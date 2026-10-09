@@ -166,12 +166,14 @@ function render(){
   const g=document.getElementById("grid");
   g.innerHTML=TOWNS.map(t=>{
     const isPick=picks.includes(t.n);
+    const likes=Math.floor(Math.random()*2000+200);
     return `<div class="town${isPick?' pick':''}">
       ${isPick?'<span class="pick-tag">✨ 今日推荐</span>':''}
       <div class="head"><span class="n">${t.n}</span><span class="tag">${t.tag}</span></div>
       <div class="row"><span class="k">🍜 吃</span>${t.foods.join("、")}</div>
       <div class="row"><span class="k">🏔️ 玩</span>${t.plays.join("、")}</div>
       <div class="why">→ ${t.why}</div>
+      <div style="font-size:12px;color:#a3e635;margin-top:8px">👍 ${likes}人想去这个镇</div>
     </div>`;
   }).join("");
 }
