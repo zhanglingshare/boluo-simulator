@@ -67,7 +67,7 @@ svg{display:block;width:100%;height:auto}
 
 <div class="wrap">
   <h1>把博罗放进大湾区，看它怎么长</h1>
-  <p class="sub">35个主体、42条可佐证主边，会自己一层层长出来。注意最粗的那根线连到哪里。</p>
+  <p class="sub">33个主体、43条可佐证主边，会自己一层层长出来。注意最粗的那根线连到哪里。</p>
 
   <div class="actbar">
     <button class="btn" id="bReplay">↻ 重新建构</button>
@@ -91,7 +91,7 @@ svg{display:block;width:100%;height:auto}
   <div id="after">
     <div class="k3">
       <div class="b"><div class="l">现在连得最多</div><div class="v" id="kDegree" style="color:#4ade80">—</div><div style="font-size:11px;color:#6b7d96;margin-top:3px" id="kDegreeDesc"></div></div>
-      <div class="b"><div class="l">网络密度</div><div class="v" style="color:#fbbf24">~12%</div><div style="font-size:11px;color:#6b7d96;margin-top:3px">42/595，大量潜在连接是暗的</div></div>
+      <div class="b"><div class="l">网络密度</div><div class="v" style="color:#fbbf24">约8%</div><div style="font-size:11px;color:#6b7d96;margin-top:3px">43/528，大量潜在连接是暗的</div></div>
       <div class="b"><div class="l">最不能断的（必经度第一）</div><div class="v" id="kBetween" style="color:#a78bfa">—</div><div style="font-size:11px;color:#6b7d96;margin-top:3px" id="kBetweenDesc"></div></div>
     </div>
 
@@ -291,7 +291,7 @@ function start(){
 
 function showAfter(degree,btw){
   document.getElementById("after").style.display="block";
-  document.getElementById("cnt").textContent=`35个节点 · ${EDGES.length}条主边 · 建构完成`;
+  document.getElementById("cnt").textContent=`33个节点 · ${EDGES.length}条主边 · 建构完成`;
 
   const degSorted=Object.entries(degree).sort((a,b)=>b[1]-a[1]);
   const topDeg=nodeById(degSorted[0][0]);
