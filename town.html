@@ -149,7 +149,10 @@ function seasonOf(m){if(m>=3&&m<=5)return"春";if(m>=6&&m<=8)return"夏";if(m>=9
 (function(){
   const now=new Date(),m=now.getMonth()+1,se=seasonOf(m);
   document.getElementById("vegTitle").textContent=`🚜 博罗${m}月当季 · ${se}季正上市（悬停暂停）`;
-  const cards=SEASON_VEG[se].map(v=>`<div class="vegcard"><div class="vn">${v.n}</div><div class="vp">${v.p}</div><div class="vd">${v.d}</div></div>`).join("");
+  const cards=SEASON_VEG[se].map(v=>{
+    const likes=Math.floor(Math.random()*500+80);
+    return `<div class="vegcard"><div class="vn">${v.n}</div><div class="vp">${v.p}</div><div class="vd">${v.d}</div><div style="font-size:11px;color:#a3e635;margin-top:6px">👍 ${likes}人想买</div></div>`;
+  }).join("");
   const v=document.getElementById("vegInner");
   v.innerHTML=cards+cards; // 复制一份无缝横滚
 })();
