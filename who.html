@@ -1,0 +1,285 @@
+<!doctype html>
+<html lang="zh-CN"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>博罗产业风洞 · 基本面</title>
+<style>
+*{box-sizing:border-box}
+body{margin:0;background:#080b12;color:#e6edf3;font:14px/1.6 -apple-system,"PingFang SC","Microsoft YaHei",sans-serif}
+.nav{position:sticky;top:0;z-index:50;display:flex;gap:5px;align-items:center;padding:9px 14px;background:rgba(8,11,18,.95);border-bottom:1px solid #1b2434;overflow-x:auto}
+.nav b{font-size:14px;margin-right:6px;flex:none}
+.nav a{background:#131c2b;color:#93a4bd;border:1px solid #22304a;padding:6px 12px;border-radius:20px;font-size:12.5px;text-decoration:none;white-space:nowrap;flex:none}
+.nav a.on{background:#15803d;border-color:#22c55e;color:#fff;font-weight:600}
+.nav .sp{margin-left:auto;font-size:11.5px;color:#64748b;flex:none}
+.wrap{max-width:920px;margin:auto;padding:16px}
+h1{font-size:20px;margin:0 0 2px}
+.sub{color:#8fa3bf;font-size:13px;margin:0 0 16px}
+.card{background:#0e1523;border:1px solid #1c2739;border-radius:12px;padding:16px;margin-bottom:12px}
+.card h2{font-size:14px;margin:0 0 12px;color:#cbd5e1}
+.next{text-align:center;margin-top:18px}
+.next a{background:#15803d;color:#fff;padding:10px 24px;border-radius:8px;text-decoration:none;font-weight:600;display:inline-block}
+.gauges{display:grid;grid-template-columns:repeat(4,1fr);gap:10px}
+@media(max-width:700px){.gauges{grid-template-columns:repeat(2,1fr)}}
+.gauge{background:#0a0f1a;border:1px solid #1c2739;border-radius:10px;padding:14px;text-align:center}
+.gauge .name{font-size:11px;color:#6b7280;margin-bottom:6px}
+.gauge .num{font-size:22px;font-weight:800;font-variant-numeric:tabular-nums}
+.gauge .tgt{font-size:10px;color:#5b6b82;margin-top:4px}
+.gauge.green{border-color:#14532d}
+.gauge.green .num{color:#34d399}
+.gauge.yellow{border-color:#713f12}
+.gauge.yellow .num{color:#fbbf24}
+.gauge.red{border-color:#7f1d1d;background:#1a0e0e}
+.gauge.red .num{color:#f87171}
+svg{display:block;width:100%;height:auto}
+.bars{margin-top:8px}
+.bar-row{display:flex;align-items:center;gap:8px;margin-bottom:7px;font-size:12px}
+.bar-row .lbl{width:130px;flex:none;text-align:right;color:#cbd5e1;font-size:11px}
+.bar-row .bg{flex:1;height:18px;background:#0a0f1a;border-radius:4px;overflow:hidden;position:relative}
+.bar-row .fill{height:100%;border-radius:4px;transition:width .8s ease}
+.bar-row .val{width:90px;flex:none;font-size:11px;color:#93a4bd;font-variant-numeric:tabular-nums}
+.plain{background:#0f1a0e;border:1px solid #1a3a1a;border-left:3px solid #22c55e;border-radius:8px;padding:10px 12px;font-size:12.5px;line-height:1.9;color:#c8e6c9;margin-top:10px}
+.plain .lab{display:block;font-size:10.5px;font-weight:800;color:#4ade80;letter-spacing:1px;margin-bottom:3px}
+.src{font-size:10px;color:#4b5a70;margin-top:8px}
+.two-col{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+@media(max-width:700px){.two-col{grid-template-columns:1fr}}
+</style></head><body>
+
+<div class="nav">
+  <b>博罗产业风洞</b>
+  <a href="index.html">① 今日话题</a>
+  <a href="network.html">② 世界怎么长</a>
+  <a href="who.html" class="on">③ 基本面</a>
+  <a href="choices.html">④ 五条路</a>
+  <a href="future.html">⑤ 未来</a>
+  <a href="windtunnel.html">⑥ 风洞测试</a>
+  <a href="blindspot.html">⑦ 忽略了什么</a>
+  <a href="report.html">⑧ 分析报告</a>
+  <a href="ending.html">⑨ 结语</a>
+  <span class="sp">2025统计公报</span>
+</div>
+
+<div class="wrap">
+  <h1>博罗现在长什么样</h1>
+  <p class="sub">广东首个千亿县。数据全部来自2025年统计公报，不做评判，只摆事实。</p>
+
+  <!-- 第一组：核心仪表盘 -->
+  <div class="gauges">
+    <div class="gauge green">
+      <div class="name">GDP</div>
+      <div class="num">1005亿</div>
+      <div class="tgt">+5.5% · 广东首个千亿县</div>
+    </div>
+    <div class="gauge green">
+      <div class="name">规上工业增加值</div>
+      <div class="num">+8.7%</div>
+      <div class="tgt">1400+家规上企业</div>
+    </div>
+    <div class="gauge green">
+      <div class="name">电子信息产值</div>
+      <div class="num">+23.0%</div>
+      <div class="tgt">占规上工业23.2%</div>
+    </div>
+    <div class="gauge yellow">
+      <div class="name">社消零</div>
+      <div class="num">297亿</div>
+      <div class="tgt">+3.9%</div>
+    </div>
+    <div class="gauge red">
+      <div class="name">固定资产投资</div>
+      <div class="num">-18.8%</div>
+      <div class="tgt">房地产-47.6%</div>
+    </div>
+    <div class="gauge green">
+      <div class="name">游客</div>
+      <div class="num">1028万</div>
+      <div class="tgt">+11.7% · 旅游收入52亿</div>
+    </div>
+    <div class="gauge yellow">
+      <div class="name">金融业增加值</div>
+      <div class="num">39亿</div>
+      <div class="tgt">-3.7%</div>
+    </div>
+    <div class="gauge green">
+      <div class="name">人均可支配收入</div>
+      <div class="num">40626元</div>
+      <div class="tgt">+4.5% · 城镇45832</div>
+    </div>
+  </div>
+
+  <!-- 第二组：三次产业结构 -->
+  <div class="card">
+    <h2>三次产业结构 10.7 : 54.6 : 34.7</h2>
+    <svg viewBox="0 0 800 120">
+      <!-- 一产 -->
+      <rect x="0" y="30" width="85.6" height="60" fill="#84cc16" rx="4"/>
+      <text x="42.8" y="65" text-anchor="middle" fill="#08130a" font-size="14" font-weight="700">10.7%</text>
+      <text x="42.8" y="105" text-anchor="middle" fill="#84cc16" font-size="11">一产 107亿</text>
+      <!-- 二产 -->
+      <rect x="95.6" y="30" width="436.8" height="60" fill="#22c55e" rx="4"/>
+      <text x="314" y="65" text-anchor="middle" fill="#08130a" font-size="16" font-weight="700">54.6%</text>
+      <text x="314" y="105" text-anchor="middle" fill="#22c55e" font-size="11">二产 549亿</text>
+      <!-- 三产 -->
+      <rect x="342.4" y="30" width="277.6" height="60" fill="#6b7280" rx="4"/>
+      <text x="481" y="65" text-anchor="middle" fill="#fff" font-size="14" font-weight="700">34.7%</text>
+      <text x="481" y="105" text-anchor="middle" fill="#9ca3af" font-size="11">三产 349亿</text>
+    </svg>
+    <div class="plain">
+      <span class="lab">人话</span>
+      博罗的二产占了一半以上，是个工业县。一产10.7%在广东县里算高的——因为博罗有107亿的农业，有柏塘山茶、福田菜心这些品牌。三产34.7%，服务业的皮还比较薄。
+    </div>
+  </div>
+
+  <!-- 第三组：2030目标轨道 -->
+  <div class="card">
+    <h2>从1005亿到1600亿：2030目标轨道</h2>
+    <svg viewBox="0 0 800 180">
+      <!-- 轨道线 -->
+      <line x1="60" y1="120" x2="740" y2="120" stroke="#2b3a55" stroke-width="2"/>
+      <!-- 2025起点 -->
+      <circle cx="60" cy="120" r="8" fill="#22c55e"/>
+      <text x="60" y="150" text-anchor="middle" fill="#22c55e" font-size="12" font-weight="700">2025</text>
+      <text x="60" y="100" text-anchor="middle" fill="#e6edf3" font-size="13" font-weight="700">1005亿</text>
+      <!-- 2026计划 -->
+      <circle cx="196" cy="120" r="6" fill="#fbbf24"/>
+      <text x="196" y="150" text-anchor="middle" fill="#fbbf24" font-size="11">2026计划</text>
+      <text x="196" y="100" text-anchor="middle" fill="#fbbf24" font-size="11">+6.5~7%</text>
+      <!-- 2030目标 -->
+      <circle cx="740" cy="60" r="10" fill="#a78bfa"/>
+      <text x="740" y="45" text-anchor="middle" fill="#a78bfa" font-size="13" font-weight="700">2030目标 1600亿</text>
+      <text x="740" y="150" text-anchor="middle" fill="#a78bfa" font-size="12" font-weight="700">2030</text>
+      <!-- 增长箭头 -->
+      <path d="M 70 115 Q 400 50 730 58" stroke="#22c55e" stroke-width="2" fill="none" stroke-dasharray="5 5" opacity="0.5"/>
+      <!-- 差距标注 -->
+      <text x="400" y="30" text-anchor="middle" fill="#93a4bd" font-size="11">五年需年均增长约9.7%</text>
+    </svg>
+    <div class="two-col" style="margin-top:10px">
+      <div style="background:#0a0f1a;border-radius:8px;padding:10px">
+        <div style="font-size:11px;color:#6b7280;margin-bottom:4px">规上工业企业</div>
+        <div style="font-size:16px;font-weight:700;color:#e6edf3">1400+ → 2500家</div>
+      </div>
+      <div style="background:#0a0f1a;border-radius:8px;padding:10px">
+        <div style="font-size:11px;color:#6b7280;margin-bottom:4px">高新技术企业</div>
+        <div style="font-size:16px;font-weight:700;color:#e6edf3">686 → 900家</div>
+      </div>
+      <div style="background:#0a0f1a;border-radius:8px;padding:10px">
+        <div style="font-size:11px;color:#6b7280;margin-bottom:4px">常住人口</div>
+        <div style="font-size:16px;font-weight:700;color:#e6edf3">124万 → 160万</div>
+      </div>
+      <div style="background:#0a0f1a;border-radius:8px;padding:10px">
+        <div style="font-size:11px;color:#6b7280;margin-bottom:4px">规上工业总产值</div>
+        <div style="font-size:16px;font-weight:700;color:#e6edf3">→ 3600亿</div>
+      </div>
+    </div>
+    <div class="plain">
+      <span class="lab">人话</span>
+      从1005亿到1600亿，五年要再涨59%，年均约9.7%。2025年实际增速是5.5%。目标比当前速度快了快一倍。这就是风洞要跑的事——按现在的参数，能不能到？
+    </div>
+  </div>
+
+  <!-- 第四组：工业结构 -->
+  <div class="card">
+    <h2>工业里谁在跑</h2>
+    <div class="bars">
+      <div class="bar-row">
+        <span class="lbl">电子信息</span>
+        <div class="bg"><div class="fill" style="width:100%;background:#22c55e"></div></div>
+        <span class="val">+23.0% · 占23.2%</span>
+      </div>
+      <div class="bar-row">
+        <span class="lbl">电气机械</span>
+        <div class="bg"><div class="fill" style="width:75%;background:#4ade80"></div></div>
+        <span class="val">+13.7% · 占14.2%</span>
+      </div>
+      <div class="bar-row">
+        <span class="lbl">金属制品</span>
+        <div class="bg"><div class="fill" style="width:48%;background:#86efac"></div></div>
+        <span class="val">+11.1% · 占8.2%</span>
+      </div>
+      <div class="bar-row">
+        <span class="lbl">电力热力</span>
+        <div class="bg"><div class="fill" style="width:61%;background:#86efac"></div></div>
+        <span class="val">+14.0% · 占6.2%</span>
+      </div>
+      <div class="bar-row">
+        <span class="lbl">橡胶塑料</span>
+        <div class="bg"><div class="fill" style="width:15%;background:#f87171"></div></div>
+        <span class="val">-4.2% · 占9.6%</span>
+      </div>
+    </div>
+    <div class="plain">
+      <span class="lab">人话</span>
+      博罗的工业不是笼统的"制造业"。电子信息和电气机械跑得最快，一个+23%一个+13.7%，两个加起来占了规上工业的37%。民营工业占68.6%，小微占56.8%——博罗的工业底盘是小企业撑起来的。
+    </div>
+  </div>
+
+  <!-- 第五组：镇街 -->
+  <div class="card">
+    <h2>镇街经济：工业重心在西边</h2>
+    <div class="bars">
+      <div class="bar-row">
+        <span class="lbl">园洲镇</span>
+        <div class="bg"><div class="fill" style="width:100%;background:#a78bfa"></div></div>
+        <span class="val">规上工业344亿（第一）</span>
+      </div>
+      <div class="bar-row">
+        <span class="lbl">石湾镇</span>
+        <div class="bg"><div class="fill" style="width:75%;background:#a78bfa"></div></div>
+        <span class="val">2513家企业（第二）</span>
+      </div>
+      <div class="bar-row">
+        <span class="lbl">罗阳街道</span>
+        <div class="bg"><div class="fill" style="width:69%;background:#9aa6b8"></div></div>
+        <span class="val">GDP 238亿</span>
+      </div>
+      <div class="bar-row">
+        <span class="lbl">湖镇镇</span>
+        <div class="bg"><div class="fill" style="width:42%;background:#9aa6b8"></div></div>
+        <span class="val">GDP 68.7亿 · 规上208亿</span>
+      </div>
+      <div class="bar-row">
+        <span class="lbl">杨侨镇</span>
+        <div class="bg"><div class="fill" style="width:14%;background:#6b7280"></div></div>
+        <span class="val">GDP 23.4亿</span>
+      </div>
+    </div>
+    <div class="plain">
+      <span class="lab">人话</span>
+      博罗工业最重的两个镇——园洲和石湾——都在最西边，挨着东莞石龙。县城罗阳在中间，GDP 238亿。北部各镇（横河、柏塘、公庄、杨村）以农业和生态为主。这就是博罗的经济地理：西工、中商、北农旅。
+    </div>
+  </div>
+
+  <!-- 第六组：人口和收入 -->
+  <div class="card">
+    <h2>人和钱</h2>
+    <div class="two-col">
+      <div>
+        <div style="font-size:12px;color:#6b7280;margin-bottom:6px">常住人口 123.94万</div>
+        <svg viewBox="0 0 300 80">
+          <rect x="0" y="20" width="180" height="40" fill="#22c55e" rx="4"/>
+          <text x="90" y="45" text-anchor="middle" fill="#08130a" font-size="13" font-weight="700">城镇 74.6万</text>
+          <rect x="190" y="20" width="110" height="40" fill="#84cc16" rx="4"/>
+          <text x="245" y="45" text-anchor="middle" fill="#08130a" font-size="12" font-weight="700">农村 49.3万</text>
+        </svg>
+        <div style="font-size:11px;color:#6b7280">城镇化率60.19%</div>
+      </div>
+      <div>
+        <div style="font-size:12px;color:#6b7280;margin-bottom:6px">人均可支配收入</div>
+        <svg viewBox="0 0 300 80">
+          <rect x="0" y="30" width="135" height="35" fill="#3b82f6" rx="4"/>
+          <text x="67" y="52" text-anchor="middle" fill="#fff" font-size="11" font-weight="700">城镇 45832</text>
+          <rect x="145" y="45" width="97" height="20" fill="#60a5fa" rx="4"/>
+          <text x="193" y="59" text-anchor="middle" fill="#08130a" font-size="10" font-weight="700">农村 32915</text>
+        </svg>
+        <div style="font-size:11px;color:#6b7280">全体平均40626元，城乡差约1.4倍</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="src">
+    数据来源：博罗县统计局《2025年博罗国民经济和社会发展统计公报》（2026-07-01）｜
+    2030目标来源：博罗县委书记周耿斌访谈（2026-01）｜
+    镇街数据来源：各镇政府公开信息
+  </div>
+
+  <div class="next"><a href="choices.html">下一步：博罗的五条路 →</a></div>
+</div>
+
+</body></html>

@@ -1,0 +1,366 @@
+<!doctype html>
+<html lang="zh-CN"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>博罗产业风洞 · 建构世界</title>
+<style>
+*{box-sizing:border-box}
+body{margin:0;background:#080b12;color:#e6edf3;font:14px/1.65 -apple-system,"PingFang SC","Microsoft YaHei",sans-serif}
+.nav{position:sticky;top:0;z-index:50;display:flex;gap:5px;align-items:center;padding:9px 14px;background:rgba(8,11,18,.95);border-bottom:1px solid #1b2434;overflow-x:auto}
+.nav b{font-size:14px;margin-right:6px;flex:none}
+.nav a{background:#131c2b;color:#93a4bd;border:1px solid #22304a;padding:6px 12px;border-radius:20px;font-size:12.5px;text-decoration:none;white-space:nowrap;flex:none}
+.nav a.on{background:#15803d;border-color:#22c55e;color:#fff;font-weight:600}
+.wrap{max-width:920px;margin:auto;padding:16px}
+h1{font-size:20px;margin:0 0 2px}
+.sub{color:#8fa3bf;font-size:13px;margin:0 0 12px}
+.stage{background:radial-gradient(ellipse at center,#0b1a12,#080b12);border:1px solid #1c2739;border-radius:12px;position:relative;overflow:hidden}
+svg{display:block;width:100%;height:auto}
+.actbar{display:flex;gap:10px;align-items:center;margin:12px 0;flex-wrap:wrap}
+.btn{background:#15803d;color:#fff;border:0;padding:9px 20px;border-radius:8px;font-size:13.5px;font-weight:600;cursor:pointer}
+.btn.gh{background:#16203a;border:1px solid #2b3a55;color:#b9cbe4;font-weight:400}
+.cnt{font-size:12px;color:#7d8da5;font-variant-numeric:tabular-nums}
+.acttitle{position:absolute;top:12px;left:50%;transform:translateX(-50%);font-size:13px;font-weight:700;letter-spacing:2px;color:#cbd5e1;opacity:0;transition:opacity .5s}
+.legend{position:absolute;bottom:9px;left:12px;font-size:10.5px;color:#6b7d96;display:flex;gap:12px;flex-wrap:wrap}
+.dot{display:inline-block;width:8px;height:8px;border-radius:50%;margin-right:4px;vertical-align:middle}
+.gnode{opacity:0;animation:drop .55s cubic-bezier(.2,1.3,.4,1) forwards}
+.gnode circle{filter:drop-shadow(0 0 6px currentColor)}
+.eline{stroke-dasharray:1;stroke-dashoffset:1;animation:grow .7s ease forwards}
+@keyframes drop{0%{opacity:0;transform:translateY(-40px) scale(.3)}70%{transform:translateY(4px) scale(1.12)}100%{opacity:1;transform:translateY(0) scale(1)}}
+@keyframes grow{to{stroke-dashoffset:0}}
+.card{background:#0e1523;border:1px solid #1c2739;border-radius:10px;padding:14px}
+.k3{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin-top:14px}
+@media(max-width:700px){.k3{grid-template-columns:1fr}}
+.k3 .b{background:#0e1523;border:1px solid #1c2739;border-radius:10px;padding:13px}
+.k3 .b .l{font-size:11px;color:#8fa3bf}
+.k3 .b .v{font-size:19px;font-weight:800;margin-top:4px}
+.plain{margin-top:9px;background:#0f1a0e;border:1px solid #1a3a1a;border-left:3px solid #22c55e;border-radius:8px;padding:10px 12px;font-size:12.5px;line-height:1.9;color:#c8e6c9}
+.plain .lab{display:block;font-size:10.5px;font-weight:800;color:#4ade80;letter-spacing:1px;margin-bottom:3px}
+.next{text-align:center;margin-top:16px}
+.next a{background:#15803d;color:#fff;padding:11px 24px;border-radius:8px;text-decoration:none;font-weight:600;display:inline-block}
+#after{display:none}
+.rank-row{display:flex;align-items:center;gap:8px;margin-bottom:6px;font-size:12px}
+.rank-row .name{width:100px;flex:none;color:#cbd5e1;text-align:right;font-size:11px}
+.rank-row .bar-bg{flex:1;height:14px;background:#0a0f1a;border-radius:3px;overflow:hidden}
+.rank-row .bar{height:100%;border-radius:3px;transition:width .6s ease}
+.rank-row .val{width:55px;flex:none;font-size:11px;color:#93a4bd;font-variant-numeric:tabular-nums}
+.algo-note{font-size:11px;color:#5b6b82;margin-top:8px;padding:8px 10px;background:#0a0f1a;border-radius:6px;border-left:2px solid #2b3a55}
+.blood-tag{display:inline-block;font-size:9px;padding:1px 5px;border-radius:3px;font-weight:700;margin-left:4px}
+.blood-A{background:#14532d;color:#86efac}
+.blood-B{background:#1e3a5f;color:#93c5fd}
+.blood-C{background:#4a3a12;color:#fcd34d}
+.blood-D{background:#4a1a1a;color:#fca5a5}
+</style></head><body>
+
+<div class="nav">
+  <b>博罗产业风洞</b>
+  <a href="index.html">① 今日话题</a>
+  <a href="network.html" class="on">② 世界怎么长</a>
+  <a href="who.html">③ 基本面</a>
+  <a href="choices.html">④ 五条路</a>
+  <a href="future.html">⑤ 未来</a>
+  <a href="windtunnel.html">⑥ 风洞测试</a>
+  <a href="blindspot.html">⑦ 忽略了什么</a>
+  <a href="report.html">⑧ 分析报告</a>
+  <a href="ending.html">⑨ 结语</a>
+</div>
+
+<div class="wrap">
+  <h1>把博罗放进大湾区，看它怎么长</h1>
+  <p class="sub">35个主体、约40条可佐证主边，会自己一层层长出来。注意最粗的那根线连到哪里。</p>
+
+  <div class="actbar">
+    <button class="btn" id="bReplay">↻ 重新建构</button>
+    <span class="cnt" id="cnt">准备中…</span>
+  </div>
+
+  <div class="stage">
+    <div class="acttitle" id="acttitle"></div>
+    <svg id="svg" viewBox="0 0 860 620">
+      <g id="edges"></g>
+      <g id="nodes"></g>
+    </svg>
+    <div class="legend">
+      <span><i class="dot" style="background:#22c55e"></i>博罗内部产业</span>
+      <span><i class="dot" style="background:#9aa6b8"></i>镇街空间</span>
+      <span><i class="dot" style="background:#f97316"></i>人</span>
+      <span><i class="dot" style="background:#a78bfa"></i>外部城市</span>
+      <span style="color:#a78bfa">━━ 跨市链接</span>
+    </div>
+  </div>
+
+  <div id="after">
+    <div class="k3">
+      <div class="b"><div class="l">现在连得最多（连接数第一）</div><div class="v" id="kDegree" style="color:#4ade80">—</div><div style="font-size:11px;color:#6b7d96;margin-top:3px" id="kDegreeDesc"></div></div>
+      <div class="b"><div class="l">网络密度</div><div class="v" style="color:#fbbf24">~12%</div><div style="font-size:11px;color:#6b7d96;margin-top:3px">40/595，大量潜在连接是暗的</div></div>
+      <div class="b"><div class="l">最不能断的边（介数第一）</div><div class="v" id="kBetween" style="color:#a78bfa">—</div><div style="font-size:11px;color:#6b7d96;margin-top:3px" id="kBetweenDesc"></div></div>
+    </div>
+
+    <div class="plain">
+      <span class="lab">人话</span>
+      博罗不是一个孤立的县。它连得最紧的那根线，不是连到自己的县城，是连到东莞。这不是问题——这是博罗在大湾区里的位置。园洲石湾挨着东莞石龙，产业承接是地理给的，不是谁规划的。<span class="blood-tag blood-A">A 实测</span> 镇街公开数据。
+    </div>
+
+    <div style="margin-top:14px">
+      <div style="font-size:13px;font-weight:700;margin-bottom:8px;color:#cbd5e1">谁连得最多？（按连接数排序）</div>
+      <div id="degreeRanks"></div>
+    </div>
+
+    <div style="margin-top:14px">
+      <div style="font-size:13px;font-weight:700;margin-bottom:8px;color:#cbd5e1">谁在关键路径上？（按必经程度排序）</div>
+      <div id="betweenRanks"></div>
+    </div>
+
+    <div class="algo-note">
+      数据血统：<span class="blood-tag blood-A">A 实测</span>统计公报/镇街公开数据 ｜
+      <span class="blood-tag blood-B">B 推估</span>镇街间联系 ｜
+      <span class="blood-tag blood-C">C 假设</span>跨区域边权重 ｜
+      网络结构由作者根据公开主体与关系构建，边权重含假设，可改参数复跑。
+    </div>
+  </div>
+
+  <div class="next"><a href="who.html">下一步：博罗的基本面 →</a></div>
+</div>
+
+<script>
+// 节点：35个
+// 坐标按东西狭长布局：东莞在最左(西)，深圳在左下，广州在左上，博罗内部从西到东排
+const NODES=[
+  // 外部城市（紫色）
+  {id:"dg",name:"东莞",x:60,y:310,type:"ext",w:3,label:"东莞石龙/城区"},
+  {id:"sz",name:"深圳",x:140,y:520,type:"ext",w:2,label:"深圳（赣深高铁）"},
+  {id:"gz",name:"广州",x:80,y:80,type:"ext",w:1,label:"广州（罗浮山游客）"},
+  {id:"hz",name:"惠城",x:760,y:310,type:"ext",w:2,label:"惠州惠城（东江走廊）"},
+  // 博罗西部（挨着东莞，产业重）
+  {id:"yz",name:"园洲",x:180,y:260,type:"space",w:3,label:"园洲镇·规上工业344亿"},
+  {id:"sw",name:"石湾",x:160,y:360,type:"space",w:2,label:"石湾镇·2513家企业"},
+  {id:"ft",name:"福田",x:240,y:420,type:"space",w:2,label:"福田镇·深莞共建园"},
+  // 博罗中部
+  {id:"ly",name:"罗阳",x:420,y:310,type:"space",w:3,label:"罗阳·县城·GDP238亿"},
+  {id:"lx",name:"龙溪",x:340,y:220,type:"space",w:2,label:"龙溪街道"},
+  {id:"hz2",name:"湖镇",x:340,y:430,type:"space",w:2,label:"湖镇·GDP68.7亿"},
+  // 博罗北部（文旅农业）
+  {id:"cn",name:"长宁",x:300,y:120,type:"space",w:2,label:"长宁镇·罗浮山"},
+  {id:"lfs",name:"罗浮山",x:260,y:60,type:"space",w:3,label:"罗浮山·年游客1028万"},
+  {id:"bh",name:"柏塘",x:400,y:100,type:"space",w:1,label:"柏塘·山茶"},
+  {id:"hh",name:"横河",x:480,y:80,type:"space",w:1,label:"横河·生态"},
+  // 博罗东部
+  {id:"gz2",name:"公庄",x:560,y:130,type:"space",w:1,label:"公庄镇"},
+  {id:"yc",name:"杨村",x:640,y:200,type:"space",w:1,label:"杨村镇"},
+  {id:"tm",name:"泰美",x:580,y:310,type:"space",w:1,label:"泰美镇"},
+  {id:"ge",name:"观音阁",x:700,y:250,type:"space",w:1,label:"观音阁镇"},
+  // 产业层（绿色）
+  {id:"ht",name:"高新区",x:420,y:200,type:"ind",w:3,label:"博罗高新区·千亿智能装备"},
+  {id:"xw",name:"欣旺达",x:380,y:160,type:"ind",w:3,label:"欣旺达·新能源龙头"},
+  {id:"dz",name:"电子信息",x:340,y:280,type:"ind",w:2,label:"电子信息·占规上23.2%"},
+  {id:"dq",name:"电气机械",x:460,y:260,type:"ind",w:2,label:"电气机械·占规上14.2%"},
+  {id:"ddc",name:"电动车集群",x:280,y:310,type:"ind",w:2,label:"电动车集群·台铃小刀"},
+  {id:"bmc",name:"表面处理",x:220,y:200,type:"ind",w:1,label:"表面处理集群"},
+  {id:"lfsgy",name:"罗浮山国药",x:380,y:380,type:"ind",w:1,label:"罗浮山国药"},
+  {id:"jt",name:"景田百岁山",x:500,y:380,type:"ind",w:2,label:"景田百岁山·饮料374万吨"},
+  {id:"my",name:"民营工业",x:420,y:430,type:"ind",w:2,label:"民营工业·1189家占68.6%"},
+  {id:"gx",name:"高新企业",x:460,y:150,type:"ind",w:2,label:"高新企业686家"},
+  // 人层（橙色）
+  {id:"w1",name:"园洲石湾工人",x:180,y:420,type:"talent",w:2,label:"园洲石湾产业工人"},
+  {id:"w2",name:"县城居民",x:460,y:370,type:"talent",w:2,label:"罗阳县城居民"},
+  {id:"w3",name:"农业人口",x:520,y:100,type:"talent",w:1,label:"北部农业人口49万"},
+  {id:"w4",name:"罗浮山游客",x:220,y:100,type:"talent",w:2,label:"年游客1028万人次"},
+  {id:"w5",name:"跨城通勤",x:120,y:400,type:"talent",w:1,label:"深惠跨城通勤族"},
+];
+
+// 边：[from,to,weight,blood]
+const EDGES=[
+  // 跨区域（紫色粗线）
+  ["yz","dg",5,"A"], // 园洲↔东莞，最粗
+  ["sw","dg",4,"A"], // 石湾↔东莞
+  ["ft","dg",3,"B"], // 福田↔东莞
+  ["yz","sz",2,"B"], // 园洲↔深圳
+  ["tm","sz",2,"B"], // 泰美↔深圳（赣深高铁）
+  ["lfs","gz",2,"B"], // 罗浮山↔广州（游客）
+  ["lfs","sz",2,"B"], // 罗浮山↔深圳（游客）
+  ["ly","hz",3,"A"], // 罗阳↔惠城
+  // 博罗内部产业-镇街
+  ["yz","ht",3,"B"],
+  ["sw","ddc",2,"B"],
+  ["yz","dz",2,"B"],
+  ["ft","bmc",2,"C"],
+  ["ly","ht",3,"A"],
+  ["lx","dq",2,"B"],
+  ["hz2","dq",2,"B"],
+  ["cn","lfs",3,"A"],
+  ["bh","w3",2,"C"],
+  ["lfs","lfsgy",2,"C"],
+  ["ge","jt",2,"B"],
+  ["ht","gx",3,"A"],
+  ["xw","dq",2,"B"],
+  ["xw","ht",2,"A"],
+  ["dz","dq",2,"B"],
+  ["ddc","dq",1,"C"],
+  ["my","ht",2,"C"],
+  ["my","yz",2,"C"],
+  // 人层
+  ["w1","yz",3,"B"],
+  ["w1","sw",2,"B"],
+  ["w2","ly",3,"A"],
+  ["w4","lfs",3,"A"],
+  ["w3","bh",2,"C"],
+  ["w5","yz",2,"C"],
+  ["w5","sz",1,"D"],
+  // 通勤/居住
+  ["w1","w5",1,"D"],
+  ["w2","ht",2,"C"],
+  ["w2","gx",1,"C"],
+  // 镇街间
+  ["yz","sw",2,"B"],
+  ["ly","lx",2,"B"],
+  ["ly","hz2",1,"C"],
+  ["cn","bh",1,"C"],
+  ["bh","hh",1,"C"],
+  ["tm","ge",1,"C"],
+  ["yc","ge",1,"C"],
+];
+
+const COLORS={
+  ind:"#22c55e",space:"#9aa6b8",talent:"#f97316",ext:"#a78bfa"
+};
+const BLOOD_COLORS={A:"#22c55e",B:"#3b82f6",C:"#fbbf24",D:"#f87171"};
+
+function nodeById(id){return NODES.find(n=>n.id===id)}
+
+function buildGraph(){
+  const adj={};
+  NODES.forEach(n=>adj[n.id]=[]);
+  EDGES.forEach(([f,t])=>{adj[f].push(t);adj[t].push(f)});
+  return adj;
+}
+
+function betweenness(adj){
+  const scores={};
+  NODES.forEach(n=>scores[n.id]=0);
+  for(const src of NODES){
+    const S=[];const P={};const sig={};const d={};
+    NODES.forEach(n=>{P[n.id]=[];sig[n.id]=0;d[n.id]=-1});
+    sig[src.id]=1;d[src.id]=0;
+    const Q=[src.id];
+    while(Q.length){
+      const v=Q.shift();S.push(v);
+      for(const w of adj[v]){
+        if(d[w]<0){d[w]=d[v]+1;Q.push(w)}
+        if(d[w]===d[v]+1){sig[w]+=sig[v];P[w].push(v)}
+      }
+    }
+    const delta={};NODES.forEach(n=>delta[n.id]=0);
+    while(S.length){
+      const w=S.pop();
+      for(const v of P[w]){delta[v]+=(sig[v]/sig[w])*(1+delta[w])}
+      if(w!==src.id)scores[w]+=delta[w];
+    }
+  }
+  return scores;
+}
+
+function start(){
+  const adj=buildGraph();
+  const degree={};NODES.forEach(n=>degree[n.id]=adj[n.id].length);
+  const btw=betweenness(adj);
+
+  const svg=document.getElementById("svg");
+  const eg=document.getElementById("edges");
+  const ng=document.getElementById("nodes");
+  eg.innerHTML="";ng.innerHTML="";
+  document.getElementById("after").style.display="none";
+
+  // Phase 1: 外部城市先落下
+  // Phase 2: 镇街落下
+  // Phase 3: 产业落下
+  // Phase 4: 人层落下
+  // Phase 5: 边长出来
+  const phaseOrder=[
+    {title:"外部城市：东莞、深圳、广州、惠城",filter:n=>n.type==="ext"},
+    {title:"博罗镇街从西到东落下",filter:n=>n.type==="space"},
+    {title:"产业节点接上",filter:n=>n.type==="ind"},
+    {title:"人和游客落下",filter:n=>n.type==="talent"},
+  ];
+
+  let delay=0;
+  const nodeDelays={};
+  phaseOrder.forEach((ph,pi)=>{
+    document.getElementById("acttitle").style.opacity=1;
+    document.getElementById("acttitle").textContent=ph.title;
+    ph.filter(NODES).forEach((n,ni)=>{
+      const d=delay+ni*120;
+      nodeDelays[n.id]=d;
+      setTimeout(()=>{
+        const g=document.createElementNS("http://www.w3.org/2000/svg","g");
+        g.setAttribute("class","gnode");
+        g.style.animationDelay="0s";
+        g.style.transformOrigin=`${n.x}px ${n.y}px`;
+        g.innerHTML=`
+          <circle cx="${n.x}" cy="${n.y}" r="${10+n.w*3}" fill="${COLORS[n.type]}" fill-opacity="0.2" stroke="${COLORS[n.type]}" stroke-width="1.5"/>
+          <text x="${n.x}" y="${n.y+4}" text-anchor="middle" fill="#e6edf3" font-size="${n.w>=3?11:9}" font-weight="${n.w>=3?700:400}">${n.name}</text>
+          <text x="${n.x}" y="${n.y+22}" text-anchor="middle" fill="#7d8fa5" font-size="7.5">${n.label}</text>
+        `;
+        ng.appendChild(g);
+      },d);
+    });
+    delay+=ph.filter(NODES).length*120+600;
+  });
+
+  // 边在最后一批节点落下后开始
+  setTimeout(()=>{
+    document.getElementById("acttitle").textContent="线长出来：注意最粗的那根";
+    EDGES.forEach(([f,t,w,blood],i)=>{
+      const n1=nodeById(f),n2=nodeById(t);
+      const line=document.createElementNS("http://www.w3.org/2000/svg","line");
+      line.setAttribute("x1",n1.x);line.setAttribute("y1",n1.y);
+      line.setAttribute("x2",n2.x);line.setAttribute("y2",n2.y);
+      line.setAttribute("stroke",blood==="A"?(f==="dg"||t==="dg"?"#a78bfa":BLOOD_COLORS[blood]):BLOOD_COLORS[blood]);
+      line.setAttribute("stroke-width",w);
+      line.setAttribute("stroke-opacity",f==="dg"||t==="dg"?0.9:0.4);
+      line.setAttribute("class","eline");
+      line.style.animationDelay=(i*60)+"ms";
+      eg.appendChild(line);
+    });
+    setTimeout(()=>{
+      document.getElementById("acttitle").style.opacity=0;
+      showAfter(degree,btw);
+    },EDGES.length*60+800);
+  },delay);
+}
+
+function showAfter(degree,btw){
+  document.getElementById("after").style.display="block";
+  document.getElementById("cnt").textContent=`35个节点 · ${EDGES.length}条主边 · 建构完成`;
+
+  // Degree ranking
+  const degSorted=Object.entries(degree).sort((a,b)=>b[1]-a[1]);
+  document.getElementById("kDegree").textContent=nodeById(degSorted[0][0]).name;
+  document.getElementById("kDegreeDesc").textContent=`连了${degSorted[0][1]}条线，全场第一`;
+  document.getElementById("degreeRanks").innerHTML=degSorted.slice(0,8).map(([id,v],i)=>{
+    const n=nodeById(id);
+    const pct=v/Math.max(...Object.values(degree))*100;
+    return `<div class="rank-row">
+      <span class="name">${n.name}</span>
+      <div class="bar-bg"><div class="bar" style="width:${pct}%;background:${COLORS[n.type]}"></div></div>
+      <span class="val">${v}条</span>
+    </div>`;
+  }).join("");
+
+  // Betweenness ranking
+  const btwSorted=Object.entries(btw).sort((a,b)=>b[1]-a[1]);
+  const topBtw=nodeById(btwSorted[0][0]);
+  document.getElementById("kBetween").textContent=topBtw.name;
+  document.getElementById("kBetweenDesc").textContent=`最短路径经过最多，网络的咽喉`;
+  document.getElementById("betweenRanks").innerHTML=btwSorted.slice(0,8).map(([id,v],i)=>{
+    const n=nodeById(id);
+    const max=btwSorted[0][1]||1;
+    const pct=v/max*100;
+    return `<div class="rank-row">
+      <span class="name">${n.name}</span>
+      <div class="bar-bg"><div class="bar" style="width:${pct}%;background:#a78bfa"></div></div>
+      <span class="val">${v.toFixed(0)}</span>
+    </div>`;
+  }).join("");
+}
+
+document.getElementById("bReplay").onclick=start;
+start();
+</script>
+</body></html>

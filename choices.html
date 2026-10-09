@@ -1,0 +1,136 @@
+<!doctype html>
+<html lang="zh-CN"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>博罗产业风洞 · 五条路</title>
+<style>
+*{box-sizing:border-box}
+body{margin:0;background:#080b12;color:#e6edf3;font:14px/1.6 -apple-system,"PingFang SC","Microsoft YaHei",sans-serif}
+.nav{position:sticky;top:0;z-index:50;display:flex;gap:5px;align-items:center;padding:9px 14px;background:rgba(8,11,18,.95);border-bottom:1px solid #1b2434;overflow-x:auto}
+.nav b{font-size:14px;margin-right:6px;flex:none}
+.nav a{background:#131c2b;color:#93a4bd;border:1px solid #22304a;padding:6px 12px;border-radius:20px;font-size:12.5px;text-decoration:none;white-space:nowrap;flex:none}
+.nav a.on{background:#15803d;border-color:#22c55e;color:#fff;font-weight:600}
+.nav .sp{margin-left:auto;font-size:11.5px;color:#64748b;flex:none}
+.wrap{max-width:800px;margin:auto;padding:16px}
+h1{font-size:20px;margin:0 0 2px}
+.sub{color:#8fa3bf;font-size:13px;margin:0 0 16px}
+.path{background:#0e1523;border:1px solid #1c2739;border-radius:12px;padding:16px;margin-bottom:10px;display:flex;gap:14px;align-items:flex-start;cursor:pointer;transition:.2s}
+.path:hover{border-color:#22c55e}
+.path.off{opacity:.4}
+.path .icon{font-size:28px;flex:none}
+.path .body{flex:1}
+.path .t{font-size:15px;font-weight:700;margin-bottom:4px}
+.path .d{font-size:12px;color:#8fa3bf;line-height:1.6}
+.path .src{font-size:10px;color:#5b6b82;margin-top:4px}
+.path .num{font-size:14px;font-weight:700;color:#fbbf24;margin-top:6px}
+.switch{width:44px;height:24px;background:#1c2739;border-radius:12px;position:relative;flex:none;margin-top:4px;transition:.2s}
+.switch::after{content:'';position:absolute;width:20px;height:20px;background:#6b7280;border-radius:50%;top:2px;left:2px;transition:.2s}
+.path.on .switch{background:#15803d}
+.path.on .switch::after{left:22px;background:#fff}
+.gap{background:#0a0f1a;border:1px solid #1c2739;border-radius:12px;padding:16px;margin-top:14px;text-align:center}
+.gap .big{font-size:28px;font-weight:800;color:#fbbf24}
+.next{text-align:center;margin-top:18px}
+.next a{background:#15803d;color:#fff;padding:10px 24px;border-radius:8px;text-decoration:none;font-weight:600;display:inline-block}
+.plain{background:#0f1a0e;border:1px solid #1a3a1a;border-left:3px solid #22c55e;border-radius:8px;padding:10px 12px;font-size:12.5px;line-height:1.9;color:#c8e6c9;margin-top:10px}
+.plain .lab{display:block;font-size:10.5px;font-weight:800;color:#4ade80;letter-spacing:1px;margin-bottom:3px}
+</style></head><body>
+
+<div class="nav">
+  <b>博罗产业风洞</b>
+  <a href="index.html">① 今日话题</a>
+  <a href="network.html">② 世界怎么长</a>
+  <a href="who.html">③ 基本面</a>
+  <a href="choices.html" class="on">④ 五条路</a>
+  <a href="future.html">⑤ 未来</a>
+  <a href="windtunnel.html">⑥ 风洞测试</a>
+  <a href="blindspot.html">⑦ 忽略了什么</a>
+  <a href="report.html">⑧ 分析报告</a>
+  <a href="ending.html">⑨ 结语</a>
+  <span class="sp">官方规划+公开数据粗估</span>
+</div>
+
+<div class="wrap">
+  <h1>博罗的五条路</h1>
+  <p class="sub">从1005亿到1600亿，差595亿。官方和公开信息里，博罗铺了五条路。点开关，看哪条路能填多少。</p>
+
+  <div class="path on" data-v="220" onclick="this.classList.toggle('on');calc()">
+    <div class="icon">🏭</div>
+    <div class="body">
+      <div class="t">产业承接升级（园洲石湾接东莞）</div>
+      <div class="d">园洲规上工业344亿、石湾2513家企业，挨着东莞石龙。深莞共建产业园、4宗链主项目总投资80亿预计年产值203亿。从"接企业"到"融产业链"。</div>
+      <div class="src">来源：南方+、惠州政府网、镇街公开数据</div>
+      <div class="num">5年累计 ~220亿</div>
+    </div>
+    <div class="switch"></div>
+  </div>
+
+  <div class="path on" data-v="180" onclick="this.classList.toggle('on');calc()">
+    <div class="icon">⚡</div>
+    <div class="body">
+      <div class="t">新投产项目（欣旺达等）</div>
+      <div class="d">电子信息+23%、电气机械+13.7%，8个百亿级产业集群。5年引进项目1042宗，规上工业企业从1400+目标到2500家。高新企业686→900家。</div>
+      <div class="src">来源：统计公报、博罗新春第一会</div>
+      <div class="num">5年累计 ~180亿</div>
+    </div>
+    <div class="switch"></div>
+  </div>
+
+  <div class="path on" data-v="60" onclick="this.classList.toggle('on');calc()">
+    <div class="icon">🏔️</div>
+    <div class="body">
+      <div class="t">罗浮山文旅升级</div>
+      <div class="d">年游客1028万、旅游收入52亿，但人均消费仅约500元。如果从"路过"变成"过夜"，人均消费和停留时间提升，罗浮未来城写入深圳十五五规划。</div>
+      <div class="src">来源：统计公报、南方+罗浮未来城报道</div>
+      <div class="num">5年累计 ~60亿</div>
+    </div>
+    <div class="switch"></div>
+  </div>
+
+  <div class="path on" data-v="45" onclick="this.classList.toggle('on');calc()">
+    <div class="icon">🌾</div>
+    <div class="body">
+      <div class="t">特色农业品牌化</div>
+      <div class="d">一产107亿+7.8%，柏塘山茶（广东十大名茶）、福田菜心（国家地理标志）、罗浮山国药、景田百岁山。从"卖原料"到"卖品牌"。</div>
+      <div class="src">来源：统计公报、农业农村局公开信息</div>
+      <div class="num">5年累计 ~45亿</div>
+    </div>
+    <div class="switch"></div>
+  </div>
+
+  <div class="path on" data-v="70" onclick="this.classList.toggle('on');calc()">
+    <div class="icon">🚄</div>
+    <div class="body">
+      <div class="t">融深融莞通道</div>
+      <div class="d">赣深高铁博罗站、莞惠城轨北延、罗浮未来城（深圳惠州十五五规划均写入）。常住人口从124万目标到160万，产业和人口双向流入。</div>
+      <div class="src">来源：今日惠州网一把手访谈、南方+</div>
+      <div class="num">5年累计 ~70亿</div>
+    </div>
+    <div class="switch"></div>
+  </div>
+
+  <div class="gap">
+    <div style="font-size:12px;color:#6b7280;margin-bottom:6px">五条路全开，覆盖缺口</div>
+    <div class="big" id="gapNum">—</div>
+    <div style="font-size:11px;color:#5b6b82;margin-top:4px" id="gapDesc"></div>
+  </div>
+
+  <div class="plain">
+    <span class="lab">人话</span>
+    博罗和惠城不一样。惠城在算"服务业怎么给制造业赋能"，博罗在算"在大湾区网络里多占几个位置"。五条路不是补短板——是把已经有的链接（东莞、深圳、罗浮山、农业）做得更厚。数字是粗估，不是官方承诺。
+  </div>
+
+  <div class="next"><a href="future.html">下一步：跑一万次未来 →</a></div>
+</div>
+
+<script>
+const TARGET=595; // 1600-1005
+function calc(){
+  let sum=0;
+  document.querySelectorAll(".path.on").forEach(p=>sum+=parseInt(p.dataset.v));
+  const pct=Math.round(sum/TARGET*100);
+  document.getElementById("gapNum").textContent=pct+"%";
+  const rem=TARGET-sum;
+  document.getElementById("gapDesc").textContent=rem>0?`还剩约${rem}亿缺口，需要第五条路之外的新抓手`:`已覆盖全部${TARGET}亿缺口`;
+  document.getElementById("gapNum").style.color=pct>=100?"#34d399":pct>=80?"#fbbf24":"#f87171";
+}
+calc();
+</script>
+</body></html>

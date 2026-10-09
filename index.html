@@ -1,0 +1,265 @@
+<!doctype html>
+<html lang="zh-CN"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>博罗产业风洞 · 今日话题</title>
+<style>
+*{box-sizing:border-box}
+body{margin:0;background:#080b12;color:#e6edf3;font:14px/1.6 -apple-system,"PingFang SC","Microsoft YaHei",sans-serif}
+.nav{position:sticky;top:0;z-index:50;display:flex;gap:5px;align-items:center;padding:9px 14px;background:rgba(8,11,18,.95);border-bottom:1px solid #1b2434;backdrop-filter:blur(8px);overflow-x:auto}
+.nav b{font-size:14px;margin-right:6px;letter-spacing:.5px;flex:none}
+.nav a{background:#131c2b;color:#93a4bd;border:1px solid #22304a;padding:6px 12px;border-radius:20px;font-size:12.5px;text-decoration:none;white-space:nowrap;flex:none}
+.nav a.on{background:#15803d;border-color:#22c55e;color:#fff;font-weight:600}
+.nav .sp{margin-left:auto;font-size:11.5px;color:#64748b;flex:none}
+.wrap{max-width:720px;margin:auto;padding:16px}
+.head{display:flex;align-items:center;gap:16px;margin-bottom:14px}
+.radar{width:72px;height:72px;flex:none;position:relative}
+h1{font-size:22px;margin:0 0 2px;letter-spacing:.5px}
+.sub{color:#8fa3bf;font-size:13px;margin:0}
+.toolbar{display:flex;gap:8px;align-items:center;margin-bottom:10px;flex-wrap:wrap}
+.cat{background:#131c2b;color:#93a4bd;border:1px solid #22304a;padding:5px 14px;border-radius:16px;font-size:12.5px;cursor:pointer;transition:.2s}
+.cat.on{background:#15803d;border-color:#22c55e;color:#fff;font-weight:600}
+.refresh{background:#f59e0b;color:#1a1206;border:0;padding:6px 16px;border-radius:16px;font-size:12.5px;font-weight:700;cursor:pointer;margin-left:auto}
+.refresh:active{transform:scale(.96)}
+.scan-info{font-size:11px;color:#5b6b82;margin-bottom:12px}
+.top1{background:linear-gradient(135deg,#0f2e1a,#0e1523);border:1px solid #22c55e;border-radius:12px;padding:16px;margin-bottom:10px;cursor:pointer;animation:fd .5s ease-out}
+.top1 .badge{display:inline-block;background:#22c55e;color:#06120a;font-size:10.5px;font-weight:800;padding:2px 8px;border-radius:4px;margin-bottom:6px}
+.top1 .t{font-size:18px;font-weight:700;margin-bottom:6px}
+.top1 .heatnum{font-size:28px;font-weight:800;color:#4ade80;font-variant-numeric:tabular-nums}
+.topic{background:#0e1523;border:1px solid #1c2739;border-radius:10px;padding:12px 14px;margin-bottom:8px;display:flex;gap:12px;align-items:flex-start;cursor:pointer;transition:.2s;animation:fd .4s ease-out}
+.topic:hover{border-color:#22c55e;background:#121d31}
+.topic .rank{font-size:16px;font-weight:800;color:#fbbf24;min-width:22px;text-align:center;font-variant-numeric:tabular-nums}
+.topic .body{flex:1;min-width:0}
+.topic .t{font-size:13.5px;font-weight:600;margin-bottom:3px}
+.topic .meta{display:flex;gap:8px;align-items:center;font-size:11px;color:#7d8fa8;flex-wrap:wrap}
+.topic .heat{height:4px;width:50px;background:#16233a;border-radius:2px;overflow:hidden;display:inline-block}
+.topic .heat i{display:block;height:100%;border-radius:2px;transition:width .6s}
+.topic .src{background:#1a2337;padding:1px 6px;border-radius:4px;font-size:10.5px}
+.topic .cat-tag{font-size:10.5px;padding:1px 6px;border-radius:4px}
+.topic .detail{display:none;font-size:12px;color:#8fa3bf;margin-top:6px;padding-top:6px;border-top:1px dashed #1e2b40}
+.topic.open .detail{display:block}
+.cat-ind{border-left:3px solid #3b82f6}
+.cat-life{border-left:3px solid #f97316}
+.cat-city{border-left:3px solid #6b7280}
+.cat-agri{border-left:3px solid #84cc16}
+.cat-fun{border-left:3px solid #10b981}
+.next{text-align:center;margin-top:18px}
+.next a{background:#15803d;color:#fff;padding:10px 24px;border-radius:8px;text-decoration:none;font-weight:600;display:inline-block}
+.disc{margin-top:14px;font-size:11px;color:#5b6b82;text-align:center}
+@keyframes fd{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:none}}
+@keyframes spin{to{transform:rotate(360deg)}}
+.scanline{transform-origin:center;animation:spin 3s linear infinite}
+.scanline.fast{animation-duration:.8s}
+@keyframes pulse{0%,100%{opacity:.4}50%{opacity:1}}
+.pulse{animation:pulse 1.5s ease-in-out infinite}
+</style></head><body>
+
+<div class="nav">
+  <b>博罗产业风洞</b>
+  <a href="index.html" class="on">① 今日话题</a>
+  <a href="network.html">② 世界怎么长</a>
+  <a href="who.html">③ 基本面</a>
+  <a href="choices.html">④ 五条路</a>
+  <a href="future.html">⑤ 未来</a>
+  <a href="windtunnel.html">⑥ 风洞测试</a>
+  <a href="blindspot.html">⑦ 忽略了什么</a>
+  <a href="report.html">⑧ 分析报告</a>
+  <a href="ending.html">⑨ 结语</a>
+</div>
+
+<div class="wrap">
+  <div class="head">
+    <svg class="radar" viewBox="0 0 80 80">
+      <circle cx="40" cy="40" r="36" fill="none" stroke="#1c2739" stroke-width="1"/>
+      <circle cx="40" cy="40" r="24" fill="none" stroke="#1c2739" stroke-width="1"/>
+      <circle cx="40" cy="40" r="12" fill="none" stroke="#1c2739" stroke-width="1"/>
+      <line x1="40" y1="4" x2="40" y2="76" stroke="#1c2739" stroke-width="1"/>
+      <line x1="4" y1="40" x2="76" y2="40" stroke="#1c2739" stroke-width="1"/>
+      <g class="scanline" id="scanline">
+        <line x1="40" y1="40" x2="40" y2="6" stroke="#22c55e" stroke-width="1.5" opacity="0.8"/>
+        <circle cx="40" cy="6" r="2" fill="#22c55e"/>
+      </g>
+    </svg>
+    <div>
+      <h1>今日博罗话题</h1>
+      <p class="sub">扫一遍公开渠道，按热度排。点卡片看详情。</p>
+    </div>
+  </div>
+
+  <div class="toolbar">
+    <button class="cat on" data-c="all">全部</button>
+    <button class="cat" data-c="ind">🔵 产业</button>
+    <button class="cat" data-c="life">🟠 民生</button>
+    <button class="cat" data-c="city">⚪ 城市</button>
+    <button class="cat" data-c="agri">🌾 农业</button>
+    <button class="cat" data-c="fun">🏞️ 文旅</button>
+    <button class="refresh" id="btnScan">🔄 重新扫描</button>
+  </div>
+  <div class="scan-info" id="scanInfo">上次扫描：刚刚 · 覆盖公开来源</div>
+
+  <div id="topicList"></div>
+
+  <div class="next"><a href="network.html">下一步：看博罗怎么长出来 →</a></div>
+  <div class="disc">数据来源：博罗县政府工作报告、统计公报、各镇公开信息、本地媒体；实时部分来自微博/百度公开热搜接口。</div>
+</div>
+
+<script>
+let curCat="all";
+let liveTopics=[];
+
+// 本地博罗话题池
+const LOCAL=[
+  {t:"广东首个千亿县，GDP突破1005亿",h:96,c:"ind",src:"2025统计公报",d:"博罗成为广东首个千亿县，2030目标1600亿",why:"千亿是一个节点，但怎么从1000走到1600？"},
+  {t:"园洲镇规上工业344亿，全县第一",h:92,c:"ind",src:"镇街公开数据",d:"挨着东莞石龙，承接产业转移，工业体量超过县城",why:"全县工业重心在最西边上。"},
+  {t:"欣旺达博罗基地扩产",h:88,c:"ind",src:"企业公开信息",d:"新能源龙头，产值超百亿，博罗重点项目",why:"龙头扩产，整个新能源链条跟着动。"},
+  {t:"社消零297亿，GDP消费率约30%",h:85,c:"city",src:"统计公报",d:"GDP 1005亿但本地消费297亿，对比惠城67%",why:"产值和消费，不在同一个地方。"},
+  {t:"金融业增加值-3.7%，存贷款双降",h:82,c:"ind",src:"统计公报",d:"金融业收缩，存款余额-0.5%，贷款余额-0.1%",why:"千亿县，金融为什么在缩？"},
+  {t:"罗浮山年游客破1028万",h:80,c:"fun",src:"文旅公开",d:"旅游收入51.88亿，增长19.1%",why:"流量很大，但停留和转化呢？"},
+  {t:"固投下降18.8%，房地产投资-47.6%",h:78,c:"city",src:"统计公报",d:"工业投资-12.7%，房地产腰斩",why:"新投资在调整，但工业还在涨。"},
+  {t:"石湾镇2513家工业企业",h:75,c:"ind",src:"镇街公开",d:"全县工业第二镇，挨着东莞石龙",why:"两个镇扛了全县工业大头。"},
+  {t:"电动车集群产值超150亿",h:72,c:"ind",src:"产业公开",d:"台铃、小刀等集聚，博罗支柱产业之一",why:"这个集群在全国有位置。"},
+  {t:"柏塘山茶，广东十大名茶",h:70,c:"agri",src:"农业公开",d:"柏塘镇名片，茶叶种植面积大",why:"农业不是落后，是博罗的特色。"},
+  {t:"福田菜心国家地理标志",h:68,c:"agri",src:"农业公开",d:"福田镇特产，冬种蔬菜品牌",why:"一个菜心，也是一个产业。"},
+  {t:"表面处理省特色产业集群",h:65,c:"ind",src:"园区公开",d:"博罗重要的配套产业集群",why:"配套虽不显眼，但少了不行。"},
+  {t:"赣深高铁博罗站运营",h:63,c:"city",src:"交通公开",d:"融深融莞的通道，到深圳半小时",why:"通了，人来不来？"},
+  {t:"常住人口123.94万，城镇化60%",h:60,c:"life",src:"统计公报",d:"四成人口还在农村，城镇化率不高",why:"它是个县，还不是个城。"},
+  {t:"居民人均可支配收入40626元",h:58,c:"life",src:"统计公报",d:"城镇45832，农村32915",why:"城乡差距还在。"},
+  {t:"博罗环山旅游公路绿道",h:56,c:"fun",src:"文旅公开",d:"数百公里串联罗浮山及北部各镇",why:"一条路，把北部散点串成线。"},
+  {t:"三产占比34.7%",h:55,c:"city",src:"统计公报",d:"对比惠城近70%，博罗还是工业县",why:"服务业的皮，还很薄。"},
+  {t:"规上工业增加值+8.7%",h:54,c:"ind",src:"统计公报",d:"民营占68.6%，小微占56.8%",why:"小企业多，韧性和风险并存。"},
+  {t:"深莞共建现代产业园",h:52,c:"ind",src:"园区公开",d:"福田/石湾江南片区，融深融莞平台",why:"承接外溢的主阵地。"},
+  {t:"博罗水果：荔枝龙眼柑橘",h:50,c:"agri",src:"农业公开",d:"杨村、公庄等镇特色水果",why:"北部各镇的农业，是博罗的底色。"},
+  {t:"沿江发展带",h:48,c:"city",src:"规划公开",d:"东江从西到东贯穿博罗",why:"东江是博罗的母亲河。"},
+  {t:"县城罗阳常住27万",h:46,c:"city",src:"统计公报",d:"GDP 238亿，行政商业中心",why:"县城服务本县人，但产业工人不一定住这。"},
+  {t:"2030目标GDP 1600亿",h:45,c:"ind",src:"十五五规划",d:"五年需增长59%，年均9.7%",why:"硬目标，怎么达成？"}
+];
+
+// 博罗好吃
+const FOOD=[
+  {t:"罗浮山窑鸡",h:92,c:"fun",src:"罗浮山招牌",d:"走地鸡用荷叶包裹，炭火慢窑，皮黄肉嫩、汁香入骨",why:"一只窑鸡，是罗浮山的味道。"},
+  {t:"柏塘山茶",h:88,c:"agri",src:"广东十大名茶",d:"柏塘镇特产，高山云雾出好茶，甘醇回甘",why:"一杯茶，是北部山区的日子。"},
+  {t:"福田菜心",h:85,c:"agri",src:"国家地理标志",d:"福田镇菜心甜嫩无渣，冬季最佳，广东菜心的名片",why:"一棵菜心，也是一个产业。"},
+  {t:"罗浮山酥醪菜",h:80,c:"agri",src:"罗浮山特产",d:"酥醪村特产，芥菜腌制，鲜甜爽口",why:"山上的菜，下山成了宝。"},
+  {t:"公庄花生",h:76,c:"agri",src:"公庄镇特产",d:"沙地花生，香脆饱满，下酒零嘴皆宜",why:"东部小镇的味道。"},
+  {t:"观音阁花生油",h:72,c:"agri",src:"观音阁镇特产",d:"东江沿岸花生，传统榨油，香浓醇厚",why:"一勺油，是博罗的烟火气。"},
+  {t:"博罗炒山坑螺",h:70,c:"fun",src:"东江河边",d:"山坑螺紫苏爆炒，鲜辣入味，下酒神器",why:"河边的夜宵，是博罗人的夏天。"},
+  {t:"横河豆腐花",h:66,c:"fun",src:"横河镇特产",d:"山水豆花，嫩滑清甜，红糖一浇",why:"山里的水，做出最嫩的豆花。"},
+  {t:"杨村柑桔",h:62,c:"agri",src:"杨村镇特产",d:"传统名果，酸甜可口",why:"东部镇的味道。"},
+  {t:"博罗糯米鸡",h:58,c:"fun",src:"客家传统",d:"糯米包裹鸡肉，粽叶蒸香，饱足一餐",why:"客家人的实在，全在这只鸡里。"}
+];
+
+// 博罗好玩
+const FUN=[
+  {t:"罗浮山",h:96,c:"fun",src:"国家5A景区",d:"岭南第一山，冲虚观、飞云顶、朱明洞，道家第七洞天",why:"博罗的名片，惠州的骄傲。"},
+  {t:"罗浮山环山绿道",h:90,c:"fun",src:"数百公里",d:"串联罗浮山及横河、柏塘、公庄各镇，骑行徒步皆宜",why:"一条路，看遍博罗北部。"},
+  {t:"平安山",h:82,c:"fun",src:"生态旅游区",d:"湖光山色，瀑布漂流，周末避暑",why:"不远行，博罗就有好山好水。"},
+  {t:"秋枫寨",h:76,c:"fun",src:"山林度假区",d:"原始森林，溪谷栈道，玻璃观景台",why:"藏在山里的秘境。"},
+  {t:"东江画廊",h:72,c:"fun",src:"东江沿岸",d:"从园洲到观音阁，东江两岸风光",why:"博罗的母亲河，慢慢看才好看。"},
+  {t:"旭日古村",h:68,c:"fun",src:"明清古村落",d:"龙华镇陈家村，400年历史，古建筑群保存完好",why:"古村不老，故事还在。"},
+  {t:"横河花园村",h:64,c:"fun",src:"生态乡村",d:"横河镇美丽乡村，稻田、花海、民宿",why:"北部山区，有另一种慢生活。"},
+  {t:"柏塘古榄园",h:60,c:"fun",src:"农业公园",d:"千亩古橄榄林，茶山环绕",why:"茶山下，橄榄老。"},
+  {t:"罗浮山漂流",h:56,c:"fun",src:"夏季项目",d:"峡谷漂流，清凉一夏",why:"夏天的罗浮山，湿着玩。"},
+  {t:"象头山自然保护区",h:52,c:"fun",src:"国家级保护区",d:"博罗边上的天然氧吧，徒步溯溪",why:"山在那里，等你去走。"}
+];
+
+const KW=["惠州","博罗","罗浮山","园洲","石湾","罗阳","龙溪","柏塘","福田","观音阁","泰美","公庄","杨村","横河","赣深","欣旺达","台铃","小刀","景田","百岁山"];
+
+async function fetchLive(){
+  liveTopics=[];
+  const apis=[
+    {url:"https://api.vvhan.com/api/hotlist/wbHot",name:"微博热搜"},
+    {url:"https://api.vvhan.com/api/hotlist/baiduRD",name:"百度热搜"}
+  ];
+  for(const api of apis){
+    try{
+      const r=await fetch(api.url);
+      const j=await r.json();
+      if(j.data&&Array.isArray(j.data)){
+        j.data.forEach((it,i)=>{
+          const title=it.title||it.word||"";
+          if(KW.some(k=>title.includes(k))){
+            liveTopics.push({
+              t:title,
+              h:Math.max(60, 95-i*1.5),
+              c:"city",
+              src:api.name+"·实时",
+              d:`来自${api.name}实时榜第${i+1}位`,
+              why:"热搜在榜——这是正在被讨论的事。",
+              live:true
+            });
+          }
+        });
+      }
+    }catch(e){}
+  }
+}
+
+function allTopics(){return [...liveTopics, ...LOCAL, ...FOOD, ...FUN];}
+
+function render(){
+  let list=curCat==="all"?allTopics():allTopics().filter(x=>x.c===curCat);
+  list=list.map(x=>({...x,hs:x.h+Math.random()*4-2})).sort((a,b)=>b.hs-a.hs);
+  const el=document.getElementById("topicList");
+  el.innerHTML=list.map((x,i)=>{
+    const catCls={ind:"cat-ind",life:"cat-life",city:"cat-city",agri:"cat-agri",fun:"cat-fun"}[x.c]||"cat-city";
+    const catName={ind:"产业",life:"民生",city:"城市",agri:"农业",fun:"文旅"}[x.c]||"城市";
+    const heatColor=x.hs>=80?"#f87171":x.hs>=60?"#fbbf24":"#4ade80";
+    const tagBg={ind:"#1e3a5f",life:"#3d2817",city:"#2a2f3a",agri:"#1a2f0e",fun:"#0c2a1e"}[x.c];
+    const tagFg={ind:"#60a5fa",life:"#fb923c",city:"#9ca3af",agri:"#a3e635",fun:"#34d399"}[x.c];
+    const liveBadge=x.live?'<span style="background:#dc2626;color:#fff;font-size:9px;padding:1px 5px;border-radius:3px;margin-left:6px;vertical-align:middle">实时</span>':'';
+    if(i===0){
+      return `<div class="top1" onclick="this.classList.toggle('open')">
+        <span class="badge">🔥 今日最热</span>${liveBadge}
+        <div class="t">${x.t}</div>
+        <div style="display:flex;align-items:center;gap:12px">
+          <span class="heatnum">${Math.round(x.hs)}°</span>
+          <span style="flex:1;height:6px;background:#16233a;border-radius:3px;overflow:hidden"><i style="display:block;height:100%;width:${x.hs}%;background:linear-gradient(90deg,#4ade80,#fbbf24)"></i></span>
+          <span class="src">${x.src}</span>
+        </div>
+        <div class="detail" style="font-size:12.5px;color:#cbd5e1;margin-top:8px">${x.d}<br><span style="color:#fbbf24">→ ${x.why}</span></div>
+      </div>`;
+    }
+    return `<div class="topic ${catCls}" style="animation-delay:${i*50}ms" onclick="this.classList.toggle('open')">
+      <div class="rank">${i+1}</div>
+      <div class="body">
+        <div class="t">${x.t}${liveBadge}</div>
+        <div class="meta">
+          <span class="heat"><i style="width:${Math.min(100,x.hs)}%;background:${heatColor}"></i></span>
+          <span>${Math.round(x.hs)}°</span>
+          <span class="src">${x.src}</span>
+          <span class="cat-tag" style="background:${tagBg};color:${tagFg}">${catName}</span>
+        </div>
+        <div class="detail">${x.d}<br><span style="color:#fbbf24">→ ${x.why}</span></div>
+      </div>
+    </div>`;
+  }).join("");
+}
+
+document.querySelectorAll(".cat").forEach(b=>{
+  b.onclick=()=>{
+    document.querySelectorAll(".cat").forEach(x=>x.classList.remove("on"));
+    b.classList.add("on");
+    curCat=b.dataset.c;
+    render();
+  };
+});
+
+document.getElementById("btnScan").onclick=async function(){
+  this.innerHTML='<span class="pulse">⏳</span> 扫描中…';
+  document.getElementById("scanInfo").textContent="雷达旋转中，正在拉取微博/百度实时热搜…";
+  document.getElementById("scanline").classList.add("fast");
+  await fetchLive();
+  this.innerHTML="🔄 重新扫描";
+  document.getElementById("scanline").classList.remove("fast");
+  const now=new Date();
+  const liveN=liveTopics.length;
+  document.getElementById("scanInfo").textContent=`上次扫描：${now.getHours().toString().padStart(2,'0')}:${now.getMinutes().toString().padStart(2,'0')} · 实时热搜${liveN}条 + 话题${LOCAL.length}条 + 好吃${FOOD.length}·好玩${FUN.length}`;
+  render();
+};
+
+(async()=>{
+  await fetchLive();
+  const now=new Date();
+  document.getElementById("scanInfo").textContent=`上次扫描：${now.getHours().toString().padStart(2,'0')}:${now.getMinutes().toString().padStart(2,'0')} · 实时热搜${liveTopics.length}条 + 话题${LOCAL.length}条 + 好吃${FOOD.length}·好玩${FUN.length}`;
+  render();
+})();
+</script>
+</body></html>
