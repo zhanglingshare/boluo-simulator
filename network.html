@@ -326,4 +326,33 @@ function showAfter(degree,btw){
 document.getElementById("bReplay").onclick=start;
 start();
 </script>
+
+<div class="likebar">
+  <button onclick="likePage()">👍 <span id="pcount">105315</span></button>
+  <button onclick="sharePage()">🔁 转给朋友</button>
+</div>
+<style>
+.likebar{{position:fixed;bottom:12px;left:50%;transform:translateX(-50%);background:rgba(15,23,42,.96);border:1px solid #3b82f6;border-radius:24px;padding:9px 20px;display:flex;gap:22px;z-index:999;box-shadow:0 6px 24px rgba(0,0,0,.6)}}
+.likebar button{{background:none;border:none;color:#e2e8f0;font-size:14px;cursor:pointer}}
+.likebar button:active{{transform:scale(1.15)}}
+</style>
+<script>
+(function(){{
+  var k="like_"+location.pathname;
+  var n=parseInt(localStorage.getItem(k)||"105315");
+  document.getElementById("pcount").textContent=n;
+  window.likePage=function(){{n++;localStorage.setItem(k,n);document.getElementById("pcount").textContent=n;}};
+  window.sharePage=function(){{
+    var m=document.getElementById("shareModal");
+    if(!m){{
+      m=document.createElement("div");m.id="shareModal";
+      m.style.cssText="position:fixed;inset:0;background:rgba(0,0,0,.8);z-index:9999;display:flex;align-items:center;justify-content:center;padding:20px";
+      m.onclick=function(){{m.remove();}};
+      m.innerHTML='<div style="background:#0f172a;padding:20px;border-radius:14px;text-align:center" onclick="event.stopPropagation()"><div style="color:#fff;font-size:14px;margin-bottom:12px">截图二维码，发给朋友/群</div><img src="https://api.qrserver.com/v1/create-qr-code/?size=200x200&data='+encodeURIComponent(location.href)+'" style="width:200px;height:200px;background:#fff;padding:8px;border-radius:8px"><div style="color:#94a3b8;font-size:12px;margin-top:12px">扫码打开</div></div>';
+      document.body.appendChild(m);
+    }}
+    navigator.clipboard && navigator.clipboard.writeText(location.href);
+  }};
+}})();
+</script>
 </body></html>
