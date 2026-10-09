@@ -92,7 +92,7 @@ h1{font-size:21px;margin:0}
 </div>
 
 <script>
-const KW=["惠州","博罗","罗浮山","园洲","石湾","罗阳","龙溪","柏塘","福田","观音阁","泰美","公庄","杨村","横河","长宁","赣深","欣旺达","台铃","景田","百岁山","荔枝","采茶","古村"];
+const KW=["惠州","博罗","罗浮山","园洲","石湾","罗阳","龙溪","柏塘","福田","观音阁","泰美","公庄","杨村","横河","长宁","赣深","欣旺达","台铃","景田","百岁山","荔枝","采茶","古村","东江","南方","惠州发布","博罗发布","融深","象头山","秋枫寨","广东"];
 
 const TOWNS=[
   {n:"长宁",tag:"罗浮山所在地",foods:["罗浮山窑鸡","酥醪菜"],plays:["罗浮山5A景区","冲虚观·飞云顶"],why:"岭南第一山，博罗的名片"},
@@ -177,7 +177,11 @@ async function fetchLive(){
   const found=[];
   const apis=[
     {url:"https://api.vvhan.com/api/hotlist/wbHot",name:"微博"},
-    {url:"https://api.vvhan.com/api/hotlist/baiduRD",name:"百度"}
+    {url:"https://api.vvhan.com/api/hotlist/baiduRD",name:"百度"},
+    {url:"https://api.vvhan.com/api/hotlist/zhihuHot",name:"知乎"},
+    {url:"https://api.vvhan.com/api/hotlist/douyinHot",name:"抖音"},
+    {url:"https://api.vvhan.com/api/hotlist/toutiao",name:"今日头条"},
+    {url:"https://api.vvhan.com/api/hotlist/bili",name:"B站"}
   ];
   for(const api of apis){
     try{

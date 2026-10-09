@@ -161,13 +161,17 @@ const FUN=[
   {t:"象头山自然保护区",h:52,c:"fun",src:"国家级保护区",d:"博罗边上的天然氧吧，徒步溯溪",why:"山在那里，等你去走。"}
 ];
 
-const KW=["惠州","博罗","罗浮山","园洲","石湾","罗阳","龙溪","柏塘","福田","观音阁","泰美","公庄","杨村","横河","赣深","欣旺达","台铃","小刀","景田","百岁山"];
+const KW=["惠州","博罗","罗浮山","园洲","石湾","罗阳","龙溪","柏塘","福田","观音阁","泰美","公庄","杨村","横河","长宁","赣深","欣旺达","台铃","小刀","景田","百岁山","广东","南方","东江","惠州发布","博罗发布","象头山"];
 
 async function fetchLive(){
   liveTopics=[];
   const apis=[
     {url:"https://api.vvhan.com/api/hotlist/wbHot",name:"微博热搜"},
-    {url:"https://api.vvhan.com/api/hotlist/baiduRD",name:"百度热搜"}
+    {url:"https://api.vvhan.com/api/hotlist/baiduRD",name:"百度热搜"},
+    {url:"https://api.vvhan.com/api/hotlist/zhihuHot",name:"知乎热榜"},
+    {url:"https://api.vvhan.com/api/hotlist/douyinHot",name:"抖音热点"},
+    {url:"https://api.vvhan.com/api/hotlist/toutiao",name:"今日头条"},
+    {url:"https://api.vvhan.com/api/hotlist/bili",name:"B站热门"}
   ];
   for(const api of apis){
     try{
