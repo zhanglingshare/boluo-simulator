@@ -1,0 +1,162 @@
+<!doctype html>
+<html lang="zh-CN"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>博罗产业风洞 · 各镇吃喝玩乐</title>
+<style>
+*{box-sizing:border-box}
+body{margin:0;background:#080b12;color:#e6edf3;font:14px/1.65 -apple-system,"PingFang SC","Microsoft YaHei",sans-serif}
+.nav{position:sticky;top:0;z-index:50;display:flex;gap:5px;align-items:center;padding:9px 14px;background:rgba(8,11,18,.95);border-bottom:1px solid #1b2434;overflow-x:auto}
+.nav b{font-size:14px;margin-right:6px;flex:none}
+.nav a{background:#131c2b;color:#93a4bd;border:1px solid #22304a;padding:6px 12px;border-radius:20px;font-size:12.5px;text-decoration:none;white-space:nowrap;flex:none}
+.nav a.on{background:#15803d;border-color:#22c55e;color:#fff;font-weight:600}
+.wrap{max-width:960px;margin:auto;padding:16px}
+.scan{background:radial-gradient(ellipse at center,#0b1a12,#080b12);border:1px solid #1c2739;border-radius:14px;padding:18px;display:flex;align-items:center;gap:16px;margin-bottom:14px}
+.radar{width:64px;height:64px;flex:none}
+.refresh{background:#f59e0b;color:#1a1206;border:0;padding:7px 18px;border-radius:18px;font-size:12.5px;font-weight:700;cursor:pointer}
+.refresh:active{transform:scale(.96)}
+.scan-info{font-size:11px;color:#5b6b82;margin-top:4px}
+h1{font-size:21px;margin:0}
+.sub{color:#8fa3bf;font-size:13px;margin:4px 0 0}
+.livebar{background:#1a1206;border:1px solid #7c4a12;border-radius:10px;padding:10px 14px;margin-bottom:14px;font-size:12.5px;color:#fcd34d}
+.livebar b{color:#fbbf24}
+.grid{display:grid;grid-template-columns:repeat(2,1fr);gap:12px}
+@media(max-width:680px){.grid{grid-template-columns:1fr}}
+.town{background:#0e1523;border:1px solid #1c2739;border-radius:12px;padding:15px;position:relative;overflow:hidden}
+.town.pick{border-color:#22c55e;box-shadow:0 0 0 1px #22c55e inset}
+.town .pick-tag{position:absolute;top:10px;right:10px;background:#22c55e;color:#04120a;font-size:10px;font-weight:800;padding:2px 8px;border-radius:10px}
+.town .head{display:flex;align-items:baseline;gap:8px;margin-bottom:6px}
+.town .n{font-size:18px;font-weight:800}
+.town .tag{font-size:10.5px;color:#4ade80;background:#0f2a16;border:1px solid #1a3a1a;padding:2px 8px;border-radius:10px}
+.town .row{font-size:12.5px;color:#cbd5e1;margin-top:5px;line-height:1.7}
+.town .row .k{display:inline-block;width:34px;color:#6b7d96}
+.town .why{margin-top:9px;padding-top:8px;border-top:1px dashed #1c2739;font-size:12px;color:#8fa3bf;font-style:italic}
+.disc{font-size:11px;color:#5b6b82;margin-top:16px;line-height:1.8}
+.next{text-align:center;margin-top:18px}
+.next a{background:#15803d;color:#fff;padding:11px 24px;border-radius:8px;text-decoration:none;font-weight:600;display:inline-block}
+</style></head><body>
+
+<div class="nav">
+  <b>博罗产业风洞</b>
+  <a href="index.html">① 今日话题</a>
+  <a href="town.html" class="on">🏘️ 各镇吃喝玩乐</a>
+  <a href="network.html">② 世界怎么长</a>
+  <a href="who.html">③ 基本面</a>
+  <a href="choices.html">④ 五条路</a>
+  <a href="future.html">⑤ 未来</a>
+  <a href="windtunnel.html">⑥ 风洞测试</a>
+  <a href="blindspot.html">⑦ 忽略了什么</a>
+  <a href="report.html">⑧ 分析报告</a>
+  <a href="ending.html">⑨ 结语</a>
+</div>
+
+<div class="wrap">
+  <div class="scan">
+    <svg class="radar" viewBox="0 0 64 64">
+      <circle cx="32" cy="32" r="28" fill="none" stroke="#1c2739" stroke-width="1"/>
+      <circle cx="32" cy="32" r="18" fill="none" stroke="#1c2739" stroke-width="1"/>
+      <circle cx="32" cy="32" r="8" fill="none" stroke="#1c2739" stroke-width="1"/>
+      <g class="scanline" id="scanline" style="transform-origin:32px 32px"><line x1="32" y1="32" x2="32" y2="4" stroke="#22c55e" stroke-width="1.5"/></g>
+      <circle cx="32" cy="32" r="2.5" fill="#22c55e"/>
+    </svg>
+    <div style="flex:1">
+      <h1>博罗各镇，一口味道、一处山水</h1>
+      <p class="sub">12 个镇街，每镇都有自己的烟火气。点"换一换"，今天先去哪三个？</p>
+      <div class="scan-info" id="scanInfo">雷达待命…</div>
+    </div>
+    <button class="refresh" id="btnScan">🔄 换一换</button>
+  </div>
+
+  <div class="livebar" id="livebar">正在拉取微博/百度实时热搜里和惠州、博罗、罗浮山相关的讨论…</div>
+
+  <div class="grid" id="grid"></div>
+
+  <div class="disc">
+    内容来自各镇公开信息、本地媒体与官方文旅推介；镇街特色以实地为准。实时部分拉取微博/百度公开热搜，命中"惠州/博罗/罗浮山/园洲/柏塘"等关键词才显示。本页是给本地人和游客的一张小地图，不是产业结论。
+  </div>
+
+  <div class="next"><a href="network.html">下一步：看博罗在大湾区里的位置 →</a></div>
+</div>
+
+<script>
+const KW=["惠州","博罗","罗浮山","园洲","石湾","罗阳","龙溪","柏塘","福田","观音阁","泰美","公庄","杨村","横河","长宁","赣深","欣旺达","台铃","景田","百岁山","荔枝","采茶","古村"];
+
+const TOWNS=[
+  {n:"长宁",tag:"罗浮山所在地",foods:["罗浮山窑鸡","酥醪菜"],plays:["罗浮山5A景区","冲虚观·飞云顶"],why:"岭南第一山，博罗的名片"},
+  {n:"横河",tag:"北部生态慢城",foods:["山水豆腐花"],plays:["花园村","秋枫寨"],why:"稻田花海民宿，山里的慢生活"},
+  {n:"柏塘",tag:"茶乡",foods:["柏塘山茶·广东十大名茶"],plays:["千亩古榄园","茶山徒步"],why:"一杯茶，是北部山区的日子"},
+  {n:"福田",tag:"农业·融深",foods:["福田菜心·国家地理标志"],plays:["深莞共建产业园"],why:"一棵甜嫩菜心，也是一个产业"},
+  {n:"龙华",tag:"古村",foods:["客家农家菜"],plays:["旭日古村·400年明清建筑群"],why:"古村不老，故事还在"},
+  {n:"公庄",tag:"东部农业镇",foods:["公庄沙地花生"],plays:["春季水果采摘"],why:"东部小镇，沙土地里的味道"},
+  {n:"杨村",tag:"水果之乡",foods:["杨村柑桔"],plays:["荔枝龙眼柑橘园"],why:"传统名果，东部镇的味道"},
+  {n:"观音阁",tag:"东江沿岸",foods:["观音阁花生油"],plays:["东江画廊"],why:"一勺浓香花生油，博罗的烟火气"},
+  {n:"罗阳",tag:"县城中心",foods:["客家菜·糯米鸡"],plays:["县城商圈·东江边散步"],why:"27万人的县城，服务本县人"},
+  {n:"园洲",tag:"工业第一镇",foods:["东江河鲜"],plays:["东江沿岸绿道"],why:"规上工业344亿全县第一，挨着东莞"},
+  {n:"石湾",tag:"工业第二镇",foods:["炒山坑螺·河边夜宵"],plays:["东江岸线"],why:"2513家企业，夜里是河鲜味"},
+  {n:"泰美",tag:"生态门户",foods:["农家菜"],plays:["象头山徒步","赣深高铁博罗站"],why:"到深圳半小时，山脚的天然氧吧"}
+];
+
+let picks=[];
+function pickThree(){
+  const arr=[...TOWNS];
+  for(let i=arr.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[arr[i],arr[j]]=[arr[j],arr[i]];}
+  picks=arr.slice(0,3).map(t=>t.n);
+}
+
+function render(){
+  const g=document.getElementById("grid");
+  g.innerHTML=TOWNS.map(t=>{
+    const isPick=picks.includes(t.n);
+    return `<div class="town${isPick?' pick':''}">
+      ${isPick?'<span class="pick-tag">✨ 今日推荐</span>':''}
+      <div class="head"><span class="n">${t.n}</span><span class="tag">${t.tag}</span></div>
+      <div class="row"><span class="k">🍜 吃</span>${t.foods.join("、")}</div>
+      <div class="row"><span class="k">🏔️ 玩</span>${t.plays.join("、")}</div>
+      <div class="why">→ ${t.why}</div>
+    </div>`;
+  }).join("");
+}
+
+async function fetchLive(){
+  const found=[];
+  const apis=[
+    {url:"https://api.vvhan.com/api/hotlist/wbHot",name:"微博"},
+    {url:"https://api.vvhan.com/api/hotlist/baiduRD",name:"百度"}
+  ];
+  for(const api of apis){
+    try{
+      const r=await fetch(api.url);const j=await r.json();
+      if(j.data&&Array.isArray(j.data)){
+        j.data.forEach((it,i)=>{
+          const title=it.title||it.word||"";
+          if(KW.some(k=>title.includes(k))&&found.length<4){
+            found.push(`<b>${api.name}</b>热搜·${title}`);
+          }
+        });
+      }
+    }catch(e){}
+  }
+  return found;
+}
+
+async function refresh(){
+  document.getElementById("scanline").style.animation="spin .8s linear infinite";
+  document.getElementById("btnScan").textContent="⏳ 扫描中…";
+  document.getElementById("scanInfo").textContent="雷达旋转中，正在拉取微博/百度实时热搜…";
+  const live=await fetchLive();
+  pickThree();render();
+  document.getElementById("scanline").style.animation="";
+  document.getElementById("btnScan").textContent="🔄 换一换";
+  const now=new Date();
+  const hh=now.getHours().toString().padStart(2,'0'),mm=now.getMinutes().toString().padStart(2,'0');
+  document.getElementById("scanInfo").textContent=`上次扫描：${hh}:${mm} · 命中博罗相关实时${live.length}条 · 共${TOWNS.length}个镇街`;
+  const bar=document.getElementById("livebar");
+  if(live.length){
+    bar.innerHTML="📡 正在热搜里："+live.join("　｜　");
+  }else{
+    bar.innerHTML="📡 实时榜里暂时没有命中惠州/博罗的词条——但博罗的好吃好玩，从来不用上热搜才值得去。";
+  }
+}
+
+refresh();
+document.getElementById("btnScan").onclick=refresh;
+</script>
+</body></html>
