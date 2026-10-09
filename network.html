@@ -19,8 +19,15 @@ svg{display:block;width:100%;height:auto}
 .acttitle{position:absolute;top:12px;left:50%;transform:translateX(-50%);font-size:13px;font-weight:700;letter-spacing:2px;color:#cbd5e1;z-index:5}
 .legend{position:absolute;bottom:9px;left:12px;font-size:10.5px;color:#6b7d96;display:flex;gap:12px;flex-wrap:wrap;z-index:5}
 .dot{display:inline-block;width:8px;height:8px;border-radius:50%;margin-right:4px;vertical-align:middle}
-.gnode{opacity:0}
+.gnode{opacity:0;animation:flyIn .55s cubic-bezier(.2,.8,.3,1) forwards}
 .gnode circle{filter:drop-shadow(0 0 6px currentColor)}
+@keyframes flyIn{
+  0%{opacity:0;transform:translateY(-42px)}
+  60%{opacity:1;transform:translateY(3px)}
+  100%{opacity:1;transform:translateY(0)}
+}
+.edge{animation:drawEdge .6s ease-out forwards}
+@keyframes drawEdge{to{stroke-dashoffset:0}}
 .card{background:#0e1523;border:1px solid #1c2739;border-radius:10px;padding:14px}
 .k3{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin-top:14px}
 @media(max-width:700px){.k3{grid-template-columns:1fr}}
@@ -208,43 +215,15 @@ let timers=[];
 function clearTimers(){timers.forEach(t=>clearTimeout(t));timers=[]}
 function later(fn,ms){const t=setTimeout(fn,ms);timers.push(t);return t}
 
-function animateNode(g,n){
+function nodeMarkup(n){
   const r=10+n.w*3;
-  g.setAttribute("opacity","0");
-  g.innerHTML=`
+  return `
     <circle cx="${n.x}" cy="${n.y}" r="${r}" fill="${COLORS[n.type]}" fill-opacity="0.2" stroke="${COLORS[n.type]}" stroke-width="1.5"/>
     <text x="${n.x}" y="${n.y+4}" text-anchor="middle" fill="#e6edf3" font-size="${n.w>=3?11:9}" font-weight="${n.w>=3?700:400}">${n.name}</text>
     <text x="${n.x}" y="${n.y+r+10}" text-anchor="middle" fill="#7d8fa5" font-size="7.5">${n.label}</text>
   `;
-  const startY=n.y-50;
-  const start=performance.now();
-  const dur=500;
-  function frame(now){
-    let t=Math.min(1,(now-start)/dur);
-    const ease=t<.7?(t/.7)*1.12:1.12-((t-.7)/.3)*.12;
-    const y=startY+(n.y-startY)*Math.min(1,t/.7);
-    g.setAttribute("opacity",Math.min(1,t*1.5));
-    g.setAttribute("transform",`translate(0,${y-n.y}) scale(${ease})`);
-    g.style.transformOrigin=`${n.x}px ${n.y}px`;
-    if(t<1)requestAnimationFrame(frame);
-    else g.setAttribute("transform","");
-  }
-  requestAnimationFrame(frame);
 }
 
-function animateEdge(line,n1,n2,isCross){
-  const len=Math.hypot(n2.x-n1.x,n2.y-n1.y);
-  line.setAttribute("stroke-dasharray",len);
-  line.setAttribute("stroke-dashoffset",len);
-  const start=performance.now();
-  const dur=600;
-  function frame(now){
-    let t=Math.min(1,(now-start)/dur);
-    line.setAttribute("stroke-dashoffset",len*(1-t));
-    if(t<1)requestAnimationFrame(frame);
-  }
-  requestAnimationFrame(frame);
-}
 
 function start(){
   clearTimers();
@@ -269,16 +248,16 @@ function start(){
   const nodeGroups={};
   phases.forEach(ph=>{
     later(()=>{document.getElementById("acttitle").textContent=ph.title},clock);
-    ph.filter(NODES).forEach((n,i)=>{
+    NODES.filter(ph.filter).forEach((n,i)=>{
       later(()=>{
         const g=document.createElementNS(SVGNS,"g");
         g.setAttribute("class","gnode");
+        g.innerHTML=nodeMarkup(n);
         ng.appendChild(g);
         nodeGroups[n.id]=g;
-        animateNode(g,n);
       },clock+i*130);
     });
-    clock+=ph.filter(NODES).length*130+700;
+    clock+=NODES.filter(ph.filter).length*130+700;
   });
 
   later(()=>{
@@ -292,12 +271,16 @@ function start(){
       let color;
       if(isCross)color="#a78bfa";
       else color=BLOOD_COLORS[blood];
+      const elen=Math.hypot(n2.x-n1.x,n2.y-n1.y);
       line.setAttribute("stroke",color);
       line.setAttribute("stroke-width",w);
       line.setAttribute("stroke-opacity",isCross?0.85:0.4);
       line.setAttribute("stroke-linecap","round");
+      line.setAttribute("class","edge");
+      line.setAttribute("stroke-dasharray",elen);
+      line.setAttribute("stroke-dashoffset",elen);
+      line.style.animationDelay=(i*0.055)+"s";
       eg.appendChild(line);
-      later(()=>animateEdge(line,n1,n2,isCross),i*55);
     });
     later(()=>{
       document.getElementById("acttitle").textContent="";
