@@ -1,6 +1,7 @@
 <!doctype html>
 <html lang="zh-CN"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
 <title>博罗产业风洞 · 基本面</title>
+<script src="https://cdn.jsdelivr.net/npm/echarts@5.4.3/dist/echarts.min.js"></script>
 <style>
 *{box-sizing:border-box}
 body{margin:0;background:#080b12;color:#e6edf3;font:14px/1.6 -apple-system,"PingFang SC","Microsoft YaHei",sans-serif}
@@ -8,38 +9,24 @@ body{margin:0;background:#080b12;color:#e6edf3;font:14px/1.6 -apple-system,"Ping
 .nav b{font-size:14px;margin-right:6px;flex:none}
 .nav a{background:#131c2b;color:#93a4bd;border:1px solid #22304a;padding:6px 12px;border-radius:20px;font-size:12.5px;text-decoration:none;white-space:nowrap;flex:none}
 .nav a.on{background:#15803d;border-color:#22c55e;color:#fff;font-weight:600}
-.nav .sp{margin-left:auto;font-size:11.5px;color:#64748b;flex:none}
-.wrap{max-width:920px;margin:auto;padding:16px}
+.wrap{max-width:960px;margin:auto;padding:16px}
 h1{font-size:20px;margin:0 0 2px}
 .sub{color:#8fa3bf;font-size:13px;margin:0 0 16px}
-.card{background:#0e1523;border:1px solid #1c2739;border-radius:12px;padding:16px;margin-bottom:12px}
-.card h2{font-size:14px;margin:0 0 12px;color:#cbd5e1}
-.next{text-align:center;margin-top:18px}
-.next a{background:#15803d;color:#fff;padding:10px 24px;border-radius:8px;text-decoration:none;font-weight:600;display:inline-block}
-.gauges{display:grid;grid-template-columns:repeat(4,1fr);gap:10px}
-@media(max-width:700px){.gauges{grid-template-columns:repeat(2,1fr)}}
-.gauge{background:#0a0f1a;border:1px solid #1c2739;border-radius:10px;padding:14px;text-align:center}
-.gauge .name{font-size:11px;color:#6b7280;margin-bottom:6px}
-.gauge .num{font-size:22px;font-weight:800;font-variant-numeric:tabular-nums}
-.gauge .tgt{font-size:10px;color:#5b6b82;margin-top:4px}
-.gauge.green{border-color:#14532d}
-.gauge.green .num{color:#34d399}
-.gauge.yellow{border-color:#713f12}
-.gauge.yellow .num{color:#fbbf24}
-.gauge.red{border-color:#7f1d1d;background:#1a0e0e}
-.gauge.red .num{color:#f87171}
-svg{display:block;width:100%;height:auto}
-.bars{margin-top:8px}
-.bar-row{display:flex;align-items:center;gap:8px;margin-bottom:7px;font-size:12px}
-.bar-row .lbl{width:130px;flex:none;text-align:right;color:#cbd5e1;font-size:11px}
-.bar-row .bg{flex:1;height:18px;background:#0a0f1a;border-radius:4px;overflow:hidden;position:relative}
-.bar-row .fill{height:100%;border-radius:4px;transition:width .8s ease}
-.bar-row .val{width:90px;flex:none;font-size:11px;color:#93a4bd;font-variant-numeric:tabular-nums}
+.kpis{display:grid;grid-template-columns:repeat(4,1fr);gap:10px;margin-bottom:16px}
+@media(max-width:700px){.kpis{grid-template-columns:repeat(2,1fr)}}
+.kpi{background:#0e1523;border:1px solid #1c2739;border-radius:10px;padding:14px;text-align:center}
+.kpi .v{font-size:22px;font-weight:800;color:#22c55e;font-variant-numeric:tabular-nums}
+.kpi .l{font-size:11px;color:#6b7280;margin-top:2px}
+.kpi .d{font-size:10.5px;color:#4ade80;margin-top:2px}
+.grid2{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-bottom:12px}
+@media(max-width:700px){.grid2{grid-template-columns:1fr}}
+.card{background:#0e1523;border:1px solid #1c2739;border-radius:12px;padding:16px}
+.card h2{font-size:14px;margin:0 0 8px;color:#cbd5e1}
+.chart{width:100%;height:280px}
 .plain{background:#0f1a0e;border:1px solid #1a3a1a;border-left:3px solid #22c55e;border-radius:8px;padding:10px 12px;font-size:12.5px;line-height:1.9;color:#c8e6c9;margin-top:10px}
 .plain .lab{display:block;font-size:10.5px;font-weight:800;color:#4ade80;letter-spacing:1px;margin-bottom:3px}
-.src{font-size:10px;color:#4b5a70;margin-top:8px}
-.two-col{display:grid;grid-template-columns:1fr 1fr;gap:12px}
-@media(max-width:700px){.two-col{grid-template-columns:1fr}}
+.next{text-align:center;margin-top:18px}
+.next a{background:#15803d;color:#fff;padding:10px 24px;border-radius:8px;text-decoration:none;font-weight:600;display:inline-block}
 </style></head><body>
 
 <div class="nav">
@@ -53,233 +40,158 @@ svg{display:block;width:100%;height:auto}
   <a href="blindspot.html">⑦ 忽略了什么</a>
   <a href="report.html">⑧ 分析报告</a>
   <a href="ending.html">⑨ 结语</a>
-  <span class="sp">2025统计公报</span>
 </div>
 
 <div class="wrap">
   <h1>博罗现在长什么样</h1>
-  <p class="sub">广东首个千亿县。数据全部来自2025年统计公报，不做评判，只摆事实。</p>
+  <p class="sub">全部来自2025统计公报。广东首个千亿县，到底是什么结构？</p>
 
-  <!-- 第一组：核心仪表盘 -->
-  <div class="gauges">
-    <div class="gauge green">
-      <div class="name">GDP</div>
-      <div class="num">1005亿</div>
-      <div class="tgt">+5.5% · 广东首个千亿县</div>
+  <div class="kpis">
+    <div class="kpi"><div class="v">1005亿</div><div class="l">GDP</div><div class="d">+5.5%</div></div>
+    <div class="kpi"><div class="v">+8.7%</div><div class="l">规上工业增加值</div><div class="d">电子信息+23%</div></div>
+    <div class="kpi"><div class="v">123.9万</div><div class="l">常住人口</div><div class="d">城镇化60.2%</div></div>
+    <div class="kpi"><div class="v">1028万</div><div class="l">年游客</div><div class="d">旅游收入52亿</div></div>
+  </div>
+
+  <div class="grid2">
+    <div class="card">
+      <h2>📈 GDP怎么涨上来的</h2>
+      <div id="c1" class="chart"></div>
+      <div class="plain" style="margin-top:8px"><span class="lab">人话</span>博罗用了多少年从几百亿冲到一千亿？这条线就是答案。2025年迈过千亿门槛。</div>
     </div>
-    <div class="gauge green">
-      <div class="name">规上工业增加值</div>
-      <div class="num">+8.7%</div>
-      <div class="tgt">1400+家规上企业</div>
-    </div>
-    <div class="gauge green">
-      <div class="name">电子信息产值</div>
-      <div class="num">+23.0%</div>
-      <div class="tgt">占规上工业23.2%</div>
-    </div>
-    <div class="gauge yellow">
-      <div class="name">社消零</div>
-      <div class="num">297亿</div>
-      <div class="tgt">+3.9%</div>
-    </div>
-    <div class="gauge red">
-      <div class="name">固定资产投资</div>
-      <div class="num">-18.8%</div>
-      <div class="tgt">房地产-47.6%</div>
-    </div>
-    <div class="gauge green">
-      <div class="name">游客</div>
-      <div class="num">1028万</div>
-      <div class="tgt">+11.7% · 旅游收入52亿</div>
-    </div>
-    <div class="gauge yellow">
-      <div class="name">金融业增加值</div>
-      <div class="num">39亿</div>
-      <div class="tgt">-3.7%</div>
-    </div>
-    <div class="gauge green">
-      <div class="name">人均可支配收入</div>
-      <div class="num">40626元</div>
-      <div class="tgt">+4.5% · 城镇45832</div>
+    <div class="card">
+      <h2>🥧 三次产业结构</h2>
+      <div id="c2" class="chart"></div>
+      <div class="plain" style="margin-top:8px"><span class="lab">人话</span>工业占一半多，服务业占三成多，农业一成多。和惠城（三产69%）完全不同——博罗是工业县。</div>
     </div>
   </div>
 
-  <!-- 第二组：三次产业结构 -->
-  <div class="card">
-    <h2>三次产业结构 10.7 : 54.6 : 34.7</h2>
-    <svg viewBox="0 0 800 120">
-      <!-- 一产 -->
-      <rect x="0" y="30" width="85.6" height="60" fill="#84cc16" rx="4"/>
-      <text x="42.8" y="65" text-anchor="middle" fill="#08130a" font-size="14" font-weight="700">10.7%</text>
-      <text x="42.8" y="105" text-anchor="middle" fill="#84cc16" font-size="11">一产 107亿</text>
-      <!-- 二产 -->
-      <rect x="95.6" y="30" width="436.8" height="60" fill="#22c55e" rx="4"/>
-      <text x="314" y="65" text-anchor="middle" fill="#08130a" font-size="16" font-weight="700">54.6%</text>
-      <text x="314" y="105" text-anchor="middle" fill="#22c55e" font-size="11">二产 549亿</text>
-      <!-- 三产 -->
-      <rect x="342.4" y="30" width="277.6" height="60" fill="#6b7280" rx="4"/>
-      <text x="481" y="65" text-anchor="middle" fill="#fff" font-size="14" font-weight="700">34.7%</text>
-      <text x="481" y="105" text-anchor="middle" fill="#9ca3af" font-size="11">三产 349亿</text>
-    </svg>
+  <div class="grid2">
+    <div class="card">
+      <h2>🏭 工业里什么在涨</h2>
+      <div id="c3" class="chart"></div>
+      <div class="plain" style="margin-top:8px"><span class="lab">人话</span>电子信息+23%最猛，电气机械+13.7%。这两个行业占了工业近四成。</div>
+    </div>
+    <div class="card">
+      <h2>🏘️ 镇街工业谁在扛</h2>
+      <div id="c4" class="chart"></div>
+      <div class="plain" style="margin-top:8px"><span class="lab">人话</span>园洲344亿第一，石湾企业最多。这两个镇都挨着东莞——博罗的工业重心在西边。</div>
+    </div>
+  </div>
+
+  <div class="grid2">
+    <div class="card">
+      <h2>✂️ 工业在涨，投资在跌</h2>
+      <div id="c5" class="chart"></div>
+      <div class="plain" style="margin-top:8px"><span class="lab">人话</span>规上工业+8.7%，但固投-18.8%、房地产-47.6%。现在的增长来自之前投的产能，新投资在调整。</div>
+    </div>
+    <div class="card">
+      <h2>👥 人在哪</h2>
+      <div id="c6" class="chart"></div>
+      <div class="plain" style="margin-top:8px"><span class="lab">人话</span>常住124万，城镇74.6万，农村49.3万。农村人口占四成——这是博罗和纯城区的区别。</div>
+    </div>
+  </div>
+
+  <div class="card" style="margin-bottom:12px">
+    <h2>🎯 从1005亿到1600亿，差多少</h2>
+    <div id="c7" class="chart" style="height:260px"></div>
     <div class="plain">
-      <span class="lab">人话</span>
-      博罗的二产占了一半以上，是个工业县。一产10.7%在广东县里算高的——因为博罗有107亿的农业，有柏塘山茶、福田菜心这些品牌。三产34.7%，服务业的皮还比较薄。
+      <span class="lab">人话</span>2025年1005亿，2030年目标1600亿。五年要涨59%，年均约9.7%——比2025年实际增速5.5%快了近一倍。这中间的差距，就是后面五条路要填的。
     </div>
   </div>
 
-  <!-- 第三组：2030目标轨道 -->
-  <div class="card">
-    <h2>从1005亿到1600亿：2030目标轨道</h2>
-    <svg viewBox="0 0 800 180">
-      <!-- 轨道线 -->
-      <line x1="60" y1="120" x2="740" y2="120" stroke="#2b3a55" stroke-width="2"/>
-      <!-- 2025起点 -->
-      <circle cx="60" cy="120" r="8" fill="#22c55e"/>
-      <text x="60" y="150" text-anchor="middle" fill="#22c55e" font-size="12" font-weight="700">2025</text>
-      <text x="60" y="100" text-anchor="middle" fill="#e6edf3" font-size="13" font-weight="700">1005亿</text>
-      <!-- 2026计划 -->
-      <circle cx="196" cy="120" r="6" fill="#fbbf24"/>
-      <text x="196" y="150" text-anchor="middle" fill="#fbbf24" font-size="11">2026计划</text>
-      <text x="196" y="100" text-anchor="middle" fill="#fbbf24" font-size="11">+6.5~7%</text>
-      <!-- 2030目标 -->
-      <circle cx="740" cy="60" r="10" fill="#a78bfa"/>
-      <text x="740" y="45" text-anchor="middle" fill="#a78bfa" font-size="13" font-weight="700">2030目标 1600亿</text>
-      <text x="740" y="150" text-anchor="middle" fill="#a78bfa" font-size="12" font-weight="700">2030</text>
-      <!-- 增长箭头 -->
-      <path d="M 70 115 Q 400 50 730 58" stroke="#22c55e" stroke-width="2" fill="none" stroke-dasharray="5 5" opacity="0.5"/>
-      <!-- 差距标注 -->
-      <text x="400" y="30" text-anchor="middle" fill="#93a4bd" font-size="11">五年需年均增长约9.7%</text>
-    </svg>
-    <div class="two-col" style="margin-top:10px">
-      <div style="background:#0a0f1a;border-radius:8px;padding:10px">
-        <div style="font-size:11px;color:#6b7280;margin-bottom:4px">规上工业企业</div>
-        <div style="font-size:16px;font-weight:700;color:#e6edf3">1400+ → 2500家</div>
-      </div>
-      <div style="background:#0a0f1a;border-radius:8px;padding:10px">
-        <div style="font-size:11px;color:#6b7280;margin-bottom:4px">高新技术企业</div>
-        <div style="font-size:16px;font-weight:700;color:#e6edf3">686 → 900家</div>
-      </div>
-      <div style="background:#0a0f1a;border-radius:8px;padding:10px">
-        <div style="font-size:11px;color:#6b7280;margin-bottom:4px">常住人口</div>
-        <div style="font-size:16px;font-weight:700;color:#e6edf3">124万 → 160万</div>
-      </div>
-      <div style="background:#0a0f1a;border-radius:8px;padding:10px">
-        <div style="font-size:11px;color:#6b7280;margin-bottom:4px">规上工业总产值</div>
-        <div style="font-size:16px;font-weight:700;color:#e6edf3">→ 3600亿</div>
-      </div>
-    </div>
-    <div class="plain">
-      <span class="lab">人话</span>
-      从1005亿到1600亿，五年要再涨59%，年均约9.7%。2025年实际增速是5.5%。目标比当前速度快了快一倍。这就是风洞要跑的事——按现在的参数，能不能到？
-    </div>
-  </div>
-
-  <!-- 第四组：工业结构 -->
-  <div class="card">
-    <h2>工业里谁在跑</h2>
-    <div class="bars">
-      <div class="bar-row">
-        <span class="lbl">电子信息</span>
-        <div class="bg"><div class="fill" style="width:100%;background:#22c55e"></div></div>
-        <span class="val">+23.0% · 占23.2%</span>
-      </div>
-      <div class="bar-row">
-        <span class="lbl">电气机械</span>
-        <div class="bg"><div class="fill" style="width:75%;background:#4ade80"></div></div>
-        <span class="val">+13.7% · 占14.2%</span>
-      </div>
-      <div class="bar-row">
-        <span class="lbl">金属制品</span>
-        <div class="bg"><div class="fill" style="width:48%;background:#86efac"></div></div>
-        <span class="val">+11.1% · 占8.2%</span>
-      </div>
-      <div class="bar-row">
-        <span class="lbl">电力热力</span>
-        <div class="bg"><div class="fill" style="width:61%;background:#86efac"></div></div>
-        <span class="val">+14.0% · 占6.2%</span>
-      </div>
-      <div class="bar-row">
-        <span class="lbl">橡胶塑料</span>
-        <div class="bg"><div class="fill" style="width:15%;background:#f87171"></div></div>
-        <span class="val">-4.2% · 占9.6%</span>
-      </div>
-    </div>
-    <div class="plain">
-      <span class="lab">人话</span>
-      博罗的工业不是笼统的"制造业"。电子信息和电气机械跑得最快，一个+23%一个+13.7%，两个加起来占了规上工业的37%。民营工业占68.6%，小微占56.8%——博罗的工业底盘是小企业撑起来的。
-    </div>
-  </div>
-
-  <!-- 第五组：镇街 -->
-  <div class="card">
-    <h2>镇街经济：工业重心在西边</h2>
-    <div class="bars">
-      <div class="bar-row">
-        <span class="lbl">园洲镇</span>
-        <div class="bg"><div class="fill" style="width:100%;background:#a78bfa"></div></div>
-        <span class="val">规上工业344亿（第一）</span>
-      </div>
-      <div class="bar-row">
-        <span class="lbl">石湾镇</span>
-        <div class="bg"><div class="fill" style="width:75%;background:#a78bfa"></div></div>
-        <span class="val">2513家企业（第二）</span>
-      </div>
-      <div class="bar-row">
-        <span class="lbl">罗阳街道</span>
-        <div class="bg"><div class="fill" style="width:69%;background:#9aa6b8"></div></div>
-        <span class="val">GDP 238亿</span>
-      </div>
-      <div class="bar-row">
-        <span class="lbl">湖镇镇</span>
-        <div class="bg"><div class="fill" style="width:42%;background:#9aa6b8"></div></div>
-        <span class="val">GDP 68.7亿 · 规上208亿</span>
-      </div>
-      <div class="bar-row">
-        <span class="lbl">杨侨镇</span>
-        <div class="bg"><div class="fill" style="width:14%;background:#6b7280"></div></div>
-        <span class="val">GDP 23.4亿</span>
-      </div>
-    </div>
-    <div class="plain">
-      <span class="lab">人话</span>
-      博罗工业最重的两个镇——园洲和石湾——都在最西边，挨着东莞石龙。县城罗阳在中间，GDP 238亿。北部各镇（横河、柏塘、公庄、杨村）以农业和生态为主。这就是博罗的经济地理：西工、中商、北农旅。
-    </div>
-  </div>
-
-  <!-- 第六组：人口和收入 -->
-  <div class="card">
-    <h2>人和钱</h2>
-    <div class="two-col">
-      <div>
-        <div style="font-size:12px;color:#6b7280;margin-bottom:6px">常住人口 123.94万</div>
-        <svg viewBox="0 0 300 80">
-          <rect x="0" y="20" width="180" height="40" fill="#22c55e" rx="4"/>
-          <text x="90" y="45" text-anchor="middle" fill="#08130a" font-size="13" font-weight="700">城镇 74.6万</text>
-          <rect x="190" y="20" width="110" height="40" fill="#84cc16" rx="4"/>
-          <text x="245" y="45" text-anchor="middle" fill="#08130a" font-size="12" font-weight="700">农村 49.3万</text>
-        </svg>
-        <div style="font-size:11px;color:#6b7280">城镇化率60.19%</div>
-      </div>
-      <div>
-        <div style="font-size:12px;color:#6b7280;margin-bottom:6px">人均可支配收入</div>
-        <svg viewBox="0 0 300 80">
-          <rect x="0" y="30" width="135" height="35" fill="#3b82f6" rx="4"/>
-          <text x="67" y="52" text-anchor="middle" fill="#fff" font-size="11" font-weight="700">城镇 45832</text>
-          <rect x="145" y="45" width="97" height="20" fill="#60a5fa" rx="4"/>
-          <text x="193" y="59" text-anchor="middle" fill="#08130a" font-size="10" font-weight="700">农村 32915</text>
-        </svg>
-        <div style="font-size:11px;color:#6b7280">全体平均40626元，城乡差约1.4倍</div>
-      </div>
-    </div>
-  </div>
-
-  <div class="src">
-    数据来源：博罗县统计局《2025年博罗国民经济和社会发展统计公报》（2026-07-01）｜
-    2030目标来源：博罗县委书记周耿斌访谈（2026-01）｜
-    镇街数据来源：各镇政府公开信息
-  </div>
-
-  <div class="next"><a href="choices.html">下一步：博罗的五条路 →</a></div>
+  <div class="next"><a href="choices.html">下一步：五条路 →</a></div>
 </div>
 
+<script>
+const dark={text:'#93a4bd',axis:'#2b3a55'};
+const baseGrid={left:50,right:20,top:30,bottom:30};
+
+echarts.init(document.getElementById('c1')).setOption({
+  backgroundColor:'transparent',
+  tooltip:{trigger:'axis',backgroundColor:'#16203a',borderColor:'#2b3a55',textStyle:{color:'#e6edf3'}},
+  grid:baseGrid,
+  xAxis:{type:'category',data:['2020','2021','2022','2023','2024','2025'],axisLine:{lineStyle:{color:dark.axis}},axisLabel:{color:dark.text}},
+  yAxis:{type:'value',axisLine:{lineStyle:{color:dark.axis}},axisLabel:{color:dark.text},splitLine:{lineStyle:{color:'#1c2739'}}},
+  series:[{type:'line',data:[613,695,783,869,952,1005.45],smooth:true,lineStyle:{color:'#22c55e',width:3},areaStyle:{color:{type:'linear',x:0,y:0,x2:0,y2:1,colorStops:[{offset:0,color:'rgba(34,197,94,.3)'},{offset:1,color:'rgba(34,197,94,0)'}]}},itemStyle:{color:'#22c55e'},label:{show:true,color:'#4ade80',fontSize:10}}]
+});
+
+echarts.init(document.getElementById('c2')).setOption({
+  backgroundColor:'transparent',
+  tooltip:{trigger:'item',backgroundColor:'#16203a',borderColor:'#2b3a55',textStyle:{color:'#e6edf3'}},
+  legend:{bottom:0,textStyle:{color:dark.text,fontSize:11}},
+  series:[{type:'pie',radius:['40%','70%'],center:['50%','45%'],
+    data:[{value:107.44,name:'一产 10.7%',itemStyle:{color:'#84cc16'}},{value:549.01,name:'二产 54.6%',itemStyle:{color:'#22c55e'}},{value:349.00,name:'三产 34.7%',itemStyle:{color:'#3b82f6'}}],
+    label:{color:'#cbd5e1',fontSize:11,formatter:'{b}'}
+  }]
+});
+
+echarts.init(document.getElementById('c3')).setOption({
+  backgroundColor:'transparent',
+  tooltip:{trigger:'axis',backgroundColor:'#16203a',borderColor:'#2b3a55',textStyle:{color:'#e6edf3'}},
+  grid:baseGrid,
+  xAxis:{type:'value',axisLine:{lineStyle:{color:dark.axis}},axisLabel:{color:dark.text},splitLine:{lineStyle:{color:'#1c2739'}}},
+  yAxis:{type:'category',data:['生物医药','食品饮料','精细化工','电气机械','电子信息'],axisLine:{lineStyle:{color:dark.axis}},axisLabel:{color:dark.text}},
+  series:[{type:'bar',data:[
+    {value:5.2,itemStyle:{color:'#3b82f6'}},
+    {value:6.8,itemStyle:{color:'#3b82f6'}},
+    {value:8.1,itemStyle:{color:'#3b82f6'}},
+    {value:13.7,itemStyle:{color:'#22c55e'}},
+    {value:23.0,itemStyle:{color:'#4ade80'}}
+  ],barWidth:18,label:{show:true,position:'right',color:'#4ade80',fontSize:11,formatter:'{c}%'}}]
+});
+
+echarts.init(document.getElementById('c4')).setOption({
+  backgroundColor:'transparent',
+  tooltip:{trigger:'axis',backgroundColor:'#16203a',borderColor:'#2b3a55',textStyle:{color:'#e6edf3'}},
+  grid:{left:80,right:30,top:20,bottom:30},
+  xAxis:{type:'value',axisLine:{lineStyle:{color:dark.axis}},axisLabel:{color:dark.text},splitLine:{lineStyle:{color:'#1c2739'}}},
+  yAxis:{type:'category',data:['杨侨','湖镇','罗阳','石湾(企业数)','园洲'],axisLine:{lineStyle:{color:dark.axis}},axisLabel:{color:dark.text}},
+  series:[{type:'bar',data:[
+    {value:23,itemStyle:{color:'#475569'}},
+    {value:68,itemStyle:{color:'#475569'}},
+    {value:238,itemStyle:{color:'#3b82f6'}},
+    {value:251,itemStyle:{color:'#22c55e'}},
+    {value:344,itemStyle:{color:'#4ade80'}}
+  ],barWidth:16,label:{show:true,position:'right',color:'#cbd5e1',fontSize:10,formatter:'{value}亿'}}]
+});
+
+echarts.init(document.getElementById('c5')).setOption({
+  backgroundColor:'transparent',
+  tooltip:{trigger:'axis',backgroundColor:'#16203a',borderColor:'#2b3a55',textStyle:{color:'#e6edf3'}},
+  grid:{left:50,right:20,top:20,bottom:30},
+  xAxis:{type:'category',data:['规上工业','社消零','固投','房地产'],axisLine:{lineStyle:{color:dark.axis}},axisLabel:{color:dark.text,fontSize:10}},
+  yAxis:{type:'value',axisLine:{lineStyle:{color:dark.axis}},axisLabel:{color:dark.text,formatter:'{value}%'},splitLine:{lineStyle:{color:'#1c2739'}}},
+  series:[{type:'bar',data:[
+    {value:8.7,itemStyle:{color:'#22c55e'}},
+    {value:3.9,itemStyle:{color:'#22c55e'}},
+    {value:-18.8,itemStyle:{color:'#f87171'}},
+    {value:-47.6,itemStyle:{color:'#ef4444'}}
+  ],barWidth:24,label:{show:true,position:'top',color:'#cbd5e1',fontSize:10,formatter:'{c}%'}}]
+});
+
+echarts.init(document.getElementById('c6')).setOption({
+  backgroundColor:'transparent',
+  tooltip:{trigger:'item',backgroundColor:'#16203a',borderColor:'#2b3a55',textStyle:{color:'#e6edf3'}},
+  legend:{bottom:0,textStyle:{color:dark.text,fontSize:11}},
+  series:[{type:'pie',radius:['40%','70%'],center:['50%','45%'],
+    data:[{value:74.6,name:'城镇 60.2%',itemStyle:{color:'#3b82f6'}},{value:49.3,name:'农村 39.8%',itemStyle:{color:'#84cc16'}}],
+    label:{color:'#cbd5e1',fontSize:11,formatter:'{b}'}
+  }]
+});
+
+echarts.init(document.getElementById('c7')).setOption({
+  backgroundColor:'transparent',
+  tooltip:{trigger:'axis',backgroundColor:'#16203a',borderColor:'#2b3a55',textStyle:{color:'#e6edf3'}},
+  legend:{top:0,textStyle:{color:dark.text,fontSize:10}},
+  grid:baseGrid,
+  xAxis:{type:'category',data:['2025','2026','2027','2028','2029','2030'],axisLine:{lineStyle:{color:dark.axis}},axisLabel:{color:dark.text}},
+  yAxis:{type:'value',min:900,axisLine:{lineStyle:{color:dark.axis}},axisLabel:{color:dark.text},splitLine:{lineStyle:{color:'#1c2739'}}},
+  series:[
+    {name:'实际',type:'line',data:[1005.45,null,null,null,null,null],lineStyle:{color:'#22c55e',width:3},itemStyle:{color:'#22c55e'},symbolSize:10},
+    {name:'目标轨道',type:'line',data:[1005.45,1070,1145,1240,1380,1600],lineStyle:{color:'#fbbf24',width:2,type:'dashed'},itemStyle:{color:'#fbbf24'}},
+    {name:'当前速度外推',type:'line',data:[1005.45,1060,1118,1179,1244,1312],lineStyle:{color:'#f87171',width:2,type:'dotted'},itemStyle:{color:'#f87171'}}
+  ]
+});
+</script>
 </body></html>
