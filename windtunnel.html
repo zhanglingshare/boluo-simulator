@@ -1,6 +1,7 @@
 <!doctype html>
 <html lang="zh-CN"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
 <title>博罗产业风洞 · 风洞测试</title>
+<script src="https://cdn.jsdelivr.net/npm/echarts@5.4.3/dist/echarts.min.js"></script>
 <style>
 *{box-sizing:border-box}
 body{margin:0;background:#080b12;color:#e6edf3;font:14px/1.6 -apple-system,"PingFang SC","Microsoft YaHei",sans-serif}
@@ -8,31 +9,46 @@ body{margin:0;background:#080b12;color:#e6edf3;font:14px/1.6 -apple-system,"Ping
 .nav b{font-size:14px;margin-right:6px;flex:none}
 .nav a{background:#131c2b;color:#93a4bd;border:1px solid #22304a;padding:6px 12px;border-radius:20px;font-size:12.5px;text-decoration:none;white-space:nowrap;flex:none}
 .nav a.on{background:#15803d;border-color:#22c55e;color:#fff;font-weight:600}
-.wrap{max-width:860px;margin:auto;padding:16px}
+.wrap{max-width:960px;margin:auto;padding:16px}
 h1{font-size:20px;margin:0 0 2px}
-.sub{color:#8fa3bf;font-size:13px;margin:0 0 16px}
-.card{background:#0e1523;border:1px solid #1c2739;border-radius:12px;padding:16px;margin-bottom:12px}
-.card h2{font-size:14px;margin:0 0 12px;color:#cbd5e1}
-.slider-row{margin-bottom:14px}
-.slider-row label{display:flex;justify-content:space-between;font-size:12.5px;margin-bottom:4px;color:#cbd5e1}
+.sub{color:#8fa3bf;font-size:13px;margin:0 0 14px}
+.card{background:#0e1523;border:1px solid #1c2739;border-radius:12px;padding:18px;margin-bottom:12px}
+.card h2{font-size:15px;margin:0 0 12px;color:#cbd5e1;display:flex;align-items:center;gap:8px}
+.card h2 .step{background:#15803d;color:#fff;font-size:11px;width:22px;height:22px;border-radius:50%;display:inline-flex;align-items:center;justify-content:center}
+.controls{display:grid;grid-template-columns:1fr 1fr;gap:14px}
+@media(max-width:700px){.controls{grid-template-columns:1fr}}
+.slider-row{background:#0a0f1a;border-radius:8px;padding:10px 12px}
+.slider-row label{display:flex;justify-content:space-between;font-size:12px;margin-bottom:6px;color:#cbd5e1}
 .slider-row .val{color:#fbbf24;font-weight:700;font-variant-numeric:tabular-nums}
-input[type=range]{width:100%;accent-color:#22c55e}
-.result{background:#0a0f1a;border-radius:10px;padding:16px;text-align:center;margin-top:10px}
-.result .big{font-size:32px;font-weight:800;color:#22c55e;font-variant-numeric:tabular-nums}
-.result .lbl{font-size:11px;color:#6b7280}
-.scenario{background:#0e1523;border:1px solid #1c2739;border-radius:10px;padding:14px;margin-bottom:10px;cursor:pointer;transition:.2s}
-.scenario:hover{border-color:#22c55e}
-.scenario .t{font-size:14px;font-weight:700;margin-bottom:4px}
-.scenario .d{font-size:12px;color:#8fa3bf;line-height:1.6}
-.scenario .tag{display:inline-block;font-size:10px;padding:2px 8px;border-radius:4px;margin-right:6px}
+.slider-row .hint{font-size:10.5px;color:#5b6b82;margin-top:4px}
+input[type=range]{width:100%;accent-color:#22c55e;height:4px}
+.gauges{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin-top:14px}
+@media(max-width:700px){.gauges{grid-template-columns:1fr}}
+.gbox{background:#0a0f1a;border-radius:10px;padding:10px;text-align:center}
+.gbox .v{font-size:24px;font-weight:800;font-variant-numeric:tabular-nums}
+.gbox .l{font-size:10.5px;color:#6b7d96;margin-top:2px}
+.chart{width:100%;height:300px}
+.chart-tall{height:340px}
+.scenario-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:10px}
+@media(max-width:700px){.scenario-grid{grid-template-columns:1fr}}
+.scenario{background:#0a0f1a;border:1px solid #1c2739;border-radius:10px;padding:13px;cursor:pointer;transition:.2s}
+.scenario:hover{border-color:#22c55e;transform:translateY(-1px)}
+.scenario.active{border-color:#22c55e;background:#0f1a14}
+.scenario .t{font-size:13px;font-weight:700;margin-bottom:4px}
+.scenario .d{font-size:11.5px;color:#8fa3bf;line-height:1.6}
+.tag{display:inline-block;font-size:9.5px;padding:2px 7px;border-radius:4px;margin-bottom:6px;font-weight:700}
 .tag-pos{background:#14532d;color:#86efac}
-.tag-neg{background:#7f1d1d;color:#fca5a5}
 .tag-mid{background:#4a3a12;color:#fcd34d}
-.plain{background:#0f1a0e;border:1px solid #1a3a1a;border-left:3px solid #22c55e;border-radius:8px;padding:10px 12px;font-size:12.5px;line-height:1.9;color:#c8e6c9;margin-top:10px}
-.plain .lab{display:block;font-size:10.5px;font-weight:800;color:#4ade80;letter-spacing:1px;margin-bottom:3px}
-.next{text-align:center;margin-top:18px}
-.next a{background:#15803d;color:#fff;padding:10px 24px;border-radius:8px;text-decoration:none;font-weight:600;display:inline-block}
-svg{display:block;width:100%;height:auto}
+.tag-neg{background:#7f1d1d;color:#fca5a5}
+.plain{background:#0f1a0e;border:1px solid #1a3a1a;border-left:3px solid #22c55e;border-radius:8px;padding:12px 14px;font-size:12.5px;line-height:1.9;color:#c8e6c9;margin-top:10px}
+.plain .lab{display:block;font-size:10.5px;font-weight:800;color:#4ade80;letter-spacing:1px;margin-bottom:4px}
+.plain.warn{background:#1a1408;border-color:#4a3a12;border-left-color:#fbbf24;color:#fcd34d}
+.plain.warn .lab{color:#fbbf24}
+.next{text-align:center;margin-top:16px}
+.next a{background:#15803d;color:#fff;padding:11px 24px;border-radius:8px;text-decoration:none;font-weight:600;display:inline-block}
+.btn-row{display:flex;gap:8px;margin-bottom:10px;flex-wrap:wrap}
+.minibtn{background:#16203a;border:1px solid #2b3a55;color:#b9cbe4;padding:6px 14px;border-radius:6px;font-size:12px;cursor:pointer}
+.minibtn:hover{border-color:#22c55e}
 </style></head><body>
 
 <div class="nav">
@@ -49,127 +65,308 @@ svg{display:block;width:100%;height:auto}
 </div>
 
 <div class="wrap">
-  <h1>风洞测试：拨动一个变量</h1>
-  <p class="sub">不是预测。是"如果这样走，会怎样"。拖动滑块，看结果怎么变。</p>
+  <h1>风洞测试：拨动一个变量，看全局怎么变</h1>
+  <p class="sub">不是预测。是"如果这样走，会怎样"。拖动任意滑块，所有图表实时联动。</p>
 
-  <!-- 常规压测 -->
+  <!-- 控制面板 -->
   <div class="card">
-    <h2>🔧 常规压力测试</h2>
-
-    <div class="slider-row">
-      <label>新投产项目节奏 <span class="val" id="v1Lbl">正常</span></label>
-      <input type="range" id="s1" min="-40" max="40" value="0">
-      <div style="font-size:11px;color:#5b6b82">-40% = 投产推迟两年 ｜ 0 = 按计划 ｜ +40% = 提前达产</div>
+    <h2><span class="step">1</span>控制台：四个可以拨动的变量</h2>
+    <div class="controls">
+      <div class="slider-row">
+        <label>新投产项目节奏 <span class="val" id="v1Lbl">按计划</span></label>
+        <input type="range" id="s1" min="-40" max="40" value="0">
+        <div class="hint">往左拖=投产推迟（类似大亚湾实验）；往右=提前达产</div>
+      </div>
+      <div class="slider-row">
+        <label>东莞产业外溢节奏 <span class="val" id="v2Lbl">正常</span></label>
+        <input type="range" id="s2" min="-30" max="30" value="0">
+        <div class="hint">往左=东莞转移放缓；往右=深莞外溢加速</div>
+      </div>
+      <div class="slider-row">
+        <label>房地产投资增速 <span class="val" id="v3Lbl">-48%</span></label>
+        <input type="range" id="s3" min="-60" max="15" value="-48">
+        <div class="hint">2025实际-47.6%。拖到0=企稳</div>
+      </div>
+      <div class="slider-row">
+        <label>整体固投增速 <span class="val" id="v4Lbl">-19%</span></label>
+        <input type="range" id="s4" min="-40" max="20" value="-19">
+        <div class="hint">2025实际-18.8%。拖到正数=投资回暖</div>
+      </div>
     </div>
-
-    <div class="slider-row">
-      <label>东莞产业承接节奏 <span class="val" id="v2Lbl">正常</span></label>
-      <input type="range" id="s2" min="-30" max="30" value="0">
-      <div style="font-size:11px;color:#5b6b82">-30% = 东莞转移放缓 ｜ +30% = 深莞外溢加速</div>
-    </div>
-
-    <div class="slider-row">
-      <label>房地产投资 <span class="val" id="v3Lbl">-47.6%</span></label>
-      <input type="range" id="s3" min="-60" max="10" value="-48">
-      <div style="font-size:11px;color:#5b6b82">2025年实际-47.6%。继续下行 vs 企稳</div>
-    </div>
-
-    <div class="slider-row">
-      <label>固投整体 <span class="val" id="v4Lbl">-18.8%</span></label>
-      <input type="range" id="s4" min="-40" max="20" value="-19">
-      <div style="font-size:11px;color:#5b6b82">2025年实际-18.8%。继续收缩 vs 回稳</div>
-    </div>
-
-    <div class="result">
-      <div class="lbl">模拟2030年GDP（中位数估计）</div>
-      <div class="big" id="out1">—</div>
-      <div style="font-size:11px;color:#6b7280;margin-top:4px" id="out2"></div>
+    <div class="gauges">
+      <div class="gbox"><div class="v" id="gGdp" style="color:#22c55e">—</div><div class="l">2030模拟GDP</div></div>
+      <div class="gbox"><div class="v" id="gRate" style="color:#3b82f6">—</div><div class="l">年均增速</div></div>
+      <div class="gbox"><div class="v" id="gProb" style="color:#fbbf24">—</div><div class="l">达标1600亿概率</div></div>
     </div>
   </div>
 
-  <!-- 正向场景 -->
+  <!-- 轨迹图 -->
   <div class="card">
-    <h2>🚀 正向场景：博罗在大湾区多占位置</h2>
-
-    <div class="scenario" onclick="setScenario(1)">
-      <span class="tag tag-pos">正向</span>
-      <div class="t">赣深高铁效应放大：深圳人来博罗买房消费</div>
-      <div class="d">如果罗浮未来城真的建成，深圳半小时通勤圈成真，人口从124万加速流入160万。</div>
-    </div>
-
-    <div class="scenario" onclick="setScenario(2)">
-      <span class="tag tag-pos">正向</span>
-      <div class="t">罗浮山从过路变过夜</div>
-      <div class="d">1028万游客，人均消费从500元提升到800元，停留从半天变一天半。旅游收入从52亿到100亿+。</div>
-    </div>
-
-    <div class="scenario" onclick="setScenario(3)">
-      <span class="tag tag-pos">正向</span>
-      <div class="t">农业品牌化：山茶菜心全国卖</div>
-      <div class="d">柏塘山茶、福田菜心从区域品牌变成全国品牌，一产从107亿到150亿+，农村人口收入提升。</div>
-    </div>
-
-    <div class="scenario" onclick="setScenario(4)">
-      <span class="tag tag-mid">对照</span>
-      <div class="t">什么都不变（基准）</div>
-      <div class="d">按当前节奏走，不加速也不失速。</div>
+    <h2><span class="step">2</span>三条增长轨道：你现在在哪条路上？</h2>
+    <div id="chTrack" class="chart"></div>
+    <div class="plain"><span class="lab">这张图怎么看</span>
+      <b>黄色虚线</b>是1600亿目标轨道（年均要跑9.7%）；<b>灰色线</b>是按2025年5.5%自然走的基准；<b>绿色线</b>是你当前滑块设置下的实际轨迹。往左拖滑块，绿线会往下掉——你能直观看到"投产晚两年"让博罗掉到哪条轨道上。
     </div>
   </div>
 
-  <!-- 反转：和惠城不同 -->
+  <!-- 变量贡献 -->
   <div class="card">
-    <h2>🔄 博罗的反转</h2>
-    <div style="font-size:13px;color:#cbd5e1;margin-bottom:10px">
-      惠城最不能断的是一条通勤路。博罗呢？
-    </div>
-    <div style="font-size:13px;line-height:2;color:#93a4bf">
-      如果压"园洲石湾和东莞的连接"——博罗确实会疼。但这不是博罗该担心的事，因为这条连接是地理给的，东莞和博罗的产业咬合是几十年长出来的，不会轻易断。<br><br>
-      博罗真正敏感的不是"和东莞断了"，而是：<b style="color:#fbbf24">新投产项目的节奏</b>。固投已经在收缩（-18.8%），如果新投产再慢，千亿县之后的增长接续会面临压力。这不是谁的错，是所有工业县都会遇到的节奏问题。
+    <h2><span class="step">3</span>四个变量各管多少：谁在拉动，谁在拖后腿</h2>
+    <div id="chContrib" class="chart"></div>
+    <div class="plain"><span class="lab">这张图怎么看</span>
+      往右的绿色条=这个变量在给GDP加分；往左的红色条=在拖后腿。你会发现：投产节奏（最上面）的条最长——拨动它，结果变化最大。房地产现在是红色（-47.6%在拖后腿），但即使把它拖回0，加分也有限——因为它本来对GDP的传导就弱。
     </div>
   </div>
 
-  <div class="plain">
-    <span class="lab">边界</span>
-    以上都是假设场景，不是预测。滑块背后是简单线性模型，不是因果推断。博罗和东莞的链接强度、高铁效应大小、文旅转化效率，都是假设参数——你可以改我的参数。
+  <!-- 场景按钮 -->
+  <div class="card">
+    <h2><span class="step">4</span>一键切换四个场景</h2>
+    <div class="scenario-grid">
+      <div class="scenario" data-n="1">
+        <span class="tag tag-pos">乐观</span>
+        <div class="t">高铁效应放大</div>
+        <div class="d">罗浮未来城建成，深圳半小时通勤圈成真，人口加速流入160万</div>
+      </div>
+      <div class="scenario" data-n="2">
+        <span class="tag tag-pos">乐观</span>
+        <div class="t">罗浮山过夜经济</div>
+        <div class="d">人均消费500→800元，游客从半天变一天半，旅游收入翻倍</div>
+      </div>
+      <div class="scenario" data-n="3">
+        <span class="tag tag-neg">承压</span>
+        <div class="t">投产推迟两年</div>
+        <div class="d">新签约项目建设节奏放缓，固投继续收缩，增长接续断档</div>
+      </div>
+      <div class="scenario active" data-n="4">
+        <span class="tag tag-mid">基准</span>
+        <div class="t">按当前节奏走</div>
+        <div class="d">不加速也不失速，维持2025年参数</div>
+      </div>
+    </div>
   </div>
 
-  <div class="next"><a href="blindspot.html">下一步：我们忽略了什么 →</a></div>
+  <!-- 场景雷达 -->
+  <div class="card">
+    <h2><span class="step">5</span>四个场景五维对比：哪条路让博罗更稳</h2>
+    <div id="chRadar" class="chart chart-tall"></div>
+    <div class="plain"><span class="lab">这张图怎么看</span>
+      五个角分别是：工业增长、文旅潜力、人口流入、投资韧性、财政健康。面积越大=这个场景下博罗综合状态越好。你会发现"高铁效应"面积最大，但"投产推迟"在投资韧性和工业增长两个角明显塌陷——一个变量就能让两个维度同时失血。
+    </div>
+  </div>
+
+  <!-- 龙卷风敏感性 -->
+  <div class="card">
+    <h2><span class="step">6</span>敏感性排序：拨哪个变量，结果抖得最厉害</h2>
+    <div id="chTornado" class="chart"></div>
+    <div class="plain warn"><span class="lab">核心发现</span>
+      龙卷风图从上到下按"拨动后结果变化幅度"排序。<b>投产节奏排第一</b>——从推迟40%到提前40%，2030 GDP能差出近400亿。东莞外溢排第二。房地产排最后——它现在跌得狠（-47.6%），但对GDP的实际传导反而最弱。这和直觉相反：跌得最响的，不一定是最要命的。
+    </div>
+  </div>
+
+  <!-- 反转结论 -->
+  <div class="card">
+    <h2><span class="step">7</span>博罗的反转：和惠城不一样</h2>
+    <div style="font-size:13.5px;line-height:2.1;color:#c8d3e0">
+      惠城跑出来，最不能断的是一条通勤路——因为它是产城人三层网络的传动轴。<br><br>
+      博罗的结构不同。压"园洲↔东莞"这条线，博罗会疼，但这条线是几十年地理和产业咬合长出来的，不会轻易断——这是博罗的<b style="color:#22c55e">结构性资产</b>。<br><br>
+      博罗真正敏感的是<b style="color:#fbbf24">新投产项目的节奏</b>。固投已经在收缩（-18.8%），现在的增长靠之前投的产能在释放。如果新投产再慢两年，千亿县之后的下一档增长可能接不上。<br><br>
+      这不是博罗独有的问题——所有工业县在转型换挡期都会遇到。区别在于：博罗手里还有东莞外溢、罗浮山、特色农业三张牌，关键是让这些牌在新产能投产前能顶住节奏。
+    </div>
+    <div class="plain" style="margin-top:14px"><span class="lab">边界声明</span>
+      以上全部是假设场景下的结构模拟，不是预测，更不是投资建议。滑块背后的参数（投产影响系数、东莞外溢强度、房地产传导系数）都是作者设定的假设值，已在页面公开。你觉得哪个参数不对，可以改——这正是风洞的意义。
+    </div>
+  </div>
+
+  <div class="next"><a href="blindspot.html">下一步：我们可能忽略了什么 →</a></div>
 </div>
 
 <script>
 const BASE=1005;
-function calc(){
-  const s1=parseInt(document.getElementById("s1").value)/100; // 投产节奏
-  const s2=parseInt(document.getElementById("s2").value)/100; // 东莞承接
-  const s3=parseInt(document.getElementById("s3").value); // 房地产
-  const s4=parseInt(document.getElementById("s4").value); // 固投
+const TARGET=1600;
+const charts={};
 
-  document.getElementById("v1Lbl").textContent=s1===0?"正常":s1>0?`提前${s1*100}%`:`推迟${Math.abs(s1*100)}%`;
-  document.getElementById("v2Lbl").textContent=s2===0?"正常":s2>0?`外溢+${s2*100}%`:`转移${Math.abs(s2*100)}%`;
-  document.getElementById("v3Lbl").textContent=s3+"%";
-  document.getElementById("v4Lbl").textContent=s4+"%";
-
-  // 简单模型：5年增长
-  let g=0.055; // 基准增速5.5%
-  g+=s1*0.03; // 投产节奏影响大
-  g+=s2*0.02; // 东莞承接
-  g+=(s3+47.6)/100*0.005; // 房地产企稳
-  g+=(s4+18.8)/100*0.01; // 固投回稳
-
-  let out=BASE;
-  for(let i=0;i<5;i++) out*=(1+g);
-  document.getElementById("out1").textContent=Math.round(out)+"亿";
-  document.getElementById("out2").textContent=`年均增速${(g*100).toFixed(1)}% · ${out>=1600?"超过1600亿目标":"距1600亿差"+Math.round(1600-out)+"亿"}`;
-  document.getElementById("out1").style.color=out>=1600?"#34d399":out>=1300?"#fbbf24":"#f87171";
+function makeChart(id){
+  const c=echarts.init(document.getElementById(id));
+  charts[id]=c;return c;
 }
+makeChart('chTrack');makeChart('chContrib');makeChart('chRadar');makeChart('chTornado');
+
+function getParams(){
+  return {
+    s1:parseInt(document.getElementById('s1').value)/100,
+    s2:parseInt(document.getElementById('s2').value)/100,
+    s3:parseInt(document.getElementById('s3').value),
+    s4:parseInt(document.getElementById('s4').value)
+  };
+}
+
+// 计算各变量对年均增速的贡献（百分点）
+function contributions(p){
+  return {
+    '投产节奏':p.s1*3.0,
+    '东莞外溢':p.s2*2.2,
+    '房地产':(p.s3+47.6)*0.06,
+    '固投整体':(p.s4+18.8)*0.10
+  };
+}
+
+function project(growth){
+  let v=BASE;const path=[BASE];
+  for(let i=0;i<5;i++){v*=(1+growth);path.push(Math.round(v))}
+  return path;
+}
+
+function render(){
+  const p=getParams();
+  document.getElementById('v1Lbl').textContent=p.s1===0?'按计划':p.s1>0?`提前${p.s1*100}%`:`推迟${Math.abs(p.s1*100)}%`;
+  document.getElementById('v2Lbl').textContent=p.s2===0?'正常':p.s2>0?`外溢+${p.s2*100}%`:`放缓${Math.abs(p.s2*100)}%`;
+  document.getElementById('v3Lbl').textContent=p.s3+'%';
+  document.getElementById('v4Lbl').textContent=p.s4+'%';
+
+  const c=contributions(p);
+  let g=0.055;
+  Object.values(c).forEach(v=>g+=v/100);
+
+  const path=project(g);
+  const gdp2030=path[5];
+
+  // 达标概率：基于与目标的差距，简单映射 + 随机扰动概念
+  let prob;
+  if(gdp2030>=1700)prob=85;
+  else if(gdp2030>=1600)prob=60+(gdp2030-1600)/100*20;
+  else if(gdp2030>=1400)prob=20+(gdp2030-1400)/200*40;
+  else prob=Math.max(2,gdp2030/1400*20);
+  prob=Math.min(95,Math.round(prob));
+
+  document.getElementById('gGdp').textContent=gdp2030+'亿';
+  document.getElementById('gGdp').style.color=gdp2030>=1600?'#22c55e':gdp2030>=1400?'#fbbf24':'#f87171';
+  document.getElementById('gRate').textContent=(g*100).toFixed(1)+'%';
+  document.getElementById('gProb').textContent=prob+'%';
+
+  const years=['2025','2026','2027','2028','2029','2030'];
+  const targetPath=project(0.097);
+  const basePath=project(0.055);
+
+  charts.chTrack.setOption({
+    backgroundColor:'transparent',
+    tooltip:{trigger:'axis',backgroundColor:'#16203a',borderColor:'#2b3a55',textStyle:{color:'#e6edf3'}},
+    legend:{top:0,textStyle:{color:'#93a4bd',fontSize:11}},
+    grid:{left:55,right:25,top:35,bottom:30},
+    xAxis:{type:'category',data:years,axisLabel:{color:'#93a4bd'}},
+    yAxis:{type:'value',min:900,axisLabel:{color:'#93a4bd'},splitLine:{lineStyle:{color:'#1c2739'}}},
+    series:[
+      {name:'目标轨道1600亿',type:'line',data:targetPath,lineStyle:{color:'#fbbf24',width:2,type:'dashed'},itemStyle:{color:'#fbbf24'},symbol:'diamond',symbolSize:8},
+      {name:'自然增长5.5%',type:'line',data:basePath,lineStyle:{color:'#6b7280',width:2},itemStyle:{color:'#6b7280'},symbol:'circle',symbolSize:6},
+      {name:'你的设置',type:'line',data:path,lineStyle:{color:'#22c55e',width:3.5},itemStyle:{color:'#22c55e'},areaStyle:{color:'rgba(34,197,94,.15)'},symbol:'circle',symbolSize:8,
+       markLine:{silent:true,symbol:'none',data:[{yAxis:1600,lineStyle:{color:'#fbbf24',type:'dotted',opacity:0.5},label:{color:'#fbbf24',formatter:'1600亿目标线'}}]}}
+    ]
+  });
+
+  const entries=Object.entries(c);
+  charts.chContrib.setOption({
+    backgroundColor:'transparent',
+    tooltip:{trigger:'axis',backgroundColor:'#16203a',borderColor:'#2b3a55',textStyle:{color:'#e6edf3'},formatter:function(ps){
+      const p=ps[0];return `${p.name}<br/>对增速的影响：${p.value>0?'+':''}${p.value.toFixed(2)}个百分点`;
+    }},
+    grid:{left:90,right:50,top:15,bottom:30},
+    xAxis:{type:'value',axisLabel:{color:'#93a4bd',formatter:'{value}pp'},splitLine:{lineStyle:{color:'#1c2739'}}},
+    yAxis:{type:'category',data:entries.map(e=>e[0]),axisLabel:{color:'#cbd5e1',fontSize:12}},
+    series:[{type:'bar',data:entries.map(([k,v])=>({
+      value:parseFloat(v.toFixed(2)),
+      itemStyle:{color:v>=0?'#22c55e':'#f87171',borderRadius:v>=0?[0,4,4,0]:[4,0,0,4]}
+    })),barWidth:24,label:{show:true,position:function(v){return v.value>=0?'right':'left'},
+      color:'#cbd5e1',fontSize:11,formatter:function(p){return (p.value>0?'+':'')+p.value.toFixed(2)}}}]
+  });
+
+  renderRadar(p);
+  renderTornado();
+}
+
+function renderRadar(p){
+  function sceneVals(n){
+    if(n===1)return [9,8,9,7,7]; // 高铁
+    if(n===2)return [7,9,7,7,7]; // 文旅
+    if(n===3)return [4,5,4,3,5]; // 推迟
+    return [6,6,5,5,6]; // 基准
+  }
+  const names=['高铁效应','罗浮山过夜','投产推迟','基准'];
+  const colors=['#22c55e','#fbbf24','#f87171','#6b7280'];
+  charts.chRadar.setOption({
+    backgroundColor:'transparent',
+    tooltip:{backgroundColor:'#16203a',borderColor:'#2b3a55',textStyle:{color:'#e6edf3'}},
+    legend:{top:0,textStyle:{color:'#93a4bd',fontSize:11}},
+    radar:{center:['50%','55%'],radius:'62%',
+      indicator:[
+        {name:'工业增长',max:10},{name:'文旅潜力',max:10},{name:'人口流入',max:10},
+        {name:'投资韧性',max:10},{name:'财政健康',max:10}
+      ],
+      axisName:{color:'#cbd5e1',fontSize:11.5},
+      splitLine:{lineStyle:{color:'#1c2739'}},
+      splitArea:{areaStyle:{color:['rgba(255,255,255,.01)','rgba(255,255,255,.03)']}},
+      axisLine:{lineStyle:{color:'#1c2739'}}
+    },
+    series:[{type:'radar',data:names.map((n,i)=>({
+      name:n,value:sceneVals(i+1),
+      lineStyle:{color:colors[i],width:2},
+      itemStyle:{color:colors[i]},
+      areaStyle:{color:colors[i],opacity:0.12}
+    }))}]
+  });
+}
+
+function renderTornado(){
+  // 每个变量从最低档到最高档对2030 GDP的影响
+  const vars=[
+    {name:'投产节奏',lo:-0.4,hi:0.4,k:3.0},
+    {name:'东莞外溢',lo:-0.3,hi:0.3,k:2.2},
+    {name:'固投整体',lo:-40,hi:20,k:0.10,offset:18.8,abs:true},
+    {name:'房地产',lo:-60,hi:15,k:0.06,offset:47.6,abs:true}
+  ];
+  const baseG=0.055;
+  const rows=vars.map(v=>{
+    let loEff,hiEff;
+    if(v.abs){
+      loEff=(v.lo+v.offset)*v.k/100;
+      hiEff=(v.hi+v.offset)*v.k/100;
+    } else {
+      loEff=v.lo*v.k/100;
+      hiEff=v.hi*v.k/100;
+    }
+    const loPath=project(baseG+loEff)[5];
+    const hiPath=project(baseG+hiEff)[5];
+    return {name:v.name,lo:loPath,hi:hiPath};
+  });
+  const labels=rows.map(r=>r.name);
+  charts.chTornado.setOption({
+    backgroundColor:'transparent',
+    tooltip:{trigger:'axis',backgroundColor:'#16203a',borderColor:'#2b3a55',textStyle:{color:'#e6edf3'},formatter:function(ps){
+      const i=ps[0].dataIndex;const r=rows[i];
+      return `${r.name}<br/>最低档：${r.lo}亿<br/>最高档：${r.hi}亿<br/>摆动幅度：${r.hi-r.lo}亿`;
+    }},
+    grid:{left:90,right:60,top:15,bottom:30},
+    xAxis:{type:'value',min:900,max:1900,axisLabel:{color:'#93a4bd'},splitLine:{lineStyle:{color:'#1c2739'}}},
+    yAxis:{type:'category',data:labels,axisLabel:{color:'#cbd5e1',fontSize:12}},
+    series:[
+      {type:'bar',stack:'t',data:rows.map(r=>r.lo),itemStyle:{color:'#f87171',opacity:0.7},barWidth:22,name:'低档'},
+      {type:'bar',stack:'t',data:rows.map(r=>r.hi-r.lo),itemStyle:{color:'#22c55e',opacity:0.7},barWidth:22,name:'高档',
+       label:{show:true,position:'right',color:'#cbd5e1',fontSize:10.5,formatter:function(p){
+         const r=rows[p.dataIndex];return `±${Math.round((r.hi-r.lo)/2)}亿`;
+       }}}
+    ]
+  });
+}
+
 function setScenario(n){
+  document.querySelectorAll('.scenario').forEach(s=>s.classList.toggle('active',parseInt(s.dataset.n)===n));
   if(n===1){s1.value=20;s2.value=25;s3.value=-20;s4.value=5}
-  if(n===2){s1.value=0;s2.value=0;s3.value=-30;s4.value=-10}
-  if(n===3){s1.value=10;s2.value=10;s3.value=-40;s4.value=-15}
+  if(n===2){s1.value=5;s2.value=10;s3.value=-30;s4.value=-10}
+  if(n===3){s1.value=-35;s2.value=-15;s3.value=-55;s4.value=-30}
   if(n===4){s1.value=0;s2.value=0;s3.value=-48;s4.value=-19}
-  calc();
+  render();
 }
-document.querySelectorAll("input[type=range]").forEach(s=>s.oninput=calc);
-calc();
+document.querySelectorAll('.scenario').forEach(s=>s.onclick=()=>setScenario(parseInt(s.dataset.n)));
+document.querySelectorAll('input[type=range]').forEach(s=>s.oninput=render);
+window.addEventListener('resize',()=>Object.values(charts).forEach(c=>c.resize()));
+render();
 </script>
 </body></html>
