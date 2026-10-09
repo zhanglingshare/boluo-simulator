@@ -78,17 +78,8 @@ h1{font-size:21px;margin:0}
   <div class="livebar" id="livebar">正在拉取微博/百度实时热搜里和惠州、博罗、罗浮山相关的讨论…</div>
 
   <div class="veg">
-    <div class="veg-title">🚜 博罗新鲜农产品 · 当季 / 国家地理标志（悬停暂停）</div>
-    <div class="veg-track"><div class="veg-inner" id="vegInner">
-      <div class="vegcard"><div class="vn">福田菜心</div><div class="vp">福田镇 · 国家地理标志</div><div class="vd">冬春最甜，菜心无渣，广东菜心名片</div></div>
-      <div class="vegcard"><div class="vn">柏塘山茶</div><div class="vp">柏塘镇 · 广东十大名茶</div><div class="vd">高山云雾茶，甘醇回甘</div></div>
-      <div class="vegcard"><div class="vn">观音阁花生油</div><div class="vp">观音阁镇 · 东江沿岸</div><div class="vd">传统小榨，香浓醇厚</div></div>
-      <div class="vegcard"><div class="vn">杨村柑桔</div><div class="vp">杨村镇 · 传统名果</div><div class="vd">酸甜可口，秋冬时令</div></div>
-      <div class="vegcard"><div class="vn">公庄花生</div><div class="vp">公庄镇 · 沙地</div><div class="vd">香脆饱满，下酒零嘴皆宜</div></div>
-      <div class="vegcard"><div class="vn">罗浮山酥醪菜</div><div class="vp">长宁酥醪村 · 山上特产</div><div class="vd">芥菜腌制，鲜甜爽口</div></div>
-      <div class="vegcard"><div class="vn">博罗荔枝</div><div class="vp">各镇 · 岭南夏季名果</div><div class="vd">六月红，肉厚核小</div></div>
-      <div class="vegcard"><div class="vn">横河山水豆腐花</div><div class="vp">横河镇 · 山泉制作</div><div class="vd">嫩滑清甜，红糖一浇</div></div>
-    </div></div>
+    <div class="veg-title" id="vegTitle">🚜 博罗当季农产品 · 此刻正上市（悬停暂停）</div>
+    <div class="veg-track"><div class="veg-inner" id="vegInner"></div></div>
   </div>
 
   <div class="grid" id="grid"></div>
@@ -119,8 +110,49 @@ const TOWNS=[
 ];
 
 let picks=[];
-// 农产品轮播无缝复制一份
-(function(){const v=document.getElementById("vegInner");v.innerHTML+=v.innerHTML;})();
+// 博罗当季农产品——按月份动态切换，现在有什么才挂什么
+const SEASON_VEG={
+  春:[
+    {n:"柏塘春茶",p:"柏塘镇 · 明前头采",d:"三月新茶，甘香回甘"},
+    {n:"罗浮山春笋",p:"长宁/横河",d:"雨后春笋，鲜掉眉毛"},
+    {n:"福田春菜",p:"福田镇",d:"春季蔬菜，清甜"},
+    {n:"博罗枇杷",p:"横河/柏塘",d:"五月黄，润肺"},
+    {n:"春季蜂蜜",p:"柏塘/山区",d:"百花蜜，刚摇出来"},
+    {n:"山水豆腐花",p:"横河镇",d:"山泉水做，嫩滑"}
+  ],
+  夏:[
+    {n:"博罗荔枝",p:"各镇 · 岭南名果",d:"六月红，肉厚核小"},
+    {n:"石坝龙眼",p:"石坝镇",d:"七月甜，肉厚"},
+    {n:"黄皮",p:"博罗山区",d:"七月生津解暑"},
+    {n:"炒山坑螺",p:"东江河边",d:"紫苏爆炒，夏天夜宵"},
+    {n:"山水豆腐花",p:"横河镇",d:"冰镇豆花，解暑"},
+    {n:"罗浮山荔枝蜜",p:"长宁",d:"夏季花蜜"}
+  ],
+  秋:[
+    {n:"杨村皇帝柑",p:"杨村镇",d:"十月成熟，清甜化渣"},
+    {n:"公庄秋花生",p:"公庄镇 · 沙土地",d:"刚刨出来，带泥香"},
+    {n:"观音阁花生油",p:"观音阁镇",d:"新花生现榨，香浓"},
+    {n:"博罗红薯",p:"北部各镇",d:"秋收番薯，甜糯"},
+    {n:"柏塘秋茶",p:"柏塘镇",d:"秋茶香浓耐泡"},
+    {n:"秋蔬菜",p:"福田/公庄",d:"秋冬菜心开始育苗"}
+  ],
+  冬:[
+    {n:"福田菜心",p:"福田镇 · 国家地理标志",d:"腊月最甜，无渣"},
+    {n:"罗浮山酥醪菜",p:"长宁酥醪村",d:"冬季腌藏，鲜甜"},
+    {n:"沙糖桔",p:"杨村/公庄",d:"腊月上市，一剥一兜"},
+    {n:"客家腊味",p:"横河/公庄",d:"冬风晒，油香"},
+    {n:"糯米鸡",p:"各镇客家",d:"腊月蒸一笼，实在"},
+    {n:"观音阁花生油",p:"观音阁镇",d:"年节用油"}
+  ]
+};
+function seasonOf(m){if(m>=3&&m<=5)return"春";if(m>=6&&m<=8)return"夏";if(m>=9&&m<=11)return"秋";return"冬";}
+(function(){
+  const now=new Date(),m=now.getMonth()+1,se=seasonOf(m);
+  document.getElementById("vegTitle").textContent=`🚜 博罗${m}月当季 · ${se}季正上市（悬停暂停）`;
+  const cards=SEASON_VEG[se].map(v=>`<div class="vegcard"><div class="vn">${v.n}</div><div class="vp">${v.p}</div><div class="vd">${v.d}</div></div>`).join("");
+  const v=document.getElementById("vegInner");
+  v.innerHTML=cards+cards; // 复制一份无缝横滚
+})();
 function pickThree(){
   const arr=[...TOWNS];
   for(let i=arr.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[arr[i],arr[j]]=[arr[j],arr[i]];}
