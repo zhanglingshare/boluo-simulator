@@ -209,42 +209,37 @@ function allTopics(){return [...liveTopics, ...LOCAL, ...FOOD, ...FUN];}
 function render(){
   let list=curCat==="all"?allTopics():allTopics().filter(x=>x.c===curCat);
   list=list.map(x=>({...x,hs:x.h+Math.random()*4-2})).sort((a,b)=>b.hs-a.hs);
+  const grads={ind:"linear-gradient(135deg,#1e3a8a,#0f1a2e)",life:"linear-gradient(135deg,#7c2d12,#1a0f0f)",city:"linear-gradient(135deg,#374151,#0f1a2e)",agri:"linear-gradient(135deg,#1a2f0e,#0f1a2e)",fun:"linear-gradient(135deg,#064e3b,#0f1a2e)"};
+  const catName={ind:"产业",life:"民生",city:"城市",agri:"农业",fun:"文旅"};
   const el=document.getElementById("topicList");
-  el.innerHTML=list.map((x,i)=>{
-    const catCls={ind:"cat-ind",life:"cat-life",city:"cat-city",agri:"cat-agri",fun:"cat-fun"}[x.c]||"cat-city";
-    const catName={ind:"产业",life:"民生",city:"城市",agri:"农业",fun:"文旅"}[x.c]||"城市";
-    const heatColor=x.hs>=80?"#f87171":x.hs>=60?"#fbbf24":"#4ade80";
-    const tagBg={ind:"#1e3a5f",life:"#3d2817",city:"#2a2f3a",agri:"#1a2f0e",fun:"#0c2a1e"}[x.c];
-    const tagFg={ind:"#60a5fa",life:"#fb923c",city:"#9ca3af",agri:"#a3e635",fun:"#34d399"}[x.c];
-    const liveBadge=x.live?'<span style="background:#dc2626;color:#fff;font-size:9px;padding:1px 5px;border-radius:3px;margin-left:6px;vertical-align:middle">实时</span>':'';
-    if(i===0){
-      return `<div class="top1" onclick="this.classList.toggle('open')">
-        <span class="badge">🔥 今日最热</span>${liveBadge}
-        <div class="t">${x.t}</div>
-        <div style="display:flex;align-items:center;gap:12px">
-          <span class="heatnum">${Math.round(x.hs)}°</span>
-          <span style="flex:1;height:6px;background:#16233a;border-radius:3px;overflow:hidden"><i style="display:block;height:100%;width:${x.hs}%;background:linear-gradient(90deg,#4ade80,#fbbf24)"></i></span>
-          <span class="src">${x.src}</span>
+  el.style.cssText="display:grid;grid-template-columns:1fr 1fr;gap:10px";
+  el.innerHTML=list.map((x)=>{
+    const liveBadge=x.live?'<span style="background:#dc2626;color:#fff;font-size:9px;padding:1px 5px;border-radius:3px;margin-left:5px">实时</span>':'';
+    const likes=(localStorage.getItem("like_"+x.t)||Math.floor(Math.random()*50+10));
+    return `<div class="tcard" data-t="${x.t}" style="background:${grads[x.c]||grads.city};border-radius:12px;padding:14px;cursor:pointer">
+      <div style="font-size:11px;color:#94a3b8">${catName[x.c]||"城市"}${liveBadge} · ${x.src||""}</div>
+      <div style="font-size:16px;font-weight:800;color:#fff;margin:8px 0 4px;line-height:1.4">${x.t}</div>
+      <div style="display:flex;align-items:center;justify-content:space-between">
+        <div style="font-size:26px;font-weight:900;color:${x.hs>=85?'#f87171':x.hs>=70?'#fbbf24':'#4ade80'}">${Math.round(x.hs)}<span style="font-size:12px;font-weight:400">°</span></div>
+        <div style="display:flex;gap:10px;font-size:12px;color:#94a3b8">
+          <span>👁️ ${(x.hs*x.hs/120).toFixed(1)}万</span>
+          <span>🔁 ${Math.round(x.hs*x.hs/8)}</span>
+          <span class="likeBtn" onclick="event.stopPropagation();like(this,'${x.t}')">👍 <b class="ln">${likes}</b></span>
         </div>
-        <div class="detail" style="font-size:12.5px;color:#cbd5e1;margin-top:8px">${x.d}<br><span style="color:#fbbf24">→ ${x.why}</span></div>
-      </div>`;
-    }
-    return `<div class="topic ${catCls}" style="animation-delay:${i*50}ms" onclick="this.classList.toggle('open')">
-      <div class="rank">${i+1}</div>
-      <div class="body">
-        <div class="t">${x.t}${liveBadge}</div>
-        <div class="meta">
-          <span class="heat"><i style="width:${Math.min(100,x.hs)}%;background:${heatColor}"></i></span>
-          <span>${Math.round(x.hs)}°</span>
-          <span class="src">${x.src}</span>
-          <span class="cat-tag" style="background:${tagBg};color:${tagFg}">${catName}</span>
-        </div>
-        <div class="detail">${x.d}<br><span style="color:#fbbf24">→ ${x.why}</span></div>
       </div>
+      <div class="detail" style="font-size:11.5px;color:#cbd5e1;margin-top:8px;display:none">${x.d}<br><span style="color:#fbbf24">→ ${x.why}</span></div>
     </div>`;
   }).join("");
+  document.querySelectorAll("#topicList .tcard").forEach(c=>{
+    c.onclick=()=>{const d=c.querySelector(".detail");d.style.display=d.style.display==="none"?"block":"none";};
+  });
 }
-
+function like(el,t){
+  let n=parseInt(el.querySelector(".ln").textContent)+1;
+  el.querySelector(".ln").textContent=n;
+  localStorage.setItem("like_"+t,n);
+  el.style.transform="scale(1.2)";setTimeout(()=>el.style.transform="",200);
+}
 document.querySelectorAll(".cat").forEach(b=>{
   b.onclick=()=>{
     document.querySelectorAll(".cat").forEach(x=>x.classList.remove("on"));
