@@ -1,28 +1,59 @@
 <!doctype html>
 <html lang="zh-CN"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
-<title>博罗产业风洞 · 分析报告</title>
+<title>博罗县产业分析报告（Demo版）· 张凌</title>
 <script src="https://cdn.jsdelivr.net/npm/echarts@5.4.3/dist/echarts.min.js"></script>
 <style>
 *{box-sizing:border-box}
-body{margin:0;background:#080b12;color:#e6edf3;font:14px/1.6 -apple-system,"PingFang SC","Microsoft YaHei",sans-serif}
+body{margin:0;background:#080b12;color:#e6edf3;font:14px/1.7 -apple-system,"PingFang SC","Microsoft YaHei",sans-serif}
 .nav{position:sticky;top:0;z-index:50;display:flex;gap:5px;align-items:center;padding:9px 14px;background:rgba(8,11,18,.95);border-bottom:1px solid #1b2434;overflow-x:auto}
 .nav b{font-size:14px;margin-right:6px;flex:none}
 .nav a{background:#131c2b;color:#93a4bd;border:1px solid #22304a;padding:6px 12px;border-radius:20px;font-size:12.5px;text-decoration:none;white-space:nowrap;flex:none}
 .nav a.on{background:#15803d;border-color:#22c55e;color:#fff;font-weight:600}
-.wrap{max-width:800px;margin:auto;padding:20px}
-h1{font-size:22px;margin:0 0 4px}
-.sub{color:#8fa3bf;font-size:13px;margin:0 0 18px}
-.report{background:#0e1523;border:1px solid #1c2739;border-radius:12px;padding:24px;margin-bottom:14px}
-.report h2{font-size:16px;margin:0 0 10px;color:#22c55e;border-bottom:1px solid #1c2739;padding-bottom:8px}
-.report p{font-size:13.5px;line-height:2;color:#c8d3e0;margin:8px 0}
-.report .k{color:#fbbf24;font-weight:700}
-.report .src{font-size:11px;color:#5b6b82;margin-top:6px;padding-top:6px;border-top:1px dashed #1c2739}
-.chart{width:100%;height:260px;margin:12px 0}
-.author{background:#0a0f1a;border:1px solid #1c2739;border-radius:10px;padding:16px;margin-top:14px;font-size:12px;color:#8fa3bf;line-height:1.9}
-.author b{color:#cbd5e1}
-.next{text-align:center;margin-top:18px}
-.next a{background:#15803d;color:#fff;padding:10px 24px;border-radius:8px;text-decoration:none;font-weight:600;display:inline-block}
-.disc{background:#1a0e0e;border:1px solid #7f1d1d;border-radius:8px;padding:12px;font-size:11.5px;color:#fca5a5;line-height:1.8;margin-top:10px}
+.wrap{max-width:880px;margin:auto;padding:18px}
+.cover{text-align:center;padding:42px 20px;background:linear-gradient(160deg,#082014,#0a0f1a);border:1px solid #1c2739;border-radius:16px;margin-bottom:16px}
+.cover .kick{font-size:12px;letter-spacing:3px;color:#4ade80;margin-bottom:12px}
+.cover h1{font-size:27px;lineHeight:1.4;margin:0 0 10px}
+.cover .meta{font-size:12.5px;color:#8fa3bf;margin-top:16px}
+.card{background:#0e1523;border:1px solid #1c2739;border-radius:12px;padding:18px;margin-bottom:14px}
+.card h2{font-size:16px;margin:0 0 12px;padding-bottom:8px;border-bottom:1px solid #1c2739;color:#4ade80}
+.card h3{font-size:13.5px;color:#4ade80;margin:18px 0 6px}
+.kpis{display:grid;grid-template-columns:repeat(4,1fr);gap:10px;margin:12px 0}
+@media(max-width:700px){.kpis{grid-template-columns:repeat(2,1fr)}}
+.kpi{background:#0a0f1a;border:1px solid #1c2739;border-radius:10px;padding:12px;text-align:center}
+.kpi .v{font-size:19px;font-weight:800;color:#fbbf24}
+.kpi .l{font-size:10.5px;color:#6b7d96;margin-top:3px}
+.lights{display:grid;grid-template-columns:repeat(2,1fr);gap:10px;margin:12px 0}
+@media(max-width:700px){.lights{grid-template-columns:1fr}}
+.light{border-radius:10px;padding:11px 12px;font-size:12px;border:1px solid}
+.light .dot{display:inline-block;width:9px;height:9px;border-radius:50%;margin-right:6px}
+.g{background:#0a1a12;border-color:#14532d}.g .dot{background:#22c55e}
+.y{background:#1a1808;border-color:#713f12}.y .dot{background:#eab308}
+.r{background:#1a0c0c;border-color:#7f1d1d}.r .dot{background:#ef4444}
+ol.find{margin:0;padding-left:20px}
+ol.find li{margin-bottom:10px;line-height:1.8;font-size:13px;color:#c8d3e0}
+.two{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+@media(max-width:700px){.two{grid-template-columns:1fr}}
+.people{background:linear-gradient(160deg,#1a1408,#0e1523);border:1px solid #713f12}
+.people .q{font-size:13.5px;font-weight:700;color:#fbbf24;margin-bottom:6px}
+.people .a{font-size:12.3px;color:#cbd5e1;line-height:1.85}
+.action{display:flex;gap:12px;margin-bottom:10px;align-items:flex-start}
+.action .pri{flex:none;width:46px;height:46px;border-radius:10px;display:flex;align-items:center;justify-content:center;font-size:11px;font-weight:700;color:#fff}
+.action .body{flex:1}
+.action .body b{font-size:13.5px}
+.action .body p{font-size:12px;color:#9aa9bd;margin:3px 0 0;line-height:1.7}
+.src-list{font-size:12.5px;color:#cbd5e1;line-height:2}
+.grade{display:inline-block;width:22px;height:22px;line-height:22px;text-align:center;border-radius:50%;font-size:10px;font-weight:700;margin-right:6px;color:#fff}
+.bound{font-size:12.5px;line-height:1.95;color:#cbd5e1}
+.author{display:flex;gap:16px;align-items:flex-start;flex-wrap:wrap}
+.author .badge{width:84px;height:84px;border-radius:50%;background:linear-gradient(135deg,#15803d,#0e7490);display:flex;align-items:center;justify-content:center;font-size:24px;flex:none;color:#fff;font-weight:700}
+.author .roles{font-size:12.5px;line-height:2;color:#cbd5e1}
+.tagline{font-size:12px;color:#8fa3bf;font-style:italic;margin-top:8px}
+.disc{font-size:11.5px;color:#6b7d96;line-height:1.8;text-align:center}
+.btn{background:#15803d;color:#fff;border:0;padding:10px 22px;border-radius:8px;font-size:14px;font-weight:600;cursor:pointer;text-decoration:none;display:inline-block}
+.bigquote{font-size:15px;line-height:2;text-align:center;color:#e6edf3}
+.plain{margin-top:9px;background:#081a0e;border:1px solid #14532d;border-left:3px solid #22c55e;border-radius:8px;padding:10px 12px;font-size:12.3px;line-height:1.85;color:#cdeecf}
+.plain .lab{display:block;font-size:10.5px;font-weight:800;color:#4ade80;letter-spacing:1px;margin-bottom:3px}
+.chart{width:100%;height:230px}
 </style></head><body>
 
 <div class="nav">
@@ -39,136 +70,249 @@ h1{font-size:22px;margin:0 0 4px}
 </div>
 
 <div class="wrap">
-  <h1>博罗县产业决策风洞 · 分析报告</h1>
-  <p class="sub">Demo版 · 基于公开数据的结构分析，不构成投资建议</p>
 
-  <div class="report">
-    <h2>一、博罗现在在哪里</h2>
-    <p>2025年，博罗县GDP达到<span class="k">1005.45亿元</span>，同比增长5.5%，成为<span class="k">广东省首个千亿县</span>。</p>
-    <div id="r1" class="chart"></div>
-    <p>三次产业结构10.7:54.6:34.7——工业是主航道，一产占比在广东县里偏高。规上工业增加值增长8.7%，电子信息+23%最猛。</p>
-    <div class="src">数据来源：博罗县统计局《2025年博罗国民经济和社会发展统计公报》</div>
+  <!-- 封面 -->
+  <div class="cover">
+    <div class="kick">区域产业决策风洞 · 第四类样本</div>
+    <h1>博罗县产业决策<br>模拟推演分析报告</h1>
+    <div style="font-size:13px;color:#cbd5e1">——广东首个千亿县，在大湾区网络里的位置与可能（Demo版）</div>
+    <div class="meta">作者：<b style="color:#fbbf24">张凌 博士</b> &nbsp;|&nbsp; 2026年10月 · 广东惠州</div>
   </div>
 
-  <div class="report">
-    <h2>二、博罗在大湾区网络里的位置</h2>
-    <p>博罗连得最紧的线，不是连到自己县城罗阳，是连到<span class="k">东莞</span>。园洲344亿、石湾2513家企业，都在西边挨着东莞。</p>
-    <div id="r2" class="chart"></div>
-    <p>赣深高铁通车后，博罗到深圳约30分钟。这条链接正在变粗。罗浮山每年1028万游客，大量来自广深。</p>
+  <!-- 一页看懂 -->
+  <div class="card">
+    <h2>一、一页看懂：现在什么状态</h2>
+    <div class="lights">
+      <div class="g"><span class="dot"></span>GDP过千亿：1005亿、+5.5%，广东首个千亿县</div>
+      <div class="g"><span class="dot"></span>工业稳：规上工业增加值+8.7%</div>
+      <div class="g"><span class="dot"></span>电子信息猛：+23%，是第一大行业</div>
+      <div class="g"><span class="dot"></span>文旅热：游客1028万、收入+19.1%</div>
+      <div class="y"><span class="dot"></span>消费+3.9%，三产增速仅2.7%</div>
+      <div class="y"><span class="dot"></span>城镇化率60%，还有提升空间</div>
+      <div class="r"><span class="dot"></span>固定资产投资-18.8%</div>
+      <div class="r"><span class="dot"></span>房地产投资-47.6%（调整最深）</div>
+    </div>
+    <p style="font-size:13px;color:#cbd5e1;margin:8px 0 0">一句话：<b style="color:#fbbf24">工业这条主航道跑得稳，文旅农业有亮点；投资正在换挡，关键看新产能能不能按时接上。</b></p>
   </div>
 
-  <div class="report">
-    <h2>三、2030年：从1005到1600</h2>
-    <p>目标5年增长59%，年均约9.7%。2025年实际增速5.5%——目标比当前速度快了近一倍。</p>
-    <div id="r3" class="chart"></div>
-    <p>蒙特卡洛模拟中位数约1500亿，达标概率约六成。这不是预测，是在当前参数下的参考区间。</p>
-    <div class="src">目标来源：博罗县委书记周耿斌访谈（2026年1月）；模拟结果为作者自建模型</div>
+  <!-- 五条发现 -->
+  <div class="card">
+    <h2>二、五条核心发现</h2>
+    <ol class="find">
+      <li><b>博罗是广东首个千亿县</b>，2025年GDP 1005.45亿元、增长5.5%；二产占54.6%，工业是主航道，电子信息、电气机械是两大支柱。</li>
+      <li><b>最大的底牌是区位</b>：西边园洲石湾贴着东莞，赣深高铁半小时到深圳，这张"地图上的资产"比GDP排名更稀缺。</li>
+      <li><b>增长靠"产业承接+新投产"双引擎</b>：两条路合计贡献约400亿，是新增量的大头，但都与东莞、深圳的外溢节奏相连。</li>
+      <li><b>最被低估的是罗浮山过夜经济和特色农业</b>：千万游客人均仅消费约500元，一产增速却最快（7.8%），提升杠杆比想象中大。</li>
+      <li><b>真正敏感的是投产节奏</b>：固投换挡期，眼前增长靠前几年产能释放，新项目按时投产才能把下一档增长接上。</li>
+    </ol>
   </div>
 
-  <div class="report">
-    <h2>四、五条路各管多少</h2>
-    <div id="r4" class="chart"></div>
-    <p>产业承接和新投产项目是主力，文旅、农业、通道是补充。五条路不是补短板，是把已经有的链接做得更厚。</p>
+  <!-- 基本面 -->
+  <div class="card">
+    <h2>三、我们站在哪：基本面快照</h2>
+    <div class="kpis">
+      <div class="kpi"><div class="v">1005亿</div><div class="l">GDP · +5.5%</div></div>
+      <div class="kpi"><div class="v">549亿</div><div class="l">二产 · +6.9%</div></div>
+      <div class="kpi"><div class="v">124万</div><div class="l">常住人口</div></div>
+      <div class="kpi"><div class="v">686家</div><div class="l">高新技术企业</div></div>
+      <div class="kpi"><div class="v" style="color:#f87171">-18.8%</div><div class="l">固定资产投资</div></div>
+      <div class="kpi"><div class="v">297亿</div><div class="l">社消零 · +3.9%</div></div>
+      <div class="kpi"><div class="v">95.3亿</div><div class="l">一般公共预算</div></div>
+      <div class="kpi"><div class="v">1028万</div><div class="l">年游客人次</div></div>
+    </div>
+    <div class="two">
+      <div>
+        <h3 style="margin-top:6px">三次产业结构</h3>
+        <div id="rStruct" class="chart"></div>
+        <div class="plain"><span class="lab">人话版</span>博罗每赚100块，55块来自工厂，35块来自商场餐馆旅游，还有11块来自种地。和市中心城区比，博罗农业占比不低，但这正是它的特色——近49万农村人口、大湾区的菜篮子，都在这11块里。</div>
+      </div>
+      <div>
+        <h3 style="margin-top:6px">工业两大引擎增速</h3>
+        <div id="rInd" class="chart"></div>
+        <div class="plain"><span class="lab">人话版</span>电子信息一年增长23%，是跑得最快的行业；电气机械增长13.7%。这两个行业加起来占了规上工业的三分之一还多，是博罗工业的两台主发动机，而且都和东莞深圳的产业链连着。</div>
+      </div>
+    </div>
   </div>
 
-  <div class="report">
-    <h2>五、可能被忽略的</h2>
-    <div id="r5" class="chart"></div>
-    <p>1. 区位是最大优势——挨着东莞、半小时到深圳<br>
-    2. 罗浮山人均消费仅500元，提升空间大<br>
-    3. 一产107亿是特色，不是落后<br>
-    4. 博罗不需要成为第二个惠城<br>
-    5. 固投收缩是节奏问题，不是崩盘</p>
+  <!-- 离目标多远 -->
+  <div class="card">
+    <h2>四、离2030目标还有多远</h2>
+    <h3>GDP爬坡：从千亿到1600亿</h3>
+    <div id="rClimb" class="chart"></div>
+    <div class="plain"><span class="lab">人话版</span>5年要从1005亿涨到1600亿，相当于年均跑9.7%，而2025年实际增速是5.5%——目标比当前节奏快了近一倍。这不是匀速爬坡，而是靠几个大项目投产"跳台阶"，每一级都得踩稳。</div>
+    <h3>2030年三种可能</h3>
+    <div id="rScen" class="chart"></div>
+    <div class="plain"><span class="lab">人话版</span>顺的时候约1800亿，比目标高；一半一半约1500亿，离目标线不远；不顺时约1100亿，守住千亿但离1600差一大截。中位那档离目标线距离不大，一个关键项目晚投产，就可能滑到下面一档。</div>
   </div>
 
-  <div class="disc">
-    ⚠️ <b>模型边界与免责声明</b><br>
-    1. 本报告基于公开数据，不构成任何投资建议或政策判断。<br>
-    2. 所有模拟结果均为"在当前假设参数下的参考区间"，不是预测。<br>
-    3. 网络结构和路径系数为作者根据公开信息构建，边权重含假设成分。<br>
-    4. 本项目为个人独立完成，无课题、无商业赞助。
+  <!-- 决策者三件事 -->
+  <div class="card" style="border-color:#7f1d1d">
+    <h2>五、决策者最该重视的三件事</h2>
+    <h3>1. 两本账分开看：常规波动 vs 现实场景</h3>
+    <p style="font-size:12.5px;color:#cbd5e1;margin:0;line-height:1.85">常规敏感性里，投资、外需等参数扰动，投资与外需靠前；另一本是单独做的<b>受控场景压测</b>——把"关键项目投产延期""通道拥堵"这类现实里真可能发生的事单独压一遍，它们不在常规排序里，但一旦发生更直接。</p>
+    <h3>2. 先做"影响大、自己可控"的事</h3>
+    <div id="rMatrix" class="chart"></div>
+    <div class="plain"><span class="lab">人话版</span>越靠右上角，越是"自己说了算、又管用"的事——盯投产节点、做园区配套、打通道，都在这一片；而外需、全球环境虽然热闹，钥匙不全在自己手里。先把自己能掌控的事办好，心里才踏实。</div>
+    <h3>3. 时间窗口不等人</h3>
+    <p style="font-size:12.5px;color:#cbd5e1;margin:0">"再等等、稳一点"听起来轻，但在有明确投产节点的系统里，晚一点会明显拉低达标可能。<b style="color:#f87171">该上的项目、该通的路，窗口就这几年。</b></p>
   </div>
 
-  <div class="author">
-    <b>作者：张凌 博士</b><br>
-    高校副教授 · 南粤优秀教师 · 国际SCI期刊审稿人<br>
-    广东省乡村振兴驻镇工作队 · 曾担任驻村第一书记<br>
-    📧 68588368@qq.com ｜ zhangyu0703@gmail.com<br>
-    <span style="color:#4b5a70">开源项目：MIT协议 · 代码和数据公开可复现 · 你可以改我的参数</span>
+  <!-- 因素影响 -->
+  <div class="card">
+    <h2>六、哪些因素最牵动结果</h2>
+    <div id="rCoef" class="chart"></div>
+    <div class="plain"><span class="lab">人话版</span>排在最前的是"项目能不能按时投产"和"东莞外溢节奏"；房地产虽然跌得深（-47.6%），但对GDP的实际传导反而靠后。这正是反常识的地方：<b>跌得最响的，不一定是最牵动全局的。</b></div>
   </div>
 
-  <div class="next"><a href="ending.html">最后一页 →</a></div>
+  <!-- 老百姓 -->
+  <div class="card people">
+    <h2 style="border-color:#713f12;color:#fbbf24">七、这和普通老百姓有什么关系</h2>
+    <div class="two">
+      <div><div class="q">在园洲石湾上班，机会会更多吗？</div><div class="a">西边挨着东莞，工厂和配套多，产业承接带来的岗位首先落在这一片，家门口的工作机会会跟着多。</div></div>
+      <div><div class="q">柏塘种茶、福田种菜，能卖出更好价钱吗？</div><div class="a">山茶菜心是地理标志品牌，品牌化、电商卖全国，收购价和农户收入都有提升空间。</div></div>
+      <div><div class="q">罗浮山开民宿餐馆，有奔头吗？</div><div class="a">游客已经上千万，如果更多人过夜，住宿、餐饮、夜间消费的生意会明显更旺。</div></div>
+      <div><div class="q">年轻人留博罗，还是去深圳？</div><div class="a">高铁半小时到深圳，既可以去深圳上班，也可以回博罗居住消费，通勤圈变了，选择比以前多。</div></div>
+    </div>
+  </div>
+
+  <!-- 行动建议 -->
+  <div class="card">
+    <h2>八、行动建议（按轻重缓急）</h2>
+    <div class="action"><div class="pri" style="background:#b91c1c">优先</div><div class="body"><b>盯紧新投产项目节点</b><p>把重大项目列清单、节点到人，尽量避免延期，换挡期增长底盘才稳。</p></div></div>
+    <div class="action"><div class="pri" style="background:#b91c1c">优先</div><div class="body"><b>接住东莞深圳外溢</b><p>做强园洲石湾承接平台和深莞共建园，把区位优势变成实实在在的项目和岗位。</p></div></div>
+    <div class="action"><div class="pri" style="background:#c2410c">重要</div><div class="body"><b>做强罗浮山过夜经济</b><p>补住宿、夜间消费和康养配套，让千万游客多留半天、多消费一笔。</p></div></div>
+    <div class="action"><div class="pri" style="background:#c2410c">重要</div><div class="body"><b>特色农业品牌化</b><p>把山茶、菜心、南药做成品牌、打通电商，带动近49万农村人口增收。</p></div></div>
+    <div class="action"><div class="pri" style="background:#15803d">持续</div><div class="body"><b>打通融深融莞通道</b><p>用好高铁、枢纽和过江通道，缩短通勤物流时间，放大通道效应。</p></div></div>
+    <p style="font-size:11px;color:#5b6b82;margin:10px 0 0">建议方向对应博罗"产业强县、文旅兴旺、乡村振兴、融深融莞"等官方战略表述，为模拟推演的优先级提示，非替代官方决策。</p>
+  </div>
+
+  <!-- 数据来源 -->
+  <div class="card">
+    <h2>九、数据来源与分级</h2>
+    <div class="src-list">
+      <div><span class="grade" style="background:#14532d">A</span><b>实测</b>：统计公报、政府工作报告中直接给出的数字</div>
+      <div><span class="grade" style="background:#1e40af">B</span><b>推估</b>：部分历史序列按公开增速回推</div>
+      <div><span class="grade" style="background:#713f12">C</span><b>代理</b>：镇街级联系与供给代理，非逐镇街实查</div>
+      <div><span class="grade" style="background:#7f1d1d">D</span><b>假设</b>：网络边权重、路径贡献、跨城通勤强度</div>
+    </div>
+    <h3>主要公开来源</h3>
+    <div style="font-size:12px;color:#cbd5e1;line-height:2">
+      · 博罗县人民政府门户网站及统计部门发布<br>
+      · 《2025年博罗国民经济和社会发展统计公报》<br>
+      · 博罗县政府工作报告、县委主要领导公开访谈<br>
+      · 南方+等官方媒体公开报道、上市公司公告
+    </div>
+  </div>
+
+  <!-- 边界 -->
+  <div class="card">
+    <h2>十、模型边界与免责声明</h2>
+    <div class="bound">
+      1. <b>不是预测器</b>：不预测具体产值或招商成败，只在公开数据与明确假设下给出叙事分布与结构提示。<br>
+      2. <b>不做因果断言</b>：统一使用"关联、同步、结构提示"，路径系数为模型内部关联，不代表现实因果。<br>
+      3. <b>反事实不可验证，但参数可核对</b>：每个参数都能回到公开资料核对。<br>
+      4. <b>可复现</b>：固定随机种子后结果完全可复现；网络指标由代码实时计算，非硬编码。<br>
+      5. <b>两本账</b>：参数敏感性与受控场景压测分开计算、分开解读，不混排。<br>
+      6. <b>不构成投资建议</b>，亦不替代官方决策；结论随假设改变而改变。
+    </div>
+  </div>
+
+  <!-- 作者 -->
+  <div class="card">
+    <h2>十一、作者介绍</h2>
+    <div class="author">
+      <div class="badge">张凌</div>
+      <div style="flex:1;min-width:240px">
+        <div style="font-size:16px;font-weight:700;color:#fbbf24">张凌 博士</div>
+        <div class="roles">
+          · 高校副教授<br>
+          · 南粤优秀教师<br>
+          · 国际SCI期刊审稿人<br>
+          · 广东省乡村振兴驻镇工作队成员<br>
+          · 曾任驻村第一书记
+        </div>
+        <div class="tagline">"把不确定性，变成可拍板的结构。"</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="card">
+    <p class="bigquote" style="margin:4px 0">博罗的较量，不在补齐自己缺的，<br>而在看清<b style="color:#4ade80">自己在大湾区网络里，已经占着哪些位置、还能多占几个</b>。</p>
+    <p class="disc" style="margin-top:14px">本报告为Demo演示版本。数据以博罗县统计公报与官方发布为准；2030年1600亿等为参考外延目标，非现行刚性指标。模拟结果仅代表当前数据、参数与规则下的压力测试，不代表精确预测，亦不构成投资建议。</p>
+  </div>
+
+  <div style="text-align:center;margin:22px 0"><a class="btn" href="index.html">回到首页</a></div>
 </div>
 
 <script>
-const dark={text:'#93a4bd',axis:'#2b3a55'};
+const tip={backgroundColor:'#16203a',borderColor:'#2b3a55',textStyle:{color:'#e6edf3'}};
+function mk(id){return echarts.init(document.getElementById(id))}
+const cStruct=mk('rStruct'),cInd=mk('rInd'),cClimb=mk('rClimb'),cScen=mk('rScen'),cMatrix=mk('rMatrix'),cCoef=mk('rCoef');
 
-echarts.init(document.getElementById('r1')).setOption({
-  backgroundColor:'transparent',
-  tooltip:{trigger:'axis',backgroundColor:'#16203a',borderColor:'#2b3a55',textStyle:{color:'#e6edf3'}},
-  grid:{left:50,right:20,top:20,bottom:30},
-  xAxis:{type:'category',data:['2021','2022','2023','2024','2025'],axisLabel:{color:dark.text}},
-  yAxis:{type:'value',axisLabel:{color:dark.text},splitLine:{lineStyle:{color:'#1c2739'}}},
-  series:[{type:'line',data:[695,783,869,952,1005],smooth:true,lineStyle:{color:'#22c55e',width:3},areaStyle:{color:'rgba(34,197,94,.2)'},itemStyle:{color:'#22c55e'}}]
-});
-
-echarts.init(document.getElementById('r2')).setOption({
-  backgroundColor:'transparent',
-  tooltip:{trigger:'item',backgroundColor:'#16203a',borderColor:'#2b3a55',textStyle:{color:'#e6edf3'}},
-  series:[{type:'graph',layout:'none',roam:false,
-    nodes:[
-      {x:300,y:120,name:'博罗',symbolSize:50,itemStyle:{color:'#22c55e'},label:{show:true,color:'#fff',fontSize:12}},
-      {x:100,y:180,name:'东莞',symbolSize:40,itemStyle:{color:'#3b82f6'},label:{show:true,color:'#fff'}},
-      {x:200,y:50,name:'广州',symbolSize:35,itemStyle:{color:'#6b7280'},label:{show:true,color:'#fff'}},
-      {x:450,y:80,name:'深圳',symbolSize:40,itemStyle:{color:'#a78bfa'},label:{show:true,color:'#fff'}},
-      {x:500,y:180,name:'惠州',symbolSize:30,itemStyle:{color:'#6b7280'},label:{show:true,color:'#fff'}}
-    ],
-    links:[
-      {source:'博罗',target:'东莞',lineStyle:{width:5,color:'#22c55e'}},
-      {source:'博罗',target:'深圳',lineStyle:{width:3,color:'#a78bfa'}},
-      {source:'博罗',target:'广州',lineStyle:{width:2,color:'#6b7280'}},
-      {source:'博罗',target:'惠州',lineStyle:{width:2,color:'#6b7280'}}
-    ]
-  }]
-});
-
-echarts.init(document.getElementById('r3')).setOption({
-  backgroundColor:'transparent',
-  tooltip:{trigger:'axis',backgroundColor:'#16203a',borderColor:'#2b3a55',textStyle:{color:'#e6edf3'}},
-  grid:{left:50,right:20,top:20,bottom:30},
-  xAxis:{type:'category',data:['2025','2026','2027','2028','2029','2030'],axisLabel:{color:dark.text}},
-  yAxis:{type:'value',min:900,axisLabel:{color:dark.text},splitLine:{lineStyle:{color:'#1c2739'}}},
-  series:[
-    {type:'line',data:[1005,1070,1145,1240,1380,1600],smooth:true,lineStyle:{color:'#fbbf24',width:2,type:'dashed'},itemStyle:{color:'#fbbf24'},areaStyle:{color:'rgba(251,191,36,.1)'}}
-  ]
-});
-
-echarts.init(document.getElementById('r4')).setOption({
-  backgroundColor:'transparent',
-  tooltip:{trigger:'item',backgroundColor:'#16203a',borderColor:'#2b3a55',textStyle:{color:'#e6edf3'}},
-  series:[{type:'pie',radius:['40%','70%'],
+cStruct.setOption({backgroundColor:'transparent',tooltip:tip,
+  series:[{type:'pie',radius:['42%','70%'],
     data:[
-      {value:220,name:'产业承接升级',itemStyle:{color:'#22c55e'}},
-      {value:180,name:'新投产项目',itemStyle:{color:'#3b82f6'}},
-      {value:70,name:'融深融莞',itemStyle:{color:'#a78bfa'}},
-      {value:60,name:'罗浮山文旅',itemStyle:{color:'#fbbf24'}},
-      {value:45,name:'特色农业',itemStyle:{color:'#84cc16'}}
-    ],
-    label:{color:'#cbd5e1',fontSize:11}
-  }]
-});
+      {value:10.7,name:'一产 10.7%',itemStyle:{color:'#84cc16'}},
+      {value:54.6,name:'二产 54.6%',itemStyle:{color:'#22c55e'}},
+      {value:34.7,name:'三产 34.7%',itemStyle:{color:'#3b82f6'}}
+    ],label:{color:'#cbd5e1',fontSize:10.5}}]});
 
-echarts.init(document.getElementById('r5')).setOption({
-  backgroundColor:'transparent',
-  tooltip:{backgroundColor:'#16203a',borderColor:'#2b3a55',textStyle:{color:'#e6edf3'}},
-  radar:{indicator:[
-    {name:'区位优势',max:10},
-    {name:'文旅潜力',max:10},
-    {name:'农业特色',max:10},
-    {name:'工业基础',max:10},
-    {name:'投资韧性',max:10}
-  ],axisName:{color:'#cbd5e1',fontSize:11},splitLine:{lineStyle:{color:'#1c2739'}},splitArea:{areaStyle:{color:['rgba(34,197,94,.02)','rgba(34,197,94,.05)']}}},
-  series:[{type:'radar',data:[{value:[9,7,8,8,5],name:'博罗评估',areaStyle:{color:'rgba(34,197,94,.3)'},lineStyle:{color:'#22c55e'},itemStyle:{color:'#22c55e'}}]}]
-});
+cInd.setOption({backgroundColor:'transparent',tooltip:{trigger:'axis',...tip},
+  grid:{left:75,right:25,top:15,bottom:30},
+  xAxis:{type:'value',axisLabel:{color:'#6b7d96',formatter:'{value}%'},splitLine:{lineStyle:{color:'#1c2739'}}},
+  yAxis:{type:'category',data:['电气机械','电子信息'],axisLabel:{color:'#cbd5e1'}},
+  series:[{type:'bar',data:[
+    {value:13.7,itemStyle:{color:'#3b82f6'}},
+    {value:23.0,itemStyle:{color:'#22c55e'}}
+  ],barWidth:26,label:{show:true,position:'right',color:'#cbd5e1',formatter:'{c}%'}}]});
+
+cClimb.setOption({backgroundColor:'transparent',tooltip:{trigger:'axis',...tip},
+  legend:{top:0,textStyle:{color:'#93a4bd',fontSize:10.5}},
+  grid:{left:55,right:25,top:35,bottom:30},
+  xAxis:{type:'category',data:['2025','2026','2027','2028','2029','2030'],axisLabel:{color:'#6b7d96'}},
+  yAxis:{type:'value',min:950,axisLabel:{color:'#6b7d96'},splitLine:{lineStyle:{color:'#1c2739'}}},
+  series:[
+    {name:'目标轨道',type:'line',data:[1005,1080,1170,1280,1420,1600],lineStyle:{color:'#fbbf24',type:'dashed',width:2},itemStyle:{color:'#fbbf24'},symbol:'diamond',symbolSize:7},
+    {name:'自然增长5.5%',type:'line',data:[1005,1061,1119,1180,1245,1314],lineStyle:{color:'#6b7280',width:2},itemStyle:{color:'#6b7280'},symbol:'none'}
+  ]});
+
+cScen.setOption({backgroundColor:'transparent',tooltip:{trigger:'axis',...tip},
+  grid:{left:55,right:25,top:20,bottom:30},
+  xAxis:{type:'category',data:['不顺','一半一半','顺利'],axisLabel:{color:'#cbd5e1'}},
+  yAxis:{type:'value',min:900,axisLabel:{color:'#6b7d96'},splitLine:{lineStyle:{color:'#1c2739'}}},
+  series:[
+    {type:'bar',data:[
+      {value:1100,itemStyle:{color:'#f87171'}},
+      {value:1500,itemStyle:{color:'#fbbf24'}},
+      {value:1800,itemStyle:{color:'#22c55e'}}
+    ],barWidth:40,label:{show:true,position:'top',color:'#cbd5e1',formatter:'{c}亿'},
+    markLine:{silent:true,symbol:'none',data:[{yAxis:1600,lineStyle:{color:'#a78bfa',type:'dashed'},label:{color:'#a78bfa',formatter:'目标1600'}}]}}
+  ]});
+
+cMatrix.setOption({backgroundColor:'transparent',tooltip:tip,
+  grid:{left:55,right:30,top:20,bottom:45},
+  xAxis:{name:'自己可控 →',nameLocation:'middle',nameGap:28,min:0,max:10,axisLabel:{color:'#6b7d96'},splitLine:{lineStyle:{color:'#1c2739'}},nameTextStyle:{color:'#6b7d96'}},
+  yAxis:{name:'影响 →',nameLocation:'middle',nameGap:32,min:0,max:10,axisLabel:{color:'#6b7d96'},splitLine:{lineStyle:{color:'#1c2739'}},nameTextStyle:{color:'#6b7d96'}},
+  series:[{type:'scatter',symbolSize:22,data:[
+    {value:[8.5,9],name:'盯投产节点'},{value:[8,8],name:'园区配套'},
+    {value:[7.5,7.5],name:'融深通道'},{value:[7,6.5],name:'文旅配套'},
+    {value:[7,6],name:'农业品牌'},{value:[4,3.5],name:'外需'},{value:[3,2.5],name:'全球环境'}
+  ],itemStyle:{color:'#4ade80'},
+    label:{show:true,position:'top',color:'#cbd5e1',fontSize:9.5,formatter:p=>p.data.name}}]});
+
+cCoef.setOption({backgroundColor:'transparent',tooltip:{trigger:'axis',...tip},
+  grid:{left:95,right:45,top:15,bottom:30},
+  xAxis:{type:'value',max:1,axisLabel:{color:'#6b7d96'},splitLine:{lineStyle:{color:'#1c2739'}}},
+  yAxis:{type:'category',data:['房地产','文旅','农业','融深通道','东莞外溢','投产工期'],axisLabel:{color:'#cbd5e1',fontSize:11}},
+  series:[{type:'bar',data:[
+    {value:0.28,itemStyle:{color:'#94a3b8'}},
+    {value:0.42,itemStyle:{color:'#fbbf24'}},
+    {value:0.4,itemStyle:{color:'#84cc16'}},
+    {value:0.55,itemStyle:{color:'#a78bfa'}},
+    {value:0.74,itemStyle:{color:'#3b82f6'}},
+    {value:0.82,itemStyle:{color:'#22c55e'}}
+  ],barWidth:17,label:{show:true,position:'right',color:'#93a4bd',fontSize:10}}]});
+
+window.addEventListener('resize',()=>[cStruct,cInd,cClimb,cScen,cMatrix,cCoef].forEach(c=>c.resize()));
 </script>
 </body></html>

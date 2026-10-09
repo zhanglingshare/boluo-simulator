@@ -1,24 +1,49 @@
 <!doctype html>
 <html lang="zh-CN"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
-<title>博罗产业风洞 · 结语</title>
+<title>让每一个重大决策，先跑一遍 · 博罗产业风洞</title>
+<script src="https://cdn.jsdelivr.net/npm/echarts@5.4.3/dist/echarts.min.js"></script>
 <style>
 *{box-sizing:border-box}
-body{margin:0;background:#080b12;color:#e6edf3;font:14px/1.6 -apple-system,"PingFang SC","Microsoft YaHei",sans-serif}
+body{margin:0;background:#080b12;color:#e6edf3;font:14px/1.7 -apple-system,"PingFang SC","Microsoft YaHei",sans-serif}
 .nav{position:sticky;top:0;z-index:50;display:flex;gap:5px;align-items:center;padding:9px 14px;background:rgba(8,11,18,.95);border-bottom:1px solid #1b2434;overflow-x:auto}
 .nav b{font-size:14px;margin-right:6px;flex:none}
 .nav a{background:#131c2b;color:#93a4bd;border:1px solid #22304a;padding:6px 12px;border-radius:20px;font-size:12.5px;text-decoration:none;white-space:nowrap;flex:none}
 .nav a.on{background:#15803d;border-color:#22c55e;color:#fff;font-weight:600}
-.wrap{max-width:720px;margin:auto;padding:40px 20px;text-align:center}
-h1{font-size:26px;margin:20px 0;letter-spacing:1px}
-.big{font-size:18px;line-height:2.2;color:#c8d3e0;margin:30px 0}
-.green{color:#4ade80;font-weight:700}
-.gray{color:#6b7d96;font-size:12.5px;margin-top:40px;line-height:2}
-.three{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin:30px 0}
-@media(max-width:700px){.three{grid-template-columns:1fr}}
-.tile{background:#0e1523;border:1px solid #1c2739;border-radius:10px;padding:16px}
-.tile .n{font-size:24px;font-weight:800;color:#22c55e}
-.tile .l{font-size:11px;color:#8fa3bf;margin-top:4px}
-a.home{display:inline-block;margin-top:30px;background:#15803d;color:#fff;padding:10px 28px;border-radius:8px;text-decoration:none;font-weight:600}
+.wrap{max-width:880px;margin:auto;padding:18px}
+.hero{text-align:center;padding:44px 22px;background:radial-gradient(ellipse at top,#0c2a1a 0%,#0a0f1a 70%);border:1px solid #1c2739;border-radius:16px;margin-bottom:14px}
+.hero .kick{font-size:12px;letter-spacing:3px;color:#4ade80;margin-bottom:14px}
+.hero h1{font-size:25px;line-height:1.5;margin:0}
+.hero p{font-size:13px;color:#9aa9bd;margin:14px 0 0}
+.card{background:#0e1523;border:1px solid #1c2739;border-radius:12px;padding:18px;margin-bottom:14px}
+.card h2{font-size:16px;margin:0 0 12px;padding-bottom:8px;border-bottom:1px solid #1c2739}
+.policy{background:linear-gradient(160deg,#081a10,#0e1523);border-color:#14532d}
+.quote{border-left:3px solid #4ade80;background:#0a0f1a;border-radius:0 8px 8px 0;padding:9px 12px;margin:9px 0;font-size:12.5px;color:#d7f0dd;line-height:1.85}
+.quote b{color:#86efac}
+.src{font-size:11px;color:#6b7d96;margin-top:6px}
+.world .row{display:flex;gap:11px;align-items:flex-start;background:#0a0f1a;border:1px solid #1c2739;border-radius:10px;padding:11px 13px;margin-bottom:9px}
+.world .flag{flex:none;width:52px;font-size:12px;font-weight:800;color:#fbbf24}
+.world .txt{flex:1;font-size:12.3px;color:#cbd5e1;line-height:1.8}
+.world .txt b{color:#e6edf3}
+.world .note{font-size:12.5px;color:#9aa9bd;text-align:center;margin-top:10px;line-height:1.9}
+.why{display:grid;grid-template-columns:repeat(3,1fr);gap:12px}
+@media(max-width:700px){.why{grid-template-columns:1fr}}
+.why .step{background:#0a0f1a;border:1px solid #1c2739;border-radius:10px;padding:14px}
+.why .step .n{font-size:11px;font-weight:800;color:#4ade80;letter-spacing:1px}
+.why .step h3{font-size:13.5px;margin:6px 0;color:#fbbf24}
+.why .step p{font-size:12px;color:#a9b6c9;margin:0;line-height:1.85}
+.chart{width:100%;height:300px}
+.grid6{display:grid;grid-template-columns:repeat(3,1fr);gap:11px}
+@media(max-width:700px){.grid6{grid-template-columns:1fr 1fr}}
+.feat{background:#0a0f1a;border:1px solid #1c2739;border-radius:10px;padding:13px}
+.feat b{font-size:12.8px;color:#e6edf3;display:block;margin-bottom:4px}
+.feat span{font-size:11px;color:#8fa3bf;line-height:1.7}
+.closing{text-align:center;padding:34px 24px;background:linear-gradient(160deg,#0a1a0e,#0a0f1a);border:1px solid #14532d;border-radius:14px;margin-bottom:14px}
+.closing .big{font-size:15px;line-height:2.1;color:#e6edf3}
+.closing .big b{color:#4ade80}
+.sign{font-size:12px;color:#8fa3bf;margin-top:18px}
+.sign b{color:#fbbf24}
+.btn{background:#15803d;color:#fff;border:0;padding:11px 24px;border-radius:8px;font-size:14px;font-weight:600;cursor:pointer;text-decoration:none;display:inline-block}
+.btn.ghost{background:transparent;border:1px solid #2b3c5a;color:#cbd5e1}
 </style></head><body>
 
 <div class="nav">
@@ -35,40 +60,123 @@ a.home{display:inline-block;margin-top:30px;background:#15803d;color:#fff;paddin
 </div>
 
 <div class="wrap">
-  <h1>博罗拿到了广东首个千亿县</h1>
 
-  <div class="big">
-    这不是终点。<br><br>
-    它是博罗在大湾区网络里的一个新起点。<br><br>
-    博罗不需要成为另一个惠城，<br>
-    也不需要成为另一个东莞。<br><br>
-    它需要想清楚的是：<br>
-    <span class="green">在这个几万亿的大湾区里，</span><br>
-    <span class="green">博罗最不可替代的那个位置是什么？</span>
+  <div class="hero">
+    <div class="kick">结 语</div>
+    <h1>让每一个重大决策，先跑一遍</h1>
+    <p>我们不替任何人做决定，只想在拍板之前，多帮着看一步路。</p>
   </div>
 
-  <div class="three">
-    <div class="tile"><div class="n">1005亿</div><div class="l">2025 GDP · 广东首个千亿县</div></div>
-    <div class="tile"><div class="n">1028万</div><div class="l">年游客 · 罗浮山</div></div>
-    <div class="tile"><div class="n">1600亿</div><div class="l">2030目标</div></div>
+  <!-- 数字中国 -->
+  <div class="card policy">
+    <h2>这件事，在“数字中国”的蓝图里</h2>
+    <p style="font-size:12.5px;color:#cbd5e1;margin:0">县域决策的科学化，不是心血来潮，而是国家早已指明的方向。</p>
+    <div class="quote">“十四五”规划和2035年远景目标纲要提出：<b>“加快构建数字技术辅助政府决策机制，提高基于高频大数据精准动态监测预测预警水平”</b>，并要求<b>“探索建设数字孪生城市”</b>。</div>
+    <div class="quote">2023年《数字中国建设整体布局规划》按照“2522”整体框架，要求数字技术与经济、政治、社会等深度融合，<b>“发展高效协同的数字政务”</b>，并强调夯实县域数字基础。</div>
+    <p style="font-size:12.5px;color:#cbd5e1;margin:10px 0 0">这台小小的县域风洞，正是把“数字技术辅助决策”落到博罗这样一个千亿县的具体尝试——它不宏大，却是数字中国这座大厦里一块<b style="color:#86efac">看得见、摸得着、可核对</b>的砖。</p>
+    <div class="src">依据来源：中国政府网公开发布的“十四五”规划纲要、《数字中国建设整体布局规划》。</div>
   </div>
 
-  <div class="big" style="font-size:15px;color:#8fa3bf">
-    产业、文旅、农业、通道——四张牌。<br>
-    不需要每张都打满，需要想清楚先打哪张。<br><br>
-    这就是风洞的意义：<br>
-    不是替你做决定，<br>
-    是把你没看见的未来，先跑给你看。
+  <!-- 国际 -->
+  <div class="card world">
+    <h2>放眼世界，“先算后干”早已是通行做法</h2>
+    <p style="font-size:12.5px;color:#cbd5e1;margin:0 0 12px">越是成熟的经济体，越舍得在区域决策前的推演上下功夫。</p>
+    <div class="row"><div class="flag">新加坡</div><div class="txt">试错不起，建成全球首个国家级数字孪生 <b>Virtual Singapore</b>，整座城装进电脑，规划、建设、应急都先“试一遍”。</div></div>
+    <div class="row"><div class="flag">美国</div><div class="txt">州和地方政府常用区域经济模型（<b>REMI、IMPLAN</b>），加税、修路、能源政策出台前，先算清带来多少就业、多少收入。</div></div>
+    <div class="row"><div class="flag">日本</div><div class="txt">国土交通省主导 <b>Project PLATEAU</b>，为约250个城市建成三维城市模型并开放数据，规划、防洪防灾先在上面模拟。</div></div>
+    <div class="row"><div class="flag">韩国</div><div class="txt">把“数字孪生国土”写进国家空间政策，首尔用数字孪生实时模拟、调度交通，智慧城市先行试点。</div></div>
+    <div class="row"><div class="flag">英国</div><div class="txt">成立“地方经济增长实证中心” <b>What Works Centre</b>，用证据回答“哪些政策真能拉动地方经济”。</div></div>
+    <div class="note">这些地方并非更聪明，而是更早懂得——<b style="color:#fbbf24">决策前多花一分“算”的功夫，决策后就能少交十分“试错”的学费。</b></div>
   </div>
 
-  <a class="home" href="index.html">↻ 重新看一遍</a>
-
-  <div class="gray">
-    本项目为个人独立完成，暂无任何课题或商业赞助。<br>
-    所有数据来自博罗县政府公开统计公报和官方发布，可公开核查。<br>
-    模型参数和代码开源，MIT协议。你可以改我的参数。<br><br>
-    张凌 博士 ｜ 68588368@qq.com ｜ zhangyu0703@gmail.com
+  <!-- 为什么 -->
+  <div class="card">
+    <h2>我们为什么想做这件事</h2>
+    <div class="why">
+      <div class="step">
+        <div class="n">第一 · 数字背后是人</div>
+        <h3>每个决策都连着具体的人</h3>
+        <p>园洲赶班车的工人、柏塘种山茶的农户、罗浮山下开民宿的夫妻、为孩子学位操心的父母——县域每个重大决定，最终都落在这样的人身上。</p>
+      </div>
+      <div class="step">
+        <div class="n">第二 · 县域是个整体</div>
+        <h3>牵一发，往往动全身</h3>
+        <p>产业、农业、文旅、通道早已咬合，一个项目晚了、一条路堵了，会牵出一连串反应。只盯一个数字，容易看不见整片森林。</p>
+      </div>
+      <div class="step">
+        <div class="n">第三 · 我们的态度</div>
+        <h3>不炫技，只想帮上忙</h3>
+        <p>模拟器替代不了一线的脚步、群众的智慧和决策者的担当。它只在动手前多提供一种“先看一看”的可能，让选择更透明、能复盘。</p>
+      </div>
+    </div>
   </div>
+
+  <!-- Demo vs 正式版 -->
+  <div class="card">
+    <h2>这只是一个开始：正式版要更扎实</h2>
+    <div id="chRadar" class="chart"></div>
+    <p style="font-size:12px;color:#8fa3bf;text-align:center;margin:8px 0 0">绿线是当前Demo已做到的，橙线是正式版努力的方向。</p>
+  </div>
+
+  <!-- 正式版功课 -->
+  <div class="card">
+    <h2>正式版，还要接受更严格的检验</h2>
+    <div class="grid6">
+      <div class="feat"><b>更多压力测试</b><span>投产延期、外需波动、极端天气、产业链断点等多重压力同时发生的组合情景。</span></div>
+      <div class="feat"><b>更细地找“命门”</b><span>把每个项目、每条关系、每个参数逐一扰动，找出“最不能出错”的位置。</span></div>
+      <div class="feat"><b>成千上万次推演</b><span>让未来在不同条件下反复演化，给出更稳健的可能性分布，而不是一个数字。</span></div>
+      <div class="feat"><b>更真实的数据</b><span>对接统计、交通、就业、农业等更多真实数据源，逐步减少假设成分。</span></div>
+      <div class="feat"><b>可交互 · 可核对</b><span>决策者自己改参数、提问题、现场推演，每一步都能回到公开资料核对。</span></div>
+      <div class="feat"><b>从看见到怎么走</b><span>不止于指出哪里脆弱，更进一步和一线一起，推演具体行动怎么走、先后如何排。</span></div>
+    </div>
+  </div>
+
+  <!-- 收尾 -->
+  <div class="closing">
+    <div class="big">
+      一座县城的现代化，<br>
+      不只是产值过了千亿、路宽了、游客多了，<br>
+      更是每一个决策都更<b>郑重、透明、经得起追问</b>。<br>
+      多一个“先看一看”，或许就能让博罗少走一些弯路，<br>
+      让生活在这里的124万人，多一分安心。
+    </div>
+    <div class="sign">
+      博罗产业决策风洞 · Demo版 &nbsp;|&nbsp; <b>张凌 博士</b> · 决策模拟推演
+    </div>
+    <div style="margin-top:20px;display:flex;gap:10px;justify-content:center;flex-wrap:wrap">
+      <a class="btn" href="index.html">重新看一遍</a>
+      <a class="btn ghost" href="report.html">查看分析报告</a>
+    </div>
+    <div style="font-size:11px;color:#5b6b82;margin-top:18px;line-height:1.9">
+      本项目为个人独立完成，暂无课题、基金或商业扶持，纯个人兴趣。<br>
+      数据来自博罗县政府公开统计公报与官方发布，可公开核查。代码与参数开源（MIT）。<br>
+      张凌 博士 ｜ 68588368@qq.com ｜ zhangyu0703@gmail.com
+    </div>
+  </div>
+
 </div>
 
+<script>
+const radar=echarts.init(document.getElementById('chRadar'));
+radar.setOption({
+  backgroundColor:'transparent',
+  tooltip:{backgroundColor:'#16203a',borderColor:'#2b3a55',textStyle:{color:'#e6edf3'}},
+  legend:{bottom:0,textStyle:{color:'#93a4bd',fontSize:12}},
+  radar:{center:['50%','48%'],radius:'62%',
+    indicator:[
+      {name:'压力测试广度',max:100},{name:'找命门精度',max:100},{name:'数据真实程度',max:100},
+      {name:'未来情景丰富度',max:100},{name:'决策交互深度',max:100}
+    ],
+    axisName:{color:'#cbd5e1',fontSize:11},
+    splitLine:{lineStyle:{color:'#1c2739'}},
+    splitArea:{areaStyle:{color:['rgba(255,255,255,.01)','rgba(255,255,255,.03)']}},
+    axisLine:{lineStyle:{color:'#1c2739'}}
+  },
+  series:[{type:'radar',data:[
+    {name:'当前Demo',value:[55,50,62,55,60],lineStyle:{color:'#22c55e',width:2},itemStyle:{color:'#22c55e'},areaStyle:{color:'rgba(34,197,94,.18)'}},
+    {name:'正式版',value:[92,90,88,90,93],lineStyle:{color:'#f59e0b',width:2},itemStyle:{color:'#f59e0b'},areaStyle:{color:'rgba(245,158,11,.15)'}}
+  ]}]
+});
+window.addEventListener('resize',()=>radar.resize());
+</script>
 </body></html>

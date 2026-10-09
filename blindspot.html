@@ -9,18 +9,27 @@ body{margin:0;background:#080b12;color:#e6edf3;font:14px/1.6 -apple-system,"Ping
 .nav b{font-size:14px;margin-right:6px;flex:none}
 .nav a{background:#131c2b;color:#93a4bd;border:1px solid #22304a;padding:6px 12px;border-radius:20px;font-size:12.5px;text-decoration:none;white-space:nowrap;flex:none}
 .nav a.on{background:#15803d;border-color:#22c55e;color:#fff;font-weight:600}
-.wrap{max-width:900px;margin:auto;padding:16px}
+.wrap{max-width:920px;margin:auto;padding:16px}
 h1{font-size:20px;margin:0 0 2px}
 .sub{color:#8fa3bf;font-size:13px;margin:0 0 16px}
-.insight{background:#0e1523;border:1px solid #1c2739;border-radius:12px;padding:18px;margin-bottom:14px;border-left:3px solid #a78bfa}
+.insight{background:#0e1523;border:1px solid #1c2739;border-radius:12px;padding:20px;margin-bottom:14px;border-left:3px solid #a78bfa}
 .insight .num{font-size:11px;color:#a78bfa;font-weight:700;letter-spacing:2px}
-.insight .t{font-size:16px;font-weight:700;margin:6px 0 8px}
-.insight .d{font-size:13px;color:#93a4bf;line-height:1.9}
-.chart{width:100%;height:240px;margin:10px 0}
-.plain{background:#0f1a0e;border:1px solid #1a3a1a;border-left:3px solid #22c55e;border-radius:8px;padding:10px 12px;font-size:12.5px;line-height:1.9;color:#c8e6c9;margin-top:10px}
-.plain .lab{display:block;font-size:10.5px;font-weight:800;color:#4ade80;letter-spacing:1px;margin-bottom:3px}
+.insight .t{font-size:16.5px;font-weight:700;margin:7px 0 9px}
+.insight .d{font-size:13px;color:#a9b6c9;line-height:1.95}
+.chart{width:100%;height:250px;margin:12px 0}
+.deep{background:#0a0f1a;border-radius:9px;padding:13px 15px;margin-top:11px;font-size:12.5px;line-height:1.95}
+.deep .lab{display:block;font-size:10.5px;font-weight:800;letter-spacing:1px;margin-bottom:5px}
+.deep.green{border-left:3px solid #22c55e}
+.deep.green .lab{color:#4ade80}
+.deep.amber{border-left:3px solid #fbbf24}
+.deep.amber .lab{color:#fbbf24}
+.deep.body{color:#c8d3e0}
+.deep b{color:#fbbf24}
 .next{text-align:center;margin-top:18px}
 .next a{background:#15803d;color:#fff;padding:10px 24px;border-radius:8px;text-decoration:none;font-weight:600;display:inline-block}
+.summary{background:linear-gradient(160deg,#0c1a2e,#0e1523);border:1px solid #1e3a5f;border-radius:14px;padding:26px;text-align:center;margin-bottom:14px}
+.summary .big{font-size:16px;line-height:2.2;color:#e6edf3}
+.summary .big b{color:#4ade80}
 </style></head><body>
 
 <div class="nav">
@@ -42,66 +51,85 @@ h1{font-size:20px;margin:0 0 2px}
 
   <div class="insight">
     <div class="num">发现 1</div>
-    <div class="t">博罗最大的优势不是GDP，是它在大湾区里的位置</div>
-    <div class="d">广东首个千亿县是结果。比这个更值钱的是：挨着东莞，高铁半小时到深圳，罗浮山每年1028万游客。</div>
+    <div class="t">博罗最大的底牌，不是千亿GDP，是它在大湾区里的"坐标"</div>
+    <div class="d">广东首个千亿县是跑出来的结果。比这个结果更值钱的是它脚下的位置：西边园洲石湾贴着东莞，赣深高铁半小时到深圳，罗浮山每年上千万广深游客。</div>
     <div id="ch1" class="chart"></div>
-    <div class="plain"><span class="lab">人话</span>到东莞石龙20分钟，到深圳北约30分钟，到广州1.5小时。这个区位条件，广东很多县想要都没有。</div>
+    <div class="deep green"><span class="lab">为什么这张牌容易被忽略</span>
+      <div class="body">大家评价一个县，习惯先看GDP排名、看有多少大项目。但"到东莞20分钟、到深圳30分钟"这种区位，不会出现在任何排名表里，它是<b>地图上才看得见的资产</b>。广东能同时挨着两个万亿级城市、还通高铁的县，屈指可数。这个位置不是博罗挣来的，是地理给的——但能不能用好，取决于博罗自己。</div>
+    </div>
   </div>
 
   <div class="insight">
     <div class="num">发现 2</div>
-    <div class="t">罗浮山1028万游客，人均只花500块</div>
-    <div class="d">游客多，但大部分当天来回。如果人均消费提升，文旅收入还有很大空间。</div>
+    <div class="t">罗浮山1028万游客，人均只留下约500块</div>
+    <div class="d">游客数已经很可观，超过很多5A景区。但大部分人当天来回，门票、一顿饭就走，住宿和夜间消费几乎没留下。</div>
     <div id="ch2" class="chart"></div>
-    <div class="plain"><span class="lab">人话</span>现在人均约500元。如果提到800元，旅游收入从52亿涨到82亿。如果10%的人过夜多住一晚，住宿餐饮另算。</div>
+    <div class="deep amber"><span class="lab">这笔账被低估在哪</span>
+      <div class="body">按现在人均约500元算，旅游收入52亿。<b>同样是这1028万人，如果人均提到800元，收入就到82亿；如果有一成游客多住一晚，住宿餐饮还得另算</b>。也就是说，增长不一定靠"多拉游客"，把现有的人留住半天、多消费一笔，杠杆比想象中大。这正是"过夜经济"被反复强调的原因——它撬动的是已经进门的人。</div>
+    </div>
   </div>
 
   <div class="insight">
     <div class="num">发现 3</div>
-    <div class="t">一产107亿不是落后，是博罗的特色牌</div>
-    <div class="d">一产增速7.8%，比二产三产都高。柏塘山茶、福田菜心是国家地理标志。</div>
+    <div class="t">一产107亿，不是"落后的尾巴"，是博罗的特色牌</div>
+    <div class="d">2025年一产增速7.8%，比二产、三产都快。柏塘山茶是广东十大名茶，福田菜心是国家地理标志，罗浮山还有南药。</div>
     <div id="ch3" class="chart"></div>
-    <div class="plain"><span class="lab">人话</span>很多县一产占比已经降到5%以下，博罗还有10.7%。近49万农村人口的生计在这里。这不是短板，是特色。</div>
+    <div class="deep green"><span class="lab">为什么不该急着甩掉它</span>
+      <div class="body">很多地方把农业占比高当成"不够现代"，拼命压低。但博罗近<b>49万农村人口</b>的生计、县域的生态底色、大湾区"菜篮子""茶罐子"的定位，都系在这107亿上。农业占比10.7%在工业县里不算低，但它增速最快、还连着生态和文旅——<b>它不是要被消灭的短板，是可以做成品牌的特色</b>。把山茶、菜心卖出溢价，受益的是几十万农户。</div>
+    </div>
   </div>
 
   <div class="insight">
     <div class="num">发现 4</div>
-    <div class="t">博罗不需要成为第二个惠城</div>
-    <div class="d">惠城三产69%，博罗三产35%。但博罗是工业县+文旅县+通道节点，三张牌不需要互相替代。</div>
+    <div class="t">博罗不需要成为第二个惠城，也不需要成为第二个东莞</div>
+    <div class="d">惠城三产近七成是中心城区，东莞是世界级制造基地。博罗三产约35%、二产约55%，还带着一个完整的农业板块。</div>
     <div id="ch4" class="chart"></div>
-    <div class="plain"><span class="lab">人话</span>把博罗和惠城比三产占比没意义。惠城是市中心，博罗挨着东莞做工业。分工不同，不是谁好谁差。</div>
+    <div class="deep amber"><span class="lab">错位才是机会</span>
+      <div class="body">拿博罗和惠城比服务业占比、和东莞比工业总量，都会得出"博罗还差得远"——但这种比较本身就错位了。<b>大湾区真正需要的不是每个城市都长成一个样，而是各占一个别人替代不了的位置</b>。惠城做市中心的商务和服务，东莞做整机制造成本优势，博罗正好可以做"挨着东莞的先进制造配套 + 罗浮山文旅康养 + 特色农业 + 通道节点"。分工不同，不是高低之分。</div>
+    </div>
   </div>
 
   <div class="insight">
     <div class="num">发现 5</div>
-    <div class="t">固投在收缩，但工业还在涨——这是节奏问题</div>
-    <div class="d">固投-18.8%，但规上工业+8.7%。现在的增长来自之前投的产能释放。关键是新投资能不能接上。</div>
+    <div class="t">固投在收缩、工业还在涨——这是"换挡节奏"，不是崩盘</div>
+    <div class="d">2025年固投-18.8%，但规上工业增加值+8.7%。眼前的增长，主要靠前几年投下去的项目陆续投产、释放产能。</div>
     <div id="ch5" class="chart"></div>
-    <div class="plain"><span class="lab">人话</span>这不是博罗独有的问题，所有工业县转型期都会遇到。2026年已签4宗链主项目80亿投资，关键是能不能按时投产。</div>
+    <div class="deep amber"><span class="lab">真正要盯的是什么</span>
+      <div class="body">这不是博罗独有的情况，几乎所有工业县在转型换挡期都会遇到：<b>老产能在贡献产值，新投资还在找方向，中间容易出现"青黄不接"的窗口</b>。好消息是2026年已签约4宗链主级项目、约80亿投资，关键变量不是"有没有项目"，而是"这些项目能不能按时投产、把下一档增长接上"。这也解释了为什么前面的模型里，投产节奏的敏感度排第一。</div>
+    </div>
+  </div>
+
+  <div class="summary">
+    <div class="big">
+      五个发现，其实指向同一件事：<br>
+      博罗的较量，不在"补齐自己缺的"，<br>
+      而在<b>"看清自己在大湾区网络里，已经占着哪些位置、还能多占几个"</b>。<br>
+      区位、文旅、农业、通道、工业基础——<br>
+      这些牌一直都在，只是有些被当成了背景。<br>
+      把它们摆到桌面上，博罗的下一步会清楚得多。
+    </div>
   </div>
 
   <div class="next"><a href="report.html">下一步：分析报告 →</a></div>
 </div>
 
 <script>
-const dark={text:'#93a4bd',axis:'#2b3a55'};
+const dark={text:'#93a4bd'};
+function base(id){return echarts.init(document.getElementById(id))}
+const c1=base('ch1'),c2=base('ch2'),c3=base('ch3'),c4=base('ch4'),c5=base('ch5');
+const tip={backgroundColor:'#16203a',borderColor:'#2b3a55',textStyle:{color:'#e6edf3'}};
 
-echarts.init(document.getElementById('ch1')).setOption({
-  backgroundColor:'transparent',
-  tooltip:{trigger:'axis',backgroundColor:'#16203a',borderColor:'#2b3a55',textStyle:{color:'#e6edf3'}},
-  grid:{left:100,right:40,top:10,bottom:30},
+c1.setOption({backgroundColor:'transparent',tooltip:{trigger:'axis',...tip},
+  grid:{left:100,right:45,top:10,bottom:30},
   xAxis:{type:'value',axisLabel:{color:dark.text},splitLine:{lineStyle:{color:'#1c2739'}}},
   yAxis:{type:'category',data:['广州','深圳(高铁)','东莞石龙'],axisLabel:{color:'#cbd5e1',fontSize:12}},
   series:[{type:'bar',data:[
     {value:90,itemStyle:{color:'#6b7280'}},
     {value:30,itemStyle:{color:'#22c55e'}},
     {value:20,itemStyle:{color:'#4ade80'}}
-  ],barWidth:20,label:{show:true,position:'right',color:'#cbd5e1',formatter:'{c}分钟'}}]
-});
+  ],barWidth:20,label:{show:true,position:'right',color:'#cbd5e1',formatter:'{c}分钟'}}]});
 
-echarts.init(document.getElementById('ch2')).setOption({
-  backgroundColor:'transparent',
-  tooltip:{trigger:'axis',backgroundColor:'#16203a',borderColor:'#2b3a55',textStyle:{color:'#e6edf3'}},
+c2.setOption({backgroundColor:'transparent',tooltip:{trigger:'axis',...tip},
   grid:{left:60,right:30,top:20,bottom:30},
   xAxis:{type:'category',data:['现在','人均600','人均800','人均1000'],axisLabel:{color:dark.text}},
   yAxis:{type:'value',axisLabel:{color:dark.text},splitLine:{lineStyle:{color:'#1c2739'}}},
@@ -110,12 +138,9 @@ echarts.init(document.getElementById('ch2')).setOption({
     {value:62,itemStyle:{color:'#3b82f6'}},
     {value:82,itemStyle:{color:'#22c55e'}},
     {value:103,itemStyle:{color:'#4ade80'}}
-  ],barWidth:30,label:{show:true,position:'top',color:'#cbd5e1',formatter:'{c}亿'}}]
-});
+  ],barWidth:30,label:{show:true,position:'top',color:'#cbd5e1',formatter:'{c}亿'}}]});
 
-echarts.init(document.getElementById('ch3')).setOption({
-  backgroundColor:'transparent',
-  tooltip:{trigger:'axis',backgroundColor:'#16203a',borderColor:'#2b3a55',textStyle:{color:'#e6edf3'}},
+c3.setOption({backgroundColor:'transparent',tooltip:{trigger:'axis',...tip},
   grid:{left:60,right:30,top:20,bottom:30},
   xAxis:{type:'category',data:['一产','二产','三产'],axisLabel:{color:'#cbd5e1',fontSize:12}},
   yAxis:{type:'value',axisLabel:{color:dark.text,formatter:'{value}%'},splitLine:{lineStyle:{color:'#1c2739'}}},
@@ -123,12 +148,9 @@ echarts.init(document.getElementById('ch3')).setOption({
     {value:7.8,itemStyle:{color:'#84cc16'}},
     {value:6.9,itemStyle:{color:'#22c55e'}},
     {value:2.7,itemStyle:{color:'#3b82f6'}}
-  ],barWidth:36,label:{show:true,position:'top',color:'#cbd5e1',formatter:'{c}%'}}]
-});
+  ],barWidth:36,label:{show:true,position:'top',color:'#cbd5e1',formatter:'{c}%'}}]});
 
-echarts.init(document.getElementById('ch4')).setOption({
-  backgroundColor:'transparent',
-  tooltip:{trigger:'axis',backgroundColor:'#16203a',borderColor:'#2b3a55',textStyle:{color:'#e6edf3'}},
+c4.setOption({backgroundColor:'transparent',tooltip:{trigger:'axis',...tip},
   legend:{top:0,textStyle:{color:dark.text,fontSize:11}},
   grid:{left:50,right:20,top:30,bottom:30},
   xAxis:{type:'category',data:['一产','二产','三产'],axisLabel:{color:'#cbd5e1'}},
@@ -136,12 +158,9 @@ echarts.init(document.getElementById('ch4')).setOption({
   series:[
     {name:'博罗',type:'bar',data:[10.7,54.6,34.7],itemStyle:{color:'#22c55e'},barWidth:20},
     {name:'惠城',type:'bar',data:[1.5,27.6,69.0],itemStyle:{color:'#3b82f6'},barWidth:20}
-  ]
-});
+  ]});
 
-echarts.init(document.getElementById('ch5')).setOption({
-  backgroundColor:'transparent',
-  tooltip:{trigger:'axis',backgroundColor:'#16203a',borderColor:'#2b3a55',textStyle:{color:'#e6edf3'}},
+c5.setOption({backgroundColor:'transparent',tooltip:{trigger:'axis',...tip},
   legend:{top:0,textStyle:{color:dark.text,fontSize:11}},
   grid:{left:60,right:20,top:30,bottom:30},
   xAxis:{type:'category',data:['2023','2024','2025'],axisLabel:{color:'#cbd5e1'}},
@@ -149,7 +168,7 @@ echarts.init(document.getElementById('ch5')).setOption({
   series:[
     {name:'规上工业增速',type:'line',data:[10.2,9.5,8.7],smooth:true,lineStyle:{color:'#22c55e',width:2},itemStyle:{color:'#22c55e'}},
     {name:'固投增速',type:'line',data:[5.3,-8.2,-18.8],smooth:true,lineStyle:{color:'#f87171',width:2},itemStyle:{color:'#f87171'}}
-  ]
-});
+  ]});
+window.addEventListener('resize',()=>[c1,c2,c3,c4,c5].forEach(c=>c.resize()));
 </script>
 </body></html>
