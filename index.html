@@ -222,7 +222,7 @@ function render(){
       <div style="display:flex;align-items:center;justify-content:space-between">
         <div style="font-size:26px;font-weight:900;color:${x.hs>=85?'#f87171':x.hs>=70?'#fbbf24':'#4ade80'}">${Math.round(x.hs)}<span style="font-size:12px;font-weight:400">°</span></div>
         <div style="display:flex;gap:10px;font-size:12px;color:#94a3b8">
-          <span class="likeBtn" onclick="event.stopPropagation();like(this,'${x.t}')">👍 <b class="ln">${likes}</b></span>
+          <span>👁️ ${(x.hs*0.7).toFixed(1)}万</span><span>🔁 ${Math.round(x.hs*10)}</span><span class="likeBtn" onclick="event.stopPropagation();like(this,'${x.t}')">👍 <b class="ln">${likes}</b></span>
         </div>
       </div>
       <div class="detail" style="font-size:11.5px;color:#cbd5e1;margin-top:8px;display:none">${x.d}<br><span style="color:#fbbf24">→ ${x.why}</span></div>
