@@ -30,6 +30,16 @@ h1{font-size:21px;margin:0}
 .town .row .k{display:inline-block;width:34px;color:#6b7d96}
 .town .why{margin-top:9px;padding-top:8px;border-top:1px dashed #1c2739;font-size:12px;color:#8fa3bf;font-style:italic}
 .disc{font-size:11px;color:#5b6b82;margin-top:16px;line-height:1.8}
+.veg{margin-bottom:14px}
+.veg-title{font-size:13px;color:#4ade80;margin-bottom:8px;font-weight:700}
+.veg-track{overflow:hidden;mask-image:linear-gradient(90deg,transparent,#000 4%,#000 96%,transparent)}
+.veg-inner{display:flex;gap:10px;animation:vscroll 26s linear infinite;width:max-content}
+.veg-track:hover .veg-inner{animation-play-state:paused}
+.vegcard{flex:none;background:#0e1523;border:1px solid #1f3a24;border-left:3px solid #22c55e;border-radius:10px;padding:10px 14px;width:190px}
+.vegcard .vn{font-size:14px;font-weight:700;color:#e6edf3}
+.vegcard .vp{font-size:11px;color:#4ade80;margin-top:2px}
+.vegcard .vd{font-size:11.5px;color:#8fa3bf;margin-top:4px;line-height:1.5}
+@keyframes vscroll{from{transform:translateX(0)}to{transform:translateX(-50%)}}
 .next{text-align:center;margin-top:18px}
 .next a{background:#15803d;color:#fff;padding:11px 24px;border-radius:8px;text-decoration:none;font-weight:600;display:inline-block}
 </style></head><body>
@@ -67,6 +77,20 @@ h1{font-size:21px;margin:0}
 
   <div class="livebar" id="livebar">正在拉取微博/百度实时热搜里和惠州、博罗、罗浮山相关的讨论…</div>
 
+  <div class="veg">
+    <div class="veg-title">🚜 博罗新鲜农产品 · 当季 / 国家地理标志（悬停暂停）</div>
+    <div class="veg-track"><div class="veg-inner" id="vegInner">
+      <div class="vegcard"><div class="vn">福田菜心</div><div class="vp">福田镇 · 国家地理标志</div><div class="vd">冬春最甜，菜心无渣，广东菜心名片</div></div>
+      <div class="vegcard"><div class="vn">柏塘山茶</div><div class="vp">柏塘镇 · 广东十大名茶</div><div class="vd">高山云雾茶，甘醇回甘</div></div>
+      <div class="vegcard"><div class="vn">观音阁花生油</div><div class="vp">观音阁镇 · 东江沿岸</div><div class="vd">传统小榨，香浓醇厚</div></div>
+      <div class="vegcard"><div class="vn">杨村柑桔</div><div class="vp">杨村镇 · 传统名果</div><div class="vd">酸甜可口，秋冬时令</div></div>
+      <div class="vegcard"><div class="vn">公庄花生</div><div class="vp">公庄镇 · 沙地</div><div class="vd">香脆饱满，下酒零嘴皆宜</div></div>
+      <div class="vegcard"><div class="vn">罗浮山酥醪菜</div><div class="vp">长宁酥醪村 · 山上特产</div><div class="vd">芥菜腌制，鲜甜爽口</div></div>
+      <div class="vegcard"><div class="vn">博罗荔枝</div><div class="vp">各镇 · 岭南夏季名果</div><div class="vd">六月红，肉厚核小</div></div>
+      <div class="vegcard"><div class="vn">横河山水豆腐花</div><div class="vp">横河镇 · 山泉制作</div><div class="vd">嫩滑清甜，红糖一浇</div></div>
+    </div></div>
+  </div>
+
   <div class="grid" id="grid"></div>
 
   <div class="disc">
@@ -95,6 +119,8 @@ const TOWNS=[
 ];
 
 let picks=[];
+// 农产品轮播无缝复制一份
+(function(){const v=document.getElementById("vegInner");v.innerHTML+=v.innerHTML;})();
 function pickThree(){
   const arr=[...TOWNS];
   for(let i=arr.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[arr[i],arr[j]]=[arr[j],arr[i]];}
