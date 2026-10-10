@@ -87,7 +87,7 @@ h1{font-size:22px;margin:0 0 2px;letter-spacing:.5px}
     </svg>
     <div>
       <h1>今日博罗话题</h1>
-      <p class="sub">扫一遍公开渠道，按热度排。点卡片看详情。<br><span style="font-size:11px;color:#5b6b82">数据来源：统计公报/政府工作报告/各镇公开介绍/上市公司公告/南方+/微博抖音头条等12平台实时热搜。统计区间：最近7天 · 2025年快报 · 2026-2030规划。👁️阅读量按来源热度合理估算，🔁转发按约1%推算，非真实后台统计。实时部分来自公开热榜接口，随平台变化。</span></p>
+      <p class="sub">扫一遍公开渠道，按热度排。点卡片看详情。<br><span style="font-size:11px;color:#5b6b82">数据来源：博罗县政府工作报告、统计公报与各镇公开信息、南方+/惠州日报等媒体，以及微博/抖音/头条等公开热榜。统计区间：最近24小时（近1天）· 每日自动更新一次。👁️阅读、🔁转发、👍点赞按公开来源热度合理估算，非平台后台真实统计。</span></p>
     </div>
   </div>
 
@@ -176,8 +176,14 @@ let hotMeta={};
 
 // 读取当日话题快照（由数据雷达每日生成、推送）
 async function loadHot(){
-  const r=await fetch("hot.json?ts="+Date.now());
-  const j=await r.json();
+  let j;
+  for(let a=0;a<3;a++){
+    try{
+      const r=await fetch("hot.json?ts="+Date.now());
+      if(!r.ok) throw new Error("http "+r.status);
+      j=await r.json(); break;
+    }catch(e){ if(a===2) throw e; await new Promise(s=>setTimeout(s,500)); }
+  }
   hotMeta=j;
   allData=j.items.map(it=>({
     t:it.title, h:it.hot, c:catMap[it.cat]||"city",
