@@ -170,62 +170,44 @@ const FUN=[
 
 const KW=["惠州","博罗","罗浮山","园洲","石湾","罗阳","龙溪","柏塘","福田","观音阁","泰美","公庄","杨村","横河","长宁","赣深","欣旺达","台铃","小刀","景田","百岁山","广东","南方","东江","惠州发布","博罗发布","象头山"];
 
-async function fetchLive(){
-  liveTopics=[];
-  const apis=[
-    {url:"https://api.vvhan.com/api/hotlist/wbHot",name:"微博热搜"},
-    {url:"https://api.vvhan.com/api/hotlist/baiduRD",name:"百度热搜"},
-    {url:"https://api.vvhan.com/api/hotlist/zhihuHot",name:"知乎热榜"},
-    {url:"https://api.vvhan.com/api/hotlist/douyinHot",name:"抖音热点"},
-    {url:"https://api.vvhan.com/api/hotlist/toutiao",name:"今日头条"},
-    {url:"https://api.vvhan.com/api/hotlist/bili",name:"B站热门"}
-  ];
-  for(const api of apis){
-    try{
-      const r=await fetch(api.url);
-      const j=await r.json();
-      if(j.data&&Array.isArray(j.data)){
-        j.data.forEach((it,i)=>{
-          const title=it.title||it.word||"";
-          if(KW.some(k=>title.includes(k))){
-            liveTopics.push({
-              t:title,
-              h:Math.max(60, 95-i*1.5),
-              c:"city",
-              src:api.name+"·实时",
-              d:`来自${api.name}实时榜第${i+1}位`,
-              why:"热搜在榜——这是正在被讨论的事。",
-              live:true
-            });
-          }
-        });
-      }
-    }catch(e){}
-  }
+const catMap={industry:"ind",livelihood:"life",city:"city",agriculture:"agri",tourism:"fun",food:"fun",gossip:"city"};
+let allData=[];
+let hotMeta={};
+
+// 读取当日话题快照（由数据雷达每日生成、推送）
+async function loadHot(){
+  const r=await fetch("hot.json?ts="+Date.now());
+  const j=await r.json();
+  hotMeta=j;
+  allData=j.items.map(it=>({
+    t:it.title, h:it.hot, c:catMap[it.cat]||"city",
+    src:it.source, url:it.url, d:it.summary, live:it.live,
+    vw:it.views_wan, sh:it.shares, lk:it.likes
+  }));
 }
 
-function allTopics(){return [...liveTopics, ...LOCAL, ...FOOD, ...FUN];}
+function allTopics(){return allData;}
 
 function render(){
   let list=curCat==="all"?allTopics():allTopics().filter(x=>x.c===curCat);
-  list=list.map(x=>({...x,hs:x.h+Math.random()*4-2})).sort((a,b)=>b.hs-a.hs);
+  list=list.slice().sort((a,b)=>b.h-a.h);
   const grads={ind:"linear-gradient(135deg,#1e3a8a,#0f1a2e)",life:"linear-gradient(135deg,#7c2d12,#1a0f0f)",city:"linear-gradient(135deg,#374151,#0f1a2e)",agri:"linear-gradient(135deg,#1a2f0e,#0f1a2e)",fun:"linear-gradient(135deg,#064e3b,#0f1a2e)"};
   const catName={ind:"产业",life:"民生",city:"城市",agri:"农业",fun:"文旅"};
   const el=document.getElementById("topicList");
   el.style.cssText="display:grid;grid-template-columns:1fr 1fr;gap:10px";
   el.innerHTML=list.map((x)=>{
     const liveBadge=x.live?'<span style="background:#dc2626;color:#fff;font-size:9px;padding:1px 5px;border-radius:3px;margin-left:5px">实时</span>':'';
-    const likes=(localStorage.getItem("like_"+x.t)||Math.floor(Math.random()*50+10));
+    const likes=(localStorage.getItem("like_"+x.t)??x.lk);
     return `<div class="tcard" data-t="${x.t}" style="background:${grads[x.c]||grads.city};border-radius:12px;padding:14px;cursor:pointer">
       <div style="font-size:11px;color:#94a3b8">${catName[x.c]||"城市"}${liveBadge} · ${x.src||""}</div>
       <div style="font-size:16px;font-weight:800;color:#fff;margin:8px 0 4px;line-height:1.4">${x.t}</div>
       <div style="display:flex;align-items:center;justify-content:space-between">
-        <div style="font-size:26px;font-weight:900;color:${x.hs>=85?'#f87171':x.hs>=70?'#fbbf24':'#4ade80'}">${Math.round(x.hs)}<span style="font-size:12px;font-weight:400">°</span></div>
+        <div style="font-size:26px;font-weight:900;color:${x.h>=85?'#f87171':x.h>=70?'#fbbf24':'#4ade80'}">${Math.round(x.h)}<span style="font-size:12px;font-weight:400">°</span></div>
         <div style="display:flex;gap:10px;font-size:12px;color:#94a3b8">
-          <span>👁️ ${(x.hs*0.7).toFixed(1)}万</span><span>🔁 ${Math.round(x.hs*10)}</span><span class="likeBtn" onclick="event.stopPropagation();like(this,'${x.t}')">👍 <b class="ln">${likes}</b></span>
+          <span>👁️ ${x.vw}万</span><span>🔁 ${x.sh}</span><span class="likeBtn" onclick="event.stopPropagation();like(this,'${x.t}')">👍 <b class="ln">${likes}</b></span>
         </div>
       </div>
-      <div class="detail" style="font-size:11.5px;color:#cbd5e1;margin-top:8px;display:none">${x.d}<br><span style="color:#fbbf24">→ ${x.why}</span></div>
+      <div class="detail" style="font-size:11.5px;color:#cbd5e1;margin-top:8px;display:none">${x.d||""}${x.why?`<br><span style="color:#fbbf24">→ ${x.why}</span>`:""}</div>
     </div>`;
   }).join("");
   document.querySelectorAll("#topicList .tcard").forEach(c=>{
@@ -247,23 +229,24 @@ document.querySelectorAll(".cat").forEach(b=>{
   };
 });
 
+function scanText(){
+  return `数据每日自动更新一次 · 上次更新 ${hotMeta.updated||"—"} · 近1天 · 共${allData.length}个话题`;
+}
+
 document.getElementById("btnScan").onclick=async function(){
   this.innerHTML='<span class="pulse">⏳</span> 扫描中…';
-  document.getElementById("scanInfo").textContent="雷达旋转中，正在拉取微博/百度实时热搜…";
+  document.getElementById("scanInfo").textContent="雷达旋转中，正在读取当日话题快照…";
   document.getElementById("scanline").classList.add("fast");
-  await fetchLive();
+  await loadHot();
   this.innerHTML="🔄 重新扫描";
   document.getElementById("scanline").classList.remove("fast");
-  const now=new Date();
-  const liveN=liveTopics.length;
-  document.getElementById("scanInfo").textContent=`上次扫描：${now.getHours().toString().padStart(2,'0')}:${now.getMinutes().toString().padStart(2,'0')} · 实时热搜${liveN}条 + 话题${LOCAL.length}条 + 好吃${FOOD.length}·好玩${FUN.length}`;
+  document.getElementById("scanInfo").textContent=scanText();
   render();
 };
 
 (async()=>{
-  await fetchLive();
-  const now=new Date();
-  document.getElementById("scanInfo").textContent=`上次扫描：${now.getHours().toString().padStart(2,'0')}:${now.getMinutes().toString().padStart(2,'0')} · 实时热搜${liveTopics.length}条 + 话题${LOCAL.length}条 + 好吃${FOOD.length}·好玩${FUN.length}`;
+  await loadHot();
+  document.getElementById("scanInfo").textContent=scanText();
   render();
 })();
 </script>
@@ -273,28 +256,28 @@ document.getElementById("btnScan").onclick=async function(){
   <button onclick="sharePage()">🔁 转给朋友</button>
 </div>
 <style>
-.likebar{{position:relative;bottom:auto;left:auto;transform:none;display:flex;justify-content:center;margin:20px 0;background:rgba(15,23,42,.96);border:1px solid #3b82f6;border-radius:24px;padding:9px 20px;display:flex;gap:22px;z-index:999;box-shadow:0 6px 24px rgba(0,0,0,.6)}}
-.likebar button{{background:none;border:none;color:#e2e8f0;font-size:14px;cursor:pointer}}
-.likebar button:active{{transform:scale(1.15)}}
+.likebar{position:relative;bottom:auto;left:auto;transform:none;display:flex;justify-content:center;align-items:center;margin:20px 0;background:rgba(15,23,42,.96);border:1px solid #3b82f6;border-radius:24px;padding:9px 20px;gap:22px;z-index:999;box-shadow:0 6px 24px rgba(0,0,0,.6)}
+.likebar button{background:none;border:none;color:#e2e8f0;font-size:14px;cursor:pointer}
+.likebar button:active{transform:scale(1.15)}
 </style>
 <script>
-(function(){{
+(function(){
   var k="like_"+location.pathname;
   var n=parseInt(localStorage.getItem(k)||"421277");
   document.getElementById("pcount").textContent=n;
-  window.likePage=function(){{n++;localStorage.setItem(k,n);document.getElementById("pcount").textContent=n;}};
-  window.sharePage=function(){{
+  window.likePage=function(){n++;localStorage.setItem(k,n);document.getElementById("pcount").textContent=n;};
+  window.sharePage=function(){
     var m=document.getElementById("shareModal");
-    if(!m){{
+    if(!m){
       m=document.createElement("div");m.id="shareModal";
       m.style.cssText="position:fixed;inset:0;background:rgba(0,0,0,.8);z-index:9999;display:flex;align-items:center;justify-content:center;padding:20px";
-      m.onclick=function(){{m.remove();}};
+      m.onclick=function(){m.remove();};
       m.innerHTML='<div style="background:#0f172a;padding:20px;border-radius:14px;text-align:center" onclick="event.stopPropagation()"><div style="color:#fff;font-size:14px;margin-bottom:12px">截图二维码，发给朋友/群</div><img src="https://api.qrserver.com/v1/create-qr-code/?size=200x200&data='+encodeURIComponent(location.href)+'" style="width:200px;height:200px;background:#fff;padding:8px;border-radius:8px"><div style="color:#94a3b8;font-size:12px;margin-top:12px">扫码打开</div></div>';
       document.body.appendChild(m);
-    }}
+    }
     navigator.clipboard && navigator.clipboard.writeText(location.href);
-  }};
-}})();
+  };
+})();
 </script>
 <!-- 百度统计：去 mtj.baidu.com 注册后替换 YOUR_ID -->
 <script>
