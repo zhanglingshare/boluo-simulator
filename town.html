@@ -92,13 +92,13 @@ h1{font-size:21px;margin:0}
 </div>
 
 <script>
-let TOWNS=[],VEG=[],PULSE=[],UPDATED='';
+let TOWNS=[],VEG=[],PULSE=[],UPDATED='',SRC='';
 
 let picks=[];
 
 function renderVeg(){
   const cards=(VEG.length?VEG:[{n:"—",p:"",d:"",want:0}]).map(v=>
-    `<div class="vegcard"><div class="vn">${v.n}</div><div class="vp">${v.p}</div><div class="vd">${v.d}</div><div style="font-size:11px;color:#a3e635;margin-top:6px">👍 ${v.want}人想尝</div></div>`
+    `<div class="vegcard"><div class="vn">${v.n}</div><div class="vp">${v.p}</div><div class="vd">${v.d}</div><div style="font-size:11px;color:#a3e635;margin-top:6px">👍 ${v.want}人想尝</div><div style="font-size:9px;color:#5b6b82;margin-top:3px">📎 公开渠道 · 近24小时估算</div></div>`
   ).join("");
   document.getElementById("vegInner").innerHTML=cards+cards;
 }
@@ -119,6 +119,7 @@ function render(){
       <div class="row"><span class="k">🏔️ 玩</span>${t.plays.join("、")}</div>
       <div class="why">→ ${t.why}</div>
       <div style="font-size:12px;color:#a3e635;margin-top:8px">👍 ${t.pop}人想去这个镇</div>
+      <div style="font-size:9.5px;color:#5b6b82;margin-top:4px;line-height:1.4">📎 来源：${SRC}<br>近24小时公开热度 · 合理估算</div>
     </div>`;
   }).join("");
 }
@@ -126,13 +127,13 @@ function render(){
 async function loadLife(){
   try{
     const r=await fetch("life.json");const d=await r.json();
-    TOWNS=d.towns||[];VEG=d.veg||[];PULSE=d.pulse||[];UPDATED=d.updated||"";
+    TOWNS=d.towns||[];VEG=d.veg||[];PULSE=d.pulse||[];UPDATED=d.updated||"";SRC=d.sourceLabel||"";
     if(d.season)document.getElementById("vegTitle").textContent=`🚜 博罗${d.season}季当季农品 · 按10月真实时令（悬停暂停）`;
   }catch(e){}
   renderVeg();pickThree();render();
   document.getElementById("scanInfo").textContent=`数据每日更新一次 · 上次更新 ${UPDATED} · 近1天 · 共${TOWNS.length}个镇街`;
   document.getElementById("livebar").innerHTML=PULSE.length
-    ?"📡 最近大家在聊："+PULSE.join("　｜　")
+    ?"📡 最近大家在聊（近24小时公开渠道）："+PULSE.join("　｜　")
     :"📡 博罗的好吃好玩，不用上热搜也值得去。";
 }
 
