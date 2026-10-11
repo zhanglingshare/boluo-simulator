@@ -2,6 +2,7 @@
 <html lang="zh-CN"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
 <title>博罗产业风洞 · 风洞测试</title>
 <script src="lib/echarts.min.js"></script>
+<script src="model.js"></script>
 <style>
 *{box-sizing:border-box}
 body{margin:0;background:#080b12;color:#e6edf3;font:14px/1.6 -apple-system,"PingFang SC","Microsoft YaHei",sans-serif}
@@ -231,15 +232,15 @@ function render(){
   const path=project(g);
   const gdp2030=path[5];
 
-  // 达标概率：基于与目标的差距，简单映射 + 随机扰动概念
-  let prob;
-  if(gdp2030>=1700)prob=85;
-  else if(gdp2030>=1600)prob=60+(gdp2030-1600)/100*20;
-  else if(gdp2030>=1400)prob=20+(gdp2030-1400)/200*40;
-  else prob=Math.max(2,gdp2030/1400*20);
-  prob=Math.min(95,Math.round(prob));
+  // 达标概率：把四个滑块翻译成路径 μ 调整，交给同一 model.js 内核重跑
+  const paths=JSON.parse(JSON.stringify(HT.DEFAULT_PATHS));
+  paths[1].mu=Math.max(0,paths[1].mu*(1+p.s1*0.2));   // 投产节奏 ±20%
+  paths[0].mu=Math.max(0,paths[0].mu*(1+p.s2*0.15));  // 东莞外溢→产业承接
+  paths[2].mu=Math.max(0,paths[2].mu*(1+p.s4/100));   // 固投→融深通道
+  const m=HT.run(42,10000,paths);
+  const prob=Math.round(m.hit);
 
-  document.getElementById('gGdp').textContent=gdp2030+'亿';
+  document.getElementById('gGdp').textContent=gdp2030+'亿（中位模型值'+Math.round(m.p50)+'亿）';
   document.getElementById('gGdp').style.color=gdp2030>=1600?'#22c55e':gdp2030>=1400?'#fbbf24':'#f87171';
   document.getElementById('gRate').textContent=(g*100).toFixed(1)+'%';
   document.getElementById('gProb').textContent=prob+'%';

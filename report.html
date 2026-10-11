@@ -2,6 +2,7 @@
 <html lang="zh-CN"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
 <title>博罗县产业分析报告（Demo版）· 张凌</title>
 <script src="lib/echarts.min.js"></script>
+<script src="model.js"></script>
 <style>
 *{box-sizing:border-box}
 body{margin:0;background:#080b12;color:#e6edf3;font:14px/1.7 -apple-system,"PingFang SC","Microsoft YaHei",sans-serif}
@@ -301,18 +302,21 @@ cMatrix.setOption({backgroundColor:'transparent',tooltip:tip,
   ],itemStyle:{color:'#4ade80'},
     label:{show:true,position:'top',color:'#cbd5e1',fontSize:9.5,formatter:p=>p.data.name}}]});
 
+// 影响系数：直接读 model.js 同一内核输出，不再写死
+// coefs 顺序=[产业承接(东莞外溢), 新投产(投产工期), 融深(融深通道), 文旅, 农业]
+const _bm=HT.run(42,10000,HT.DEFAULT_PATHS);
 cCoef.setOption({backgroundColor:'transparent',tooltip:{trigger:'axis',...tip},
   grid:{left:95,right:45,top:15,bottom:30},
   xAxis:{type:'value',max:1,axisLabel:{color:'#6b7d96'},splitLine:{lineStyle:{color:'#1c2739'}}},
   yAxis:{type:'category',data:['房地产','文旅','农业','融深通道','东莞外溢','投产工期'],axisLabel:{color:'#cbd5e1',fontSize:11}},
   series:[{type:'bar',data:[
     {value:0.28,itemStyle:{color:'#94a3b8'}},
-    {value:0.42,itemStyle:{color:'#fbbf24'}},
-    {value:0.4,itemStyle:{color:'#84cc16'}},
-    {value:0.55,itemStyle:{color:'#a78bfa'}},
-    {value:0.74,itemStyle:{color:'#3b82f6'}},
-    {value:0.82,itemStyle:{color:'#22c55e'}}
-  ],barWidth:17,label:{show:true,position:'right',color:'#93a4bd',fontSize:10}}]});
+    {value:+_bm.coefs[3].toFixed(2),itemStyle:{color:'#fbbf24'}},
+    {value:+_bm.coefs[4].toFixed(2),itemStyle:{color:'#84cc16'}},
+    {value:+_bm.coefs[2].toFixed(2),itemStyle:{color:'#a78bfa'}},
+    {value:+_bm.coefs[0].toFixed(2),itemStyle:{color:'#3b82f6'}},
+    {value:+_bm.coefs[1].toFixed(2),itemStyle:{color:'#22c55e'}}
+  ],barWidth:17,label:{show:true,position:'right',color:'#93a4bd',fontSize:10,formatter:p=>p.value+'（模型输出）'}}]});
 
 window.addEventListener('resize',()=>[cStruct,cInd,cClimb,cScen,cMatrix,cCoef].forEach(c=>c.resize()));
 </script>

@@ -2,6 +2,7 @@
 <html lang="zh-CN"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
 <title>博罗产业风洞 · 未来</title>
 <script src="lib/echarts.min.js"></script>
+<script src="model.js"></script>
 <style>
 *{box-sizing:border-box}
 body{margin:0;background:#080b12;color:#e6edf3;font:14px/1.6 -apple-system,"PingFang SC","Microsoft YaHei",sans-serif}
@@ -195,40 +196,22 @@ table.sens td{padding:6px 8px;text-align:right;border-bottom:1px solid #152033;c
 </div>
 
 <script>
-function mulberry32(a){return function(){a|=0;a=a+0x6D2B79F5|0;let t=Math.imul(a^a>>>15,1|a);t=t+Math.imul(t^t>>>7,61|t)^t;return((t^t>>>14)>>>0)/4294967296}}
-function makeRandn(prng){return function(){let u=0,v=0;while(!u)u=prng();while(!v)v=prng();return Math.sqrt(-2*Math.log(u))*Math.cos(2*Math.PI*v)}}
-function quantile(sorted,q){if(!sorted.length)return NaN;const pos=(sorted.length-1)*q,lo=Math.floor(pos),hi=Math.ceil(pos),w=pos-lo;return sorted[lo]*(1-w)+sorted[hi]*w}
-function corr(xs,ys){const n=xs.length;let mx=0,my=0;for(let k=0;k<n;k++){mx+=xs[k];my+=ys[k]}mx/=n;my/=n;let num=0,dx=0,dy=0;for(let k=0;k<n;k++){num+=(xs[k]-mx)*(ys[k]-my);dx+=(xs[k]-mx)**2;dy+=(ys[k]-my)**2}return num/Math.sqrt(dx*dy)}
-
-const BASE=1005.45,TARGET=1600;
-const PATHS=[
-  {name:"产业承接升级",mu:220,sd:45,color:"#22c55e"},
-  {name:"新投产项目",mu:180,sd:40,color:"#3b82f6"},
-  {name:"融深融莞通道",mu:70,sd:28,color:"#a78bfa"},
-  {name:"罗浮山文旅",mu:60,sd:22,color:"#fbbf24"},
-  {name:"特色农业",mu:45,sd:14,color:"#84cc16"}
-];
-const GLOBAL_SD=40;
+// 算法内核已抽到同目录 model.js（HT 对象），future / windtunnel / report 三页共用。
+// 这里保留两个薄包装，供敏感性分析调用，行为与 HT.run 一致。
+const BASE=HT.BASE, TARGET=HT.TARGET, GLOBAL_SD=HT.NOISE_SD;
+const PATHS=HT.DEFAULT_PATHS;
 const charts={};
 function initC(id){const c=echarts.init(document.getElementById(id));charts[id]=c;return c}
 initC('chHist');initC('chStack');initC('chTorn');initC('chCoef');initC('chSens');
 
-// 可复现单跑：返回原始结果（不排序）
 function simulateRaw(seed,N,paths){
-  const prng=mulberry32(seed),randn=makeRandn(prng);
-  const raw=[],contribs=paths.map(()=>[]);
-  for(let i=0;i<N;i++){
-    let total=BASE;
-    paths.forEach((p,j)=>{let v=p.mu+randn()*p.sd;v=Math.max(0,v);total+=v;contribs[j].push(v)});
-    total+=randn()*GLOBAL_SD;
-    raw.push(total);
-  }
-  return {raw,contribs};
+  const m=HT.run(seed,N,paths);
+  return {raw:m.rawResults, contribs:null};
 }
 function summarize(raw){
   const sorted=[...raw].sort((a,b)=>a-b);
   return {
-    p10:quantile(sorted,.1),p50:quantile(sorted,.5),p90:quantile(sorted,.9),
+    p10:HT.quantile(sorted,.1),p50:HT.quantile(sorted,.5),p90:HT.quantile(sorted,.9),
     hit:sorted.filter(x=>x>=TARGET).length/sorted.length*100,sorted
   };
 }
@@ -236,8 +219,9 @@ function summarize(raw){
 function run(){
   const seed=+document.getElementById('seed').value||42;
   const N=+document.getElementById('selN').value;
-  const {raw,contribs}=simulateRaw(seed,N,PATHS);
-  const s=summarize(raw);
+  const m=HT.run(seed,N,PATHS);
+  const s={p10:m.p10,p50:m.p50,p90:m.p90,hit:m.hit,sorted:m.results};
+  const coefs=m.coefs;
 
   // 参数面板
   document.getElementById('paramPanel').innerHTML=`
@@ -303,8 +287,7 @@ function run(){
     ]
   });
 
-  // 路径系数（用原始顺序，修复错位）
-  const coefs=contribs.map(c=>Math.abs(corr(c,raw)));
+  // 路径系数（直接读 model 输出的 coefs）
   const cOrder=coefs.map((v,i)=>({v,p:PATHS[i]})).sort((a,b)=>b.v-a.v);
   charts.chCoef.setOption({
     backgroundColor:'transparent',
