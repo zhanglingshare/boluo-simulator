@@ -91,6 +91,14 @@ h1{font-size:22px;margin:0 0 2px;letter-spacing:.5px}
     </div>
   </div>
 
+  <!-- 你是哪个镇的 -->
+  <div style="margin:12px 0;padding:14px;background:linear-gradient(135deg,#14231a,#0f172a);border:1px solid #22c55e;border-radius:14px">
+    <div style="font-size:15px;font-weight:800;color:#fff;margin-bottom:4px">🏘️ 你是博罗哪个镇的？</div>
+    <div style="font-size:12.5px;color:#94a3b8;margin-bottom:10px">12个镇街，每个镇都有自己的饭碗。点你的镇，看它最近在发生什么。</div>
+    <div id="townGrid" style="display:grid;grid-template-columns:repeat(4,1fr);gap:6px"></div>
+    <div id="townOut" style="margin-top:10px;font-size:12.5px;color:#cbd5e1;line-height:1.6"></div>
+  </div>
+
 
   <div class="toolbar">
     <button class="cat on" data-c="all">全部</button>
@@ -293,6 +301,32 @@ var _hmt = _hmt || [];
   hm.src = "https://hm.baidu.com/hm.js?YOUR_ID";
   var s = document.getElementsByTagName("script")[0]; 
   s.parentNode.insertBefore(hm, s);
+})();
+</script>
+<script>
+// 你是哪个镇的
+(function(){
+  const TOWNS=[
+    {n:"罗阳",tag:"县城中心",say:"县政府在这，博罗的门面。"},
+    {n:"石湾",tag:"工业重镇",say:"挨着东莞，2513家企业，夜里是河鲜。"},
+    {n:"园洲",tag:"融深第一镇",say:"隔着一条河就是东莞，深惠通勤最密。"},
+    {n:"龙溪",tag:"电子信息",say:"从东莞接过来的产业链。"},
+    {n:"长宁",tag:"罗浮山大门",say:"进罗浮山先过你这，游客的第一站。"},
+    {n:"福田",tag:"农业·融深",say:"福田菜心是国家地理标志，9-11月刚播种。"},
+    {n:"龙华",tag:"古村",say:"旭日古村400年明清建筑，客家老味道。"},
+    {n:"柏塘",tag:"茶乡",say:"柏塘山茶是广东十大名茶，千亩古榄园。"},
+    {n:"公庄",tag:"东部农镇",say:"公庄秋花生刚刨出来，带泥香。"},
+    {n:"杨村",tag:"水果之乡",say:"皇帝柑快熟了，山区里的日子。"},
+    {n:"泰美",tag:"生态门户",say:"赣深高铁博罗站在这，到深圳半小时。"},
+    {n:"观音阁",tag:"东江沿岸",say:"观音阁花生油新榨，东江岸线。"}
+  ];
+  document.getElementById("townGrid").innerHTML=TOWNS.map(t=>
+    `<button onclick="pickTown('${t.n}')" style="background:#22c55e22;border:1px solid #22c55e44;color:#bbf7d0;border-radius:8px;padding:8px 4px;cursor:pointer;font-size:12px;font-weight:700">${t.n}</button>`
+  ).join("");
+  window.pickTown=function(n){
+    const t=TOWNS.find(x=>x.n===n);if(!t)return;
+    document.getElementById("townOut").innerHTML=`你是<b style="color:#4ade80">${t.n}人</b>——${t.tag}。<br>${t.say}<br><span style="color:#6b7280">这个镇在博罗这盘棋里，占的是${t.tag}这个位置。</span>`;
+  };
 })();
 </script>
 </body></html>
