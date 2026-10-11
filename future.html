@@ -71,6 +71,18 @@ table.sens td{padding:6px 8px;text-align:right;border-bottom:1px solid #152033;c
   <h1>2030年博罗长什么样：把未来反复跑</h1>
   <p class="sub">选模式、定种子、点按钮。同样的种子必定跑出同样的结果——这是可以复现的。</p>
 
+  <!-- 先猜后揭 -->
+  <div style="margin:12px 0;padding:16px;background:linear-gradient(135deg,#1e293b,#0f172a);border:1px solid #fbbf24;border-radius:14px">
+    <div style="font-size:15px;font-weight:800;color:#fff;margin-bottom:4px">🎯 先别往下看——你觉得2030年博罗最可能落到多少？</div>
+    <div style="font-size:12.5px;color:#94a3b8;margin-bottom:12px">凭直觉选一个，再看模型跑出来的分布。</div>
+    <div style="display:flex;gap:8px">
+      <button onclick="guess(1)" style="flex:1;background:#f8717122;border:1px solid #f87171;color:#f87171;border-radius:10px;padding:10px 6px;cursor:pointer;font-size:13px;font-weight:700">1400亿以下</button>
+      <button onclick="guess(2)" style="flex:1;background:#fbbf2422;border:1px solid #fbbf24;color:#fbbf24;border-radius:10px;padding:10px 6px;cursor:pointer;font-size:13px;font-weight:700">1400-1600亿</button>
+      <button onclick="guess(3)" style="flex:1;background:#34d39922;border:1px solid #34d399;color:#34d399;border-radius:10px;padding:10px 6px;cursor:pointer;font-size:13px;font-weight:700">1600亿以上</button>
+    </div>
+    <div id="guessOut" style="margin-top:10px;font-size:12.5px;color:#cbd5e1"></div>
+  </div>
+
   <!-- 控制 -->
   <div class="card">
     <h2>控制台</h2>
@@ -392,5 +404,15 @@ var _hmt = _hmt || [];
   var s = document.getElementsByTagName("script")[0]; 
   s.parentNode.insertBefore(hm, s);
 })();
+</script>
+<script>
+function guess(n){
+  const msgs={
+    1:"你偏谨慎。模型跑出来中位数约1580亿——比你猜的要乐观。",
+    2:"你猜在中间。模型中位数约1580亿，正好落在你这个区间。",
+    3:"你偏乐观。模型跑出来只有约41%的概率过1600亿——比你想的要难。"
+  };
+  document.getElementById("guessOut").innerHTML="揭晓："+msgs[n]+"<br>下面这张分布，就是它跑了一万遍的结果。";
+}
 </script>
 </body></html>
