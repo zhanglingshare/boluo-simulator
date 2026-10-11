@@ -1,45 +1,34 @@
 {
   "region": "boluo",
-  "updated": "2026-10-12 03:31",
+  "updated": "2026-10-12 07:32",
   "frequency": "每日更新一次",
   "count": 15,
   "note": "话题按编辑关注程度排序，标注关注档（高/较高/中）与来源级别；本页不展示平台后台真实阅读、转发、点赞数据。话题均来自公开渠道，每日更新。",
   "items": [
     {
-      "title": "欣旺达广东首座独立储能电站在博罗并网送电，年产值约0.7亿元",
+      "title": "亿纬锂能日盛独立共享储能电站在石湾并网",
       "cat": "industry",
       "emoji": "🔋",
-      "tier": "高",
-      "srcLevel": "官方发布",
-      "live": false,
-      "source": "博罗县人民政府",
-      "url": "https://www.boluo.gov.cn/xzygdw/xgbdst/blxw/content/post_5868321.html",
-      "summary": "10月10日消息，惠州欣城新能源独立储能电站成功并网、进入试运行，是欣旺达在广东布局的首座独立储能电站。"
-    },
-    {
-      "title": "罗浮山国庆过夜游客比2023年同期增长62%，山野民宿成新选择",
-      "cat": "tourism",
-      "emoji": "🛏️",
-      "tier": "较高",
-      "srcLevel": "官方发布",
-      "live": false,
-      "source": "惠州市人民政府",
-      "url": "https://www.huizhou.gov.cn/zwgk/hzsz/zwyw/content/post_5865139.html",
-      "summary": "非遗主题、山野音乐派对带动留宿，假期过夜游客明显增长，文旅业态更丰富。"
-    },
-    {
-      "title": "亿纬锂能日盛200MW/400MWh独立共享储能电站在石湾并网",
-      "cat": "industry",
-      "emoji": "⚡",
       "tier": "较高",
       "srcLevel": "官方发布",
       "live": false,
       "source": "博罗县人民政府",
       "url": "https://www.boluo.gov.cn/xzygdw/xgbdst/blxw/content/post_5863373.html",
-      "summary": "9月29日并网，为博罗新型能源体系再添电力引擎。"
+      "summary": "200MW/400MWh独立共享储能电站9月29日并网，博罗新型能源体系再添“电力引擎”。"
     },
     {
-      "title": "博罗签约四宗优质产业项目，总投资80亿、预计年产值203亿",
+      "title": "博罗过夜游客比2023年同期增长62%，多家精品民宿入住率100%",
+      "cat": "tourism",
+      "emoji": "🌙",
+      "tier": "较高",
+      "srcLevel": "官方发布",
+      "live": false,
+      "source": "惠州市人民政府",
+      "url": "https://www.huizhou.gov.cn/zwgk/hzsz/zwyw/content/post_5865139.html",
+      "summary": "环罗浮山民宿集群、乡村酒店迎来高峰，“过路客”加快变“过夜客”。"
+    },
+    {
+      "title": "博罗签约四宗优质产业项目，总投资80亿元",
       "cat": "industry",
       "emoji": "🤝",
       "tier": "较高",
@@ -47,128 +36,139 @@
       "live": false,
       "source": "博罗县人民政府",
       "url": "https://www.boluo.gov.cn/yshj/ysdt/content/post_5852105.html",
-      "summary": "四宗带动力强的项目落户，赋能博罗“3+3”现代化产业体系。"
+      "summary": "4宗项目预计年产值203亿元，为博罗“3+3”现代化产业体系注入新动能。"
     },
     {
-      "title": "一路山水一路烟火，罗浮山仙山非遗引客来",
-      "cat": "tourism",
-      "emoji": "⛰️",
+      "title": "博罗综合交通“十五五”规划征求意见，园洲振兴大道纳入",
+      "cat": "livelihood",
+      "emoji": "🛣️",
       "tier": "较高",
       "srcLevel": "官方发布",
       "live": false,
-      "source": "惠州市人民政府",
-      "url": "https://www.huizhou.gov.cn/zwgk/hzsz/xqyw/content/post_5864381.html",
-      "summary": "20余个非遗摊位、客家擂茶、畲族竹竿舞与拦门酒，沉浸式国风度假。"
+      "source": "博罗县人民政府",
+      "url": "https://www.boluo.gov.cn/zmhd/yjfk/content/post_5851764.html",
+      "summary": "吸纳公众建议，连接园洲与龙溪的振兴大道工程纳入“十五五”规划。"
     },
     {
-      "title": "秋茶采摘加工正当时，柏塘山茶续做秋冬市场",
-      "cat": "agriculture",
-      "emoji": "🍵",
+      "title": "博罗“00后”技能小将世赛夺金，助中国队四连冠",
+      "cat": "industry",
+      "emoji": "🥇",
       "tier": "较高",
       "srcLevel": "官方发布",
       "live": false,
-      "source": "博罗县农事指南",
-      "url": "https://www.boluo.gov.cn/zwgk/zwdt/bmdt/content/post_5862010.html",
-      "summary": "部署秋茶采摘、名优茶加工与市场营销，做强山茶品牌。"
+      "source": "博罗县人民政府",
+      "url": "https://www.boluo.gov.cn/zwgk/zwdt/tpxw/",
+      "summary": "七年磨一剑，博罗青年在世界技能赛场夺冠，展现技能人才培养成果。"
     },
     {
-      "title": "博中东江大桥建设将重启，完善对外交通骨架",
+      "title": "园洲镇第十八届人民代表大会召开，“一镇三园区”格局成型",
       "cat": "city",
-      "emoji": "🌉",
+      "emoji": "🏛️",
       "tier": "较高",
       "srcLevel": "官方发布",
       "live": false,
-      "source": "惠州市人民政府",
-      "url": "https://www.huizhou.gov.cn/zwgk/hzsz/xqyw/content/mpost_5705616.html",
-      "summary": "纳入年度重点推进，与龙桥快线、石洲大桥等共同畅通镇街联系。"
+      "source": "博罗县人民政府",
+      "url": "https://www.boluo.gov.cn/hzblyzz/gkmlpt/content/5/5862/post_5862256.html?jump=true",
+      "summary": "镇域产业、基础设施、乡村振兴与民生事业全面提质，部署下一阶段工作。"
     },
     {
-      "title": "罗阳承粮陂村60亩玉米开摘，邀市民体验农耕",
+      "title": "罗阳承粮陂村60亩玉米开摘",
       "cat": "agriculture",
       "emoji": "🌽",
       "tier": "较高",
       "srcLevel": "官方发布",
       "live": false,
-      "source": "博罗融媒",
-      "url": "https://www.boluo.gov.cn/xzygdw/xgbdst/blxw/content/post_5863416.html",
-      "summary": "近日迎来丰收，基地开放田间采摘体验。"
-    },
-    {
-      "title": "龙溪横巷村金钻凤梨集中采收，撂荒地变“甜蜜产业”",
-      "cat": "agriculture",
-      "emoji": "🍍",
-      "tier": "较高",
-      "srcLevel": "官方发布",
-      "live": false,
       "source": "博罗县人民政府",
-      "url": "https://www.boluo.gov.cn/xzygdw/xgbdst/blxw/content/post_5863087.html",
-      "summary": "台农17号金钻凤梨，亩产7000至8000斤，甜度15度以上。"
+      "url": "https://www.boluo.gov.cn/zwgk/zwdt/tpxw/",
+      "summary": "秋高气爽，承粮陂村玉米迎来采收季，新鲜玉米直供本地市场。"
     },
     {
-      "title": "公庄荷树塘村百香果甜蜜上市，打造“果语之乡”",
+      "title": "“番薯哥”“甘蔗姐”田间开播，特色作物长势喜人",
       "cat": "agriculture",
-      "emoji": "🥭",
+      "emoji": "🍠",
       "tier": "较高",
       "srcLevel": "官方发布",
       "live": false,
-      "source": "惠州市农业农村局",
-      "url": "http://nyncj.huizhou.gov.cn/zwzc/xwzx/bsyw/content/mpost_5856819.html",
-      "summary": "20多亩百香果成熟，毗邻水东陂水库，发展四季水果采摘。"
+      "source": "博罗县农业农村局",
+      "url": "https://www.boluo.gov.cn/xnyncj/",
+      "summary": "博罗特色农产品借助田间直播拓宽销路，红薯、甘蔗等秋季作物丰收在望。"
     },
     {
-      "title": "“寻东坡十六乐事”启动，环南昆山—罗浮山16座驿站集章赢好礼",
+      "title": "国庆博罗迎客63.82万人次，实现旅游综合收入3.38亿元",
       "cat": "tourism",
-      "emoji": "📮",
-      "tier": "中",
-      "srcLevel": "媒体报道",
-      "live": false,
-      "source": "博罗发布",
-      "url": "http://m.toutiao.com/group/7693018657424785955/",
-      "summary": "10月至12月，小程序定位打卡集驿章，解锁温泉票、客房体验券。"
-    },
-    {
-      "title": "国庆博罗接待游客63.82万人次，旅游综合收入3.38亿元",
-      "cat": "tourism",
-      "emoji": "🧳",
+      "emoji": "🎊",
       "tier": "中",
       "srcLevel": "媒体报道",
       "live": false,
       "source": "惠州新闻网",
       "url": "http://www.hznews.com/xqrm/blx/202610/t20261008_1663544.shtml",
-      "summary": "罗浮山非遗、全域旅游带动假期文旅消费。"
+      "summary": "罗浮山“仙山揽月·古韵贺华诞”非遗主题活动出圈，仙山非遗引客来。"
     },
     {
-      "title": "汉德精密增资15亿元，在园洲建空压机智能制造产业园",
-      "cat": "industry",
-      "emoji": "🏗️",
+      "title": "环南昆山—罗浮山引领区成国庆文旅热点，罗浮山入园超9万人次",
+      "cat": "tourism",
+      "emoji": "🏔️",
       "tier": "中",
       "srcLevel": "媒体报道",
       "live": false,
-      "source": "新浪财经",
-      "url": "https://finance.sina.com.cn/roll/2026-09-22/doc-inissyrf2020895.shtml.md",
-      "summary": "扎根园洲十年的企业第三期项目签约，建设约20万平方米智能制造基地。"
+      "source": "南方+",
+      "url": "https://www.nfnews.com/content/A6EBkNYmoK.html",
+      "summary": "罗浮山推非遗展演、科技互动、非遗集市与音乐派对，沿线村民分享客流红利。"
+    },
+    {
+      "title": "柏塘山茶从手工炒茶走向茶文旅融合，国庆万亩茶园迎客",
+      "cat": "agriculture",
+      "emoji": "🍵",
+      "tier": "中",
+      "srcLevel": "媒体报道",
+      "live": false,
+      "source": "博罗发布",
+      "url": "http://m.toutiao.com/group/7695289670455804458/",
+      "summary": "统一标准与品牌、开发山茶啤酒月饼等衍生品，茶园观光采茶体验让山茶“破圈”。"
     },
     {
       "title": "椰泰集团在博罗建第三个生产基地，提供850个就业岗位",
       "cat": "industry",
-      "emoji": "🥥",
+      "emoji": "🧃",
       "tier": "中",
       "srcLevel": "媒体报道",
       "live": false,
       "source": "触电新闻",
       "url": "https://m.itouchtv.cn/article/0c88336be05e179c09ed17aa38908b73",
-      "summary": "总投资10亿元，引进16条无菌生产线，布局咖啡、椰汁、果汁、凉茶等。"
+      "summary": "总投资10亿元、16条无菌生产线，专注咖啡、椰汁、果汁等，预计年内投产。"
     },
     {
-      "title": "园洲卫生院整体扩建升级为县第八人民医院，总投资3亿元",
+      "title": "广大附中博罗实验学校迎来首批新生",
       "cat": "livelihood",
-      "emoji": "🏥",
+      "emoji": "🎓",
+      "tier": "中",
+      "srcLevel": "媒体报道",
+      "live": false,
+      "source": "惠州市教育局",
+      "url": "https://jyj.huizhou.gov.cn/gkmlpt/content/5/5850/post_5850161.html?jump=true",
+      "summary": "省级名校跨市托管的公办完全中学开学，与校本部同课程、同教研、同考试。"
+    },
+    {
+      "title": "218公里最美旅游公路火了，横河显岗水库驿站民宿满房翻三倍",
+      "cat": "tourism",
+      "emoji": "🛖",
       "tier": "中",
       "srcLevel": "媒体报道",
       "live": false,
       "source": "南方+",
-      "url": "http://m.toutiao.com/group/7690371595935810111/",
-      "summary": "建筑面积从9千多平方米扩至约4万平方米，群众家门口看病更方便。"
+      "url": "http://m.toutiao.com/group/7694252877808534073/",
+      "summary": "环湖绿道变身非遗工坊，过云山居连日满房、单日营业额逾5万元。"
+    },
+    {
+      "title": "从景点游到全域游，博罗国庆文旅“连着玩”成新风尚",
+      "cat": "tourism",
+      "emoji": "🗺️",
+      "tier": "中",
+      "srcLevel": "媒体报道",
+      "live": false,
+      "source": "博罗发布",
+      "url": "http://m.toutiao.com/group/7694105419119133184/",
+      "summary": "一条路串起山水，游客登山赏景之余体验非遗、音乐与乡村，全域游升温。"
     }
   ]
 }
