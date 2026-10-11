@@ -111,6 +111,14 @@ h1{font-size:20px;margin:0 0 2px}
     </div>
   </div>
 
+  <!-- 博罗特色投票 -->
+  <div style="margin:12px 0;padding:14px;background:linear-gradient(135deg,#1a2332,#0f172a);border:1px solid #fbbf24;border-radius:14px">
+    <div style="font-size:15px;font-weight:800;color:#fff;margin-bottom:4px">🍵 你最希望把博罗哪样做成真正的大品牌？</div>
+    <div style="font-size:12.5px;color:#94a3b8;margin-bottom:10px">这些牌一直都在。哪张最该摆到桌面上？</div>
+    <div id="brandGrid" style="display:flex;gap:8px;flex-wrap:wrap"></div>
+    <div id="brandOut" style="margin-top:10px;font-size:12.5px;color:#cbd5e1;line-height:1.6"></div>
+  </div>
+
   <div class="next"><a href="report.html">下一步：分析报告 →</a></div>
 </div>
 
@@ -209,6 +217,30 @@ var _hmt = _hmt || [];
   hm.src = "https://hm.baidu.com/hm.js?YOUR_ID";
   var s = document.getElementsByTagName("script")[0]; 
   s.parentNode.insertBefore(hm, s);
+})();
+</script>
+<script>
+// 博罗品牌投票
+(function(){
+  const KEY="boluo_brand_v1";
+  const opts=[
+    {k:"tea",label:"🍵 柏塘山茶",c:"#84cc16"},
+    {k:"caixin",label:"🥬 福田菜心",c:"#22c55e"},
+    {k:"luofu",label:"⛰️ 罗浮山",c:"#a78bfa"},
+    {k:"oil",label:"🥜 观音阁花生油",c:"#fbbf24"},
+    {k:"peanut",label:"🥜 公庄花生",c:"#f97316"}
+  ];
+  let d=JSON.parse(localStorage.getItem(KEY)||'{}');
+  opts.forEach(o=>{if(typeof d[o.k]!=="number")d[o.k]=0;});
+  document.getElementById("brandGrid").innerHTML=opts.map(o=>
+    `<button onclick="pickBrand('${o.k}')" style="flex:1;min-width:80px;background:${o.c}22;border:1px solid ${o.c};color:${o.c};border-radius:10px;padding:10px 6px;cursor:pointer;font-size:12px;font-weight:700">${o.label}</button>`
+  ).join("");
+  window.pickBrand=function(k){
+    if(localStorage.getItem(KEY+"_done"))return;
+    d[k]++;localStorage.setItem(KEY,JSON.stringify(d));localStorage.setItem(KEY+"_done","1");
+    const top=opts.slice().sort((a,b)=>d[b.k]-d[a.k])[0];
+    document.getElementById("brandOut").innerHTML=`你选了<b style="color:${opts.find(o=>o.k===k).c}">${opts.find(o=>o.k===k).label}</b>。<br>大家最想做成大品牌的是 <b style="color:${top.c}">${top.label}</b>。<br>好东西一直在，就看怎么卖出溢价。`;
+  };
 })();
 </script>
 </body></html>
