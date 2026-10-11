@@ -87,7 +87,7 @@ h1{font-size:22px;margin:0 0 2px;letter-spacing:.5px}
     </svg>
     <div>
       <h1>今日博罗话题</h1>
-      <p class="sub">扫一遍公开渠道，按热度排。点卡片看详情。<br><span style="font-size:11px;color:#5b6b82">数据来源：博罗县政府工作报告、统计公报与各镇公开信息、南方+/惠州日报等媒体，以及微博/抖音/头条等公开热榜。统计区间：最近24小时（近1天）· 每日自动更新一次。👁️阅读、🔁转发、👍点赞按公开来源热度合理估算，非平台后台真实统计。</span></p>
+      <p class="sub">扫一遍公开渠道，按关注程度排。点卡片看详情。<br><span style="font-size:11px;color:#5b6b82">数据来源：博罗县政府工作报告、统计公报与各镇公开信息、南方+/惠州日报等媒体，以及微博/抖音/头条等公开热榜。统计区间：近期公开信息，每日自动刷新（优先最近1天）。本页不展示平台后台真实阅读、转发、点赞，改用关注档（高/较高/中）标注。</span></p>
     </div>
   </div>
 
@@ -117,12 +117,12 @@ h1{font-size:22px;margin:0 0 2px;letter-spacing:.5px}
     <button class="cat" data-c="fun">🏞️ 文旅</button>
     <button class="refresh" id="btnScan">🔄 重新扫描</button>
   </div>
-  <div class="scan-info" id="scanInfo">上次扫描：刚刚 · 最近7天 · 覆盖12个公开来源</div>
+  <div class="scan-info" id="scanInfo">正在读取当日话题…</div>
 
   <div id="topicList"></div>
 
   <div class="next"><a href="network.html">下一步：看博罗怎么长出来 →</a></div>
-  <div class="disc">数据来源：博罗县政府工作报告、统计公报、各镇公开信息、本地媒体；实时部分来自微博/百度公开热搜接口。</div>
+  <div class="disc">话题均来自公开渠道、每日自动刷新；本页不展示平台后台真实阅读、转发、点赞，按关注档（高/较高/中）标注。</div>
 </div>
 
 <script>
@@ -202,9 +202,9 @@ async function loadHot(){
   }
   hotMeta=j;
   allData=j.items.map(it=>({
-    t:it.title, h:it.hot, c:catMap[it.cat]||"city",
-    src:it.source, url:it.url, d:it.summary, live:it.live,
-    vw:it.views_wan, sh:it.shares, lk:it.likes
+    t:it.title, c:catMap[it.cat]||"city",
+    src:it.source, srcLevel:it.srcLevel, url:it.url, d:it.summary,
+    live:it.live, tier:it.tier
   }));
 }
 
@@ -212,24 +212,23 @@ function allTopics(){return allData;}
 
 function render(){
   let list=curCat==="all"?allTopics():allTopics().filter(x=>x.c===curCat);
-  list=list.slice().sort((a,b)=>b.h-a.h);
+  // hot.json 已按关注档排好，直接采用数组顺序
   const grads={ind:"linear-gradient(135deg,#1e3a8a,#0f1a2e)",life:"linear-gradient(135deg,#7c2d12,#1a0f0f)",city:"linear-gradient(135deg,#374151,#0f1a2e)",agri:"linear-gradient(135deg,#1a2f0e,#0f1a2e)",fun:"linear-gradient(135deg,#064e3b,#0f1a2e)"};
   const catName={ind:"产业",life:"民生",city:"城市",agri:"农业",fun:"文旅"};
+  const tierColor={"高":"#f87171","较高":"#fbbf24","中":"#34d399"};
   const el=document.getElementById("topicList");
   el.style.cssText="display:grid;grid-template-columns:1fr 1fr;gap:10px";
   el.innerHTML=list.map((x)=>{
     const liveBadge=x.live?'<span style="background:#dc2626;color:#fff;font-size:9px;padding:1px 5px;border-radius:3px;margin-left:5px">实时</span>':'';
-    const likes=(localStorage.getItem("like_"+x.t)??x.lk);
+    const tc=tierColor[x.tier]||"#34d399";
     return `<div class="tcard" data-t="${x.t}" style="background:${grads[x.c]||grads.city};border-radius:12px;padding:14px;cursor:pointer">
-      <div style="font-size:11px;color:#94a3b8">${catName[x.c]||"城市"}${liveBadge} · ${x.src||""}</div>
-      <div style="font-size:16px;font-weight:800;color:#fff;margin:8px 0 4px;line-height:1.4">${x.t}</div>
+      <div style="font-size:11px;color:#94a3b8">${catName[x.c]||"城市"}${liveBadge} · ${x.srcLevel||""} · ${x.src||""}</div>
+      <div style="font-size:16px;font-weight:800;color:#fff;margin:8px 0 6px;line-height:1.4">${x.t}</div>
       <div style="display:flex;align-items:center;justify-content:space-between">
-        <div style="font-size:26px;font-weight:900;color:${x.h>=85?'#f87171':x.h>=70?'#fbbf24':'#4ade80'}">${Math.round(x.h)}<span style="font-size:12px;font-weight:400">°</span></div>
-        <div style="display:flex;gap:10px;font-size:12px;color:#94a3b8">
-          <span>👁️ ${x.vw}万</span><span>🔁 ${x.sh}</span><span class="likeBtn" onclick="event.stopPropagation();like(this,'${x.t}')">👍 <b class="ln">${likes}</b></span>
-        </div>
+        <span style="font-size:11px;font-weight:800;color:${tc};border:1px solid ${tc};border-radius:8px;padding:3px 10px">关注 · ${x.tier}</span>
+        <span class="likeBtn" onclick="event.stopPropagation();like(this,'${x.t}')" style="font-size:12px;color:#94a3b8;cursor:pointer">👍 <b class="ln">0</b></span>
       </div>
-      <div class="detail" style="font-size:11.5px;color:#cbd5e1;margin-top:8px;display:none">${x.d||""}${x.why?`<br><span style="color:#fbbf24">→ ${x.why}</span>`:""}</div>
+      <div class="detail" style="font-size:11.5px;color:#cbd5e1;margin-top:8px;display:none">${x.d||""}</div>
     </div>`;
   }).join("");
   document.querySelectorAll("#topicList .tcard").forEach(c=>{
@@ -252,7 +251,7 @@ document.querySelectorAll(".cat").forEach(b=>{
 });
 
 function scanText(){
-  return `数据每日自动更新一次 · 上次更新 ${hotMeta.updated||"—"} · 近1天 · 共${allData.length}个话题`;
+  return `数据每日自动刷新 · 上次更新 ${hotMeta.updated||"—"} · 共${allData.length}个话题 · 关注档排序`;
 }
 
 document.getElementById("btnScan").onclick=async function(){
@@ -356,8 +355,8 @@ var _hmt = _hmt || [];
   window.pickProud=function(k){
     if(localStorage.getItem(KEY+"_done"))return;
     d[k]++;localStorage.setItem(KEY,JSON.stringify(d));localStorage.setItem(KEY+"_done","1");
-    const top=opts.slice().sort((a,b)=>d[b.k]-d[a.k])[0];
-    document.getElementById("proudOut").innerHTML=`你选了<b style="color:#fbbf24">${opts.find(o=>o.k===k).label}</b>。<br>大家最常向外人提起的是 <b style="color:${top.c}">${top.label}</b>——${top.say}<br>博罗是博罗，这就是我们的家底。`;
+    const my=opts.find(o=>o.k===k);
+    document.getElementById("proudOut").innerHTML=`你选了<b style="color:${my.c}">${my.label}</b>。<br>这是你本机的记录——${my.say}<br>博罗是博罗，这就是我们的家底。`;
   };
 })();
 </script>

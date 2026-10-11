@@ -63,7 +63,7 @@ h1{font-size:20px;margin:0 0 2px}
   <div class="insight">
     <div class="num">发现 2</div>
     <div class="t">罗浮山1028万游客，人均只留下约500块</div>
-    <div class="d">游客数已经很可观，超过很多5A景区。但大部分人当天来回，门票、一顿饭就走，住宿和夜间消费几乎没留下。</div>
+    <div class="d">游客数已经很可观，超过很多5A景区。其中不少人当天来回，住宿和夜间消费还有很大提升空间——假期过夜游客已在较快增长，是个好信号。</div>
     <div id="ch2" class="chart"></div>
     <div class="deep amber"><span class="lab">这笔账被低估在哪</span>
       <div class="body">按现在人均约500元算，旅游收入52亿。<b>同样是这1028万人，如果人均提到800元，收入就到82亿；如果有一成游客多住一晚，住宿餐饮还得另算</b>。也就是说，增长不一定靠"多拉游客"，把现有的人留住半天、多消费一笔，杠杆比想象中大。这正是"过夜经济"被反复强调的原因——它撬动的是已经进门的人。</div>
@@ -186,28 +186,28 @@ window.addEventListener('resize',()=>[c1,c2,c3,c4,c5].forEach(c=>c.resize()));
   <button onclick="sharePage()">🔁 转给朋友</button>
 </div>
 <style>
-.likebar{{position:relative;bottom:auto;left:auto;transform:none;display:flex;justify-content:center;margin:20px 0;background:rgba(15,23,42,.96);border:1px solid #3b82f6;border-radius:24px;padding:9px 20px;display:flex;gap:22px;z-index:999;box-shadow:0 6px 24px rgba(0,0,0,.6)}}
-.likebar button{{background:none;border:none;color:#e2e8f0;font-size:14px;cursor:pointer}}
-.likebar button:active{{transform:scale(1.15)}}
+.likebar{position:relative;bottom:auto;left:auto;transform:none;display:flex;justify-content:center;margin:20px 0;background:rgba(15,23,42,.96);border:1px solid #3b82f6;border-radius:24px;padding:9px 20px;display:flex;gap:22px;z-index:999;box-shadow:0 6px 24px rgba(0,0,0,.6)}
+.likebar button{background:none;border:none;color:#e2e8f0;font-size:14px;cursor:pointer}
+.likebar button:active{transform:scale(1.15)}
 </style>
 <script>
-(function(){{
+(function(){
   var k="like_"+location.pathname;
   var n=parseInt(localStorage.getItem(k)||"0");
   document.getElementById("pcount").textContent=n;
-  window.likePage=function(){{n++;localStorage.setItem(k,n);document.getElementById("pcount").textContent=n;}};
-  window.sharePage=function(){{
+  window.likePage=function(){n++;localStorage.setItem(k,n);document.getElementById("pcount").textContent=n;};
+  window.sharePage=function(){
     var m=document.getElementById("shareModal");
-    if(!m){{
+    if(!m){
       m=document.createElement("div");m.id="shareModal";
       m.style.cssText="position:fixed;inset:0;background:rgba(0,0,0,.8);z-index:9999;display:flex;align-items:center;justify-content:center;padding:20px";
-      m.onclick=function(){{m.remove();}};
+      m.onclick=function(){m.remove();};
       m.innerHTML='<div style="background:#0f172a;padding:20px;border-radius:14px;text-align:center" onclick="event.stopPropagation()"><div style="color:#fff;font-size:14px;margin-bottom:12px">截图二维码，发给朋友/群</div><img src="https://api.qrserver.com/v1/create-qr-code/?size=200x200&data='+encodeURIComponent(location.href)+'" style="width:200px;height:200px;background:#fff;padding:8px;border-radius:8px"><div style="color:#94a3b8;font-size:12px;margin-top:12px">扫码打开</div></div>';
       document.body.appendChild(m);
-    }}
+    }
     navigator.clipboard && navigator.clipboard.writeText(location.href);
-  }};
-}})();
+  };
+})();
 </script>
 <!-- 百度统计：去 mtj.baidu.com 注册后替换 YOUR_ID -->
 <script>
@@ -238,8 +238,8 @@ var _hmt = _hmt || [];
   window.pickBrand=function(k){
     if(localStorage.getItem(KEY+"_done"))return;
     d[k]++;localStorage.setItem(KEY,JSON.stringify(d));localStorage.setItem(KEY+"_done","1");
-    const top=opts.slice().sort((a,b)=>d[b.k]-d[a.k])[0];
-    document.getElementById("brandOut").innerHTML=`你选了<b style="color:${opts.find(o=>o.k===k).c}">${opts.find(o=>o.k===k).label}</b>。<br>大家最想做成大品牌的是 <b style="color:${top.c}">${top.label}</b>。<br>好东西一直在，就看怎么卖出溢价。`;
+    const my=opts.find(o=>o.k===k);
+    document.getElementById("brandOut").innerHTML=`你选了<b style="color:${my.c}">${my.label}</b>。<br>这是你本机的记录。<br>好东西一直在，就看怎么卖出溢价。`;
   };
 })();
 </script>
