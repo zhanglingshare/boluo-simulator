@@ -153,7 +153,7 @@ document.getElementById("btnScan").onclick=refresh;
 </div>
 
 <div class="likebar">
-  <button onclick="likePage()">👍 <span id="pcount">510584</span></button>
+  <button onclick="likePage()">👍 <span id="pcount">0</span></button>
   <button onclick="sharePage()">🔁 转给朋友</button>
 </div>
 <style>
@@ -164,7 +164,7 @@ document.getElementById("btnScan").onclick=refresh;
 <script>
 (function(){{
   var k="like_"+location.pathname;
-  var n=parseInt(localStorage.getItem(k)||"510584");
+  var n=parseInt(localStorage.getItem(k)||"0");
   document.getElementById("pcount").textContent=n;
   window.likePage=function(){{n++;localStorage.setItem(k,n);document.getElementById("pcount").textContent=n;}};
   window.sharePage=function(){{
