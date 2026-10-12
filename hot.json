@@ -1,6 +1,8 @@
 {
+  "schema_version": 2,
   "region": "boluo",
-  "updated": "2026-10-12 07:32",
+  "updated": "2026-10-12 19:33",
+  "fetched_at": "2026-10-12 19:33",
   "frequency": "每日更新一次",
   "count": 15,
   "note": "话题按编辑关注程度排序，标注关注档（高/较高/中）与来源级别；本页不展示平台后台真实阅读、转发、点赞数据。话题均来自公开渠道，每日更新。",
@@ -14,7 +16,10 @@
       "live": false,
       "source": "博罗县人民政府",
       "url": "https://www.boluo.gov.cn/xzygdw/xgbdst/blxw/content/post_5863373.html",
-      "summary": "200MW/400MWh独立共享储能电站9月29日并网，博罗新型能源体系再添“电力引擎”。"
+      "summary": "200MW/400MWh独立共享储能电站9月29日并网，博罗新型能源体系再添“电力引擎”。",
+      "published_at": null,
+      "fetched_at": "2026-10-12 19:33",
+      "verified_status": "pending"
     },
     {
       "title": "博罗过夜游客比2023年同期增长62%，多家精品民宿入住率100%",
@@ -25,7 +30,10 @@
       "live": false,
       "source": "惠州市人民政府",
       "url": "https://www.huizhou.gov.cn/zwgk/hzsz/zwyw/content/post_5865139.html",
-      "summary": "环罗浮山民宿集群、乡村酒店迎来高峰，“过路客”加快变“过夜客”。"
+      "summary": "环罗浮山民宿集群、乡村酒店迎来高峰，“过路客”加快变“过夜客”。",
+      "published_at": null,
+      "fetched_at": "2026-10-12 19:33",
+      "verified_status": "pending"
     },
     {
       "title": "博罗签约四宗优质产业项目，总投资80亿元",
@@ -36,7 +44,10 @@
       "live": false,
       "source": "博罗县人民政府",
       "url": "https://www.boluo.gov.cn/yshj/ysdt/content/post_5852105.html",
-      "summary": "4宗项目预计年产值203亿元，为博罗“3+3”现代化产业体系注入新动能。"
+      "summary": "4宗项目预计年产值203亿元，为博罗“3+3”现代化产业体系注入新动能。",
+      "published_at": null,
+      "fetched_at": "2026-10-12 19:33",
+      "verified_status": "pending"
     },
     {
       "title": "博罗综合交通“十五五”规划征求意见，园洲振兴大道纳入",
@@ -47,7 +58,10 @@
       "live": false,
       "source": "博罗县人民政府",
       "url": "https://www.boluo.gov.cn/zmhd/yjfk/content/post_5851764.html",
-      "summary": "吸纳公众建议，连接园洲与龙溪的振兴大道工程纳入“十五五”规划。"
+      "summary": "吸纳公众建议，连接园洲与龙溪的振兴大道工程纳入“十五五”规划。",
+      "published_at": null,
+      "fetched_at": "2026-10-12 19:33",
+      "verified_status": "pending"
     },
     {
       "title": "博罗“00后”技能小将世赛夺金，助中国队四连冠",
@@ -58,7 +72,10 @@
       "live": false,
       "source": "博罗县人民政府",
       "url": "https://www.boluo.gov.cn/zwgk/zwdt/tpxw/",
-      "summary": "七年磨一剑，博罗青年在世界技能赛场夺冠，展现技能人才培养成果。"
+      "summary": "七年磨一剑，博罗青年在世界技能赛场夺冠，展现技能人才培养成果。",
+      "published_at": null,
+      "fetched_at": "2026-10-12 19:33",
+      "verified_status": "pending"
     },
     {
       "title": "园洲镇第十八届人民代表大会召开，“一镇三园区”格局成型",
@@ -69,7 +86,10 @@
       "live": false,
       "source": "博罗县人民政府",
       "url": "https://www.boluo.gov.cn/hzblyzz/gkmlpt/content/5/5862/post_5862256.html?jump=true",
-      "summary": "镇域产业、基础设施、乡村振兴与民生事业全面提质，部署下一阶段工作。"
+      "summary": "镇域产业、基础设施、乡村振兴与民生事业全面提质，部署下一阶段工作。",
+      "published_at": null,
+      "fetched_at": "2026-10-12 19:33",
+      "verified_status": "pending"
     },
     {
       "title": "罗阳承粮陂村60亩玉米开摘",
@@ -80,7 +100,10 @@
       "live": false,
       "source": "博罗县人民政府",
       "url": "https://www.boluo.gov.cn/zwgk/zwdt/tpxw/",
-      "summary": "秋高气爽，承粮陂村玉米迎来采收季，新鲜玉米直供本地市场。"
+      "summary": "秋高气爽，承粮陂村玉米迎来采收季，新鲜玉米直供本地市场。",
+      "published_at": null,
+      "fetched_at": "2026-10-12 19:33",
+      "verified_status": "pending"
     },
     {
       "title": "“番薯哥”“甘蔗姐”田间开播，特色作物长势喜人",
@@ -91,7 +114,10 @@
       "live": false,
       "source": "博罗县农业农村局",
       "url": "https://www.boluo.gov.cn/xnyncj/",
-      "summary": "博罗特色农产品借助田间直播拓宽销路，红薯、甘蔗等秋季作物丰收在望。"
+      "summary": "博罗特色农产品借助田间直播拓宽销路，红薯、甘蔗等秋季作物丰收在望。",
+      "published_at": null,
+      "fetched_at": "2026-10-12 19:33",
+      "verified_status": "pending"
     },
     {
       "title": "国庆博罗迎客63.82万人次，实现旅游综合收入3.38亿元",
@@ -102,7 +128,10 @@
       "live": false,
       "source": "惠州新闻网",
       "url": "http://www.hznews.com/xqrm/blx/202610/t20261008_1663544.shtml",
-      "summary": "罗浮山“仙山揽月·古韵贺华诞”非遗主题活动出圈，仙山非遗引客来。"
+      "summary": "罗浮山“仙山揽月·古韵贺华诞”非遗主题活动出圈，仙山非遗引客来。",
+      "published_at": null,
+      "fetched_at": "2026-10-12 19:33",
+      "verified_status": "pending"
     },
     {
       "title": "环南昆山—罗浮山引领区成国庆文旅热点，罗浮山入园超9万人次",
@@ -113,7 +142,10 @@
       "live": false,
       "source": "南方+",
       "url": "https://www.nfnews.com/content/A6EBkNYmoK.html",
-      "summary": "罗浮山推非遗展演、科技互动、非遗集市与音乐派对，沿线村民分享客流红利。"
+      "summary": "罗浮山推非遗展演、科技互动、非遗集市与音乐派对，沿线村民分享客流红利。",
+      "published_at": null,
+      "fetched_at": "2026-10-12 19:33",
+      "verified_status": "pending"
     },
     {
       "title": "柏塘山茶从手工炒茶走向茶文旅融合，国庆万亩茶园迎客",
@@ -124,7 +156,10 @@
       "live": false,
       "source": "博罗发布",
       "url": "http://m.toutiao.com/group/7695289670455804458/",
-      "summary": "统一标准与品牌、开发山茶啤酒月饼等衍生品，茶园观光采茶体验让山茶“破圈”。"
+      "summary": "统一标准与品牌、开发山茶啤酒月饼等衍生品，茶园观光采茶体验让山茶“破圈”。",
+      "published_at": null,
+      "fetched_at": "2026-10-12 19:33",
+      "verified_status": "pending"
     },
     {
       "title": "椰泰集团在博罗建第三个生产基地，提供850个就业岗位",
@@ -135,7 +170,10 @@
       "live": false,
       "source": "触电新闻",
       "url": "https://m.itouchtv.cn/article/0c88336be05e179c09ed17aa38908b73",
-      "summary": "总投资10亿元、16条无菌生产线，专注咖啡、椰汁、果汁等，预计年内投产。"
+      "summary": "总投资10亿元、16条无菌生产线，专注咖啡、椰汁、果汁等，预计年内投产。",
+      "published_at": null,
+      "fetched_at": "2026-10-12 19:33",
+      "verified_status": "pending"
     },
     {
       "title": "广大附中博罗实验学校迎来首批新生",
@@ -146,7 +184,10 @@
       "live": false,
       "source": "惠州市教育局",
       "url": "https://jyj.huizhou.gov.cn/gkmlpt/content/5/5850/post_5850161.html?jump=true",
-      "summary": "省级名校跨市托管的公办完全中学开学，与校本部同课程、同教研、同考试。"
+      "summary": "省级名校跨市托管的公办完全中学开学，与校本部同课程、同教研、同考试。",
+      "published_at": null,
+      "fetched_at": "2026-10-12 19:33",
+      "verified_status": "pending"
     },
     {
       "title": "218公里最美旅游公路火了，横河显岗水库驿站民宿满房翻三倍",
@@ -157,7 +198,10 @@
       "live": false,
       "source": "南方+",
       "url": "http://m.toutiao.com/group/7694252877808534073/",
-      "summary": "环湖绿道变身非遗工坊，过云山居连日满房、单日营业额逾5万元。"
+      "summary": "环湖绿道变身非遗工坊，过云山居连日满房、单日营业额逾5万元。",
+      "published_at": null,
+      "fetched_at": "2026-10-12 19:33",
+      "verified_status": "pending"
     },
     {
       "title": "从景点游到全域游，博罗国庆文旅“连着玩”成新风尚",
@@ -168,7 +212,10 @@
       "live": false,
       "source": "博罗发布",
       "url": "http://m.toutiao.com/group/7694105419119133184/",
-      "summary": "一条路串起山水，游客登山赏景之余体验非遗、音乐与乡村，全域游升温。"
+      "summary": "一条路串起山水，游客登山赏景之余体验非遗、音乐与乡村，全域游升温。",
+      "published_at": null,
+      "fetched_at": "2026-10-12 19:33",
+      "verified_status": "pending"
     }
   ]
 }

@@ -1,5 +1,5 @@
 {
-  "updated": "2026-10-12 07:35",
+  "updated": "2026-10-12 19:33",
   "freq": "每日更新一次",
   "range": "最近24小时公开讨论",
   "note": "各镇与农品人气按点评/小红书/抖音近期公开打卡热度分为高/较高/中三档，非真实人数统计；农品按当月真实时令。",
@@ -23,7 +23,8 @@
       ],
       "why": "岭南第一山，国庆非遗市集出圈",
       "hot": 87,
-      "level": "高"
+      "level": "高",
+      "verified_status": "pending"
     },
     {
       "n": "横河",
@@ -37,7 +38,8 @@
       ],
       "why": "国庆驿站满房、业绩翻三倍，山里慢生活",
       "hot": 74,
-      "level": "较高"
+      "level": "较高",
+      "verified_status": "pending"
     },
     {
       "n": "罗阳",
@@ -51,7 +53,8 @@
       ],
       "why": "27万人的县城，服务本县人",
       "hot": 74,
-      "level": "较高"
+      "level": "较高",
+      "verified_status": "pending"
     },
     {
       "n": "园洲",
@@ -65,7 +68,8 @@
       ],
       "why": "全省首个跨市域总部+基地示范园，挨着东莞",
       "hot": 72,
-      "level": "较高"
+      "level": "较高",
+      "verified_status": "pending"
     },
     {
       "n": "石湾",
@@ -78,7 +82,8 @@
       ],
       "why": "企业密集，夜里是河鲜味",
       "hot": 68,
-      "level": "较高"
+      "level": "较高",
+      "verified_status": "pending"
     },
     {
       "n": "泰美",
@@ -92,7 +97,8 @@
       ],
       "why": "到深圳半小时，山脚天然氧吧",
       "hot": 60,
-      "level": "较高"
+      "level": "较高",
+      "verified_status": "pending"
     },
     {
       "n": "柏塘",
@@ -106,7 +112,8 @@
       ],
       "why": "秋茶香浓，北部山区的日子",
       "hot": 62,
-      "level": "较高"
+      "level": "较高",
+      "verified_status": "pending"
     },
     {
       "n": "福田",
@@ -119,7 +126,8 @@
       ],
       "why": "菜心9-11月播种，一棵菜也是一个产业",
       "hot": 50,
-      "level": "中"
+      "level": "中",
+      "verified_status": "pending"
     },
     {
       "n": "龙华",
@@ -132,7 +140,8 @@
       ],
       "why": "400年古村，故事还在",
       "hot": 46,
-      "level": "中"
+      "level": "中",
+      "verified_status": "pending"
     },
     {
       "n": "公庄",
@@ -145,7 +154,8 @@
       ],
       "why": "10月刚刨出来，带泥香",
       "hot": 44,
-      "level": "中"
+      "level": "中",
+      "verified_status": "pending"
     },
     {
       "n": "杨村",
@@ -158,7 +168,8 @@
       ],
       "why": "皇帝柑11月起开摘，金秋满园挂果",
       "hot": 42,
-      "level": "中"
+      "level": "中",
+      "verified_status": "pending"
     },
     {
       "n": "观音阁",
@@ -171,7 +182,8 @@
       ],
       "why": "新花生现榨，一勺浓香",
       "hot": 40,
-      "level": "中"
+      "level": "中",
+      "verified_status": "pending"
     }
   ],
   "season": "秋",
@@ -181,56 +193,66 @@
       "p": "公庄镇·沙土地",
       "d": "9—10月采收，刚刨出来带泥香",
       "hot": 70,
-      "level": "较高"
+      "level": "较高",
+      "verified_status": "pending"
     },
     {
       "n": "柏塘秋茶",
       "p": "柏塘镇",
       "d": "秋茶香浓耐泡，万亩茶园迎客",
       "hot": 66,
-      "level": "较高"
+      "level": "较高",
+      "verified_status": "pending"
     },
     {
       "n": "博罗红薯",
       "p": "北部各镇",
       "d": "秋收番薯，甜糯飘香",
       "hot": 64,
-      "level": "较高"
+      "level": "较高",
+      "verified_status": "pending"
     },
     {
       "n": "观音阁花生油",
       "p": "观音阁镇",
       "d": "新花生现榨，一勺浓香",
       "hot": 62,
-      "level": "较高"
+      "level": "较高",
+      "verified_status": "pending"
     },
     {
       "n": "罗阳承粮陂玉米",
       "p": "罗阳街道",
       "d": "10月开摘，可田间体验",
       "hot": 58,
-      "level": "较高"
+      "level": "较高",
+      "verified_status": "pending"
     },
     {
       "n": "公庄百香果",
       "p": "公庄镇",
       "d": "秋季甜蜜上市，果香四溢",
       "hot": 55,
-      "level": "较高"
+      "level": "较高",
+      "verified_status": "pending"
     },
     {
       "n": "杨村皇帝柑(挂果期)",
       "p": "杨村镇",
       "d": "11月起开摘，此刻挂果尚未上市",
       "hot": 42,
-      "level": "中"
+      "level": "中",
+      "verified_status": "pending"
     },
     {
       "n": "福田菜心(播种季)",
       "p": "福田镇",
       "d": "9—11月秋茬播种，尚未上市",
       "hot": 40,
-      "level": "中"
+      "level": "中",
+      "verified_status": "pending"
     }
-  ]
+  ],
+  "schema_version": 2,
+  "fetched_at": "2026-10-12 19:33"
 }
