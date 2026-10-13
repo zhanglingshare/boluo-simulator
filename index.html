@@ -104,8 +104,21 @@ h1{font-size:22px;margin:0 0 2px;letter-spacing:.5px}
     </div>
   </div>
 
+  <div class="toolbar">
+    <button class="cat on" data-c="all">全部</button>
+    <button class="cat" data-c="ind">🔵 产业</button>
+    <button class="cat" data-c="life">🟠 民生</button>
+    <button class="cat" data-c="city">⚪ 城市</button>
+    <button class="cat" data-c="agri">🌾 农业</button>
+    <button class="cat" data-c="fun">🏞️ 文旅</button>
+    <button class="refresh" id="btnScan">🔄 重新扫描</button>
+  </div>
+  <div class="scan-info" id="scanInfo">正在读取当日话题…</div>
+
+  <div id="topicList"></div>
+
   <!-- 你是哪个镇的 -->
-  <div style="margin:12px 0;padding:14px;background:linear-gradient(135deg,#14231a,#0f172a);border:1px solid #22c55e;border-radius:14px">
+  <div style="margin:20px 0 12px;padding:14px;background:linear-gradient(135deg,#14231a,#0f172a);border:1px solid #22c55e;border-radius:14px">
     <div style="font-size:15px;font-weight:800;color:#fff;margin-bottom:4px">🏘️ 你是博罗哪个镇的？</div>
     <div style="font-size:12.5px;color:#94a3b8;margin-bottom:10px">12个镇街，每个镇都有自己的饭碗。点你的镇，看它最近在发生什么。</div>
     <div id="townGrid" style="display:grid;grid-template-columns:repeat(4,1fr);gap:6px"></div>
@@ -119,20 +132,6 @@ h1{font-size:22px;margin:0 0 2px;letter-spacing:.5px}
     <div id="proudGrid" style="display:flex;gap:8px;flex-wrap:wrap"></div>
     <div id="proudOut" style="margin-top:10px;font-size:12.5px;color:#cbd5e1;line-height:1.6"></div>
   </div>
-
-
-  <div class="toolbar">
-    <button class="cat on" data-c="all">全部</button>
-    <button class="cat" data-c="ind">🔵 产业</button>
-    <button class="cat" data-c="life">🟠 民生</button>
-    <button class="cat" data-c="city">⚪ 城市</button>
-    <button class="cat" data-c="agri">🌾 农业</button>
-    <button class="cat" data-c="fun">🏞️ 文旅</button>
-    <button class="refresh" id="btnScan">🔄 重新扫描</button>
-  </div>
-  <div class="scan-info" id="scanInfo">正在读取当日话题…</div>
-
-  <div id="topicList"></div>
 
   <div class="next"><a href="network.html">下一步：看博罗怎么长出来 →</a></div>
   <div class="disc">话题均来自公开渠道、每日自动刷新；本页不展示平台后台真实阅读、转发、点赞，按关注档（高/较高/中）标注。</div>
