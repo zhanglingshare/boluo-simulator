@@ -72,6 +72,7 @@ svg{display:block;width:100%;height:auto}
 
   <div class="actbar">
     <button class="btn" id="bReplay">↻ 重新建构</button>
+    <button class="btn" style="background:#16203a;border:1px solid #2b3a55;color:#b9cbe4;font-weight:400;font-size:12px;padding:6px 14px" onclick="exportCSV()">⬇ 导出 edges.csv</button>
     <span class="cnt" id="cnt">准备中…</span>
   </div>
 
@@ -99,6 +100,11 @@ svg{display:block;width:100%;height:auto}
     <div class="plain">
       <span class="lab">人话</span>
       博罗不是一个孤立的县。它连得最紧的那根线，不是连到自己的县城，是连到东莞。这不是问题——这是博罗在大湾区里的位置。园洲石湾挨着东莞石龙，产业承接是地理给的。<span class="blood-tag blood-A">A 实测</span>
+    </div>
+
+    <div class="plain" style="background:rgba(248,113,113,.08);border-left:3px solid #f87171;margin-top:8px">
+      <span class="lab" style="color:#fca5a5">看不懂图？</span>
+      红圈标了三个命门：<b>东莞石龙</b>是博罗工业的源头，<b>园洲石湾</b>是接产业的第一站，<b>罗浮山</b>是博罗唯一的文旅大IP。记住这三个，这张图就没白看。
     </div>
 
     <div style="margin-top:14px">
@@ -325,6 +331,20 @@ function showAfter(degree,btw){
       <span class="val">${v.toFixed(0)}</span>
     </div>`;
   }).join("");
+}
+
+function exportCSV(){
+  const rows=[["source","target","weight","blood_level"]];
+  EDGES.forEach(e=>{
+    const s=nodeById(e[0]),t=nodeById(e[1]);
+    rows.push([s.name,t.name,e[2],e[3]||""]);
+  });
+  const csv=rows.map(r=>r.join(",")).join("\n");
+  const blob=new Blob(["\uFEFF"+csv],{type:"text/csv;charset=utf-8"});
+  const a=document.createElement("a");
+  a.href=URL.createObjectURL(blob);
+  a.download="boluo-edges.csv";
+  a.click();
 }
 
 document.getElementById("bReplay").onclick=start;

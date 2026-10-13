@@ -1,6 +1,7 @@
 <!doctype html>
 <html lang="zh-CN"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
 <title>博罗产业风洞 · 今日话题</title>
+<script src="model.js"></script>
 <style>
 *{box-sizing:border-box}
 body{margin:0;background:#080b12;color:#e6edf3;font:14px/1.6 -apple-system,"PingFang SC","Microsoft YaHei",sans-serif}
@@ -88,7 +89,16 @@ h1{font-size:22px;margin:0 0 2px;letter-spacing:.5px}
     <div>
       <h1>今日博罗话题</h1>
       <p class="sub">扫一遍公开渠道，按关注程度排。点卡片看详情。<br><span style="font-size:11px;color:#5b6b82">数据来源：博罗县政府工作报告、统计公报与各镇公开信息、南方+/惠州日报等媒体，以及微博/抖音/头条等公开热榜。统计区间：近期公开信息，每日自动刷新（优先最近1天）。本页不展示平台后台真实阅读、转发、点赞，改用关注档（高/较高/中）标注。</span></p>
+      <div id="topHook" style="margin-top:12px;font-size:17px;font-weight:800;color:#fbbf24;line-height:1.5;background:rgba(251,191,36,.08);border-left:3px solid #fbbf24;padding:10px 12px;border-radius:0 10px 10px 0"></div>
     </div>
+  </div>
+
+  <!-- 你的判断：模型联动 -->
+  <div style="margin:12px 0;padding:14px;background:linear-gradient(135deg,#14231a,#0f172a);border:1px solid #22c55e;border-radius:14px">
+    <div style="font-size:14px;font-weight:800;color:#fff;margin-bottom:4px">🔮 2030年博罗能到1600亿吗？说说你的判断</div>
+    <div style="font-size:12px;color:#94a3b8;margin-bottom:10px">同一套模型跑了4000遍，过1600亿概率约 <b id="baseHit" style="color:#4ade80">…</b>，中位数约 <b id="baseP50" style="color:#4ade80">…</b>亿。你比它乐观还是悲观？</div>
+    <div id="voteBar" style="display:flex;gap:8px"></div>
+    <div id="voteOut" style="margin-top:10px;font-size:12px;color:#cbd5e1;line-height:1.6"></div>
   </div>
 
   <!-- 你是哪个镇的 -->
@@ -213,6 +223,11 @@ function allTopics(){return allData;}
 function esc(s){return String(s==null?"":s).replace(/[&<>"']/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]));}
 function render(){
   let list=curCat==="all"?allTopics():allTopics().filter(x=>x.c===curCat);
+  // topHook：今天大家在看的第一条
+  if(allTopics().length){
+    const top=allTopics()[0];
+    document.getElementById("topHook").innerHTML="📌 今天大家在看的，是<b>「"+esc(top.t)+"」</b>";
+  }
   // hot.json 已按关注档排好，直接采用数组顺序
   const grads={ind:"linear-gradient(135deg,#1e3a8a,#0f1a2e)",life:"linear-gradient(135deg,#7c2d12,#1a0f0f)",city:"linear-gradient(135deg,#374151,#0f1a2e)",agri:"linear-gradient(135deg,#1a2f0e,#0f1a2e)",fun:"linear-gradient(135deg,#064e3b,#0f1a2e)"};
   const catName={ind:"产业",life:"民生",city:"城市",agri:"农业",fun:"文旅"};
@@ -278,6 +293,10 @@ document.getElementById("btnScan").onclick=async function(){
   catch(e){ hotOk=false; hotMeta={}; allData=[]; }
   document.getElementById("scanInfo").textContent=hotOk?scanText():"今日话题快照暂不可用（读取失败），可点「重新扫描」重试；页面其余内容不受影响。";
   render();
+  // 跑风洞基准模型
+  const b=HT.run(42,4000,HT.DEFAULT_PATHS);
+  document.getElementById("baseHit").textContent=b.hit.toFixed(0)+"%";
+  document.getElementById("baseP50").textContent=Math.round(b.p50);
 })();
 </script>
 
@@ -316,6 +335,35 @@ var _hmt = _hmt || [];
   hm.src = "https://hm.baidu.com/hm.js?YOUR_ID";
   var s = document.getElementsByTagName("script")[0]; 
   s.parentNode.insertBefore(hm, s);
+})();
+</script>
+<script>
+// 你的判断：本地累计表态
+(function(){
+  const KEY="boluo_judge_v1";
+  const opts=[{k:"sure",label:"我看稳了",c:"#4ade80",mood:"你比模型乐观"},{k:"risky",label:"有点悬",c:"#f87171",mood:"你比模型悲观"},{k:"wait",label:"不好说",c:"#94a3b8",mood:"你和模型一样谨慎"}];
+  let d=JSON.parse(localStorage.getItem(KEY)||'{"sure":0,"risky":0,"wait":0}');
+  function render(){
+    const total=opts.reduce((s,o)=>s+d[o.k],0);
+    const voted=localStorage.getItem(KEY+"_done");
+    document.getElementById("voteBar").innerHTML=opts.map(o=>{
+      const pct=total?Math.round(d[o.k]/total*100):0;
+      const dis=voted?'pointer-events:none;opacity:.7':'';
+      return `<button onclick="judge('${o.k}')" style="${dis};flex:1;background:${o.c}22;border:1px solid ${o.c};color:${o.c};border-radius:10px;padding:10px 6px;cursor:pointer;font-size:13px;font-weight:700">${o.label}</button>`;
+    }).join("");
+    if(voted){
+      const my=opts.find(o=>d[o.k]>0);
+      document.getElementById("voteOut").innerHTML=`你这一票投给了「<b style="color:${my.c}">${my.label}</b>」——${my.mood}。<br>这是你本机的记录。2026年我们在这，一年后回来，看看自己的判断准不准。`;
+    } else {
+      document.getElementById("voteOut").innerHTML="还没表态，选一个。";
+    }
+  }
+  window.judge=function(k){
+    if(localStorage.getItem(KEY+"_done"))return;
+    d[k]++;localStorage.setItem(KEY,JSON.stringify(d));localStorage.setItem(KEY+"_done","1");
+    render();
+  };
+  render();
 })();
 </script>
 <script>
