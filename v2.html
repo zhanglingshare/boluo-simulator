@@ -93,12 +93,16 @@ const rawNodes=[
   {id:"zw",name:"正威新材料",type:"anchor",town:"罗阳",desc:"25万吨铜杆/年·重资产原材料底座"},
   {id:"jq",name:"嘉奇新能源",type:"anchor",town:"园洲",desc:"奇瑞系·深博福田产业园2026开园·梯次电池基地"},
   {id:"jf",name:"江丰精密",type:"anchor",town:"园洲",desc:"溅射靶材全球第一·3纳米"},
-  {id:"gj",name:"11家国家级小巨人",type:"champ",town:"多镇",desc:"嘉治/派沃/力王/凤凰/广麟/奥科/百时达/吉邦/鑫晖源/信立泰/TCL瑞智"},
-  {id:"sj",name:"74家省级专精特新",type:"champ",town:"多镇",desc:"各细分赛道隐形市占率"},
-  {id:"bmc",name:"表面处理群落",type:"capillary",town:"福田",desc:"省级特色集群·电镀/喷涂·受东江环保约束"},
-  {id:"mj",name:"石湾模具群落",type:"capillary",town:"石湾",desc:"全镇2461家工业企业·三市交界·特斯拉/比亚迪/拓竹"},
-  {id:"ddc",name:"电动车配套群落",type:"capillary",town:"石湾",desc:"台铃/小刀/新日/绿佳·产值超150亿"},
-  {id:"lq",name:"镇村老厂群落",type:"legacy",town:"龙溪/园洲/罗阳",desc:"数千家五金/塑料/建材·用电+11.5%大头·亩均达标压力"},
+  {id:"gj",name:"10家国家级小巨人",type:"capillary",town:"多镇",desc:"力王高新/凤凰新能源/广麟材耀/奥科伟业/百时达化工/吉邦精密/鑫晖源/嘉治电子/派沃新能源/瑞讯电子"},
+  {id:"sj",name:"165家省级专精特新",type:"capillary",town:"多镇",desc:"2025年口径·各细分赛道隐形市占率"},
+  {id:"bmc",name:"表面处理集群",type:"capillary",town:"龙溪·金茂园",desc:"2025省级特色集群·年产值超50亿·省内最大电镀基地·受东江环保约束"},
+  {id:"mj",name:"石湾模具群落",type:"capillary",town:"石湾",desc:"全镇2461家工业企业·三市交界·客户特斯拉/比亚迪/拓竹"},
+  {id:"ddc",name:"电动车配套群落",type:"capillary",town:"石湾",desc:"台铃/小刀/新日/绿佳·智能出行全产业链"},
+  {id:"sr",name:"散热产业集群",type:"capillary",town:"多镇",desc:"2026省级特色集群·电子散热配套"},
+  {id:"lq",name:"镇村老厂群落",type:"capillary",town:"龙溪/园洲/罗阳",desc:"数千家五金/塑料/建材·用电+11.5%大头·亩均达标压力"},
+  {id:"dl",name:"电力保障",type:"infra",town:"全县电网",desc:"1-8月工业用电60亿度+11.5%·变电站负荷是硬约束"},
+  {id:"pk1",name:"智能装备产业园",type:"park",town:"罗阳/园洲",desc:"承载欣旺达/正威等重资产项目的空间载体"},
+  {id:"pk2",name:"深博福田产业园",type:"park",town:"园洲",desc:"2026年6月全面开园·21宗项目·嘉奇/欣旺达入驻·福田总部+博罗基地"},
   {id:"bss",name:"百岁山",type:"agri",town:"湖镇",desc:"374万吨/年·罗浮山水源"},
   {id:"lfsgy",name:"罗浮山国药",type:"agri",town:"长宁",desc:"中华老字号·红脚艾·百草油·省中医院"},
   {id:"sc",name:"柏塘山茶",type:"gi",town:"柏塘",desc:"国家地理标志·省十大茶乡"},
@@ -108,7 +112,7 @@ const rawNodes=[
   {id:"sb",name:"石坝胡须鸡",type:"agri",town:"石坝",desc:"全国名特优新"},
   {id:"lsmd",name:"罗浮山大米",type:"gi",town:"长宁/横河",desc:"国家地理标志·太空育种"},
   {id:"lsz",name:"罗浮山荔枝",type:"gi",town:"罗浮山周边",desc:"国家地理标志·10万亩"},
-  {id:"hh",name:"横河户外小镇",type:"capillary",town:"横河",desc:"华南户外水经济港·民宿集群"},
+  {id:"hh",name:"横河户外小镇",type:"agri",town:"横河",desc:"华南户外水经济港·民宿集群"},
   {id:"gz",name:"广州",type:"ext",town:"外部",desc:"增城接石湾·省中医院医药合作"},
   {id:"dg",name:"东莞",type:"ext",town:"外部",desc:"紧邻石湾/园洲·模具电子外溢源头"},
   {id:"sz",name:"深圳",type:"ext",town:"外部",desc:"欣旺达·嘉奇新能源项目来源"},
@@ -119,16 +123,21 @@ const rawEdges=[
   ["sz","xwd",4,"供应链"],["sz","jq",4,"供应链"],["gz","mj",2,"供应链"],["mj","ddc",2,"供应链"],
   ["bmc","ddc",2,"供应链"],["jf","htd",2,"供应链"],["gj","htd",2,"供应链"],["sj","lq",2,"供应链"],
   ["xwd","mj",2,"供应链"],["jq","ddc",2,"供应链"],["lq","htd",2,"供应链"],
+  ["sr","htd",2,"供应链"],
   ["dj","bmc",3,"环保约束"],["dj","bss",3,"环保约束"],["dj","lq",1,"环保约束"],
   ["xwd","lq",1,"资源竞争"],["htd","lq",1,"资源竞争"],
   ["lswh","lfsgy",3,"生态补偿"],["lswh","hh",2,"生态补偿"],["lswh","sc",1,"生态补偿"],["lswh","lsz",1,"生态补偿"],
   ["gz","lfsgy",2,"生态补偿"],["hz","lswh",2,"生态补偿"],
   ["dj","lsmd",1,"供应链"],["gyght","gyg",1,"供应链"],["gyg","dj",1,"供应链"],["zw","xwd",2,"供应链"],
+  ["dl","xwd",3,"设施承载"],["dl","htd",2,"设施承载"],["dl","lq",2,"设施承载"],
+  ["pk1","xwd",2,"载体承载"],["pk1","zw",2,"载体承载"],["pk2","jq",3,"载体承载"],
 ];
-const typeColor={anchor:0x22d3ee,champ:0x818cf8,capillary:0x34d399,legacy:0xfbbf24,
-  eco:0x38bdf8,agri:0xa3e635,gi:0x4ade80,ext:0xc084fc};
-const edgeColor={供应链:0x38bdf8,环保约束:0xef4444,资源竞争:0xf59e0b,生态补偿:0x0ea5e9};
-const radius={anchor:9,champ:7,capillary:6,legacy:7,eco:11,agri:5,gi:4.5,ext:5};
+// 仲恺式8位势：链主/配套/设施/载体/生态/农业/地标/外部
+const typeColor={anchor:0x3b5bdb,capillary:0x0e7490,infra:0x64748b,park:0x65a30d,
+  eco:0x0ea5e9,agri:0xa3e635,gi:0x4ade80,ext:0xa78bfa};
+const edgeColor={供应链:0x38bdf8,环保约束:0xef4444,资源竞争:0xf59e0b,生态补偿:0x0ea5e9,
+  设施承载:0x94a3b8,载体承载:0x84cc16};
+const radius={anchor:11,capillary:7,infra:6,park:7,eco:11,agri:5,gi:4.5,ext:5};
 
 // ===== Three.js 场景 =====
 const bg=document.getElementById("bg");
@@ -150,7 +159,7 @@ scene.add(new THREE.AmbientLight(0xffffff,0.4));
 const key=new THREE.PointLight(0x88ccff,1.2,800);key.position.set(100,150,100);scene.add(key);
 
 // 节点按层摆到球壳上：上=生态农业，中=工业，远=外部
-const layerR={anchor:55,champ:95,capillary:125,legacy:135,eco:90,agri:95,gi:90,ext:210};
+const layerR={anchor:55,capillary:105,infra:145,park:145,eco:90,agri:100,gi:95,ext:210};
 const nodes=rawNodes.map(d=>{
   const R=layerR[d.type];
   const same=rawNodes.filter(x=>layerR[x.type]===R);
@@ -175,19 +184,24 @@ nodes.forEach(n=>{
   );
   const core=new THREE.Mesh(
     new THREE.SphereGeometry(r,20,20),
-    new THREE.MeshStandardMaterial({color:n.baseColor,emissive:n.baseColor,emissiveIntensity:0.6,transparent:true,opacity:0.92})
+    new THREE.MeshStandardMaterial({color:n.baseColor,emissive:n.baseColor,emissiveIntensity:0.6,transparent:true,opacity:0.95})
   );
-  glow.position.copy(n.pos);core.position.copy(n.pos);
-  group.add(glow);group.add(core);
-  // 标签sprite
-  const c=document.createElement('canvas');c.width=256;c.height=64;
-  const ctx=c.getContext('2d');ctx.font='bold 26px sans-serif';ctx.fillStyle='#cfe8ff';
-  ctx.textAlign='center';ctx.fillText(n.name,128,40);
+  // 仲恺式白边外圈
+  const ring=new THREE.Mesh(
+    new THREE.SphereGeometry(r*1.15,16,16),
+    new THREE.MeshBasicMaterial({color:0xffffff,transparent:true,opacity:0.25,wireframe:false})
+  );
+  glow.position.copy(n.pos);core.position.copy(n.pos);ring.position.copy(n.pos);
+  group.add(glow);group.add(core);group.add(ring);
+  // 标签sprite——放在节点正下方
+  const c=document.createElement('canvas');c.width=256;c.height=56;
+  const ctx=c.getContext('2d');ctx.font='bold 24px sans-serif';ctx.fillStyle='#d6e8ff';
+  ctx.textAlign='center';ctx.fillText(n.name,128,36);
   const tex=new THREE.CanvasTexture(c);
-  const sp=new THREE.Sprite(new THREE.SpriteMaterial({map:tex,transparent:true,opacity:0.85,depthTest:false}));
-  sp.scale.set(r*8,r*2,1);sp.position.copy(n.pos).y+=r+5;
+  const sp=new THREE.Sprite(new THREE.SpriteMaterial({map:tex,transparent:true,opacity:0.9,depthTest:false}));
+  sp.scale.set(r*9,r*2,1);sp.position.copy(n.pos).y-=r+7;
   group.add(sp);
-  nodeMeshes[n.id]={glow,core,label:sp,pos:n.pos};
+  nodeMeshes[n.id]={glow,core,ring,label:sp,pos:n.pos};
 });
 
 // 边：静态线 + 流动粒子
@@ -272,9 +286,10 @@ function resetShock(){
     m.core.material.color.setHex(n.baseColor);
     m.core.material.emissive.setHex(n.baseColor);
     m.core.material.emissiveIntensity=0.6;
-    m.core.material.opacity=0.92;
+    m.core.material.opacity=0.95;
     m.glow.material.color.setHex(n.baseColor);m.glow.material.opacity=0.12;
-    m.label.material.opacity=0.85;});
+    m.ring.material.opacity=0.25;
+    m.label.material.opacity=0.9;});
   rawEdges.forEach(e=>{const k=e[0]+'-'+e[1];if(lines[k]){lines[k].material.color.setHex(edgeColor[e[3]]);lines[k].material.opacity=0.35;}});
   try{history.replaceState(null,'',location.pathname+location.search);}catch(e){}
 }
@@ -353,7 +368,8 @@ function tick(){
   nodes.forEach((n,i)=>{const m=nodeMeshes[n.id];
     m.core.position.y=n.pos.y+Math.sin(t*1.2+i)*1.2;
     m.glow.position.copy(m.core.position);
-    m.label.position.y=m.core.position.y+radius[n.type]+5;});
+    m.ring.position.copy(m.core.position);
+    m.label.position.y=m.core.position.y-radius[n.type]-7;});
   renderer.render(scene,camera);
 }
 tick();
