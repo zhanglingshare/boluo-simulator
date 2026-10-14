@@ -1,0 +1,170 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no">
+<title>博罗产业家底 · 决策风洞</title>
+<style>
+*{margin:0;padding:0;box-sizing:border-box;-webkit-tap-highlight-color:transparent}
+body{background:#030711;color:#cbd5e1;font-family:-apple-system,"PingFang SC",sans-serif;line-height:1.6;padding-bottom:40px}
+.hd{padding:16px 16px 8px}
+.hd h1{font-size:20px;color:#e2e8f0;font-weight:600}
+.hd .sub{font-size:12px;color:#64748b;margin-top:4px}
+.sec{margin:16px 12px;background:rgba(15,23,42,.6);border:1px solid rgba(51,65,85,.5);border-radius:14px;padding:14px}
+.sec h2{font-size:14px;margin-bottom:10px;display:flex;align-items:center;gap:6px}
+.chain h2{color:#60a5fa}
+.support h2{color:#22d3ee}
+.tour h2{color:#a3e635}
+.dormant h2{color:#94a3b8}
+.row{display:flex;flex-wrap:wrap;gap:8px}
+.card{background:rgba(30,41,59,.6);border:1px solid rgba(71,85,105,.5);border-radius:10px;padding:10px 12px;flex:1 1 45%;min-width:140px;cursor:pointer;transition:all .2s}
+.card.sel{background:rgba(30,58,95,.8);border-color:#3b82f6;box-shadow:0 0 12px rgba(59,130,246,.3)}
+.card .n{font-size:13px;color:#e2e8f0;font-weight:600}
+.card .d{font-size:11px;color:#94a3b8;margin-top:3px}
+.card .tag{display:inline-block;font-size:10px;padding:1px 6px;border-radius:6px;margin-top:4px}
+.tag-main{background:#1e3a5f;color:#60a5fa}
+.tag-support{background:#164e63;color:#22d3ee}
+.tag-tour{background:#365314;color:#a3e635}
+.tag-dormant{background:#334155;color:#94a3b8}
+.btn{display:block;width:calc(100% - 24px);margin:16px 12px;padding:14px;border-radius:12px;border:none;font-size:15px;font-weight:600;cursor:pointer}
+.btn-go{background:linear-gradient(135deg,#3b82f6,#1e40af);color:#fff}
+.btn-shock{background:rgba(127,29,29,.6);color:#fca5a5;border:1px solid #7f1d1d}
+.btn-shock.on{background:#dc2626;color:#fff}
+.shockbox{display:none;margin:12px}
+.shockbox.show{display:block}
+.rpt{display:none;margin:12px;background:rgba(15,23,42,.9);border:1px solid rgba(251,191,36,.3);border-radius:14px;padding:14px}
+.rpt.show{display:block}
+.rpt h3{color:#fbbf24;font-size:15px;margin-bottom:10px}
+.rpt .item{padding:8px 0;border-bottom:1px solid rgba(51,65,85,.5);font-size:13px}
+.rpt .item:last-child{border:none}
+.rpt .when{color:#fbbf24;font-size:12px}
+.hint{font-size:11px;color:#64748b;padding:0 16px;margin-top:8px}
+</style>
+</head>
+<body>
+
+<div class="hd">
+  <h1>博罗产业家底</h1>
+  <div class="sub">先看清博罗手里有什么，再决定跑哪个推演</div>
+</div>
+
+<div class="sec chain">
+  <h2>⚙️ 产业链主体</h2>
+  <div class="row">
+    <div class="card sel" data-cat="chain"><div class="n">华通电脑</div><div class="d">电子信息770亿基本盘</div><span class="tag tag-main">链主</span></div>
+    <div class="card sel" data-cat="chain"><div class="n">欣旺达/锂威</div><div class="d">锂电池·深圳订单</div><span class="tag tag-main">链主</span></div>
+    <div class="card sel" data-cat="chain"><div class="n">正威新材料</div><div class="d">25万吨铜杆/年</div><span class="tag tag-main">链主</span></div>
+    <div class="card sel" data-cat="chain"><div class="n">江丰精密</div><div class="d">溅射靶材全球第一</div><span class="tag tag-main">链主</span></div>
+    <div class="card sel" data-cat="chain"><div class="n">嘉奇新能源</div><div class="d">奇瑞系梯次电池·2026入园</div><span class="tag tag-main">链主</span></div>
+    <div class="card sel" data-cat="chain"><div class="n">表面处理集群</div><div class="d">龙溪金茂园·50亿·省内最大电镀</div><span class="tag tag-support">配套</span></div>
+    <div class="card sel" data-cat="chain"><div class="n">石湾模具群落</div><div class="d">承接东莞外溢·特斯拉/比亚迪客户</div><span class="tag tag-support">配套</span></div>
+    <div class="card sel" data-cat="chain"><div class="n">电动车配套</div><div class="d">台铃/小刀/新日/绿佳</div><span class="tag tag-support">配套</span></div>
+    <div class="card sel" data-cat="chain"><div class="n">散热集群</div><div class="d">2026省级新集群</div><span class="tag tag-support">配套</span></div>
+    <div class="card sel" data-cat="chain"><div class="n">传统老厂存量</div><div class="d">制衣/五金/纸品·数千家小微</div><span class="tag tag-support">传统</span></div>
+  </div>
+</div>
+
+<div class="sec support">
+  <h2>🔌 配套设施</h2>
+  <div class="row">
+    <div class="card" data-cat="support"><div class="n">电力保障</div><div class="d">60亿度/年·+11.5%</div><span class="tag tag-support">设施</span></div>
+    <div class="card" data-cat="support"><div class="n">高铁三站</div><div class="d">年客流129万</div><span class="tag tag-support">设施</span></div>
+    <div class="card" data-cat="support"><div class="n">东江码头</div><div class="d">集装箱267万吨</div><span class="tag tag-support">设施</span></div>
+    <div class="card" data-cat="support"><div class="n">深博福田园</div><div class="d">2026开园·21宗项目</div><span class="tag tag-support">载体</span></div>
+  </div>
+</div>
+
+<div class="sec tour">
+  <h2>🏔️ 文旅农业</h2>
+  <div class="row">
+    <div class="card" data-cat="tour"><div class="n">罗浮山5A</div><div class="d">国庆91万人次·4.6亿</div><span class="tag tag-tour">文旅</span></div>
+    <div class="card" data-cat="tour"><div class="n">百岁山</div><div class="d">374万吨/年</div><span class="tag tag-tour">农业</span></div>
+    <div class="card" data-cat="tour"><div class="n">罗浮山国药</div><div class="d">1000人药厂·中华老字号</div><span class="tag tag-tour">农业</span></div>
+    <div class="card" data-cat="tour"><div class="n">嘉宝田温泉</div><div class="d">5星温泉度假</div><span class="tag tag-tour">文旅</span></div>
+    <div class="card" data-cat="tour"><div class="n">石坝胡须鸡</div><div class="d">全国名特优新</div><span class="tag tag-tour">农业</span></div>
+  </div>
+</div>
+
+<div class="sec dormant">
+  <h2>💤 待点亮期权</h2>
+  <div class="row">
+    <div class="card" data-cat="dormant"><div class="n">观音阁老糖厂</div><div class="d">70年制糖史·2000吨黑糖</div><span class="tag tag-dormant">待点亮</span></div>
+    <div class="card" data-cat="dormant"><div class="n">观音阁光伏</div><div class="d">100MW·1.1亿度绿电</div><span class="tag tag-dormant">待点亮</span></div>
+  </div>
+</div>
+
+<div class="hint">点卡片可勾选/取消——只有勾选的才算本次推演的产业链主体</div>
+
+<button class="btn btn-go" id="goBtn">确认主体，开始推演 →</button>
+
+<div class="shockbox" id="shockBox">
+  <div style="padding:0 12px;font-size:13px;color:#94a3b8;margin-bottom:8px">选一个苗头注入：</div>
+  <div class="row" style="padding:0 12px">
+    <button class="btn-shock" data-s="A">A 链主飞走（欣旺达搬离）</button>
+    <button class="btn-shock" data-s="B">B 东江喊停（环保限产）</button>
+    <button class="btn-shock" data-s="C">C 老厂腾退（三旧改造）</button>
+    <button class="btn-shock" data-s="D">D 外溢断流（东莞订单减）</button>
+  </div>
+</div>
+
+<div class="rpt" id="report"></div>
+
+<script>
+document.querySelectorAll('.card').forEach(c=>{
+  c.onclick=()=>c.classList.toggle('sel');
+});
+document.getElementById('goBtn').onclick=()=>{
+  document.getElementById('shockBox').classList.add('show');
+  document.getElementById('goBtn').textContent='已确认，选苗头 ↑';
+};
+document.querySelectorAll('.btn-shock').forEach(b=>{
+  b.onclick=()=>{
+    document.querySelectorAll('.btn-shock').forEach(x=>x.classList.remove('on'));
+    b.classList.add('on');
+    runReport(b.dataset.s);
+  };
+});
+function runReport(s){
+  const R={
+    A:{t:'链主飞走（欣旺达搬离）',items:[
+      ['第1层（0-6个月）','欣旺达/锂威订单转移，园洲用电需求下降15-20%'],
+      ['第2层（6-18个月）','石湾模具、表面处理失去最大客户，配套集群产能闲置30%'],
+      ['第3层（18-36个月）','正威铜杆供不上电池线，深博福田园招商承压，嘉奇独木难支'],
+      ['缓冲','电子信息链（华通/江丰/散热）不受直接影响，全县GDP可能从千亿退到800-900亿区间'],
+      ['什么能托住','华通770亿基本盘+文旅基本盘还在，不是雪崩是减速']
+    ]},
+    B:{t:'东江喊停（环保限产）',items:[
+      ['第1层（0-3个月）','表面处理集群（龙溪金茂园）停产整改，50亿产值直接受影响'],
+      ['第2层（3-12个月）','电动车配套、石湾模具失去电镀环节，供应链卡壳'],
+      ['第3层（12-24个月）','百岁山水源保护加强，农业面源污染管控收紧'],
+      ['缓冲','如果环保技改到位（2026已在做），表面处理反而可能升级为绿色标杆'],
+      ['什么能托住','不直接影响电子信息链和新能源链主本身']
+    ]},
+    C:{t:'老厂腾退（三旧改造）',items:[
+      ['第1层（0-12个月）','园洲/龙溪制衣五金厂拆迁，数千小微工人转岗，用电短期下降'],
+      ['第2层（12-24个月）','腾出的土地建园区/商品房，短期阵痛'],
+      ['第3层（24-36个月）','如果深博福田园承接，腾退变腾笼换鸟；如果接不住，就是真空'],
+      ['缓冲','老厂本来就是亩均低效，腾退方向对，关键是接住什么'],
+      ['什么能托住','欣旺达/华通等链主不受影响，影响的是底层就业']
+    ]},
+    D:{t:'外溢断流（东莞订单减）',items:[
+      ['第1层（0-6个月）','石湾模具群落（承接东莞外溢）订单减30%，特斯拉/比亚迪客户流失'],
+      ['第2层（6-18个月）','电动车配套、表面处理跟着减，模具相关就业收缩'],
+      ['第3层（18-36个月）','如果转内供（给欣旺达/华通配套），反而是好事；如果转不过去，就萎缩'],
+      ['缓冲','这正好是SNA发现的断链机会——模具/表面处理本来就该同时供两条链'],
+      ['什么能托住','链主自身订单（华通/欣旺达）不依赖东莞外溢']
+    ]}
+  };
+  const r=R[s];
+  let h=`<h3>📊 推演报告：${r.t}</h3>`;
+  r.items.forEach(([k,v])=>{
+    h+=`<div class="item"><span class="when">${k}</span><br>${v}</div>`;
+  });
+  h+='<div class="item" style="color:#7d8fa8;font-size:11px;margin-top:8px">这是按公开关系推演的区间，不是预测。时间窗口取决于政策/订单/技改速度，可能提前也可能延后。</div>';
+  document.getElementById('report').innerHTML=h;
+  document.getElementById('report').classList.add('show');
+  document.getElementById('report').scrollIntoView({behavior:'smooth'});
+}
+</script>
+</body>
+</html>
