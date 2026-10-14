@@ -124,7 +124,7 @@ svg.scene{width:100%;height:auto;display:block;margin-top:2px}
   <a class="srccard" href="http://m.toutiao.com/group/7309682229155217954/" target="_blank" rel="noopener">
     <span class="ic">🍬</span><span class="tx">博罗发布(2023)：现在年榨2.5万吨、产糖3000多吨</span><span class="go">↗</span></a>
   <a class="srccard" href="http://m.toutiao.com/group/7594644501654684198/" target="_blank" rel="noopener">
-    <span class="ic">🧋</span><span class="tx">惠州发布(2026)：远销全国，与多家大型茶饮品牌稳定合作</span><span class="go">↗</span></a>
+    <span class="ic">🧋</span><span class="tx">博罗融媒(2026)：今年榨糖约2000吨；远销全国、多家大型茶饮品牌</span><span class="go">↗</span></a>
   <a class="srccard" href="http://m.toutiao.com/group/7512759962451508/" target="_blank" rel="noopener">
     <span class="ic">👥</span><span class="tx">博罗发布(2025)：古石龙农场2024年接待游客28万人次</span><span class="go">↗</span></a>
   <a class="srccard" href="https://www.boluo.gov.cn/xzgwh/gygzrmzf/zwgk/qt/ghjh/content/post_5758388.html" target="_blank" rel="noopener">
@@ -259,17 +259,17 @@ function renderYield(){
   pts.forEach(g=>{
     s+=`<circle class="yp" id="${g[0]}" cx="${g[1][0]}" cy="${g[1][1]}" r="4.5" fill="${g[2]}"/>`;
   });
-  // 产量标签
-  s+=`<text class="yt" id="ylB" x="105" y="30" text-anchor="middle" fill="#fbbf24" font-weight="700">约6000吨</text>
-      <text class="yt" id="ylD" x="228" y="108" text-anchor="middle" fill="#fcd34d" font-weight="700">约3000吨</text>
-      <text class="yt" id="ylUp" x="300" y="32" text-anchor="middle" fill="#86efac" font-weight="700">约4000~5000吨</text>
+  // 产量标签（只放查证得到的实数；未来只给方向、不给数字）
+  s+=`<text class="yt" id="ylB" x="105" y="30" text-anchor="middle" fill="#fbbf24" font-weight="700">出口高峰约6000吨</text>
+      <text class="yt" id="ylD" x="228" y="108" text-anchor="middle" fill="#fcd34d" font-weight="700">约2000~3000吨</text>
+      <text class="yt" id="ylUp" x="300" y="32" text-anchor="middle" fill="#86efac" font-weight="700">重新做大</text>
       <text class="yt" id="ylDn" x="300" y="138" text-anchor="middle" fill="#94a3b8">越来越少</text>`;
   // 横轴年代
   const eras=[[40,'1954'],[105,'七八十年代'],[170,'1986'],[235,'今天'],[300,'未来']];
   eras.forEach(e=>{
     s+=`<text x="${e[0]}" y="155" text-anchor="middle" font-size="9" fill="#94a3b8">${e[1]}</text>`;
   });
-  s+=`<text x="110" y="180" text-anchor="middle" font-size="9" fill="#64748b">（年产糖量·吨；未来两条为模拟，不预测）</text>`;
+  s+=`<text x="120" y="180" text-anchor="middle" font-size="9" fill="#64748b">（年产糖量·吨；6000为当年出口量；未来两条只示方向，不预测）</text>`;
   document.getElementById('yield').innerHTML=s;
 }
 renderYield();
@@ -341,20 +341,11 @@ function play(){
     TOUR.forEach(pi=>$('te_'+pi).classList.add('tedge'));
   });
   at(6.2,()=>{ $('ysC').classList.add('on'); $('ypD').classList.add('on'); $('ylD').classList.add('on'); });
-  // 第三幕：分叉
+  // 第三幕：网络停在今天，不预测未来（不在主网络上把虚线变实线；只把问题交给下方两种命运）
   at(9.0,()=>{
-    setEra('未来 · 点亮，还是熄灭？');
-    // 点亮：半线/零线全变实线（网变密）
-    S2.forEach((d,i)=>{
-      const e=$('e2_'+i),n=$('n2_'+i);
-      setTimeout(()=>{e.classList.remove('half','none');e.classList.add('on');n.classList.add('on');},i*260);
-    });
-    // 游客虚线接上（研学/文旅/民宿 → 游客）
-    TOUR.forEach((pi,k)=>{
-      setTimeout(()=>{const te=$('te_'+pi);te.classList.remove('tedge');te.classList.add('on');},(k+2)*260);
-    });
+    setEra('未来 · 点亮，还是熄灭？（网络只画到今天，下面是两种可能）');
   });
-  // 产量曲线分叉
+  // 产量曲线分叉（只示方向，不预测数字）
   at(9.2,()=>{ $('ysUp').classList.add('on'); $('ypUp').classList.add('on'); $('ylUp').classList.add('on'); });
   at(9.9,()=>{ $('ysDn').classList.add('on'); $('ypDn').classList.add('on'); $('ylDn').classList.add('on'); });
 }
