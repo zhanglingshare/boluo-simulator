@@ -89,6 +89,12 @@ body{background:#030711;color:#e6edf3;font:13px/1.6 -apple-system,"PingFang SC",
   <button id="resetBtn">↺</button>
   <button id="whyBtn" style="background:rgba(30,58,95,.8);color:#7dd3fc;border:1px solid #1e3a5f">📋 入选理由</button>
   <button id="snaBtn" style="background:rgba(88,28,135,.8);color:#c084fc;border:1px solid #581c87">📊 SNA</button>
+  <button id="eraBtn" style="background:rgba(120,53,15,.8);color:#fbbf24;border:1px solid #78350f">⏳ 演变</button>
+</div>
+
+<div class="panel" id="eraPanel">
+  <div class="panel-head">⏳ 博罗产业网络演变 <button id="eraClose">✕</button></div>
+  <div class="panel-body" id="eraPanelBody"></div>
 </div>
 
 <div class="panel" id="snaPanel">
@@ -494,6 +500,21 @@ document.getElementById('snaBtn').onclick=(e)=>{e.stopPropagation();
   document.getElementById('snaPanel').classList.toggle('show');};
 document.getElementById('snaClose').onclick=(e)=>{e.stopPropagation();
   document.getElementById('snaPanel').classList.remove('show');};
+document.getElementById('eraBtn').onclick=(e)=>{e.stopPropagation();
+  document.getElementById('eraPanelBody').innerHTML=`
+  <b style="color:#fbbf24">⏳ 博罗产业网络的四个阶段</b>
+  <br><br><b style="color:#94a3b8">① 起步期（1990s-2000）：散点</b>
+  <div class="dim">只有镇村老厂+农业+东江港。港资/东莞来料加工零散进来，没有链、没有集群。网络近乎孤立，度中心性≤1。</div>
+  <br><b style="color:#7dd3fc">② 成长期（2005-2015）：两条链各自长</b>
+  <div class="dim">华通/欣旺达先后落地，电子信息链和新能源链分别从东莞/深圳外溢长出。各长各的，互不供货。SNA出现两个连通分量。</div>
+  <br><b style="color:#4ade80">③ 现在（2026）：千亿县但断链</b>
+  <div class="dim">28节点全息图。GDP破千亿、电子信息770亿，但SNA算出来：新能源链和电子信息链之间<b style="color:#f87171">没有供货边</b>。表面处理同时服务两条链吗？江丰靶材进欣旺达吗？现在的边里没有。</div>
+  <br><b style="color:#c084fc">④ 搭桥后（推演）：如果…</b>
+  <div class="dim">如果表面处理集群同时供电子+新能源（它已经在两边了）、如果江丰靶材进欣旺达电池线、如果散热集群从华通拓展到新能源——两个就连成一个整体。这就是破局点：不是再造一个产业，是<b style="color:#c084fc">在现有两条链之间架一座桥</b>。</div>
+  <br><div class="dim" style="color:#7d8fa8">演变不是预测，是把"从散到连"的路径画出来。现在站在③，④能不能发生、谁来搭桥，留给使用者推演。</div>`;
+  document.getElementById('eraPanel').classList.toggle('show');};
+document.getElementById('eraClose').onclick=(e)=>{e.stopPropagation();
+  document.getElementById('eraPanel').classList.remove('show');};
 const m=location.hash.match(/shock=(\w+)/);
 if(m){const btn=document.querySelector(`.sbtn[data-shock="${m[1]}"]`);
   if(btn){btn.classList.add('on');runShock(m[1],btn.dataset.name,btn.dataset.kinds);}}
