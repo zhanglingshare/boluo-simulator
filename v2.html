@@ -178,11 +178,13 @@ const rawNodes=[
   {id:"lfsgy",name:"罗浮山国药",type:"agri",town:"长宁",desc:"中华老字号·近1000员工·片剂150亿片/年·红脚艾"},
   {id:"sb",name:"石坝胡须鸡",type:"agri",town:"石坝",desc:"全国名特优新·真成了产业的农业"},
   {id:"hh",name:"横河户外小镇",type:"agri",town:"横河",desc:"华南户外水经济港·承接大湾区客流"},
+  {id:"smm",name:"丝苗米产业园",type:"agri",town:"石湾/泰美",desc:"省级现代农业园·规划677平方公里·伴永康/九优龙头·146家合作社·罗浮山大米品牌·农科院共建研究院"},
   {id:"ggt",name:"观音阁老糖厂",type:"dormant",town:"观音阁",desc:"1954年建·70年制糖史·2026技改后产黑糖2000吨·公司+农户·待点亮"},
   {id:"ggp",name:"观音阁光伏",type:"dormant",town:"观音阁",desc:"100MW复合项目·年绿电1.1亿度·碳中和待放量"},
   {id:"edu1",name:"博罗中学",type:"livelihood",town:"罗阳",desc:"1926年·国家级示范高中·县教育名片·留人底盘"},
   {id:"edu2",name:"高校集群",type:"livelihood",town:"多镇",desc:"广州理工博罗校区+惠州工程职院+省技师学院·在校生5-6万·产教融合"},
   {id:"med1",name:"县人民医院",type:"livelihood",town:"罗阳",desc:"1937年建·三级综合·中山一院共建·冲三甲·员工看病"},
+  {id:"bh_ps",name:"生产性服务业黑洞",type:"blackhole",town:"要素外流",desc:"制造千亿，研发/检测/金融/工业设计/总部却在深圳·东莞·广州。博罗2027目标才引进3家检测/5家信息/3家物流——现在近乎空白。高附加值服务被外部吸走，这是结构性缺位，不是待点亮。"},
 ];
 const rawEdges=[
   ["mj","ddc",2,"供应链"],["bmc","ddc",2,"供应链"],["jf","htd",2,"供应链"],
@@ -201,7 +203,7 @@ const rawEdges=[
 ];
 // 仲恺式8位势：链主/配套/设施/载体/生态/农业/地标/外部
 const typeColor={anchor:0x3b5bdb,capillary:0x0e7490,infra:0x64748b,park:0x65a30d,
-  eco:0x0ea5e9,agri:0xa3e635,gi:0x4ade80,ext:0xa78bfa,legacy:0xa16207,terrain:0x38bdf8,dormant:0x475569,livelihood:0xec4899};
+  eco:0x0ea5e9,agri:0xa3e635,gi:0x4ade80,ext:0xa78bfa,legacy:0xa16207,terrain:0x38bdf8,dormant:0x475569,livelihood:0xec4899,blackhole:0x7c3aed};
 const edgeColor={供应链:0x38bdf8,环保约束:0xef4444,资源竞争:0xf59e0b,生态补偿:0x0ea5e9,
   设施承载:0x94a3b8,载体承载:0x84cc16};
 const radius={anchor:11,capillary:7,infra:6,park:7,eco:11,agri:5,gi:4.5,ext:5,legacy:6,dormant:4.5,livelihood:6};
@@ -226,7 +228,7 @@ scene.add(new THREE.AmbientLight(0xffffff,0.4));
 const key=new THREE.PointLight(0x88ccff,1.2,800);key.position.set(100,150,100);scene.add(key);
 
 // 节点按层摆到球壳上：上=生态农业，中=工业
-const layerR={anchor:55,capillary:105,infra:145,park:145,eco:90,agri:100,gi:95,ext:210,terrain:0,legacy:130,dormant:170,livelihood:155};
+const layerR={anchor:55,capillary:105,infra:145,park:145,eco:90,agri:100,gi:95,ext:210,terrain:0,legacy:130,dormant:170,livelihood:155,blackhole:225};
 // 从URL ?nodes=xxx 过滤用户选的主体
 const urlParams=new URLSearchParams(location.search);
 const filterNodes=urlParams.get('nodes');
@@ -240,6 +242,9 @@ const nodes=rawNodesFiltered.map(d=>{
   }
   if(d.type==='terrain' && d.id==='lswh'){
     return Object.assign({},d,{pos:new THREE.Vector3(0,85,0),baseColor:0x4ade80});
+  }
+  if(d.type==='blackhole'){
+    return Object.assign({},d,{pos:new THREE.Vector3(200,-70,120),baseColor:0x7c3aed});
   }
   const R=layerR[d.type];
   const same=rawNodes.filter(x=>x.type===d.type);
@@ -301,6 +306,42 @@ nodes.forEach(n=>{
     sp.position.copy(n.pos).y+=25;sp.scale.set(100,22,1);
     group.add(sp);
     nodeMeshes[n.id]={mist:mist,label:sp,pos:n.pos,terrain:true};
+    return;
+  }
+
+  if(n.type==='blackhole'){
+    // 黑洞：纯黑圆盘 + 暗紫事件视界环 + 螺旋吸入粒子
+    const bhg=new THREE.Group();
+    const disk=new THREE.Mesh(
+      new THREE.CircleGeometry(14,40),
+      new THREE.MeshBasicMaterial({color:0x050008})
+    );
+    const horizon=new THREE.Mesh(
+      new THREE.RingGeometry(14,17,48),
+      new THREE.MeshBasicMaterial({color:0x7c3aed,transparent:true,opacity:0.7,side:THREE.DoubleSide})
+    );
+    const glowRing=new THREE.Mesh(
+      new THREE.RingGeometry(17,26,48),
+      new THREE.MeshBasicMaterial({color:0x7c3aed,transparent:true,opacity:0.18,side:THREE.DoubleSide})
+    );
+    bhg.add(disk);bhg.add(horizon);bhg.add(glowRing);
+    // 螺旋粒子
+    const N=180,bp=[];
+    for(let i=0;i<N;i++){
+      const a=Math.random()*Math.PI*2,r=20+Math.random()*40;
+      bp.push(Math.cos(a)*r,Math.sin(a)*r*0.4,(Math.random()-0.5)*6);
+    }
+    const bgeo=new THREE.BufferGeometry();
+    bgeo.setAttribute('position',new THREE.Float32BufferAttribute(bp,3));
+    const bpts=new THREE.Points(bgeo,new THREE.PointsMaterial({color:0xa78bfa,size:2,transparent:true,opacity:0.7}));
+    bpts.userData={spin:0};
+    bhg.add(bpts);
+    bhg.position.copy(n.pos);
+    bhg.lookAt(camera.position);
+    group.add(bhg);
+    sp.position.copy(n.pos);sp.position.y+=30;sp.scale.set(110,24,1);
+    group.add(sp);
+    nodeMeshes[n.id]={bh:bhg,disk,horizon,glowRing,spiral:bpts,label:sp,pos:n.pos,blackhole:true};
     return;
   }
 
@@ -380,9 +421,10 @@ renderer.domElement.addEventListener('click',e=>{
   if(moved>5)return; // 拖拽后不触发click
   mouse.x=(e.clientX/innerWidth)*2-1;mouse.y=-(e.clientY/innerHeight)*2+1;
   ray.setFromCamera(mouse,camera);
-  const meshes=Object.values(nodeMeshes).map(m=>m.core);
-  const hit=ray.intersectObjects(meshes)[0];
-  if(hit){const id=Object.keys(nodeMeshes).find(k=>nodeMeshes[k].core===hit.object);
+  const pickMeshes=[];
+  Object.entries(nodeMeshes).forEach(([id,m])=>{const hm=m.core||m.disk;if(hm){hm.__id=id;pickMeshes.push(hm);}});
+  const hit=ray.intersectObjects(pickMeshes)[0];
+  if(hit){const id=hit.object.__id;
     const n=nodeById[id];
     tip.style.display='block';
     tip.innerHTML=`<b>${n.name}</b> <span class="town">${n.town}</span><div class="desc">${n.desc}</div>`;
@@ -411,7 +453,7 @@ const info=document.getElementById('info');
 function resetShock(){
   info.classList.remove('show');
   document.querySelectorAll('.sbtn').forEach(b=>b.classList.remove('on'));
-  nodes.forEach(n=>{const m=nodeMeshes[n.id];if(m.terrain)return;
+  nodes.forEach(n=>{const m=nodeMeshes[n.id];if(m.terrain||m.blackhole)return;
     m.core.material.color.setHex(n.baseColor);
     m.core.material.emissive.setHex(n.baseColor);
     m.core.material.emissiveIntensity=0.6;
@@ -433,7 +475,7 @@ function runShock(seedId,seedName,kindsStr){
     if((e[0]===nid&&level[e[1]]!==undefined)||(e[1]===nid&&level[e[0]]!==undefined))hitE.add(e[0]+'-'+e[1]);
   });});
   // 先全部压暗
-  nodes.forEach(n=>{if(level[n.id]===undefined){const m=nodeMeshes[n.id];if(m.terrain)return;
+  nodes.forEach(n=>{if(level[n.id]===undefined){const m=nodeMeshes[n.id];if(m.terrain||m.blackhole)return;
     m.core.material.opacity=0.15;m.glow.material.opacity=0.02;m.label.material.opacity=0.1;}});
   rawEdges.forEach(e=>{const k=e[0]+'-'+e[1];if(lines[k]){
     lines[k].material.opacity=hitE.has(k)?0.9:0.03;
@@ -445,7 +487,7 @@ function runShock(seedId,seedName,kindsStr){
     else if(level[id]>0.55)col=0xef4444;
     else if(level[id]>0.32)col=0xf97316;
     else col=0xfacc15;
-    const m=nodeMeshes[id];if(m.terrain)return;
+    const m=nodeMeshes[id];if(m.terrain||m.blackhole)return;
     m.core.material.color.setHex(col);m.core.material.emissive.setHex(col);
     m.core.material.emissiveIntensity=1.5;m.core.material.opacity=1;
     m.glow.material.color.setHex(col);m.glow.material.opacity=0.4;
@@ -552,7 +594,7 @@ function snaStep(step){
   const SNA=new Set(['xwd','htd','zw','jq','jf','bmc','mj','ddc','sr','lq']);
   const chainA=new Set(['xwd','zw','mj','ddc','bmc','jq']); // 新能源链
   const chainB=new Set(['htd','jf','sr','lq']); // 电子信息链
-  nodes.forEach(n=>{const m=nodeMeshes[n.id];if(m.terrain)return;
+  nodes.forEach(n=>{const m=nodeMeshes[n.id];if(m.terrain||m.blackhole)return;
     if(step<=1){m.core.material.opacity=0.95;m.glow.material.opacity=0.12;m.label.material.opacity=0.9;m.ring.material.opacity=0.25;}
     else if(step===2||step===3){
       const on=SNA.has(n.id);
@@ -570,7 +612,7 @@ function snaStep(step){
     const g=new THREE.BufferGeometry().setFromPoints([s,t]);
     bridgeLine=new THREE.Line(g,new THREE.LineBasicMaterial({color:0xc084fc,transparent:true,opacity:0.9}));
     group.add(bridgeLine);
-    nodes.forEach(n=>{const m=nodeMeshes[n.id];if(m.terrain)return;
+    nodes.forEach(n=>{const m=nodeMeshes[n.id];if(m.terrain||m.blackhole)return;
       m.core.material.opacity=0.6;m.label.material.opacity=0.4;
       if(chainA.has(n.id)||chainB.has(n.id)){m.core.material.opacity=0.9;m.label.material.opacity=0.9;}});
   }
@@ -599,7 +641,7 @@ function playEvolution(){
   document.getElementById('eraPanel').classList.remove('show');
   resetShock();
   // 先全部压暗
-  nodes.forEach(n=>{const m=nodeMeshes[n.id];if(m.terrain)return;
+  nodes.forEach(n=>{const m=nodeMeshes[n.id];if(m.terrain||m.blackhole)return;
     m.core.material.opacity=0.05;m.glow.material.opacity=0.01;m.label.material.opacity=0;m.ring.material.opacity=0;});
   Object.values(lines).forEach(l=>l.material.opacity=0);
   // 分批亮起
@@ -614,7 +656,7 @@ function playEvolution(){
   batches.forEach(b=>{
     b.types.forEach(t=>{
       nodes.forEach(n=>{if(n.type!==t)return;
-        setTimeout(()=>{const m=nodeMeshes[n.id];if(m.terrain)return;
+        setTimeout(()=>{const m=nodeMeshes[n.id];if(m.terrain||m.blackhole)return;
           m.core.material.opacity=0.95;m.glow.material.opacity=0.12;m.label.material.opacity=0.9;m.ring.material.opacity=0.25;},b.delay);
       });
     });
@@ -664,6 +706,13 @@ function tick(){
   });
   // 节点微微浮动
   nodes.forEach((n,i)=>{const m=nodeMeshes[n.id];if(m.terrain)return;
+    if(m.blackhole){
+      m.bh.lookAt(camera.position);
+      m.spiral.rotation.z+=0.015;
+      m.horizon.material.opacity=0.55+0.25*Math.sin(t*2.5);
+      m.glowRing.material.opacity=0.12+0.1*Math.sin(t*2.5);
+      return;
+    }
     m.core.position.y=n.pos.y+Math.sin(t*1.2+i)*1.2;
     m.glow.position.copy(m.core.position);
     m.ring.position.copy(m.core.position);
