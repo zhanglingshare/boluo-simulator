@@ -66,7 +66,8 @@ h1{font-size:22px;margin-bottom:6px}
   <div class="legend">
     <span><i style="background:#22c55e"></i>链主/锚点</span>
     <span><i style="background:#3b82f6"></i>骨干产业</span>
-    <span><i style="background:#64748b"></i>毛细血管/配套</span>
+    <span><i style="background:#64748b"></i>毛细血管群落</span>
+    <span><i style="background:#f59e0b"></i>老厂群落</span>
     <span><i style="background:#a78bfa"></i>外部城市</span>
     <span>── A级硬数据</span>
     <span>- - B级推估</span>
@@ -104,9 +105,10 @@ const rawNodes=[
   {id:"dz",name:"电子信息",type:"anchor",town:"园洲/罗阳/龙溪",state:"green",val:770,desc:"317家规上·产值770亿·华通电脑/威博精密/南亚电子"},
   {id:"ht",name:"智能装备",type:"anchor",town:"罗阳",state:"green",val:500,desc:"千亿产业园·686家高企·天倬科技"},
   {id:"xw",name:"新能源新材料",type:"anchor",town:"园洲",state:"green",val:400,desc:"欣旺达锂威·正威25万吨铜杆·嘉奇新能源(奇瑞)"},
-  {id:"bmc",name:"表面处理",type:"capillary",town:"福田",state:"yellow",val:80,desc:"省特色集群·电镀/喷涂硬约束工序·环保容量紧张"},
+  {id:"bmc",name:"表面处理群落",type:"capillary",town:"福田",state:"yellow",val:80,desc:"省特色集群·电镀/喷涂硬约束工序·环保容量紧张·含数十家中小厂"},
   {id:"ddc",name:"智能出行",type:"core",town:"石湾",state:"green",val:150,desc:"产值超150亿·台铃/小刀/新日/绿佳"},
-  {id:"mj",name:"精密模具",type:"capillary",town:"石湾",state:"green",val:60,desc:"特斯拉/比亚迪/拓竹供应链·东莞迁入小巨人"},
+  {id:"mj",name:"石湾模具群落",type:"capillary",town:"石湾",state:"green",val:60,desc:"特斯拉/比亚迪/拓竹供应链·东莞迁入小巨人+周边数十家注塑厂"},
+  {id:"lq",name:"龙溪五金老厂群落",type:"legacy",town:"龙溪",state:"yellow",val:100,desc:"传统五金加工老厂群·亩均效益达标压力·用电稳但增长弱"},
   {id:"jf",name:"江丰精密",type:"anchor",town:"园洲",state:"green",val:50,desc:"溅射靶材全球第一·3纳米级"},
   {id:"lfsgy",name:"生命健康",type:"core",town:"长宁",state:"green",val:40,desc:"罗浮山国药·红脚艾·百草油·中华老字号"},
   {id:"jt",name:"现代食品",type:"core",town:"湖镇",state:"green",val:80,desc:"百岁山374万吨·顺兴食品"},
@@ -126,6 +128,8 @@ const rawEdges=[
   {s:"jf",t:"dz",level:"B",w:2,rel:"靶材供应"},
   {s:"xw",t:"ht",level:"A",w:2,rel:"园区载体"},
   {s:"ht",t:"dz",level:"A",w:3,rel:"园区载体"},
+  {s:"lq",t:"dz",level:"B",w:2,rel:"五金配套"},
+  {s:"lq",t:"ht",level:"B",w:2,rel:"机加工配套"},
   {s:"lfsgy",t:"sc",level:"C",w:1,rel:"南药/农业"},
   {s:"bmc",t:"xc",level:"C",w:1,rel:"福田同镇"},
 ];
@@ -147,8 +151,8 @@ const chart=document.getElementById("chart");
 const W=chart.clientWidth||860, H=560;
 const svg=d3.select("#chart").append("svg").attr("width","100%").attr("height",H);
 
-const colorMap={anchor:"#22c55e",core:"#3b82f6",capillary:"#64748b",agri:"#84cc16",ext:"#a78bfa"};
-const rMap={anchor:16,core:13,capillary:10,agri:8,ext:12};
+const colorMap={anchor:"#22c55e",core:"#3b82f6",capillary:"#64748b",agri:"#84cc16",ext:"#a78bfa",legacy:"#f59e0b"};
+const rMap={anchor:16,core:13,capillary:11,agri:8,ext:12,legacy:14};
 
 let nodes=rawNodes.map(d=>({...d}));
 let links=rawEdges.map(d=>({...d}));
@@ -177,6 +181,27 @@ const node=svg.append("g").selectAll("circle").data(nodes).enter().append("circl
     .on("drag",(e,d)=>{d.fx=e.x;d.fy=e.y})
     .on("end",(e,d)=>{if(!e.active)sim.alphaTarget(0);d.fx=null;d.fy=null}));
 
+// 群落节点加外圈环
+svg.append("g").selectAll("circle").data(nodes.filter(d=>d.type==="capillary"||d.type==="legacy")).enter().append("circle")
+  .attr("r",d=>rMap[d.type]+7)
+  .attr("fill","none")
+  .attr("stroke",d=>colorMap[d.type])
+  .attr("stroke-width",1)
+  .attr("stroke-dasharray","3,3")
+  .attr("stroke-opacity",0.5)
+  .style("pointer-events","none")
+  .each(function(){this.parentNode.appendChild(this)});
+
+// 把外环绑定到tick
+sim.on("tick",()=>{
+  link.attr("x1",d=>d.source.x).attr("y1",d=>d.source.y)
+      .attr("x2",d=>d.target.x).attr("y2",d=>d.target.y);
+  node.attr("cx",d=>d.x).attr("cy",d=>d.y);
+  svg.selectAll("circle").filter(d=>d&&(d.type==="capillary"||d.type==="legacy")&&d.fx!==undefined)
+     .attr("cx",d=>d.x).attr("cy",d=>d.y);
+  label.attr("x",d=>d.x).attr("y",d=>d.y);
+});
+
 const label=svg.append("g").selectAll("text").data(nodes).enter().append("text")
   .text(d=>d.name)
   .attr("fill","#e6edf3").attr("font-size","11px").attr("dx",20).attr("dy",4)
@@ -192,13 +217,6 @@ node.on("click",(e,d)=>{
   e.stopPropagation();
 });
 chart.on("click",()=>tip.style.display="none");
-
-sim.on("tick",()=>{
-  link.attr("x1",d=>d.source.x).attr("y1",d=>d.source.y)
-      .attr("x2",d=>d.target.x).attr("y2",d=>d.target.y);
-  node.attr("cx",d=>d.x).attr("cy",d=>d.y);
-  label.attr("x",d=>d.x).attr("y",d=>d.y);
-});
 
 // 筛选
 document.querySelectorAll(".fbtn").forEach(btn=>{
