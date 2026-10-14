@@ -147,19 +147,19 @@ for(let i=0;i<9;i++){
 }
 // 第一幕：鼎盛期（甘蔗成片、码头、货船、出口日本）
 const S1=[
-  {p:0,ic:'🌾',t:'甘蔗',c:'#84cc16'},
-  {p:1,ic:'🌾',t:'甘蔗',c:'#84cc16'},
+  {p:0,ic:'🌾',t:'甘蔗',c:'#84cc16',r:20},
+  {p:1,ic:'🌾',t:'甘蔗',c:'#84cc16',r:20},
   {p:2,ic:'🇯🇵',t:'日本',c:'#ef4444'},
   {p:3,ic:'🚢',t:'货船',c:'#06b6d4'},
-  {p:4,ic:'🌾',t:'甘蔗',c:'#84cc16'},
-  {p:5,ic:'🌾',t:'甘蔗',c:'#84cc16'},
+  {p:4,ic:'🌾',t:'甘蔗',c:'#84cc16',r:20},
+  {p:5,ic:'🌾',t:'甘蔗',c:'#84cc16',r:20},
   {p:6,ic:'🏗️',t:'码头',c:'#f59e0b'},
-  {p:7,ic:'🌾',t:'甘蔗',c:'#84cc16'},
-  {p:8,ic:'🌾',t:'甘蔗',c:'#84cc16'}
+  {p:7,ic:'🌾',t:'甘蔗',c:'#84cc16',r:20},
+  {p:8,ic:'🌾',t:'甘蔗',c:'#84cc16',r:20}
 ];
 // 第二幕：今天（甘蔗仍实线；研学/文旅/民宿在右侧外连游客；茶饮/电商是销路）
 const S2=[
-  {p:0,ic:'🌾',t:'甘蔗',c:'#22c55e',edge:'on'},
+  {p:0,ic:'🌾',t:'甘蔗',c:'#22c55e',edge:'on',r:11},
   {p:1,ic:'🎓',t:'研学',c:'#3b82f6',edge:'half'},
   {p:2,ic:'🏛️',t:'文旅',c:'#d946ef',edge:'half'},
   {p:3,ic:'🏡',t:'民宿',c:'#a78bfa',edge:'none'},
@@ -174,17 +174,19 @@ const TX=320,TY=140,TOUR=[1,2,3];
 
 function nodeSVG(d,id){
   const q=RING[d.p];
-  // 标签位置（避开中心）
-  let lx=q.x,ly=q.y-23,anchor='middle';
+  const r=d.r||16;
+  // 标签位置（避开中心，随节点大小）
+  let lx=q.x,ly=q.y-r-7,anchor='middle';
   const below=q.y>CY+10;
-  if(below){ly=q.y+26;}
+  if(below){ly=q.y+r+10;}
+  const icFs=r>=19?19:(r<=12?13:16);
   let sub='';
   if(d.sub){
     sub=`<text x="${lx}" y="${ly+(below?11:-10)}" text-anchor="${anchor}" font-size="8" fill="${d.c}" opacity="0.9">${d.sub}</text>`;
   }
   return `<g class="node" id="${id}">
-    <circle cx="${q.x}" cy="${q.y}" r="16" fill="rgba(8,15,30,.94)" stroke="${d.c}" stroke-width="2.3"/>
-    <text x="${q.x}" y="${q.y+6}" text-anchor="middle" font-size="16">${d.ic}</text>
+    <circle cx="${q.x}" cy="${q.y}" r="${r}" fill="rgba(8,15,30,.94)" stroke="${d.c}" stroke-width="2.3"/>
+    <text x="${q.x}" y="${q.y+icFs/2.4}" text-anchor="middle" font-size="${icFs}">${d.ic}</text>
     <text x="${lx}" y="${ly}" text-anchor="${anchor}" font-size="10" fill="${d.c}" font-weight="700">${d.t}</text>
     ${sub}
   </g>`;
