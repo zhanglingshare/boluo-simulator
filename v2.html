@@ -493,15 +493,17 @@ document.getElementById('snaBtn').onclick=(e)=>{e.stopPropagation();
   snaR.comps.forEach((c,i)=>{html+=`<div class="dim">· 分量${i+1}（${c.length}个）：${c.map(name).join('、')}</div>`;});
   if(snaR.comps.length>1){
     html+='<div class="dim" style="color:#f87171">→ 发现：电子信息链和新能源/电动车链之间没有供货边，网络是断的</div>';
-    html+='<br><b style="color:#fbbf24">🧠 这个结论是怎么推出来的（思考链）</b>';
-    html+='<div class="dim">① <b style="color:#94a3b8">初始假设</b>：博罗GDP破千亿、电子信息770亿，网络应该是连通的一张网</div>';
-    html+='<div class="dim">② <b style="color:#94a3b8">抽节点</b>：从28个混类节点里只抽10个产业行动者（5链主+4配套+1传统），设施/地形/民生不算</div>';
-    html+='<div class="dim">③ <b style="color:#94a3b8">抽边</b>：只算它们之间的供货关系边（8条），环保/生态/承载边不算</div>';
-    html+='<div class="dim">④ <b style="color:#94a3b8">BFS遍历</b>：从欣旺达出发能走到谁？走到正威/石湾模具/电动车/表面处理/嘉奇——走不到华通/江丰/散热/老厂</div>';
-    html+='<div class="dim">⑤ <b style="color:#f87171">发现</b>：网络断成两个分量。千亿县≠一张网，是两张网并行</div>';
-    html+='<div class="dim">⑥ <b style="color:#c084fc">两条路</b>：A 接受现状（各跑各的）/ B 在两条链之间架桥（表面处理同时供两边？江丰靶材进欣旺达？）</div>';
-    html+='<div class="dim">⑦ <b style="color:#4ade80">推荐</b>：B。破局不是再造一个产业，是在现有两条链之间找那座桥</div>';
+    html+='<br><b style="color:#fbbf24">🧠 这个结论是怎么推出来的（点每步看3D）</b>';
+    html+='<div class="dim">① <b style="color:#94a3b8">初始假设</b>：千亿县应该是一张连通的网 <button class="snaStep" data-step="1" style="background:#1e3a5f;color:#7dd3fc;border:1px solid #1e3a5f;padding:2px 8px;border-radius:8px;font-size:11px;margin-left:4px">看3D</button></div>';
+    html+='<div class="dim">② <b style="color:#94a3b8">抽节点</b>：只留10个产业行动者，其他暗掉 <button class="snaStep" data-step="2" style="background:#1e3a5f;color:#7dd3fc;border:1px solid #1e3a5f;padding:2px 8px;border-radius:8px;font-size:11px;margin-left:4px">看3D</button></div>';
+    html+='<div class="dim">③ <b style="color:#94a3b8">抽边</b>：只看8条供货边 <button class="snaStep" data-step="3" style="background:#1e3a5f;color:#7dd3fc;border:1px solid #1e3a5f;padding:2px 8px;border-radius:8px;font-size:11px;margin-left:4px">看3D</button></div>';
+    html+='<div class="dim">④ <b style="color:#94a3b8">BFS从欣旺达出发</b>：能走到谁？<button class="snaStep" data-step="4" style="background:#1e3a5f;color:#7dd3fc;border:1px solid #1e3a5f;padding:2px 8px;border-radius:8px;font-size:11px;margin-left:4px">看3D</button></div>';
+    html+='<div class="dim">⑤ <b style="color:#f87171">发现断链</b>：走不到华通那边 <button class="snaStep" data-step="5" style="background:#7f1d1d;color:#f87171;border:1px solid #7f1d1d;padding:2px 8px;border-radius:8px;font-size:11px;margin-left:4px">看3D</button></div>';
+    html+='<div class="dim">⑥ <b style="color:#c084fc">搭桥推演</b>：紫色桥边连接两块 <button class="snaStep" data-step="6" style="background:#581c87;color:#c084fc;border:1px solid #581c87;padding:2px 8px;border-radius:8px;font-size:11px;margin-left:4px">看3D</button></div>';
   }
+  document.querySelectorAll('.snaStep').forEach(btn=>{
+    btn.onclick=(e)=>{e.stopPropagation();snaStep(parseInt(btn.dataset.step));};
+  });
   html+='<br><b style="color:#c084fc">介数中心性（谁是桥）</b>';
   snaR.between.filter(b=>b[1]>0).forEach(b=>{html+=`<div class="dim">· <b style="color:#e2e8f0">${name(b[0])}</b>：在${b[1]}条最短路径上</div>`;});
   if(snaR.between.filter(b=>b[1]>0).length===0)html+='<div class="dim">→ 两个分量内部都是树状，没有桥节点</div>';
@@ -510,6 +512,38 @@ document.getElementById('snaBtn').onclick=(e)=>{e.stopPropagation();
   document.getElementById('snaPanel').classList.toggle('show');};
 document.getElementById('snaClose').onclick=(e)=>{e.stopPropagation();
   document.getElementById('snaPanel').classList.remove('show');};
+
+// SNA分步高亮
+let bridgeLine=null;
+function snaStep(step){
+  resetShock();
+  if(bridgeLine){group.remove(bridgeLine);bridgeLine=null;}
+  const SNA=new Set(['xwd','htd','zw','jq','jf','bmc','mj','ddc','sr','lq']);
+  const chainA=new Set(['xwd','zw','mj','ddc','bmc','jq']); // 新能源链
+  const chainB=new Set(['htd','jf','sr','lq']); // 电子信息链
+  nodes.forEach(n=>{const m=nodeMeshes[n.id];if(m.terrain)return;
+    if(step<=1){m.core.material.opacity=0.95;m.glow.material.opacity=0.12;m.label.material.opacity=0.9;m.ring.material.opacity=0.25;}
+    else if(step===2||step===3){
+      const on=SNA.has(n.id);
+      m.core.material.opacity=on?0.95:0.1;m.glow.material.opacity=on?0.12:0.01;m.label.material.opacity=on?0.9:0.1;m.ring.material.opacity=on?0.25:0.05;
+    }
+    else if(step===4||step===5){
+      const on=chainA.has(n.id);
+      m.core.material.opacity=on?0.95:0.1;m.glow.material.opacity=on?0.15:0.01;m.label.material.opacity=on?0.9:0.1;m.ring.material.opacity=on?0.25:0.05;
+      if(step===5&&chainB.has(n.id)){m.core.material.opacity=0.3;m.core.material.emissive.setHex(0xef4444);m.core.material.emissiveIntensity=0.8;}
+    }
+  });
+  if(step===6){
+    // 桥边：表面处理→华通
+    const s=nodeById['bmc'].pos,t=nodeById['htd'].pos;
+    const g=new THREE.BufferGeometry().setFromPoints([s,t]);
+    bridgeLine=new THREE.Line(g,new THREE.LineBasicMaterial({color:0xc084fc,transparent:true,opacity:0.9}));
+    group.add(bridgeLine);
+    nodes.forEach(n=>{const m=nodeMeshes[n.id];if(m.terrain)return;
+      m.core.material.opacity=0.6;m.label.material.opacity=0.4;
+      if(chainA.has(n.id)||chainB.has(n.id)){m.core.material.opacity=0.9;m.label.material.opacity=0.9;}});
+  }
+}
 document.getElementById('eraBtn').onclick=(e)=>{e.stopPropagation();
   document.getElementById('eraPanelBody').innerHTML=`
   <b style="color:#fbbf24">⏳ 博罗产业网络的四个阶段</b>
