@@ -3,87 +3,59 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no">
-<title>第二步 · 苗头：东江环保</title>
+<title>第二步 · 老店能不能重新点亮</title>
 <style>
 *{margin:0;padding:0;box-sizing:border-box;-webkit-tap-highlight-color:transparent}
 body{background:#030711;color:#cbd5e1;font-family:-apple-system,"PingFang SC",sans-serif;line-height:1.5;padding-bottom:92px}
 .hd{padding:18px 16px 8px}
 .hd .step{display:inline-block;background:#1e3a5f;color:#60a5fa;font-size:11px;padding:2px 10px;border-radius:20px;margin-bottom:8px}
-.hd h1{font-size:22px;color:#e2e8f0;font-weight:700}
-.hd .sub{font-size:12px;color:#64748b;margin-top:5px}
-.block{margin:14px 12px 0}
-.block .bt{font-size:13.5px;color:#7dd3fc;font-weight:700;margin-bottom:9px;display:flex;align-items:center;gap:6px}
-/* 一句话假设 */
+.hd h1{font-size:21px;color:#e2e8f0;font-weight:700}
+.hd .sub{font-size:12px;color:#64748b;margin-top:5px;line-height:1.6}
+/* 一句话立场 */
 .assume1{display:flex;gap:10px;background:rgba(12,25,40,.7);border:1px solid rgba(59,130,246,.4);
   border-radius:14px;padding:13px 15px;margin:14px 12px 0}
 .assume1 .ai{font-size:18px;line-height:1.5}
-.assume1 b{color:#93c5fd}
 .assume1 div{font-size:12.5px;color:#aebfd0;line-height:1.6}
-/* 证据分级色块 */
-.lvrow{display:flex;gap:7px}
-.lvchip{flex:1;text-align:center;border-radius:11px;padding:10px 2px;font-size:11px;color:#fff}
-.lvchip b{display:block;font-size:15px}
-.c-a{background:#14532d}.c-b{background:#1e3a5f}.c-c{background:#713f12}.c-d{background:#334155}
-/* 苗头卡片 */
-.card{margin:14px 12px 0;background:rgba(15,23,42,.6);border:1px solid rgba(51,65,85,.5);border-radius:16px;padding:15px}
-.card .top{display:flex;align-items:center;gap:10px}
-.card .em{font-size:28px}
-.card .tt{font-size:17px;font-weight:700;color:#f1f5f9}
-.card .plain{font-size:11.5px;color:#94a3b8;margin-top:1px}
-.lvl{margin-left:auto;font-size:11px;font-weight:700;padding:4px 11px;border-radius:20px;background:#7f1d1d;color:#fca5a5;white-space:nowrap}
-.kinds{margin-top:8px}
-.kinds span{display:inline-block;font-size:11px;background:rgba(51,65,85,.5);border-radius:6px;padding:2px 9px;margin-right:5px;color:#cbd5e1}
-.evidencechain{margin-top:11px;background:rgba(8,15,30,.5);border:1px solid rgba(125,211,252,.12);border-radius:12px;padding:10px 8px 8px}
-.evidencechain .ec-title{font-size:11px;color:#94a3b8;margin-bottom:2px;padding:0 4px}
-.evidencechain svg{width:100%;height:auto;display:block}
-/* 证据链动画 */
-.evidencechain line.link{stroke-dasharray:100;stroke-dashoffset:100;animation:draw .8s ease forwards}
-@keyframes draw{to{stroke-dashoffset:0}}
-.evidencechain .enode{opacity:0;transform-box:view-box;animation:pop .45s cubic-bezier(.2,1.6,.4,1) forwards}
-@keyframes pop{from{opacity:0;transform:scale(0)}to{opacity:1;transform:scale(1)}}
-.evidencechain .center{transform-box:view-box;transform-origin:170px 150px;animation:breathe 2.6s ease-in-out infinite}
-@keyframes breathe{0%,100%{transform:scale(1)}50%{transform:scale(1.07)}}
-.evidencechain .flow{opacity:0;animation:showflow .3s ease forwards 1.7s}
-@keyframes showflow{to{opacity:.9}}
-/* 来源清单 */
-.src-list{margin-top:10px;border-top:1px dashed rgba(71,85,105,.5);padding-top:8px}
-.sl-title{font-size:11px;color:#94a3b8;margin-bottom:2px}
+/* 老店身份卡 */
+.idcard{margin:14px 12px 0;background:rgba(15,23,42,.6);border:1px solid rgba(51,65,85,.5);border-radius:16px;padding:15px}
+.idcard .head{display:flex;align-items:center;gap:10px}
+.idcard .em{font-size:30px}
+.idcard .nm{font-size:17px;font-weight:700;color:#f1f5f9}
+.idcard .tag{font-size:11px;color:#94a3b8;margin-top:1px}
+.fact-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:7px;margin-top:13px}
+.fact{background:rgba(30,41,59,.5);border:1px solid rgba(71,85,105,.4);border-radius:10px;padding:9px 3px;text-align:center}
+.fact .n{font-size:13.5px;color:#fbbf24;font-weight:700}
+.fact .w{font-size:10px;color:#94a3b8;margin-top:2px}
+/* 一道坎 */
+.hurdle{margin:14px 12px 0;background:rgba(60,40,10,.45);border:1px solid #a16207;border-radius:13px;
+  padding:12px 14px;text-align:center;font-size:12.5px;color:#fbbf24;line-height:1.6}
+/* 命运分叉 */
+.fork{margin:14px 12px 0;display:flex;gap:9px}
+.fpath{flex:1;border-radius:14px;padding:11px 8px;display:flex;flex-direction:column}
+.fp-up{background:rgba(20,50,30,.5);border:1px solid #16a34a}
+.fp-down{background:rgba(40,28,28,.45);border:1px solid #64748b}
+.fpath .fh{text-align:center;font-size:12.5px;font-weight:700;padding-bottom:8px;margin-bottom:5px;
+  border-bottom:1px dashed rgba(71,85,105,.55)}
+.fp-up .fh{color:#4ade80}
+.fp-down .fh{color:#94a3b8}
+.fstep{display:flex;align-items:center;gap:6px;padding:4px 0;font-size:11px;color:#cbd5e1}
+.fstep .ic{font-size:14px}
+.fstep .dw{margin-left:auto;color:#475569;font-size:9px}
+.fresult{margin-top:7px;border-radius:9px;padding:8px 4px;text-align:center;font-size:11px;font-weight:700}
+.fr-up{background:#14532d;color:#bbf7d0}
+.fr-down{background:#334155;color:#cbd5e1}
+.fnote{text-align:center;font-size:10px;color:#7d8fa8;margin-top:6px;line-height:1.5}
+/* 来源 */
+.srcbox{margin:14px 12px 0}
+.srcbox .bt{font-size:13.5px;color:#7dd3fc;font-weight:700;margin-bottom:8px}
 .srccard{display:flex;align-items:center;gap:10px;background:rgba(8,15,30,.6);border:1px solid rgba(71,85,105,.4);
-  border-radius:11px;padding:9px 11px;margin-top:7px;text-decoration:none}
-.lvpill{width:22px;height:22px;line-height:22px;text-align:center;border-radius:6px;font-size:11px;font-weight:700;flex-shrink:0}
-.lvp-a{background:#14532d;color:#bbf7d0}
-.lvp-b{background:#1e3a5f;color:#bfdbfe}
-.lvp-c{background:#713f12;color:#fde68a}
-.lvp-d{background:#334155;color:#cbd5e1}
-.ni-cred{font-size:11px;color:#7dd3fc;margin-bottom:5px}
-.sum-item{display:flex;align-items:flex-start;gap:8px;background:rgba(8,15,30,.5);border-radius:9px;padding:8px 10px;margin-top:6px;font-size:11.5px;color:#aebfd0;line-height:1.5}
-.sum-item b{color:#e2e8f0}
-.ni-empty{font-size:11.5px;color:#7d8fa8;font-style:italic;margin-top:4px}
-.sc-body{flex:1;display:flex;flex-direction:column}
-.sc-t{font-size:13px;color:#e2e8f0;font-weight:600}
-.sc-src{font-size:10.5px;color:#7d8fa8}
-.sc-link{font-size:15px;color:#7dd3fc}
-.clickable{cursor:pointer}
-.nodeinfo{display:none;margin-top:10px;background:rgba(12,25,40,.7);border:1px solid rgba(125,211,252,.25);
-  border-radius:11px;padding:11px 12px;animation:fadein .2s ease}
-@keyframes fadein{from{opacity:0;transform:translateY(4px)}to{opacity:1;transform:none}}
-.ni-head{display:flex;align-items:center;gap:8px}
-.ni-t{font-size:13.5px;color:#e2e8f0;font-weight:700}
-.ni-x{margin-left:auto;color:#7d8fa8;font-size:13px;padding:2px 6px;cursor:pointer}
-.ni-info{font-size:12.5px;color:#cbd5e1;margin:7px 0 8px;line-height:1.6}
-.ni-link{display:block;font-size:11.5px;color:#7dd3fc;text-decoration:none;border-top:1px dashed rgba(71,85,105,.5);padding-top:8px}
-/* 多米诺影响 */
-.domino{display:flex;align-items:center;gap:3px;margin-top:11px}
-.dnode{flex:1;text-align:center;border-radius:12px;padding:10px 2px}
-.dnode .ic{font-size:20px}
-.dnode .w{font-size:10px;margin-top:2px}
-.d1{background:rgba(127,29,29,.55);border:1px solid #dc2626;color:#fca5a5}
-.d2{background:rgba(120,53,15,.5);border:1px solid #ea580c;color:#fdba74}
-.d3{background:rgba(113,63,18,.5);border:1px solid #ca8a04;color:#fde047}
-.darrow{color:#f87171;font-size:15px}
+  border-radius:11px;padding:9px 12px;margin-top:7px;text-decoration:none}
+.srccard .ic{font-size:15px}
+.srccard .tx{flex:1;font-size:12px;color:#aebfd0}
+.srccard .go{color:#7dd3fc;font-size:14px}
 .bar{position:fixed;bottom:0;left:0;right:0;background:rgba(8,15,30,.94);border-top:1px solid #1c2739;padding:12px 14px;backdrop-filter:blur(12px)}
 .btn{display:block;width:100%;padding:15px;border-radius:12px;border:none;font-size:15px;font-weight:700;cursor:pointer;
-  background:linear-gradient(135deg,#dc2626,#991b1b);color:#fff}
+  background:linear-gradient(135deg,#16a34a,#166534);color:#fff}
 .back{display:inline-block;font-size:12px;color:#64748b;margin:12px 16px 0;text-decoration:none}
 </style>
 </head>
@@ -91,8 +63,8 @@ body{background:#030711;color:#cbd5e1;font-family:-apple-system,"PingFang SC",sa
 
 <div class="hd">
   <div class="step">第二步</div>
-  <h1>苗头：东江环保</h1>
-  <div class="sub">只盯一个苗头，看清楚，再往下走。</div>
+  <h1>苗头：一家老店，能不能重新点亮</h1>
+  <div class="sub">这一步不看确定的政策，看一家<b style="color:#94a3b8">有底子、但现在不够亮</b>的老店，它面前有一道坎，也有两种命运。样本：观音阁糖厂。</div>
 </div>
 
 <div class="assume1">
@@ -100,158 +72,67 @@ body{background:#030711;color:#cbd5e1;font-family:-apple-system,"PingFang SC",sa
   <div>这是“如果发生”，不是预测会发生。</div>
 </div>
 
-<div class="block">
-  <div class="bt">🏷️ 证据来源等级</div>
-  <div class="lvrow">
-    <div class="lvchip c-a clickable" data-lv="A"><b>A</b>官方一手</div>
-    <div class="lvchip c-b clickable" data-lv="B"><b>B</b>媒体学术</div>
-    <div class="lvchip c-c clickable" data-lv="C"><b>C</b>企业行业</div>
-    <div class="lvchip c-d clickable" data-lv="D"><b>D</b>迹象推断</div>
+<div class="idcard">
+  <div class="head">
+    <span class="em">🏭</span>
+    <div>
+      <div class="nm">观音阁糖厂</div>
+      <div class="tag">博罗县观音阁糖业 · “双荣”黑糖</div>
+    </div>
   </div>
-  <div class="nodeinfo" id="intelSummary"></div>
+  <div class="fact-grid">
+    <div class="fact"><div class="n">1954</div><div class="w">建·70年</div></div>
+    <div class="fact"><div class="n">600吨</div><div class="w">日产能</div></div>
+    <div class="fact"><div class="n">出口</div><div class="w">日本</div></div>
+    <div class="fact"><div class="n">省名牌</div><div class="w">著名商标</div></div>
+    <div class="fact"><div class="n">2.5万吨</div><div class="w">年榨蔗</div></div>
+    <div class="fact" style="border-color:#a16207"><div class="n" style="color:#fca5a5">掉规下</div><div class="w">现在不够亮</div></div>
+  </div>
 </div>
 
-<div class="card">
-  <div class="top"><span class="em">🛑</span>
-    <div><div class="tt">东江喊停</div><div class="plain">沿江工厂环保停产</div></div>
-    <span class="lvl">苗头强·趋势确定</span>
-  </div>
-  <div class="kinds"><span>环保约束</span><span>供应链</span></div>
+<div class="hurdle">⚠️ 一道坎：规模掉到规下、甘蔗原料在减、市场偏窄</div>
 
-  <div class="evidencechain" id="ec"></div>
-
-  <div class="domino">
-    <div class="dnode d1"><div class="ic">🛑</div><div class="w">东江喊停</div></div>
-    <div class="darrow">→</div>
-    <div class="dnode d2"><div class="ic">🏭</div><div class="w">龙溪电镀先停</div></div>
-    <div class="darrow">→</div>
-    <div class="dnode d3"><div class="ic">🛵</div><div class="w">电动车模具卡</div></div>
+<div class="fork">
+  <div class="fpath fp-up">
+    <div class="fh">🌱 点亮</div>
+    <div class="fstep"><span class="ic">🔧</span>技改升级<span class="dw">↓</span></div>
+    <div class="fstep"><span class="ic">🍬</span>黑糖深加工<span class="dw">↓</span></div>
+    <div class="fstep"><span class="ic">🏷️</span>品牌新市场<span class="dw">↓</span></div>
+    <div class="fstep"><span class="ic">🏛️</span>糖厂文旅<span class="dw">↓</span></div>
+    <div class="fresult">重返规上</div>
+    <div class="fnote">带动甘蔗种植<br>联农带农</div>
   </div>
+  <div class="fpath fp-down">
+    <div class="fh">🌑 熄灭</div>
+    <div class="fstep"><span class="ic">💤</span>维持原样<span class="dw">↓</span></div>
+    <div class="fstep"><span class="ic">📉</span>继续掉规下<span class="dw">↓</span></div>
+    <div class="fstep"><span class="ic">🌾</span>原料缩减<span class="dw">↓</span></div>
+    <div class="fstep"><span class="ic">🧱</span>无人接手<span class="dw">↓</span></div>
+    <div class="fresult">厂消失</div>
+    <div class="fnote">70年品牌断<br>少一条甘蔗链</div>
+  </div>
+</div>
+
+<div class="srcbox">
+  <div class="bt">🔗 来源（点击核验）</div>
+  <a class="srccard" href="http://www.guanyinge-sugar.com/about.html" target="_blank" rel="noopener">
+    <span class="ic">🏭</span><span class="tx">观音阁糖厂官网 · 公司简介</span><span class="go">↗</span></a>
+  <a class="srccard" href="https://www.boluo.gov.cn/xzgwh/gygzrmzf/zwgk/qt/ghjh/content/post_5758388.html" target="_blank" rel="noopener">
+    <span class="ic">📄</span><span class="tx">观音阁镇2026政府工作报告 · 支持糖厂重返规上</span><span class="go">↗</span></a>
+  <a class="srccard" href="https://static.nfapp.southcn.com/content/202212/13/c7169801.html" target="_blank" rel="noopener">
+    <span class="ic">📰</span><span class="tx">南方+ · 以糖厂撬起甘蔗产业、联农带农</span><span class="go">↗</span></a>
 </div>
 
 <a class="back" href="v2.html">← 回全息图</a>
 
 <div class="bar">
-  <button class="btn" id="goBtn">就按这个苗头，下一步：选主体组网</button>
+  <button class="btn" id="goBtn">就以这家老店为例，下一步：选主体组网</button>
 </div>
 
 <script>
-const EVIDENCE=[
-  {lv:'A',t:'政府工作报告',src:'博罗县人民政府 · 2026',
-   info:'饮用水源地水质达标率100%，生态建设向绿向美。',
-   url:'http://www.boluo.gov.cn/zwgk/zfgzbg/content/post_5717382.html'},
-  {lv:'A',t:'水源保护',src:'博罗县环境准入负面清单',
-   info:'东江5条排水渠流域禁建电镀、线路板、印染，暂停审批表面处理。',
-   url:'http://www.boluo.gov.cn/attachment/0/292/292739/5480524.pdf'},
-  {lv:'A',t:'生态督导',src:'博罗县 · 2026年6月',
-   info:'县领导督导：坚守生态底线，生态优先、绿色发展。',
-   url:'https://www.boluo.gov.cn/gkmlpt/content/5/5783/mpost_5783532.html'},
-  {lv:'B',t:'电镀管控',src:'惠州市生态环境局 · 龙溪基地环评',
-   info:'龙溪电镀基地须在线监控、污染物全面达标，增产不增污。',
-   url:'https://shj.huizhou.gov.cn/attachment/0/352/352439/5798919.pdf'},
-  {lv:'B',t:'重金属停批',src:'博罗县 · 华橙电子环评',
-   info:'东江流域停止审批向河流排放汞、镉、铬、铅等重金属项目。',
-   url:'https://www.boluo.gov.cn/attachment/0/322/322711/5631034.pdf'},
-  {lv:'B',t:'企业搬入园',src:'惠州市政府 · 龙溪基地环评',
-   info:'东江流域现有企业搬迁进入龙溪电镀基地，集中治污。',
-   url:'https://www.huizhou.gov.cn/attachment/0/336/336362/5718604.pdf'}
-];
-const LV_COLOR={A:'#22c55e',B:'#3b82f6',C:'#eab308',D:'#94a3b8'};
-function evidenceSVG(){
-  const n=EVIDENCE.length,cx=170,cy=150,R=104,pos=[];
-  let svg='<svg viewBox="0 0 340 300" xmlns="http://www.w3.org/2000/svg">';
-  EVIDENCE.forEach((e,i)=>{
-    const a=-Math.PI/2+i*2*Math.PI/n;
-    const x=cx+R*Math.cos(a),y=cy+R*Math.sin(a);
-    pos.push({x,y,e});
-    svg+=`<line class="link" pathLength="100" x1="${cx}" y1="${cy}" x2="${x}" y2="${y}"
-      stroke="${LV_COLOR[e.lv]}" stroke-width="2" opacity="0.7"
-      style="animation-delay:${0.2+i*0.22}s"/>`;
-  });
-  // 光流：证据汇聚到中心
-  pos.forEach((p,i)=>{
-    svg+=`<circle class="flow" r="3" fill="${LV_COLOR[p.e.lv]}">
-      <animateMotion dur="2.3s" repeatCount="indefinite"
-        path="M ${p.x} ${p.y} L ${cx} ${cy}" begin="${1.8+i*0.55}s"/>
-      </circle>`;
-  });
-  // 中心
-  svg+=`<g class="center">
-    <circle cx="${cx}" cy="${cy}" r="21" fill="#7f1d1d" stroke="#ef4444" stroke-width="2"/>
-    <text x="${cx}" y="${cy+5}" text-anchor="middle" fill="#fff" font-size="12" font-weight="bold">苗头</text>
-  </g>`;
-  // 证据节点
-  pos.forEach((p,i)=>{
-    let anchor='middle',tx=p.x,ty=p.y;
-    if(p.x>cx+20){anchor='start';tx=p.x+18;ty=p.y+4;}
-    else if(p.x<cx-20){anchor='end';tx=p.x-18;ty=p.y+4;}
-    else if(p.y<cy){ty=p.y-20;}
-    else{ty=p.y+27;}
-    svg+=`<g class="enode clickable" data-i="${i}" style="transform-origin:${p.x}px ${p.y}px;animation-delay:${1+i*0.15}s">
-      <circle cx="${p.x}" cy="${p.y}" r="14" fill="rgba(8,15,30,.92)" stroke="${LV_COLOR[p.e.lv]}" stroke-width="2.5"/>
-      <text x="${p.x}" y="${p.y+4}" text-anchor="middle" fill="${LV_COLOR[p.e.lv]}" font-size="12" font-weight="bold">${p.e.lv}</text>
-      <text x="${tx}" y="${ty}" text-anchor="${anchor}" fill="#cbd5e1" font-size="11">${p.e.t}</text>
-    </g>`;
-  });
-  return svg+'</svg>';
-}
-document.getElementById('ec').innerHTML=
-  '<div class="ec-title">🧩 证据链：点节点看关键信息</div>'+evidenceSVG()+
-  '<div class="nodeinfo" id="nodeInfo"></div>';
-
-// 点击节点：只给一句关键信息（不过载）+ 来源链接，不直接跳走
-function showNode(i){
-  const e=EVIDENCE[i],box=document.getElementById('nodeInfo');
-  box.innerHTML=
-    '<div class="ni-head">'+
-      '<span class="lvpill '+(e.lv==='A'?'lvp-a':'lvp-b')+'">'+e.lv+'</span>'+
-      '<span class="ni-t">'+e.t+'</span>'+
-      '<span class="ni-x" id="niX">✕</span>'+
-    '</div>'+
-    '<div class="ni-info">'+e.info+'</div>'+
-    '<a class="ni-link" href="'+e.url+'" target="_blank" rel="noopener">来源：'+e.src+' · 查看原文 ↗</a>';
-  box.style.display='block';
-  document.getElementById('niX').onclick=function(ev){ev.stopPropagation();box.style.display='none';};
-}
-document.getElementById('ec').querySelectorAll('.clickable').forEach(g=>{
-  g.addEventListener('click',function(ev){ev.preventDefault();showNode(+g.dataset.i);});
-});
-
-// 点 A/B/C/D 等级：弹情报摘要（可信度 + 该等级包含哪些证据）
-const LV_DESC={
-  A:{name:'官方一手',cred:'可信度最高 · 政府发布',
-     desc:'政府工作报告、统计公报、规划文件、政府公示。'},
-  B:{name:'媒体学术',cred:'较可信 · 权威公开',
-     desc:'党媒通讯社、科研机构，以及政府公示的项目环评。'},
-  C:{name:'企业行业',cred:'企业公开 · 注意核对',
-     desc:'工商、招商、招投标等企业或行业公开信息。'},
-  D:{name:'迹象推断',cred:'较弱 · 需验证',
-     desc:'单一来源、现象观察，用虚线，需进一步核实。'}
-};
-function showLevel(lv){
-  const d=LV_DESC[lv],items=EVIDENCE.filter(e=>e.lv===lv),box=document.getElementById('intelSummary');
-  const pill='lvp-'+lv.toLowerCase();
-  box.innerHTML=
-    '<div class="ni-head">'+
-      '<span class="lvpill '+pill+'">'+lv+'</span>'+
-      '<span class="ni-t">'+d.name+'</span>'+
-      '<span class="ni-x" id="lsX">✕</span>'+
-    '</div>'+
-    '<div class="ni-cred">'+d.cred+'</div>'+
-    '<div class="ni-info">'+d.desc+'</div>'+
-    (items.length?
-      items.map(e=>'<div class="sum-item"><span class="lvpill '+(e.lv==='A'?'lvp-a':'lvp-b')+'">'+e.lv+'</span>'+
-        '<div><b>'+e.t+'</b><br>'+e.info+'</div></div>').join('')
-      :'<div class="ni-empty">本苗头暂无此类来源——不是靠它撑的。</div>');
-  box.style.display='block';
-  document.getElementById('lsX').onclick=function(ev){ev.stopPropagation();box.style.display='none';};
-}
-document.querySelectorAll('.lvchip.clickable').forEach(c=>{
-  c.addEventListener('click',function(ev){ev.preventDefault();showLevel(c.dataset.lv);});
-});
-
 document.getElementById('goBtn').onclick=()=>{
-  location.href='v3.html?shock=B';
+  // 带着老店情景，去第三页选主体组网
+  location.href='v3.html?shock=G';
 };
 </script>
 </body>
