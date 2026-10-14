@@ -124,6 +124,11 @@ body{font:14px/1.6 -apple-system,"PingFang SC","Microsoft YaHei",sans-serif;back
     </div>
 
     <div class="takeaway" id="takeaway"></div>
+
+    <div style="margin-top:16px;padding-top:14px;border-top:1px solid #1c2739">
+      <button onclick="exportBrief()" style="background:#fbbf24;color:#000;border:none;padding:10px 18px;border-radius:8px;font-size:13px;font-weight:700;cursor:pointer">📄 导出决策简报</button>
+      <span style="font-size:11px;color:#5b6b82;margin-left:10px">自动生成：核心结论+翻转点+先查三件事+数据血统</span>
+    </div>
   </div>
 
   <div class="footnote">
@@ -229,6 +234,47 @@ function probAt(idx,dir){
   const test=paths.map(p=>({...p}));
   test[idx].mu= dir<0? RANGES[idx][0] : RANGES[idx][1];
   return runMulti(test).hit.toFixed(0)+"%";
+}
+
+function exportBrief(){
+  paths.forEach((p,i)=>{ p.mu=parseFloat(document.getElementById("s"+i).value); });
+  const r=runMulti(paths);
+  const order=paths.map((p,i)=>({name:p.name,c:r.coefs[i]})).sort((a,b)=>b.c-a.c);
+  const top=order[0];
+  const date=new Date().toISOString().slice(0,10);
+
+  // 先查三件事：方差贡献最大的三个参数
+  const checks=order.slice(0,3).map((o,i)=>`${i+1}. 优先核查「${o.name}」——它对结果方差贡献最大（相关系数${o.c.toFixed(2)}）`).join("\n");
+
+  const md=`# 博罗产业决策简报（${date}）
+
+## 一、核心结论
+- 2030年GDP预测：P10=${Math.round(r.p10)}亿 / P50=${Math.round(r.p50)}亿 / P90=${Math.round(r.p90)}亿
+- 到1600亿概率：${r.hit.toFixed(0)}%（多种子±${(r.hits/2).toFixed(0)}pp）
+- 当前资源盘使用：${paths.reduce((a,p)=>a+p.mu,0)} / ${BUDGET} 亿
+
+## 二、生死翻转点
+- 最敏感路径：**${top.name}**（统计相关系数${top.c.toFixed(2)}）
+- 这条牌从崩溃端拉到跃迁端，到1600概率变化最大。
+- 注意：这是加性模型下的统计相关，不代表博罗真实经济弹性。
+
+## 三、今天先查三件事
+${checks}
+
+## 四、数据血统
+- BASE=1005亿（2025统计公报·A类官方）
+- TARGET=1600亿（2026政府工作报告"力争2030"·A类官方）
+- 各路径μ按2024三次产业结构+真实增速外推（B级推算）
+- σ为经验设定、五路径独立加和无耦合（D级假设）
+- 模型：5个种子×4000次蒙特卡洛，加性路径沙盒
+- ⚠️ 本简报为模型设定下的情景推演，非预测。不回答链主外迁后具体倒几家。
+`;
+
+  const blob=new Blob([md],{type:"text/markdown;charset=utf-8"});
+  const a=document.createElement("a");
+  a.href=URL.createObjectURL(blob);
+  a.download=`boluo-brief-${date}.md`;
+  a.click();
 }
 
 paths.forEach((p,i)=>{ document.getElementById("s"+i).oninput=run; });
