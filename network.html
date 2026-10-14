@@ -46,6 +46,8 @@ svg{display:block;width:100%;height:auto}
 .rank-row .val{width:55px;flex:none;font-size:11px;color:#93a4bd;font-variant-numeric:tabular-nums}
 .algo-note{font-size:11px;color:#5b6b82;margin-top:8px;padding:8px 10px;background:#0a0f1a;border-radius:6px;border-left:2px solid #2b3a55}
 .blood-tag{display:inline-block;font-size:9px;padding:1px 5px;border-radius:3px;font-weight:700;margin-left:4px}
+.filter-btn{background:#131c2b;color:#93a4bd;border:1px solid #22304a;padding:5px 14px;border-radius:16px;font-size:12px;cursor:pointer}
+.filter-btn.on{background:#15803d;border-color:#22c55e;color:#fff;font-weight:600}
 .blood-A{background:#14532d;color:#86efac}
 .blood-B{background:#1e3a5f;color:#93c5fd}
 .blood-C{background:#4a3a12;color:#fcd34d}
@@ -74,6 +76,15 @@ svg{display:block;width:100%;height:auto}
     <button class="btn" id="bReplay">↻ 重新建构</button>
     <button class="btn" style="background:#16203a;border:1px solid #2b3a55;color:#b9cbe4;font-weight:400;font-size:12px;padding:6px 14px" onclick="exportCSV()">⬇ 导出 edges.csv</button>
     <span class="cnt" id="cnt">准备中…</span>
+  </div>
+
+  <div style="display:flex;gap:8px;margin-bottom:12px;flex-wrap:wrap;align-items:center">
+    <span style="font-size:12px;color:#8fa3bf;margin-right:4px">视图：</span>
+    <button class="filter-btn on" data-types="ext,space,ind,talent">全景</button>
+    <button class="filter-btn" data-types="space">只看镇</button>
+    <button class="filter-btn" data-types="ind">只看产业</button>
+    <button class="filter-btn" data-types="talent">只看人</button>
+    <button class="filter-btn" data-types="ext,space">镇+外部</button>
   </div>
 
   <div class="stage">
@@ -241,11 +252,15 @@ function nodeMarkup(n){
 }
 
 
+let activeTypes=new Set(["ext","space","ind","talent"]);
+
 function start(){
   clearTimers();
-  const adj=buildGraph();
-  const degree={};NODES.forEach(n=>degree[n.id]=adj[n.id].length);
-  const btw=betweenness(adj);
+  const visible=NODES.filter(n=>activeTypes.has(n.type));
+  const visibleIds=new Set(visible.map(n=>n.id));
+  const adj={};visible.forEach(n=>adj[n.id]=[]);
+  EDGES.forEach(([f,t])=>{if(visibleIds.has(f)&&visibleIds.has(t)){adj[f].push(t);adj[t].push(f)}});
+  const degree={};visible.forEach(n=>degree[n.id]=adj[n.id].length);
 
   const eg=document.getElementById("edges");
   const ng=document.getElementById("nodes");
@@ -253,32 +268,32 @@ function start(){
   document.getElementById("after").style.display="none";
   document.getElementById("cnt").textContent="建构中…";
 
-  const phases=[
-    {title:"① 外部城市：东莞、深圳、广州、惠城",filter:n=>n.type==="ext"},
-    {title:"② 博罗镇街从西到东落下",filter:n=>n.type==="space"},
-    {title:"③ 产业节点接上",filter:n=>n.type==="ind"},
-    {title:"④ 人和游客落下",filter:n=>n.type==="talent"},
-  ];
+  const typeNames={ext:"外部城市",space:"镇街",ind:"产业",talent:"人"};
+  const phases=[];
+  if(activeTypes.has("ext"))phases.push({title:"① 外部城市落下",filter:n=>n.type==="ext"});
+  if(activeTypes.has("space"))phases.push({title:"② 镇街空间落下",filter:n=>n.type==="space"});
+  if(activeTypes.has("ind"))phases.push({title:"③ 产业节点接上",filter:n=>n.type==="ind"});
+  if(activeTypes.has("talent"))phases.push({title:"④ 人和游客落下",filter:n=>n.type==="talent"});
 
   let clock=0;
-  const nodeGroups={};
   phases.forEach(ph=>{
     later(()=>{document.getElementById("acttitle").textContent=ph.title},clock);
-    NODES.filter(ph.filter).forEach((n,i)=>{
+    const list=visible.filter(ph.filter);
+    list.forEach((n,i)=>{
       later(()=>{
         const g=document.createElementNS(SVGNS,"g");
         g.setAttribute("class","gnode");
         g.innerHTML=nodeMarkup(n);
         ng.appendChild(g);
-        nodeGroups[n.id]=g;
       },clock+i*130);
     });
-    clock+=NODES.filter(ph.filter).length*130+700;
+    clock+=list.length*130+500;
   });
 
   later(()=>{
-    document.getElementById("acttitle").textContent="⑤ 线长出来：注意最粗的那根";
-    EDGES.forEach(([f,t,w,blood],i)=>{
+    document.getElementById("acttitle").textContent="⑤ 线长出来";
+    const visibleEdges=EDGES.filter(([f,t])=>visibleIds.has(f)&&visibleIds.has(t));
+    visibleEdges.forEach(([f,t,w,blood],i)=>{
       const n1=nodeById(f),n2=nodeById(t);
       const isCross=n1.type==="ext"||n2.type==="ext";
       const line=document.createElementNS(SVGNS,"line");
@@ -300,20 +315,20 @@ function start(){
     });
     later(()=>{
       document.getElementById("acttitle").textContent="";
-      showAfter(degree,btw);
-    },EDGES.length*55+900);
+      showAfter(degree,visible.length,visibleEdges.length);
+    },visibleEdges.length*55+700);
   },clock);
 }
 
-function showAfter(degree,btw){
+function showAfter(degree,nodeCount,edgeCount){
   document.getElementById("after").style.display="block";
-  document.getElementById("cnt").textContent=`33个节点 · ${EDGES.length}条主边 · 建构完成`;
+  document.getElementById("cnt").textContent=`${nodeCount}个节点 · ${edgeCount}条边 · 建构完成`;
 
   const degSorted=Object.entries(degree).sort((a,b)=>b[1]-a[1]);
   const topDeg=nodeById(degSorted[0][0]);
   document.getElementById("kDegree").textContent=topDeg.name;
-  document.getElementById("kDegreeDesc").textContent=`连了${degSorted[0][1]}条线，全场第一`;
-  const maxDeg=Math.max(...Object.values(degree));
+  document.getElementById("kDegreeDesc").textContent=`连了${degSorted[0][1]}条线，本组第一`;
+  const maxDeg=Math.max(...Object.values(degree))||1;
   document.getElementById("degreeRanks").innerHTML=degSorted.slice(0,8).map(([id,v])=>{
     const n=nodeById(id);
     return `<div class="rank-row">
@@ -323,19 +338,9 @@ function showAfter(degree,btw){
     </div>`;
   }).join("");
 
-  const btwSorted=Object.entries(btw).sort((a,b)=>b[1]-a[1]);
-  const topBtw=nodeById(btwSorted[0][0]);
-  document.getElementById("kBetween").textContent=topBtw.name;
-  document.getElementById("kBetweenDesc").textContent=`最短路径经过最多`;
-  const maxBtw=btwSorted[0][1]||1;
-  document.getElementById("betweenRanks").innerHTML=btwSorted.slice(0,8).map(([id,v])=>{
-    const n=nodeById(id);
-    return `<div class="rank-row">
-      <span class="name">${n.name}</span>
-      <div class="bar-bg"><div class="bar" style="width:${v/maxBtw*100}%;background:#a78bfa"></div></div>
-      <span class="val">${v.toFixed(0)}</span>
-    </div>`;
-  }).join("");
+  // 筛选视图下 betweenness 排名无意义，隐藏
+  document.querySelector(".k3").children[2].style.display=activeTypes.size===4?"":"none";
+  document.getElementById("betweenRanks").parentElement.style.display=activeTypes.size===4?"":"none";
 }
 
 function exportCSV(){
@@ -353,6 +358,14 @@ function exportCSV(){
 }
 
 document.getElementById("bReplay").onclick=start;
+document.querySelectorAll(".filter-btn").forEach(btn=>{
+  btn.onclick=()=>{
+    document.querySelectorAll(".filter-btn").forEach(b=>b.classList.remove("on"));
+    btn.classList.add("on");
+    activeTypes=new Set(btn.dataset.types.split(","));
+    start();
+  };
+});
 start();
 </script>
 
