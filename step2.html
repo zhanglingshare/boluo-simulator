@@ -3,50 +3,55 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no">
-<title>第二步 · 老店能不能重新点亮</title>
+<title>第二步 · 一家老店能不能重新点亮</title>
 <style>
 *{margin:0;padding:0;box-sizing:border-box;-webkit-tap-highlight-color:transparent}
 body{background:#030711;color:#cbd5e1;font-family:-apple-system,"PingFang SC",sans-serif;line-height:1.5;padding-bottom:92px}
-.hd{padding:18px 16px 8px}
+.hd{padding:18px 16px 6px}
 .hd .step{display:inline-block;background:#1e3a5f;color:#60a5fa;font-size:11px;padding:2px 10px;border-radius:20px;margin-bottom:8px}
 .hd h1{font-size:21px;color:#e2e8f0;font-weight:700}
 .hd .sub{font-size:12px;color:#64748b;margin-top:5px;line-height:1.6}
-/* 一句话立场 */
+/* 舞台 */
+.stage{margin:14px 12px 0;background:rgba(15,23,42,.6);border:1px solid rgba(51,65,85,.5);border-radius:16px;padding:13px 12px 11px}
+.sim-badge{display:flex;align-items:center;gap:7px;background:rgba(30,58,40,.4);border:1px solid #16a34a;
+  border-radius:10px;padding:7px 10px;font-size:11px;color:#86efac}
+.sim-badge b{color:#bbf7d0}
+.sim-badge .x{flex:1}
+.era{display:flex;align-items:center;gap:8px;margin:11px 0 2px}
+.era .dot{width:8px;height:8px;border-radius:50%;background:#fbbf24;box-shadow:0 0 8px #fbbf24;flex-shrink:0}
+.era #eraTxt{font-size:13px;color:#fcd34d;font-weight:700}
+svg.scene{width:100%;height:auto;display:block;margin-top:2px}
+/* 节点 / 边动画 */
+.node{opacity:0;transform:scale(0);transform-box:fill-box;transform-origin:center;transition:opacity .5s,transform .5s cubic-bezier(.2,1.6,.4,1)}
+.node.on{opacity:1;transform:scale(1)}
+.node.ghost{opacity:.18;transform:scale(.85)}
+.edge{opacity:0;stroke-dasharray:100;stroke-dashoffset:100;transition:opacity .5s,stroke-dashoffset .6s}
+.edge.on{opacity:.85;stroke-dashoffset:0}
+.edge.half{opacity:.45;stroke-dasharray:6 5;stroke-dashoffset:0}
+.edge.none{opacity:.18;stroke-dasharray:2 6;stroke-dashoffset:0}
+.edge.dead{opacity:0}
+/* 分叉两小网 */
+.fork-title{text-align:center;font-size:13px;color:#7dd3fc;font-weight:700;margin:16px 0 1px}
+.fork-wrap{margin:9px 12px 0;display:flex;gap:9px}
+.fbox{flex:1;background:rgba(15,23,42,.6);border:1px solid rgba(51,65,85,.5);border-radius:14px;padding:10px 6px 9px}
+.fbox.up{border-color:#16a34a;background:rgba(20,45,28,.5)}
+.fbox.dn{border-color:#64748b;background:rgba(30,24,24,.4)}
+.fbox .fh{text-align:center;font-size:12px;font-weight:700;margin-bottom:2px}
+.fbox.up .fh{color:#4ade80}
+.fbox.dn .fh{color:#94a3b8}
+.fbox svg{width:100%;height:auto;display:block}
+.fbox .fr{text-align:center;font-size:10.5px;font-weight:700;border-radius:8px;padding:5px 2px;margin-top:4px}
+.fbox.up .fr{background:#14532d;color:#bbf7d0}
+.fbox.dn .fr{background:#334155;color:#cbd5e1}
+.fbox .fn{text-align:center;font-size:9.5px;color:#7d8fa8;margin-top:4px;line-height:1.5}
+.replay{display:block;margin:13px auto 0;font-size:12px;color:#7dd3fc;background:rgba(12,25,40,.7);
+  border:1px solid rgba(125,211,252,.35);border-radius:20px;padding:6px 18px;cursor:pointer}
+/* 立场 */
 .assume1{display:flex;gap:10px;background:rgba(12,25,40,.7);border:1px solid rgba(59,130,246,.4);
-  border-radius:14px;padding:13px 15px;margin:14px 12px 0}
-.assume1 .ai{font-size:18px;line-height:1.5}
-.assume1 div{font-size:12.5px;color:#aebfd0;line-height:1.6}
-/* 老店身份卡 */
-.idcard{margin:14px 12px 0;background:rgba(15,23,42,.6);border:1px solid rgba(51,65,85,.5);border-radius:16px;padding:15px}
-.idcard .head{display:flex;align-items:center;gap:10px}
-.idcard .em{font-size:30px}
-.idcard .nm{font-size:17px;font-weight:700;color:#f1f5f9}
-.idcard .tag{font-size:11px;color:#94a3b8;margin-top:1px}
-.fact-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:7px;margin-top:13px}
-.fact{background:rgba(30,41,59,.5);border:1px solid rgba(71,85,105,.4);border-radius:10px;padding:9px 3px;text-align:center}
-.fact .n{font-size:13.5px;color:#fbbf24;font-weight:700}
-.fact .w{font-size:10px;color:#94a3b8;margin-top:2px}
-/* 一道坎 */
-.hurdle{margin:14px 12px 0;background:rgba(60,40,10,.45);border:1px solid #a16207;border-radius:13px;
-  padding:12px 14px;text-align:center;font-size:12.5px;color:#fbbf24;line-height:1.6}
-/* 命运分叉 */
-.fork{margin:14px 12px 0;display:flex;gap:9px}
-.fpath{flex:1;border-radius:14px;padding:11px 8px;display:flex;flex-direction:column}
-.fp-up{background:rgba(20,50,30,.5);border:1px solid #16a34a}
-.fp-down{background:rgba(40,28,28,.45);border:1px solid #64748b}
-.fpath .fh{text-align:center;font-size:12.5px;font-weight:700;padding-bottom:8px;margin-bottom:5px;
-  border-bottom:1px dashed rgba(71,85,105,.55)}
-.fp-up .fh{color:#4ade80}
-.fp-down .fh{color:#94a3b8}
-.fstep{display:flex;align-items:center;gap:6px;padding:4px 0;font-size:11px;color:#cbd5e1}
-.fstep .ic{font-size:14px}
-.fstep .dw{margin-left:auto;color:#475569;font-size:9px}
-.fresult{margin-top:7px;border-radius:9px;padding:8px 4px;text-align:center;font-size:11px;font-weight:700}
-.fr-up{background:#14532d;color:#bbf7d0}
-.fr-down{background:#334155;color:#cbd5e1}
-.fnote{text-align:center;font-size:10px;color:#7d8fa8;margin-top:6px;line-height:1.5}
+  border-radius:14px;padding:12px 14px;margin:15px 12px 0;font-size:12px;color:#aebfd0;line-height:1.6}
+.assume1 .ai{font-size:17px}
 /* 来源 */
-.srcbox{margin:14px 12px 0}
+.srcbox{margin:15px 12px 0}
 .srcbox .bt{font-size:13.5px;color:#7dd3fc;font-weight:700;margin-bottom:8px}
 .srccard{display:flex;align-items:center;gap:10px;background:rgba(8,15,30,.6);border:1px solid rgba(71,85,105,.4);
   border-radius:11px;padding:9px 12px;margin-top:7px;text-decoration:none}
@@ -64,63 +69,45 @@ body{background:#030711;color:#cbd5e1;font-family:-apple-system,"PingFang SC",sa
 <div class="hd">
   <div class="step">第二步</div>
   <h1>一家老店，能不能重新点亮</h1>
-  <div class="sub">这一步不看确定的政策，看一家<b style="color:#94a3b8">有底子、但现在不够亮</b>的老店，它面前有一道坎，也有两种命运。样本：观音阁糖厂。</div>
+  <div class="sub">样本：观音阁糖厂（70年）。不看确定的政策，看一家<b style="color:#94a3b8">有底子、但现在不够亮</b>的老店，它的网过去70年一直在变。</div>
+</div>
+
+<div class="stage">
+  <div class="sim-badge">📐 <b>接近真实模拟</b><span class="x"></span>节点·关系·年代均来自公开资料，做了简化抽象，非精确还原</div>
+  <div class="era"><span class="dot"></span><span id="eraTxt">1954 · 建厂</span></div>
+  <svg class="scene" id="scene" viewBox="0 0 360 280" xmlns="http://www.w3.org/2000/svg"></svg>
+  <button class="replay" id="replay">↻ 重看一遍</button>
+</div>
+
+<div class="fork-title">走到路口，两种命运</div>
+<div class="fork-wrap">
+  <div class="fbox up">
+    <div class="fh">🌱 点亮</div>
+    <svg viewBox="0 0 200 150" id="forkUp"></svg>
+    <div class="fr">重返规上</div>
+    <div class="fn">深加工·联名·研学<br>带动甘蔗、联农</div>
+  </div>
+  <div class="fbox dn">
+    <div class="fh">🌑 熄灭</div>
+    <svg viewBox="0 0 200 150" id="forkDn"></svg>
+    <div class="fr">厂消失</div>
+    <div class="fn">70年品牌断<br>少一条甘蔗链</div>
+  </div>
 </div>
 
 <div class="assume1">
   <span class="ai">🔍</span>
-  <div>这是“如果发生”，不是预测会发生。</div>
-</div>
-
-<div class="idcard">
-  <div class="head">
-    <span class="em">🏭</span>
-    <div>
-      <div class="nm">观音阁糖厂</div>
-      <div class="tag">博罗县观音阁糖业 · “双荣”黑糖</div>
-    </div>
-  </div>
-  <div class="fact-grid">
-    <div class="fact"><div class="n">1954</div><div class="w">建·70年</div></div>
-    <div class="fact"><div class="n">600吨</div><div class="w">日产能</div></div>
-    <div class="fact"><div class="n">出口</div><div class="w">日本</div></div>
-    <div class="fact"><div class="n">省名牌</div><div class="w">著名商标</div></div>
-    <div class="fact"><div class="n">2.5万吨</div><div class="w">年榨蔗</div></div>
-    <div class="fact" style="border-color:#a16207"><div class="n" style="color:#fca5a5">掉规下</div><div class="w">现在不够亮</div></div>
-  </div>
-</div>
-
-<div class="hurdle">⚠️ 一道坎：规模掉到规下、甘蔗原料在减、市场偏窄</div>
-
-<div class="fork">
-  <div class="fpath fp-up">
-    <div class="fh">🌱 点亮</div>
-    <div class="fstep"><span class="ic">🔧</span>技改升级<span class="dw">↓</span></div>
-    <div class="fstep"><span class="ic">🍬</span>黑糖深加工<span class="dw">↓</span></div>
-    <div class="fstep"><span class="ic">🏷️</span>品牌新市场<span class="dw">↓</span></div>
-    <div class="fstep"><span class="ic">🏛️</span>糖厂文旅<span class="dw">↓</span></div>
-    <div class="fresult">重返规上</div>
-    <div class="fnote">带动甘蔗种植<br>联农带农</div>
-  </div>
-  <div class="fpath fp-down">
-    <div class="fh">🌑 熄灭</div>
-    <div class="fstep"><span class="ic">💤</span>维持原样<span class="dw">↓</span></div>
-    <div class="fstep"><span class="ic">📉</span>继续掉规下<span class="dw">↓</span></div>
-    <div class="fstep"><span class="ic">🌾</span>原料缩减<span class="dw">↓</span></div>
-    <div class="fstep"><span class="ic">🧱</span>无人接手<span class="dw">↓</span></div>
-    <div class="fresult">厂消失</div>
-    <div class="fnote">70年品牌断<br>少一条甘蔗链</div>
-  </div>
+  <div>这是“如果发生”，不是预测会发生；你可以看依据、决定认不认，也可以质疑、要求重算。</div>
 </div>
 
 <div class="srcbox">
   <div class="bt">🔗 来源（点击核验）</div>
   <a class="srccard" href="http://www.guanyinge-sugar.com/about.html" target="_blank" rel="noopener">
-    <span class="ic">🏭</span><span class="tx">观音阁糖厂官网 · 公司简介</span><span class="go">↗</span></a>
+    <span class="ic">🏭</span><span class="tx">观音阁糖厂官网 · 1954建·600吨/日·出口日本</span><span class="go">↗</span></a>
   <a class="srccard" href="https://www.boluo.gov.cn/xzgwh/gygzrmzf/zwgk/qt/ghjh/content/post_5758388.html" target="_blank" rel="noopener">
     <span class="ic">📄</span><span class="tx">观音阁镇2026政府工作报告 · 支持糖厂重返规上</span><span class="go">↗</span></a>
-  <a class="srccard" href="https://static.nfapp.southcn.com/content/202212/13/c7169801.html" target="_blank" rel="noopener">
-    <span class="ic">📰</span><span class="tx">南方+ · 以糖厂撬起甘蔗产业、联农带农</span><span class="go">↗</span></a>
+  <a class="srccard" href="http://m.toutiao.com/group/6963460810752459276/" target="_blank" rel="noopener">
+    <span class="ic">📰</span><span class="tx">走读百年惠州 · 沿江甘蔗、吊机转运、水路运蔗</span><span class="go">↗</span></a>
 </div>
 
 <a class="back" href="v2.html">← 回全息图</a>
@@ -130,10 +117,158 @@ body{background:#030711;color:#cbd5e1;font-family:-apple-system,"PingFang SC",sa
 </div>
 
 <script>
-document.getElementById('goBtn').onclick=()=>{
-  // 带着老店情景，去第三页选主体组网
-  location.href='v3.html?shock=G';
-};
+// ===== 环位（中心糖厂 180,140；半径 90）=====
+const CX=180,CY=140,R=90;
+const RING=[
+  {x:CX,y:CY-R},                       // 0 顶
+  {x:CX+R*Math.cos(-Math.PI/3),y:CY+R*Math.sin(-Math.PI/3)},   // 1 右上
+  {x:CX+R,y:CY},                       // 2 右
+  {x:CX+R*Math.cos(Math.PI/3),y:CY+R*Math.sin(Math.PI/3)},     // 3 右下
+  {x:CX-R*Math.cos(Math.PI/3),y:CY+R*Math.sin(Math.PI/3)},     // 4 左下
+  {x:CX-R,y:CY},                       // 5 左
+  {x:CX-R*Math.cos(-Math.PI/3),y:CY+R*Math.sin(-Math.PI/3)}    // 6 左上
+];
+// 第一幕：鼎盛期（甘蔗成片、码头、货船、出口日本）
+const S1=[
+  {p:0,ic:'🌾',t:'甘蔗',c:'#84cc16'},
+  {p:1,ic:'🌾',t:'甘蔗',c:'#84cc16'},
+  {p:2,ic:'🇯🇵',t:'日本',c:'#ef4444'},
+  {p:3,ic:'🚢',t:'货船',c:'#06b6d4'},
+  {p:4,ic:'🏗️',t:'码头',c:'#f59e0b'},
+  {p:5,ic:'🌾',t:'甘蔗',c:'#84cc16'},
+  {p:6,ic:'🌾',t:'甘蔗',c:'#84cc16'}
+];
+// 第二幕：今天（甘蔗仍实线，其余半线/零线）
+const S2=[
+  {p:0,ic:'🌾',t:'甘蔗',c:'#22c55e',edge:'on'},
+  {p:1,ic:'🏛️',t:'研文旅',c:'#3b82f6',edge:'half'},
+  {p:2,ic:'🥜',t:'花生',c:'#eab308',edge:'half'},
+  {p:3,ic:'🛒',t:'电商',c:'#06b6d4',edge:'half'},
+  {p:4,ic:'🏪',t:'线下网',c:'#f59e0b',edge:'none'},
+  {p:5,ic:'🏘️',t:'村集体',c:'#f59e0b',edge:'none'},
+  {p:6,ic:'🏡',t:'民宿',c:'#a78bfa',edge:'none'}
+];
+
+function nodeSVG(d,id){
+  const q=RING[d.p];
+  // 标签位置（避开中心）
+  let lx=q.x,ly=q.y-23,anchor='middle';
+  if(q.y>CY+10){ly=q.y+28;}
+  return `<g class="node" id="${id}">
+    <circle cx="${q.x}" cy="${q.y}" r="16" fill="rgba(8,15,30,.94)" stroke="${d.c}" stroke-width="2.3"/>
+    <text x="${q.x}" y="${q.y+6}" text-anchor="middle" font-size="16">${d.ic}</text>
+    <text x="${lx}" y="${ly}" text-anchor="${anchor}" font-size="10" fill="${d.c}" font-weight="700">${d.t}</text>
+  </g>`;
+}
+function edgeSVG(d,id){
+  const q=RING[d.p];
+  return `<line class="edge" id="${id}" x1="${CX}" y1="${CY}" x2="${q.x}" y2="${q.y}"
+    stroke="${d.c}" stroke-width="2.2"/>`;
+}
+
+function renderScene(){
+  let svg='';
+  // 东江（底部流动）
+  svg+=`<path d="M 8 252 Q 90 242 180 252 T 352 252" stroke="#0ea5e9" stroke-width="5" fill="none" opacity="0.45"/>
+    <circle r="3.5" fill="#7dd3fc"><animateMotion dur="3.4s" repeatCount="indefinite"
+      path="M 8 252 Q 90 242 180 252 T 352 252"/></circle>
+    <circle r="2.5" fill="#bae6fd" opacity="0.8"><animateMotion dur="3.4s" begin="1.7s" repeatCount="indefinite"
+      path="M 8 252 Q 90 242 180 252 T 352 252"/></circle>`;
+  // 边（先画，在节点下）
+  S1.forEach((d,i)=>svg+=edgeSVG(d,'e1_'+i));
+  S2.forEach((d,i)=>svg+=edgeSVG(d,'e2_'+i));
+  // 出口日本远边
+  svg+=`<line class="edge" id="japanLine" x1="${CX}" y1="${CY}" x2="346" y2="86" stroke="#ef4444" stroke-width="1.8" opacity="0"/>`;
+  // 节点
+  S1.forEach((d,i)=>svg+=nodeSVG(d,'n1_'+i));
+  S2.forEach((d,i)=>svg+=nodeSVG(d,'n2_'+i));
+  // 糖厂（中央）
+  svg+=`<g class="node" id="factory">
+    <rect x="193" y="102" width="7" height="20" fill="#78716c"/>
+    <rect x="191" y="98" width="11" height="5" fill="#57534e"/>
+    <circle cx="${CX}" cy="${CY}" r="26" fill="#b45309" stroke="#f59e0b" stroke-width="2.6"/>
+    <text x="${CX}" y="${CY+5}" text-anchor="middle" fill="#fff" font-size="13" font-weight="bold">糖厂</text>
+  </g>`;
+  document.getElementById('scene').innerHTML=svg;
+}
+renderScene();
+
+// 分叉小网：点亮（边变密、多中心） vs 熄灭（边断、中心暗）
+function renderFork(id,kind){
+  const c=100,cy=72,r=46;
+  const ps=[[c,cy-r],[c+r*0.87,cy-r*0.5],[c+r*0.87,cy+r*0.5],[c,cy+r],[c-r*0.87,cy+r*0.5],[c-r*0.87,cy-r*0.5]];
+  let s='';
+  // 中心辐射边
+  ps.forEach((p,i)=>{
+    s+=`<line class="fedge" id="${id}_e${i}" x1="${c}" y1="${cy}" x2="${p[0]}" y2="${p[1]}" stroke="${kind==='up'?'#22c55e':'#94a3b8'}" stroke-width="1.6"/>`;
+  });
+  // 点亮：额外的环边（节点互连，密集）
+  if(kind==='up'){
+    for(let i=0;i<ps.length;i++){
+      const a=ps[i],b=ps[(i+1)%ps.length];
+      s+=`<line class="fring" x1="${a[0]}" y1="${a[1]}" x2="${b[0]}" y2="${b[1]}" stroke="#4ade80" stroke-width="1.3" opacity="0.65"/>`;
+    }
+  }
+  ps.forEach(p=>{
+    s+=`<circle cx="${p[0]}" cy="${p[1]}" r="6.5" fill="rgba(8,15,30,.9)" stroke="${kind==='up'?'#4ade80':'#94a3b8'}" stroke-width="1.6"/>`;
+  });
+  s+=`<circle class="fcenter" id="${id}_c" cx="${c}" cy="${cy}" r="12" fill="${kind==='up'?'#b45309':'#475569'}" stroke="${kind==='up'?'#f59e0b':'#64748b'}" stroke-width="2"/>
+    <text x="${c}" y="${cy+4}" text-anchor="middle" fill="#fff" font-size="9" font-weight="bold">糖厂</text>`;
+  document.getElementById(id).innerHTML=s;
+}
+renderFork('forkUp','up');
+renderFork('forkDn','dn');
+
+// ===== 时间线编排 =====
+const $=id=>document.getElementById(id);
+const timers=[];
+function at(sec,fn){timers.push(setTimeout(fn,sec*1000));}
+function setEra(t){$('eraTxt').textContent=t;}
+function play(){
+  // 复位
+  timers.forEach(clearTimeout);timers.length=0;
+  document.querySelectorAll('.node').forEach(n=>n.classList.remove('on','ghost'));
+  document.querySelectorAll('.edge').forEach(e=>{e.classList.remove('on','half','none','dead');});
+  // 点亮小网初始态
+  const upEdges=$('forkUp').querySelectorAll('.fedge, .fring');
+  const dnEdges=$('forkDn').querySelectorAll('.fedge');
+  // 第一幕：建厂
+  at(0.2,()=>{ $('factory').classList.add('on'); setEra('1954 · 建厂'); });
+  // 七八十年代：甘蔗成片、码头、货船
+  S1.forEach((d,i)=>{
+    at(0.8+i*0.28,()=>{
+      $('n1_'+i).classList.add('on');
+      $('e1_'+i).classList.add('on');
+    });
+  });
+  at(1.6,()=>setEra('七八十年代 · 糖业鼎盛，沿江二三十公里甘蔗'));
+  at(3.0,()=>{ $('japanLine').classList.add('on'); setEra('1986 · 起出口日本'); });
+  // 第二幕：历史节点淡出，今天节点淡入
+  at(4.3,()=>{
+    setEra('今天 · 仍在生产，但已掉到规下');
+    S1.forEach((d,i)=>{ $('n1_'+i).classList.add('ghost'); $('e1_'+i).classList.remove('on'); });
+    $('japanLine').classList.remove('on');
+    S2.forEach((d,i)=>{
+      $('n2_'+i).classList.add('on');
+      $('e2_'+i).classList.add(d.edge);
+    });
+  });
+  // 第三幕：分叉
+  at(7.2,()=>{
+    setEra('未来 · 点亮，还是熄灭？');
+    // 点亮：半线/零线全变实线（网变密）
+    S2.forEach((d,i)=>{
+      const e=$('e2_'+i),n=$('n2_'+i);
+      setTimeout(()=>{e.classList.remove('half','none');e.classList.add('on');n.classList.add('on');},i*260);
+    });
+    // 熄灭：另一条路——让节点变暗
+  });
+  at(8.6,()=>setEra('两种命运，都可能——决定权在人'));
+}
+$('replay').onclick=play;
+$('goBtn').onclick=()=>{ location.href='v3.html?shock=G'; };
+// 进入即播放
+play();
 </script>
 </body>
 </html>
