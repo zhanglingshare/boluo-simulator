@@ -462,6 +462,7 @@ function bfs(seedId,kinds){
       if(!kinds.has(e[3]))return;
       const oth=(e[0]===nid)?e[1]:(e[1]===nid?e[0]:null);
       if(!oth||level[oth]!==undefined)return;
+      if(!nodeById[oth])return; // 不在当前组网（被过滤掉）的节点不传播
       level[oth]=Math.max(0.18,1-hop*0.26-(5-e[2])*0.05);next.push(oth);
     });});
     layers.push(next);frontier=next;}
@@ -531,6 +532,19 @@ document.querySelectorAll('.sbtn').forEach(btn=>{
     runShock(btn.dataset.shock,btn.dataset.name,btn.dataset.kinds);};
 });
 document.getElementById('resetBtn').onclick=(e)=>{e.stopPropagation();resetShock();};
+// 第二页选了冲击→组网完成后自动触发
+const autoShock=urlParams.get('shock');
+if(autoShock){
+  const seedMap={A:'xwd',B:'dj',C:'lq',D:'mj'};
+  const seed=seedMap[autoShock];
+  const autoBtn=seed?document.querySelector('.sbtn[data-shock="'+seed+'"]'):null;
+  if(autoBtn){
+    setTimeout(()=>{
+      autoBtn.classList.add('on');
+      runShock(autoBtn.dataset.shock,autoBtn.dataset.name,autoBtn.dataset.kinds);
+    },1400);
+  }
+}
 document.getElementById('whyBtn').onclick=(e)=>{e.stopPropagation();
   document.getElementById('menuDropdown').style.display='none';
   document.getElementById('whyPanel').classList.toggle('show');};

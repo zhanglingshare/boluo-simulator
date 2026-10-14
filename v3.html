@@ -46,6 +46,7 @@ body{background:#030711;color:#cbd5e1;font-family:-apple-system,"PingFang SC",sa
 <div class="hd">
   <h1>博罗产业家底</h1>
   <div class="sub">先看清博罗手里有什么，再决定跑哪个推演</div>
+  <div id="shockPicked" style="display:none;margin-top:10px;background:rgba(127,29,29,.5);border:1px solid #7f1d1d;border-radius:10px;padding:8px 12px;font-size:12.5px;color:#fca5a5"></div>
 </div>
 
 <div class="sec chain">
@@ -118,13 +119,22 @@ body{background:#030711;color:#cbd5e1;font-family:-apple-system,"PingFang SC",sa
 <div class="rpt" id="report"></div>
 
 <script>
+const SHOCK_NAME={A:'链主飞走（欣旺达搬走）',B:'东江喊停（环保停产）',C:'老厂腾退（老厂拆迁）',D:'外溢断流（东莞订单少）'};
+const shockParam=new URLSearchParams(location.search).get('shock');
+if(shockParam&&SHOCK_NAME[shockParam]){
+  const sp=document.getElementById('shockPicked');
+  sp.style.display='block';
+  sp.innerHTML='💥 已选冲击：<b>'+SHOCK_NAME[shockParam]+'</b>　选完主体后，网络会自动按这个冲击推演';
+}
 document.querySelectorAll('.card').forEach(c=>{
   c.onclick=()=>c.classList.toggle('sel');
 });
 document.getElementById('goBtn').onclick=()=>{
   const sel=[...document.querySelectorAll('.card.sel')].map(c=>c.dataset.id);
   if(sel.length<3){alert('至少选3个主体才能组网');return;}
-  location.href='v2.html?nodes='+sel.join(',');
+  let url='v2.html?nodes='+sel.join(',');
+  if(shockParam)url+='&shock='+shockParam;
+  location.href=url;
 };
 document.querySelectorAll('.btn-shock').forEach(b=>{
   b.onclick=()=>{
