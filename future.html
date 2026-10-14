@@ -240,7 +240,7 @@ function run(){
     <div class="row"><span class="k">随机种子</span><span class="v2">${seed}</span><span style="color:#5b6b82">（同种子必同结果）</span></div>
     <div class="row"><span class="k">模拟次数</span><span class="v2">${N.toLocaleString()}次</span></div>
     <div class="row"><span class="k">起点（实测）</span><span class="v2">${BASE}亿</span><span style="color:#5b6b82">2025年GDP</span></div>
-    <div class="row"><span class="k">参考目标</span><span class="v2">${TARGET}亿</span><span style="color:#5b6b82">县委书记访谈提出，非刚性指标</span></div>
+    <div class="row"><span class="k">参考目标</span><span class="v2">${TARGET}亿</span><span style="color:#5b6b82">2026政府工作报告"力争2030"目标</span></div>
     <div class="row" style="margin-top:6px"><span class="k">五条路预期/摆动</span></div>
     ${PATHS.map(p=>`<div class="row" style="padding-left:20px"><span style="color:${p.color};min-width:110px">· ${p.name}</span><span class="v2">预期${p.mu}亿，摆动±${p.sd}亿</span></div>`).join('')}
     <div class="row"><span class="k">全局扰动</span><span class="v2">±${GLOBAL_SD}亿</span><span style="color:#5b6b82">模拟外部冲击等随机因素</span></div>

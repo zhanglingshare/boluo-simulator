@@ -244,9 +244,9 @@ function render(){
 
   // 达标概率：把四个滑块翻译成路径 μ 调整，交给同一 model.js 内核重跑
   const paths=JSON.parse(JSON.stringify(HT.DEFAULT_PATHS));
-  paths[1].mu=Math.max(0,paths[1].mu*(1+p.s1*0.2));   // 投产节奏 ±20%
-  paths[0].mu=Math.max(0,paths[0].mu*(1+p.s2*0.15));  // 东莞外溢→产业承接
-  paths[2].mu=Math.max(0,paths[2].mu*(1+p.s4/100));   // 固投→融深通道
+  paths[0].mu=Math.max(0,paths[0].mu*(1+p.s1*0.2));   // 投产节奏→双引擎(电子信息+新能源)
+  paths[1].mu=Math.max(0,paths[1].mu*(1+p.s2*0.15));  // 东莞外溢→工业底盘
+  paths[3].mu=Math.max(0,paths[3].mu*(1+p.s4/100));   // 固投→融深通道基建
   const m=HT.run(42,10000,paths);
   const prob=Math.round(m.hit);
 
