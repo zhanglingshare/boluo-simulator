@@ -102,7 +102,7 @@ body{font:14px/1.6 -apple-system,"PingFang SC","Microsoft YaHei",sans-serif;back
       <span class="track"><i id="budgetBar"></i></span>
       <span id="budgetTxt"></span>
     </div>
-    <div class="warn" id="budgetWarn">⛔ 已超出博罗现实可调配资源盘。此组合需要额外土地指标与财政基建配套，且会挤压其他牌——现实中五张牌不可能同时拉满。</div>
+    <div class="warn" id="budgetWarn">⛔ 此组合已超过政府"力争1600亿"所需总盘子(595亿)。比官方目标还激进，需要额外土地/财政配套并挤压其他牌——五张牌不可能同时拉满。</div>
 
     <div id="paths"></div>
   </div>
@@ -127,10 +127,11 @@ body{font:14px/1.6 -apple-system,"PingFang SC","Microsoft YaHei",sans-serif;back
   </div>
 
   <div class="footnote">
-    <span class="b">● B级（推估）</span> 五条路径 μ/σ 为模型设定、非实测相关；五路径<b>独立加和、无耦合</b> ｜
-    <span class="g">● 锚点</span> BASE 1005亿(2025公报)、TARGET 1600亿(外延参考) ｜
-    <span class="c">● 稳健性</span> 已用 5 个随机种子各跑 4000 遍取均值，± 为种子间极差 ｜
-    资源盘 700 亿为现实可行性示意，非官方盘子。本页不预测任何具体企业命运。
+    <span class="g">● A类官方</span> BASE 1005亿(2025公报)、TARGET 1600亿(2026政府工作报告"力争2030") ｜
+    <span class="b">● B级推算</span> 各路径 μ 按2024三次产业结构+真实增速外推：二产+6.9%、三产仅+0.2%、电子信息+17.1% ｜
+    <span class="c">● D级假设</span> 融深通道贡献无公开分项、σ 为经验设定；五路径独立加和、无耦合 ｜
+    <span class="c">● 稳健性</span> 5个随机种子各跑4000遍取均值，±为种子间极差 ｜
+    资源盘595亿=1600−1005政府目标所需总增量。本页不预测任何具体企业命运。
   </div>
 
   <a class="backhome" href="index.html">← 回到博罗日常（公众版）</a>
@@ -138,16 +139,25 @@ body{font:14px/1.6 -apple-system,"PingFang SC","Microsoft YaHei",sans-serif;back
 
 <script>
 const FEARS=[
-  {q:"链主/东莞外万一退，我配套厂会不会跟着死？", tag:"压「产业承接升级」", p:0},
-  {q:"房地产腰斩、固投掉两成，新链主顶得上吗？", tag:"压「新投产项目」", p:1},
-  {q:"融深融莞半小时，人为什么不来？", tag:"压「融深融莞通道」", p:2},
-  {q:"千万游客为什么留不住钱？", tag:"压「罗浮山文旅」", p:3},
+  {q:"电子信息/新能源这两个引擎万一失速，怎么办？", tag:"压「双引擎」", p:0},
+  {q:"房地产腰斩、固投掉两成，新产能顶得上吗？", tag:"压「工业底盘」", p:1},
+  {q:"千万游客为什么留不住钱？", tag:"压「三产/文旅」", p:2},
+  {q:"融深融莞半小时，人为什么不来？", tag:"压「融深通道」", p:3},
 ];
-const RANGES=[[80,380],[60,320],[20,160],[15,140],[10,100]];
-const SEEDS=[42,137,2024,7,99];   // 多种子稳健
-const BUDGET=700;                  // 现实资源盘（亿，累计贡献上限）
+// 真实锚定（非凑数）：按2024三次产业结构+真实增速外推的五年累计GDP增量
+// 一产104亿/+3.5%、二产513亿/+6.9%、三产334亿/+0.2%(2024统计公报)；电子信息773.8亿/+17.1%
+const PATHS=[
+  {mu:150, sd:40, name:"双引擎·电子信息+新能源",   color:"#3b82f6"},
+  {mu:100, sd:28, name:"工业底盘自然延续",         color:"#8b5cf6"},
+  {mu:50,  sd:30, name:"三产/文旅破局(现状仅+0.2%)", color:"#fbbf24"},
+  {mu:25,  sd:20, name:"融深融莞通道",             color:"#06b6d4"},
+  {mu:18,  sd:10, name:"一产·特色农业",            color:"#34d399"},
+];
+const RANGES=[[60,260],[40,180],[10,140],[5,100],[5,45]];
+const SEEDS=[42,137,2024,7,99];
+const BUDGET=595;   // = 1600-1005，政府"力争"2030目标所需总增量
 let curFear=null;
-const paths=HT.DEFAULT_PATHS.map(p=>({...p}));
+const paths=PATHS.map(p=>({...p}));
 
 document.getElementById("fears").innerHTML=FEARS.map((f,i)=>
   `<button class="fear" data-i="${i}"><div class="q">${f.q}</div><div class="tag">${f.tag}</div></button>`).join("");
@@ -160,7 +170,7 @@ document.getElementById("paths").innerHTML=paths.map((p,i)=>{
       <span class="val" style="color:${p.color}"><span id="v${i}">${Math.round(p.mu)}</span> 亿</span>
     </div>
     <input type="range" id="s${i}" min="${lo}" max="${hi}" value="${p.mu}" step="5">
-    <div class="range">崩溃 ${lo} ── 基准 ${Math.round(HT.DEFAULT_PATHS[i].mu)} ── 跃迁 ${hi}</div>
+    <div class="range">崩溃 ${lo} ── 现实延续 ${Math.round(PATHS[i].mu)} ── 加力 ${hi}</div>
   </div>`;
 }).join("");
 
