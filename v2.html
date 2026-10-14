@@ -65,9 +65,26 @@ body{background:#030711;color:#e6edf3;font:13px/1.6 -apple-system,"PingFang SC",
 .panel-head button{background:none;border:none;color:#94a3b8;font-size:16px;cursor:pointer}
 .panel-body{padding:14px 16px;overflow:auto;font-size:12px;line-height:1.7;color:#cbd5e1}
 .panel-body .dim{color:#94a3b8;margin-top:3px}
+.intro{position:fixed;bottom:44px;left:50%;transform:translateX(-50%);z-index:8;
+  width:92vw;max-width:560px;text-align:center;pointer-events:none;display:none;
+  background:rgba(8,15,30,.55);border:1px solid rgba(125,211,252,.18);
+  border-radius:18px;padding:18px 20px;backdrop-filter:blur(8px)}
+.intro .big{font-size:21px;font-weight:800;color:#e2e8f0;letter-spacing:3px}
+.intro .big span{color:#7dd3fc}
+.intro .small{font-size:12.5px;color:#94a3b8;margin-top:10px;line-height:1.9}
+.intro .small b{color:#cbd5e1}
 </style></head><body>
 <div id="bg"></div>
 <div class="hint">🔄 拖动旋转 · 双指缩放 · 点节点看详情</div>
+
+<div class="intro" id="intro">
+  <div class="big">看见产业 · <span>看见另一种可能</span></div>
+  <div class="small">
+    每个亮球，都是博罗<b>真有的产业</b>。<br>
+    亮着的，是今天的家底；<b>还没亮的</b>，是明天的机会。<br>
+    🔄 拖动旋转 · 双指缩放 · 点节点看它是谁
+  </div>
+</div>
 
 <div class="top">
   <h1>博罗产业全息风洞 <span class="ver">V2</span></h1>
@@ -381,12 +398,13 @@ edges.forEach((e,i)=>{
 });
 
 if(!showIds){
-  // 概览模式：只留纯全息图，隐藏所有操作UI
+  // 概览模式：只留纯全息图，隐藏所有操作UI，配几句说明
   document.querySelector('.shockbar').style.display='none';
   document.querySelector('.foot').style.display='none';
   document.getElementById('menuBtn').style.display='none';
   document.querySelector('.blood').style.display='none';
   document.querySelector('.hint').style.display='none';
+  document.getElementById('intro').style.display='block';
 }
 
 // 背景星尘
