@@ -136,6 +136,13 @@ svg{display:block;width:100%;height:auto}
     </div>
   </div>
 
+  <div id="drillModal" style="display:none;position:fixed;top:0;left:0;right:0;bottom:0;background:rgba(0,0,0,0.6);z-index:999"></div>
+
+  <div style="background:rgba(167,139,250,.08);border:1px solid rgba(167,139,250,.2);border-radius:8px;padding:10px 14px;margin-top:14px;font-size:12px;color:#8fa3bf;line-height:1.8">
+    <b style="color:#a78bfa">📐 招商基准与物流摩擦</b><br>
+    准入门槛：投资强度≥450-600万/亩，亩均税收≥35-50万/亩 ｜ 博罗→东莞90km/货运2.6h ｜ 博罗→深圳87km/公路8-12h ｜ 专精特新：11家国家级+74家省级
+  </div>
+
   <div class="next"><a href="who.html">下一步：博罗的基本面 →</a></div>
 </div>
 
@@ -148,19 +155,20 @@ const NODES=[
   {id:"hz",name:"惠城",x:810,y:250,type:"ext",w:1,label:"惠州主城·行政"},
   // ===== 博罗"3+3"产业体系（节点位置已按工商注册地校正） =====
   // 三大主导产业
-  {id:"dz",name:"新一代电子信息",x:200,y:170,type:"ind",w:3,label:"317家规上·产值770亿·园洲/罗阳/龙溪"},
-  {id:"ht",name:"智能装备",x:380,y:200,type:"ind",w:3,label:"千亿产业园·686家高企·罗阳"},
-  {id:"xw",name:"新能源新材料",x:480,y:110,type:"ind",w:3,label:"欣旺达锂威·正威铜材料·园洲"},
+  {id:"dz",name:"新一代电子信息",x:200,y:170,type:"ind",w:3,tier:"A",label:"317家规上·产值770亿",town:"园洲/罗阳/龙溪",firms:"华通电脑·威博精密·南亚电子·新谱电子"},
+  {id:"ht",name:"智能装备",x:380,y:200,type:"ind",w:3,tier:"A",label:"千亿产业园·686家高企",town:"罗阳",firms:"天倬科技·汽车零部件·精密模具"},
+  {id:"xw",name:"新能源新材料",x:480,y:110,type:"ind",w:3,tier:"A",label:"欣旺达锂威·正威铜材料",town:"园洲",firms:"正威25万吨铜杆·嘉奇新能源(奇瑞)"},
   // 配套集群
-  {id:"bmc",name:"表面处理",x:140,y:120,type:"ind",w:1,label:"省特色产业集群·福田"},
-  {id:"ddc",name:"智能出行",x:160,y:260,type:"ind",w:2,label:"台铃/小刀/新日/绿佳·石湾"},
-  {id:"mj",name:"精密模具",x:240,y:300,type:"ind",w:1,label:"特斯拉/比亚迪供应链·石湾"},
+  {id:"bmc",name:"表面处理",x:140,y:120,type:"ind",w:1,tier:"A",label:"省特色产业集群",town:"福田",firms:"电镀/喷涂配套"},
+  {id:"ddc",name:"智能出行",x:160,y:260,type:"ind",w:2,tier:"A",label:"产值超150亿",town:"石湾",firms:"台铃·小刀·新日·绿佳"},
+  {id:"mj",name:"精密模具",x:240,y:300,type:"ind",w:1,tier:"A",label:"特斯拉/比亚迪供应链",town:"石湾",firms:"东莞迁入小巨人·注塑/精密件"},
+  {id:"jf",name:"江丰精密",x:300,y:80,type:"ind",w:1,tier:"A",label:"溅射靶材全球第一·3纳米",town:"园洲",firms:"江丰电子子公司"},
   // 三大新兴产业
-  {id:"lfsgy",name:"生命健康",x:620,y:280,type:"ind",w:2,label:"罗浮山国药·红脚艾·百草油·长宁"},
-  {id:"jt",name:"现代食品",x:700,y:200,type:"ind",w:2,label:"百岁山374万吨·顺兴食品·湖镇"},
+  {id:"lfsgy",name:"生命健康",x:620,y:280,type:"ind",w:2,tier:"A",label:"罗浮山国药·红脚艾·百草油",town:"长宁",firms:"中华老字号·省中医院合作"},
+  {id:"jt",name:"现代食品",x:700,y:200,type:"ind",w:2,tier:"A",label:"百岁山374万吨",town:"湖镇",firms:"顺兴食品·立华家禽"},
   // 特色农业
-  {id:"sc",name:"博罗山茶",x:720,y:340,type:"ind",w:1,label:"地理标志·柏塘"},
-  {id:"xc",name:"福田菜心",x:140,y:340,type:"ind",w:1,label:"地理标志·播种季·福田"},
+  {id:"sc",name:"博罗山茶",x:720,y:340,type:"ind",w:1,tier:"A",label:"地理标志",town:"柏塘",firms:"—"},
+  {id:"xc",name:"福田菜心",x:140,y:340,type:"ind",w:1,tier:"A",label:"地理标志·播种季",town:"福田",firms:"—"},
 ];
 
 const EDGES=[
@@ -171,6 +179,7 @@ const EDGES=[
   // 配套关系
   ["bmc","dz",2,"B"],["bmc","ddc",2,"B"],
   ["mj","ddc",2,"A"],["mj","dz",2,"B"],
+  ["jf","dz",2,"B"],
   ["xw","ht",2,"A"],
   ["ht","dz",3,"A"],
 ];
@@ -215,15 +224,35 @@ function later(fn,ms){const t=setTimeout(fn,ms);timers.push(t);return t}
 
 function nodeMarkup(n){
   const r=10+n.w*3;
-  const KEY={"lfs":"博罗的名片","sz":"半小时到深圳","yz":"自己的产业链"};
-  const note=KEY[n.id]||"";
-  const ring=note?`<circle cx="${n.x}" cy="${n.y}" r="${r+6}" fill="none" stroke="#f87171" stroke-width="2" stroke-dasharray="3 3" opacity="0.9"></circle>`:"";
-  const tag=note?`<text x="${n.x}" y="${n.y+r+20}" text-anchor="middle" fill="#fca5a5" font-size="9" font-weight="700">📍 ${note}</text>`:"";
+  const tierColor=n.tier==="A"?"#4ade80":n.tier==="B"?"#fbbf24":"#f87171";
   return `
-    <circle cx="${n.x}" cy="${n.y}" r="${r}" fill="${COLORS[n.type]}" fill-opacity="0.2" stroke="${COLORS[n.type]}" stroke-width="1.5"/>${ring}
-    <text x="${n.x}" y="${n.y+4}" text-anchor="middle" fill="#e6edf3" font-size="${n.w>=3?11:9}" font-weight="${n.w>=3?700:400}">${n.name}</text>
-    <text x="${n.x}" y="${n.y+r+10}" text-anchor="middle" fill="#7d8fa5" font-size="7.5">${n.label}</text>${tag}
+    <circle cx="${n.x}" cy="${n.y}" r="${r}" fill="${COLORS[n.type]}" fill-opacity="0.2" stroke="${COLORS[n.type]}" stroke-width="1.5" style="cursor:pointer" onclick="showDrill('${n.id}')"/>
+    <circle cx="${n.x-r+4}" cy="${n.y-r+4}" r="3" fill="${tierColor}" opacity="0.9"/>
+    <text x="${n.x}" y="${n.y+4}" text-anchor="middle" fill="#e6edf3" font-size="${n.w>=3?11:9}" font-weight="${n.w>=3?700:400}" style="cursor:pointer" onclick="showDrill('${n.id}')">${n.name}</text>
+    <text x="${n.x}" y="${n.y+r+10}" text-anchor="middle" fill="#7d8fa5" font-size="7.5">${n.label}</text>
   `;
+}
+
+function showDrill(id){
+  const n=nodeById(id);
+  if(!n)return;
+  const tierText=n.tier==="A"?"🟢 公开硬数据":n.tier==="B"?"🟡 算法推估":"🔴 内网待接入";
+  const modal=document.getElementById("drillModal");
+  modal.innerHTML=`
+    <div style="background:#1a2332;border-radius:12px;padding:20px;max-width:380px;margin:80px auto;border:1px solid #2b3a55">
+      <div style="display:flex;justify-content:space-between;align-items:start;margin-bottom:12px">
+        <b style="color:#e6edf3;font-size:16px">${n.name}</b>
+        <span style="cursor:pointer;color:#7d8fa5" onclick="this.parentElement.parentElement.parentElement.remove()">✕</span>
+      </div>
+      <div style="font-size:12px;color:#7d8fa5;margin-bottom:10px">${tierText}</div>
+      <div style="font-size:13px;color:#cbd5e1;line-height:1.8">
+        <div>📍 所在：${n.town||"—"}</div>
+        <div>📊 指标：${n.label||"—"}</div>
+        <div>🏭 代表企业：${n.firms||"—"}</div>
+      </div>
+    </div>`;
+  modal.style.display="block";
+  modal.onclick=function(e){if(e.target===modal)modal.remove()};
 }
 
 
