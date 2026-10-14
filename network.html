@@ -97,11 +97,11 @@ h1{font-size:22px;margin-bottom:6px}
   </div>
 
   <div class="shock-bar">
-    <span>💥 注入苗头（沿供货关系级联）：</span>
-    <button class="sbtn" data-shock="xwd" data-name="链主飞走（欣旺达/锂威）">A 链主飞走</button>
-    <button class="sbtn" data-shock="dj" data-name="东江喊停（环保限产）">B 东江喊停</button>
-    <button class="sbtn" data-shock="lq" data-name="老厂腾退（亩均改造）">C 老厂腾退</button>
-    <button class="sbtn" data-shock="dg" data-name="外溢退潮（东莞外溢减弱）">D 外溢退潮</button>
+    <span>💥 注入苗头（沿对应关系级联）：</span>
+    <button class="sbtn" data-shock="xwd" data-kinds="供应链,资源竞争" data-name="链主飞走（欣旺达/锂威）">A 链主飞走</button>
+    <button class="sbtn" data-shock="dj" data-kinds="环保约束,供应链" data-name="东江喊停（环保限产）">B 东江喊停</button>
+    <button class="sbtn" data-shock="lq" data-kinds="资源竞争,供应链" data-name="老厂腾退（亩均改造）">C 老厂腾退</button>
+    <button class="sbtn" data-shock="dg" data-kinds="供应链" data-name="外溢退潮（东莞外溢减弱）">D 外溢退潮</button>
     <button id="shockReset">↺ 重置全景</button>
   </div>
   <div id="shockInfo"></div>
@@ -534,9 +534,10 @@ chart.addEventListener("click",()=>{selected=null;resetHighlight();tip.style.dis
 (function(){
   const transKind=new Set(["供应链","资源竞争"]); // 经济冲击只沿这两类边传导，不沿环保/生态
   const info=document.getElementById("shockInfo");
+  function parseKinds(s){return new Set((s||"供应链,资源竞争").split(","));}
 
-  // BFS 分层 + 随层数和边权重衰减
-  function bfs(seedId){
+  // BFS 分层 + 随层数和边权重衰减；kinds 决定沿哪类边传导
+  function bfs(seedId, kinds){
     const level={}; level[seedId]=1;
     const layers=[[seedId]];
     let frontier=[seedId], hop=0;
@@ -545,7 +546,7 @@ chart.addEventListener("click",()=>{selected=null;resetHighlight();tip.style.dis
       const next=[];
       frontier.forEach(nid=>{
         links.forEach(l=>{
-          if(!transKind.has(l.kind)) return;
+          if(!kinds.has(l.kind)) return;
           const sid=l.source.id, tid=l.target.id;
           const oth=(sid===nid)?tid:(tid===nid?sid:null);
           if(!oth || level[oth]!==undefined) return;
@@ -584,16 +585,19 @@ chart.addEventListener("click",()=>{selected=null;resetHighlight();tip.style.dis
     try{history.replaceState(null,"",location.pathname+location.search);}catch(e){}
   }
 
-  function runShock(seedId, seedName){
+  function runShock(seedId, seedName, kindsStr){
     selected=null; tip.style.display="none";
     document.querySelectorAll(".fbtn").forEach(b=>b.classList.remove("on"));
-    const {level,layers}=bfs(seedId);
+    const kinds=parseKinds(kindsStr);
+    const kindLabel={供应链:"供货关系",资源竞争:"抢地抢电",环保约束:"环保红线"};
+    const kindText=[...kinds].map(k=>kindLabel[k]||k).join(" / ");
+    const {level,layers}=bfs(seedId, kinds);
 
     // 被传播到的边
     const hitEdges=new Set();
     Object.keys(level).forEach(nid=>{
       links.forEach(l=>{
-        if(!transKind.has(l.kind)) return;
+        if(!kinds.has(l.kind)) return;
         const sid=l.source.id, tid=l.target.id;
         if((sid===nid&&level[tid]!==undefined)||(tid===nid&&level[sid]!==undefined)) hitEdges.add(l);
       });
@@ -628,7 +632,7 @@ chart.addEventListener("click",()=>{selected=null;resetHighlight();tip.style.dis
     const totalAffected=Object.keys(level).length-1;
     info.style.display="block";
     info.innerHTML=`<b class="t">💥 苗头：${seedName}</b><br>
-      从该节点沿<b>供货 / 抢地抢电</b>两类边级联，共波及 <b>${totalAffected}</b> 个节点、${layers.length-1} 层；环保红线、山水康养类的边<b>不传导</b>经济冲击。<br>
+      从该节点沿<b>${kindText}</b>类边级联，共波及 <b>${totalAffected}</b> 个节点、${layers.length-1} 层；不相关的边（山水康养等）不传导这次冲击。<br>
       <b>① 抵抗（直接受冲击·第1层）</b>：${hop1.length?hop1.join("、"):"—"}<br>
       <b>② 传导（第2层及以后）</b>：${hop2.length?hop2.join("、"):"末梢已衰减为淡黄色"}<br>
       <span class="dim">颜色越红＝离冲击源越近、传导路径越粗；越黄＝传得越远、衰减越多。有多条连接的节点会部分"吸收"冲击。</span><br>
@@ -643,7 +647,7 @@ chart.addEventListener("click",()=>{selected=null;resetHighlight();tip.style.dis
       document.querySelectorAll(".sbtn").forEach(b=>b.classList.remove("on"));
       if(wasOn){resetShock();return;}
       btn.classList.add("on");
-      runShock(btn.dataset.shock, btn.dataset.name);
+      runShock(btn.dataset.shock, btn.dataset.name, btn.dataset.kinds);
     };
   });
   document.getElementById("shockReset").onclick=(e)=>{e.stopPropagation();resetShock();};
@@ -652,7 +656,7 @@ chart.addEventListener("click",()=>{selected=null;resetHighlight();tip.style.dis
   const m=location.hash.match(/shock=(\w+)/);
   if(m){
     const btn=document.querySelector(`.sbtn[data-shock="${m[1]}"]`);
-    if(btn){btn.classList.add("on");runShock(m[1],btn.dataset.name);}
+    if(btn){btn.classList.add("on");runShock(m[1],btn.dataset.name,btn.dataset.kinds);}
   }
 })();
 
