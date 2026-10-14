@@ -55,6 +55,14 @@ h1{font-size:22px;margin-bottom:6px}
 .lab-nums .n .v{font-size:22px;font-weight:800}
 .lab-hit{font-size:14px;margin:10px 0}
 .lab-hit b{font-size:20px;color:#4ade80}
+.shock-bar{display:flex;gap:8px;margin:12px 0;flex-wrap:wrap;align-items:center}
+.shock-bar>span{font-size:12px;color:#8fa3bf}
+.sbtn{background:#2a1215;color:#fca5a5;border:1px solid #7f1d1d;padding:6px 14px;border-radius:20px;font-size:12px;cursor:pointer}
+.sbtn.on{background:#b91c1c;border-color:#ef4444;color:#fff;font-weight:600}
+#shockReset{background:#131c2b;color:#93a4bd;border:1px solid #22304a;padding:6px 12px;border-radius:20px;font-size:12px;cursor:pointer}
+#shockInfo{background:rgba(239,68,68,.08);border:1px solid rgba(239,68,68,.25);border-radius:10px;padding:12px 14px;font-size:12.5px;line-height:1.8;color:#cbd5e1;margin-bottom:12px;display:none}
+#shockInfo b.t{color:#f87171}
+#shockInfo .dim{color:#94a3b8}
 </style></head><body>
 
 <div class="nav">
@@ -87,6 +95,16 @@ h1{font-size:22px;margin-bottom:6px}
     <button class="fbtn" data-filter="env">环保要素</button>
     <span style="margin-left:auto;font-size:10px;color:#475569">👆 可以拖动圆点，点击看详情</span>
   </div>
+
+  <div class="shock-bar">
+    <span>💥 注入苗头（沿供货关系级联）：</span>
+    <button class="sbtn" data-shock="xwd" data-name="链主飞走（欣旺达/锂威）">A 链主飞走</button>
+    <button class="sbtn" data-shock="dj" data-name="东江喊停（环保限产）">B 东江喊停</button>
+    <button class="sbtn" data-shock="lq" data-name="老厂腾退（亩均改造）">C 老厂腾退</button>
+    <button class="sbtn" data-shock="dg" data-name="外溢退潮（东莞外溢减弱）">D 外溢退潮</button>
+    <button id="shockReset">↺ 重置全景</button>
+  </div>
+  <div id="shockInfo"></div>
 
   <div id="chart">
     <div id="tooltip"></div>
@@ -511,6 +529,132 @@ function resetHighlight(){
   link.style("stroke-opacity",d=>d.level==="A"?0.8:0.5);
 }
 chart.addEventListener("click",()=>{selected=null;resetHighlight();tip.style.display="none"});
+
+// ===== V2：苗头冲击级联推演（沿供货关系逐层扩散，可复现URL） =====
+(function(){
+  const transKind=new Set(["供应链","资源竞争"]); // 经济冲击只沿这两类边传导，不沿环保/生态
+  const info=document.getElementById("shockInfo");
+
+  // BFS 分层 + 随层数和边权重衰减
+  function bfs(seedId){
+    const level={}; level[seedId]=1;
+    const layers=[[seedId]];
+    let frontier=[seedId], hop=0;
+    while(frontier.length && hop<4){
+      hop++;
+      const next=[];
+      frontier.forEach(nid=>{
+        links.forEach(l=>{
+          if(!transKind.has(l.kind)) return;
+          const sid=l.source.id, tid=l.target.id;
+          const oth=(sid===nid)?tid:(tid===nid?sid:null);
+          if(!oth || level[oth]!==undefined) return;
+          // 层数越远、边越细(w越小)，衰减越多
+          level[oth]=Math.max(0.18, 1 - hop*0.26 - (5-l.w)*0.05);
+          next.push(oth);
+        });
+      });
+      layers.push(next); frontier=next;
+    }
+    return {level,layers};
+  }
+
+  function origLinkColor(l){
+    if(l.kind==="环保约束")return "#ef4444";
+    if(l.kind==="资源竞争")return "#f59e0b";
+    if(l.kind==="生态补偿")return "#0ea5e9";
+    return l.level==="A"?"#38bdf8":"#475569";
+  }
+  function nodeColor(id){
+    const n=nodes.find(x=>x.id===id);
+    return n?(n.state==="yellow"?"#eab308":colorMap[n.type]):"#fff";
+  }
+
+  function resetShock(){
+    info.style.display="none";
+    document.querySelectorAll(".sbtn").forEach(b=>b.classList.remove("on"));
+    node.interrupt().transition().duration(300).style("opacity",1)
+        .attr("stroke",d=>nodeColor(d.id))
+        .attr("stroke-width",2);
+    label.interrupt().transition().duration(300).style("opacity",1);
+    rings.interrupt().transition().duration(300).style("opacity",0.5);
+    link.interrupt().style("stroke-opacity",d=>d.level==="A"?0.8:0.5)
+        .style("stroke-width",d=>d.w)
+        .attr("stroke",d=>origLinkColor(d));
+    try{history.replaceState(null,"",location.pathname+location.search);}catch(e){}
+  }
+
+  function runShock(seedId, seedName){
+    selected=null; tip.style.display="none";
+    document.querySelectorAll(".fbtn").forEach(b=>b.classList.remove("on"));
+    const {level,layers}=bfs(seedId);
+
+    // 被传播到的边
+    const hitEdges=new Set();
+    Object.keys(level).forEach(nid=>{
+      links.forEach(l=>{
+        if(!transKind.has(l.kind)) return;
+        const sid=l.source.id, tid=l.target.id;
+        if((sid===nid&&level[tid]!==undefined)||(tid===nid&&level[sid]!==undefined)) hitEdges.add(l);
+      });
+    });
+
+    // 先把无关的压暗
+    node.interrupt().style("opacity",d=>level[d.id]!==undefined?1:0.12);
+    label.interrupt().style("opacity",d=>level[d.id]!==undefined?1:0.08);
+    link.interrupt()
+        .style("stroke-opacity",l=>hitEdges.has(l)?0.95:0.05)
+        .style("stroke-width",l=>hitEdges.has(l)?Math.max(2.5,l.w+0.5):l.w)
+        .attr("stroke",l=>hitEdges.has(l)?"#ef4444":origLinkColor(l));
+
+    // 逐层点亮：种子白→红→橙→黄
+    layers.forEach((layer,i)=>{
+      setTimeout(()=>{
+        layer.forEach(id=>{
+          let col;
+          if(level[id]===1) col="#fef2f2";
+          else if(level[id]>0.55) col="#ef4444";
+          else if(level[id]>0.32) col="#f97316";
+          else col="#facc15";
+          node.filter(n=>n.id===id).interrupt().transition().duration(350)
+              .style("opacity",1).attr("stroke",col).attr("stroke-width",3.5);
+        });
+      }, i*480);
+    });
+
+    // 韧性三阶段说明（中性陈述，不诊断）
+    const hop1=(layers[1]||[]).map(id=>nodes.find(n=>n.id===id).name);
+    const hop2=(layers[2]||[]).map(id=>nodes.find(n=>n.id===id).name);
+    const totalAffected=Object.keys(level).length-1;
+    info.style.display="block";
+    info.innerHTML=`<b class="t">💥 苗头：${seedName}</b><br>
+      从该节点沿<b>供货 / 抢地抢电</b>两类边级联，共波及 <b>${totalAffected}</b> 个节点、${layers.length-1} 层；环保红线、山水康养类的边<b>不传导</b>经济冲击。<br>
+      <b>① 抵抗（直接受冲击·第1层）</b>：${hop1.length?hop1.join("、"):"—"}<br>
+      <b>② 传导（第2层及以后）</b>：${hop2.length?hop2.join("、"):"末梢已衰减为淡黄色"}<br>
+      <span class="dim">颜色越红＝离冲击源越近、传导路径越粗；越黄＝传得越远、衰减越多。有多条连接的节点会部分"吸收"冲击。</span><br>
+      <span class="dim">这是按公开连边规则做的级联演示，不是预测真实损失；冲击幅度是假设，你可以质疑、改参数重跑。</span>`;
+    try{history.replaceState(null,"","#shock="+seedId);}catch(e){}
+  }
+
+  document.querySelectorAll(".sbtn").forEach(btn=>{
+    btn.onclick=(e)=>{
+      e.stopPropagation();
+      const wasOn=btn.classList.contains("on");
+      document.querySelectorAll(".sbtn").forEach(b=>b.classList.remove("on"));
+      if(wasOn){resetShock();return;}
+      btn.classList.add("on");
+      runShock(btn.dataset.shock, btn.dataset.name);
+    };
+  });
+  document.getElementById("shockReset").onclick=(e)=>{e.stopPropagation();resetShock();};
+
+  // 打开链接即复现（社交对局卡地基）
+  const m=location.hash.match(/shock=(\w+)/);
+  if(m){
+    const btn=document.querySelector(`.sbtn[data-shock="${m[1]}"]`);
+    if(btn){btn.classList.add("on");runShock(m[1],btn.dataset.name);}
+  }
+})();
 
 // 分视图：一张图只讲一件事
 function viewKind(f){
