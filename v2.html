@@ -87,9 +87,15 @@ body{background:#030711;color:#e6edf3;font:13px/1.6 -apple-system,"PingFang SC",
   <button class="sbtn" data-shock="lq" data-kinds="资源竞争,供应链" data-name="老厂腾退（亩均改造）">C 老厂腾退</button>
   <button class="sbtn" data-shock="mj" data-kinds="供应链" data-name="外溢断流（东莞外溢减弱·石湾模具首当其冲）">D 外溢断流</button>
   <button id="resetBtn">↺</button>
-  <button id="whyBtn" style="background:rgba(30,58,95,.8);color:#7dd3fc;border:1px solid #1e3a5f">📋 入选理由</button>
-  <button id="snaBtn" style="background:rgba(88,28,135,.8);color:#c084fc;border:1px solid #581c87">📊 SNA</button>
-  <button id="eraBtn" style="background:rgba(120,53,15,.8);color:#fbbf24;border:1px solid #78350f">⏳ 演变</button>
+  <button id="menuBtn" style="background:rgba(30,41,59,.8);color:#94a3b8;border:1px solid #334155">☰</button>
+</div>
+
+<div id="menuDropdown" style="display:none;position:fixed;top:110px;right:12px;z-index:15;
+  background:rgba(8,15,30,.95);border:1px solid rgba(125,211,252,.3);border-radius:12px;
+  padding:8px;flex-direction:column;gap:6px;backdrop-filter:blur(14px)">
+  <button id="whyBtn" style="background:rgba(30,58,95,.8);color:#7dd3fc;border:1px solid #1e3a5f;padding:8px 14px;border-radius:8px;cursor:pointer">📋 入选理由</button>
+  <button id="snaBtn" style="background:rgba(88,28,135,.8);color:#c084fc;border:1px solid #581c87;padding:8px 14px;border-radius:8px;cursor:pointer">📊 SNA分析</button>
+  <button id="eraBtn" style="background:rgba(120,53,15,.8);color:#fbbf24;border:1px solid #78350f;padding:8px 14px;border-radius:8px;cursor:pointer">⏳ 演变动画</button>
 </div>
 
 <div class="panel" id="eraPanel">
@@ -138,10 +144,9 @@ body{background:#030711;color:#e6edf3;font:13px/1.6 -apple-system,"PingFang SC",
   </div>
 </div>
 
-<div class="foot">
-  <b style="color:#94a3b8">设计原则：</b>亮球＝今天的现实家底（有据可查）· 暗球＝明天的期权（现在不起眼但有底子，政策/资本/客流进来就亮）<br>
-  博罗家底：GDP 1005亿（2025广东首个千亿县）· 电子信息770亿 · 工业用电60亿度+11.5% · 小巨人10家 / 专精特新165家 / 高企686家<br>
-  全息沙盘＝可被重跑的产业世界，不预测、不替人拍板。<b>欢迎质疑、改参数、重跑。</b>
+<div class="foot" id="footBar">
+  博罗家底：GDP 1005亿 · 电子信息770亿 · 用电60亿度+11.5% · 小巨人10家/高企686家 <span style="color:#475569">▾</span><br>
+  <span style="display:none" id="footMore">亮球=今天家底 · 暗球=明天期权 · 可重跑不预测，欢迎质疑改参数。</span>
 </div>
 <div class="tip" id="tip"></div>
 
@@ -446,7 +451,11 @@ document.querySelectorAll('.sbtn').forEach(btn=>{
 });
 document.getElementById('resetBtn').onclick=(e)=>{e.stopPropagation();resetShock();};
 document.getElementById('whyBtn').onclick=(e)=>{e.stopPropagation();
+  document.getElementById('menuDropdown').style.display='none';
   document.getElementById('whyPanel').classList.toggle('show');};
+document.getElementById('menuBtn').onclick=(e)=>{e.stopPropagation();
+  const d=document.getElementById('menuDropdown');
+  d.style.display=d.style.display==='none'?'flex':'none';};
 document.getElementById('whyClose').onclick=(e)=>{e.stopPropagation();
   document.getElementById('whyPanel').classList.remove('show');};
 
@@ -509,7 +518,8 @@ document.getElementById('snaBtn').onclick=(e)=>{e.stopPropagation();
   if(snaR.between.filter(b=>b[1]>0).length===0)html+='<div class="dim">→ 两个分量内部都是树状，没有桥节点</div>';
   html+='<br><div class="dim" style="color:#7d8fa8">这是按当前公开供货关系算的结构指标，不是预测。断链本身就是发现：两条产业链之间缺谁来搭桥？</div>';
   document.getElementById('snaPanelBody').innerHTML=html;
-  document.getElementById('snaPanel').classList.toggle('show');};
+  document.getElementById('snaPanel').classList.toggle('show');
+  document.getElementById('menuDropdown').style.display='none';};
 document.getElementById('snaClose').onclick=(e)=>{e.stopPropagation();
   document.getElementById('snaPanel').classList.remove('show');};
 
@@ -558,6 +568,7 @@ document.getElementById('eraBtn').onclick=(e)=>{e.stopPropagation();
   <br><button id="playEra" style="background:#78350f;color:#fbbf24;border:1px solid #fbbf24;padding:8px 16px;border-radius:20px;cursor:pointer;margin-top:8px">▶ 在3D里播放这个演变</button>
   <div class="dim" style="margin-top:8px">演变不是预测，是把"从散到连"的路径画出来。</div>`;
   document.getElementById('eraPanel').classList.toggle('show');
+  document.getElementById('menuDropdown').style.display='none';
   document.getElementById('playEra').onclick=(e)=>{e.stopPropagation();playEvolution();};};
 document.getElementById('eraClose').onclick=(e)=>{e.stopPropagation();
   document.getElementById('eraPanel').classList.remove('show');};
