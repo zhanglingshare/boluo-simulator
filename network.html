@@ -46,7 +46,7 @@ h1{font-size:22px;margin-bottom:6px}
 
 <div class="wrap">
   <h1>博罗产业网络X光机</h1>
-  <p class="sub">15个产业主体·14条关系·力导向可拖拽。节点大小=经济体量，颜色=健康状态，实线=A级硬数据，虚线=B级推估。</p>
+  <p class="sub">27个节点·6层架构·25条关系。链主独立、小巨人聚合、毛细血管成群、老厂成片。可拖拽。</p>
 
   <div class="health">
     <b style="color:#4ade80">📊 全县产业健康度（2026年1-8月）</b><br>
@@ -64,21 +64,20 @@ h1{font-size:22px;margin-bottom:6px}
   </div>
 
   <div class="legend">
-    <span><i style="background:#22c55e"></i>链主/锚点</span>
-    <span><i style="background:#3b82f6"></i>骨干产业</span>
-    <span><i style="background:#64748b"></i>毛细血管群落</span>
+    <span><i style="background:#22c55e"></i>链主</span>
+    <span><i style="background:#06b6d4"></i>小巨人</span>
+    <span><i style="background:#64748b"></i>毛细血管</span>
     <span><i style="background:#f59e0b"></i>老厂群落</span>
-    <span><i style="background:#84cc16"></i>地理标志农业</span>
-    <span><i style="background:#06b6d4"></i>东江水系</span>
-    <span><i style="background:#a78bfa"></i>外部城市</span>
-    <span>── A级硬数据</span>
-    <span>- - B级推估</span>
+    <span><i style="background:#84cc16"></i>农业康养</span>
+    <span><i style="background:#0ea5e9"></i>生态底座</span>
+    <span><i style="background:#a78bfa"></i>外部</span>
+    <span>── 实线A级</span><span>- - 虚线B级</span><span>· · 点线C级</span>
   </div>
 
   <div class="stats">
-    <div class="stat"><div class="l">链主（度中心度第一）</div><div class="v" id="sHub" style="color:#4ade80">–</div></div>
+    <div class="stat"><div class="l">度中心度第一（连接最多）</div><div class="v" id="sHub" style="color:#4ade80">–</div></div>
     <div class="stat"><div class="l">网络密度</div><div class="v" style="color:#fbbf24">–</div></div>
-    <div class="stat"><div class="l">外部依赖边</div><div class="v" id="sExt" style="color:#a78bfa">–</div></div>
+    <div class="stat"><div class="l">介数咽喉（最高）</div><div class="v" id="sExt" style="color:#a78bfa">–</div></div>
   </div>
 
   <div class="brief">
@@ -98,80 +97,135 @@ h1{font-size:22px;margin-bottom:6px}
 </div>
 
 <script>
-// ===== 数据 =====
+// ===== 数据（6层架构） =====
 const rawNodes=[
-  {id:"gz",name:"广州",type:"ext",town:"广深都市圈",state:"green",val:1,desc:"医药/文旅合作来源"},
-  {id:"dg",name:"东莞",type:"ext",town:"石龙/石排",state:"green",val:3,desc:"产业外溢源头"},
-  {id:"sz",name:"深圳",type:"ext",town:"新能源项目",state:"green",val:2,desc:"新能源/电子信息项目来源"},
-  {id:"hz",name:"惠城",type:"ext",town:"惠州主城",state:"green",val:1,desc:"行政"},
-  {id:"dz",name:"电子信息",type:"anchor",town:"园洲/罗阳/龙溪",state:"green",val:770,desc:"317家规上·产值770亿·华通电脑/威博精密/南亚电子"},
-  {id:"ht",name:"智能装备",type:"anchor",town:"罗阳",state:"green",val:500,desc:"千亿产业园·686家高企·天倬科技"},
-  {id:"xw",name:"新能源新材料",type:"anchor",town:"园洲",state:"green",val:400,desc:"欣旺达锂威·正威25万吨铜杆·嘉奇新能源(奇瑞)"},
-  {id:"bmc",name:"表面处理群落",type:"capillary",town:"福田",state:"yellow",val:80,desc:"省特色集群·电镀/喷涂硬约束工序·环保容量紧张·含数十家中小厂"},
-  {id:"ddc",name:"智能出行",type:"core",town:"石湾",state:"green",val:150,desc:"产值超150亿·台铃/小刀/新日/绿佳"},
-  {id:"mj",name:"石湾模具群落",type:"capillary",town:"石湾",state:"green",val:60,desc:"特斯拉/比亚迪/拓竹供应链·东莞迁入小巨人+周边数十家注塑厂"},
-  {id:"lq",name:"龙溪五金老厂群落",type:"legacy",town:"龙溪",state:"yellow",val:100,desc:"传统五金加工老厂群·亩均效益达标压力·用电稳但增长弱"},
-  {id:"jf",name:"江丰精密",type:"anchor",town:"园洲",state:"green",val:50,desc:"溅射靶材全球第一·3纳米级"},
-  {id:"lfsgy",name:"生命健康",type:"core",town:"长宁",state:"green",val:40,desc:"罗浮山国药·红脚艾·百草油·中华老字号"},
-  {id:"lswh",name:"环两山引领区",type:"core",town:"长宁/横河/福田",state:"green",val:60,desc:"环南昆山-罗浮山·218km 8字旅游公路·户外运动·罗浮山居"},
-  {id:"hh",name:"横河户外小镇",type:"capillary",town:"横河",state:"green",val:10,desc:"华南户外水经济港·两山明珠·精品民宿集群"},
-  {id:"jt",name:"现代食品",type:"core",town:"湖镇",state:"green",val:80,desc:"百岁山374万吨·顺兴食品"},
-  {id:"sc",name:"柏塘山茶",type:"agri",town:"柏塘",state:"green",val:5,desc:"国家地理标志·省十大茶乡"},
-  {id:"xc",name:"福田菜心",type:"agri",town:"福田",state:"yellow",val:3,desc:"国家地理标志·神舟四号太空育种"},
-  {id:"gyg",name:"观音阁花生",type:"agri",town:"观音阁",state:"green",val:8,desc:"国家地理标志·沙质土壤"},
-  {id:"gyght",name:"观音阁黑糖",type:"agri",town:"观音阁",state:"green",val:5,desc:"国家地理标志·传统红糖工艺"},
-  {id:"sb",name:"石坝胡须鸡",type:"agri",town:"石坝",state:"green",val:12,desc:"全国名特优新·三黄胡须鸡全产业链"},
-  {id:"lsmd",name:"罗浮山大米",type:"agri",town:"长宁/横河",state:"green",val:6,desc:"国家地理标志·神舟四号太空育种"},
-  {id:"lsz",name:"罗浮山荔枝",type:"agri",town:"罗浮山周边",state:"green",val:15,desc:"国家地理标志·10万亩种植面积"},
-  {id:"dj",name:"东江水系",type:"water",town:"罗阳/石湾/园洲",state:"green",val:200,desc:"母亲河·饮用水源Ⅱ类达标·百岁山取水"},
+  // 第一层：生态硬约束
+  {id:"dj",name:"东江水系",type:"eco",town:"罗阳/石湾/园洲",state:"green",layer:"生态底座",desc:"母亲河·饮用水源Ⅱ类·沿江镇街排污上限约束"},
+  {id:"lswh",name:"环两山引领区",type:"eco",town:"长宁/横河/福田",state:"green",layer:"生态底座",desc:"环南昆山-罗浮山·218km 8字旅游公路·北部绿色屏障"},
+  // 第二层：链主（独立企业）
+  {id:"xwd",name:"欣旺达/锂威",type:"anchor",town:"园洲",state:"green",layer:"链主",desc:"锂电池·高用电·高外部订单依赖"},
+  {id:"htd",name:"华通电脑",type:"anchor",town:"园洲/石湾",state:"green",layer:"链主",desc:"电子信息770亿基本盘代表"},
+  {id:"zw",name:"正威新材料",type:"anchor",town:"罗阳",state:"green",layer:"链主",desc:"25万吨铜杆/年·重资产原材料底座"},
+  {id:"jq",name:"嘉奇新能源",type:"anchor",town:"福田",state:"yellow",layer:"链主",desc:"奇瑞系·深博福田产业园2026.6开园"},
+  {id:"jf",name:"江丰精密",type:"anchor",town:"园洲",state:"green",layer:"链主",desc:"溅射靶材全球第一·3纳米"},
+  // 第三层：小巨人聚合
+  {id:"gj",name:"11家国家级小巨人",type:"champ",town:"多镇",state:"green",layer:"小巨人",desc:"嘉治电子/派沃/力王/凤凰/广麟/奥科/百时达/吉邦/鑫晖源/信立泰/TCL瑞智"},
+  {id:"sj",name:"74家省级专精特新",type:"champ",town:"多镇",state:"green",layer:"小巨人",desc:"各细分赛道隐形市占率"},
+  // 第四层：毛细血管群落
+  {id:"bmc",name:"表面处理群落",type:"capillary",town:"福田",state:"yellow",layer:"毛细血管",desc:"省级特色集群·电镀/喷涂·受东江环保约束"},
+  {id:"mj",name:"石湾模具群落",type:"capillary",town:"石湾",state:"green",layer:"毛细血管",desc:"特斯拉/比亚迪/拓竹·东莞迁入+数十家注塑厂"},
+  {id:"ddc",name:"电动车配套群落",type:"capillary",town:"石湾",state:"green",layer:"毛细血管",desc:"台铃/小刀/新日/绿佳·产值超150亿"},
+  // 第五层：老厂基盘
+  {id:"lq",name:"镇村老厂群落",type:"legacy",town:"龙溪/园洲/罗阳",state:"yellow",layer:"老厂基盘",desc:"数千家五金/塑料/建材·用电+11.5%大头·亩均达标压力"},
+  // 第六层：农业与康养
+  {id:"bss",name:"百岁山",type:"agri",town:"湖镇",state:"green",layer:"农业康养",desc:"374万吨/年·罗浮山水源"},
+  {id:"lfsgy",name:"罗浮山国药",type:"agri",town:"长宁",state:"green",layer:"农业康养",desc:"中华老字号·红脚艾·百草油·省中医院"},
+  {id:"sc",name:"柏塘山茶",type:"agri",town:"柏塘",state:"green",layer:"农业康养",desc:"国家地理标志·省十大茶乡"},
+  {id:"xc",name:"福田菜心",type:"agri",town:"福田",state:"yellow",layer:"农业康养",desc:"国家地理标志·太空育种"},
+  {id:"gyg",name:"观音阁花生",type:"agri",town:"观音阁",state:"green",layer:"农业康养",desc:"国家地理标志"},
+  {id:"gyght",name:"观音阁黑糖",type:"agri",town:"观音阁",state:"green",layer:"农业康养",desc:"国家地理标志"},
+  {id:"sb",name:"石坝胡须鸡",type:"agri",town:"石坝",state:"green",layer:"农业康养",desc:"全国名特优新"},
+  {id:"lsmd",name:"罗浮山大米",type:"agri",town:"长宁/横河",state:"green",layer:"农业康养",desc:"国家地理标志·太空育种"},
+  {id:"lsz",name:"罗浮山荔枝",type:"agri",town:"罗浮山周边",state:"green",layer:"农业康养",desc:"国家地理标志·10万亩"},
+  {id:"hh",name:"横河户外小镇",type:"capillary",town:"横河",state:"green",layer:"农业康养",desc:"华南户外水经济港·民宿集群"},
+  // 外部
+  {id:"gz",name:"广州",type:"ext",town:"外部",state:"green",layer:"外部",desc:"医药/文旅合作"},
+  {id:"dg",name:"东莞",type:"ext",town:"外部",state:"green",layer:"外部",desc:"产业外溢源头"},
+  {id:"sz",name:"深圳",type:"ext",town:"外部",state:"green",layer:"外部",desc:"新能源项目来源"},
+  {id:"hz",name:"惠城",type:"ext",town:"外部",state:"green",layer:"外部",desc:"行政"},
 ];
 const rawEdges=[
-  {s:"dg",t:"dz",level:"A",w:5,rel:"产业外溢"},
-  {s:"dg",t:"ddc",level:"A",w:4,rel:"企业迁入"},
-  {s:"dg",t:"mj",level:"A",w:3,rel:"企业迁入"},
-  {s:"sz",t:"xw",level:"B",w:3,rel:"项目投资"},
-  {s:"gz",t:"lfsgy",level:"C",w:2,rel:"医药合作"},
-  {s:"bmc",t:"dz",level:"B",w:2,rel:"电镀配套"},
-  {s:"bmc",t:"ddc",level:"B",w:2,rel:"喷涂配套"},
-  {s:"mj",t:"ddc",level:"A",w:2,rel:"模具零部件"},
-  {s:"mj",t:"dz",level:"B",w:2,rel:"精密件配套"},
-  {s:"jf",t:"dz",level:"B",w:2,rel:"靶材供应"},
-  {s:"xw",t:"ht",level:"A",w:2,rel:"园区载体"},
-  {s:"ht",t:"dz",level:"A",w:3,rel:"园区载体"},
-  {s:"lq",t:"dz",level:"B",w:2,rel:"五金配套"},
-  {s:"lq",t:"ht",level:"B",w:2,rel:"机加工配套"},
-  {s:"lswh",t:"lfsgy",level:"A",w:3,rel:"文旅+医药"},
-  {s:"hh",t:"lswh",level:"A",w:2,rel:"户外运动"},
-  {s:"lswh",t:"sc",level:"B",w:1,rel:"茶旅融合"},
-  {s:"lfsgy",t:"sc",level:"C",w:1,rel:"南药/农业"},
-  {s:"bmc",t:"xc",level:"C",w:1,rel:"福田同镇"},
-  {s:"dj",t:"jt",level:"A",w:3,rel:"百岁山取水"},
-  {s:"dj",t:"dz",level:"A",w:2,rel:"工业用水"},
-  {s:"dj",t:"lsmd",level:"B",w:1,rel:"灌溉"},
-  {s:"gyg",t:"dj",level:"B",w:1,rel:"东江沙壤"},
-  {s:"gyght",t:"gyg",level:"A",w:1,rel:"观音阁同镇"},
-  {s:"lsz",t:"lswh",level:"B",w:1,rel:"罗浮山周边"},
+  // 供应链刚需
+  {s:"dg",t:"mj",level:"A",w:4,rel:"企业迁入",kind:"供应链"},
+  {s:"dg",t:"ddc",level:"A",w:4,rel:"企业迁入",kind:"供应链"},
+  {s:"sz",t:"xwd",level:"A",w:3,rel:"项目投资",kind:"供应链"},
+  {s:"mj",t:"ddc",level:"A",w:2,rel:"模具零部件",kind:"供应链"},
+  {s:"bmc",t:"ddc",level:"B",w:2,rel:"喷涂配套",kind:"供应链"},
+  {s:"jf",t:"htd",level:"B",w:2,rel:"靶材供应",kind:"供应链"},
+  {s:"gj",t:"htd",level:"B",w:2,rel:"精密配套",kind:"供应链"},
+  {s:"sj",t:"lq",level:"B",w:2,rel:"技术升级",kind:"供应链"},
+  {s:"xwd",t:"mj",level:"B",w:2,rel:"电池结构件",kind:"供应链"},
+  {s:"jq",t:"ddc",level:"B",w:2,rel:"汽车零部件",kind:"供应链"},
+  {s:"lq",t:"htd",level:"B",w:2,rel:"五金配套",kind:"供应链"},
+  // 环保硬约束
+  {s:"dj",t:"bmc",level:"A",w:3,rel:"排污上限约束",kind:"环保约束"},
+  {s:"dj",t:"bss",level:"A",w:3,rel:"饮用水源",kind:"环保约束"},
+  {s:"dj",t:"lq",level:"B",w:1,rel:"沿江工业约束",kind:"环保约束"},
+  // 空间竞争
+  {s:"xwd",t:"lq",level:"B",w:1,rel:"用电/用地竞争",kind:"资源竞争"},
+  {s:"htd",t:"lq",level:"B",w:1,rel:"腾笼换鸟",kind:"资源竞争"},
+  // 生态补偿/康养对流
+  {s:"lswh",t:"lfsgy",level:"A",w:3,rel:"文旅+医药",kind:"生态补偿"},
+  {s:"lswh",t:"hh",level:"A",w:2,rel:"户外运动",kind:"生态补偿"},
+  {s:"lswh",t:"sc",level:"B",w:1,rel:"茶旅融合",kind:"生态补偿"},
+  {s:"lswh",t:"lsz",level:"B",w:1,rel:"荔枝采摘",kind:"生态补偿"},
+  {s:"gz",t:"lfsgy",level:"C",w:2,rel:"省中医院合作",kind:"生态补偿"},
+  // 农业/水利
+  {s:"dj",t:"lsmd",level:"B",w:1,rel:"灌溉",kind:"供应链"},
+  {s:"gyght",t:"gyg",level:"A",w:1,rel:"观音阁同镇",kind:"供应链"},
+  {s:"gyg",t:"dj",level:"B",w:1,rel:"东江沙壤",kind:"供应链"},
+  {s:"zw",t:"xwd",level:"A",w:2,rel:"铜杆→电池",kind:"供应链"},
 ];
 
-// ===== 计算度中心度 =====
+// ===== SNA 指标计算 =====
+const N=rawNodes.length, E=rawEdges.length;
 const deg={};
-rawNodes.forEach(n=>deg[n.id]=0);
-rawEdges.forEach(e=>{deg[e.s]++;deg[e.t]++});
+const adj={};
+rawNodes.forEach(n=>{deg[n.id]=0;adj[n.id]=new Set()});
+rawEdges.forEach(e=>{
+  deg[e.s]++;deg[e.t]++;
+  adj[e.s].add(e.t);adj[e.t].add(e.s);
+});
 rawNodes.forEach(n=>n.degree=deg[n.id]);
-const sorted=[...rawNodes].sort((a,b)=>b.degree-a.degree);
-document.getElementById("sHub").textContent=sorted[0].name;
+
+// 密度
+const density=(2*E)/(N*(N-1));
+
+// 介数中心度（BFS，无权图近似）
+const betweenness={};
+rawNodes.forEach(n=>betweenness[n.id]=0);
+rawNodes.forEach(src=>{
+  const S=[],P={},sig={},d={};
+  rawNodes.forEach(n=>{P[n.id]=[];sig[n.id]=0;d[n.id]=-1});
+  sig[src.id]=1;d[src.id]=0;
+  const Q=[src.id];
+  while(Q.length){
+    const v=Q.shift();S.push(v);
+    adj[v].forEach(w=>{
+      if(d[w]<0){d[w]=d[v]+1;Q.push(w)}
+      if(d[w]===d[v]+1){sig[w]+=sig[v];P[w].push(v)}
+    });
+  }
+  const delta={};rawNodes.forEach(n=>delta[n.id]=0);
+  while(S.length){
+    const w=S.pop();
+    P[w].forEach(v=>{delta[v]+=(sig[v]/sig[w])*(1+delta[w])});
+    if(w!==src.id)betweenness[w]+=delta[w];
+  }
+});
+rawNodes.forEach(n=>n.betweenness=betweenness[n.id]/((N-1)*(N-2)));
+
+// 排序
+const byDegree=[...rawNodes].sort((a,b)=>b.degree-a.degree);
+const byBetween=[...rawNodes].sort((a,b)=>b.betweenness-a.betweenness);
+
+document.getElementById("sHub").textContent=byDegree[0].name;
 document.getElementById("sExt").textContent=rawEdges.filter(e=>{
   const ns=rawNodes.find(n=>n.id===e.s).type,nt=rawNodes.find(n=>n.id===e.t).type;
   return ns==="ext"||nt==="ext";
 }).length+"条";
+document.querySelector(".stat:nth-child(2) .v").textContent=(density*100).toFixed(1)+"%";
+document.querySelector(".stat:nth-child(2) .l").textContent="网络密度（"+E+"条边/"+N+"节点）";
+document.querySelector(".stat:nth-child(3) .l").textContent="介数咽喉（最高）";
+document.getElementById("sExt").textContent=byBetween[0].name;
 
 // ===== 渲染 =====
 const chart=document.getElementById("chart");
 const W=chart.clientWidth||860, H=560;
 const svg=d3.select("#chart").append("svg").attr("width","100%").attr("height",H);
 
-const colorMap={anchor:"#22c55e",core:"#3b82f6",capillary:"#64748b",agri:"#84cc16",ext:"#a78bfa",legacy:"#f59e0b",water:"#06b6d4"};
-const rMap={anchor:16,core:13,capillary:11,agri:8,ext:12,legacy:14,water:18};
+const colorMap={anchor:"#22c55e",champ:"#06b6d4",capillary:"#64748b",agri:"#84cc16",ext:"#a78bfa",legacy:"#f59e0b",eco:"#0ea5e9"};
+const rMap={anchor:15,champ:13,capillary:11,agri:8,ext:12,legacy:14,eco:16};
 
 let nodes=rawNodes.map(d=>({...d}));
 let links=rawEdges.map(d=>({...d}));
@@ -183,7 +237,12 @@ const sim=d3.forceSimulation(nodes)
   .force("collide",d3.forceCollide().radius(d=>rMap[d.type]+15));
 
 const link=svg.append("g").selectAll("line").data(links).enter().append("line")
-  .attr("stroke",d=>d.level==="A"?"#38bdf8":d.level==="B"?"#475569":"#6b21a8")
+  .attr("stroke",d=>{
+    if(d.kind==="环保约束")return "#ef4444";
+    if(d.kind==="资源竞争")return "#f59e0b";
+    if(d.kind==="生态补偿")return "#0ea5e9";
+    return d.level==="A"?"#38bdf8":"#475569";
+  })
   .attr("stroke-width",d=>d.w)
   .attr("stroke-dasharray",d=>d.level==="B"?"5,4":d.level==="C"?"2,4":"none")
   .attr("stroke-opacity",d=>d.level==="A"?0.8:0.5);
@@ -200,24 +259,23 @@ const node=svg.append("g").selectAll("circle").data(nodes).enter().append("circl
     .on("drag",(e,d)=>{d.fx=e.x;d.fy=e.y})
     .on("end",(e,d)=>{if(!e.active)sim.alphaTarget(0);d.fx=null;d.fy=null}));
 
-// 群落节点加外圈环
-svg.append("g").selectAll("circle").data(nodes.filter(d=>d.type==="capillary"||d.type==="legacy")).enter().append("circle")
+// 群落节点加外圈环（聚合节点）
+const clusterTypes=new Set(["capillary","legacy","champ"]);
+const rings=svg.append("g").selectAll("circle").data(nodes.filter(d=>clusterTypes.has(d.type))).enter().append("circle")
   .attr("r",d=>rMap[d.type]+7)
   .attr("fill","none")
   .attr("stroke",d=>colorMap[d.type])
   .attr("stroke-width",1)
   .attr("stroke-dasharray","3,3")
   .attr("stroke-opacity",0.5)
-  .style("pointer-events","none")
-  .each(function(){this.parentNode.appendChild(this)});
+  .style("pointer-events","none");
 
 // 把外环绑定到tick
 sim.on("tick",()=>{
   link.attr("x1",d=>d.source.x).attr("y1",d=>d.source.y)
       .attr("x2",d=>d.target.x).attr("y2",d=>d.target.y);
   node.attr("cx",d=>d.x).attr("cy",d=>d.y);
-  svg.selectAll("circle").filter(d=>d&&(d.type==="capillary"||d.type==="legacy")&&d.fx!==undefined)
-     .attr("cx",d=>d.x).attr("cy",d=>d.y);
+  rings.attr("cx",d=>d.x).attr("cy",d=>d.y);
   label.attr("x",d=>d.x).attr("y",d=>d.y);
 });
 
@@ -230,7 +288,7 @@ const label=svg.append("g").selectAll("text").data(nodes).enter().append("text")
 const tip=document.getElementById("tooltip");
 node.on("click",(e,d)=>{
   tip.style.display="block";
-  tip.innerHTML=`<b style="color:${colorMap[d.type]}">${d.name}</b><br>📍 ${d.town}<br>📊 ${d.desc}<br>🔗 连了${d.degree}条边<br>💚 状态：${d.state==="green"?"健康":d.state==="yellow"?"亚健康":"高危"}`;
+  tip.innerHTML=`<b style="color:${colorMap[d.type]}">${d.name}</b><br>📐 ${d.layer||""}｜📍 ${d.town}<br>📊 ${d.desc}<br>🔗 度中心度：${d.degree}条边<br>🌉 介数：${(d.betweenness*100).toFixed(1)}%<br>💚 状态：${d.state==="green"?"健康":d.state==="yellow"?"亚健康":"高危"}`;
   tip.style.left=(e.offsetX+15)+"px";
   tip.style.top=(e.offsetY-10)+"px";
   e.stopPropagation();
