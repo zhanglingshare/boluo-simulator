@@ -85,6 +85,11 @@ svg{display:block;width:100%;height:auto}
     <button class="filter-btn" data-types="ext">只看外部城市</button>
   </div>
 
+  <div style="background:rgba(34,197,94,.1);border:1px solid rgba(34,197,94,.3);border-radius:8px;padding:10px 14px;margin-bottom:14px;font-size:13px">
+    <b style="color:#4ade80">📊 全县产业健康度（2026年1-8月）</b><br>
+    <span style="color:#cbd5e1">工业用电 60.04亿度，同比 <b style="color:#4ade80">+11.5%</b> ｜ 规上工业 +8.2% ｜ 两大主力：电子信息 + 电气机械 ｜ 状态：<b style="color:#4ade80">🟢 健康</b></span>
+  </div>
+
   <div class="stage">
     <div class="acttitle" id="acttitle"></div>
     <svg id="svg" viewBox="0 0 860 620">
@@ -123,12 +128,12 @@ svg{display:block;width:100%;height:auto}
       <div id="degreeRanks"></div>
     </div>
 
-    <div class="algo-note">
-      <b style="color:#cbd5e1">数据分级（透明原则）</b><br>
-      <span class="blood-tag blood-A">A 公开硬数据</span>：2026政府工作报告、统计局月报（工业用电60亿度+11.5%）、工信局小巨人名录、工商注册地 ｜
-      <span class="blood-tag blood-B">B 行业推估</span>：产业链配套关系（基于公开产业链常识） ｜
-      <span class="blood-tag blood-C">C 待补内网数据</span>：本地配套率%、各镇剩余工业用地、企业亩均税收（需工信局/税务局接入）<br>
-      本图为公开数据PoC版，不触碰企业敏感财务数据。内网数据接入后可升级为高精度决策版。
+    <div class="algo-note" style="line-height:1.7">
+      <b style="color:#cbd5e1">数据分级与系统边界声明</b><br><br>
+      <span style="color:#4ade80">🟢 公开硬数据</span>：2026政府工作报告、统计局月报（工业用电60.04亿度+11.5%）、工信部小巨人名录（11家国家级+74家省级）、工商注册地、商务局产业导向——绝对事实，零争议。<br>
+      <span style="color:#fbbf24">🟡 算法推估关系</span>：产业链配套连边基于GB/T行业代码与省级投入产出表概率拟合，为合理假设，需现场核查。<br>
+      <span style="color:#f87171">🔴 内网待接入变量</span>：链主本地配套率%、各镇剩余工业用地亩数、企业真实亩均税收——需授权工信局/税务局/自然资源局网关。<br><br>
+      <b>系统边界</b>：当前为公开数据PoC演示版，不触碰企业敏感财务数据。若需启用招商项目生死筛查、产业链安全一票否决，请由主管部门授权接入内网数据网关，以解锁高精度微观闭环。
     </div>
   </div>
 
