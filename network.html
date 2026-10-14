@@ -70,12 +70,17 @@ h1{font-size:22px;margin-bottom:6px}
   <div class="controls">
     <span>视图：</span>
     <button class="fbtn on" data-filter="all">全景</button>
-    <button class="fbtn" data-filter="boluo">只看博罗产业</button>
+    <button class="fbtn" data-filter="supply">供货链</button>
+    <button class="fbtn" data-filter="eco">山水农业</button>
+    <button class="fbtn" data-filter="env">环保要素</button>
     <span style="margin-left:auto;font-size:10px;color:#475569">👆 可以拖动圆点，点击看详情</span>
   </div>
 
   <div id="chart">
     <div id="tooltip"></div>
+  </div>
+  <div style="font-size:11px;color:#64748b;margin:6px 2px;line-height:1.6">
+    <b>供货链</b>：谁给谁供货、厂从哪搬来（蓝线）　｜　<b>山水农业</b>：罗浮山、东江怎么养人养特产（浅蓝线）　｜　<b>环保要素</b>：东江管着谁排污、谁和谁抢地抢电（红线/橙线）
   </div>
 
   <div class="legend">
@@ -101,6 +106,16 @@ h1{font-size:22px;margin-bottom:6px}
     <div class="stat"><div class="l">图有多密</div><div class="v" id="sDensity" style="color:#fbbf24;font-size:15px">–</div></div>
     <div class="stat"><div class="l">必经之路</div><div class="v" id="sExt" style="color:#a78bfa;font-size:15px">–</div></div>
     <div class="stat"><div class="l">连接不同圈子的</div><div class="v" id="sHole" style="color:#ef4444;font-size:15px">–</div></div>
+  </div>
+
+  <div class="brief">
+    <b style="color:#a78bfa">周边城市连线的真实数据依据</b><br>
+    <div style="font-size:12px;color:#cbd5e1;line-height:1.9;margin-top:8px">
+      <b style="color:#a78bfa">东莞（最粗）</b>：石湾南隔东江与东莞石龙相望，是承接东莞外溢的第一线。模具企业天倬科技从东莞50亩扩到石湾150亩，制造效率提升20-30%；台铃、小刀等电动车厂从东莞方向落户石湾；园洲镇"十四五"承接优质项目84宗、达产年产值625亿元，以电子信息为主。<br><br>
+      <b style="color:#a78bfa">深圳（粗）</b>：欣旺达总部在深圳、锂威生产基地在园洲；"深博福田产业园"建在园洲，采用"福田总部+博罗生产基地"，已落户25宗项目、总投资约54亿元、投产后总产值超100亿元，含奇瑞系嘉奇新能源。<br><br>
+      <b style="color:#a78bfa">广州（中等）</b>：石湾地处广州、惠州、东莞三市交界，西北毗邻增城三江，承接部分外溢；罗浮山国药与广东省中医院合作红脚艾（合作规模未公开）。<br><br>
+      <b style="color:#a78bfa">惠城（中等）</b>：惠州市主城区，博罗为下辖县，行政关系明确；罗浮山游客的一部分从惠城方向来（客流量未公开）。
+    </div>
   </div>
 
   <div class="brief">
@@ -162,14 +177,14 @@ const rawNodes=[
   {id:"xwd",name:"欣旺达/锂威",type:"anchor",town:"园洲",state:"green",layer:"链主",desc:"锂电池·高用电·高外部订单依赖"},
   {id:"htd",name:"华通电脑",type:"anchor",town:"园洲/石湾",state:"green",layer:"链主",desc:"电子信息770亿基本盘代表"},
   {id:"zw",name:"正威新材料",type:"anchor",town:"罗阳",state:"green",layer:"链主",desc:"25万吨铜杆/年·重资产原材料底座"},
-  {id:"jq",name:"嘉奇新能源",type:"anchor",town:"福田",state:"yellow",layer:"链主",desc:"奇瑞系·深博福田产业园2026.6开园"},
+  {id:"jq",name:"嘉奇新能源",type:"anchor",town:"园洲",state:"yellow",layer:"链主",desc:"奇瑞系·深博福田产业园(园洲)2026开园·华南首个梯次电池基地"},
   {id:"jf",name:"江丰精密",type:"anchor",town:"园洲",state:"green",layer:"链主",desc:"溅射靶材全球第一·3纳米"},
   // 第三层：小巨人聚合
   {id:"gj",name:"11家国家级小巨人",type:"champ",town:"多镇",state:"green",layer:"小巨人",desc:"嘉治电子/派沃/力王/凤凰/广麟/奥科/百时达/吉邦/鑫晖源/信立泰/TCL瑞智"},
   {id:"sj",name:"74家省级专精特新",type:"champ",town:"多镇",state:"green",layer:"小巨人",desc:"各细分赛道隐形市占率"},
   // 第四层：毛细血管群落
   {id:"bmc",name:"表面处理群落",type:"capillary",town:"福田",state:"yellow",layer:"毛细血管",desc:"省级特色集群·电镀/喷涂·受东江环保约束"},
-  {id:"mj",name:"石湾模具群落",type:"capillary",town:"石湾",state:"green",layer:"毛细血管",desc:"特斯拉/比亚迪/拓竹·东莞迁入+数十家注塑厂"},
+  {id:"mj",name:"石湾模具群落",type:"capillary",town:"石湾",state:"green",layer:"毛细血管",desc:"全镇2461家工业企业·三市交界·特斯拉/比亚迪/拓竹"},
   {id:"ddc",name:"电动车配套群落",type:"capillary",town:"石湾",state:"green",layer:"毛细血管",desc:"台铃/小刀/新日/绿佳·产值超150亿"},
   // 第五层：老厂基盘
   {id:"lq",name:"镇村老厂群落",type:"legacy",town:"龙溪/园洲/罗阳",state:"yellow",layer:"老厂基盘",desc:"数千家五金/塑料/建材·用电+11.5%大头·亩均达标压力"},
@@ -185,16 +200,20 @@ const rawNodes=[
   {id:"lsz",name:"罗浮山荔枝",type:"gi",town:"罗浮山周边",state:"green",layer:"国家地理标志",desc:"国家地理标志·10万亩"},
   {id:"hh",name:"横河户外小镇",type:"capillary",town:"横河",state:"green",layer:"农业康养",desc:"华南户外水经济港·民宿集群"},
   // 外部
-  {id:"gz",name:"广州",type:"ext",town:"外部",state:"green",layer:"外部",desc:"医药/文旅合作"},
-  {id:"dg",name:"东莞",type:"ext",town:"外部",state:"green",layer:"外部",desc:"产业外溢源头"},
-  {id:"sz",name:"深圳",type:"ext",town:"外部",state:"green",layer:"外部",desc:"新能源项目来源"},
-  {id:"hz",name:"惠城",type:"ext",town:"外部",state:"green",layer:"外部",desc:"行政"},
+  {id:"gz",name:"广州",type:"ext",town:"外部",state:"green",layer:"外部",desc:"增城接石湾·省中医院医药合作"},
+  {id:"dg",name:"东莞",type:"ext",town:"外部",state:"green",layer:"外部",desc:"紧邻石湾/园洲·模具电子外溢源头"},
+  {id:"sz",name:"深圳",type:"ext",town:"外部",state:"green",layer:"外部",desc:"欣旺达·嘉奇新能源项目来源"},
+  {id:"hz",name:"惠城",type:"ext",town:"外部",state:"green",layer:"外部",desc:"惠州主城·行政与文旅客流"},
 ];
 const rawEdges=[
-  // 供应链刚需
-  {s:"dg",t:"mj",level:"A",w:4,rel:"企业迁入",kind:"供应链"},
-  {s:"dg",t:"ddc",level:"A",w:4,rel:"企业迁入",kind:"供应链"},
-  {s:"sz",t:"xwd",level:"A",w:3,rel:"项目投资",kind:"供应链"},
+  // 供应链刚需（外部城市连线均有公开数据）
+  {s:"dg",t:"mj",level:"A",w:5,rel:"隔东江与东莞石龙相望·模具厂迁入(天倬东莞50亩→石湾150亩)",kind:"供应链"},
+  {s:"dg",t:"ddc",level:"A",w:4,rel:"台铃/小刀等电动车厂从东莞方向落户石湾",kind:"供应链"},
+  {s:"dg",t:"htd",level:"A",w:4,rel:"园洲/石湾承接东莞电子信息外溢·园洲年产值380亿",kind:"供应链"},
+  {s:"dg",t:"lq",level:"B",w:2,rel:"五金/塑料小厂随边界扩散",kind:"供应链"},
+  {s:"sz",t:"xwd",level:"A",w:4,rel:"欣旺达深圳总部·锂威园洲生产基地",kind:"供应链"},
+  {s:"sz",t:"jq",level:"A",w:4,rel:"深博福田产业园25宗项目·总投资54亿·产值超100亿",kind:"供应链"},
+  {s:"gz",t:"mj",level:"B",w:2,rel:"石湾西北毗邻增城·三市交界承接外溢",kind:"供应链"},
   {s:"mj",t:"ddc",level:"A",w:2,rel:"模具零部件",kind:"供应链"},
   {s:"bmc",t:"ddc",level:"B",w:2,rel:"喷涂配套",kind:"供应链"},
   {s:"jf",t:"htd",level:"B",w:2,rel:"靶材供应",kind:"供应链"},
@@ -349,6 +368,19 @@ const link=svg.append("g").selectAll("line").data(links).enter().append("line")
   .attr("stroke-dasharray",d=>d.level==="B"?"5,4":d.level==="C"?"2,4":"none")
   .attr("stroke-opacity",d=>d.level==="A"?0.8:0.5);
 
+// 透明宽点击层（细手机也能点到线）
+const linkHit=svg.append("g").selectAll("line").data(links).enter().append("line")
+  .attr("stroke","transparent").attr("stroke-width",14).style("cursor","pointer")
+  .on("click",(e,d)=>{
+    e.stopPropagation();
+    const color=d.kind==="环保约束"?"#ef4444":d.kind==="资源竞争"?"#f59e0b":d.kind==="生态补偿"?"#0ea5e9":"#38bdf8";
+    const lvl=d.level==="A"?"实线·公开依据":d.level==="B"?"虚线·合理推算":"点线·暂不确定";
+    tip.style.display="block";
+    tip.innerHTML=`<b style="color:${color}">${d.source.name} ↔ ${d.target.name}</b><br>关系：${d.rel}<br>依据：${lvl}`;
+    tip.style.left=Math.min(e.offsetX+15,W-250)+"px";
+    tip.style.top=Math.min(e.offsetY-10,H-120)+"px";
+  });
+
 const node=svg.append("g").selectAll("circle").data(nodes).enter().append("circle")
   .attr("r",d=>rMap[d.type])
   .attr("fill",d=>colorMap[d.type])
@@ -379,6 +411,8 @@ const rings=svg.append("g").selectAll("circle").data(nodes.filter(d=>clusterType
 
 sim.on("tick",()=>{
   link.attr("x1",d=>d.source.x).attr("y1",d=>d.source.y)
+      .attr("x2",d=>d.target.x).attr("y2",d=>d.target.y);
+  linkHit.attr("x1",d=>d.source.x).attr("y1",d=>d.source.y)
       .attr("x2",d=>d.target.x).attr("y2",d=>d.target.y);
   node.attr("cx",d=>d.x).attr("cy",d=>d.y);
   rings.attr("cx",d=>d.x).attr("cy",d=>d.y);
@@ -416,18 +450,40 @@ function resetHighlight(){
 }
 chart.on("click",()=>{selected=null;resetHighlight();tip.style.display="none"});
 
-// 筛选
+// 分视图：一张图只讲一件事
+function viewKind(f){
+  if(f==="all")return null;
+  if(f==="supply")return ["供应链"];
+  if(f==="eco")return ["生态补偿"];
+  if(f==="env")return ["环保约束","资源竞争"];
+  return null;
+}
 document.querySelectorAll(".fbtn").forEach(btn=>{
   btn.onclick=()=>{
     document.querySelectorAll(".fbtn").forEach(b=>b.classList.remove("on"));
     btn.classList.add("on");
+    selected=null;tip.style.display="none";
     const f=btn.dataset.filter;
-    node.style("opacity",d=>f==="all"||d.type!=="ext"?1:0.15);
-    link.style("opacity",d=>{
-      if(f==="all")return d.level==="A"?0.8:0.5;
-      return (d.source.type!=="ext"&&d.target.type!=="ext")?0.6:0.1;
-    });
-    label.style("opacity",d=>f==="all"||d.type!=="ext"?1:0.15);
+    const kinds=viewKind(f);
+    if(!kinds){
+      // 全景
+      node.style("opacity",1);
+      label.style("opacity",1);
+      rings.style("opacity",0.5);
+      link.style("stroke-opacity",d=>d.level==="A"?0.8:0.5).style("display",null);
+      linkHit.style("display",null);
+      return;
+    }
+    // 该视图涉及的边
+    const activeLinks=links.filter(l=>kinds.includes(l.kind));
+    const activeIds=new Set();
+    activeLinks.forEach(l=>{activeIds.add(l.source.id);activeIds.add(l.target.id)});
+    node.style("opacity",d=>activeIds.has(d.id)?1:0.08);
+    label.style("opacity",d=>activeIds.has(d.id)?1:0.05);
+    rings.style("opacity",d=>activeIds.has(d.id)?0.5:0.03);
+    link.style("display",l=>kinds.includes(l.kind)?null:"none")
+        .style("stroke-opacity",l=>kinds.includes(l.kind)?(l.level==="A"?0.9:0.6):0);
+    linkHit.style("display",l=>kinds.includes(l.kind)?null:"none");
   };
 });
 </script>
