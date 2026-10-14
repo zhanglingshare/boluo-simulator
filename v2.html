@@ -338,6 +338,13 @@ edges.forEach((e,i)=>{
   group.add(p);particles.push(p);
 });
 
+if(!showIds){
+  const tip=document.createElement('div');
+  tip.style.cssText='position:fixed;top:90px;left:50%;transform:translateX(-50%);z-index:12;background:rgba(120,53,15,.8);color:#fbbf24;padding:6px 14px;border-radius:20px;font-size:11px;border:1px solid #78350f';
+  tip.innerHTML='👁️ 整体概览模式 · 不参与计算 · <a href="v3.html" style="color:#fde68a">选主体进入推演 →</a>';
+  document.body.appendChild(tip);
+}
+
 // 背景星尘
 const starsGeo=new THREE.BufferGeometry();
 const starPos=[];for(let i=0;i<400;i++){starPos.push((Math.random()-0.5)*800,(Math.random()-0.5)*800,(Math.random()-0.5)*800-200);}
