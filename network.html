@@ -2,6 +2,7 @@
 <html lang="zh-CN"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
 <title>博罗产业风洞 · 产业网络X光机</title>
 <script src="https://d3js.org/d3.v7.min.js"></script>
+<script src="model.js"></script>
 <style>
 *{box-sizing:border-box}
 body{margin:0;background:#080b12;color:#e6edf3;font:14px/1.65 -apple-system,"PingFang SC","Microsoft YaHei",sans-serif}
@@ -29,6 +30,19 @@ h1{font-size:22px;margin-bottom:6px}
 .algo-note{font-size:11px;color:#6b7d96;line-height:1.8;margin-top:16px;padding-top:12px;border-top:1px solid #162032}
 .next{margin-top:18px}
 .next a{color:#4ade80;text-decoration:none;font-size:14px}
+.lab-panel{background:linear-gradient(135deg,#0f2e1a,#0e1523);border:1px solid #22c55e;border-radius:14px;padding:20px;margin:20px 0}
+.lab-panel h2{font-size:16px;margin-bottom:4px}
+.lab-panel .hint{font-size:12px;color:#94a3b8;margin-bottom:14px;line-height:1.6}
+.lpath{padding:10px 0;border-top:1px solid #162032}
+.lpath:first-of-type{border-top:none}
+.lpath .row{display:flex;justify-content:space-between;font-size:13px;margin-bottom:4px}
+.lpath input[type=range]{width:100%;accent-color:#22c55e}
+.lab-nums{display:grid;grid-template-columns:1fr 1fr 1fr;gap:10px;margin:14px 0}
+.lab-nums .n{text-align:center}
+.lab-nums .n .l{font-size:11px;color:#8fa3bf}
+.lab-nums .n .v{font-size:22px;font-weight:800}
+.lab-hit{font-size:14px;margin:10px 0}
+.lab-hit b{font-size:20px;color:#4ade80}
 </style></head><body>
 
 <div class="nav">
@@ -45,12 +59,12 @@ h1{font-size:22px;margin-bottom:6px}
 </div>
 
 <div class="wrap">
-  <h1>博罗产业网络X光机</h1>
-  <p class="sub">27个节点·6层架构·25条关系。链主独立、小巨人聚合、毛细血管成群、老厂成片。可拖拽。</p>
+  <h1>博罗产业网络</h1>
+  <p class="sub">27个节点·6层架构·25条关系。以下数据基于公开报告整理，不做诊断判断。</p>
 
   <div class="health">
-    <b style="color:#4ade80">📊 全县产业健康度（2026年1-8月）</b><br>
-    <span style="color:#cbd5e1">工业用电 60.04亿度，同比 <b style="color:#4ade80">+11.5%</b> ｜ 规上工业 +8.2% ｜ 状态：<b style="color:#4ade80">🟢 健康</b></span>
+    <b style="color:#4ade80">📊 工业用电（2026年1-8月）</b><br>
+    <span style="color:#cbd5e1">60.04亿度，同比 <b>+11.5%</b> ｜ 规上工业增加值 +8.2%（1-7月）</span>
   </div>
 
   <div class="controls">
@@ -84,7 +98,7 @@ h1{font-size:22px;margin-bottom:6px}
     <div class="stat"><div class="l">连接最多</div><div class="v" id="sHub" style="color:#4ade80;font-size:15px">–</div></div>
     <div class="stat"><div class="l">网络密度</div><div class="v" id="sDensity" style="color:#fbbf24;font-size:15px">–</div></div>
     <div class="stat"><div class="l">介数咽喉</div><div class="v" id="sExt" style="color:#a78bfa;font-size:15px">–</div></div>
-    <div class="stat"><div class="l">关键结构洞</div><div class="v" id="sHole" style="color:#ef4444;font-size:15px">–</div></div>
+    <div class="stat"><div class="l">限制度最低节点</div><div class="v" id="sHole" style="color:#ef4444;font-size:15px">–</div></div>
   </div>
 
   <div class="brief">
@@ -312,7 +326,7 @@ const label=svg.append("g").selectAll("text").data(nodes).enter().append("text")
 const tip=document.getElementById("tooltip");
 node.on("click",(e,d)=>{
   tip.style.display="block";
-  tip.innerHTML=`<b style="color:${colorMap[d.type]}">${d.name}</b><br>📐 ${d.layer||""}｜📍 ${d.town}<br>📊 ${d.desc}<br>🔗 度：${d.degree}｜🌉 介数：${(d.betweenness*100).toFixed(1)}%<br>🕳 结构洞限制度：${(d.constraint*100).toFixed(0)}%（越低越是咽喉）<br>💚 ${d.state==="green"?"健康":d.state==="yellow"?"亚健康":"高危"}`;
+  tip.innerHTML=`<b style="color:${colorMap[d.type]}">${d.name}</b><br>📐 ${d.layer||""}｜📍 ${d.town}<br>📊 ${d.desc}<br>🔗 度：${d.degree}｜🌉 介数：${(d.betweenness*100).toFixed(1)}%<br>🕳 结构洞限制度：${(d.constraint*100).toFixed(0)}%（越低越是咽喉）<br>💚 ${d.state==="green"?"指标平稳":d.state==="yellow"?"指标待核实":"数据缺失"}`;
   tip.style.left=(e.offsetX+15)+"px";
   tip.style.top=(e.offsetY-10)+"px";
   e.stopPropagation();
