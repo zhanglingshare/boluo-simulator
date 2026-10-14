@@ -116,11 +116,13 @@ const rawNodes=[
   {id:"lswh",name:"环两山引领区",type:"core",town:"长宁/横河/福田",state:"green",val:60,desc:"环南昆山-罗浮山·218km 8字旅游公路·户外运动·罗浮山居"},
   {id:"hh",name:"横河户外小镇",type:"capillary",town:"横河",state:"green",val:10,desc:"华南户外水经济港·两山明珠·精品民宿集群"},
   {id:"jt",name:"现代食品",type:"core",town:"湖镇",state:"green",val:80,desc:"百岁山374万吨·顺兴食品"},
-  {id:"sc",name:"博罗山茶",type:"agri",town:"柏塘",state:"green",val:5,desc:"地理标志·省十大茶乡"},
-  {id:"xc",name:"福田菜心",type:"agri",town:"福田",state:"yellow",val:3,desc:"地理标志·播种季"},
-  {id:"gyg",name:"观音阁花生",type:"agri",town:"观音阁",state:"green",val:8,desc:"国家地理标志·黑糖/柠檬/蓝莓酱"},
+  {id:"sc",name:"柏塘山茶",type:"agri",town:"柏塘",state:"green",val:5,desc:"国家地理标志·省十大茶乡"},
+  {id:"xc",name:"福田菜心",type:"agri",town:"福田",state:"yellow",val:3,desc:"国家地理标志·神舟四号太空育种"},
+  {id:"gyg",name:"观音阁花生",type:"agri",town:"观音阁",state:"green",val:8,desc:"国家地理标志·沙质土壤"},
+  {id:"gyght",name:"观音阁黑糖",type:"agri",town:"观音阁",state:"green",val:5,desc:"国家地理标志·传统红糖工艺"},
   {id:"sb",name:"石坝胡须鸡",type:"agri",town:"石坝",state:"green",val:12,desc:"全国名特优新·三黄胡须鸡全产业链"},
   {id:"lsmd",name:"罗浮山大米",type:"agri",town:"长宁/横河",state:"green",val:6,desc:"国家地理标志·神舟四号太空育种"},
+  {id:"lsz",name:"罗浮山荔枝",type:"agri",town:"罗浮山周边",state:"green",val:15,desc:"国家地理标志·10万亩种植面积"},
   {id:"dj",name:"东江水系",type:"water",town:"罗阳/石湾/园洲",state:"green",val:200,desc:"母亲河·饮用水源Ⅱ类达标·百岁山取水"},
 ];
 const rawEdges=[
@@ -147,6 +149,8 @@ const rawEdges=[
   {s:"dj",t:"dz",level:"A",w:2,rel:"工业用水"},
   {s:"dj",t:"lsmd",level:"B",w:1,rel:"灌溉"},
   {s:"gyg",t:"dj",level:"B",w:1,rel:"东江沙壤"},
+  {s:"gyght",t:"gyg",level:"A",w:1,rel:"观音阁同镇"},
+  {s:"lsz",t:"lswh",level:"B",w:1,rel:"罗浮山周边"},
 ];
 
 // ===== 计算度中心度 =====
