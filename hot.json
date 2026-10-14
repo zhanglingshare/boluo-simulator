@@ -1,35 +1,15 @@
 {
   "schema_version": 2,
   "region": "boluo",
-  "updated": "2026-10-14 07:32",
-  "fetched_at": "2026-10-14 07:32",
+  "updated": "2026-10-15 07:51",
+  "fetched_at": "2026-10-15 07:51",
   "frequency": "每日更新一次",
-  "count": 17,
+  "count": 14,
   "stats": [],
   "note": "话题按编辑关注程度排序，标注关注档（高/较高/中）与来源级别；每条显示原报道时间、最近抓取与核验状态（官方原文或≥2独立来源=已核验，单源媒体/本地=待核实），缺失标「待核实」。本页不展示平台后台真实阅读、转发、点赞数据。话题均来自公开渠道，每日更新。",
   "items": [
     {
-      "title": "218公里最美旅游公路火了，横河显岗水库驿站民宿满房翻三倍",
-      "cat": "tourism",
-      "emoji": "🛖",
-      "tier": "较高",
-      "srcLevel": "官方发布",
-      "live": false,
-      "source": "南方+",
-      "url": "http://m.toutiao.com/group/7694252877808534057/",
-      "summary": "环湖绿道变身非遗工坊，过云山居国庆7天满房、日均营业额约5万元，同比翻三倍，一条风景道串起山水古村与民宿带。",
-      "published_at": "2026-10-08",
-      "event_date": "2026-10-07",
-      "fetched_at": "2026-10-14 07:32",
-      "verified_status": "已核验",
-      "fate": {
-        "kind": "life",
-        "direction": "利好",
-        "note": "生活资讯入口"
-      }
-    },
-    {
-      "title": "50家博企将亮相第140届广交会，共设77个展位",
+      "title": "第140届广交会今日开幕，50家博企携77个展位出海拓订单",
       "cat": "industry",
       "emoji": "🏭",
       "tier": "较高",
@@ -37,10 +17,10 @@
       "live": false,
       "source": "博罗县人民政府",
       "url": "https://www.boluo.gov.cn/xzygdw/xgbdst/blxw/content/post_5864325.html",
-      "summary": "第140届广交会10月15日至11月4日在广州举办，50家博罗企业携家居用品、家用电器、体育休闲用品等出海拓订单。",
+      "summary": "第140届广交会10月15日至11月4日在广州举办，50家博罗企业携家居用品、家用电器、体育休闲用品等参展，积极对接全球客商。",
       "published_at": "2026-10-02",
       "event_date": "2026-10-15",
-      "fetched_at": "2026-10-14 07:32",
+      "fetched_at": "2026-10-15 07:51",
       "verified_status": "已核验",
       "fate": {
         "kind": "info",
@@ -60,12 +40,12 @@
       "summary": "环南昆山—罗浮山引领区“寻东坡十六乐事”活动10—12月进行，沿线16座东坡主题驿站集章可换免费温泉票与精品客房券。",
       "published_at": "2026-10-13",
       "event_date": "2026-10-01",
-      "fetched_at": "2026-10-14 07:32",
+      "fetched_at": "2026-10-15 07:51",
       "verified_status": "已核验",
       "fate": {
         "kind": "life",
         "direction": "利好",
-        "note": "生活资讯入口"
+        "note": "秋冬自驾与民宿温泉活动资讯"
       }
     },
     {
@@ -80,12 +60,32 @@
       "summary": "环罗浮山民宿集群、乡村酒店迎客流高峰，横河民宿示范镇、长宁罗浮山大门一带“过路客”加快变“过夜客”。",
       "published_at": "2026-10-09",
       "event_date": "2026-10-08",
-      "fetched_at": "2026-10-14 07:32",
+      "fetched_at": "2026-10-15 07:51",
       "verified_status": "已核验",
       "fate": {
         "kind": "life",
         "direction": "利好",
-        "note": "生活资讯入口"
+        "note": "民宿与过夜游人气持续走旺"
+      }
+    },
+    {
+      "title": "博罗收纳企业联祥家具备战广交会，30多个新产品即将亮相",
+      "cat": "industry",
+      "emoji": "📦",
+      "tier": "较高",
+      "srcLevel": "官方发布",
+      "live": false,
+      "source": "博罗县人民政府",
+      "url": "https://www.boluo.gov.cn/xzygdw/xgbdst/blxw/content/post_5871427.html",
+      "summary": "年产值破亿元的联祥家具本次带30多个新产品参展，从可移动收纳推车到多功能置物架，“博罗制造”收纳产品迎接全球客商。",
+      "published_at": "2026-10-14",
+      "event_date": "2026-10-14",
+      "fetched_at": "2026-10-15 07:51",
+      "verified_status": "已核验",
+      "fate": {
+        "kind": "info",
+        "direction": "利好",
+        "note": "本地制造企业以新品拓市场"
       }
     },
     {
@@ -100,7 +100,7 @@
       "summary": "龙华镇瑞莱思卫浴长期为海外品牌代工，如今带着自主研发的智能电控系统备展，主动对接海外客商。",
       "published_at": "2026-10-07",
       "event_date": "2026-10-15",
-      "fetched_at": "2026-10-14 07:32",
+      "fetched_at": "2026-10-15 07:51",
       "verified_status": "已核验",
       "fate": {
         "kind": "info",
@@ -120,7 +120,7 @@
       "summary": "第四季度调图后惠州北站新增湛江北往返梅州西经停车次，满图开行动车组169列，往返粤西直达运力再加密。",
       "published_at": "2026-10-13",
       "event_date": "2026-10-11",
-      "fetched_at": "2026-10-14 07:32",
+      "fetched_at": "2026-10-15 07:51",
       "verified_status": "已核验",
       "fate": {
         "kind": "info",
@@ -140,52 +140,12 @@
       "summary": "800年古村高头村把废弃水塔与旧礼堂改造成红砖艺术聚落首作，顶层可望东江、罗浮山，周末又添文艺打卡地。",
       "published_at": "2026-10-13",
       "event_date": "2026-10-12",
-      "fetched_at": "2026-10-14 07:32",
+      "fetched_at": "2026-10-15 07:51",
       "verified_status": "已核验",
       "fate": {
         "kind": "life",
         "direction": "利好",
-        "note": "生活资讯入口"
-      }
-    },
-    {
-      "title": "收藏爱好者邓玲慧向葛洪博物馆无偿捐赠104件/套珍贵文物",
-      "cat": "tourism",
-      "emoji": "🏺",
-      "tier": "较高",
-      "srcLevel": "官方发布",
-      "live": false,
-      "source": "博罗县人民政府",
-      "url": "https://www.boluo.gov.cn/xzygdw/xgbdst/blxw/content/post_5870424.html",
-      "summary": "这批含多件中医药相关器具，上自汉代下至民国，为罗浮山葛洪博物馆研究岭南中医药与本土民俗再添实物。",
-      "published_at": "2026-10-13",
-      "event_date": "2026-10-11",
-      "fetched_at": "2026-10-14 07:32",
-      "verified_status": "已核验",
-      "fate": {
-        "kind": "life",
-        "direction": "利好",
-        "note": "罗浮山文化文博资讯"
-      }
-    },
-    {
-      "title": "博罗产投集团联手中国电信，数智赋能园区发展",
-      "cat": "industry",
-      "emoji": "📡",
-      "tier": "较高",
-      "srcLevel": "官方发布",
-      "live": false,
-      "source": "博罗县人民政府",
-      "url": "https://www.boluo.gov.cn/xzygdw/xgyzcswzx/zwgk/gzdt/content/post_5856048.html",
-      "summary": "双方围绕园区数字化建设、产业服务升级达成战略合作，为博罗产业园区装上“数字底座”。",
-      "published_at": "2026-09-21",
-      "event_date": "2026-09-17",
-      "fetched_at": "2026-10-14 07:32",
-      "verified_status": "已核验",
-      "fate": {
-        "kind": "info",
-        "direction": "利好",
-        "note": "园区数字化服务升级"
+        "note": "古村活化与文艺打卡新场景"
       }
     },
     {
@@ -200,32 +160,12 @@
       "summary": "惠州歌舞剧院把优质文艺资源送到村民家门口，《春到岭南》《在希望的田野上》等节目点亮乡村夜晚。",
       "published_at": "2026-10-13",
       "event_date": "2026-10-09",
-      "fetched_at": "2026-10-14 07:32",
+      "fetched_at": "2026-10-15 07:51",
       "verified_status": "已核验",
       "fate": {
         "kind": "life",
         "direction": "利好",
         "note": "乡村文化生活资讯"
-      }
-    },
-    {
-      "title": "泰美车村发布“乡创盒子”，为青年入乡搭起共创平台",
-      "cat": "livelihood",
-      "emoji": "📦",
-      "tier": "较高",
-      "srcLevel": "官方发布",
-      "live": false,
-      "source": "博罗县人民政府",
-      "url": "https://www.boluo.gov.cn/zwgk/zwdt/tpxw/content/post_5862508.html",
-      "summary": "车村村推出“乡创盒子”（Dream Box）品牌，为青年参与乡村建设、返乡创业提供共享共创空间。",
-      "published_at": "2026-09-30",
-      "event_date": "2026-09-28",
-      "fetched_at": "2026-10-14 07:32",
-      "verified_status": "已核验",
-      "fate": {
-        "kind": "info",
-        "direction": "利好",
-        "note": "百千万工程青年入乡平台"
       }
     },
     {
@@ -240,12 +180,12 @@
       "summary": "秋高气爽，承粮陂村玉米迎来采收季，新鲜玉米直供本地市场，市民可下田体验采摘。",
       "published_at": "2026-10-01",
       "event_date": "2026-10-01",
-      "fetched_at": "2026-10-14 07:32",
+      "fetched_at": "2026-10-15 07:51",
       "verified_status": "已核验",
       "fate": {
         "kind": "life",
         "direction": "利好",
-        "note": "生活资讯入口"
+        "note": "秋收采摘与乡村体验"
       }
     },
     {
@@ -260,32 +200,32 @@
       "summary": "千年柏塘山茶机械赋能、手工锁香，统一品牌与衍生品开发叠加茶园观光采茶体验，一片叶子串起完整茶产业链。",
       "published_at": "2026-10-11",
       "event_date": "2026-10-10",
-      "fetched_at": "2026-10-14 07:32",
+      "fetched_at": "2026-10-15 07:51",
       "verified_status": "待核实",
       "fate": {
         "kind": "life",
         "direction": "利好",
-        "note": "生活资讯入口"
+        "note": "特色农业品牌化与茶文旅融合"
       }
     },
     {
-      "title": "国庆博罗迎客63.82万人次，实现旅游综合收入3.38亿元",
+      "title": "国庆博罗登上旅行平台热门县域TOP5，浮生六季等亲子营地走热",
       "cat": "tourism",
-      "emoji": "🎊",
+      "emoji": "🦙",
       "tier": "中",
       "srcLevel": "媒体报道",
       "live": false,
-      "source": "惠州新闻网",
-      "url": "http://www.hznews.com/xqrm/blx/202610/t20261008_1663544.shtml",
-      "summary": "罗浮山“仙山揽月·古韵贺华诞”非遗主题活动出圈，仙山非遗引客来，县域文旅消费持续升温。",
-      "published_at": "2026-10-08",
-      "event_date": "2026-10-07",
-      "fetched_at": "2026-10-14 07:32",
+      "source": "博罗发布",
+      "url": "http://m.toutiao.com/group/7695295778072199743/",
+      "summary": "国庆假期博罗登上旅行平台热门县域TOP5；长宁浮生六季生态园集萌宠互动、轻奢露营、高端民宿于一体，成为家庭出行热门目的地。",
+      "published_at": "2026-10-11",
+      "event_date": "2026-10-11",
+      "fetched_at": "2026-10-15 07:51",
       "verified_status": "待核实",
       "fate": {
         "kind": "life",
         "direction": "利好",
-        "note": "生活资讯入口"
+        "note": "县域全域游与亲子微度假"
       }
     },
     {
@@ -295,17 +235,17 @@
       "tier": "中",
       "srcLevel": "媒体报道",
       "live": false,
-      "source": "一亩田",
+      "source": "惠农网·一亩田",
       "url": "https://m.ymt.com/argtech/0mAz8tqN",
-      "summary": "杨村皇帝柑进入糖分积累关键期，果皮渐转橙红，预计10月下旬至12月陆续成熟上市。",
+      "summary": "杨村皇帝柑进入糖分积累关键期，果皮渐转橙红，预计10月下旬至12月陆续成熟上市，产地货源已开始预热。",
       "published_at": "2026-10-08",
       "event_date": "2026-10-08",
-      "fetched_at": "2026-10-14 07:32",
+      "fetched_at": "2026-10-15 07:51",
       "verified_status": "待核实",
       "fate": {
         "kind": "life",
         "direction": "利好",
-        "note": "生活资讯入口"
+        "note": "当季地理标志果品，即将上市"
       }
     },
     {
@@ -320,32 +260,32 @@
       "summary": "埔心村500亩澳洲坚果基地进入收获季，以“种植+文旅”融合形成一产带三产，成为乡村致富新路子。",
       "published_at": "2026-09-24",
       "event_date": "2026-09-23",
-      "fetched_at": "2026-10-14 07:32",
+      "fetched_at": "2026-10-15 07:51",
       "verified_status": "待核实",
       "fate": {
         "kind": "life",
         "direction": "利好",
-        "note": "生活资讯入口"
+        "note": "特色坚果产业带动农户增收"
       }
     },
     {
-      "title": "湖镇大丰村80多亩板栗采收热销，山野结新果",
-      "cat": "agriculture",
-      "emoji": "🌰",
+      "title": "罗浮山景区重阳节延长营业时间，登高祈福请错峰入园",
+      "cat": "tourism",
+      "emoji": "⛰️",
       "tier": "中",
-      "srcLevel": "媒体报道",
+      "srcLevel": "市民讨论",
       "live": false,
-      "source": "惠州市农业农村局·惠州日报",
-      "url": "http://nyncj.huizhou.gov.cn/zwzc/xwzx/bsyw/content/mpost_5857773.html",
-      "summary": "粤北不常见的板栗在湖镇大丰村长成80多亩林，入秋工人敲果装包、订单渐多，成为山区特色农品。",
-      "published_at": "2026-09-23",
-      "event_date": "2026-09-22",
-      "fetched_at": "2026-10-14 07:32",
+      "source": "惠州本地宝",
+      "url": "https://huizhou.bendibao.com/sou/",
+      "summary": "为满足重阳登高祈福、休闲出游需求，罗浮山景区重阳节期间延长营业时间并发布入园须知，建议游客错峰、服从现场引导。",
+      "published_at": "2026-10-14",
+      "event_date": "2026-10-17",
+      "fetched_at": "2026-10-15 07:51",
       "verified_status": "待核实",
       "fate": {
         "kind": "life",
-        "direction": "利好",
-        "note": "生活资讯入口"
+        "direction": "中性",
+        "note": "重阳登高出行提示"
       }
     }
   ]
