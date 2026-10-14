@@ -24,12 +24,6 @@ body{background:#030711;color:#cbd5e1;font-family:-apple-system,"PingFang SC",sa
 .b-warn{background:rgba(60,40,10,.5);border:1px solid #a16207;color:#fbbf24}
 .b-run{background:rgba(12,40,30,.5);border:1px solid #15803d;color:#4ade80}
 .b-lock{background:rgba(30,41,59,.6);border:1px solid #475569;color:#94a3b8}
-/* 流程图 */
-.flowrow{display:flex;align-items:center;gap:4px}
-.fstep{flex:1;text-align:center;background:rgba(30,41,59,.5);border:1px solid rgba(71,85,105,.45);border-radius:12px;padding:12px 3px}
-.fstep .ic{font-size:21px}
-.fstep .w{font-size:10.5px;color:#cbd5e1;margin-top:3px}
-.farrow{color:#60a5fa;font-size:17px}
 /* 证据分级色块 */
 .lvrow{display:flex;gap:7px}
 .lvchip{flex:1;text-align:center;border-radius:11px;padding:10px 2px;font-size:11px;color:#fff}
@@ -124,15 +118,8 @@ body{background:#030711;color:#cbd5e1;font-family:-apple-system,"PingFang SC",sa
 </div>
 
 <div class="block">
-  <div class="bt">🕵️ 苗头怎么发现的</div>
-  <div class="flowrow">
-    <div class="fstep"><div class="ic">📡</div><div class="w">多源采集</div></div>
-    <div class="farrow">→</div>
-    <div class="fstep"><div class="ic">🔗</div><div class="w">交叉验证</div></div>
-    <div class="farrow">→</div>
-    <div class="fstep"><div class="ic">🏷️</div><div class="w">分级标注</div></div>
-  </div>
-  <div class="lvrow" style="margin-top:9px">
+  <div class="bt">🏷️ 证据来源等级</div>
+  <div class="lvrow">
     <div class="lvchip c-a clickable" data-lv="A"><b>A</b>官方一手</div>
     <div class="lvchip c-b clickable" data-lv="B"><b>B</b>媒体学术</div>
     <div class="lvchip c-c clickable" data-lv="C"><b>C</b>企业行业</div>
@@ -253,7 +240,7 @@ const LV_DESC={
      desc:'政府工作报告、统计公报、规划文件、政府公示。'},
   B:{name:'媒体学术',cred:'较可信 · 权威公开',
      desc:'党媒通讯社、科研机构，以及政府公示的项目环评。'},
-  C:{name:'企业行业',cred:'需交叉 · 企业公开',
+  C:{name:'企业行业',cred:'企业公开 · 注意核对',
      desc:'工商、招商、招投标等企业或行业公开信息。'},
   D:{name:'迹象推断',cred:'较弱 · 需验证',
      desc:'单一来源、现象观察，用虚线，需进一步核实。'}
