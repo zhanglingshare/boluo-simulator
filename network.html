@@ -259,8 +259,11 @@ document.getElementById("sHole").textContent=structuralHole?structuralHole.name:
 
 // ===== 渲染 =====
 const chart=document.getElementById("chart");
-const W=chart.clientWidth||860, H=560;
-const svg=d3.select("#chart").append("svg").attr("width","100%").attr("height",H);
+const W=chart.clientWidth||860;
+const isMobile=W<500;
+const canvasH=isMobile?620:560;
+const H=canvasH;
+const svg=d3.select("#chart").append("svg").attr("width","100%").attr("height",canvasH);
 
 const colorMap={anchor:"#22c55e",champ:"#06b6d4",capillary:"#64748b",agri:"#84cc16",ext:"#a78bfa",legacy:"#f59e0b",eco:"#0ea5e9"};
 const rMap={anchor:15,champ:13,capillary:11,agri:8,ext:12,legacy:14,eco:16};
@@ -268,11 +271,20 @@ const rMap={anchor:15,champ:13,capillary:11,agri:8,ext:12,legacy:14,eco:16};
 let nodes=rawNodes.map(d=>({...d}));
 let links=rawEdges.map(d=>({source:d.s,target:d.t,level:d.level,w:d.w,rel:d.rel,kind:d.kind}));
 
+const chargeStrength=isMobile?-180:-280;
+const linkDist=isMobile?60:95;
 const sim=d3.forceSimulation(nodes)
-  .force("link",d3.forceLink(links).id(d=>d.id).distance(d=>80+d.w*15))
-  .force("charge",d3.forceManyBody().strength(-280))
+  .force("link",d3.forceLink(links).id(d=>d.id).distance(d=>linkDist+d.w*8))
+  .force("charge",d3.forceManyBody().strength(chargeStrength))
   .force("center",d3.forceCenter(W/2,H/2))
-  .force("collide",d3.forceCollide().radius(d=>rMap[d.type]+15));
+  .force("collide",d3.forceCollide().radius(d=>rMap[d.type]+(isMobile?6:15)))
+  .force("bounds",alpha=>{
+    nodes.forEach(n=>{
+      const r=rMap[n.type]+10;
+      n.x=Math.max(r,Math.min(W-r,n.x));
+      n.y=Math.max(r,Math.min(H-r,n.y));
+    });
+  });
 
 const link=svg.append("g").selectAll("line").data(links).enter().append("line")
   .attr("stroke",d=>{
@@ -299,7 +311,7 @@ const node=svg.append("g").selectAll("circle").data(nodes).enter().append("circl
 
 const label=svg.append("g").selectAll("text").data(nodes).enter().append("text")
   .text(d=>d.name)
-  .attr("fill","#e6edf3").attr("font-size","11px").attr("dx",20).attr("dy",4)
+  .attr("fill","#e6edf3").attr("font-size",isMobile?"9px":"11px").attr("dx",isMobile?14:20).attr("dy",4)
   .style("pointer-events","none");
 
 // 群落节点加外圈环（聚合节点）
