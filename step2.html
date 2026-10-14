@@ -21,6 +21,15 @@ body{background:#030711;color:#cbd5e1;font-family:-apple-system,"PingFang SC",sa
 .era .dot{width:8px;height:8px;border-radius:50%;background:#fbbf24;box-shadow:0 0 8px #fbbf24;flex-shrink:0}
 .era #eraTxt{font-size:13px;color:#fcd34d;font-weight:700}
 svg.scene{width:100%;height:auto;display:block;margin-top:2px}
+/* 产量曲线 */
+.yield-hd{font-size:11.5px;color:#7dd3fc;font-weight:700;margin:15px 0 1px;text-align:center}
+.yseg{fill:none;stroke-width:2.6;stroke-linecap:round;stroke-linejoin:round;opacity:0;
+  stroke-dasharray:160;stroke-dashoffset:160;transition:opacity .3s,stroke-dashoffset .7s ease}
+.yseg.on{opacity:1;stroke-dashoffset:0}
+.yp{opacity:0;transition:opacity .4s}
+.yp.on{opacity:1}
+.yt{font-size:9px;fill:#94a3b8;opacity:0;transition:opacity .4s}
+.yt.on{opacity:1}
 /* 节点 / 边动画 */
 .node{opacity:0;transform:scale(0);transform-box:fill-box;transform-origin:center;transition:opacity .5s,transform .5s cubic-bezier(.2,1.6,.4,1)}
 .node.on{opacity:1;transform:scale(1)}
@@ -76,6 +85,8 @@ svg.scene{width:100%;height:auto;display:block;margin-top:2px}
   <div class="sim-badge">📐 <b>接近真实模拟</b><span class="x"></span>节点·关系·年代均来自公开资料，做了简化抽象，非精确还原</div>
   <div class="era"><span class="dot"></span><span id="eraTxt">1954 · 建厂</span></div>
   <svg class="scene" id="scene" viewBox="0 0 360 280" xmlns="http://www.w3.org/2000/svg"></svg>
+  <div class="yield-hd">📈 甘蔗和糖的产量，跟着年代起伏</div>
+  <svg class="scene" id="yield" viewBox="0 0 360 195" xmlns="http://www.w3.org/2000/svg"></svg>
   <button class="replay" id="replay">↻ 重看一遍</button>
 </div>
 
@@ -117,17 +128,13 @@ svg.scene{width:100%;height:auto;display:block;margin-top:2px}
 </div>
 
 <script>
-// ===== 环位（中心糖厂 180,140；半径 90）=====
-const CX=180,CY=140,R=90;
-const RING=[
-  {x:CX,y:CY-R},                       // 0 顶
-  {x:CX+R*Math.cos(-Math.PI/3),y:CY+R*Math.sin(-Math.PI/3)},   // 1 右上
-  {x:CX+R,y:CY},                       // 2 右
-  {x:CX+R*Math.cos(Math.PI/3),y:CY+R*Math.sin(Math.PI/3)},     // 3 右下
-  {x:CX-R*Math.cos(Math.PI/3),y:CY+R*Math.sin(Math.PI/3)},     // 4 左下
-  {x:CX-R,y:CY},                       // 5 左
-  {x:CX-R*Math.cos(-Math.PI/3),y:CY+R*Math.sin(-Math.PI/3)}    // 6 左上
-];
+// ===== 环位（中心糖厂 180,140；半径 82；8个位置）=====
+const CX=180,CY=140,R=82;
+const RING=[];
+for(let i=0;i<8;i++){
+  const a=-Math.PI/2+i*Math.PI/4;
+  RING.push({x:CX+R*Math.cos(a),y:CY+R*Math.sin(a)});
+}
 // 第一幕：鼎盛期（甘蔗成片、码头、货船、出口日本）
 const S1=[
   {p:0,ic:'🌾',t:'甘蔗',c:'#84cc16'},
@@ -136,17 +143,19 @@ const S1=[
   {p:3,ic:'🚢',t:'货船',c:'#06b6d4'},
   {p:4,ic:'🏗️',t:'码头',c:'#f59e0b'},
   {p:5,ic:'🌾',t:'甘蔗',c:'#84cc16'},
-  {p:6,ic:'🌾',t:'甘蔗',c:'#84cc16'}
+  {p:6,ic:'🌾',t:'甘蔗',c:'#84cc16'},
+  {p:7,ic:'🌾',t:'甘蔗',c:'#84cc16'}
 ];
 // 第二幕：今天（甘蔗仍实线，其余半线/零线）
 const S2=[
   {p:0,ic:'🌾',t:'甘蔗',c:'#22c55e',edge:'on'},
-  {p:1,ic:'🏛️',t:'研文旅',c:'#3b82f6',edge:'half'},
-  {p:2,ic:'🥜',t:'花生',c:'#eab308',edge:'half'},
-  {p:3,ic:'🛒',t:'电商',c:'#06b6d4',edge:'half'},
-  {p:4,ic:'🏪',t:'线下店',c:'#f59e0b',edge:'none'},
-  {p:5,ic:'🏘️',t:'村集体',c:'#f59e0b',edge:'none'},
-  {p:6,ic:'🏡',t:'民宿',c:'#a78bfa',edge:'none'}
+  {p:1,ic:'🎓',t:'研学',c:'#3b82f6',edge:'half'},
+  {p:2,ic:'🏛️',t:'文旅',c:'#d946ef',edge:'half'},
+  {p:3,ic:'🥜',t:'花生',c:'#eab308',edge:'half'},
+  {p:4,ic:'🛒',t:'电商',c:'#06b6d4',edge:'half'},
+  {p:5,ic:'🏪',t:'线下店',c:'#f59e0b',edge:'none'},
+  {p:6,ic:'🏘️',t:'村集体',c:'#f59e0b',edge:'none'},
+  {p:7,ic:'🏡',t:'民宿',c:'#a78bfa',edge:'none'}
 ];
 
 function nodeSVG(d,id){
@@ -169,11 +178,11 @@ function edgeSVG(d,id){
 function renderScene(){
   let svg='';
   // 东江（底部流动）
-  svg+=`<path d="M 8 252 Q 90 242 180 252 T 352 252" stroke="#0ea5e9" stroke-width="5" fill="none" opacity="0.45"/>
+  svg+=`<path d="M 8 260 Q 90 250 180 260 T 352 260" stroke="#0ea5e9" stroke-width="5" fill="none" opacity="0.45"/>
     <circle r="3.5" fill="#7dd3fc"><animateMotion dur="3.4s" repeatCount="indefinite"
-      path="M 8 252 Q 90 242 180 252 T 352 252"/></circle>
+      path="M 8 260 Q 90 250 180 260 T 352 260"/></circle>
     <circle r="2.5" fill="#bae6fd" opacity="0.8"><animateMotion dur="3.4s" begin="1.7s" repeatCount="indefinite"
-      path="M 8 252 Q 90 242 180 252 T 352 252"/></circle>`;
+      path="M 8 260 Q 90 250 180 260 T 352 260"/></circle>`;
   // 边（先画，在节点下）
   S1.forEach((d,i)=>svg+=edgeSVG(d,'e1_'+i));
   S2.forEach((d,i)=>svg+=edgeSVG(d,'e2_'+i));
@@ -192,6 +201,45 @@ function renderScene(){
   document.getElementById('scene').innerHTML=svg;
 }
 renderScene();
+
+// 产量曲线（年产糖量·吨；随年代起伏，未来分叉）
+function renderYield(){
+  const P={
+    a:[40,100], b:[105,45], c:[170,52], d:[235,85],
+    up:[300,50], dn:[300,118]
+  };
+  let s='';
+  // 坐标轴淡线
+  s+=`<line x1="30" y1="35" x2="30" y2="125" stroke="#334155" stroke-width="1" opacity="0.7"/>
+      <line x1="30" y1="120" x2="330" y2="120" stroke="#1e293b" stroke-width="1" opacity="0.7"/>`;
+  // 分段
+  const segs=[
+    ['ysA',P.a,P.b,'#f59e0b'],['ysB',P.b,P.c,'#f59e0b'],['ysC',P.c,P.d,'#f59e0b'],
+    ['ysUp',P.d,P.up,'#22c55e'],['ysDn',P.d,P.dn,'#94a3b8']
+  ];
+  segs.forEach(g=>{
+    s+=`<path class="yseg" id="${g[0]}" d="M ${g[1][0]} ${g[1][1]} L ${g[2][0]} ${g[2][1]}" stroke="${g[3]}"/>`;
+  });
+  // 点
+  const pts=[['ypA',P.a,'#f59e0b'],['ypB',P.b,'#f59e0b'],['ypC',P.c,'#f59e0b'],
+    ['ypD',P.d,'#f59e0b'],['ypUp',P.up,'#22c55e'],['ypDn',P.dn,'#94a3b8']];
+  pts.forEach(g=>{
+    s+=`<circle class="yp" id="${g[0]}" cx="${g[1][0]}" cy="${g[1][1]}" r="4.5" fill="${g[2]}"/>`;
+  });
+  // 产量标签
+  s+=`<text class="yt" id="ylB" x="105" y="30" text-anchor="middle" fill="#fbbf24" font-weight="700">约6000吨</text>
+      <text class="yt" id="ylD" x="228" y="108" text-anchor="middle" fill="#fcd34d" font-weight="700">约3000吨</text>
+      <text class="yt" id="ylUp" x="300" y="32" text-anchor="middle" fill="#86efac" font-weight="700">约4000~5000吨</text>
+      <text class="yt" id="ylDn" x="300" y="138" text-anchor="middle" fill="#94a3b8">越来越少</text>`;
+  // 横轴年代
+  const eras=[[40,'1954'],[105,'七八十年代'],[170,'1986'],[235,'今天'],[300,'未来']];
+  eras.forEach(e=>{
+    s+=`<text x="${e[0]}" y="155" text-anchor="middle" font-size="9" fill="#94a3b8">${e[1]}</text>`;
+  });
+  s+=`<text x="110" y="180" text-anchor="middle" font-size="9" fill="#64748b">（年产糖量·吨；未来两条为模拟，不预测）</text>`;
+  document.getElementById('yield').innerHTML=s;
+}
+renderYield();
 
 // 分叉小网：点亮（线变多、大家互相连） vs 熄灭（线断、中心暗）
 function renderFork(id,kind){
@@ -229,11 +277,15 @@ function play(){
   timers.forEach(clearTimeout);timers.length=0;
   document.querySelectorAll('.node').forEach(n=>n.classList.remove('on','ghost'));
   document.querySelectorAll('.edge').forEach(e=>{e.classList.remove('on','half','none','dead');});
+  document.querySelectorAll('.yseg,.yp,.yt').forEach(e=>e.classList.remove('on'));
   // 点亮小网初始态
   const upEdges=$('forkUp').querySelectorAll('.fedge, .fring');
   const dnEdges=$('forkDn').querySelectorAll('.fedge');
   // 第一幕：建厂
   at(0.2,()=>{ $('factory').classList.add('on'); setEra('1954 · 建厂'); });
+  at(0.45,()=>$('ypA').classList.add('on'));
+  at(1.45,()=>{ $('ysA').classList.add('on'); $('ypB').classList.add('on'); $('ylB').classList.add('on'); });
+  at(2.6,()=>{ $('ysB').classList.add('on'); $('ypC').classList.add('on'); });
   // 七八十年代：甘蔗成片、码头、货船
   S1.forEach((d,i)=>{
     at(0.8+i*0.28,()=>{
@@ -253,6 +305,7 @@ function play(){
       $('e2_'+i).classList.add(d.edge);
     });
   });
+  at(4.6,()=>{ $('ysC').classList.add('on'); $('ypD').classList.add('on'); $('ylD').classList.add('on'); });
   // 第三幕：分叉
   at(7.2,()=>{
     setEra('未来 · 点亮，还是熄灭？');
@@ -262,6 +315,9 @@ function play(){
       setTimeout(()=>{e.classList.remove('half','none');e.classList.add('on');n.classList.add('on');},i*260);
     });
   });
+  // 产量曲线分叉
+  at(7.35,()=>{ $('ysUp').classList.add('on'); $('ypUp').classList.add('on'); $('ylUp').classList.add('on'); });
+  at(7.95,()=>{ $('ysDn').classList.add('on'); $('ypDn').classList.add('on'); $('ylDn').classList.add('on'); });
 }
 $('replay').onclick=play;
 $('goBtn').onclick=()=>{ location.href='v3.html?shock=G'; };
