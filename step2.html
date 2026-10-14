@@ -84,14 +84,14 @@ svg.scene{width:100%;height:auto;display:block;margin-top:2px}
   <div class="fbox up">
     <div class="fh">🌱 点亮</div>
     <svg viewBox="0 0 200 150" id="forkUp"></svg>
-    <div class="fr">重返规上</div>
-    <div class="fn">深加工·联名·研学<br>带动甘蔗、联农</div>
+    <div class="fr">重新做大</div>
+    <div class="fn">做新产品·一起卖·办研学<br>带动大家种甘蔗</div>
   </div>
   <div class="fbox dn">
     <div class="fh">🌑 熄灭</div>
     <svg viewBox="0 0 200 150" id="forkDn"></svg>
     <div class="fr">厂消失</div>
-    <div class="fn">70年品牌断<br>少一条甘蔗链</div>
+    <div class="fn">70年的招牌没了<br>种甘蔗的人少了</div>
   </div>
 </div>
 
@@ -105,7 +105,7 @@ svg.scene{width:100%;height:auto;display:block;margin-top:2px}
   <a class="srccard" href="http://www.guanyinge-sugar.com/about.html" target="_blank" rel="noopener">
     <span class="ic">🏭</span><span class="tx">观音阁糖厂官网 · 1954建·600吨/日·出口日本</span><span class="go">↗</span></a>
   <a class="srccard" href="https://www.boluo.gov.cn/xzgwh/gygzrmzf/zwgk/qt/ghjh/content/post_5758388.html" target="_blank" rel="noopener">
-    <span class="ic">📄</span><span class="tx">观音阁镇2026政府工作报告 · 支持糖厂重返规上</span><span class="go">↗</span></a>
+    <span class="ic">📄</span><span class="tx">观音阁镇2026政府工作报告 · 支持糖厂重新做大</span><span class="go">↗</span></a>
   <a class="srccard" href="http://m.toutiao.com/group/6963460810752459276/" target="_blank" rel="noopener">
     <span class="ic">📰</span><span class="tx">走读百年惠州 · 沿江甘蔗、吊机转运、水路运蔗</span><span class="go">↗</span></a>
 </div>
@@ -113,7 +113,7 @@ svg.scene{width:100%;height:auto;display:block;margin-top:2px}
 <a class="back" href="v2.html">← 回全息图</a>
 
 <div class="bar">
-  <button class="btn" id="goBtn">就以这家老店为例，下一步：选主体组网</button>
+  <button class="btn" id="goBtn">就以这家老店为例，下一步：选相关产业</button>
 </div>
 
 <script>
@@ -144,7 +144,7 @@ const S2=[
   {p:1,ic:'🏛️',t:'研文旅',c:'#3b82f6',edge:'half'},
   {p:2,ic:'🥜',t:'花生',c:'#eab308',edge:'half'},
   {p:3,ic:'🛒',t:'电商',c:'#06b6d4',edge:'half'},
-  {p:4,ic:'🏪',t:'线下网',c:'#f59e0b',edge:'none'},
+  {p:4,ic:'🏪',t:'线下店',c:'#f59e0b',edge:'none'},
   {p:5,ic:'🏘️',t:'村集体',c:'#f59e0b',edge:'none'},
   {p:6,ic:'🏡',t:'民宿',c:'#a78bfa',edge:'none'}
 ];
@@ -193,7 +193,7 @@ function renderScene(){
 }
 renderScene();
 
-// 分叉小网：点亮（边变密、多中心） vs 熄灭（边断、中心暗）
+// 分叉小网：点亮（线变多、大家互相连） vs 熄灭（线断、中心暗）
 function renderFork(id,kind){
   const c=100,cy=72,r=46;
   const ps=[[c,cy-r],[c+r*0.87,cy-r*0.5],[c+r*0.87,cy+r*0.5],[c,cy+r],[c-r*0.87,cy+r*0.5],[c-r*0.87,cy-r*0.5]];
@@ -245,7 +245,7 @@ function play(){
   at(3.0,()=>{ $('japanLine').classList.add('on'); setEra('1986 · 起出口日本'); });
   // 第二幕：历史节点淡出，今天节点淡入
   at(4.3,()=>{
-    setEra('今天 · 仍在生产，但已掉到规下');
+    setEra('今天 · 还在生产，但厂子变小、不够规模了');
     S1.forEach((d,i)=>{ $('n1_'+i).classList.add('ghost'); $('e1_'+i).classList.remove('on'); });
     $('japanLine').classList.remove('on');
     S2.forEach((d,i)=>{
@@ -261,9 +261,7 @@ function play(){
       const e=$('e2_'+i),n=$('n2_'+i);
       setTimeout(()=>{e.classList.remove('half','none');e.classList.add('on');n.classList.add('on');},i*260);
     });
-    // 熄灭：另一条路——让节点变暗
   });
-  at(8.6,()=>setEra('两种命运，都可能——决定权在人'));
 }
 $('replay').onclick=play;
 $('goBtn').onclick=()=>{ location.href='v3.html?shock=G'; };
