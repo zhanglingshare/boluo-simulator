@@ -13,17 +13,13 @@ body{background:#030711;color:#cbd5e1;font-family:-apple-system,"PingFang SC",sa
 .hd .sub{font-size:12px;color:#64748b;margin-top:5px}
 .block{margin:14px 12px 0}
 .block .bt{font-size:13.5px;color:#7dd3fc;font-weight:700;margin-bottom:9px;display:flex;align-items:center;gap:6px}
-/* 假设网格 */
-.ggrid{display:grid;grid-template-columns:repeat(3,1fr);gap:8px}
-.gcell{background:rgba(30,41,59,.5);border:1px solid rgba(71,85,105,.45);border-radius:13px;padding:13px 5px;text-align:center}
-.gcell .ic{font-size:23px}
-.gcell .w{font-size:11px;color:#cbd5e1;margin-top:4px}
-/* 徽章行 */
-.badge-row{display:flex;gap:8px;margin-top:10px}
-.badge2{flex:1;text-align:center;font-size:11px;border-radius:10px;padding:9px 5px}
-.b-warn{background:rgba(60,40,10,.5);border:1px solid #a16207;color:#fbbf24}
-.b-run{background:rgba(12,40,30,.5);border:1px solid #15803d;color:#4ade80}
-.b-lock{background:rgba(30,41,59,.6);border:1px solid #475569;color:#94a3b8}
+/* 一句话假设 */
+.assume1{display:flex;gap:10px;background:rgba(12,25,40,.7);border:1px solid rgba(59,130,246,.4);
+  border-radius:14px;padding:13px 15px;margin:14px 12px 0}
+.assume1 .ai{font-size:18px;line-height:1.5}
+.assume1 b{color:#93c5fd}
+.assume1 div{font-size:12.5px;color:#aebfd0;line-height:1.6}
+.assume1 .aflip{display:block;font-size:11px;color:#7d8fa8;margin-top:5px}
 /* 证据分级色块 */
 .lvrow{display:flex;gap:7px}
 .lvchip{flex:1;text-align:center;border-radius:11px;padding:10px 2px;font-size:11px;color:#fff}
@@ -100,20 +96,11 @@ body{background:#030711;color:#cbd5e1;font-family:-apple-system,"PingFang SC",sa
   <div class="sub">只盯一个苗头，看清楚，再往下走。</div>
 </div>
 
-<div class="block">
-  <div class="bt">🔍 推演建立在哪些假设上</div>
-  <div class="ggrid">
-    <div class="gcell"><div class="ic">🔗</div><div class="w">关系真实</div></div>
-    <div class="gcell"><div class="ic">➡️</div><div class="w">沿供货走</div></div>
-    <div class="gcell"><div class="ic">🔻</div><div class="w">越远越弱</div></div>
-    <div class="gcell"><div class="ic">🚫</div><div class="w">裸冲击</div></div>
-    <div class="gcell"><div class="ic">🔒</div><div class="w">网络固定</div></div>
-    <div class="gcell"><div class="ic">⏱️</div><div class="w">时间估算</div></div>
-  </div>
-  <div class="badge-row">
-    <div class="badge2 b-warn">⚠️ 是“如果发生”<br>不是预测会发生</div>
-    <div class="badge2 b-run">🔄 假设不认同<br>可改参数重跑</div>
-    <div class="badge2 b-lock">🔒 只看依据<br>算法不公开</div>
+<div class="assume1">
+  <span class="ai">🔍</span>
+  <div>
+    <b>假设：</b>冲击沿真实供货关系传导、越远越弱，先不计救援；这是“如果发生”，不是预测会发生。
+    <span class="aflip">不认同可改参数重跑，具体算法不公开。</span>
   </div>
 </div>
 
