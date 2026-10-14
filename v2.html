@@ -198,6 +198,10 @@ const rawEdges=[
   ["pk1","xwd",2,"载体承载"],["pk1","zw",2,"载体承载"],["pk2","jq",3,"载体承载"],
   ["ggt","dj",1,"环保约束"],["ggp","dl",1,"设施承载"],
 ];
+// 过滤边：只保留两端都在显示集合里的
+const showNodeIds=new Set(nodes.map(n=>n.id));
+const edges=rawEdges.filter(e=>showNodeIds.has(e[0])&&showNodeIds.has(e[1]));
+
 // 仲恺式8位势：链主/配套/设施/载体/生态/农业/地标/外部
 const typeColor={anchor:0x3b5bdb,capillary:0x0e7490,infra:0x64748b,park:0x65a30d,
   eco:0x0ea5e9,agri:0xa3e635,gi:0x4ade80,ext:0xa78bfa,legacy:0xa16207,terrain:0x38bdf8,dormant:0x475569,livelihood:0xec4899};
@@ -226,7 +230,14 @@ const key=new THREE.PointLight(0x88ccff,1.2,800);key.position.set(100,150,100);s
 
 // 节点按层摆到球壳上：上=生态农业，中=工业
 const layerR={anchor:55,capillary:105,infra:145,park:145,eco:90,agri:100,gi:95,ext:210,terrain:0,legacy:130,dormant:170,livelihood:155};
-const nodes=rawNodes.map(d=>{
+// 从URL ?nodes=xxx 过滤用户选的主体
+const urlParams=new URLSearchParams(location.search);
+const filterNodes=urlParams.get('nodes');
+let showIds=null;
+if(filterNodes)showIds=new Set(filterNodes.split(','));
+const rawNodesFiltered=showIds?rawNodes.filter(n=>showIds.has(n.id)||n.type==='terrain'):rawNodes;
+
+const nodes=rawNodesFiltered.map(d=>{
   if(d.type==='terrain' && d.id==='dj'){
     return Object.assign({},d,{pos:new THREE.Vector3(-20,-22,0),baseColor:0x38bdf8});
   }
@@ -314,7 +325,7 @@ nodes.forEach(n=>{
 
 // 边：静态线 + 流动粒子
 const lines={},particles=[];
-rawEdges.forEach((e,i)=>{
+edges.forEach((e,i)=>{
   const s=nodeById[e[0]],t=nodeById[e[1]];
   const g=new THREE.BufferGeometry().setFromPoints([s.pos,t.pos]);
   const m=new THREE.LineBasicMaterial({color:edgeColor[e[3]],transparent:true,opacity:0.35});
