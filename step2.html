@@ -63,6 +63,10 @@ body{background:#030711;color:#cbd5e1;font-family:-apple-system,"PingFang SC",sa
 .tab{flex:1;text-align:center;padding:10px 4px;border-radius:10px;font-size:12px;background:rgba(30,41,59,.6);
   border:1px solid rgba(71,85,105,.5);color:#94a3b8;cursor:pointer;transition:all .15s}
 .tab.tab-sel{background:#7f1d1d;border-color:#ef4444;color:#fff;font-weight:700;box-shadow:0 0 12px rgba(239,68,68,.3)}
+.evidencechain{margin-top:10px;background:rgba(8,15,30,.5);border:1px solid rgba(125,211,252,.12);
+  border-radius:12px;padding:10px 8px 8px}
+.evidencechain .ec-title{font-size:11px;color:#94a3b8;margin-bottom:2px;padding:0 4px}
+.evidencechain svg{width:100%;height:auto;display:block}
 </style>
 </head>
 <body>
@@ -198,6 +202,65 @@ document.querySelectorAll('.card').forEach(c=>{
   const lv=levelOf(c.dataset.s),tag=c.querySelector('.lvl');
   tag.className='lvl '+lv.cls;
   tag.textContent='苗头'+lv.word+'·'+SUB[c.dataset.s];
+});
+
+// ===== 证据链网络（模仿辐射状关系图：中心=苗头，周围=证据，颜色=来源等级，虚线=推断）=====
+const EVIDENCE={
+  A:[
+    {lv:'C',t:'总部在深圳'},
+    {lv:'B',t:'还在扩产'},
+    {lv:'D',t:'成本转移推断'}
+  ],
+  B:[
+    {lv:'A',t:'政府工作报告'},
+    {lv:'A',t:'水源保护'},
+    {lv:'B',t:'电镀管控'},
+    {lv:'B',t:'媒体报道'}
+  ],
+  C:[
+    {lv:'A',t:'三旧改造政策'},
+    {lv:'B',t:'老厂在改造范围'},
+    {lv:'C',t:'改造已在进行'}
+  ],
+  D:[
+    {lv:'A',t:'东莞产业升级'},
+    {lv:'B',t:'承接东莞事实'},
+    {lv:'D',t:'减弱幅度待验证'}
+  ]
+};
+const LV_COLOR={A:'#22c55e',B:'#3b82f6',C:'#eab308',D:'#94a3b8'};
+function evidenceSVG(s){
+  const ev=EVIDENCE[s],n=ev.length,cx=170,cy=150,R=104;
+  const pos=[];
+  let svg='<svg viewBox="0 0 340 300" xmlns="http://www.w3.org/2000/svg">';
+  ev.forEach((e,i)=>{
+    const a=-Math.PI/2+i*2*Math.PI/n;
+    const x=cx+R*Math.cos(a),y=cy+R*Math.sin(a);
+    pos.push({x,y,e});
+    const dash=e.lv==='D'?'stroke-dasharray="4 4"':'';
+    svg+=`<line x1="${cx}" y1="${cy}" x2="${x}" y2="${y}" stroke="${LV_COLOR[e.lv]}" stroke-width="2" opacity="0.65" ${dash}/>`;
+  });
+  // 中心苗头
+  svg+=`<circle cx="${cx}" cy="${cy}" r="21" fill="#7f1d1d" stroke="#ef4444" stroke-width="2"/>`;
+  svg+=`<text x="${cx}" y="${cy+5}" text-anchor="middle" fill="#fff" font-size="12" font-weight="bold">苗头</text>`;
+  // 证据节点 + 标签
+  pos.forEach(p=>{
+    svg+=`<circle cx="${p.x}" cy="${p.y}" r="13" fill="rgba(8,15,30,.92)" stroke="${LV_COLOR[p.e.lv]}" stroke-width="2.5"/>`;
+    svg+=`<text x="${p.x}" y="${p.y+4}" text-anchor="middle" fill="${LV_COLOR[p.e.lv]}" font-size="12" font-weight="bold">${p.e.lv}</text>`;
+    let anchor='middle',tx=p.x,ty=p.y;
+    if(p.x>cx+20){anchor='start';tx=p.x+18;ty=p.y+4;}
+    else if(p.x<cx-20){anchor='end';tx=p.x-18;ty=p.y+4;}
+    else if(p.y<cy){ty=p.y-20;}
+    else{ty=p.y+27;}
+    svg+=`<text x="${tx}" y="${ty}" text-anchor="${anchor}" fill="#cbd5e1" font-size="11">${p.e.t}</text>`;
+  });
+  return svg+'</svg>';
+}
+document.querySelectorAll('.card').forEach(c=>{
+  const box=document.createElement('div');
+  box.className='evidencechain';
+  box.innerHTML='<div class="ec-title">🧩 证据链：节点颜色=来源等级，虚线=弱/推断</div>'+evidenceSVG(c.dataset.s);
+  c.querySelector('.signal').after(box);
 });
 
 // 一次只讨论一个苗头：tab 切换显示，默认聚焦苗头最强的 B
