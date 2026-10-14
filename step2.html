@@ -56,6 +56,27 @@ body{background:#030711;color:#cbd5e1;font-family:-apple-system,"PingFang SC",sa
 @keyframes breathe{0%,100%{transform:scale(1)}50%{transform:scale(1.07)}}
 .evidencechain .flow{opacity:0;animation:showflow .3s ease forwards 1.7s}
 @keyframes showflow{to{opacity:.9}}
+/* 来源清单 */
+.src-list{margin-top:10px;border-top:1px dashed rgba(71,85,105,.5);padding-top:8px}
+.sl-title{font-size:11px;color:#94a3b8;margin-bottom:2px}
+.srccard{display:flex;align-items:center;gap:10px;background:rgba(8,15,30,.6);border:1px solid rgba(71,85,105,.4);
+  border-radius:11px;padding:9px 11px;margin-top:7px;text-decoration:none}
+.lvpill{width:22px;height:22px;line-height:22px;text-align:center;border-radius:6px;font-size:11px;font-weight:700;flex-shrink:0}
+.lvp-a{background:#14532d;color:#bbf7d0}
+.lvp-b{background:#1e3a5f;color:#bfdbfe}
+.sc-body{flex:1;display:flex;flex-direction:column}
+.sc-t{font-size:13px;color:#e2e8f0;font-weight:600}
+.sc-src{font-size:10.5px;color:#7d8fa8}
+.sc-link{font-size:15px;color:#7dd3fc}
+.clickable{cursor:pointer}
+.nodeinfo{display:none;margin-top:10px;background:rgba(12,25,40,.7);border:1px solid rgba(125,211,252,.25);
+  border-radius:11px;padding:11px 12px;animation:fadein .2s ease}
+@keyframes fadein{from{opacity:0;transform:translateY(4px)}to{opacity:1;transform:none}}
+.ni-head{display:flex;align-items:center;gap:8px}
+.ni-t{font-size:13.5px;color:#e2e8f0;font-weight:700}
+.ni-x{margin-left:auto;color:#7d8fa8;font-size:13px;padding:2px 6px;cursor:pointer}
+.ni-info{font-size:12.5px;color:#cbd5e1;margin:7px 0 8px;line-height:1.6}
+.ni-link{display:block;font-size:11.5px;color:#7dd3fc;text-decoration:none;border-top:1px dashed rgba(71,85,105,.5);padding-top:8px}
 /* 多米诺影响 */
 .domino{display:flex;align-items:center;gap:3px;margin-top:11px}
 .dnode{flex:1;text-align:center;border-radius:12px;padding:10px 2px}
@@ -139,10 +160,24 @@ body{background:#030711;color:#cbd5e1;font-family:-apple-system,"PingFang SC",sa
 
 <script>
 const EVIDENCE=[
-  {lv:'A',t:'政府工作报告'},
-  {lv:'A',t:'水源保护'},
-  {lv:'B',t:'电镀管控'},
-  {lv:'B',t:'媒体报道'}
+  {lv:'A',t:'政府工作报告',src:'博罗县人民政府 · 2026',
+   info:'饮用水源地水质达标率100%，生态建设向绿向美。',
+   url:'http://www.boluo.gov.cn/zwgk/zfgzbg/content/post_5717382.html'},
+  {lv:'A',t:'水源保护',src:'博罗县环境准入负面清单',
+   info:'东江5条排水渠流域禁建电镀、线路板、印染，暂停审批表面处理。',
+   url:'http://www.boluo.gov.cn/attachment/0/292/292739/5480524.pdf'},
+  {lv:'A',t:'生态督导',src:'博罗县 · 2026年6月',
+   info:'县领导督导：坚守生态底线，生态优先、绿色发展。',
+   url:'https://www.boluo.gov.cn/gkmlpt/content/5/5783/mpost_5783532.html'},
+  {lv:'B',t:'电镀管控',src:'惠州市生态环境局 · 龙溪基地环评',
+   info:'龙溪电镀基地须在线监控、污染物全面达标，增产不增污。',
+   url:'https://shj.huizhou.gov.cn/attachment/0/352/352439/5798919.pdf'},
+  {lv:'B',t:'重金属停批',src:'博罗县 · 华橙电子环评',
+   info:'东江流域停止审批向河流排放汞、镉、铬、铅等重金属项目。',
+   url:'https://www.boluo.gov.cn/attachment/0/322/322711/5631034.pdf'},
+  {lv:'B',t:'企业搬入园',src:'惠州市政府 · 龙溪基地环评',
+   info:'东江流域现有企业搬迁进入龙溪电镀基地，集中治污。',
+   url:'https://www.huizhou.gov.cn/attachment/0/336/336362/5718604.pdf'}
 ];
 const LV_COLOR={A:'#22c55e',B:'#3b82f6',C:'#eab308',D:'#94a3b8'};
 function evidenceSVG(){
@@ -175,8 +210,8 @@ function evidenceSVG(){
     else if(p.x<cx-20){anchor='end';tx=p.x-18;ty=p.y+4;}
     else if(p.y<cy){ty=p.y-20;}
     else{ty=p.y+27;}
-    svg+=`<g class="enode" style="transform-origin:${p.x}px ${p.y}px;animation-delay:${1+i*0.18}s">
-      <circle cx="${p.x}" cy="${p.y}" r="13" fill="rgba(8,15,30,.92)" stroke="${LV_COLOR[p.e.lv]}" stroke-width="2.5"/>
+    svg+=`<g class="enode clickable" data-i="${i}" style="transform-origin:${p.x}px ${p.y}px;animation-delay:${1+i*0.15}s">
+      <circle cx="${p.x}" cy="${p.y}" r="14" fill="rgba(8,15,30,.92)" stroke="${LV_COLOR[p.e.lv]}" stroke-width="2.5"/>
       <text x="${p.x}" y="${p.y+4}" text-anchor="middle" fill="${LV_COLOR[p.e.lv]}" font-size="12" font-weight="bold">${p.e.lv}</text>
       <text x="${tx}" y="${ty}" text-anchor="${anchor}" fill="#cbd5e1" font-size="11">${p.e.t}</text>
     </g>`;
@@ -184,7 +219,26 @@ function evidenceSVG(){
   return svg+'</svg>';
 }
 document.getElementById('ec').innerHTML=
-  '<div class="ec-title">🧩 证据链：颜色=来源等级，光点=证据汇聚</div>'+evidenceSVG();
+  '<div class="ec-title">🧩 证据链：点节点看关键信息</div>'+evidenceSVG()+
+  '<div class="nodeinfo" id="nodeInfo"></div>';
+
+// 点击节点：只给一句关键信息（不过载）+ 来源链接，不直接跳走
+function showNode(i){
+  const e=EVIDENCE[i],box=document.getElementById('nodeInfo');
+  box.innerHTML=
+    '<div class="ni-head">'+
+      '<span class="lvpill '+(e.lv==='A'?'lvp-a':'lvp-b')+'">'+e.lv+'</span>'+
+      '<span class="ni-t">'+e.t+'</span>'+
+      '<span class="ni-x" id="niX">✕</span>'+
+    '</div>'+
+    '<div class="ni-info">'+e.info+'</div>'+
+    '<a class="ni-link" href="'+e.url+'" target="_blank" rel="noopener">来源：'+e.src+' · 查看原文 ↗</a>';
+  box.style.display='block';
+  document.getElementById('niX').onclick=function(ev){ev.stopPropagation();box.style.display='none';};
+}
+document.getElementById('ec').querySelectorAll('.clickable').forEach(g=>{
+  g.addEventListener('click',function(ev){ev.preventDefault();showNode(+g.dataset.i);});
+});
 
 document.getElementById('goBtn').onclick=()=>{
   location.href='v3.html?shock=B';
