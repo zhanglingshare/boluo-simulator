@@ -111,6 +111,8 @@ const rawNodes=[
   {id:"lq",name:"龙溪五金老厂群落",type:"legacy",town:"龙溪",state:"yellow",val:100,desc:"传统五金加工老厂群·亩均效益达标压力·用电稳但增长弱"},
   {id:"jf",name:"江丰精密",type:"anchor",town:"园洲",state:"green",val:50,desc:"溅射靶材全球第一·3纳米级"},
   {id:"lfsgy",name:"生命健康",type:"core",town:"长宁",state:"green",val:40,desc:"罗浮山国药·红脚艾·百草油·中华老字号"},
+  {id:"lswh",name:"环两山引领区",type:"core",town:"长宁/横河/福田",state:"green",val:60,desc:"环南昆山-罗浮山·218km 8字旅游公路·户外运动·罗浮山居"},
+  {id:"hh",name:"横河户外小镇",type:"capillary",town:"横河",state:"green",val:10,desc:"华南户外水经济港·两山明珠·精品民宿集群"},
   {id:"jt",name:"现代食品",type:"core",town:"湖镇",state:"green",val:80,desc:"百岁山374万吨·顺兴食品"},
   {id:"sc",name:"博罗山茶",type:"agri",town:"柏塘",state:"green",val:5,desc:"地理标志"},
   {id:"xc",name:"福田菜心",type:"agri",town:"福田",state:"yellow",val:3,desc:"地理标志·播种季"},
@@ -130,6 +132,9 @@ const rawEdges=[
   {s:"ht",t:"dz",level:"A",w:3,rel:"园区载体"},
   {s:"lq",t:"dz",level:"B",w:2,rel:"五金配套"},
   {s:"lq",t:"ht",level:"B",w:2,rel:"机加工配套"},
+  {s:"lswh",t:"lfsgy",level:"A",w:3,rel:"文旅+医药"},
+  {s:"hh",t:"lswh",level:"A",w:2,rel:"户外运动"},
+  {s:"lswh",t:"sc",level:"B",w:1,rel:"茶旅融合"},
   {s:"lfsgy",t:"sc",level:"C",w:1,rel:"南药/农业"},
   {s:"bmc",t:"xc",level:"C",w:1,rel:"福田同镇"},
 ];
