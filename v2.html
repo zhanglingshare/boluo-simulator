@@ -198,10 +198,6 @@ const rawEdges=[
   ["pk1","xwd",2,"载体承载"],["pk1","zw",2,"载体承载"],["pk2","jq",3,"载体承载"],
   ["ggt","dj",1,"环保约束"],["ggp","dl",1,"设施承载"],
 ];
-// 过滤边：只保留两端都在显示集合里的
-const showNodeIds=new Set(nodes.map(n=>n.id));
-const edges=rawEdges.filter(e=>showNodeIds.has(e[0])&&showNodeIds.has(e[1]));
-
 // 仲恺式8位势：链主/配套/设施/载体/生态/农业/地标/外部
 const typeColor={anchor:0x3b5bdb,capillary:0x0e7490,infra:0x64748b,park:0x65a30d,
   eco:0x0ea5e9,agri:0xa3e635,gi:0x4ade80,ext:0xa78bfa,legacy:0xa16207,terrain:0x38bdf8,dormant:0x475569,livelihood:0xec4899};
@@ -255,6 +251,10 @@ const nodes=rawNodesFiltered.map(d=>{
   });
 });
 const nodeById={};nodes.forEach(n=>nodeById[n.id]=n);
+
+// 过滤边：只保留两端都在显示集合里的
+const showNodeIds=new Set(nodes.map(n=>n.id));
+const edges=rawEdges.filter(e=>showNodeIds.has(e[0])&&showNodeIds.has(e[1]));
 
 // 创建节点mesh：外层光晕+内层核心+标签
 const group=new THREE.Group();scene.add(group);
