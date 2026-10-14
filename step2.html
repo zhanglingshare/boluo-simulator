@@ -59,6 +59,10 @@ body{background:#030711;color:#cbd5e1;font-family:-apple-system,"PingFang SC",sa
 .intel .noalgo{margin-top:10px;font-size:11px;color:#7d8fa8;font-style:italic;border-top:1px dashed rgba(51,65,85,.5);padding-top:8px}
 .ev{font-size:12.5px;color:#aebfd0;padding:4px 0;display:flex;align-items:flex-start}
 .ev .src{margin-top:1px}
+.shocktabs{display:flex;gap:6px;margin:16px 12px 2px}
+.tab{flex:1;text-align:center;padding:10px 4px;border-radius:10px;font-size:12px;background:rgba(30,41,59,.6);
+  border:1px solid rgba(71,85,105,.5);color:#94a3b8;cursor:pointer;transition:all .15s}
+.tab.tab-sel{background:#7f1d1d;border-color:#ef4444;color:#fff;font-weight:700;box-shadow:0 0 12px rgba(239,68,68,.3)}
 </style>
 </head>
 <body>
@@ -98,7 +102,14 @@ body{background:#030711;color:#cbd5e1;font-family:-apple-system,"PingFang SC",sa
   <div class="noalgo">这里只交代观察到的变动和证据来源，不公开具体的计算模型与权重——你可以看依据、决定认不认，也可以质疑、要求重算。</div>
 </div>
 
-<div class="card" data-s="A">
+<div class="shocktabs" id="tabs">
+  <div class="tab" data-s="A">A 链主飞走</div>
+  <div class="tab tab-sel" data-s="B">B 东江喊停</div>
+  <div class="tab" data-s="C">C 老厂腾退</div>
+  <div class="tab" data-s="D">D 外溢断流</div>
+</div>
+
+<div class="card" data-s="A" style="display:none">
   <div class="top"><span class="em">🏃</span>
     <div><div class="tt">链主飞走</div><div class="plain">最大的电池厂搬走（欣旺达总部外迁）</div></div>
     <span class="lvl lvl-weak">苗头弱·尾部风险</span>
@@ -128,7 +139,7 @@ body{background:#030711;color:#cbd5e1;font-family:-apple-system,"PingFang SC",sa
   <div class="impact">一旦发生：<b>龙溪电镀基地最先停产整改</b>，电动车、模具失去电镀环节，跟着卡壳。</div>
 </div>
 
-<div class="card" data-s="C">
+<div class="card" data-s="C" style="display:none">
   <div class="top"><span class="em">🏚️</span>
     <div><div class="tt">老厂腾退</div><div class="plain">老旧小厂拆迁改造</div></div>
     <span class="lvl lvl-strong">苗头强·已在推进</span>
@@ -143,7 +154,7 @@ body{background:#030711;color:#cbd5e1;font-family:-apple-system,"PingFang SC",sa
   <div class="impact">一旦发生：<b>数千小微工人转岗</b>，链主大厂基本不受影响，痛在底层就业。</div>
 </div>
 
-<div class="card" data-s="D">
+<div class="card" data-s="D" style="display:none">
   <div class="top"><span class="em">📉</span>
     <div><div class="tt">外溢断流</div><div class="plain">东莞那边订单少了</div></div>
     <span class="lvl lvl-mid">苗头中·看速度</span>
@@ -161,7 +172,7 @@ body{background:#030711;color:#cbd5e1;font-family:-apple-system,"PingFang SC",sa
 <a class="back" href="v2.html">← 回全息图</a>
 
 <div class="bar">
-  <button class="btn" id="goBtn">选好了，下一步：选主体组网</button>
+  <button class="btn" id="goBtn">就按这个苗头，下一步：选主体组网</button>
 </div>
 
 <script>
@@ -189,16 +200,20 @@ document.querySelectorAll('.card').forEach(c=>{
   tag.textContent='苗头'+lv.word+'·'+SUB[c.dataset.s];
 });
 
-let picked=null;
-document.querySelectorAll('.card').forEach(c=>{
-  c.onclick=()=>{
-    document.querySelectorAll('.card').forEach(x=>x.classList.remove('sel'));
-    c.classList.add('sel');picked=c.dataset.s;
-    document.getElementById('goBtn').classList.add('on');
-  };
-});
+// 一次只讨论一个苗头：tab 切换显示，默认聚焦苗头最强的 B
+let picked='B';
+const tabs=document.querySelectorAll('.tab');
+const cards=document.querySelectorAll('.card');
+function showShock(s){
+  tabs.forEach(t=>t.classList.toggle('tab-sel',t.dataset.s===s));
+  cards.forEach(c=>c.style.display=c.dataset.s===s?'block':'none');
+  picked=s;
+}
+tabs.forEach(t=>t.onclick=()=>showShock(t.dataset.s));
+showShock('B');
+document.getElementById('goBtn').classList.add('on');
 document.getElementById('goBtn').onclick=()=>{
-  // 带着选中的冲击，去第三页选主体组网
+  // 带着当前聚焦的冲击，去第三页选主体组网
   location.href='v3.html?shock='+picked;
 };
 </script>
