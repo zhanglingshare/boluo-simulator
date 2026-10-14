@@ -71,6 +71,7 @@ h1{font-size:22px;margin-bottom:6px}
     <span>视图：</span>
     <button class="fbtn on" data-filter="all">全景</button>
     <button class="fbtn" data-filter="boluo">只看博罗产业</button>
+    <span style="margin-left:auto;font-size:10px;color:#475569">👆 可以拖动圆点，点击看详情</span>
   </div>
 
   <div id="chart">
@@ -299,6 +300,10 @@ const isMobile=W<500;
 const canvasH=isMobile?620:560;
 const H=canvasH;
 const svg=d3.select("#chart").append("svg").attr("width","100%").attr("height",canvasH);
+// 东江横带（背景）
+svg.append("rect").attr("x",0).attr("y",H/2-18).attr("width","100%").attr("height",36)
+  .attr("fill","#0ea5e9").attr("opacity",0.06).attr("rx",8);
+svg.append("text").attr("x",8).attr("y",H/2-22).attr("fill","#0ea5e9").attr("font-size","9px").attr("opacity",0.5).text("— 东江 —");
 
 const colorMap={anchor:"#22c55e",champ:"#06b6d4",capillary:"#64748b",agri:"#84cc16",gi:"#fbbf24",ext:"#a78bfa",legacy:"#f59e0b",eco:"#0ea5e9"};
 const rMap={anchor:15,champ:13,capillary:11,agri:9,gi:9,ext:12,legacy:14,eco:16};
@@ -306,14 +311,30 @@ const rMap={anchor:15,champ:13,capillary:11,agri:9,gi:9,ext:12,legacy:14,eco:16}
 let nodes=rawNodes.map(d=>({...d}));
 let links=rawEdges.map(d=>({source:d.s,target:d.t,level:d.level,w:d.w,rel:d.rel,kind:d.kind}));
 
-const chargeStrength=isMobile?-180:-280;
-const linkDist=isMobile?60:95;
+// 给每个节点一个地理方位（南工北农，外部在左）
+const geoY={
+  eco:null, // 东江/环两山单独处理
+  anchor:380,champ:340,capillary:420,legacy:470,agri:150,gi:100,ext:null
+};
+const geoX={gz:40,dg:40,sz:40,hz:W-40};
+nodes.forEach(n=>{
+  if(n.id==="dj"){n.fy0=H/2; n.fx0=W/2}
+  else if(n.id==="lswh"){n.fy0=100; n.fx0=W/2}
+  else if(n.type==="ext"){n.fy0=geoX[n.id]===40?200+(Math.random()*200):H/2; n.fx0=geoX[n.id]||40}
+  else if(n.type==="gi"){n.fy0=60+Math.random()*120; n.fx0=W*0.3+Math.random()*W*0.4}
+  else if(n.type==="agri"){n.fy0=120+Math.random()*100; n.fx0=W*0.2+Math.random()*W*0.6}
+  else {n.fy0=geoY[n.type]+Math.random()*60; n.fx0=W*0.15+Math.random()*W*0.7}
+});
+
+const chargeStrength=isMobile?-160:-240;
+const linkDist=isMobile?55:85;
 const sim=d3.forceSimulation(nodes)
   .force("link",d3.forceLink(links).id(d=>d.id).distance(d=>linkDist+d.w*8))
   .force("charge",d3.forceManyBody().strength(chargeStrength))
-  .force("center",d3.forceCenter(W/2,H/2))
-  .force("collide",d3.forceCollide().radius(d=>rMap[d.type]+(isMobile?6:15)))
-  .force("bounds",alpha=>{
+  .force("collide",d3.forceCollide().radius(d=>rMap[d.type]+(isMobile?5:12)))
+  .force("geoY",d3.forceY(d=>d.fy0).strength(0.35))
+  .force("geoX",d3.forceX(d=>d.fx0).strength(0.25))
+  .force("bounds",()=>{
     nodes.forEach(n=>{
       const r=rMap[n.type]+10;
       n.x=Math.max(r,Math.min(W-r,n.x));
@@ -368,16 +389,36 @@ sim.on("tick",()=>{
   label.attr("x",d=>d.x).attr("y",d=>d.y);
 });
 
-// 点击下钻
+// 点击下钻+高亮邻居
 const tip=document.getElementById("tooltip");
+let selected=null;
 node.on("click",(e,d)=>{
+  e.stopPropagation();
+  if(selected===d.id){selected=null;resetHighlight();tip.style.display="none";return}
+  selected=d.id;
+  const neighbors=new Set([d.id]);
+  links.forEach(l=>{
+    if(l.source.id===d.id)neighbors.add(l.target.id);
+    if(l.target.id===d.id)neighbors.add(l.source.id);
+  });
+  node.style("opacity",n=>neighbors.has(n.id)?1:0.15);
+  label.style("opacity",n=>neighbors.has(n.id)?1:0.1);
+  rings.style("opacity",n=>neighbors.has(n.id)?0.5:0.05);
+  link.style("stroke-opacity",l=>
+    (l.source.id===d.id||l.target.id===d.id)?0.9:0.05
+  );
   tip.style.display="block";
   tip.innerHTML=`<b style="color:${colorMap[d.type]}">${d.name}</b><br>📍 ${d.town}<br>📊 ${d.desc}<br>🔗 连了${d.degree}条线<br>🚦 多少条路要经过它：${(d.betweenness*100).toFixed(1)}%<br>💚 ${d.state==="green"?"指标平稳":d.state==="yellow"?"指标待核实":"数据缺失"}`;
-  tip.style.left=(e.offsetX+15)+"px";
-  tip.style.top=(e.offsetY-10)+"px";
-  e.stopPropagation();
+  tip.style.left=Math.min(e.offsetX+15,W-240)+"px";
+  tip.style.top=Math.min(e.offsetY-10,H-160)+"px";
 });
-chart.on("click",()=>tip.style.display="none");
+function resetHighlight(){
+  node.style("opacity",1);
+  label.style("opacity",1);
+  rings.style("opacity",0.5);
+  link.style("stroke-opacity",d=>d.level==="A"?0.8:0.5);
+}
+chart.on("click",()=>{selected=null;resetHighlight();tip.style.display="none"});
 
 // 筛选
 document.querySelectorAll(".fbtn").forEach(btn=>{
