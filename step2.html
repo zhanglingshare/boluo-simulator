@@ -6,55 +6,69 @@
 <title>第二步 · 苗头：东江环保</title>
 <style>
 *{margin:0;padding:0;box-sizing:border-box;-webkit-tap-highlight-color:transparent}
-body{background:#030711;color:#cbd5e1;font-family:-apple-system,"PingFang SC",sans-serif;line-height:1.6;padding-bottom:90px}
-.hd{padding:18px 16px 10px}
+body{background:#030711;color:#cbd5e1;font-family:-apple-system,"PingFang SC",sans-serif;line-height:1.5;padding-bottom:92px}
+.hd{padding:18px 16px 8px}
 .hd .step{display:inline-block;background:#1e3a5f;color:#60a5fa;font-size:11px;padding:2px 10px;border-radius:20px;margin-bottom:8px}
-.hd h1{font-size:20px;color:#e2e8f0;font-weight:700}
-.hd .sub{font-size:12.5px;color:#64748b;margin-top:6px;line-height:1.7}
-.assume{margin:14px 12px;background:rgba(12,25,40,.7);border:1px solid rgba(59,130,246,.4);border-radius:16px;padding:14px 16px}
-.assume h3{font-size:14px;color:#60a5fa;margin-bottom:8px}
-.assume ul{list-style:none}
-.assume li{font-size:12.5px;color:#aebfd0;padding:5px 0 5px 22px;position:relative;border-bottom:1px dashed rgba(51,65,85,.4)}
-.assume li:last-child{border:none}
-.assume li:before{content:"◆";position:absolute;left:0;color:#60a5fa;font-size:9px;top:7px}
-.assume li b{color:#e2e8f0}
-.assume .not{margin-top:10px;background:rgba(60,40,10,.5);border-radius:10px;padding:9px 12px;font-size:12px;color:#fbbf24}
-.assume .flip{margin-top:8px;font-size:11.5px;color:#7d8fa8;font-style:italic}
-.intel{margin:14px 12px;background:rgba(15,23,42,.6);border:1px solid rgba(148,163,184,.25);border-radius:16px;padding:14px 16px}
-.intel h3{font-size:14px;color:#cbd5e1;margin-bottom:8px}
-.intel .how{font-size:12.5px;color:#aebfd0;line-height:1.8}
-.intel .how b{color:#e2e8f0}
-.legend{display:flex;flex-wrap:wrap;gap:7px;margin-top:10px}
-.legend span{font-size:11px;color:#aebfd0;display:flex;align-items:center;flex:1 1 45%}
-.src{display:inline-block;width:18px;height:18px;line-height:18px;text-align:center;border-radius:5px;font-size:10px;font-weight:700;margin-right:6px;flex-shrink:0}
-.src-a{background:#14532d;color:#bbf7d0}
-.src-b{background:#1e3a5f;color:#bfdbfe}
-.src-c{background:#713f12;color:#fde68a}
-.src-d{background:#334155;color:#cbd5e1}
-.intel .noalgo{margin-top:10px;font-size:11px;color:#7d8fa8;font-style:italic;border-top:1px dashed rgba(51,65,85,.5);padding-top:8px}
-.card{margin:12px;background:rgba(15,23,42,.6);border:1px solid rgba(51,65,85,.5);border-radius:16px;padding:15px}
+.hd h1{font-size:22px;color:#e2e8f0;font-weight:700}
+.hd .sub{font-size:12px;color:#64748b;margin-top:5px}
+.block{margin:14px 12px 0}
+.block .bt{font-size:13.5px;color:#7dd3fc;font-weight:700;margin-bottom:9px;display:flex;align-items:center;gap:6px}
+/* 假设网格 */
+.ggrid{display:grid;grid-template-columns:repeat(3,1fr);gap:8px}
+.gcell{background:rgba(30,41,59,.5);border:1px solid rgba(71,85,105,.45);border-radius:13px;padding:13px 5px;text-align:center}
+.gcell .ic{font-size:23px}
+.gcell .w{font-size:11px;color:#cbd5e1;margin-top:4px}
+/* 徽章行 */
+.badge-row{display:flex;gap:8px;margin-top:10px}
+.badge2{flex:1;text-align:center;font-size:11px;border-radius:10px;padding:9px 5px}
+.b-warn{background:rgba(60,40,10,.5);border:1px solid #a16207;color:#fbbf24}
+.b-run{background:rgba(12,40,30,.5);border:1px solid #15803d;color:#4ade80}
+.b-lock{background:rgba(30,41,59,.6);border:1px solid #475569;color:#94a3b8}
+/* 流程图 */
+.flowrow{display:flex;align-items:center;gap:4px}
+.fstep{flex:1;text-align:center;background:rgba(30,41,59,.5);border:1px solid rgba(71,85,105,.45);border-radius:12px;padding:12px 3px}
+.fstep .ic{font-size:21px}
+.fstep .w{font-size:10.5px;color:#cbd5e1;margin-top:3px}
+.farrow{color:#60a5fa;font-size:17px}
+/* 证据分级色块 */
+.lvrow{display:flex;gap:7px}
+.lvchip{flex:1;text-align:center;border-radius:11px;padding:10px 2px;font-size:11px;color:#fff}
+.lvchip b{display:block;font-size:15px}
+.c-a{background:#14532d}.c-b{background:#1e3a5f}.c-c{background:#713f12}.c-d{background:#334155}
+/* 苗头卡片 */
+.card{margin:14px 12px 0;background:rgba(15,23,42,.6);border:1px solid rgba(51,65,85,.5);border-radius:16px;padding:15px}
 .card .top{display:flex;align-items:center;gap:10px}
-.card .em{font-size:26px}
-.card .tt{font-size:16px;font-weight:700;color:#f1f5f9}
-.card .plain{font-size:12px;color:#94a3b8;margin-top:1px}
-.lvl{margin-left:auto;font-size:11px;font-weight:700;padding:3px 10px;border-radius:20px;white-space:nowrap}
-.lvl-strong{background:#7f1d1d;color:#fca5a5}
-.kinds{margin-top:8px;font-size:11px;color:#7d8fa8}
-.kinds span{display:inline-block;background:rgba(51,65,85,.5);border-radius:6px;padding:1px 8px;margin-right:5px}
-.signal{margin-top:10px;background:rgba(8,15,30,.6);border-left:3px solid #3b82f6;border-radius:8px;padding:9px 12px;font-size:12.5px;color:#aebfd0}
-.signal b{color:#93c5fd}
-.ev{font-size:12.5px;color:#aebfd0;padding:4px 0;display:flex;align-items:flex-start}
-.ev .src{margin-top:1px}
-.signal .warn{color:#fbbf24;font-size:11.5px;margin-top:6px}
-.impact{margin-top:9px;font-size:12.5px;color:#cbd5e1}
-.impact b{color:#f87171}
-.evidencechain{margin-top:10px;background:rgba(8,15,30,.5);border:1px solid rgba(125,211,252,.12);border-radius:12px;padding:10px 8px 8px}
+.card .em{font-size:28px}
+.card .tt{font-size:17px;font-weight:700;color:#f1f5f9}
+.card .plain{font-size:11.5px;color:#94a3b8;margin-top:1px}
+.lvl{margin-left:auto;font-size:11px;font-weight:700;padding:4px 11px;border-radius:20px;background:#7f1d1d;color:#fca5a5;white-space:nowrap}
+.kinds{margin-top:8px}
+.kinds span{display:inline-block;font-size:11px;background:rgba(51,65,85,.5);border-radius:6px;padding:2px 9px;margin-right:5px;color:#cbd5e1}
+.evidencechain{margin-top:11px;background:rgba(8,15,30,.5);border:1px solid rgba(125,211,252,.12);border-radius:12px;padding:10px 8px 8px}
 .evidencechain .ec-title{font-size:11px;color:#94a3b8;margin-bottom:2px;padding:0 4px}
 .evidencechain svg{width:100%;height:auto;display:block}
-.bar{position:fixed;bottom:0;left:0;right:0;background:rgba(8,15,30,.92);border-top:1px solid #1c2739;padding:12px 14px;backdrop-filter:blur(12px)}
+/* 证据链动画 */
+.evidencechain line.link{stroke-dasharray:100;stroke-dashoffset:100;animation:draw .8s ease forwards}
+@keyframes draw{to{stroke-dashoffset:0}}
+.evidencechain .enode{opacity:0;transform-box:view-box;animation:pop .45s cubic-bezier(.2,1.6,.4,1) forwards}
+@keyframes pop{from{opacity:0;transform:scale(0)}to{opacity:1;transform:scale(1)}}
+.evidencechain .center{transform-box:view-box;transform-origin:170px 150px;animation:breathe 2.6s ease-in-out infinite}
+@keyframes breathe{0%,100%{transform:scale(1)}50%{transform:scale(1.07)}}
+.evidencechain .flow{opacity:0;animation:showflow .3s ease forwards 1.7s}
+@keyframes showflow{to{opacity:.9}}
+/* 多米诺影响 */
+.domino{display:flex;align-items:center;gap:3px;margin-top:11px}
+.dnode{flex:1;text-align:center;border-radius:12px;padding:10px 2px}
+.dnode .ic{font-size:20px}
+.dnode .w{font-size:10px;margin-top:2px}
+.d1{background:rgba(127,29,29,.55);border:1px solid #dc2626;color:#fca5a5}
+.d2{background:rgba(120,53,15,.5);border:1px solid #ea580c;color:#fdba74}
+.d3{background:rgba(113,63,18,.5);border:1px solid #ca8a04;color:#fde047}
+.darrow{color:#f87171;font-size:15px}
+.bar{position:fixed;bottom:0;left:0;right:0;background:rgba(8,15,30,.94);border-top:1px solid #1c2739;padding:12px 14px;backdrop-filter:blur(12px)}
 .btn{display:block;width:100%;padding:15px;border-radius:12px;border:none;font-size:15px;font-weight:700;cursor:pointer;
   background:linear-gradient(135deg,#dc2626,#991b1b);color:#fff}
-.back{display:inline-block;font-size:12px;color:#64748b;margin:8px 16px 0;text-decoration:none}
+.back{display:inline-block;font-size:12px;color:#64748b;margin:12px 16px 0;text-decoration:none}
 </style>
 </head>
 <body>
@@ -62,51 +76,59 @@ body{background:#030711;color:#cbd5e1;font-family:-apple-system,"PingFang SC",sa
 <div class="hd">
   <div class="step">第二步</div>
   <h1>苗头：东江环保</h1>
-  <div class="sub">这一步只盯一个苗头：<b style="color:#94a3b8">东江环保收紧</b>。先看清假设、证据和来源，再看它怎么穿过产业网络。</div>
+  <div class="sub">只盯一个苗头，看清楚，再往下走。</div>
 </div>
 
-<div class="assume">
-  <h3>🔍 先说清楚：这次推演建立在哪些假设上</h3>
-  <ul>
-    <li><b>① 关系是真的：</b>节点之间的连线，来自公开的供货/交易报道，不是厂里内部数据——可能有个别不准。</li>
-    <li><b>② 冲击沿供货走：</b>主要顺供应链传播；环保红线、抢地抢电是另外两条线。</li>
-    <li><b>③ 越远越弱：</b>离源头越远，影响越小，传到第3-4层就衰减很多（我设的衰减规则，不是实测）。</li>
-    <li><b>④ 先算“裸冲击”：</b>假设没有政府补贴、企业也没马上找到新客户——现实里这些缓冲会发生，所以你看到的是“最坏的机械传导”，不是最终结果。</li>
-    <li><b>⑤ 网络这一刻不变：</b>推演时网络结构固定，先不考虑企业临时牵新关系。</li>
-    <li><b>⑥ 时间是估的：</b>“几个月/几年”是合理估算（D级），快慢取决于政策、订单、技改速度，可能提前也可能延后。</li>
-  </ul>
-  <div class="not">⚠️ 这是“如果发生会怎样”，不是预测它一定发生。</div>
-  <div class="flip">💡 哪一条假设你不认同，结论就会跟着变——这正是它可以质疑、可以改参数重跑的原因。</div>
+<div class="block">
+  <div class="bt">🔍 推演建立在哪些假设上</div>
+  <div class="ggrid">
+    <div class="gcell"><div class="ic">🔗</div><div class="w">关系真实</div></div>
+    <div class="gcell"><div class="ic">➡️</div><div class="w">沿供货走</div></div>
+    <div class="gcell"><div class="ic">🔻</div><div class="w">越远越弱</div></div>
+    <div class="gcell"><div class="ic">🚫</div><div class="w">裸冲击</div></div>
+    <div class="gcell"><div class="ic">🔒</div><div class="w">网络固定</div></div>
+    <div class="gcell"><div class="ic">⏱️</div><div class="w">时间估算</div></div>
+  </div>
+  <div class="badge-row">
+    <div class="badge2 b-warn">⚠️ 是“如果发生”<br>不是预测会发生</div>
+    <div class="badge2 b-run">🔄 假设不认同<br>可改参数重跑</div>
+    <div class="badge2 b-lock">🔒 只看依据<br>算法不公开</div>
+  </div>
 </div>
 
-<div class="intel">
-  <h3>🕵️ 苗头是怎么发现的</h3>
-  <div class="how">苗头不是拍脑袋，是像<b>情报分析</b>一样盯出来的：<b>多源采集 → 交叉验证 → 分级标注</b>。
-    单一来源先存疑，两个以上独立来源对上，才升级为苗头。
+<div class="block">
+  <div class="bt">🕵️ 苗头怎么发现的</div>
+  <div class="flowrow">
+    <div class="fstep"><div class="ic">📡</div><div class="w">多源采集</div></div>
+    <div class="farrow">→</div>
+    <div class="fstep"><div class="ic">🔗</div><div class="w">交叉验证</div></div>
+    <div class="farrow">→</div>
+    <div class="fstep"><div class="ic">🏷️</div><div class="w">分级标注</div></div>
   </div>
-  <div class="legend">
-    <span><i class="src src-a">A</i>官方一手：政府工作报告/统计公报/规划</span>
-    <span><i class="src src-b">B</i>权威媒体/学术：党媒通讯社/科研机构</span>
-    <span><i class="src src-c">C</i>企业行业公开：工商/招商/招投标</span>
-    <span><i class="src src-d">D</i>迹象推断：单源/现象，需继续验证</span>
+  <div class="lvrow" style="margin-top:9px">
+    <div class="lvchip c-a"><b>A</b>官方一手</div>
+    <div class="lvchip c-b"><b>B</b>媒体学术</div>
+    <div class="lvchip c-c"><b>C</b>企业行业</div>
+    <div class="lvchip c-d"><b>D</b>迹象推断</div>
   </div>
-  <div class="noalgo">这里只交代观察到的变动和证据来源，不公开具体的计算模型与权重——你可以看依据、决定认不认，也可以质疑、要求重算。</div>
 </div>
 
 <div class="card">
   <div class="top"><span class="em">🛑</span>
     <div><div class="tt">东江喊停</div><div class="plain">沿江工厂环保停产</div></div>
-    <span class="lvl lvl-strong">苗头强·趋势确定</span>
+    <span class="lvl">苗头强·趋势确定</span>
   </div>
   <div class="kinds"><span>环保约束</span><span>供应链</span></div>
-  <div class="signal"><b>观察到的变动：</b>
-    <div class="ev"><i class="src src-a">A</i>东江是深莞惠几千万人饮用水源，环保要求持续收紧</div>
-    <div class="ev"><i class="src src-a">A</i>2026政府工作报告强调生态优先、绿色发展</div>
-    <div class="ev"><i class="src src-b">B</i>沿江电镀、表面处理被列为重点管控对象</div>
-    <div class="warn">⚠️ 多源一致、苗头最明确：环保方向几乎不会回头。</div>
-  </div>
+
   <div class="evidencechain" id="ec"></div>
-  <div class="impact">一旦发生：<b>龙溪电镀基地最先停产整改</b>，电动车、模具失去电镀环节，跟着卡壳。</div>
+
+  <div class="domino">
+    <div class="dnode d1"><div class="ic">🛑</div><div class="w">东江喊停</div></div>
+    <div class="darrow">→</div>
+    <div class="dnode d2"><div class="ic">🏭</div><div class="w">龙溪电镀先停</div></div>
+    <div class="darrow">→</div>
+    <div class="dnode d3"><div class="ic">🛵</div><div class="w">电动车模具卡</div></div>
+  </div>
 </div>
 
 <a class="back" href="v2.html">← 回全息图</a>
@@ -116,7 +138,6 @@ body{background:#030711;color:#cbd5e1;font-family:-apple-system,"PingFang SC",sa
 </div>
 
 <script>
-// 证据链网络：中心=苗头，周围=证据，颜色=来源等级，虚线=推断
 const EVIDENCE=[
   {lv:'A',t:'政府工作报告'},
   {lv:'A',t:'水源保护'},
@@ -131,25 +152,39 @@ function evidenceSVG(){
     const a=-Math.PI/2+i*2*Math.PI/n;
     const x=cx+R*Math.cos(a),y=cy+R*Math.sin(a);
     pos.push({x,y,e});
-    const dash=e.lv==='D'?'stroke-dasharray="4 4"':'';
-    svg+=`<line x1="${cx}" y1="${cy}" x2="${x}" y2="${y}" stroke="${LV_COLOR[e.lv]}" stroke-width="2" opacity="0.65" ${dash}/>`;
+    svg+=`<line class="link" pathLength="100" x1="${cx}" y1="${cy}" x2="${x}" y2="${y}"
+      stroke="${LV_COLOR[e.lv]}" stroke-width="2" opacity="0.7"
+      style="animation-delay:${0.2+i*0.22}s"/>`;
   });
-  svg+=`<circle cx="${cx}" cy="${cy}" r="21" fill="#7f1d1d" stroke="#ef4444" stroke-width="2"/>`;
-  svg+=`<text x="${cx}" y="${cy+5}" text-anchor="middle" fill="#fff" font-size="12" font-weight="bold">苗头</text>`;
-  pos.forEach(p=>{
-    svg+=`<circle cx="${p.x}" cy="${p.y}" r="13" fill="rgba(8,15,30,.92)" stroke="${LV_COLOR[p.e.lv]}" stroke-width="2.5"/>`;
-    svg+=`<text x="${p.x}" y="${p.y+4}" text-anchor="middle" fill="${LV_COLOR[p.e.lv]}" font-size="12" font-weight="bold">${p.e.lv}</text>`;
+  // 光流：证据汇聚到中心
+  pos.forEach((p,i)=>{
+    svg+=`<circle class="flow" r="3" fill="${LV_COLOR[p.e.lv]}">
+      <animateMotion dur="2.3s" repeatCount="indefinite"
+        path="M ${p.x} ${p.y} L ${cx} ${cy}" begin="${1.8+i*0.55}s"/>
+      </circle>`;
+  });
+  // 中心
+  svg+=`<g class="center">
+    <circle cx="${cx}" cy="${cy}" r="21" fill="#7f1d1d" stroke="#ef4444" stroke-width="2"/>
+    <text x="${cx}" y="${cy+5}" text-anchor="middle" fill="#fff" font-size="12" font-weight="bold">苗头</text>
+  </g>`;
+  // 证据节点
+  pos.forEach((p,i)=>{
     let anchor='middle',tx=p.x,ty=p.y;
     if(p.x>cx+20){anchor='start';tx=p.x+18;ty=p.y+4;}
     else if(p.x<cx-20){anchor='end';tx=p.x-18;ty=p.y+4;}
     else if(p.y<cy){ty=p.y-20;}
     else{ty=p.y+27;}
-    svg+=`<text x="${tx}" y="${ty}" text-anchor="${anchor}" fill="#cbd5e1" font-size="11">${p.e.t}</text>`;
+    svg+=`<g class="enode" style="transform-origin:${p.x}px ${p.y}px;animation-delay:${1+i*0.18}s">
+      <circle cx="${p.x}" cy="${p.y}" r="13" fill="rgba(8,15,30,.92)" stroke="${LV_COLOR[p.e.lv]}" stroke-width="2.5"/>
+      <text x="${p.x}" y="${p.y+4}" text-anchor="middle" fill="${LV_COLOR[p.e.lv]}" font-size="12" font-weight="bold">${p.e.lv}</text>
+      <text x="${tx}" y="${ty}" text-anchor="${anchor}" fill="#cbd5e1" font-size="11">${p.e.t}</text>
+    </g>`;
   });
   return svg+'</svg>';
 }
 document.getElementById('ec').innerHTML=
-  '<div class="ec-title">🧩 证据链：节点颜色=来源等级，虚线=弱/推断</div>'+evidenceSVG();
+  '<div class="ec-title">🧩 证据链：颜色=来源等级，光点=证据汇聚</div>'+evidenceSVG();
 
 document.getElementById('goBtn').onclick=()=>{
   location.href='v3.html?shock=B';
