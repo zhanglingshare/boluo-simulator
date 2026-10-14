@@ -68,6 +68,8 @@ h1{font-size:22px;margin-bottom:6px}
     <span><i style="background:#3b82f6"></i>骨干产业</span>
     <span><i style="background:#64748b"></i>毛细血管群落</span>
     <span><i style="background:#f59e0b"></i>老厂群落</span>
+    <span><i style="background:#84cc16"></i>地理标志农业</span>
+    <span><i style="background:#06b6d4"></i>东江水系</span>
     <span><i style="background:#a78bfa"></i>外部城市</span>
     <span>── A级硬数据</span>
     <span>- - B级推估</span>
@@ -114,8 +116,12 @@ const rawNodes=[
   {id:"lswh",name:"环两山引领区",type:"core",town:"长宁/横河/福田",state:"green",val:60,desc:"环南昆山-罗浮山·218km 8字旅游公路·户外运动·罗浮山居"},
   {id:"hh",name:"横河户外小镇",type:"capillary",town:"横河",state:"green",val:10,desc:"华南户外水经济港·两山明珠·精品民宿集群"},
   {id:"jt",name:"现代食品",type:"core",town:"湖镇",state:"green",val:80,desc:"百岁山374万吨·顺兴食品"},
-  {id:"sc",name:"博罗山茶",type:"agri",town:"柏塘",state:"green",val:5,desc:"地理标志"},
+  {id:"sc",name:"博罗山茶",type:"agri",town:"柏塘",state:"green",val:5,desc:"地理标志·省十大茶乡"},
   {id:"xc",name:"福田菜心",type:"agri",town:"福田",state:"yellow",val:3,desc:"地理标志·播种季"},
+  {id:"gyg",name:"观音阁花生",type:"agri",town:"观音阁",state:"green",val:8,desc:"国家地理标志·黑糖/柠檬/蓝莓酱"},
+  {id:"sb",name:"石坝胡须鸡",type:"agri",town:"石坝",state:"green",val:12,desc:"全国名特优新·三黄胡须鸡全产业链"},
+  {id:"lsmd",name:"罗浮山大米",type:"agri",town:"长宁/横河",state:"green",val:6,desc:"国家地理标志·神舟四号太空育种"},
+  {id:"dj",name:"东江水系",type:"water",town:"罗阳/石湾/园洲",state:"green",val:200,desc:"母亲河·饮用水源Ⅱ类达标·百岁山取水"},
 ];
 const rawEdges=[
   {s:"dg",t:"dz",level:"A",w:5,rel:"产业外溢"},
@@ -137,6 +143,10 @@ const rawEdges=[
   {s:"lswh",t:"sc",level:"B",w:1,rel:"茶旅融合"},
   {s:"lfsgy",t:"sc",level:"C",w:1,rel:"南药/农业"},
   {s:"bmc",t:"xc",level:"C",w:1,rel:"福田同镇"},
+  {s:"dj",t:"jt",level:"A",w:3,rel:"百岁山取水"},
+  {s:"dj",t:"dz",level:"A",w:2,rel:"工业用水"},
+  {s:"dj",t:"lsmd",level:"B",w:1,rel:"灌溉"},
+  {s:"gyg",t:"dj",level:"B",w:1,rel:"东江沙壤"},
 ];
 
 // ===== 计算度中心度 =====
@@ -156,8 +166,8 @@ const chart=document.getElementById("chart");
 const W=chart.clientWidth||860, H=560;
 const svg=d3.select("#chart").append("svg").attr("width","100%").attr("height",H);
 
-const colorMap={anchor:"#22c55e",core:"#3b82f6",capillary:"#64748b",agri:"#84cc16",ext:"#a78bfa",legacy:"#f59e0b"};
-const rMap={anchor:16,core:13,capillary:11,agri:8,ext:12,legacy:14};
+const colorMap={anchor:"#22c55e",core:"#3b82f6",capillary:"#64748b",agri:"#84cc16",ext:"#a78bfa",legacy:"#f59e0b",water:"#06b6d4"};
+const rMap={anchor:16,core:13,capillary:11,agri:8,ext:12,legacy:14,water:18};
 
 let nodes=rawNodes.map(d=>({...d}));
 let links=rawEdges.map(d=>({...d}));
