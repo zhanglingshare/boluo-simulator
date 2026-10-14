@@ -108,6 +108,18 @@ h1{font-size:22px;margin-bottom:6px}
     <div class="stat"><div class="l">连接不同圈子的</div><div class="v" id="sHole" style="color:#ef4444;font-size:15px">–</div></div>
   </div>
 
+  <h2 style="margin-top:34px">博罗家底图：有什么、多大、卖给谁、来了多少人</h2>
+  <p class="sub">中心是博罗，越往外越是"对外"。圆越大＝规模越大。数字均来自2025统计公报、政府工作报告、统计局月报。</p>
+  <div id="solarchart" style="position:relative">
+    <div id="solarTip" style="position:absolute;display:none;background:rgba(13,20,33,.96);border:1px solid #334155;border-radius:10px;padding:10px 12px;font-size:11.5px;color:#cbd5e1;max-width:250px;z-index:9;line-height:1.6;box-shadow:0 8px 30px rgba(0,0,0,.5)"></div>
+  </div>
+  <div class="legend" style="margin-top:6px">
+    <span><i style="background:#fbbf24"></i>博罗（中心）</span>
+    <span><i style="background:#22c55e"></i>六大产业（大小=产值）</span>
+    <span><i style="background:#06b6d4"></i>手里的家底</span>
+    <span><i style="background:#a78bfa"></i>卖到哪·谁来</span>
+  </div>
+
   <div class="brief">
     <b style="color:#a78bfa">周边城市连线的真实数据依据</b><br>
     <div style="font-size:12px;color:#cbd5e1;line-height:1.9;margin-top:8px">
@@ -448,7 +460,7 @@ function resetHighlight(){
   rings.style("opacity",0.5);
   link.style("stroke-opacity",d=>d.level==="A"?0.8:0.5);
 }
-chart.on("click",()=>{selected=null;resetHighlight();tip.style.display="none"});
+chart.addEventListener("click",()=>{selected=null;resetHighlight();tip.style.display="none"});
 
 // 分视图：一张图只讲一件事
 function viewKind(f){
@@ -486,5 +498,113 @@ document.querySelectorAll(".fbtn").forEach(btn=>{
     linkHit.style("display",l=>kinds.includes(l.kind)?null:"none");
   };
 });
+
+// ===== 太阳系家底图（固定轨道，不做力导向） =====
+(function(){
+  const box=document.getElementById("solarchart");
+  const SW=box.clientWidth||860;
+  const m=SW<500;
+  const SH=m?760:640;
+  const cx=SW/2, cy=SH/2;
+  const R1=m?72:120, R2=m?120:215, R3=m?163:300;
+  const ssvg=d3.select("#solarchart").append("svg").attr("width","100%").attr("height",SH);
+  const stip=document.getElementById("solarTip");
+
+  // 轨道圈
+  [R1,R2,R3].forEach((r,i)=>{
+    ssvg.append("circle").attr("cx",cx).attr("cy",cy).attr("r",r)
+      .attr("fill","none").attr("stroke","#1e293b").attr("stroke-width",1).attr("stroke-dasharray","2,6");
+  });
+  // 轨道标注
+  ssvg.append("text").attr("x",cx+6).attr("y",cy-R1+4).attr("fill","#475569").attr("font-size","9px").text("六大产业");
+  ssvg.append("text").attr("x",cx+6).attr("y",cy-R2+4).attr("fill","#475569").attr("font-size","9px").text("手里的家底");
+  ssvg.append("text").attr("x",cx+6).attr("y",cy-R3+4).attr("fill","#475569").attr("font-size","9px").text("卖到哪·谁来");
+
+  // 数据：产值单位亿元；null=规模未公开
+  const industries=[
+    {name:"电子信息",val:770,note:"产值770亿·317家规上·+17.1%",color:"#22c55e"},
+    {name:"智能装备",val:1000,goal:true,note:"正威铜杆/欣旺达·冲刺千亿级",color:"#22c55e"},
+    {name:"智能出行",val:150,note:"产值超150亿·台铃/小刀/新日/绿佳",color:"#22c55e"},
+    {name:"新能源新材料",val:90,note:"锂威/正威·规模未单列(圆为定性)",color:"#22c55e"},
+    {name:"生命健康",val:60,note:"罗浮山国药/信立泰·规模未单列",color:"#22c55e"},
+    {name:"现代食品",val:60,note:"百岁山374万吨·规模未单列",color:"#22c55e"},
+  ];
+  const assets=[
+    {name:"11家国家级小巨人",note:"工信部名录·技术好的中小厂",color:"#06b6d4"},
+    {name:"74家省级专精特新",note:"广东省工信厅名录",color:"#06b6d4"},
+    {name:"6个国家地理标志",note:"山茶/菜心/花生/黑糖/大米/荔枝",color:"#fbbf24"},
+    {name:"工业用电60.04亿度",note:"2026年1-8月·+11.5%",color:"#06b6d4"},
+    {name:"石湾2461家工业企业",note:"三市交界·承接外溢第一线",color:"#06b6d4"},
+  ];
+  const markets=[
+    {name:"海外",val:400,note:"外贸进出口超400亿·+26.1%·增幅全市第二·12家市百强外贸企业",color:"#a78bfa"},
+    {name:"游客",val:320,note:"2025年接待游客1028万人次·+11.7%·旅游综合收入51.88亿·+19.1%",color:"#a78bfa"},
+    {name:"深圳",val:200,note:"欣旺达总部+锂威园洲·深博福田产业园25宗/54亿/产值超100亿",color:"#a78bfa"},
+    {name:"东莞",val:200,note:"石湾/园洲承接外溢·模具电子电动车·园洲年产值380亿",color:"#a78bfa"},
+    {name:"广州",val:120,note:"石湾三市交界毗邻增城·罗浮山国药与省中医院合作",color:"#a78bfa"},
+  ];
+
+  // 产值→半径（仅产业）
+  const indR=v=>Math.max(11,Math.sqrt(v)/2.0);
+  // 市场→半径
+  const mktR=v=>Math.max(12,Math.sqrt(v)/2.2);
+
+  function place(items,R,startDeg){
+    return items.map((d,i)=>{
+      const ang=(startDeg + i*360/items.length)*Math.PI/180;
+      d.x=cx+R*Math.cos(ang); d.y=cy+R*Math.sin(ang); return d;
+    });
+  }
+  const inds=place(industries,R1,-90);
+  const asss=place(assets,R2,-62);
+  const mkts=place(markets,R3,-90);
+
+  // 中心到各节点的辐射线（淡）
+  const drawSpokes=(items,R)=>items.forEach(d=>{
+    ssvg.append("line").attr("x1",cx).attr("y1",cy).attr("x2",d.x).attr("y2",d.y)
+      .attr("stroke","#1e293b").attr("stroke-width",1).attr("stroke-opacity",0.6);
+  });
+  drawSpokes(inds,R1);drawSpokes(asss,R2);drawSpokes(mkts,R3);
+
+  // 中心
+  ssvg.append("circle").attr("cx",cx).attr("cy",cy).attr("r",m?30:36)
+    .attr("fill","#fbbf24").attr("fill-opacity",0.18).attr("stroke","#fbbf24").attr("stroke-width",2);
+  ssvg.append("text").attr("x",cx).attr("y",cy-2).attr("text-anchor","middle").attr("fill","#fbbf24").attr("font-size","13px").attr("font-weight","700").text("博罗");
+  ssvg.append("text").attr("x",cx).attr("y",cy+13).attr("text-anchor","middle").attr("fill","#fbbf24").attr("font-size","10px").text("GDP 1005亿");
+
+  function drawNodes(items,radFn,kind){
+    const g=ssvg.selectAll(null).data(items).enter().append("g").style("cursor","pointer");
+    g.append("circle")
+      .attr("cx",d=>d.x).attr("cy",d=>d.y)
+      .attr("r",radFn)
+      .attr("fill",d=>d.color).attr("fill-opacity",0.2)
+      .attr("stroke",d=>d.color).attr("stroke-width",d=>d.goal?2:1.5)
+      .attr("stroke-dasharray",d=>d.goal?"4,3":null);
+    g.append("text").attr("x",d=>d.x).attr("y",d=>d.y+3).attr("text-anchor","middle")
+      .attr("fill","#e6edf3").attr("font-size",m?"8.5px":"10px").text(d=>d.name);
+    // 规模标签（产业/市场，在圆下方）
+    g.append("text").attr("x",d=>d.x).attr("y",d=>d.y+radFn(d)+12).attr("text-anchor","middle")
+      .attr("fill","#94a3b8").attr("font-size","8.5px")
+      .text(d=>{
+        if(kind==="ind")return d.goal?"目标千亿":(d.val>=100?d.val+"亿":"");
+        if(kind==="mkt")return d.name.includes("游客")?"1028万人":(d.val>=300?d.val+"亿":"");
+        return "";
+      });
+    g.on("click",(e,d)=>{
+      e.stopPropagation();
+      const rect=box.getBoundingClientRect();
+      stip.style.display="block";
+      stip.innerHTML=`<b style="color:${d.color}">${d.name}</b><br>${d.note}`;
+      const px=e.clientX-rect.left+12, py=e.clientY-rect.top+10;
+      stip.style.left=Math.min(px,SW-260)+"px";
+      stip.style.top=Math.min(py,SH-90)+"px";
+    });
+    return g;
+  }
+  drawNodes(inds,d=>indR(d.val),"ind");
+  drawNodes(asss,()=>13,"asset");
+  drawNodes(mkts,d=>mktR(d.val),"mkt");
+  ssvg.on("click",()=>stip.style.display="none");
+})();
 </script>
 </body></html>
