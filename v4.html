@@ -1,0 +1,160 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no">
+<title>博罗人版 · 这事儿跟你有啥关系</title>
+<style>
+*{margin:0;padding:0;box-sizing:border-box;-webkit-tap-highlight-color:transparent}
+body{background:#fdf6ec;color:#3f3a33;font-family:-apple-system,"PingFang SC",sans-serif;line-height:1.7;padding-bottom:50px}
+.hd{background:linear-gradient(135deg,#c2410c,#b45309);color:#fff;padding:22px 18px 26px;border-radius:0 0 24px 24px}
+.hd h1{font-size:21px;font-weight:700}
+.hd p{font-size:13px;opacity:.92;margin-top:6px}
+.step{margin:20px 14px 0}
+.step .no{display:inline-block;background:#c2410c;color:#fff;width:24px;height:24px;border-radius:50%;text-align:center;line-height:24px;font-size:13px;margin-right:6px}
+.step h2{font-size:16px;color:#7c2d12;display:inline;vertical-align:middle}
+.row{display:flex;flex-wrap:wrap;gap:10px;margin-top:12px}
+.opt{background:#fff;border:2px solid #e7d9c5;border-radius:14px;padding:13px 12px;flex:1 1 44%;min-width:130px;text-align:center;cursor:pointer;transition:all .15s}
+.opt .em{font-size:26px}
+.opt .t{font-size:14px;font-weight:600;margin-top:4px;color:#3f3a33}
+.opt .s{font-size:11px;color:#9a8f7d;margin-top:2px}
+.opt.sel{border-color:#c2410c;background:#fff7ed;box-shadow:0 4px 14px rgba(194,65,12,.15)}
+.opt.red{border-color:#b91c1c}
+.opt.red.sel{background:#fef2f2;box-shadow:0 4px 14px rgba(185,28,28,.15)}
+.opt .redt{color:#b91c1c}
+.btn{display:block;width:calc(100% - 28px);margin:22px 14px 0;padding:16px;border-radius:14px;border:none;font-size:16px;font-weight:700;cursor:pointer;background:#c2410c;color:#fff;opacity:.4;pointer-events:none}
+.btn.on{opacity:1;pointer-events:auto}
+.rpt{display:none;margin:16px 14px;background:#fff;border-radius:18px;padding:18px;box-shadow:0 6px 24px rgba(124,45,18,.1);border:1px solid #f0e4d2}
+.rpt.show{display:block}
+.badge{display:inline-block;padding:4px 14px;border-radius:20px;font-size:13px;font-weight:700;margin-bottom:10px}
+.b-first{background:#fee2e2;color:#b91c1c}
+.b-second{background:#ffedd5;color:#c2410c}
+.b-third{background:#fef9c3;color:#a16207}
+.b-safe{background:#dcfce7;color:#15803d}
+.rpt h3{font-size:17px;color:#7c2d12;margin:6px 0 4px}
+.rpt .when{font-size:13px;color:#9a8f7d;margin-bottom:12px}
+.chain{background:#fff7ed;border-radius:12px;padding:12px 14px;font-size:14px;color:#57534e;margin-bottom:12px}
+.chain b{color:#7c2d12}
+.todo{background:#f0fdf4;border:1px solid #bbf7d0;border-radius:12px;padding:12px 14px;font-size:14px}
+.todo h4{color:#15803d;font-size:14px;margin-bottom:6px}
+.todo li{list-style:none;padding-left:18px;position:relative;margin:4px 0;color:#3f3a33}
+.todo li:before{content:"✓";position:absolute;left:0;color:#16a34a}
+.foot-note{font-size:11px;color:#b4a892;margin:14px 16px 0;text-align:center}
+</style>
+</head>
+<body>
+
+<div class="hd">
+  <h1>博罗人版 · 这事儿跟你有啥关系</h1>
+  <p>不堆术语、不吓你。先选你是干啥的，再选万一发生啥，看看会不会轮到你、大概什么时候、你能提前做点啥。</p>
+</div>
+
+<div class="step">
+  <span class="no">1</span><h2>你是干啥的？</h2>
+  <div class="row" id="roleRow">
+    <div class="opt" data-role="battery"><div class="em">🔋</div><div class="t">电池厂上班</div><div class="s">欣旺达/锂威/嘉奇</div></div>
+    <div class="opt" data-role="electronic"><div class="em">📱</div><div class="t">电子厂上班</div><div class="s">华通/电脑/散热</div></div>
+    <div class="opt" data-role="mold"><div class="em">🔧</div><div class="t">模具厂上班</div><div class="s">石湾一带</div></div>
+    <div class="opt" data-role="plating"><div class="em">⚙️</div><div class="t">电镀/表面处理</div><div class="s">龙溪金茂园</div></div>
+    <div class="opt" data-role="bike"><div class="em">🛵</div><div class="t">电动车厂</div><div class="s">台铃/小刀等</div></div>
+    <div class="opt" data-role="old"><div class="em">🏭</div><div class="t">老厂/制衣五金</div><div class="s">园洲/龙溪</div></div>
+    <div class="opt" data-role="farm"><div class="em">🌾</div><div class="t">种田/养殖</div><div class="s">丝苗米/胡须鸡</div></div>
+    <div class="opt" data-role="tour"><div class="em">🍜</div><div class="t">旅游/餐饮/开店</div><div class="s">罗浮山/景区</div></div>
+  </div>
+</div>
+
+<div class="step">
+  <span class="no">2</span><h2>万一发生啥？</h2>
+  <div class="row" id="shockRow">
+    <div class="opt red" data-shock="A"><div class="em">🏃</div><div class="t redt">大厂搬走</div><div class="s">最大的电池厂搬走</div></div>
+    <div class="opt red" data-shock="B"><div class="em">🛑</div><div class="t redt">环保停产</div><div class="s">沿江工厂关停整改</div></div>
+    <div class="opt red" data-shock="C"><div class="em">🏚️</div><div class="t redt">老厂拆迁</div><div class="s">老旧小厂改造</div></div>
+    <div class="opt red" data-shock="D"><div class="em">📉</div><div class="t redt">订单少了</div><div class="s">东莞那边订单减少</div></div>
+  </div>
+</div>
+
+<button class="btn" id="goBtn">看看跟我有没有关系</button>
+
+<div class="rpt" id="rpt"></div>
+
+<div class="foot-note">这是按博罗公开的工厂关系推的大方向，不是算命。<br>真到了那一步，多看县里公告、多问厂里，自己拿主意。</div>
+
+<script>
+let role=null,shock=null;
+document.getElementById('roleRow').onclick=e=>{
+  const o=e.target.closest('.opt');if(!o)return;
+  document.querySelectorAll('#roleRow .opt').forEach(x=>x.classList.remove('sel'));
+  o.classList.add('sel');role=o.dataset.role;check();
+};
+document.getElementById('shockRow').onclick=e=>{
+  const o=e.target.closest('.opt');if(!o)return;
+  document.querySelectorAll('#shockRow .opt').forEach(x=>x.classList.remove('sel'));
+  o.classList.add('sel');shock=o.dataset.shock;check();
+};
+function check(){document.getElementById('goBtn').classList.toggle('on',role&&shock);}
+
+// 每个行业×每个苗头：层级 first先挨/second后挨/third慢/safe基本不沾
+const DATA={
+  battery:{name:'电池厂',
+    A:{lv:'first',when:'0-6个月，最先受影响',chain:['大厂搬走，你就是直接受影响的人','给它供货的小厂跟着减产，订单跟着少','正威、模具、嘉奇这条线上的都受牵连'],todo:['别只盯着这一家，多留意深圳/惠州其他电池厂在不在招工','手里的技术（电池工艺、设备操作）是能带走的，平时多攒证书和操作经验','家里留够3-6个月过日子的钱，别刚听到风声就冲动辞职']},
+    B:{lv:'third',when:'12-24个月，间接影响',chain:['环保停产主要卡沿江的电镀厂，不直接卡电池厂','但电池也需要表面处理，外发加工会变慢、变贵','时间长了可能影响出货节奏'],todo:['影响没那么快，不用慌','如果厂里有电镀工序，留意环保要求是不是在收紧','安心干活，盯着大厂订单稳不稳就行']},
+    C:{lv:'safe',when:'基本不直接影响',chain:['拆迁主要是老旧制衣、小五金厂','跟你所在的现代电池厂关系不大','反而可能腾出地、建更新的园区'],todo:['不是你的事，不用太担心','如果新园区招大厂，可能还是你的机会']},
+    D:{lv:'second',when:'6-18个月，间接影响',chain:['东莞订单减少先砸到石湾模具厂','模具厂同时给电池厂供货，慢慢会传导','但大厂还有自己的深圳总部订单托着'],todo:['别只盯着东莞客户，看厂里在不在开拓比亚迪、本地新能源这些新客户','多学电池新产线（储能、动力电池），少守着旧工艺']}},
+  electronic:{name:'电子厂',
+    A:{lv:'safe',when:'基本不直接影响',chain:['电池厂搬走，跟电子厂是两条不串门的链','华通、江丰、散热这条线有自己的客户','这反而是两拨厂不串门的好处，风险不连着'],todo:['这波跟你关系不大，安心干','但别觉得永远安全，电子厂也得看自己的大客户订单']},
+    B:{lv:'third',when:'12-24个月，间接影响',chain:['环保停产主要卡电镀厂','电子厂的表面处理如果外包给龙溪，会受影响','自个儿有产线的就好一些'],todo:['问清楚厂里表面处理是自己做还是外包','外包的话留意龙溪那边整改进度']},
+    C:{lv:'third',when:'12-36个月，看拆迁腾给谁',chain:['老厂拆迁腾空间','如果腾给华通、散热这些电子厂扩产，你是受益的','如果腾去搞房地产，就跟你没关系'],todo:['看新园区引进的是不是电子信息企业','是的话，新产线可能要老工人']},
+    D:{lv:'safe',when:'基本不直接影响',chain:['东莞外溢主要是模具、电动车那块','华通电子有自己的基本盘','770亿电子信息盘子还在'],todo:['这波你基本不在受影响的线上','但要关注散热这些新集群在不在长大']}},
+  mold:{name:'模具厂',
+    A:{lv:'second',when:'6-18个月，跟着挨',chain:['大厂搬走，给电池厂供模具的订单先少','石湾模具也给电动车供货，跟着减','你在中间，上下游都受影响'],todo:['石湾模具客户不止一家（特斯拉、比亚迪、拓竹），学会问厂里：大客户分散不分散','往新能源、电池模具方向靠，别只会单一产品','学数控、精密加工的新技能，转型比死守强']},
+    B:{lv:'third',when:'12-24个月，间接',chain:['环保停产卡的是电镀，不是模具','但模具做完要表面处理，电镀厂停了你的活交不了','加工周期变长'],todo:['多备几家能做表面处理的合作厂','别把所有电镀活押在一家']},
+    C:{lv:'second',when:'12-24个月，看是否搬进新园区',chain:['石湾有很多小厂也在改造范围','如果搬进新园区、设备升级，可能是好事','如果厂撑不过过渡期，就会裁员'],todo:['关注厂里有没有进园区的计划','现在就开始攒更高级的数控/自动化技能']},
+    D:{lv:'first',when:'0-6个月，你首当其冲',chain:['石湾模具本来就是承接东莞外溢起家的','东莞订单一减，你这最先感觉到','接东莞单的厂最明显，做本地/新能源的好些'],todo:['这是你最该准备的：别把饭碗押在东莞一个方向','主动学电池、新能源模具的工艺','手里留钱，关注比亚迪、本地新能源链的招聘']}},
+  plating:{name:'电镀/表面处理',
+    A:{lv:'second',when:'6-18个月，间接',chain:['大厂搬走，给它做表面处理的订单少','但你同时给电动车、电子供货，不会全断','客户分散的厂能扛'],todo:['问自己：厂里客户是只盯着电池厂，还是几条链都有','分散客户的厂最稳，单一客户的趁早想后路']},
+    B:{lv:'first',when:'0-3个月，你最先停',chain:['环保停产第一个就是沿江的电镀厂','龙溪金茂园是省内最大电镀基地，一停就是大片','整改期没活干，整改完才恢复'],todo:['这是你最该看的：环保设备、废水处理达标没，厂里有没有在技改','已技改的绿色企业反而是好事，小散乱的会被淘汰','留够半年生活费，盯紧园区环保改造时间表','趁这个空档考危化、环保操作相关的证']},
+    C:{lv:'safe',when:'基本不直接影响',chain:['拆迁主要是制衣、五金','龙溪金茂园是省级电镀基地，是被保留升级的','但要持续技改'],todo:['别躺平，环保和绿色技改是长期趋势','把环保工艺学扎实，是最稳的护城河']},
+    D:{lv:'second',when:'6-18个月，跟着减',chain:['东莞订单少，模具厂减，给模具做表面处理的也减','但你还给电子厂、电动车厂供货，能缓冲','这正是你应该同时服务两边的原因'],todo:['别只接东莞/模具这一类客户','主动找电子、电池厂要表面处理订单，多条腿走路']}},
+  bike:{name:'电动车厂',
+    A:{lv:'second',when:'6-18个月，间接',chain:['大厂搬走，石湾模具、表面处理减产，会影响你拿配件','但台铃、小刀、新日、绿佳有自己的整车品牌','配件涨价、交期变长是主要影响'],todo:['关注整车厂的订单（旺季招工、淡季减人）','台铃、小刀在扩产，比纯代工的小厂稳']},
+    B:{lv:'first',when:'0-3个月，配件卡壳',chain:['电动车很多零件要电镀、表面处理','龙溪电镀厂停产，你的配件先供不上','整车下线会变慢'],todo:['问厂里：电镀配件是本地拿还是外地拿','有外地备用供应商的厂稳，只有本地的会很被动']},
+    C:{lv:'safe',when:'基本不直接影响',chain:['拆迁是老厂的事','电动车是产业集群，有园区承接','台铃、小刀还在建二期'],todo:['大方向上这是在长大的产业，相对安心','抓新产线、新车型的机会']},
+    D:{lv:'first',when:'0-6个月，跟着减',chain:['石湾模具、电动车配套本来就是东莞外溢的承接区','东莞那边整车/配件订单少，你这直接减','智能化出行是个新方向，看能不能转过去'],todo:['盯厂里在不在做智能、电动化新产品','别只做低端代工，学整车装配、质检这些更硬的岗']}},
+  old:{name:'老厂/制衣五金',
+    A:{lv:'third',when:'18-36个月，慢传导',chain:['大厂搬走对老厂直接影响小','老厂主要跟电子、制衣、本地市场走','但全县景气下来，订单也会慢慢少'],todo:['老厂本来就在改造，最怕的是没准备']},
+    B:{lv:'second',when:'3-12个月，部分受影响',chain:['沿江的小五金、塑胶厂有环保压力','制衣厂影响小一些','环保不达标的会被先关停'],todo:['环保不达标的，趁早想办法','制衣、纸品这些看本地和出口订单']},
+    C:{lv:'first',when:'0-12个月，就轮到你',chain:['三旧改造、亩均提升，最先动的就是老厂','拆迁、搬迁、转型，工人要么转岗要么失业','这是你绕不开的一关'],todo:['这是最该提前打算的：别等厂拆了再想','早问清楚：有没有新厂、新园区能去','学新技能（自动化设备、去大链主找活），50岁以上考虑社保、灵活就业兜底']},
+    D:{lv:'second',when:'6-18个月，订单少',chain:['东莞外溢弱，五金配套先减','制衣主要看自己的出口和内销','老厂本来就两头受压'],todo:['往欣旺达、华通这些大链主的配套方向找活','旧岗位越来越少，别硬守']}},
+  farm:{name:'种田/养殖',
+    A:{lv:'safe',when:'基本不影响',chain:['大厂搬不搬走，米照种、鸡照养','你跟工业链是两条道','但要关注本地农产品能不能卖出去'],todo:['安心种地，丝苗米产业园、胡须鸡这些是政策扶持的','入合作社、跟龙头企业（伴永康、九优）签订单最稳']},
+    B:{lv:'third',when:'12-24个月，看水源',chain:['东江环保加强，对养殖排污要求更严','达标的生态养殖反而是好事','水源地附近的会被重点管'],todo:['养殖的早点搞粪污处理、达标排放','跟绿色基地、合作社走，单打独斗容易被卡']},
+    C:{lv:'safe',when:'基本不直接影响',chain:['拆迁是工业老厂的事','跟种养殖关系不大','但征地可能涉及个别地块'],todo:['如果村里征地，看清补偿和安置政策','别被忽悠，留好合同和证件']},
+    D:{lv:'safe',when:'基本不影响',chain:['东莞订单主要是工业品','农产品看的是大湾区市场和物流','泰美绿色基地是往全国发货的'],todo:['把品质和品牌做好，丝苗米、胡须鸡有产业园兜底','学电商、短视频卖货，别只等收购商']}},
+  tour:{name:'旅游/餐饮/开店',
+    A:{lv:'third',when:'18-36个月，慢影响',chain:['大厂搬走，工人少了，园区周边的生意慢慢淡','但你主要靠罗浮山、温泉的游客','广深来的客流比本地工厂更关键'],todo:['游客在，生意就在','把客群从"只靠工厂"转到"靠罗浮山景区和大湾区客流"']},
+    B:{lv:'safe',when:'基本不影响',chain:['环保停产是工业的事','罗浮山、温泉、好山好水反而更值钱','好生态是文旅的本钱'],todo:['生态越好，越有底气做高端民宿、农家乐','跟着218最美公路、户外小镇做']},
+    C:{lv:'safe',when:'基本不影响',chain:['拆迁老厂跟你没关系','老厂改造成新园区，可能带来新的客流','景区在扩容、民宿入住率高'],todo:['盯国庆、节假日这些旺季，把服务做扎实','民宿、特色餐饮、户外体验是能持续的方向']},
+    D:{lv:'safe',when:'基本不影响',chain:['东莞订单少，跟景区生意关系不大','罗浮山靠的是大湾区广深客流','国庆91万人次、4.6亿还在'],todo:['好好服务游客，把回头客、口碑做起来','这是比工业更稳的方向，尤其生态好的地方']}},
+};
+
+document.getElementById('goBtn').onclick=()=>{
+  const d=DATA[role][shock];
+  const rname=DATA[role].name;
+  const badgeCls={first:'b-first',second:'b-second',third:'b-third',safe:'b-safe'};
+  const badgeTxt={first:'你是这波里最先挨的，要早做准备',second:'你会跟着受影响，有缓冲时间',third:'轮到你比较慢，不用慌',safe:'这波基本不直接关系到你'};
+  let h=`<span class="badge ${badgeCls[d.lv]}">${badgeTxt[d.lv]}</span>`;
+  h+=`<h3>${rname}遇上这个"万一"</h3>`;
+  h+=`<div class="when">⏱ 大概什么时候：${d.when}</div>`;
+  h+=`<div class="chain">事情大概是这样传过来的：<ul style="padding-left:18px;margin-top:4px">`;
+  d.chain.forEach(c=>h+=`<li style="margin:3px 0">${c}</li>`);
+  h+=`</ul></div>`;
+  h+=`<div class="todo"><h4>你能提前做的（不慌，做这几件实在的）</h4><ul>`;
+  d.todo.forEach(t=>h+=`<li>${t}</li>`);
+  h+=`</ul></div>`;
+  const r=document.getElementById('rpt');
+  r.innerHTML=h;r.classList.add('show');
+  r.scrollIntoView({behavior:'smooth',block:'start'});
+};
+</script>
+</body>
+</html>
