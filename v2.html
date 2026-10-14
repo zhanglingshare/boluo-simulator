@@ -339,16 +339,16 @@ edges.forEach((e,i)=>{
 });
 
 if(!showIds){
+  // 概览模式：只留全息图，隐藏所有操作UI
+  document.querySelector('.shockbar').style.display='none';
+  document.querySelector('.foot').style.display='none';
+  document.getElementById('menuBtn').style.display='none';
+  document.querySelector('.blood').style.display='none';
+  document.querySelector('.hint').style.display='none';
   const tip=document.createElement('div');
-  tip.style.cssText='position:fixed;top:100px;left:12px;z-index:12;background:rgba(8,15,30,.85);border:1px solid rgba(251,191,36,.3);border-radius:10px;padding:8px 12px;font-size:11px;line-height:1.6;backdrop-filter:blur(10px);max-width:220px';
-  tip.innerHTML=`
-    <b style="color:#fbbf24">博罗产业全息风洞</b><br>
-    <span style="color:#94a3b8">拖动旋转看全貌。<br>
-    此概览不参与计算。<br>
-    <a href="v3.html" style="color:#fde68a">选主体进入推演 →</a></span>`;
+  tip.style.cssText='position:fixed;bottom:30px;left:50%;transform:translateX(-50%);z-index:12;background:rgba(8,15,30,.8);border:1px solid rgba(251,191,36,.3);border-radius:20px;padding:8px 18px;font-size:12px;backdrop-filter:blur(10px)';
+  tip.innerHTML='<a href="v3.html" style="color:#fde68a;text-decoration:none">选择产业主体进入推演 →</a>';
   document.body.appendChild(tip);
-  tip.style.cursor='pointer';
-  tip.onclick=()=>tip.style.display='none';
 }
 
 // 背景星尘
