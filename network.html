@@ -91,10 +91,13 @@ svg{display:block;width:100%;height:auto}
     <div class="acttitle" id="acttitle"></div>
     <svg id="svg" viewBox="0 0 860 620">
       <!-- 功能片区背景标签 -->
-      <text x="170" y="40" fill="#22c55e" font-size="11" font-weight="700" opacity="0.5">西部工业带</text>
-      <text x="380" y="20" fill="#9aa6b8" font-size="11" font-weight="700" opacity="0.5">县城·环罗浮山</text>
-      <text x="600" y="35" fill="#34d399" font-size="11" font-weight="700" opacity="0.5">博东农业生态</text>
-      <text x="20" y="50" fill="#a78bfa" font-size="11" font-weight="700" opacity="0.5">外部</text>
+      <text x="20" y="40" fill="#a78bfa" font-size="10" font-weight="700" opacity="0.6">外部城市</text>
+      <text x="160" y="60" fill="#9aa6b8" font-size="10" font-weight="700" opacity="0.6">西部工业带</text>
+      <text x="330" y="85" fill="#9aa6b8" font-size="10" font-weight="700" opacity="0.6">县城中心</text>
+      <text x="480" y="25" fill="#9aa6b8" font-size="10" font-weight="700" opacity="0.6">环罗浮山文旅</text>
+      <text x="660" y="40" fill="#9aa6b8" font-size="10" font-weight="700" opacity="0.6">博东农业</text>
+      <text x="280" y="260" fill="#22c55e" font-size="10" font-weight="700" opacity="0.6">博罗产业</text>
+      <text x="380" y="470" fill="#f97316" font-size="10" font-weight="700" opacity="0.6">人</text>
       <g id="edges"></g>
       <g id="nodes"></g>
     </svg>
@@ -147,43 +150,47 @@ svg{display:block;width:100%;height:auto}
 
 <script>
 const NODES=[
-  // ===== 外部连接（最左+最右） =====
-  {id:"gz",name:"广州",x:45,y:70,type:"ext",w:1,label:"广州"},
-  {id:"dg",name:"东莞",x:45,y:220,type:"ext",w:3,label:"东莞石龙/石排·产业源头"},
-  {id:"sz",name:"深圳",x:45,y:380,type:"ext",w:2,label:"深圳·新能源项目来源"},
-  {id:"hz",name:"惠城",x:815,y:300,type:"ext",w:2,label:"惠州惠城·行政辐射"},
-  // ===== 西部工业带（左中）：园洲石湾接东莞 =====
-  {id:"bmc",name:"表面处理",x:170,y:90,type:"ind",w:1,label:"表面处理集群"},
-  {id:"yz",name:"园洲",x:180,y:150,type:"space",w:3,label:"县域副中心·规上工业344亿"},
-  {id:"dz",name:"电子信息",x:250,y:130,type:"ind",w:2,label:"占规上23.2%"},
-  {id:"sw",name:"石湾",x:180,y:220,type:"space",w:2,label:"工业重镇·2513家企业"},
-  {id:"dq",name:"电气机械",x:250,y:190,type:"ind",w:2,label:"占规上14.2%"},
-  {id:"ddc",name:"电动车",x:220,y:260,type:"ind",w:2,label:"台铃小刀"},
-  {id:"ft",name:"福田",x:180,y:300,type:"space",w:2,label:"深莞共建园"},
-  {id:"w1",name:"园洲石湾工人",x:180,y:360,type:"talent",w:2,label:"产业工人"},
-  {id:"w5",name:"跨城通勤",x:100,y:300,type:"talent",w:1,label:"深惠通勤族"},
-  // ===== 县城+环罗浮山（中部）：罗阳县城 + 长宁文旅 =====
-  {id:"lfs",name:"罗浮山",x:340,y:50,type:"space",w:3,label:"年游客1028万"},
-  {id:"hh",name:"横河",x:300,y:35,type:"space",w:1,label:"生态·环两山"},
-  {id:"w4",name:"罗浮山游客",x:310,y:80,type:"talent",w:2,label:"年1028万人次"},
-  {id:"xw",name:"欣旺达",x:400,y:80,type:"ind",w:3,label:"新能源龙头"},
-  {id:"gx",name:"高新企业",x:450,y:110,type:"ind",w:2,label:"686家"},
-  {id:"cn",name:"长宁",x:340,y:110,type:"space",w:2,label:"旅游服务副中心"},
-  {id:"lx",name:"龙溪",x:380,y:160,type:"space",w:2,label:"县城组成"},
-  {id:"ht",name:"高新区",x:420,y:180,type:"ind",w:3,label:"千亿智能装备"},
-  {id:"ly",name:"罗阳",x:420,y:250,type:"space",w:3,label:"县城主中心·GDP238亿"},
-  {id:"hz2",name:"湖镇",x:360,y:290,type:"space",w:2,label:"环两山·医药文旅"},
-  {id:"my",name:"民营工业",x:400,y:310,type:"ind",w:2,label:"占68.6%"},
-  {id:"lfsgy",name:"罗浮山国药",x:340,y:340,type:"ind",w:1,label:"罗浮山国药"},
-  {id:"jt",name:"景田百岁山",x:480,y:330,type:"ind",w:2,label:"饮料374万吨"},
-  {id:"w2",name:"县城居民",x:450,y:370,type:"talent",w:2,label:"罗阳居民"},
-  // ===== 博东农业生态（右） =====
-  {id:"w3",name:"农业人口",x:560,y:50,type:"talent",w:1,label:"农业人口49万"},
-  {id:"bh",name:"柏塘",x:560,y:90,type:"space",w:1,label:"山茶"},
-  {id:"gz2",name:"公庄",x:620,y:80,type:"space",w:1,label:"博东"},
-  {id:"yc",name:"杨村",x:660,y:110,type:"space",w:1,label:"博东副中心"},
-  {id:"tm",name:"泰美",x:580,y:180,type:"space",w:1,label:"城市发展区"},
-  {id:"ge",name:"观音阁",x:680,y:170,type:"space",w:1,label:"东部文旅"},
+  // ===== 外部城市（最左列 + 最右惠城） =====
+  {id:"gz",name:"广州",x=45,y:60,type:"ext",w:1,label:"广州"},
+  {id:"dg",name:"东莞",x=45,y:180,type:"ext",w:3,label:"东莞石龙/石排"},
+  {id:"sz",name:"深圳",x=45,y:320,type:"ext",w:2,label:"深圳（高铁）"},
+  {id:"hz",name:"惠城",x=815,y:200,type:"ext",w:2,label:"惠州惠城"},
+  // ===== 镇街空间（中上部大块，内部按功能片区分4组） =====
+  // --- 西部工业带 ---
+  {id:"yz",name:"园洲",x=180,y:90,type:"space",w:3,label:"县域副中心·344亿"},
+  {id:"sw",name:"石湾",x=180,y=140,type:"space",w:2,label:"工业重镇·2513家"},
+  {id:"ft",name:"福田",x=180,y:190,type:"space",w:2,label:"深莞共建园"},
+  {id:"tm",name:"泰美",x=180,y=240,type:"space",w:1,label:"城市发展区"},
+  // --- 县城中心 ---
+  {id:"ly",name:"罗阳",x=350,y:110,type:"space",w:3,label:"县城主中心·238亿"},
+  {id:"lx",name:"龙溪",x=350,y:160,type:"space",w:2,label:"县城组成"},
+  // --- 环罗浮山文旅 ---
+  {id:"lfs",name:"罗浮山",x=500,y:40,type:"space",w:3,label:"年游客1028万"},
+  {id:"cn",name:"长宁",x=500,y:80,type:"space",w:2,label:"旅游副中心"},
+  {id:"hh",name:"横河",x=500,y:120,type:"space",w:1,label:"生态·环两山"},
+  {id:"hz2",name:"湖镇",x=500,y:160,type:"space",w:2,label:"医药文旅"},
+  // --- 博东农业生态 ---
+  {id:"bh",name:"柏塘",x=680,y:60,type:"space",w:1,label:"山茶"},
+  {id:"gz2",name:"公庄",x=680,y:100,type:"space",w:1,label:"博东"},
+  {id:"yc",name:"杨村",x=680,y:140,type:"space",w:1,label:"博东副中心"},
+  {id:"ge",name:"观音阁",x=680,y:180,type:"space",w:1,label:"东部文旅"},
+  // ===== 产业节点（中下部一块） =====
+  {id:"bmc",name:"表面处理",x=180,y=340,type:"ind",w:1,label:"表面处理集群"},
+  {id:"dz",name:"电子信息",x=240,y=320,type:"ind",w:2,label:"占规上23.2%"},
+  {id:"ddc",name:"电动车",x=200,y=380,type:"ind",w:2,label:"台铃小刀"},
+  {id:"dq",name:"电气机械",x=280,y=360,type:"ind",w:2,label:"占规上14.2%"},
+  {id:"ht",name:"高新区",x=380,y:300,type:"ind",w:3,label:"千亿智能装备"},
+  {id:"xw",name:"欣旺达",x=340,y:270,type:"ind",w:3,label:"新能源龙头"},
+  {id:"gx",name:"高新企业",x=420,y:270,type:"ind",w:2,label:"686家"},
+  {id:"my",name:"民营工业",x=380,y:370,type:"ind",w:2,label:"占68.6%"},
+  {id:"lfsgy",name:"罗浮山国药",x=500,y=280,type:"ind",w:1,label:"罗浮山国药"},
+  {id:"jt",name:"景田百岁山",x=560,y=300,type:"ind",w:2,label:"饮料374万吨"},
+  // ===== 人（最下一排） =====
+  {id:"w1",name:"工人",x=180,y=480,type:"talent",w:2,label:"园洲石湾产业工人"},
+  {id:"w5",name:"通勤",x=100,y=420,type:"talent",w:1,label:"深惠通勤族"},
+  {id:"w2",name:"县城居民",x=380,y=440,type:"talent",w:2,label:"罗阳居民"},
+  {id:"w4",name:"游客",x=520,y=220,type:"talent",w:2,label:"年1028万人次"},
+  {id:"w3",name:"农业人口",x=680,y=240,type:"talent",w:1,label:"农业人口49万"},
 ];
 
 const EDGES=[
