@@ -2,7 +2,14 @@
 <html lang="zh-CN"><head><meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
 <title>博罗产业全息风洞 V2</title>
-<script src="https://unpkg.com/three@0.128.0/build/three.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/three@0.128.0/build/three.min.js"></script>
+<script>
+window.addEventListener('error',function(e){
+  var d=document.createElement('div');
+  d.style.cssText='position:fixed;top:50%;left:50%;transform:translate(-50%,-50%);color:#f87171;background:#1a0000;padding:20px;border-radius:10px;font-size:12px;z-index:9999;max-width:80vw';
+  d.textContent='加载出错: '+e.message;
+  document.body.appendChild(d);
+});</script>
 <style>
 *{box-sizing:border-box;margin:0;padding:0}
 html,body{height:100%;overflow:hidden}
