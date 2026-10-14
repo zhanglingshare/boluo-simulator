@@ -70,7 +70,7 @@ svg{display:block;width:100%;height:auto}
 
 <div class="wrap">
   <h1>博罗产业网络：谁是链主，谁在配套谁</h1>
-  <p class="sub">14个产业主体、13条可佐证关系。注意最粗的那根线从东莞连到谁。</p>
+  <p class="sub">16个产业主体（含3个特色农业）、14条可佐证关系。注意最粗的那根线从东莞连到谁。</p>
 
   <div class="actbar">
     <button class="btn" id="bReplay">↻ 重新建构</button>
@@ -124,9 +124,9 @@ svg{display:block;width:100%;height:auto}
     </div>
 
     <div class="algo-note">
-      数据血统（8条边）：<span class="blood-tag blood-A">A 实测 4条</span>统计公报/企业公开数据 ｜
-      <span class="blood-tag blood-B">B 推估 3条</span>产业配套关系 ｜
-      <span class="blood-tag blood-C">C 假设 1条</span>特色产业联动<br>
+      数据血统（14条边）：<span class="blood-tag blood-A">A 实测 4条</span>统计公报/企业公开数据 ｜
+      <span class="blood-tag blood-B">B 推估 4条</span>产业配套/农业上游 ｜
+      <span class="blood-tag blood-C">C 假设 2条</span>特色产业联动<br>
       节点为博罗核心产业主体，镇仅作标签；边为上下游/配套/外溢关系，权重含假设，可改参数复跑。
     </div>
   </div>
@@ -150,8 +150,12 @@ const NODES=[
   {id:"ht",name:"高新区",x:380,y:220,type:"ind",w:3,label:"千亿智能装备·罗阳"},
   {id:"gx",name:"高新企业",x:440,y:260,type:"ind",w:2,label:"686家"},
   {id:"lfsgy",name:"罗浮山国药",x:620,y:280,type:"ind",w:1,label:"生物医药·长宁"},
+  {id:"zy",name:"罗浮山中药材",x:560,y:340,type:"ind",w:1,label:"南药种植·横河/长宁"},
   {id:"jt",name:"景田百岁山",x:700,y:220,type:"ind",w:2,label:"饮料374万吨·湖镇"},
   {id:"my",name:"民营工业",x:380,y:320,type:"ind",w:2,label:"占规上68.6%"},
+  // ===== 特色农业 =====
+  {id:"sc",name:"博罗山茶",x:720,y:340,type:"ind",w:1,label:"地理标志·柏塘"},
+  {id:"xc",name:"福田菜心",x:160,y:340,type:"ind",w:1,label:"地理标志·播种季·福田"},
 ];
 
 const EDGES=[
@@ -163,6 +167,7 @@ const EDGES=[
   ["ht","dz",3,"A"],["ht","gx",3,"A"],["ht","my",2,"B"],
   ["xw","ht",2,"A"],
   ["jt","my",1,"C"],
+  ["zy","lfsgy",2,"B"],
 ];
 
 const COLORS={ind:"#22c55e",space:"#9aa6b8",talent:"#f97316",ext:"#a78bfa"};
