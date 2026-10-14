@@ -55,6 +55,16 @@ body{background:#030711;color:#e6edf3;font:13px/1.6 -apple-system,"PingFang SC",
 .tip .desc{color:#94a3b8;margin-top:3px;font-size:11px}
 .hint{position:fixed;top:56px;left:50%;transform:translateX(-50%);z-index:9;
   font-size:10.5px;color:#475569;pointer-events:none;letter-spacing:1px}
+.panel{position:fixed;top:50px;left:50%;transform:translateX(-50%);z-index:20;
+  width:94vw;max-width:640px;max-height:80vh;background:rgba(8,15,30,.96);
+  border:1px solid rgba(125,211,252,.3);border-radius:14px;display:none;flex-direction:column;
+  backdrop-filter:blur(14px);box-shadow:0 20px 60px rgba(0,0,0,.6)}
+.panel.show{display:flex}
+.panel-head{padding:12px 16px;font-size:14px;font-weight:700;color:#7dd3fc;
+  border-bottom:1px solid #1c2739;display:flex;justify-content:space-between;align-items:center}
+.panel-head button{background:none;border:none;color:#94a3b8;font-size:16px;cursor:pointer}
+.panel-body{padding:14px 16px;overflow:auto;font-size:12px;line-height:1.7;color:#cbd5e1}
+.panel-body .dim{color:#94a3b8;margin-top:3px}
 </style></head><body>
 <div id="bg"></div>
 <div class="hint">🔄 拖动旋转 · 双指缩放 · 点节点看详情</div>
@@ -77,6 +87,42 @@ body{background:#030711;color:#e6edf3;font:13px/1.6 -apple-system,"PingFang SC",
   <button class="sbtn" data-shock="lq" data-kinds="资源竞争,供应链" data-name="老厂腾退（亩均改造）">C 老厂腾退</button>
   <button class="sbtn" data-shock="mj" data-kinds="供应链" data-name="外溢断流（东莞外溢减弱·石湾模具首当其冲）">D 外溢断流</button>
   <button id="resetBtn">↺</button>
+  <button id="whyBtn" style="background:rgba(30,58,95,.8);color:#7dd3fc;border:1px solid #1e3a5f">📋 入选理由</button>
+</div>
+
+<div class="panel" id="whyPanel">
+  <div class="panel-head">📋 节点入选与排除说明 <button id="whyClose">✕</button></div>
+  <div class="panel-body">
+    <b style="color:#4ade80">入选标准（5条全满足才进图）</b>
+    <div class="dim">1. 是产业主体（有经营/就业/地理实体），不是统计数字、不是外部背景、不是纯地形</div>
+    <div class="dim">2. 真成了产业（有可查体量），不是"有个牌子"（地理标志≠产业）</div>
+    <div class="dim">3. 占独一位势（链主/配套/设施/载体/文旅/农业/待点亮），不重复</div>
+    <div class="dim">4. 和别的节点有真实关系（供货/环保/生态/承载），不画孤点</div>
+    <div class="dim">5. 待点亮节点：现在不起眼但有真实资产底子，是"政策/资本进来就亮"的期权</div>
+
+    <br><b style="color:#7dd3fc">✅ 入选节点及理由</b>
+    <div class="dim"><b style="color:#93c5fd">链主（深蓝）</b>：欣旺达（锂电池龙头）、华通电脑（电子信息770亿基本盘）、正威（25万吨铜杆）、嘉奇（奇瑞系梯次电池）、江丰（靶材全球第一）——都是百亿级/单项冠军级链主</div>
+    <div class="dim"><b style="color:#22d3ee">配套集群（青）</b>：表面处理（龙溪金茂园，50亿，省内最大电镀基地）、石湾模具（承接东莞外溢，特斯拉/比亚迪客户）、电动车配套（台铃/小刀/新日/绿佳）、散热（2026省级新集群）——都是有地理集聚、有产值的成规模集群</div>
+    <div class="dim"><b style="color:#a16207">传统存量（暗棕）</b>：园洲制衣+五金三旧——数千家小微，用电大头但亩均待改造，和省级集群性质不同</div>
+    <div class="dim"><b style="color:#94a3b8">设施（灰）</b>：电力（60亿度+11.5%命门）、高铁三站（年客流129万，融深融湾命脉）、东江码头（集装箱267万吨物流血管）</div>
+    <div class="dim"><b style="color:#84cc16">载体（绿）</b>：智能装备园、深博福田园（2026开园，嘉奇/欣旺达入驻）——承载重资产项目的空间</div>
+    <div class="dim"><b style="color:#a3e635">文旅（黄绿）</b>：罗浮山（5A，国庆91万人次）、嘉宝田温泉、那里花开、平安山、横河户外——广深1.5h自驾圈真有客流的点</div>
+    <div class="dim"><b style="color:#a3e635">农业真产业（黄绿）</b>：百岁山（374万吨水）、罗浮山国药（1000人药厂）、石坝胡须鸡（名特优新）——真成了产业，不是地标牌子</div>
+    <div class="dim"><b style="color:#64748b">待点亮期权（暗灰）</b>：观音阁老糖厂（70年制糖史/2000吨黑糖/公司+农户）、观音阁光伏（100MW/1.1亿度绿电）——现在不起眼但有底子</div>
+    <div class="dim"><b style="color:#38bdf8">地形（不是球）</b>：东江画成蓝色光带、环两山画成绿色雾团——它们是世界不是产业节点</div>
+
+    <br><b style="color:#f87171">❌ 候选排除及理由</b>
+    <div class="dim">• <b>深圳/东莞/广州/惠城</b>：外部城市是背景板不是博罗产业一员；但"东莞外溢""深圳订单"写进了对应节点描述（石湾模具desc=承接东莞外溢、欣旺达desc=深圳总部订单）</div>
+    <div class="dim">• <b>6个地理标志单品</b>（柏塘山茶/福田菜心/观音阁花生/观音阁黑糖/罗浮山大米/罗浮山荔枝）：地理标志是牌子，不一定成了产业；只有真成了产业的（百岁山/罗浮山国药/胡须鸡）才进图</div>
+    <div class="dim">• <b>10家小巨人/165家专精特新/686家高企</b>：是企业数量统计，不是产业节点；写在页面底部家底条</div>
+    <div class="dim">• <b>信立泰药业</b>：在大亚湾不在博罗（已查证），剔除</div>
+    <div class="dim">• <b>表面处理集群位置</b>：在龙溪金茂园（不在福田镇），已修正</div>
+    <div class="dim">• <b>单个小微厂</b>（金丰制衣/环亚五金/立泰塑胶）：体量太小不单独画，归到"传统老厂存量"描述里</div>
+    <div class="dim">• <b>检测认证/金融/职业院校</b>：博罗有但体量不够、不是产业命脉，不单独画球，作用被设施和载体覆盖</div>
+    <div class="dim">• <b>南亚/联合铜箔/泰塑/方大新材</b>：是正威/新材料链上的项目，不单独拆节点，归到链主"正威新材料"desc里</div>
+
+    <br><div class="dim" style="color:#7d8fa8">本说明随公开材料持续修正。欢迎质疑：哪个节点该进没进、哪个不该进却进了，说出来就改。</div>
+  </div>
 </div>
 
 <div class="foot">
@@ -383,6 +429,10 @@ document.querySelectorAll('.sbtn').forEach(btn=>{
     runShock(btn.dataset.shock,btn.dataset.name,btn.dataset.kinds);};
 });
 document.getElementById('resetBtn').onclick=(e)=>{e.stopPropagation();resetShock();};
+document.getElementById('whyBtn').onclick=(e)=>{e.stopPropagation();
+  document.getElementById('whyPanel').classList.toggle('show');};
+document.getElementById('whyClose').onclick=(e)=>{e.stopPropagation();
+  document.getElementById('whyPanel').classList.remove('show');};
 const m=location.hash.match(/shock=(\w+)/);
 if(m){const btn=document.querySelector(`.sbtn[data-shock="${m[1]}"]`);
   if(btn){btn.classList.add('on');runShock(m[1],btn.dataset.name,btn.dataset.kinds);}}
