@@ -123,8 +123,10 @@ h1{font-size:22px;margin-bottom:6px}
   <h2 style="margin-top:34px">博罗家底图：有什么、多大、卖给谁、来了多少人</h2>
   <p class="sub">中心是博罗，越往外越是"对外"。圆越大＝规模越大。数字均来自2025统计公报、政府工作报告、统计局月报。</p>
   <div id="solarchart" style="position:relative">
+    <button id="solarToggle" style="position:absolute;top:8px;right:8px;z-index:8;background:rgba(21,128,61,.85);border:1px solid #22c55e;color:#fff;font-size:12px;border-radius:8px;padding:6px 12px;cursor:pointer">⏸ 暂停运转</button>
     <div id="solarTip" style="position:absolute;display:none;background:rgba(13,20,33,.96);border:1px solid #334155;border-radius:10px;padding:10px 12px;font-size:11.5px;color:#cbd5e1;max-width:250px;z-index:9;line-height:1.6;box-shadow:0 8px 30px rgba(0,0,0,.5)"></div>
   </div>
+  <p class="sub" style="margin-top:2px">行星沿轨道缓慢公转（内圈快、外圈慢），像真实产业系统在运转；点任意节点会停住看详情，右上角可暂停。</p>
   <div class="legend" style="margin-top:6px">
     <span><i style="background:#fbbf24"></i>博罗（中心）</span>
     <span><i style="background:#22c55e"></i>六大产业（大小=产值）</span>
@@ -597,22 +599,26 @@ document.querySelectorAll(".fbtn").forEach(btn=>{
   // 市场→半径
   const mktR=v=>Math.max(12,Math.sqrt(v)/2.2);
 
-  function place(items,R,startDeg){
-    return items.map((d,i)=>{
-      const ang=(startDeg + i*360/items.length)*Math.PI/180;
-      d.x=cx+R*Math.cos(ang); d.y=cy+R*Math.sin(ang); return d;
+  // 装配：每个节点带轨道半径、初始角度、角速度（内圈快、外圈慢）
+  const TAU=Math.PI*2;
+  function setup(items,R,startDeg,kind,periodSec){
+    items.forEach((d,i)=>{
+      d.R=R; d.kind=kind;
+      d.a=(startDeg+i*360/items.length)*Math.PI/180;
+      d.w=TAU/periodSec;
+      d.rad=kind==="ind"?indR(d.val):(kind==="mkt"?mktR(d.val):13);
+      d.x=cx+R*Math.cos(d.a); d.y=cy+R*Math.sin(d.a);
     });
   }
-  const inds=place(industries,R1,-90);
-  const asss=place(assets,R2,-62);
-  const mkts=place(markets,R3,-90);
+  setup(industries,R1,-90,"ind",48);
+  setup(assets,R2,-62,"asset",72);
+  setup(markets,R3,-90,"mkt",100);
+  const planets=industries.concat(assets).concat(markets);
 
-  // 中心到各节点的辐射线（淡）
-  const drawSpokes=(items,R)=>items.forEach(d=>{
-    ssvg.append("line").attr("x1",cx).attr("y1",cy).attr("x2",d.x).attr("y2",d.y)
-      .attr("stroke","#1e293b").attr("stroke-width",1).attr("stroke-opacity",0.6);
-  });
-  drawSpokes(inds,R1);drawSpokes(asss,R2);drawSpokes(mkts,R3);
+  // 中心到各节点的辐射线（随行星转动）
+  const spoke=ssvg.selectAll(null).data(planets).enter().append("line")
+    .attr("x1",cx).attr("y1",cy)
+    .attr("stroke","#1e293b").attr("stroke-width",1).attr("stroke-opacity",0.5);
 
   // 中心
   ssvg.append("circle").attr("cx",cx).attr("cy",cy).attr("r",m?30:36)
@@ -620,39 +626,55 @@ document.querySelectorAll(".fbtn").forEach(btn=>{
   ssvg.append("text").attr("x",cx).attr("y",cy-2).attr("text-anchor","middle").attr("fill","#fbbf24").attr("font-size","13px").attr("font-weight","700").text("博罗");
   ssvg.append("text").attr("x",cx).attr("y",cy+13).attr("text-anchor","middle").attr("fill","#fbbf24").attr("font-size","10px").text("GDP 1005亿");
 
-  function drawNodes(items,radFn,kind){
-    const g=ssvg.selectAll(null).data(items).enter().append("g").style("cursor","pointer");
-    g.append("circle")
-      .attr("cx",d=>d.x).attr("cy",d=>d.y)
-      .attr("r",radFn)
-      .attr("fill",d=>d.color).attr("fill-opacity",0.2)
-      .attr("stroke",d=>d.color).attr("stroke-width",d=>d.goal?2:1.5)
-      .attr("stroke-dasharray",d=>d.goal?"4,3":null);
-    g.append("text").attr("x",d=>d.x).attr("y",d=>d.y+3).attr("text-anchor","middle")
-      .attr("fill","#e6edf3").attr("font-size",m?"8.5px":"10px").text(d=>d.name);
-    // 规模标签（产业/市场，在圆下方）
-    g.append("text").attr("x",d=>d.x).attr("y",d=>d.y+radFn(d)+12).attr("text-anchor","middle")
-      .attr("fill","#94a3b8").attr("font-size","8.5px")
-      .text(d=>{
-        if(kind==="ind")return d.goal?"目标千亿":(d.val>=100?d.val+"亿":"");
-        if(kind==="mkt")return d.name.includes("游客")?"1028万人":(d.val>=300?d.val+"亿":"");
-        return "";
-      });
-    g.on("click",(e,d)=>{
-      e.stopPropagation();
-      const rect=box.getBoundingClientRect();
-      stip.style.display="block";
-      stip.innerHTML=`<b style="color:${d.color}">${d.name}</b><br>${d.note}`;
-      const px=e.clientX-rect.left+12, py=e.clientY-rect.top+10;
-      stip.style.left=Math.min(px,SW-260)+"px";
-      stip.style.top=Math.min(py,SH-90)+"px";
+  // 行星（局部坐标，整组 translate 定位，文字始终水平）
+  const g=ssvg.selectAll(null).data(planets).enter().append("g").style("cursor","pointer");
+  g.append("circle")
+    .attr("r",d=>d.rad)
+    .attr("fill",d=>d.color).attr("fill-opacity",0.2)
+    .attr("stroke",d=>d.color).attr("stroke-width",d=>d.goal?2:1.5)
+    .attr("stroke-dasharray",d=>d.goal?"4,3":null);
+  g.append("text").attr("y",3).attr("text-anchor","middle")
+    .attr("fill","#e6edf3").attr("font-size",m?"8.5px":"10px").text(d=>d.name);
+  g.append("text").attr("y",d=>d.rad+12).attr("text-anchor","middle")
+    .attr("fill","#94a3b8").attr("font-size","8.5px")
+    .text(d=>{
+      if(d.kind==="ind")return d.goal?"目标千亿":(d.val>=100?d.val+"亿":"");
+      if(d.kind==="mkt")return d.name.includes("游客")?"1028万人":(d.val>=300?d.val+"亿":"");
+      return "";
     });
-    return g;
-  }
-  drawNodes(inds,d=>indR(d.val),"ind");
-  drawNodes(asss,()=>13,"asset");
-  drawNodes(mkts,d=>mktR(d.val),"mkt");
+
+  let playing=true;
+  const btn=document.getElementById("solarToggle");
+  btn.addEventListener("click",()=>{playing=!playing;btn.textContent=playing?"⏸ 暂停运转":"▶ 继续运转";});
+
+  g.on("click",(e,d)=>{
+    e.stopPropagation();
+    playing=false; btn.textContent="▶ 继续运转";
+    const rect=box.getBoundingClientRect();
+    stip.style.display="block";
+    stip.innerHTML=`<b style="color:${d.color}">${d.name}</b><br>${d.note}`;
+    const px=e.clientX-rect.left+12, py=e.clientY-rect.top+10;
+    stip.style.left=Math.min(px,SW-260)+"px";
+    stip.style.top=Math.min(py,SH-90)+"px";
+  });
   ssvg.on("click",()=>stip.style.display="none");
+
+  // 公转循环
+  let last=performance.now();
+  function frame(now){
+    const dt=Math.min((now-last)/1000,0.05); last=now;
+    if(playing){
+      for(const p of planets){
+        p.a+=p.w*dt;
+        p.x=cx+p.R*Math.cos(p.a);
+        p.y=cy+p.R*Math.sin(p.a);
+      }
+    }
+    g.attr("transform",d=>`translate(${d.x},${d.y})`);
+    spoke.attr("x2",d=>d.x).attr("y2",d=>d.y);
+    requestAnimationFrame(frame);
+  }
+  requestAnimationFrame(frame);
 })();
 </script>
 </body></html>
