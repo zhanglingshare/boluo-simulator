@@ -491,7 +491,17 @@ document.getElementById('snaBtn').onclick=(e)=>{e.stopPropagation();
   snaR.deg.forEach(d=>{html+=`<div class="dim">· <b style="color:#e2e8f0">${name(d.n)}</b>：${d.d}条供货边</div>`;});
   html+='<br><b style="color:#fbbf24">⚠️ 连通分量（网络断成几块）</b>';
   snaR.comps.forEach((c,i)=>{html+=`<div class="dim">· 分量${i+1}（${c.length}个）：${c.map(name).join('、')}</div>`;});
-  if(snaR.comps.length>1)html+='<div class="dim" style="color:#f87171">→ 发现：电子信息链（华通+江丰+散热+老厂）和新能源/电动车链（欣旺达+正威+石湾模具+表面处理+嘉奇）之间没有供货边，网络是断的</div>';
+  if(snaR.comps.length>1){
+    html+='<div class="dim" style="color:#f87171">→ 发现：电子信息链和新能源/电动车链之间没有供货边，网络是断的</div>';
+    html+='<br><b style="color:#fbbf24">🧠 这个结论是怎么推出来的（思考链）</b>';
+    html+='<div class="dim">① <b style="color:#94a3b8">初始假设</b>：博罗GDP破千亿、电子信息770亿，网络应该是连通的一张网</div>';
+    html+='<div class="dim">② <b style="color:#94a3b8">抽节点</b>：从28个混类节点里只抽10个产业行动者（5链主+4配套+1传统），设施/地形/民生不算</div>';
+    html+='<div class="dim">③ <b style="color:#94a3b8">抽边</b>：只算它们之间的供货关系边（8条），环保/生态/承载边不算</div>';
+    html+='<div class="dim">④ <b style="color:#94a3b8">BFS遍历</b>：从欣旺达出发能走到谁？走到正威/石湾模具/电动车/表面处理/嘉奇——走不到华通/江丰/散热/老厂</div>';
+    html+='<div class="dim">⑤ <b style="color:#f87171">发现</b>：网络断成两个分量。千亿县≠一张网，是两张网并行</div>';
+    html+='<div class="dim">⑥ <b style="color:#c084fc">两条路</b>：A 接受现状（各跑各的）/ B 在两条链之间架桥（表面处理同时供两边？江丰靶材进欣旺达？）</div>';
+    html+='<div class="dim">⑦ <b style="color:#4ade80">推荐</b>：B。破局不是再造一个产业，是在现有两条链之间找那座桥</div>';
+  }
   html+='<br><b style="color:#c084fc">介数中心性（谁是桥）</b>';
   snaR.between.filter(b=>b[1]>0).forEach(b=>{html+=`<div class="dim">· <b style="color:#e2e8f0">${name(b[0])}</b>：在${b[1]}条最短路径上</div>`;});
   if(snaR.between.filter(b=>b[1]>0).length===0)html+='<div class="dim">→ 两个分量内部都是树状，没有桥节点</div>';
