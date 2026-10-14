@@ -39,6 +39,10 @@ svg.scene{width:100%;height:auto;display:block;margin-top:2px}
 .edge.half{opacity:.45;stroke-dasharray:6 5;stroke-dashoffset:0}
 .edge.none{opacity:.18;stroke-dasharray:2 6;stroke-dashoffset:0}
 .edge.dead{opacity:0}
+/* 游客连线：断断续续、时有时无（现在没接上） */
+.edge.tedge{opacity:.5;stroke-dasharray:2 8;stroke-dashoffset:0;animation:tedgeBlink 2.4s ease-in-out infinite}
+.edge.tedge.on{opacity:1;stroke-dasharray:none;animation:none}
+@keyframes tedgeBlink{0%,100%{opacity:.08}40%{opacity:.55}62%{opacity:.18}}
 /* 分叉两小网 */
 .fork-title{text-align:center;font-size:13px;color:#7dd3fc;font-weight:700;margin:16px 0 1px}
 .fork-wrap{margin:9px 12px 0;display:flex;gap:9px}
@@ -217,7 +221,6 @@ function renderScene(){
     <text x="${TX}" y="${TY-25}" text-anchor="middle" font-size="10" fill="#7dd3fc" font-weight="700">游客</text>
     <circle cx="${TX}" cy="${TY}" r="17" fill="rgba(8,15,30,.94)" stroke="#38bdf8" stroke-width="2.3"/>
     <text x="${TX}" y="${TY+6}" text-anchor="middle" font-size="16">👥</text>
-    <text x="${TX}" y="${TY+34}" text-anchor="middle" font-size="9" fill="#7dd3fc">28万人次</text>
   </g>`;
   // 糖厂（中央）
   svg+=`<g class="node" id="factory">
@@ -304,7 +307,7 @@ function play(){
   // 复位
   timers.forEach(clearTimeout);timers.length=0;
   document.querySelectorAll('.node').forEach(n=>n.classList.remove('on','ghost'));
-  document.querySelectorAll('.edge').forEach(e=>{e.classList.remove('on','half','none','dead');});
+  document.querySelectorAll('.edge').forEach(e=>{e.classList.remove('on','half','none','dead','tedge');});
   document.querySelectorAll('.yseg,.yp,.yt').forEach(e=>e.classList.remove('on'));
   // 点亮小网初始态
   const upEdges=$('forkUp').querySelectorAll('.fedge, .fring');
@@ -333,7 +336,7 @@ function play(){
       $('e2_'+i).classList.add(d.edge);
     });
     $('tourist').classList.add('on');
-    TOUR.forEach(pi=>$('te_'+pi).classList.add('none'));
+    TOUR.forEach(pi=>$('te_'+pi).classList.add('tedge'));
   });
   at(6.2,()=>{ $('ysC').classList.add('on'); $('ypD').classList.add('on'); $('ylD').classList.add('on'); });
   // 第三幕：分叉
@@ -346,7 +349,7 @@ function play(){
     });
     // 游客虚线接上（研学/文旅/民宿 → 游客）
     TOUR.forEach((pi,k)=>{
-      setTimeout(()=>{const te=$('te_'+pi);te.classList.remove('none');te.classList.add('on');},(k+2)*260);
+      setTimeout(()=>{const te=$('te_'+pi);te.classList.remove('tedge');te.classList.add('on');},(k+2)*260);
     });
   });
   // 产量曲线分叉
