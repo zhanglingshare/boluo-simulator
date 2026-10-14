@@ -311,29 +311,25 @@ const rMap={anchor:15,champ:13,capillary:11,agri:9,gi:9,ext:12,legacy:14,eco:16}
 let nodes=rawNodes.map(d=>({...d}));
 let links=rawEdges.map(d=>({source:d.s,target:d.t,level:d.level,w:d.w,rel:d.rel,kind:d.kind}));
 
-// 给每个节点一个地理方位（南工北农，外部在左）
-const geoY={
-  eco:null, // 东江/环两山单独处理
-  anchor:380,champ:340,capillary:420,legacy:470,agri:150,gi:100,ext:null
-};
+// 初始位置：南工北农（只决定第一帧，之后自由）
+const geoY={anchor:380,champ:340,capillary:420,legacy:470,agri:150,gi:100};
 const geoX={gz:40,dg:40,sz:40,hz:W-40};
 nodes.forEach(n=>{
-  if(n.id==="dj"){n.fy0=H/2; n.fx0=W/2}
-  else if(n.id==="lswh"){n.fy0=100; n.fx0=W/2}
-  else if(n.type==="ext"){n.fy0=geoX[n.id]===40?200+(Math.random()*200):H/2; n.fx0=geoX[n.id]||40}
-  else if(n.type==="gi"){n.fy0=60+Math.random()*120; n.fx0=W*0.3+Math.random()*W*0.4}
-  else if(n.type==="agri"){n.fy0=120+Math.random()*100; n.fx0=W*0.2+Math.random()*W*0.6}
-  else {n.fy0=geoY[n.type]+Math.random()*60; n.fx0=W*0.15+Math.random()*W*0.7}
+  if(n.id==="dj"){n.y=H/2; n.x=W/2}
+  else if(n.id==="lswh"){n.y=100; n.x=W/2}
+  else if(n.type==="ext"){n.y=geoX[n.id]===40?150+Math.random()*250:H/2; n.x=geoX[n.id]||40}
+  else if(n.type==="gi"){n.y=60+Math.random()*120; n.x=W*0.3+Math.random()*W*0.4}
+  else if(n.type==="agri"){n.y=120+Math.random()*100; n.x=W*0.2+Math.random()*W*0.6}
+  else {n.y=geoY[n.type]+Math.random()*80; n.x=W*0.15+Math.random()*W*0.7}
 });
 
-const chargeStrength=isMobile?-160:-240;
-const linkDist=isMobile?55:85;
+const chargeStrength=isMobile?-160:-260;
+const linkDist=isMobile?55:90;
 const sim=d3.forceSimulation(nodes)
   .force("link",d3.forceLink(links).id(d=>d.id).distance(d=>linkDist+d.w*8))
   .force("charge",d3.forceManyBody().strength(chargeStrength))
-  .force("collide",d3.forceCollide().radius(d=>rMap[d.type]+(isMobile?5:12)))
-  .force("geoY",d3.forceY(d=>d.fy0).strength(0.35))
-  .force("geoX",d3.forceX(d=>d.fx0).strength(0.25))
+  .force("center",d3.forceCenter(W/2,H/2))
+  .force("collide",d3.forceCollide().radius(d=>rMap[d.type]+(isMobile?5:14)))
   .force("bounds",()=>{
     nodes.forEach(n=>{
       const r=rMap[n.type]+10;
