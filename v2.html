@@ -2,14 +2,7 @@
 <html lang="zh-CN"><head><meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
 <title>博罗产业全息风洞 V2</title>
-<script src="https://cdn.jsdelivr.net/npm/three@0.128.0/build/three.min.js"></script>
-<script>
-window.addEventListener('error',function(e){
-  var d=document.createElement('div');
-  d.style.cssText='position:fixed;top:50%;left:50%;transform:translate(-50%,-50%);color:#f87171;background:#1a0000;padding:20px;border-radius:10px;font-size:12px;z-index:9999;max-width:80vw';
-  d.textContent='加载出错: '+e.message;
-  document.body.appendChild(d);
-});</script>
+<script src="https://unpkg.com/three@0.128.0/build/three.min.js"></script>
 <style>
 *{box-sizing:border-box;margin:0;padding:0}
 html,body{height:100%;overflow:hidden}
@@ -158,6 +151,7 @@ body{background:#030711;color:#e6edf3;font:13px/1.6 -apple-system,"PingFang SC",
 <div class="tip" id="tip"></div>
 
 <script>
+try{
 const rawNodes=[
   {id:"dj",name:"东江",type:"terrain",town:"沿江多镇",desc:"母亲河·饮用水源Ⅱ类·沿江镇街排污上限——它是地形，不是产业"},
   {id:"lswh",name:"环两山",type:"terrain",town:"长宁/横河/福田",desc:"南昆山-罗浮山·北部绿色屏障——它是生态背景，不是产业"},
@@ -678,5 +672,8 @@ function tick(){
 }
 tick();
 addEventListener('resize',()=>{camera.aspect=innerWidth/innerHeight;camera.updateProjectionMatrix();renderer.setSize(innerWidth,innerHeight);});
+}catch(err){
+  document.body.insertAdjacentHTML('beforeend','<div style="position:fixed;top:40%;left:5%;right:5%;background:#2a0000;color:#f87171;padding:16px;border-radius:10px;font-size:12px;z-index:9999;white-space:pre-wrap;font-family:monospace">JS错误: '+err.message+'\n'+err.stack.split('\n')[1]+'</div>');
+}
 </script>
 </body></html>
