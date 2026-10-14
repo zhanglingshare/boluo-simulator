@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no">
-<title>第二步 · 选一个有苗头的冲击</title>
+<title>第二步 · 苗头：东江环保</title>
 <style>
 *{margin:0;padding:0;box-sizing:border-box;-webkit-tap-highlight-color:transparent}
 body{background:#030711;color:#cbd5e1;font-family:-apple-system,"PingFang SC",sans-serif;line-height:1.6;padding-bottom:90px}
@@ -11,35 +11,10 @@ body{background:#030711;color:#cbd5e1;font-family:-apple-system,"PingFang SC",sa
 .hd .step{display:inline-block;background:#1e3a5f;color:#60a5fa;font-size:11px;padding:2px 10px;border-radius:20px;margin-bottom:8px}
 .hd h1{font-size:20px;color:#e2e8f0;font-weight:700}
 .hd .sub{font-size:12.5px;color:#64748b;margin-top:6px;line-height:1.7}
-.card{margin:12px;background:rgba(15,23,42,.6);border:1px solid rgba(51,65,85,.5);border-radius:16px;
-  padding:15px;cursor:pointer;transition:all .18s;position:relative}
-.card.sel{border-color:#ef4444;background:rgba(60,20,20,.5);box-shadow:0 0 18px rgba(239,68,68,.25)}
-.card .top{display:flex;align-items:center;gap:10px}
-.card .em{font-size:26px}
-.card .tt{font-size:16px;font-weight:700;color:#f1f5f9}
-.card .plain{font-size:12px;color:#94a3b8;margin-top:1px}
-.lvl{margin-left:auto;font-size:11px;font-weight:700;padding:3px 10px;border-radius:20px;white-space:nowrap}
-.lvl-strong{background:#7f1d1d;color:#fca5a5}
-.lvl-mid{background:#78350f;color:#fbbf24}
-.lvl-weak{background:#1e293b;color:#94a3b8}
-.kinds{margin-top:8px;font-size:11px;color:#7d8fa8}
-.kinds span{display:inline-block;background:rgba(51,65,85,.5);border-radius:6px;padding:1px 8px;margin-right:5px}
-.signal{margin-top:10px;background:rgba(8,15,30,.6);border-left:3px solid #3b82f6;border-radius:8px;
-  padding:9px 12px;font-size:12.5px;color:#aebfd0}
-.signal b{color:#93c5fd}
-.signal .warn{color:#fbbf24;font-size:11px;margin-top:5px}
-.impact{margin-top:9px;font-size:12.5px;color:#cbd5e1}
-.impact b{color:#f87171}
-.bar{position:fixed;bottom:0;left:0;right:0;background:rgba(8,15,30,.92);border-top:1px solid #1c2739;
-  padding:12px 14px;backdrop-filter:blur(12px)}
-.btn{display:block;width:100%;padding:15px;border-radius:12px;border:none;font-size:15px;font-weight:700;
-  cursor:pointer;background:#334155;color:#94a3b8;opacity:.5;pointer-events:none}
-.btn.on{background:linear-gradient(135deg,#dc2626,#991b1b);color:#fff;opacity:1;pointer-events:auto}
-.back{display:inline-block;font-size:12px;color:#64748b;margin:8px 16px 0;text-decoration:none}
 .assume{margin:14px 12px;background:rgba(12,25,40,.7);border:1px solid rgba(59,130,246,.4);border-radius:16px;padding:14px 16px}
 .assume h3{font-size:14px;color:#60a5fa;margin-bottom:8px}
 .assume ul{list-style:none}
-.assume li{font-size:12.5px;color:#aebfd0;padding:5px 0 5px 22px;position:relative;border-bottom:1px dashed rgba(51,85,85,.4)}
+.assume li{font-size:12.5px;color:#aebfd0;padding:5px 0 5px 22px;position:relative;border-bottom:1px dashed rgba(51,65,85,.4)}
 .assume li:last-child{border:none}
 .assume li:before{content:"◆";position:absolute;left:0;color:#60a5fa;font-size:9px;top:7px}
 .assume li b{color:#e2e8f0}
@@ -57,78 +32,68 @@ body{background:#030711;color:#cbd5e1;font-family:-apple-system,"PingFang SC",sa
 .src-c{background:#713f12;color:#fde68a}
 .src-d{background:#334155;color:#cbd5e1}
 .intel .noalgo{margin-top:10px;font-size:11px;color:#7d8fa8;font-style:italic;border-top:1px dashed rgba(51,65,85,.5);padding-top:8px}
+.card{margin:12px;background:rgba(15,23,42,.6);border:1px solid rgba(51,65,85,.5);border-radius:16px;padding:15px}
+.card .top{display:flex;align-items:center;gap:10px}
+.card .em{font-size:26px}
+.card .tt{font-size:16px;font-weight:700;color:#f1f5f9}
+.card .plain{font-size:12px;color:#94a3b8;margin-top:1px}
+.lvl{margin-left:auto;font-size:11px;font-weight:700;padding:3px 10px;border-radius:20px;white-space:nowrap}
+.lvl-strong{background:#7f1d1d;color:#fca5a5}
+.kinds{margin-top:8px;font-size:11px;color:#7d8fa8}
+.kinds span{display:inline-block;background:rgba(51,65,85,.5);border-radius:6px;padding:1px 8px;margin-right:5px}
+.signal{margin-top:10px;background:rgba(8,15,30,.6);border-left:3px solid #3b82f6;border-radius:8px;padding:9px 12px;font-size:12.5px;color:#aebfd0}
+.signal b{color:#93c5fd}
 .ev{font-size:12.5px;color:#aebfd0;padding:4px 0;display:flex;align-items:flex-start}
 .ev .src{margin-top:1px}
-.shocktabs{display:flex;gap:6px;margin:16px 12px 2px}
-.tab{flex:1;text-align:center;padding:10px 4px;border-radius:10px;font-size:12px;background:rgba(30,41,59,.6);
-  border:1px solid rgba(71,85,105,.5);color:#94a3b8;cursor:pointer;transition:all .15s}
-.tab.tab-sel{background:#7f1d1d;border-color:#ef4444;color:#fff;font-weight:700;box-shadow:0 0 12px rgba(239,68,68,.3)}
-.evidencechain{margin-top:10px;background:rgba(8,15,30,.5);border:1px solid rgba(125,211,252,.12);
-  border-radius:12px;padding:10px 8px 8px}
+.signal .warn{color:#fbbf24;font-size:11.5px;margin-top:6px}
+.impact{margin-top:9px;font-size:12.5px;color:#cbd5e1}
+.impact b{color:#f87171}
+.evidencechain{margin-top:10px;background:rgba(8,15,30,.5);border:1px solid rgba(125,211,252,.12);border-radius:12px;padding:10px 8px 8px}
 .evidencechain .ec-title{font-size:11px;color:#94a3b8;margin-bottom:2px;padding:0 4px}
 .evidencechain svg{width:100%;height:auto;display:block}
+.bar{position:fixed;bottom:0;left:0;right:0;background:rgba(8,15,30,.92);border-top:1px solid #1c2739;padding:12px 14px;backdrop-filter:blur(12px)}
+.btn{display:block;width:100%;padding:15px;border-radius:12px;border:none;font-size:15px;font-weight:700;cursor:pointer;
+  background:linear-gradient(135deg,#dc2626,#991b1b);color:#fff}
+.back{display:inline-block;font-size:12px;color:#64748b;margin:8px 16px 0;text-decoration:none}
 </style>
 </head>
 <body>
 
 <div class="hd">
   <div class="step">第二步</div>
-  <h1>选一个有苗头的冲击</h1>
-  <div class="sub">风洞不替你瞎猜。这里列的都是<b style="color:#94a3b8">已经有苗头</b>的冲击，并且如实标出苗头强弱。
-  挑一个，看看它怎么顺着供货关系，穿过博罗的产业网络。</div>
+  <h1>苗头：东江环保</h1>
+  <div class="sub">这一步只盯一个苗头：<b style="color:#94a3b8">东江环保收紧</b>。先看清假设、证据和来源，再看它怎么穿过产业网络。</div>
 </div>
 
 <div class="assume">
   <h3>🔍 先说清楚：这次推演建立在哪些假设上</h3>
   <ul>
     <li><b>① 关系是真的：</b>节点之间的连线，来自公开的供货/交易报道，不是厂里内部数据——可能有个别不准。</li>
-    <li><b>② 冲击沿供货走：</b>主要顺供应链传播；环保红线、抢地抢电是另外两条线。苗头卡片上标了它走哪条。</li>
-    <li><b>③ 越远越弱：</b>离源头越远，影响越小，传到第3-4层就衰减很多（这是我设的衰减规则，不是实测）。</li>
+    <li><b>② 冲击沿供货走：</b>主要顺供应链传播；环保红线、抢地抢电是另外两条线。</li>
+    <li><b>③ 越远越弱：</b>离源头越远，影响越小，传到第3-4层就衰减很多（我设的衰减规则，不是实测）。</li>
     <li><b>④ 先算“裸冲击”：</b>假设没有政府补贴、企业也没马上找到新客户——现实里这些缓冲会发生，所以你看到的是“最坏的机械传导”，不是最终结果。</li>
     <li><b>⑤ 网络这一刻不变：</b>推演时网络结构固定，先不考虑企业临时牵新关系。</li>
     <li><b>⑥ 时间是估的：</b>“几个月/几年”是合理估算（D级），快慢取决于政策、订单、技改速度，可能提前也可能延后。</li>
   </ul>
-  <div class="not">⚠️ 还要特别说明：这是“<b>如果发生会怎样</b>”，不是预测它一定会发生。尤其 A 链主飞走，目前还在扩产。</div>
-  <div class="flip">💡 上面哪一条假设你不认同，下面的结论就会跟着变——这正是它可以质疑、可以改参数重跑的原因。</div>
+  <div class="not">⚠️ 这是“如果发生会怎样”，不是预测它一定发生。</div>
+  <div class="flip">💡 哪一条假设你不认同，结论就会跟着变——这正是它可以质疑、可以改参数重跑的原因。</div>
 </div>
 
 <div class="intel">
   <h3>🕵️ 苗头是怎么发现的</h3>
   <div class="how">苗头不是拍脑袋，是像<b>情报分析</b>一样盯出来的：<b>多源采集 → 交叉验证 → 分级标注</b>。
-    单一来源先存疑，两个以上独立来源对上，才升级为苗头；只出现一次的现象，列为“待验证”。
+    单一来源先存疑，两个以上独立来源对上，才升级为苗头。
   </div>
   <div class="legend">
     <span><i class="src src-a">A</i>官方一手：政府工作报告/统计公报/规划</span>
     <span><i class="src src-b">B</i>权威媒体/学术：党媒通讯社/科研机构</span>
-    <span><i class="src src-c">C</i>企业行业公开：工商/招商/招投标/协会</span>
+    <span><i class="src src-c">C</i>企业行业公开：工商/招商/招投标</span>
     <span><i class="src src-d">D</i>迹象推断：单源/现象，需继续验证</span>
   </div>
   <div class="noalgo">这里只交代观察到的变动和证据来源，不公开具体的计算模型与权重——你可以看依据、决定认不认，也可以质疑、要求重算。</div>
 </div>
 
-<div class="shocktabs" id="tabs">
-  <div class="tab" data-s="A">A 链主飞走</div>
-  <div class="tab tab-sel" data-s="B">B 东江喊停</div>
-  <div class="tab" data-s="C">C 老厂腾退</div>
-  <div class="tab" data-s="D">D 外溢断流</div>
-</div>
-
-<div class="card" data-s="A" style="display:none">
-  <div class="top"><span class="em">🏃</span>
-    <div><div class="tt">链主飞走</div><div class="plain">最大的电池厂搬走（欣旺达总部外迁）</div></div>
-    <span class="lvl lvl-weak">苗头弱·尾部风险</span>
-  </div>
-  <div class="kinds"><span>供应链</span><span>资源竞争</span></div>
-  <div class="signal"><b>观察到的变动：</b>
-    <div class="ev"><i class="src src-c">C</i>欣旺达总部、研发在深圳，博罗是制造基地（工商/企业公开）</div>
-    <div class="ev"><i class="src src-b">B</i>锂威在博罗园洲还在扩产（反向信号，说明现在没走）</div>
-    <div class="ev"><i class="src src-d">D</i>没有观察到搬迁动作，“飞走”是“成本中心可能随成本转移”的推断，待验证</div>
-    <div class="warn">⚠️ 苗头弱：这是“万一”，不是已经看到的动作。</div>
-  </div>
-  <div class="impact">一旦发生：<b>正威铜杆、石湾模具、嘉奇这条电池链跟着受影响</b>，但电子链（华通）不连着。</div>
-</div>
-
-<div class="card" data-s="B">
+<div class="card">
   <div class="top"><span class="em">🛑</span>
     <div><div class="tt">东江喊停</div><div class="plain">沿江工厂环保停产</div></div>
     <span class="lvl lvl-strong">苗头强·趋势确定</span>
@@ -140,37 +105,8 @@ body{background:#030711;color:#cbd5e1;font-family:-apple-system,"PingFang SC",sa
     <div class="ev"><i class="src src-b">B</i>沿江电镀、表面处理被列为重点管控对象</div>
     <div class="warn">⚠️ 多源一致、苗头最明确：环保方向几乎不会回头。</div>
   </div>
+  <div class="evidencechain" id="ec"></div>
   <div class="impact">一旦发生：<b>龙溪电镀基地最先停产整改</b>，电动车、模具失去电镀环节，跟着卡壳。</div>
-</div>
-
-<div class="card" data-s="C" style="display:none">
-  <div class="top"><span class="em">🏚️</span>
-    <div><div class="tt">老厂腾退</div><div class="plain">老旧小厂拆迁改造</div></div>
-    <span class="lvl lvl-strong">苗头强·已在推进</span>
-  </div>
-  <div class="kinds"><span>资源竞争</span><span>供应链</span></div>
-  <div class="signal"><b>观察到的变动：</b>
-    <div class="ev"><i class="src src-a">A</i>“三旧改造”“亩均论英雄”政策已明确推进</div>
-    <div class="ev"><i class="src src-b">B</i>园洲、龙溪成片制衣、五金、纸品等低效老厂在改造范围</div>
-    <div class="ev"><i class="src src-c">C</i>部分地块改造、园区建设已在进行</div>
-    <div class="warn">⚠️ 关键在腾出来之后接住什么：接住是腾笼换鸟，接不住是真空。</div>
-  </div>
-  <div class="impact">一旦发生：<b>数千小微工人转岗</b>，链主大厂基本不受影响，痛在底层就业。</div>
-</div>
-
-<div class="card" data-s="D" style="display:none">
-  <div class="top"><span class="em">📉</span>
-    <div><div class="tt">外溢断流</div><div class="plain">东莞那边订单少了</div></div>
-    <span class="lvl lvl-mid">苗头中·看速度</span>
-  </div>
-  <div class="kinds"><span>供应链</span></div>
-  <div class="signal"><b>观察到的变动：</b>
-    <div class="ev"><i class="src src-a">A</i>东莞推进产业升级、工改工，倾向本地留住企业</div>
-    <div class="ev"><i class="src src-b">B</i>石湾模具本来就是承接东莞外溢起家的（事实）</div>
-    <div class="ev"><i class="src src-d">D</i>外溢减弱的具体幅度缺硬数据，速度和规模待验证</div>
-    <div class="warn">⚠️ 若转内供（给欣旺达、华通供货）成功，反而是好事。</div>
-  </div>
-  <div class="impact">一旦发生：<b>石湾模具最先减</b>，电动车、表面处理跟着减；若转去给欣旺达、华通供货，是机会。</div>
 </div>
 
 <a class="back" href="v2.html">← 回全息图</a>
@@ -180,70 +116,26 @@ body{background:#030711;color:#cbd5e1;font-family:-apple-system,"PingFang SC",sa
 </div>
 
 <script>
-// 苗头强度：基于真实因子加权计算（政策确定性/已现信号/结构性压力/不可逆性），UI只显示结果，不展示过程
-// 因子取值来自公开政策与报道；这是模型评级（D级），不是精确概率，分值只用于排序，不对外展示
-const FACTORS={
-  A:[0.20,0.20,0.60,0.30],   // 链主飞走
-  B:[0.95,0.85,0.80,0.95],   // 东江喊停
-  C:[0.90,0.80,0.85,0.80],   // 老厂腾退
-  D:[0.80,0.50,0.70,0.55]    // 外溢断流
-};
-const W=[0.30,0.30,0.25,0.15];
-const SUB={A:'尾部风险',B:'趋势确定',C:'已在推进',D:'看速度'};
-function levelOf(s){
-  const f=FACTORS[s];let sc=0;
-  for(let i=0;i<4;i++)sc+=f[i]*W[i];
-  if(sc>=0.70)return{cls:'lvl-strong',word:'强'};
-  if(sc>=0.45)return{cls:'lvl-mid',word:'中'};
-  return{cls:'lvl-weak',word:'弱'};
-}
-// 页面加载时用计算结果填充强度标签
-document.querySelectorAll('.card').forEach(c=>{
-  const lv=levelOf(c.dataset.s),tag=c.querySelector('.lvl');
-  tag.className='lvl '+lv.cls;
-  tag.textContent='苗头'+lv.word+'·'+SUB[c.dataset.s];
-});
-
-// ===== 证据链网络（模仿辐射状关系图：中心=苗头，周围=证据，颜色=来源等级，虚线=推断）=====
-const EVIDENCE={
-  A:[
-    {lv:'C',t:'总部在深圳'},
-    {lv:'B',t:'还在扩产'},
-    {lv:'D',t:'成本转移推断'}
-  ],
-  B:[
-    {lv:'A',t:'政府工作报告'},
-    {lv:'A',t:'水源保护'},
-    {lv:'B',t:'电镀管控'},
-    {lv:'B',t:'媒体报道'}
-  ],
-  C:[
-    {lv:'A',t:'三旧改造政策'},
-    {lv:'B',t:'老厂在改造范围'},
-    {lv:'C',t:'改造已在进行'}
-  ],
-  D:[
-    {lv:'A',t:'东莞产业升级'},
-    {lv:'B',t:'承接东莞事实'},
-    {lv:'D',t:'减弱幅度待验证'}
-  ]
-};
+// 证据链网络：中心=苗头，周围=证据，颜色=来源等级，虚线=推断
+const EVIDENCE=[
+  {lv:'A',t:'政府工作报告'},
+  {lv:'A',t:'水源保护'},
+  {lv:'B',t:'电镀管控'},
+  {lv:'B',t:'媒体报道'}
+];
 const LV_COLOR={A:'#22c55e',B:'#3b82f6',C:'#eab308',D:'#94a3b8'};
-function evidenceSVG(s){
-  const ev=EVIDENCE[s],n=ev.length,cx=170,cy=150,R=104;
-  const pos=[];
+function evidenceSVG(){
+  const n=EVIDENCE.length,cx=170,cy=150,R=104,pos=[];
   let svg='<svg viewBox="0 0 340 300" xmlns="http://www.w3.org/2000/svg">';
-  ev.forEach((e,i)=>{
+  EVIDENCE.forEach((e,i)=>{
     const a=-Math.PI/2+i*2*Math.PI/n;
     const x=cx+R*Math.cos(a),y=cy+R*Math.sin(a);
     pos.push({x,y,e});
     const dash=e.lv==='D'?'stroke-dasharray="4 4"':'';
     svg+=`<line x1="${cx}" y1="${cy}" x2="${x}" y2="${y}" stroke="${LV_COLOR[e.lv]}" stroke-width="2" opacity="0.65" ${dash}/>`;
   });
-  // 中心苗头
   svg+=`<circle cx="${cx}" cy="${cy}" r="21" fill="#7f1d1d" stroke="#ef4444" stroke-width="2"/>`;
   svg+=`<text x="${cx}" y="${cy+5}" text-anchor="middle" fill="#fff" font-size="12" font-weight="bold">苗头</text>`;
-  // 证据节点 + 标签
   pos.forEach(p=>{
     svg+=`<circle cx="${p.x}" cy="${p.y}" r="13" fill="rgba(8,15,30,.92)" stroke="${LV_COLOR[p.e.lv]}" stroke-width="2.5"/>`;
     svg+=`<text x="${p.x}" y="${p.y+4}" text-anchor="middle" fill="${LV_COLOR[p.e.lv]}" font-size="12" font-weight="bold">${p.e.lv}</text>`;
@@ -256,28 +148,11 @@ function evidenceSVG(s){
   });
   return svg+'</svg>';
 }
-document.querySelectorAll('.card').forEach(c=>{
-  const box=document.createElement('div');
-  box.className='evidencechain';
-  box.innerHTML='<div class="ec-title">🧩 证据链：节点颜色=来源等级，虚线=弱/推断</div>'+evidenceSVG(c.dataset.s);
-  c.querySelector('.signal').after(box);
-});
+document.getElementById('ec').innerHTML=
+  '<div class="ec-title">🧩 证据链：节点颜色=来源等级，虚线=弱/推断</div>'+evidenceSVG();
 
-// 一次只讨论一个苗头：tab 切换显示，默认聚焦苗头最强的 B
-let picked='B';
-const tabs=document.querySelectorAll('.tab');
-const cards=document.querySelectorAll('.card');
-function showShock(s){
-  tabs.forEach(t=>t.classList.toggle('tab-sel',t.dataset.s===s));
-  cards.forEach(c=>c.style.display=c.dataset.s===s?'block':'none');
-  picked=s;
-}
-tabs.forEach(t=>t.onclick=()=>showShock(t.dataset.s));
-showShock('B');
-document.getElementById('goBtn').classList.add('on');
 document.getElementById('goBtn').onclick=()=>{
-  // 带着当前聚焦的冲击，去第三页选主体组网
-  location.href='v3.html?shock='+picked;
+  location.href='v3.html?shock=B';
 };
 </script>
 </body>
