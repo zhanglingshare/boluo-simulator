@@ -266,7 +266,7 @@ const colorMap={anchor:"#22c55e",champ:"#06b6d4",capillary:"#64748b",agri:"#84cc
 const rMap={anchor:15,champ:13,capillary:11,agri:8,ext:12,legacy:14,eco:16};
 
 let nodes=rawNodes.map(d=>({...d}));
-let links=rawEdges.map(d=>({...d}));
+let links=rawEdges.map(d=>({source:d.s,target:d.t,level:d.level,w:d.w,rel:d.rel,kind:d.kind}));
 
 const sim=d3.forceSimulation(nodes)
   .force("link",d3.forceLink(links).id(d=>d.id).distance(d=>80+d.w*15))
@@ -297,6 +297,11 @@ const node=svg.append("g").selectAll("circle").data(nodes).enter().append("circl
     .on("drag",(e,d)=>{d.fx=e.x;d.fy=e.y})
     .on("end",(e,d)=>{if(!e.active)sim.alphaTarget(0);d.fx=null;d.fy=null}));
 
+const label=svg.append("g").selectAll("text").data(nodes).enter().append("text")
+  .text(d=>d.name)
+  .attr("fill","#e6edf3").attr("font-size","11px").attr("dx",20).attr("dy",4)
+  .style("pointer-events","none");
+
 // 群落节点加外圈环（聚合节点）
 const clusterTypes=new Set(["capillary","legacy","champ"]);
 const rings=svg.append("g").selectAll("circle").data(nodes.filter(d=>clusterTypes.has(d.type))).enter().append("circle")
@@ -308,7 +313,6 @@ const rings=svg.append("g").selectAll("circle").data(nodes.filter(d=>clusterType
   .attr("stroke-opacity",0.5)
   .style("pointer-events","none");
 
-// 把外环绑定到tick
 sim.on("tick",()=>{
   link.attr("x1",d=>d.source.x).attr("y1",d=>d.source.y)
       .attr("x2",d=>d.target.x).attr("y2",d=>d.target.y);
@@ -316,11 +320,6 @@ sim.on("tick",()=>{
   rings.attr("cx",d=>d.x).attr("cy",d=>d.y);
   label.attr("x",d=>d.x).attr("y",d=>d.y);
 });
-
-const label=svg.append("g").selectAll("text").data(nodes).enter().append("text")
-  .text(d=>d.name)
-  .attr("fill","#e6edf3").attr("font-size","11px").attr("dx",20).attr("dy",4)
-  .style("pointer-events","none");
 
 // 点击下钻
 const tip=document.getElementById("tooltip");
