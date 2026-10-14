@@ -112,13 +112,17 @@ svg.scene{width:100%;height:auto;display:block;margin-top:2px}
 </div>
 
 <div class="srcbox">
-  <div class="bt">🔗 来源（点击核验）</div>
+  <div class="bt">🔗 图上数字的出处（点击核验）</div>
   <a class="srccard" href="http://www.guanyinge-sugar.com/about.html" target="_blank" rel="noopener">
-    <span class="ic">🏭</span><span class="tx">观音阁糖厂官网 · 1954建·600吨/日·出口日本</span><span class="go">↗</span></a>
+    <span class="ic">🏭</span><span class="tx">糖厂官网：600吨/日，年出口量已破6000吨</span><span class="go">↗</span></a>
+  <a class="srccard" href="http://m.toutiao.com/group/6963460810752459276/" target="_blank" rel="noopener">
+    <span class="ic">📰</span><span class="tx">惠州发布：高峰出口6000吨，2018年起转内销</span><span class="go">↗</span></a>
+  <a class="srccard" href="http://m.toutiao.com/group/7309682229155217954/" target="_blank" rel="noopener">
+    <span class="ic">🍬</span><span class="tx">博罗发布(2023)：现在年榨2.5万吨、产糖3000多吨</span><span class="go">↗</span></a>
+  <a class="srccard" href="http://m.toutiao.com/group/7512759962451508/" target="_blank" rel="noopener">
+    <span class="ic">👥</span><span class="tx">博罗发布(2025)：古石龙农场2024年接待游客28万人次</span><span class="go">↗</span></a>
   <a class="srccard" href="https://www.boluo.gov.cn/xzgwh/gygzrmzf/zwgk/qt/ghjh/content/post_5758388.html" target="_blank" rel="noopener">
     <span class="ic">📄</span><span class="tx">观音阁镇2026政府工作报告 · 支持糖厂重新做大</span><span class="go">↗</span></a>
-  <a class="srccard" href="http://m.toutiao.com/group/6963460810752459276/" target="_blank" rel="noopener">
-    <span class="ic">📰</span><span class="tx">走读百年惠州 · 沿江甘蔗、吊机转运、水路运蔗</span><span class="go">↗</span></a>
 </div>
 
 <a class="back" href="v2.html">← 回全息图</a>
@@ -146,17 +150,19 @@ const S1=[
   {p:6,ic:'🌾',t:'甘蔗',c:'#84cc16'},
   {p:7,ic:'🌾',t:'甘蔗',c:'#84cc16'}
 ];
-// 第二幕：今天（甘蔗仍实线，其余半线/零线）
+// 第二幕：今天（甘蔗仍实线，其余半线/零线；研学/文旅/民宿在右侧，外连游客）
 const S2=[
   {p:0,ic:'🌾',t:'甘蔗',c:'#22c55e',edge:'on'},
   {p:1,ic:'🎓',t:'研学',c:'#3b82f6',edge:'half'},
   {p:2,ic:'🏛️',t:'文旅',c:'#d946ef',edge:'half'},
-  {p:3,ic:'🥜',t:'花生',c:'#eab308',edge:'half'},
+  {p:3,ic:'🏡',t:'民宿',c:'#a78bfa',edge:'none'},
   {p:4,ic:'🛒',t:'电商',c:'#06b6d4',edge:'half'},
   {p:5,ic:'🏪',t:'线下店',c:'#f59e0b',edge:'none'},
   {p:6,ic:'🏘️',t:'村集体',c:'#f59e0b',edge:'none'},
-  {p:7,ic:'🏡',t:'民宿',c:'#a78bfa',edge:'none'}
+  {p:7,ic:'🥜',t:'花生',c:'#eab308',edge:'half'}
 ];
+// 游客在环外右侧；研学(1)/文旅(2)/民宿(3) 用虚线连过去（现在没接上）
+const TX=320,TY=140,TOUR=[1,2,3];
 
 function nodeSVG(d,id){
   const q=RING[d.p];
@@ -186,11 +192,23 @@ function renderScene(){
   // 边（先画，在节点下）
   S1.forEach((d,i)=>svg+=edgeSVG(d,'e1_'+i));
   S2.forEach((d,i)=>svg+=edgeSVG(d,'e2_'+i));
+  // 游客虚线：研学/文旅/民宿 → 游客（现在没接上）
+  TOUR.forEach(pi=>{
+    const q=RING[pi];
+    svg+=`<line class="edge" id="te_${pi}" x1="${q.x}" y1="${q.y}" x2="${TX}" y2="${TY}" stroke="#38bdf8" stroke-width="1.6"/>`;
+  });
   // 出口日本远边
   svg+=`<line class="edge" id="japanLine" x1="${CX}" y1="${CY}" x2="346" y2="86" stroke="#ef4444" stroke-width="1.8" opacity="0"/>`;
   // 节点
   S1.forEach((d,i)=>svg+=nodeSVG(d,'n1_'+i));
   S2.forEach((d,i)=>svg+=nodeSVG(d,'n2_'+i));
+  // 游客（环外右侧）
+  svg+=`<g class="node" id="tourist">
+    <text x="${TX}" y="${TY-25}" text-anchor="middle" font-size="10" fill="#7dd3fc" font-weight="700">游客</text>
+    <circle cx="${TX}" cy="${TY}" r="17" fill="rgba(8,15,30,.94)" stroke="#38bdf8" stroke-width="2.3"/>
+    <text x="${TX}" y="${TY+6}" text-anchor="middle" font-size="16">👥</text>
+    <text x="${TX}" y="${TY+34}" text-anchor="middle" font-size="9" fill="#7dd3fc">28万人次</text>
+  </g>`;
   // 糖厂（中央）
   svg+=`<g class="node" id="factory">
     <rect x="193" y="102" width="7" height="20" fill="#78716c"/>
@@ -304,6 +322,8 @@ function play(){
       $('n2_'+i).classList.add('on');
       $('e2_'+i).classList.add(d.edge);
     });
+    $('tourist').classList.add('on');
+    TOUR.forEach(pi=>$('te_'+pi).classList.add('none'));
   });
   at(4.6,()=>{ $('ysC').classList.add('on'); $('ypD').classList.add('on'); $('ylD').classList.add('on'); });
   // 第三幕：分叉
@@ -313,6 +333,10 @@ function play(){
     S2.forEach((d,i)=>{
       const e=$('e2_'+i),n=$('n2_'+i);
       setTimeout(()=>{e.classList.remove('half','none');e.classList.add('on');n.classList.add('on');},i*260);
+    });
+    // 游客虚线接上（研学/文旅/民宿 → 游客）
+    TOUR.forEach((pi,k)=>{
+      setTimeout(()=>{const te=$('te_'+pi);te.classList.remove('none');te.classList.add('on');},(k+2)*260);
     });
   });
   // 产量曲线分叉
