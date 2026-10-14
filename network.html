@@ -69,8 +69,8 @@ svg{display:block;width:100%;height:auto}
 </div>
 
 <div class="wrap">
-  <h1>把博罗放进大湾区，看它怎么长</h1>
-  <p class="sub">33个主体、43条可佐证主边，会自己一层层长出来。注意最粗的那根线连到哪里。</p>
+  <h1>博罗产业网络：谁是链主，谁在配套谁</h1>
+  <p class="sub">14个产业主体、13条可佐证关系。注意最粗的那根线从东莞连到谁。</p>
 
   <div class="actbar">
     <button class="btn" id="bReplay">↻ 重新建构</button>
@@ -80,22 +80,16 @@ svg{display:block;width:100%;height:auto}
 
   <div style="display:flex;gap:8px;margin-bottom:12px;flex-wrap:wrap;align-items:center">
     <span style="font-size:12px;color:#8fa3bf;margin-right:4px">视图：</span>
-    <button class="filter-btn on" data-types="ext,space,ind,talent">全景</button>
-    <button class="filter-btn" data-types="space">只看镇</button>
-    <button class="filter-btn" data-types="ind">只看产业</button>
-    <button class="filter-btn" data-types="talent">只看人</button>
-    <button class="filter-btn" data-types="ext,space">镇+外部</button>
+    <button class="filter-btn on" data-types="ext,ind">全景</button>
+    <button class="filter-btn" data-types="ind">只看博罗产业</button>
+    <button class="filter-btn" data-types="ext">只看外部城市</button>
   </div>
 
   <div class="stage">
     <div class="acttitle" id="acttitle"></div>
     <svg id="svg" viewBox="0 0 860 620">
-      <!-- 功能片区背景标签 -->
-      <text x="20" y="40" fill="#a78bfa" font-size="10" font-weight="700" opacity="0.6">外部城市</text>
-      <text x="160" y="60" fill="#9aa6b8" font-size="10" font-weight="700" opacity="0.6">西部工业带</text>
-      <text x="330" y="85" fill="#9aa6b8" font-size="10" font-weight="700" opacity="0.6">县城中心</text>
-      <text x="480" y="25" fill="#9aa6b8" font-size="10" font-weight="700" opacity="0.6">环罗浮山文旅</text>
-      <text x="660" y="40" fill="#9aa6b8" font-size="10" font-weight="700" opacity="0.6">博东农业</text>
+      <text x="20" y="40" fill="#a78bfa" font-size="11" font-weight="700" opacity="0.6">外部产业源头</text>
+      <text x="250" y="80" fill="#22c55e" font-size="11" font-weight="700" opacity="0.6">博罗产业集群</text>
       <text x="280" y="260" fill="#22c55e" font-size="10" font-weight="700" opacity="0.6">博罗产业</text>
       <text x="380" y="470" fill="#f97316" font-size="10" font-weight="700" opacity="0.6">人</text>
       <g id="edges"></g>
@@ -103,45 +97,37 @@ svg{display:block;width:100%;height:auto}
     </svg>
     <div class="legend">
       <span><i class="dot" style="background:#22c55e"></i>博罗产业</span>
-      <span><i class="dot" style="background:#9aa6b8"></i>镇街空间</span>
-      <span><i class="dot" style="background:#f97316"></i>人</span>
-      <span><i class="dot" style="background:#a78bfa"></i>外部城市</span>
+      <span><i class="dot" style="background:#a78bfa"></i>外部城市（产业源头）</span>
     </div>
   </div>
 
   <div id="after">
     <div class="k3">
-      <div class="b"><div class="l">现在连得最多</div><div class="v" id="kDegree" style="color:#4ade80">—</div><div style="font-size:11px;color:#6b7d96;margin-top:3px" id="kDegreeDesc"></div></div>
-      <div class="b"><div class="l">网络密度</div><div class="v" style="color:#fbbf24">约8%</div><div style="font-size:11px;color:#6b7d96;margin-top:3px">43/528，大量潜在连接是暗的</div></div>
-      <div class="b"><div class="l">最不能断的（必经度第一）</div><div class="v" id="kBetween" style="color:#a78bfa">—</div><div style="font-size:11px;color:#6b7d96;margin-top:3px" id="kBetweenDesc"></div></div>
+      <div class="b"><div class="l">链主（连得最多）</div><div class="v" id="kDegree" style="color:#4ade80">—</div><div style="font-size:11px;color:#6b7d96;margin-top:3px" id="kDegreeDesc"></div></div>
+      <div class="b"><div class="l">网络密度</div><div class="v" style="color:#fbbf24">约4.4%</div><div style="font-size:11px;color:#6b7d96;margin-top:3px">8条边/14节点，大量潜在配套是暗的</div></div>
+      <div class="b"><div class="l">最不能断的</div><div class="v" id="kBetween" style="color:#a78bfa">—</div><div style="font-size:11px;color:#6b7d96;margin-top:3px" id="kBetweenDesc"></div></div>
     </div>
 
     <div class="plain">
       <span class="lab">人话</span>
-      博罗不是一个孤立的县。它连得最紧的那根线，不是连到自己的县城，是连到东莞。这不是问题——这是博罗在大湾区里的位置。园洲石湾挨着东莞石龙，产业承接是地理给的。<span class="blood-tag blood-A">A 实测</span>
+      博罗的产业网络不是平的。最粗的那根线从<b>东莞</b>连到<b>电子信息</b>——这是博罗工业的源头。<b>欣旺达</b>从深圳来，拉着<b>电气机械</b>配套。<b>高新区</b>是载体，上面挂着电子信息和686家高新企业。<span class="blood-tag blood-A">A 实测</span>
     </div>
 
     <div class="plain" style="background:rgba(248,113,113,.08);border-left:3px solid #f87171;margin-top:8px">
-      <span class="lab" style="color:#fca5a5">看不懂图？</span>
-      红圈标了三个命门：<b>东莞石龙</b>是博罗工业的源头，<b>园洲石湾</b>是接产业的第一站，<b>罗浮山</b>是博罗唯一的文旅大IP。记住这三个，这张图就没白看。
+      <span class="lab" style="color:#fca5a5">怎么读这张图？</span>
+      三个链主撑着博罗：<b>电子信息</b>（东莞外溢+表面处理配套）、<b>欣旺达/新能源</b>（深圳项目+电气机械配套）、<b>高新区</b>（载体+686家企业）。最细的线是景田百岁山和罗浮山国药——它们不依附于谁，是独立的特色产业。
     </div>
 
     <div style="margin-top:14px">
-      <div style="font-size:13px;font-weight:700;margin-bottom:8px;color:#cbd5e1">谁连得最多？</div>
+      <div style="font-size:13px;font-weight:700;margin-bottom:8px;color:#cbd5e1">谁是链主？</div>
       <div id="degreeRanks"></div>
     </div>
 
-    <div style="margin-top:14px">
-      <div style="font-size:13px;font-weight:700;margin-bottom:8px;color:#cbd5e1">谁在关键路径上？</div>
-      <div id="betweenRanks"></div>
-    </div>
-
     <div class="algo-note">
-      数据血统（43条边）：<span class="blood-tag blood-A">A 实测 9条</span>统计公报/镇街公开数据 ｜
-      <span class="blood-tag blood-B">B 推估 17条</span>镇街间联系 ｜
-      <span class="blood-tag blood-C">C 假设 15条</span>跨区域边权重 ｜
-      <span class="blood-tag blood-D">D 缺数 2条</span>无公开数据支撑<br>
-      网络结构由作者根据公开主体与关系构建，边权重含假设，可改参数复跑。
+      数据血统（8条边）：<span class="blood-tag blood-A">A 实测 4条</span>统计公报/企业公开数据 ｜
+      <span class="blood-tag blood-B">B 推估 3条</span>产业配套关系 ｜
+      <span class="blood-tag blood-C">C 假设 1条</span>特色产业联动<br>
+      节点为博罗核心产业主体，镇仅作标签；边为上下游/配套/外溢关系，权重含假设，可改参数复跑。
     </div>
   </div>
 
@@ -150,66 +136,33 @@ svg{display:block;width:100%;height:auto}
 
 <script>
 const NODES=[
-  // ===== 外部城市（最左列 + 最右惠城） =====
-  {id:"gz",name:"广州",x=45,y:60,type:"ext",w:1,label:"广州"},
-  {id:"dg",name:"东莞",x=45,y:180,type:"ext",w:3,label:"东莞石龙/石排"},
-  {id:"sz",name:"深圳",x=45,y:320,type:"ext",w:2,label:"深圳（高铁）"},
-  {id:"hz",name:"惠城",x=815,y:200,type:"ext",w:2,label:"惠州惠城"},
-  // ===== 镇街空间（中上部大块，内部按功能片区分4组） =====
-  // --- 西部工业带 ---
-  {id:"yz",name:"园洲",x=180,y:90,type:"space",w:3,label:"县域副中心·344亿"},
-  {id:"sw",name:"石湾",x=180,y=140,type:"space",w:2,label:"工业重镇·2513家"},
-  {id:"ft",name:"福田",x=180,y:190,type:"space",w:2,label:"深莞共建园"},
-  {id:"tm",name:"泰美",x=180,y=240,type:"space",w:1,label:"城市发展区"},
-  // --- 县城中心 ---
-  {id:"ly",name:"罗阳",x=350,y:110,type:"space",w:3,label:"县城主中心·238亿"},
-  {id:"lx",name:"龙溪",x=350,y:160,type:"space",w:2,label:"县城组成"},
-  // --- 环罗浮山文旅 ---
-  {id:"lfs",name:"罗浮山",x=500,y:40,type:"space",w:3,label:"年游客1028万"},
-  {id:"cn",name:"长宁",x=500,y:80,type:"space",w:2,label:"旅游副中心"},
-  {id:"hh",name:"横河",x=500,y:120,type:"space",w:1,label:"生态·环两山"},
-  {id:"hz2",name:"湖镇",x=500,y:160,type:"space",w:2,label:"医药文旅"},
-  // --- 博东农业生态 ---
-  {id:"bh",name:"柏塘",x=680,y:60,type:"space",w:1,label:"山茶"},
-  {id:"gz2",name:"公庄",x=680,y:100,type:"space",w:1,label:"博东"},
-  {id:"yc",name:"杨村",x=680,y:140,type:"space",w:1,label:"博东副中心"},
-  {id:"ge",name:"观音阁",x=680,y:180,type:"space",w:1,label:"东部文旅"},
-  // ===== 产业节点（中下部一块） =====
-  {id:"bmc",name:"表面处理",x=180,y=340,type:"ind",w:1,label:"表面处理集群"},
-  {id:"dz",name:"电子信息",x=240,y=320,type:"ind",w:2,label:"占规上23.2%"},
-  {id:"ddc",name:"电动车",x=200,y=380,type:"ind",w:2,label:"台铃小刀"},
-  {id:"dq",name:"电气机械",x=280,y=360,type:"ind",w:2,label:"占规上14.2%"},
-  {id:"ht",name:"高新区",x=380,y:300,type:"ind",w:3,label:"千亿智能装备"},
-  {id:"xw",name:"欣旺达",x=340,y:270,type:"ind",w:3,label:"新能源龙头"},
-  {id:"gx",name:"高新企业",x=420,y:270,type:"ind",w:2,label:"686家"},
-  {id:"my",name:"民营工业",x=380,y:370,type:"ind",w:2,label:"占68.6%"},
-  {id:"lfsgy",name:"罗浮山国药",x=500,y=280,type:"ind",w:1,label:"罗浮山国药"},
-  {id:"jt",name:"景田百岁山",x=560,y=300,type:"ind",w:2,label:"饮料374万吨"},
-  // ===== 人（最下一排） =====
-  {id:"w1",name:"工人",x=180,y=480,type:"talent",w:2,label:"园洲石湾产业工人"},
-  {id:"w5",name:"通勤",x=100,y=420,type:"talent",w:1,label:"深惠通勤族"},
-  {id:"w2",name:"县城居民",x=380,y=440,type:"talent",w:2,label:"罗阳居民"},
-  {id:"w4",name:"游客",x=520,y=220,type:"talent",w:2,label:"年1028万人次"},
-  {id:"w3",name:"农业人口",x=680,y=240,type:"talent",w:1,label:"农业人口49万"},
+  // ===== 外部城市（产业源头） =====
+  {id:"gz",name:"广州",x:50,y:80,type:"ext",w:1,label:"广深都市圈"},
+  {id:"dg",name:"东莞",x:50,y:220,type:"ext",w:3,label:"石龙/石排·产业外溢源头"},
+  {id:"sz",name:"深圳",x:50,y:360,type:"ext",w:2,label:"新能源项目来源"},
+  {id:"hz",name:"惠城",x:810,y:250,type:"ext",w:1,label:"惠州主城·行政"},
+  // ===== 博罗核心产业集群 =====
+  {id:"dz",name:"电子信息",x:220,y:180,type:"ind",w:3,label:"317家规上·产值773.8亿·园洲"},
+  {id:"bmc",name:"表面处理",x:160,y:130,type:"ind",w:1,label:"配套集群·福田"},
+  {id:"ddc",name:"电动车",x:180,y:260,type:"ind",w:2,label:"台铃小刀·石湾"},
+  {id:"xw",name:"欣旺达",x:480,y:120,type:"ind",w:3,label:"新能源龙头·罗阳"},
+  {id:"dq",name:"电气机械",x:540,y:170,type:"ind",w:2,label:"占规上14.2%·龙溪"},
+  {id:"ht",name:"高新区",x:380,y:220,type:"ind",w:3,label:"千亿智能装备·罗阳"},
+  {id:"gx",name:"高新企业",x:440,y:260,type:"ind",w:2,label:"686家"},
+  {id:"lfsgy",name:"罗浮山国药",x:620,y:280,type:"ind",w:1,label:"生物医药·长宁"},
+  {id:"jt",name:"景田百岁山",x:700,y:220,type:"ind",w:2,label:"饮料374万吨·湖镇"},
+  {id:"my",name:"民营工业",x:380,y:320,type:"ind",w:2,label:"占规上68.6%"},
 ];
 
 const EDGES=[
-  ["yz","dg",5,"A"],["sw","dg",4,"A"],["ft","dg",3,"B"],
-  ["yz","sz",2,"B"],["tm","sz",2,"B"],
-  ["lfs","gz",2,"B"],["lfs","sz",2,"B"],
-  ["ly","hz",3,"A"],
-  ["yz","ht",3,"B"],["sw","ddc",2,"B"],["yz","dz",2,"B"],
-  ["ft","bmc",2,"C"],["ly","ht",3,"A"],["lx","dq",2,"B"],
-  ["hz2","dq",2,"B"],["cn","lfs",3,"A"],["bh","w3",2,"C"],
-  ["lfs","lfsgy",2,"C"],["ge","jt",2,"B"],["ht","gx",3,"A"],
-  ["xw","dq",2,"B"],["xw","ht",2,"A"],["dz","dq",2,"B"],
-  ["ddc","dq",1,"C"],["my","ht",2,"C"],["my","yz",2,"C"],
-  ["w1","yz",3,"B"],["w1","sw",2,"B"],["w2","ly",3,"A"],
-  ["w4","lfs",3,"A"],["w3","bh",2,"C"],["w5","yz",2,"C"],
-  ["w5","sz",1,"D"],["w1","w5",1,"D"],["w2","ht",2,"C"],
-  ["w2","gx",1,"C"],["yz","sw",2,"B"],["ly","lx",2,"B"],
-  ["ly","hz2",1,"C"],["cn","bh",1,"C"],["bh","hh",1,"C"],
-  ["tm","ge",1,"C"],["yc","ge",1,"C"],
+  ["dg","dz",5,"A"],["dg","ddc",4,"A"],
+  ["sz","xw",3,"B"],["sz","dq",2,"B"],
+  ["gz","lfsgy",2,"C"],
+  ["bmc","dz",2,"B"],["bmc","ddc",2,"B"],
+  ["dq","xw",2,"B"],
+  ["ht","dz",3,"A"],["ht","gx",3,"A"],["ht","my",2,"B"],
+  ["xw","ht",2,"A"],
+  ["jt","my",1,"C"],
 ];
 
 const COLORS={ind:"#22c55e",space:"#9aa6b8",talent:"#f97316",ext:"#a78bfa"};
@@ -282,10 +235,8 @@ function start(){
 
   const typeNames={ext:"外部城市",space:"镇街",ind:"产业",talent:"人"};
   const phases=[];
-  if(activeTypes.has("ext"))phases.push({title:"① 外部城市落下",filter:n=>n.type==="ext"});
-  if(activeTypes.has("space"))phases.push({title:"② 镇街空间落下",filter:n=>n.type==="space"});
-  if(activeTypes.has("ind"))phases.push({title:"③ 产业节点接上",filter:n=>n.type==="ind"});
-  if(activeTypes.has("talent"))phases.push({title:"④ 人和游客落下",filter:n=>n.type==="talent"});
+  if(activeTypes.has("ext"))phases.push({title:"① 外部产业源头落下",filter:n=>n.type==="ext"});
+  if(activeTypes.has("ind"))phases.push({title:"② 博罗产业集群接上",filter:n=>n.type==="ind"});
 
   let clock=0;
   phases.forEach(ph=>{
@@ -339,7 +290,7 @@ function showAfter(degree,nodeCount,edgeCount){
   const degSorted=Object.entries(degree).sort((a,b)=>b[1]-a[1]);
   const topDeg=nodeById(degSorted[0][0]);
   document.getElementById("kDegree").textContent=topDeg.name;
-  document.getElementById("kDegreeDesc").textContent=`连了${degSorted[0][1]}条线，本组第一`;
+  document.getElementById("kDegreeDesc").textContent=`连了${degSorted[0][1]}条线，链主`;
   const maxDeg=Math.max(...Object.values(degree))||1;
   document.getElementById("degreeRanks").innerHTML=degSorted.slice(0,8).map(([id,v])=>{
     const n=nodeById(id);
@@ -350,9 +301,14 @@ function showAfter(degree,nodeCount,edgeCount){
     </div>`;
   }).join("");
 
-  // 筛选视图下 betweenness 排名无意义，隐藏
-  document.querySelector(".k3").children[2].style.display=activeTypes.size===4?"":"none";
-  document.getElementById("betweenRanks").parentElement.style.display=activeTypes.size===4?"":"none";
+  // 全景下显示 betweenness
+  document.querySelector(".k3").children[2].style.display=activeTypes.size===2?"":"none";
+  if(activeTypes.size===2){
+    const betSorted=Object.entries(between).sort((a,b)=>b[1]-a[1]);
+    const topBet=nodeById(betSorted[0][0]);
+    document.getElementById("kBetween").textContent=topBet.name;
+    document.getElementById("kBetweenDesc").textContent=`处在${betSorted[0][1].toFixed(1)}条关键路径上`;
+  }
 }
 
 function exportCSV(){
