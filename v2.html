@@ -508,13 +508,62 @@ document.getElementById('eraBtn').onclick=(e)=>{e.stopPropagation();
   <br><b style="color:#7dd3fc">② 成长期（2005-2015）：两条链各自长</b>
   <div class="dim">华通/欣旺达先后落地，电子信息链和新能源链分别从东莞/深圳外溢长出。各长各的，互不供货。SNA出现两个连通分量。</div>
   <br><b style="color:#4ade80">③ 现在（2026）：千亿县但断链</b>
-  <div class="dim">28节点全息图。GDP破千亿、电子信息770亿，但SNA算出来：新能源链和电子信息链之间<b style="color:#f87171">没有供货边</b>。表面处理同时服务两条链吗？江丰靶材进欣旺达吗？现在的边里没有。</div>
+  <div class="dim">28节点全息图。GDP破千亿、电子信息770亿，但SNA算出来：新能源链和电子信息链之间<b style="color:#f87171">没有供货边</b>。</div>
   <br><b style="color:#c084fc">④ 搭桥后（推演）：如果…</b>
-  <div class="dim">如果表面处理集群同时供电子+新能源（它已经在两边了）、如果江丰靶材进欣旺达电池线、如果散热集群从华通拓展到新能源——两个就连成一个整体。这就是破局点：不是再造一个产业，是<b style="color:#c084fc">在现有两条链之间架一座桥</b>。</div>
-  <br><div class="dim" style="color:#7d8fa8">演变不是预测，是把"从散到连"的路径画出来。现在站在③，④能不能发生、谁来搭桥，留给使用者推演。</div>`;
-  document.getElementById('eraPanel').classList.toggle('show');};
+  <div class="dim">如果表面处理同时供两边、江丰靶材进欣旺达、散热从华通拓到新能源——两个就连成一个整体。</div>
+  <br><button id="playEra" style="background:#78350f;color:#fbbf24;border:1px solid #fbbf24;padding:8px 16px;border-radius:20px;cursor:pointer;margin-top:8px">▶ 在3D里播放这个演变</button>
+  <div class="dim" style="margin-top:8px">演变不是预测，是把"从散到连"的路径画出来。</div>`;
+  document.getElementById('eraPanel').classList.toggle('show');
+  document.getElementById('playEra').onclick=(e)=>{e.stopPropagation();playEvolution();};};
 document.getElementById('eraClose').onclick=(e)=>{e.stopPropagation();
   document.getElementById('eraPanel').classList.remove('show');};
+
+// 演变动画：节点分批淡入，最后桥边闪
+function playEvolution(){
+  document.getElementById('eraPanel').classList.remove('show');
+  resetShock();
+  // 先全部压暗
+  nodes.forEach(n=>{const m=nodeMeshes[n.id];if(m.terrain)return;
+    m.core.material.opacity=0.05;m.glow.material.opacity=0.01;m.label.material.opacity=0;m.ring.material.opacity=0;});
+  Object.values(lines).forEach(l=>l.material.opacity=0);
+  // 分批亮起
+  const batches=[
+    {types:['terrain'],delay:0,label:'东江和环两山——地形先在'},
+    {types:['legacy','agri'],delay:800,label:'老厂+农业——起步期散点'},
+    {types:['anchor'],delay:1800,label:'链主落地——华通/欣旺达/正威进来'},
+    {types:['capillary'],delay:3000,label:'配套集群长出来——两条链各自成链'},
+    {types:['infra','park'],delay:4200,label:'设施和载体跟上——电/高铁/园区'},
+    {types:['dormant','livelihood'],delay:5400,label:'待点亮+民生底盘'},
+  ];
+  batches.forEach(b=>{
+    b.types.forEach(t=>{
+      nodes.forEach(n=>{if(n.type!==t)return;
+        setTimeout(()=>{const m=nodeMeshes[n.id];if(m.terrain)return;
+          m.core.material.opacity=0.95;m.glow.material.opacity=0.12;m.label.material.opacity=0.9;m.ring.material.opacity=0.25;},b.delay);
+      });
+    });
+  });
+  // 边逐条画出
+  setTimeout(()=>{
+    Object.values(lines).forEach((l,i)=>{setTimeout(()=>l.material.opacity=0.4,i*80);});
+  },2500);
+  // 最后：桥边闪烁（虚拟：表面处理→华通，连接两条链）
+  setTimeout(()=>{
+    const s=nodeById['bmc'].pos,t=nodeById['htd'].pos;
+    const g=new THREE.BufferGeometry().setFromPoints([s,t]);
+    const bridge=new THREE.Line(g,new THREE.LineBasicMaterial({color:0xc084fc,transparent:true,opacity:0.9}));
+    group.add(bridge);
+    const p=new THREE.Mesh(new THREE.SphereGeometry(2.5,8,8),
+      new THREE.MeshBasicMaterial({color:0xc084fc,transparent:true,opacity:1}));
+    group.add(p);
+    let t2=0;
+    const flash=setInterval(()=>{t2+=0.02;
+      p.position.lerpVectors(s,t,t2%1);
+      bridge.material.opacity=0.5+0.5*Math.sin(t2*8);
+      if(t2>3){clearInterval(flash);group.remove(bridge);group.remove(p);}
+    },30);
+  },6500);
+}
 const m=location.hash.match(/shock=(\w+)/);
 if(m){const btn=document.querySelector(`.sbtn[data-shock="${m[1]}"]`);
   if(btn){btn.classList.add('on');runShock(m[1],btn.dataset.name,btn.dataset.kinds);}}
