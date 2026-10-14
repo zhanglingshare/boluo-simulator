@@ -18,6 +18,18 @@ h1{font-size:22px;margin-bottom:6px}
 .controls span{font-size:12px;color:#8fa3bf}
 .fbtn{background:#131c2b;color:#93a4bd;border:1px solid #22304a;padding:6px 14px;border-radius:20px;font-size:12px;cursor:pointer}
 .fbtn.on{background:#15803d;border-color:#22c55e;color:#fff;font-weight:600}
+.evo-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:12px;margin-top:14px}
+.evo-card{background:#0e1523;border:1px solid #1c2739;border-radius:12px;padding:14px}
+.evo-title{font-size:13px;color:#cbd5e1;font-weight:600;margin-bottom:10px;display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:4px}
+.evo-up{font-size:11px;color:#4ade80;font-weight:700}
+.bar-row{display:grid;grid-template-columns:34px minmax(0,1fr) 56px;align-items:center;gap:8px;margin:7px 0}
+.bar-row .yr{font-size:11px;color:#64748b}
+.bar{height:16px;background:#0a0f1a;border-radius:4px;overflow:hidden}
+.bar i{display:block;height:100%;background:linear-gradient(90deg,#1d4ed8,#38bdf8);border-radius:4px;transition:width .6s}
+.bar-row b{text-align:right;font-size:11px;color:#cbd5e1}
+.bar-row.hi .bar i{background:linear-gradient(90deg,#15803d,#22c55e)}
+.evo-note{font-size:10.5px;color:#64748b;margin-top:8px;line-height:1.5}
+@media(max-width:560px){.evo-grid{grid-template-columns:1fr}}
 #chart{background:#0a0f1a;border:1px solid #1c2739;border-radius:14px;overflow:hidden;position:relative}
 #tooltip{position:absolute;display:none;background:#1a2332;border:1px solid #2b3a55;border-radius:8px;padding:12px;font-size:12px;color:#cbd5e1;pointer-events:none;z-index:10;max-width:260px;line-height:1.7}
 .legend{display:flex;gap:16px;margin-top:10px;font-size:11px;color:#8fa3bf;flex-wrap:wrap}
@@ -118,6 +130,42 @@ h1{font-size:22px;margin-bottom:6px}
     <span><i style="background:#22c55e"></i>六大产业（大小=产值）</span>
     <span><i style="background:#06b6d4"></i>手里的家底</span>
     <span><i style="background:#a78bfa"></i>卖到哪·谁来</span>
+  </div>
+
+  <h2 style="margin-top:34px">三年怎么长过来的（2023→2025）</h2>
+  <p class="sub">四条横条按各自最大值归一化，只比三年自己的变化。数字来自2023-2025年统计公报、科工信局总结。</p>
+  <div class="evo-grid">
+    <div class="evo-card">
+      <div class="evo-title">GDP（亿元）<span class="evo-up">两年 +19.9%</span></div>
+      <div class="bar-row"><span class="yr">2023</span><div class="bar"><i style="width:83.4%"></i></div><b>838.9</b></div>
+      <div class="bar-row"><span class="yr">2024</span><div class="bar"><i style="width:94.7%"></i></div><b>952.2</b></div>
+      <div class="bar-row hi"><span class="yr">2025</span><div class="bar"><i style="width:100%"></i></div><b>1005.5</b></div>
+      <div class="evo-note">2025年迈过千亿，成广东首个千亿县</div>
+    </div>
+    <div class="evo-card">
+      <div class="evo-title">接待游客（万人次）<span class="evo-up">+18.0%</span></div>
+      <div class="bar-row"><span class="yr">2023</span><div class="bar"><i style="width:84.8%"></i></div><b>871.3</b></div>
+      <div class="bar-row"><span class="yr">2024</span><div class="bar"><i style="width:89.5%"></i></div><b>920.5</b></div>
+      <div class="bar-row hi"><span class="yr">2025</span><div class="bar"><i style="width:100%"></i></div><b>1028.1</b></div>
+      <div class="evo-note">2025年首破千万人次</div>
+    </div>
+    <div class="evo-card">
+      <div class="evo-title">旅游综合收入（亿元）<span class="evo-up">+25.0%</span></div>
+      <div class="bar-row"><span class="yr">2023</span><div class="bar"><i style="width:80%"></i></div><b>41.5</b></div>
+      <div class="bar-row"><span class="yr">2024</span><div class="bar"><i style="width:84%"></i></div><b>43.6</b></div>
+      <div class="bar-row hi"><span class="yr">2025</span><div class="bar"><i style="width:100%"></i></div><b>51.9</b></div>
+      <div class="evo-note">人均消费逐年走高</div>
+    </div>
+    <div class="evo-card">
+      <div class="evo-title">外贸进出口（亿元）<span class="evo-up">+35.8%</span></div>
+      <div class="bar-row"><span class="yr">2023</span><div class="bar"><i style="width:73.6%"></i></div><b>294.5</b></div>
+      <div class="bar-row"><span class="yr">2024</span><div class="bar"><i style="width:79.3%"></i></div><b>约317</b></div>
+      <div class="bar-row hi"><span class="yr">2025</span><div class="bar"><i style="width:100%"></i></div><b>超400</b></div>
+      <div class="evo-note">2025年 +26.1%，增幅全市第二；2024年值由增速反推</div>
+    </div>
+  </div>
+  <div class="algo-note" style="margin-top:10px">
+    另外两组只给方向性变化、不做条图：2025年规上工业总产值突破<b>2000亿</b>、增加值+8.7%；规上工业企业从2024年1035家（民营）增至2025年1407家。高新技术企业由2024年末710家变为2025年末686家，存量有所下降，如实列出。
   </div>
 
   <div class="brief">
