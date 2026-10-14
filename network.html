@@ -83,6 +83,7 @@ h1{font-size:22px;margin-bottom:6px}
     <span><i style="background:#64748b"></i>毛细血管</span>
     <span><i style="background:#f59e0b"></i>老厂群落</span>
     <span><i style="background:#84cc16"></i>农业康养</span>
+    <span><i style="background:#fbbf24"></i>国家地理标志</span>
     <span><i style="background:#0ea5e9"></i>生态底座</span>
     <span><i style="background:#a78bfa"></i>外部</span>
     <span>── 实线A级</span><span>- - 虚线B级</span><span>· · 点线C级</span>
@@ -141,13 +142,13 @@ const rawNodes=[
   // 第六层：农业与康养
   {id:"bss",name:"百岁山",type:"agri",town:"湖镇",state:"green",layer:"农业康养",desc:"374万吨/年·罗浮山水源"},
   {id:"lfsgy",name:"罗浮山国药",type:"agri",town:"长宁",state:"green",layer:"农业康养",desc:"中华老字号·红脚艾·百草油·省中医院"},
-  {id:"sc",name:"柏塘山茶",type:"agri",town:"柏塘",state:"green",layer:"农业康养",desc:"国家地理标志·省十大茶乡"},
-  {id:"xc",name:"福田菜心",type:"agri",town:"福田",state:"yellow",layer:"农业康养",desc:"国家地理标志·太空育种"},
-  {id:"gyg",name:"观音阁花生",type:"agri",town:"观音阁",state:"green",layer:"农业康养",desc:"国家地理标志"},
-  {id:"gyght",name:"观音阁黑糖",type:"agri",town:"观音阁",state:"green",layer:"农业康养",desc:"国家地理标志"},
+  {id:"sc",name:"柏塘山茶",type:"gi",town:"柏塘",state:"green",layer:"国家地理标志",desc:"国家地理标志·省十大茶乡"},
+  {id:"xc",name:"福田菜心",type:"gi",town:"福田",state:"yellow",layer:"国家地理标志",desc:"国家地理标志·太空育种"},
+  {id:"gyg",name:"观音阁花生",type:"gi",town:"观音阁",state:"green",layer:"国家地理标志",desc:"国家地理标志"},
+  {id:"gyght",name:"观音阁黑糖",type:"gi",town:"观音阁",state:"green",layer:"国家地理标志",desc:"国家地理标志"},
   {id:"sb",name:"石坝胡须鸡",type:"agri",town:"石坝",state:"green",layer:"农业康养",desc:"全国名特优新"},
-  {id:"lsmd",name:"罗浮山大米",type:"agri",town:"长宁/横河",state:"green",layer:"农业康养",desc:"国家地理标志·太空育种"},
-  {id:"lsz",name:"罗浮山荔枝",type:"agri",town:"罗浮山周边",state:"green",layer:"农业康养",desc:"国家地理标志·10万亩"},
+  {id:"lsmd",name:"罗浮山大米",type:"gi",town:"长宁/横河",state:"green",layer:"国家地理标志",desc:"国家地理标志·太空育种"},
+  {id:"lsz",name:"罗浮山荔枝",type:"gi",town:"罗浮山周边",state:"green",layer:"国家地理标志",desc:"国家地理标志·10万亩"},
   {id:"hh",name:"横河户外小镇",type:"capillary",town:"横河",state:"green",layer:"农业康养",desc:"华南户外水经济港·民宿集群"},
   // 外部
   {id:"gz",name:"广州",type:"ext",town:"外部",state:"green",layer:"外部",desc:"医药/文旅合作"},
@@ -265,8 +266,8 @@ const canvasH=isMobile?620:560;
 const H=canvasH;
 const svg=d3.select("#chart").append("svg").attr("width","100%").attr("height",canvasH);
 
-const colorMap={anchor:"#22c55e",champ:"#06b6d4",capillary:"#64748b",agri:"#84cc16",ext:"#a78bfa",legacy:"#f59e0b",eco:"#0ea5e9"};
-const rMap={anchor:15,champ:13,capillary:11,agri:8,ext:12,legacy:14,eco:16};
+const colorMap={anchor:"#22c55e",champ:"#06b6d4",capillary:"#64748b",agri:"#84cc16",gi:"#fbbf24",ext:"#a78bfa",legacy:"#f59e0b",eco:"#0ea5e9"};
+const rMap={anchor:15,champ:13,capillary:11,agri:9,gi:9,ext:12,legacy:14,eco:16};
 
 let nodes=rawNodes.map(d=>({...d}));
 let links=rawEdges.map(d=>({source:d.s,target:d.t,level:d.level,w:d.w,rel:d.rel,kind:d.kind}));
