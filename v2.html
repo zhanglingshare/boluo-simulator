@@ -1,308 +1,362 @@
 <!doctype html>
 <html lang="zh-CN"><head><meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
-<title>博罗产业风洞 V2 · 可推演主舞台</title>
-<script src="https://d3js.org/d3.v7.min.js"></script>
+<title>博罗产业全息风洞 V2</title>
+<script src="https://unpkg.com/three@0.128.0/build/three.min.js"></script>
 <style>
 *{box-sizing:border-box;margin:0;padding:0}
-html,body{height:100%}
-body{background:radial-gradient(ellipse at 50% 0%,#0a1224 0%,#050810 60%);color:#e6edf3;
-  font:14px/1.6 -apple-system,"PingFang SC","Microsoft YaHei",sans-serif;overflow-x:hidden}
-.wrap{max-width:1100px;margin:auto;padding:14px}
+html,body{height:100%;overflow:hidden}
+body{background:#030711;color:#e6edf3;font:13px/1.6 -apple-system,"PingFang SC","Microsoft YaHei",sans-serif}
+#bg{position:fixed;inset:0;z-index:0}
+#bg canvas{width:100%;height:100%;display:block}
 /* 顶栏 */
-.top{display:flex;align-items:center;gap:10px;flex-wrap:wrap;padding:6px 2px 12px}
-.top h1{font-size:19px;letter-spacing:.5px}
+.top{position:fixed;top:0;left:0;right:0;z-index:10;display:flex;align-items:center;gap:10px;
+  padding:10px 14px;background:linear-gradient(180deg,rgba(3,7,17,.92),transparent);pointer-events:none}
+.top h1{font-size:16px;letter-spacing:.5px;pointer-events:auto}
 .top h1 b{color:#4ade80}
-.ver{background:linear-gradient(135deg,#f59e0b,#ef4444);color:#fff;font-size:11px;font-weight:800;
-  padding:2px 9px;border-radius:10px;letter-spacing:1px}
-.blood{margin-left:auto;display:flex;gap:6px;flex-wrap:wrap;font-size:10.5px}
-.blood span{padding:2px 8px;border-radius:8px;background:#0e1523;border:1px solid #1c2739;color:#93a4bd}
+.ver{background:linear-gradient(135deg,#f59e0b,#ef4444);color:#fff;font-size:10px;font-weight:800;
+  padding:2px 8px;border-radius:9px;letter-spacing:1px}
+.blood{margin-left:auto;display:flex;gap:5px;flex-wrap:wrap;font-size:10px;pointer-events:auto}
+.blood span{padding:2px 7px;border-radius:7px;background:rgba(14,21,35,.7);border:1px solid #1c2739;color:#93a4bd;backdrop-filter:blur(6px)}
 .blood .g{color:#4ade80;border-color:#166534}
 .blood .y{color:#fbbf24;border-color:#854d0e}
 .blood .r{color:#f87171;border-color:#7f1d1d}
-.sub{font-size:12px;color:#8fa3bf;margin:0 0 12px;line-height:1.7}
 /* 苗头条 */
-.shockbar{display:flex;gap:8px;flex-wrap:wrap;align-items:center;margin:10px 0 12px;
-  padding:12px 14px;background:rgba(239,68,68,.06);border:1px solid rgba(239,68,68,.2);border-radius:14px}
-.shockbar .lab{font-size:12px;color:#fca5a5;font-weight:700;margin-right:2px}
-.sbtn{background:#1a1218;color:#fca5a5;border:1px solid #7f1d1d;padding:8px 14px;border-radius:22px;
-  font-size:12.5px;cursor:pointer;transition:.15s}
-.sbtn:hover{border-color:#ef4444}
-.sbtn.on{background:#dc2626;border-color:#f87171;color:#fff;font-weight:700;box-shadow:0 0 18px rgba(239,68,68,.4)}
-#resetBtn{background:#131c2b;color:#93a4bd;border:1px solid #22304a;padding:8px 14px;border-radius:22px;
-  font-size:12.5px;cursor:pointer}
+.shockbar{position:fixed;bottom:86px;left:50%;transform:translateX(-50%);z-index:10;
+  display:flex;gap:7px;flex-wrap:wrap;justify-content:center;max-width:96vw;
+  padding:9px 12px;background:rgba(10,18,36,.78);border:1px solid rgba(56,189,248,.25);
+  border-radius:30px;backdrop-filter:blur(10px)}
+.shockbar .lab{font-size:11px;color:#fca5a5;align-self:center}
+.sbtn{background:rgba(30,18,22,.7);color:#fca5a5;border:1px solid #7f1d1d;padding:7px 13px;border-radius:20px;
+  font-size:12px;cursor:pointer;transition:.15s;backdrop-filter:blur(6px)}
+.sbtn.on{background:#dc2626;border-color:#f87171;color:#fff;font-weight:700;box-shadow:0 0 18px rgba(239,68,68,.5)}
+#resetBtn{background:rgba(19,28,43,.8);color:#93a4bd;border:1px solid #22304a;padding:7px 13px;border-radius:20px;font-size:12px;cursor:pointer}
 /* 信息卡 */
-.info{background:linear-gradient(135deg,rgba(239,68,68,.1),rgba(15,23,42,.6));
-  border:1px solid rgba(239,68,68,.3);border-radius:14px;padding:14px 16px;font-size:13px;
-  line-height:1.8;color:#cbd5e1;margin-bottom:12px;display:none}
+.info{position:fixed;bottom:140px;left:12px;right:12px;z-index:10;max-width:680px;margin:auto;
+  background:rgba(10,18,36,.85);border:1px solid rgba(239,68,68,.35);border-radius:14px;
+  padding:13px 15px;font-size:12.5px;line-height:1.75;color:#cbd5e1;backdrop-filter:blur(12px);
+  display:none;max-height:38vh;overflow:auto}
 .info.show{display:block;animation:fd .4s ease-out}
-.info .t{color:#f87171;font-weight:800;font-size:14px}
-.info .dim{color:#7d8fa8;font-size:11.5px}
-.info .row{margin-top:4px}
+.info .t{color:#f87171;font-weight:800;font-size:13.5px}
+.info .dim{color:#7d8fa8;font-size:11px}
 .info b.k{color:#fca5a5}
 @keyframes fd{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:none}}
-/* 画布 */
-#stage{position:relative;width:100%;height:62vh;min-height:420px;background:#070c18;
-  border:1px solid #16233a;border-radius:16px;overflow:hidden}
-svg{width:100%;height:100%;display:block;cursor:grab}
-svg:active{cursor:grabbing}
-.node{cursor:pointer}
-.node circle{stroke:#0a0f1c;stroke-width:2;transition:opacity .3s}
-.node text{fill:#cbd5e1;font-size:11px;paint-order:stroke;stroke:#070c18;stroke-width:3px;
-  pointer-events:none;font-weight:600}
-.link{transition:opacity .3s}
-/* 图例 */
-.legend{display:flex;gap:14px;flex-wrap:wrap;margin:10px 2px;font-size:11px;color:#7d8fa8}
-.legend i{display:inline-block;width:18px;height:3px;border-radius:2px;vertical-align:middle;margin-right:5px}
-/* 底部声明 */
-.foot{margin-top:14px;padding:12px 14px;background:#0b1120;border:1px solid #16233a;border-radius:12px;
-  font-size:11px;color:#5b6b82;line-height:1.7}
+/* 底部 */
+.foot{position:fixed;bottom:0;left:0;right:0;z-index:9;padding:7px 14px;
+  background:linear-gradient(0deg,rgba(3,7,17,.95),transparent);
+  font-size:10.5px;color:#5b6b82;text-align:center}
 .foot b{color:#94a3b8}
 /* tooltip */
-.tip{position:absolute;pointer-events:none;background:rgba(10,18,36,.96);border:1px solid #22304a;
-  border-radius:10px;padding:10px 12px;font-size:12px;line-height:1.6;color:#cbd5e1;
-  max-width:240px;display:none;z-index:20;box-shadow:0 8px 30px rgba(0,0,0,.5)}
-.tip b{color:#fff;font-size:13px}
+.tip{position:fixed;pointer-events:none;background:rgba(10,18,36,.96);border:1px solid #22304a;
+  border-radius:10px;padding:9px 12px;font-size:12px;line-height:1.6;color:#cbd5e1;
+  max-width:220px;display:none;z-index:20;box-shadow:0 8px 30px rgba(0,0,0,.6)}
+.tip b{color:#fff}
 .tip .town{color:#fbbf24;font-size:10.5px}
-.tip .desc{color:#94a3b8;margin-top:3px}
-@media(max-width:680px){#stage{height:56vh;min-height:380px}.top h1{font-size:16px}}
+.tip .desc{color:#94a3b8;margin-top:3px;font-size:11px}
+.hint{position:fixed;top:56px;left:50%;transform:translateX(-50%);z-index:9;
+  font-size:10.5px;color:#475569;pointer-events:none;letter-spacing:1px}
 </style></head><body>
-<div class="wrap">
-  <div class="top">
-    <h1>博罗产业风洞 <span class="ver">V2</span></h1>
-    <div class="blood">
-      <span class="g">● 公开硬数据</span>
-      <span class="y">● 合理估算</span>
-      <span class="r">● 待内网接入</span>
-    </div>
-  </div>
-  <p class="sub">全县产业生长图：<b style="color:#e6edf3">27 个骨架节点 · 35 条真实关系</b>。
-  点下面任意一个"苗头"，看冲击沿供货关系一层层传出去。节点可以用手拖动。</p>
+<div id="bg"></div>
+<div class="hint">🔄 拖动旋转 · 双指缩放 · 点节点看详情</div>
 
-  <div class="shockbar">
-    <span class="lab">💥 注入苗头</span>
-    <button class="sbtn" data-shock="xwd" data-kinds="供应链,资源竞争" data-name="链主飞走（欣旺达/锂威总部外迁）">A 链主飞走</button>
-    <button class="sbtn" data-shock="dj" data-kinds="环保约束,供应链" data-name="东江喊停（沿江环保限产）">B 东江喊停</button>
-    <button class="sbtn" data-shock="lq" data-kinds="资源竞争,供应链" data-name="老厂腾退（亩均改造）">C 老厂腾退</button>
-    <button class="sbtn" data-shock="dg" data-kinds="供应链" data-name="外溢退潮（东莞外溢减弱）">D 外溢退潮</button>
-    <button id="resetBtn">↺ 重置</button>
-  </div>
-
-  <div class="info" id="info"></div>
-
-  <div id="stage">
-    <svg id="svg"></svg>
-    <div class="tip" id="tip"></div>
-  </div>
-
-  <div class="legend">
-    <span><i style="background:#38bdf8"></i>供应链</span>
-    <span><i style="background:#ef4444"></i>环保约束</span>
-    <span><i style="background:#f59e0b"></i>抢地抢电</span>
-    <span><i style="background:#0ea5e9"></i>生态补偿/康养</span>
-    <span style="margin-left:auto">线越粗＝关系越强</span>
-  </div>
-
-  <div class="foot">
-    <b>这是什么：</b>一个可以被重跑的产业沙盘，不是预测、不替任何人做决定。
-    节点与连线依据政府公开报告、权威研究与合理估算搭建（🟢/🟡），内网真实数据接入后（🔴）指标会重算。
-    颜色越红＝离冲击源越近；越黄＝传得越远、衰减越多。<b>欢迎质疑、改参数、重跑。</b>
+<div class="top">
+  <h1>博罗产业全息风洞 <span class="ver">V2</span></h1>
+  <div class="blood">
+    <span class="g">● 公开硬数据</span>
+    <span class="y">● 合理估算</span>
+    <span class="r">● 待内网</span>
   </div>
 </div>
 
+<div class="info" id="info"></div>
+
+<div class="shockbar">
+  <span class="lab">💥 苗头</span>
+  <button class="sbtn" data-shock="xwd" data-kinds="供应链,资源竞争" data-name="链主飞走（欣旺达/锂威总部外迁）">A 链主飞走</button>
+  <button class="sbtn" data-shock="dj" data-kinds="环保约束,供应链" data-name="东江喊停（沿江环保限产）">B 东江喊停</button>
+  <button class="sbtn" data-shock="lq" data-kinds="资源竞争,供应链" data-name="老厂腾退（亩均改造）">C 老厂腾退</button>
+  <button class="sbtn" data-shock="dg" data-kinds="供应链" data-name="外溢退潮（东莞外溢减弱）">D 外溢退潮</button>
+  <button id="resetBtn">↺</button>
+</div>
+
+<div class="foot">
+  全息沙盘＝可被重跑的产业世界，不预测、不替人拍板。节点依据公开报告/权威研究/合理估算搭建（🟢🟡），内网数据接入后（🔴）重算。<b>欢迎质疑、改参数、重跑。</b>
+</div>
+<div class="tip" id="tip"></div>
+
 <script>
 const rawNodes=[
-  {id:"dj",name:"东江水系",type:"eco",layer:"生态底座",town:"沿江多镇",desc:"母亲河·饮用水源Ⅱ类·沿江镇街排污上限"},
-  {id:"lswh",name:"环两山引领区",type:"eco",layer:"生态底座",town:"长宁/横河/福田",desc:"南昆山-罗浮山·218km 8字旅游公路·北部绿色屏障"},
-  {id:"xwd",name:"欣旺达/锂威",type:"anchor",layer:"链主",town:"园洲",desc:"锂电池·高用电·高外部订单依赖"},
-  {id:"htd",name:"华通电脑",type:"anchor",layer:"链主",town:"园洲/石湾",desc:"电子信息770亿基本盘代表"},
-  {id:"zw",name:"正威新材料",type:"anchor",layer:"链主",town:"罗阳",desc:"25万吨铜杆/年·重资产原材料底座"},
-  {id:"jq",name:"嘉奇新能源",type:"anchor",layer:"链主",town:"园洲",desc:"奇瑞系·深博福田产业园2026开园·梯次电池基地"},
-  {id:"jf",name:"江丰精密",type:"anchor",layer:"链主",town:"园洲",desc:"溅射靶材全球第一·3纳米"},
-  {id:"gj",name:"11家国家级小巨人",type:"champ",layer:"小巨人",town:"多镇",desc:"嘉治/派沃/力王/凤凰/广麟/奥科/百时达/吉邦/鑫晖源/信立泰/TCL瑞智"},
-  {id:"sj",name:"74家省级专精特新",type:"champ",layer:"小巨人",town:"多镇",desc:"各细分赛道隐形市占率"},
-  {id:"bmc",name:"表面处理群落",type:"capillary",layer:"毛细血管",town:"福田",desc:"省级特色集群·电镀/喷涂·受东江环保约束"},
-  {id:"mj",name:"石湾模具群落",type:"capillary",layer:"毛细血管",town:"石湾",desc:"全镇2461家工业企业·三市交界·特斯拉/比亚迪/拓竹"},
-  {id:"ddc",name:"电动车配套群落",type:"capillary",layer:"毛细血管",town:"石湾",desc:"台铃/小刀/新日/绿佳·产值超150亿"},
-  {id:"lq",name:"镇村老厂群落",type:"legacy",layer:"老厂基盘",town:"龙溪/园洲/罗阳",desc:"数千家五金/塑料/建材·用电+11.5%大头·亩均达标压力"},
-  {id:"bss",name:"百岁山",type:"agri",layer:"农业康养",town:"湖镇",desc:"374万吨/年·罗浮山水源"},
-  {id:"lfsgy",name:"罗浮山国药",type:"agri",layer:"农业康养",town:"长宁",desc:"中华老字号·红脚艾·百草油·省中医院"},
-  {id:"sc",name:"柏塘山茶",type:"gi",layer:"地理标志",town:"柏塘",desc:"国家地理标志·省十大茶乡"},
-  {id:"xc",name:"福田菜心",type:"gi",layer:"地理标志",town:"福田",desc:"国家地理标志·太空育种"},
-  {id:"gyg",name:"观音阁花生",type:"gi",layer:"地理标志",town:"观音阁",desc:"国家地理标志"},
-  {id:"gyght",name:"观音阁黑糖",type:"gi",layer:"地理标志",town:"观音阁",desc:"国家地理标志"},
-  {id:"sb",name:"石坝胡须鸡",type:"agri",layer:"农业康养",town:"石坝",desc:"全国名特优新"},
-  {id:"lsmd",name:"罗浮山大米",type:"gi",layer:"地理标志",town:"长宁/横河",desc:"国家地理标志·太空育种"},
-  {id:"lsz",name:"罗浮山荔枝",type:"gi",layer:"地理标志",town:"罗浮山周边",desc:"国家地理标志·10万亩"},
-  {id:"hh",name:"横河户外小镇",type:"capillary",layer:"农业康养",town:"横河",desc:"华南户外水经济港·民宿集群"},
-  {id:"gz",name:"广州",type:"ext",layer:"外部",town:"外部",desc:"增城接石湾·省中医院医药合作"},
-  {id:"dg",name:"东莞",type:"ext",layer:"外部",town:"外部",desc:"紧邻石湾/园洲·模具电子外溢源头"},
-  {id:"sz",name:"深圳",type:"ext",layer:"外部",town:"外部",desc:"欣旺达·嘉奇新能源项目来源"},
-  {id:"hz",name:"惠城",type:"ext",layer:"外部",town:"外部",desc:"惠州主城·行政与文旅客流"},
+  {id:"dj",name:"东江水系",type:"eco",town:"沿江多镇",desc:"母亲河·饮用水源Ⅱ类·沿江镇街排污上限"},
+  {id:"lswh",name:"环两山引领区",type:"eco",town:"长宁/横河/福田",desc:"南昆山-罗浮山·218km 8字旅游公路·北部绿色屏障"},
+  {id:"xwd",name:"欣旺达/锂威",type:"anchor",town:"园洲",desc:"锂电池·高用电·高外部订单依赖"},
+  {id:"htd",name:"华通电脑",type:"anchor",town:"园洲/石湾",desc:"电子信息770亿基本盘代表"},
+  {id:"zw",name:"正威新材料",type:"anchor",town:"罗阳",desc:"25万吨铜杆/年·重资产原材料底座"},
+  {id:"jq",name:"嘉奇新能源",type:"anchor",town:"园洲",desc:"奇瑞系·深博福田产业园2026开园·梯次电池基地"},
+  {id:"jf",name:"江丰精密",type:"anchor",town:"园洲",desc:"溅射靶材全球第一·3纳米"},
+  {id:"gj",name:"11家国家级小巨人",type:"champ",town:"多镇",desc:"嘉治/派沃/力王/凤凰/广麟/奥科/百时达/吉邦/鑫晖源/信立泰/TCL瑞智"},
+  {id:"sj",name:"74家省级专精特新",type:"champ",town:"多镇",desc:"各细分赛道隐形市占率"},
+  {id:"bmc",name:"表面处理群落",type:"capillary",town:"福田",desc:"省级特色集群·电镀/喷涂·受东江环保约束"},
+  {id:"mj",name:"石湾模具群落",type:"capillary",town:"石湾",desc:"全镇2461家工业企业·三市交界·特斯拉/比亚迪/拓竹"},
+  {id:"ddc",name:"电动车配套群落",type:"capillary",town:"石湾",desc:"台铃/小刀/新日/绿佳·产值超150亿"},
+  {id:"lq",name:"镇村老厂群落",type:"legacy",town:"龙溪/园洲/罗阳",desc:"数千家五金/塑料/建材·用电+11.5%大头·亩均达标压力"},
+  {id:"bss",name:"百岁山",type:"agri",town:"湖镇",desc:"374万吨/年·罗浮山水源"},
+  {id:"lfsgy",name:"罗浮山国药",type:"agri",town:"长宁",desc:"中华老字号·红脚艾·百草油·省中医院"},
+  {id:"sc",name:"柏塘山茶",type:"gi",town:"柏塘",desc:"国家地理标志·省十大茶乡"},
+  {id:"xc",name:"福田菜心",type:"gi",town:"福田",desc:"国家地理标志·太空育种"},
+  {id:"gyg",name:"观音阁花生",type:"gi",town:"观音阁",desc:"国家地理标志"},
+  {id:"gyght",name:"观音阁黑糖",type:"gi",town:"观音阁",desc:"国家地理标志"},
+  {id:"sb",name:"石坝胡须鸡",type:"agri",town:"石坝",desc:"全国名特优新"},
+  {id:"lsmd",name:"罗浮山大米",type:"gi",town:"长宁/横河",desc:"国家地理标志·太空育种"},
+  {id:"lsz",name:"罗浮山荔枝",type:"gi",town:"罗浮山周边",desc:"国家地理标志·10万亩"},
+  {id:"hh",name:"横河户外小镇",type:"capillary",town:"横河",desc:"华南户外水经济港·民宿集群"},
+  {id:"gz",name:"广州",type:"ext",town:"外部",desc:"增城接石湾·省中医院医药合作"},
+  {id:"dg",name:"东莞",type:"ext",town:"外部",desc:"紧邻石湾/园洲·模具电子外溢源头"},
+  {id:"sz",name:"深圳",type:"ext",town:"外部",desc:"欣旺达·嘉奇新能源项目来源"},
+  {id:"hz",name:"惠城",type:"ext",town:"外部",desc:"惠州主城·行政与文旅客流"},
 ];
 const rawEdges=[
-  {s:"dg",t:"mj",w:5,kind:"供应链"},{s:"dg",t:"ddc",w:4,kind:"供应链"},
-  {s:"dg",t:"htd",w:4,kind:"供应链"},{s:"dg",t:"lq",w:2,kind:"供应链"},
-  {s:"sz",t:"xwd",w:4,kind:"供应链"},{s:"sz",t:"jq",w:4,kind:"供应链"},
-  {s:"gz",t:"mj",w:2,kind:"供应链"},{s:"mj",t:"ddc",w:2,kind:"供应链"},
-  {s:"bmc",t:"ddc",w:2,kind:"供应链"},{s:"jf",t:"htd",w:2,kind:"供应链"},
-  {s:"gj",t:"htd",w:2,kind:"供应链"},{s:"sj",t:"lq",w:2,kind:"供应链"},
-  {s:"xwd",t:"mj",w:2,kind:"供应链"},{s:"jq",t:"ddc",w:2,kind:"供应链"},
-  {s:"lq",t:"htd",w:2,kind:"供应链"},
-  {s:"dj",t:"bmc",w:3,kind:"环保约束"},{s:"dj",t:"bss",w:3,kind:"环保约束"},
-  {s:"dj",t:"lq",w:1,kind:"环保约束"},
-  {s:"xwd",t:"lq",w:1,kind:"资源竞争"},{s:"htd",t:"lq",w:1,kind:"资源竞争"},
-  {s:"lswh",t:"lfsgy",w:3,kind:"生态补偿"},{s:"lswh",t:"hh",w:2,kind:"生态补偿"},
-  {s:"lswh",t:"sc",w:1,kind:"生态补偿"},{s:"lswh",t:"lsz",w:1,kind:"生态补偿"},
-  {s:"gz",t:"lfsgy",w:2,kind:"生态补偿"},{s:"hz",t:"lswh",w:2,kind:"生态补偿"},
-  {s:"dj",t:"lsmd",w:1,kind:"供应链"},{s:"gyght",t:"gyg",w:1,kind:"供应链"},
-  {s:"gyg",t:"dj",w:1,kind:"供应链"},{s:"zw",t:"xwd",w:2,kind:"供应链"},
+  ["dg","mj",5,"供应链"],["dg","ddc",4,"供应链"],["dg","htd",4,"供应链"],["dg","lq",2,"供应链"],
+  ["sz","xwd",4,"供应链"],["sz","jq",4,"供应链"],["gz","mj",2,"供应链"],["mj","ddc",2,"供应链"],
+  ["bmc","ddc",2,"供应链"],["jf","htd",2,"供应链"],["gj","htd",2,"供应链"],["sj","lq",2,"供应链"],
+  ["xwd","mj",2,"供应链"],["jq","ddc",2,"供应链"],["lq","htd",2,"供应链"],
+  ["dj","bmc",3,"环保约束"],["dj","bss",3,"环保约束"],["dj","lq",1,"环保约束"],
+  ["xwd","lq",1,"资源竞争"],["htd","lq",1,"资源竞争"],
+  ["lswh","lfsgy",3,"生态补偿"],["lswh","hh",2,"生态补偿"],["lswh","sc",1,"生态补偿"],["lswh","lsz",1,"生态补偿"],
+  ["gz","lfsgy",2,"生态补偿"],["hz","lswh",2,"生态补偿"],
+  ["dj","lsmd",1,"供应链"],["gyght","gyg",1,"供应链"],["gyg","dj",1,"供应链"],["zw","xwd",2,"供应链"],
 ];
-const typeColor={anchor:"#22c55e",champ:"#06b6d4",capillary:"#94a3b8",
-  agri:"#84cc16",gi:"#a3e635",legacy:"#f59e0b",eco:"#0ea5e9",ext:"#a78bfa"};
-const edgeColor={供应链:"#38bdf8",环保约束:"#ef4444",资源竞争:"#f59e0b",生态补偿:"#0ea5e9"};
-const radius={anchor:15,champ:13,capillary:12,agri:11,gi:10,legacy:13,eco:16,ext:11};
+const typeColor={anchor:0x22d3ee,champ:0x818cf8,capillary:0x34d399,legacy:0xfbbf24,
+  eco:0x38bdf8,agri:0xa3e635,gi:0x4ade80,ext:0xc084fc};
+const edgeColor={供应链:0x38bdf8,环保约束:0xef4444,资源竞争:0xf59e0b,生态补偿:0x0ea5e9};
+const radius={anchor:9,champ:7,capillary:6,legacy:7,eco:11,agri:5,gi:4.5,ext:5};
 
-const stage=document.getElementById("stage");
-const svg=d3.select("#svg");
-const tip=document.getElementById("tip");
-const info=document.getElementById("info");
-const isMobile=innerWidth<680;
+// ===== Three.js 场景 =====
+const bg=document.getElementById("bg");
+const scene=new THREE.Scene();
+scene.fog=new THREE.FogExp2(0x030711,0.0012);
+const camera=new THREE.PerspectiveCamera(55,innerWidth/innerHeight,0.1,2000);
+let renderer;
+try{
+  renderer=new THREE.WebGLRenderer({antialias:true,alpha:true});
+}catch(e){
+  bg.innerHTML='<div style="color:#f87171;padding:40px;text-align:center;font-size:13px">此设备不支持 WebGL，全息舞台无法渲染。<br>请用较新的手机浏览器或电脑 Chrome 打开。</div>';
+  throw e;
+}
+renderer.setSize(innerWidth,innerHeight);
+renderer.setPixelRatio(Math.min(devicePixelRatio,2));
+bg.appendChild(renderer.domElement);
 
-let W=stage.clientWidth, H=stage.clientHeight;
-const nodes=rawNodes.map(d=>Object.assign({},d));
-const links=rawEdges.map(d=>({source:d.s,target:d.t,w:d.w,kind:d.kind}));
+scene.add(new THREE.AmbientLight(0xffffff,0.4));
+const key=new THREE.PointLight(0x88ccff,1.2,800);key.position.set(100,150,100);scene.add(key);
 
-const g=svg.append("g");
-svg.call(d3.zoom().scaleExtent([0.5,2.5]).on("zoom",e=>g.attr("transform",e.transform)));
-
-const link=g.selectAll(".link").data(links).join("line")
-  .attr("class","link")
-  .attr("stroke",d=>edgeColor[d.kind])
-  .attr("stroke-width",d=>d.w)
-  .attr("stroke-opacity",0.45);
-
-const node=g.selectAll(".node").data(nodes).join("g")
-  .attr("class","node")
-  .call(d3.drag()
-    .on("start",(e,d)=>{if(!e.active)simulation.alphaTarget(0.2).restart();d.fx=d.x;d.fy=d.y;})
-    .on("drag",(e,d)=>{d.fx=e.x;d.fy=e.y;})
-    .on("end",(e,d)=>{if(!e.active)simulation.alphaTarget(0);d.fx=null;d.fy=null;}));
-
-node.append("circle")
-  .attr("r",d=>radius[d.type])
-  .attr("fill",d=>typeColor[d.type])
-  .attr("fill-opacity",0.9)
-  .style("filter",d=>`drop-shadow(0 0 6px ${typeColor[d.type]}88)`);
-node.append("text").attr("dx",d=>radius[d.type]+4).attr("dy",4).text(d=>d.name);
-
-node.on("click",(e,d)=>{
-  e.stopPropagation();
-  tip.style.display="block";
-  tip.innerHTML=`<b>${d.name}</b> <span class="town">${d.town}</span><br>
-    <span style="color:#64748b;font-size:10.5px">${d.layer}</span>
-    <div class="desc">${d.desc}</div>`;
-  tip.style.left=(e.offsetX+14)+"px"; tip.style.top=(e.offsetY+14)+"px";
+// 节点按层摆到球壳上：上=生态农业，中=工业，远=外部
+const layerR={anchor:55,champ:95,capillary:125,legacy:135,eco:90,agri:95,gi:90,ext:210};
+const nodes=rawNodes.map(d=>{
+  const R=layerR[d.type];
+  const same=rawNodes.filter(x=>layerR[x.type]===R);
+  const idx=same.indexOf(d);
+  const ang=(idx/same.length)*Math.PI*2;
+  let y=(d.type==='eco'||d.type==='agri'||d.type==='gi')?55+Math.sin(ang)*18:Math.sin(ang)*R*0.4;
+  return Object.assign({},d,{
+    pos:new THREE.Vector3(Math.cos(ang)*R, y, Math.sin(ang)*R),
+    baseColor:typeColor[d.type]
+  });
 });
-stage.addEventListener("click",()=>{tip.style.display="none";});
+const nodeById={};nodes.forEach(n=>nodeById[n.id]=n);
 
-const simulation=d3.forceSimulation(nodes)
-  .force("link",d3.forceLink(links).id(d=>d.id).distance(d=>d.kind==="供应链"?110:130).strength(0.6))
-  .force("charge",d3.forceManyBody().strength(isMobile?-200:-320))
-  .force("center",d3.forceCenter(W/2,H/2))
-  .force("collide",d3.forceCollide().radius(d=>radius[d.type]+18));
-simulation.on("tick",()=>{
-  link.attr("x1",d=>d.source.x).attr("y1",d=>d.source.y)
-      .attr("x2",d=>d.target.x).attr("y2",d=>d.target.y);
-  node.attr("transform",d=>`translate(${d.x},${d.y})`);
+// 创建节点mesh：外层光晕+内层核心+标签
+const group=new THREE.Group();scene.add(group);
+const nodeMeshes={};
+nodes.forEach(n=>{
+  const r=radius[n.type];
+  const glow=new THREE.Mesh(
+    new THREE.SphereGeometry(r*1.9,16,16),
+    new THREE.MeshBasicMaterial({color:n.baseColor,transparent:true,opacity:0.12})
+  );
+  const core=new THREE.Mesh(
+    new THREE.SphereGeometry(r,20,20),
+    new THREE.MeshStandardMaterial({color:n.baseColor,emissive:n.baseColor,emissiveIntensity:0.6,transparent:true,opacity:0.92})
+  );
+  glow.position.copy(n.pos);core.position.copy(n.pos);
+  group.add(glow);group.add(core);
+  // 标签sprite
+  const c=document.createElement('canvas');c.width=256;c.height=64;
+  const ctx=c.getContext('2d');ctx.font='bold 26px sans-serif';ctx.fillStyle='#cfe8ff';
+  ctx.textAlign='center';ctx.fillText(n.name,128,40);
+  const tex=new THREE.CanvasTexture(c);
+  const sp=new THREE.Sprite(new THREE.SpriteMaterial({map:tex,transparent:true,opacity:0.85,depthTest:false}));
+  sp.scale.set(r*8,r*2,1);sp.position.copy(n.pos).y+=r+5;
+  group.add(sp);
+  nodeMeshes[n.id]={glow,core,label:sp,pos:n.pos};
 });
+
+// 边：静态线 + 流动粒子
+const lines={},particles=[];
+rawEdges.forEach((e,i)=>{
+  const s=nodeById[e[0]],t=nodeById[e[1]];
+  const g=new THREE.BufferGeometry().setFromPoints([s.pos,t.pos]);
+  const m=new THREE.LineBasicMaterial({color:edgeColor[e[3]],transparent:true,opacity:0.35});
+  const line=new THREE.Line(g,m);group.add(line);
+  lines[e[0]+'-'+e[1]]=line;
+  // 流动粒子
+  const p=new THREE.Mesh(new THREE.SphereGeometry(1.5,8,8),
+    new THREE.MeshBasicMaterial({color:edgeColor[e[3]],transparent:true,opacity:0.9}));
+  p.userData={s:s.pos,e:t.pos,t:Math.random(),w:e[2]};
+  group.add(p);particles.push(p);
+});
+
+// 背景星尘
+const starsGeo=new THREE.BufferGeometry();
+const starPos=[];for(let i=0;i<400;i++){starPos.push((Math.random()-0.5)*800,(Math.random()-0.5)*800,(Math.random()-0.5)*800-200);}
+starsGeo.setAttribute('position',new THREE.Float32BufferAttribute(starPos,3));
+scene.add(new THREE.Points(starsGeo,new THREE.PointsMaterial({color:0x3a5a8a,size:1,transparent:true,opacity:0.6})));
+
+// ===== 轨道相机（自己写，不依赖OrbitControls）=====
+let rotY=0.6,rotX=-0.15,dist=260;
+let drag=false,px=0,py=0,moved=0;
+renderer.domElement.addEventListener('pointerdown',e=>{drag=true;px=e.clientX;py=e.clientY;moved=0;});
+addEventListener('pointermove',e=>{if(!drag)return;
+  const dx=e.clientX-px,dy=e.clientY-py;moved+=Math.abs(dx)+Math.abs(dy);
+  rotY+=dx*0.006;rotX+=dy*0.006;rotX=Math.max(-1.4,Math.min(1.4,rotX));px=e.clientX;py=e.clientY;});
+addEventListener('pointerup',()=>drag=false);
+renderer.domElement.addEventListener('wheel',e=>{e.preventDefault();
+  dist+=e.deltaY*0.2;dist=Math.max(120,Math.min(600,dist));},{passive:false});
+// 双指缩放
+let lastPinch=0;
+renderer.domElement.addEventListener('touchmove',e=>{
+  if(e.touches.length===2){e.preventDefault();
+    const d=Math.hypot(e.touches[0].clientX-e.touches[1].clientX,e.touches[0].clientY-e.touches[1].clientY);
+    if(lastPinch)dist+=(lastPinch-d)*0.5;dist=Math.max(120,Math.min(600,dist));lastPinch=d;}
+},{passive:false});
+renderer.domElement.addEventListener('touchend',()=>lastPinch=0);
+
+// 点选节点
+const ray=new THREE.Raycaster(),mouse=new THREE.Vector2();
+const tip=document.getElementById('tip');
+renderer.domElement.addEventListener('click',e=>{
+  if(moved>5)return; // 拖拽后不触发click
+  mouse.x=(e.clientX/innerWidth)*2-1;mouse.y=-(e.clientY/innerHeight)*2+1;
+  ray.setFromCamera(mouse,camera);
+  const meshes=Object.values(nodeMeshes).map(m=>m.core);
+  const hit=ray.intersectObjects(meshes)[0];
+  if(hit){const id=Object.keys(nodeMeshes).find(k=>nodeMeshes[k].core===hit.object);
+    const n=nodeById[id];
+    tip.style.display='block';
+    tip.innerHTML=`<b>${n.name}</b> <span class="town">${n.town}</span><div class="desc">${n.desc}</div>`;
+    tip.style.left=(e.clientX+14)+'px';tip.style.top=(e.clientY+14)+'px';
+  } else tip.style.display='none';
+});
+addEventListener('click',e=>{if(e.target.closest('.shockbar')||e.target.closest('.top'))return;
+  if(!e.target.closest('canvas'))tip.style.display='none';});
 
 // ===== 苗头级联 =====
-function parseKinds(s){return new Set((s||"供应链,资源竞争").split(","));}
+function parseKinds(s){return new Set((s||'供应链,资源竞争').split(','));}
 function bfs(seedId,kinds){
   const level={};level[seedId]=1;const layers=[[seedId]];
   let frontier=[seedId],hop=0;
   while(frontier.length&&hop<4){hop++;const next=[];
-    frontier.forEach(nid=>{links.forEach(l=>{
-      if(!kinds.has(l.kind))return;
-      const sid=l.source.id??l.source,tid=l.target.id??l.target;
-      const oth=(sid===nid)?tid:(tid===nid?sid:null);
+    frontier.forEach(nid=>{rawEdges.forEach(e=>{
+      if(!kinds.has(e[3]))return;
+      const oth=(e[0]===nid)?e[1]:(e[1]===nid?e[0]:null);
       if(!oth||level[oth]!==undefined)return;
-      level[oth]=Math.max(0.18,1-hop*0.26-(5-l.w)*0.05);next.push(oth);
+      level[oth]=Math.max(0.18,1-hop*0.26-(5-e[2])*0.05);next.push(oth);
     });});
     layers.push(next);frontier=next;}
   return {level,layers};
 }
-function origFill(id){const n=nodes.find(x=>x.id===id);return typeColor[n.type];}
-
+const info=document.getElementById('info');
 function resetShock(){
-  info.classList.remove("show");
-  document.querySelectorAll(".sbtn").forEach(b=>b.classList.remove("on"));
-  node.select("circle").transition().duration(300).style("opacity",1)
-    .attr("fill",d=>typeColor[d.type])
-    .style("filter",d=>`drop-shadow(0 0 6px ${typeColor[d.type]}88)`);
-  node.select("text").transition().duration(300).style("opacity",1);
-  link.transition().duration(300).attr("stroke-opacity",0.45).attr("stroke-width",d=>d.w)
-      .attr("stroke",d=>edgeColor[d.kind]);
-  try{history.replaceState(null,"",location.pathname+location.search);}catch(e){}
+  info.classList.remove('show');
+  document.querySelectorAll('.sbtn').forEach(b=>b.classList.remove('on'));
+  nodes.forEach(n=>{const m=nodeMeshes[n.id];
+    m.core.material.color.setHex(n.baseColor);
+    m.core.material.emissive.setHex(n.baseColor);
+    m.core.material.emissiveIntensity=0.6;
+    m.core.material.opacity=0.92;
+    m.glow.material.color.setHex(n.baseColor);m.glow.material.opacity=0.12;
+    m.label.material.opacity=0.85;});
+  rawEdges.forEach(e=>{const k=e[0]+'-'+e[1];if(lines[k]){lines[k].material.color.setHex(edgeColor[e[3]]);lines[k].material.opacity=0.35;}});
+  try{history.replaceState(null,'',location.pathname+location.search);}catch(e){}
 }
-
 function runShock(seedId,seedName,kindsStr){
   const kinds=parseKinds(kindsStr);
-  const kindLabel={供应链:"供货关系",资源竞争:"抢地抢电",环保约束:"环保红线"};
-  const kindText=[...kinds].map(k=>kindLabel[k]||k).join(" / ");
+  const kindLabel={供应链:'供货关系',资源竞争:'抢地抢电',环保约束:'环保红线'};
+  const kindText=[...kinds].map(k=>kindLabel[k]||k).join(' / ');
   const {level,layers}=bfs(seedId,kinds);
-  const hitEdges=new Set();
-  Object.keys(level).forEach(nid=>{links.forEach(l=>{
-    if(!kinds.has(l.kind))return;
-    const sid=l.source.id??l.source,tid=l.target.id??l.target;
-    if((sid===nid&&level[tid]!==undefined)||(tid===nid&&level[sid]!==undefined))hitEdges.add(l);
+  const hitE=new Set();
+  Object.keys(level).forEach(nid=>{rawEdges.forEach(e=>{
+    if(!kinds.has(e[3]))return;
+    if((e[0]===nid&&level[e[1]]!==undefined)||(e[1]===nid&&level[e[0]]!==undefined))hitE.add(e[0]+'-'+e[1]);
   });});
-
-  node.select("circle").interrupt().style("opacity",d=>level[d.id]!==undefined?1:0.1);
-  node.select("text").interrupt().style("opacity",d=>level[d.id]!==undefined?1:0.06);
-  link.interrupt().attr("stroke-opacity",l=>hitEdges.has(l)?0.95:0.04)
-      .attr("stroke-width",l=>hitEdges.has(l)?Math.max(2.5,l.w+0.5):l.w)
-      .attr("stroke",l=>hitEdges.has(l)?"#ef4444":edgeColor[l.kind]);
-
-  layers.forEach((layer,i)=>{
-    setTimeout(()=>{layer.forEach(id=>{
-      let col;
-      if(level[id]===1)col="#fef2f2";
-      else if(level[id]>0.55)col="#ef4444";
-      else if(level[id]>0.32)col="#f97316";
-      else col="#facc15";
-      node.filter(n=>n.id===id).select("circle").interrupt().transition().duration(350)
-        .attr("fill",col).style("filter",`drop-shadow(0 0 10px ${col})`);
-    });},i*460);
-  });
-
-  const hop1=(layers[1]||[]).map(id=>nodes.find(n=>n.id===id).name);
-  const hop2=(layers[2]||[]).map(id=>nodes.find(n=>n.id===id).name);
+  // 先全部压暗
+  nodes.forEach(n=>{if(level[n.id]===undefined){const m=nodeMeshes[n.id];
+    m.core.material.opacity=0.15;m.glow.material.opacity=0.02;m.label.material.opacity=0.1;}});
+  rawEdges.forEach(e=>{const k=e[0]+'-'+e[1];if(lines[k]){
+    lines[k].material.opacity=hitE.has(k)?0.9:0.03;
+    lines[k].material.color.setHex(hitE.has(k)?0xef4444:edgeColor[e[3]]);}});
+  // 逐层点亮
+  layers.forEach((layer,i)=>{setTimeout(()=>{layer.forEach(id=>{
+    let col;
+    if(level[id]===1)col=0xffffff;
+    else if(level[id]>0.55)col=0xef4444;
+    else if(level[id]>0.32)col=0xf97316;
+    else col=0xfacc15;
+    const m=nodeMeshes[id];
+    m.core.material.color.setHex(col);m.core.material.emissive.setHex(col);
+    m.core.material.emissiveIntensity=1.5;m.core.material.opacity=1;
+    m.glow.material.color.setHex(col);m.glow.material.opacity=0.4;
+    m.label.material.opacity=1;
+  });},i*460);});
+  const hop1=(layers[1]||[]).map(id=>nodeById[id].name);
+  const hop2=(layers[2]||[]).map(id=>nodeById[id].name);
   const total=Object.keys(level).length-1;
-  info.classList.add("show");
+  info.classList.add('show');
   info.innerHTML=`<span class="t">💥 ${seedName}</span>
-    <div class="row">沿 <b class="k">${kindText}</b> 类关系级联，波及 <b class="k">${total}</b> 个节点、${layers.length-1} 层；不相关的山水康养类关系不传。</div>
-    <div class="row"><b class="k">① 抵抗（第1层直接受影响）</b>：${hop1.length?hop1.join("、"):"—"}</div>
-    <div class="row"><b class="k">② 传导（第2层及以后）</b>：${hop2.length?hop2.join("、"):"末梢已衰减为黄色"}</div>
-    <div class="row dim">颜色越红＝离苗头越近、路径越粗；越黄＝传得越远、衰减越多。有多条连接的节点会部分吸收冲击。</div>
-    <div class="row dim">这是按公开关系规则做的级联演示，不是预测真实损失；冲击幅度是假设，可质疑、可改参数重跑。</div>`;
-  try{history.replaceState(null,"","#shock="+seedId);}catch(e){}
+    <div>沿 <b class="k">${kindText}</b> 级联，波及 <b class="k">${total}</b> 节点、${layers.length-1} 层。</div>
+    <div><b class="k">① 抵抗（第1层直接受影响）</b>：${hop1.length?hop1.join('、'):'—'}</div>
+    <div><b class="k">② 传导（第2层+）</b>：${hop2.length?hop2.join('、'):'末梢已衰减为黄色'}</div>
+    <div class="dim">颜色越红＝离苗头越近；越黄＝传得越远衰减越多。这是按公开关系规则做的级联演示，不是预测真实损失，可质疑、可重跑。</div>`;
+  try{history.replaceState(null,'','#shock='+seedId);}catch(e){}
 }
-
-document.querySelectorAll(".sbtn").forEach(btn=>{
+document.querySelectorAll('.sbtn').forEach(btn=>{
   btn.onclick=(e)=>{e.stopPropagation();
-    const on=btn.classList.contains("on");
-    document.querySelectorAll(".sbtn").forEach(b=>b.classList.remove("on"));
+    const on=btn.classList.contains('on');
+    document.querySelectorAll('.sbtn').forEach(b=>b.classList.remove('on'));
     if(on){resetShock();return;}
-    btn.classList.add("on");
-    runShock(btn.dataset.shock,btn.dataset.name,btn.dataset.kinds);
-  };
+    btn.classList.add('on');
+    runShock(btn.dataset.shock,btn.dataset.name,btn.dataset.kinds);};
 });
-document.getElementById("resetBtn").onclick=(e)=>{e.stopPropagation();resetShock();};
-
+document.getElementById('resetBtn').onclick=(e)=>{e.stopPropagation();resetShock();};
 const m=location.hash.match(/shock=(\w+)/);
 if(m){const btn=document.querySelector(`.sbtn[data-shock="${m[1]}"]`);
-  if(btn){btn.classList.add("on");runShock(m[1],btn.dataset.name,btn.dataset.kinds);}}
+  if(btn){btn.classList.add('on');runShock(m[1],btn.dataset.name,btn.dataset.kinds);}}
+
+// ===== 动画循环 =====
+const clock=new THREE.Clock();
+function tick(){
+  requestAnimationFrame(tick);
+  const t=clock.getElapsedTime();
+  // 相机轨道
+  camera.position.set(
+    dist*Math.cos(rotX)*Math.sin(rotY),
+    dist*Math.sin(rotX),
+    dist*Math.cos(rotX)*Math.cos(rotY)
+  );
+  camera.lookAt(0,0,0);
+  // 粒子沿边流动
+  particles.forEach(p=>{
+    p.userData.t+=0.004+p.userData.w*0.001;
+    if(p.userData.t>1)p.userData.t=0;
+    p.position.lerpVectors(p.userData.s,p.userData.e,p.userData.t);
+  });
+  // 节点微微浮动
+  nodes.forEach((n,i)=>{const m=nodeMeshes[n.id];
+    m.core.position.y=n.pos.y+Math.sin(t*1.2+i)*1.2;
+    m.glow.position.copy(m.core.position);
+    m.label.position.y=m.core.position.y+radius[n.type]+5;});
+  renderer.render(scene,camera);
+}
+tick();
+addEventListener('resize',()=>{camera.aspect=innerWidth/innerHeight;camera.updateProjectionMatrix();renderer.setSize(innerWidth,innerHeight);});
 </script>
 </body></html>
