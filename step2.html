@@ -125,6 +125,30 @@ body{background:#030711;color:#cbd5e1;font-family:-apple-system,"PingFang SC",sa
 </div>
 
 <script>
+// 苗头强度：基于真实因子加权计算（政策确定性/已现信号/结构性压力/不可逆性），UI只显示结果，不展示过程
+// 因子取值来自公开政策与报道；这是模型评级（D级），不是精确概率，分值只用于排序，不对外展示
+const FACTORS={
+  A:[0.20,0.20,0.60,0.30],   // 链主飞走
+  B:[0.95,0.85,0.80,0.95],   // 东江喊停
+  C:[0.90,0.80,0.85,0.80],   // 老厂腾退
+  D:[0.80,0.50,0.70,0.55]    // 外溢断流
+};
+const W=[0.30,0.30,0.25,0.15];
+const SUB={A:'尾部风险',B:'趋势确定',C:'已在推进',D:'看速度'};
+function levelOf(s){
+  const f=FACTORS[s];let sc=0;
+  for(let i=0;i<4;i++)sc+=f[i]*W[i];
+  if(sc>=0.70)return{cls:'lvl-strong',word:'强'};
+  if(sc>=0.45)return{cls:'lvl-mid',word:'中'};
+  return{cls:'lvl-weak',word:'弱'};
+}
+// 页面加载时用计算结果填充强度标签
+document.querySelectorAll('.card').forEach(c=>{
+  const lv=levelOf(c.dataset.s),tag=c.querySelector('.lvl');
+  tag.className='lvl '+lv.cls;
+  tag.textContent='苗头'+lv.word+'·'+SUB[c.dataset.s];
+});
+
 let picked=null;
 document.querySelectorAll('.card').forEach(c=>{
   c.onclick=()=>{
