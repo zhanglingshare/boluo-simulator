@@ -73,11 +73,18 @@ h1{font-size:22px;margin-bottom:6px}
     <span><i style="background:#a78bfa"></i>外部</span>
     <span>── 实线A级</span><span>- - 虚线B级</span><span>· · 点线C级</span>
   </div>
+  <div class="legend" style="margin-top:6px">
+    <span style="color:#38bdf8">━ 供应链</span>
+    <span style="color:#ef4444">━ 环保约束</span>
+    <span style="color:#f59e0b">━ 资源竞争</span>
+    <span style="color:#0ea5e9">━ 生态补偿</span>
+  </div>
 
-  <div class="stats">
-    <div class="stat"><div class="l">度中心度第一（连接最多）</div><div class="v" id="sHub" style="color:#4ade80">–</div></div>
-    <div class="stat"><div class="l">网络密度</div><div class="v" style="color:#fbbf24">–</div></div>
-    <div class="stat"><div class="l">介数咽喉（最高）</div><div class="v" id="sExt" style="color:#a78bfa">–</div></div>
+  <div class="stats" style="grid-template-columns:repeat(4,1fr)">
+    <div class="stat"><div class="l">连接最多</div><div class="v" id="sHub" style="color:#4ade80;font-size:15px">–</div></div>
+    <div class="stat"><div class="l">网络密度</div><div class="v" id="sDensity" style="color:#fbbf24;font-size:15px">–</div></div>
+    <div class="stat"><div class="l">介数咽喉</div><div class="v" id="sExt" style="color:#a78bfa;font-size:15px">–</div></div>
+    <div class="stat"><div class="l">关键结构洞</div><div class="v" id="sHole" style="color:#ef4444;font-size:15px">–</div></div>
   </div>
 
   <div class="brief">
@@ -205,19 +212,36 @@ rawNodes.forEach(src=>{
 });
 rawNodes.forEach(n=>n.betweenness=betweenness[n.id]/((N-1)*(N-2)));
 
+// 结构洞限制度（Burt Constraint）：越低=占据结构洞
+const constraint={};
+rawNodes.forEach(v=>{
+  let c=0;
+  const nv=adj[v.id];
+  if(nv.size===0){constraint[v.id]=1;return}
+  nv.forEach(w=>{
+    const pvw=1/nv.size;
+    let indirect=0;
+    nv.forEach(q=>{
+      if(q!==w&&adj[q].has(w)){
+        indirect+=(1/nv.size)*(1/adj[q].size);
+      }
+    });
+    c+=(pvw+indirect)**2;
+  });
+  constraint[v.id]=c;
+});
+rawNodes.forEach(n=>n.constraint=constraint[n.id]);
+const byConstraint=[...rawNodes].filter(n=>n.degree>=2).sort((a,b)=>a.constraint-b.constraint);
+const structuralHole=byConstraint[0];
+
 // 排序
 const byDegree=[...rawNodes].sort((a,b)=>b.degree-a.degree);
 const byBetween=[...rawNodes].sort((a,b)=>b.betweenness-a.betweenness);
 
 document.getElementById("sHub").textContent=byDegree[0].name;
-document.getElementById("sExt").textContent=rawEdges.filter(e=>{
-  const ns=rawNodes.find(n=>n.id===e.s).type,nt=rawNodes.find(n=>n.id===e.t).type;
-  return ns==="ext"||nt==="ext";
-}).length+"条";
-document.querySelector(".stat:nth-child(2) .v").textContent=(density*100).toFixed(1)+"%";
-document.querySelector(".stat:nth-child(2) .l").textContent="网络密度（"+E+"条边/"+N+"节点）";
-document.querySelector(".stat:nth-child(3) .l").textContent="介数咽喉（最高）";
+document.getElementById("sDensity").textContent=(density*100).toFixed(1)+"%";
 document.getElementById("sExt").textContent=byBetween[0].name;
+document.getElementById("sHole").textContent=structuralHole?structuralHole.name:"–";
 
 // ===== 渲染 =====
 const chart=document.getElementById("chart");
@@ -288,7 +312,7 @@ const label=svg.append("g").selectAll("text").data(nodes).enter().append("text")
 const tip=document.getElementById("tooltip");
 node.on("click",(e,d)=>{
   tip.style.display="block";
-  tip.innerHTML=`<b style="color:${colorMap[d.type]}">${d.name}</b><br>📐 ${d.layer||""}｜📍 ${d.town}<br>📊 ${d.desc}<br>🔗 度中心度：${d.degree}条边<br>🌉 介数：${(d.betweenness*100).toFixed(1)}%<br>💚 状态：${d.state==="green"?"健康":d.state==="yellow"?"亚健康":"高危"}`;
+  tip.innerHTML=`<b style="color:${colorMap[d.type]}">${d.name}</b><br>📐 ${d.layer||""}｜📍 ${d.town}<br>📊 ${d.desc}<br>🔗 度：${d.degree}｜🌉 介数：${(d.betweenness*100).toFixed(1)}%<br>🕳 结构洞限制度：${(d.constraint*100).toFixed(0)}%（越低越是咽喉）<br>💚 ${d.state==="green"?"健康":d.state==="yellow"?"亚健康":"高危"}`;
   tip.style.left=(e.offsetX+15)+"px";
   tip.style.top=(e.offsetY-10)+"px";
   e.stopPropagation();
