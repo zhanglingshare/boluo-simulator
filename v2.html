@@ -339,16 +339,12 @@ edges.forEach((e,i)=>{
 });
 
 if(!showIds){
-  // 概览模式：只留全息图，隐藏所有操作UI
+  // 概览模式：只留纯全息图，隐藏所有操作UI
   document.querySelector('.shockbar').style.display='none';
   document.querySelector('.foot').style.display='none';
   document.getElementById('menuBtn').style.display='none';
   document.querySelector('.blood').style.display='none';
   document.querySelector('.hint').style.display='none';
-  const tip=document.createElement('div');
-  tip.style.cssText='position:fixed;bottom:30px;left:50%;transform:translateX(-50%);z-index:12;background:rgba(8,15,30,.8);border:1px solid rgba(251,191,36,.3);border-radius:20px;padding:8px 18px;font-size:12px;backdrop-filter:blur(10px)';
-  tip.innerHTML='<a href="v3.html" style="color:#fde68a;text-decoration:none">选择产业主体进入推演 →</a>';
-  document.body.appendChild(tip);
 }
 
 // 背景星尘
