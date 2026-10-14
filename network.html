@@ -70,7 +70,7 @@ svg{display:block;width:100%;height:auto}
 
 <div class="wrap">
   <h1>博罗产业网络："3+3"体系谁是链主</h1>
-  <p class="sub">13个产业主体（官方"3+3"体系）、8条可佐证关系。注意最粗的那根线从东莞连到谁。</p>
+  <p class="sub">14个产业主体、10条关系。工业用电+11.5%（2026年1-8月）。节点位置已按工商注册地校正。</p>
 
   <div class="actbar">
     <button class="btn" id="bReplay">↻ 重新建构</button>
@@ -124,10 +124,11 @@ svg{display:block;width:100%;height:auto}
     </div>
 
     <div class="algo-note">
-      数据血统（8条边）：<span class="blood-tag blood-A">A 实测 4条</span>2026政府工作报告/统计公报 ｜
-      <span class="blood-tag blood-B">B 推估 3条</span>产业链配套关系 ｜
-      <span class="blood-tag blood-C">C 假设 1条</span>跨区域合作<br>
-      节点依据博罗"3+3"现代化产业体系官方口径，镇仅作标签；边为上下游/配套/外溢关系，可改参数复跑。
+      <b style="color:#cbd5e1">数据分级（透明原则）</b><br>
+      <span class="blood-tag blood-A">A 公开硬数据</span>：2026政府工作报告、统计局月报（工业用电60亿度+11.5%）、工信局小巨人名录、工商注册地 ｜
+      <span class="blood-tag blood-B">B 行业推估</span>：产业链配套关系（基于公开产业链常识） ｜
+      <span class="blood-tag blood-C">C 待补内网数据</span>：本地配套率%、各镇剩余工业用地、企业亩均税收（需工信局/税务局接入）<br>
+      本图为公开数据PoC版，不触碰企业敏感财务数据。内网数据接入后可升级为高精度决策版。
     </div>
   </div>
 
@@ -141,14 +142,15 @@ const NODES=[
   {id:"dg",name:"东莞",x:50,y:220,type:"ext",w:3,label:"石龙/石排·产业外溢源头"},
   {id:"sz",name:"深圳",x:50,y:360,type:"ext",w:2,label:"新能源项目来源"},
   {id:"hz",name:"惠城",x:810,y:250,type:"ext",w:1,label:"惠州主城·行政"},
-  // ===== 博罗"3+3"产业体系 =====
+  // ===== 博罗"3+3"产业体系（节点位置已按工商注册地校正） =====
   // 三大主导产业
-  {id:"dz",name:"新一代电子信息",x:200,y:170,type:"ind",w:3,label:"317家规上·产值770亿·园洲"},
+  {id:"dz",name:"新一代电子信息",x:200,y:170,type:"ind",w:3,label:"317家规上·产值770亿·园洲/罗阳/龙溪"},
   {id:"ht",name:"智能装备",x:380,y:200,type:"ind",w:3,label:"千亿产业园·686家高企·罗阳"},
-  {id:"xw",name:"新能源新材料",x:500,y:130,type:"ind",w:3,label:"欣旺达锂威·正威铜材料·罗阳"},
+  {id:"xw",name:"新能源新材料",x:480,y:110,type:"ind",w:3,label:"欣旺达锂威·正威铜材料·园洲"},
   // 配套集群
   {id:"bmc",name:"表面处理",x:140,y:120,type:"ind",w:1,label:"省特色产业集群·福田"},
   {id:"ddc",name:"智能出行",x:160,y:260,type:"ind",w:2,label:"台铃/小刀/新日/绿佳·石湾"},
+  {id:"mj",name:"精密模具",x:240,y:300,type:"ind",w:1,label:"特斯拉/比亚迪供应链·石湾"},
   // 三大新兴产业
   {id:"lfsgy",name:"生命健康",x:620,y:280,type:"ind",w:2,label:"罗浮山国药·红脚艾·百草油·长宁"},
   {id:"jt",name:"现代食品",x:700,y:200,type:"ind",w:2,label:"百岁山374万吨·顺兴食品·湖镇"},
@@ -159,11 +161,12 @@ const NODES=[
 
 const EDGES=[
   // 外部→博罗（产业外溢/项目来源）
-  ["dg","dz",5,"A"],["dg","ddc",4,"A"],
+  ["dg","dz",5,"A"],["dg","ddc",4,"A"],["dg","mj",3,"A"],
   ["sz","xw",3,"B"],
   ["gz","lfsgy",2,"C"],
   // 配套关系
   ["bmc","dz",2,"B"],["bmc","ddc",2,"B"],
+  ["mj","ddc",2,"A"],["mj","dz",2,"B"],
   ["xw","ht",2,"A"],
   ["ht","dz",3,"A"],
 ];
