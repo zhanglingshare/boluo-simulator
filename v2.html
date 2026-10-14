@@ -81,11 +81,11 @@ body{background:#030711;color:#e6edf3;font:13px/1.6 -apple-system,"PingFang SC",
 <div class="info" id="info"></div>
 
 <div class="shockbar">
-  <span class="lab">💥 苗头</span>
-  <button class="sbtn" data-shock="xwd" data-kinds="供应链,资源竞争" data-name="链主飞走（欣旺达/锂威总部外迁）">A 链主飞走</button>
-  <button class="sbtn" data-shock="dj" data-kinds="环保约束,供应链" data-name="东江喊停（沿江环保限产）">B 东江喊停</button>
-  <button class="sbtn" data-shock="lq" data-kinds="资源竞争,供应链" data-name="老厂腾退（亩均改造）">C 老厂腾退</button>
-  <button class="sbtn" data-shock="mj" data-kinds="供应链" data-name="外溢断流（东莞外溢减弱·石湾模具首当其冲）">D 外溢断流</button>
+  <span class="lab">💥 万一</span>
+  <button class="sbtn" data-shock="xwd" data-kinds="供应链,资源竞争" data-name="大厂搬走了（欣旺达总部外迁）">A 链主飞走<br><small style="color:#94a3b8;font-weight:400">最大的电池厂搬走</small></button>
+  <button class="sbtn" data-shock="dj" data-kinds="环保约束,供应链" data-name="东江喊停（沿江环保限产）">B 东江喊停<br><small style="color:#94a3b8;font-weight:400">沿江工厂环保停产</small></button>
+  <button class="sbtn" data-shock="lq" data-kinds="资源竞争,供应链" data-name="老厂腾退（旧厂拆迁改造）">C 老厂腾退<br><small style="color:#94a3b8;font-weight:400">老旧小厂拆迁</small></button>
+  <button class="sbtn" data-shock="mj" data-kinds="供应链" data-name="东莞订单少了（石湾模具首当其冲）">D 外溢断流<br><small style="color:#94a3b8;font-weight:400">东莞那边订单少了</small></button>
   <button id="resetBtn">↺</button>
   <button id="menuBtn" style="background:rgba(30,41,59,.8);color:#94a3b8;border:1px solid #334155">☰</button>
 </div>
@@ -184,7 +184,7 @@ const rawNodes=[
   {id:"edu1",name:"博罗中学",type:"livelihood",town:"罗阳",desc:"1926年·国家级示范高中·县教育名片·留人底盘"},
   {id:"edu2",name:"高校集群",type:"livelihood",town:"多镇",desc:"广州理工博罗校区+惠州工程职院+省技师学院·在校生5-6万·产教融合"},
   {id:"med1",name:"县人民医院",type:"livelihood",town:"罗阳",desc:"1937年建·三级综合·中山一院共建·冲三甲·员工看病"},
-  {id:"bh_ps",name:"生产性服务业黑洞",type:"blackhole",town:"要素外流",desc:"制造千亿，研发/检测/金融/工业设计/总部却在深圳·东莞·广州。博罗2027目标才引进3家检测/5家信息/3家物流——现在近乎空白。高附加值服务被外部吸走，这是结构性缺位，不是待点亮。"},
+  {id:"bh_ps",name:"最赚钱的脑力活在外地",type:"blackhole",town:"钱被外面赚走",desc:"博罗有上千家工厂（出体力），但研发设计、检测认证、金融、工业设计、总部这些最赚钱的脑力活，大多在深圳、东莞、广州。博罗2027年才计划引进3家检测、5家信息、3家物流。意思是：工厂在博罗，高工资的白领岗位和利润被外面赚走了。这不是哪个厂还没长大，是一整片暂时没有的东西。"},
 ];
 const rawEdges=[
   ["mj","ddc",2,"供应链"],["bmc","ddc",2,"供应链"],["jf","htd",2,"供应链"],
@@ -559,12 +559,13 @@ const snaR=sna();
 document.getElementById('snaBtn').onclick=(e)=>{e.stopPropagation();
   const name=id=>nodeById[id]?nodeById[id].name:id;
   let html='<b style="color:#7dd3fc">📊 SNA 产业行动者网络分析</b><div class="dim">只算10个产业主体之间的供货关系边（8条），设施/地形/民生不算节点</div>';
-  html+='<br><b style="color:#4ade80">度中心性（谁连接最多）</b>';
-  snaR.deg.forEach(d=>{html+=`<div class="dim">· <b style="color:#e2e8f0">${name(d.n)}</b>：${d.d}条供货边</div>`;});
-  html+='<br><b style="color:#fbbf24">⚠️ 连通分量（网络断成几块）</b>';
+  html+='<br><b style="color:#4ade80">谁的朋友最多（供货关系）</b>';
+  snaR.deg.forEach(d=>{html+=`<div class="dim">· <b style="color:#e2e8f0">${name(d.n)}</b>：跟${d.d}家厂做生意</div>`;});
+  html+='<br><b style="color:#fbbf24">⚠️ 这些厂是不是都连在一起</b>';
   snaR.comps.forEach((c,i)=>{html+=`<div class="dim">· 分量${i+1}（${c.length}个）：${c.map(name).join('、')}</div>`;});
   if(snaR.comps.length>1){
-    html+='<div class="dim" style="color:#f87171">→ 发现：电子信息链和新能源/电动车链之间没有供货边，网络是断的</div>';
+    html+='<div class="dim" style="color:#f87171">→ 说人话：博罗的电子厂和电池厂两拨人，各干各的，互相不串门、不做生意</div>';
+    html+='<div class="dim" style="color:#7d8fa8;font-size:11px">（专业说法：新能源产业链和电子信息产业链之间没有供货边，网络断成两个连通分量）</div>';
     html+='<br><b style="color:#fbbf24">🧠 这个结论是怎么推出来的（点每步看3D）</b>';
     html+='<div class="dim">① <b style="color:#94a3b8">初始假设</b>：千亿县应该是一张连通的网 <button class="snaStep" data-step="1" style="background:#1e3a5f;color:#7dd3fc;border:1px solid #1e3a5f;padding:2px 8px;border-radius:8px;font-size:11px;margin-left:4px">看3D</button></div>';
     html+='<div class="dim">② <b style="color:#94a3b8">抽节点</b>：只留10个产业行动者，其他暗掉 <button class="snaStep" data-step="2" style="background:#1e3a5f;color:#7dd3fc;border:1px solid #1e3a5f;padding:2px 8px;border-radius:8px;font-size:11px;margin-left:4px">看3D</button></div>';
@@ -576,10 +577,10 @@ document.getElementById('snaBtn').onclick=(e)=>{e.stopPropagation();
   document.querySelectorAll('.snaStep').forEach(btn=>{
     btn.onclick=(e)=>{e.stopPropagation();snaStep(parseInt(btn.dataset.step));};
   });
-  html+='<br><b style="color:#c084fc">介数中心性（谁是桥）</b>';
-  snaR.between.filter(b=>b[1]>0).forEach(b=>{html+=`<div class="dim">· <b style="color:#e2e8f0">${name(b[0])}</b>：在${b[1]}条最短路径上</div>`;});
-  if(snaR.between.filter(b=>b[1]>0).length===0)html+='<div class="dim">→ 两个分量内部都是树状，没有桥节点</div>';
-  html+='<br><div class="dim" style="color:#7d8fa8">这是按当前公开供货关系算的结构指标，不是预测。断链本身就是发现：两条产业链之间缺谁来搭桥？</div>';
+  html+='<br><b style="color:#c084fc">谁是必经之路上的桥</b>';
+  snaR.between.filter(b=>b[1]>0).forEach(b=>{html+=`<div class="dim">· <b style="color:#e2e8f0">${name(b[0])}</b>：${b[1]}条路都要经过它</div>`;});
+  if(snaR.between.filter(b=>b[1]>0).length===0)html+='<div class="dim">→ 两拨厂内部都是直线串着，没有谁在中间搭桥</div>';
+  html+='<br><div class="dim" style="color:#7d8fa8">数字是按公开供货关系算的，不是预测。两拨厂不串门这件事本身就是发现：缺谁来搭桥？</div>';
   document.getElementById('snaPanelBody').innerHTML=html;
   document.getElementById('snaPanel').classList.toggle('show');
   document.getElementById('menuDropdown').style.display='none';};
