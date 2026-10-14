@@ -87,8 +87,8 @@ body{background:#030711;color:#e6edf3;font:13px/1.6 -apple-system,"PingFang SC",
 
 <script>
 const rawNodes=[
-  {id:"dj",name:"东江水系",type:"eco",town:"沿江多镇",desc:"母亲河·饮用水源Ⅱ类·沿江镇街排污上限"},
-  {id:"lswh",name:"环两山引领区",type:"eco",town:"长宁/横河/福田",desc:"南昆山-罗浮山·218km 8字旅游公路·北部绿色屏障"},
+  {id:"dj",name:"东江",type:"terrain",town:"沿江多镇",desc:"母亲河·饮用水源Ⅱ类·沿江镇街排污上限——它是地形，不是产业"},
+  {id:"lswh",name:"环两山",type:"terrain",town:"长宁/横河/福田",desc:"南昆山-罗浮山·北部绿色屏障——它是生态背景，不是产业"},
   {id:"xwd",name:"欣旺达/锂威",type:"anchor",town:"园洲",desc:"锂电池·深圳总部订单·高用电·高外部依赖"},
   {id:"htd",name:"华通电脑",type:"anchor",town:"园洲/石湾",desc:"电子信息770亿基本盘代表·规上300多家之一"},
   {id:"zw",name:"正威新材料",type:"anchor",town:"罗阳",desc:"25万吨铜杆/年·重资产原材料底座"},
@@ -98,7 +98,7 @@ const rawNodes=[
   {id:"mj",name:"石湾模具群落",type:"capillary",town:"石湾",desc:"全镇2461家工业企业·承接东莞外溢·客户特斯拉/比亚迪/拓竹"},
   {id:"ddc",name:"电动车配套群落",type:"capillary",town:"石湾",desc:"台铃/小刀/新日/绿佳·智能出行全产业链"},
   {id:"sr",name:"散热产业集群",type:"capillary",town:"多镇",desc:"2026省级特色集群·电子散热配套"},
-  {id:"lq",name:"镇村老厂群落",type:"capillary",town:"龙溪/园洲/罗阳",desc:"数千家五金/塑料/建材·用电+11.5%大头·亩均达标压力"},
+  {id:"lq",name:"传统老厂存量",type:"legacy",town:"园洲/龙溪/罗阳",desc:"园洲桔龙制衣（金丰/骏达）+五金塑胶三旧改造（环亚/立泰）+纸品建材·数千家小微·用电+11.5%大头·亩均达标压力"},
   {id:"dl",name:"电力保障",type:"infra",town:"全县电网",desc:"1-8月工业用电60亿度+11.5%·变电站负荷是硬约束"},
   {id:"pk1",name:"智能装备产业园",type:"park",town:"罗阳/园洲",desc:"承载欣旺达/正威等重资产项目的空间载体"},
   {id:"pk2",name:"深博福田产业园",type:"park",town:"园洲",desc:"2026年6月全面开园·21宗项目·嘉奇/欣旺达入驻·福田总部+博罗基地"},
@@ -120,10 +120,10 @@ const rawEdges=[
 ];
 // 仲恺式8位势：链主/配套/设施/载体/生态/农业/地标/外部
 const typeColor={anchor:0x3b5bdb,capillary:0x0e7490,infra:0x64748b,park:0x65a30d,
-  eco:0x0ea5e9,agri:0xa3e635,gi:0x4ade80,ext:0xa78bfa};
+  eco:0x0ea5e9,agri:0xa3e635,gi:0x4ade80,ext:0xa78bfa,legacy:0xa16207,terrain:0x38bdf8};
 const edgeColor={供应链:0x38bdf8,环保约束:0xef4444,资源竞争:0xf59e0b,生态补偿:0x0ea5e9,
   设施承载:0x94a3b8,载体承载:0x84cc16};
-const radius={anchor:11,capillary:7,infra:6,park:7,eco:11,agri:5,gi:4.5,ext:5};
+const radius={anchor:11,capillary:7,infra:6,park:7,eco:11,agri:5,gi:4.5,ext:5,legacy:6};
 
 // ===== Three.js 场景 =====
 const bg=document.getElementById("bg");
@@ -144,14 +144,20 @@ bg.appendChild(renderer.domElement);
 scene.add(new THREE.AmbientLight(0xffffff,0.4));
 const key=new THREE.PointLight(0x88ccff,1.2,800);key.position.set(100,150,100);scene.add(key);
 
-// 节点按层摆到球壳上：上=生态农业，中=工业，远=外部
-const layerR={anchor:55,capillary:105,infra:145,park:145,eco:90,agri:100,gi:95,ext:210};
+// 节点按层摆到球壳上：上=生态农业，中=工业
+const layerR={anchor:55,capillary:105,infra:145,park:145,eco:90,agri:100,gi:95,ext:210,terrain:0,legacy:130};
 const nodes=rawNodes.map(d=>{
+  if(d.type==='terrain' && d.id==='dj'){
+    return Object.assign({},d,{pos:new THREE.Vector3(-20,-22,0),baseColor:0x38bdf8});
+  }
+  if(d.type==='terrain' && d.id==='lswh'){
+    return Object.assign({},d,{pos:new THREE.Vector3(0,85,0),baseColor:0x4ade80});
+  }
   const R=layerR[d.type];
-  const same=rawNodes.filter(x=>layerR[x.type]===R);
+  const same=rawNodes.filter(x=>x.type===d.type);
   const idx=same.indexOf(d);
   const ang=(idx/same.length)*Math.PI*2;
-  let y=(d.type==='eco'||d.type==='agri'||d.type==='gi')?55+Math.sin(ang)*18:Math.sin(ang)*R*0.4;
+  let y=(d.type==='agri')?55+Math.sin(ang)*18:Math.sin(ang)*R*0.4;
   return Object.assign({},d,{
     pos:new THREE.Vector3(Math.cos(ang)*R, y, Math.sin(ang)*R),
     baseColor:typeColor[d.type]
@@ -163,6 +169,49 @@ const nodeById={};nodes.forEach(n=>nodeById[n.id]=n);
 const group=new THREE.Group();scene.add(group);
 const nodeMeshes={};
 nodes.forEach(n=>{
+  // 标签sprite——放在节点下方
+  const c=document.createElement('canvas');c.width=256;c.height=56;
+  const ctx=c.getContext('2d');ctx.font='bold 24px sans-serif';ctx.fillStyle='#d6e8ff';
+  ctx.textAlign='center';ctx.fillText(n.name,128,36);
+  const tex=new THREE.CanvasTexture(c);
+  const sp=new THREE.Sprite(new THREE.SpriteMaterial({map:tex,transparent:true,opacity:0.7,depthTest:false}));
+
+  if(n.type==='terrain' && n.id==='dj'){
+    // 东江：蜿蜒蓝色光带（TubeGeometry）
+    const pts=[
+      new THREE.Vector3(-240,-25,-40),
+      new THREE.Vector3(-140,-20,15),
+      new THREE.Vector3(-50,-24,-20),
+      new THREE.Vector3(40,-20,25),
+      new THREE.Vector3(130,-26,-15),
+      new THREE.Vector3(230,-22,20),
+    ];
+    const curve=new THREE.CatmullRomCurve3(pts);
+    const tube=new THREE.TubeGeometry(curve,60,2.2,8,false);
+    const mesh=new THREE.Mesh(tube,new THREE.MeshBasicMaterial({color:0x38bdf8,transparent:true,opacity:0.45}));
+    group.add(mesh);
+    sp.position.copy(n.pos).y-=10;sp.scale.set(90,20,1);
+    group.add(sp);
+    nodeMeshes[n.id]={river:mesh,label:sp,pos:n.pos,terrain:true};
+    return;
+  }
+  if(n.type==='terrain' && n.id==='lswh'){
+    // 环两山：绿色粒子雾团
+    const g=new THREE.BufferGeometry();
+    const p=[];
+    for(let i=0;i<400;i++){
+      const r=50+Math.random()*50,a=Math.random()*Math.PI*2;
+      p.push(Math.cos(a)*r, 70+Math.random()*35, Math.sin(a)*r);
+    }
+    g.setAttribute('position',new THREE.Float32BufferAttribute(p,3));
+    const mist=new THREE.Points(g,new THREE.PointsMaterial({color:0x4ade80,size:3.5,transparent:true,opacity:0.3}));
+    group.add(mist);
+    sp.position.copy(n.pos).y+=25;sp.scale.set(100,22,1);
+    group.add(sp);
+    nodeMeshes[n.id]={mist:mist,label:sp,pos:n.pos,terrain:true};
+    return;
+  }
+
   const r=radius[n.type];
   const glow=new THREE.Mesh(
     new THREE.SphereGeometry(r*1.9,16,16),
@@ -172,19 +221,12 @@ nodes.forEach(n=>{
     new THREE.SphereGeometry(r,20,20),
     new THREE.MeshStandardMaterial({color:n.baseColor,emissive:n.baseColor,emissiveIntensity:0.6,transparent:true,opacity:0.95})
   );
-  // 仲恺式白边外圈
   const ring=new THREE.Mesh(
     new THREE.SphereGeometry(r*1.15,16,16),
     new THREE.MeshBasicMaterial({color:0xffffff,transparent:true,opacity:0.25,wireframe:false})
   );
   glow.position.copy(n.pos);core.position.copy(n.pos);ring.position.copy(n.pos);
   group.add(glow);group.add(core);group.add(ring);
-  // 标签sprite——放在节点正下方
-  const c=document.createElement('canvas');c.width=256;c.height=56;
-  const ctx=c.getContext('2d');ctx.font='bold 24px sans-serif';ctx.fillStyle='#d6e8ff';
-  ctx.textAlign='center';ctx.fillText(n.name,128,36);
-  const tex=new THREE.CanvasTexture(c);
-  const sp=new THREE.Sprite(new THREE.SpriteMaterial({map:tex,transparent:true,opacity:0.9,depthTest:false}));
   sp.scale.set(r*9,r*2,1);sp.position.copy(n.pos).y-=r+7;
   group.add(sp);
   nodeMeshes[n.id]={glow,core,ring,label:sp,pos:n.pos};
@@ -268,7 +310,7 @@ const info=document.getElementById('info');
 function resetShock(){
   info.classList.remove('show');
   document.querySelectorAll('.sbtn').forEach(b=>b.classList.remove('on'));
-  nodes.forEach(n=>{const m=nodeMeshes[n.id];
+  nodes.forEach(n=>{const m=nodeMeshes[n.id];if(m.terrain)return;
     m.core.material.color.setHex(n.baseColor);
     m.core.material.emissive.setHex(n.baseColor);
     m.core.material.emissiveIntensity=0.6;
@@ -290,7 +332,7 @@ function runShock(seedId,seedName,kindsStr){
     if((e[0]===nid&&level[e[1]]!==undefined)||(e[1]===nid&&level[e[0]]!==undefined))hitE.add(e[0]+'-'+e[1]);
   });});
   // 先全部压暗
-  nodes.forEach(n=>{if(level[n.id]===undefined){const m=nodeMeshes[n.id];
+  nodes.forEach(n=>{if(level[n.id]===undefined){const m=nodeMeshes[n.id];if(m.terrain)return;
     m.core.material.opacity=0.15;m.glow.material.opacity=0.02;m.label.material.opacity=0.1;}});
   rawEdges.forEach(e=>{const k=e[0]+'-'+e[1];if(lines[k]){
     lines[k].material.opacity=hitE.has(k)?0.9:0.03;
@@ -302,7 +344,7 @@ function runShock(seedId,seedName,kindsStr){
     else if(level[id]>0.55)col=0xef4444;
     else if(level[id]>0.32)col=0xf97316;
     else col=0xfacc15;
-    const m=nodeMeshes[id];
+    const m=nodeMeshes[id];if(m.terrain)return;
     m.core.material.color.setHex(col);m.core.material.emissive.setHex(col);
     m.core.material.emissiveIntensity=1.5;m.core.material.opacity=1;
     m.glow.material.color.setHex(col);m.glow.material.opacity=0.4;
@@ -351,7 +393,7 @@ function tick(){
     p.position.lerpVectors(p.userData.s,p.userData.e,p.userData.t);
   });
   // 节点微微浮动
-  nodes.forEach((n,i)=>{const m=nodeMeshes[n.id];
+  nodes.forEach((n,i)=>{const m=nodeMeshes[n.id];if(m.terrain)return;
     m.core.position.y=n.pos.y+Math.sin(t*1.2+i)*1.2;
     m.glow.position.copy(m.core.position);
     m.ring.position.copy(m.core.position);
