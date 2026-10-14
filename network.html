@@ -69,8 +69,8 @@ svg{display:block;width:100%;height:auto}
 </div>
 
 <div class="wrap">
-  <h1>博罗产业网络：谁是链主，谁在配套谁</h1>
-  <p class="sub">16个产业主体（含3个特色农业）、14条可佐证关系。注意最粗的那根线从东莞连到谁。</p>
+  <h1>博罗产业网络："3+3"体系谁是链主</h1>
+  <p class="sub">13个产业主体（官方"3+3"体系）、8条可佐证关系。注意最粗的那根线从东莞连到谁。</p>
 
   <div class="actbar">
     <button class="btn" id="bReplay">↻ 重新建构</button>
@@ -110,12 +110,12 @@ svg{display:block;width:100%;height:auto}
 
     <div class="plain">
       <span class="lab">人话</span>
-      博罗的产业网络不是平的。最粗的那根线从<b>东莞</b>连到<b>电子信息</b>——这是博罗工业的源头。<b>欣旺达</b>从深圳来，拉着<b>电气机械</b>配套。<b>高新区</b>是载体，上面挂着电子信息和686家高新企业。<span class="blood-tag blood-A">A 实测</span>
+      博罗官方定的是<b>"3+3"体系</b>：三大主导（电子信息/智能装备/新能源新材料）+ 三大新兴（生命健康/智能出行/现代食品）。最粗的线从<b>东莞</b>连到<b>电子信息</b>——这是博罗工业的源头。<span class="blood-tag blood-A">A 实测</span>
     </div>
 
     <div class="plain" style="background:rgba(248,113,113,.08);border-left:3px solid #f87171;margin-top:8px">
       <span class="lab" style="color:#fca5a5">怎么读这张图？</span>
-      三个链主撑着博罗：<b>电子信息</b>（东莞外溢+表面处理配套）、<b>欣旺达/新能源</b>（深圳项目+电气机械配套）、<b>高新区</b>（载体+686家企业）。最细的线是景田百岁山和罗浮山国药——它们不依附于谁，是独立的特色产业。
+      三个链主撑着博罗：<b>电子信息</b>（东莞外溢+表面处理配套）、<b>智能装备</b>（高新区载体+686家高企）、<b>新能源新材料</b>（深圳欣旺达/正威）。<b>智能出行</b>（台铃小刀）接东莞外溢。<b>生命健康</b>（罗浮山国药/红脚艾）和<b>现代食品</b>（百岁山）是独立特色产业。
     </div>
 
     <div style="margin-top:14px">
@@ -124,10 +124,10 @@ svg{display:block;width:100%;height:auto}
     </div>
 
     <div class="algo-note">
-      数据血统（14条边）：<span class="blood-tag blood-A">A 实测 4条</span>统计公报/企业公开数据 ｜
-      <span class="blood-tag blood-B">B 推估 4条</span>产业配套/农业上游 ｜
-      <span class="blood-tag blood-C">C 假设 2条</span>特色产业联动<br>
-      节点为博罗核心产业主体，镇仅作标签；边为上下游/配套/外溢关系，权重含假设，可改参数复跑。
+      数据血统（8条边）：<span class="blood-tag blood-A">A 实测 4条</span>2026政府工作报告/统计公报 ｜
+      <span class="blood-tag blood-B">B 推估 3条</span>产业链配套关系 ｜
+      <span class="blood-tag blood-C">C 假设 1条</span>跨区域合作<br>
+      节点依据博罗"3+3"现代化产业体系官方口径，镇仅作标签；边为上下游/配套/外溢关系，可改参数复跑。
     </div>
   </div>
 
@@ -141,33 +141,31 @@ const NODES=[
   {id:"dg",name:"东莞",x:50,y:220,type:"ext",w:3,label:"石龙/石排·产业外溢源头"},
   {id:"sz",name:"深圳",x:50,y:360,type:"ext",w:2,label:"新能源项目来源"},
   {id:"hz",name:"惠城",x:810,y:250,type:"ext",w:1,label:"惠州主城·行政"},
-  // ===== 博罗核心产业集群 =====
-  {id:"dz",name:"电子信息",x:220,y:180,type:"ind",w:3,label:"317家规上·产值773.8亿·园洲"},
-  {id:"bmc",name:"表面处理",x:160,y:130,type:"ind",w:1,label:"配套集群·福田"},
-  {id:"ddc",name:"电动车",x:180,y:260,type:"ind",w:2,label:"台铃小刀·石湾"},
-  {id:"xw",name:"欣旺达",x:480,y:120,type:"ind",w:3,label:"新能源龙头·罗阳"},
-  {id:"dq",name:"电气机械",x:540,y:170,type:"ind",w:2,label:"占规上14.2%·龙溪"},
-  {id:"ht",name:"高新区",x:380,y:220,type:"ind",w:3,label:"千亿智能装备·罗阳"},
-  {id:"gx",name:"高新企业",x:440,y:260,type:"ind",w:2,label:"686家"},
-  {id:"lfsgy",name:"罗浮山国药",x:620,y:280,type:"ind",w:1,label:"生物医药·长宁"},
-  {id:"zy",name:"罗浮山中药材",x:560,y:340,type:"ind",w:1,label:"南药种植·横河/长宁"},
-  {id:"jt",name:"景田百岁山",x:700,y:220,type:"ind",w:2,label:"饮料374万吨·湖镇"},
-  {id:"my",name:"民营工业",x:380,y:320,type:"ind",w:2,label:"占规上68.6%"},
-  // ===== 特色农业 =====
+  // ===== 博罗"3+3"产业体系 =====
+  // 三大主导产业
+  {id:"dz",name:"新一代电子信息",x:200,y:170,type:"ind",w:3,label:"317家规上·产值770亿·园洲"},
+  {id:"ht",name:"智能装备",x:380,y:200,type:"ind",w:3,label:"千亿产业园·686家高企·罗阳"},
+  {id:"xw",name:"新能源新材料",x:500,y:130,type:"ind",w:3,label:"欣旺达锂威·正威铜材料·罗阳"},
+  // 配套集群
+  {id:"bmc",name:"表面处理",x:140,y:120,type:"ind",w:1,label:"省特色产业集群·福田"},
+  {id:"ddc",name:"智能出行",x:160,y:260,type:"ind",w:2,label:"台铃/小刀/新日/绿佳·石湾"},
+  // 三大新兴产业
+  {id:"lfsgy",name:"生命健康",x:620,y:280,type:"ind",w:2,label:"罗浮山国药·红脚艾·百草油·长宁"},
+  {id:"jt",name:"现代食品",x:700,y:200,type:"ind",w:2,label:"百岁山374万吨·顺兴食品·湖镇"},
+  // 特色农业
   {id:"sc",name:"博罗山茶",x:720,y:340,type:"ind",w:1,label:"地理标志·柏塘"},
-  {id:"xc",name:"福田菜心",x:160,y:340,type:"ind",w:1,label:"地理标志·播种季·福田"},
+  {id:"xc",name:"福田菜心",x:140,y:340,type:"ind",w:1,label:"地理标志·播种季·福田"},
 ];
 
 const EDGES=[
+  // 外部→博罗（产业外溢/项目来源）
   ["dg","dz",5,"A"],["dg","ddc",4,"A"],
-  ["sz","xw",3,"B"],["sz","dq",2,"B"],
+  ["sz","xw",3,"B"],
   ["gz","lfsgy",2,"C"],
+  // 配套关系
   ["bmc","dz",2,"B"],["bmc","ddc",2,"B"],
-  ["dq","xw",2,"B"],
-  ["ht","dz",3,"A"],["ht","gx",3,"A"],["ht","my",2,"B"],
   ["xw","ht",2,"A"],
-  ["jt","my",1,"C"],
-  ["zy","lfsgy",2,"B"],
+  ["ht","dz",3,"A"],
 ];
 
 const COLORS={ind:"#22c55e",space:"#9aa6b8",talent:"#f97316",ext:"#a78bfa"};
