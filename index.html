@@ -88,7 +88,11 @@ h1{font-size:22px;margin:0 0 2px;letter-spacing:.5px}
     </svg>
     <div>
       <h1>今日博罗话题</h1>
-      <p class="sub">扫一遍公开渠道，按关注程度排。点卡片看详情。<br><span style="font-size:11px;color:#5b6b82">数据来源：博罗县政府工作报告、统计公报与各镇公开信息、南方+/惠州日报等媒体，以及微博/抖音/头条等公开热榜。统计区间：近期公开信息，每日自动刷新（优先最近1天）。本页不展示平台后台真实阅读、转发、点赞，改用关注档（高/较高/中）标注。</span></p>
+      <p class="sub">扫一遍公开渠道，按关注程度排。点卡片看详情。
+        <details style="margin-top:6px;font-size:11px;color:#5b6b82"><summary style="cursor:pointer;display:inline">ⓘ 数据说明</summary>
+        <span style="display:block;margin-top:4px;line-height:1.6">来源：统计公报、各镇公开信息、南方+/惠州日报及微博/抖音/头条公开热榜，每日自动刷新。本页不展示平台后台真实阅读/转发/点赞，按关注档（高/较高/中）标注。</span>
+        </details>
+      </p>
       <div id="topHook" style="margin-top:12px;font-size:17px;font-weight:800;color:#fbbf24;line-height:1.5;background:rgba(251,191,36,.08);border-left:3px solid #fbbf24;padding:10px 12px;border-radius:0 10px 10px 0"></div>
     </div>
   </div>
@@ -99,9 +103,6 @@ h1{font-size:22px;margin:0 0 2px;letter-spacing:.5px}
     <div style="font-size:12px;color:#94a3b8;margin-bottom:10px">同一套模型跑了4000遍，过1600亿概率约 <b id="baseHit" style="color:#4ade80">…</b>，中位数约 <b id="baseP50" style="color:#4ade80">…</b>亿。你比它乐观还是悲观？</div>
     <div id="voteBar" style="display:flex;gap:8px"></div>
     <div id="voteOut" style="margin-top:10px;font-size:12px;color:#cbd5e1;line-height:1.6"></div>
-    <div style="margin-top:10px;padding-top:8px;border-top:1px solid #1c2739;font-size:10.5px;color:#6b7d96;line-height:1.7">
-      📊 模型基于公开数据校准 · 参数分A/B/C/D四级 · 固定随机种子可复现 · 详见数据说明
-    </div>
   </div>
 
   <div class="toolbar">
@@ -117,8 +118,11 @@ h1{font-size:22px;margin:0 0 2px;letter-spacing:.5px}
 
   <div id="topicList"></div>
 
+  <details style="margin:20px 0 12px;border:1px dashed #22c55e55;border-radius:12px;padding:0 14px">
+    <summary style="cursor:pointer;padding:12px 0;font-size:13px;color:#4ade80;font-weight:700">💬 说两句：你是哪个镇的？博罗你先介绍哪样？</summary>
+    <div style="padding:0 0 16px">
   <!-- 你是哪个镇的 -->
-  <div style="margin:20px 0 12px;padding:14px;background:linear-gradient(135deg,#14231a,#0f172a);border:1px solid #22c55e;border-radius:14px">
+  <div style="margin:12px 0;padding:14px;background:linear-gradient(135deg,#14231a,#0f172a);border:1px solid #22c55e;border-radius:14px">
     <div style="font-size:15px;font-weight:800;color:#fff;margin-bottom:4px">🏘️ 你是博罗哪个镇的？</div>
     <div style="font-size:12.5px;color:#94a3b8;margin-bottom:10px">12个镇街，每个镇都有自己的饭碗。点你的镇，看它最近在发生什么。</div>
     <div id="townGrid" style="display:grid;grid-template-columns:repeat(4,1fr);gap:6px"></div>
@@ -132,9 +136,10 @@ h1{font-size:22px;margin:0 0 2px;letter-spacing:.5px}
     <div id="proudGrid" style="display:flex;gap:8px;flex-wrap:wrap"></div>
     <div id="proudOut" style="margin-top:10px;font-size:12.5px;color:#cbd5e1;line-height:1.6"></div>
   </div>
+    </div>
+  </details>
 
   <div class="next"><a href="network.html">下一步：看博罗怎么长出来 →</a></div>
-  <div class="disc">话题均来自公开渠道、每日自动刷新；本页不展示平台后台真实阅读、转发、点赞，按关注档（高/较高/中）标注。</div>
 </div>
 
 <script>
