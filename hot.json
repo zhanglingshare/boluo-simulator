@@ -1,13 +1,33 @@
 {
   "schema_version": 2,
   "region": "boluo",
-  "updated": "2026-10-19 07:31",
-  "fetched_at": "2026-10-19 07:31",
+  "updated": "2026-10-20 07:26",
+  "fetched_at": "2026-10-20 07:26",
   "frequency": "每日更新一次",
-  "count": 11,
+  "count": 12,
   "stats": [],
   "note": "话题按编辑关注程度排序，标注关注档（高/较高/中）与来源级别；每条显示原报道时间、最近抓取与核验状态（官方原文或≥2独立来源=已核验，单源媒体/本地=待核实），缺失标「待核实」。本页不展示平台后台真实阅读、转发、点赞数据。话题均来自公开渠道，每日更新。",
   "items": [
+    {
+      "title": "深博福田产业园全面开园，首批标准化厂房交付、企业集中入驻",
+      "cat": "industry",
+      "emoji": "🏭",
+      "tier": "较高",
+      "srcLevel": "官方发布",
+      "live": false,
+      "source": "博罗县人民政府",
+      "url": "https://www.boluo.gov.cn/zwgk/zwdt/zwyw/content/post_5800807.html",
+      "summary": "深博福田产业园正式全面开园，嘉奇能源、上梅林实业、讯凌新科技、胜鉴新材料等企业集中入驻，首批标准化厂房交付投产；园区是深圳福田与博罗共建“福田总部研发+博罗智能制造”飞地经济的核心载体。",
+      "published_at": "2026-06-30",
+      "event_date": "2026-06-30",
+      "fetched_at": "2026-10-20 07:26",
+      "verified_status": "已核验",
+      "fate": {
+        "kind": "info",
+        "direction": "利好",
+        "note": "深博协作园区开园，交付投产不等于达产，产值以实际运行为准"
+      }
+    },
     {
       "title": "亿纬锂能日盛200MW/400MWh独立共享储能电站在博罗石湾并网",
       "cat": "industry",
@@ -17,10 +37,10 @@
       "live": false,
       "source": "博罗县人民政府",
       "url": "https://www.boluo.gov.cn/xzygdw/xgbdst/blxw/content/post_5863373.html",
-      "summary": "9月29日，亿纬锂能日盛200MW/400MWh独立共享储能电站并网仪式在博罗石湾举行，项目将发挥调峰、调频、保供稳网作用，与此前并网的欣城新能源储能电站一起，为博罗新型电力系统与绿色低碳能源体系再添“电力引擎”。",
+      "summary": "9月29日，亿纬锂能日盛200MW/400MWh独立共享储能电站并网仪式在博罗石湾举行，将发挥调峰、调频、保供稳网作用，为博罗新型电力系统与绿色低碳能源体系再添“电力引擎”。",
       "published_at": "2026-10-01",
       "event_date": "2026-09-29",
-      "fetched_at": "2026-10-19 07:31",
+      "fetched_at": "2026-10-20 07:26",
       "verified_status": "已核验",
       "fate": {
         "kind": "info",
@@ -29,27 +49,27 @@
       }
     },
     {
-      "title": "博罗县第八人民医院新院建设提速，预计2027年初试运行",
+      "title": "博罗中专新校区B区竣工投用，约2700名学生搬入新宿舍",
       "cat": "livelihood",
-      "emoji": "🏥",
+      "emoji": "🎓",
       "tier": "较高",
       "srcLevel": "官方发布",
       "live": false,
       "source": "博罗县人民政府",
-      "url": "https://www.boluo.gov.cn/zwgk/zwdt/tpxw/index.html",
-      "summary": "博罗县第八人民医院新院项目建设加快推进，预计2027年初进入试运行，新院将进一步完善县域医疗服务布局、提升基层诊疗与急救能力，让周边群众就近享有更优质的医疗卫生服务。",
-      "published_at": "2026-10-16",
-      "event_date": "2026-10-15",
-      "fetched_at": "2026-10-19 07:31",
+      "url": "https://www.boluo.gov.cn/xzygdw/xgbdst/tpxw/content/post_5863394.html",
+      "summary": "9月29日博罗中等专业学校新校区B区竣工投用，约2700名学生分批搬入新宿舍。该项目是博罗2026年十件民生实事教育板块项目之一，为县域中职教育与技能人才家门口培养拓展硬件空间。",
+      "published_at": "2026-10-01",
+      "event_date": "2026-09-29",
+      "fetched_at": "2026-10-20 07:26",
       "verified_status": "已核验",
       "fate": {
         "kind": "info",
         "direction": "利好",
-        "note": "县域医疗基础设施补短板；试运行时间为建设计划口径"
+        "note": "职业教育民生项目投用，服务本地技能人才培养"
       }
     },
     {
-      "title": "环南昆山—罗浮山引领区国庆迎客约91万人次，过夜游客比2023年同期增62%",
+      "title": "环南昆山—罗浮山引领区国庆迎客约91万人次，过夜游客比2023年增62%",
       "cat": "tourism",
       "emoji": "🌄",
       "tier": "较高",
@@ -57,59 +77,19 @@
       "live": false,
       "source": "惠州市人民政府",
       "url": "https://www.huizhou.gov.cn/zwgk/hzsz/zwyw/content/post_5865139.html",
-      "summary": "据不完全统计，2026年国庆假期环南昆山—罗浮山引领区所辖各镇（管委会）累计接待游客约91万人次、过夜游客23万人次，实现旅游总收入4.6亿元，比引领区建设前（2023年）同期分别增长38%、62%、48%，“百千万工程”城乡融合与文旅带动效应持续显现。",
+      "summary": "据不完全统计，2026年国庆假期环南昆山—罗浮山引领区累计接待游客约91万人次、过夜游客23万人次，旅游总收入4.6亿元，比2023年同期分别增长38%、62%、48%，城乡融合与文旅带动效应持续显现。",
       "published_at": "2026-10-09",
       "event_date": "2026-10-01至2026-10-07",
-      "fetched_at": "2026-10-19 07:31",
+      "fetched_at": "2026-10-20 07:26",
       "verified_status": "已核验",
       "fate": {
         "kind": "life",
         "direction": "利好",
-        "note": "引领区文旅消费数据为不完全统计口径，反映人气回升趋势"
+        "note": "引领区文旅为不完全统计口径，反映人气回升"
       }
     },
     {
-      "title": "民间收藏爱好者向葛洪博物馆无偿捐赠104件/套珍贵文物，罗浮山添文化家底",
-      "cat": "tourism",
-      "emoji": "🏺",
-      "tier": "较高",
-      "srcLevel": "官方发布",
-      "live": false,
-      "source": "博罗县人民政府",
-      "url": "https://www.boluo.gov.cn/xzygdw/xgbdst/ztzl/sbgs/",
-      "summary": "“同心护宝 合力传薪”罗浮山景区文物捐赠仪式举行，民间收藏爱好者邓玲慧无偿向葛洪博物馆捐赠104件/套珍贵文物，丰富了罗浮山中医药文化与葛洪文化展陈，为景区文旅融合增添可看可学的文化家底。",
-      "published_at": "2026-10-14",
-      "event_date": "2026-10-13",
-      "fetched_at": "2026-10-19 07:31",
-      "verified_status": "已核验",
-      "fate": {
-        "kind": "life",
-        "direction": "利好",
-        "note": "社会力量无偿捐赠充实罗浮山文化展陈"
-      }
-    },
-    {
-      "title": "2026 TCL惠州马拉松定于12月27日举行，博罗沿线进入筹备",
-      "cat": "city",
-      "emoji": "🏃",
-      "tier": "较高",
-      "srcLevel": "官方发布",
-      "live": false,
-      "source": "博罗县融媒体中心",
-      "url": "http://www.boluo.gov.cn/xzygdw/xgbdst/blxw/",
-      "summary": "2026 TCL惠州马拉松将于12月27日举行，赛事筹备与路线保障工作陆续展开，博罗沿线镇街、文旅与体育消费有望迎来一波人气，户外运动与赛事经济持续升温。",
-      "published_at": "2026-10-16",
-      "event_date": "2026-12-27",
-      "fetched_at": "2026-10-19 07:31",
-      "verified_status": "已核验",
-      "fate": {
-        "kind": "info",
-        "direction": "利好",
-        "note": "赛事安排以官方最终公告为准；赛事带动沿线文旅体育消费"
-      }
-    },
-    {
-      "title": "“非遗轻骑兵”首站落户218公路博罗段，16个驿站串珠成链打造融合样板",
+      "title": "“非遗轻骑兵”首站落户218公路博罗段，16个驿站串珠成链",
       "cat": "tourism",
       "emoji": "🎭",
       "tier": "较高",
@@ -117,35 +97,15 @@
       "live": false,
       "source": "博罗县人民政府",
       "url": "https://www.boluo.gov.cn/hzblwgltj/gkmlpt/content/5/5871/post_5871692.html?jump=true",
-      "summary": "依托全省“跟着非遗去旅行”文旅融合品牌，“非遗轻骑兵”进驿站活动首站落地环南昆山—罗浮山引领区218公里最美旅游公路博罗段，以公路沿线16个驿站为载体，通过轻量化、沉浸式展演将岭南非遗融入游客旅途。",
+      "summary": "依托“跟着非遗去旅行”品牌，“非遗轻骑兵”进驿站首站落地环南昆山—罗浮山引领区218公里最美旅游公路博罗段，以沿线16个驿站为载体，通过轻量化、沉浸式展演将岭南非遗融入游客旅途。",
       "published_at": "2026-10-14",
       "event_date": "2026-10-14",
-      "fetched_at": "2026-10-19 07:31",
+      "fetched_at": "2026-10-20 07:26",
       "verified_status": "已核验",
       "fate": {
         "kind": "life",
         "direction": "利好",
         "note": "非遗进驿站带动公路旅游与镇村消费"
-      }
-    },
-    {
-      "title": "10月11日起惠州北站新增粤西方向直达动车，博罗人出行更便捷",
-      "cat": "city",
-      "emoji": "🚄",
-      "tier": "较高",
-      "srcLevel": "官方发布",
-      "live": false,
-      "source": "博罗县人民政府",
-      "url": "https://www.boluo.gov.cn/gkmlpt/mindex?theme=dark",
-      "summary": "10月11日起，惠州北站新增开往粤西方向的直达动车组列车，进一步拓展博罗经惠州枢纽的高铁通达范围，便利沿线居民商务、探亲与旅游出行，强化博罗与粤港澳大湾区及粤西的快速联系。",
-      "published_at": "2026-10-13",
-      "event_date": "2026-10-11",
-      "fetched_at": "2026-10-19 07:31",
-      "verified_status": "已核验",
-      "fate": {
-        "kind": "info",
-        "direction": "利好",
-        "note": "高铁通达性提升，具体班次以12306为准"
       }
     },
     {
@@ -157,10 +117,10 @@
       "live": false,
       "source": "博罗县人民政府",
       "url": "https://www.boluo.gov.cn/xzygdw/xgbdst/blxw/content/post_5871433.html",
-      "summary": "寒露至、秋茶香，柏塘镇万亩茶园进入秋茶采摘季，茶农趁晴好天气采制秋茶，百年手工炒茶技艺迎来年轻新传人，柏塘山茶持续香飘大湾区“茶罐子”，一片叶子带动一方农户增收。",
+      "summary": "柏塘万亩茶园进入秋茶采摘季，茶农趁晴好采制秋茶，百年手工炒茶技艺迎来年轻新传人，柏塘山茶持续香飘大湾区“茶罐子”，一片叶子带动一方农户增收。",
       "published_at": "2026-10-14",
       "event_date": "2026-10-14",
-      "fetched_at": "2026-10-19 07:31",
+      "fetched_at": "2026-10-20 07:26",
       "verified_status": "已核验",
       "fate": {
         "kind": "life",
@@ -169,23 +129,63 @@
       }
     },
     {
-      "title": "博罗县老年人体育协会成立四十周年，九九重阳文体展演展银发风采",
-      "cat": "livelihood",
-      "emoji": "👵",
+      "title": "博罗甜玉米精加工基地新厂区投产，本地鲜玉米就地延链",
+      "cat": "industry",
+      "emoji": "🌽",
       "tier": "较高",
       "srcLevel": "官方发布",
       "live": false,
       "source": "博罗县人民政府",
-      "url": "http://www.boluo.gov.cn/zwgk/zwdt/bmdt/index.html",
-      "summary": "博罗县举办纪念县老年人体育协会成立四十周年暨九九重阳节文体展演活动，老年文体爱好者带来广场舞、太极、健身操等节目，展现健康向上的银发风采，营造尊老敬老、全民健身的节日氛围。",
-      "published_at": "2026-10-16",
-      "event_date": "2026-10-16",
-      "fetched_at": "2026-10-19 07:31",
+      "url": "https://www.boluo.gov.cn/",
+      "summary": "博罗甜玉米精加工基地新厂区投产，本地鲜玉米就地加工延链；同期罗阳承粮陂村60亩玉米开摘、铜来顺新材料等项目投产，县域先进制造与农产品加工多点发力。",
+      "published_at": "2026-10-13",
+      "event_date": "2026-10-13",
+      "fetched_at": "2026-10-20 07:26",
+      "verified_status": "已核验",
+      "fate": {
+        "kind": "info",
+        "direction": "利好",
+        "note": "农产品精加工延链，产能以实际运行"
+      }
+    },
+    {
+      "title": "民间收藏爱好者向葛洪博物馆无偿捐赠104件/套文物，罗浮山添文化家底",
+      "cat": "tourism",
+      "emoji": "🏺",
+      "tier": "较高",
+      "srcLevel": "官方发布",
+      "live": false,
+      "source": "博罗县人民政府",
+      "url": "https://www.boluo.gov.cn/xzygdw/xgbdst/ztzl/sbgs/",
+      "summary": "“同心护宝 合力传薪”罗浮山文物捐赠仪式举行，民间收藏爱好者邓玲慧无偿向葛洪博物馆捐赠104件/套珍贵文物，丰富了罗浮山中医药文化与葛洪文化展陈。",
+      "published_at": "2026-10-14",
+      "event_date": "2026-10-13",
+      "fetched_at": "2026-10-20 07:26",
       "verified_status": "已核验",
       "fate": {
         "kind": "life",
         "direction": "利好",
-        "note": "重阳敬老与全民健身社区活动"
+        "note": "社会力量无偿捐赠充实罗浮山文化展陈"
+      }
+    },
+    {
+      "title": "霜降前后农事指南：10月23日霜降，果树秋肥、晚稻成熟管理正当时",
+      "cat": "agriculture",
+      "emoji": "📒",
+      "tier": "较高",
+      "srcLevel": "官方发布",
+      "live": false,
+      "source": "博罗县农业农村局",
+      "url": "https://www.boluo.gov.cn/xzygdw/xnyjstgzx/zwgk/gzdt/content/post_5872101.html",
+      "summary": "博罗县农事指南第20期：10月23日霜降、早晚温差大，利于糖分积累，当前晚稻陆续成熟、果树秋施基肥、秋冬种有序推进，指导农户做好田间管理。",
+      "published_at": "2026-10-15",
+      "event_date": "2026-10-23",
+      "fetched_at": "2026-10-20 07:26",
+      "verified_status": "已核验",
+      "fate": {
+        "kind": "info",
+        "direction": "中性",
+        "note": "季节性农业生产指导，公开农事信息"
       }
     },
     {
@@ -197,15 +197,35 @@
       "live": false,
       "source": "博罗发布",
       "url": "http://m.toutiao.com/group/7697914283007312435/",
-      "summary": "2026年品牌乡村（农文旅IP）创新案例名单出炉，博罗柏塘镇“逸山海‘微改共生’打造茶农文旅全域IP”入选文旅融合IP类案例，是粤港澳大湾区唯一上榜项目、广东省本次入围的三个项目之一，为柏塘山茶与乡村文旅融合再添国家级名片。",
+      "summary": "2026年品牌乡村（农文旅IP）创新案例名单出炉，柏塘镇“逸山海‘微改共生’打造茶农文旅全域IP”入选文旅融合IP类，是粤港澳大湾区唯一上榜项目，为柏塘山茶与乡村文旅融合再添国家级名片。",
       "published_at": "2026-10-18",
       "event_date": "2026-10-18",
-      "fetched_at": "2026-10-19 07:31",
+      "fetched_at": "2026-10-20 07:26",
       "verified_status": "待核实",
       "fate": {
         "kind": "life",
         "direction": "利好",
-        "note": "茶旅融合IP获国家级案例认可，品牌溢价连着茶农与文旅从业者生计"
+        "note": "茶旅融合IP获国家级认可，品牌溢价连着茶农与文旅从业者"
+      }
+    },
+    {
+      "title": "博罗县第八人民医院新院建设提速，进度约85%、预计2027年初试运行",
+      "cat": "livelihood",
+      "emoji": "🏥",
+      "tier": "中",
+      "srcLevel": "媒体报道",
+      "live": false,
+      "source": "博罗发布",
+      "url": "http://m.toutiao.com/group/7696410429580493347/",
+      "summary": "博罗县第八人民医院新院整体建设进度约85.3%，装修进入收尾，四维彩超、64排CT等设备陆续到位，预计2026年底完工、2027年初试运行，将完善县域医疗布局、提升基层诊疗能力。",
+      "published_at": "2026-10-14",
+      "event_date": "2026-10-14",
+      "fetched_at": "2026-10-20 07:26",
+      "verified_status": "待核实",
+      "fate": {
+        "kind": "info",
+        "direction": "利好",
+        "note": "县域医疗基础设施补短板；试运行时间为建设计划口径"
       }
     },
     {
@@ -217,15 +237,15 @@
       "live": false,
       "source": "惠农网",
       "url": "https://news.cnhnb.com/mrdzx/detail/459956/",
-      "summary": "杨村皇帝柑进入秋季转色与糖分积累关键期，果皮由青转青黄，按广东产区物候10月下旬起陆续进入开摘季，产地货源与电商预售开始预热。作为博罗特色柑橘品牌，皇帝柑连着广大果农增收与大湾区“果盘子”。",
+      "summary": "杨村皇帝柑进入秋季转色与糖分积累关键期，按广东产区物候10月下旬起陆续进入开摘季，货源与电商预售开始预热。皇帝柑连着广大果农增收与大湾区“果盘子”。",
       "published_at": "2026-10-18",
       "event_date": "2026-10下旬",
-      "fetched_at": "2026-10-19 07:31",
+      "fetched_at": "2026-10-20 07:26",
       "verified_status": "待核实",
       "fate": {
         "kind": "life",
         "direction": "利好",
-        "note": "当季地理标志果品临近开摘、尚未规模上市，物候以当地当年为准"
+        "note": "当季地理标志果品临近开摘、尚未规模上市"
       }
     }
   ]
