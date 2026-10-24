@@ -31,6 +31,82 @@
     return `<button class="${cls}" data-add="${c.id}" data-full="${full ? 1 : 0}">${label}</button>`;
   }
 
+  /* 关键指标卡：数字当主角 + 用真实数字做的迷你可视化（数字均来自博罗县2025统计公报/官方发布）。
+     不再用大块灰底装饰图标。tone: up=teal / down=rose / flat=ink。 */
+  const STAT_SPEC = {
+    'ind-gdp': {
+      icon: 'chart', value: '1005.45', unit: '亿元', tone: 'flat',
+      sub: '地区生产总值 · 2025', badge: '广东首个千亿县',
+      mini: { kind: 'mile', cur: 1005.45, scale: 1200, mark: 1000, markLabel: '千亿关口' }
+    },
+    'ind-gdp-growth': {
+      icon: 'trendingUp', value: '5.5', unit: '%', tone: 'up',
+      sub: '2025 按不变价同比', badge: '',
+      mini: { kind: 'step', a: { v: '5.5%', l: '2025 实际' }, b: { v: '6.5–7%', l: '2026 计划' } }
+    },
+    'ind-fai': {
+      icon: 'trendingDown', value: '-18.8', unit: '%', tone: 'down',
+      sub: '2025 全社会固定资产投资', badge: '',
+      mini: { kind: 'bars', cap: '降幅构成 · 2025', rows: [
+        { k: '房地产开发', v: -47.6, t: 'strong' },
+        { k: '工业投资', v: -12.7, t: 'mid' },
+        { k: '基础设施', v: -0.3, t: 'flat' }
+      ] }
+    },
+    'ind-visitors': {
+      icon: 'mountain', value: '35.94', unit: '万人次', tone: 'up',
+      sub: '2026 国庆假期 · 监测乡村旅游点', badge: '国庆同比 +10.51%',
+      mini: null
+    }
+  };
+  function statMini(m) {
+    if (!m) return '';
+    if (m.kind === 'bars') {
+      return `<div class="mb-bars">${m.rows.map(r => {
+        const w = Math.max(4, Math.abs(r.v) / 50 * 100);
+        return `<div class="mb-row"><span class="mb-k">${esc(r.k)}</span><span class="mb-track"><span class="mb-fill ${r.t}" style="width:${w.toFixed(1)}%"></span></span><span class="mb-v ${r.t}">${r.v}%</span></div>`;
+      }).join('')}<div class="mb-cap">${esc(m.cap || '')}</div></div>`;
+    }
+    if (m.kind === 'mile') {
+      const w = (m.cur / m.scale * 100).toFixed(1), mp = (m.mark / m.scale * 100).toFixed(1);
+      return `<div class="mb-mile"><div class="mile-track"><span class="mile-grad" style="width:${w}%"></span><span class="mile-mark" style="left:${mp}%"></span><span class="mile-dot" style="left:${w}%"></span></div><div class="mile-lbl"><span>0</span><span class="ml-k">${m.mark} · ${esc(m.markLabel)}</span></div></div>`;
+    }
+    if (m.kind === 'step') {
+      return `<div class="mb-step"><div class="step-box real"><b>${esc(m.a.v)}</b><span>${esc(m.a.l)}</span></div><span class="step-arr">${I('arrowRight', 16)}</span><div class="step-box plan"><b>${esc(m.b.v)}</b><span>${esc(m.b.l)}</span></div></div>`;
+    }
+    return '';
+  }
+  function indicatorCardHtml(c) {
+    const s = STAT_SPEC[c.id] || { icon: 'chart', value: (c.subtitle || '').replace(/^[^：:]*[：:]/, ''), unit: '', tone: 'flat', sub: '', badge: '', mini: null };
+    const dir = s.tone === 'down' ? 'trendingDown' : (s.tone === 'up' ? 'trendingUp' : '');
+    const yoy = (s.unit === '%' && dir) ? `<span class="stat-dir ${s.tone}">${I(dir, 14)}同比</span>` : '';
+    return `<div class="stat-card tone-${s.tone}" draggable="true" data-card="${c.id}">
+      <div class="stat-top"><span class="stat-ico">${I(s.icon, 19)}</span><span class="stat-name">${esc(c.title)}</span>${yoy}</div>
+      <div class="stat-main"><span class="stat-value">${esc(s.value)}</span><span class="stat-unit">${esc(s.unit)}</span>
+        ${s.badge ? `<span class="stat-badge">${esc(s.badge)}</span>` : ''}
+        <div class="stat-sub">${esc(s.sub)}</div></div>
+      <div class="stat-mini">${statMini(s.mini)}</div>
+      <div class="stat-foot"><span class="src-mini">${esc(c.source)}</span>${addBtn(c, false)}</div>
+    </div>`;
+  }
+  function indicatorFeatureHtml(c) {
+    const s = STAT_SPEC[c.id] || STAT_SPEC['ind-fai'];
+    return `<div class="stat-feature" draggable="true" data-card="${c.id}">
+      <div class="sf-left">
+        <div class="sf-name">${I(s.icon, 18)}${esc(c.title)}</div>
+        <div class="sf-value tone-${s.tone}"><span class="sv">${esc(s.value)}</span><span class="su">${esc(s.unit)}</span></div>
+        ${s.badge ? `<span class="stat-badge">${esc(s.badge)}</span>` : ''}
+        <div class="sf-mini">${statMini(s.mini)}</div>
+      </div>
+      <div class="sf-right">
+        <div class="f-tag">关键数据</div>
+        <h3>${esc(c.title)}</h3>
+        <p>${esc(c.summary)}</p>
+        <div class="c-foot"><span class="src-mini">${esc(c.source)}</span>${addBtn(c, true)}</div>
+      </div>
+    </div>`;
+  }
+
   function cardHtml(c) {
     const v = visual(c), img = imgOf(c);
     return `<div class="card" draggable="true" data-card="${c.id}">
@@ -100,9 +176,11 @@
     const grid = cards
       .filter(c => gridTypes.includes(c.type) && c.id !== featureId)
       .sort((a, b) => (imgOf(b) ? 1 : 0) - (imgOf(a) ? 1 : 0));
-    document.getElementById('feature').innerHTML = f ? featureHtml(f) : '';
+    document.getElementById('feature').innerHTML = f
+      ? (f.type === 'indicator' ? indicatorFeatureHtml(f) : featureHtml(f)) : '';
     document.getElementById('gridTitle').textContent = gridTitle;
-    document.getElementById('grid').innerHTML = grid.map(cardHtml).join('');
+    document.getElementById('grid').innerHTML = grid.map(c =>
+      c.type === 'indicator' ? indicatorCardHtml(c) : cardHtml(c)).join('');
     bind();
   }
 

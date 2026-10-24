@@ -76,3 +76,72 @@ button{font-family:inherit}
 .loc-mini .bi{color:var(--muted)}
 .f-visual .note{display:inline-flex;align-items:center;gap:4px;z-index:3}
 .brand .logo .bi{color:#fff}
+
+/* 关键指标卡：数字为主角 + 真实迷你可视化（替代旧的灰底装饰图标） */
+.stat-card{background:var(--card);border:1px solid var(--b);border-radius:16px;padding:15px 16px 14px;
+  display:flex;flex-direction:column;transition:.18s}
+.stat-card:hover{border-color:var(--teal);transform:translateY(-3px);box-shadow:0 12px 30px rgba(15,23,42,.09)}
+.stat-top{display:flex;align-items:center;gap:9px}
+.stat-ico{width:34px;height:34px;border-radius:10px;display:flex;align-items:center;justify-content:center;flex:none;
+  background:var(--teal-bg);color:var(--teal)}
+.stat-card.tone-down .stat-ico{background:#fff1f2;color:var(--rose)}
+.stat-card.tone-flat .stat-ico{background:#f1f5f9;color:var(--ink2)}
+.stat-name{font-size:14px;font-weight:700;color:var(--ink)}
+.stat-dir{margin-left:auto;display:inline-flex;align-items:center;gap:3px;font-size:11px;font-weight:700;padding:3px 9px;border-radius:20px}
+.stat-dir.up{background:var(--teal-bg);color:var(--teal)}
+.stat-dir.down{background:#fff1f2;color:var(--rose)}
+.stat-main{margin-top:13px}
+.stat-value{font-size:31px;font-weight:800;letter-spacing:-.5px;line-height:1.1;color:var(--ink)}
+.stat-card.tone-up .stat-value{color:var(--teal)}
+.stat-card.tone-down .stat-value{color:var(--rose)}
+.stat-unit{font-size:14px;font-weight:600;color:var(--ink2);margin-left:3px}
+.stat-badge{display:inline-block;margin-left:9px;font-size:11px;font-weight:700;color:var(--teal);
+  background:var(--teal-bg);padding:3px 10px;border-radius:20px;vertical-align:3px}
+.stat-sub{font-size:12px;color:var(--muted);margin-top:5px}
+.stat-mini{margin-top:14px;padding-top:13px;border-top:1px dashed var(--line)}
+.stat-foot{display:flex;align-items:center;gap:8px;margin-top:auto;padding-top:13px}
+.stat-foot .src-mini{flex:1;line-height:1.4}
+
+/* 分行业降幅条形 */
+.mb-row{display:grid;grid-template-columns:66px 1fr 50px;align-items:center;gap:8px;margin-bottom:8px}
+.mb-k{font-size:11.5px;color:var(--ink2)}
+.mb-track{height:8px;background:var(--line);border-radius:5px;overflow:hidden}
+.mb-fill{display:block;height:100%;border-radius:5px}
+.mb-fill.strong{background:linear-gradient(90deg,#fb7185,#e11d48)}
+.mb-fill.mid{background:linear-gradient(90deg,#fbbf24,#d97706)}
+.mb-fill.flat{background:#cbd5e1}
+.mb-v{font-size:11.5px;font-weight:700;text-align:right}
+.mb-v.strong{color:var(--rose)}.mb-v.mid{color:var(--amber)}.mb-v.flat{color:var(--muted)}
+.mb-cap{font-size:10.5px;color:var(--muted);margin-top:2px}
+
+/* 千亿里程碑 */
+.mile-track{position:relative;height:10px;background:var(--line);border-radius:6px;margin-top:6px}
+.mile-grad{position:absolute;top:0;bottom:0;left:0;border-radius:6px;background:linear-gradient(90deg,#5eead4,#0d9488)}
+.mile-mark{position:absolute;top:-3px;bottom:-3px;width:2px;background:var(--ink);border-radius:2px}
+.mile-dot{position:absolute;top:50%;width:13px;height:13px;border-radius:50%;background:var(--teal);
+  border:2.5px solid #fff;box-shadow:0 0 0 1px var(--teal);transform:translate(-50%,-50%)}
+.mile-lbl{display:flex;justify-content:space-between;font-size:10.5px;color:var(--muted);margin-top:7px}
+.mile-lbl .ml-k{color:var(--ink2);font-weight:700}
+
+/* 实际 → 计划步进 */
+.mb-step{display:flex;align-items:center;gap:9px}
+.step-box{flex:1;border-radius:11px;padding:9px 8px;text-align:center;display:flex;flex-direction:column;gap:2px}
+.step-box b{font-size:17px;font-weight:800}
+.step-box span{font-size:10.5px;color:var(--muted)}
+.step-box.real{background:var(--teal-bg);color:var(--teal)}
+.step-box.plan{background:#fff;border:1.5px dashed #5eead4;color:#0f766e}
+.step-arr{color:var(--muted);display:flex}
+
+/* 关系页横向大指标卡 */
+.stat-feature{background:var(--card);border:1px solid var(--b);border-radius:20px;overflow:hidden;
+  display:grid;grid-template-columns:1fr 1fr;box-shadow:0 10px 34px rgba(15,23,42,.07)}
+.sf-left{padding:26px;background:linear-gradient(160deg,#f0faf9,#fff);border-right:1px solid var(--line);display:flex;flex-direction:column;justify-content:center}
+.sf-name{font-size:13.5px;font-weight:700;color:var(--ink2);display:inline-flex;align-items:center;gap:7px}
+.sf-name .bi{color:var(--teal)}
+.sf-value{margin-top:12px;line-height:1}
+.sf-value .sv{font-size:44px;font-weight:900;letter-spacing:-1px}
+.sf-value.tone-up .sv{color:var(--teal)}.sf-value.tone-down .sv{color:var(--rose)}.sf-value.tone-flat .sv{color:var(--ink)}
+.sf-value .su{font-size:16px;font-weight:600;color:var(--ink2);margin-left:5px}
+.sf-left .stat-badge{align-self:flex-start;margin:10px 0 0}
+.sf-mini{margin-top:18px}
+@media(max-width:680px){.stat-feature{grid-template-columns:1fr}.sf-left{border-right:none;border-bottom:1px solid var(--line)}}
