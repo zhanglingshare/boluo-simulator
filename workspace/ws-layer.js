@@ -20,6 +20,16 @@
     if (cs && cs.src) DATA_DIR = new URL('.', cs.src).href;
   } catch (e) { /* 用相对路径兜底 */ }
   const url = (f) => DATA_DIR + f + '?ts=' + (window.__WS_TS__ || Date.now());
+  // 静态资源（图片）用绝对 URL，不挂时间戳以便缓存
+  const assetUrl = (p) => !p ? '' : (/^https?:\/\//.test(p) ? p : new URL(p, DATA_DIR).href);
+  // 某张卡应显示的主视觉（优先富模块 hero，其次卡 thumb），无则返回 null（用渐变占位）
+  function mediaOf(id) {
+    const m = moduleOf(id);
+    if (m && m.hero) return assetUrl(m.hero);
+    const c = byId[id];
+    if (c && c.thumb) return assetUrl(c.thumb);
+    return null;
+  }
 
   /* ---------- 常量与状态 ---------- */
   const LS_KEY = 'boluo-ws-v3';
@@ -133,10 +143,12 @@ a{color:#0d9488}
 /* 主卡 */
 .mcard{background:#fff;border:1px solid #e5e9ee;border-radius:16px;overflow:hidden;box-shadow:0 6px 24px rgba(15,23,42,.06);animation:fd .32s ease}
 @keyframes fd{from{opacity:0;transform:translateY(9px)}to{opacity:1;transform:none}}
-.mhero{height:170px;position:relative;display:flex;align-items:flex-end;padding:17px;overflow:hidden}
+.mhero{height:200px;position:relative;display:flex;align-items:flex-end;padding:17px;overflow:hidden}
 .mhero::before{content:"";position:absolute;inset:0;background:radial-gradient(circle at 80% 15%,rgba(255,255,255,.28),transparent 55%)}
 .mhero::after{content:"";position:absolute;inset:0;background:linear-gradient(180deg,rgba(15,23,42,0) 35%,rgba(15,23,42,.55))}
 .mhero .mhero-emoji{position:absolute;top:18px;right:20px;font-size:52px;opacity:.92}
+.mhero .mhero-img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover}
+.mhero.has-img::before{background:radial-gradient(circle at 80% 15%,rgba(255,255,255,.18),transparent 55%)}
 .mhero .mhero-txt{position:relative;z-index:1;color:#fff}
 .mkicker{font-size:10px;font-weight:700;letter-spacing:.8px;opacity:.85;text-transform:uppercase}
 .mhero h1{font-size:21px;margin:3px 0 2px;color:#fff;font-weight:800;text-shadow:0 2px 12px rgba(0,0,0,.25)}
@@ -239,7 +251,9 @@ a{color:#0d9488}
 .pcard{display:flex;gap:11px;background:#fff;border:1px solid #e5e9ee;border-radius:13px;overflow:hidden;margin-bottom:10px;transition:.16s}
 .pcard:hover{border-color:#0d9488;box-shadow:0 6px 20px rgba(15,23,42,.07)}
 .pcard.inws{opacity:.5}
-.pthumb{width:78px;min-height:74px;flex:none;display:flex;align-items:center;justify-content:center;font-size:30px;position:relative}
+.pthumb{width:78px;min-height:74px;flex:none;display:flex;align-items:center;justify-content:center;font-size:30px;position:relative;overflow:hidden;border-radius:10px}
+.pthumb-img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover}
+.pthumb .ptag{position:absolute;left:5px;top:5px;z-index:2}
 .pthumb .ptag{position:absolute;left:5px;top:5px;font-size:8.5px;font-weight:700;padding:1px 6px;border-radius:8px;background:rgba(255,255,255,.9);color:#475569}
 .pbody{flex:1;min-width:0;padding:9px 10px 9px 2px;display:flex;flex-direction:column;justify-content:center}
 .pbody .pt{font-size:13px;font-weight:700;line-height:1.4;margin-bottom:3px}
@@ -314,9 +328,15 @@ a{color:#0d9488}
       <button class="nadd" data-add="${esc(n.add || '')}" title="加入（若内容库有）">＋</button></div>`).join('');
     const loc = ((c.tags && c.tags.locations) || [])[0] || m.town || '';
     const tabs = (m.tabs || []).map(t => `<span class="mtag">${esc(t)}</span>`).join('');
+    const heroSrc = mediaOf(c.id);
+    const heroBg = heroSrc ? '' : ` style="background:${gradientOf(c)}"`;
+    const heroInner = heroSrc
+      ? `<img class="mhero-img" src="${heroSrc}" alt="${esc(m.title || c.title)}">`
+      : `<span class="mhero-emoji">✨</span>`;
+    const heroNote = heroSrc ? '🎨 AI 概念插画' : '🎨 主题示意 · 实拍图待授权';
     return `<div class="mcard">
-      <div class="mhero" style="background:${gradientOf(c)}">
-        <span class="img-note">🎨 主题示意 · 实拍图待授权</span><span class="mhero-emoji">✨</span>
+      <div class="mhero${heroSrc ? ' has-img' : ''}"${heroBg}>
+        <span class="img-note">${heroNote}</span>${heroInner}
         <div class="mhero-txt"><div class="mkicker">${esc(m.town || loc)} · 富模块</div>
           <h1>${esc(m.title || c.title)}</h1><div class="msub">${esc(m.subtitle || c.subtitle || '')}</div></div></div>
       <div class="mbody">
@@ -504,7 +524,7 @@ a{color:#0d9488}
     let html = state.ids.map(id => {
       const c = byId[id]; if (!c) return '';
       return `<div class="chip ${state.active === id ? 'on' : ''}" data-chip="${id}" draggable="true">
-        <div class="cico" style="background:${cardVisual(c).grad};color:#fff">${TYPE_EMOJI[c.type] || '📌'}</div>
+        <div class="cico" style="background:${cardVisual(c).grad};color:#fff">${c.emoji || TYPE_EMOJI[c.type] || '📌'}</div>
         <div class="ctxt"><div class="cn">${esc(c.title)}</div><div class="ct">${esc(chipSub(c))}</div></div>
         <button class="cx" data-remove="${id}" title="移出（可撤销）">✕</button></div>`;
     }).join('');
@@ -585,8 +605,9 @@ a{color:#0d9488}
       const v = cardVisual(c);
       const loc = ((c.tags && c.tags.locations) || [])[0] || '';
       const inWs = state.ids.includes(c.id);
+      const pImg = mediaOf(c.id);
       return `<div class="pcard ${inWs ? 'inws' : ''}" data-draggable="${c.id}" draggable="true">
-        <div class="pthumb" style="background:${v.grad}"><span class="ptag">${v.tag}</span><span>${TYPE_EMOJI[c.type] || '📌'}</span></div>
+        <div class="pthumb"${pImg ? '' : ` style="background:${v.grad}"`}><span class="ptag">${v.tag}</span>${pImg ? `<img class="pthumb-img" src="${pImg}" alt="">` : `<span>${c.emoji || TYPE_EMOJI[c.type] || '📌'}</span>`}</div>
         <div class="pbody"><div class="pt">${esc(c.title)}</div><div class="pm">${loc ? '📍' + esc(loc) + ' · ' : ''}${esc(c.subtitle || '')}</div></div>
         <button class="padd" data-add="${c.id}" ${inWs ? 'disabled' : ''}>${inWs ? '✓' : '＋'}</button>
       </div>`;
@@ -779,6 +800,7 @@ a{color:#0d9488}
     count: () => state.ids.length,
     cards: () => (DB.pool && DB.pool.cards || []).slice(),
     card: (id) => byId[id] || null,
+    media: (id) => mediaOf(id),
     on: (ev, fn) => { if (listeners[ev]) listeners[ev].push(fn); }
   };
   window.WS = api;

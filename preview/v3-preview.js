@@ -24,12 +24,15 @@
     return { g: GRAD[cat] || GRAD.city, tag: (CAT_EMOJI[cat] || '📌') + ' ' + (CAT_NAME[cat] || '资讯') };
   }
   function locOf(c) { return ((c.tags && c.tags.locations) || [])[0] || ''; }
+  function imgOf(c) { return (window.WS && WS.media) ? WS.media(c.id) : null; }
 
   function cardHtml(c) {
-    const v = visual(c);
+    const v = visual(c), img = imgOf(c);
     return `<div class="card" draggable="true" data-card="${c.id}">
-      <div class="c-thumb" style="background:${v.g}">
-        <span class="ctag">${v.tag}</span><span>${TYPE_EMOJI[c.type] || '📌'}</span>
+      <div class="c-thumb"${img ? '' : ` style="background:${v.g}"`}>
+        <span class="ctag">${v.tag}</span>${img
+          ? `<img class="thumb-img" src="${img}" alt="${esc(c.title)}">`
+          : `<span>${c.emoji || TYPE_EMOJI[c.type] || '📌'}</span>`}
       </div>
       <div class="c-body">
         <div class="ct">${esc(c.title)}</div>
@@ -42,10 +45,12 @@
     </div>`;
   }
   function featureHtml(c) {
-    const v = visual(c);
+    const v = visual(c), img = imgOf(c);
     return `<div class="feature" draggable="true" data-card="${c.id}">
-      <div class="f-visual" style="background:${v.g}">
-        <span class="note">🎨 主题示意 · 实拍图待授权</span><span>${TYPE_EMOJI[c.type] || '📌'}</span>
+      <div class="f-visual"${img ? '' : ` style="background:${v.g}"`}>
+        <span class="note">${img ? '🎨 AI 概念插画' : '🎨 主题示意 · 实拍图待授权'}</span>${img
+          ? `<img class="thumb-img" src="${img}" alt="${esc(c.title)}">`
+          : `<span>${c.emoji || TYPE_EMOJI[c.type] || '📌'}</span>`}
       </div>
       <div class="f-body">
         <div class="f-tag">${v.tag}</div>
@@ -86,7 +91,9 @@
       gridTitle = '把这些放进工作区，看看它们之间的关系';
     }
     const f = card(featureId);
-    const grid = cards.filter(c => gridTypes.includes(c.type) && c.id !== featureId);
+    const grid = cards
+      .filter(c => gridTypes.includes(c.type) && c.id !== featureId)
+      .sort((a, b) => (imgOf(b) ? 1 : 0) - (imgOf(a) ? 1 : 0));
     document.getElementById('feature').innerHTML = f ? featureHtml(f) : '';
     document.getElementById('gridTitle').textContent = gridTitle;
     document.getElementById('grid').innerHTML = grid.map(cardHtml).join('');
