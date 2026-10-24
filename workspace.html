@@ -1,0 +1,956 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no">
+<title>博罗 · 我的发现桌面</title>
+<meta name="description" content="博罗产业风洞·我的发现桌面：把新闻、镇街、产业与农品拖进你的工作区，系统会主动发现它们之间的联系。">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Ctext y='.9em' font-size='88'%3E%F0%9F%A7%AD%3C/text%3E%3C/svg%3E">
+<style>
+:root{
+  --bg:#f6f8f9; --panel:#fbfcfd; --card:#ffffff; --card-b:#e5e9ee; --line:#eef2f5;
+  --ink:#0f172a; --ink2:#475569; --muted:#94a3b8;
+  --teal:#0d9488; --teal-light:#14b8a6; --teal-bg:#f0faf9;
+  --slate:#334155; --amber:#d97706; --rose:#e11d48; --indigo:#4f46e5; --green:#65a30d;
+  --shadow:0 6px 24px rgba(15,23,42,.06); --shadow-lg:0 16px 48px rgba(13,148,136,.14);
+}
+*{box-sizing:border-box;-webkit-tap-highlight-color:transparent}
+html,body{margin:0;height:100%}
+body{background:var(--bg);color:var(--ink);font:14px/1.6 -apple-system,BlinkMacSystemFont,"PingFang SC","Microsoft YaHei",sans-serif;overflow:hidden}
+button{font-family:inherit}
+a{color:var(--teal)}
+::-webkit-scrollbar{width:8px;height:8px}
+::-webkit-scrollbar-thumb{background:#cbd5e1;border-radius:8px}
+::-webkit-scrollbar-track{background:transparent}
+
+/* ===== 顶部导航（与全站一致） ===== */
+.nav{position:relative;z-index:60;display:flex;gap:5px;align-items:center;padding:10px 14px;background:rgba(255,255,255,.96);border-bottom:1px solid var(--card-b);backdrop-filter:blur(8px);overflow-x:auto;height:52px}
+.nav b{font-size:14px;margin-right:6px;letter-spacing:.5px;flex:none}
+.nav a{background:var(--card);color:var(--ink2);border:1px solid var(--card-b);padding:6px 12px;border-radius:20px;font-size:12.5px;text-decoration:none;white-space:nowrap;flex:none;transition:.2s}
+.nav a.on{background:var(--teal);border-color:var(--teal);color:#fff;font-weight:600}
+.nav .sp{margin-left:auto;font-size:11px;color:var(--muted);flex:none;white-space:nowrap}
+
+/* ===== 应用主布局：发现区 35% / 工作区 65% ===== */
+.app{display:grid;grid-template-columns:minmax(300px,35fr) 65fr;height:calc(100vh - 52px)}
+
+/* 发现区 */
+.discovery{display:flex;flex-direction:column;background:var(--panel);border-right:1px solid var(--card-b);min-height:0}
+.disc-head{padding:16px 16px 10px}
+.disc-title{display:flex;align-items:center;gap:8px;font-size:16px;font-weight:800}
+.disc-title .spark{font-size:18px}
+.disc-sub{font-size:11.5px;color:var(--muted);margin:3px 0 10px}
+.search{display:flex;align-items:center;gap:7px;background:var(--card);border:1px solid var(--card-b);border-radius:10px;padding:8px 11px}
+.search input{border:0;outline:0;flex:1;font-size:13px;background:transparent;color:var(--ink)}
+.filters{display:flex;gap:6px;padding:0 16px 10px;overflow-x:auto;scrollbar-width:none}
+.filters::-webkit-scrollbar{display:none}
+.fchip{flex:none;background:var(--card);border:1px solid var(--card-b);color:var(--ink2);border-radius:16px;padding:5px 13px;font-size:12px;cursor:pointer;transition:.18s}
+.fchip.on{background:var(--teal);border-color:var(--teal);color:#fff;font-weight:600}
+.disc-list{flex:1;overflow-y:auto;padding:4px 14px 20px}
+
+/* 发现区小卡 */
+.dcard{background:var(--card);border:1px solid var(--card-b);border-radius:13px;overflow:hidden;cursor:grab;transition:.18s;position:relative;display:block;margin-bottom:12px}
+.dcard:hover{border-color:var(--teal);box-shadow:var(--shadow);transform:translateY(-2px)}
+.dcard:active{cursor:grabbing}
+.dcard.dragging{opacity:.4}
+.dthumb{flex:none;height:124px;position:relative;display:flex;align-items:center;justify-content:center;font-size:38px;overflow:hidden}
+.dthumb::after{content:"";position:absolute;inset:0;background:radial-gradient(circle at 75% 20%,rgba(255,255,255,.35),transparent 60%)}
+.dthumb .dtag{position:absolute;left:7px;top:7px;font-size:9.5px;font-weight:700;padding:2px 7px;border-radius:9px;background:rgba(255,255,255,.88);color:var(--ink2)}
+.dthumb .ddate{position:absolute;right:7px;bottom:7px;font-size:9px;color:#fff;background:rgba(15,23,42,.45);padding:1px 6px;border-radius:8px}
+.dbody{padding:10px 12px 11px}
+.dbody .dt{font-size:13px;font-weight:700;line-height:1.45;margin-bottom:6px;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden;min-height:38px}
+.dbody .dmeta{font-size:10.5px;color:var(--muted);display:flex;align-items:center;gap:6px;flex-wrap:wrap}
+.dadd{position:absolute;right:7px;top:7px;width:24px;height:24px;border-radius:50%;border:0;background:rgba(255,255,255,.92);color:var(--teal);font-size:17px;font-weight:700;line-height:1;cursor:pointer;display:none;align-items:center;justify-content:center;box-shadow:0 2px 8px rgba(0,0,0,.15);z-index:2}
+.dcard:hover .dadd{display:flex}
+.dadd:active{transform:scale(.9)}
+.disc-empty{text-align:center;color:var(--muted);font-size:12.5px;padding:50px 20px;line-height:1.8}
+
+/* 工作区 */
+.workspace{display:flex;flex-direction:column;min-width:0;min-height:0;background:var(--bg)}
+.ws-head{display:flex;align-items:center;gap:12px;padding:13px 22px;border-bottom:1px solid var(--card-b);background:rgba(255,255,255,.7);flex:none;flex-wrap:wrap}
+.ws-title{display:flex;align-items:baseline;gap:10px}
+.ws-title h2{margin:0;font-size:17px;font-weight:800;display:flex;align-items:center;gap:7px}
+.ws-title .cnt{font-size:11.5px;color:var(--muted);font-weight:400}
+.ws-save{font-size:10.5px;color:var(--teal);background:var(--teal-bg);border-radius:10px;padding:2px 8px;font-weight:600}
+.ws-actions{margin-left:auto;display:flex;gap:8px}
+.wsbtn{border:1px solid var(--card-b);background:var(--card);color:var(--ink2);border-radius:9px;padding:6px 13px;font-size:12px;cursor:pointer;transition:.18s}
+.wsbtn:hover{border-color:var(--teal);color:var(--teal)}
+.wsbtn.primary{background:var(--teal);border-color:var(--teal);color:#fff;font-weight:600}
+.wsbtn.primary:hover{background:var(--teal-light);color:#fff}
+
+/* 已选 chips 横排 */
+.chips{display:flex;gap:9px;padding:12px 22px;overflow-x:auto;flex:none;background:var(--card);border-bottom:1px solid var(--line);scrollbar-width:thin}
+.chip{flex:none;display:flex;align-items:center;gap:8px;border:1.5px solid var(--card-b);background:var(--panel);border-radius:11px;padding:7px 9px 7px 11px;cursor:pointer;transition:.16s;min-width:0;max-width:210px}
+.chip.on{border-color:var(--teal);background:var(--teal-bg);box-shadow:0 2px 10px rgba(13,148,136,.12)}
+.chip.drag-over{border-style:dashed;border-color:var(--teal)}
+.chip .cico{width:30px;height:30px;border-radius:8px;flex:none;display:flex;align-items:center;justify-content:center;font-size:15px}
+.chip .ctxt{min-width:0}
+.chip .ctxt .cn{font-size:12.5px;font-weight:700;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;max-width:130px}
+.chip .ctxt .ct{font-size:9.5px;color:var(--muted);white-space:nowrap;overflow:hidden;text-overflow:ellipsis;max-width:130px}
+.chip .cx{border:0;background:none;color:var(--muted);font-size:15px;cursor:pointer;padding:0 2px;line-height:1;flex:none}
+.chip .cx:hover{color:var(--rose)}
+.chip-add{flex:none;border:1.5px dashed var(--card-b);background:transparent;color:var(--muted);border-radius:11px;padding:7px 14px;font-size:12px;cursor:pointer;white-space:nowrap}
+.chip-add:hover{border-color:var(--teal);color:var(--teal)}
+
+/* 舞台 */
+.stage{flex:1;overflow-y:auto;min-height:0}
+.stage-inner{padding:22px;max-width:1100px;margin:0 auto}
+
+/* 空状态 */
+.empty{height:100%;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;padding:40px;color:var(--ink2)}
+.empty .ebox{width:118px;height:118px;border-radius:28px;background:var(--teal-bg);border:2px dashed var(--teal);display:flex;align-items:center;justify-content:center;font-size:48px;margin-bottom:22px;animation:floaty 3s ease-in-out infinite}
+@keyframes floaty{0%,100%{transform:translateY(0)}50%{transform:translateY(-8px)}}
+.empty h3{font-size:19px;margin:0 0 8px;color:var(--ink)}
+.empty p{font-size:13px;color:var(--muted);margin:0 0 20px;max-width:380px;line-height:1.8}
+.empty .earrows{display:flex;gap:10px;flex-wrap:wrap;justify-content:center}
+.empty .epill{background:var(--card);border:1px solid var(--card-b);border-radius:20px;padding:8px 16px;font-size:12.5px;cursor:pointer;color:var(--ink2)}
+.empty .epill:hover{border-color:var(--teal);color:var(--teal)}
+
+/* 主卡通用 */
+.mcard{background:var(--card);border:1px solid var(--card-b);border-radius:18px;overflow:hidden;box-shadow:var(--shadow);animation:fd .35s ease}
+@keyframes fd{from{opacity:0;transform:translateY(10px)}to{opacity:1;transform:none}}
+.mhero{height:210px;position:relative;display:flex;align-items:flex-end;padding:20px;overflow:hidden}
+.mhero::before{content:"";position:absolute;inset:0;background:radial-gradient(circle at 80% 15%,rgba(255,255,255,.28),transparent 55%)}
+.mhero::after{content:"";position:absolute;inset:0;background:linear-gradient(180deg,rgba(15,23,42,0) 35%,rgba(15,23,42,.55))}
+.mhero .mhero-emoji{position:absolute;top:22px;right:26px;font-size:64px;opacity:.9;filter:drop-shadow(0 4px 10px rgba(0,0,0,.2))}
+.mhero .mhero-txt{position:relative;z-index:1;color:#fff}
+.mhero .mkicker{font-size:11px;font-weight:700;letter-spacing:1px;opacity:.85;text-transform:uppercase}
+.mhero h1{font-size:25px;margin:4px 0 3px;color:#fff;font-weight:800;text-shadow:0 2px 12px rgba(0,0,0,.25)}
+.mhero .msub{font-size:13px;opacity:.95}
+.mhero .img-note{position:absolute;top:12px;left:14px;font-size:9.5px;background:rgba(15,23,42,.4);color:#fff;padding:2px 8px;border-radius:9px;z-index:1}
+.mbody{padding:20px 22px}
+.mtags{display:flex;gap:7px;flex-wrap:wrap;margin-bottom:16px}
+.mtag{font-size:11px;padding:4px 11px;border-radius:14px;background:var(--teal-bg);color:var(--teal);font-weight:600;border:1px solid rgba(13,148,136,.18)}
+.msection{margin-bottom:20px}
+.msection h4{font-size:13px;font-weight:800;margin:0 0 9px;display:flex;align-items:center;gap:7px;color:var(--ink)}
+.mstory{font-size:13.5px;line-height:1.9;color:var(--ink2)}
+.mquote{margin:14px 0 0;border-left:3px solid var(--teal);background:var(--teal-bg);padding:11px 15px;border-radius:0 10px 10px 0;font-size:13px;color:var(--slate);font-weight:600;line-height:1.7}
+
+/* facts 图标网格 */
+.facts{display:grid;grid-template-columns:repeat(auto-fill,minmax(150px,1fr));gap:10px}
+.fact{display:flex;gap:10px;align-items:flex-start;background:var(--panel);border:1px solid var(--line);border-radius:11px;padding:11px 12px}
+.fact .fico{width:32px;height:32px;border-radius:9px;background:var(--teal-bg);display:flex;align-items:center;justify-content:center;flex:none;font-size:15px}
+.fact .fl{font-size:10.5px;color:var(--muted);margin-bottom:1px}
+.fact .fv{font-size:12.5px;font-weight:600;color:var(--ink);line-height:1.4}
+
+/* 附近推荐 */
+.nearby{display:grid;grid-template-columns:repeat(auto-fill,minmax(190px,1fr));gap:9px}
+.near{display:flex;align-items:center;gap:10px;background:var(--panel);border:1px solid var(--line);border-radius:11px;padding:10px 12px}
+.near .nico{width:34px;height:34px;border-radius:9px;background:#fff;border:1px solid var(--card-b);display:flex;align-items:center;justify-content:center;font-size:16px;flex:none}
+.near .ninfo{flex:1;min-width:0}
+.near .nn{font-size:12.5px;font-weight:600}
+.near .nd{font-size:10.5px;color:var(--muted)}
+.near .nadd{border:1px solid var(--teal);color:var(--teal);background:#fff;border-radius:8px;width:26px;height:26px;font-size:15px;cursor:pointer;flex:none}
+.near .nadd:hover{background:var(--teal);color:#fff}
+
+/* 双栏（故事 + 侧栏） */
+.mgrid{display:grid;grid-template-columns:1fr 280px;gap:18px}
+@media(max-width:1024px){.mgrid{grid-template-columns:1fr}}
+.sidecard{background:var(--panel);border:1px solid var(--line);border-radius:13px;padding:14px;margin-bottom:14px}
+.sidecard h5{margin:0 0 10px;font-size:12.5px;font-weight:800;display:flex;align-items:center;gap:6px}
+.minimap{height:150px;border-radius:10px;background:linear-gradient(135deg,#e8f4f3,#dcebe9);position:relative;overflow:hidden;margin-bottom:8px}
+.mapbtn{width:100%;border:1px solid var(--teal);background:#fff;color:var(--teal);border-radius:8px;padding:7px;font-size:12px;font-weight:600;cursor:pointer}
+.mapbtn:hover{background:var(--teal);color:#fff}
+
+/* 指标卡 */
+.ind-hero{padding:26px 24px 22px}
+.ind-big{display:flex;align-items:baseline;gap:14px;flex-wrap:wrap}
+.ind-val{font-size:52px;font-weight:900;font-variant-numeric:tabular-nums;line-height:1;letter-spacing:-1px}
+.ind-val.down{color:var(--rose)} .ind-val.up{color:var(--teal)} .ind-val.flat{color:var(--slate)}
+.ind-name{font-size:16px;font-weight:700}
+.ind-badges{display:flex;gap:8px;margin:14px 0 4px;flex-wrap:wrap}
+.badge{font-size:11px;font-weight:700;padding:4px 12px;border-radius:14px}
+.badge.stock{background:rgba(51,65,85,.1);color:var(--slate)}
+.badge.flow{background:rgba(79,70,229,.1);color:var(--indigo)}
+.badge.off{background:rgba(225,29,72,.1);color:var(--rose)}
+.badge.src{background:rgba(13,148,136,.1);color:var(--teal)}
+.ind-break{display:flex;gap:8px;flex-wrap:wrap;margin:14px 0 0}
+.ind-pill{background:var(--panel);border:1px solid var(--line);border-radius:10px;padding:8px 12px;font-size:12px}
+.ind-pill b{font-variant-numeric:tabular-nums}
+
+/* 新闻卡 */
+.news-hero{padding:22px 24px}
+.news-hero h1{font-size:21px;line-height:1.45;margin:10px 0 12px}
+.news-meta{display:flex;gap:8px;flex-wrap:wrap;align-items:center}
+.fate{background:var(--panel);border:1px solid var(--line);border-radius:12px;padding:14px 16px;margin-top:16px}
+.fate .frow{font-size:12.5px;line-height:1.9;color:var(--ink2)}
+.fate .frow b{color:var(--ink)}
+
+/* 农品卡 */
+.veg-hero{height:170px}
+
+/* 来源 */
+.sources{margin-top:18px;padding-top:14px;border-top:1px dashed var(--card-b);font-size:11px;color:var(--muted);line-height:1.9}
+.sources a{word-break:break-all;text-decoration:none}
+.srcsrc{display:inline-flex;align-items:center;gap:4px;background:var(--panel);border:1px solid var(--line);border-radius:8px;padding:3px 9px;margin:3px 5px 0 0;font-size:10.5px}
+
+/* ===== 关联发现（核心魔法） ===== */
+.insight{flex:none;border-top:1px solid var(--line);background:linear-gradient(180deg,#f0faf9,#fff);padding:0 22px 18px;max-height:46%;overflow-y:auto}
+.insight-toggle{display:flex;align-items:center;gap:11px;width:100%;border:0;background:none;padding:14px 0 10px;cursor:pointer;text-align:left}
+.insight-orb{width:36px;height:36px;border-radius:50%;background:var(--teal);color:#fff;display:flex;align-items:center;justify-content:center;font-size:17px;flex:none;box-shadow:0 4px 14px rgba(13,148,136,.35);animation:orb 2.4s ease-in-out infinite}
+@keyframes orb{0%,100%{box-shadow:0 4px 14px rgba(13,148,136,.35)}50%{box-shadow:0 4px 22px rgba(13,148,136,.6)}}
+.insight-toggle .itxt{flex:1}
+.insight-toggle .it{font-size:13.5px;font-weight:800;color:var(--ink)}
+.insight-toggle .is{font-size:11.5px;color:var(--ink2)}
+.insight-toggle .chev{color:var(--muted);transition:.25s}
+.insight.open .chev{transform:rotate(180deg)}
+.insight-body{display:none;padding-bottom:6px}
+.insight.open .insight-body{display:block;animation:fd .3s ease}
+.link-card{background:var(--card);border:1px solid var(--card-b);border-left:4px solid var(--teal);border-radius:13px;padding:16px 18px;margin-bottom:12px;box-shadow:var(--shadow)}
+.lc-head{display:flex;align-items:center;gap:9px;flex-wrap:wrap;margin-bottom:6px}
+.lc-kind{font-size:10px;font-weight:800;padding:3px 10px;border-radius:11px;background:var(--teal);color:#fff}
+.lc-title{font-size:15px;font-weight:800}
+.lc-q{font-size:13px;color:var(--slate);font-weight:700;margin:4px 0 12px}
+.lc-explain{font-size:12.8px;line-height:1.9;color:var(--ink2)}
+
+/* compare 对比表 */
+.cmp{display:grid;grid-template-columns:120px 1fr 1fr;gap:1px;background:var(--card-b);border-radius:11px;overflow:hidden;margin:12px 0;border:1px solid var(--card-b)}
+.cmp>div{background:#fff;padding:10px 12px;font-size:12px;line-height:1.5}
+.cmp .ch{background:var(--teal-bg);font-weight:800;color:var(--teal);font-size:12px}
+.cmp .cd{background:var(--panel);color:var(--muted);font-weight:600;font-size:11.5px;display:flex;align-items:center}
+.cmp .cv{color:var(--ink2)}
+
+/* season chain */
+.chain{margin:12px 0;position:relative;padding-left:26px}
+.chain::before{content:"";position:absolute;left:9px;top:8px;bottom:8px;width:2px;background:linear-gradient(var(--teal),var(--teal-light))}
+.cstep{position:relative;margin-bottom:14px}
+.cstep:last-child{margin-bottom:0}
+.cstep .cdot{position:absolute;left:-22px;top:2px;width:16px;height:16px;border-radius:50%;background:#fff;border:3px solid var(--teal)}
+.cstep .cst{font-size:12px;font-weight:800;color:var(--teal)}
+.cstep .ctx{font-size:12.5px;color:var(--ink2);line-height:1.7}
+
+/* geo route */
+.route{display:flex;align-items:center;gap:6px;flex-wrap:wrap;margin:12px 0;background:var(--panel);border:1px solid var(--line);border-radius:11px;padding:13px}
+.rnode{background:#fff;border:1px solid var(--teal);color:var(--teal);border-radius:9px;padding:6px 12px;font-size:12px;font-weight:600}
+.rarrow{color:var(--teal);font-weight:800}
+
+/* 系统动力学流程图（long-cycle / stock-flow-lag） */
+.flow{background:linear-gradient(135deg,#f8fafc,#f0faf9);border:1px solid var(--line);border-radius:13px;padding:16px;margin:12px 0}
+.flow-row{display:flex;align-items:center;gap:6px;flex-wrap:wrap}
+.fnode{background:#fff;border:1.5px solid var(--teal);color:var(--slate);border-radius:10px;padding:8px 12px;font-size:11.5px;font-weight:600;line-height:1.4;box-shadow:0 2px 8px rgba(13,148,136,.08)}
+.fnode.stock{border-color:var(--slate);background:var(--slate);color:#fff}
+.fnode.flow{border-color:var(--indigo);color:var(--indigo)}
+.fnode.shock{border-color:var(--rose);color:var(--rose)}
+.farrow{color:var(--muted);font-weight:800}
+.fnode.lag{border-style:dashed;border-color:var(--amber);color:var(--amber);background:rgba(217,119,6,.06);position:relative}
+.fnode.lag .ltag{display:block;font-size:9px;font-weight:800}
+.loopback{margin-top:11px;display:flex;align-items:center;gap:7px;font-size:11px;color:var(--indigo);border-top:1px dashed #c7d2fe;padding-top:10px;flex-wrap:wrap}
+.stages{display:grid;grid-template-columns:repeat(auto-fill,minmax(170px,1fr));gap:10px;margin:12px 0}
+.stage-item{background:#fff;border:1px solid var(--line);border-top:3px solid var(--teal);border-radius:10px;padding:11px 12px}
+.stage-item .ss{font-size:11px;font-weight:800;color:var(--teal);margin-bottom:4px}
+.stage-item .sx{font-size:11.5px;color:var(--ink2);line-height:1.6}
+.duo{display:grid;grid-template-columns:1fr 1fr;gap:11px;margin:12px 0}
+.duo .dbox{border-radius:12px;padding:14px;text-align:center}
+.duo .dbox.neg{background:rgba(225,29,72,.07);border:1px solid rgba(225,29,72,.25)}
+.duo .dbox.pos{background:rgba(13,148,136,.08);border:1px solid rgba(13,148,136,.28)}
+.duo .dl{font-size:11px;color:var(--muted);margin-bottom:4px}
+.duo .dv{font-size:24px;font-weight:900;font-variant-numeric:tabular-nums}
+.duo .neg .dv{color:var(--rose)} .duo .dbox.pos .dv{color:var(--teal)}
+.duo .dd{font-size:11px;color:var(--ink2);margin-top:3px}
+.caveat{display:flex;gap:9px;background:rgba(217,119,6,.07);border:1px solid rgba(217,119,6,.25);border-radius:10px;padding:11px 13px;margin-top:12px;font-size:11.5px;color:#92400e;line-height:1.7}
+.caveat .ci{flex:none}
+.lc-src{margin-top:10px;font-size:10.5px;color:var(--muted)}
+.no-insight{font-size:12px;color:var(--muted);padding:16px 0;line-height:1.8}
+
+/* 拖拽悬停高亮 */
+.workspace.drop-zone-active .stage{outline:2px dashed var(--teal);outline-offset:-8px;border-radius:14px}
+.drop-hint{display:none;align-items:center;justify-content:center;height:100%;color:var(--teal);font-weight:700;font-size:15px;pointer-events:none}
+.workspace.drop-zone-active .drop-hint{display:flex}
+
+/* ===== 移动端底部 dock & 抽屉 ===== */
+.dock{display:none}
+.drawer-close{display:none}
+@media(max-width:860px){
+  body{overflow:auto}
+  .app{grid-template-columns:1fr;height:auto;min-height:calc(100vh - 52px)}
+  .discovery{border-right:0;border-bottom:0}
+  .disc-list{padding-bottom:130px}
+  .dadd{display:flex}
+  .workspace{position:fixed;inset:0;z-index:100;background:var(--bg);transform:translateY(100%);transition:transform .32s cubic-bezier(.4,0,.2,1);display:flex;flex-direction:column}
+  .workspace.open{transform:translateY(0)}
+  .ws-head{padding:12px 14px 10px;flex-wrap:wrap;column-gap:10px;row-gap:8px}
+  .ws-title{flex:1;min-width:0;flex-direction:column;align-items:flex-start;gap:2px}
+  .ws-title h2{font-size:16px}
+  .ws-title .cnt{font-size:10.5px}
+  .ws-save{display:none}
+  .drawer-close{display:flex;align-items:center;justify-content:center;width:40px;height:34px;border-radius:10px;border:1px solid var(--card-b);background:var(--card);font-size:20px;line-height:1;cursor:pointer;color:var(--ink2);flex:none}
+  .ws-actions{flex:1 1 100%;width:100%;margin-left:0;order:3}
+  .ws-actions .wsbtn{flex:1;padding:9px 6px;font-size:12.5px}
+  .dthumb{height:96px;font-size:30px}
+  .chips{padding:10px 14px}
+  .stage-inner{padding:15px 14px}
+  .mhero{height:170px}
+  .mhero h1{font-size:20px}
+  .mgrid{grid-template-columns:1fr}
+  .mbody{padding:16px 16px}
+  .insight{padding:0 14px 14px;max-height:none}
+  .dock{display:flex;align-items:center;gap:10px;position:fixed;left:12px;right:12px;bottom:12px;z-index:90;background:var(--slate);color:#fff;border-radius:16px;padding:12px 16px;box-shadow:0 10px 30px rgba(15,23,42,.3);cursor:pointer}
+  .dock .dico{width:34px;height:34px;border-radius:10px;background:rgba(255,255,255,.15);display:flex;align-items:center;justify-content:center;font-size:17px}
+  .dock .dtxt{flex:1}
+  .dock .dn{font-size:13.5px;font-weight:800}
+  .dock .ds{font-size:10.5px;opacity:.8}
+  .dock .dgo{font-size:18px;animation:slideup 1.6s ease-in-out infinite}
+  @keyframes slideup{0%,100%{transform:translateY(0)}50%{transform:translateY(-4px)}}
+  .cmp{grid-template-columns:1fr;}
+  .cmp .cd{background:var(--teal-bg)}
+  .duo{grid-template-columns:1fr}
+}
+
+/* toast */
+.toast{position:fixed;left:50%;bottom:90px;transform:translateX(-50%) translateY(20px);background:var(--slate);color:#fff;padding:11px 18px;border-radius:12px;font-size:13px;z-index:200;opacity:0;pointer-events:none;transition:.25s;display:flex;align-items:center;gap:12px;box-shadow:0 10px 30px rgba(0,0,0,.25)}
+.toast.show{opacity:1;transform:translateX(-50%) translateY(0);pointer-events:auto}
+.toast .undo{background:rgba(255,255,255,.18);border:0;color:#fff;border-radius:8px;padding:4px 12px;font-size:12px;font-weight:700;cursor:pointer}
+.skel{background:linear-gradient(90deg,#eef2f5 25%,#f6f8f9 37%,#eef2f5 63%);background-size:400% 100%;animation:sk 1.3s ease infinite;border-radius:8px}
+@keyframes sk{0%{background-position:100% 0}100%{background-position:-100% 0}}
+</style>
+</head>
+<body>
+
+<div class="nav">
+  <b>博罗产业风洞</b>
+  <a href="index.html">① 今日话题</a>
+  <a href="town.html">🏘️ 各镇吃喝玩乐</a>
+  <a href="workspace.html" class="on">🧭 我的工作区</a>
+  <a href="network.html">② 产业网络</a>
+  <a href="who.html">③ 基本面</a>
+  <a href="choices.html">④ 五条路</a>
+  <a href="future.html">⑤ 未来</a>
+  <a href="windtunnel.html">⑥ 风洞测试</a>
+  <a href="blindspot.html">⑦ 忽略了什么</a>
+  <a href="report.html">⑧ 分析报告</a>
+  <a href="ending.html">⑨ 结语</a>
+  <span class="sp" id="navUpdated">数据加载中…</span>
+</div>
+
+<div class="app">
+  <!-- 发现区 -->
+  <aside class="discovery" id="discovery">
+    <div class="disc-head">
+      <div class="disc-title"><span class="spark">✨</span>发现区</div>
+      <div class="disc-sub">把感兴趣的内容拖进右侧工作区，或点 <b style="color:var(--teal)">＋</b> 加入</div>
+      <div class="search">
+        <span style="color:var(--muted)">🔍</span>
+        <input id="searchInput" placeholder="搜镇街、茶、产业、民生…" autocomplete="off">
+      </div>
+    </div>
+    <div class="filters" id="filters"></div>
+    <div class="disc-list" id="discList"></div>
+  </aside>
+
+  <!-- 工作区（桌面右侧 / 移动抽屉） -->
+  <main class="workspace" id="workspace">
+    <div class="ws-head">
+      <div class="ws-title">
+        <h2>🧭 我的博罗工作区</h2>
+        <span class="cnt" id="wsCnt">已选 0 项 · 拖拽排序 · 自动保存</span>
+      </div>
+      <span class="ws-save">✓ 已自动保存</span>
+      <button class="drawer-close" id="drawerClose" aria-label="收起工作区">⌄</button>
+      <div class="ws-actions">
+        <button class="wsbtn" id="btnShare">⤴ 分享</button>
+        <button class="wsbtn" id="btnClear">清空</button>
+        <button class="wsbtn primary" id="btnAdd">＋ 添加内容</button>
+      </div>
+    </div>
+    <div class="chips" id="chips"></div>
+    <div class="stage" id="stage">
+      <div class="drop-hint">松开，加入工作区</div>
+      <div class="stage-inner" id="stageInner"></div>
+    </div>
+    <div class="insight" id="insight"></div>
+  </main>
+</div>
+
+<!-- 移动端底部浮条 -->
+<div class="dock" id="dock">
+  <div class="dico">🧭</div>
+  <div class="dtxt"><div class="dn">我的博罗 <span id="dockN">0</span></div><div class="ds">点击查看已选内容与发现</div></div>
+  <div class="dgo">⌃</div>
+</div>
+
+<div class="toast" id="toast"></div>
+
+<script>
+/* ================= 数据与状态 ================= */
+const LS_KEY='boluo-ws-v3';
+const DB={pool:null,modules:[],towns:[],links:[]};
+const byId={};
+const state={ids:[],active:null,filter:'all',q:''};
+let lastRemoved=null;
+
+const CAT_NAME={industry:'产业经济',livelihood:'民生',city:'城市',tourism:'文旅',food:'美食',agri:'农产'};
+const CAT_EMOJI={industry:'🏭',livelihood:'🧸',city:'🏙️',tourism:'⛰️',food:'🍲',agri:'🌾'};
+const TYPE_EMOJI={news:'📰',town:'🏘️',module:'✨',indicator:'📉',veg:'🥬',event:'📅'};
+const GRAD={
+  tourism:'linear-gradient(135deg,#0d9488,#14b8a6)',
+  food:'linear-gradient(135deg,#d97706,#f59e0b)',
+  agri:'linear-gradient(135deg,#65a30d,#84cc16)',
+  industry:'linear-gradient(135deg,#334155,#475569)',
+  livelihood:'linear-gradient(135deg,#e11d48,#f472b6)',
+  city:'linear-gradient(135deg,#4f46e5,#818cf8)'
+};
+const FILTERS=[
+  {k:'all',n:'全部'},{k:'news',n:'今日新闻'},{k:'tourism',n:'风景文旅'},
+  {k:'food',n:'美食农品'},{k:'industry',n:'产业经济'},{k:'livelihood',n:'民生城市'}
+];
+
+async function load(){
+  const base='workspace/';
+  const ts='?ts='+Date.now();
+  try{
+    const [pl,mo,to,li]=await Promise.all([
+      fetch(base+'pool.json'+ts).then(r=>r.json()),
+      fetch(base+'modules.json'+ts).then(r=>r.json()),
+      fetch(base+'towns.json'+ts).then(r=>r.json()),
+      fetch(base+'links.json'+ts).then(r=>r.json())
+    ]);
+    DB.pool=pl; DB.modules=mo.modules||[]; DB.towns=to.districts||[]; DB.links=li.links||[];
+    (pl.cards||[]).forEach(c=>byId[c.id]=c);
+    if(document.getElementById('navUpdated'))document.getElementById('navUpdated').textContent='内容池更新 '+pl.updated+' · '+(pl.cards||[]).length+' 项';
+  }catch(e){
+    document.getElementById('stageInner').innerHTML='<div class="empty"><h3>数据加载失败</h3><p>请检查网络后刷新；内容池为静态 JSON，正常情况下秒开。</p></div>';
+    return;
+  }
+  // 支持分享链接：#ws=id,id
+  const h=location.hash.match(/ws=([\w,\-]+)/);
+  if(h){
+    const ids=h[1].split(',').filter(id=>byId[id]);
+    if(ids.length){state.ids=ids;state.active=ids[0];}
+  }else{
+    restore();
+  }
+  if(!state.ids.length) seedDemo();
+  if(!state.active||!byId[state.active])state.active=state.ids[0]||null;
+  bindStatic();
+  renderAll();
+}
+
+function seedDemo(){
+  state.ids=['mod-baitang-tea','mod-luofu-wellness','mod-new-materials'];
+  state.active='mod-baitang-tea';
+}
+function restore(){try{const s=JSON.parse(localStorage.getItem(LS_KEY)||'null');if(s&&Array.isArray(s.ids)){state.ids=s.ids.filter(id=>byId[id]);state.active=s.active;}}catch(e){}}
+function save(){localStorage.setItem(LS_KEY,JSON.stringify({ids:state.ids,active:state.active}));}
+
+/* ================= 工具 ================= */
+function esc(s){return String(s==null?'':s).replace(/[&<>"]/g,m=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[m]));}
+function moduleOf(id){return DB.modules.find(m=>m.id===id);}
+function townOf(id){return DB.towns.find(t=>t.id===id);}
+function cardOf(id){return byId[id];}
+function activeLinks(){const set=new Set(state.ids);return DB.links.filter(l=>l.status==='online'&&l.card_ids.every(id=>set.has(id)));}
+function toast(msg,undoFn){
+  const t=document.getElementById('toast');
+  t.innerHTML=esc(msg)+(undoFn?'<button class="undo">撤销</button>':'');
+  t.classList.add('show');
+  const btn=t.querySelector('.undo');if(btn)btn.onclick=()=>{undoFn();t.classList.remove('show');};
+  clearTimeout(t._t);t._t=setTimeout(()=>t.classList.remove('show'),2600);
+}
+
+/* ================= 发现区 ================= */
+function renderFilters(){
+  document.getElementById('filters').innerHTML=FILTERS.map(f=>
+    `<button class="fchip ${state.filter===f.k?'on':''}" data-f="${f.k}">${f.n}</button>`).join('');
+}
+function matchFilter(c){
+  const cat=(c.tags&&c.tags.category)||'';
+  if(state.filter==='news')return c.type==='news';
+  if(state.filter==='tourism')return cat==='tourism'||c.type==='module'&&cat==='tourism';
+  if(state.filter==='food')return cat==='food'||cat==='agri';
+  if(state.filter==='industry')return cat==='industry';
+  if(state.filter==='livelihood')return cat==='livelihood'||cat==='city';
+  return true;
+}
+function renderDiscovery(){
+  const q=state.q.trim().toLowerCase();
+  const list=DB.pool.cards.filter(c=>{
+    if(state.ids.includes(c.id))return false;
+    if(!matchFilter(c))return false;
+    if(q){
+      const hay=[c.title,c.subtitle,(c.tags&&c.tags.entities||[]).join(''),(c.tags&&c.tags.locations||[]).join('')].join(' ').toLowerCase();
+      if(!hay.includes(q))return false;
+    }
+    return true;
+  });
+  const el=document.getElementById('discList');
+  el.className='disc-list'+(state.q||state.filter!=='all'?' single':'');
+  if(!list.length){el.innerHTML='<div class="disc-empty">没有匹配的内容，换个关键词或分类试试。<br>已加入工作区的内容会从这里收起。</div>';return;}
+  el.innerHTML=list.map(c=>{
+    const v=cardVisual(c);
+    const loc=((c.tags&&c.tags.locations)||[])[0]||'';
+    return `<div class="dcard" draggable="true" data-id="${c.id}">
+      <div class="dthumb" style="background:${v.grad}">
+        <span class="dtag">${v.tag}</span>
+        <span>${TYPE_EMOJI[c.type]||'📌'}</span>
+        ${c.valid_from?`<span class="ddate">${esc(c.valid_from.slice(5))}</span>`:''}
+        <button class="dadd" data-add="${c.id}" title="加入工作区">＋</button>
+      </div>
+      <div class="dbody">
+        <div class="dt">${esc(c.title)}</div>
+        <div class="dmeta">${loc?`<span>📍${esc(loc)}</span>`:''}<span>${esc(c.subtitle||'')}</span></div>
+      </div>
+    </div>`;
+  }).join('');
+  bindDiscoveryCards(el);
+}
+
+/* ================= 工作区 chips ================= */
+function chipIcon(c){
+  return `<div class="cico" style="background:${cardVisual(c).grad};color:#fff">${TYPE_EMOJI[c.type]||'📌'}</div>`;
+}
+function chipSub(c){
+  const loc=((c.tags&&c.tags.locations)||[])[0];
+  if(c.type==='module')return ((c.tags&&c.tags.entities)||[])[0]||CAT_NAME[(c.tags&&c.tags.category)]||'';
+  return loc||CAT_NAME[(c.tags&&c.tags.category)]||c.type;
+}
+function renderChips(){
+  const el=document.getElementById('chips');
+  let html=state.ids.map((id,i)=>{
+    const c=byId[id];if(!c)return '';
+    return `<div class="chip ${state.active===id?'on':''}" data-chip="${id}" draggable="true">
+      ${chipIcon(c)}
+      <div class="ctxt"><div class="cn">${esc(c.title)}</div><div class="ct">${esc(chipSub(c))}</div></div>
+      <button class="cx" data-remove="${id}" title="移出（可撤销）">✕</button>
+    </div>`;
+  }).join('');
+  html+=`<button class="chip-add" id="chipAdd">＋ 添加</button>`;
+  el.innerHTML=html;
+  bindChips(el);
+  document.getElementById('wsCnt').textContent=`已选 ${state.ids.length} 项 · 点选切换 · 拖拽排序 · 自动保存`;
+  document.getElementById('dockN').textContent=`(${state.ids.length})`;
+}
+
+/* ================= 舞台（拖入自动变身） ================= */
+function renderStage(){
+  const inner=document.getElementById('stageInner');
+  if(!state.active){
+    inner.innerHTML=`<div class="empty">
+      <div class="ebox">🧭</div>
+      <h3>把你感兴趣的博罗，放进这里</h3>
+      <p>从左侧发现区拖入内容，或点卡片上的 ＋。不同内容会自动展开成完整模块；当你选的内容之间存在联系，这里会主动帮你发现一个值得一看的问题。</p>
+      <div class="earrows">
+        <button class="epill" data-quick="mod-baitang-tea">🍃 试试柏塘茶园</button>
+        <button class="epill" data-quick="ind-fai">📉 看看投资与投产的时滞</button>
+        <button class="epill" data-quick="mod-yangqiao-citrus">🍊 杨侨柑桔长周期</button>
+      </div>
+    </div>`;
+    inner.querySelectorAll('[data-quick]').forEach(b=>b.onclick=()=>add(b.dataset.quick));
+    return;
+  }
+  const c=byId[state.active];
+  if(!c){inner.innerHTML='';return;}
+  if(c.type==='module')inner.innerHTML=viewModule(c);
+  else if(c.type==='town')inner.innerHTML=viewTown(c);
+  else if(c.type==='indicator')inner.innerHTML=viewIndicator(c);
+  else if(c.type==='news')inner.innerHTML=viewNews(c);
+  else if(c.type==='veg')inner.innerHTML=viewVeg(c);
+  else inner.innerHTML=viewGeneric(c);
+  bindStageActions();
+}
+
+function cardVisual(c){
+  const cat=(c.tags&&c.tags.category)||'city';
+  if(c.type==='town')return {grad:GRAD.tourism, tag:'🏘️ 镇街'};
+  if(c.type==='indicator')return {grad:GRAD.industry, tag:'📊 指标'};
+  if(c.type==='veg')return {grad:GRAD.agri, tag:'🥬 当季农品'};
+  if(c.type==='module')return {grad:GRAD[cat]||GRAD.tourism, tag:(TYPE_EMOJI.module||'✨')+' '+(CAT_NAME[cat]||'富模块')};
+  return {grad:GRAD[cat]||GRAD.city, tag:(CAT_EMOJI[cat]||'📌')+' '+(CAT_NAME[cat]||'资讯')};
+}
+function srcLinks(arr){
+  if(!arr||!arr.length)return '';
+  return `<div class="sources">🔗 来源：${arr.map(u=>`<a class="srcsrc" href="${u}" target="_blank" rel="noopener">${u.replace(/^https?:\/\//,'').slice(0,42)}…</a>`).join('')}</div>`;
+}
+function gradientOf(c){return cardVisual(c).grad;}
+
+function viewModule(c){
+  const m=moduleOf(c.id)||{};
+  const cat=(c.tags&&c.tags.category)||'tourism';
+  const facts=(m.facts||[]).map(f=>`<div class="fact"><div class="fico">${factIcon(f.icon)}</div><div><div class="fl">${esc(f.label)}</div><div class="fv">${esc(f.value)}</div></div></div>`).join('');
+  const nearby=(m.nearby||[]).map(n=>`<div class="near">
+      <div class="nico">${factIcon(n.type==='cafe'?'coffee':n.type==='food'?'food':n.type==='sport'?'sport':'star')}</div>
+      <div class="ninfo"><div class="nn">${esc(n.name)}</div><div class="nd">${esc(n.distance)}</div></div>
+      <button class="nadd" data-near title="相关地点（示意，可在发现区搜索）">＋</button>
+    </div>`).join('');
+  const loc=((c.tags&&c.tags.locations)||[])[0]||m.town||'';
+  const tabs=(m.tabs||[]).map(t=>`<span class="mtag">${esc(t)}</span>`).join('');
+  return `<div class="mcard">
+    <div class="mhero" style="background:${gradientOf(c)}">
+      <span class="img-note">🎨 主题示意 · 实拍图待授权</span>
+      <span class="mhero-emoji">${TYPE_EMOJI.module}</span>
+      <div class="mhero-txt">
+        <div class="mkicker">${esc(m.town||loc)} · 富模块</div>
+        <h1>${esc(m.title||c.title)}</h1>
+        <div class="msub">${esc(m.subtitle||c.subtitle||'')}</div>
+      </div>
+    </div>
+    <div class="mbody">
+      <div class="mtags">${tabs}</div>
+      <div class="mgrid">
+        <div>
+          <div class="msection"><h4>🍃 这里是什么</h4><div class="mstory">${esc(m.story||c.summary||'')}</div></div>
+          <div class="msection"><h4>📋 实用信息</h4><div class="facts">${facts||'<div class="mstory" style="font-size:12px">以现场实际为准。</div>'}</div></div>
+        </div>
+        <div>
+          <div class="sidecard">
+            <h5>📍 在博罗的位置</h5>
+            <div class="minimap">${miniMap(loc)}</div>
+            <button class="mapbtn" data-map="${esc(loc)}">查看地图（外部）</button>
+          </div>
+          <div class="sidecard">
+            <h5>🧭 附近推荐</h5>
+            <div class="nearby" style="grid-template-columns:1fr">${nearby||'<div class="mstory" style="font-size:12px">暂无</div>'}</div>
+          </div>
+        </div>
+      </div>
+      ${srcLinks(m.sources||(c.url?[c.url]:[]))}
+    </div>
+  </div>`;
+}
+
+function viewTown(c){
+  const t=townOf(c.id)||{};
+  const cat=(c.tags&&c.tags.category)||'tourism';
+  const modRefs=(t.module_refs||[]).map(rid=>moduleOf(rid)).filter(Boolean);
+  const hot=t.baseline_hot?`<span class="badge src">常驻人气 ${t.baseline_hot}</span>`:'';
+  return `<div class="mcard">
+    <div class="mhero" style="background:${gradientOf(c)};height:170px">
+      <span class="mhero-emoji">🏘️</span>
+      <div class="mhero-txt">
+        <div class="mkicker">${esc(t.position||'博罗')} · ${esc(t.kind||'镇街')}${(t.merged_from||[]).length?'（'+t.merged_from.map(esc).join('、')+'已并入）':''}</div>
+        <h1>${esc(t.name||c.title)}</h1>
+        <div class="msub">${esc(t.tag||'')}</div>
+      </div>
+    </div>
+    <div class="mbody">
+      <div class="ind-badges"><span class="badge stock">${esc(t.kind||'镇街')}</span>${hot}</div>
+      <div class="mgrid" style="margin-top:16px">
+        <div>
+          <div class="msection"><h4>💼 硬核饭碗</h4>
+            <div class="mstory">${esc(t.industry||'（产业资料待补）')}</div>
+          </div>
+          <div class="msection"><h4>🎆 烟火气</h4>
+            <div class="mstory"><b>🍜 吃：</b>${esc((t.foods||[]).join('、')||'—')}<br><b>🏔️ 玩：</b>${esc((t.plays||[]).join('、')||'—')}</div>
+          </div>
+        </div>
+        <div>
+          ${modRefs.length?`<div class="sidecard"><h5>✨ 展开明星模块</h5>${modRefs.map(m=>`<button class="wsbtn" style="width:100%;margin-bottom:8px" data-goto="${m.id}">${TYPE_EMOJI.module} ${esc(m.title)}</button>`).join('')}</div>`:''}
+          <div class="sidecard"><h5>📍 区位</h5><div class="minimap" style="height:120px">${miniMap(t.name)}</div><button class="mapbtn" data-map="${esc(t.name+' 博罗')}">查看地图（外部）</button></div>
+        </div>
+      </div>
+      ${srcLinks(t.sources||(c.url?[c.url]:[]))}
+    </div>
+  </div>`;
+}
+
+function viewIndicator(c){
+  const val=(c.subtitle||'').replace(/^最新（[^）]*）：?/,'');
+  const num=val.match(/-?\d+(\.\d+)?/);
+  const n=num?parseFloat(num[0]):null;
+  const cls=n===null?'flat':(n<0?'down':'up');
+  const sf=((c.tags&&c.tags.metrics)||[]).map(metricMeta).find(Boolean);
+  const dir=(c.tags&&c.tags.direction)||'';
+  const dirBadge=dir==='利空'?'<span class="badge off">当期承压</span>':dir==='利好'?'<span class="badge" style="background:rgba(13,148,136,.1);color:var(--teal)">当期向好</span>':'';
+  // 细分指标（若为固投）
+  let breakHtml='';
+  if(c.id==='ind-fai'){
+    breakHtml=`<div class="ind-break">
+      <div class="ind-pill">工业投资 <b style="color:var(--rose)">-12.7%</b></div>
+      <div class="ind-pill">房地产开发 <b style="color:var(--rose)">-47.6%</b></div>
+      <div class="ind-pill">基础设施 <b style="color:var(--slate)">-0.3%</b></div>
+      <div class="ind-pill">一产 <b style="color:var(--rose)">-64.7%</b></div>
+      <div class="ind-pill">三产 <b style="color:var(--rose)">-25.9%</b></div>
+    </div>`;
+  }
+  return `<div class="mcard">
+    <div class="ind-hero">
+      <div class="ind-badges">
+        ${sf?`<span class="badge ${sf.cls}">${sf.name}</span>`:''}
+        ${dirBadge}
+        <span class="badge src">${esc(c.verified_status||'')} · ${esc(c.srcLevel||'')}</span>
+      </div>
+      <div style="margin-top:16px">
+        <div class="ind-name">${esc(c.title)}</div>
+        <div class="ind-big"><span class="ind-val ${cls}">${esc(val||'—')}</span></div>
+      </div>
+      ${breakHtml}
+      <div class="mstory" style="margin-top:16px">${esc(c.summary||'')}</div>
+      <div class="mquote">💡 这是${sf&&sf.name==='流量'?'当期「流量」，变化先反映当下的投入与意愿':'「存量」与「流量」共同作用的结果'}；把它和具体事件卡放在一起，工作区会揭示它们之间的时滞与反馈。</div>
+      ${srcLinks(c.url?[c.url]:[])}
+    </div>
+  </div>`;
+}
+function metricMeta(m){
+  const map={
+    fai:{name:'流量 · 固定资产投资',cls:'flow'},
+    gdp:{name:'存量 · 地区生产总值',cls:'stock'},
+    'gdp-growth':{name:'流量 · GDP增速',cls:'flow'},
+    visitors:{name:'流量 · 当期客流',cls:'flow'}
+  };
+  return map[m]||null;
+}
+
+function viewNews(c){
+  const tier=c.tier?`<span class="badge" style="background:${c.tier==='高'?'rgba(225,29,72,.1)':'rgba(217,119,6,.1)'};color:${c.tier==='高'?'var(--rose)':'var(--amber)'}">关注 · ${esc(c.tier)}</span>`:'';
+  const fate=c.fate?`<div class="fate">
+      <div class="frow"><b>性质：</b>${fateKind(c.fate.kind)}</div>
+      <div class="frow"><b>关联：</b>${esc(c.fate.objects||'—')}</div>
+      <div class="frow"><b>方向：</b>${esc(c.fate.direction||'中性')}</div>
+      <div class="frow" style="color:var(--muted);font-size:11px;margin-top:5px">前提：${esc(c.fate.assumption||'以官方发布为准')}</div>
+    </div>`:'';
+  return `<div class="mcard">
+    <div class="news-hero">
+      <div class="ind-badges"><span class="badge src">${esc(c.srcLevel||'')} · ${esc(c.verified_status||'')}</span>${tier}</div>
+      <h1>${esc(c.title)}</h1>
+      <div class="mstory">${esc(c.summary||'')}</div>
+      ${fate}
+      <div style="margin-top:16px"><a class="wsbtn primary" href="${esc(c.url)}" target="_blank" rel="noopener" style="text-decoration:none;display:inline-block">阅读原文 ↗</a></div>
+      ${srcLinks(c.url?[c.url]:[])}
+    </div>
+  </div>`;
+}
+function fateKind(k){return {sim:'需要推演（含假设）',info:'信息播报',life:'生活烟火'}[k]||'信息';}
+
+function viewVeg(c){
+  return `<div class="mcard">
+    <div class="mhero veg-hero" style="background:${GRAD.agri}">
+      <span class="mhero-emoji">🥬</span>
+      <div class="mhero-txt"><div class="mkicker">当季农品 · 时令</div><h1>${esc(c.title)}</h1><div class="msub">${esc(c.subtitle||'')}</div></div>
+    </div>
+    <div class="mbody">
+      <div class="mstory">${esc(c.summary||'')}</div>
+      <div class="mquote">🌱 农品按真实时令呈现，已过季或未上市会明确标注，不反季推荐。</div>
+      ${srcLinks(c.url?[c.url]:[])}
+    </div>
+  </div>`;
+}
+function viewGeneric(c){
+  return `<div class="mcard"><div class="news-hero"><h1>${esc(c.title)}</h1><div class="mstory">${esc(c.summary||'')}</div>${srcLinks(c.url?[c.url]:[])}</div></div>`;
+}
+
+function factIcon(k){
+  const m={calendar:'📅',ticket:'🎫',clock:'⏱️',people:'👥',star:'⭐',target:'🎯',route:'🛣️',coffee:'☕',food:'🍲',sport:'🥾',show:'🎭'};
+  return m[k]||'📌';
+}
+function miniMap(loc){
+  // 抽象的博罗示意：罗浮山在西北、东江、县城与镇街定位，不伪造精确地图
+  return `<svg viewBox="0 0 280 150" style="width:100%;height:100%">
+    <rect width="280" height="150" fill="transparent"/>
+    <path d="M0 70 Q60 40 120 60 T280 55" fill="none" stroke="#9bd0cb" stroke-width="3" opacity=".7"/>
+    <path d="M20 120 Q90 95 160 110 T280 100" fill="none" stroke="#c7e6e2" stroke-width="2"/>
+    <text x="150" y="30" text-anchor="middle" font-size="9" fill="#7a9b97">罗浮山（西北山系）</text>
+    <path d="M60 42 l8 -14 l8 14 z" fill="#9bd0cb"/>
+    <circle cx="150" cy="78" r="5" fill="#0d9488"/>
+    <circle cx="150" cy="78" r="11" fill="none" stroke="#0d9488" stroke-width="1.4" opacity=".5"/>
+    <text x="165" y="81" font-size="10" font-weight="700" fill="#0d9488">${esc(loc||'博罗')}</text>
+    <text x="120" y="135" font-size="8" fill="#94a3b8">东江 · 博罗示意（非精确地图）</text>
+  </svg>`;
+}
+
+/* ================= 关联发现 ================= */
+function renderInsight(){
+  const el=document.getElementById('insight');
+  const links=activeLinks();
+  if(!state.ids.length){el.style.display='none';return;}
+  el.style.display='block';
+  if(!links.length){
+    el.classList.remove('open');
+    el.innerHTML=`<div class="insight-toggle"><div class="insight-orb" style="background:#94a3b8;box-shadow:none">🔗</div>
+      <div class="itxt"><div class="it">还没有发现关联</div><div class="is">再加入 1—2 张内容，比如一个产业指标 + 一条新闻，或两个相邻去处，工作区会帮你发现它们之间的联系。</div></div></div>`;
+    return;
+  }
+  // 默认收起，只保留醒目提示条；把展开主动权交给用户，不抢占主卡空间
+  el.classList.remove('open');
+  const body=links.map(l=>`<div class="link-card">
+    <div class="lc-head"><span class="lc-kind">${kindName(l.kind)}</span><span class="lc-title">${esc(l.title)}</span></div>
+    ${l.question?`<div class="lc-q">❓ ${esc(l.question)}</div>`:''}
+    ${renderFrame(l)}
+    ${l.caveat?`<div class="caveat"><span class="ci">⚠️</span><span>${esc(l.caveat)}</span></div>`:''}
+    ${l.sources&&l.sources.length?`<div class="lc-src">🔗 来源：${l.sources.map(u=>`<a href="${u}" target="_blank" rel="noopener" style="margin-right:8px">${u.replace(/^https?:\/\//,'').slice(0,40)}…</a>`).join('')}</div>`:''}
+  </div>`).join('');
+  el.innerHTML=`<button class="insight-toggle" id="insightToggle">
+      <div class="insight-orb">🔗</div>
+      <div class="itxt"><div class="it">为你发现了 ${links.length} 个值得一看的联系</div><div class="is">${esc(links[0].question||links[0].title)}</div></div>
+      <span class="chev">▾</span>
+    </button><div class="insight-body">${body}</div>`;
+  document.getElementById('insightToggle').onclick=()=>el.classList.toggle('open');
+}
+function kindName(k){return {puzzle:'系统动力学 · 时滞之谜',contrast:'对比',season:'时令',geo:'邻近路线',causal:'长周期因果',theme:'主题'}[k]||'关联';}
+
+function renderFrame(l){
+  const f=l.frame||{};
+  if(f.type==='compare'){
+    const [aId,bId]=l.card_ids;
+    const a=byId[aId],b=byId[bId];
+    const rows=(f.dimensions||[]).map(d=>`<div class="cd">${esc(d.dim)}</div><div class="cv">${esc(d.a)}</div><div class="cv">${esc(d.b)}</div>`).join('');
+    return `<div class="lc-explain">${esc(f.explain||'')}</div>
+      <div class="cmp">
+        <div class="cd">维度</div><div class="ch">${esc(a?a.title:'方案 A')}</div><div class="ch">${esc(b?b.title:'方案 B')}</div>
+        ${rows}
+      </div>`;
+  }
+  if(f.type==='season'){
+    return `<div class="chain">${(f.chain||[]).map(s=>`<div class="cstep"><span class="cdot"></span><div class="cst">${esc(s.step)}</div><div class="ctx">${esc(s.text)}</div></div>`).join('')}</div>`;
+  }
+  if(f.type==='nearby'){
+    const parts=String(f.route||'').split('→');
+    return `<div class="route">${parts.map((p,i)=>`<span class="rnode">${esc(p.trim())}</span>${i<parts.length-1?'<span class="rarrow">→</span>':''}`).join('')}</div>
+      <div class="lc-explain">${esc(f.explain||'')}</div>`;
+  }
+  if(f.type==='long-cycle'){
+    const stages=(f.stages||[]).map(s=>`<div class="stage-item"><div class="ss">${esc(s.stage)}</div><div class="sx">${esc(s.text)}</div></div>`).join('');
+    return `<div class="lc-explain">${esc(f.explain||'')}</div>
+      <div class="stages">${stages}</div>
+      ${f.loop?`<div class="flow"><div class="flow-row" style="font-size:11px;font-weight:800;color:var(--indigo);margin-bottom:8px">🔁 反馈回路（多年时滞）</div><div class="flow-row">${loopNodes(f.loop)}</div></div>`:''}`;
+  }
+  if(f.type==='stock-flow-lag'){
+    const neg=byId[l.card_ids[0]],pos=byId[l.card_ids[1]];
+    return `<div class="duo">
+        <div class="dbox neg"><div class="dl">当期流量 · 2025 固定资产投资</div><div class="dv">-18.8%</div><div class="dd">新开工引擎减速（工业 -12.7%、房地产 -47.6%）</div></div>
+        <div class="dbox pos"><div class="dl">存量产能 · 2026 新点火</div><div class="dv">🔥 铜来顺</div><div class="dd">2-3 年前投资高峰开工的项目到了投产节点</div></div>
+      </div>
+      <div class="lc-explain">${esc(f.explain||'')}</div>
+      <div class="flow">
+        <div class="flow-row" style="font-size:11px;font-weight:800;color:var(--slate);margin-bottom:8px">⏳ 流量 → 建设时滞 → 存量（系统动力学）</div>
+        <div class="flow-row">${loopNodes(f.loop)}</div>
+      </div>`;
+  }
+  return `<div class="lc-explain">${esc(f.explain||'')}</div>`;
+}
+// 解析 "→" 链路，〔…〕为时滞节点，标记不同角色
+function loopNodes(loop){
+  const parts=String(loop).split('→').map(s=>s.trim()).filter(Boolean);
+  return parts.map((p,i)=>{
+    const isLag=/〔|〕/.test(p);
+    const isStock=/存量/.test(p)&&!/流量/.test(p);
+    const isFlow=/流量/.test(p)&&!/存量/.test(p);
+    const isShock=/冲击|↓/.test(p)&&/病害/.test(p);
+    let cls='fnode';
+    if(isLag)cls+=' lag';else if(isStock)cls+=' stock';else if(isFlow)cls+=' flow';else if(isShock)cls+=' shock';
+    const txt=p.replace(/〔|〕/g,'');
+    return `<span class="${cls}">${isLag?'<span class="ltag">⏳ 时滞</span>':''}${esc(txt)}</span>${i<parts.length-1?'<span class="farrow">→</span>':''}`;
+  }).join('') + `<span class="loopback" style="width:100%;margin-top:11px">↩ 再投资形成正反馈回路；存量与流量不在同一时间刻度，因此会同时出现"当期走弱"与"项目投产"。</span>`;
+}
+
+/* ================= 操作 ================= */
+function add(id){
+  if(!byId[id])return;
+  if(state.ids.includes(id)){state.active=id;renderStage();renderChips();return;}
+  state.ids.push(id);state.active=id;save();renderAll();
+  toast('已加入工作区');
+  closeDrawerMobile();
+}
+function remove(id){
+  const i=state.ids.indexOf(id);if(i<0)return;
+  const removed=state.ids.splice(i,1)[0];
+  if(state.active===removed)state.active=state.ids[Math.min(i,state.ids.length-1)]||null;
+  save();renderAll();
+  lastRemoved={id:removed,index:i};
+  toast('已移出工作区（内容仍在发现区）',()=>{
+    state.ids.splice(Math.min(i,state.ids.length),0,removed);
+    state.active=removed;save();renderAll();
+  });
+}
+function clearAll(){
+  if(!state.ids.length)return;
+  const old=[...state.ids];
+  state.ids=[];state.active=null;save();renderAll();
+  toast('已清空，可撤销',()=>{state.ids=old;state.active=old[0]||null;save();renderAll();});
+}
+function share(){
+  const hash='#ws='+state.ids.join(',');
+  history.replaceState(null,'',hash);
+  const url=location.origin+location.pathname+hash;
+  if(navigator.clipboard){navigator.clipboard.writeText(url).catch(()=>{});}
+  toast('分享链接已生成并复制，也可从地址栏复制');
+}
+
+/* ================= 绑定 ================= */
+function renderAll(){renderFilters();renderDiscovery();renderChips();renderStage();renderInsight();}
+
+function bindStatic(){
+  document.getElementById('searchInput').addEventListener('input',e=>{state.q=e.target.value;renderDiscovery();});
+  document.getElementById('filters').addEventListener('click',e=>{
+    const b=e.target.closest('[data-f]');if(!b)return;
+    state.filter=b.dataset.f;renderFilters();renderDiscovery();
+  });
+  document.getElementById('btnClear').onclick=clearAll;
+  document.getElementById('btnShare').onclick=share;
+  document.getElementById('btnAdd').onclick=()=>{document.getElementById('discList').scrollIntoView({behavior:'smooth',block:'start'});document.getElementById('searchInput').focus();};
+  document.getElementById('chipAdd')&&(document.getElementById('chipAdd').onclick=()=>document.getElementById('btnAdd').click());
+  // 移动端
+  document.getElementById('dock').onclick=openDrawer;
+  document.getElementById('drawerClose').onclick=closeDrawerMobile;
+}
+function openDrawer(){document.getElementById('workspace').classList.add('open');}
+function closeDrawerMobile(){if(window.innerWidth<=860)document.getElementById('workspace').classList.remove('open');}
+
+function bindDiscoveryCards(el){
+  el.querySelectorAll('.dcard').forEach(card=>{
+    const id=card.dataset.id;
+    card.querySelector('[data-add]').addEventListener('click',e=>{e.stopPropagation();add(id);});
+    card.addEventListener('dragstart',e=>{e.dataTransfer.setData('text/ws-id',id);e.dataTransfer.effectAllowed='copy';card.classList.add('dragging');});
+    card.addEventListener('dragend',()=>card.classList.remove('dragging'));
+    // 移动：单击卡片也可加入（触屏无悬停）
+    card.addEventListener('click',e=>{if(window.innerWidth<=860&&!e.target.closest('[data-add]'))add(id);});
+  });
+}
+function bindChips(el){
+  const chipAdd=document.getElementById('chipAdd');
+  if(chipAdd)chipAdd.onclick=()=>document.getElementById('btnAdd').click();
+  el.querySelectorAll('[data-chip]').forEach(chip=>{
+    const id=chip.dataset.chip;
+    chip.addEventListener('click',e=>{if(!e.target.closest('[data-remove]')){state.active=id;save();renderChips();renderStage();}});
+    chip.querySelector('[data-remove]').addEventListener('click',e=>{e.stopPropagation();remove(id);});
+    // 拖拽排序
+    chip.addEventListener('dragstart',e=>{e.dataTransfer.setData('text/chip-id',id);e.dataTransfer.effectAllowed='move';});
+    chip.addEventListener('dragover',e=>{e.preventDefault();chip.classList.add('drag-over');});
+    chip.addEventListener('dragleave',()=>chip.classList.remove('drag-over'));
+    chip.addEventListener('drop',e=>{
+      e.preventDefault();chip.classList.remove('drag-over');
+      const src=e.dataTransfer.getData('text/chip-id');
+      if(src&&src!==id){reorder(src,id);}
+    });
+  });
+}
+function reorder(src,target){
+  const si=state.ids.indexOf(src),ti=state.ids.indexOf(target);
+  if(si<0||ti<0)return;
+  state.ids.splice(si,1);state.ids.splice(ti,0,src);save();renderChips();
+}
+
+function bindStageActions(){
+  document.querySelectorAll('[data-goto]').forEach(b=>b.onclick=()=>add(b.dataset.goto));
+  document.querySelectorAll('[data-map]').forEach(b=>b.onclick=()=>{
+    const q=encodeURIComponent('博罗县 '+b.dataset.map);
+    window.open('https://uri.amap.com/search?keyword='+q,'_blank');
+  });
+}
+
+/* 拖到工作区（桌面） */
+const ws=document.getElementById('workspace');
+['dragover','dragenter'].forEach(ev=>ws.addEventListener(ev,e=>{
+  if(e.dataTransfer&&Array.from(e.dataTransfer.types||[]).includes('text/ws-id')){e.preventDefault();ws.classList.add('drop-zone-active');}
+}));
+['dragleave','drop'].forEach(ev=>ws.addEventListener(ev,e=>{
+  if(ev==='dragleave'&&ws.contains(e.relatedTarget))return;
+  ws.classList.remove('drop-zone-active');
+}));
+ws.addEventListener('drop',e=>{
+  e.preventDefault();
+  const id=e.dataTransfer.getData('text/ws-id');
+  if(id)add(id);
+});
+/* 拖回发现区 = 移出 */
+const disc=document.getElementById('discovery');
+disc.addEventListener('dragover',e=>{
+  if(e.dataTransfer&&Array.from(e.dataTransfer.types||[]).includes('text/chip-id')){e.preventDefault();disc.style.background='rgba(225,29,72,.05)';}
+});
+disc.addEventListener('dragleave',()=>disc.style.background='');
+disc.addEventListener('drop',e=>{
+  disc.style.background='';
+  const id=e.dataTransfer.getData('text/chip-id');
+  if(id)remove(id);
+});
+
+load();
+</script>
+</body>
+</html>
