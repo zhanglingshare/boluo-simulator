@@ -1,0 +1,39 @@
+{
+  "schema_version": 3,
+  "region": "boluo",
+  "updated": "2026-10-24",
+  "note": "产业指标+五条路径+关联规则模板（慢本体）。latest/source 由数据核查在官方新锚点确认后更新，每日情报不擅改 base。stock_flow 为系统动力学标签（存量/流量/事件），用于时滞类关联解释。",
+  "base": {
+    "gdp_2025": 1005.45,
+    "target_2030": 1600,
+    "unit": "亿元",
+    "sources": ["博罗县2025年统计公报", "2026年博罗县政府工作报告"]
+  },
+  "indicators": [
+    {"id": "gdp", "name": "GDP", "unit": "亿元", "stock_flow": "存量", "path": null, "latest": 1005.45, "latest_period": "2025", "source": "博罗县2025年统计公报", "urls": ["https://www.boluo.gov.cn/blgk/qjmb/content/post_5719003.html", "https://www.boluo.gov.cn/bmzb/xtjj/tjyj/tjfx/content/post_5801531.html"], "note": "地区生产总值，2025年1005.45亿元，成为广东首个千亿县"},
+    {"id": "gdp-growth", "name": "GDP增速", "unit": "%", "stock_flow": "流量", "path": null, "latest": 5.5, "latest_period": "2025", "source": "博罗县2025年统计公报", "urls": ["https://www.boluo.gov.cn/blgk/qjmb/content/post_5719003.html"], "note": "2025年按不变价同比增长5.5%；2026年计划6.5%—7%"},
+    {"id": "fai", "name": "固定资产投资", "unit": "%", "stock_flow": "流量", "path": "all", "latest": -18.8, "latest_period": "2025", "source": "博罗县2025年统计公报", "urls": ["https://www.boluo.gov.cn/bmzb/xtjj/tjyj/tjfx/content/post_5801531.html", "https://www.boluo.gov.cn/blgk/qjmb/content/post_5719003.html"], "note": "2025年全社会固投下降18.8%；工业投资-12.7%、房地产-47.6%、基建-0.3%；2026年计划实现正增长。当期投资是流量，其影响通过2-3年时滞传导到产能"},
+    {"id": "ind-output", "name": "规上工业总产值", "unit": "亿元", "stock_flow": "流量", "path": "p1", "latest": null, "latest_period": null, "source": null, "note": "电子信息、新能源等主要载体"},
+    {"id": "ind-value", "name": "规上工业增加值", "unit": "%", "stock_flow": "流量", "path": "p1", "latest": null, "latest_period": null, "source": null, "note": "工业实际增长"},
+    {"id": "new-project", "name": "新开工/投产项目", "unit": "个", "stock_flow": "事件", "path": "p1", "latest": null, "latest_period": null, "source": null, "note": "点火/投产/开工为离散事件；投产产能滞后进入GDP"},
+    {"id": "retail", "name": "社会消费品零售总额", "unit": "亿元", "stock_flow": "流量", "path": "p3", "latest": null, "latest_period": null, "source": null, "note": "消费与文旅景气"},
+    {"id": "visitors", "name": "文旅接待游客", "unit": "万人次", "stock_flow": "流量", "path": "p3", "latest": 35.94, "latest_period": "2026国庆假期", "source": "博罗县文广旅体局", "note": "纳入监测的乡村旅游点，国庆35.94万人次、同比+10.51%"},
+    {"id": "trade", "name": "外贸进出口", "unit": "亿元", "stock_flow": "流量", "path": "p4", "latest": null, "latest_period": null, "source": null, "note": "广交会、抱团出海"},
+    {"id": "population", "name": "常住人口", "unit": "万人", "stock_flow": "存量", "path": null, "latest": null, "latest_period": null, "source": null, "note": "劳动力与消费基数"}
+  ],
+  "paths": [
+    {"id": "p1", "name": "双引擎·电子信息+新能源", "color": "#3b82f6"},
+    {"id": "p2", "name": "工业底盘自然延续", "color": "#8b5cf6"},
+    {"id": "p3", "name": "三产/文旅破局", "color": "#fbbf24"},
+    {"id": "p4", "name": "融深融莞通道", "color": "#06b6d4"},
+    {"id": "p5", "name": "一产·特色农业", "color": "#34d399"}
+  ],
+  "link_rules": [
+    {"id": "rule-stock-flow-lag", "kind": "puzzle", "when": "走弱/下行的投资类指标(如 fai 利空) 与 新投产/点火项目(news, industry) 同期出现", "question_tpl": "投资在走弱，为什么仍有新项目投产？", "frame": "stock-flow-lag"},
+    {"id": "rule-lifestyle-compare", "kind": "contrast", "when": "两个 mood 含 chill/family 的镇街或景区富模块", "question_tpl": "这两个地方都适合慢生活，分别适合怎样的周末？", "frame": "compare"},
+    {"id": "rule-geo-nearby", "kind": "geo", "when": "同片区/相邻镇街 + 同类或互补去处", "question_tpl": "玩完这里，附近还有什么？", "frame": "nearby"},
+    {"id": "rule-path-theme", "kind": "theme", "when": "同一 path 的多条企业/项目动态", "question_tpl": "这条产业路径最近发生了什么？", "frame": "timeline"},
+    {"id": "rule-season-foodchain", "kind": "season", "when": "当季农品(veg) + 对应镇街/美食去处", "question_tpl": "这个季节，从田间到餐桌怎么走？", "frame": "season"},
+    {"id": "rule-agri-cycle", "kind": "causal", "when": "特色农业有公开史料、体现病害/价格/复种/品牌的长周期", "question_tpl": "这个产业为什么几起几落？", "frame": "long-cycle"}
+  ]
+}

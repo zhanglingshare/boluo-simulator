@@ -1,0 +1,134 @@
+{
+  "schema_version": 3,
+  "region": "boluo",
+  "updated": "2026-10-24",
+  "note": "明星富模块（拖入工作区后展开的完整交互内容）。静态故事底座 + 动态插槽（当季/人气/新闻由每日内容池填充）。hero/gallery 只放授权实拍图，无授权留空。事实须可溯源，拿不准写以现场为准。",
+  "modules": [
+    {
+      "id": "mod-baitang-tea",
+      "type": "scenic",
+      "town": "柏塘",
+      "title": "柏塘茶园",
+      "subtitle": "万亩茶园，山水之间的一杯好茶",
+      "hero": "",
+      "tabs": ["自然风光", "茶文化", "乡村旅游", "适合亲子", "秋季最佳"],
+      "story": "柏塘山茶是广东十大名茶之一，博罗柏塘镇坐拥万亩茶园，茶垄沿山势层叠、茶香漫山。秋日的茶园被称作『大自然打翻的绿色调色盘』，可漫步茶田栈道吸氧洗肺、体验手工采茶制茶，茶园里也有适合小坐的咖啡空间，是湾区周边周末短途的治愈去处。",
+      "facts": [
+        {"icon": "calendar", "label": "最佳时间", "value": "9—11月秋茶季"},
+        {"icon": "ticket", "label": "门票", "value": "以各茶园现场为准"},
+        {"icon": "clock", "label": "建议时长", "value": "半天到一天"},
+        {"icon": "people", "label": "适合人群", "value": "亲子/情侣/朋友"},
+        {"icon": "star", "label": "特色体验", "value": "采茶制茶、茶园咖啡、乡村美食"}
+      ],
+      "nearby": [
+        {"name": "柏塘茶园咖啡", "distance": "约2.3km", "type": "cafe", "add": true},
+        {"name": "平安山生态园", "distance": "约5.1km", "type": "sport", "add": true},
+        {"name": "特色农家菜", "distance": "约3.8km", "type": "food", "add": true}
+      ],
+      "gallery": [],
+      "dynamic": { "season_ref": "veg:柏塘秋茶", "town_ref": "town-baitang", "news_keywords": ["柏塘", "茶园"] },
+      "tags": { "category": "tourism", "entities": ["柏塘山茶", "万亩茶园"], "metrics": [], "locations": ["柏塘"], "event_date": null, "identity": ["weekend"], "mood": ["chill", "photo", "food"], "direction": "中性" },
+      "sources": ["https://www.boluo.gov.cn/hzblbtz/gkmlpt/content/5/5872/mpost_5872244.html"]
+    },
+    {
+      "id": "mod-luofu-wellness",
+      "type": "culture",
+      "town": "长宁",
+      "title": "罗浮山康养旅居",
+      "subtitle": "山上登高览胜，山下康养旅居",
+      "hero": "",
+      "tabs": ["山上登高", "山下康养", "葛洪文化", "敬老旅居"],
+      "story": "罗浮山是岭南第一山，也是葛洪中医药文化的重要承载地。博罗以罗浮山核心景区为牵引，构建『山上登高览胜祈福、山下康养旅居敬老』的全域文旅体系。长宁镇山下村山夏1368酒店把古村活化、适老化住宿与中医药康养结合，推出『冬养罗浮』生态康养旅居，面向银发群体提供旅居休养。",
+      "facts": [
+        {"icon": "calendar", "label": "最佳时间", "value": "秋冬康养季"},
+        {"icon": "ticket", "label": "门票", "value": "景区与旅居产品分别以官方为准"},
+        {"icon": "clock", "label": "建议时长", "value": "1—2天（旅居可长住）"},
+        {"icon": "people", "label": "适合人群", "value": "银发/敬老家庭/康养客群"},
+        {"icon": "star", "label": "特色体验", "value": "登高、中医药康养、适老化旅居、古村" }
+      ],
+      "nearby": [
+        {"name": "显岗水库驿站", "distance": "约6km", "type": "sport", "add": true},
+        {"name": "横河民宿群", "distance": "约8km", "type": "cafe", "add": true},
+        {"name": "客家山水豆腐花", "distance": "山下沿线", "type": "food", "add": true}
+      ],
+      "gallery": [],
+      "dynamic": { "season_ref": null, "town_ref": "town-changning", "news_keywords": ["罗浮山", "康养", "长宁"] },
+      "tags": { "category": "tourism", "entities": ["罗浮山", "山夏1368", "葛洪中医药文化"], "metrics": ["visitors"], "locations": ["长宁", "横河"], "event_date": null, "identity": ["weekend", "family-kid"], "mood": ["chill", "family"], "direction": "中性" },
+      "sources": ["https://www.boluo.gov.cn/xzygdw/xgbdst/blxw/content/post_5877145.html", "http://e.hznews.com/hzrb/pc/content/202610/20/content_1134020.html"]
+    },
+    {
+      "id": "mod-yangqiao-citrus",
+      "type": "agri",
+      "town": "杨侨",
+      "title": "杨侨柑桔与侨乡",
+      "subtitle": "一座『亚洲第一柑桔农场』的两起两落",
+      "hero": "",
+      "tabs": ["采摘当季", "侨乡故事", "黄龙病与复种", "长周期"],
+      "story": "杨侨镇前身是1951年建场的广东省杨村华侨柑桔场，曾在1991年前后以3万亩柑桔、年产约百万担被称为『亚洲第一大柑桔专业农场』。此后黄龙病两度给柑桔产业毁灭性打击；通过统一认识、统一管理、统防统治，复种园发病被控制在约1%。如今红江橙、沃柑、贡柑、砂糖桔、年桔等重新挂果，归侨群体的果园故事也在延续。这是观察一个农业产业如何在病害、市场与复种之间长周期波动的鲜活样本。",
+      "facts": [
+        {"icon": "calendar", "label": "最佳时间", "value": "10月下旬—次年1月柑橘季"},
+        {"icon": "ticket", "label": "采摘", "value": "以各果园现场为准"},
+        {"icon": "clock", "label": "建议时长", "value": "半天"},
+        {"icon": "people", "label": "适合人群", "value": "亲子/家庭/农业爱好者"},
+        {"icon": "star", "label": "特色体验", "value": "红江橙采摘、侨乡文化、柑桔科普" }
+      ],
+      "nearby": [
+        {"name": "杨村柑橘采摘园", "distance": "相邻", "type": "food", "add": true},
+        {"name": "侨乡文化点", "distance": "镇内", "type": "show", "add": true}
+      ],
+      "gallery": [],
+      "dynamic": { "season_ref": "veg:杨村皇帝柑", "town_ref": "town-yangqiao", "news_keywords": ["杨侨", "红江橙", "柑桔"] },
+      "tags": { "category": "agri", "entities": ["杨村华侨柑桔场", "红江橙", "黄龙病", "归侨"], "metrics": [], "locations": ["杨侨", "杨村"], "event_date": null, "identity": ["weekend", "family-kid"], "mood": ["food", "family", "photo"], "direction": "中性" },
+      "sources": ["https://static.nfapp.southcn.com/content/201909/03/c2586804.html", "http://static.nfapp.southcn.com/content/201701/29/c266925.html", "http://nyncj.huizhou.gov.cn/zwzc/xwzx/fpzx/content/mpost_5171509.html"]
+    },
+    {
+      "id": "mod-new-materials",
+      "type": "industry",
+      "town": "长宁",
+      "title": "新材料产业点火",
+      "subtitle": "铜来顺投产，与投资下行的『时差』",
+      "hero": "",
+      "tabs": ["项目概况", "产业路径", "投资时滞", "相关企业"],
+      "story": "2026年10月13日，博罗铜来顺新材料有限公司生产线在惠州博罗产业园区点火，项目由博罗县产业投资集团牵头引进，提出2027年冲刺百亿产值目标，新材料赛道再添新力量。值得注意的是：项目从投资、开工到点火、投产再到形成产能，通常有2—3年时滞。当下投产的项目，多是几年前投资高峰期开工的——因此会出现『当期固定资产投资走弱、仍有新项目接连投产』的表面反差。",
+      "facts": [
+        {"icon": "calendar", "label": "点火时间", "value": "2026年10月13日"},
+        {"icon": "target", "label": "产值目标", "value": "2027年冲刺百亿（企业公开口径）"},
+        {"icon": "route", "label": "产业路径", "value": "双引擎·电子信息+新材料"},
+        {"icon": "people", "label": "关注人群", "value": "关心产业/投资者"},
+        {"icon": "star", "label": "看点", "value": "投资流量与产能存量的时滞" }
+      ],
+      "nearby": [
+        {"name": "博罗产业园区企业", "distance": "园区内", "type": "industry", "add": true}
+      ],
+      "gallery": [],
+      "dynamic": { "season_ref": null, "town_ref": "town-changning", "news_keywords": ["铜来顺", "新材料", "点火", "投产"] },
+      "tags": { "category": "industry", "entities": ["铜来顺新材料", "博罗产业园区", "博罗县产业投资集团"], "metrics": ["new-project", "ind-output"], "locations": ["长宁"], "event_date": "2026-10-13", "identity": ["industry-watcher"], "mood": ["shop"], "direction": "利好" },
+      "sources": ["https://www.boluo.gov.cn/zwgk/zwdt/tpxw/content/post_5872750.html"]
+    },
+    {
+      "id": "mod-huzhen-spaceagri",
+      "type": "agri",
+      "town": "湖镇",
+      "title": "航天农业科技生态园",
+      "subtitle": "一颗种子的太空历险记",
+      "hero": "",
+      "tabs": ["航天育种", "亲子科普", "太空果蔬", "四季采摘"],
+      "story": "广东航天农业科技生态园位于湖镇镇，是国家3A级旅游景区、全国第一个县级航天育种试验示范基地（博罗县农业科技示范场始建于1981年，2004年成为全国首个县级航天育种示范基地）。园区约3650亩，把航天育种、优质水果与鱼塘田园结合，常年培育上百个特色航天农作物品种，是亲子研学与农业科普的好去处。湖镇也是有名的『冬瓜之乡』，太空育种黑皮冬瓜亩产曾达约1.5万公斤。",
+      "facts": [
+        {"icon": "ticket", "label": "景区等级", "value": "国家3A级"},
+        {"icon": "calendar", "label": "适宜季节", "value": "全年，果蔬成熟期最佳"},
+        {"icon": "clock", "label": "建议时长", "value": "半天"},
+        {"icon": "people", "label": "适合人群", "value": "亲子/研学/家庭"},
+        {"icon": "star", "label": "特色体验", "value": "航天育种科普、太空果蔬、田园采摘" }
+      ],
+      "nearby": [
+        {"name": "罗浮山景区", "distance": "相邻片区", "type": "sport", "add": true},
+        {"name": "石芽坝山茶", "distance": "镇内", "type": "food", "add": true}
+      ],
+      "gallery": [],
+      "dynamic": { "season_ref": null, "town_ref": "town-huzhen", "news_keywords": ["航天", "湖镇", "生态园", "冬瓜"] },
+      "tags": { "category": "agri", "entities": ["广东航天农业科技生态园", "航天育种", "湖镇冬瓜"], "metrics": [], "locations": ["湖镇"], "event_date": null, "identity": ["family-kid", "weekend"], "mood": ["family", "photo", "food"], "direction": "中性" },
+      "sources": ["https://www.boluo.gov.cn/blgk/yxbl/content/post_5823957.html", "https://www.boluo.gov.cn/hzblnyncj/gkmlpt/content/5/5554/mpost_5554960.html"]
+    }
+  ]
+}

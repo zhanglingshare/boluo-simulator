@@ -1,0 +1,1757 @@
+{
+  "schema_version": 3,
+  "region": "boluo",
+  "updated": "2026-10-24 07:31",
+  "fetched_at": "2026-10-24 07:31",
+  "note": "工作区内容池：今日新鲜事(daily)+近期活跃(recent)+常驻(evergreen)。人气为相对分档非真实人数；活动过有效期自动淡出，常驻内容长期保留。",
+  "cards": [
+    {
+      "id": "town-luoyang",
+      "dedup_key": "town|罗阳",
+      "type": "town",
+      "freshness": "evergreen",
+      "title": "罗阳",
+      "subtitle": "县城中心",
+      "thumb": "",
+      "emoji": "🏘️",
+      "tier": null,
+      "srcLevel": "官方发布",
+      "verified_status": "已核验",
+      "summary": "罗阳县城中心：行政商贸、公共服务、县城消费枢纽",
+      "source": "博罗县政府/公开资料",
+      "url": "https://www.boluo.gov.cn/blgk/xzqh/",
+      "valid_from": null,
+      "valid_to": null,
+      "evergreen": true,
+      "status": "active",
+      "module_refs": [],
+      "link_ids": [],
+      "tags": {
+        "category": "city",
+        "entities": [
+          "罗阳"
+        ],
+        "metrics": [],
+        "locations": [
+          "罗阳"
+        ],
+        "event_date": null,
+        "identity": [
+          "weekend",
+          "industry-watcher"
+        ],
+        "mood": [
+          "food",
+          "shop"
+        ],
+        "direction": "中性"
+      },
+      "fetched_at": "2026-10-24 07:31"
+    },
+    {
+      "id": "town-longxi",
+      "dedup_key": "town|龙溪",
+      "type": "town",
+      "freshness": "evergreen",
+      "title": "龙溪",
+      "subtitle": "电子信息·电声·AI散热",
+      "thumb": "",
+      "emoji": "🏘️",
+      "tier": null,
+      "srcLevel": "官方发布",
+      "verified_status": "已核验",
+      "summary": "龙溪电子信息·电声·AI散热：电子信息、电动车、表面处理、人工智能与机器人四大支柱；规上工业企业约241家；得胜电声、AI散热产业集聚区（18家核心散热企业、半小时配套圈）",
+      "source": "博罗县政府/公开资料",
+      "url": "https://www.boluo.gov.cn/xzgwh/lxjdbsc/lxgk/content/post_5828173.html",
+      "valid_from": null,
+      "valid_to": null,
+      "evergreen": true,
+      "status": "active",
+      "module_refs": [],
+      "link_ids": [],
+      "tags": {
+        "category": "city",
+        "entities": [
+          "龙溪"
+        ],
+        "metrics": [],
+        "locations": [
+          "龙溪"
+        ],
+        "event_date": null,
+        "identity": [
+          "industry-watcher"
+        ],
+        "mood": [
+          "shop"
+        ],
+        "direction": "中性"
+      },
+      "fetched_at": "2026-10-24 07:31"
+    },
+    {
+      "id": "town-shiba",
+      "dedup_key": "town|石坝",
+      "type": "town",
+      "freshness": "evergreen",
+      "title": "石坝",
+      "subtitle": "三黄胡须鸡之乡",
+      "thumb": "",
+      "emoji": "🏘️",
+      "tier": null,
+      "srcLevel": "官方发布",
+      "verified_status": "已核验",
+      "summary": "石坝三黄胡须鸡之乡：三黄胡须鸡（全国三黄胡须鸡输出量最大乡镇，占博罗全县七成以上）、白切鸡非遗、荷花（太空莲）、黑皮果蔗、农文旅",
+      "source": "博罗县政府/公开资料",
+      "url": "https://www.huizhou.gov.cn/zdlyxxgk/xczx/gzdt/content/post_5685654.html",
+      "valid_from": null,
+      "valid_to": null,
+      "evergreen": true,
+      "status": "active",
+      "module_refs": [],
+      "link_ids": [],
+      "tags": {
+        "category": "city",
+        "entities": [
+          "石坝"
+        ],
+        "metrics": [],
+        "locations": [
+          "石坝"
+        ],
+        "event_date": null,
+        "identity": [
+          "weekend"
+        ],
+        "mood": [
+          "food",
+          "photo",
+          "family"
+        ],
+        "direction": "中性"
+      },
+      "fetched_at": "2026-10-24 07:31"
+    },
+    {
+      "id": "town-mapi",
+      "dedup_key": "town|麻陂",
+      "type": "town",
+      "freshness": "evergreen",
+      "title": "麻陂",
+      "subtitle": "肉丸非遗·供港蔬菜",
+      "thumb": "",
+      "emoji": "🏘️",
+      "tier": null,
+      "srcLevel": "官方发布",
+      "verified_status": "已核验",
+      "summary": "麻陂肉丸非遗·供港蔬菜：麻陂肉丸（百年技艺、惠州市级非遗）、玉米深加工、供港蔬菜、茨菇；智慧农业",
+      "source": "博罗县政府/公开资料",
+      "url": "https://www.boluo.gov.cn/xzgwh/mzzrmzf/mzgk/content/post_5828123.html",
+      "valid_from": null,
+      "valid_to": null,
+      "evergreen": true,
+      "status": "active",
+      "module_refs": [],
+      "link_ids": [],
+      "tags": {
+        "category": "city",
+        "entities": [
+          "麻陂"
+        ],
+        "metrics": [],
+        "locations": [
+          "麻陂"
+        ],
+        "event_date": null,
+        "identity": [
+          "weekend"
+        ],
+        "mood": [
+          "food"
+        ],
+        "direction": "中性"
+      },
+      "fetched_at": "2026-10-24 07:31"
+    },
+    {
+      "id": "town-guanyinge",
+      "dedup_key": "town|观音阁",
+      "type": "town",
+      "freshness": "evergreen",
+      "title": "观音阁",
+      "subtitle": "东江画廊·花生油",
+      "thumb": "",
+      "emoji": "🏘️",
+      "tier": null,
+      "srcLevel": "官方发布",
+      "verified_status": "已核验",
+      "summary": "观音阁东江画廊·花生油：花生油（新花生现榨）、特色农业、东江文旅",
+      "source": "博罗县政府/公开资料",
+      "url": "https://www.boluo.gov.cn/blgk/xzqh/",
+      "valid_from": null,
+      "valid_to": null,
+      "evergreen": true,
+      "status": "active",
+      "module_refs": [],
+      "link_ids": [],
+      "tags": {
+        "category": "city",
+        "entities": [
+          "观音阁"
+        ],
+        "metrics": [],
+        "locations": [
+          "观音阁"
+        ],
+        "event_date": null,
+        "identity": [
+          "weekend"
+        ],
+        "mood": [
+          "chill",
+          "food",
+          "photo"
+        ],
+        "direction": "中性"
+      },
+      "fetched_at": "2026-10-24 07:31"
+    },
+    {
+      "id": "town-gongzhuang",
+      "dedup_key": "town|公庄",
+      "type": "town",
+      "freshness": "evergreen",
+      "title": "公庄",
+      "subtitle": "东部农镇·秋花生",
+      "thumb": "",
+      "emoji": "🏘️",
+      "tier": null,
+      "srcLevel": "官方发布",
+      "verified_status": "已核验",
+      "summary": "公庄东部农镇·秋花生：沙地产秋花生、特色种植、客家农业",
+      "source": "博罗县政府/公开资料",
+      "url": "https://www.boluo.gov.cn/blgk/xzqh/",
+      "valid_from": null,
+      "valid_to": null,
+      "evergreen": true,
+      "status": "active",
+      "module_refs": [],
+      "link_ids": [],
+      "tags": {
+        "category": "city",
+        "entities": [
+          "公庄"
+        ],
+        "metrics": [],
+        "locations": [
+          "公庄"
+        ],
+        "event_date": null,
+        "identity": [
+          "weekend"
+        ],
+        "mood": [
+          "food",
+          "chill"
+        ],
+        "direction": "中性"
+      },
+      "fetched_at": "2026-10-24 07:31"
+    },
+    {
+      "id": "town-yangcun",
+      "dedup_key": "town|杨村",
+      "type": "town",
+      "freshness": "evergreen",
+      "title": "杨村",
+      "subtitle": "水果之乡·皇帝柑",
+      "thumb": "",
+      "emoji": "🏘️",
+      "tier": null,
+      "srcLevel": "官方发布",
+      "verified_status": "已核验",
+      "summary": "杨村水果之乡·皇帝柑：皇帝柑等柑橘、特色水果、农业与产业转移",
+      "source": "博罗县政府/公开资料",
+      "url": "http://nyncj.huizhou.gov.cn/zwzc/xwzx/fpzx/content/mpost_5171509.html",
+      "valid_from": null,
+      "valid_to": null,
+      "evergreen": true,
+      "status": "active",
+      "module_refs": [
+        "mod-yangqiao-citrus"
+      ],
+      "link_ids": [],
+      "tags": {
+        "category": "city",
+        "entities": [
+          "杨村"
+        ],
+        "metrics": [],
+        "locations": [
+          "杨村"
+        ],
+        "event_date": null,
+        "identity": [
+          "weekend",
+          "family-kid"
+        ],
+        "mood": [
+          "food",
+          "family"
+        ],
+        "direction": "中性"
+      },
+      "fetched_at": "2026-10-24 07:31"
+    },
+    {
+      "id": "town-yangqiao",
+      "dedup_key": "town|杨侨",
+      "type": "town",
+      "freshness": "evergreen",
+      "title": "杨侨",
+      "subtitle": "华侨柑桔·归侨文化",
+      "thumb": "",
+      "emoji": "🏘️",
+      "tier": null,
+      "srcLevel": "官方发布",
+      "verified_status": "已核验",
+      "summary": "杨侨华侨柑桔·归侨文化：柑桔（红江橙、沃柑、贡柑、砂糖桔、年桔）；原杨村华侨柑桔场曾为『亚洲第一大柑桔专业农场』，归侨文化、黄龙病统防统治复种",
+      "source": "博罗县政府/公开资料",
+      "url": "https://static.nfapp.southcn.com/content/201909/03/c2586804.html",
+      "valid_from": null,
+      "valid_to": null,
+      "evergreen": true,
+      "status": "active",
+      "module_refs": [
+        "mod-yangqiao-citrus"
+      ],
+      "link_ids": [],
+      "tags": {
+        "category": "city",
+        "entities": [
+          "杨侨"
+        ],
+        "metrics": [],
+        "locations": [
+          "杨侨"
+        ],
+        "event_date": null,
+        "identity": [
+          "weekend",
+          "family-kid"
+        ],
+        "mood": [
+          "food",
+          "family",
+          "photo"
+        ],
+        "direction": "中性"
+      },
+      "fetched_at": "2026-10-24 07:31"
+    },
+    {
+      "id": "town-baitang",
+      "dedup_key": "town|柏塘",
+      "type": "town",
+      "freshness": "evergreen",
+      "title": "柏塘",
+      "subtitle": "茶乡",
+      "thumb": "",
+      "emoji": "🏘️",
+      "tier": null,
+      "srcLevel": "官方发布",
+      "verified_status": "已核验",
+      "summary": "柏塘茶乡：柏塘山茶（广东十大名茶）、万亩茶园、茶文旅融合",
+      "source": "博罗县政府/公开资料",
+      "url": "https://www.boluo.gov.cn/hzblbtz/gkmlpt/content/5/5872/mpost_5872244.html",
+      "valid_from": null,
+      "valid_to": null,
+      "evergreen": true,
+      "status": "active",
+      "module_refs": [
+        "mod-baitang-tea"
+      ],
+      "link_ids": [],
+      "tags": {
+        "category": "city",
+        "entities": [
+          "柏塘"
+        ],
+        "metrics": [],
+        "locations": [
+          "柏塘"
+        ],
+        "event_date": null,
+        "identity": [
+          "weekend"
+        ],
+        "mood": [
+          "chill",
+          "photo",
+          "food"
+        ],
+        "direction": "中性"
+      },
+      "fetched_at": "2026-10-24 07:31"
+    },
+    {
+      "id": "town-huzhen",
+      "dedup_key": "town|湖镇",
+      "type": "town",
+      "freshness": "evergreen",
+      "title": "湖镇",
+      "subtitle": "冬瓜之乡·航天农业",
+      "thumb": "",
+      "emoji": "🏘️",
+      "tier": null,
+      "srcLevel": "官方发布",
+      "verified_status": "已核验",
+      "summary": "湖镇冬瓜之乡·航天农业：黑皮冬瓜（曾列入国家星火计划）、全国首个县级航天育种示范基地（广东航天农业科技生态园，国家3A）、石芽坝山茶",
+      "source": "博罗县政府/公开资料",
+      "url": "https://www.boluo.gov.cn/blgk/yxbl/content/post_5823957.html",
+      "valid_from": null,
+      "valid_to": null,
+      "evergreen": true,
+      "status": "active",
+      "module_refs": [
+        "mod-huzhen-spaceagri"
+      ],
+      "link_ids": [],
+      "tags": {
+        "category": "city",
+        "entities": [
+          "湖镇"
+        ],
+        "metrics": [],
+        "locations": [
+          "湖镇"
+        ],
+        "event_date": null,
+        "identity": [
+          "weekend",
+          "family-kid"
+        ],
+        "mood": [
+          "family",
+          "photo",
+          "food"
+        ],
+        "direction": "中性"
+      },
+      "fetched_at": "2026-10-24 07:31"
+    },
+    {
+      "id": "town-changning",
+      "dedup_key": "town|长宁",
+      "type": "town",
+      "freshness": "evergreen",
+      "title": "长宁",
+      "subtitle": "罗浮山大门·康养旅居",
+      "thumb": "",
+      "emoji": "🏘️",
+      "tier": null,
+      "srcLevel": "官方发布",
+      "verified_status": "已核验",
+      "summary": "长宁罗浮山大门·康养旅居：罗浮山文旅与『冬养罗浮』康养旅居、中医药康养；原福田片区菜心（国家地理标志）、航天育种；新材料产业园区",
+      "source": "博罗县政府/公开资料",
+      "url": "https://www.boluo.gov.cn/gkmlpt/content/5/5459/mpost_5459072.html",
+      "valid_from": null,
+      "valid_to": null,
+      "evergreen": true,
+      "status": "active",
+      "module_refs": [
+        "mod-luofu-wellness",
+        "mod-new-materials"
+      ],
+      "link_ids": [],
+      "tags": {
+        "category": "city",
+        "entities": [
+          "长宁"
+        ],
+        "metrics": [],
+        "locations": [
+          "长宁"
+        ],
+        "event_date": null,
+        "identity": [
+          "weekend",
+          "family-kid"
+        ],
+        "mood": [
+          "chill",
+          "family",
+          "photo"
+        ],
+        "direction": "中性"
+      },
+      "fetched_at": "2026-10-24 07:31"
+    },
+    {
+      "id": "town-shiwan",
+      "dedup_key": "town|石湾",
+      "type": "town",
+      "freshness": "evergreen",
+      "title": "石湾",
+      "subtitle": "工业重镇·河鲜夜宵",
+      "thumb": "",
+      "emoji": "🏘️",
+      "tier": null,
+      "srcLevel": "官方发布",
+      "verified_status": "已核验",
+      "summary": "石湾工业重镇·河鲜夜宵：制造业重镇（企业密集）、东江岸线夜宵经济",
+      "source": "博罗县政府/公开资料",
+      "url": "https://www.boluo.gov.cn/blgk/xzqh/",
+      "valid_from": null,
+      "valid_to": null,
+      "evergreen": true,
+      "status": "active",
+      "module_refs": [],
+      "link_ids": [],
+      "tags": {
+        "category": "city",
+        "entities": [
+          "石湾"
+        ],
+        "metrics": [],
+        "locations": [
+          "石湾"
+        ],
+        "event_date": null,
+        "identity": [
+          "industry-watcher"
+        ],
+        "mood": [
+          "food",
+          "chill"
+        ],
+        "direction": "中性"
+      },
+      "fetched_at": "2026-10-24 07:31"
+    },
+    {
+      "id": "town-yuanzhou",
+      "dedup_key": "town|园洲",
+      "type": "town",
+      "freshness": "evergreen",
+      "title": "园洲",
+      "subtitle": "融深第一镇",
+      "thumb": "",
+      "emoji": "🏘️",
+      "tier": null,
+      "srcLevel": "官方发布",
+      "verified_status": "已核验",
+      "summary": "园洲融深第一镇：深博福田产业园（全省首个跨市域总部+基地示范园）、融深融莞产业、通勤",
+      "source": "博罗县政府/公开资料",
+      "url": "https://www.boluo.gov.cn/blgk/xzqh/",
+      "valid_from": null,
+      "valid_to": null,
+      "evergreen": true,
+      "status": "active",
+      "module_refs": [],
+      "link_ids": [],
+      "tags": {
+        "category": "city",
+        "entities": [
+          "园洲"
+        ],
+        "metrics": [],
+        "locations": [
+          "园洲"
+        ],
+        "event_date": null,
+        "identity": [
+          "industry-watcher",
+          "weekend"
+        ],
+        "mood": [
+          "chill",
+          "food",
+          "photo"
+        ],
+        "direction": "中性"
+      },
+      "fetched_at": "2026-10-24 07:31"
+    },
+    {
+      "id": "town-longhua",
+      "dedup_key": "town|龙华",
+      "type": "town",
+      "freshness": "evergreen",
+      "title": "龙华",
+      "subtitle": "古村",
+      "thumb": "",
+      "emoji": "🏘️",
+      "tier": null,
+      "srcLevel": "官方发布",
+      "verified_status": "已核验",
+      "summary": "龙华古村：古村落保护、客家文化、乡村旅游",
+      "source": "博罗县政府/公开资料",
+      "url": "https://www.boluo.gov.cn/blgk/xzqh/",
+      "valid_from": null,
+      "valid_to": null,
+      "evergreen": true,
+      "status": "active",
+      "module_refs": [],
+      "link_ids": [],
+      "tags": {
+        "category": "city",
+        "entities": [
+          "龙华"
+        ],
+        "metrics": [],
+        "locations": [
+          "龙华"
+        ],
+        "event_date": null,
+        "identity": [
+          "weekend"
+        ],
+        "mood": [
+          "photo",
+          "chill",
+          "family"
+        ],
+        "direction": "中性"
+      },
+      "fetched_at": "2026-10-24 07:31"
+    },
+    {
+      "id": "town-taimei",
+      "dedup_key": "town|泰美",
+      "type": "town",
+      "freshness": "evergreen",
+      "title": "泰美",
+      "subtitle": "生态门户·高铁站",
+      "thumb": "",
+      "emoji": "🏘️",
+      "tier": null,
+      "srcLevel": "官方发布",
+      "verified_status": "已核验",
+      "summary": "泰美生态门户·高铁站：生态文旅、高铁融深通道、象头山生态",
+      "source": "博罗县政府/公开资料",
+      "url": "https://www.boluo.gov.cn/blgk/xzqh/",
+      "valid_from": null,
+      "valid_to": null,
+      "evergreen": true,
+      "status": "active",
+      "module_refs": [],
+      "link_ids": [],
+      "tags": {
+        "category": "city",
+        "entities": [
+          "泰美"
+        ],
+        "metrics": [],
+        "locations": [
+          "泰美"
+        ],
+        "event_date": null,
+        "identity": [
+          "weekend"
+        ],
+        "mood": [
+          "chill",
+          "photo",
+          "family"
+        ],
+        "direction": "中性"
+      },
+      "fetched_at": "2026-10-24 07:31"
+    },
+    {
+      "id": "town-henghe",
+      "dedup_key": "town|横河",
+      "type": "town",
+      "freshness": "evergreen",
+      "title": "横河",
+      "subtitle": "民宿示范镇",
+      "thumb": "",
+      "emoji": "🏘️",
+      "tier": null,
+      "srcLevel": "官方发布",
+      "verified_status": "已核验",
+      "summary": "横河民宿示范镇：民宿经济、环两山公路、非遗教学与乡村文旅",
+      "source": "博罗县政府/公开资料",
+      "url": "https://www.boluo.gov.cn/blgk/xzqh/",
+      "valid_from": null,
+      "valid_to": null,
+      "evergreen": true,
+      "status": "active",
+      "module_refs": [],
+      "link_ids": [],
+      "tags": {
+        "category": "city",
+        "entities": [
+          "横河"
+        ],
+        "metrics": [],
+        "locations": [
+          "横河"
+        ],
+        "event_date": null,
+        "identity": [
+          "weekend"
+        ],
+        "mood": [
+          "chill",
+          "family",
+          "photo"
+        ],
+        "direction": "中性"
+      },
+      "fetched_at": "2026-10-24 07:31"
+    },
+    {
+      "id": "mod-baitang-tea",
+      "dedup_key": "module|mod-baitang-tea",
+      "type": "module",
+      "freshness": "evergreen",
+      "title": "柏塘茶园",
+      "subtitle": "万亩茶园，山水之间的一杯好茶",
+      "thumb": "",
+      "emoji": "✨",
+      "tier": null,
+      "srcLevel": "官方发布",
+      "verified_status": "已核验",
+      "summary": "柏塘山茶是广东十大名茶之一，博罗柏塘镇坐拥万亩茶园，茶垄沿山势层叠、茶香漫山。秋日的茶园被称作『大自然打翻的绿色调色盘』，可漫步茶田栈道吸氧洗肺、体验手工采茶制茶，茶园里也有适合小坐的咖啡空间，是湾区周边周末短途的治愈去处。",
+      "source": "公开资料整理",
+      "url": "https://www.boluo.gov.cn/hzblbtz/gkmlpt/content/5/5872/mpost_5872244.html",
+      "valid_from": null,
+      "valid_to": null,
+      "evergreen": true,
+      "status": "active",
+      "module_ref": "mod-baitang-tea",
+      "link_ids": [],
+      "tags": {
+        "category": "tourism",
+        "entities": [
+          "柏塘山茶",
+          "万亩茶园"
+        ],
+        "metrics": [],
+        "locations": [
+          "柏塘"
+        ],
+        "event_date": null,
+        "identity": [
+          "weekend"
+        ],
+        "mood": [
+          "chill",
+          "photo",
+          "food"
+        ],
+        "direction": "中性"
+      },
+      "fetched_at": "2026-10-24 07:31"
+    },
+    {
+      "id": "mod-luofu-wellness",
+      "dedup_key": "module|mod-luofu-wellness",
+      "type": "module",
+      "freshness": "evergreen",
+      "title": "罗浮山康养旅居",
+      "subtitle": "山上登高览胜，山下康养旅居",
+      "thumb": "",
+      "emoji": "✨",
+      "tier": null,
+      "srcLevel": "官方发布",
+      "verified_status": "已核验",
+      "summary": "罗浮山是岭南第一山，也是葛洪中医药文化的重要承载地。博罗以罗浮山核心景区为牵引，构建『山上登高览胜祈福、山下康养旅居敬老』的全域文旅体系。长宁镇山下村山夏1368酒店把古村活化、适老化住宿与中医药康养结合，推出『冬养罗浮』生态康养旅居，面向",
+      "source": "公开资料整理",
+      "url": "https://www.boluo.gov.cn/xzygdw/xgbdst/blxw/content/post_5877145.html",
+      "valid_from": null,
+      "valid_to": null,
+      "evergreen": true,
+      "status": "active",
+      "module_ref": "mod-luofu-wellness",
+      "link_ids": [],
+      "tags": {
+        "category": "tourism",
+        "entities": [
+          "罗浮山",
+          "山夏1368",
+          "葛洪中医药文化"
+        ],
+        "metrics": [
+          "visitors"
+        ],
+        "locations": [
+          "长宁",
+          "横河"
+        ],
+        "event_date": null,
+        "identity": [
+          "weekend",
+          "family-kid"
+        ],
+        "mood": [
+          "chill",
+          "family"
+        ],
+        "direction": "中性"
+      },
+      "fetched_at": "2026-10-24 07:31"
+    },
+    {
+      "id": "mod-yangqiao-citrus",
+      "dedup_key": "module|mod-yangqiao-citrus",
+      "type": "module",
+      "freshness": "evergreen",
+      "title": "杨侨柑桔与侨乡",
+      "subtitle": "一座『亚洲第一柑桔农场』的两起两落",
+      "thumb": "",
+      "emoji": "✨",
+      "tier": null,
+      "srcLevel": "官方发布",
+      "verified_status": "已核验",
+      "summary": "杨侨镇前身是1951年建场的广东省杨村华侨柑桔场，曾在1991年前后以3万亩柑桔、年产约百万担被称为『亚洲第一大柑桔专业农场』。此后黄龙病两度给柑桔产业毁灭性打击；通过统一认识、统一管理、统防统治，复种园发病被控制在约1%。如今红江橙、沃柑",
+      "source": "公开资料整理",
+      "url": "https://static.nfapp.southcn.com/content/201909/03/c2586804.html",
+      "valid_from": null,
+      "valid_to": null,
+      "evergreen": true,
+      "status": "active",
+      "module_ref": "mod-yangqiao-citrus",
+      "link_ids": [],
+      "tags": {
+        "category": "agri",
+        "entities": [
+          "杨村华侨柑桔场",
+          "红江橙",
+          "黄龙病",
+          "归侨"
+        ],
+        "metrics": [],
+        "locations": [
+          "杨侨",
+          "杨村"
+        ],
+        "event_date": null,
+        "identity": [
+          "weekend",
+          "family-kid"
+        ],
+        "mood": [
+          "food",
+          "family",
+          "photo"
+        ],
+        "direction": "中性"
+      },
+      "fetched_at": "2026-10-24 07:31"
+    },
+    {
+      "id": "mod-new-materials",
+      "dedup_key": "module|mod-new-materials",
+      "type": "module",
+      "freshness": "evergreen",
+      "title": "新材料产业点火",
+      "subtitle": "铜来顺投产，与投资下行的『时差』",
+      "thumb": "",
+      "emoji": "✨",
+      "tier": null,
+      "srcLevel": "官方发布",
+      "verified_status": "已核验",
+      "summary": "2026年10月13日，博罗铜来顺新材料有限公司生产线在惠州博罗产业园区点火，项目由博罗县产业投资集团牵头引进，提出2027年冲刺百亿产值目标，新材料赛道再添新力量。值得注意的是：项目从投资、开工到点火、投产再到形成产能，通常有2—3年时滞",
+      "source": "公开资料整理",
+      "url": "https://www.boluo.gov.cn/zwgk/zwdt/tpxw/content/post_5872750.html",
+      "valid_from": null,
+      "valid_to": null,
+      "evergreen": true,
+      "status": "active",
+      "module_ref": "mod-new-materials",
+      "link_ids": [],
+      "tags": {
+        "category": "industry",
+        "entities": [
+          "铜来顺新材料",
+          "博罗产业园区",
+          "博罗县产业投资集团"
+        ],
+        "metrics": [
+          "new-project",
+          "ind-output"
+        ],
+        "locations": [
+          "长宁"
+        ],
+        "event_date": "2026-10-13",
+        "identity": [
+          "industry-watcher"
+        ],
+        "mood": [
+          "shop"
+        ],
+        "direction": "利好"
+      },
+      "fetched_at": "2026-10-24 07:31"
+    },
+    {
+      "id": "mod-huzhen-spaceagri",
+      "dedup_key": "module|mod-huzhen-spaceagri",
+      "type": "module",
+      "freshness": "evergreen",
+      "title": "航天农业科技生态园",
+      "subtitle": "一颗种子的太空历险记",
+      "thumb": "",
+      "emoji": "✨",
+      "tier": null,
+      "srcLevel": "官方发布",
+      "verified_status": "已核验",
+      "summary": "广东航天农业科技生态园位于湖镇镇，是国家3A级旅游景区、全国第一个县级航天育种试验示范基地（博罗县农业科技示范场始建于1981年，2004年成为全国首个县级航天育种示范基地）。园区约3650亩，把航天育种、优质水果与鱼塘田园结合，常年培育上",
+      "source": "公开资料整理",
+      "url": "https://www.boluo.gov.cn/blgk/yxbl/content/post_5823957.html",
+      "valid_from": null,
+      "valid_to": null,
+      "evergreen": true,
+      "status": "active",
+      "module_ref": "mod-huzhen-spaceagri",
+      "link_ids": [],
+      "tags": {
+        "category": "agri",
+        "entities": [
+          "广东航天农业科技生态园",
+          "航天育种",
+          "湖镇冬瓜"
+        ],
+        "metrics": [],
+        "locations": [
+          "湖镇"
+        ],
+        "event_date": null,
+        "identity": [
+          "family-kid",
+          "weekend"
+        ],
+        "mood": [
+          "family",
+          "photo",
+          "food"
+        ],
+        "direction": "中性"
+      },
+      "fetched_at": "2026-10-24 07:31"
+    },
+    {
+      "id": "ind-gdp",
+      "dedup_key": "indicator|gdp",
+      "type": "indicator",
+      "freshness": "evergreen",
+      "title": "GDP",
+      "subtitle": "最新（2025）：1005.45亿元",
+      "thumb": "",
+      "emoji": "📈",
+      "tier": null,
+      "srcLevel": "官方发布",
+      "verified_status": "已核验",
+      "summary": "地区生产总值，2025年1005.45亿元，成为广东首个千亿县",
+      "source": "博罗县2025年统计公报",
+      "url": "https://www.boluo.gov.cn/blgk/qjmb/content/post_5719003.html",
+      "valid_from": null,
+      "valid_to": null,
+      "evergreen": true,
+      "status": "active",
+      "module_ref": null,
+      "link_ids": [],
+      "tags": {
+        "category": "industry",
+        "entities": [
+          "GDP"
+        ],
+        "metrics": [
+          "gdp"
+        ],
+        "locations": [],
+        "event_date": "2025",
+        "identity": [
+          "industry-watcher"
+        ],
+        "mood": [
+          "shop"
+        ],
+        "direction": "中性"
+      },
+      "fetched_at": "2026-10-24 07:31"
+    },
+    {
+      "id": "ind-gdp-growth",
+      "dedup_key": "indicator|gdp-growth",
+      "type": "indicator",
+      "freshness": "evergreen",
+      "title": "GDP增速",
+      "subtitle": "最新（2025）：5.5%",
+      "thumb": "",
+      "emoji": "📈",
+      "tier": null,
+      "srcLevel": "官方发布",
+      "verified_status": "已核验",
+      "summary": "2025年按不变价同比增长5.5%；2026年计划6.5%—7%",
+      "source": "博罗县2025年统计公报",
+      "url": "https://www.boluo.gov.cn/blgk/qjmb/content/post_5719003.html",
+      "valid_from": null,
+      "valid_to": null,
+      "evergreen": true,
+      "status": "active",
+      "module_ref": null,
+      "link_ids": [],
+      "tags": {
+        "category": "industry",
+        "entities": [
+          "GDP增速"
+        ],
+        "metrics": [
+          "gdp-growth"
+        ],
+        "locations": [],
+        "event_date": "2025",
+        "identity": [
+          "industry-watcher"
+        ],
+        "mood": [
+          "shop"
+        ],
+        "direction": "中性"
+      },
+      "fetched_at": "2026-10-24 07:31"
+    },
+    {
+      "id": "ind-fai",
+      "dedup_key": "indicator|fai",
+      "type": "indicator",
+      "freshness": "evergreen",
+      "title": "固定资产投资",
+      "subtitle": "最新（2025）：-18.8%",
+      "thumb": "",
+      "emoji": "📉",
+      "tier": null,
+      "srcLevel": "官方发布",
+      "verified_status": "已核验",
+      "summary": "2025年全社会固投下降18.8%；工业投资-12.7%、房地产-47.6%、基建-0.3%；2026年计划实现正增长。当期投资是流量，其影响通过2-3年时滞传导到产能",
+      "source": "博罗县2025年统计公报",
+      "url": "https://www.boluo.gov.cn/bmzb/xtjj/tjyj/tjfx/content/post_5801531.html",
+      "valid_from": null,
+      "valid_to": null,
+      "evergreen": true,
+      "status": "active",
+      "module_ref": null,
+      "link_ids": [],
+      "tags": {
+        "category": "industry",
+        "entities": [
+          "固定资产投资"
+        ],
+        "metrics": [
+          "fai"
+        ],
+        "locations": [],
+        "event_date": "2025",
+        "identity": [
+          "industry-watcher"
+        ],
+        "mood": [
+          "shop"
+        ],
+        "direction": "利空"
+      },
+      "fetched_at": "2026-10-24 07:31"
+    },
+    {
+      "id": "ind-visitors",
+      "dedup_key": "indicator|visitors",
+      "type": "indicator",
+      "freshness": "evergreen",
+      "title": "文旅接待游客",
+      "subtitle": "最新（2026国庆假期）：35.94万人次",
+      "thumb": "",
+      "emoji": "📈",
+      "tier": null,
+      "srcLevel": "官方发布",
+      "verified_status": "已核验",
+      "summary": "纳入监测的乡村旅游点，国庆35.94万人次、同比+10.51%",
+      "source": "博罗县文广旅体局",
+      "url": "https://www.boluo.gov.cn/",
+      "valid_from": null,
+      "valid_to": null,
+      "evergreen": true,
+      "status": "active",
+      "module_ref": null,
+      "link_ids": [],
+      "tags": {
+        "category": "industry",
+        "entities": [
+          "文旅接待游客"
+        ],
+        "metrics": [
+          "visitors"
+        ],
+        "locations": [],
+        "event_date": "2026国庆假期",
+        "identity": [
+          "industry-watcher"
+        ],
+        "mood": [
+          "shop"
+        ],
+        "direction": "中性"
+      },
+      "fetched_at": "2026-10-24 07:31"
+    },
+    {
+      "id": "veg-gongzhuang-peanut",
+      "dedup_key": "veg|公庄秋花生",
+      "type": "veg",
+      "freshness": "recent",
+      "title": "公庄秋花生",
+      "subtitle": "公庄镇·沙土地",
+      "thumb": "",
+      "emoji": "🌾",
+      "tier": "较高",
+      "srcLevel": "市民讨论",
+      "verified_status": "待核实",
+      "summary": "9—10月采收，刚刨出来带泥香",
+      "source": "农业公开/社交打卡",
+      "url": "https://www.boluo.gov.cn/",
+      "valid_from": "2026-10-24",
+      "valid_to": "2026-11-30",
+      "evergreen": false,
+      "status": "active",
+      "module_ref": null,
+      "link_ids": [],
+      "tags": {
+        "category": "agri",
+        "entities": [
+          "公庄秋花生"
+        ],
+        "metrics": [],
+        "locations": [
+          "公庄"
+        ],
+        "event_date": null,
+        "identity": [
+          "weekend"
+        ],
+        "mood": [
+          "food",
+          "family"
+        ],
+        "direction": "中性"
+      },
+      "fetched_at": "2026-10-24 07:31"
+    },
+    {
+      "id": "veg-baitang-tea",
+      "dedup_key": "veg|柏塘秋茶",
+      "type": "veg",
+      "freshness": "recent",
+      "title": "柏塘秋茶",
+      "subtitle": "柏塘镇",
+      "thumb": "",
+      "emoji": "🌾",
+      "tier": "较高",
+      "srcLevel": "市民讨论",
+      "verified_status": "待核实",
+      "summary": "秋茶香浓耐泡，万亩茶园开采、茶文旅融合",
+      "source": "农业公开/社交打卡",
+      "url": "https://www.boluo.gov.cn/",
+      "valid_from": "2026-10-24",
+      "valid_to": "2026-11-30",
+      "evergreen": false,
+      "status": "active",
+      "module_ref": null,
+      "link_ids": [],
+      "tags": {
+        "category": "agri",
+        "entities": [
+          "柏塘秋茶"
+        ],
+        "metrics": [],
+        "locations": [
+          "柏塘"
+        ],
+        "event_date": null,
+        "identity": [
+          "weekend"
+        ],
+        "mood": [
+          "food",
+          "family"
+        ],
+        "direction": "中性"
+      },
+      "fetched_at": "2026-10-24 07:31"
+    },
+    {
+      "id": "veg-sweet-potato",
+      "dedup_key": "veg|博罗红薯",
+      "type": "veg",
+      "freshness": "recent",
+      "title": "博罗红薯",
+      "subtitle": "北部各镇",
+      "thumb": "",
+      "emoji": "🌾",
+      "tier": "较高",
+      "srcLevel": "市民讨论",
+      "verified_status": "待核实",
+      "summary": "秋收番薯，甜糯飘香（10—11月）",
+      "source": "农业公开/社交打卡",
+      "url": "https://www.boluo.gov.cn/",
+      "valid_from": "2026-10-24",
+      "valid_to": "2026-11-30",
+      "evergreen": false,
+      "status": "active",
+      "module_ref": null,
+      "link_ids": [],
+      "tags": {
+        "category": "agri",
+        "entities": [
+          "博罗红薯"
+        ],
+        "metrics": [],
+        "locations": [
+          "石坝",
+          "麻陂"
+        ],
+        "event_date": null,
+        "identity": [
+          "weekend"
+        ],
+        "mood": [
+          "food",
+          "family"
+        ],
+        "direction": "中性"
+      },
+      "fetched_at": "2026-10-24 07:31"
+    },
+    {
+      "id": "veg-guanyinge-peanut-oil",
+      "dedup_key": "veg|观音阁花生油",
+      "type": "veg",
+      "freshness": "recent",
+      "title": "观音阁花生油",
+      "subtitle": "观音阁镇",
+      "thumb": "",
+      "emoji": "🌾",
+      "tier": "较高",
+      "srcLevel": "市民讨论",
+      "verified_status": "待核实",
+      "summary": "10月新花生现榨，一勺浓香",
+      "source": "农业公开/社交打卡",
+      "url": "https://www.boluo.gov.cn/",
+      "valid_from": "2026-10-24",
+      "valid_to": "2026-11-30",
+      "evergreen": false,
+      "status": "active",
+      "module_ref": null,
+      "link_ids": [],
+      "tags": {
+        "category": "agri",
+        "entities": [
+          "观音阁花生油"
+        ],
+        "metrics": [],
+        "locations": [
+          "观音阁"
+        ],
+        "event_date": null,
+        "identity": [
+          "weekend"
+        ],
+        "mood": [
+          "food",
+          "family"
+        ],
+        "direction": "中性"
+      },
+      "fetched_at": "2026-10-24 07:31"
+    },
+    {
+      "id": "veg-yangcun-emperor-citrus",
+      "dedup_key": "veg|杨村皇帝柑",
+      "type": "veg",
+      "freshness": "recent",
+      "title": "杨村皇帝柑",
+      "subtitle": "杨村镇",
+      "thumb": "",
+      "emoji": "🌾",
+      "tier": "较高",
+      "srcLevel": "市民讨论",
+      "verified_status": "待核实",
+      "summary": "10月下旬开摘、上市初期，果皮转色糖分积累中",
+      "source": "农业公开/社交打卡",
+      "url": "https://www.boluo.gov.cn/",
+      "valid_from": "2026-10-24",
+      "valid_to": "2026-11-30",
+      "evergreen": false,
+      "status": "active",
+      "module_ref": null,
+      "link_ids": [],
+      "tags": {
+        "category": "agri",
+        "entities": [
+          "杨村皇帝柑"
+        ],
+        "metrics": [],
+        "locations": [
+          "杨村"
+        ],
+        "event_date": null,
+        "identity": [
+          "weekend"
+        ],
+        "mood": [
+          "food",
+          "family"
+        ],
+        "direction": "中性"
+      },
+      "fetched_at": "2026-10-24 07:31"
+    },
+    {
+      "id": "veg-changning-flower-cabbage",
+      "dedup_key": "veg|福田菜心(播种季)",
+      "type": "veg",
+      "freshness": "recent",
+      "title": "福田菜心(播种季)",
+      "subtitle": "长宁镇（原福田片区）",
+      "thumb": "",
+      "emoji": "🌾",
+      "tier": "中",
+      "srcLevel": "市民讨论",
+      "verified_status": "待核实",
+      "summary": "9—11月秋茬播种，尚未上市",
+      "source": "农业公开/社交打卡",
+      "url": "https://www.boluo.gov.cn/",
+      "valid_from": "2026-10-24",
+      "valid_to": "2026-11-30",
+      "evergreen": false,
+      "status": "active",
+      "module_ref": null,
+      "link_ids": [],
+      "tags": {
+        "category": "agri",
+        "entities": [
+          "福田菜心(播种季)"
+        ],
+        "metrics": [],
+        "locations": [
+          "长宁"
+        ],
+        "event_date": null,
+        "identity": [
+          "weekend"
+        ],
+        "mood": [
+          "food",
+          "family"
+        ],
+        "direction": "中性"
+      },
+      "fetched_at": "2026-10-24 07:31"
+    },
+    {
+      "id": "news-20261022-luofu-wellness",
+      "dedup_key": "古村游定制适老化客房，博罗探索“冬养罗浮”生态康养旅居新模式|2026-10",
+      "type": "news",
+      "freshness": "daily",
+      "title": "古村游定制适老化客房，博罗探索“冬养罗浮”生态康养旅居新模式",
+      "subtitle": "依托罗浮山优良生态资源，长宁镇山下村山夏1368酒店融入定制适老化住宿配套，打造",
+      "thumb": "",
+      "emoji": "🏡",
+      "tier": "较高",
+      "srcLevel": "官方发布",
+      "verified_status": "已核验",
+      "summary": "依托罗浮山优良生态资源，长宁镇山下村山夏1368酒店融入定制适老化住宿配套，打造“冬养罗浮”生态康养旅居项目，把古村活化、适老化住宿、中医药康养相结合，面向银发群体提供旅居休养服务。",
+      "source": "博罗县人民政府·博罗新闻",
+      "url": "https://www.boluo.gov.cn/xzygdw/xgbdst/blxw/content/post_5877145.html",
+      "valid_from": "2026-10-22",
+      "valid_to": "2026-11-21",
+      "evergreen": false,
+      "status": "active",
+      "module_ref": "mod-luofu-wellness",
+      "link_ids": [],
+      "tags": {
+        "category": "tourism",
+        "entities": [
+          "罗浮山",
+          "山夏1368",
+          "冬养罗浮康养"
+        ],
+        "metrics": [
+          "visitors"
+        ],
+        "locations": [
+          "长宁"
+        ],
+        "event_date": "2026-10",
+        "identity": [
+          "weekend",
+          "family-kid"
+        ],
+        "mood": [
+          "chill",
+          "family"
+        ],
+        "direction": "中性"
+      },
+      "fetched_at": "2026-10-24 07:31"
+    },
+    {
+      "id": "news-20261023-art-class",
+      "dedup_key": "博罗公益艺术培训十余年：学员从课堂走向省级舞台|2026-10",
+      "type": "news",
+      "freshness": "daily",
+      "title": "博罗公益艺术培训十余年：学员从课堂走向省级舞台",
+      "subtitle": "博罗县文化馆秋季公益艺术培训班开班，这项培训自2012年启动已持续十余年，免费开",
+      "thumb": "",
+      "emoji": "🎨",
+      "tier": "较高",
+      "srcLevel": "官方发布",
+      "verified_status": "已核验",
+      "summary": "博罗县文化馆秋季公益艺术培训班开班，这项培训自2012年启动已持续十余年，免费开设少儿美术、钢琴、民族舞、合唱、非洲鼓等课程，一批群众文艺团队正从公益培训中成长，从课堂学艺走向广东“四季村晚”舞台。",
+      "source": "博罗县人民政府·博罗新闻",
+      "url": "https://www.boluo.gov.cn/xzygdw/xgbdst/blxw/content/post_5878440.html",
+      "valid_from": "2026-10-23",
+      "valid_to": "2026-11-22",
+      "evergreen": false,
+      "status": "active",
+      "module_ref": null,
+      "link_ids": [],
+      "tags": {
+        "category": "livelihood",
+        "entities": [
+          "博罗县文化馆",
+          "公益艺术培训"
+        ],
+        "metrics": [],
+        "locations": [
+          "罗阳"
+        ],
+        "event_date": "2026-10",
+        "identity": [
+          "family-kid"
+        ],
+        "mood": [
+          "family"
+        ],
+        "direction": "中性"
+      },
+      "fetched_at": "2026-10-24 07:31"
+    },
+    {
+      "id": "news-20261022-nursery",
+      "dedup_key": "博罗首家公办托育服务中心试运营：148个普惠托位“医育融合”开放报名|2026-10-20",
+      "type": "news",
+      "freshness": "daily",
+      "title": "博罗首家公办托育服务中心试运营：148个普惠托位“医育融合”开放报名",
+      "subtitle": "10月20日，博罗县托育服务中心进入试运营阶段，正式开放报名，148个普惠托位面",
+      "thumb": "",
+      "emoji": "👶",
+      "tier": "较高",
+      "srcLevel": "官方发布",
+      "verified_status": "已核验",
+      "summary": "10月20日，博罗县托育服务中心进入试运营阶段，正式开放报名，148个普惠托位面向0至3岁婴幼儿家庭。中心主打“医育融合”，把儿童保健、生长发育评估、膳食营养指导融入孩子的一日生活。",
+      "source": "博罗县人民政府·博罗新闻",
+      "url": "https://www.boluo.gov.cn/xzygdw/xgbdst/blxw/content/post_5877155.html",
+      "valid_from": "2026-10-22",
+      "valid_to": "2026-11-21",
+      "evergreen": false,
+      "status": "active",
+      "module_ref": null,
+      "link_ids": [],
+      "tags": {
+        "category": "livelihood",
+        "entities": [
+          "博罗县托育服务中心"
+        ],
+        "metrics": [],
+        "locations": [
+          "罗阳"
+        ],
+        "event_date": "2026-10-20",
+        "identity": [
+          "family-kid"
+        ],
+        "mood": [
+          "family"
+        ],
+        "direction": "利好"
+      },
+      "fetched_at": "2026-10-24 07:31"
+    },
+    {
+      "id": "news-20261016-tuolai",
+      "dedup_key": "博罗铜来顺新材料投产：生产线点火，2027年冲刺百亿产值目标|2026-10-13",
+      "type": "news",
+      "freshness": "daily",
+      "title": "博罗铜来顺新材料投产：生产线点火，2027年冲刺百亿产值目标",
+      "subtitle": "10月13日，博罗铜来顺新材料有限公司生产线点火仪式在惠州博罗产业园区举行，该项",
+      "thumb": "",
+      "emoji": "🔥",
+      "tier": "较高",
+      "srcLevel": "官方发布",
+      "verified_status": "已核验",
+      "summary": "10月13日，博罗铜来顺新材料有限公司生产线点火仪式在惠州博罗产业园区举行，该项目由博罗县产业投资集团有限公司牵头引进，2027年将冲刺百亿产值目标，新材料赛道再添新力量。",
+      "source": "博罗县人民政府·博罗融媒",
+      "url": "https://www.boluo.gov.cn/zwgk/zwdt/tpxw/content/post_5872750.html",
+      "valid_from": "2026-10-16",
+      "valid_to": "2026-11-15",
+      "evergreen": false,
+      "status": "active",
+      "module_ref": "mod-new-materials",
+      "link_ids": [],
+      "tags": {
+        "category": "industry",
+        "entities": [
+          "铜来顺新材料",
+          "博罗产业园区",
+          "博罗县产业投资集团"
+        ],
+        "metrics": [
+          "new-project",
+          "ind-output"
+        ],
+        "locations": [
+          "长宁"
+        ],
+        "event_date": "2026-10-13",
+        "identity": [
+          "industry-watcher"
+        ],
+        "mood": [
+          "shop"
+        ],
+        "direction": "利好"
+      },
+      "fetched_at": "2026-10-24 07:31"
+    },
+    {
+      "id": "news-20261021-cantonfair",
+      "dedup_key": "博罗53家企业组团亮相第140届广交会，参展规模创新高|2026-10",
+      "type": "news",
+      "freshness": "daily",
+      "title": "博罗53家企业组团亮相第140届广交会，参展规模创新高",
+      "subtitle": "【高质量发展】博罗53家企业组团亮相第140届广交会，参展规模创新高，县域企业抱",
+      "thumb": "",
+      "emoji": "🌐",
+      "tier": "较高",
+      "srcLevel": "官方发布",
+      "verified_status": "已核验",
+      "summary": "【高质量发展】博罗53家企业组团亮相第140届广交会，参展规模创新高，县域企业抱团出海拓市场，展示博罗制造的底气与活力。",
+      "source": "博罗县人民政府·县融媒体中心",
+      "url": "http://www.boluo.gov.cn/xzygdw/xgbdst/tpxw/",
+      "valid_from": "2026-10-21",
+      "valid_to": "2026-11-20",
+      "evergreen": false,
+      "status": "active",
+      "module_ref": null,
+      "link_ids": [],
+      "tags": {
+        "category": "industry",
+        "entities": [
+          "广交会",
+          "博罗参展企业团"
+        ],
+        "metrics": [
+          "trade"
+        ],
+        "locations": [
+          "罗阳"
+        ],
+        "event_date": "2026-10",
+        "identity": [
+          "industry-watcher"
+        ],
+        "mood": [
+          "shop"
+        ],
+        "direction": "利好"
+      },
+      "fetched_at": "2026-10-24 07:31"
+    },
+    {
+      "id": "news-20261015-baitang-autumn",
+      "dedup_key": "柏塘万亩茶园秋游攻略出炉：赴山野秋景，解锁治愈人间烟火|2026-10",
+      "type": "news",
+      "freshness": "daily",
+      "title": "柏塘万亩茶园秋游攻略出炉：赴山野秋景，解锁治愈人间烟火",
+      "subtitle": "秋日的柏塘万亩茶园是大自然打翻的绿色调色盘：茶田层叠、茶香漫山，漫步茶田栈道沉浸",
+      "thumb": "",
+      "emoji": "🍵",
+      "tier": "较高",
+      "srcLevel": "官方发布",
+      "verified_status": "已核验",
+      "summary": "秋日的柏塘万亩茶园是大自然打翻的绿色调色盘：茶田层叠、茶香漫山，漫步茶田栈道沉浸式吸氧洗肺，可缓步漫游、静坐观景，随手一拍都是清新文艺大片，是湾区周边周末吸氧好去处。",
+      "source": "博罗县人民政府·柏塘镇",
+      "url": "https://www.boluo.gov.cn/hzblbtz/gkmlpt/content/5/5872/mpost_5872244.html",
+      "valid_from": "2026-10-15",
+      "valid_to": "2026-11-14",
+      "evergreen": false,
+      "status": "active",
+      "module_ref": "mod-baitang-tea",
+      "link_ids": [],
+      "tags": {
+        "category": "tourism",
+        "entities": [
+          "柏塘万亩茶园",
+          "柏塘山茶"
+        ],
+        "metrics": [
+          "visitors"
+        ],
+        "locations": [
+          "柏塘"
+        ],
+        "event_date": "2026-10",
+        "identity": [
+          "weekend"
+        ],
+        "mood": [
+          "chill",
+          "photo",
+          "food"
+        ],
+        "direction": "中性"
+      },
+      "fetched_at": "2026-10-24 07:31"
+    },
+    {
+      "id": "news-20261014-guoqing",
+      "dedup_key": "博罗县2026年国庆假期文旅市场综述：乡村旅游点接待游客35.94万人次|2026-10",
+      "type": "news",
+      "freshness": "daily",
+      "title": "博罗县2026年国庆假期文旅市场综述：乡村旅游点接待游客35.94万人次",
+      "subtitle": "国庆假期博罗聚焦亲子休闲、户外露营、茶旅融合、古村度假等新需求，推出罗浮山力天梦",
+      "thumb": "",
+      "emoji": "📊",
+      "tier": "较高",
+      "srcLevel": "官方发布",
+      "verified_status": "已核验",
+      "summary": "国庆假期博罗聚焦亲子休闲、户外露营、茶旅融合、古村度假等新需求，推出罗浮山力天梦幻乐园亲子水上游乐、玄碧湖骑行露营、柏塘万亩茶园采茶体验、徐田古村稻田观光等乡村文旅新产品，纳入监测的乡村旅游点累计接待游客35.94万人次，同比增长10.51%。",
+      "source": "博罗县人民政府·县文广旅体局",
+      "url": "https://www.boluo.gov.cn/hzblwgltj/gkmlpt/content/5/5871/post_5871692.html?jump=true",
+      "valid_from": "2026-10-14",
+      "valid_to": "2026-11-13",
+      "evergreen": false,
+      "status": "active",
+      "module_ref": null,
+      "link_ids": [],
+      "tags": {
+        "category": "tourism",
+        "entities": [
+          "博罗乡村旅游",
+          "国庆文旅"
+        ],
+        "metrics": [
+          "visitors"
+        ],
+        "locations": [
+          "长宁",
+          "柏塘"
+        ],
+        "event_date": "2026-10",
+        "identity": [
+          "weekend",
+          "family-kid"
+        ],
+        "mood": [
+          "family",
+          "chill"
+        ],
+        "direction": "中性"
+      },
+      "fetched_at": "2026-10-24 07:31"
+    },
+    {
+      "id": "news-20261022-henghe-credit",
+      "dedup_key": "横河镇开展信用服务进企业专题宣传活动|2026-10-22",
+      "type": "news",
+      "freshness": "daily",
+      "title": "横河镇开展信用服务进企业专题宣传活动",
+      "subtitle": "横河镇开展信用服务进企业专题宣传活动，把惠企政策与信用服务送到企业一线，助力营商",
+      "thumb": "",
+      "emoji": "🤝",
+      "tier": "较高",
+      "srcLevel": "官方发布",
+      "verified_status": "已核验",
+      "summary": "横河镇开展信用服务进企业专题宣传活动，把惠企政策与信用服务送到企业一线，助力营商环境持续优化。",
+      "source": "博罗县人民政府·镇街动态",
+      "url": "http://www.boluo.gov.cn/?q=help",
+      "valid_from": "2026-10-22",
+      "valid_to": "2026-11-21",
+      "evergreen": false,
+      "status": "active",
+      "module_ref": null,
+      "link_ids": [],
+      "tags": {
+        "category": "city",
+        "entities": [
+          "横河镇",
+          "信用服务进企业"
+        ],
+        "metrics": [],
+        "locations": [
+          "横河"
+        ],
+        "event_date": "2026-10-22",
+        "identity": [
+          "industry-watcher"
+        ],
+        "mood": [
+          "shop"
+        ],
+        "direction": "中性"
+      },
+      "fetched_at": "2026-10-24 07:31"
+    },
+    {
+      "id": "news-20261020-chongyang",
+      "dedup_key": "罗浮登高览胜 山下康养旅居：重阳前后博罗全域文旅融合效应显现|2026-10",
+      "type": "news",
+      "freshness": "daily",
+      "title": "罗浮登高览胜 山下康养旅居：重阳前后博罗全域文旅融合效应显现",
+      "subtitle": "九九重阳登高热潮褪去，博罗秋冬文旅融合效应持续显现。重阳节前后，博罗以罗浮山核心",
+      "thumb": "",
+      "emoji": "⛰️",
+      "tier": "中",
+      "srcLevel": "媒体报道",
+      "verified_status": "待核实",
+      "summary": "九九重阳登高热潮褪去，博罗秋冬文旅融合效应持续显现。重阳节前后，博罗以罗浮山核心景区为牵引，深度融合登高民俗、葛洪中医药文化与乡村康养业态，构建“山上登高览胜祈福、山下康养旅居敬老”的全域文旅体系。",
+      "source": "惠州日报/今日惠州网",
+      "url": "http://e.hznews.com/hzrb/pc/content/202610/20/content_1134020.html",
+      "valid_from": "2026-10-20",
+      "valid_to": "2026-11-19",
+      "evergreen": false,
+      "status": "active",
+      "module_ref": "mod-luofu-wellness",
+      "link_ids": [],
+      "tags": {
+        "category": "tourism",
+        "entities": [
+          "罗浮山",
+          "葛洪中医药文化",
+          "重阳登高"
+        ],
+        "metrics": [
+          "visitors"
+        ],
+        "locations": [
+          "长宁",
+          "横河"
+        ],
+        "event_date": "2026-10",
+        "identity": [
+          "weekend"
+        ],
+        "mood": [
+          "chill",
+          "family"
+        ],
+        "direction": "中性"
+      },
+      "fetched_at": "2026-10-24 07:31"
+    }
+  ]
+}

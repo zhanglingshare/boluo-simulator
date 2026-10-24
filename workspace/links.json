@@ -1,0 +1,131 @@
+{
+  "schema_version": 3,
+  "region": "boluo",
+  "updated": "2026-10-24",
+  "note": "工作区关联图谱。只有 confidence=high 且双事实已核验、带 caveat、≥2 来源的关联才 status=online 进前端；其余进 audit-pending-links.md。并列呈现不代表因果。",
+  "links": [
+    {
+      "id": "link-fai-vs-newproject",
+      "kind": "puzzle",
+      "card_ids": ["ind-fai", "news-20261016-tuolai"],
+      "title": "投资在走弱，为什么仍有新项目投产？",
+      "question": "2025年博罗全社会固定资产投资下降18.8%，为什么2026年10月铜来顺新材料仍在点火投产？",
+      "frame": {
+        "type": "stock-flow-lag",
+        "explain": "固定资产投资是当期『流量』，反映当下的投入意愿；而点火、投产形成的产能，是项目从投资、开工一路沉淀下来、最终计入GDP的『存量』。2025年固投下降18.8%（工业投资-12.7%、房地产-47.6%），意味着当年新开工的引擎在减速；但2026年陆续投产的项目，多是2-3年前投资高峰期就已开工、建设到了投产节点的存量。时滞让『投资走弱』与『项目仍投产』在同一时间出现，构成表面反差。",
+        "loop": "固定资产投资(当期流量) → 项目开工 →〔建设时滞约2-3年〕→ 点火/投产(新增产能存量) → 工业产值与就业 → 企业信心 → 再投资(流量)"
+      },
+      "confidence": "high",
+      "status": "online",
+      "caveat": "并列呈现不代表因果关系。固投-18.8%为2025年全年官方数据；铜来顺为2026-10-13点火事实，二者是用流量/存量与建设时滞解释的宏观关系，不代表该项目由某笔具体投资直接决定；项目实际开工年份请以官方备案为准。",
+      "sources": [
+        "https://www.boluo.gov.cn/bmzb/xtjj/tjyj/tjfx/content/post_5801531.html",
+        "https://www.boluo.gov.cn/blgk/qjmb/content/post_5719003.html",
+        "https://www.boluo.gov.cn/zwgk/zwdt/tpxw/content/post_5872750.html"
+      ],
+      "generated_at": "2026-10-24",
+      "review": null
+    },
+    {
+      "id": "link-tea-vs-wellness",
+      "kind": "contrast",
+      "card_ids": ["mod-baitang-tea", "mod-luofu-wellness"],
+      "title": "柏塘茶园 vs 罗浮山康养：两种慢周末怎么选？",
+      "question": "你已经选了『柏塘茶园』，它和『罗浮山康养旅居』都主打慢生活，分别适合怎样的周末和人群？",
+      "frame": {
+        "type": "compare",
+        "explain": "两处都在博罗北部山系、都适合放空，但节奏和人群不同：柏塘偏轻、偏年轻化的半日山野茶饮；罗浮山偏深、偏长住的敬老康养。",
+        "dimensions": [
+          {"dim": "位置", "a": "柏塘·中部偏北山区", "b": "长宁·罗浮山脚下"},
+          {"dim": "节奏", "a": "半日轻徒步+一杯茶", "b": "1—2天甚至长住"},
+          {"dim": "最适合", "a": "情侣/朋友/亲子、拍照打卡", "b": "银发、敬老家庭、康养客群"},
+          {"dim": "主打", "a": "万亩茶园、采茶、茶园咖啡", "b": "登高、中医药康养、适老化旅居"},
+          {"dim": "最佳季节", "a": "9—11月秋茶", "b": "秋冬康养季"}
+        ]
+      },
+      "confidence": "high",
+      "status": "online",
+      "caveat": "对比仅呈现差异，不代表哪个更好；门票、时长与产品以官方和现场为准。",
+      "sources": [
+        "https://www.boluo.gov.cn/hzblbtz/gkmlpt/content/5/5872/mpost_5872244.html",
+        "https://www.boluo.gov.cn/xzygdw/xgbdst/blxw/content/post_5877145.html",
+        "http://e.hznews.com/hzrb/pc/content/202610/20/content_1134020.html"
+      ],
+      "generated_at": "2026-10-24",
+      "review": null
+    },
+    {
+      "id": "link-citrus-season",
+      "kind": "season",
+      "card_ids": ["veg-yangcun-emperor-citrus", "mod-yangqiao-citrus"],
+      "title": "这个季节，从一颗柑桔走进杨侨",
+      "question": "杨村皇帝柑10月下旬开摘，杨侨的红江橙也在挂果——这颗柑橘背后，藏着一个『亚洲第一柑桔农场』的地方故事，要不要一起看看？",
+      "frame": {
+        "type": "season",
+        "chain": [
+          {"step": "当季", "text": "10月下旬—次年1月，杨村皇帝柑、杨侨红江橙/沃柑陆续成熟，可进园采摘"},
+          {"step": "到餐桌", "text": "现摘鲜食、做伴手礼；周边有侨乡风味与农家菜"},
+          {"step": "再深一层", "text": "走进杨侨，了解原杨村华侨柑桔场的归侨文化与黄龙病复种史"}
+        ]
+      },
+      "confidence": "high",
+      "status": "online",
+      "caveat": "具体开摘与上市时间受天气影响，以果园当年实际为准；人气声量为相对分档，非真实人数。",
+      "sources": [
+        "http://nyncj.huizhou.gov.cn/zwzc/xwzx/fpzx/content/mpost_5171509.html",
+        "https://static.nfapp.southcn.com/content/201909/03/c2586804.html",
+        "http://static.nfapp.southcn.com/content/201701/29/c266925.html"
+      ],
+      "generated_at": "2026-10-24",
+      "review": null
+    },
+    {
+      "id": "link-luofu-henghe",
+      "kind": "geo",
+      "card_ids": ["mod-luofu-wellness", "town-henghe"],
+      "title": "玩完罗浮山，附近还有一座安静的民宿小镇",
+      "question": "罗浮山脚下适合住下来，再往西北就是横河镇——显岗水库、环山绿道、秋枫寨，要不要顺路看看？",
+      "frame": {
+        "type": "nearby",
+        "route": "长宁罗浮山 → 环山绿道/显岗水库驿站 → 横河镇民宿群（同属罗浮山周边山系，可串成一条慢游线）",
+        "explain": "长宁与横河同处罗浮山周边，一个在山口主景区、一个在更安静的库区与民宿带，适合『主景区+小众延伸』组合。"
+      },
+      "confidence": "high",
+      "status": "online",
+      "caveat": "路程与路况以实际导航为准；民宿营业与活动以当地发布为准。",
+      "sources": [
+        "https://www.boluo.gov.cn/xzygdw/xgbdst/blxw/content/post_5877145.html",
+        "https://www.boluo.gov.cn/hzblwgltj/gkmlpt/content/5/5871/post_5871692.html?jump=true"
+      ],
+      "generated_at": "2026-10-24",
+      "review": null
+    },
+    {
+      "id": "link-yangqiao-cycle",
+      "kind": "causal",
+      "card_ids": ["mod-yangqiao-citrus", "town-yangqiao"],
+      "title": "从『亚洲第一』到黄龙病，再到重新挂果：杨侨柑桔为何两起两落？",
+      "question": "杨侨曾是『亚洲第一大柑桔专业农场』，又两度遭遇黄龙病毁灭性打击，今天为什么还能重新挂上满树红橙？",
+      "frame": {
+        "type": "long-cycle",
+        "explain": "这是一个典型的长周期产业：面积/树龄是『存量』，病害是负向冲击，统防统治与复种是修复，品牌与市场通过价格反馈决定农户是否愿意再投入。短期看到的『今年丰收』，是多年修复存量的结果。",
+        "stages": [
+          {"stage": "1951起", "text": "杨村华侨柑桔场建场，1991年前后约3万亩、年产约百万担，称亚洲第一大柑桔农场"},
+          {"stage": "冲击", "text": "黄龙病两度重创，老果园大面积损失"},
+          {"stage": "修复", "text": "统一认识、统一管理、统防统治，复种园发病率控制在约1%"},
+          {"stage": "回归", "text": "红江橙、沃柑、贡柑、砂糖桔、年桔复种，归侨果园故事延续"}
+        ],
+        "loop": "种植规模(存量) → 病害冲击↓ → 统防统治/复种 → 产量恢复 → 市场价格↑ → 农户信心与再投入 → 种植规模(存量)（多年时滞）"
+      },
+      "confidence": "high",
+      "status": "online",
+      "caveat": "历史数据与产量为公开报道口径，不同年份统计口径可能不一；为长周期产业回顾，非对当前价格/收益的预测。",
+      "sources": [
+        "https://static.nfapp.southcn.com/content/201909/03/c2586804.html",
+        "http://static.nfapp.southcn.com/content/201701/29/c266925.html"
+      ],
+      "generated_at": "2026-10-24",
+      "review": null
+    }
+  ]
+}
