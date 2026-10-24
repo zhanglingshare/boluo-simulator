@@ -37,7 +37,7 @@
   const byId = {};
   const state = { ids: [], active: null, filter: 'all', q: '', view: 'ws' };
   let lastRemoved = null;
-  const listeners = { change: [] };
+  const listeners = { change: [], open: [], close: [] };
 
   const CAT_NAME = { industry: '产业经济', livelihood: '民生', city: '城市', tourism: '文旅', food: '美食', agri: '农产' };
   const GRAD = {
@@ -297,6 +297,14 @@ a{color:#0d9488}
 .ind-break{display:flex;gap:7px;flex-wrap:wrap;margin:13px 0}
 .ind-pill{background:#fbfcfd;border:1px solid #eef2f5;border-radius:10px;padding:7px 11px;font-size:11.5px}
 .news-hero{padding:19px 20px}.news-hero h1{font-size:19px;line-height:1.45;margin:9px 0 11px}
+.news-num{display:flex;align-items:baseline;gap:8px;flex-wrap:wrap;background:linear-gradient(135deg,#f1f7f5,#e9f3f1);
+  border:1px solid #dcebe8;border-radius:14px;padding:14px 18px;margin:14px 0 4px}
+.news-num .nn{font-size:44px;font-weight:800;line-height:1;color:#087F75;letter-spacing:-.02em;font-variant-numeric:tabular-nums}
+.news-num .nu{font-size:19px;font-weight:700;color:#06655c}
+.news-num .nc{font-size:15px;font-weight:700;color:#0f172a;border-left:2px solid #cbdedb;padding-left:10px;margin-left:2px}
+.facts{display:flex;flex-wrap:wrap;gap:8px 18px;margin:13px 0 2px;font-size:12px;color:#64748b}
+.facts .f{display:inline-flex;align-items:center;gap:5px}
+.facts .f .bi{color:#087F75}
 .fate{background:#fbfcfd;border:1px solid #eef2f5;border-radius:12px;padding:13px 15px;margin-top:14px}
 .fate .frow{font-size:12px;line-height:1.9;color:#475569}.fate .frow b{color:#0f172a}
 .sources{margin-top:16px;padding-top:13px;border-top:1px dashed #e5e9ee;font-size:10.5px;color:#94a3b8;line-height:1.8}
@@ -375,6 +383,61 @@ a{color:#0d9488}
 .toast.show{opacity:1;transform:translateX(-50%) translateY(0);pointer-events:auto}
 .toast .undo{background:rgba(255,255,255,.18);border:0;color:#fff;border-radius:8px;padding:4px 12px;font-size:12px;font-weight:700}
 .toast .go{background:var(--teal,#0d9488);border:0;color:#fff;border-radius:8px;padding:4px 12px;font-size:12px;font-weight:700}
+
+/* ============ 内联主舞台模式（v3 预览，宿主挂载） ============ */
+/* 复用全部数据/状态/渲染/关联，仅把 fixed 抽屉外壳换成宿主页面内的主舞台 */
+:host([data-mode="inline"]){position:static!important;inset:auto!important;z-index:auto!important;
+  display:block!important;pointer-events:auto!important;background:transparent!important}
+:host([data-mode="inline"]) .dock,
+:host([data-mode="inline"]) .scrim{display:none!important}
+:host([data-mode="inline"]) .drawer{position:static!important;width:100%!important;max-width:none!important;height:auto!important;
+  transform:none!important;box-shadow:none!important;background:transparent!important;display:flex!important;
+  border-radius:0;flex-direction:column;pointer-events:auto!important}
+:host([data-mode="inline"]) .drawer *{pointer-events:auto}
+:host([data-mode="inline"]) .dr-head{display:none!important}
+:host([data-mode="inline"]) .chips{background:transparent;border-bottom:1px solid #eef2f5;padding:2px 0 13px;
+  position:static;z-index:auto}
+:host([data-mode="inline"]) .chips .cico{background:linear-gradient(135deg,#eef5f3,#e1edeb)!important;color:#087F75!important;
+  width:34px;height:34px;border-radius:10px}
+:host([data-mode="inline"]) .chips .cico .bi{color:#087F75!important}
+:host([data-mode="inline"]) .view{display:block!important;overflow:visible;flex:none;animation:fd .34s ease}
+:host([data-mode="inline"]) .view-inner{padding:0}
+:host([data-mode="inline"]) #viewPicker{display:none!important}
+:host([data-mode="inline"]) .mcard{border-radius:18px;box-shadow:0 10px 36px rgba(15,23,42,.07)}
+:host([data-mode="inline"]) .mhero{height:280px}
+:host([data-mode="inline"]) .mgrid{grid-template-columns:1fr 1fr;gap:22px}
+:host([data-mode="inline"]) .mbody{padding:24px 26px}
+:host([data-mode="inline"]) .mhero h1{font-size:27px}
+:host([data-mode="inline"]) .news-hero{padding:28px 32px}
+:host([data-mode="inline"]) .news-hero h1{font-size:25px}
+:host([data-mode="inline"]) .news-num{padding:18px 24px;margin:18px 0 6px}
+:host([data-mode="inline"]) .news-num .nn{font-size:62px}
+:host([data-mode="inline"]) .news-num .nu{font-size:26px}
+:host([data-mode="inline"]) .news-num .nc{font-size:20px}
+:host([data-mode="inline"]) .mstory{font-size:14.5px;line-height:1.95}
+:host([data-mode="inline"]) .facts{font-size:13px}
+:host([data-mode="inline"]) .insight{background:transparent;padding:0 0 8px;border-top:1px solid #eef2f5;margin-top:6px}
+/* 空态：只留一句克制邀请，不弹跳、不塞引导 */
+:host([data-mode="inline"]) .empty{min-height:46vh}
+:host([data-mode="inline"]) .ebox{animation:none;border-width:1.5px;background:#fff;width:78px;height:78px;border-radius:22px}
+:host([data-mode="inline"]) .earrows{display:none}
+:host([data-mode="inline"]) .empty h3{font-size:17px}
+:host([data-mode="inline"]) .empty p{display:none}
+/* 内联模式：内容选择器为全屏 sheet（桌面/手机一致） */
+:host([data-mode="inline"][data-picker="true"]) #viewPicker{
+  display:block!important;position:fixed;inset:0;z-index:2147483950;overflow-y:auto;background:#f6f8f9;
+  padding-top:env(safe-area-inset-top,0);padding-bottom:env(safe-area-inset-bottom,0);animation:fd .28s ease}
+:host([data-mode="inline"][data-picker="true"]) #viewWs{display:none!important}
+:host([data-mode="inline"][data-picker="true"]) .picker-head{position:sticky;top:0;background:#fff;z-index:6;
+  padding-top:max(12px,env(safe-area-inset-top,0));box-shadow:0 1px 0 #eef2f5}
+@media(max-width:860px){
+  :host([data-mode="inline"]) .chips{position:sticky;top:var(--ws-chip-top,56px);z-index:5;
+    background:#FAFAF8;padding-top:10px}
+  :host([data-mode="inline"]) .mhero{height:210px}
+  :host([data-mode="inline"]) .mgrid{grid-template-columns:1fr;gap:16px}
+  :host([data-mode="inline"]) .mbody{padding:18px 16px}
+  :host([data-mode="inline"]) .mhero h1{font-size:22px}
+}
 `;
 
   /* ---------- 工具 ---------- */
@@ -506,6 +569,29 @@ a{color:#0d9488}
       <div class="mquote">${icon('bulb', 15)} 这是${sf && sf.name.includes('流量') ? '当期「流量」，变化先反映当下的投入与意愿' : '「存量」与「流量」共同作用的结果'}；把它和具体事件卡放在一起，工作区会揭示它们之间的时滞与反馈。</div>
       ${srcLinks(c.url ? [c.url] : [])}</div></div>`;
   }
+  function numFromTitle(c) {
+    const m = (c.title || '').match(/([\d]+(?:\.\d+)?)\s*(万人次|万人|亿元|亿|万元|个|位|家|%)/);
+    if (!m) return '';
+    const after = (c.title || '').slice(m.index + m[0].length);
+    const cap = (after.match(/^([\u4e00-\u9fa5]{2,6})/) || [])[1] || '';
+    return `<div class="news-num"><span class="nn">${m[1]}</span><span class="nu">${m[2]}</span>${cap ? `<span class="nc">${esc(cap)}</span>` : ''}</div>`;
+  }
+  function evDateText(c) {
+    const s = c && c.tags && c.tags.event_date;
+    if (!s) return '';
+    const m = String(s).match(/(\d{4})-(\d{2})(?:-(\d{2}))?/);
+    if (!m) return String(s);
+    return m[3] ? `${+m[2]}月${+m[3]}日` : `${m[1]}年${+m[2]}月`;
+  }
+  function factsRow(c) {
+    const parts = [];
+    const loc = (c.tags && c.tags.locations || [])[0];
+    if (loc) parts.push(`<span class="f">${icon('pin', 13)}${esc(loc)}</span>`);
+    const d = evDateText(c);
+    if (d) parts.push(`<span class="f">${icon('calendar', 13)}${d}</span>`);
+    if (c.source) parts.push(`<span class="f">${icon('news', 13)}${esc(c.source)}</span>`);
+    return parts.length ? `<div class="facts">${parts.join('')}</div>` : '';
+  }
   function viewNews(c) {
     const tier = c.tier ? `<span class="badge" style="background:${c.tier === '高' ? 'rgba(225,29,72,.1)' : 'rgba(217,119,6,.1)'};color:${c.tier === '高' ? '#e11d48' : '#d97706'}">关注 · ${esc(c.tier)}</span>` : '';
     const fate = c.fate ? `<div class="fate">
@@ -515,8 +601,8 @@ a{color:#0d9488}
         <div class="frow" style="color:#94a3b8;font-size:10.5px;margin-top:4px">前提：${esc(c.fate.assumption || '以官方发布为准')}</div></div>` : '';
     return `<div class="mcard"><div class="news-hero">
       <div class="ind-badges"><span class="badge src">${esc(c.srcLevel || '')} · ${esc(c.verified_status || '')}</span>${tier}</div>
-      <h1>${esc(c.title)}</h1><div class="mstory">${esc(c.summary || '')}</div>${fate}
-      <div style="margin-top:14px"><a class="dr-btn primary" href="${esc(c.url)}" target="_blank" rel="noopener" style="display:inline-flex;align-items:center;gap:6px;text-decoration:none">阅读原文 ${icon('external', 15)}</a></div>
+      <h1>${esc(c.title)}</h1>${numFromTitle(c)}<div class="mstory">${esc(c.summary || '')}</div>${factsRow(c)}${fate}
+      <div style="margin-top:16px"><a class="dr-btn primary" href="${esc(c.url)}" target="_blank" rel="noopener" style="display:inline-flex;align-items:center;gap:6px;text-decoration:none">阅读原文 ${icon('external', 15)}</a></div>
       ${srcLinks(c.url ? [c.url] : [])}</div></div>`;
   }
   function viewVeg(c) {
@@ -746,6 +832,7 @@ a{color:#0d9488}
     const existed = state.ids.includes(id);
     if (!existed) state.ids.push(id);
     state.active = id; persist(); renderAll();
+    if (isInline()) { if (host.dataset.picker === 'true') closePicker(); open(); return; }
     if (opts.open) { open(); }
     else {
       toast(existed ? '已在工作区' : '已加入「我的博罗」', null, () => open());
@@ -761,11 +848,13 @@ a{color:#0d9488}
       state.ids.splice(Math.min(i, state.ids.length), 0, removed); state.active = removed; persist(); renderAll();
     });
   }
+  function clearHash() { try { history.replaceState(null, '', location.pathname + location.search); } catch (e) {} }
+  function writeHash() { try { if (state.ids.length) history.replaceState(null, '', '#ws=' + state.ids.join(',')); else clearHash(); } catch (e) {} }
   function clearAll() {
     if (!state.ids.length) return;
     const old = [...state.ids];
-    state.ids = []; state.active = null; persist(); renderAll();
-    toast('已清空，可撤销', () => { state.ids = old; state.active = old[0] || null; persist(); renderAll(); });
+    state.ids = []; state.active = null; clearHash(); persist(); renderAll();
+    toast('已清空，可撤销', () => { state.ids = old; state.active = old[0] || null; writeHash(); persist(); renderAll(); });
   }
   function share() {
     const hash = '#ws=' + state.ids.join(',');
@@ -774,15 +863,42 @@ a{color:#0d9488}
     if (navigator.clipboard) navigator.clipboard.writeText(link).catch(() => {});
     toast('分享链接已生成并复制，也可从地址栏复制');
   }
-  function open() { host.setAttribute('data-open', 'true'); toastEl.classList.remove('show'); }
-  function close() { host.setAttribute('data-open', 'false'); state.view = 'ws'; switchView(); }
-  function toggle() { host.getAttribute('data-open') === 'true' ? close() : open(); }
+  const isInline = () => host.dataset.mode === 'inline';
+  function openPicker() {
+    state.view = 'picker';
+    if (isInline()) { renderPicker(); host.dataset.picker = 'true'; }
+    else { switchView(); }
+  }
+  function closePicker() {
+    state.view = 'ws';
+    if (isInline()) { host.dataset.picker = 'false'; }
+    else { switchView(); }
+  }
+  function open() {
+    toastEl.classList.remove('show');
+    if (isInline()) { emit('open'); }
+    else { host.setAttribute('data-open', 'true'); }
+  }
+  function close() {
+    if (isInline()) { if (host.dataset.picker === 'true') { closePicker(); return; } emit('close'); }
+    else { host.setAttribute('data-open', 'false'); state.view = 'ws'; switchView(); }
+  }
+  function toggle() {
+    if (isInline()) { emit('open'); return; }
+    host.getAttribute('data-open') === 'true' ? close() : open();
+  }
   function switchView() {
     $('#viewWs').classList.toggle('on', state.view === 'ws');
     $('#viewPicker').classList.toggle('on', state.view === 'picker');
     if (state.view === 'picker') renderPicker();
   }
-  function emitChange() { listeners.change.forEach(fn => { try { fn(state.ids.slice(), state.active); } catch (e) {} }); }
+  function emit(ev, ...args) { (listeners[ev] || []).forEach(fn => { try { fn(...args); } catch (e) {} }); }
+  function emitChange() { emit('change', state.ids.slice(), state.active); }
+  function mountInline(sel) {
+    if (host && host.parentNode) host.parentNode.removeChild(host);
+    const el = document.querySelector(sel);
+    if (el) { el.appendChild(host); host.dataset.mode = 'inline'; }
+  }
 
   /* ---------- 事件（统一委托） ---------- */
   function bindEvents() {
@@ -792,8 +908,8 @@ a{color:#0d9488}
     $('#drClose').addEventListener('click', close);
     $('#btnShare').addEventListener('click', share);
     $('#btnClear').addEventListener('click', clearAll);
-    $('#btnAdd').addEventListener('click', () => { state.view = 'picker'; switchView(); });
-    $('#pBack').addEventListener('click', () => { state.view = 'ws'; switchView(); });
+    $('#btnAdd').addEventListener('click', openPicker);
+    $('#pBack').addEventListener('click', closePicker);
     $('#pFilters').addEventListener('click', e => {
       const b = e.target.closest('[data-f]'); if (!b) return;
       state.filter = b.dataset.f; renderPicker();
@@ -816,7 +932,7 @@ a{color:#0d9488}
       const goto = e.target.closest('[data-goto]');
       if (goto) { add(goto.dataset.goto); return; }
       const picker = e.target.closest('[data-picker]');
-      if (picker) { state.view = 'picker'; switchView(); return; }
+      if (picker) { openPicker(); return; }
       const chip = e.target.closest('[data-chip]');
       if (chip && !e.target.closest('[data-remove]')) { state.active = chip.dataset.chip; persist(); renderChips(); renderStage(); renderInsight(); return; }
       const mapB = e.target.closest('[data-map]');
@@ -902,8 +1018,12 @@ a{color:#0d9488}
     __installed: true,
     ready: null,
     add, remove, open, close, toggle,
+    mountInline, openPicker, closePicker,
+    share, clear: clearAll,
     has: (id) => state.ids.includes(id),
     count: () => state.ids.length,
+    active: () => state.active,
+    isInline: () => host.dataset.mode === 'inline',
     cards: () => (DB.pool && DB.pool.cards || []).slice(),
     card: (id) => byId[id] || null,
     media: (id) => mediaOf(id),

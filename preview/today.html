@@ -2,36 +2,75 @@
 <html lang="zh-CN">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1">
-<title>今天 · 博罗 3.0 预览</title>
-<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Ctext y='.9em' font-size='88'%3E%F0%9F%A7%AD%3C/text%3E%3C/svg%3E">
-<link rel="stylesheet" href="v3.css">
+<meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,viewport-fit=cover">
+<title>今天 · 博罗 · 发现你的世界</title>
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23087F75' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Ccircle cx='12' cy='12' r='10'/%3E%3Cpolygon points='16.24 7.76 14.12 14.12 7.76 16.24 9.88 9.88 16.24 7.76'/%3E%3C/svg%3E">
+<link rel="stylesheet" href="stage.css">
 </head>
 <body data-world="today">
-<nav class="nav">
-  <div class="brand"><span class="logo"><svg class="bi" width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><polygon points="16.24 7.76 14.12 14.12 7.76 16.24 9.88 9.88 16.24 7.76"/></svg></span><span class="t">博罗 · 发现桌面</span></div>
+
+<!-- 极简导航 -->
+<nav class="topbar">
+  <div class="brand">
+    <span class="logo"><svg class="bi" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><polygon points="16.24 7.76 14.12 14.12 7.76 16.24 9.88 9.88 16.24 7.76"/></svg></span>
+    <span class="bname">博罗</span>
+    <span class="btag">发现你的世界</span>
+  </div>
   <div class="tabs">
-    <a href="today.html" class="on">今天</a>
+    <a class="on" aria-current="page">今天</a>
     <a href="towns.html">各镇</a>
     <a href="relations.html">关系</a>
   </div>
-  <a class="more" href="../index.html">更多 ›</a>
+  <div class="top-actions">
+    <button class="ws-entry" id="wsEntry" hidden>
+      <svg class="bi" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><polygon points="16.24 7.76 14.12 14.12 7.76 16.24 9.88 9.88 16.24 7.76"/></svg>
+      我的博罗 <b id="wsCount">0</b>
+    </button>
+    <a class="more" href="../index.html">更多</a>
+  </div>
 </nav>
 
-<main class="wrap">
-  <header class="hero">
-    <div class="hero-kicker">今天 · DAILY</div>
-    <h1>今天，博罗有件事<br>可能和你有关</h1>
-    <p>不用先看一堆数字。挑一条你感兴趣的，点「＋ 加入工作区」，它会自动展开完整内容；把有关联的内容放一起，还能看到背后的因果。</p>
-  </header>
+<!-- 浏览态：大精选 + 发现带 -->
+<div id="browse">
+  <main class="browse-wrap">
+    <section class="feature" id="feature" aria-live="polite"></section>
+    <section class="discover">
+      <div class="d-head">
+        <h2>为你发现</h2>
+        <div class="d-actions">
+          <button class="btn-ghost" id="shuffle">
+            <svg class="bi" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M16 3h5v5"/><path d="M4 20 21 3"/><path d="M21 16v5h-5"/><path d="m15 15 6 6"/><path d="M4 4l5 5"/></svg>
+            换一批</button>
+          <button class="btn-ghost" id="browseAll">全部内容</button>
+        </div>
+      </div>
+      <div class="rail" id="rail" aria-label="为你发现的内容，横向滑动"></div>
+      <p class="updated-line" id="updatedLine"></p>
+    </section>
+  </main>
+</div>
 
-  <div id="feature"></div>
-
-  <div class="sec-h"><h2 id="gridTitle"></h2><span class="hint">点 ＋ 加入，或拖到右下角的工作区</span></div>
-  <div class="grid" id="grid"></div>
-</main>
+<!-- 舞台态：ws-layer 内联主舞台挂载点 -->
+<div id="stageWrap" class="stage-wrap" hidden>
+  <div class="stage-top">
+    <button class="stage-back" id="stageBack">
+      <svg class="bi" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M19 12H5"/><path d="m12 19-7-7 7-7"/></svg>
+      <span>返回发现</span>
+    </button>
+    <div class="stage-title">我的博罗</div>
+    <div class="stage-tools">
+      <button class="btn-mini" id="stShare">
+        <svg class="bi" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M4 12v7a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2v-7"/><path d="M12 3v13"/><path d="m7 8 5-5 5 5"/></svg>
+        分享</button>
+      <button class="btn-mini" id="stClear">
+        <svg class="bi" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M3 6h18"/><path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6"/><path d="M8 6V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"/></svg>
+        清空</button>
+    </div>
+  </div>
+  <div class="stage-body" id="wsStage"></div>
+</div>
 
 <script src="../workspace/ws-layer.js" defer></script>
-<script src="v3-preview.js" defer></script>
+<script src="today.js" defer></script>
 </body>
 </html>
