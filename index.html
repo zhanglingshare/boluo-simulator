@@ -3,61 +3,108 @@
 <title>博罗产业风洞 · 今日话题</title>
 <script src="model.js"></script>
 <style>
+:root{
+  --bg:#f8fafc;
+  --card:#ffffff;
+  --card-b:#e2e8f0;
+  --ink:#0f172a;
+  --ink2:#475569;
+  --muted:#94a3b8;
+  --teal:#0d9488;
+  --teal-light:#14b8a6;
+  --slate:#334155;
+  --amber:#d97706;
+  --rose:#e11d48;
+  --line:#f1f5f9;
+}
 *{box-sizing:border-box}
-body{margin:0;background:#080b12;color:#e6edf3;font:14px/1.6 -apple-system,"PingFang SC","Microsoft YaHei",sans-serif}
-.nav{position:sticky;top:0;z-index:50;display:flex;gap:5px;align-items:center;padding:9px 14px;background:rgba(8,11,18,.95);border-bottom:1px solid #1b2434;backdrop-filter:blur(8px);overflow-x:auto}
-.nav b{font-size:14px;margin-right:6px;letter-spacing:.5px;flex:none}
-.nav a{background:#131c2b;color:#93a4bd;border:1px solid #22304a;padding:6px 12px;border-radius:20px;font-size:12.5px;text-decoration:none;white-space:nowrap;flex:none}
-.nav a.on{background:#15803d;border-color:#22c55e;color:#fff;font-weight:600}
-.nav .sp{margin-left:auto;font-size:11.5px;color:#64748b;flex:none}
-.wrap{max-width:720px;margin:auto;padding:16px}
-.head{display:flex;align-items:center;gap:16px;margin-bottom:14px}
-.radar{width:72px;height:72px;flex:none;position:relative}
-h1{font-size:22px;margin:0 0 2px;letter-spacing:.5px}
-.sub{color:#8fa3bf;font-size:13px;margin:0}
-.toolbar{display:flex;gap:8px;align-items:center;margin-bottom:10px;flex-wrap:wrap}
-.cat{background:#131c2b;color:#93a4bd;border:1px solid #22304a;padding:5px 14px;border-radius:16px;font-size:12.5px;cursor:pointer;transition:.2s}
-.cat.on{background:#15803d;border-color:#22c55e;color:#fff;font-weight:600}
-.refresh{background:#f59e0b;color:#1a1206;border:0;padding:6px 16px;border-radius:16px;font-size:12.5px;font-weight:700;cursor:pointer;margin-left:auto}
+body{margin:0;background:var(--bg);color:var(--ink);font:14px/1.6 -apple-system,"PingFang SC","Microsoft YaHei",sans-serif}
+.nav{position:sticky;top:0;z-index:50;display:flex;gap:5px;align-items:center;padding:10px 14px;background:rgba(255,255,255,.95);border-bottom:1px solid var(--card-b);backdrop-filter:blur(8px);overflow-x:auto}
+.nav b{font-size:14px;margin-right:6px;letter-spacing:.5px;flex:none;color:var(--ink)}
+.nav a{background:var(--card);color:var(--ink2);border:1px solid var(--card-b);padding:6px 12px;border-radius:20px;font-size:12.5px;text-decoration:none;white-space:nowrap;flex:none;transition:.2s}
+.nav a.on{background:var(--teal);border-color:var(--teal);color:#fff;font-weight:600}
+.nav .sp{margin-left:auto;font-size:11.5px;color:var(--muted);flex:none}
+.wrap{max-width:720px;margin:auto;padding:20px}
+@media(min-width:1024px){.wrap{max-width:1200px!important;padding:32px}}
+.head{display:flex;align-items:center;gap:16px;margin-bottom:20px}
+.radar{width:64px;height:64px;flex:none}
+h1{font-size:24px;margin:0 0 4px;letter-spacing:.5px;color:var(--ink)}
+.sub{color:var(--ink2);font-size:13px;margin:0}
+.toolbar{display:flex;gap:8px;align-items:center;margin-bottom:12px;flex-wrap:wrap}
+.cat{background:var(--card);color:var(--ink2);border:1px solid var(--card-b);padding:6px 16px;border-radius:16px;font-size:12.5px;cursor:pointer;transition:.2s}
+.cat.on{background:var(--teal);border-color:var(--teal);color:#fff;font-weight:600}
+.refresh{background:var(--amber);color:#fff;border:0;padding:7px 18px;border-radius:16px;font-size:12.5px;font-weight:700;cursor:pointer;margin-left:auto}
 .refresh:active{transform:scale(.96)}
-.scan-info{font-size:11px;color:#5b6b82;margin-bottom:12px}
-.tour-t{font-size:13px;color:#4ade80;font-weight:700;margin:0 0 8px}
-.tour{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin-bottom:16px}
-.tour a{background:#0e1523;border:1px solid #1c2739;border-radius:9px;padding:9px 11px;text-decoration:none;color:#8fa3bf;font-size:11.5px;line-height:1.45;display:block}
-.tour a:hover{border-color:#22c55e;background:#0f1f18}
-.tour b{color:#e6edf3;display:block;font-size:12.5px;margin-bottom:2px}
-@media(max-width:680px){.tour{grid-template-columns:repeat(2,1fr)}}
-.top1{background:linear-gradient(135deg,#0f2e1a,#0e1523);border:1px solid #22c55e;border-radius:12px;padding:16px;margin-bottom:10px;cursor:pointer;animation:fd .5s ease-out}
-.top1 .badge{display:inline-block;background:#22c55e;color:#06120a;font-size:10.5px;font-weight:800;padding:2px 8px;border-radius:4px;margin-bottom:6px}
-.top1 .t{font-size:18px;font-weight:700;margin-bottom:6px}
-.top1 .heatnum{font-size:28px;font-weight:800;color:#4ade80;font-variant-numeric:tabular-nums}
-.topic{background:#0e1523;border:1px solid #1c2739;border-radius:10px;padding:12px 14px;margin-bottom:8px;display:flex;gap:12px;align-items:flex-start;cursor:pointer;transition:.2s;animation:fd .4s ease-out}
-.topic:hover{border-color:#22c55e;background:#121d31}
-.topic .rank{font-size:16px;font-weight:800;color:#fbbf24;min-width:22px;text-align:center;font-variant-numeric:tabular-nums}
-.topic .body{flex:1;min-width:0}
-.topic .t{font-size:13.5px;font-weight:600;margin-bottom:3px}
-.topic .meta{display:flex;gap:8px;align-items:center;font-size:11px;color:#7d8fa8;flex-wrap:wrap}
-.topic .heat{height:4px;width:50px;background:#16233a;border-radius:2px;overflow:hidden;display:inline-block}
-.topic .heat i{display:block;height:100%;border-radius:2px;transition:width .6s}
-.topic .src{background:#1a2337;padding:1px 6px;border-radius:4px;font-size:10.5px}
-.topic .cat-tag{font-size:10.5px;padding:1px 6px;border-radius:4px}
-.topic .detail{display:none;font-size:12px;color:#8fa3bf;margin-top:6px;padding-top:6px;border-top:1px dashed #1e2b40}
-.topic.open .detail{display:block}
-.cat-ind{border-left:3px solid #3b82f6}
-.cat-life{border-left:3px solid #f97316}
-.cat-city{border-left:3px solid #6b7280}
-.cat-agri{border-left:3px solid #84cc16}
-.cat-fun{border-left:3px solid #10b981}
-.next{text-align:center;margin-top:18px}
-.next a{background:#15803d;color:#fff;padding:10px 24px;border-radius:8px;text-decoration:none;font-weight:600;display:inline-block}
-.disc{margin-top:14px;font-size:11px;color:#5b6b82;text-align:center}
+.scan-info{font-size:11px;color:var(--muted);margin-bottom:16px}
+
+/* 核心话题卡（带半圆环） */
+.hero-card{background:var(--card);border:1px solid var(--card-b);border-radius:16px;padding:24px;margin-bottom:20px;box-shadow:0 4px 20px rgba(0,0,0,.04)}
+.hero-card .tag{display:inline-block;font-size:11px;padding:4px 12px;border-radius:20px;background:rgba(13,148,136,.1);color:var(--teal);font-weight:600;margin-bottom:12px}
+.hero-card h2{font-size:20px;font-weight:800;margin-bottom:8px;color:var(--ink)}
+.hero-card .desc{font-size:13px;color:var(--ink2);margin-bottom:20px}
+.hero-grid{display:grid;grid-template-columns:1fr 1fr;gap:24px}
+@media(max-width:680px){.hero-grid{grid-template-columns:1fr}}
+.gauge{display:flex;flex-direction:column;align-items:center}
+.gauge-circle{width:140px;height:140px;position:relative}
+.gauge svg{width:100%;height:100%;transform:rotate(-90deg)}
+.gauge .bg{fill:none;stroke:#e2e8f0;stroke-width:10}
+.gauge .fg{fill:none;stroke:var(--teal);stroke-width:10;stroke-linecap:round;stroke-dasharray:314;stroke-dashoffset:310}
+.gauge .center{position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);text-align:center}
+.gauge .pct{font-size:28px;font-weight:900;color:var(--teal);font-variant-numeric:tabular-nums}
+.gauge .label{font-size:10px;color:var(--muted)}
+.gauge-caption{font-size:11px;color:var(--ink2);margin-top:10px;text-align:center}
+.compare{display:flex;flex-direction:column;gap:12px;justify-content:center}
+.compare-item{display:flex;align-items:center;gap:12px;padding:12px;background:var(--bg);border-radius:10px}
+.compare-item .icon{width:32px;height:32px;border-radius:8px;display:flex;align-items:center;justify-content:center;font-size:14px}
+.compare-item.model .icon{background:rgba(13,148,136,.15)}
+.compare-item.vote .icon{background:rgba(217,119,6,.15)}
+.compare-item .info{flex:1}
+.compare-item .info .title{font-size:12px;font-weight:600;color:var(--ink)}
+.compare-item .info .desc{font-size:10px;color:var(--muted)}
+.compare-item .num{font-size:20px;font-weight:800;font-variant-numeric:tabular-nums}
+.compare-item.model .num{color:var(--teal)}
+.compare-item.vote .num{color:var(--amber)}
+
+/* topHook */
+.top-hook{margin-top:12px;font-size:15px;font-weight:700;color:var(--amber);line-height:1.5;background:rgba(217,119,6,.06);border-left:3px solid var(--amber);padding:10px 12px;border-radius:0 10px 10px 0}
+
+/* 话题卡片 */
+.tcard{background:var(--card);border:1px solid var(--card-b);border-radius:12px;padding:16px;cursor:pointer;transition:.2s}
+.tcard:hover{border-color:var(--teal);box-shadow:0 4px 12px rgba(13,148,136,.1)}
+.tcard .cat-name{font-size:11px;color:var(--muted)}
+.tcard .t{font-size:15px;font-weight:700;color:var(--ink);margin:8px 0 6px;line-height:1.4}
+.tcard .row{display:flex;align-items:center;justify-content:space-between}
+.tcard .tier{font-size:11px;font-weight:700;border-radius:8px;padding:3px 10px}
+.tcard .detail{font-size:12px;color:var(--ink2);margin-top:8px;padding-top:8px;border-top:1px dashed var(--line);line-height:1.6}
+.tier-high{color:var(--rose);border:1px solid var(--rose)}
+.tier-mid{color:var(--amber);border:1px solid var(--amber)}
+.tier-low{color:var(--teal);border:1px solid var(--teal)}
+
+/* 互动区 */
+.interactive{margin:16px 0;padding:16px;background:var(--card);border:1px solid var(--card-b);border-radius:14px}
+.interactive h3{font-size:15px;font-weight:700;color:var(--ink);margin-bottom:4px}
+.interactive .sub{font-size:12px;color:var(--ink2);margin-bottom:12px}
+.pill-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:6px}
+.pill-btn{background:rgba(13,148,136,.08);border:1px solid rgba(13,148,136,.2);color:var(--teal);border-radius:8px;padding:8px 4px;cursor:pointer;font-size:12px;font-weight:600;transition:.2s}
+.pill-btn:hover{background:var(--teal);color:#fff}
+.vote-btn{flex:1;background:rgba(13,148,136,.08);border:1px solid var(--teal);color:var(--teal);border-radius:10px;padding:10px 6px;cursor:pointer;font-size:13px;font-weight:700;transition:.2s}
+.vote-btn:hover{background:var(--teal);color:#fff}
+
+.next{text-align:center;margin-top:24px}
+.next a{background:var(--teal);color:#fff;padding:11px 28px;border-radius:8px;text-decoration:none;font-weight:600;display:inline-block}
+.disc{margin-top:16px;font-size:11px;color:var(--muted);text-align:center;line-height:1.8}
+
 @keyframes fd{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:none}}
 @keyframes spin{to{transform:rotate(360deg)}}
 .scanline{transform-origin:center;animation:spin 3s linear infinite}
 .scanline.fast{animation-duration:.8s}
 @keyframes pulse{0%,100%{opacity:.4}50%{opacity:1}}
 .pulse{animation:pulse 1.5s ease-in-out infinite}
-@media(min-width:1024px){.wrap{max-width:1200px!important;padding:24px}}</style></head><body>
+
+.likebar{position:relative;bottom:auto;left:auto;transform:none;display:flex;justify-content:center;align-items:center;margin:20px 0;background:var(--card);border:1px solid var(--card-b);border-radius:24px;padding:10px 24px;gap:24px;z-index:999;box-shadow:0 4px 16px rgba(0,0,0,.06)}
+.likebar button{background:none;border:none;color:var(--ink2);font-size:14px;cursor:pointer}
+.likebar button:active{transform:scale(1.15)}
+</style></head><body>
 
 <div class="nav">
   <b>博罗产业风洞</b>
@@ -71,39 +118,73 @@ h1{font-size:22px;margin:0 0 2px;letter-spacing:.5px}
   <a href="blindspot.html">⑦ 忽略了什么</a>
   <a href="report.html">⑧ 分析报告</a>
   <a href="ending.html">⑨ 结语</a>
-  <a href="lab.html" style="background:#fbbf2422;border-color:#fbbf24;color:#fbbf24">🧪 决策实验室</a>
+  <a href="lab.html" style="background:rgba(217,119,6,.1);border-color:var(--amber);color:var(--amber)">🧪 决策实验室</a>
 </div>
 
 <div class="wrap">
   <div class="head">
     <svg class="radar" viewBox="0 0 80 80">
-      <circle cx="40" cy="40" r="36" fill="none" stroke="#1c2739" stroke-width="1"/>
-      <circle cx="40" cy="40" r="24" fill="none" stroke="#1c2739" stroke-width="1"/>
-      <circle cx="40" cy="40" r="12" fill="none" stroke="#1c2739" stroke-width="1"/>
-      <line x1="40" y1="4" x2="40" y2="76" stroke="#1c2739" stroke-width="1"/>
-      <line x1="4" y1="40" x2="76" y2="40" stroke="#1c2739" stroke-width="1"/>
+      <circle cx="40" cy="40" r="36" fill="none" stroke="#e2e8f0" stroke-width="1"/>
+      <circle cx="40" cy="40" r="24" fill="none" stroke="#e2e8f0" stroke-width="1"/>
+      <circle cx="40" cy="40" r="12" fill="none" stroke="#e2e8f0" stroke-width="1"/>
+      <line x1="40" y1="4" x2="40" y2="76" stroke="#e2e8f0" stroke-width="1"/>
+      <line x1="4" y1="40" x2="76" y2="40" stroke="#e2e8f0" stroke-width="1"/>
       <g class="scanline" id="scanline">
-        <line x1="40" y1="40" x2="40" y2="6" stroke="#22c55e" stroke-width="1.5" opacity="0.8"/>
-        <circle cx="40" cy="6" r="2" fill="#22c55e"/>
+        <line x1="40" y1="40" x2="40" y2="6" stroke="#0d9488" stroke-width="1.5" opacity="0.8"/>
+        <circle cx="40" cy="6" r="2" fill="#0d9488"/>
       </g>
     </svg>
     <div>
       <h1>今日博罗话题</h1>
       <p class="sub">扫一遍公开渠道，按关注程度排。点卡片看详情。
-        <details style="margin-top:6px;font-size:11px;color:#5b6b82"><summary style="cursor:pointer;display:inline">ⓘ 数据说明</summary>
+        <details style="margin-top:6px;font-size:11px;color:var(--muted)"><summary style="cursor:pointer;display:inline">ⓘ 数据说明</summary>
         <span style="display:block;margin-top:4px;line-height:1.6">来源：统计公报、各镇公开信息、南方+/惠州日报及微博/抖音/头条公开热榜，每日自动刷新。本页不展示平台后台真实阅读/转发/点赞，按关注档（高/较高/中）标注。</span>
         </details>
       </p>
-      <div id="topHook" style="margin-top:12px;font-size:17px;font-weight:800;color:#fbbf24;line-height:1.5;background:rgba(251,191,36,.08);border-left:3px solid #fbbf24;padding:10px 12px;border-radius:0 10px 10px 0"></div>
+      <div id="topHook" class="top-hook"></div>
     </div>
   </div>
 
-  <!-- 你的判断：模型联动 -->
-  <div style="margin:12px 0;padding:14px;background:linear-gradient(135deg,#14231a,#0f172a);border:1px solid #22c55e;border-radius:14px">
-    <div style="font-size:14px;font-weight:800;color:#fff;margin-bottom:4px">🔮 2030年博罗能到1600亿吗？说说你的判断</div>
-    <div style="font-size:12px;color:#94a3b8;margin-bottom:10px">同一套模型跑了4000遍，过1600亿概率约 <b id="baseHit" style="color:#4ade80">…</b>，中位数约 <b id="baseP50" style="color:#4ade80">…</b>亿。你比它乐观还是悲观？</div>
-    <div id="voteBar" style="display:flex;gap:8px"></div>
-    <div id="voteOut" style="margin-top:10px;font-size:12px;color:#cbd5e1;line-height:1.6"></div>
+  <!-- 核心话题卡（半圆环） -->
+  <div class="hero-card">
+    <div class="tag">🔮 模型推演</div>
+    <h2>2030年博罗能到1600亿吗？</h2>
+    <div class="desc">同一套模型跑了4000遍，过1600亿概率约 <b id="baseHit" style="color:var(--teal)">…</b>，中位数约 <b id="baseP50" style="color:var(--teal)">…</b>亿。你比它乐观还是悲观？</div>
+    <div class="hero-grid">
+      <div class="gauge">
+        <div class="gauge-circle">
+          <svg viewBox="0 0 140 140">
+            <circle class="bg" cx="70" cy="70" r="50"/>
+            <circle class="fg" cx="70" cy="70" r="50" id="gaugeFg"/>
+          </svg>
+          <div class="center">
+            <div class="pct" id="gaugePct">…</div>
+            <div class="label">达成率</div>
+          </div>
+        </div>
+        <div class="gauge-caption">4000次蒙特卡洛 · 种子42可复现</div>
+      </div>
+      <div class="compare">
+        <div class="compare-item model">
+          <div class="icon">📊</div>
+          <div class="info">
+            <div class="title">模型推演</div>
+            <div class="desc">按现状延续 · 中位数约 <span id="gaugeP50">…</span>亿</div>
+          </div>
+          <div class="num" id="gaugeHit">…</div>
+        </div>
+        <div class="compare-item vote">
+          <div class="icon">🗳️</div>
+          <div class="info">
+            <div class="title">网友投票</div>
+            <div class="desc">你比它乐观还是悲观？</div>
+          </div>
+          <div class="num">—</div>
+        </div>
+      </div>
+    </div>
+    <div id="voteBar" style="display:flex;gap:8px;margin-top:16px"></div>
+    <div id="voteOut" style="margin-top:10px;font-size:12px;color:var(--ink2);line-height:1.6"></div>
   </div>
 
   <div class="toolbar">
@@ -119,23 +200,24 @@ h1{font-size:22px;margin:0 0 2px;letter-spacing:.5px}
 
   <div id="topicList"></div>
 
-  <details style="margin:20px 0 12px;border:1px dashed #22c55e55;border-radius:12px;padding:0 14px">
-    <summary style="cursor:pointer;padding:12px 0;font-size:13px;color:#4ade80;font-weight:700">💬 说两句：你是哪个镇的？博罗你先介绍哪样？</summary>
+  <details style="margin:20px 0 12px;border:1px dashed var(--teal);border-radius:12px;padding:0 14px">
+    <summary style="cursor:pointer;padding:12px 0;font-size:13px;color:var(--teal);font-weight:700">💬 说两句：你是哪个镇的？博罗你先介绍哪样？</summary>
     <div style="padding:0 0 16px">
+
   <!-- 你是哪个镇的 -->
-  <div style="margin:12px 0;padding:14px;background:linear-gradient(135deg,#14231a,#0f172a);border:1px solid #22c55e;border-radius:14px">
-    <div style="font-size:15px;font-weight:800;color:#fff;margin-bottom:4px">🏘️ 你是博罗哪个镇的？</div>
-    <div style="font-size:12.5px;color:#94a3b8;margin-bottom:10px">12个镇街，每个镇都有自己的饭碗。点你的镇，看它最近在发生什么。</div>
-    <div id="townGrid" style="display:grid;grid-template-columns:repeat(4,1fr);gap:6px"></div>
-    <div id="townOut" style="margin-top:10px;font-size:12.5px;color:#cbd5e1;line-height:1.6"></div>
+  <div class="interactive">
+    <h3>🏘️ 你是博罗哪个镇的？</h3>
+    <div class="sub">12个镇街，每个镇都有自己的饭碗。点你的镇，看它最近在发生什么。</div>
+    <div id="townGrid" class="pill-grid"></div>
+    <div id="townOut" style="margin-top:10px;font-size:12.5px;color:var(--ink2);line-height:1.6"></div>
   </div>
 
   <!-- 博罗骄傲 -->
-  <div style="margin:12px 0;padding:14px;background:linear-gradient(135deg,#1a2332,#0f172a);border:1px solid #fbbf24;border-radius:14px">
-    <div style="font-size:15px;font-weight:800;color:#fff;margin-bottom:4px">🏆 向外人介绍博罗，你最先说哪样？</div>
-    <div style="font-size:12.5px;color:#94a3b8;margin-bottom:10px">博罗是博罗。罗浮山、菜心山茶、东江——这是我们自己的家底。</div>
+  <div class="interactive" style="margin-top:12px">
+    <h3>🏆 向外人介绍博罗，你最先说哪样？</h3>
+    <div class="sub">博罗是博罗。罗浮山、菜心山茶、东江——这是我们自己的家底。</div>
     <div id="proudGrid" style="display:flex;gap:8px;flex-wrap:wrap"></div>
-    <div id="proudOut" style="margin-top:10px;font-size:12.5px;color:#cbd5e1;line-height:1.6"></div>
+    <div id="proudOut" style="margin-top:10px;font-size:12.5px;color:var(--ink2);line-height:1.6"></div>
   </div>
     </div>
   </details>
@@ -147,7 +229,6 @@ h1{font-size:22px;margin:0 0 2px;letter-spacing:.5px}
 let curCat="all";
 let liveTopics=[];
 
-// 本地博罗话题池
 const LOCAL=[
   {t:"广东首个千亿县，GDP突破1005亿",h:96,c:"ind",src:"2025统计公报",d:"博罗成为广东首个千亿县，2030目标1600亿",why:"千亿是一个节点，但怎么从1000走到1600？"},
   {t:"园洲镇规上工业344亿，全县第一",h:92,c:"ind",src:"镇街公开数据",d:"挨着东莞石龙，承接产业转移，工业体量超过县城",why:"全县工业重心在最西边上。"},
@@ -174,7 +255,6 @@ const LOCAL=[
   {t:"2030目标GDP 1600亿",h:45,c:"ind",src:"十五五规划",d:"五年需增长59%，年均9.7%",why:"硬目标，怎么达成？"}
 ];
 
-// 博罗好吃
 const FOOD=[
   {t:"罗浮山窑鸡",h:92,c:"fun",src:"罗浮山招牌",d:"走地鸡用荷叶包裹，炭火慢窑，皮黄肉嫩、汁香入骨",why:"一只窑鸡，是罗浮山的味道。"},
   {t:"柏塘山茶",h:88,c:"agri",src:"广东十大名茶",d:"柏塘镇特产，高山云雾出好茶，甘醇回甘",why:"一杯茶，是北部山区的日子。"},
@@ -188,7 +268,6 @@ const FOOD=[
   {t:"博罗糯米鸡",h:58,c:"fun",src:"客家传统",d:"糯米包裹鸡肉，粽叶蒸香，饱足一餐",why:"客家人的实在，全在这只鸡里。"}
 ];
 
-// 博罗好玩
 const FUN=[
   {t:"罗浮山",h:96,c:"fun",src:"国家5A景区",d:"岭南第一山，冲虚观、飞云顶、朱明洞，道家第七洞天",why:"博罗的名片，惠州的骄傲。"},
   {t:"罗浮山环山绿道",h:90,c:"fun",src:"数百公里",d:"串联罗浮山及横河、柏塘、公庄各镇，骑行徒步皆宜",why:"一条路，看遍博罗北部。"},
@@ -208,7 +287,6 @@ const catMap={industry:"ind",livelihood:"life",city:"city",agriculture:"agri",to
 let allData=[];
 let hotMeta={};
 
-// 读取当日话题快照（由数据雷达每日生成、推送）
 async function loadHot(){
   let j;
   for(let a=0;a<3;a++){
@@ -231,30 +309,27 @@ function allTopics(){return allData;}
 function esc(s){return String(s==null?"":s).replace(/[&<>"']/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]));}
 function render(){
   let list=curCat==="all"?allTopics():allTopics().filter(x=>x.c===curCat);
-  // topHook：今天大家在看的第一条
   if(allTopics().length){
     const top=allTopics()[0];
     document.getElementById("topHook").innerHTML="📌 今天大家在看的，是<b>「"+esc(top.t)+"」</b>";
   }
-  // hot.json 已按关注档排好，直接采用数组顺序
-  const grads={ind:"linear-gradient(135deg,#1e3a8a,#0f1a2e)",life:"linear-gradient(135deg,#7c2d12,#1a0f0f)",city:"linear-gradient(135deg,#374151,#0f1a2e)",agri:"linear-gradient(135deg,#1a2f0e,#0f1a2e)",fun:"linear-gradient(135deg,#064e3b,#0f1a2e)"};
   const catName={ind:"产业",life:"民生",city:"城市",agri:"农业",fun:"文旅"};
-  const tierColor={"高":"#f87171","较高":"#fbbf24","中":"#34d399"};
+  const tierClass={"高":"tier-high","较高":"tier-mid","中":"tier-low"};
   const el=document.getElementById("topicList");
   el.style.cssText="display:grid;grid-template-columns:1fr 1fr;gap:10px";
   el.innerHTML=list.map((x)=>{
-    const liveBadge=x.live?'<span style="background:#dc2626;color:#fff;font-size:9px;padding:1px 5px;border-radius:3px;margin-left:5px">实时</span>':'';
-    const tc=tierColor[x.tier]||"#34d399";
-    return `<div class="tcard" data-t="${esc(x.t)}" style="background:${grads[x.c]||grads.city};border-radius:12px;padding:14px;cursor:pointer">
-      <div style="font-size:11px;color:#94a3b8">${catName[x.c]||"城市"}${liveBadge} · ${esc(x.srcLevel||"")} · ${esc(x.src||"")}</div>
-      <div style="font-size:16px;font-weight:800;color:#fff;margin:8px 0 6px;line-height:1.4">${esc(x.t)}</div>
-      <div style="display:flex;align-items:center;justify-content:space-between">
-        <span style="font-size:11px;font-weight:800;color:${tc};border:1px solid ${tc};border-radius:8px;padding:3px 10px">关注 · ${esc(x.tier||"")}</span>
-        <span class="likeBtn" onclick="event.stopPropagation();like(this,'${esc(x.t)}')" style="font-size:12px;color:#94a3b8;cursor:pointer">👍 <b class="ln">0</b></span>
+    const liveBadge=x.live?'<span style="background:#e11d48;color:#fff;font-size:9px;padding:1px 5px;border-radius:3px;margin-left:5px">实时</span>':'';
+    const tc=tierClass[x.tier]||"tier-low";
+    return `<div class="tcard" data-t="${esc(x.t)}">
+      <div class="cat-name">${catName[x.c]||"城市"}${liveBadge} · ${esc(x.srcLevel||"")} · ${esc(x.src||"")}</div>
+      <div class="t">${esc(x.t)}</div>
+      <div class="row">
+        <span class="tier ${tc}">关注 · ${esc(x.tier||"")}</span>
+        <span class="likeBtn" onclick="event.stopPropagation();like(this,'${esc(x.t)}')" style="font-size:12px;color:var(--muted);cursor:pointer">👍 <b class="ln">0</b></span>
       </div>
-      <div class="detail" style="font-size:11.5px;color:#cbd5e1;margin-top:8px;display:none">${esc(x.d||"")}${x.url?'<div style="margin-top:8px"><a href="'+esc(x.url)+'" target="_blank" rel="noopener nofollow" style="color:#7dd3fc;text-decoration:underline" onclick="event.stopPropagation()">查看原始报道 ↗</a></div>':''}</div>
+      <div class="detail" style="display:none">${esc(x.d||"")}${x.url?'<div style="margin-top:8px"><a href="'+esc(x.url)+'" target="_blank" rel="noopener nofollow" style="color:var(--teal);text-decoration:underline" onclick="event.stopPropagation()">查看原始报道 ↗</a></div>':''}</div>
     </div>`;
-  }).join("")||'<div style="grid-column:1/-1;color:#5b6b82;text-align:center;padding:26px 0">今日话题快照暂不可用（读取失败），可点「重新扫描」重试；页面其余内容不受影响。</div>';
+  }).join("")||'<div style="grid-column:1/-1;color:var(--muted);text-align:center;padding:26px 0">今日话题快照暂不可用（读取失败），可点「重新扫描」重试；页面其余内容不受影响。</div>';
   document.querySelectorAll("#topicList .tcard").forEach(c=>{
     c.onclick=()=>{const d=c.querySelector(".detail");d.style.display=d.style.display==="none"?"block":"none";};
   });
@@ -301,10 +376,20 @@ document.getElementById("btnScan").onclick=async function(){
   catch(e){ hotOk=false; hotMeta={}; allData=[]; }
   document.getElementById("scanInfo").textContent=hotOk?scanText():"今日话题快照暂不可用（读取失败），可点「重新扫描」重试；页面其余内容不受影响。";
   render();
-  // 跑风洞基准模型
   const b=HT.run(42,4000,HT.DEFAULT_PATHS);
-  document.getElementById("baseHit").textContent=b.hit.toFixed(0)+"%";
-  document.getElementById("baseP50").textContent=Math.round(b.p50);
+  const hitPct=b.hit.toFixed(0);
+  const p50=Math.round(b.p50);
+  document.getElementById("baseHit").textContent=hitPct+"%";
+  document.getElementById("baseP50").textContent=p50;
+  // 半圆环
+  document.getElementById("gaugePct").textContent=hitPct+"%";
+  document.getElementById("gaugeP50").textContent=p50;
+  document.getElementById("gaugeHit").textContent=hitPct+"%";
+  const circle=document.getElementById("gaugeFg");
+  const circumference=2*Math.PI*50;
+  const offset=circumference-(b.hit/100)*circumference;
+  circle.style.strokeDasharray=circumference;
+  circle.style.strokeDashoffset=offset;
 })();
 </script>
 
@@ -312,10 +397,6 @@ document.getElementById("btnScan").onclick=async function(){
   <button onclick="likePage()">👍 <span id="pcount">0</span></button>
   <button onclick="sharePage()">🔁 转给朋友</button>
 </div>
-<style>
-.likebar{position:relative;bottom:auto;left:auto;transform:none;display:flex;justify-content:center;align-items:center;margin:20px 0;background:rgba(15,23,42,.96);border:1px solid #3b82f6;border-radius:24px;padding:9px 20px;gap:22px;z-index:999;box-shadow:0 6px 24px rgba(0,0,0,.6)}
-.likebar button{background:none;border:none;color:#e2e8f0;font-size:14px;cursor:pointer}
-.likebar button:active{transform:scale(1.15)}
 <script>
 (function(){
   var k="like_"+location.pathname;
@@ -326,16 +407,15 @@ document.getElementById("btnScan").onclick=async function(){
     var m=document.getElementById("shareModal");
     if(!m){
       m=document.createElement("div");m.id="shareModal";
-      m.style.cssText="position:fixed;inset:0;background:rgba(0,0,0,.8);z-index:9999;display:flex;align-items:center;justify-content:center;padding:20px";
+      m.style.cssText="position:fixed;inset:0;background:rgba(0,0,0,.6);z-index:9999;display:flex;align-items:center;justify-content:center;padding:20px";
       m.onclick=function(){m.remove();};
-      m.innerHTML='<div style="background:#0f172a;padding:20px;border-radius:14px;text-align:center" onclick="event.stopPropagation()"><div style="color:#fff;font-size:14px;margin-bottom:12px">截图二维码，发给朋友/群</div><img src="https://api.qrserver.com/v1/create-qr-code/?size=200x200&data='+encodeURIComponent(location.href)+'" style="width:200px;height:200px;background:#fff;padding:8px;border-radius:8px"><div style="color:#94a3b8;font-size:12px;margin-top:12px">扫码打开</div></div>';
+      m.innerHTML='<div style="background:#fff;padding:20px;border-radius:14px;text-align:center" onclick="event.stopPropagation()"><div style="color:#0f172a;font-size:14px;margin-bottom:12px">截图二维码，发给朋友/群</div><img src="https://api.qrserver.com/v1/create-qr-code/?size=200x200&data='+encodeURIComponent(location.href)+'" style="width:200px;height:200px;background:#fff;padding:8px;border-radius:8px"><div style="color:#94a3b8;font-size:12px;margin-top:12px">扫码打开</div></div>';
       document.body.appendChild(m);
     }
     navigator.clipboard && navigator.clipboard.writeText(location.href);
   };
 })();
 </script>
-<!-- 百度统计：去 mtj.baidu.com 注册后替换 YOUR_ID -->
 <script>
 var _hmt = _hmt || [];
 (function() {
@@ -346,10 +426,9 @@ var _hmt = _hmt || [];
 })();
 </script>
 <script>
-// 你的判断：本地累计表态
 (function(){
   const KEY="boluo_judge_v1";
-  const opts=[{k:"sure",label:"我看稳了",c:"#4ade80",mood:"你比模型乐观"},{k:"risky",label:"有点悬",c:"#f87171",mood:"你比模型悲观"},{k:"wait",label:"不好说",c:"#94a3b8",mood:"你和模型一样谨慎"}];
+  const opts=[{k:"sure",label:"我看稳了",c:"#0d9488",mood:"你比模型乐观"},{k:"risky",label:"有点悬",c:"#e11d48",mood:"你比模型悲观"},{k:"wait",label:"不好说",c:"#94a3b8",mood:"你和模型一样谨慎"}];
   let d=JSON.parse(localStorage.getItem(KEY)||'{"sure":0,"risky":0,"wait":0}');
   function render(){
     const total=opts.reduce((s,o)=>s+d[o.k],0);
@@ -357,7 +436,7 @@ var _hmt = _hmt || [];
     document.getElementById("voteBar").innerHTML=opts.map(o=>{
       const pct=total?Math.round(d[o.k]/total*100):0;
       const dis=voted?'pointer-events:none;opacity:.7':'';
-      return `<button onclick="judge('${o.k}')" style="${dis};flex:1;background:${o.c}22;border:1px solid ${o.c};color:${o.c};border-radius:10px;padding:10px 6px;cursor:pointer;font-size:13px;font-weight:700">${o.label}</button>`;
+      return `<button class="vote-btn" onclick="judge('${o.k}')" style="${dis}background:${o.c}15;border-color:${o.c};color:${o.c}">${o.label}</button>`;
     }).join("");
     if(voted){
       const my=opts.find(o=>d[o.k]>0);
@@ -375,7 +454,6 @@ var _hmt = _hmt || [];
 })();
 </script>
 <script>
-// 你是哪个镇的
 (function(){
   const TOWNS=[
     {n:"罗阳",tag:"县城中心",say:"县政府在这，博罗的门面。"},
@@ -392,29 +470,28 @@ var _hmt = _hmt || [];
     {n:"观音阁",tag:"东江沿岸",say:"观音阁花生油新榨，东江岸线。"}
   ];
   document.getElementById("townGrid").innerHTML=TOWNS.map(t=>
-    `<button onclick="pickTown('${t.n}')" style="background:#22c55e22;border:1px solid #22c55e44;color:#bbf7d0;border-radius:8px;padding:8px 4px;cursor:pointer;font-size:12px;font-weight:700">${t.n}</button>`
+    `<button class="pill-btn" onclick="pickTown('${t.n}')">${t.n}</button>`
   ).join("");
   window.pickTown=function(n){
     const t=TOWNS.find(x=>x.n===n);if(!t)return;
-    document.getElementById("townOut").innerHTML=`你是<b style="color:#4ade80">${t.n}人</b>——${t.tag}。<br>${t.say}<br><span style="color:#6b7280">这个镇在博罗这盘棋里，占的是${t.tag}这个位置。</span>`;
+    document.getElementById("townOut").innerHTML=`你是<b style="color:var(--teal)">${t.n}人</b>——${t.tag}。<br>${t.say}<br><span style="color:var(--muted)">这个镇在博罗这盘棋里，占的是${t.tag}这个位置。</span>`;
   };
 })();
 </script>
 <script>
-// 博罗骄傲：向外人先说什么
 (function(){
   const KEY="boluo_proud_v1";
   const opts=[
-    {k:"luofu",label:"⛰️ 罗浮山",c:"#a78bfa",say:"岭南第一山，博罗的名片。"},
+    {k:"luofu",label:"⛰️ 罗浮山",c:"#8b5cf6",say:"岭南第一山，博罗的名片。"},
     {k:"tea",label:"🍵 菜心山茶",c:"#84cc16",say:"国家地理标志，广东十大名茶。"},
-    {k:"river",label:"🌊 东江",c:"#38bdf8",say:"穿境而过，博罗的母亲河。"},
+    {k:"river",label:"🌊 东江",c:"#0ea5e9",say:"穿境而过，博罗的母亲河。"},
     {k:"ind",label:"🏭 工业底子",c:"#f97316",say:"园洲石湾，自己的产业链。"},
-    {k:"near",label:"🚄 挨着深圳",c:"#fbbf24",say:"赣深高铁，半小时到深圳。"}
+    {k:"near",label:"🚄 挨着深圳",c:"#d97706",say:"赣深高铁，半小时到深圳。"}
   ];
   let d=JSON.parse(localStorage.getItem(KEY)||'{}');
   opts.forEach(o=>{if(typeof d[o.k]!=="number")d[o.k]=0;});
   document.getElementById("proudGrid").innerHTML=opts.map(o=>
-    `<button onclick="pickProud('${o.k}')" style="flex:1;min-width:80px;background:${o.c}22;border:1px solid ${o.c};color:${o.c};border-radius:10px;padding:10px 6px;cursor:pointer;font-size:12px;font-weight:700">${o.label}</button>`
+    `<button class="pill-btn" onclick="pickProud('${o.k}')" style="background:${o.c}15;border-color:${o.c};color:${o.c}">${o.label}</button>`
   ).join("");
   window.pickProud=function(k){
     if(localStorage.getItem(KEY+"_done"))return;
