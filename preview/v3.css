@@ -66,3 +66,13 @@ button{font-family:inherit}
 .chips-row{display:flex;gap:8px;flex-wrap:wrap}
 .chipx{background:#fff;border:1px solid var(--b);border-radius:18px;padding:7px 14px;font-size:12.5px;color:var(--ink2)}
 .chipx b{color:var(--teal)}
+
+/* 统一线性图标（WS.icon 生成的 svg 位于宿主页，需在本页定义对齐与配色） */
+.bi{display:inline-block;vertical-align:-.2em;flex:none}
+.add-btn{display:inline-flex;align-items:center;justify-content:center;gap:5px}
+.thumb-ico,.f-ico{display:flex;align-items:center;justify-content:center;color:rgba(255,255,255,.94);z-index:2}
+.c-thumb .thumb-ico .bi,.f-visual .f-ico .bi{filter:drop-shadow(0 4px 12px rgba(0,0,0,.20))}
+.loc-mini{display:inline-flex;align-items:center;gap:2px}
+.loc-mini .bi{color:var(--muted)}
+.f-visual .note{display:inline-flex;align-items:center;gap:4px;z-index:3}
+.brand .logo .bi{color:#fff}

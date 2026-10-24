@@ -1,6 +1,7 @@
 /* 博罗 3.0 预览 · 三个内容世界的内容渲染（第一阶段验证用）。
  * 页面 <body data-world="today|towns|relations">，所有卡片的"加入"调用全局 WS。
- * 卡片来自内容库 pool.json，由 ws-layer 统一加载，本页不重复 fetch。 */
+ * 卡片来自内容库 pool.json，由 ws-layer 统一加载，本页不重复 fetch。
+ * 图标统一走 WS.icon（线性 SVG），不再使用彩色 emoji。 */
 (function () {
   const GRAD = {
     tourism: 'linear-gradient(135deg,#0d9488,#14b8a6)',
@@ -10,21 +11,25 @@
     livelihood: 'linear-gradient(135deg,#e11d48,#f472b6)',
     city: 'linear-gradient(135deg,#4f46e5,#818cf8)'
   };
-  const CAT_NAME = { industry: '产业经济', livelihood: '民生', city: '城市', tourism: '文旅', food: '美食', agri: '农产' };
-  const CAT_EMOJI = { industry: '🏭', livelihood: '🧸', city: '🏙️', tourism: '⛰️', food: '🍲', agri: '🌾' };
-  const TYPE_EMOJI = { news: '📰', town: '🏘️', module: '✨', indicator: '📉', veg: '🥬', event: '📅' };
   const esc = s => String(s == null ? '' : s).replace(/[&<>"]/g, m => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' }[m]));
-
+  const I = (n, s) => (window.WS && WS.icon) ? WS.icon(n, s) : '';
+  const cicon = c => (window.WS && WS.cardIcon) ? WS.cardIcon(c) : 'pin';
   function visual(c) {
-    const cat = (c.tags && c.tags.category) || 'city';
-    if (c.type === 'town') return { g: GRAD.tourism, tag: '🏘️ 镇街' };
-    if (c.type === 'indicator') return { g: GRAD.industry, tag: '📊 指标' };
-    if (c.type === 'veg') return { g: GRAD.agri, tag: '🥬 当季农品' };
-    if (c.type === 'module') return { g: GRAD[cat] || GRAD.tourism, tag: '✨ ' + (CAT_NAME[cat] || '富模块') };
-    return { g: GRAD[cat] || GRAD.city, tag: (CAT_EMOJI[cat] || '📌') + ' ' + (CAT_NAME[cat] || '资讯') };
+    if (window.WS && WS.visual) { const v = WS.visual(c); return { g: v.grad, tag: v.tag, icon: v.icon }; }
+    return { g: GRAD.city, tag: '', icon: 'pin' };
   }
   function locOf(c) { return ((c.tags && c.tags.locations) || [])[0] || ''; }
   function imgOf(c) { return (window.WS && WS.media) ? WS.media(c.id) : null; }
+  function locLine(c) {
+    const l = locOf(c);
+    return l ? `<span class="loc-mini">${I('pin', 12)}${esc(l)}</span> · ` : '';
+  }
+  function addBtn(c, full) {
+    const inWs = window.WS && WS.has(c.id);
+    const cls = 'add-btn' + (full ? ' add-lg' : '');
+    const label = inWs ? `${I('check', 15)} 已加入` : `${I('plus', 15)}${full ? ' 加入工作区' : ' 加入'}`;
+    return `<button class="${cls}" data-add="${c.id}" data-full="${full ? 1 : 0}">${label}</button>`;
+  }
 
   function cardHtml(c) {
     const v = visual(c), img = imgOf(c);
@@ -32,14 +37,14 @@
       <div class="c-thumb"${img ? '' : ` style="background:${v.g}"`}>
         <span class="ctag">${v.tag}</span>${img
           ? `<img class="thumb-img" src="${img}" alt="${esc(c.title)}">`
-          : `<span>${c.emoji || TYPE_EMOJI[c.type] || '📌'}</span>`}
+          : `<span class="thumb-ico">${I(cicon(c), 42)}</span>`}
       </div>
       <div class="c-body">
         <div class="ct">${esc(c.title)}</div>
-        <div class="cs">${locOf(c) ? '📍' + esc(locOf(c)) + ' · ' : ''}${esc(c.subtitle || '')}</div>
+        <div class="cs">${locLine(c)}${esc(c.subtitle || '')}</div>
         <div class="c-foot">
           <span class="src-mini">${esc(c.source || (c.type === 'town' ? '博罗行政区划' : '内容库'))}</span>
-          <button class="add-btn" data-add="${c.id}">${window.WS && WS.has(c.id) ? '✓ 已加入' : '＋ 加入'}</button>
+          ${addBtn(c, false)}
         </div>
       </div>
     </div>`;
@@ -48,28 +53,29 @@
     const v = visual(c), img = imgOf(c);
     return `<div class="feature" draggable="true" data-card="${c.id}">
       <div class="f-visual"${img ? '' : ` style="background:${v.g}"`}>
-        <span class="note">${img ? '🎨 AI 概念插画' : '🎨 主题示意 · 实拍图待授权'}</span>${img
+        <span class="note">${img ? `${I('sparkles', 11)} AI 概念插画` : '主题示意 · 实拍图待授权'}</span>${img
           ? `<img class="thumb-img" src="${img}" alt="${esc(c.title)}">`
-          : `<span>${c.emoji || TYPE_EMOJI[c.type] || '📌'}</span>`}
+          : `<span class="f-ico">${I(cicon(c), 64)}</span>`}
       </div>
       <div class="f-body">
         <div class="f-tag">${v.tag}</div>
         <h3>${esc(c.title)}</h3>
         <p>${esc(c.summary || c.subtitle || '')}</p>
         <div class="c-foot">
-          <span class="src-mini">${locOf(c) ? '📍' + esc(locOf(c)) + ' · ' : ''}${esc(c.source || '内容库')}</span>
-          <button class="add-btn" data-add="${c.id}" style="padding:10px 22px">${window.WS && WS.has(c.id) ? '✓ 已加入' : '＋ 加入工作区'}</button>
+          <span class="src-mini">${locLine(c)}${esc(c.source || '内容库')}</span>
+          ${addBtn(c, true)}
         </div>
       </div>
     </div>`;
   }
 
   function refreshButtons() {
-    document.querySelectorAll('[data-add]').forEach(b => {
+    document.querySelectorAll('.add-btn[data-add]').forEach(b => {
       const id = b.dataset.add;
       const inWs = window.WS && WS.has(id);
+      const full = b.dataset.full === '1';
       b.classList.toggle('in', !!inWs);
-      b.textContent = inWs ? '✓ 已加入' : (b.classList.contains('add-btn') && b.style.padding ? '＋ 加入工作区' : '＋ 加入');
+      b.innerHTML = inWs ? `${I('check', 15)} 已加入` : `${I('plus', 15)}${full ? ' 加入工作区' : ' 加入'}`;
     });
   }
 

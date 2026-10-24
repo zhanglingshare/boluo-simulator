@@ -40,8 +40,6 @@
   const listeners = { change: [] };
 
   const CAT_NAME = { industry: '产业经济', livelihood: '民生', city: '城市', tourism: '文旅', food: '美食', agri: '农产' };
-  const CAT_EMOJI = { industry: '🏭', livelihood: '🧸', city: '🏙️', tourism: '⛰️', food: '🍲', agri: '🌾' };
-  const TYPE_EMOJI = { news: '📰', town: '🏘️', module: '✨', indicator: '📉', veg: '🥬', event: '📅' };
   const GRAD = {
     tourism: 'linear-gradient(135deg,#0d9488,#14b8a6)',
     food: 'linear-gradient(135deg,#d97706,#f59e0b)',
@@ -55,6 +53,95 @@
     { k: 'food', n: '美食农品' }, { k: 'industry', n: '产业经济' }, { k: 'livelihood', n: '民生城市' }
   ];
 
+  /* ---------- 统一线性图标系统（Lucide 风格，currentColor 描边，无彩色 emoji） ---------- */
+  const ICONS = {
+    news: '<path d="M4 22h16a2 2 0 0 0 2-2V4a2 2 0 0 0-2-2H8a2 2 0 0 0-2 2v16a2 2 0 0 1-2 2Zm0 0a2 2 0 0 1-2-2v-9c0-1.1.9-2 2-2h2"/><path d="M18 14h-8M15 18h-5M10 6h8v4h-8V6Z"/>',
+    pin: '<path d="M20 10c0 6-8 12-8 12s-8-6-8-12a8 8 0 0 1 16 0Z"/><circle cx="12" cy="10" r="3"/>',
+    sparkles: '<path d="M9.94 15.5A2 2 0 0 0 8.5 14.06l-6.12-1.17a.5.5 0 0 1 0-.98L8.5 10.94A2 2 0 0 0 9.94 9.5l1.17-6.12a.5.5 0 0 1 .98 0l1.17 6.12a2 2 0 0 0 1.44 1.44l6.12 1.17a.5.5 0 0 1 0 .98l-6.12 1.17a2 2 0 0 0-1.44 1.44l-1.17 6.12a.5.5 0 0 1-.98 0Z"/>',
+    chart: '<path d="M3 3v18h18"/><path d="M18 17V9M13 17V5M8 17v-3"/>',
+    leaf: '<path d="M11 20A7 7 0 0 1 9.8 6.1C15.5 5 17 4.48 19 2c1 2 2 4.18 2 8 0 5.5-4.78 10-10 10Z"/><path d="M2 21c0-3 1.85-5.36 5.08-6C9.5 14.52 12 13 13 12"/>',
+    factory: '<path d="M2 20h20"/><path d="M4 20V9l5 3.5V9l5 3.5V9l6 4v7"/><path d="M9 16h2"/>',
+    heart: '<path d="M19 14c1.49-1.46 3-3.21 3-5.5A5.5 5.5 0 0 0 16.5 3c-1.76 0-3 .5-4.5 2-1.5-1.5-2.74-2-4.5-2A5.5 5.5 0 0 0 2 8.5c0 2.3 1.5 4.05 3 5.5l7 7Z"/>',
+    city: '<path d="M6 22V4a2 2 0 0 1 2-2h8a2 2 0 0 1 2 2v18Z"/><path d="M6 12H4a2 2 0 0 0-2 2v6a2 2 0 0 0 2 2h2"/><path d="M18 9h2a2 2 0 0 1 2 2v9a2 2 0 0 1-2 2h-2"/><path d="M10 6h4M10 10h4M10 14h4M10 18h4"/>',
+    mountain: '<path d="m8 3 4 8 5-5 5 15H2L8 3z"/>',
+    bowl: '<path d="M2 12h20a8 8 0 0 1-8 8H10a8 8 0 0 1-8-8Z"/><path d="M8 6.5c.5-1 1-1.5 1-3M12 6.5c.5-1 1-1.5 1-3M16 6.5c.5-1 1-1.5 1-3"/>',
+    wheat: '<path d="M2 22 16 8"/><path d="M3.47 12.53 5 11l1.53 1.53a3.5 3.5 0 0 1 0 4.94L5 19l-1.53-1.53a3.5 3.5 0 0 1 0-4.94Z"/><path d="M7.47 8.53 9 7l1.53 1.53a3.5 3.5 0 0 1 0 4.94L9 15l-1.53-1.53a3.5 3.5 0 0 1 0-4.94Z"/><path d="M11.47 4.53 13 3l1.53 1.53a3.5 3.5 0 0 1 0 4.94L13 11l-1.53-1.53a3.5 3.5 0 0 1 0-4.94Z"/><path d="M20 2h2v2a4 4 0 0 1-4 4h-2V6a4 4 0 0 1 4-4Z"/>',
+    cpu: '<rect width="16" height="16" x="4" y="4" rx="2"/><rect width="6" height="6" x="9" y="9" rx="1"/><path d="M15 2v2M15 20v2M2 15h2M2 9h2M20 15h2M20 9h2M9 2v2M9 20v2"/>',
+    bird: '<path d="M16 7h.01"/><path d="M3.4 18H12a8 8 0 0 0 8-8V7a4 4 0 0 0-7.28-2.3L2 20"/><path d="m20 7 2 .5-2 .5"/><path d="M10 18v3M14 17.75V21"/><path d="M7 18a6 6 0 0 1-3.84-10.61"/>',
+    droplet: '<path d="M12 22a7 7 0 0 0 7-7c0-2-1-3.9-3-5.5s-3.5-4-4-6.5c-.5 2.5-2 4.9-4 6.5C6 11.1 5 13 5 15a7 7 0 0 0 7 7z"/>',
+    orange: '<circle cx="12" cy="13" r="8"/><path d="M12 5V3.5"/><path d="M12 3.5C13.5 2 15 2 16 2c-.2 1.5-1.2 2.5-2.5 3"/>',
+    home: '<path d="M3 9.5 12 3l9 6.5V20a1 1 0 0 1-1 1h-5v-6H9v6H4a1 1 0 0 1-1-1Z"/>',
+    rocket: '<path d="M4.5 16.5c-1.5 1.26-2 5-2 5s3.74-.5 5-2c.71-.84.7-2.13-.09-2.91a2.18 2.18 0 0 0-2.91-.09z"/><path d="m12 15-3-3a22 22 0 0 1 2-3.95A12.88 12.88 0 0 1 22 2c0 2.72-.78 7.5-6 11a22.35 22.35 0 0 1-4 2z"/><path d="M9 12H4s.55-3.03 2-4c1.62-1.08 5 0 5 0"/><path d="M12 15v5s3.03-.55 4-2c1.08-1.62 0-5 0-5"/>',
+    fish: '<path d="M3 12c1.5-3 5-5.5 8.5-5.5 3.5 0 5.8 2.5 6.5 5.5-.7 3-3 5.5-6.5 5.5C8 17.5 4.5 15 3 12Z"/><path d="M18 12c1.2-1 2-2 2-3.5v7c0-1.5-.8-2.5-2-3.5Z"/><circle cx="13.5" cy="12" r=".7"/>',
+    waves: '<path d="M2 6c.6.5 1.2 1 2.5 1 2.5 0 2.5-2 5-2 2.6 0 2.4 2 5 2 2.5 0 2.5-2 5-2 1.3 0 1.9.5 2.5 1"/><path d="M2 12c.6.5 1.2 1 2.5 1 2.5 0 2.5-2 5-2 2.6 0 2.4 2 5 2 2.5 0 2.5-2 5-2 1.3 0 1.9.5 2.5 1"/><path d="M2 18c.6.5 1.2 1 2.5 1 2.5 0 2.5-2 5-2 2.6 0 2.4 2 5 2 2.5 0 2.5-2 5-2 1.3 0 1.9.5 2.5 1"/>',
+    landmark: '<path d="M3 22h18"/><path d="M6 18v-7M10 18v-7M14 18v-7M18 18v-7"/><path d="M12 2 21 7H3Z"/>',
+    train: '<rect width="16" height="16" x="4" y="3" rx="2"/><path d="M4 11h16M12 3v8"/><path d="m8 19-2 3M18 22l-2-3"/><circle cx="8" cy="14.5" r=".6"/><circle cx="16" cy="14.5" r=".6"/>',
+    trees: '<path d="m17 14 3 3.3a1 1 0 0 1-.7 1.7H4.7a1 1 0 0 1-.7-1.7L7 14h-.3a1 1 0 0 1-.7-1.7L9 9h-.2A1 1 0 0 1 8 7.3 5 5 0 0 1 12 3a5 5 0 0 1 4 4.3 1 1 0 0 1-.8 1.7H15l3 3.3a1 1 0 0 1-.7 1.7Z"/><path d="M12 22v-3"/>',
+    carrot: '<path d="M2.3 9.3A2.4 2.4 0 0 0 2 10.3c0 .6.2 1.2.7 1.7l9.3 9.3a2.4 2.4 0 0 0 3.4 0l3.6-3.6a2.4 2.4 0 0 0 0-3.4L9.7 5a2.4 2.4 0 0 0-3.4 0Z"/><path d="M8.5 12.5l3 3"/><path d="M15 5c.3-1 .8-2.1 2.5-3 0 1.7-.8 2.8-2 3.5"/>',
+    sprout: '<path d="M7 20h10"/><path d="M10 20c5.5-2.5.8-6.4 3-10"/><path d="M9.5 9.4c1.1.8 1.8 2.2 2.3 3.7-2 .4-3.5.4-4.8-.3-1.2-.6-2.3-1.9-3-4.2 2.8-.5 4.4 0 5.5.8z"/><path d="M14.1 6a7 7 0 0 0-1.1 4c1.9-.1 3.3-.6 4.3-1.4 1-1 1.6-2.3 1.7-4.6-2.7.1-4 1-4.9 2z"/>',
+    calendar: '<rect width="18" height="18" x="3" y="4" rx="2"/><path d="M16 2v4M8 2v4M3 10h18"/>',
+    clipboard: '<rect width="8" height="4" x="8" y="2" rx="1"/><path d="M16 4h2a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2h2"/><path d="M12 11v4M10 13h4"/>',
+    ticket: '<path d="M2 9a3 3 0 0 1 0 6v2a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2v-2a3 3 0 0 1 0-6V7a2 2 0 0 0-2-2H4a2 2 0 0 0-2 2Z"/><path d="M13 5v2M13 11v2M13 17v2"/>',
+    clock: '<circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/>',
+    users: '<path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M22 21v-2a4 4 0 0 0-3-3.87M16 3.13a4 4 0 0 1 0 7.75"/>',
+    star: '<polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/>',
+    target: '<circle cx="12" cy="12" r="10"/><circle cx="12" cy="12" r="6"/><circle cx="12" cy="12" r="2"/>',
+    route: '<circle cx="6" cy="19" r="3"/><path d="M9 19h8.5a3.5 3.5 0 0 0 0-7h-11a3.5 3.5 0 0 1 0-7H15"/><circle cx="18" cy="5" r="3"/>',
+    coffee: '<path d="M10 2v2M14 2v2"/><path d="M16 8a1 1 0 0 1 1 1v8a4 4 0 0 1-4 4H7a4 4 0 0 1-4-4V9a1 1 0 0 1 1-1h14a4 4 0 1 1 0 8h-1"/><path d="M6 2v2"/>',
+    utensils: '<path d="M3 2v7c0 1.1.9 2 2 2h4a2 2 0 0 0 2-2V2"/><path d="M7 2v20"/><path d="M21 15V2a5 5 0 0 0-5 5v6c0 1.1.9 2 2 2h3Zm0 0v7"/>',
+    footprints: '<path d="M4 16v-2.38C4 11.5 2.97 10.5 3 8c.03-2.72 1.49-6 4.5-6C9.37 2 10 3.8 10 5.5c0 3.11-2 5.66-2 8.68V16a2 2 0 1 1-4 0Z"/><path d="M20 20v-2.38c0-2.12 1.03-3.12 1-5.62-.03-2.72-1.49-6-4.5-6C14.63 6 14 7.8 14 9.5c0 3.11 2 5.66 2 8.68V20a2 2 0 1 0 4 0Z"/><path d="M16 17h4M4 13h4"/>',
+    plus: '<path d="M12 5v14M5 12h14"/>',
+    x: '<path d="M18 6 6 18M6 6l12 12"/>',
+    check: '<path d="M20 6 9 17l-5-5"/>',
+    search: '<circle cx="11" cy="11" r="8"/><path d="m21 21-4.3-4.3"/>',
+    share: '<path d="M4 12v7a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2v-7"/><path d="M12 3v13"/><path d="m7 8 5-5 5 5"/>',
+    trash: '<path d="M3 6h18"/><path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6"/><path d="M8 6V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"/>',
+    link: '<path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"/><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"/>',
+    external: '<path d="M15 3h6v6"/><path d="M10 14 21 3"/><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/>',
+    compass: '<circle cx="12" cy="12" r="10"/><polygon points="16.24 7.76 14.12 14.12 7.76 16.24 9.88 9.88 16.24 7.76"/>',
+    bulb: '<path d="M15 14c.2-1 .7-1.7 1.5-2.5 1-.9 1.5-2.2 1.5-3.5A6 6 0 0 0 6 8c0 1 .2 2.2 1.5 3.5.7.7 1.3 1.5 1.5 2.5"/><path d="M9 18h6M10 22h4"/>',
+    alert: '<path d="m21.73 18-8-14a2 2 0 0 0-3.48 0l-8 14A2 2 0 0 0 4 21h16a2 2 0 0 0 1.73-3Z"/><path d="M12 9v4M12 17h.01"/>',
+    help: '<circle cx="12" cy="12" r="10"/><path d="M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3"/><path d="M12 17h.01"/>',
+    refresh: '<path d="M3 12a9 9 0 0 1 9-9 9.75 9.75 0 0 1 6.74 2.74L21 8"/><path d="M21 3v5h-5"/><path d="M21 12a9 9 0 0 1-9 9 9.75 9.75 0 0 1-6.74-2.74L3 16"/><path d="M8 16H3v5"/>',
+    hourglass: '<path d="M5 22h14M5 2h14"/><path d="M17 22v-4.17a2 2 0 0 0-.59-1.42L12 12l-4.41 4.41A2 2 0 0 0 7 17.83V22"/><path d="M7 2v4.17a2 2 0 0 0 .59 1.42L12 12l4.41-4.41A2 2 0 0 0 17 6.17V2"/>',
+    flame: '<path d="M8.5 14.5A2.5 2.5 0 0 0 11 12c0-1.38-.5-2-1-3-1.07-2.14-.22-4.05 2-6 .5 2.5 2 4.9 4 6.5 2 1.6 3 3.5 3 5.5a7 7 0 1 1-14 0c0-1.15.43-2.29 1-3a2.5 2.5 0 0 0 2.5 2.5z"/>',
+    briefcase: '<rect width="20" height="14" x="2" y="7" rx="2"/><path d="M16 21V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v16"/>',
+    moon: '<path d="M12 3a6 6 0 0 0 9 9 9 9 0 1 1-9-9Z"/>',
+    trending: '<polyline points="22 17 13.5 8.5 8.5 13.5 2 7"/><polyline points="16 17 22 17 22 11"/>',
+    chevronUp: '<path d="m18 15-6-6-6 6"/>',
+    chevronDown: '<path d="m6 9 6 6 6-6"/>',
+    undo: '<path d="M3 7v6h6"/><path d="M21 17a9 9 0 0 0-9-9 9 9 0 0 0-6 2.3L3 13"/>',
+    arrowRight: '<path d="M5 12h14M12 5l7 7-7 7"/>',
+    shuffle: '<path d="M16 3h5v5"/><path d="M4 20 21 3"/><path d="M21 16v5h-5"/><path d="m15 15 6 6"/><path d="M4 4l5 5"/>'
+  };
+  const TYPE_ICON = { news: 'news', town: 'pin', module: 'sparkles', indicator: 'chart', veg: 'leaf', event: 'calendar' };
+  const CAT_ICON = { industry: 'factory', livelihood: 'heart', city: 'city', tourism: 'mountain', food: 'bowl', agri: 'wheat' };
+  const TOWN_ICON = {
+    'town-luoyang': 'city', 'town-longxi': 'cpu', 'town-shiba': 'bird', 'town-mapi': 'bowl',
+    'town-guanyinge': 'droplet', 'town-gongzhuang': 'wheat', 'town-yangcun': 'orange', 'town-yangqiao': 'home',
+    'town-baitang': 'leaf', 'town-huzhen': 'rocket', 'town-changning': 'mountain', 'town-shiwan': 'fish',
+    'town-yuanzhou': 'waves', 'town-longhua': 'landmark', 'town-taimei': 'train', 'town-henghe': 'trees'
+  };
+  const VEG_ICON = {
+    'veg-gongzhuang-peanut': 'wheat', 'veg-baitang-tea': 'leaf', 'veg-sweet-potato': 'carrot',
+    'veg-guanyinge-peanut-oil': 'droplet', 'veg-yangcun-emperor-citrus': 'orange', 'veg-changning-flower-cabbage': 'sprout'
+  };
+  const MODULE_ICON = {
+    'mod-baitang-tea': 'leaf', 'mod-luofu-wellness': 'mountain', 'mod-yangqiao-citrus': 'orange',
+    'mod-new-materials': 'cpu', 'mod-huzhen-spaceagri': 'sprout'
+  };
+  function icon(name, size) {
+    const p = ICONS[name] || ICONS.pin;
+    const s = size || 20;
+    return `<svg class="bi" width="${s}" height="${s}" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">${p}</svg>`;
+  }
+  function cardIcon(c) {
+    if (c.type === 'town') return TOWN_ICON[c.id] || 'pin';
+    if (c.type === 'veg') return VEG_ICON[c.id] || 'leaf';
+    if (c.type === 'module') return MODULE_ICON[c.id] || CAT_ICON[(c.tags && c.tags.category) || 'tourism'] || 'sparkles';
+    return TYPE_ICON[c.type] || 'pin';
+  }
+
   /* ---------- 样式（Shadow 内） ---------- */
   const CSS = `
 :host{position:fixed;inset:0;z-index:2147483000;margin:0;padding:0;display:block;
@@ -63,6 +150,23 @@
 *{box-sizing:border-box;-webkit-tap-highlight-color:transparent;font-family:-apple-system,BlinkMacSystemFont,"PingFang SC","Microsoft YaHei",sans-serif}
 button{font-family:inherit;cursor:pointer}
 a{color:#0d9488}
+/* 统一线性图标对齐 */
+.bi{display:inline-block;vertical-align:-.2em;flex:none}
+.dr-btn,.mapbtn,.epill,.chip-add,.nadd,.padd,.pback{display:inline-flex;align-items:center;justify-content:center;gap:6px}
+.dr-x,.dgo,.cx,.nadd{display:inline-flex;align-items:center;justify-content:center}
+.msection h4,.sidecard h5,.lc-q{display:flex;align-items:center;gap:6px}
+.msection h4 .bi{color:#0d9488}.sidecard h5 .bi{color:#0d9488}
+.mquote{display:flex;align-items:flex-start;gap:8px}.mquote .bi{color:#0d9488;margin-top:2px}
+.fico .bi,.nico .bi{color:#0d9488}.nadd .bi{color:#0d9488}
+.insight-orb .bi{color:#fff}.padd .bi{color:#fff}.cico .bi,.dico .bi{color:#fff}
+.pm-loc,.note-ico{display:inline-flex;align-items:center;gap:3px}
+.pm-loc .bi{color:#94a3b8}.note-ico{color:#fff}
+.mhero-ico{position:absolute;top:22px;right:26px;color:rgba(255,255,255,.85);display:flex;filter:drop-shadow(0 3px 10px rgba(0,0,0,.18))}
+.pthumb-ico{display:flex;align-items:center;justify-content:center;color:rgba(255,255,255,.92)}
+.img-note{display:inline-flex;align-items:center;gap:4px}
+.lc-src{display:flex;align-items:center;gap:4px;flex-wrap:wrap}.lc-src .bi{color:#94a3b8}
+.sources{display:flex;align-items:center;gap:4px;flex-wrap:wrap}.sources .bi{color:#94a3b8;flex:none}
+.ltag{display:inline-flex;align-items:center;gap:3px}
 ::-webkit-scrollbar{width:7px;height:7px}
 ::-webkit-scrollbar-thumb{background:#cbd5e1;border-radius:8px}
 ::-webkit-scrollbar-track{background:transparent}
@@ -146,7 +250,7 @@ a{color:#0d9488}
 .mhero{height:200px;position:relative;display:flex;align-items:flex-end;padding:17px;overflow:hidden}
 .mhero::before{content:"";position:absolute;inset:0;background:radial-gradient(circle at 80% 15%,rgba(255,255,255,.28),transparent 55%)}
 .mhero::after{content:"";position:absolute;inset:0;background:linear-gradient(180deg,rgba(15,23,42,0) 35%,rgba(15,23,42,.55))}
-.mhero .mhero-emoji{position:absolute;top:18px;right:20px;font-size:52px;opacity:.92}
+.mhero .mhero-ico{width:54px;height:54px}
 .mhero .mhero-img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover}
 .mhero.has-img::before{background:radial-gradient(circle at 80% 15%,rgba(255,255,255,.18),transparent 55%)}
 .mhero .mhero-txt{position:relative;z-index:1;color:#fff}
@@ -279,11 +383,11 @@ a{color:#0d9488}
 
   function cardVisual(c) {
     const cat = (c.tags && c.tags.category) || 'city';
-    if (c.type === 'town') return { grad: GRAD.tourism, tag: '🏘️ 镇街' };
-    if (c.type === 'indicator') return { grad: GRAD.industry, tag: '📊 指标' };
-    if (c.type === 'veg') return { grad: GRAD.agri, tag: '🥬 当季农品' };
-    if (c.type === 'module') return { grad: GRAD[cat] || GRAD.tourism, tag: (TYPE_EMOJI.module || '✨') + ' ' + (CAT_NAME[cat] || '富模块') };
-    return { grad: GRAD[cat] || GRAD.city, tag: (CAT_EMOJI[cat] || '📌') + ' ' + (CAT_NAME[cat] || '资讯') };
+    if (c.type === 'town') return { grad: GRAD.tourism, tag: '镇街', icon: cardIcon(c) };
+    if (c.type === 'indicator') return { grad: GRAD.industry, tag: '指标', icon: 'chart' };
+    if (c.type === 'veg') return { grad: GRAD.agri, tag: '当季农品', icon: cardIcon(c) };
+    if (c.type === 'module') return { grad: GRAD[cat] || GRAD.tourism, tag: (CAT_NAME[cat] || '富模块'), icon: cardIcon(c) };
+    return { grad: GRAD[cat] || GRAD.city, tag: (CAT_NAME[cat] || '资讯'), icon: cardIcon(c) };
   }
   function gradientOf(c) { return cardVisual(c).grad; }
   function chipSub(c) {
@@ -301,10 +405,10 @@ a{color:#0d9488}
   }
   function fateKind(k) { return { sim: '需要推演（含假设）', info: '信息播报', life: '生活烟火' }[k] || '信息'; }
   function kindName(k) { return { puzzle: '系统动力学 · 时滞之谜', contrast: '对比', season: '时令', geo: '邻近路线', causal: '长周期因果', theme: '主题' }[k] || '关联'; }
-  function factIcon(k) { return { calendar: '📅', ticket: '🎫', clock: '⏱️', people: '👥', star: '⭐', target: '🎯', route: '🛣️', coffee: '☕', food: '🍲', sport: '🥾', show: '🎭' }[k] || '📌'; }
+  function factIcon(k) { const map = { calendar: 'calendar', ticket: 'ticket', clock: 'clock', people: 'users', star: 'star', target: 'target', route: 'route', coffee: 'coffee', food: 'utensils', sport: 'footprints', show: 'star' }; return icon(map[k] || 'pin', 18); }
   function srcLinks(arr) {
     if (!arr || !arr.length) return '';
-    return `<div class="sources">🔗 来源：${arr.map(u => `<a href="${u}" target="_blank" rel="noopener">${u.replace(/^https?:\/\//, '').slice(0, 40)}…</a>`).join('')}</div>`;
+    return `<div class="sources">${icon('link', 13)} 来源：${arr.map(u => `<a href="${u}" target="_blank" rel="noopener">${u.replace(/^https?:\/\//, '').slice(0, 40)}…</a>`).join('')}</div>`;
   }
   function miniMap(loc) {
     return `<svg viewBox="0 0 280 150" style="width:100%;height:100%">
@@ -325,15 +429,15 @@ a{color:#0d9488}
     const nearby = (m.nearby || []).map(n => `<div class="near">
       <div class="nico">${factIcon(n.type === 'cafe' ? 'coffee' : n.type === 'food' ? 'food' : n.type === 'sport' ? 'sport' : 'star')}</div>
       <div class="ninfo"><div class="nn">${esc(n.name)}</div><div class="nd">${esc(n.distance)}</div></div>
-      <button class="nadd" data-add="${esc(n.add || '')}" title="加入（若内容库有）">＋</button></div>`).join('');
+      <button class="nadd" data-add="${esc(n.add || '')}" title="加入（若内容库有）">${icon('plus', 16)}</button></div>`).join('');
     const loc = ((c.tags && c.tags.locations) || [])[0] || m.town || '';
     const tabs = (m.tabs || []).map(t => `<span class="mtag">${esc(t)}</span>`).join('');
     const heroSrc = mediaOf(c.id);
     const heroBg = heroSrc ? '' : ` style="background:${gradientOf(c)}"`;
     const heroInner = heroSrc
       ? `<img class="mhero-img" src="${heroSrc}" alt="${esc(m.title || c.title)}">`
-      : `<span class="mhero-emoji">✨</span>`;
-    const heroNote = heroSrc ? '🎨 AI 概念插画' : '🎨 主题示意 · 实拍图待授权';
+      : `<span class="mhero-ico">${icon(cardIcon(c), 54)}</span>`;
+    const heroNote = heroSrc ? `<span class="note-ico">${icon('sparkles', 10)}</span>AI 概念插画` : '主题示意 · 实拍图待授权';
     return `<div class="mcard">
       <div class="mhero${heroSrc ? ' has-img' : ''}"${heroBg}>
         <span class="img-note">${heroNote}</span>${heroInner}
@@ -343,12 +447,12 @@ a{color:#0d9488}
         <div class="mtags">${tabs}</div>
         <div class="mgrid">
           <div>
-            <div class="msection"><h4>🍃 这里是什么</h4><div class="mstory">${esc(m.story || c.summary || '')}</div></div>
-            <div class="msection"><h4>📋 实用信息</h4><div class="facts">${facts || '<div class="mstory" style="font-size:12px">以现场实际为准。</div>'}</div></div>
+            <div class="msection"><h4>${icon('leaf', 15)} 这里是什么</h4><div class="mstory">${esc(m.story || c.summary || '')}</div></div>
+            <div class="msection"><h4>${icon('clipboard', 15)} 实用信息</h4><div class="facts">${facts || '<div class="mstory" style="font-size:12px">以现场实际为准。</div>'}</div></div>
           </div>
           <div>
-            <div class="sidecard"><h5>📍 在博罗的位置</h5><div class="minimap">${miniMap(loc)}</div><button class="mapbtn" data-map="${esc(loc)}">查看地图（外部）</button></div>
-            <div class="sidecard"><h5>🧭 附近推荐</h5><div class="nearby">${nearby || '<div class="mstory" style="font-size:12px">暂无</div>'}</div></div>
+            <div class="sidecard"><h5>${icon('pin', 14)} 在博罗的位置</h5><div class="minimap">${miniMap(loc)}</div><button class="mapbtn" data-map="${esc(loc)}">${icon('external', 13)} 查看地图（外部）</button></div>
+            <div class="sidecard"><h5>${icon('compass', 14)} 附近推荐</h5><div class="nearby">${nearby || '<div class="mstory" style="font-size:12px">暂无</div>'}</div></div>
           </div>
         </div>${srcLinks(m.sources || (c.url ? [c.url] : []))}
       </div></div>`;
@@ -358,19 +462,19 @@ a{color:#0d9488}
     const modRefs = (t.module_refs || []).map(moduleOf).filter(Boolean);
     const hot = t.baseline_hot ? `<span class="badge src">常驻人气 ${t.baseline_hot}</span>` : '';
     return `<div class="mcard">
-      <div class="mhero" style="background:${gradientOf(c)};height:160px"><span class="mhero-emoji">🏘️</span>
+      <div class="mhero" style="background:${gradientOf(c)};height:160px"><span class="mhero-ico">${icon(cardIcon(c), 54)}</span>
         <div class="mhero-txt"><div class="mkicker">${esc(t.position || '博罗')} · ${esc(t.kind || '镇街')}${(t.merged_from || []).length ? '（' + t.merged_from.map(esc).join('、') + '已并入）' : ''}</div>
           <h1>${esc(t.name || c.title)}</h1><div class="msub">${esc(t.tag || '')}</div></div></div>
       <div class="mbody">
         <div class="ind-badges"><span class="badge stock">${esc(t.kind || '镇街')}</span>${hot}</div>
         <div class="mgrid" style="margin-top:14px">
           <div>
-            <div class="msection"><h4>💼 硬核饭碗</h4><div class="mstory">${esc(t.industry || '（产业资料待补）')}</div></div>
-            <div class="msection"><h4>🎆 烟火气</h4><div class="mstory"><b>🍜 吃：</b>${esc((t.foods || []).join('、') || '—')}<br><b>🏔️ 玩：</b>${esc((t.plays || []).join('、') || '—')}</div></div>
+            <div class="msection"><h4>${icon('briefcase', 15)} 硬核饭碗</h4><div class="mstory">${esc(t.industry || '（产业资料待补）')}</div></div>
+            <div class="msection"><h4>${icon('moon', 15)} 烟火气</h4><div class="mstory"><b>${icon('utensils', 13)} 吃：</b>${esc((t.foods || []).join('、') || '—')}<br><b>${icon('mountain', 13)} 玩：</b>${esc((t.plays || []).join('、') || '—')}</div></div>
           </div>
           <div>
-            ${modRefs.length ? `<div class="sidecard"><h5>✨ 展开明星模块</h5>${modRefs.map(m => `<button class="dr-btn" data-goto="${m.id}" style="margin-bottom:8px">✨ ${esc(m.title)}</button>`).join('')}</div>` : ''}
-            <div class="sidecard"><h5>📍 区位</h5><div class="minimap" style="height:115px">${miniMap(t.name)}</div><button class="mapbtn" data-map="${esc(t.name + ' 博罗')}">查看地图（外部）</button></div>
+            ${modRefs.length ? `<div class="sidecard"><h5>${icon('sparkles', 14)} 展开明星模块</h5>${modRefs.map(m => `<button class="dr-btn" data-goto="${m.id}" style="margin-bottom:8px">${icon('arrowRight', 14)} ${esc(m.title)}</button>`).join('')}</div>` : ''}
+            <div class="sidecard"><h5>${icon('pin', 14)} 区位</h5><div class="minimap" style="height:115px">${miniMap(t.name)}</div><button class="mapbtn" data-map="${esc(t.name + ' 博罗')}">${icon('external', 13)} 查看地图（外部）</button></div>
           </div>
         </div>${srcLinks(t.sources || (c.url ? [c.url] : []))}
       </div></div>`;
@@ -397,7 +501,7 @@ a{color:#0d9488}
       <div class="ind-name">${esc(c.title)}</div><div class="ind-big"><span class="ind-val ${cls}">${esc(val || '—')}</span></div>
       ${br}
       <div class="mstory" style="margin-top:14px">${esc(c.summary || '')}</div>
-      <div class="mquote">💡 这是${sf && sf.name.includes('流量') ? '当期「流量」，变化先反映当下的投入与意愿' : '「存量」与「流量」共同作用的结果'}；把它和具体事件卡放在一起，工作区会揭示它们之间的时滞与反馈。</div>
+      <div class="mquote">${icon('bulb', 15)} 这是${sf && sf.name.includes('流量') ? '当期「流量」，变化先反映当下的投入与意愿' : '「存量」与「流量」共同作用的结果'}；把它和具体事件卡放在一起，工作区会揭示它们之间的时滞与反馈。</div>
       ${srcLinks(c.url ? [c.url] : [])}</div></div>`;
   }
   function viewNews(c) {
@@ -410,15 +514,15 @@ a{color:#0d9488}
     return `<div class="mcard"><div class="news-hero">
       <div class="ind-badges"><span class="badge src">${esc(c.srcLevel || '')} · ${esc(c.verified_status || '')}</span>${tier}</div>
       <h1>${esc(c.title)}</h1><div class="mstory">${esc(c.summary || '')}</div>${fate}
-      <div style="margin-top:14px"><a class="dr-btn primary" href="${esc(c.url)}" target="_blank" rel="noopener" style="display:inline-block;text-decoration:none">阅读原文 ↗</a></div>
+      <div style="margin-top:14px"><a class="dr-btn primary" href="${esc(c.url)}" target="_blank" rel="noopener" style="display:inline-flex;align-items:center;gap:6px;text-decoration:none">阅读原文 ${icon('external', 15)}</a></div>
       ${srcLinks(c.url ? [c.url] : [])}</div></div>`;
   }
   function viewVeg(c) {
     return `<div class="mcard">
-      <div class="mhero veg-hero" style="background:${GRAD.agri};height:160px"><span class="mhero-emoji">🥬</span>
+      <div class="mhero veg-hero" style="background:${GRAD.agri};height:160px"><span class="mhero-ico">${icon(cardIcon(c), 54)}</span>
         <div class="mhero-txt"><div class="mkicker">当季农品 · 时令</div><h1>${esc(c.title)}</h1><div class="msub">${esc(c.subtitle || '')}</div></div></div>
       <div class="mbody"><div class="mstory">${esc(c.summary || '')}</div>
-        <div class="mquote">🌱 农品按真实时令呈现，已过季或未上市会明确标注，不反季推荐。</div>
+        <div class="mquote">${icon('sprout', 15)} 农品按真实时令呈现，已过季或未上市会明确标注，不反季推荐。</div>
         ${srcLinks(c.url ? [c.url] : [])}</div></div>`;
   }
   function viewGeneric(c) {
@@ -442,14 +546,14 @@ a{color:#0d9488}
     if (f.type === 'long-cycle') {
       const stages = (f.stages || []).map(s => `<div class="stage-item"><div class="ss">${esc(s.stage)}</div><div class="sx">${esc(s.text)}</div></div>`).join('');
       return `<div class="lc-explain">${esc(f.explain || '')}</div><div class="stages">${stages}</div>
-        ${f.loop ? `<div class="flow"><div class="flow-row" style="font-size:10.5px;font-weight:800;color:#4f46e5;margin-bottom:7px">🔁 反馈回路（多年时滞）</div><div class="flow-row">${loopNodes(f.loop)}</div></div>` : ''}`;
+        ${f.loop ? `<div class="flow"><div class="flow-row" style="display:flex;align-items:center;gap:6px;font-size:10.5px;font-weight:800;color:#4f46e5;margin-bottom:7px">${icon('refresh', 13)} 反馈回路（多年时滞）</div><div class="flow-row">${loopNodes(f.loop)}</div></div>` : ''}`;
     }
     if (f.type === 'stock-flow-lag') {
       return `<div class="duo">
           <div class="dbox neg"><div class="dl">当期流量 · 2025 固定资产投资</div><div class="dv">-18.8%</div><div class="dd">新开工引擎减速（工业 -12.7%、房地产 -47.6%）</div></div>
-          <div class="dbox pos"><div class="dl">存量产能 · 2026 新点火</div><div class="dv">🔥 铜来顺</div><div class="dd">2-3 年前投资高峰开工的项目到了投产节点</div></div></div>
+          <div class="dbox pos"><div class="dl">存量产能 · 2026 新点火</div><div class="dv" style="display:flex;align-items:center;justify-content:center;gap:6px">${icon('flame', 18)} 铜来顺</div><div class="dd">2-3 年前投资高峰开工的项目到了投产节点</div></div></div>
         <div class="lc-explain">${esc(f.explain || '')}</div>
-        <div class="flow"><div class="flow-row" style="font-size:10.5px;font-weight:800;color:#334155;margin-bottom:7px">⏳ 流量 → 建设时滞 → 存量（系统动力学）</div><div class="flow-row">${loopNodes(f.loop)}</div></div>`;
+        <div class="flow"><div class="flow-row" style="display:flex;align-items:center;gap:6px;font-size:10.5px;font-weight:800;color:#334155;margin-bottom:7px">${icon('hourglass', 13)} 流量 → 建设时滞 → 存量（系统动力学）</div><div class="flow-row">${loopNodes(f.loop)}</div></div>`;
     }
     return `<div class="lc-explain">${esc(f.explain || '')}</div>`;
   }
@@ -463,8 +567,8 @@ a{color:#0d9488}
       let cls = 'fnode';
       if (isLag) cls += ' lag'; else if (isStock) cls += ' stock'; else if (isFlow) cls += ' flow'; else if (isShock) cls += ' shock';
       const txt = p.replace(/〔|〕/g, '');
-      return `<span class="${cls}">${isLag ? '<span class="ltag">⏳ 时滞</span>' : ''}${esc(txt)}</span>${i < parts.length - 1 ? '<span class="farrow">→</span>' : ''}`;
-    }).join('') + `<span class="loopback" style="width:100%">↩ 再投资形成正反馈；存量与流量不在同一时间刻度，因此会同时出现"当期走弱"与"项目投产"。</span>`;
+      return `<span class="${cls}">${isLag ? `<span class="ltag">${icon('hourglass', 11)} 时滞</span>` : ''}${esc(txt)}</span>${i < parts.length - 1 ? '<span class="farrow">→</span>' : ''}`;
+    }).join('') + `<span class="loopback" style="display:flex;align-items:center;gap:6px;width:100%">${icon('undo', 13)} 再投资形成正反馈；存量与流量不在同一时间刻度，因此会同时出现"当期走弱"与"项目投产"。</span>`;
   }
 
   /* ---------- DOM 构建 ---------- */
@@ -479,19 +583,19 @@ a{color:#0d9488}
     root.appendChild(style);
     root.innerHTML += `
       <div class="dock" id="dock" part="dock">
-        <div class="dico">🧭</div>
+        <div class="dico">${icon('compass', 22)}</div>
         <div class="dtxt"><div class="dn">我的博罗 <span id="dockN">0</span></div><div class="ds" id="dockS">点击查看你选的内容与发现</div></div>
-        <div class="dgo">⌃</div>
+        <div class="dgo">${icon('chevronUp', 20)}</div>
       </div>
       <div class="scrim" id="scrim"></div>
       <div class="drawer" id="drawer" role="dialog" aria-label="我的博罗工作区">
         <div class="dr-head">
-          <div class="dr-title"><h2>🧭 我的博罗</h2><div class="cnt" id="wsCnt">已选 0 项 · 自动保存</div></div>
-          <button class="dr-x" id="drClose" aria-label="收起">⌄</button>
+          <div class="dr-title"><h2>${icon('compass', 20)} 我的博罗</h2><div class="cnt" id="wsCnt">已选 0 项 · 自动保存</div></div>
+          <button class="dr-x" id="drClose" aria-label="收起">${icon('chevronDown', 20)}</button>
           <div class="dr-tools">
-            <button class="dr-btn" id="btnShare">⤴ 分享</button>
-            <button class="dr-btn" id="btnClear">清空</button>
-            <button class="dr-btn primary" id="btnAdd">＋ 添加内容</button>
+            <button class="dr-btn" id="btnShare">${icon('share', 15)} 分享</button>
+            <button class="dr-btn" id="btnClear">${icon('trash', 15)} 清空</button>
+            <button class="dr-btn primary" id="btnAdd">${icon('plus', 16)} 添加内容</button>
           </div>
         </div>
         <div class="chips" id="chips"></div>
@@ -505,7 +609,7 @@ a{color:#0d9488}
         <!-- 内容选择器视图 -->
         <div class="view" id="viewPicker">
           <div class="picker-head"><h3>把感兴趣的内容加进来</h3><button class="pback" id="pBack">‹ 返回</button></div>
-          <div class="psearch"><span style="color:#94a3b8">🔍</span><input id="pSearch" placeholder="搜镇街、茶、产业、民生…"></div>
+          <div class="psearch"><span style="color:#94a3b8;display:inline-flex">${icon('search', 16)}</span><input id="pSearch" placeholder="搜镇街、茶、产业、民生…"></div>
           <div class="pfilters" id="pFilters"></div>
           <div class="plist" id="pList"></div>
         </div>
@@ -524,11 +628,11 @@ a{color:#0d9488}
     let html = state.ids.map(id => {
       const c = byId[id]; if (!c) return '';
       return `<div class="chip ${state.active === id ? 'on' : ''}" data-chip="${id}" draggable="true">
-        <div class="cico" style="background:${cardVisual(c).grad};color:#fff">${c.emoji || TYPE_EMOJI[c.type] || '📌'}</div>
+        <div class="cico" style="background:${cardVisual(c).grad};color:#fff">${icon(cardIcon(c), 22)}</div>
         <div class="ctxt"><div class="cn">${esc(c.title)}</div><div class="ct">${esc(chipSub(c))}</div></div>
-        <button class="cx" data-remove="${id}" title="移出（可撤销）">✕</button></div>`;
+        <button class="cx" data-remove="${id}" title="移出（可撤销）">${icon('x', 15)}</button></div>`;
     }).join('');
-    html += `<button class="chip-add" data-picker>＋ 添加</button>`;
+    html += `<button class="chip-add" data-picker>${icon('plus', 16)} 添加</button>`;
     chipsEl.innerHTML = html;
     $('#wsCnt').textContent = `已选 ${state.ids.length} 项 · 点选切换 · 自动保存`;
     $('#dockN').textContent = state.ids.length;
@@ -539,13 +643,13 @@ a{color:#0d9488}
   function renderStage() {
     if (!state.active) {
       stageEl.innerHTML = `<div class="empty">
-        <div class="ebox">🧭</div>
+        <div class="ebox">${icon('compass', 46)}</div>
         <h3>把你感兴趣的博罗，放进这里</h3>
-        <p>在页面里点内容上的 ＋，或用上面的「添加内容」。不同内容会自动展开成完整模块；当你选的内容之间存在联系，这里会主动发现一个值得一看的问题。</p>
+        <p>在页面里点内容上的「加入」，或用上面的「添加内容」。不同内容会自动展开成完整模块；当你选的内容之间存在联系，这里会主动发现一个值得一看的问题。</p>
         <div class="earrows">
-          <button class="epill" data-quick="mod-baitang-tea">🍃 试试柏塘茶园</button>
-          <button class="epill" data-quick="ind-fai">📉 看看投资与投产的时滞</button>
-          <button class="epill" data-quick="mod-yangqiao-citrus">🍊 杨侨柑桔长周期</button>
+          <button class="epill" data-quick="mod-baitang-tea">${icon('leaf', 15)} 试试柏塘茶园</button>
+          <button class="epill" data-quick="ind-fai">${icon('trending', 15)} 看看投资与投产的时滞</button>
+          <button class="epill" data-quick="mod-yangqiao-citrus">${icon('orange', 15)} 杨侨柑桔长周期</button>
         </div></div>`;
       return;
     }
@@ -562,22 +666,22 @@ a{color:#0d9488}
     insightEl.style.display = 'block';
     if (!links.length) {
       insightEl.classList.remove('open');
-      insightEl.innerHTML = `<div class="insight-toggle"><div class="insight-orb" style="background:#94a3b8;box-shadow:none">🔗</div>
+      insightEl.innerHTML = `<div class="insight-toggle"><div class="insight-orb" style="background:#94a3b8;box-shadow:none">${icon('link', 20)}</div>
         <div class="itxt"><div class="it">还没有发现关联</div><div class="is">再加入 1—2 张内容：一个指标 + 一条新闻，或两个相邻去处。</div></div></div>`;
       return;
     }
     insightEl.classList.remove('open');
     const body = links.map(l => `<div class="link-card">
       <div class="lc-head"><span class="lc-kind">${kindName(l.kind)}</span><span class="lc-title">${esc(l.title)}</span></div>
-      ${l.question ? `<div class="lc-q">❓ ${esc(l.question)}</div>` : ''}
+      ${l.question ? `<div class="lc-q">${icon('help', 15)} ${esc(l.question)}</div>` : ''}
       ${renderFrame(l)}
-      ${l.caveat ? `<div class="caveat"><span>⚠️</span><span>${esc(l.caveat)}</span></div>` : ''}
-      ${l.sources && l.sources.length ? `<div class="lc-src">🔗 来源：${l.sources.map(u => `<a href="${u}" target="_blank" rel="noopener">${u.replace(/^https?:\/\//, '').slice(0, 38)}…</a>`).join('')}</div>` : ''}
+      ${l.caveat ? `<div class="caveat"><span style="display:inline-flex;color:#d97706">${icon('alert', 15)}</span><span>${esc(l.caveat)}</span></div>` : ''}
+      ${l.sources && l.sources.length ? `<div class="lc-src">${icon('link', 13)} 来源：${l.sources.map(u => `<a href="${u}" target="_blank" rel="noopener">${u.replace(/^https?:\/\//, '').slice(0, 38)}…</a>`).join('')}</div>` : ''}
     </div>`).join('');
     insightEl.innerHTML = `<button class="insight-toggle" id="insightToggle">
-        <div class="insight-orb">🔗</div>
+        <div class="insight-orb">${icon('link', 20)}</div>
         <div class="itxt"><div class="it">为你发现了 ${links.length} 个值得一看的联系</div><div class="is">${esc(links[0].question || links[0].title)}</div></div>
-        <span class="chev">▾</span></button><div class="insight-body">${body}</div>`;
+        <span class="chev">${icon('chevronDown', 18)}</span></button><div class="insight-body">${body}</div>`;
   }
 
   function matchFilter(c) {
@@ -607,9 +711,9 @@ a{color:#0d9488}
       const inWs = state.ids.includes(c.id);
       const pImg = mediaOf(c.id);
       return `<div class="pcard ${inWs ? 'inws' : ''}" data-draggable="${c.id}" draggable="true">
-        <div class="pthumb"${pImg ? '' : ` style="background:${v.grad}"`}><span class="ptag">${v.tag}</span>${pImg ? `<img class="pthumb-img" src="${pImg}" alt="">` : `<span>${c.emoji || TYPE_EMOJI[c.type] || '📌'}</span>`}</div>
-        <div class="pbody"><div class="pt">${esc(c.title)}</div><div class="pm">${loc ? '📍' + esc(loc) + ' · ' : ''}${esc(c.subtitle || '')}</div></div>
-        <button class="padd" data-add="${c.id}" ${inWs ? 'disabled' : ''}>${inWs ? '✓' : '＋'}</button>
+        <div class="pthumb"${pImg ? '' : ` style="background:${v.grad}"`}><span class="ptag">${v.tag}</span>${pImg ? `<img class="pthumb-img" src="${pImg}" alt="">` : `<span class="pthumb-ico">${icon(cardIcon(c), 34)}</span>`}</div>
+        <div class="pbody"><div class="pt">${esc(c.title)}</div><div class="pm">${loc ? `<span class="pm-loc">${icon('pin', 12)}${esc(loc)}</span> · ` : ''}${esc(c.subtitle || '')}</div></div>
+        <button class="padd" data-add="${c.id}" ${inWs ? 'disabled' : ''}>${inWs ? icon('check', 16) : icon('plus', 16)}</button>
       </div>`;
     }).join('');
   }
@@ -801,6 +905,9 @@ a{color:#0d9488}
     cards: () => (DB.pool && DB.pool.cards || []).slice(),
     card: (id) => byId[id] || null,
     media: (id) => mediaOf(id),
+    icon: (name, size) => icon(name, size),
+    cardIcon: (c) => cardIcon(c),
+    visual: (c) => cardVisual(c),
     on: (ev, fn) => { if (listeners[ev]) listeners[ev].push(fn); }
   };
   window.WS = api;
