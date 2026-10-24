@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1">
+<title>今天 · 博罗 3.0 预览</title>
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Ctext y='.9em' font-size='88'%3E%F0%9F%A7%AD%3C/text%3E%3C/svg%3E">
+<link rel="stylesheet" href="v3.css">
+</head>
+<body data-world="today">
+<nav class="nav">
+  <div class="brand"><span class="logo">🧭</span><span class="t">博罗 · 发现桌面</span></div>
+  <div class="tabs">
+    <a href="today.html" class="on">今天</a>
+    <a href="towns.html">各镇</a>
+    <a href="relations.html">关系</a>
+  </div>
+  <a class="more" href="../index.html">更多 ›</a>
+</nav>
+
+<main class="wrap">
+  <header class="hero">
+    <div class="hero-kicker">今天 · DAILY</div>
+    <h1>今天，博罗有件事<br>可能和你有关</h1>
+    <p>不用先看一堆数字。挑一条你感兴趣的，点「＋ 加入工作区」，它会自动展开完整内容；把有关联的内容放一起，还能看到背后的因果。</p>
+  </header>
+
+  <div id="feature"></div>
+
+  <div class="sec-h"><h2 id="gridTitle"></h2><span class="hint">点 ＋ 加入，或拖到右下角的工作区</span></div>
+  <div class="grid" id="grid"></div>
+</main>
+
+<script src="../workspace/ws-layer.js" defer></script>
+<script src="v3-preview.js" defer></script>
+</body>
+</html>
