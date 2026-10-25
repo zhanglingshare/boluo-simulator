@@ -349,6 +349,35 @@ body{
   border-radius:12px;font-size:13px;opacity:0;pointer-events:none;transition:all .3s;max-width:80%;text-align:center}
 .toast.show{opacity:1;transform:translateX(-50%)}
 .hidden{display:none!important}
+
+/* 风洞实验 */
+.wind-tun{margin:14px 16px;background:var(--card);border-radius:14px;padding:16px}
+.wt-row{display:flex;align-items:center;gap:10px;margin-bottom:12px}
+.wt-lb{flex:0 0 70px;font-size:12px;color:var(--ink2)}
+.wt-row input[type=range]{flex:1;accent-color:var(--teal)}
+.wt-val{flex:0 0 42px;text-align:right;font-weight:600;font-size:13px;color:var(--ink)}
+.wt-chart{background:#0a141c;border-radius:10px;padding:8px;margin:8px 0}
+.wt-chart svg{width:100%;height:160px;display:block}
+.wt-note{font-size:11px;color:var(--ink2);line-height:1.6;margin-top:8px}
+
+/* 判断修订 */
+.rev-cmp{display:flex;align-items:center;gap:10px;margin:14px 16px;background:var(--card);border-radius:14px;padding:16px}
+.rev-side{flex:1;text-align:center}
+.rev-side.now{background:rgba(232,180,84,.08);border-radius:10px;padding:10px}
+.rev-h{font-size:11px;color:var(--ink2);margin-bottom:6px}
+.rev-v{font-size:26px;font-weight:700;color:var(--ink)}
+.rev-side.now .rev-v{color:var(--gold)}
+.rev-sub{font-size:12px;color:var(--ink2);margin-top:4px}
+.rev-arrow{font-size:22px;color:var(--ink2)}
+.rev-poses{display:grid;grid-template-columns:1fr 1fr;gap:8px;padding:0 16px}
+.rev-poses .rp{background:var(--card);border:1px solid transparent;border-radius:10px;padding:10px;cursor:pointer}
+.rev-poses .rp.on{border-color:var(--gold);background:rgba(232,180,84,.1)}
+.rev-poses .rp .t{font-size:13px;font-weight:600;color:var(--ink)}
+.rev-poses .rp .d{font-size:11px;color:var(--ink2);margin-top:3px;line-height:1.4}
+.rev-reasons{display:flex;flex-wrap:wrap;gap:8px;padding:0 16px}
+.rev-reasons label{display:flex;align-items:center;gap:6px;background:var(--card);border-radius:20px;padding:7px 12px;font-size:12px;color:var(--ink2);cursor:pointer}
+.rev-reasons input{accent-color:var(--teal)}
+
 @media (prefers-reduced-motion: reduce){
   *{animation-duration:.01ms!important;transition-duration:.01ms!important}
 }
@@ -362,7 +391,7 @@ body{
 <div class="phone">
   <div class="topbar">
     <div class="brand">博罗<b>判断实验</b></div>
-    <div class="prog" id="prog"><i class="on"></i><i></i><i></i><i></i><i></i></div>
+    <div class="prog" id="prog"><i class="on"></i><i></i><i></i><i></i><i></i><i></i><i></i></div>
     <div class="step-tag" id="stepTag">悬念</div>
   </div>
 
@@ -533,10 +562,86 @@ body{
       </div>
     </section>
 
-    <!-- ============ 4 朋友挑战 ============ -->
+    <!-- ============ 4 风洞实验（视觉示意版） ============ -->
     <section class="scene" id="s4">
+      <div class="pad">
+        <div class="label">第 5 步 · 实验</div>
+        <div class="q-title">如果条件变了，会怎样？</div>
+        <div class="q-sub">拖三个滑块，看看两条线怎么动。<b style="color:var(--gold)">这是示意图，不是真预测</b>，也不能证明历史上到底发生了啥。</div>
+      </div>
+      <div class="wind-tun">
+        <div class="wt-row">
+          <div class="wt-lb">工业投资</div>
+          <input type="range" id="wtInd" min="-30" max="30" step="1" value="5">
+          <div class="wt-val" id="wtIndV">+5%</div>
+        </div>
+        <div class="wt-row">
+          <div class="wt-lb">房地产投资</div>
+          <input type="range" id="wtRe" min="-60" max="20" step="1" value="-30">
+          <div class="wt-val" id="wtReV">-30%</div>
+        </div>
+        <div class="wt-row">
+          <div class="wt-lb">基建投资</div>
+          <input type="range" id="wtCon" min="-20" max="20" step="1" value="0">
+          <div class="wt-val" id="wtConV">0%</div>
+        </div>
+        <div class="wt-chart">
+          <svg id="wtSvg" viewBox="0 0 300 160" preserveAspectRatio="none">
+            <line x1="0" y1="80" x2="300" y2="80" stroke="rgba(255,255,255,.15)" stroke-dasharray="3 3"/>
+            <path id="wtGdp" d="" stroke="#3FB67F" stroke-width="2.5" fill="none"/>
+            <path id="wtFai" d="" stroke="#E5544B" stroke-width="2.5" fill="none"/>
+            <text x="4" y="14" fill="#3FB67F" font-size="10">GDP增速</text>
+            <text x="4" y="150" fill="#E5544B" font-size="10">固投增速</text>
+          </svg>
+        </div>
+        <div class="wt-note">绿线是经济增长，红线是投资变化。你拖滑块时，红线先动、绿线隔一两年才跟着动——这就是"时滞"的意思，但隔多久、是不是真这么回事，还得看项目。</div>
+      </div>
+      <div class="dock">
+        <button class="btn btn-line" id="wtReset">重置</button>
+        <button class="btn btn-primary" data-go="5">看完了，定我的判断</button>
+      </div>
+    </section>
+
+    <!-- ============ 5 判断修订 ============ -->
+    <section class="scene" id="s5">
+      <div class="pad">
+        <div class="label">第 6 步 · 定判</div>
+        <div class="q-title">看完证据和实验，你的判断变了吗？</div>
+      </div>
+      <div class="rev-cmp">
+        <div class="rev-side">
+          <div class="rev-h">我第一反应</div>
+          <div class="rev-v" id="revFirstGuess">-8%</div>
+          <div class="rev-sub" id="revFirstPose">后劲不足</div>
+        </div>
+        <div class="rev-arrow">→</div>
+        <div class="rev-side now">
+          <div class="rev-h">现在我认为</div>
+          <div class="rev-v" id="revNowVal">—</div>
+          <div class="rev-sub" id="revNowPose">还没选</div>
+        </div>
+      </div>
+      <div class="pad" style="padding-top:10px">
+        <div class="label" style="margin-bottom:8px">现在你更信哪种说法？</div>
+        <div class="rev-poses" id="revPoseList"></div>
+        <div class="label" style="margin-top:18px;margin-bottom:8px">是什么让你改了主意？（可多选）</div>
+        <div class="rev-reasons" id="revReasons">
+          <label><input type="checkbox" value="看到新证据"><span>看到新证据</span></label>
+          <label><input type="checkbox" value="被实验说服"><span>被实验说服</span></label>
+          <label><input type="checkbox" value="还是原来的看法"><span>还是原来的看法</span></label>
+          <label><input type="checkbox" value="还拿不准"><span>还拿不准</span></label>
+        </div>
+      </div>
+      <div class="dock">
+        <button class="btn btn-line" data-go="4">回去再看实验</button>
+        <button class="btn btn-primary" data-go="6">生成我的判断卡</button>
+      </div>
+    </section>
+
+    <!-- ============ 6 朋友挑战 ============ -->
+    <section class="scene" id="s6">
       <div class="vs2">
-        <div class="label">第 4 步 · 找朋友对对答案</div>
+        <div class="label">第 7 步 · 对答案</div>
         <div class="q-title">你俩到底哪儿想得不一样？</div>
         <div class="q-sub">不光是选得一样不一样——是连数字都看岔了，还是对为啥跌看法不同，或是<b style="color:var(--ink)">想要的东西本来就不一样</b>。</div>
       </div>
@@ -637,8 +742,8 @@ body{
 (function(){
   var REAL=-18.8;
   var state={guess:-8,instinct:null,confidence:0,pose:null,browse:false};
-  var scenes=["s0","s1","s2","s3","s4"];
-  var stepNames=["悬念","下注","反转","交锋","对答案"];
+  var scenes=["s0","s1","s2","s3","s4","s5","s6"];
+  var stepNames=["悬念","下注","反转","交锋","实验","定判","对答案"];
   var posName={C:"小波动",R:"后劲不足",G:"换个赛道",U:"看不出"};
   var $=function(id){return document.getElementById(id)};
   var reduced=window.matchMedia('(prefers-reduced-motion: reduce)').matches;
@@ -878,6 +983,56 @@ body{
   function hexA(hex,a){var n=parseInt(hex.slice(1),16);return"rgba("+(n>>16)+","+((n>>8)&255)+","+(n&255)+","+a+")";}
   renderPoses();
   renderBoard();
+
+  /* ---------- 风洞实验（视觉示意版） ---------- */
+  var wtInd=$("wtInd"),wtRe=$("wtRe"),wtCon=$("wtCon");
+  function wtPaint(){
+    var ind=+wtInd.value, re=+wtRe.value, con=+wtCon.value;
+    $("wtIndV").textContent=(ind>=0?"+":"")+ind+"%";
+    $("wtReV").textContent=(re>=0?"+":"")+re+"%";
+    $("wtConV").textContent=(con>=0?"+":"")+con+"%";
+    // 固投增速 = 三类加权（工业40%、房地产30%、基建30%）
+    var fai = ind*0.4 + re*0.3 + con*0.3;
+    // GDP 基线 +5.5%，缓慢向固投靠拢（时滞示意）
+    var gdp = 5.5 - Math.abs(fai)*0.15;
+    // y 坐标：0线在 y=80，每%上下 2px，范围 -40%..+30%
+    function y(v){return 80 - v*2;}
+    // 三段线：2024(基线) / 2025(当前) / 2026(示意)
+    $("wtFai").setAttribute("d","M 40 "+y(20)+" L 150 "+y(fai)+" L 260 "+y(fai*1.1));
+    $("wtGdp").setAttribute("d","M 40 "+y(5.5)+" L 150 "+y(5.5)+" L 260 "+y(gdp));
+  }
+  [wtInd,wtRe,wtCon].forEach(function(s){s.addEventListener("input",wtPaint);});
+  wtPaint();
+  $("wtReset").addEventListener("click",function(){
+    wtInd.value=5;wtRe.value=-30;wtCon.value=0;wtPaint();
+  });
+
+  /* ---------- 判断修订屏 ---------- */
+  var revList=$("revPoseList");
+  poses.forEach(function(p){
+    var d=document.createElement("div");d.className="rp";d.setAttribute("data-pid",p.id);
+    d.innerHTML='<div class="t">'+p.name+'</div><div class="d">'+p.claim+'</div>';
+    d.addEventListener("click",function(){
+      document.querySelectorAll(".rev-poses .rp").forEach(function(x){x.classList.remove("on");});
+      d.classList.add("on");
+      state.pose=p.id;
+      $("revNowPose").textContent=p.name;
+      $("revNowVal").textContent=state.guess+"%";
+      $("mePose").textContent=p.name;
+      $("cardNow").textContent=p.name;
+      $("cfNow").textContent=(/[。？！?.!]$/.test(p.claim)?p.claim:p.claim+"。")+p.short;
+    });
+    revList.appendChild(d);
+  });
+  // 进入修订屏时，把第一反应填进去
+  var _go=go;
+  go=function(n){
+    _go(n);
+    if(n===5){
+      $("revFirstGuess").textContent=state.guess+"%";
+      $("revFirstPose").textContent=posName[state.instinct]||"—";
+    }
+  };
 
   $("toConnect").addEventListener("click",function(){
     if(!state.pose){toast("先点开一种说法");return;}
