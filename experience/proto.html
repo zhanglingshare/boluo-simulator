@@ -65,6 +65,7 @@ body{
   opacity:0;transform:translateX(40px);pointer-events:none;
   transition:opacity .45s ease,transform .45s ease;overflow-y:auto;overflow-x:hidden;
   -webkit-overflow-scrolling:touch}
+#s2,#s3,#s4{padding-bottom:150px}
 .scene.on{opacity:1;transform:none;pointer-events:auto}
 .scene.left{transform:translateX(-40px)}
 .scene>*{flex-shrink:0}
@@ -248,6 +249,27 @@ body{
   border:1px solid var(--line);color:var(--ink3)}
 .ev-tray .tb b{font-size:14px;display:block;margin-bottom:1px}
 .ev-tray .tb.pro b{color:var(--green)} .ev-tray .tb.con b{color:var(--red)} .ev-tray .tb.tbd b{color:var(--ink)}
+/* 我的证据拼图 */
+.myboard{margin:16px 22px 0;padding:15px;border-radius:16px;background:rgba(255,255,255,.03);
+  border:1px dashed var(--line)}
+.mb-head{font-size:13px;font-weight:600;display:flex;align-items:baseline;gap:8px;margin-bottom:13px;flex-wrap:wrap}
+.mb-head .mb-tip{font-size:10.5px;color:var(--ink3);font-weight:400}
+.mb-col{margin-bottom:12px}
+.mb-col:last-child{margin-bottom:0}
+.mb-col .mb-t{font-size:11px;display:flex;align-items:center;gap:6px;margin-bottom:7px;color:var(--ink3)}
+.mb-col .mb-t b{font-size:12px;font-weight:700}
+.mb-col.pro .mb-t,.mb-col.pro .mb-t b{color:var(--green)}
+.mb-col.con .mb-t,.mb-col.con .mb-t b{color:var(--red)}
+.mb-col.tbd .mb-t{color:var(--ink2)} .mb-col.tbd .mb-t b{color:var(--ink)}
+.mb-items{display:flex;flex-direction:column;gap:6px}
+.mb-empty{font-size:11px;color:var(--ink3);border:1px dashed var(--line);border-radius:10px;
+  padding:9px 11px;text-align:center}
+.mb-chip{position:relative;font-size:11.5px;line-height:1.55;color:var(--ink2);
+  background:rgba(255,255,255,.05);border:1px solid var(--line);border-radius:10px;
+  padding:8px 28px 8px 10px;animation:evIn .35s ease}
+.mb-chip .src-tag{font-size:9.5px;color:var(--ink3);border:1px solid var(--line);
+  border-radius:5px;padding:0 5px;margin-left:5px;white-space:nowrap}
+.mb-chip .rm{position:absolute;right:9px;top:7px;color:var(--ink3);font-size:14px;cursor:pointer;line-height:1}
 /* ============ 场景 4 朋友挑战 ============ */
 .vs2{padding:8px 22px 0}
 .duo-stage{margin-top:14px;border-radius:18px;background:linear-gradient(165deg,var(--card2),var(--card));
@@ -297,6 +319,26 @@ body{
 .card-foot .key{color:var(--ink)}
 .card-foot .tagrow{display:flex;gap:6px;margin-top:9px}
 .card-foot .tagrow span{font-size:10px;padding:3px 9px;border-radius:999px;border:1px solid var(--line);color:var(--ink3)}
+/* 卡版本切换 */
+.card-tabs{display:flex;gap:6px;margin:16px 22px 0}
+.card-tabs .ctab{flex:1;padding:10px 4px;border-radius:11px;border:1px solid var(--line);
+  background:transparent;color:var(--ink3);font-size:12px;cursor:pointer;font-family:inherit}
+.card-tabs .ctab.on{background:rgba(232,180,84,.12);color:var(--gold);border-color:rgba(232,180,84,.4)}
+/* 复盘版卡 */
+.card-full{margin:10px 22px 0;border-radius:18px;background:linear-gradient(165deg,#12303e,#0b1c27);
+  border:1px solid rgba(232,180,84,.25);padding:15px 16px}
+.cf-sec{padding:11px 0;border-bottom:1px solid var(--line)}
+.cf-sec:last-child{border-bottom:0}
+.cf-h{font-size:11px;letter-spacing:.1em;color:var(--gold);margin-bottom:6px;font-weight:600}
+.cf-b{font-size:12.5px;color:var(--ink2);line-height:1.7}
+.cf-b li{margin-left:16px;margin-bottom:3px}
+.cf-b .k{color:var(--ink)}
+/* 分歧类型 */
+.dtype-row{display:flex;gap:6px;margin-bottom:13px}
+.dtype-row .dt{flex:1;text-align:center;font-size:11px;padding:8px 0;border-radius:10px;
+  border:1px solid var(--line);color:var(--ink3);line-height:1.4}
+.dtype-row .dt.on{background:rgba(232,180,84,.14);border-color:var(--gold);color:var(--gold)}
+.dtype-row .dt.muted{opacity:.4}
 .privacy{display:flex;align-items:flex-start;gap:9px;margin:14px 22px 0;font-size:11.5px;color:var(--ink3);line-height:1.6}
 .privacy .box{width:18px;height:18px;flex:none;border-radius:5px;border:1px solid var(--ink3);margin-top:1px;
   display:flex;align-items:center;justify-content:center;color:var(--bg);font-size:12px;flex:none}
@@ -475,6 +517,16 @@ body{
 
       <div class="pose-list" id="poseList"></div>
 
+      <div class="myboard">
+        <div class="mb-head">我的证据拼图 <span class="mb-tip">点证据上的「支持 / 反对 / 待查」，自动归入下面三类，组成你自己的判断</span></div>
+        <div class="mb-col pro"><div class="mb-t">支持我的判断 · <b id="bProN">0</b></div>
+          <div class="mb-items" id="bPro"><div class="mb-empty">还没有收集支持证据</div></div></div>
+        <div class="mb-col con"><div class="mb-t">反对我的判断 · <b id="bConN">0</b></div>
+          <div class="mb-items" id="bCon"><div class="mb-empty">还没有收集反对证据</div></div></div>
+        <div class="mb-col tbd"><div class="mb-t">暂不确定 · <b id="bTbdN">0</b></div>
+          <div class="mb-items" id="bTbd"><div class="mb-empty">还没有待核查项</div></div></div>
+      </div>
+
       <div class="dock">
         <button class="btn btn-primary" id="toConnect" disabled>我更接近这个立场，继续</button>
         <button class="btn btn-line" data-go="2">回去看数字</button>
@@ -494,6 +546,11 @@ body{
           <div class="person ta"><div class="avatar">TA</div><div class="pn">朋友</div><div class="pr">先完成的人</div></div>
           <div class="vs-mid">VS</div>
           <div class="person me"><div class="avatar">你</div><div class="pn" id="meName">你</div><div class="pr">刚完成</div></div>
+        </div>
+        <div class="dtype-row">
+          <span class="dt muted">事实分歧</span>
+          <span class="dt on">机制分歧</span>
+          <span class="dt muted">价值分歧</span>
         </div>
         <div class="match-row split" id="rowGuess">
           <div class="cell"><span class="mini">朋友猜</span><b id="taGuess">-3%</b></div>
@@ -516,8 +573,12 @@ body{
         <div class="demo-note">演示：朋友一侧为示例数据，正式版由挑战链接独立作答后生成</div>
       </div>
 
-      <!-- 社交卡预览 -->
-      <div class="card-preview">
+      <!-- 判断卡：双版 -->
+      <div class="card-tabs">
+        <button class="ctab on" data-ver="social">社交传播版</button>
+        <button class="ctab" data-ver="full">详细复盘版</button>
+      </div>
+      <div class="card-preview" id="cardSocial">
         <div class="card-top">
           <div class="ct">我曾经这样判断博罗</div>
           <div class="cq">投资回落，是换挡，还是断档？</div>
@@ -525,12 +586,25 @@ body{
         <div class="card-flip">
           <div class="cf first"><div class="l">最初我猜</div><div class="v" id="cardFirst">-8%</div></div>
           <div class="arr">→</div>
-          <div class="cf now"><div class="l">现在我认为</div><div class="v" id="cardNow">换挡</div></div>
+          <div class="cf now"><div class="l">现在我认为</div><div class="v" id="cardNow">—</div></div>
         </div>
         <div class="card-foot">
-          <span class="key">改变我的一条线索：</span>房地产 -47.6%，但规上工业增加值 +8.7%。
+          <span class="key">改变我的一条线索：</span>房地产 -47.6%，但规上工业增加值仍 +8.7%。
           <div class="tagrow"><span>模拟分析</span><span>非民意调查</span><span>待核验</span></div>
         </div>
+      </div>
+      <div class="card-full hidden" id="cardFull">
+        <div class="cf-sec"><div class="cf-h">① 初始判断（已封存）</div>
+          <div class="cf-b" id="cfInit">猜 -8% · 信心 3 · 首次盲测</div></div>
+        <div class="cf-sec"><div class="cf-h">② 改变我判断的关键证据</div>
+          <div class="cf-b">
+            <li>房地产 -47.6%，但工业投资超230亿、占固投近60% <span class="src-tag">A 统计公报</span></li>
+            <li>2026上半年工业投资 -51.3%，同期规上工业增加值仍 +7.5% <span class="src-tag">A 2026核验</span></li>
+          </div></div>
+        <div class="cf-sec"><div class="cf-h">③ 我现在的判断</div>
+          <div class="cf-b" id="cfNow">—</div></div>
+        <div class="cf-sec"><div class="cf-h">④ 仍待核验</div>
+          <div class="cf-b">下半年工业投资能否触底；"生产强、投资弱"的背离何时收敛；在建大项目投产节奏。</div></div>
       </div>
 
       <div class="privacy" id="privacy">
@@ -636,6 +710,7 @@ body{
     var blind = !state.browse;
     $("sealText").innerHTML="猜测 "+state.guess+"% · 倾向"+posName[state.instinct]+" · 信心 "+state.confidence+
       "<br>"+(blind?"未看到答案前的原始判断（首次盲测）":"已浏览过立场，标记为非盲测");
+    $("cfInit").innerHTML="猜 "+state.guess+"% · 倾向"+posName[state.instinct]+" · 信心 "+state.confidence+" · "+(blind?"首次盲测":"非盲测");
     $("seal").classList.add("show");
     setTimeout(function(){$("seal").classList.remove("show");},reduced?200:1500);
     setTimeout(function(){go(2);},reduced?220:1550);
@@ -715,7 +790,44 @@ body{
       con:[["宏观事实已确凿：GDP+5.5%、固投-18.8%，并非完全无据","A · 统计公报","ev-gdp"]],
       unknown:"哪些关键数据公开后可以证伪或证实以上三个立场？需要先列清单。"}
   ];
-  var classify={pro:0,con:0,tbd:0};
+  var boardMap={};
+  var evById={};
+  poses.forEach(function(p){p.pro.concat(p.con).forEach(function(e){evById[e[2]]={text:e[0],tag:e[1]};});});
+  evById["ev-gdp-rebut"]={text:"宏观数据本身已足够确凿，不能以谨慎回避判断。",tag:"A · 统计公报"};
+  var kindName={pro:"支持我的",con:"反对我的",tbd:"待核查"};
+  var boxId={pro:"bPro",con:"bCon",tbd:"bTbd"};
+  var emptyTxt={pro:"还没有收集支持证据",con:"还没有收集反对证据",tbd:"还没有待核查项"};
+  function capK(k){return k==="pro"?"Pro":k==="con"?"Con":"Tbd";}
+  function classifyEv(eid,k){
+    if(boardMap[eid]===k){delete boardMap[eid];}else{boardMap[eid]=k;}
+    renderBoard();syncEvButtons();
+  }
+  function renderBoard(){
+    var g={pro:[],con:[],tbd:[]};
+    Object.keys(boardMap).forEach(function(id){if(g[boardMap[id]])g[boardMap[id]].push(id);});
+    ["pro","con","tbd"].forEach(function(k){
+      $(boxId[k]+"N").textContent=g[k].length;
+      $("tray"+capK(k)).textContent=g[k].length;
+      var box=$(boxId[k]);
+      if(!g[k].length){box.innerHTML='<div class="mb-empty">'+emptyTxt[k]+'</div>';return;}
+      box.innerHTML=g[k].map(function(id){
+        var d=evById[id]||{text:"",tag:""};
+        return '<div class="mb-chip">'+d.text+'<span class="src-tag">'+d.tag+'</span><span class="rm" data-rm="'+id+'">×</span></div>';
+      }).join("");
+    });
+  }
+  function syncEvButtons(){
+    document.querySelectorAll(".ev[data-eid]").forEach(function(ev){
+      var k=boardMap[ev.getAttribute("data-eid")];
+      ev.querySelectorAll(".ev-btns button").forEach(function(b){
+        b.classList.toggle("sel",b.getAttribute("data-k")===k);
+      });
+    });
+  }
+  document.addEventListener("click",function(e){
+    var rm=e.target.closest(".mb-chip .rm");
+    if(rm){var id=rm.getAttribute("data-rm");delete boardMap[id];renderBoard();syncEvButtons();}
+  });
   function renderPoses(){
     var list=$("poseList");list.innerHTML="";
     poses.forEach(function(p){
@@ -731,51 +843,56 @@ body{
         '<div class="pose-body"><div class="pose-inner">'+
           '<h4>支持证据</h4>'+evs+
           '<h4>最强反证</h4>'+
-          (p.id==="evidence"?'<div class="ev con"><div class="ev-txt">宏观数据本身已足够确凿，不能以“谨慎”回避判断。<span class="src-tag">A · 统计公报</span></div><div class="ev-btns"></div></div>':'')+
-          '<div class="unknown">🔍 关键未知：'+p.unknown+'</div>'+
+          (p.id==="evidence"?'<div class="ev con" data-eid="ev-gdp-rebut"><div class="ev-txt">宏观数据本身已足够确凿，不能以“谨慎”回避判断。<span class="src-tag">A · 统计公报</span></div><div class="ev-btns"><button class="b-pro" data-k="pro">支持</button><button class="b-con" data-k="con">反对</button><button class="b-tbd" data-k="tbd">待查</button></div></div>':'')+
+          '<div class="unknown">关键未知：'+p.unknown+'</div>'+
         '</div></div>';
       list.appendChild(div);
+      function pickPose(){
+        state.pose=p.id;$("toConnect").disabled=false;
+        $("mePose").textContent=p.name;
+        $("cardNow").textContent=p.name;
+        $("cfNow").textContent=(/[。？！?.!]$/.test(p.claim)?p.claim:p.claim+"。")+p.short;
+      }
       div.querySelector(".pose-head").addEventListener("click",function(){
         var open=div.classList.contains("open");
         document.querySelectorAll(".pose").forEach(function(x){x.classList.remove("open")});
-        if(!open){div.classList.add("open");
-          state.pose=p.id;$("toConnect").disabled=false;
-          $("mePose").textContent=p.name;$("cardNow").textContent=p.name;
-        }
+        if(!open){div.classList.add("open");pickPose();}
       });
       div.querySelector(".pose-inner").addEventListener("click",function(e){
         var btn=e.target.closest(".ev-btns button");if(!btn)return;
-        var k=btn.getAttribute("data-k");
-        var ev=btn.closest(".ev");
-        var same=ev.querySelectorAll(".ev-btns button");
-        var was=btn.classList.contains("sel");
-        same.forEach(function(b){b.classList.remove("sel")});
-        // 简单计数：同一条只计最后一次归类
-        if(!was){btn.classList.add("sel");classify[k]++;}
-        updateTray();
-        toast(k==="pro"?"已放入「支持我的」":k==="con"?"已放入「反对我的」":"已放入「待核查」");
-        state.pose=p.id;
-        $("toConnect").disabled=false;
-        $("mePose").textContent=p.name;
-        $("cardNow").textContent=p.name;
+        var eid=btn.closest(".ev").getAttribute("data-eid"), k=btn.getAttribute("data-k");
+        classifyEv(eid,k);
+        toast("已放入「"+kindName[k]+"」");
+        pickPose();
       });
     });
   }
   function evRow(p,e,kind){
-    return '<div class="ev '+kind+'"><div class="ev-txt">'+e[0]+'<span class="src-tag">'+e[1]+'</span></div>'+
+    return '<div class="ev '+kind+'" data-eid="'+e[2]+'"><div class="ev-txt">'+e[0]+'<span class="src-tag">'+e[1]+'</span></div>'+
       '<div class="ev-btns">'+
         '<button class="b-pro" data-k="pro">支持</button>'+
         '<button class="b-con" data-k="con">反对</button>'+
         '<button class="b-tbd" data-k="tbd">待查</button>'+
       '</div></div>';
   }
-  function updateTray(){$("trayPro").textContent=classify.pro;$("trayCon").textContent=classify.con;$("trayTbd").textContent=classify.tbd;}
   function hexA(hex,a){var n=parseInt(hex.slice(1),16);return"rgba("+(n>>16)+","+((n>>8)&255)+","+(n&255)+","+a+")";}
   renderPoses();
+  renderBoard();
 
   $("toConnect").addEventListener("click",function(){
     if(!state.pose){toast("先点选一个立场");return;}
     go(4);
+  });
+
+  /* 判断卡：社交版 / 复盘版 */
+  document.querySelectorAll(".card-tabs .ctab").forEach(function(t){
+    t.addEventListener("click",function(){
+      document.querySelectorAll(".card-tabs .ctab").forEach(function(x){x.classList.remove("on")});
+      t.classList.add("on");
+      var v=t.getAttribute("data-ver");
+      $("cardSocial").classList.toggle("hidden",v!=="social");
+      $("cardFull").classList.toggle("hidden",v!=="full");
+    });
   });
 
   /* ---------- 朋友挑战 / 分享 ---------- */
@@ -791,8 +908,10 @@ body{
     range.value=-8;paintBet(-8);
     document.querySelectorAll("#instinctGrid .opt,#confRow .conf-chip").forEach(function(x){x.classList.remove("sel")});
     document.querySelectorAll(".pose").forEach(function(x){x.classList.remove("open")});
-    classify={pro:0,con:0,tbd:0};updateTray();
-    $("toConnect").disabled=true;$("mePose").textContent="—";$("cardNow").textContent="—";
+    boardMap={};renderBoard();syncEvButtons();
+    document.querySelectorAll(".card-tabs .ctab").forEach(function(x,i){x.classList.toggle("on",i===0)});
+    $("cardSocial").classList.remove("hidden");$("cardFull").classList.add("hidden");
+    $("toConnect").disabled=true;$("mePose").textContent="—";$("cardNow").textContent="—";$("cfNow").textContent="—";
     revealed=false;
     toast("已开启新的一次尝试，原始记录已保留");
     go(1);
