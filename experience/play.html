@@ -1,0 +1,212 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>城市读心术 · 博罗 · 投资下降之谜</title>
+<meta name="description" content="在不确定下先下判断、看立场、查证据、再修正。基于公开统计的判断力训练，非民意调查。">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%230E7C70' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Ccircle cx='12' cy='12' r='10'/%3E%3Cpolygon points='16.24 7.76 14.12 14.12 7.76 16.24 9.88 9.88 16.24 7.76'/%3E%3C/svg%3E">
+<link rel="stylesheet" href="play.css">
+</head>
+<body>
+<div class="app">
+
+  <!-- 顶部进度 -->
+  <header class="topbar">
+    <a class="brand" href="../index.html">
+      <span class="brand-dot"></span>
+      <span class="brand-name">博罗<em>城市读心术</em></span>
+    </a>
+    <nav class="steps" id="steps" aria-label="判断进度">
+      <span class="step" data-s="0">开场</span>
+      <span class="step" data-s="1">先猜</span>
+      <span class="step" data-s="2">立场</span>
+      <span class="step" data-s="3">真相</span>
+      <span class="step" data-s="4">判断</span>
+    </nav>
+    <a class="back-site" href="../index.html">返回正式站</a>
+  </header>
+
+  <main class="screens">
+
+    <!-- 0 开场：今日谜题 -->
+    <section class="screen" id="s0" data-screen="0">
+      <div class="hero-glow" aria-hidden="true"></div>
+      <div class="wrap wrap-narrow">
+        <span class="kicker">今日议题 · 先下判断，再找答案</span>
+        <h1 class="hero-title">
+          2025年博罗GDP突破<span class="num-gold">1000亿</span>，<br>
+          固定资产投资却<span class="num-red">下降18.8%</span>。
+        </h1>
+        <p class="hero-q">增长动力究竟在发生什么变化？</p>
+        <div class="clash" aria-hidden="true">
+          <div class="clash-item"><div class="clash-num gold">1005.45<span>亿</span></div><div class="clash-lbl">GDP · 增长5.5%</div></div>
+          <div class="clash-vs"></div>
+          <div class="clash-item"><div class="clash-num red">−18.8<span>%</span></div><div class="clash-lbl">固定资产投资</div></div>
+        </div>
+        <p class="hero-note">先别急着找答案。像情报分析师一样：<b>说出你的直觉 → 看到不同立场 → 用证据检验 → 决定是否改判</b>。没有人会笑话你猜错，我们只关心你被什么改变。</p>
+        <div class="hero-actions">
+          <button class="cta" data-go="1">开始，先说出我的判断</button>
+          <button class="cta-ghost" data-go="2">先看看各方立场</button>
+        </div>
+        <p class="src-line">题目数据：博罗县2025年统计公报（GDP与固投均为公开口径）</p>
+      </div>
+    </section>
+
+    <!-- 1 先猜 -->
+    <section class="screen" id="s1" data-screen="1">
+      <div class="wrap">
+        <span class="kicker">第 1 步 · 你的初始判断</span>
+        <h2 class="screen-title">在看到分析之前，你怎么想？</h2>
+        <p class="screen-sub">这一步会冻结成你的“初始快照”，可以回看，但不会被无痕修改。</p>
+
+        <div class="card guess-card">
+          <div class="q-label">你猜：2025年博罗固定资产投资，相比上一年变化了多少？</div>
+          <div class="guess-num" id="guessNum">0%</div>
+          <input type="range" id="faiRange" min="-50" max="10" step="1" value="0" aria-label="猜测固定资产投资增速">
+          <div class="range-ends"><span>−50%</span><span>0</span><span>+10%</span></div>
+        </div>
+
+        <div class="card">
+          <div class="q-label">你的第一反应，更接近哪一种？</div>
+          <div class="choice-grid" id="instinctChoices">
+            <button class="choice" data-v="cycle">投资有起伏，问题不大</button>
+            <button class="choice" data-v="realestate">主要是房地产在拖累</button>
+            <button class="choice" data-v="gap">新动能没接上，要警惕</button>
+            <button class="choice" data-v="unknown">我没概念，想看分析</button>
+          </div>
+        </div>
+
+        <div class="card">
+          <div class="q-label">你对这个判断有多少信心？</div>
+          <div class="confidence" id="confidence" role="radiogroup" aria-label="信心">
+            <button class="conf" data-c="1">1</button>
+            <button class="conf" data-c="2">2</button>
+            <button class="conf" data-c="3">3</button>
+            <button class="conf" data-c="4">4</button>
+            <button class="conf" data-c="5">5</button>
+          </div>
+          <div class="conf-ends"><span>纯属猜测</span><span>很有把握</span></div>
+        </div>
+
+        <div class="nav-actions">
+          <button class="cta-ghost" data-go="0">返回</button>
+          <button class="cta" id="toPositions">锁下我的直觉，看看别人怎么看</button>
+        </div>
+      </div>
+    </section>
+
+    <!-- 2 立场研判 -->
+    <section class="screen" id="s2" data-screen="2">
+      <div class="wrap">
+        <span class="kicker">第 2 步 · 典型立场研判</span>
+        <h2 class="screen-title">同一组数据，处在不同位置的人会得出不同判断</h2>
+        <p class="screen-sub">点开每张卡片，看他们的依据、盲区，以及“什么证据会让他们改变”。</p>
+        <div class="positions" id="positions"><!-- 立场卡由JS渲染 --></div>
+        <div class="fifth">
+          <p>这几种解释都没说到点上？</p>
+          <button class="cta-ghost" id="fifthBtn">提出你的第五种观点（投稿）</button>
+        </div>
+        <div class="nav-actions">
+          <button class="cta-ghost" data-go="1">返回</button>
+          <button class="cta" data-go="3">看完立场，揭晓真实数据</button>
+        </div>
+      </div>
+    </section>
+
+    <!-- 3 数据揭晓 -->
+    <section class="screen" id="s3" data-screen="3">
+      <div class="wrap">
+        <span class="kicker">第 3 步 · 数据揭晓</span>
+        <h2 class="screen-title">你的直觉，和公开公报差多少？</h2>
+        <div class="reveal-box">
+          <div class="reveal-col">
+            <div class="reveal-lbl">你猜</div>
+            <div class="reveal-num you" id="youNum">0%</div>
+          </div>
+          <div class="reveal-arrow" aria-hidden="true"></div>
+          <div class="reveal-col">
+            <div class="reveal-lbl">统计公报</div>
+            <div class="reveal-num real">−18.8%</div>
+            <div class="reveal-cap">2025年全社会固定资产投资</div>
+          </div>
+        </div>
+        <div class="gap-banner" id="gapBanner"></div>
+        <div class="card reveal-facts">
+          <div class="q-label">同一时间，还发生了这些事：</div>
+          <ul class="fact-list" id="revealFacts"></ul>
+        </div>
+        <div class="card lag-card">
+          <div class="q-label">为什么“GDP涨、投资跌”会同时出现？</div>
+          <p class="lag-txt">投资是<b>领先指标</b>，当期产值是<b>滞后指标</b>，二者相差约 <b>2–3 年时滞</b>。今年的产出，靠的是前几年投下去的产能；今年投得少，影响的是 <b>2027–2028 年</b>的接续。所以单看任何一个数字都可能误判。</p>
+        </div>
+        <div class="nav-actions">
+          <button class="cta-ghost" data-go="2">返回立场</button>
+          <button class="cta" data-go="4">生成我的判断卡</button>
+        </div>
+      </div>
+    </section>
+
+    <!-- 4 判断卡 -->
+    <section class="screen" id="s4" data-screen="4">
+      <div class="wrap">
+        <span class="kicker">第 4 步 · 形成你的判断</span>
+        <h2 class="screen-title">现在，你可以坚持、补充，或改判</h2>
+        <div class="card">
+          <div class="q-label">看完立场和数据，你现在最接近哪一种？</div>
+          <div class="choice-grid" id="nowPositions"></div>
+        </div>
+        <div class="card">
+          <div class="q-label">相比最初，你的判断：</div>
+          <div class="choice-grid" id="verdict">
+            <button class="choice" data-v="hold">我坚持原来的看法</button>
+            <button class="choice" data-v="adjust">部分修正</button>
+            <button class="choice" data-v="change">我改判了</button>
+          </div>
+          <div class="q-label" style="margin-top:18px">一句话写下你的理由（可留空）：</div>
+          <textarea id="myReason" rows="2" maxlength="80" placeholder="例如：我原来以为只是地产问题，没想到工业投资也在降……"></textarea>
+        </div>
+
+        <!-- 海报式判断卡 -->
+        <div class="judgment-card" id="judgmentCard">
+          <div class="jc-top">
+            <div class="jc-brand">博罗 · 城市读心术</div>
+            <div class="jc-topic" id="jcTopic"></div>
+          </div>
+          <div class="jc-row"><span class="jc-k">我最初猜</span><span class="jc-v" id="jcGuess"></span></div>
+          <div class="jc-row"><span class="jc-k">真实公报</span><span class="jc-v red">固投 −18.8%</span></div>
+          <div class="jc-row"><span class="jc-k">更接近</span><span class="jc-v" id="jcPos">（待选）</span></div>
+          <div class="jc-row"><span class="jc-k">我的判断</span><span class="jc-v" id="jcVerdict">（待选）</span></div>
+          <div class="jc-row jc-reason"><span class="jc-k">我的理由</span><span class="jc-v" id="jcReason">—</span></div>
+          <div class="jc-divider"></div>
+          <div class="jc-watch">
+            <div class="jc-watch-t">什么会让我重新判断：</div>
+            <div id="jcWatch"></div>
+          </div>
+          <div class="jc-foot">
+            <span>2026年4月一季度数据发布后回来验证</span>
+            <span class="jc-badge">基于公开统计的分析估计 · 非民意调查</span>
+          </div>
+        </div>
+
+        <div class="nav-actions wrap-actions">
+          <button class="cta" id="downloadCard">下载卡片图</button>
+          <button class="cta" id="saveCard">生成挑战链接</button>
+          <button class="cta-ghost" id="copyCard">复制文字</button>
+          <button class="cta-ghost" id="submitCard">投稿</button>
+          <button class="cta-ghost" id="restart">重新玩</button>
+        </div>
+        <p class="save-note" id="saveNote">判断只保存在本机浏览器，不上云；清除浏览数据或更换设备会丢失，可先复制或截图保存。</p>
+      </div>
+    </section>
+
+  </main>
+
+  <footer class="disclaimer">
+    <span>本页为基于公开统计的结构化分析估计，<b>非民意调查、非真人发言</b>；不代表任何机构结论。</span>
+  </footer>
+</div>
+<script src="../intelligence/intel-data.js"></script>
+<script src="play.js"></script>
+</body>
+</html>

@@ -1,0 +1,67 @@
+{
+  "schema_version": 1,
+  "engine": "观点情报引擎",
+  "region": "boluo",
+  "updated": "2026-10-25",
+  "note": "鉴别清单：等待更新的统计指标/事件，以及不同结果分别支持哪个立场。验证日期取决于真实数据发布节奏，不做机械30天开奖。",
+  "watchlist": [
+    {
+      "watch_id": "wl-q1-2026-ind-value",
+      "topic_id": "boluo-investment-decline-2025",
+      "metric": "2026年一季度规上工业增加值增速",
+      "current": "8.7%（2025全年）",
+      "distinguishes": {
+        "keep_above_8": "支持 vp-prod-current（当期生产仍有支撑）",
+        "below_5": "支持 vp-pipeline-ahead（投资收缩开始传导）",
+        "between_5_8": "维持分歧，需结合投资项"
+      },
+      "next_release": "2026-04"
+    },
+    {
+      "watch_id": "wl-q1-2026-industrial-invest",
+      "topic_id": "boluo-investment-decline-2025",
+      "metric": "2026年一季度工业投资（二产）增速",
+      "current": "-12.7%（2025全年二产投资）",
+      "distinguishes": {
+        "turn_positive": "支持 vp-structure-split（换挡成立，工业底盘稳住）",
+        "continue_double_digit_decline": "支持 vp-pipeline-ahead（接续风险兑现）",
+        "slight_negative": "vp-structure-split 与 vp-pipeline-ahead 之间，继续观察"
+      },
+      "next_release": "2026-04"
+    },
+    {
+      "watch_id": "wl-new-projects",
+      "topic_id": "boluo-investment-decline-2025",
+      "metric": "2026年新开工/投产项目数",
+      "current": "待公布",
+      "distinguishes": {
+        "more_projects": "支持 vp-structure-split / vp-prod-current（投资周期触底）",
+        "fewer_projects": "支持 vp-pipeline-ahead（企业信心未恢复）"
+      },
+      "next_release": "持续监测"
+    },
+    {
+      "watch_id": "wl-tonglaishun",
+      "topic_id": "boluo-investment-decline-2025",
+      "metric": "铜来顺等百亿级项目投产进度",
+      "current": "生产线点火，2027年冲刺百亿",
+      "distinguishes": {
+        "on_schedule": "支持 vp-structure-split（大项目仍在落地）",
+        "delay_or_shrink": "支持 vp-pipeline-ahead（企业投资意愿下降）"
+      },
+      "next_release": "2026年持续监测"
+    },
+    {
+      "watch_id": "wl-tourism-annual",
+      "topic_id": "boluo-tertiary-tourism-2025",
+      "metric": "全年游客接待量、旅游总收入、人均消费",
+      "current": "公开全年文旅专项数据未取得",
+      "distinguishes": {
+        "high_revenue_growth": "支持 vp-tourism-cultivate（第二曲线值得加码）",
+        "traffic_without_revenue": "支持 vp-tourism-scale（有人气无转化，短期难接棒）",
+        "data_absent": "两立场均维持低置信度，不展开更多对立观点"
+      },
+      "next_release": "待文旅部门年度数据"
+    }
+  ]
+}

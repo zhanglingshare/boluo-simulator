@@ -1,0 +1,79 @@
+{
+  "schema_version": 1,
+  "engine": "观点情报引擎",
+  "region": "boluo",
+  "updated": "2026-10-25",
+  "note": "议题库。议题可沿用多天，只有重要事实变化、话题失效或人工替换时才更换；不制造为新而新的伪争议。",
+  "topics": [
+    {
+      "topic_id": "boluo-investment-decline-2025",
+      "title": "博罗GDP破千亿了，投资却下降18.8%。未来增长靠什么接续？",
+      "core_question": "增长动能在良性换挡，还是新产能接续存在隐忧？",
+      "summary": "2025年博罗成为广东首个千亿县，GDP增长5.5%、规上工业增加值增长8.7%，但全社会固定资产投资下降18.8%。投资是领先指标、当期产值是滞后指标，两者相差2-3年时滞。真正的判断点是：2027-2028年的新产能能否接得上。",
+      "category": "industry",
+      "baseline_facts": {
+        "gdp": 1005.45,
+        "gdp_growth": 5.5,
+        "fixed_asset_investment_growth": -18.8,
+        "real_estate_investment_growth": -47.6,
+        "industrial_value_added_growth": 8.7,
+        "lag_mechanism": "投资为流量，经2-3年时滞传导为产能"
+      },
+      "evidence_ids": [
+        "ev-gdp-2025",
+        "ev-secondary-2025",
+        "ev-tertiary-2025",
+        "ev-primary-2025",
+        "ev-ind-value-2025",
+        "ev-ind-output-2025",
+        "ev-electronics-2025",
+        "ev-electrical-2025",
+        "ev-fai-2025",
+        "ev-realestate-2025",
+        "ev-industrial-invest-scale",
+        "ev-secondary-invest-2025",
+        "ev-tertiary-invest-2025",
+        "ev-primary-invest-2025",
+        "ev-tonglaishun-2025"
+      ],
+      "model_mappable": true,
+      "model_note": "可映射到 model.js 五路径的投资/产能假设；新投产项目节奏对应p1双引擎。",
+      "started_at": "2026-10-25",
+      "updated_at": "2026-10-25",
+      "status": "active",
+      "verification": {
+        "next_check": "2026年一季度经济数据",
+        "next_release_window": "2026-04",
+        "verifiable": true
+      }
+    },
+    {
+      "topic_id": "boluo-tertiary-tourism-2025",
+      "title": "三产增速只有2.7%，罗浮山的人气能变成第二增长引擎吗？",
+      "core_question": "文旅的热闹是生活补充，还是足以接棒工业的结构性增长极？",
+      "summary": "博罗第二产业增加值549亿、增速6.9%，第三产业349亿、增速仅2.7%，文旅与工业不在一个量级。国庆乡村旅游点人气不错，但'游客来了'与'形成增加值、税收、就业'之间隔着消费转化、停留时长和产业乘数。本议题数据尚不充分，只给出可被现有证据支撑的立场，不凑齐四个。",
+      "category": "livelihood",
+      "baseline_facts": {
+        "tertiary_value": 349.00,
+        "tertiary_growth": 2.7,
+        "secondary_value": 549.01,
+        "secondary_growth": 6.9
+      },
+      "evidence_ids": [
+        "ev-tertiary-2025",
+        "ev-secondary-2025"
+      ],
+      "evidence_sufficiency": "insufficient",
+      "model_mappable": true,
+      "model_note": "对应 model.js 路径p3三产/文旅破局（mu=50，五路径中第三），敏感性显著低于p1双引擎。",
+      "started_at": "2026-10-25",
+      "updated_at": "2026-10-25",
+      "status": "active",
+      "verification": {
+        "next_check": "全年游客接待量、旅游总收入、停留时长",
+        "next_release_window": "待文旅部门年度数据",
+        "verifiable": true
+      }
+    }
+  ]
+}

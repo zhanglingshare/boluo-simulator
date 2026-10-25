@@ -1,0 +1,212 @@
+{
+  "schema_version": 1,
+  "engine": "观点情报引擎",
+  "region": "boluo",
+  "updated": "2026-10-25",
+  "generated_at": "2026-10-25 07:00",
+  "method": "竞争性假设分析（ACH）+ 利益相关方结构定位：从公开证据识别实质不同的解释，再映射到由结构位置决定的立场原型",
+  "display_label": "典型立场研判 · 基于公开情报推演",
+  "disclaimer": "以下立场为基于公开统计与情报的结构化分析估计（analytic estimate），代表由结构位置与信息环境推导的'立场原型'，非任何真人发言、非民意调查、不代表公众意见分布。无支持率、无头像、无互动数据。",
+  "viewpoints": [
+    {
+      "viewpoint_id": "vp-prod-current",
+      "origin": "ai_synthesized",
+      "population_representativeness": "not_established",
+      "topic_id": "boluo-investment-decline-2025",
+      "color": "#3b82f6",
+      "position_archetype": "当期生产视角",
+      "archetype_headline": "数据明明很好，别自己吓自己",
+      "structural_position": "对当期产值负责的人：高新区与企业生产运营、口径落在'出货与产能利用'的位置。",
+      "information_environment": "日常看到订单、产能利用率、产值报表，眼前是工业增加值+8.7%、产值破2000亿、电子信息+17.2%。",
+      "claim": "投资下降不等于当前工业衰退；过去几年投下去的产能正在释放，当下增长有支撑。",
+      "support_evidence_ids": [
+        "ev-ind-value-2025",
+        "ev-ind-output-2025",
+        "ev-electronics-2025",
+        "ev-electrical-2025",
+        "ev-secondary-2025"
+      ],
+      "contradict_evidence_ids": [
+        "ev-fai-2025",
+        "ev-secondary-invest-2025"
+      ],
+      "blind_spot": "看到的是滞后指标（当期产值）；投资是领先指标，收缩要2-3年后才传导到生产端。",
+      "uncertainties": [
+        "现有产能能否持续满负荷",
+        "新订单与外需是否延续"
+      ],
+      "discriminating_tests": ["wl-q1-2026-ind-value"],
+      "confidence": "中",
+      "confidence_basis": "对'当下仍在增长'判断可信度高（A级证据）；对'未来无忧'判断弱。",
+      "generated_at": "2026-10-25",
+      "review_status": "pending",
+      "source_refs": [
+        "https://www.boluo.gov.cn/hzbltjj/gkmlpt/content/5/5801/mpost_5801532.html",
+        "https://www.boluo.gov.cn/bmzb/xkjgyhxxhj/zwgk/qt/ghjh/content/post_5731937.html"
+      ],
+      "version": "1.0"
+    },
+    {
+      "viewpoint_id": "vp-pipeline-ahead",
+      "origin": "ai_synthesized",
+      "population_representativeness": "not_established",
+      "topic_id": "boluo-investment-decline-2025",
+      "color": "#ef4444",
+      "position_archetype": "前瞻接续视角",
+      "archetype_headline": "投得越来越少，2027拿什么接？",
+      "structural_position": "对未来项目储备负责的人：发改、招商、产业研究，口径落在'新签约、新开工、在建'。",
+      "information_environment": "盯投资领先指标：全社会固投-18.8%，一产投资-64.7%、三产投资-25.9%、二产投资-12.7%。",
+      "claim": "投资是领先指标，现在收缩意味着两三年后新增产能可能断档，应警惕增长接续风险。",
+      "support_evidence_ids": [
+        "ev-fai-2025",
+        "ev-primary-invest-2025",
+        "ev-tertiary-invest-2025",
+        "ev-secondary-invest-2025"
+      ],
+      "contradict_evidence_ids": [
+        "ev-industrial-invest-scale",
+        "ev-tonglaishun-2025",
+        "ev-ind-value-2025"
+      ],
+      "blind_spot": "容易把房地产塌方误算成工业失速，并低估存量产能与在建大项目的释放节奏。",
+      "uncertainties": [
+        "在建项目的实际投产时间表",
+        "工业投资（剔除地产）的真实趋势"
+      ],
+      "discriminating_tests": ["wl-q1-2026-industrial-invest", "wl-new-projects"],
+      "confidence": "中",
+      "confidence_basis": "领先指标方向明确（A级），但向生产端传导的强度与时滞不确定。",
+      "generated_at": "2026-10-25",
+      "review_status": "pending",
+      "source_refs": [
+        "https://www.boluo.gov.cn/bmzb/xtjj/tjyj/tjfx/content/post_5801531.html"
+      ],
+      "version": "1.0"
+    },
+    {
+      "viewpoint_id": "vp-structure-split",
+      "origin": "ai_synthesized",
+      "population_representativeness": "not_established",
+      "topic_id": "boluo-investment-decline-2025",
+      "color": "#f59e0b",
+      "position_archetype": "结构分析视角",
+      "archetype_headline": "别被总数吓到，要看是谁在跌",
+      "structural_position": "做统计与经济结构分析的人，习惯把总量拆开看分项，而非对单一总数下结论。",
+      "information_environment": "手握分项：房地产投资-47.6%是主跌项，工业投资仅-12.7%、仍超230亿、占固投近60%、连续四年超200亿，铜来顺等项目仍在点火。",
+      "claim": "这是房地产周期出清叠加产业结构升级，工业底盘没有塌；是'换挡'而非'熄火'，要按分项分别判断。",
+      "support_evidence_ids": [
+        "ev-industrial-invest-scale",
+        "ev-realestate-2025",
+        "ev-electronics-2025",
+        "ev-electrical-2025",
+        "ev-tonglaishun-2025"
+      ],
+      "contradict_evidence_ids": [
+        "ev-secondary-invest-2025",
+        "ev-tertiary-invest-2025",
+        "ev-fai-2025"
+      ],
+      "blind_spot": "二产、三产投资同时为负，'全面收缩'也是事实；结构分化叙事可能过度乐观、掩盖工业投资本身的小幅走弱。",
+      "uncertainties": [
+        "工业投资与房地产投资的增速差是否持续扩大",
+        "工业投资230亿的内部结构（新建vs技改）"
+      ],
+      "discriminating_tests": ["wl-q1-2026-industrial-invest", "wl-tonglaishun"],
+      "confidence": "中高",
+      "confidence_basis": "与分项数据最吻合；'换挡'成立的关键是工业投资增速稳住，尚需一季度验证。",
+      "generated_at": "2026-10-25",
+      "review_status": "pending",
+      "source_refs": [
+        "https://www.boluo.gov.cn/bmzb/xkjgyhxxhj/zwgk/qt/ghjh/content/post_5731937.html",
+        "https://www.boluo.gov.cn/bmzb/xtjj/tjyj/tjfx/content/post_5801531.html"
+      ],
+      "version": "1.0"
+    },
+    {
+      "viewpoint_id": "vp-evidence-thin",
+      "origin": "ai_synthesized",
+      "population_representativeness": "not_established",
+      "topic_id": "boluo-investment-decline-2025",
+      "color": "#6b7280",
+      "position_archetype": "审慎证据视角",
+      "archetype_headline": "公开数据还不够，现在下结论为时过早",
+      "structural_position": "外部学者、只掌握公开数据、拿不到内部项目台账与企业投资意愿调查的观察者。",
+      "information_environment": "只有增速，缺分项绝对金额、在建项目投产时间表、企业投资意愿的微观调查。",
+      "claim": "缺少诊断性证据，既不能喊空也不能唱多；应先补齐能区分上述解释的关键数据。",
+      "support_evidence_ids": [],
+      "contradict_evidence_ids": [],
+      "blind_spot": "等待完美数据本身就是一种判断——它意味着'现在不需要行动'。",
+      "uncertainties": [
+        "各投资分项的绝对金额与多年趋势",
+        "在建项目投产时间表",
+        "企业投资意愿的直接调查（市场/融资/政策）"
+      ],
+      "discriminating_tests": ["wl-q1-2026-ind-value", "wl-q1-2026-industrial-invest", "wl-new-projects"],
+      "confidence": "高",
+      "confidence_basis": "'证据不足'这一元判断本身成立；对四种解释的最终取舍则悬置。",
+      "generated_at": "2026-10-25",
+      "review_status": "pending",
+      "source_refs": [
+        "https://www.boluo.gov.cn/hzbltjj/gkmlpt/content/5/5801/mpost_5801532.html"
+      ],
+      "version": "1.0"
+    },
+    {
+      "viewpoint_id": "vp-tourism-cultivate",
+      "origin": "ai_synthesized",
+      "population_representativeness": "not_established",
+      "topic_id": "boluo-tertiary-tourism-2025",
+      "color": "#fbbf24",
+      "position_archetype": "文旅培育视角",
+      "archetype_headline": "罗浮山是慢变量，值得长期养",
+      "structural_position": "文旅、农业与地方生活的从业者和推动者，看重人气、口碑与长期品牌。",
+      "information_environment": "看到节假日乡村旅游点人气旺、生态与文化资源独特，但缺少全年游客量、旅游收入与消费转化的权威数值。",
+      "claim": "文旅是需要长期培育的第二曲线，即使短期体量小，也应在工业换挡期坚持投入做消费转化。",
+      "support_evidence_ids": ["ev-tertiary-2025"],
+      "contradict_evidence_ids": ["ev-secondary-2025"],
+      "blind_spot": "人气不等于增加值；在拿到旅游总收入、停留时长、人均消费等数据前，难以判断其乘数效应。",
+      "uncertainties": [
+        "全年游客接待量与旅游总收入",
+        "游客停留时长与人均消费",
+        "国庆等节点人气能否常态化"
+      ],
+      "discriminating_tests": ["wl-tourism-annual"],
+      "confidence": "低",
+      "confidence_basis": "仅1条三产总量证据支撑方向，缺乏文旅专项量化证据，属待验证立场。",
+      "generated_at": "2026-10-25",
+      "review_status": "pending",
+      "source_refs": [
+        "https://www.boluo.gov.cn/hzbltjj/gkmlpt/content/5/5801/mpost_5801532.html"
+      ],
+      "version": "1.0"
+    },
+    {
+      "viewpoint_id": "vp-tourism-scale",
+      "origin": "ai_synthesized",
+      "population_representativeness": "not_established",
+      "topic_id": "boluo-tertiary-tourism-2025",
+      "color": "#06b6d4",
+      "position_archetype": "量级清醒视角",
+      "archetype_headline": "349亿对549亿，文旅短期接不了工业的棒",
+      "structural_position": "以总量与结构口径看经济基本盘的人，习惯用产业规模和增速做量级比较。",
+      "information_environment": "二产549亿、增6.9%，三产349亿、仅增2.7%，两者不在一个量级和增速档位。",
+      "claim": "文旅可以富民、改善生活品质，但短期不足以成为接棒工业的增长极；它是补充与韧性，不是主引擎。",
+      "support_evidence_ids": ["ev-secondary-2025", "ev-tertiary-2025"],
+      "contradict_evidence_ids": [],
+      "blind_spot": "可能低估文旅的就业带动与长期生态价值，只看了GDP口径。",
+      "uncertainties": [
+        "若旅游收入高增长，量级判断是否需要修正",
+        "三产内部的生产性服务业占比"
+      ],
+      "discriminating_tests": ["wl-tourism-annual"],
+      "confidence": "中",
+      "confidence_basis": "二产/三产规模与增速为A级事实，'短期难接棒'有据；长期判断仍取决于文旅数据。",
+      "generated_at": "2026-10-25",
+      "review_status": "pending",
+      "source_refs": [
+        "https://www.boluo.gov.cn/hzbltjj/gkmlpt/content/5/5801/mpost_5801532.html"
+      ],
+      "version": "1.0"
+    }
+  ]
+}
