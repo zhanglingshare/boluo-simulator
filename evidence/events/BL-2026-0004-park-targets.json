@@ -1,0 +1,24 @@
+{
+  "event_id": "BL-2026-0004",
+  "region": "boluo",
+  "event_type": "policy",
+  "subject": "2026年园区目标：供地新动工25宗、新投产30宗、工业投资110亿元、规上工业产值550亿元；做大新一代电子信息、智能装备、新能源新材料三大主导产业",
+  "event_date": "2026-02",
+  "published_at": "2026-02",
+  "fetched_at": "2026-10-26T08:00:00",
+  "source_url": "http://www.boluo.gov.cn/zwgk/zfgzbg/content/post_5717382.html",
+  "evidence_level": "A",
+  "status": "approved",
+  "related_paths": [0, 1],
+  "parameter_change": {
+    "path_index": 0,
+    "mu_delta": null,
+    "reason": "规划兑现(base)路径的核心依据：园区年550亿产值、工业投资110亿、双引擎+工业底盘五年累计250/150亿。但2026年1-8月工业投资仅−46.7%，与110亿目标存在明显缺口，故达标率仅约50%。"
+  },
+  "requires_review": true,
+  "review": {
+    "reviewer": "zhang-ling",
+    "reviewed_at": "2026-10-26",
+    "comment": "2026政府工作报告，A级；作为规划兑现路径基准，非已实现结果。"
+  }
+}

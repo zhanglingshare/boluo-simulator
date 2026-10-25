@@ -57,6 +57,8 @@ h1{font-size:22px;margin:0 0 2px;letter-spacing:.5px}
 .scanline.fast{animation-duration:.8s}
 @keyframes pulse{0%,100%{opacity:.4}50%{opacity:1}}
 .pulse{animation:pulse 1.5s ease-in-out infinite}
+.scissorMini{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+@media(max-width:560px){.scissorMini{grid-template-columns:1fr}}
 @media(min-width:1024px){.wrap{max-width:1200px!important;padding:24px}}</style></head><body>
 
 <div class="nav">
@@ -98,10 +100,34 @@ h1{font-size:22px;margin:0 0 2px;letter-spacing:.5px}
     </div>
   </div>
 
+  <!-- 2026最新：生产与投资的剪刀差 -->
+  <div style="margin:12px 0;padding:16px;border-radius:14px;border:1px solid #713f12;background:linear-gradient(135deg,#161408,#0f172a)">
+    <div style="display:flex;justify-content:space-between;align-items:baseline;flex-wrap:wrap;gap:4px;margin-bottom:10px">
+      <div style="font-size:15px;font-weight:800;color:#fbbf24">⚠️ 2026年1-8月，博罗出现一个"剪刀差"</div>
+      <div style="font-size:10.5px;color:#6b7d96">博罗县统计局2026年1-8月经济运行简析</div>
+    </div>
+    <div class="scissorMini">
+      <div style="background:#0a1a12;border:1px solid #14532d;border-radius:10px;padding:12px">
+        <div style="font-size:12px;color:#86efac;font-weight:700">▲ 生产端在爬坡</div>
+        <div style="font-size:24px;font-weight:800;color:#22c55e;margin:2px 0">工业增加值 +8.9%</div>
+        <div style="font-size:11.5px;color:#9aa9bd;line-height:1.6">工业用电+11.5%，电子设备+12.7%、电气机械+14.1%——工厂在满负荷运转。</div>
+      </div>
+      <div style="background:#1a0c0c;border:1px solid #7f1d1d;border-radius:10px;padding:12px">
+        <div style="font-size:12px;color:#fca5a5;font-weight:700">▼ 投资端在失速</div>
+        <div style="font-size:24px;font-weight:800;color:#ef6b6b;margin:2px 0">工业投资 −46.7%</div>
+        <div style="font-size:11.5px;color:#9aa9bd;line-height:1.6">固投−34.1%、基建−35.3%；年初1-2月还是+1.1%，随后一路下滑。</div>
+      </div>
+    </div>
+    <div style="margin-top:11px;font-size:13px;color:#e8d9a8;line-height:1.8">
+      <b>今年的投资，是三五年后的产出。</b>工厂在交付旧订单，新项目却在减少开工——把这一幕喂给模型，1600亿的达标率会从约50%掉到约6.6%。
+      <a href="windtunnel.html" style="display:inline-block;margin-top:8px;background:#fbbf24;color:#1a1408;padding:9px 18px;border-radius:8px;font-weight:800;font-size:13px;text-decoration:none">去风洞压一压，看1600亿还够不够得着 →</a>
+    </div>
+  </div>
+
   <!-- 你的判断：模型联动 -->
   <div style="margin:12px 0;padding:14px;background:linear-gradient(135deg,#14231a,#0f172a);border:1px solid #22c55e;border-radius:14px">
     <div style="font-size:14px;font-weight:800;color:#fff;margin-bottom:4px">🔮 2030年博罗能到1600亿吗？说说你的判断</div>
-    <div style="font-size:12px;color:#94a3b8;margin-bottom:10px">同一套模型跑了4000遍，过1600亿概率约 <b id="baseHit" style="color:#4ade80">…</b>，中位数约 <b id="baseP50" style="color:#4ade80">…</b>亿。你比它乐观还是悲观？</div>
+    <div style="font-size:12px;color:#94a3b8;margin-bottom:10px">在<b style="color:#cbd5e1">规划兑现</b>基准下，同一模型跑了2万遍，过1600亿概率约 <b id="baseHit" style="color:#4ade80">…</b>，中位数约 <b id="baseP50" style="color:#4ade80">…</b>亿。<span style="color:#6b7d96">（按现状自然延续则几乎摸不到——去风洞看压力情景）</span>你比它乐观还是悲观？</div>
     <div id="voteBar" style="display:flex;gap:8px"></div>
     <div id="voteOut" style="margin-top:10px;font-size:12px;color:#cbd5e1;line-height:1.6"></div>
   </div>
@@ -149,6 +175,7 @@ let liveTopics=[];
 
 // 本地博罗话题池
 const LOCAL=[
+  {t:"工业投资腰斩-46.7%，生产却在涨（2026剪刀差）",h:99,c:"city",src:"2026年1-8月简析",d:"1-8月固投-34.1%、工业投资-46.7%、基建-35.3%，但工业增加值+8.9%、工业用电+11.5%",why:"工厂在满产、新项目在减少开工，今年的投资是三五年后的产出。"},
   {t:"广东首个千亿县，GDP突破1005亿",h:96,c:"ind",src:"2025统计公报",d:"博罗成为广东首个千亿县，2030目标1600亿",why:"千亿是一个节点，但怎么从1000走到1600？"},
   {t:"园洲镇规上工业344亿，全县第一",h:92,c:"ind",src:"镇街公开数据",d:"挨着东莞石龙，承接产业转移，工业体量超过县城",why:"全县工业重心在最西边上。"},
   {t:"欣旺达博罗基地扩产",h:88,c:"ind",src:"企业公开信息",d:"新能源龙头，产值超百亿，博罗重点项目",why:"龙头扩产，整个新能源链条跟着动。"},
@@ -302,7 +329,7 @@ document.getElementById("btnScan").onclick=async function(){
   document.getElementById("scanInfo").textContent=hotOk?scanText():"今日话题快照暂不可用（读取失败），可点「重新扫描」重试；页面其余内容不受影响。";
   render();
   // 跑风洞基准模型
-  const b=HT.run(42,4000,HT.DEFAULT_PATHS);
+  const b=HT.run(42,20000,HT.DEFAULT_PATHS);
   document.getElementById("baseHit").textContent=b.hit.toFixed(0)+"%";
   document.getElementById("baseP50").textContent=Math.round(b.p50);
 })();

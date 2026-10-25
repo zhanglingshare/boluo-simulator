@@ -1,0 +1,24 @@
+{
+  "event_id": "BL-2026-0001",
+  "region": "boluo",
+  "event_type": "project_progress",
+  "subject": "欣旺达广东首座独立储能电站（欣城新能源）在博罗并网送电，预计年产值约0.7亿元、税收约1200万元",
+  "event_date": "2026-10",
+  "published_at": "2026-10",
+  "fetched_at": "2026-10-26T08:00:00",
+  "source_url": "https://www.boluo.gov.cn/xzygdw/xgbdst/blxw/content/post_5868321.html",
+  "evidence_level": "A",
+  "status": "approved",
+  "related_paths": [0],
+  "parameter_change": {
+    "path_index": 0,
+    "mu_delta": null,
+    "reason": "单座储能电站产值约0.7亿，体量不足以单独调整路径μ；作为'双引擎超预期（upside）'情景的现实苗头之一，纳入定性证据。"
+  },
+  "requires_review": true,
+  "review": {
+    "reviewer": "zhang-ling",
+    "reviewed_at": "2026-10-26",
+    "comment": "官方报道，A级事实；不直接改参数，仅作新能源放量的证据。"
+  }
+}

@@ -1,0 +1,10 @@
+# 构建产物（由 tests/release_params.js 生成，不入库）
+params.json
+
+# 设计工具工作目录
+.creative-design/
+
+# 系统/编辑器
+.DS_Store
+Thumbs.db
+*.log

@@ -3,6 +3,8 @@
 <title>博罗产业风洞 · 风洞测试</title>
 <script src="lib/echarts.min.js"></script>
 <script src="model.js"></script>
+<script src="bl-viz/data.js"></script>
+<script src="bl-viz/windtunnel.js" defer></script>
 <style>
 *{box-sizing:border-box}
 body{margin:0;background:#080b12;color:#e6edf3;font:14px/1.6 -apple-system,"PingFang SC","Microsoft YaHei",sans-serif}
@@ -50,6 +52,31 @@ input[type=range]{width:100%;accent-color:#22c55e;height:4px}
 .btn-row{display:flex;gap:8px;margin-bottom:10px;flex-wrap:wrap}
 .minibtn{background:#16203a;border:1px solid #2b3a55;color:#b9cbe4;padding:6px 14px;border-radius:6px;font-size:12px;cursor:pointer}
 .minibtn:hover{border-color:#22c55e}
+/* ===== 现实压力测试（2026） ===== */
+.press-intro{font-size:12.5px;color:#9aa9bd;line-height:1.8;margin:0 0 12px}
+.press-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin-bottom:12px}
+@media(max-width:820px){.press-grid{grid-template-columns:1fr 1fr}}
+@media(max-width:560px){.press-grid{grid-template-columns:1fr}}
+.ptile{background:#0a0f1a;border:1px solid #1c2739;border-radius:11px;padding:12px 13px;cursor:pointer;text-align:left;transition:transform .12s,border-color .12s;position:relative}
+.ptile:hover{transform:translateY(-2px);border-color:#3b4a63}
+.ptile.sel{border-color:#fbbf24;background:#161408;box-shadow:0 0 0 1px #fbbf24 inset}
+.ptile .pn{font-size:13px;font-weight:700;color:#e6edf3;margin-bottom:3px}
+.ptile .pd{font-size:11px;color:#8fa3bf;line-height:1.55;margin-bottom:8px;min-height:32px}
+.ptile .ph{font-size:20px;font-weight:800;line-height:1}
+.ptile .ps{font-size:10.5px;color:#6b7d96;margin-top:2px}
+.ptile.base .ph{color:#22c55e}.ptile.good .ph{color:#22c55e}.ptile.warm .ph{color:#eab308}.ptile.bad .ph{color:#ef6b6b}
+.press-result{display:grid;grid-template-columns:1.15fr 1fr;gap:14px;align-items:stretch}
+@media(max-width:760px){.press-result{grid-template-columns:1fr}}
+.press-panel{background:#0a0f1a;border:1px solid #1c2739;border-radius:11px;padding:14px}
+.sprout{background:#161408;border:1px solid #713f12;border-left:3px solid #fbbf24;border-radius:8px;padding:10px 12px;font-size:12px;color:#e8d9a8;line-height:1.8;margin-top:10px}
+.sprout .lab{display:block;font-size:10px;font-weight:800;color:#fbbf24;letter-spacing:1px;margin-bottom:3px}
+.press-bars{display:flex;gap:16px;align-items:center;flex-wrap:wrap;margin:8px 0 4px}
+.pbar{flex:1;min-width:120px}
+.pbar .lab{font-size:11px;color:#93a4bd;margin-bottom:5px}
+.pbar .track{height:10px;background:#16203a;border-radius:6px;overflow:hidden}
+.pbar .fill{height:100%;border-radius:6px;transition:width .5s}
+.pbar .num{font-size:12px;font-weight:700;margin-top:3px}
+.press-canvas{width:100%;height:250px}
 @media(min-width:1024px){.wrap{max-width:1200px!important;padding:24px}}</style></head><body>
 
 <div class="nav">
@@ -69,6 +96,29 @@ input[type=range]{width:100%;accent-color:#22c55e;height:4px}
 <div class="wrap">
   <h1>风洞测试：拨动一个变量，看全局怎么变</h1>
   <p class="sub">不是预测。是"如果这样走，会怎样"。拖动任意滑块，所有图表实时联动。</p>
+
+  <!-- 现实压力测试（受控场景压测，2026真实数据） -->
+  <div class="card" id="pressCard" style="border-color:#713f12">
+    <h2 style="color:#fbbf24">⚠️ 现实压力测试：先选一个"如果"，看1600亿还够不够得着</h2>
+    <p class="press-intro">下面每个情景都用<b>同一个模型内核、同一粒种子（42）</b>真实重跑2万次，差异只来自注入的事件——不是凭感觉打分。情景默认站在<b>规划兑现基准</b>（中位约1601亿、达标率约50%），再看压力一来会怎样。</p>
+    <div class="press-grid" id="pressGrid"></div>
+    <div class="press-result">
+      <div class="press-panel">
+        <div id="pressName" style="font-size:15px;font-weight:800;color:#fbbf24;margin-bottom:3px"></div>
+        <div id="pressDesc" style="font-size:12px;color:#9aa9bd;line-height:1.7;margin-bottom:10px"></div>
+        <div class="press-bars">
+          <div class="pbar"><div class="lab">达标1600亿概率</div><div class="track"><div class="fill" id="hitFill" style="background:#22c55e"></div></div><div class="num" id="hitNum" style="color:#22c55e"></div></div>
+          <div class="pbar"><div class="lab">2030中位GDP（亿元）</div><div class="track"><div class="fill" id="p50Fill" style="background:#3b82f6"></div></div><div class="num" id="p50Num" style="color:#60a5fa"></div></div>
+        </div>
+        <div id="pressCompare" style="font-size:12.5px;color:#cbd5e1;margin-top:8px;line-height:1.8"></div>
+        <div class="sprout" id="sproutBox" style="display:none"><span class="lab">🔎 现实苗头（官方数据）</span><span id="sproutText"></span></div>
+      </div>
+      <div class="press-panel">
+        <div style="font-size:12px;color:#93a4bd;margin-bottom:4px">2030 GDP 分布：基准（灰）vs 当前情景（彩色）</div>
+        <canvas id="pressCanvas" class="press-canvas"></canvas>
+      </div>
+    </div>
+  </div>
 
   <!-- 控制面板 -->
   <div class="card">
@@ -122,7 +172,8 @@ input[type=range]{width:100%;accent-color:#22c55e;height:4px}
 
   <!-- 场景按钮 -->
   <div class="card">
-    <h2><span class="step">4</span>一键切换四个场景</h2>
+    <h2><span class="step">4</span>滑块快捷预设：四个参数组合（定性示意）</h2>
+    <div style="font-size:11.5px;color:#6b7d96;margin-bottom:10px;line-height:1.7">点下面的卡片，会把四个滑块一次性拨到某个组合，方便你快速对比。注意：这是参数敏感性的快捷操作；<b style="color:#8fa3bf">页面顶部"现实压力测试"才是用真实2026事件、同一粒种子重跑的定量结果</b>，两者口径不同。</div>
     <div class="scenario-grid">
       <div class="scenario" data-n="1">
         <span class="tag tag-pos">乐观</span>
@@ -171,11 +222,11 @@ input[type=range]{width:100%;accent-color:#22c55e;height:4px}
     <div style="font-size:13.5px;line-height:2.1;color:#c8d3e0">
       惠城跑出来，最不能断的是一条通勤路——因为它是产城人三层网络的传动轴。<br><br>
       博罗的结构不同。压"园洲↔东莞"这条线，博罗会疼，但这条线是几十年地理和产业咬合长出来的，不会轻易断——这是博罗的<b style="color:#22c55e">结构性资产</b>。<br><br>
-      博罗真正敏感的是<b style="color:#fbbf24">新投产项目的节奏</b>。固投已经在收缩（-18.8%），现在的增长靠之前投的产能在释放。如果新投产再慢两年，千亿县之后的下一档增长可能接不上。<br><br>
-      这不是博罗独有的问题——所有工业县在转型换挡期都会遇到。区别在于：博罗手里还有东莞外溢、罗浮山、特色农业三张牌，关键是让这些牌在新产能投产前能顶住节奏。
+      博罗真正的警报在<b style="color:#f87171">投资端</b>。2026年1-8月，固投已经不是2025年的−18.8%，而是<b>−34.1%</b>，其中工业投资<b>−46.7%</b>（上半年一度−51.3%）；与此同时，工业增加值却从一季度的+3.5%爬到了+8.9%。<b style="color:#4ade80">工厂在满产、订单在交付，但新开工、新投产的管线在收缩。</b><br><br>
+      页面顶部的压力测试把这一幕喂给了模型：<b>如果工业投资腰斩延续，规划兑现路径的达标率会从约50%直接跌到约6.6%，中位GDP少约139亿；若再叠加房地产探底，达标率只剩约2%。</b>而"双引擎超预期"（电子信息、储能、新能源提前放量）能把达标率抬到约71%。<b>这不是博罗独有问题——所有工业县换挡期都会遇到；区别在于博罗手里还有东莞外溢、罗浮山、特色农业三张牌，关键是让在建项目按时投产、把工业投资这台播种机重新点起来。</b>
     </div>
     <div class="plain" style="margin-top:14px"><span class="lab">边界声明</span>
-      以上全部是假设场景下的结构模拟，不是预测，更不是投资建议。滑块背后的参数（投产影响系数、东莞外溢强度、房地产传导系数）都是作者设定的假设值，已在页面公开。你觉得哪个参数不对，可以改——这正是风洞的意义。
+      顶部"现实压力测试"是用同一模型内核、同一粒种子（42）、2万次蒙特卡洛的真实重跑，路径参数与现实苗头的对应关系在数据层 bl-viz/data.js 公开；下方滑块是参数敏感性实验。全部是假设情景下的结构模拟，不是预测，更不是投资建议。你觉得哪个参数不对，可以自己改——这正是风洞的意义。
     </div>
   </div>
 

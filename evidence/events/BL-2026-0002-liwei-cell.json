@@ -1,0 +1,24 @@
+{
+  "event_id": "BL-2026-0002",
+  "region": "boluo",
+  "event_type": "project_progress",
+  "subject": "锂威新能源锂离子电芯生产线项目（园洲镇欣旺达产业园16号厂房，总投资6377万元，预计2027年8月投产）",
+  "event_date": "2026-07",
+  "published_at": "2026-07",
+  "fetched_at": "2026-10-26T08:00:00",
+  "source_url": "https://www.boluo.gov.cn/hzblfzggj/gkmlpt/content/5/5801/mpost_5801838.html",
+  "evidence_level": "A",
+  "status": "approved",
+  "related_paths": [0],
+  "parameter_change": {
+    "path_index": 0,
+    "mu_delta": null,
+    "reason": "在建项目，2027年才投产，属于'规划兑现'路径中电子信息+新能源双引擎的待投产管线；投产节奏正是压力测试的关键变量。"
+  },
+  "requires_review": true,
+  "review": {
+    "reviewer": "zhang-ling",
+    "reviewed_at": "2026-10-26",
+    "comment": "发改局公开备案信息，A级；登记为待投产项目，不作为2026已实现产出。"
+  }
+}

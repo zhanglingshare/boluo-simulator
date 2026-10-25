@@ -19,18 +19,18 @@ for (const f of htmlFiles) {
   ok(f + '（' + blocks.length + ' 块）');
 }
 
-console.log('── 2) 模型口径断言（SEED=42 N=10000，与页面口径同源）──');
+console.log('── 2) 模型口径断言（SEED=42 N=10000，规划兑现基准路径；与页面口径同源）──');
 const HT = require(path.join(root, 'model.js'));
 const SEED = 42, N = 10000;
 const res = HT.run(SEED, N, HT.DEFAULT_PATHS);
 const near = (a, b, t) => Math.abs(a - b) <= t;
-if (!near(res.p10, 1475, 8)) bad('p10 应≈1475，实际 ' + Math.round(res.p10));
+if (!near(res.p10, 1481, 8)) bad('p10 应≈1481，实际 ' + Math.round(res.p10));
 else ok('p10 = ' + Math.round(res.p10));
-if (!near(res.p50, 1581, 8)) bad('p50 应≈1581，实际 ' + Math.round(res.p50));
+if (!near(res.p50, 1600, 8)) bad('p50 应≈1600，实际 ' + Math.round(res.p50));
 else ok('p50 = ' + Math.round(res.p50));
-if (!near(res.p90, 1687, 8)) bad('p90 应≈1687，实际 ' + Math.round(res.p90));
+if (!near(res.p90, 1722, 8)) bad('p90 应≈1722，实际 ' + Math.round(res.p90));
 else ok('p90 = ' + Math.round(res.p90));
-if (!near(res.hit, 40.8, 1.2)) bad('hit 应≈40.8%，实际 ' + res.hit.toFixed(2) + '%');
+if (!near(res.hit, 50.1, 1.2)) bad('hit 应≈50.1%（规划兑现基准），实际 ' + res.hit.toFixed(2) + '%');
 else ok('hit = ' + res.hit.toFixed(2) + '%');
 if (!near(HT.BASE, 1005.45, 0.05)) bad('BASE 应≈1005.45，实际 ' + HT.BASE);
 else ok('BASE = ' + HT.BASE);

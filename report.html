@@ -3,6 +3,8 @@
 <title>博罗县产业分析报告（Demo版）· 张凌</title>
 <script src="lib/echarts.min.js"></script>
 <script src="model.js"></script>
+<script src="bl-viz/data.js"></script>
+<script src="bl-viz/report.js" defer></script>
 <style>
 *{box-sizing:border-box}
 body{margin:0;background:#080b12;color:#e6edf3;font:14px/1.7 -apple-system,"PingFang SC","Microsoft YaHei",sans-serif}
@@ -55,6 +57,43 @@ ol.find li{margin-bottom:10px;line-height:1.8;font-size:13px;color:#c8d3e0}
 .plain{margin-top:9px;background:#081a0e;border:1px solid #14532d;border-left:3px solid #22c55e;border-radius:8px;padding:10px 12px;font-size:12.3px;line-height:1.85;color:#cdeecf}
 .plain .lab{display:block;font-size:10.5px;font-weight:800;color:#4ade80;letter-spacing:1px;margin-bottom:3px}
 .chart{width:100%;height:230px}
+/* ===== 经济CT体检卡（2026） ===== */
+.ct-head{display:flex;justify-content:space-between;align-items:flex-end;flex-wrap:wrap;gap:8px}
+.ct-src{font-size:11px;color:#6b7d96}
+.ct-src b{color:#8fa3bf}
+.ct-summary{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin:14px 0}
+@media(max-width:700px){.ct-summary{grid-template-columns:1fr}}
+.ct-sum{border-radius:10px;padding:11px 14px;font-size:12.5px;border:1px solid;display:flex;align-items:center;gap:10px}
+.ct-sum .n{font-size:22px;font-weight:800;line-height:1}
+.ct-sum.g{background:#0a1a12;border-color:#14532d}.ct-sum.g .n{color:#22c55e}
+.ct-sum.y{background:#1a1808;border-color:#713f12}.ct-sum.y .n{color:#eab308}
+.ct-sum.r{background:#1a0c0c;border-color:#7f1d1d}.ct-sum.r .n{color:#ef4444}
+.ct-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:10px;margin:10px 0}
+@media(max-width:900px){.ct-grid{grid-template-columns:repeat(2,1fr)}}
+.ct-card{background:#0a0f1a;border:1px solid #1c2739;border-radius:11px;padding:12px 12px 10px;cursor:pointer;text-align:left;border-top:3px solid #334155;transition:transform .12s,border-color .12s}
+.ct-card:hover{transform:translateY(-2px)}
+.ct-card.good{border-top-color:#22c55e}.ct-card.warm{border-top-color:#eab308}.ct-card.risk{border-top-color:#ef4444}.ct-card.neutral{border-top-color:#64748b}
+.ct-card .k{font-size:11.5px;color:#93a4bd;margin-bottom:5px;min-height:30px}
+.ct-card .v{font-size:21px;font-weight:800;line-height:1.1}
+.ct-card.good .v{color:#22c55e}.ct-card.warm .v{color:#eab308}.ct-card.risk .v{color:#ef6b6b}.ct-card.neutral .v{color:#cbd5e1}
+.ct-card .d{font-size:10.5px;color:#6b7d96;margin-top:4px}
+.ct-card canvas{width:100%;height:30px;display:block;margin-top:6px}
+.ct-badge{display:inline-block;font-size:9.5px;padding:1px 6px;border-radius:8px;margin-top:5px;font-weight:600}
+.ct-badge.good{background:#0a1a12;color:#4ade80}.ct-badge.warm{background:#1a1808;color:#eab308}.ct-badge.risk{background:#1a0c0c;color:#f87171}
+.ct-detail{margin-top:12px;background:#0a0f1a;border:1px solid #1c2739;border-radius:9px;padding:11px 13px;font-size:12.5px;color:#c8d3e0;line-height:1.8;min-height:44px}
+.ct-detail a{color:#60a5fa;word-break:break-all}
+/* 剪刀差 */
+.scissors{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin:14px 0}
+@media(max-width:700px){.scissors{grid-template-columns:1fr}}
+.sci{border-radius:11px;padding:13px 15px;border:1px solid}
+.sci.up{background:linear-gradient(160deg,#0a1a12,#0a0f1a);border-color:#14532d}
+.sci.down{background:linear-gradient(160deg,#1a0c0c,#0a0f1a);border-color:#7f1d1d}
+.sci .t{font-size:12px;font-weight:700;margin-bottom:4px;display:flex;align-items:center;gap:6px}
+.sci.up .t{color:#4ade80}.sci.down .t{color:#f87171}
+.sci .big{font-size:26px;font-weight:800;line-height:1.2;margin:2px 0}
+.sci.up .big{color:#22c55e}.sci.down .big{color:#ef6b6b}
+.sci .s{font-size:11.5px;color:#9aa9bd;line-height:1.7}
+.sci canvas{width:100%;height:46px;margin-top:6px}
 @media(min-width:1024px){.wrap{max-width:1200px!important;padding:24px}}</style></head><body>
 
 <div class="nav">
@@ -81,42 +120,78 @@ ol.find li{margin-bottom:10px;line-height:1.8;font-size:13px;color:#c8d3e0}
     <div class="meta">作者：<b style="color:#fbbf24">张凌 博士</b> &nbsp;|&nbsp; 2026年10月 · 广东惠州</div>
   </div>
 
-  <!-- 模型校准前后对比 -->
+  <!-- ===== 2026 经济CT：生产与投资的剪刀差 ===== -->
+  <div class="card" id="ctCard">
+    <div class="ct-head">
+      <h2 style="border:0;padding:0;margin:0">🩺 博罗经济CT（2026最新）：生产在回暖，投资却在失速</h2>
+      <div class="ct-src">数据更新：<b id="ctLatest"></b></div>
+    </div>
+    <div style="font-size:12.5px;color:#9aa9bd;margin:6px 0 2px">工厂还在开足马力（用电、工业增加值都在升），但新建项目的投资断崖式下滑——这正是决策最该盯的地方：今年的投资，是三五年后的产出。</div>
+
+    <div class="scissors" id="scissors"></div>
+    <canvas id="scissorChart" style="width:100%;height:240px"></canvas>
+
+    <h3 style="margin-top:18px">生产端（回升向好）</h3>
+    <div class="ct-grid" id="prodGrid"></div>
+    <h3 style="margin-top:6px">投资端（深度失速）</h3>
+    <div class="ct-grid" id="invGrid"></div>
+    <div class="ct-detail" id="ctDetail">点击任意一张体检卡，核对官方口径与来源。</div>
+  </div>
+
+  <!-- ===== 2025 全年八项体检 ===== -->
+  <div class="card" id="ct2025">
+    <div class="ct-head">
+      <h2 style="border:0;padding:0;margin:0">📊 2025年八项体检：千亿县这一年</h2>
+      <div class="ct-src">数据源：<b>2025年统计公报</b></div>
+    </div>
+    <div class="ct-summary" id="ct2025Summary"></div>
+    <div class="ct-grid" id="ct2025Grid"></div>
+    <div class="ct-detail" id="ct2025Detail">点击任意一张体检卡，核对官方口径与来源。</div>
+  </div>
+
+  <!-- 模型校准说明 -->
   <div class="card" style="border-color:#b45309">
-    <h2 style="color:#fbbf24">⚖️ 模型校准说明：从「凑数」到「真实锚定」</h2>
+    <h2 style="color:#fbbf24">⚖️ 模型口径：三本账，别混着算</h2>
     <div style="overflow-x:auto">
     <table style="width:100%;border-collapse:collapse;font-size:12.5px">
       <tr style="border-bottom:1px solid #1c2739">
-        <th style="text-align:left;padding:8px;color:#94a3b8">项目</th>
-        <th style="text-align:center;padding:8px;color:#f87171">校准前（凑数版）</th>
-        <th style="text-align:center;padding:8px;color:#4ade80">校准后（真实锚定）</th>
+        <th style="text-align:left;padding:8px;color:#94a3b8">口径</th>
+        <th style="text-align:center;padding:8px;color:#6b7d96">凑数版（已弃）</th>
+        <th style="text-align:center;padding:8px;color:#f87171">现状延续（对照）</th>
+        <th style="text-align:center;padding:8px;color:#4ade80">规划兑现（基准）</th>
       </tr>
       <tr style="border-bottom:1px solid #162032">
-        <td style="padding:8px;color:#cbd5e1">五条路径 μ（亿/年）</td>
-        <td style="text-align:center;padding:8px;color:#f87171">220/180/70/60/45</td>
-        <td style="text-align:center;padding:8px;color:#4ade80">150/100/50/25/18</td>
+        <td style="padding:8px;color:#cbd5e1">五条路径 μ（五年累计，亿）</td>
+        <td style="text-align:center;padding:8px;color:#6b7d96">220/180/70/60/45</td>
+        <td style="text-align:center;padding:8px;color:#f87171">150/100/50/25/18</td>
+        <td style="text-align:center;padding:8px;color:#4ade80">250/150/110/55/30</td>
       </tr>
       <tr style="border-bottom:1px solid #162032">
         <td style="padding:8px;color:#cbd5e1">2030 中位数 P50</td>
-        <td style="text-align:center;padding:8px;color:#f87171">1581 亿</td>
-        <td style="text-align:center;padding:8px;color:#4ade80">1349 亿</td>
+        <td style="text-align:center;padding:8px;color:#6b7d96">1581 亿</td>
+        <td style="text-align:center;padding:8px;color:#f87171">约1350 亿</td>
+        <td style="text-align:center;padding:8px;color:#4ade80">约1601 亿</td>
       </tr>
       <tr style="border-bottom:1px solid #162032">
         <td style="padding:8px;color:#cbd5e1">到1600亿概率</td>
-        <td style="text-align:center;padding:8px;color:#f87171">41%</td>
-        <td style="text-align:center;padding:8px;color:#4ade80">0.1%</td>
+        <td style="text-align:center;padding:8px;color:#6b7d96">41%</td>
+        <td style="text-align:center;padding:8px;color:#f87171">约0.1%</td>
+        <td style="text-align:center;padding:8px;color:#4ade80">约50%</td>
       </tr>
       <tr>
-        <td style="padding:8px;color:#cbd5e1">参数来源</td>
-        <td style="text-align:center;padding:8px;color:#f87171">照1600反推（自证预言）</td>
-        <td style="text-align:center;padding:8px;color:#4ade80">按2024三次产业结构+真实增速外推</td>
+        <td style="padding:8px;color:#cbd5e1">参数依据</td>
+        <td style="text-align:center;padding:8px;color:#6b7d96">照1600反推</td>
+        <td style="text-align:center;padding:8px;color:#f87171">2025-26实际增速外推</td>
+        <td style="text-align:center;padding:8px;color:#4ade80">三大产业+园区目标（C级）</td>
       </tr>
     </table>
     </div>
     <div class="plain" style="margin-top:12px">
-      <span class="lab">为什么改</span>
-      校准前的五条路径 μ 是照着"2030到1600亿"这个终点反推出来的——先定目标，再凑每条路贡献多少。这在数学上必然导致"基准已经快到1600了"的假乐观（P50=1581、hit=41%）。<br><br>
-      校准后按博罗2024年真实三次产业结构（一产104亿/+3.5%、二产513亿/+6.9%、三产334亿/<b>仅+0.2%</b>）和电子信息产值+17.1%的真实增速外推。结果诚实了：<b>按现状延续，2030年大约1349亿，到1600亿几乎没戏</b>——要达成目标，必须把三产从0.2%的泥里拉出来、双引擎保持高增长。
+      <span class="lab">为什么有三本账</span>
+      ① <b>凑数版</b>是照着"2030到1600"反推每条路贡献多少，必然自证预言（假乐观），已弃用。<br>
+      ② <b>现状延续</b>按2025-2026上半年实际增速外推（2026上半年GDP仅+3.0%、工业投资−51.3%）：不加码，2030年大约只有1350亿，几乎摸不到1600。<br>
+      ③ <b>规划兑现</b>是本报告与风洞的基准：以2026政府工作报告"三大主导产业+园区年550亿产值、工业投资110亿"为依据，反推各条路要贡献多少——这样中位约1601亿、达标率约50%，意思是"<b>目标跳一跳够得到，但不是自然增长能到</b>"。<br><br>
+      风洞页正是用来检验：<b>如果2026年工业投资腰斩这一幕延续下去，规划兑现路径会被打回原形——达标率从约50%跌到约7%。</b>
     </div>
   </div>
 
@@ -133,17 +208,20 @@ ol.find li{margin-bottom:10px;line-height:1.8;font-size:13px;color:#c8d3e0}
   <!-- 一页看懂 -->
   <div class="card">
     <h2>一、一页看懂：现在什么状态</h2>
+    <div style="margin:0 0 10px;padding:9px 13px;background:rgba(239,107,107,.08);border:1px solid rgba(239,107,107,.3);border-radius:9px;font-size:12px;color:#f2b8b8;line-height:1.7">
+      📌 <b>2026年1-8月最新（剪刀差）：</b>规上工业增加值 <b style="color:#4ade80">+8.9%</b>、工业用电+11.5%，但固定资产投资 <b style="color:#f87171">−34.1%</b>、工业投资 <b style="color:#f87171">−46.7%</b>、基建−35.3%。<b>生产在回暖、投资在失速，后劲问题比眼前增速更关键。</b>
+    </div>
     <div class="lights">
       <div class="g"><span class="dot"></span>GDP过千亿：1005亿、+5.5%，广东首个千亿县</div>
-      <div class="g"><span class="dot"></span>工业稳：规上工业增加值+8.7%</div>
-      <div class="g"><span class="dot"></span>电子信息猛：+23%，是第一大行业</div>
+      <div class="g"><span class="dot"></span>工业稳：2026年1-8月工业增加值+8.9%（较上半年回升）</div>
+      <div class="g"><span class="dot"></span>电子信息猛：2025年+23%，是第一大行业</div>
       <div class="g"><span class="dot"></span>文旅热：游客1028万、收入+19.1%</div>
-      <div class="y"><span class="dot"></span>消费+3.9%，三产增速仅2.7%</div>
+      <div class="y"><span class="dot"></span>消费偏弱：2025年+3.9%，2026年1-8月+3.6%</div>
       <div class="y"><span class="dot"></span>城镇化率60%，还有提升空间</div>
-      <div class="r"><span class="dot"></span>固定资产投资-18.8%</div>
-      <div class="r"><span class="dot"></span>房地产投资-47.6%（调整最深）</div>
+      <div class="r"><span class="dot"></span>固投：2025年−18.8%，2026年1-8月−34.1%</div>
+      <div class="r"><span class="dot"></span>工业投资腰斩：2026年1-8月−46.7%</div>
     </div>
-    <p style="font-size:13px;color:#cbd5e1;margin:8px 0 0">一句话：<b style="color:#fbbf24">工业这条主航道跑得稳，文旅农业有亮点；投资正在换挡，关键看新产能能不能按时接上。</b></p>
+    <p style="font-size:13px;color:#cbd5e1;margin:8px 0 0">一句话：<b style="color:#fbbf24">眼前的工业还在高负荷运转、新产能在释放；但投资这台"播种机"在降速，今年少播的种，三五年后会反映到收成里。</b></p>
   </div>
 
   <!-- 五条发现 -->
@@ -193,7 +271,7 @@ ol.find li{margin-bottom:10px;line-height:1.8;font-size:13px;color:#c8d3e0}
     <div class="plain"><span class="lab">人话版</span>5年要从1005亿涨到1600亿，相当于年均跑9.7%，而2025年实际增速是5.5%——目标比当前节奏快了近一倍。这不是匀速爬坡，而是靠几个大项目投产"跳台阶"，每一级都得踩稳。</div>
     <h3>2030年三种可能</h3>
     <div id="rScen" class="chart"></div>
-    <div class="plain"><span class="lab">人话版</span>顺的时候约1800亿，比目标高；一半一半约1500亿，离目标线不远；不顺时约1100亿，守住千亿但离1600差一大截。中位那档离目标线距离不大，一个关键项目晚投产，就可能滑到下面一档。</div>
+    <div class="plain"><span class="lab">人话版</span>三档都是同一模型真实跑出来的：<b>不加码、按现状延续</b>，2030年大约<b>1350亿</b>，摸不到1600；<b>按规划兑现</b>（三大产业、园区550亿产值、工业投资110亿都做到），大约<b>1600亿</b>，刚好踩线；<b>电子信息、储能、新能源超预期</b>，能到<b>1650亿以上</b>。1600亿不是天上掉下来的，差距全在"投资能不能扭转、项目能不能按时投产"。</div>
   </div>
 
   <!-- 决策者三件事 -->
@@ -337,16 +415,17 @@ cClimb.setOption({backgroundColor:'transparent',tooltip:{trigger:'axis',...tip},
     {name:'自然增长5.5%',type:'line',data:[1005,1061,1119,1180,1245,1314],lineStyle:{color:'#6b7280',width:2},itemStyle:{color:'#6b7280'},symbol:'none'}
   ]});
 
+const _scTrend=blRunScene('trend'),_scBase=blRunScene('base'),_scUp=blRunScene('upside');
 cScen.setOption({backgroundColor:'transparent',tooltip:{trigger:'axis',...tip},
-  grid:{left:55,right:25,top:20,bottom:30},
-  xAxis:{type:'category',data:['不顺','一半一半','顺利'],axisLabel:{color:'#cbd5e1'}},
-  yAxis:{type:'value',min:900,axisLabel:{color:'#6b7d96'},splitLine:{lineStyle:{color:'#1c2739'}}},
+  grid:{left:55,right:25,top:20,bottom:42},
+  xAxis:{type:'category',data:['现状延续\n不加码','规划兑现\n基准','双引擎\n超预期'],axisLabel:{color:'#cbd5e1',fontSize:11,lineHeight:15}},
+  yAxis:{type:'value',min:1150,max:1750,axisLabel:{color:'#6b7d96'},splitLine:{lineStyle:{color:'#1c2739'}}},
   series:[
     {type:'bar',data:[
-      {value:1100,itemStyle:{color:'#f87171'}},
-      {value:1500,itemStyle:{color:'#fbbf24'}},
-      {value:1800,itemStyle:{color:'#22c55e'}}
-    ],barWidth:40,label:{show:true,position:'top',color:'#cbd5e1',formatter:'{c}亿'},
+      {value:Math.round(_scTrend.p50),itemStyle:{color:'#f87171'}},
+      {value:Math.round(_scBase.p50),itemStyle:{color:'#fbbf24'}},
+      {value:Math.round(_scUp.p50),itemStyle:{color:'#22c55e'}}
+    ],barWidth:46,label:{show:true,position:'top',color:'#cbd5e1',formatter:'{c}亿'},
     markLine:{silent:true,symbol:'none',data:[{yAxis:1600,lineStyle:{color:'#a78bfa',type:'dashed'},label:{color:'#a78bfa',formatter:'目标1600'}}]}}
   ]});
 
