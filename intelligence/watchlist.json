@@ -1,55 +1,129 @@
 {
-  "schema_version": 1,
+  "schema_version": 2,
   "engine": "观点情报引擎",
   "region": "boluo",
   "updated": "2026-10-25",
-  "note": "鉴别清单：等待更新的统计指标/事件，以及不同结果分别支持哪个立场。验证日期取决于真实数据发布节奏，不做机械30天开奖。",
+  "fetched_at": "2026-10-25 19:40",
+  "status_legend": {
+    "not_due": "尚未到核查窗口",
+    "due_unchecked": "已到窗口但尚未取得/核实到权威数据",
+    "published_verified": "已获取并核实到新数据（附来源、时期、核查日）",
+    "unavailable": "公开数据暂未取得",
+    "superseded": "该核验指标已被更新版本取代"
+  },
+  "note": "鉴别清单：等待更新的统计指标/事件，以及不同结果分别支持哪个立场。仅记录真实发布的证据，不凭到达日期自动判定立场胜负；机械30天开奖不适用。",
   "watchlist": [
     {
       "watch_id": "wl-q1-2026-ind-value",
       "topic_id": "boluo-investment-decline-2025",
-      "metric": "2026年一季度规上工业增加值增速",
-      "current": "8.7%（2025全年）",
+      "metric": "2026年规上工业增加值增速（分季度跟踪）",
+      "current": "2025全年 +8.7%",
       "distinguishes": {
-        "keep_above_8": "支持 vp-prod-current（当期生产仍有支撑）",
-        "below_5": "支持 vp-pipeline-ahead（投资收缩开始传导）",
-        "between_5_8": "维持分歧，需结合投资项"
+        "keep_above_8": "更接近 vp-prod-current（当期生产仍有支撑）",
+        "below_5": "更接近 vp-pipeline-ahead（投资收缩开始向生产端传导）",
+        "between_5_8": "维持分歧，需结合投资项与持续时间"
       },
-      "next_release": "2026-04"
+      "verification_status": "published_verified",
+      "checked_at": "2026-10-25",
+      "next_window": "2026年三季度/全年数据",
+      "records": [
+        {
+          "period": "2026年一季度",
+          "value": "+3.5%",
+          "evidence_id": "ev-q1-2026-ind-value",
+          "source": "博罗县统计局《2026年一季度全县经济运行情况简析》",
+          "url": "https://www.boluo.gov.cn/hzbltjj/gkmlpt/content/5/5762/mpost_5762427.html",
+          "checked_at": "2026-10-25"
+        },
+        {
+          "period": "2026年上半年",
+          "value": "+7.5%",
+          "evidence_id": "ev-h1-2026-ind-value",
+          "source": "博罗县统计局《2026年上半年经济运行情况分析》",
+          "url": "https://www.boluo.gov.cn/hzbltjj/gkmlpt/content/5/5823/mpost_5823636.html",
+          "checked_at": "2026-10-25"
+        },
+        {
+          "period": "2026年1-8月",
+          "value": "+8.9%",
+          "evidence_id": "ev-aug-2026-ind-value",
+          "source": "博罗县统计局《2026年1-8月全县经济运行基本情况》",
+          "url": "https://www.boluo.gov.cn/hzbltjj/gkmlpt/content/5/5860/mpost_5860920.html",
+          "checked_at": "2026-10-25"
+        }
+      ],
+      "interpretation": "生产端年初一度放缓（一季度+3.5%）后重新走强，1-8月回到+8.9%、接近2025全年水平，说明当期生产仍有韧性；但这是累计同比，投资收缩向未来产出的传导仍未到结论，不据此判定任何立场胜负。"
     },
     {
       "watch_id": "wl-q1-2026-industrial-invest",
       "topic_id": "boluo-investment-decline-2025",
-      "metric": "2026年一季度工业投资（二产）增速",
-      "current": "-12.7%（2025全年二产投资）",
+      "metric": "2026年工业投资（二产）增速（分阶段跟踪）",
+      "current": "2025全年二产投资 -12.7%",
       "distinguishes": {
-        "turn_positive": "支持 vp-structure-split（换挡成立，工业底盘稳住）",
-        "continue_double_digit_decline": "支持 vp-pipeline-ahead（接续风险兑现）",
+        "turn_positive": "更接近 vp-structure-split（换挡成立，工业底盘稳住）",
+        "continue_double_digit_decline": "更接近 vp-pipeline-ahead（接续风险兑现）",
         "slight_negative": "vp-structure-split 与 vp-pipeline-ahead 之间，继续观察"
       },
-      "next_release": "2026-04"
+      "verification_status": "published_verified",
+      "checked_at": "2026-10-25",
+      "next_window": "2026年三季度/全年工业投资",
+      "records": [
+        {
+          "period": "2026年一季度",
+          "value": "-33.2%",
+          "evidence_id": "ev-q1-2026-industrial-invest",
+          "source": "博罗县统计局《2026年一季度全县经济运行情况简析》",
+          "url": "https://www.boluo.gov.cn/hzbltjj/gkmlpt/content/5/5762/mpost_5762427.html",
+          "checked_at": "2026-10-25"
+        },
+        {
+          "period": "2026年上半年",
+          "value": "-51.3%",
+          "evidence_id": "ev-h1-2026-industrial-invest",
+          "source": "博罗县统计局《2026年上半年经济运行情况分析》",
+          "url": "https://www.boluo.gov.cn/hzbltjj/gkmlpt/content/5/5823/mpost_5823636.html",
+          "checked_at": "2026-10-25"
+        },
+        {
+          "period": "2026年1-8月",
+          "value": "-46.7%",
+          "evidence_id": "ev-aug-2026-industrial-invest",
+          "source": "博罗县统计局《2026年1-8月全县经济运行基本情况》",
+          "url": "https://www.boluo.gov.cn/hzbltjj/gkmlpt/content/5/5860/mpost_5860920.html",
+          "checked_at": "2026-10-25"
+        }
+      ],
+      "interpretation": "工业投资在2026年走深（一季度-33.2%、上半年-51.3%、1-8月-46.7%），明显弱于2025年的-12.7%，且降幅一度超过房地产，弱化了“2025年只是房地产主跌、工业稳住”的结构叙事；1-8月降幅小幅收窄，是否触底仍需后续数据。"
     },
     {
       "watch_id": "wl-new-projects",
       "topic_id": "boluo-investment-decline-2025",
-      "metric": "2026年新开工/投产项目数",
-      "current": "待公布",
+      "metric": "2026年新开工/投产项目数与投资计划完成情况",
+      "current": "2026年权威口径的新开工/投产项目台账尚未取得",
       "distinguishes": {
-        "more_projects": "支持 vp-structure-split / vp-prod-current（投资周期触底）",
-        "fewer_projects": "支持 vp-pipeline-ahead（企业信心未恢复）"
+        "more_projects": "更接近 vp-structure-split / vp-prod-current（投资周期触底）",
+        "fewer_projects": "更接近 vp-pipeline-ahead（企业信心未恢复）"
       },
-      "next_release": "持续监测"
+      "verification_status": "due_unchecked",
+      "checked_at": "2026-10-25",
+      "next_window": "发改/重点项目季度通报与全年数据",
+      "records": [],
+      "interpretation": "已到可核查窗口，但暂未从公开渠道取得2026年可比口径的新开工/投产项目数，标记为待核查，不以缺失数据推断方向。"
     },
     {
       "watch_id": "wl-tonglaishun",
       "topic_id": "boluo-investment-decline-2025",
       "metric": "铜来顺等百亿级项目投产进度",
-      "current": "生产线点火，2027年冲刺百亿",
+      "current": "2025年生产线点火，规划2027年冲刺百亿；2026年最新进度未获权威更新",
       "distinguishes": {
-        "on_schedule": "支持 vp-structure-split（大项目仍在落地）",
-        "delay_or_shrink": "支持 vp-pipeline-ahead（企业投资意愿下降）"
+        "on_schedule": "更接近 vp-structure-split（大项目仍在落地）",
+        "delay_or_shrink": "更接近 vp-pipeline-ahead（企业投资意愿下降）"
       },
-      "next_release": "2026年持续监测"
+      "verification_status": "due_unchecked",
+      "checked_at": "2026-10-25",
+      "next_window": "企业/园区2026年投产进展通报",
+      "records": [],
+      "interpretation": "已到可核查窗口，尚未取得2026年项目进度的权威更新，保持待核查。"
     },
     {
       "watch_id": "wl-tourism-annual",
@@ -57,11 +131,15 @@
       "metric": "全年游客接待量、旅游总收入、人均消费",
       "current": "公开全年文旅专项数据未取得",
       "distinguishes": {
-        "high_revenue_growth": "支持 vp-tourism-cultivate（第二曲线值得加码）",
-        "traffic_without_revenue": "支持 vp-tourism-scale（有人气无转化，短期难接棒）",
+        "high_revenue_growth": "更接近 vp-tourism-cultivate（第二曲线值得加码）",
+        "traffic_without_revenue": "更接近 vp-tourism-scale（有人气无转化，短期难接棒）",
         "data_absent": "两立场均维持低置信度，不展开更多对立观点"
       },
-      "next_release": "待文旅部门年度数据"
+      "verification_status": "unavailable",
+      "checked_at": "2026-10-25",
+      "next_window": "文旅部门年度数据",
+      "records": [],
+      "interpretation": "文旅专项量化数据公开渠道暂未取得，两立场维持低置信、不进公开包。"
     }
   ]
 }

@@ -9,16 +9,24 @@
       "topic_id": "boluo-investment-decline-2025",
       "title": "博罗GDP破千亿了，投资却下降18.8%。未来增长靠什么接续？",
       "core_question": "增长动能在良性换挡，还是新产能接续存在隐忧？",
-      "summary": "2025年博罗成为广东首个千亿县，GDP增长5.5%、规上工业增加值增长8.7%，但全社会固定资产投资下降18.8%。投资是领先指标、当期产值是滞后指标，两者相差2-3年时滞。真正的判断点是：2027-2028年的新产能能否接得上。",
+      "summary": "2025年博罗成为广东首个千亿县，GDP增长5.5%、规上工业增加值增长8.7%，但全社会固定资产投资下降18.8%。投资通常领先于产能形成、当期产值相对滞后，但不同行业与项目的建设周期差异很大，仅凭当期GDP与投资增速无法确定具体传导时间，更不能据此判定某家企业的经营前景。真正的判断点是：投资收缩会不会、以及何时影响未来产出。这是一个需要持续用新数据检验的机制假设，而不是已经成立的结论。",
       "category": "industry",
+      "data_version": "2025-annual-v1",
+      "data_snapshot_id": "boluo-2025-annual-202603",
       "baseline_facts": {
         "gdp": 1005.45,
         "gdp_growth": 5.5,
         "fixed_asset_investment_growth": -18.8,
         "real_estate_investment_growth": -47.6,
         "industrial_value_added_growth": 8.7,
-        "lag_mechanism": "投资为流量，经2-3年时滞传导为产能"
+        "lag_hypothesis": "投资为流量、产能形成相对滞后，可能存在跨期传导；但周期长短因项目与行业而异，属待检验假设，不能由单期数据确定",
+        "lag_mechanism_status": "hypothesis_not_established"
       },
+      "competing_explanations": [
+        "看投资结构：总量下降由谁驱动（房地产、工业、基建、一产），是结构分化还是全面收缩",
+        "看已有项目与投产：在建大项目的投产时间表能否支撑未来产出",
+        "看不同解释：当期生产、前瞻接续、结构换挡、证据不足等立场各自需要什么证据才能成立"
+      ],
       "evidence_ids": [
         "ev-gdp-2025",
         "ev-secondary-2025",
@@ -34,16 +42,31 @@
         "ev-secondary-invest-2025",
         "ev-tertiary-invest-2025",
         "ev-primary-invest-2025",
-        "ev-tonglaishun-2025"
+        "ev-tonglaishun-2025",
+        "ev-janfeb-2026-fai",
+        "ev-q1-2026-gdp",
+        "ev-q1-2026-ind-value",
+        "ev-q1-2026-fai",
+        "ev-q1-2026-industrial-invest",
+        "ev-q1-2026-realestate",
+        "ev-h1-2026-ind-value",
+        "ev-h1-2026-fai",
+        "ev-h1-2026-industrial-invest",
+        "ev-aug-2026-ind-value",
+        "ev-aug-2026-fai",
+        "ev-aug-2026-industrial-invest"
       ],
       "model_mappable": true,
-      "model_note": "可映射到 model.js 五路径的投资/产能假设；新投产项目节奏对应p1双引擎。",
+      "model_note": "可映射到 model.js 五路径的投资/产能假设；但历史投资下降不能直接等同于某条路径参数已证实变化，模型只用于情景推演、不用于证明历史成因。",
       "started_at": "2026-10-25",
       "updated_at": "2026-10-25",
       "status": "active",
       "verification": {
-        "next_check": "2026年一季度经济数据",
-        "next_release_window": "2026-04",
+        "initial_window": "2026年一季度经济数据",
+        "initial_window_release": "2026-04",
+        "status": "partially_verified",
+        "latest_observed": "2026年1-8月（2026-09-29发布）",
+        "latest_note": "2026一季度、上半年、1-8月数据已陆续发布：投资增速在年初短暂转正后再度走深、上半年达-36.4%、1-8月小幅收窄至-34.1%；同期规上工业增加值由一季度+3.5%回升至1-8月+8.9%，生产与投资背离延续。此处只呈现证据，不据此判定任何立场胜负。",
         "verifiable": true
       }
     },
