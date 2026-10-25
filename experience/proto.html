@@ -1,0 +1,803 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+<title>博罗判断实验 · 原型</title>
+<style>
+:root{
+  --bg:#0A1620; --bg2:#0E1E28; --card:#102533; --card2:#13303f;
+  --line:rgba(234,242,240,.10);
+  --ink:#EAF2F0; --ink2:#A8BBB6; --ink3:#6B7F7A;
+  --teal:#0E7C70; --teal2:#10a08f; --gold:#E8B454;
+  --green:#3FB67F; --red:#E5544B; --blue:#5b9bd5;
+  --r:20px; --safe-b:env(safe-area-inset-bottom,0px);
+}
+*{margin:0;padding:0;box-sizing:border-box;-webkit-tap-highlight-color:transparent}
+html,body{height:100%}
+body{
+  font-family:-apple-system,BlinkMacSystemFont,"PingFang SC","Microsoft YaHei",sans-serif;
+  background:#050b10; color:var(--ink);
+  display:flex; align-items:center; justify-content:center;
+  overflow:hidden;
+}
+/* ---------- PC 舞台 ---------- */
+.stage{position:fixed; inset:0;
+  background:linear-gradient(180deg,#060d13,#08141c);}
+.stage::before{content:"";position:absolute;inset:0;
+  background:url('img/proto-bg-pc.jpg') center/cover no-repeat;
+  opacity:.28; filter:saturate(.85);
+  -webkit-mask-image:linear-gradient(180deg,rgba(0,0,0,.7),transparent 70%);
+          mask-image:linear-gradient(180deg,rgba(0,0,0,.7),transparent 70%);}
+.stage-side{position:absolute; top:50%; transform:translateY(-50%);
+  color:var(--ink3); font-size:12px; letter-spacing:.18em; writing-mode:vertical-rl;
+  line-height:2.4; opacity:.0; transition:opacity .5s;}
+.stage-side.l{left:5%;} .stage-side.r{right:5%;}
+/* ---------- 手机 ---------- */
+.phone{
+  position:relative; width:100%; height:100vh;
+  background:var(--bg); overflow:hidden;
+  display:flex; flex-direction:column;
+}
+@media (min-width:520px){
+  .stage-side{opacity:.75}
+  .phone{
+    width:402px; height:860px; max-height:94vh;
+    border-radius:44px; border:1px solid rgba(255,255,255,.10);
+    box-shadow:0 40px 120px rgba(0,0,0,.7), 0 0 0 10px #0a0f14, 0 0 0 11px rgba(255,255,255,.06);
+  }
+  .phone::before{content:"";position:absolute;top:0;left:50%;transform:translateX(-50%);
+    width:150px;height:26px;background:#0a0f14;border-radius:0 0 18px 18px;z-index:90;}
+}
+/* 进度 */
+.topbar{position:relative;z-index:40; padding:14px 18px 8px; display:flex;align-items:center;gap:12px;
+  background:linear-gradient(180deg,rgba(10,22,32,.92),rgba(10,22,32,.0));}
+.brand{font-size:12px;letter-spacing:.12em;color:var(--ink3);white-space:nowrap}
+.brand b{color:var(--gold);font-weight:600}
+.prog{flex:1;display:flex;gap:5px}
+.prog i{height:3px;flex:1;border-radius:3px;background:rgba(255,255,255,.10);transition:background .4s}
+.prog i.on{background:var(--gold)}
+.step-tag{font-size:11px;color:var(--ink3);white-space:nowrap}
+/* 场景容器 */
+.deck{position:relative;flex:1;overflow:hidden;
+  background:radial-gradient(120% 45% at 50% 0%,#112633 0%,var(--bg) 60%)}
+.scene{position:absolute;inset:0;display:flex;flex-direction:column;
+  opacity:0;transform:translateX(40px);pointer-events:none;
+  transition:opacity .45s ease,transform .45s ease;overflow-y:auto;overflow-x:hidden;
+  -webkit-overflow-scrolling:touch}
+.scene.on{opacity:1;transform:none;pointer-events:auto}
+.scene.left{transform:translateX(-40px)}
+.scene>*{flex-shrink:0}
+.scene .grow{flex:1}
+/* 底部主操作 */
+.dock{position:sticky;bottom:0;margin-top:auto;padding:14px 20px calc(18px + var(--safe-b));
+  background:linear-gradient(180deg,rgba(10,22,32,0),var(--bg) 28%);}
+.btn{display:block;width:100%;border:none;cursor:pointer;font-family:inherit;
+  padding:17px 20px;border-radius:16px;font-size:17px;font-weight:600;letter-spacing:.02em;
+  transition:transform .12s ease, box-shadow .2s, opacity .2s;}
+.btn:active{transform:scale(.97)}
+.btn-primary{background:linear-gradient(135deg,var(--gold),#d99e3a);color:#241a06;
+  box-shadow:0 10px 30px rgba(232,180,84,.22)}
+.btn-teal{background:linear-gradient(135deg,var(--teal2),var(--teal));color:#eafbf8;
+  box-shadow:0 10px 30px rgba(16,160,143,.20)}
+.btn-ghost{background:rgba(255,255,255,.05);color:var(--ink2);border:1px solid var(--line);font-weight:500}
+.btn-line{background:transparent;color:var(--ink3);font-size:14px;font-weight:400;padding:10px}
+.btn:disabled{opacity:.4;box-shadow:none}
+.duo{display:flex;gap:10px}
+/* ============ 场景 0 城市悬念 ============ */
+#s0{background:linear-gradient(180deg,rgba(8,16,22,.55) 0%,rgba(8,18,26,.72) 55%,var(--bg) 100%),url('img/proto-bg-m.jpg') center 30%/cover no-repeat}
+.s0-wrap{padding:12px 24px 6px;display:flex;flex-direction:column;min-height:100%}
+.eyebrow{display:inline-flex;align-items:center;gap:8px;font-size:12px;letter-spacing:.22em;
+  color:var(--gold);text-transform:uppercase;margin-top:6vh}
+.eyebrow::before{content:"";width:22px;height:1px;background:var(--gold);opacity:.7}
+.s0-hook{margin-top:14px}
+.s0-hook .rise{font-size:15px;color:var(--ink2);letter-spacing:.04em}
+.s0-hook .rise b{color:var(--gold);font-weight:600}
+.s0-hook h1{font-size:34px;line-height:1.28;font-weight:700;margin-top:14px;letter-spacing:.01em;
+  text-shadow:0 2px 30px rgba(0,0,0,.6)}
+.s0-hook h1 em{font-style:normal;color:var(--gold)}
+.s0-hook .sub{margin-top:16px;font-size:14.5px;line-height:1.8;color:var(--ink2)}
+.s0-meta{display:flex;gap:18px;margin-top:22px;flex-wrap:wrap}
+.s0-meta .m{font-size:12px;color:var(--ink3);display:flex;align-items:center;gap:6px}
+.s0-meta .m .dot{width:5px;height:5px;border-radius:50%;background:var(--teal2)}
+.s0-meta .m .dot.g{background:var(--gold)}
+.ribbon{margin-top:18px;padding:11px 14px;border-radius:12px;border:1px solid rgba(232,180,84,.35);
+  background:rgba(232,180,84,.08);font-size:13px;color:var(--gold);display:none}
+.ribbon.show{display:block}
+/* 浮现动画 */
+.rise-in{opacity:0;transform:translateY(18px);animation:riseIn .9s ease forwards}
+.d1{animation-delay:.15s}.d2{animation-delay:.45s}.d3{animation-delay:.75s}.d4{animation-delay:1.05s}.d5{animation-delay:1.3s}
+@keyframes riseIn{to{opacity:1;transform:none}}
+/* ============ 通用文案 ============ */
+.q-title{font-size:22px;font-weight:700;line-height:1.4}
+.q-sub{font-size:14px;color:var(--ink2);line-height:1.7;margin-top:8px}
+.pad{padding:6px 22px 0}
+.label{font-size:12px;letter-spacing:.16em;color:var(--ink3);margin-bottom:10px}
+/* ============ 场景 1 直觉下注 ============ */
+.bet-hero{text-align:center;padding:18px 22px 4px}
+.bet-num{font-size:72px;font-weight:700;line-height:1;letter-spacing:-1px;
+  font-variant-numeric:tabular-nums;transition:color .2s}
+.bet-num .pct{font-size:30px;font-weight:600;margin-left:2px}
+.bet-hint{font-size:12.5px;color:var(--ink3);margin-top:8px}
+.ruler{position:relative;margin:26px 30px 8px;height:78px}
+.ruler .track{position:absolute;top:38px;left:0;right:0;height:8px;border-radius:8px;
+  background:linear-gradient(90deg,#7a2b26 0%,#3a2f24 38%,#26332c 52%,#23503f 100%)}
+.ruler .zero{position:absolute;top:30px;bottom:14px;width:1px;background:rgba(255,255,255,.28)}
+.ruler .zero span{position:absolute;top:-18px;left:50%;transform:translateX(-50%);font-size:11px;color:var(--ink3)}
+.ruler .tick{position:absolute;top:42px;width:1px;height:8px;background:rgba(255,255,255,.25)}
+.ruler .tick span{position:absolute;top:12px;left:50%;transform:translateX(-50%);font-size:10px;color:var(--ink3)}
+.ruler .handle{position:absolute;top:22px;width:40px;height:40px;border-radius:50%;
+  transform:translateX(-50%);cursor:grab;touch-action:none;
+  background:radial-gradient(circle at 35% 30%,#fff,#d9e2e0 60%,#9fb0ac);
+  box-shadow:0 6px 20px rgba(0,0,0,.5),0 0 0 6px rgba(232,180,84,.18);
+  display:flex;align-items:center;justify-content:center;transition:box-shadow .2s}
+.ruler .handle::after{content:"";width:4px;height:16px;border-radius:2px;background:#3a4a52}
+.ruler .handle:active{cursor:grabbing;box-shadow:0 8px 26px rgba(0,0,0,.6),0 0 0 10px rgba(232,180,84,.28)}
+.ruler input[type=range]{position:absolute;top:18px;left:-6px;right:-6px;width:calc(100% + 12px);
+  height:48px;margin:0;opacity:0;cursor:pointer}
+/* 图形卡选择 */
+.opt-grid{display:grid;grid-template-columns:1fr 1fr;gap:11px;margin-top:6px}
+.opt{position:relative;padding:15px 13px;border-radius:16px;background:var(--card);
+  border:1px solid var(--line);cursor:pointer;transition:all .18s;overflow:hidden}
+.opt .ic{width:30px;height:30px;margin-bottom:9px;color:var(--teal2)}
+.opt .t{font-size:13.5px;font-weight:600;line-height:1.35}
+.opt .d{font-size:11px;color:var(--ink3);margin-top:4px;line-height:1.4}
+.opt.sel{border-color:var(--gold);background:linear-gradient(160deg,rgba(232,180,84,.14),var(--card) 70%)}
+.opt.sel .ic{color:var(--gold)}
+.opt.sel::after{content:"";position:absolute;right:-14px;top:-14px;width:38px;height:38px;border-radius:50%;
+  background:var(--gold);opacity:.18}
+.opt.full{grid-column:1/-1}
+/* 信心 */
+.conf-row{display:flex;gap:10px;margin-top:4px}
+.conf-chip{flex:1;padding:13px 0;border-radius:13px;background:var(--card);border:1px solid var(--line);
+  text-align:center;cursor:pointer;transition:all .15s}
+.conf-chip .n{font-size:18px;font-weight:700;font-variant-numeric:tabular-nums;color:var(--ink2)}
+.conf-chip .w{font-size:10px;color:var(--ink3);margin-top:2px}
+.conf-chip.sel{border-color:var(--gold);background:rgba(232,180,84,.1)}
+.conf-chip.sel .n{color:var(--gold)}
+/* 封存 */
+.seal{position:fixed;inset:0;z-index:100;background:rgba(6,12,17,.86);backdrop-filter:blur(6px);
+  display:flex;align-items:center;justify-content:center;opacity:0;pointer-events:none;transition:opacity .3s}
+.seal.show{opacity:1;pointer-events:auto}
+.seal-card{width:230px;padding:30px 24px;border-radius:22px;background:linear-gradient(165deg,var(--card2),var(--card));
+  border:1px solid rgba(232,180,84,.3);text-align:center;transform:scale(.8);transition:transform .4s cubic-bezier(.2,1.3,.4,1)}
+.seal.show .seal-card{transform:scale(1)}
+.seal-stamp{width:74px;height:74px;margin:0 auto 14px;border-radius:50%;border:2px solid var(--gold);
+  display:flex;align-items:center;justify-content:center;color:var(--gold)}
+.seal h3{font-size:17px}
+.seal p{font-size:12.5px;color:var(--ink2);margin-top:8px;line-height:1.6}
+/* ============ 场景 2 数字反转 ============ */
+.vs-wrap{padding:10px 22px 0}
+.vs-nums{display:flex;align-items:flex-end;justify-content:center;gap:20px;margin-top:14px}
+.vs-side{text-align:center;flex:1}
+.vs-side .cap{font-size:12px;color:var(--ink3);margin-bottom:6px}
+.vs-side .val{font-size:46px;font-weight:700;font-variant-numeric:tabular-nums;line-height:1}
+.vs-side .val .p{font-size:20px}
+.vs-side.you .val{color:var(--ink2)}
+.vs-side.real .val{color:var(--red)}
+.gap-badge{margin:20px auto 0;width:fit-content;padding:10px 18px;border-radius:999px;
+  background:rgba(229,84,75,.12);border:1px solid rgba(229,84,75,.3);color:#ff8a82;
+  font-size:15px;font-weight:600;font-variant-numeric:tabular-nums}
+.gap-axis{position:relative;margin:26px 24px 6px;height:60px}
+.gap-axis .bar{position:absolute;top:22px;left:0;right:0;height:6px;border-radius:6px;
+  background:linear-gradient(90deg,#7a2b26,#3a2f24 40%,#26332c 55%,#23503f)}
+.gap-axis .zero{position:absolute;top:14px;bottom:10px;width:1px;background:rgba(255,255,255,.25)}
+.gap-axis .pin{position:absolute;top:8px;transform:translateX(-50%);text-align:center;transition:all .3s}
+.gap-axis .pin .tag{font-size:10px;margin-bottom:3px;white-space:nowrap}
+.gap-axis .pin .pt{width:14px;height:14px;border-radius:50%;margin:0 auto;border:2px solid}
+.gap-axis .pin.you .tag{color:var(--ink2)} .gap-axis .pin.you .pt{border-color:var(--ink2);background:#2a3a44}
+.gap-axis .pin.real .tag{color:var(--red)} .gap-axis .pin.real .pt{border-color:var(--red);background:var(--red)}
+.gap-axis .arc{position:absolute;top:0;height:3px;background:var(--gold);border-radius:3px;opacity:.85}
+.caveat{margin:18px 22px 0;padding:13px 15px;border-radius:14px;background:rgba(255,255,255,.04);
+  border:1px solid var(--line);font-size:13px;line-height:1.7;color:var(--ink2)}
+.caveat b{color:var(--gold);font-weight:600}
+.src{margin:12px 22px 0;border-radius:12px;overflow:hidden;border:1px solid var(--line)}
+.src summary{padding:11px 14px;font-size:13px;color:var(--teal2);cursor:pointer;list-style:none;
+  display:flex;justify-content:space-between;align-items:center}
+.src summary::-webkit-details-marker{display:none}
+.src .src-body{padding:0 14px 13px;font-size:12px;color:var(--ink3);line-height:1.8}
+.src .src-body a{color:var(--blue);word-break:break-all}
+/* 三方向 */
+.paths{display:flex;flex-direction:column;gap:10px;margin:16px 22px 0}
+.path-item{display:flex;align-items:center;gap:13px;padding:14px 15px;border-radius:14px;
+  background:var(--card);border:1px solid var(--line);cursor:pointer;transition:all .18s}
+.path-item:active{transform:scale(.99)}
+.path-item .n{width:30px;height:30px;flex:none;border-radius:9px;background:rgba(16,160,143,.14);
+  color:var(--teal2);display:flex;align-items:center;justify-content:center;font-weight:700;font-size:14px}
+.path-item .t{font-size:14px;font-weight:600}
+.path-item .d{font-size:11.5px;color:var(--ink3);margin-top:2px}
+.path-item .arrow{margin-left:auto;color:var(--ink3)}
+/* ============ 场景 3 观点碰撞 ============ */
+.ai-note{display:flex;align-items:center;gap:7px;margin:4px 22px 0;font-size:11px;color:var(--ink3)}
+.ai-note .chip{padding:2px 8px;border-radius:999px;background:rgba(255,255,255,.07);color:var(--ink2);font-size:10px}
+.pose-list{padding:10px 22px 0;display:flex;flex-direction:column;gap:11px}
+.pose{border-radius:16px;background:var(--card);border:1px solid var(--line);overflow:hidden;transition:border .2s}
+.pose.open{border-color:rgba(232,180,84,.4)}
+.pose-head{display:flex;align-items:center;gap:13px;padding:15px 15px;cursor:pointer}
+.pose-ic{width:42px;height:42px;flex:none;border-radius:12px;display:flex;align-items:center;justify-content:center}
+.pose-ic svg{width:24px;height:24px}
+.pose-head .ht{flex:1}
+.pose-head .h1{font-size:15px;font-weight:600;line-height:1.4}
+.pose-head .h2{font-size:11.5px;color:var(--ink3);margin-top:3px}
+.pose-head .chev{color:var(--ink3);transition:transform .3s}
+.pose.open .chev{transform:rotate(180deg)}
+.pose-body{max-height:0;overflow:hidden;transition:max-height .45s ease}
+.pose.open .pose-body{max-height:1400px}
+.pose-inner{padding:2px 15px 15px}
+.pose-body h4{font-size:11px;letter-spacing:.14em;color:var(--ink3);margin:12px 0 8px;font-weight:600;
+  display:flex;align-items:center;gap:7px}
+.ev{display:flex;gap:11px;padding:11px 12px;border-radius:12px;background:rgba(255,255,255,.035);
+  border:1px solid var(--line);margin-bottom:8px;animation:evIn .5s ease both}
+.ev.pro{border-left:3px solid var(--green)}
+.ev.con{border-left:3px solid var(--red)}
+.ev .ev-txt{flex:1;font-size:12.5px;line-height:1.6;color:var(--ink2)}
+.ev .src-tag{display:inline-block;margin-top:6px;font-size:10px;color:var(--ink3);
+  border:1px solid var(--line);border-radius:6px;padding:1px 6px}
+.ev .ev-btns{display:flex;flex-direction:column;gap:5px;flex:none}
+.ev .ev-btns button{width:34px;height:25px;border-radius:7px;border:1px solid var(--line);
+  background:transparent;font-size:10px;cursor:pointer;color:var(--ink3)}
+.ev .ev-btns button.b-pro.sel{background:rgba(63,182,127,.2);color:var(--green);border-color:var(--green)}
+.ev .ev-btns button.b-con.sel{background:rgba(229,84,75,.2);color:var(--red);border-color:var(--red)}
+.ev .ev-btns button.b-tbd.sel{background:rgba(255,255,255,.12);color:var(--ink);border-color:var(--ink3)}
+@keyframes evIn{from{opacity:0;transform:translateX(14px)}to{opacity:1;transform:none}}
+.unknown{font-size:12px;color:var(--ink2);line-height:1.7;padding:10px 12px;border-radius:12px;
+  background:rgba(16,160,143,.07);border:1px dashed rgba(16,160,143,.3)}
+.ev-tray{position:sticky;top:0;display:flex;gap:8px;margin:0 22px 10px;padding:9px 0;
+  background:var(--bg);z-index:5;font-size:11px}
+.ev-tray .tb{flex:1;text-align:center;padding:7px 0;border-radius:10px;background:var(--card);
+  border:1px solid var(--line);color:var(--ink3)}
+.ev-tray .tb b{font-size:14px;display:block;margin-bottom:1px}
+.ev-tray .tb.pro b{color:var(--green)} .ev-tray .tb.con b{color:var(--red)} .ev-tray .tb.tbd b{color:var(--ink)}
+/* ============ 场景 4 朋友挑战 ============ */
+.vs2{padding:8px 22px 0}
+.duo-stage{margin-top:14px;border-radius:18px;background:linear-gradient(165deg,var(--card2),var(--card));
+  border:1px solid var(--line);padding:18px 16px}
+.duo-head{display:flex;align-items:center;justify-content:space-between;margin-bottom:14px}
+.duo-head .person{text-align:center;flex:1}
+.duo-head .avatar{width:46px;height:46px;border-radius:50%;margin:0 auto 7px;display:flex;
+  align-items:center;justify-content:center;font-weight:700;font-size:16px}
+.duo-head .me .avatar{background:linear-gradient(135deg,var(--teal2),var(--teal));color:#eafbf8}
+.duo-head .ta .avatar{background:linear-gradient(135deg,#6b7a86,#46565f);color:#eef3f2}
+.duo-head .person .pn{font-size:13px;font-weight:600}
+.duo-head .person .pr{font-size:10.5px;color:var(--ink3);margin-top:2px}
+.duo-head .vs-mid{font-size:12px;color:var(--gold);letter-spacing:.1em;padding:0 6px}
+.match-row{display:flex;align-items:center;gap:10px;margin-bottom:10px;font-size:12.5px}
+.match-row .cell{flex:1;text-align:center;padding:10px 6px;border-radius:11px;background:rgba(255,255,255,.04);
+  border:1px solid var(--line);font-variant-numeric:tabular-nums}
+.match-row .cell .mini{font-size:10px;color:var(--ink3);display:block;margin-bottom:3px}
+.match-row .state{width:40px;flex:none;text-align:center;font-size:10px}
+.match-row .state.same{color:var(--green)}
+.match-row .state.diff{color:var(--gold)}
+.match-row.agree .cell{border-color:rgba(63,182,127,.35)}
+.match-row.split .cell{border-color:rgba(232,180,84,.35)}
+.consensus{margin-top:12px;padding:12px 14px;border-radius:12px;background:rgba(63,182,127,.07);
+  border:1px solid rgba(63,182,127,.25);font-size:12px;color:var(--ink2);line-height:1.7}
+.consensus b{color:var(--green)}
+.diverge{margin-top:9px;padding:12px 14px;border-radius:12px;background:rgba(232,180,84,.08);
+  border:1px solid rgba(232,180,84,.28);font-size:12px;color:var(--ink2);line-height:1.7}
+.diverge b{color:var(--gold)}
+.respond{display:flex;gap:8px;margin-top:11px}
+.respond button{flex:1;padding:9px 4px;border-radius:10px;border:1px solid var(--line);
+  background:transparent;color:var(--ink2);font-size:11px;cursor:pointer}
+.demo-note{font-size:10.5px;color:var(--ink3);text-align:center;margin-top:9px}
+/* 社交卡 */
+.card-preview{margin:16px 22px 0;border-radius:20px;overflow:hidden;
+  background:linear-gradient(165deg,#12303e,#0b1c27);border:1px solid rgba(232,180,84,.25)}
+.card-top{padding:18px 18px 14px;background:linear-gradient(180deg,rgba(232,180,84,.12),transparent)}
+.card-top .ct{font-size:12px;letter-spacing:.18em;color:var(--gold)}
+.card-top .cq{font-size:18px;font-weight:700;margin-top:7px;line-height:1.4}
+.card-flip{display:flex;gap:14px;padding:16px 18px;align-items:center}
+.card-flip .cf{flex:1;text-align:center}
+.card-flip .cf .l{font-size:10px;color:var(--ink3)}
+.card-flip .cf .v{font-size:30px;font-weight:700;font-variant-numeric:tabular-nums;margin-top:4px}
+.card-flip .cf.first .v{color:var(--ink2);text-decoration:line-through;text-decoration-color:rgba(255,255,255,.3)}
+.card-flip .cf.now .v{color:var(--gold)}
+.card-flip .arr{color:var(--ink3)}
+.card-foot{padding:12px 18px 16px;border-top:1px solid var(--line);font-size:11.5px;color:var(--ink2);line-height:1.6}
+.card-foot .key{color:var(--ink)}
+.card-foot .tagrow{display:flex;gap:6px;margin-top:9px}
+.card-foot .tagrow span{font-size:10px;padding:3px 9px;border-radius:999px;border:1px solid var(--line);color:var(--ink3)}
+.privacy{display:flex;align-items:flex-start;gap:9px;margin:14px 22px 0;font-size:11.5px;color:var(--ink3);line-height:1.6}
+.privacy .box{width:18px;height:18px;flex:none;border-radius:5px;border:1px solid var(--ink3);margin-top:1px;
+  display:flex;align-items:center;justify-content:center;color:var(--bg);font-size:12px;flex:none}
+.privacy.on .box{background:var(--gold);border-color:var(--gold)}
+.privacy.on{color:var(--ink2)}
+.toast{position:fixed;left:50%;bottom:150px;transform:translateX(-50%) translateY(20px);z-index:120;
+  background:rgba(20,40,52,.96);border:1px solid var(--line);color:var(--ink);padding:12px 20px;
+  border-radius:12px;font-size:13px;opacity:0;pointer-events:none;transition:all .3s;max-width:80%;text-align:center}
+.toast.show{opacity:1;transform:translateX(-50%)}
+.hidden{display:none!important}
+@media (prefers-reduced-motion: reduce){
+  *{animation-duration:.01ms!important;transition-duration:.01ms!important}
+}
+</style>
+</head>
+<body>
+<div class="stage"></div>
+<div class="stage-side l">博罗判断实验 · 手机优先的城市判断挑战</div>
+<div class="stage-side r">先猜 · 反转 · 交锋 · 连接</div>
+
+<div class="phone">
+  <div class="topbar">
+    <div class="brand">博罗<b>判断实验</b></div>
+    <div class="prog" id="prog"><i class="on"></i><i></i><i></i><i></i><i></i></div>
+    <div class="step-tag" id="stepTag">悬念</div>
+  </div>
+
+  <div class="deck">
+
+    <!-- ============ 0 城市悬念 ============ -->
+    <section class="scene on" id="s0">
+      <div class="s0-wrap">
+        <div class="eyebrow rise-in d1">2025 · 广东首个千亿县</div>
+        <div class="s0-hook">
+          <div class="rise rise-in d2">这一年，博罗的 GDP 跨过了 <b>1000 亿</b>。</div>
+          <h1 class="rise-in d3">经济在增长，<br><em>投资</em>却在悄悄回落，<br>为什么？</h1>
+          <p class="sub rise-in d4">城市的灯火还在亮，工厂还在开工。可另一边，有一个方向，和这片增长完全相反。<br>先别急着看答案——<b style="color:var(--ink)">你，会怎么判断？</b></p>
+          <div class="s0-meta rise-in d4">
+            <span class="m"><span class="dot g"></span>GDP 1005.45 亿 · +5.5%</span>
+            <span class="m"><span class="dot"></span>基于公开统计的判断练习</span>
+          </div>
+          <div class="ribbon" id="challengeBanner">有朋友向你发起判断挑战 · 完成后揭晓你们的分歧</div>
+        </div>
+        <div style="flex:1"></div>
+        <div class="dock rise-in d5">
+          <button class="btn btn-primary" data-go="1">开始，我来判断</button>
+          <button class="btn btn-line" data-go="3">先随便看看各方立场</button>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============ 1 直觉下注 ============ -->
+    <section class="scene" id="s1">
+      <div class="pad">
+        <div class="label">第 1 步 · 直觉下注</div>
+        <div class="q-title">先凭直觉，投出你的第一判断</div>
+        <div class="q-sub">你猜，2025 年博罗的<b style="color:var(--ink)">固定资产投资</b>，相比上一年变化了多少？</div>
+      </div>
+      <div class="bet-hero">
+        <div class="bet-num" id="betNum">-8<span class="pct">%</span></div>
+        <div class="bet-hint">拖动下方标尺，给出你的估计</div>
+      </div>
+      <div class="ruler">
+        <div class="track"></div>
+        <div class="zero" id="zeroLine"><span>0</span></div>
+        <div class="handle" id="handle"></div>
+        <input type="range" id="betRange" min="-50" max="10" step="1" value="-8">
+      </div>
+      <div class="pad" style="margin-top:18px">
+        <div class="label">你更担心的是什么？</div>
+        <div class="opt-grid" id="instinctGrid">
+          <div class="opt" data-v="C">
+            <svg class="ic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M3 17l5-6 4 4 5-7 4 5"/><path d="M3 21h18"/></svg>
+            <div class="t">短期回调</div><div class="d">长期还在往上，不必紧张</div>
+          </div>
+          <div class="opt" data-v="R">
+            <svg class="ic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M12 3v10"/><path d="M7 8l5 5 5-5"/><path d="M5 21h14"/></svg>
+            <div class="t">动能断档</div><div class="d">投得少，未来靠什么接</div>
+          </div>
+          <div class="opt" data-v="G">
+            <svg class="ic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><rect x="3" y="9" width="7" height="11" rx="1"/><rect x="14" y="4" width="7" height="16" rx="1"/></svg>
+            <div class="t">结构换挡</div><div class="d">有的在退，有的在进</div>
+          </div>
+          <div class="opt" data-v="U">
+            <svg class="ic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><circle cx="10.5" cy="10.5" r="6.5"/><path d="M15.5 15.5L21 21"/></svg>
+            <div class="t">看不出</div><div class="d">信息太少，暂时不下结论</div>
+          </div>
+        </div>
+        <div class="label" style="margin-top:20px">你的把握有多大？</div>
+        <div class="conf-row" id="confRow">
+          <div class="conf-chip" data-c="1"><div class="n">1</div><div class="w">瞎猜</div></div>
+          <div class="conf-chip" data-c="2"><div class="n">2</div><div class="w">没底</div></div>
+          <div class="conf-chip" data-c="3"><div class="n">3</div><div class="w">一般</div></div>
+          <div class="conf-chip" data-c="4"><div class="n">4</div><div class="w">较有底</div></div>
+          <div class="conf-chip" data-c="5"><div class="n">5</div><div class="w">很确信</div></div>
+        </div>
+      </div>
+      <div class="dock">
+        <button class="btn btn-primary" id="lockBtn" disabled>锁住此刻的判断</button>
+        <button class="btn btn-line" data-back="0">返回，再想想</button>
+      </div>
+    </section>
+
+    <!-- ============ 2 数字反转 ============ -->
+    <section class="scene" id="s2">
+      <div class="vs-wrap">
+        <div class="label">第 2 步 · 数字反转</div>
+        <div class="q-title">真实数字，比大多数人想得更陡</div>
+        <div class="vs-nums">
+          <div class="vs-side you">
+            <div class="cap">你的第一判断</div>
+            <div class="val" id="youNum">-8<span class="p">%</span></div>
+          </div>
+          <div class="vs-side real">
+            <div class="cap">公报真实值</div>
+            <div class="val" id="realNum">0<span class="p">%</span></div>
+          </div>
+        </div>
+        <div class="gap-badge" id="gapBadge">相差 — 个百分点</div>
+      </div>
+      <div class="gap-axis">
+        <div class="bar"></div>
+        <div class="zero" id="gapZero"></div>
+        <div class="pin you" id="pinYou"><div class="tag" id="tagYou">你</div><div class="pt"></div></div>
+        <div class="pin real" id="pinReal"><div class="tag">真实</div><div class="pt"></div></div>
+      </div>
+      <div class="caveat">
+        这是<b>事实揭晓</b>，不是答案揭晓。<br>
+        投资与产出之间可能存在时滞，但不同项目周期差异很大，<b>仅凭当期数字无法确定原因和传导时间</b>。
+      </div>
+      <details class="src">
+        <summary>数据口径与出处 <span>▾</span></summary>
+        <div class="src-body">
+          固定资产投资：以货币形式表现的建造和购置固定资产活动的工作量及其相关费用。<br>
+          来源：博罗县2025年国民经济和社会发展统计公报。<br>
+          2025年固定资产投资 <b>-18.8%</b>，其中房地产开发投资 <b>-47.6%</b>。<br>
+          <a href="https://www.boluo.gov.cn/hzbltjj/gkmlpt/content/5/5801/mpost_5801532.html">boluo.gov.cn 统计公报原文 ↗</a>
+        </div>
+      </details>
+      <div class="label pad" style="margin-top:18px">数字差距看见了，接下来怎么查？</div>
+      <div class="paths">
+        <div class="path-item" data-go="3">
+          <div class="n">1</div>
+          <div><div class="t">看投资结构</div><div class="d">是谁在跌：房地产、工业还是基建？</div></div>
+          <div class="arrow">→</div>
+        </div>
+        <div class="path-item" data-go="3">
+          <div class="n">2</div>
+          <div><div class="t">看项目投产</div><div class="d">在建大项目，能否接上下一步？</div></div>
+          <div class="arrow">→</div>
+        </div>
+        <div class="path-item" data-go="3">
+          <div class="n">3</div>
+          <div><div class="t">看不同解释</div><div class="d">四种分析立场，各自需要什么证据</div></div>
+          <div class="arrow">→</div>
+        </div>
+      </div>
+      <div class="dock">
+        <button class="btn btn-teal" data-go="3">去看几种解释</button>
+      </div>
+    </section>
+
+    <!-- ============ 3 观点碰撞 + 证据 ============ -->
+    <section class="scene" id="s3">
+      <div class="pad" style="padding-bottom:0">
+        <div class="label">第 3 步 · 观点碰撞</div>
+        <div class="q-title">点开一个立场，让证据自己说话</div>
+      </div>
+      <div class="ai-note"><span class="chip">模拟分析立场</span> 以下为基于公开数据的分析视角，非真人发言、非民意调查</div>
+
+      <div class="ev-tray">
+        <div class="tb pro"><b id="trayPro">0</b>支持我的</div>
+        <div class="tb con"><b id="trayCon">0</b>反对我的</div>
+        <div class="tb tbd"><b id="trayTbd">0</b>待核查</div>
+      </div>
+
+      <div class="pose-list" id="poseList"></div>
+
+      <div class="dock">
+        <button class="btn btn-primary" id="toConnect" disabled>我更接近这个立场，继续</button>
+        <button class="btn btn-line" data-go="2">回去看数字</button>
+      </div>
+    </section>
+
+    <!-- ============ 4 朋友挑战 ============ -->
+    <section class="scene" id="s4">
+      <div class="vs2">
+        <div class="label">第 4 步 · 判断连接</div>
+        <div class="q-title">你们的分歧，到底在哪一层？</div>
+        <div class="q-sub">不是简单看"选得一不一样"，而是找到你们<b style="color:var(--ink)">在事实、机制还是取舍上的分歧</b>。</div>
+      </div>
+
+      <div class="duo-stage">
+        <div class="duo-head">
+          <div class="person ta"><div class="avatar">TA</div><div class="pn">朋友</div><div class="pr">先完成的人</div></div>
+          <div class="vs-mid">VS</div>
+          <div class="person me"><div class="avatar">你</div><div class="pn" id="meName">你</div><div class="pr">刚完成</div></div>
+        </div>
+        <div class="match-row split" id="rowGuess">
+          <div class="cell"><span class="mini">朋友猜</span><b id="taGuess">-3%</b></div>
+          <div class="state diff">数值<br>不同</div>
+          <div class="cell"><span class="mini">你猜</span><b id="meGuess">-8%</b></div>
+        </div>
+        <div class="match-row split" id="rowPose">
+          <div class="cell"><span class="mini">朋友倾向</span><b id="taPose" style="font-size:12px">结构分析</b></div>
+          <div class="state diff">机制<br>分歧</div>
+          <div class="cell"><span class="mini">你倾向</span><b id="mePose" style="font-size:12px">—</b></div>
+        </div>
+        <div class="consensus"><b>你们的共识：</b>都看到了"投资在回落"这个事实，也都没有把它简单当成统计失误。</div>
+        <div class="diverge"><b>关键分歧：</b>回落是"结构换挡中的正常现象"，还是"动能接续的预警"？<br>这属于<b style="color:var(--gold)">机制分歧</b>——数据相同，对原因的解释不同。</div>
+        <div class="consensus" style="margin-top:9px"><b>值得一起核查的一条证据：</b>2026 年上半年工业投资 -51.3%、而规上工业增加值 +7.5%，"生产强、投资弱"的背离，能否支撑你的解释？</div>
+        <div class="respond">
+          <button>我有反证</button>
+          <button>我想问 TA</button>
+          <button>接受这条证据</button>
+        </div>
+        <div class="demo-note">演示：朋友一侧为示例数据，正式版由挑战链接独立作答后生成</div>
+      </div>
+
+      <!-- 社交卡预览 -->
+      <div class="card-preview">
+        <div class="card-top">
+          <div class="ct">我曾经这样判断博罗</div>
+          <div class="cq">投资回落，是换挡，还是断档？</div>
+        </div>
+        <div class="card-flip">
+          <div class="cf first"><div class="l">最初我猜</div><div class="v" id="cardFirst">-8%</div></div>
+          <div class="arr">→</div>
+          <div class="cf now"><div class="l">现在我认为</div><div class="v" id="cardNow">换挡</div></div>
+        </div>
+        <div class="card-foot">
+          <span class="key">改变我的一条线索：</span>房地产 -47.6%，但规上工业增加值 +8.7%。
+          <div class="tagrow"><span>模拟分析</span><span>非民意调查</span><span>待核验</span></div>
+        </div>
+      </div>
+
+      <div class="privacy" id="privacy">
+        <span class="box">✓</span>
+        <span>分享仅包含你选择公开的选项，不包含姓名、邮箱、理由原文和浏览记录；链接内容可见，无身份认证。</span>
+      </div>
+
+      <div class="dock">
+        <button class="btn btn-primary" id="shareBtn">把我的判断发给朋友</button>
+        <div class="duo" style="margin-top:10px">
+          <button class="btn btn-ghost" id="copyLink" style="flex:1">复制挑战链接</button>
+          <button class="btn btn-ghost" id="saveImg" style="flex:1">保存判断卡</button>
+        </div>
+        <button class="btn btn-line" id="restartBtn">重新挑战一次（保留原始记录）</button>
+      </div>
+    </section>
+
+  </div>
+</div>
+
+<div class="seal" id="seal"><div class="seal-card">
+  <div class="seal-stamp"><svg width="34" height="34" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><rect x="5" y="11" width="14" height="10" rx="2"/><path d="M8 11V7a4 4 0 0 1 8 0v4"/></svg></div>
+  <h3>已封存，这是此刻的你</h3>
+  <p id="sealText">猜测 -8% · 倾向… · 信心 3<br>未看到答案前的原始判断，将被记录</p>
+</div></div>
+
+<div class="toast" id="toast"></div>
+
+<script>
+(function(){
+  var REAL=-18.8;
+  var state={guess:-8,instinct:null,confidence:0,pose:null,browse:false};
+  var scenes=["s0","s1","s2","s3","s4"];
+  var stepNames=["悬念","下注","反转","交锋","连接"];
+  var posName={C:"短期回调",R:"动能断档",G:"结构换挡",U:"看不出"};
+  var $=function(id){return document.getElementById(id)};
+  var reduced=window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+  function toast(msg){var t=$("toast");t.textContent=msg;t.classList.add("show");
+    clearTimeout(t._t);t._t=setTimeout(function(){t.classList.remove("show")},1900);}
+
+  /* ---------- 场景切换 ---------- */
+  function go(n){
+    scenes.forEach(function(s,i){
+      var el=$(s);
+      el.classList.toggle("on",i===n);
+      el.classList.toggle("left",i<n);
+    });
+    var prog=$("prog").children;
+    for(var i=0;i<prog.length;i++)prog[i].classList.toggle("on",i<=n);
+    $("stepTag").textContent=stepNames[n];
+    $(scenes[n]).scrollTop=0;
+    if(n===2) animateReveal();
+  }
+  document.querySelectorAll("[data-go]").forEach(function(b){
+    b.addEventListener("click",function(){
+      var n=+b.getAttribute("data-go");
+      if(n===3 && state.instinct===null){state.browse=true;} // 直接浏览立场=非盲
+      go(n);
+    });
+  });
+  document.querySelectorAll("[data-back]").forEach(function(b){
+    b.addEventListener("click",function(){go(+b.getAttribute("data-back"))});
+  });
+
+  /* ---------- 标尺拖动 ---------- */
+  var range=$("betRange"),handle=$("handle"),betNum=$("betNum");
+  var MIN=-50,MAX=10;
+  function pct(v){return (v-MIN)/(MAX-MIN)*100;}
+  function paintBet(v){
+    state.guess=v;
+    handle.style.left=pct(v)+"%";
+    betNum.innerHTML=v+'<span class="pct">%</span>';
+    betNum.style.color= v<0 ? "#ff8a82" : (v>0?"#6ad0a0":"#EAF2F0");
+  }
+  range.addEventListener("input",function(){paintBet(+range.value);});
+  // 零刻度位置
+  var zero=document.querySelector("#s1 .ruler .zero");zero.style.left=pct(0)+"%";
+  // 刻度
+  var ruler=document.querySelector("#s1 .ruler");
+  [-50,-30,-10,10].forEach(function(t){
+    var tk=document.createElement("div");tk.className="tick";tk.style.left=pct(t)+"%";
+    tk.innerHTML="<span>"+t+"</span>";ruler.appendChild(tk);
+  });
+  paintBet(-8);
+
+  /* ---------- 直觉 / 信心 ---------- */
+  $("instinctGrid").addEventListener("click",function(e){
+    var o=e.target.closest(".opt");if(!o)return;
+    document.querySelectorAll("#instinctGrid .opt").forEach(function(x){x.classList.remove("sel")});
+    o.classList.add("sel");state.instinct=o.getAttribute("data-v");checkLock();
+  });
+  $("confRow").addEventListener("click",function(e){
+    var c=e.target.closest(".conf-chip");if(!c)return;
+    document.querySelectorAll("#confRow .conf-chip").forEach(function(x){x.classList.remove("sel")});
+    c.classList.add("sel");state.confidence=+c.getAttribute("data-c");checkLock();
+  });
+  function checkLock(){$("lockBtn").disabled=!(state.instinct && state.confidence);}
+
+  /* ---------- 封存 ---------- */
+  $("lockBtn").addEventListener("click",function(){
+    if(state.instinct===null||!state.confidence)return;
+    var blind = !state.browse;
+    $("sealText").innerHTML="猜测 "+state.guess+"% · 倾向"+posName[state.instinct]+" · 信心 "+state.confidence+
+      "<br>"+(blind?"未看到答案前的原始判断（首次盲测）":"已浏览过立场，标记为非盲测");
+    $("seal").classList.add("show");
+    setTimeout(function(){$("seal").classList.remove("show");},reduced?200:1500);
+    setTimeout(function(){go(2);},reduced?220:1550);
+  });
+
+  /* ---------- 数字反转揭晓 ---------- */
+  var revealed=false;
+  function pos(v){return (v-MIN)/(MAX-MIN)*100;}
+  function animateReveal(){
+    $("youNum").innerHTML=state.guess+'<span class="p">%</span>';
+    $("meGuess").textContent=state.guess+"%";
+    $("cardFirst").textContent=state.guess+"%";
+    $("gapZero").style.left=pos(0)+"%";
+    $("pinYou").style.left=pos(state.guess)+"%";
+    $("tagYou").textContent="你 "+state.guess+"%";
+    if(revealed){paintReal();return;}
+    revealed=true;
+    var t0=null,dur=reduced?1:900;
+    function step(ts){
+      if(!t0)t0=ts;var k=Math.min(1,(ts-t0)/dur);
+      var e=1-Math.pow(1-k,3);
+      var v=+(REAL*e).toFixed(1);
+      $("realNum").innerHTML=v+'<span class="p">%</span>';
+      $("pinReal").style.left=pos(v)+"%";
+      var gap=Math.abs(state.guess-v).toFixed(1);
+      $("gapBadge").textContent=(k>=.99?"你和真实值，差了 ":"正在拉开…")+(k>=.99?gap+" 个百分点":"");
+      if(k<1)requestAnimationFrame(step);else{
+        $("gapBadge").textContent="你和真实值，差了 "+Math.abs(state.guess-REAL).toFixed(1)+" 个百分点";
+        $("realNum").innerHTML=REAL+'<span class="p">%</span>';
+        $("pinReal").style.left=pos(REAL)+"%";
+        // 差距弧
+        var arc=document.createElement("div");arc.className="arc";
+        var a=pos(state.guess),b=pos(REAL);
+        arc.style.left=Math.min(a,b)+"%";arc.style.width=Math.abs(b-a)+"%";
+        var axis=document.querySelector(".gap-axis");
+        var old=axis.querySelector(".arc");if(old)old.remove();axis.appendChild(arc);
+      }
+    }
+    requestAnimationFrame(step);
+  }
+  function paintReal(){
+    $("realNum").innerHTML=REAL+'<span class="p">%</span>';
+    $("pinReal").style.left=pos(REAL)+"%";
+    $("gapBadge").textContent="你和真实值，差了 "+Math.abs(state.guess-REAL).toFixed(1)+" 个百分点";
+  }
+
+  /* ---------- 立场卡 ---------- */
+  var poses=[
+    {id:"prod",color:"#10a08f",name:"当期生产",claim:"数据明明很好，别自己吓自己",
+      short:"生产还在高增长，投资是阶段性调整",
+      icon:'<path d="M3 21h18M5 21V9l5-4 5 4M9 21v-5h3v5"/><path d="M17 13v8M14 21l3-3 3 3"/>',
+      pro:[["规上工业增加值 +8.7%，总产值破2000亿、+8.3%","A · 统计公报","ev-ind-value"],
+           ["电子信息 +17.2%、电气机械 +16.9%，支柱还在扩张","A · 统计公报","ev-elec"]],
+      con:[["投资 -18.8%，若持续，未来新增产能可能受限","A · 统计公报","ev-fai"],
+           ["2026上半年工业投资一度 -51.3%，生产与投资背离加大","A · 2026核验","ev-h1"]],
+      unknown:"现有在建产能能支撑多久？2026年投资走深会否在1-2年后传导到生产端。"},
+    {id:"pipeline",color:"#E5544B",name:"前瞻接续",claim:"投得越来越少，2027拿什么接？",
+      short:"投资是领先指标，现在的收缩会在未来兑现",
+      icon:'<path d="M12 3v10M7 8l5 5 5-5"/><path d="M5 21h14"/><path d="M9 14l3 4 3-4"/>',
+      pro:[["固投 -18.8%、房地产 -47.6%，先行指标明显收缩","A · 统计公报","ev-fai"],
+           ["2026年上半年固投 -36.4%、工业投资 -51.3%，风险在兑现","A · 2026核验","ev-h1-fai"]],
+      con:[["工业投资连续四年超200亿，存量底盘仍厚","B · 科工信总结","ev-ind-scale"],
+           ["1-8月规上工业增加值 +8.9%、投资降幅小幅收窄","A · 2026核验","ev-aug"]],
+      unknown:"时滞长短未被证实；投资下降究竟是主动换挡还是被动收缩，需要项目级数据。"},
+    {id:"structure",color:"#E8B454",name:"结构分析",claim:"别被总数吓到，要看是谁在跌",
+      short:"分化很大，结构性的退与进同时发生",
+      icon:'<rect x="3" y="10" width="7" height="11" rx="1"/><rect x="14" y="4" width="7" height="17" rx="1"/><path d="M10 15h4"/>',
+      pro:[["房地产 -47.6% 拖累总盘，基建仅 -0.3%","A · 统计公报","ev-re"],
+           ["工业投资超230亿、占固投近60%，大项目仍在","B · 科工信总结","ev-scale"]],
+      con:[["2026年工业投资跌幅一度超过房地产，2025的结构叙事被弱化","A · 2026核验","ev-h1-ind"],
+           ["一产投资 -64.7%、三产 -25.9%，并非只有房地产在跌","A · 统计公报","ev-inv3"]],
+      unknown:"分行业投资的2026年最新结构尚未完整披露，换挡能否成立取决于工业能否接棒。"},
+    {id:"evidence",color:"#9fb0ac",name:"审慎证据",claim:"公开数据还不够，现在下结论为时过早",
+      short:"口径、时滞和项目数据都不足，先收集再判断",
+      icon:'<circle cx="10.5" cy="10.5" r="6.5"/><path d="M15.5 15.5 21 21"/><path d="M8 10.5h5"/>',
+      pro:[["缺少分行业投资额、项目台账与时滞长度的直接证据","方法 · 缺口","gap"]],
+      con:[["宏观事实已确凿：GDP+5.5%、固投-18.8%，并非完全无据","A · 统计公报","ev-gdp"]],
+      unknown:"哪些关键数据公开后可以证伪或证实以上三个立场？需要先列清单。"}
+  ];
+  var classify={pro:0,con:0,tbd:0};
+  function renderPoses(){
+    var list=$("poseList");list.innerHTML="";
+    poses.forEach(function(p){
+      var div=document.createElement("div");div.className="pose";
+      var evs="";
+      p.pro.forEach(function(e){evs+=evRow(p,e,"pro");});
+      p.con.forEach(function(e){evs+=evRow(p,e,"con");});
+      div.innerHTML=
+        '<div class="pose-head"><div class="pose-ic" style="background:'+hexA(p.color,.14)+';color:'+p.color+'">'+
+          '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6">'+p.icon+'</svg></div>'+
+          '<div class="ht"><div class="h1">'+p.claim+'</div><div class="h2">'+p.short+'</div></div>'+
+          '<div class="chev">▾</div></div>'+
+        '<div class="pose-body"><div class="pose-inner">'+
+          '<h4>支持证据</h4>'+evs+
+          '<h4>最强反证</h4>'+
+          (p.id==="evidence"?'<div class="ev con"><div class="ev-txt">宏观数据本身已足够确凿，不能以“谨慎”回避判断。<span class="src-tag">A · 统计公报</span></div><div class="ev-btns"></div></div>':'')+
+          '<div class="unknown">🔍 关键未知：'+p.unknown+'</div>'+
+        '</div></div>';
+      list.appendChild(div);
+      div.querySelector(".pose-head").addEventListener("click",function(){
+        var open=div.classList.contains("open");
+        document.querySelectorAll(".pose").forEach(function(x){x.classList.remove("open")});
+        if(!open){div.classList.add("open");
+          state.pose=p.id;$("toConnect").disabled=false;
+          $("mePose").textContent=p.name;$("cardNow").textContent=p.name;
+        }
+      });
+      div.querySelector(".pose-inner").addEventListener("click",function(e){
+        var btn=e.target.closest(".ev-btns button");if(!btn)return;
+        var k=btn.getAttribute("data-k");
+        var ev=btn.closest(".ev");
+        var same=ev.querySelectorAll(".ev-btns button");
+        var was=btn.classList.contains("sel");
+        same.forEach(function(b){b.classList.remove("sel")});
+        // 简单计数：同一条只计最后一次归类
+        if(!was){btn.classList.add("sel");classify[k]++;}
+        updateTray();
+        toast(k==="pro"?"已放入「支持我的」":k==="con"?"已放入「反对我的」":"已放入「待核查」");
+        state.pose=p.id;
+        $("toConnect").disabled=false;
+        $("mePose").textContent=p.name;
+        $("cardNow").textContent=p.name;
+      });
+    });
+  }
+  function evRow(p,e,kind){
+    return '<div class="ev '+kind+'"><div class="ev-txt">'+e[0]+'<span class="src-tag">'+e[1]+'</span></div>'+
+      '<div class="ev-btns">'+
+        '<button class="b-pro" data-k="pro">支持</button>'+
+        '<button class="b-con" data-k="con">反对</button>'+
+        '<button class="b-tbd" data-k="tbd">待查</button>'+
+      '</div></div>';
+  }
+  function updateTray(){$("trayPro").textContent=classify.pro;$("trayCon").textContent=classify.con;$("trayTbd").textContent=classify.tbd;}
+  function hexA(hex,a){var n=parseInt(hex.slice(1),16);return"rgba("+(n>>16)+","+((n>>8)&255)+","+(n&255)+","+a+")";}
+  renderPoses();
+
+  $("toConnect").addEventListener("click",function(){
+    if(!state.pose){toast("先点选一个立场");return;}
+    go(4);
+  });
+
+  /* ---------- 朋友挑战 / 分享 ---------- */
+  $("privacy").addEventListener("click",function(){this.classList.toggle("on");});
+  $("shareBtn").addEventListener("click",function(){
+    if(!$("privacy").classList.contains("on")){toast("请先确认仅分享公开选项");return;}
+    toast("已生成挑战链接，朋友独立作答后才看得到你的选择");
+  });
+  $("copyLink").addEventListener("click",function(){toast("挑战链接已复制（演示）");});
+  $("saveImg").addEventListener("click",function(){toast("判断卡已保存到相册（演示）");});
+  $("restartBtn").addEventListener("click",function(){
+    state={guess:-8,instinct:null,confidence:0,pose:null,browse:false};
+    range.value=-8;paintBet(-8);
+    document.querySelectorAll("#instinctGrid .opt,#confRow .conf-chip").forEach(function(x){x.classList.remove("sel")});
+    document.querySelectorAll(".pose").forEach(function(x){x.classList.remove("open")});
+    classify={pro:0,con:0,tbd:0};updateTray();
+    $("toConnect").disabled=true;$("mePose").textContent="—";$("cardNow").textContent="—";
+    revealed=false;
+    toast("已开启新的一次尝试，原始记录已保留");
+    go(1);
+  });
+})();
+</script>
+</body>
+</html>
