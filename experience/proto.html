@@ -378,6 +378,20 @@ body{
 .rev-reasons label{display:flex;align-items:center;gap:6px;background:var(--card);border-radius:20px;padding:7px 12px;font-size:12px;color:var(--ink2);cursor:pointer}
 .rev-reasons input{accent-color:var(--teal)}
 
+/* 我的判断入口 + 浮层 */
+.my-judge-entry{text-align:center;font-size:12px;color:var(--ink2);margin-top:14px;cursor:pointer;text-decoration:underline}
+.archive-mask{position:fixed;inset:0;background:rgba(0,0,0,.7);z-index:200;display:none;align-items:flex-end;justify-content:center}
+.archive-mask.show{display:flex}
+.archive-card{background:var(--bg2);width:100%;max-width:420px;border-radius:18px 18px 0 0;padding:20px 18px 30px;max-height:80vh;overflow-y:auto}
+.archive-h{font-size:16px;font-weight:700;color:var(--ink);margin-bottom:14px;display:flex;justify-content:space-between;align-items:center}
+.archive-h span{font-size:22px;color:var(--ink2);cursor:pointer;line-height:1}
+.arch-empty{color:var(--ink2);font-size:13px;line-height:1.8;text-align:center;padding:20px 0}
+.arch-row{display:flex;justify-content:space-between;padding:10px 0;border-bottom:1px solid rgba(255,255,255,.06);font-size:13px}
+.arch-row .k{color:var(--ink2)}
+.arch-row .v{color:var(--ink);font-weight:600;text-align:right}
+.arch-tags{display:flex;flex-wrap:wrap;gap:6px;margin-top:10px}
+.arch-tags span{background:var(--card);border-radius:12px;padding:4px 10px;font-size:11px;color:var(--ink2)}
+
 @media (prefers-reduced-motion: reduce){
   *{animation-duration:.01ms!important;transition-duration:.01ms!important}
 }
@@ -416,6 +430,7 @@ body{
           <button class="btn btn-primary" data-go="1">开始，我来判断</button>
           <button class="btn btn-line" data-go="3">先随便看看别人怎么说</button>
         </div>
+        <div class="my-judge-entry rise-in d5" id="openArchive">我的判断</div>
       </div>
     </section>
 
@@ -735,6 +750,15 @@ body{
   <h3>定了，改不了啦</h3>
   <p id="sealText">猜 -8% · 倾向… · 把握 3<br>还没看答案，先记下这一刻</p>
 </div></div>
+
+<div class="archive-mask" id="archiveMask">
+  <div class="archive-card">
+    <div class="archive-h">我的判断 <span id="archiveClose">×</span></div>
+    <div class="archive-body" id="archiveBody">
+      <div class="arch-empty">你还没开始判断。<br>点"开始，我来判断"，走完一遍，这里会记下你的选择。</div>
+    </div>
+  </div>
+</div>
 
 <div class="toast" id="toast"></div>
 
@@ -1071,6 +1095,35 @@ body{
     toast("上次的答案还在，这次重新猜");
     go(1);
   });
+
+  /* ---------- 我的判断浮层 ---------- */
+  function fillArchive(){
+    var body=$("archiveBody");
+    var started = state.instinct!==null || state.pose!==null;
+    if(!started){
+      body.innerHTML='<div class="arch-empty">你还没开始判断。<br>点"开始，我来判断"，走完一遍，这里会记下你的选择。</div>';
+      return;
+    }
+    var poseName = state.pose ? (poses.find(function(p){return p.id===state.pose;})||{}).name : "还没选";
+    var counts={pro:0,con:0,tbd:0};
+    Object.keys(boardMap).forEach(function(id){if(counts[boardMap[id]]!=null)counts[boardMap[id]]++;});
+    var reasons=[];
+    document.querySelectorAll("#revReasons input:checked").forEach(function(c){reasons.push(c.value);});
+    var html='';
+    html+='<div class="arch-row"><span class="k">我猜的数</span><span class="v">'+state.guess+'%</span></div>';
+    if(state.instinct){html+='<div class="arch-row"><span class="k">第一反应</span><span class="v">'+posName[state.instinct]+' · 把握'+state.confidence+'</span></div>';}
+    html+='<div class="arch-row"><span class="k">现在我信</span><span class="v">'+poseName+'</span></div>';
+    html+='<div class="arch-row"><span class="k">我攒的证据</span><span class="v">同意 '+counts.pro+' · 反对 '+counts.con+' · 拿不准 '+counts.tbd+'</span></div>';
+    if(reasons.length){html+='<div class="arch-row"><span class="k">改判原因</span><span class="v">'+reasons.join("、")+'</span></div>';}
+    html+='<div class="arch-tags"><span>这是本地记录，不上云</span><span>刷新就没了</span></div>';
+    body.innerHTML=html;
+  }
+  $("openArchive").addEventListener("click",function(){fillArchive();$("archiveMask").classList.add("show");});
+  $("archiveClose").addEventListener("click",function(){$("archiveMask").classList.remove("show");});
+  $("archiveMask").addEventListener("click",function(e){if(e.target===this)this.classList.remove("show");});
+  // 其他地方直接 show 时也自动填充
+  var _show=$("archiveMask").classList.add.bind($("archiveMask").classList);
+  Object.defineProperty($("archiveMask"),"showArchive",{value:function(){fillArchive();_show("show");}});
 })();
 </script>
 </body>
