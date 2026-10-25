@@ -230,6 +230,48 @@ textarea:focus{outline:none;border-color:var(--teal2)}
   .jc-k{width:76px}
   .jc-foot{flex-direction:column;gap:6px}
 }
+/* ---------- 判断挑战：开场提示 + 逐项对比 ---------- */
+.challenge-banner{display:flex;align-items:center;gap:12px;text-align:left;margin:24px auto 0;max-width:640px;
+  background:var(--gold-dim);border:1px solid rgba(232,180,84,.34);border-radius:14px;padding:14px 18px;
+  box-shadow:0 10px 30px rgba(232,180,84,.12)}
+.cb-flag{flex:none;font-size:12px;font-weight:800;letter-spacing:.06em;color:#1a2a30;background:var(--gold);
+  padding:5px 12px;border-radius:999px;white-space:nowrap}
+.cb-text{font-size:13.5px;color:var(--ink2);line-height:1.6}
+.cb-text b{color:var(--ink)}
+
+.share-opt{display:flex;align-items:flex-start;gap:10px;margin:18px 0 4px;padding:13px 18px;
+  background:var(--card);border:1px dashed var(--line-strong);border-radius:13px;
+  font-size:13.5px;color:var(--ink2);line-height:1.55;cursor:pointer}
+.share-opt:hover{border-color:var(--teal2)}
+.share-opt input{margin:3px 0 0;flex:none;width:17px;height:17px;accent-color:var(--teal);cursor:pointer}
+
+.vs-box{background:linear-gradient(180deg,rgba(232,180,84,.09),rgba(14,124,112,.05));
+  border:1px solid rgba(232,180,84,.32);border-radius:var(--radius);padding:22px 24px;margin:18px 0 6px;box-shadow:var(--shadow)}
+.vs-head{display:flex;align-items:baseline;justify-content:space-between;gap:10px;margin-bottom:6px}
+.vs-title{font-size:17px;font-weight:800;color:var(--gold);letter-spacing:.01em}
+.vs-cols{display:flex;gap:44px;font-size:12.5px;font-weight:800;color:var(--ink3)}
+.vs-cols span:last-child{color:var(--teal2)}
+.vs-row{display:grid;grid-template-columns:1.35fr 1fr 1.1fr;gap:14px;align-items:center;
+  padding:12px 0;border-top:1px solid rgba(255,255,255,.07);font-size:14px}
+.vs-lbl{color:var(--ink3);font-size:13px}
+.vs-ta{color:var(--ink2);font-weight:600;line-height:1.4}
+.vs-me{color:var(--ink);font-weight:700;display:flex;align-items:center;justify-content:space-between;gap:10px;line-height:1.4}
+.vs-mark{font-style:normal;font-size:11px;font-weight:800;padding:2px 9px;border-radius:999px;white-space:nowrap}
+.vs-mark.m-same{color:var(--green);background:rgba(63,182,127,.14)}
+.vs-mark.m-diff{color:var(--gold);background:rgba(232,180,84,.18)}
+.vs-concl{margin-top:12px;padding-top:14px;border-top:1px solid rgba(232,180,84,.22)}
+.vs-concl b{color:var(--gold);font-size:15px;display:block;margin-bottom:6px}
+.vs-concl p{margin:0;font-size:13px;color:var(--ink2);line-height:1.7}
+@media(max-width:640px){
+  .challenge-banner{padding:13px 15px;gap:10px}
+  .vs-box{padding:18px 16px}
+  .vs-head{margin-bottom:2px}
+  .vs-cols{gap:30px}
+  .vs-row{grid-template-columns:1fr 1fr;gap:5px 14px;padding:11px 0}
+  .vs-lbl{grid-column:1/-1;font-size:12.5px}
+  .vs-me{justify-content:flex-start;gap:10px}
+}
+
 @media(prefers-reduced-motion:reduce){
   *{animation:none!important;transition:none!important}
 }

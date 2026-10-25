@@ -45,6 +45,41 @@
     createdAt: new Date().toISOString()
   };
 
+  /* ---------- 判断挑战：URL 只编码选择题选项，绝不编码理由/姓名/联系方式 ----------
+   * 码格式 g.n.k.p.d：猜测值 / 直觉 / 信心 / 最终立场序号 / 最终动作。
+   * 全部为枚举或区间整数，白名单校验，非法一律丢弃。 */
+  const INSTINCT_CODE = { cycle: 'C', realestate: 'R', gap: 'G', unknown: 'U' };
+  const INSTINCT_FROM = { C: 'cycle', R: 'realestate', G: 'gap', U: 'unknown' };
+  const VERDICT_CODE = { hold: 'H', adjust: 'A', change: 'X' };
+  const VERDICT_FROM = { H: 'hold', A: 'adjust', X: 'change' };
+  function encodeChallenge() {
+    const pi = POS_ORDER.indexOf(state.nowPos);
+    if (pi < 0 || !state.verdict) return null;
+    const g = Number.isFinite(state.guess) ? Math.round(state.guess) : '';
+    const n = state.instinct ? INSTINCT_CODE[state.instinct] : '';
+    const k = state.confidence ? String(state.confidence) : '';
+    return [g, n, k, pi, VERDICT_CODE[state.verdict]].join('.');
+  }
+  function decodeChallenge(s) {
+    if (!s) return null;
+    const parts = String(s).split('.');
+    if (parts.length !== 5) return null;
+    try {
+      const g = parts[0] === '' ? null : Number(parts[0]);
+      if (g === null || !Number.isInteger(g) || g < -50 || g > 10) return null;
+      const n = parts[1] ? (INSTINCT_FROM[parts[1]] || null) : null;
+      if (parts[1] && !n) return null;
+      const k = parts[2] ? Number(parts[2]) : null;
+      if (k !== null && (!Number.isInteger(k) || k < 1 || k > 5)) return null;
+      const p = Number(parts[3]);
+      if (!Number.isInteger(p) || p < 0 || p >= POS_ORDER.length) return null;
+      const dv = VERDICT_FROM[parts[4]];
+      if (!dv) return null;
+      return { guess: g, instinct: n, confidence: k, position_id: POS_ORDER[p], verdict: dv };
+    } catch (e) { return null; }
+  }
+  const CHALLENGE = decodeChallenge(new URLSearchParams(location.search).get('c'));
+
   /* ---------- 屏幕切换与进度 ---------- */
   const TOTAL = 5;
   function go(n) {
@@ -199,6 +234,47 @@
     $('#jcWatch').innerHTML = watch.slice(0, 2).map(w =>
       `<div class="wl"><span class="wl-dot"></span><span>${esc(w.metric)}（${esc(w.next_release)}）</span></div>`
     ).join('');
+    renderVS();
+  }
+
+  /* ---------- 挑战对比：挑战者答完后与发起者逐项对照（只比较选项，不评判谁对） ---------- */
+  function renderVS() {
+    const box = $('#vsBox');
+    if (!CHALLENGE || !state.nowPos || !state.verdict) { box.hidden = true; return; }
+    const ta = CHALLENGE;
+    const taInstinct = ta.instinct ? INSTINCT_LABEL[ta.instinct] : '没标';
+    const meInstinct = state.instinct ? INSTINCT_LABEL[state.instinct] : '没标';
+    const taConf = ta.confidence ? ta.confidence + '/5' : '没标';
+    const meConf = state.confidence ? state.confidence + '/5' : '没标';
+    const rows = [
+      { lbl: '对固投的第一猜测', tv: fmtPct(ta.guess), mv: fmtPct(state.guess), same: ta.guess === state.guess },
+      { lbl: '最初的直觉', tv: taInstinct, mv: meInstinct, same: (ta.instinct || '') === (state.instinct || '') },
+      { lbl: '当时的把握', tv: taConf, mv: meConf, same: (ta.confidence || 0) === (state.confidence || 0) },
+      { lbl: '最终更接近', tv: posName(ta.position_id) || '—', mv: posName(state.nowPos) || '—', same: ta.position_id === state.nowPos },
+      { lbl: '最终动作', tv: VERDICT_LABEL[ta.verdict], mv: VERDICT_LABEL[state.verdict], same: ta.verdict === state.verdict }
+    ];
+    const posSame = ta.position_id === state.nowPos;
+    const actSame = ta.verdict === state.verdict;
+    const head = posSame && actSame ? '你们最终落在了同一个判断上'
+      : posSame ? '视角相同，但你们修正的程度不一样'
+      : actSame ? '动作相近，但你们看问题的视角不同'
+      : `你们的分歧，主要在「${posName(ta.position_id)}」与「${posName(state.nowPos)}」之间`;
+    box.innerHTML = `
+      <div class="vs-head">
+        <div class="vs-title">你和发起者的判断</div>
+        <div class="vs-cols"><span>TA</span><span>你</span></div>
+      </div>
+      ${rows.map(r => `
+        <div class="vs-row ${r.same ? 'same' : 'diff'}">
+          <div class="vs-lbl">${r.lbl}</div>
+          <div class="vs-ta">${esc(r.tv)}</div>
+          <div class="vs-me"><span>${esc(r.mv)}</span><i class="vs-mark ${r.same ? 'm-same' : 'm-diff'}">${r.same ? '一致' : '不同'}</i></div>
+        </div>`).join('')}
+      <div class="vs-concl">
+        <b>${esc(head)}</b>
+        <p>现在还没有标准答案——2026 年一季度数据发布后，再看谁的判断更接近。想把回合打回去？勾选下方“让朋友答完后和我对比”，再点「生成挑战链接」。</p>
+      </div>`;
+    box.hidden = false;
   }
 
   function cardText() {
@@ -252,12 +328,19 @@
   $('#saveCard').addEventListener('click', () => {
     if (!state.nowPos || !state.verdict) { alert('先在上方选一个“现在最接近的立场”和“我的判断”，判断卡才完整。'); return; }
     const ok = save();
-    const shareUrl = location.origin + location.pathname + '?topic=' + TOPIC_ID;
-    let link = shareUrl;
-    try {
-      if (navigator.clipboard) navigator.clipboard.writeText(shareUrl).catch(() => {});
-    } catch (e) {}
-    toast(ok ? '已保存到本机，挑战链接已复制，发给朋友来判断同一题' : '保存失败（可能浏览器禁用了本地存储），可先用“复制文字版”。');
+    const includeMe = $('#includeMe').checked;
+    let shareUrl = location.origin + location.pathname + '?topic=' + TOPIC_ID;
+    if (includeMe) {
+      const code = encodeChallenge();
+      if (code) shareUrl += '&c=' + encodeURIComponent(code);
+    }
+    if (navigator.clipboard && navigator.clipboard.writeText) {
+      navigator.clipboard.writeText(shareUrl).catch(() => fallbackCopy(shareUrl));
+    } else fallbackCopy(shareUrl);
+    const tip = includeMe
+      ? '已保存，含你选择的挑战链接已复制：朋友答完会和你对比'
+      : '已保存，空白挑战题链接已复制：朋友将先独立作答';
+    toast(ok ? tip : '保存失败（可能禁用了本地存储），但链接已复制，可直接发给朋友。');
   });
 
   /* ---------- 导出海报（原生 Canvas，零外部依赖） ---------- */
@@ -358,7 +441,7 @@
     font('800', 27); c.fillStyle = INK;
     wrapText(c, topic.title, W / 2, titleY, inner, 40, 2);
     font('500', 17); c.fillStyle = INK2;
-    c.fillText('我的判断卡 · 2025年固投议题', W / 2, subY);
+    c.fillText(CHALLENGE ? '我的判断卡 · 回应一次判断挑战' : '我的判断卡 · 2025年固投议题', W / 2, subY);
 
     c.fillStyle = 'rgba(255,255,255,.045)';
     roundRect(c, pad, cardTop, inner, cardH, 18); c.fill();
@@ -454,7 +537,8 @@
     go(0);
   });
 
-  /* 初始化 */
+  /* 初始化：挑战模式开场提示（不剧透发起者答案） */
+  if (CHALLENGE) $('#challengeBanner').hidden = false;
   paintGuess();
   go(0);
 })();

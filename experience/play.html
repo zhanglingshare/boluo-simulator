@@ -45,6 +45,10 @@
           <div class="clash-item"><div class="clash-num red">−18.8<span>%</span></div><div class="clash-lbl">固定资产投资</div></div>
         </div>
         <p class="hero-note">先别急着找答案。像情报分析师一样：<b>说出你的直觉 → 看到不同立场 → 用证据检验 → 决定是否改判</b>。没有人会笑话你猜错，我们只关心你被什么改变。</p>
+        <div class="challenge-banner" id="challengeBanner" hidden>
+          <span class="cb-flag">判断挑战</span>
+          <span class="cb-text">一位朋友先你作答了。<b>请独立完成下面的判断，先别看 TA 的答案</b>——走完最后一步，再对比你们为什么想的不一样。</span>
+        </div>
         <div class="hero-actions">
           <button class="cta" data-go="1">开始，先说出我的判断</button>
           <button class="cta-ghost" data-go="2">先看看各方立场</button>
@@ -188,6 +192,14 @@
             <span class="jc-badge">基于公开统计的分析估计 · 非民意调查</span>
           </div>
         </div>
+
+        <!-- 挑战者对比：仅当通过带挑战码的链接进入、且自己也完成判断后出现 -->
+        <div class="vs-box" id="vsBox" hidden></div>
+
+        <label class="share-opt" id="shareOpt">
+          <input type="checkbox" id="includeMe">
+          <span>让朋友答完后和我对比（链接只含我的选择，不含姓名、理由和联系方式）</span>
+        </label>
 
         <div class="nav-actions wrap-actions">
           <button class="cta" id="downloadCard">下载卡片图</button>
