@@ -378,14 +378,14 @@ body{
           <p class="sub rise-in d4">城市的灯火还在亮，工厂还在开工。可另一边，有一个方向，和这片增长完全相反。<br>先别急着看答案——<b style="color:var(--ink)">你，会怎么判断？</b></p>
           <div class="s0-meta rise-in d4">
             <span class="m"><span class="dot g"></span>GDP 1005.45 亿 · +5.5%</span>
-            <span class="m"><span class="dot"></span>基于公开统计的判断练习</span>
+            <span class="m"><span class="dot"></span>一道给普通人的判断题</span>
           </div>
-          <div class="ribbon" id="challengeBanner">有朋友向你发起判断挑战 · 完成后揭晓你们的分歧</div>
+          <div class="ribbon" id="challengeBanner">有朋友等你应战 · 看看你们哪儿想得不一样</div>
         </div>
         <div style="flex:1"></div>
         <div class="dock rise-in d5">
           <button class="btn btn-primary" data-go="1">开始，我来判断</button>
-          <button class="btn btn-line" data-go="3">先随便看看各方立场</button>
+          <button class="btn btn-line" data-go="3">先随便看看别人怎么说</button>
         </div>
       </div>
     </section>
@@ -394,12 +394,12 @@ body{
     <section class="scene" id="s1">
       <div class="pad">
         <div class="label">第 1 步 · 直觉下注</div>
-        <div class="q-title">先凭直觉，投出你的第一判断</div>
-        <div class="q-sub">你猜，2025 年博罗的<b style="color:var(--ink)">固定资产投资</b>，相比上一年变化了多少？</div>
+        <div class="q-title">先凭感觉，猜第一回</div>
+        <div class="q-sub">你猜，2025 年博罗盖楼、修路、建厂花的钱（官方叫<b style="color:var(--ink)">固定资产投资</b>），比上一年多了还是少了？</div>
       </div>
       <div class="bet-hero">
         <div class="bet-num" id="betNum">-8<span class="pct">%</span></div>
-        <div class="bet-hint">拖动下方标尺，给出你的估计</div>
+        <div class="bet-hint">拖一拖下面的尺子，猜个数</div>
       </div>
       <div class="ruler">
         <div class="track"></div>
@@ -412,15 +412,15 @@ body{
         <div class="opt-grid" id="instinctGrid">
           <div class="opt" data-v="C">
             <svg class="ic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M3 17l5-6 4 4 5-7 4 5"/><path d="M3 21h18"/></svg>
-            <div class="t">短期回调</div><div class="d">长期还在往上，不必紧张</div>
+            <div class="t">小波动</div><div class="d">跌一点而已，长期还是涨</div>
           </div>
           <div class="opt" data-v="R">
             <svg class="ic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M12 3v10"/><path d="M7 8l5 5 5-5"/><path d="M5 21h14"/></svg>
-            <div class="t">动能断档</div><div class="d">投得少，未来靠什么接</div>
+            <div class="t">后劲不足</div><div class="d">今天少投，明天靠什么发展</div>
           </div>
           <div class="opt" data-v="G">
             <svg class="ic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><rect x="3" y="9" width="7" height="11" rx="1"/><rect x="14" y="4" width="7" height="16" rx="1"/></svg>
-            <div class="t">结构换挡</div><div class="d">有的在退，有的在进</div>
+            <div class="t">换个赛道</div><div class="d">旧的在退，新的在涨</div>
           </div>
           <div class="opt" data-v="U">
             <svg class="ic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><circle cx="10.5" cy="10.5" r="6.5"/><path d="M15.5 15.5L21 21"/></svg>
@@ -437,7 +437,7 @@ body{
         </div>
       </div>
       <div class="dock">
-        <button class="btn btn-primary" id="lockBtn" disabled>锁住此刻的判断</button>
+        <button class="btn btn-primary" id="lockBtn" disabled>就这么定了</button>
         <button class="btn btn-line" data-back="0">返回，再想想</button>
       </div>
     </section>
@@ -446,7 +446,7 @@ body{
     <section class="scene" id="s2">
       <div class="vs-wrap">
         <div class="label">第 2 步 · 数字反转</div>
-        <div class="q-title">真实数字，比大多数人想得更陡</div>
+        <div class="q-title">真实数字，比你想的要狠</div>
         <div class="vs-nums">
           <div class="vs-side you">
             <div class="cap">你的第一判断</div>
@@ -466,13 +466,13 @@ body{
         <div class="pin real" id="pinReal"><div class="tag">真实</div><div class="pt"></div></div>
       </div>
       <div class="caveat">
-        这是<b>事实揭晓</b>，不是答案揭晓。<br>
-        投资与产出之间可能存在时滞，但不同项目周期差异很大，<b>仅凭当期数字无法确定原因和传导时间</b>。
+        这数字是真的，但它没告诉你为啥。<br>
+        钱花下去到工厂开工、房子卖出去，中间隔着一年半载；<b>光看今年这组数，没法断定到底是谁的原因</b>。
       </div>
       <details class="src">
         <summary>数据口径与出处 <span>▾</span></summary>
         <div class="src-body">
-          固定资产投资：以货币形式表现的建造和购置固定资产活动的工作量及其相关费用。<br>
+          简单说：就是盖房、修路、建厂、买设备花的总钱。<br>
           来源：博罗县2025年国民经济和社会发展统计公报。<br>
           2025年固定资产投资 <b>-18.8%</b>，其中房地产开发投资 <b>-47.6%</b>。<br>
           <a href="https://www.boluo.gov.cn/hzbltjj/gkmlpt/content/5/5801/mpost_5801532.html">boluo.gov.cn 统计公报原文 ↗</a>
@@ -487,17 +487,17 @@ body{
         </div>
         <div class="path-item" data-go="3">
           <div class="n">2</div>
-          <div><div class="t">看项目投产</div><div class="d">在建大项目，能否接上下一步？</div></div>
+          <div><div class="t">看项目进度</div><div class="d">那些大项目，能不能撑住以后？</div></div>
           <div class="arrow">→</div>
         </div>
         <div class="path-item" data-go="3">
           <div class="n">3</div>
-          <div><div class="t">看不同解释</div><div class="d">四种分析立场，各自需要什么证据</div></div>
+          <div><div class="t">听四种说法</div><div class="d">每种说法靠不靠谱，看的是哪条证据</div></div>
           <div class="arrow">→</div>
         </div>
       </div>
       <div class="dock">
-        <button class="btn btn-teal" data-go="3">去看几种解释</button>
+        <button class="btn btn-teal" data-go="3">听几种说法</button>
       </div>
     </section>
 
@@ -505,30 +505,30 @@ body{
     <section class="scene" id="s3">
       <div class="pad" style="padding-bottom:0">
         <div class="label">第 3 步 · 观点碰撞</div>
-        <div class="q-title">点开一个立场，让证据自己说话</div>
+        <div class="q-title">点开一种说法，让证据自己说话</div>
       </div>
-      <div class="ai-note"><span class="chip">模拟分析立场</span> 以下为基于公开数据的分析视角，非真人发言、非民意调查</div>
+      <div class="ai-note"><span class="chip">模拟分析</span> 下面是机器根据公开数据整理的几种看法，不是真人在说话，也不是谁在投票</div>
 
       <div class="ev-tray">
-        <div class="tb pro"><b id="trayPro">0</b>支持我的</div>
-        <div class="tb con"><b id="trayCon">0</b>反对我的</div>
-        <div class="tb tbd"><b id="trayTbd">0</b>待核查</div>
+        <div class="tb pro"><b id="trayPro">0</b>我同意</div>
+        <div class="tb con"><b id="trayCon">0</b>我反对</div>
+        <div class="tb tbd"><b id="trayTbd">0</b>拿不准</div>
       </div>
 
       <div class="pose-list" id="poseList"></div>
 
       <div class="myboard">
-        <div class="mb-head">我的证据拼图 <span class="mb-tip">点证据上的「支持 / 反对 / 待查」，自动归入下面三类，组成你自己的判断</span></div>
-        <div class="mb-col pro"><div class="mb-t">支持我的判断 · <b id="bProN">0</b></div>
-          <div class="mb-items" id="bPro"><div class="mb-empty">还没有收集支持证据</div></div></div>
-        <div class="mb-col con"><div class="mb-t">反对我的判断 · <b id="bConN">0</b></div>
-          <div class="mb-items" id="bCon"><div class="mb-empty">还没有收集反对证据</div></div></div>
-        <div class="mb-col tbd"><div class="mb-t">暂不确定 · <b id="bTbdN">0</b></div>
-          <div class="mb-items" id="bTbd"><div class="mb-empty">还没有待核查项</div></div></div>
+        <div class="mb-head">我攒的材料 <span class="mb-tip">点证据上的「站我 / 反我 / 存疑」，它就归到对应一栏，凑成你自己的看法</span></div>
+        <div class="mb-col pro"><div class="mb-t">我同意它 · <b id="bProN">0</b></div>
+          <div class="mb-items" id="bPro"><div class="mb-empty">还没有我同意的</div></div></div>
+        <div class="mb-col con"><div class="mb-t">我反对它 · <b id="bConN">0</b></div>
+          <div class="mb-items" id="bCon"><div class="mb-empty">还没有我反对的</div></div></div>
+        <div class="mb-col tbd"><div class="mb-t">拿不准 · <b id="bTbdN">0</b></div>
+          <div class="mb-items" id="bTbd"><div class="mb-empty">还在拿不准的</div></div></div>
       </div>
 
       <div class="dock">
-        <button class="btn btn-primary" id="toConnect" disabled>我更接近这个立场，继续</button>
+        <button class="btn btn-primary" id="toConnect" disabled>我更信这个，继续</button>
         <button class="btn btn-line" data-go="2">回去看数字</button>
       </div>
     </section>
@@ -536,9 +536,9 @@ body{
     <!-- ============ 4 朋友挑战 ============ -->
     <section class="scene" id="s4">
       <div class="vs2">
-        <div class="label">第 4 步 · 判断连接</div>
-        <div class="q-title">你们的分歧，到底在哪一层？</div>
-        <div class="q-sub">不是简单看"选得一不一样"，而是找到你们<b style="color:var(--ink)">在事实、机制还是取舍上的分歧</b>。</div>
+        <div class="label">第 4 步 · 找朋友对对答案</div>
+        <div class="q-title">你俩到底哪儿想得不一样？</div>
+        <div class="q-sub">不光是选得一样不一样——是连数字都看岔了，还是对为啥跌看法不同，或是<b style="color:var(--ink)">想要的东西本来就不一样</b>。</div>
       </div>
 
       <div class="duo-stage">
@@ -548,40 +548,40 @@ body{
           <div class="person me"><div class="avatar">你</div><div class="pn" id="meName">你</div><div class="pr">刚完成</div></div>
         </div>
         <div class="dtype-row">
-          <span class="dt muted">事实分歧</span>
-          <span class="dt on">机制分歧</span>
-          <span class="dt muted">价值分歧</span>
+          <span class="dt muted">数字对不上</span>
+          <span class="dt on">看法不一样</span>
+          <span class="dt muted">想要不一样</span>
         </div>
         <div class="match-row split" id="rowGuess">
           <div class="cell"><span class="mini">朋友猜</span><b id="taGuess">-3%</b></div>
-          <div class="state diff">数值<br>不同</div>
+          <div class="state diff">猜得<br>不一样</div>
           <div class="cell"><span class="mini">你猜</span><b id="meGuess">-8%</b></div>
         </div>
         <div class="match-row split" id="rowPose">
-          <div class="cell"><span class="mini">朋友倾向</span><b id="taPose" style="font-size:12px">结构分析</b></div>
-          <div class="state diff">机制<br>分歧</div>
+          <div class="cell"><span class="mini">朋友倾向</span><b id="taPose" style="font-size:12px">结构在换</b></div>
+          <div class="state diff">看法<br>不一样</div>
           <div class="cell"><span class="mini">你倾向</span><b id="mePose" style="font-size:12px">—</b></div>
         </div>
-        <div class="consensus"><b>你们的共识：</b>都看到了"投资在回落"这个事实，也都没有把它简单当成统计失误。</div>
-        <div class="diverge"><b>关键分歧：</b>回落是"结构换挡中的正常现象"，还是"动能接续的预警"？<br>这属于<b style="color:var(--gold)">机制分歧</b>——数据相同，对原因的解释不同。</div>
-        <div class="consensus" style="margin-top:9px"><b>值得一起核查的一条证据：</b>2026 年上半年工业投资 -51.3%、而规上工业增加值 +7.5%，"生产强、投资弱"的背离，能否支撑你的解释？</div>
+        <div class="consensus"><b>你俩都认：</b>投资确实在降，不是统计出错了。</div>
+        <div class="diverge"><b>你俩争的是同一件事：</b>有人觉得这是"换个活法，正常调整"，有人觉得是"后劲要接不上了"。<br>数字都一样，就是<b style="color:var(--gold)">对为啥跌看法不同</b>。</div>
+        <div class="consensus" style="margin-top:9px"><b>有一条证据你俩得一起看：</b>今年上半年工厂还在拼命生产（+7.5%），但盖厂房、买设备的钱却腰斩（-51.3%）。这到底站谁那边？</div>
         <div class="respond">
-          <button>我有反证</button>
-          <button>我想问 TA</button>
-          <button>接受这条证据</button>
+          <button>我有不同的料</button>
+          <button>我问TA一句</button>
+          <button>这条我服</button>
         </div>
-        <div class="demo-note">演示：朋友一侧为示例数据，正式版由挑战链接独立作答后生成</div>
+        <div class="demo-note">（现在朋友那边是示例，真发链接才会是TA自己的答案）</div>
       </div>
 
       <!-- 判断卡：双版 -->
       <div class="card-tabs">
-        <button class="ctab on" data-ver="social">社交传播版</button>
-        <button class="ctab" data-ver="full">详细复盘版</button>
+        <button class="ctab on" data-ver="social">发朋友圈版</button>
+        <button class="ctab" data-ver="full">自己回看版</button>
       </div>
       <div class="card-preview" id="cardSocial">
         <div class="card-top">
           <div class="ct">我曾经这样判断博罗</div>
-          <div class="cq">投资回落，是换挡，还是断档？</div>
+          <div class="cq">投资往下走，是正常调整，还是后劲没了？</div>
         </div>
         <div class="card-flip">
           <div class="cf first"><div class="l">最初我猜</div><div class="v" id="cardFirst">-8%</div></div>
@@ -590,26 +590,26 @@ body{
         </div>
         <div class="card-foot">
           <span class="key">改变我的一条线索：</span>房地产 -47.6%，但规上工业增加值仍 +8.7%。
-          <div class="tagrow"><span>模拟分析</span><span>非民意调查</span><span>待核验</span></div>
+          <div class="tagrow"><span>机器看法</span><span>不是真人</span><span>还在核实</span></div>
         </div>
       </div>
       <div class="card-full hidden" id="cardFull">
-        <div class="cf-sec"><div class="cf-h">① 初始判断（已封存）</div>
+        <div class="cf-sec"><div class="cf-h">① 我第一反应</div>
           <div class="cf-b" id="cfInit">猜 -8% · 信心 3 · 首次盲测</div></div>
-        <div class="cf-sec"><div class="cf-h">② 改变我判断的关键证据</div>
+        <div class="cf-sec"><div class="cf-h">② 后来让我改主意的事</div>
           <div class="cf-b">
             <li>房地产 -47.6%，但工业投资超230亿、占固投近60% <span class="src-tag">A 统计公报</span></li>
             <li>2026上半年工业投资 -51.3%，同期规上工业增加值仍 +7.5% <span class="src-tag">A 2026核验</span></li>
           </div></div>
         <div class="cf-sec"><div class="cf-h">③ 我现在的判断</div>
           <div class="cf-b" id="cfNow">—</div></div>
-        <div class="cf-sec"><div class="cf-h">④ 仍待核验</div>
-          <div class="cf-b">下半年工业投资能否触底；"生产强、投资弱"的背离何时收敛；在建大项目投产节奏。</div></div>
+        <div class="cf-sec"><div class="cf-h">④ 我还拿不准的</div>
+          <div class="cf-b">下半年工厂投资能不能止跌；一边生产一边不投钱，这种怪事能撑多久；几个大项目到底啥时候开工见效。</div></div>
       </div>
 
       <div class="privacy" id="privacy">
         <span class="box">✓</span>
-        <span>分享仅包含你选择公开的选项，不包含姓名、邮箱、理由原文和浏览记录；链接内容可见，无身份认证。</span>
+        <span>分享出去的只有你选的答案，不带姓名、邮箱、你写的理由，也不记你翻了哪些页；拿到链接的人能看到你的答案，但不知道你是谁。</span>
       </div>
 
       <div class="dock">
@@ -618,7 +618,7 @@ body{
           <button class="btn btn-ghost" id="copyLink" style="flex:1">复制挑战链接</button>
           <button class="btn btn-ghost" id="saveImg" style="flex:1">保存判断卡</button>
         </div>
-        <button class="btn btn-line" id="restartBtn">重新挑战一次（保留原始记录）</button>
+        <button class="btn btn-line" id="restartBtn">再来一次（上次的答案还在）</button>
       </div>
     </section>
 
@@ -627,8 +627,8 @@ body{
 
 <div class="seal" id="seal"><div class="seal-card">
   <div class="seal-stamp"><svg width="34" height="34" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><rect x="5" y="11" width="14" height="10" rx="2"/><path d="M8 11V7a4 4 0 0 1 8 0v4"/></svg></div>
-  <h3>已封存，这是此刻的你</h3>
-  <p id="sealText">猜测 -8% · 倾向… · 信心 3<br>未看到答案前的原始判断，将被记录</p>
+  <h3>定了，改不了啦</h3>
+  <p id="sealText">猜 -8% · 倾向… · 把握 3<br>还没看答案，先记下这一刻</p>
 </div></div>
 
 <div class="toast" id="toast"></div>
@@ -638,8 +638,8 @@ body{
   var REAL=-18.8;
   var state={guess:-8,instinct:null,confidence:0,pose:null,browse:false};
   var scenes=["s0","s1","s2","s3","s4"];
-  var stepNames=["悬念","下注","反转","交锋","连接"];
-  var posName={C:"短期回调",R:"动能断档",G:"结构换挡",U:"看不出"};
+  var stepNames=["悬念","下注","反转","交锋","对答案"];
+  var posName={C:"小波动",R:"后劲不足",G:"换个赛道",U:"看不出"};
   var $=function(id){return document.getElementById(id)};
   var reduced=window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 
@@ -708,9 +708,9 @@ body{
   $("lockBtn").addEventListener("click",function(){
     if(state.instinct===null||!state.confidence)return;
     var blind = !state.browse;
-    $("sealText").innerHTML="猜测 "+state.guess+"% · 倾向"+posName[state.instinct]+" · 信心 "+state.confidence+
-      "<br>"+(blind?"未看到答案前的原始判断（首次盲测）":"已浏览过立场，标记为非盲测");
-    $("cfInit").innerHTML="猜 "+state.guess+"% · 倾向"+posName[state.instinct]+" · 信心 "+state.confidence+" · "+(blind?"首次盲测":"非盲测");
+    $("sealText").innerHTML="猜 "+state.guess+"%，你选了'"+posName[state.instinct]+"'，把握 "+state.confidence+
+      "<br>"+(blind?"还没看答案，先记下这一刻":"你已经看过别人说法了，这次不算盲猜");
+    $("cfInit").innerHTML="猜 "+state.guess+"% · 选了'"+posName[state.instinct]+"' · 把握 "+state.confidence+" · "+(blind?"第一反应，没看答案":"看过答案后");
     $("seal").classList.add("show");
     setTimeout(function(){$("seal").classList.remove("show");},reduced?200:1500);
     setTimeout(function(){go(2);},reduced?220:1550);
@@ -736,9 +736,9 @@ body{
       $("realNum").innerHTML=v+'<span class="p">%</span>';
       $("pinReal").style.left=pos(v)+"%";
       var gap=Math.abs(state.guess-v).toFixed(1);
-      $("gapBadge").textContent=(k>=.99?"你和真实值，差了 ":"正在拉开…")+(k>=.99?gap+" 个百分点":"");
+      $("gapBadge").textContent=(k>=.99?"你和真实数，差了 ":"正在拉开…")+(k>=.99?gap+" 个点":"");
       if(k<1)requestAnimationFrame(step);else{
-        $("gapBadge").textContent="你和真实值，差了 "+Math.abs(state.guess-REAL).toFixed(1)+" 个百分点";
+        $("gapBadge").textContent="你和真实数，差了 "+Math.abs(state.guess-REAL).toFixed(1)+" 个点";
         $("realNum").innerHTML=REAL+'<span class="p">%</span>';
         $("pinReal").style.left=pos(REAL)+"%";
         // 差距弧
@@ -754,49 +754,49 @@ body{
   function paintReal(){
     $("realNum").innerHTML=REAL+'<span class="p">%</span>';
     $("pinReal").style.left=pos(REAL)+"%";
-    $("gapBadge").textContent="你和真实值，差了 "+Math.abs(state.guess-REAL).toFixed(1)+" 个百分点";
+    $("gapBadge").textContent="你和真实数，差了 "+Math.abs(state.guess-REAL).toFixed(1)+" 个点";
   }
 
   /* ---------- 立场卡 ---------- */
   var poses=[
-    {id:"prod",color:"#10a08f",name:"当期生产",claim:"数据明明很好，别自己吓自己",
-      short:"生产还在高增长，投资是阶段性调整",
+    {id:"prod",color:"#10a08f",name:"工厂还旺",claim:"数据明明很好，别自己吓自己",
+      short:"工厂还在猛干，投资跌点是暂时的",
       icon:'<path d="M3 21h18M5 21V9l5-4 5 4M9 21v-5h3v5"/><path d="M17 13v8M14 21l3-3 3 3"/>',
       pro:[["规上工业增加值 +8.7%，总产值破2000亿、+8.3%","A · 统计公报","ev-ind-value"],
            ["电子信息 +17.2%、电气机械 +16.9%，支柱还在扩张","A · 统计公报","ev-elec"]],
       con:[["投资 -18.8%，若持续，未来新增产能可能受限","A · 统计公报","ev-fai"],
            ["2026上半年工业投资一度 -51.3%，生产与投资背离加大","A · 2026核验","ev-h1"]],
-      unknown:"现有在建产能能支撑多久？2026年投资走深会否在1-2年后传导到生产端。"},
-    {id:"pipeline",color:"#E5544B",name:"前瞻接续",claim:"投得越来越少，2027拿什么接？",
-      short:"投资是领先指标，现在的收缩会在未来兑现",
+      unknown:"现在工厂吃得饱，可这种产能还能撑多久？今年投资掉这么深，一两年后会不会也传到生产上。"},
+    {id:"pipeline",color:"#E5544B",name:"后劲堪忧",claim:"投得越来越少，2027拿什么接？",
+      short:"今天不投钱，明年后年靠什么发展",
       icon:'<path d="M12 3v10M7 8l5 5 5-5"/><path d="M5 21h14"/><path d="M9 14l3 4 3-4"/>',
       pro:[["固投 -18.8%、房地产 -47.6%，先行指标明显收缩","A · 统计公报","ev-fai"],
            ["2026年上半年固投 -36.4%、工业投资 -51.3%，风险在兑现","A · 2026核验","ev-h1-fai"]],
       con:[["工业投资连续四年超200亿，存量底盘仍厚","B · 科工信总结","ev-ind-scale"],
            ["1-8月规上工业增加值 +8.9%、投资降幅小幅收窄","A · 2026核验","ev-aug"]],
-      unknown:"时滞长短未被证实；投资下降究竟是主动换挡还是被动收缩，需要项目级数据。"},
-    {id:"structure",color:"#E8B454",name:"结构分析",claim:"别被总数吓到，要看是谁在跌",
-      short:"分化很大，结构性的退与进同时发生",
+      unknown:"钱花下去多久见效，还没个准数；现在是主动调结构，还是真没钱投了，得看具体项目。"},
+    {id:"structure",color:"#E8B454",name:"结构在换",claim:"别被总数吓到，要看是谁在跌",
+      short:"有人在退有人在进，不是全垮了",
       icon:'<rect x="3" y="10" width="7" height="11" rx="1"/><rect x="14" y="4" width="7" height="17" rx="1"/><path d="M10 15h4"/>',
       pro:[["房地产 -47.6% 拖累总盘，基建仅 -0.3%","A · 统计公报","ev-re"],
            ["工业投资超230亿、占固投近60%，大项目仍在","B · 科工信总结","ev-scale"]],
       con:[["2026年工业投资跌幅一度超过房地产，2025的结构叙事被弱化","A · 2026核验","ev-h1-ind"],
            ["一产投资 -64.7%、三产 -25.9%，并非只有房地产在跌","A · 统计公报","ev-inv3"]],
-      unknown:"分行业投资的2026年最新结构尚未完整披露，换挡能否成立取决于工业能否接棒。"},
-    {id:"evidence",color:"#9fb0ac",name:"审慎证据",claim:"公开数据还不够，现在下结论为时过早",
-      short:"口径、时滞和项目数据都不足，先收集再判断",
+      unknown:"今年哪些行业在投、哪些在撤，最新的还没全公布；老的退了，新的能不能顶上来，还得看工业。"},
+    {id:"evidence",color:"#9fb0ac",name:"先别急",claim:"公开数据还不够，现在下结论为时过早",
+      short:"怎么算、多久见效、项目数都不全，先攒着再判",
       icon:'<circle cx="10.5" cy="10.5" r="6.5"/><path d="M15.5 15.5 21 21"/><path d="M8 10.5h5"/>',
       pro:[["缺少分行业投资额、项目台账与时滞长度的直接证据","方法 · 缺口","gap"]],
       con:[["宏观事实已确凿：GDP+5.5%、固投-18.8%，并非完全无据","A · 统计公报","ev-gdp"]],
-      unknown:"哪些关键数据公开后可以证伪或证实以上三个立场？需要先列清单。"}
+      unknown:"哪些数据一出来，就能证明或者推翻上面三种说法？得先列个单子。"}
   ];
   var boardMap={};
   var evById={};
   poses.forEach(function(p){p.pro.concat(p.con).forEach(function(e){evById[e[2]]={text:e[0],tag:e[1]};});});
   evById["ev-gdp-rebut"]={text:"宏观数据本身已足够确凿，不能以谨慎回避判断。",tag:"A · 统计公报"};
-  var kindName={pro:"支持我的",con:"反对我的",tbd:"待核查"};
+  var kindName={pro:"我同意",con:"我反对",tbd:"拿不准"};
   var boxId={pro:"bPro",con:"bCon",tbd:"bTbd"};
-  var emptyTxt={pro:"还没有收集支持证据",con:"还没有收集反对证据",tbd:"还没有待核查项"};
+  var emptyTxt={pro:"还没有我同意的",con:"还没有我反对的",tbd:"还在拿不准的"};
   function capK(k){return k==="pro"?"Pro":k==="con"?"Con":"Tbd";}
   function classifyEv(eid,k){
     if(boardMap[eid]===k){delete boardMap[eid];}else{boardMap[eid]=k;}
@@ -841,10 +841,10 @@ body{
           '<div class="ht"><div class="h1">'+p.claim+'</div><div class="h2">'+p.short+'</div></div>'+
           '<div class="chev">▾</div></div>'+
         '<div class="pose-body"><div class="pose-inner">'+
-          '<h4>支持证据</h4>'+evs+
-          '<h4>最强反证</h4>'+
-          (p.id==="evidence"?'<div class="ev con" data-eid="ev-gdp-rebut"><div class="ev-txt">宏观数据本身已足够确凿，不能以“谨慎”回避判断。<span class="src-tag">A · 统计公报</span></div><div class="ev-btns"><button class="b-pro" data-k="pro">支持</button><button class="b-con" data-k="con">反对</button><button class="b-tbd" data-k="tbd">待查</button></div></div>':'')+
-          '<div class="unknown">关键未知：'+p.unknown+'</div>'+
+          '<h4>站它的料</h4>'+evs+
+          '<h4>怼它的料</h4>'+
+          (p.id==="evidence"?'<div class="ev con" data-eid="ev-gdp-rebut"><div class="ev-txt">数字是明摆着的，别总说"再等等"就不下判断。<span class="src-tag">A · 统计公报</span></div><div class="ev-btns"><button class="b-pro" data-k="pro">站我</button><button class="b-con" data-k="con">反我</button><button class="b-tbd" data-k="tbd">存疑</button></div></div>':'')+
+          '<div class="unknown">还没搞清楚：'+p.unknown+'</div>'+
         '</div></div>';
       list.appendChild(div);
       function pickPose(){
@@ -870,9 +870,9 @@ body{
   function evRow(p,e,kind){
     return '<div class="ev '+kind+'" data-eid="'+e[2]+'"><div class="ev-txt">'+e[0]+'<span class="src-tag">'+e[1]+'</span></div>'+
       '<div class="ev-btns">'+
-        '<button class="b-pro" data-k="pro">支持</button>'+
-        '<button class="b-con" data-k="con">反对</button>'+
-        '<button class="b-tbd" data-k="tbd">待查</button>'+
+        '<button class="b-pro" data-k="pro">站我</button>'+
+        '<button class="b-con" data-k="con">反我</button>'+
+        '<button class="b-tbd" data-k="tbd">存疑</button>'+
       '</div></div>';
   }
   function hexA(hex,a){var n=parseInt(hex.slice(1),16);return"rgba("+(n>>16)+","+((n>>8)&255)+","+(n&255)+","+a+")";}
@@ -880,7 +880,7 @@ body{
   renderBoard();
 
   $("toConnect").addEventListener("click",function(){
-    if(!state.pose){toast("先点选一个立场");return;}
+    if(!state.pose){toast("先点开一种说法");return;}
     go(4);
   });
 
@@ -898,11 +898,11 @@ body{
   /* ---------- 朋友挑战 / 分享 ---------- */
   $("privacy").addEventListener("click",function(){this.classList.toggle("on");});
   $("shareBtn").addEventListener("click",function(){
-    if(!$("privacy").classList.contains("on")){toast("请先确认仅分享公开选项");return;}
-    toast("已生成挑战链接，朋友独立作答后才看得到你的选择");
+    if(!$("privacy").classList.contains("on")){toast("先点下面那个小框，同意再分享");return;}
+    toast("链接已生成，朋友答完才看得到你的答案");
   });
-  $("copyLink").addEventListener("click",function(){toast("挑战链接已复制（演示）");});
-  $("saveImg").addEventListener("click",function(){toast("判断卡已保存到相册（演示）");});
+  $("copyLink").addEventListener("click",function(){toast("链接已复制（演示）");});
+  $("saveImg").addEventListener("click",function(){toast("判断卡已存到相册（演示）");});
   $("restartBtn").addEventListener("click",function(){
     state={guess:-8,instinct:null,confidence:0,pose:null,browse:false};
     range.value=-8;paintBet(-8);
@@ -913,7 +913,7 @@ body{
     $("cardSocial").classList.remove("hidden");$("cardFull").classList.add("hidden");
     $("toConnect").disabled=true;$("mePose").textContent="—";$("cardNow").textContent="—";$("cfNow").textContent="—";
     revealed=false;
-    toast("已开启新的一次尝试，原始记录已保留");
+    toast("上次的答案还在，这次重新猜");
     go(1);
   });
 })();
