@@ -65,7 +65,7 @@ body{
   opacity:0;transform:translateX(40px);pointer-events:none;
   transition:opacity .45s ease,transform .45s ease;overflow-y:auto;overflow-x:hidden;
   -webkit-overflow-scrolling:touch}
-#s2,#s3,#s4{padding-bottom:150px}
+#s1,#s2,#s3,#s4,#s5,#s6{padding-bottom:160px}
 .scene.on{opacity:1;transform:none;pointer-events:auto}
 .scene.left{transform:translateX(-40px)}
 .scene>*{flex-shrink:0}
@@ -551,7 +551,7 @@ body{
         <div class="label">第 3 步 · 观点碰撞</div>
         <div class="q-title">点开一种说法，让证据自己说话</div>
       </div>
-      <div class="ai-note"><span class="chip">模拟分析</span> 下面是机器根据公开数据整理的几种看法，不是真人在说话，也不是谁在投票</div>
+      <div class="ai-note"><span class="chip">AI 模拟</span> 下面是机器根据公开数据整理的几种看法，不是真人在说话，也不是谁在投票</div>
 
       <div class="ev-tray">
         <div class="tb pro"><b id="trayPro">0</b>我同意</div>
@@ -632,7 +632,7 @@ body{
         <div class="rev-arrow">→</div>
         <div class="rev-side now">
           <div class="rev-h">现在我认为</div>
-          <div class="rev-v" id="revNowVal">—</div>
+          <div class="rev-v" id="revNowVal">-8%</div>
           <div class="rev-sub" id="revNowPose">还没选</div>
         </div>
       </div>
@@ -647,6 +647,7 @@ body{
           <label><input type="checkbox" value="还拿不准"><span>还拿不准</span></label>
         </div>
       </div>
+      <div style="height:120px"></div>
       <div class="dock">
         <button class="btn btn-line" data-go="4">回去再看实验</button>
         <button class="btn btn-primary" data-go="6">生成我的判断卡</button>
@@ -678,7 +679,7 @@ body{
           <div class="cell"><span class="mini">你猜</span><b id="meGuess">-8%</b></div>
         </div>
         <div class="match-row split" id="rowPose">
-          <div class="cell"><span class="mini">朋友倾向</span><b id="taPose" style="font-size:12px">结构在换</b></div>
+          <div class="cell"><span class="mini">朋友倾向</span><b id="taPose" style="font-size:12px">后劲堪忧</b></div>
           <div class="state diff">看法<br>不一样</div>
           <div class="cell"><span class="mini">你倾向</span><b id="mePose" style="font-size:12px">—</b></div>
         </div>
@@ -786,6 +787,7 @@ body{
     for(var i=0;i<prog.length;i++)prog[i].classList.toggle("on",i<=n);
     $("stepTag").textContent=stepNames[n];
     $(scenes[n]).scrollTop=0;
+    $("toast").classList.remove("show");
     if(n===2) animateReveal();
   }
   document.querySelectorAll("[data-go]").forEach(function(b){
