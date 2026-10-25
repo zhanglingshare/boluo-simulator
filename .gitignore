@@ -1,0 +1,6 @@
+# 设计工具工作目录（过程文件，非网站内容）
+.creative-design/
+
+# 系统与编辑器
+.DS_Store
+Thumbs.db
