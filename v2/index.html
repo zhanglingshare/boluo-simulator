@@ -1,0 +1,1319 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no">
+<title>博罗决策风洞 2.0 · 投资腰斩，1600亿怎么保</title>
+<script src="../model.js"></script>
+<script src="../lib/echarts.min.js"></script>
+<style>
+:root{
+  --desk:#151c17; --desk2:#1c271f; --desk3:#232f26;
+  --paper:#efe5cc; --paper2:#e7d8b6; --paper-edge:#cdb98a;
+  --ink:#2c2616; --ink2:#5b5138;
+  --amber:#d9a441; --amber2:#f2c46b; --amber-deep:#a8742a;
+  --stamp:#c2402f; --stamp-deep:#9c2f22;
+  --engine:#5b9bd5; --base:#a98bea; --tour:#e2b04e; --link:#3fb6b0; --agri:#5fb877;
+  --good:#6fb07f; --bad:#e0816f; --muted:#9fb0a1;
+  --line:rgba(217,164,65,.22);
+}
+*{box-sizing:border-box;-webkit-tap-highlight-color:transparent}
+html,body{margin:0;padding:0}
+body{
+  background:
+   radial-gradient(1200px 600px at 50% -8%, rgba(217,164,65,.16), transparent 60%),
+   radial-gradient(900px 500px at 50% 115%, rgba(30,60,45,.5), transparent 60%),
+   linear-gradient(180deg,#1a221b,#121813 40%,#101510);
+  color:#e8e3d5;
+  font:15px/1.65 -apple-system,BlinkMacSystemFont,"PingFang SC","Microsoft YaHei",sans-serif;
+  min-height:100vh;
+  padding-bottom:env(safe-area-inset-bottom);
+}
+.serif{font-family:"Songti SC","STSong","Noto Serif SC","SimSun",serif}
+#app{max-width:560px;margin:0 auto;min-height:100vh;position:relative;display:flex;flex-direction:column}
+
+/* 顶部进度 */
+.topbar{position:sticky;top:0;z-index:40;display:flex;align-items:center;gap:10px;padding:12px 16px 10px;
+  background:linear-gradient(180deg,rgba(18,24,19,.97),rgba(18,24,19,.88));backdrop-filter:blur(10px);border-bottom:1px solid var(--line)}
+.topbar .brand{font-size:13px;font-weight:700;color:var(--amber);letter-spacing:.5px;flex:none;white-space:nowrap}
+.dots{display:flex;gap:5px;flex:1;justify-content:center}
+.dot{width:22px;height:5px;border-radius:3px;background:#2c3a2f;transition:.35s;position:relative}
+.dot.on{background:var(--amber);box-shadow:0 0 8px rgba(217,164,65,.5)}
+.dot.done{background:#5a7d5a}
+.dot i{position:absolute;top:-7px;left:50%;transform:translateX(-50%);font-size:8px;color:#7d8a7c;font-style:normal}
+.dot.on i{color:var(--amber2)}
+.qbtn{flex:none;background:none;border:1px solid var(--line);color:var(--muted);border-radius:50%;width:26px;height:26px;font-size:13px;cursor:pointer}
+@media(max-width:380px){.dot{width:17px}.dot i{font-size:7px}}
+@media(max-width:480px){
+  .screen{padding:14px 14px 104px}
+  h2{font-size:22px;margin-bottom:6px}
+  .lead{font-size:13.5px;line-height:1.62;margin-bottom:13px}
+  .kick{margin-bottom:6px}
+  .card{padding:15px;border-radius:16px}
+  .path-row{margin-bottom:7px}
+  .path-row .pval{font-size:16px}
+  .quick{margin-top:8px}
+  .quick button{padding:8px 4px}
+}
+
+/* 屏幕容器 */
+.screen{display:none;flex:1;flex-direction:column;padding:18px 18px 110px;animation:fade .5s ease}
+.screen.show{display:flex}
+@keyframes fade{from{opacity:0;transform:translateY(12px)}to{opacity:1;transform:none}}
+.kick{font-size:12px;color:var(--amber);letter-spacing:2px;font-weight:700;margin:2px 0 8px}
+h2{font-size:25px;line-height:1.35;margin:0 0 8px;font-weight:800;color:#f4ecd6;letter-spacing:.5px}
+.lead{font-size:14.5px;color:#c2cbbe;margin:0 0 18px;line-height:1.75}
+.lead b{color:var(--amber2)}
+
+/* 底部操作条 */
+.dock{position:fixed;left:0;right:0;bottom:0;z-index:45;padding:12px 16px calc(14px + env(safe-area-inset-bottom));
+  background:linear-gradient(180deg,rgba(18,24,19,0),rgba(16,21,16,.96) 28%);display:flex;gap:10px;justify-content:center;pointer-events:none}
+.dock .inner{max-width:560px;width:100%;display:flex;gap:10px;pointer-events:auto}
+.btn{pointer-events:auto;border:0;cursor:pointer;border-radius:14px;font-size:16px;font-weight:800;padding:15px 18px;flex:1;
+  transition:transform .12s,opacity .2s;letter-spacing:.5px}
+.btn:active{transform:scale(.97)}
+.btn.primary{background:linear-gradient(180deg,var(--amber2),var(--amber));color:#2a1c05;box-shadow:0 8px 24px rgba(217,164,65,.28),inset 0 1px 0 rgba(255,255,255,.4)}
+.btn.ghost{background:rgba(255,255,255,.06);color:#d8e0d3;border:1px solid var(--line);flex:0 0 auto;padding:15px 20px}
+.btn.ghost.wide{flex:1}
+.btn[disabled]{opacity:.35;pointer-events:none}
+.btn.secondary{background:rgba(217,164,65,.12);color:var(--amber2);border:1px solid var(--line);flex:0 0 auto}
+
+/* ===== 开场 ===== */
+#s0{padding:0;justify-content:flex-end}
+.hero{position:relative;min-height:100vh;display:flex;flex-direction:column;justify-content:flex-end;padding:0 22px 46px;overflow:hidden}
+.hero-svg{position:absolute;inset:0;width:100%;height:100%;z-index:0}
+.hero-svg-pc{display:none}
+@media(min-width:620px){
+  #s0{position:fixed;inset:0;z-index:40;max-width:none;width:100vw;height:100vh}
+  .hero-inner{max-width:560px;width:100%;margin:0 auto}
+  .hero-svg-m{display:none}
+  .hero-svg-pc{display:block}
+}
+.hero-vignette{position:absolute;inset:0;z-index:1;background:linear-gradient(180deg,rgba(0,0,0,0) 0%,rgba(0,0,0,0) 30%,rgba(8,11,8,.22) 55%,rgba(8,11,8,.62) 76%,rgba(8,11,8,.92) 100%)}
+.hero-inner{position:relative;z-index:2}
+.hero .tag{display:inline-block;font-size:12px;letter-spacing:3px;color:var(--amber2);border:1px solid rgba(217,164,65,.5);
+  border-radius:20px;padding:4px 14px;margin-bottom:16px;background:rgba(20,26,20,.5)}
+.hero h1{font-size:34px;line-height:1.28;margin:0 0 6px;font-weight:900;color:#f6efd8;text-shadow:0 3px 24px rgba(0,0,0,.6)}
+.hero h1 .hl{color:var(--amber2)}
+.hero h1 .down{color:var(--stamp)}
+.hero .sub{font-size:15px;color:#d6dccb;line-height:1.8;margin:10px 0 24px;max-width:460px;text-shadow:0 2px 10px rgba(0,0,0,.6)}
+.hero .meta{font-size:12px;color:#9fb0a1;margin-top:16px;line-height:1.7}
+.hero .btn{font-size:17px;padding:17px}
+.hero .oldlink{display:block;text-align:center;margin-top:14px;color:#9fb0a1;font-size:12.5px;text-decoration:none}
+.hero .oldlink u{text-underline-offset:3px}
+
+/* 通用卡片 */
+.card{background:linear-gradient(180deg,rgba(35,47,38,.92),rgba(28,39,31,.92));border:1px solid var(--line);border-radius:18px;padding:18px;margin-bottom:14px}
+.paper{background:linear-gradient(160deg,var(--paper),var(--paper2));color:var(--ink);border-radius:14px;padding:18px;position:relative;
+  box-shadow:0 10px 30px rgba(0,0,0,.4);border:1px solid var(--paper-edge)}
+.paper .lab{font-size:11.5px;color:var(--ink2);letter-spacing:1px;font-weight:700}
+.note{font-size:12px;color:var(--muted);line-height:1.7;margin-top:10px}
+.src{font-size:11px;color:#8da090}
+.src a{color:#7fa0c8;text-decoration:none;word-break:break-all}
+
+/* 猜：滑块 */
+.guess-stage{text-align:center;padding:8px 0 4px}
+.guess-num{font-size:74px;font-weight:900;line-height:1;color:var(--amber2);font-variant-numeric:tabular-nums;letter-spacing:-1px;
+  text-shadow:0 0 40px rgba(217,164,65,.35)}
+.guess-num.neg{color:#ec9a80}
+.guess-num.pos{color:#8fc79b}
+.guess-unit{font-size:20px;color:#b9c4b4;font-weight:700;margin-top:2px}
+.guess-q{font-size:13.5px;color:#c2cbbe;margin:14px auto 8px;max-width:380px}
+input[type=range]{-webkit-appearance:none;appearance:none;width:100%;height:42px;background:transparent;cursor:pointer;margin:6px 0}
+input[type=range]::-webkit-slider-runnable-track{height:10px;border-radius:6px;
+  background:linear-gradient(90deg,#7d2f24,#3a2c1c 48%,#2c4a36 52%,#3c6b46)}
+input[type=range]::-webkit-slider-thumb{-webkit-appearance:none;width:30px;height:30px;border-radius:50%;margin-top:-10px;
+  background:radial-gradient(circle at 35% 30%,var(--amber2),var(--amber-deep));border:2px solid #2a1c05;
+  box-shadow:0 4px 12px rgba(0,0,0,.5),0 0 0 5px rgba(217,164,65,.15)}
+input[type=range]::-moz-range-track{height:10px;border-radius:6px;background:linear-gradient(90deg,#7d2f24,#3a2c1c 48%,#2c4a36 52%,#3c6b46)}
+input[type=range]::-moz-range-thumb{width:28px;height:28px;border-radius:50%;border:2px solid #2a1c05;background:radial-gradient(circle at 35% 30%,var(--amber2),var(--amber-deep))}
+.scale{display:flex;justify-content:space-between;font-size:11px;color:#8da090;padding:0 2px;margin-bottom:6px}
+.chips{display:flex;gap:8px;justify-content:center;flex-wrap:wrap;margin-top:14px}
+.chip{background:rgba(255,255,255,.06);border:1px solid var(--line);color:#cfd8c9;border-radius:20px;padding:8px 14px;font-size:13px;cursor:pointer}
+.chip.on{background:rgba(217,164,65,.18);border-color:var(--amber);color:var(--amber2)}
+
+/* 翻：揭晓 */
+.reveal{text-align:center;position:relative}
+.reveal .real{font-size:84px;font-weight:900;color:var(--stamp);line-height:1;letter-spacing:-2px;font-variant-numeric:tabular-nums}
+.reveal .realcap{font-size:14px;color:#b9c4b4;margin:6px 0 4px}
+.stamp{position:absolute;right:-4px;top:34px;transform:rotate(-14deg) scale(0);border:3px solid var(--stamp);color:var(--stamp);
+  border-radius:10px;padding:6px 12px;font-weight:900;font-size:18px;background:rgba(194,64,47,.06);opacity:.92;transition:transform .5s cubic-bezier(.2,1.4,.4,1)}
+.stamp.show{transform:rotate(-14deg) scale(1)}
+.scissor{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-top:16px}
+.scissor .up{background:rgba(111,176,127,.1);border:1px solid #3c6b46;border-radius:12px;padding:13px}
+.scissor .dn{background:rgba(224,129,111,.1);border:1px solid #7d3a2e;border-radius:12px;padding:13px}
+.scissor .t{font-size:11.5px;font-weight:700;opacity:.85}
+.scissor .n{font-size:23px;font-weight:900;margin:2px 0}
+.scissor .up .n{color:#8fc79b}.scissor .dn .n{color:#ec9a80}
+.scissor .d{font-size:11px;color:#b9c4b4;line-height:1.55}
+@media(max-width:380px){.reveal .real{font-size:66px}.guess-num{font-size:60px}}
+
+/* 辨：立场卡 */
+.stance{border-radius:14px;padding:14px;margin-bottom:10px;cursor:pointer;border:1.5px solid var(--line);background:rgba(255,255,255,.03);transition:.2s}
+.stance.sel{border-color:var(--amber);background:rgba(217,164,65,.1)}
+.stance .head{display:flex;align-items:flex-start;gap:10px}
+.stance .view{flex:1}
+.stance .view .badge{display:inline-block;font-size:10.5px;padding:2px 8px;border-radius:6px;margin-bottom:6px;font-weight:700}
+.stance .view .oneline{font-size:15.5px;font-weight:800;color:#f0ead8;line-height:1.5}
+.stance .view .oneline b{color:var(--amber2)}
+.stance .toggle{color:var(--muted);font-size:12px;flex:none;padding-top:3px}
+.evi{display:none;margin-top:12px}
+.stance.open .evi{display:block}
+.evi .col{border-radius:10px;padding:11px 12px;margin-bottom:8px}
+.evi .pro{background:rgba(111,176,127,.09);border-left:3px solid var(--good)}
+.evi .con{background:rgba(224,129,111,.09);border-left:3px solid var(--bad)}
+.evi .col h4{margin:0 0 6px;font-size:12px;letter-spacing:.5px}
+.evi .pro h4{color:#8fc79b}.evi .con h4{color:#ec9a80}
+.evi ul{margin:0;padding-left:17px;font-size:12.5px;color:#d4dcc9;line-height:1.65}
+.evi li{margin-bottom:5px}
+.evi .r{font-size:10.5px;color:#8da090;margin-top:2px}
+.keep{display:block;width:100%;text-align:center;background:rgba(255,255,255,.05);border:1px dashed var(--line);color:#c9d2c2;border-radius:12px;padding:13px;font-size:13.5px;cursor:pointer;margin-top:4px}
+.keep.on{background:rgba(217,164,65,.14);border-style:solid;border-color:var(--amber);color:var(--amber2)}
+
+/* 押：分配 */
+.alloc-head{display:flex;justify-content:space-between;align-items:baseline;margin-bottom:4px}
+.alloc-head .pt{font-size:14px;font-weight:800;color:#f0ead8}
+.alloc-head .tot{font-size:14px;font-weight:800;color:var(--amber2);font-variant-numeric:tabular-nums}
+.alloc-tip{font-size:11.5px;color:#9fb0a1;margin-bottom:12px}
+.path-row{margin-bottom:10px}
+.path-row .pr-top{display:flex;justify-content:space-between;align-items:baseline;margin-bottom:2px}
+.path-row .pname{font-size:14px;font-weight:800}
+.path-row .pname small{font-weight:500;color:#aab6a6;font-size:11px;margin-left:6px}
+.path-row .pval{font-size:18px;font-weight:900;font-variant-numeric:tabular-nums}
+.path-row input[type=range]{-webkit-appearance:none;appearance:none;width:100%;height:28px;margin:0;background:transparent;--fill:0%}
+.path-row input[type=range]::-webkit-slider-runnable-track{height:10px;border-radius:5px;background:linear-gradient(to right,var(--c,#d9a441) 0,var(--c,#d9a441) var(--fill,0%),#26322a var(--fill,0%),#26322a 100%)}
+.path-row input[type=range]::-webkit-slider-thumb{-webkit-appearance:none;width:24px;height:24px;border-radius:50%;margin-top:-7px;background:radial-gradient(circle at 35% 30%,#f6d88f,#d9a441);border:1px solid #8a6a26;box-shadow:0 2px 6px rgba(0,0,0,.5);cursor:pointer}
+.path-row input[type=range]::-moz-range-track{height:10px;border-radius:5px;background:linear-gradient(to right,var(--c,#d9a441) var(--fill,0%),#26322a var(--fill,0%))}
+.path-row input[type=range]::-moz-range-thumb{width:24px;height:24px;border:none;border-radius:50%;background:radial-gradient(circle at 35% 30%,#f6d88f,#d9a441);cursor:pointer}
+.profile{border-radius:12px;padding:13px;margin-top:6px;font-size:13px;line-height:1.7;background:rgba(217,164,65,.08);border:1px solid var(--line)}
+.profile b{color:var(--amber2)}
+.quick{display:flex;gap:8px;margin-top:10px;flex-wrap:wrap}
+.quick button{flex:1;min-width:90px;background:rgba(255,255,255,.05);border:1px solid var(--line);color:#cdd7c8;border-radius:9px;padding:9px 6px;font-size:12px;cursor:pointer}
+
+/* 压：选局面 + 结果 */
+.scene-opt{display:flex;gap:9px;margin-bottom:8px;padding:12px;border-radius:12px;border:1.5px solid var(--line);background:rgba(255,255,255,.03);cursor:pointer}
+.scene-opt.sel{border-color:var(--stamp);background:rgba(194,64,47,.08)}
+.scene-opt .ic{font-size:20px;flex:none}
+.scene-opt .tx{flex:1}
+.scene-opt .tx .nm{font-size:14.5px;font-weight:800;color:#f0ead8}
+.scene-opt .tx .ds{font-size:11.5px;color:#aab6a6;line-height:1.5;margin-top:2px}
+.scene-opt .tx .spr{font-size:10.5px;color:#c9a36a;margin-top:4px;line-height:1.5}
+.press-out{display:none;scroll-margin-top:64px}
+.press-out.show{display:block;animation:fade .5s}
+.bigresult{display:flex;align-items:baseline;gap:10px;justify-content:center;margin:6px 0}
+.bigresult .v{font-size:58px;font-weight:900;color:var(--amber2);line-height:1;font-variant-numeric:tabular-nums}
+.bigresult .u{font-size:16px;color:#b9c4b4;font-weight:700}
+.vs{display:grid;grid-template-columns:1fr auto 1fr;gap:8px;align-items:center;margin:14px 0}
+.vs .side{border-radius:12px;padding:12px;text-align:center}
+.vs .you{background:rgba(217,164,65,.1);border:1px solid var(--amber)}
+.vs .base{background:rgba(255,255,255,.04);border:1px solid var(--line)}
+.vs .vs-mid{font-size:12px;color:#8da090}
+.vs .side .lab{font-size:11px;color:#aab6a6;margin-bottom:3px}
+.vs .side .num{font-size:23px;font-weight:900;font-variant-numeric:tabular-nums}
+.vs .you .num{color:var(--amber2)}
+.vs .base .num{color:#c6cfc2}
+.quant{display:flex;justify-content:space-around;text-align:center;margin-top:6px;font-size:12px;color:#aab6a6}
+.quant b{display:block;font-size:18px;color:#e6e0cd;font-variant-numeric:tabular-nums}
+#chart-mountain{width:100%;height:210px;margin-top:8px}
+
+/* 比：命运矩阵 */
+.mtx-wrap{overflow-x:auto;margin:0 -4px;padding:0 4px;-webkit-overflow-scrolling:touch}
+table.mtx{border-collapse:collapse;font-size:12px;width:100%;min-width:480px}
+table.mtx th,table.mtx td{padding:9px 7px;text-align:center;border:1px solid rgba(217,164,65,.15)}
+table.mtx th{background:rgba(0,0,0,.25);color:#d9cfa8;font-weight:700;font-size:11px}
+table.mtx td.pname{text-align:left;font-weight:800;color:#e6e0cd;white-space:nowrap;background:rgba(0,0,0,.15)}
+table.mtx td .cell{font-weight:900;font-variant-numeric:tabular-nums;font-size:13.5px}
+table.mtx tr.me td{background:rgba(217,164,65,.1)}
+table.mtx tr.me td.pname{color:var(--amber2)}
+.mtx-legend{font-size:11px;color:#8da090;margin-top:8px;line-height:1.6}
+.takeaway{margin-top:14px}
+.takeaway .tk{display:flex;gap:10px;margin-bottom:10px;font-size:13px;line-height:1.65;color:#d8dfd2}
+.takeaway .tk .n{flex:none;width:22px;height:22px;border-radius:50%;background:var(--amber);color:#2a1c05;font-weight:900;font-size:13px;display:flex;align-items:center;justify-content:center;margin-top:1px}
+.takeaway .tk b{color:var(--amber2)}
+.costtags{display:flex;flex-wrap:wrap;gap:6px;margin-top:4px}
+.costtags span{font-size:11px;border-radius:7px;padding:4px 9px;border:1px solid var(--line);color:#cdd7c8;background:rgba(255,255,255,.03)}
+
+/* 留：判断卡 */
+.nickrow{display:flex;align-items:center;gap:10px;margin-bottom:14px}
+.nickrow input{flex:1;background:rgba(255,255,255,.06);border:1px solid var(--line);border-radius:10px;color:#f0ead8;padding:12px 14px;font-size:15px}
+.nickrow input::placeholder{color:#7d8a7c}
+.card-preview{width:100%;border-radius:16px;display:block;box-shadow:0 14px 40px rgba(0,0,0,.5);margin-bottom:14px}
+.share-row{display:flex;gap:10px;margin-bottom:12px}
+.share-row .btn{font-size:14px;padding:13px}
+.qrbox{display:flex;gap:14px;align-items:center;justify-content:center;background:rgba(255,255,255,.04);border:1px solid var(--line);border-radius:14px;padding:14px}
+.qrbox img{width:104px;height:104px;background:#fff;border-radius:10px;padding:6px;flex:none}
+.qrbox .qt{font-size:12.5px;color:#c2cbbe;line-height:1.7}
+.qrbox .qt b{color:var(--amber2)}
+.open-letter{margin-top:14px}
+.copyhint{font-size:11px;color:#8fc79b;text-align:center;margin-top:8px;height:14px}
+
+/* 挑战对比 */
+.vs-big{display:grid;grid-template-columns:1fr 40px 1fr;gap:8px;align-items:start;margin:10px 0}
+.vs-big .who{border-radius:13px;padding:13px;text-align:center}
+.vs-big .a{background:rgba(111,155,213,.1);border:1px solid #5b9bd5}
+.vs-big .b{background:rgba(217,164,65,.12);border:1px solid var(--amber)}
+.vs-big .who .nm{font-size:12px;font-weight:800;margin-bottom:8px}
+.vs-big .who .row{font-size:12px;color:#cdd7c8;margin:6px 0;line-height:1.5}
+.vs-big .who .row b{display:block;font-size:15px;margin-top:1px}
+.vs-big .mid{text-align:center;font-size:18px;color:var(--muted);padding-top:60px}
+.divider{text-align:center;color:var(--muted);font-size:12px;margin:14px 0 6px;letter-spacing:2px}
+
+/* 应战全局提示条 */
+#challengeNotice{display:none}
+#challengeNotice.show{display:block;background:rgba(91,155,213,.12);border-bottom:1px solid #5b9bd5;color:#cfe2f5;font-size:12.5px;padding:9px 16px;line-height:1.55;text-align:center}
+#challengeNotice b{color:#9cc4ee}
+
+/* 挑战分歧对比横幅 */
+.challenge-banner{display:none;background:linear-gradient(135deg,rgba(111,155,213,.1),rgba(217,164,65,.12));border:1px solid var(--amber);border-radius:16px;padding:16px;margin:16px 0}
+.challenge-banner.show{display:block;animation:fadeUp .4s ease}
+.cc-head{font-size:14px;color:var(--amber2);margin-bottom:10px}
+.cc-cols{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:2px}
+.cc-col{text-align:center;font-weight:800;font-size:12px;padding:6px;border-radius:8px}
+.cc-col.cc-a{background:rgba(111,155,213,.18);color:#9cc4ee}
+.cc-col.cc-b{background:rgba(217,164,65,.18);color:var(--amber2)}
+.cc-row{margin-top:8px}
+.cc-lab{color:var(--muted);font-size:11.5px;text-align:center;margin-bottom:3px}
+.cc-vals{display:grid;grid-template-columns:1fr 1fr;gap:10px;font-size:13px}
+.cc-vals .cc-a{color:#9cc4ee;text-align:right;font-weight:700}
+.cc-vals .cc-b{color:var(--amber2);text-align:left;font-weight:700}
+.cc-line{margin-top:12px;font-size:13px;color:#f0e6d0;line-height:1.7;background:rgba(0,0,0,.18);border-left:3px solid var(--amber);padding:8px 10px;border-radius:0 8px 8px 0}
+.cc-tip{margin-top:8px;font-size:11.5px;color:var(--muted);line-height:1.6}
+
+/* 弹层 */
+.modal{position:fixed;inset:0;background:rgba(8,12,9,.82);z-index:99;display:none;align-items:center;justify-content:center;padding:22px}
+.modal.show{display:flex}
+.modal .box{background:var(--desk2);border:1px solid var(--line);border-radius:16px;padding:20px;max-width:420px;width:100%;max-height:84vh;overflow:auto}
+.modal h3{margin:0 0 10px;font-size:18px;color:var(--amber2)}
+.modal p{font-size:13px;color:#cdd7c8;line-height:1.75}
+.modal .x{float:right;background:none;border:0;color:var(--muted);font-size:20px;cursor:pointer}
+
+@media (prefers-reduced-motion: reduce){
+  *{animation:none!important;transition:none!important}
+}
+</style>
+</head>
+<body>
+<div id="app">
+
+  <!-- 顶部进度 -->
+  <div class="topbar" id="topbar" style="display:none">
+    <div class="brand">博罗决策风洞 2.0</div>
+    <div class="dots" id="dots"></div>
+    <button class="qbtn" onclick="openAbout()">?</button>
+  </div>
+  <div id="challengeNotice"></div>
+
+  <!-- 0 开场 -->
+  <section class="screen" id="s0">
+    <div class="hero">
+      <svg class="hero-svg hero-svg-m" viewBox="0 0 560 900" preserveAspectRatio="xMidYMid slice" aria-hidden="true">
+        <defs>
+          <linearGradient id="sky" x1="0" y1="0" x2="0" y2="1">
+            <stop offset="0" stop-color="#2c2b20"/><stop offset="36%" stop-color="#27371f"/>
+            <stop offset="60%" stop-color="#18261d"/><stop offset="100%" stop-color="#0e140f"/>
+          </linearGradient>
+          <radialGradient id="lamp" cx="50%" cy="5%" r="70%">
+            <stop offset="0" stop-color="#f3c978" stop-opacity=".40"/><stop offset="45%" stop-color="#d9a441" stop-opacity=".09"/>
+            <stop offset="100%" stop-color="#000" stop-opacity="0"/>
+          </radialGradient>
+          <radialGradient id="moonglow" cx="50%" cy="50%" r="50%">
+            <stop offset="0" stop-color="#fdf3d8" stop-opacity=".62"/>
+            <stop offset="45%" stop-color="#f6e8c6" stop-opacity=".18"/>
+            <stop offset="100%" stop-color="#f6e8c6" stop-opacity="0"/>
+          </radialGradient>
+          <linearGradient id="water" x1="0" y1="0" x2="0" y2="1">
+            <stop offset="0" stop-color="#162820"/><stop offset="100%" stop-color="#0b110d"/>
+          </linearGradient>
+          <linearGradient id="fade" x1="0" y1="0" x2="0" y2="1">
+            <stop offset="0" stop-color="#0e140f" stop-opacity="0"/><stop offset="1" stop-color="#0e140f" stop-opacity=".95"/>
+          </linearGradient>
+        </defs>
+        <rect width="560" height="900" fill="url(#sky)"/>
+        <rect width="560" height="900" fill="url(#lamp)"/>
+        <circle cx="410" cy="155" r="70" fill="url(#moonglow)"/>
+        <circle cx="410" cy="155" r="36" fill="#fff7e2"/>
+        <circle cx="402" cy="146" r="8" fill="#e7d8ae" opacity=".55"/>
+        <circle cx="422" cy="164" r="5" fill="#e7d8ae" opacity=".45"/>
+        <g fill="#f3e6c2">
+          <circle cx="80" cy="92" r="1.4" opacity=".7"/><circle cx="160" cy="132" r="1.1" opacity=".6"/>
+          <circle cx="250" cy="82" r="1.3" opacity=".65"/><circle cx="320" cy="118" r="1" opacity=".5"/>
+          <circle cx="500" cy="232" r="1.2" opacity=".6"/><circle cx="120" cy="205" r="1" opacity=".5"/>
+          <circle cx="60" cy="180" r="1.1" opacity=".55"/>
+        </g>
+        <!-- 罗浮山层峦 -->
+        <path d="M0,386 L60,322 L120,364 L185,286 L250,352 L310,282 L380,346 L445,302 L500,342 L560,318 L560,470 L0,470 Z" fill="#23382b" opacity=".9"/>
+        <path d="M0,446 L80,382 L150,428 L230,362 L300,422 L380,372 L450,424 L520,392 L560,418 L560,520 L0,520 Z" fill="#18281e"/>
+        <!-- 城市剪影 -->
+        <g fill="#0c130f">
+          <rect x="40" y="456" width="18" height="90"/><rect x="64" y="438" width="22" height="108"/>
+          <rect x="92" y="452" width="16" height="94"/><rect x="114" y="430" width="24" height="116"/>
+          <rect x="144" y="462" width="16" height="84"/><rect x="166" y="446" width="20" height="100"/>
+          <rect x="200" y="470" width="15" height="76"/>
+          <rect x="340" y="448" width="22" height="98"/><rect x="368" y="432" width="20" height="114"/>
+          <rect x="394" y="460" width="16" height="86"/><rect x="416" y="440" width="24" height="106"/>
+          <rect x="446" y="466" width="16" height="80"/><rect x="468" y="448" width="22" height="98"/>
+          <rect x="496" y="462" width="16" height="84"/><rect x="518" y="452" width="18" height="94"/>
+        </g>
+        <!-- 万家灯火 -->
+        <g fill="#f2c46a">
+          <circle cx="47" cy="468" r="1.6"/><circle cx="52" cy="484" r="1.3"/><circle cx="47" cy="502" r="1.5"/>
+          <circle cx="72" cy="452" r="1.5"/><circle cx="78" cy="470" r="1.7"/><circle cx="72" cy="488" r="1.4"/><circle cx="79" cy="506" r="1.5"/><circle cx="73" cy="524" r="1.3"/>
+          <circle cx="98" cy="466" r="1.4"/><circle cx="97" cy="486" r="1.6"/><circle cx="99" cy="508" r="1.3"/>
+          <circle cx="121" cy="444" r="1.5" fill="#ffe9b8"/><circle cx="128" cy="462" r="1.7"/><circle cx="121" cy="480" r="1.4"/><circle cx="130" cy="498" r="1.6"/><circle cx="123" cy="516" r="1.4"/>
+          <circle cx="150" cy="476" r="1.4"/><circle cx="152" cy="496" r="1.5"/><circle cx="149" cy="516" r="1.3"/>
+          <circle cx="172" cy="460" r="1.6"/><circle cx="179" cy="478" r="1.4"/><circle cx="173" cy="496" r="1.5"/><circle cx="180" cy="514" r="1.3"/>
+          <circle cx="206" cy="484" r="1.4"/><circle cx="207" cy="504" r="1.5"/>
+          <circle cx="348" cy="462" r="1.5"/><circle cx="355" cy="480" r="1.4"/><circle cx="349" cy="498" r="1.6"/><circle cx="356" cy="516" r="1.3"/>
+          <circle cx="374" cy="446" r="1.6" fill="#ffe9b8"/><circle cx="381" cy="464" r="1.5"/><circle cx="375" cy="482" r="1.4"/><circle cx="382" cy="500" r="1.6"/>
+          <circle cx="400" cy="474" r="1.4"/><circle cx="402" cy="494" r="1.5"/><circle cx="400" cy="514" r="1.3"/>
+          <circle cx="424" cy="454" r="1.6"/><circle cx="432" cy="472" r="1.4"/><circle cx="425" cy="490" r="1.5"/><circle cx="433" cy="508" r="1.4"/>
+          <circle cx="452" cy="480" r="1.4"/><circle cx="453" cy="500" r="1.5"/>
+          <circle cx="475" cy="462" r="1.5"/><circle cx="482" cy="480" r="1.6"/><circle cx="476" cy="498" r="1.3"/><circle cx="483" cy="516" r="1.5"/>
+          <circle cx="502" cy="476" r="1.4"/><circle cx="504" cy="496" r="1.5"/>
+          <circle cx="525" cy="466" r="1.5"/><circle cx="526" cy="486" r="1.4"/><circle cx="525" cy="506" r="1.6"/>
+        </g>
+        <!-- 远山村落零星灯火 -->
+        <g fill="#f2c46a" opacity=".6">
+          <circle cx="250" cy="400" r="1.1"/><circle cx="300" cy="388" r="1.1"/><circle cx="180" cy="410" r="1"/><circle cx="380" cy="398" r="1.1"/>
+        </g>
+        <!-- 东江 -->
+        <rect x="0" y="546" width="560" height="140" fill="url(#water)"/>
+        <path d="M0,564 C140,594 250,550 370,582 C470,606 520,582 560,590" stroke="#3f5f56" stroke-width="1.6" fill="none" opacity=".55"/>
+        <path d="M0,600 C150,628 260,588 380,616 C475,638 520,618 560,624" stroke="#33504a" stroke-width="1.3" fill="none" opacity=".4"/>
+        <!-- 灯火倒影 -->
+        <g fill="#f2c46a">
+          <rect x="72" y="552" width="3" height="48" opacity=".22"/><rect x="122" y="552" width="4" height="66" opacity=".26"/>
+          <rect x="173" y="552" width="3" height="44" opacity=".18"/><rect x="374" y="552" width="4" height="62" opacity=".24"/>
+          <rect x="425" y="552" width="3" height="50" opacity=".2"/><rect x="477" y="552" width="3" height="46" opacity=".18"/>
+          <rect x="524" y="552" width="3" height="44" opacity=".2"/>
+        </g>
+        <!-- 下部渐隐，留给文字 -->
+        <rect x="0" y="612" width="560" height="288" fill="url(#fade)"/>
+      </svg>
+      <!-- 桌面横版夜景 -->
+      <svg class="hero-svg hero-svg-pc" viewBox="0 0 1440 760" preserveAspectRatio="xMidYMid slice" aria-hidden="true">
+        <defs>
+          <linearGradient id="sky-pc" x1="0" y1="0" x2="0" y2="1">
+            <stop offset="0" stop-color="#2c2b20"/><stop offset="38%" stop-color="#27371f"/>
+            <stop offset="62%" stop-color="#18261d"/><stop offset="1" stop-color="#0e140f"/>
+          </linearGradient>
+          <radialGradient id="lamp-pc" cx="50%" cy="0%" r="75%">
+            <stop offset="0" stop-color="#f3c978" stop-opacity=".18"/><stop offset="55%" stop-color="#d9a441" stop-opacity=".05"/>
+            <stop offset="1" stop-color="#000" stop-opacity="0"/>
+          </radialGradient>
+          <radialGradient id="moonglow-pc" cx="50%" cy="50%" r="50%">
+            <stop offset="0" stop-color="#fdf3d8" stop-opacity=".6"/>
+            <stop offset="45%" stop-color="#f6e8c6" stop-opacity=".18"/>
+            <stop offset="1" stop-color="#f6e8c6" stop-opacity="0"/>
+          </radialGradient>
+          <linearGradient id="water-pc" x1="0" y1="0" x2="0" y2="1">
+            <stop offset="0" stop-color="#162820"/><stop offset="1" stop-color="#0b110d"/>
+          </linearGradient>
+          <linearGradient id="fade-pc" x1="0" y1="0" x2="0" y2="1">
+            <stop offset="0" stop-color="#0e140f" stop-opacity="0"/><stop offset="1" stop-color="#0e140f" stop-opacity=".92"/>
+          </linearGradient>
+        </defs>
+        <rect width="1440" height="760" fill="url(#sky-pc)"/>
+        <rect width="1440" height="760" fill="url(#lamp-pc)"/>
+        <circle cx="1150" cy="105" r="82" fill="url(#moonglow-pc)"/>
+        <circle cx="1150" cy="105" r="43" fill="#fff7e2"/>
+        <circle cx="1140" cy="95" r="9" fill="#e7d8ae" opacity=".5"/>
+        <circle cx="1163" cy="116" r="6" fill="#e7d8ae" opacity=".4"/>
+        <g fill="#f3e6c2">
+          <circle cx="180" cy="80" r="1.5" opacity=".7"/><circle cx="360" cy="120" r="1.2" opacity=".55"/>
+          <circle cx="560" cy="70" r="1.4" opacity=".65"/><circle cx="720" cy="110" r="1.1" opacity=".5"/>
+          <circle cx="980" cy="70" r="1.3" opacity=".6"/><circle cx="260" cy="170" r="1.1" opacity=".5"/>
+          <circle cx="860" cy="150" r="1.2" opacity=".5"/><circle cx="1300" cy="190" r="1.3" opacity=".6"/>
+        </g>
+        <!-- 罗浮山层峦横贯 -->
+        <path d="M0,420 L160,338 L300,392 L470,300 L640,372 L820,300 L990,362 L1160,310 L1330,372 L1440,330 L1440,490 L0,490 Z" fill="#23382b" opacity=".9"/>
+        <path d="M0,470 L180,400 L360,452 L560,380 L760,442 L960,390 L1160,452 L1330,410 L1440,440 L1440,525 L0,525 Z" fill="#18281e"/>
+        <!-- 城市剪影（两岸密、中部疏） -->
+        <g fill="#0c130f">
+          <rect x="70" y="486" width="30" height="74"/><rect x="106" y="470" width="24" height="90"/>
+          <rect x="136" y="482" width="20" height="78"/><rect x="162" y="458" width="28" height="102"/>
+          <rect x="196" y="490" width="22" height="70"/><rect x="224" y="472" width="26" height="88"/>
+          <rect x="256" y="484" width="20" height="76"/><rect x="282" y="462" width="24" height="98"/>
+          <rect x="312" y="488" width="22" height="72"/><rect x="340" y="474" width="28" height="86"/>
+          <rect x="374" y="492" width="20" height="68"/><rect x="400" y="480" width="26" height="80"/>
+          <rect x="432" y="496" width="22" height="64"/><rect x="460" y="486" width="24" height="74"/>
+          <rect x="490" y="494" width="20" height="66"/><rect x="520" y="488" width="28" height="72"/>
+          <rect x="620" y="500" width="22" height="60"/><rect x="680" y="508" width="20" height="52"/>
+          <rect x="760" y="502" width="24" height="58"/><rect x="820" y="510" width="20" height="50"/>
+          <rect x="880" y="482" width="26" height="78"/><rect x="912" y="466" width="22" height="94"/>
+          <rect x="940" y="488" width="26" height="72"/><rect x="972" y="470" width="28" height="90"/>
+          <rect x="1006" y="490" width="20" height="70"/><rect x="1032" y="462" width="24" height="98"/>
+          <rect x="1062" y="486" width="28" height="74"/><rect x="1094" y="474" width="22" height="86"/>
+          <rect x="1122" y="490" width="26" height="70"/><rect x="1154" y="478" width="24" height="82"/>
+          <rect x="1184" y="494" width="20" height="66"/><rect x="1210" y="470" width="28" height="90"/>
+          <rect x="1244" y="486" width="22" height="74"/><rect x="1272" y="476" width="26" height="84"/>
+          <rect x="1304" y="492" width="22" height="68"/><rect x="1332" y="484" width="26" height="76"/>
+        </g>
+        <!-- 两岸灯火 -->
+        <g fill="#f2c46a">
+          <circle cx="82" cy="500" r="1.8"/><circle cx="88" cy="520" r="1.6"/><circle cx="80" cy="540" r="1.7"/>
+          <circle cx="114" cy="484" r="1.7"/><circle cx="121" cy="504" r="1.9"/><circle cx="113" cy="524" r="1.6"/><circle cx="122" cy="544" r="1.7"/>
+          <circle cx="144" cy="498" r="1.6"/><circle cx="143" cy="520" r="1.8"/><circle cx="145" cy="542" r="1.5"/>
+          <circle cx="170" cy="474" r="1.8" fill="#ffe9b8"/><circle cx="180" cy="494" r="1.9"/><circle cx="170" cy="514" r="1.6"/><circle cx="181" cy="534" r="1.8"/><circle cx="172" cy="550" r="1.5"/>
+          <circle cx="204" cy="504" r="1.6"/><circle cx="207" cy="526" r="1.7"/><circle cx="203" cy="546" r="1.5"/>
+          <circle cx="232" cy="486" r="1.8"/><circle cx="241" cy="506" r="1.6"/><circle cx="233" cy="526" r="1.7"/><circle cx="242" cy="546" r="1.5"/>
+          <circle cx="264" cy="498" r="1.6"/><circle cx="266" cy="520" r="1.7"/><circle cx="264" cy="542" r="1.5"/>
+          <circle cx="289" cy="478" r="1.8" fill="#ffe9b8"/><circle cx="298" cy="498" r="1.7"/><circle cx="289" cy="518" r="1.6"/><circle cx="299" cy="538" r="1.8"/>
+          <circle cx="320" cy="502" r="1.6"/><circle cx="323" cy="524" r="1.7"/><circle cx="320" cy="546" r="1.5"/>
+          <circle cx="350" cy="490" r="1.7"/><circle cx="360" cy="510" r="1.6"/><circle cx="350" cy="530" r="1.7"/><circle cx="360" cy="550" r="1.5"/>
+          <circle cx="383" cy="508" r="1.5"/><circle cx="384" cy="530" r="1.6"/><circle cx="410" cy="496" r="1.7"/><circle cx="419" cy="516" r="1.6"/><circle cx="410" cy="538" r="1.7"/>
+          <circle cx="441" cy="510" r="1.6"/><circle cx="443" cy="532" r="1.5"/><circle cx="470" cy="500" r="1.6"/><circle cx="471" cy="522" r="1.7"/><circle cx="469" cy="544" r="1.5"/>
+          <circle cx="500" cy="508" r="1.6"/><circle cx="502" cy="530" r="1.5"/><circle cx="528" cy="502" r="1.7"/><circle cx="535" cy="522" r="1.6"/><circle cx="527" cy="542" r="1.7"/>
+          <circle cx="628" cy="516" r="1.5"/><circle cx="630" cy="538" r="1.4"/><circle cx="687" cy="522" r="1.5"/><circle cx="689" cy="542" r="1.4"/>
+          <circle cx="768" cy="518" r="1.5"/><circle cx="771" cy="540" r="1.4"/><circle cx="827" cy="524" r="1.4"/><circle cx="829" cy="544" r="1.3"/>
+          <circle cx="890" cy="498" r="1.7"/><circle cx="900" cy="518" r="1.6"/><circle cx="891" cy="538" r="1.8"/><circle cx="900" cy="552" r="1.5"/>
+          <circle cx="919" cy="482" r="1.8" fill="#ffe9b8"/><circle cx="928" cy="502" r="1.7"/><circle cx="919" cy="522" r="1.6"/><circle cx="929" cy="542" r="1.7"/>
+          <circle cx="949" cy="504" r="1.6"/><circle cx="952" cy="526" r="1.8"/><circle cx="949" cy="548" r="1.5"/>
+          <circle cx="980" cy="486" r="1.8"/><circle cx="991" cy="506" r="1.6"/><circle cx="981" cy="526" r="1.7"/><circle cx="992" cy="548" r="1.5"/>
+          <circle cx="1013" cy="506" r="1.6"/><circle cx="1015" cy="528" r="1.7"/><circle cx="1040" cy="478" r="1.8" fill="#ffe9b8"/><circle cx="1049" cy="498" r="1.7"/><circle cx="1040" cy="518" r="1.6"/><circle cx="1050" cy="540" r="1.8"/>
+          <circle cx="1072" cy="502" r="1.7"/><circle cx="1081" cy="522" r="1.6"/><circle cx="1072" cy="542" r="1.7"/><circle cx="1082" cy="552" r="1.5"/>
+          <circle cx="1102" cy="490" r="1.7"/><circle cx="1112" cy="510" r="1.6"/><circle cx="1102" cy="530" r="1.7"/><circle cx="1112" cy="550" r="1.5"/>
+          <circle cx="1132" cy="506" r="1.6"/><circle cx="1141" cy="526" r="1.7"/><circle cx="1132" cy="548" r="1.5"/>
+          <circle cx="1163" cy="494" r="1.7"/><circle cx="1172" cy="514" r="1.6"/><circle cx="1163" cy="534" r="1.7"/><circle cx="1172" cy="552" r="1.5"/>
+          <circle cx="1192" cy="510" r="1.6"/><circle cx="1194" cy="532" r="1.5"/><circle cx="1220" cy="486" r="1.8"/><circle cx="1231" cy="506" r="1.6"/><circle cx="1221" cy="526" r="1.7"/><circle cx="1232" cy="548" r="1.5"/>
+          <circle cx="1252" cy="502" r="1.6"/><circle cx="1254" cy="524" r="1.7"/><circle cx="1252" cy="546" r="1.5"/>
+          <circle cx="1280" cy="492" r="1.8"/><circle cx="1290" cy="512" r="1.6"/><circle cx="1281" cy="532" r="1.7"/><circle cx="1291" cy="552" r="1.5"/>
+          <circle cx="1312" cy="508" r="1.6"/><circle cx="1314" cy="530" r="1.5"/><circle cx="1340" cy="500" r="1.7"/><circle cx="1350" cy="520" r="1.6"/><circle cx="1340" cy="542" r="1.7"/>
+        </g>
+        <!-- 远山村落灯火 -->
+        <g fill="#f2c46a" opacity=".55">
+          <circle cx="470" cy="420" r="1.2"/><circle cx="640" cy="400" r="1.2"/><circle cx="820" cy="388" r="1.2"/><circle cx="990" cy="410" r="1.2"/><circle cx="300" cy="430" r="1.1"/>
+        </g>
+        <!-- 东江 -->
+        <rect x="0" y="558" width="1440" height="130" fill="url(#water-pc)"/>
+        <path d="M0,578 C300,612 560,560 900,596 C1140,622 1280,594 1440,604" stroke="#3f5f56" stroke-width="1.8" fill="none" opacity=".5"/>
+        <path d="M0,620 C320,652 600,604 920,640 C1160,666 1300,640 1440,650" stroke="#33504a" stroke-width="1.4" fill="none" opacity=".38"/>
+        <!-- 灯火倒影 -->
+        <g fill="#f2c46a">
+          <rect x="115" y="564" width="4" height="52" opacity=".2"/><rect x="172" y="564" width="5" height="74" opacity=".24"/>
+          <rect x="235" y="564" width="4" height="48" opacity=".16"/><rect x="292" y="564" width="5" height="70" opacity=".22"/>
+          <rect x="352" y="564" width="4" height="52" opacity=".17"/><rect x="412" y="564" width="4" height="46" opacity=".15"/>
+          <rect x="528" y="564" width="4" height="48" opacity=".16"/>
+          <rect x="920" y="564" width="5" height="70" opacity=".22"/><rect x="982" y="564" width="4" height="54" opacity=".18"/>
+          <rect x="1042" y="564" width="5" height="74" opacity=".23"/><rect x="1104" y="564" width="4" height="52" opacity=".17"/>
+          <rect x="1224" y="564" width="5" height="66" opacity=".2"/><rect x="1282" y="564" width="4" height="50" opacity=".16"/>
+          <rect x="1340" y="564" width="4" height="48" opacity=".18"/>
+        </g>
+        <rect x="0" y="606" width="1440" height="154" fill="url(#fade-pc)"/>
+      </svg>
+      <div class="hero-vignette"></div>
+      <div class="hero-inner">
+        <span class="tag">决策风洞 · 第一局</span>
+        <h1 class="serif">GDP破了千亿，<br>投资却在<span class="down">腰斩</span>，<br><span class="hl">2030年1600亿，</span>还够得着吗？</h1>
+        <p class="sub">别急着看报告。这一局，你不是旁观者——<br>先凭直觉下注，再翻开真实数字，然后<b style="color:#f2c46b">把100点决策重心压到五条路上</b>，看看你的选择在不同未来里，会把博罗带向哪里。</p>
+        <button class="btn primary" onclick="startGame()" id="startBtn">我来做一回决策 →</button>
+        <a class="oldlink" href="../index.html">‹ 先逛逛博罗风洞（数据版）</a>
+        <p class="meta">约需 5 分钟 · 真实公开数据 + 教学沙盘推演<br>所有概率为教学假设，不是预测，更不代表任何官方口径</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- 1 猜 -->
+  <section class="screen" id="s1">
+    <div class="kick">第 1 步 · 先凭直觉</div>
+    <h2>先猜，别查数据</h2>
+    <p class="lead">工厂还在满负荷转，可新项目开得少了。<br><b>你猜，2026年1—8月，博罗的工业投资，比去年同期变化了多少？</b></p>
+    <div class="card">
+      <div class="guess-stage">
+        <div class="guess-num" id="gNum">0%</div>
+        <div class="guess-unit">工业投资同比增速（你的猜测）</div>
+        <input type="range" id="gRange" min="-80" max="30" step="1" value="0">
+        <div class="scale"><span>-80%</span><span>-40%</span><span>0</span><span>+30%</span></div>
+        <div class="chips">
+          <div class="chip" onclick="setGuess(-20)">大概-20%</div>
+          <div class="chip" onclick="setGuess(-40)">可能腰斩</div>
+          <div class="chip" onclick="setGuess(0)">差不多持平</div>
+          <div class="chip" onclick="setGuess(10)">还在涨</div>
+          <div class="chip" onclick="setGuess(null)">我没概念</div>
+        </div>
+      </div>
+    </div>
+    <p class="note">先把你的直觉锁住，锁了就不能改——这才看得出，你对这座城市的真实感觉准不准。</p>
+  </section>
+
+  <!-- 2 翻 -->
+  <section class="screen" id="s2">
+    <div class="kick">第 2 步 · 翻开真实数字</div>
+    <h2>数字比你想的更狠</h2>
+    <div class="card reveal">
+      <div class="stamp" id="stamp">差 0 个点</div>
+      <div class="realcap">博罗县统计局公布，2026年1—8月工业投资</div>
+      <div class="real serif">−46.7%</div>
+      <div class="realcap" style="margin-top:8px">上半年一度低到 <b>−51.3%</b>，几乎腰斩</div>
+      <div class="scissor">
+        <div class="up"><div class="t">▲ 生产端在爬坡</div><div class="n">+8.9%</div><div class="d">规上工业增加值；工业用电+11.5%，电子设备+12.7%</div></div>
+        <div class="dn"><div class="t">▼ 投资端在失速</div><div class="n">−46.7%</div><div class="d">工业投资；固投−34.1%、基建−35.3%</div></div>
+      </div>
+    </div>
+    <div class="paper">
+      <div class="lab">为什么这道"剪刀差"很要命</div>
+      <p style="margin:8px 0 0;font-size:14px;line-height:1.75">今天的投资，是<b>三五年后</b>的产出。<br>工厂现在满产，交付的是过去的订单；而今年新开的项目少了一半，意味着 <b>2027—2028年的新产能，可能接不上</b>。</p>
+    </div>
+    <p class="src">来源：<a href="https://www.boluo.gov.cn/hzbltjj/gkmlpt/content/5/5860/post_5860920.html" target="_blank" rel="noopener">博罗县2026年1-8月经济运行简析（2026-09-29）</a></p>
+  </section>
+
+  <!-- 3 辨 -->
+  <section class="screen" id="s3">
+    <div class="kick">第 3 步 · 同一件事，四种说法</div>
+    <h2>你更信哪个解释？</h2>
+    <p class="lead">数字摆在这，<b>为什么会这样</b>，没有标准答案。点开每张卡，看支持和反对的证据，自己判断。</p>
+    <div id="stanceList"></div>
+    <button class="keep" id="keepBtn" onclick="toggleKeep()">我先保留自己的判断，不急着站队</button>
+    <p class="note">你可以选一个，也可以保留——真正的决策，常常是在多种解释都没被证伪时做的。</p>
+  </section>
+
+  <!-- 4 押 -->
+  <section class="screen" id="s4">
+    <div class="kick">第 4 步 · 该你出手了</div>
+    <h2>把100点决策重心，压到五条路</h2>
+    <p class="lead">看清问题后，你手里有 <b>100点</b> 决策重心（代表未来几年能调动的关注、资源和协调力度，<b>教学假设，不是真实财政</b>）。往哪条路压，哪条路就更被你看重。</p>
+    <div class="card">
+      <div class="alloc-head"><span class="pt">五条路</span><span class="tot">已分配 <span id="allocTot">100</span> / 100</span></div>
+      <div class="alloc-tip">拖动滑块，系统会自动配平到100点</div>
+      <div id="allocList"></div>
+      <div class="quick">
+        <button onclick="presetWeights('plan')">规划基准</button>
+        <button onclick="presetWeights('even')">平均用力</button>
+        <button onclick="presetWeights('engine')">重押双引擎</button>
+      </div>
+      <div class="profile" id="profile"></div>
+    </div>
+  </section>
+
+  <!-- 5 压 -->
+  <section class="screen" id="s5">
+    <div class="kick">第 5 步 · 给未来施压</div>
+    <h2>你最担心，未来变成哪种？</h2>
+    <p class="lead">你的押法已经定了。现在选一个<b>你最担心的局面</b>，同一个模型跑 2 万次，看 2030 年能不能摸到 1600 亿。</p>
+    <div id="sceneList"></div>
+    <div class="press-out" id="pressOut">
+      <div class="card" style="margin-top:14px">
+        <div class="bigresult"><span class="v" id="prHit">–</span><span class="u">摸到1600亿的概率</span></div>
+        <div class="vs">
+          <div class="side you"><div class="lab">你的押法</div><div class="num" id="prYou">–</div></div>
+          <div class="vs-mid">VS</div>
+          <div class="side base"><div class="lab">按规划基准走</div><div class="num" id="prBase">–</div></div>
+        </div>
+        <div class="quant">
+          <div>悲观区间(P10)<b id="prP10">–</b></div>
+          <div>中位数(P50)<b id="prP50">–</b></div>
+          <div>乐观区间(P90)<b id="prP90">–</b></div>
+        </div>
+        <div id="chart-mountain"></div>
+      </div>
+    </div>
+    <p class="note">同一套五条路、同一个随机种子，结果只由"局面"和"你的押法"决定——可以复盘、可以重算。</p>
+  </section>
+
+  <!-- 6 比 -->
+  <section class="screen" id="s6">
+    <div class="kick">第 6 步 · 看你的选择在不同未来的命运</div>
+    <h2>没有一种押法，能通吃所有未来</h2>
+    <p class="lead">把你的押法，和几种典型打法并排，放进五个未来里跑。<b>真正的问题不是"哪个数字最高"，而是"你在赌哪个未来，赌错了赔得起吗"。</b></p>
+    <div class="card" style="padding:12px">
+      <div class="mtx-wrap"><table class="mtx" id="mtx"></table></div>
+      <div class="mtx-legend">数字=摸到1600亿的概率（%，同一模型2万次）。行是打法，列是未来。每行最高的格子，就是那种打法押注的未来。</div>
+    </div>
+    <div class="card takeaway" id="takeaway"></div>
+    <div class="card">
+      <div class="lab" style="font-size:12px;color:var(--amber);letter-spacing:1px;font-weight:700;margin-bottom:8px">五条路，各自的代价</div>
+      <div class="costtags" id="costtags"></div>
+    </div>
+  </section>
+
+  <!-- 7 留 -->
+  <section class="screen" id="s7">
+    <div class="kick">第 7 步 · 把判断留下</div>
+    <h2>你的判断，值得被时间检验</h2>
+    <p class="lead">一局走完，把你的判断存成一张卡。<b>先别公布答案——发给朋友，让他也盲测一遍，再看你们的分歧。</b></p>
+    <div id="challengeBanner" class="challenge-banner"></div>
+    <div class="nickrow">
+      <input id="nick" maxlength="10" placeholder="留个名字（选填，默认显示“我”）">
+    </div>
+    <canvas id="cardCanvas" style="display:none" width="750" height="1334"></canvas>
+    <img class="card-preview" id="cardPreview" alt="我的判断卡">
+    <div class="share-row">
+      <button class="btn primary" onclick="downloadCard()">下载判断卡</button>
+      <button class="btn secondary" onclick="copyLink()">复制挑战链接</button>
+    </div>
+    <div class="qrbox">
+      <img id="qrImg" alt="挑战二维码">
+      <div class="qt">扫码或转发链接，<b>先让朋友独立做完</b>，他才能看到你的选择。<br>分歧，才是照见彼此盲区的镜子。</div>
+    </div>
+    <div class="paper open-letter">
+      <div class="lab">时间开奖</div>
+      <p style="margin:8px 0 0;font-size:14px;line-height:1.75">这张卡记下的是你 <b>2026 年</b> 的判断。工业投资的数字已经揭晓，但 <b>2030 年能不能到 1600 亿、新引擎能不能真正接棒</b>，还要等几年。<br>把卡存好，到时候回来，对一对答案。</p>
+    </div>
+    <div class="copyhint" id="copyhint"></div>
+  </section>
+
+</div>
+
+<!-- 底部操作 -->
+<div class="dock" id="dock" style="display:none">
+  <div class="inner">
+    <button class="btn ghost" id="backBtn" onclick="goBack()">上一步</button>
+    <button class="btn primary" id="nextBtn" onclick="goNext()">下一步</button>
+  </div>
+</div>
+
+<!-- 说明弹层 -->
+<div class="modal" id="aboutModal">
+  <div class="box">
+    <button class="x" onclick="closeAbout()">×</button>
+    <h3>这是什么</h3>
+    <p><b>博罗决策风洞 2.0</b> 是一个决策训练沙盘，不是预测系统。</p>
+    <p>开局的工业投资、GDP、规划目标等数字，全部来自博罗县统计局等公开渠道并附原文链接；之后的"押重心、跑概率"，是用透明规则做的<b>教学推演</b>，用来体会"判断—行动—后果—条件"的关系，<b>不是任何官方结论，也不代表真实概率</b>。</p>
+    <p>模型固定随机种子、每次可复算；五条路、情景、规则都在公开的 model.js 里。</p>
+  </div>
+</div>
+
+<script>
+/* ============ 数据 ============ */
+var SEED=42,N=20000;
+var REAL_INV=-46.7;
+var PATHS=[
+ {key:'engine',name:'双引擎',sub:'电子信息+新能源',color:'#5b9bd5',mu:250,
+  cost:'天花板高、见效快、波动大；项目和投资随外部链主走，本地留存不确定'},
+ {key:'base',name:'工业底盘',sub:'智能装备与配套',color:'#a98bea',mu:150,
+  cost:'稳、托底、保就业，见效慢；利润率不高，但抗外部冲击'},
+ {key:'tour',name:'三产文旅',sub:'罗浮山+消费',color:'#e2b04e',mu:110,
+  cost:'慢变量，带动本地就业和消费；靠游客转化，短期撑不起总量'},
+ {key:'link',name:'融深融莞',sub:'通道与承接',color:'#3fb6b0',mu:55,
+  cost:'体量小，依赖深莞外溢；桥修了，人未必来、产业未必留'},
+ {key:'agri',name:'特色农业',sub:'山茶菜心',color:'#5fb877',mu:30,
+  cost:'小而稳、共富效益强；规模最小，难以扛起总量'}
+];
+var SUMM=PATHS.reduce(function(s,p){return s+p.mu;},0); // 595
+var BASE_W=PATHS.map(function(p){return p.mu/SUMM;});
+function clamp(x,lo,hi){return Math.max(lo,Math.min(hi,x));}
+
+var SCENES=[
+ {key:'base',ic:'🟢',name:'规划兑现',desc:'三大产业按十五五规划推进，园区目标如期达成',
+  sprout:'现实苗头：电子设备+12.7%、电气机械+14.1%，新引擎在放量。',adjust:function(ps){return ps;}},
+ {key:'upside',ic:'🚀',name:'双引擎超预期',desc:'电子信息、储能、新能源项目提前放量，招商超预期',
+  sprout:'现实苗头：欣旺达广东首座独立储能电站已并网，锂威电芯2027年投产。',adjust:function(ps){ps[0].mu*=1.15;ps[1].mu*=1.10;return ps;}},
+ {key:'investment',ic:'📉',name:'投资持续低迷',desc:'工业投资−46.7%延续，新项目开工投产放缓',
+  sprout:'现实苗头：2026年计划工业投资110亿，上半年一度腰斩，缺口巨大。',adjust:function(ps){ps[0].mu*=0.70;ps[1].mu*=0.75;ps[3].mu*=0.50;return ps;}},
+ {key:'property',ic:'🏚️',name:'房地产继续探底',desc:'开发投资−32.5%、销售仍−22%，拖累三产与基建',
+  sprout:'现实苗头：商品房销售面积已较2020年高点跌超七成。',adjust:function(ps){ps[2].mu*=0.70;return ps;}},
+ {key:'combined',ic:'⛈️',name:'投资+地产叠加',desc:'投资失速与地产探底同时发生，财政基建同步承压',
+  sprout:'现实苗头：固投−34.1%、基建−35.3%；一般公共预算收入仅+0.4%。',adjust:function(ps){ps[0].mu*=0.65;ps[1].mu*=0.70;ps[2].mu*=0.70;ps[3].mu*=0.45;return ps;}}
+];
+var SCENE_ORDER=['base','upside','investment','property','combined'];
+
+var STANCES=[
+ {key:'structure',badge:'转型视角',color:'#5b9bd5',
+  oneline:'结构性转型阵痛，<b>阵痛是暂时的</b>，新引擎正在接棒',
+  pro:[
+   ['生产端在涨：规上工业增加值+8.9%，电子设备+12.7%、电气机械+14.1%，两行业贡献率59.3%','1-8月简析'],
+   ['高技术制造业总产值+11.1%，拉动全县规上工业总产值3.2个百分点','2026上半年分析'],
+   ['欣旺达储能电站并网、锂威电芯2027年投产，新项目在落地','政府公开信息 BL-2026-0001/0002']],
+  con:[
+   ['投资是三五年后的产出，今年工业投资−46.7%，意味着2027—2028新产能可能接续不上','1-8月简析'],
+   ['2026计划工业投资110亿，上半年腰斩，缺口巨大','2026计划指标表']]},
+ {key:'confidence',badge:'企业视角',color:'#e0a85a',
+  oneline:'企业投资信心不足，<b>不敢投、不敢扩</b>，需求没真正转暖',
+  pro:[
+   ['工业投资−46.7%、固投−34.1%，是市场主体用脚投票','1-8月简析'],
+   ['2025年金融业增加值−3.7%，存贷款双降，信用扩张乏力','2025统计公报'],
+   ['一般公共预算收入仅+0.4%，政府腾挪空间同样有限','1-8月简析']],
+  con:[
+   ['2025年外贸进出口+26.1%，外需并不差；工业用电+11.5%，企业仍在生产','统计公报/简析'],
+   ['欣旺达、锂威等新投产项目仍在推进，并非全行业观望','政府公开信息']]},
+ {key:'stat',badge:'统计视角',color:'#3fb6b0',
+  oneline:'可能有<b>统计口径与入库节奏</b>扰动，别只盯一个数',
+  pro:[
+   ['降幅在收窄：上半年−36.4%→1-7月−35.0%→1-8月−34.1%','固投月度累计'],
+   ['固投按入库项目进度统计，大项目跨年、入库时点会造成月度大幅波动','统计口径说明'],
+   ['生产+8.9%与投资−46.7%同时出现，部分可由"前期投资形成的产能现在投产"的时滞解释','']],
+  con:[
+   ['连续第二年负增长（2025固投−18.8%），不像单月噪声','2025统计公报'],
+   ['工业投资−46.7%、基建−35.3%、房地产−32.5%三个分项同步深跌，口径难解释全部','1-8月简析']]},
+ {key:'property',badge:'周期视角',color:'#d98a7a',
+  oneline:'根子在<b>房地产深度调整</b>，土地财政和上下游被带下来',
+  pro:[
+   ['2025房地产开发投资−47.6%，2026年1-8月−32.5%；销售面积较2020高点跌超七成','统计公报/简析'],
+   ['房地产带动建材、装修、家电、基建配套，投资链条长',''],
+   ['基建投资−35.3%，与土地财政承压相关','1-8月简析']],
+  con:[
+   ['工业投资−46.7%比房地产−32.5%跌得更深，说明不只是地产的事','1-8月简析'],
+   ['博罗增长主要靠电子信息、新能源制造业，与房地产周期相关性在下降','']]}
+];
+
+var PRESETS={
+  plan:[42,25,19,9,5],
+  engine:[60,15,10,10,5],
+  even:[20,20,20,20,20],
+  tour:[18,14,42,16,10]
+};
+
+/* ============ 状态 ============ */
+var state={step:0,guess:null,guessNoIdea:false,stance:null,keep:false,
+  raw:PRESETS.plan.slice(),w:PRESETS.plan.slice(),worry:'investment',nick:'',
+  challenge:null,chResults:null};
+
+/* 解析挑战链接 */
+function parseChallenge(){
+  try{
+    var c=new URLSearchParams(location.search).get('c');
+    if(!c) return null;
+    c=c.replace(/-/g,'+').replace(/_/g,'/');
+    while(c.length%4)c+='=';
+    var o=JSON.parse(decodeURIComponent(escape(atob(c))));
+    return o;
+  }catch(e){return null;}
+}
+function encodeChallenge(o){
+  var s=btoa(unescape(encodeURIComponent(JSON.stringify(o))));
+  return s.replace(/\+/g,'-').replace(/\//g,'_').replace(/=+$/,'');
+}
+
+/* ============ 模型 ============ */
+function pathsFor(sceneKey,w){
+  var ps=HT.DEFAULT_PATHS.map(function(p){return {mu:p.mu,sd:p.sd,name:p.name,color:p.color};});
+  var sc=SCENES.find(function(x){return x.key===sceneKey;});
+  ps=sc.adjust(ps);
+  if(w){
+    var wn=w.map(function(x){return x/100;});
+    ps=ps.map(function(p,i){
+      var e=wn[i]/BASE_W[i];
+      var f=clamp(e,0.3,1.6);
+      return {mu:Math.max(0,p.mu*f),sd:p.sd,name:p.name,color:p.color};
+    });
+  }
+  return ps;
+}
+function runPlan(sceneKey,w){return HT.run(SEED,N,pathsFor(sceneKey,w));}
+function fmt(n){return Math.round(n).toLocaleString('zh-CN');}
+
+/* ============ 屏幕导航 ============ */
+var stepTitles=['猜','翻','辨','押','压','比','留'];
+function buildDots(){
+  var html='';
+  for(var i=0;i<7;i++){
+    html+='<div class="dot" data-i="'+i+'"><i>'+(i+1)+'</i></div>';
+  }
+  document.getElementById('dots').innerHTML=html;
+}
+function render(){
+  for(var i=0;i<=7;i++){
+    var el=document.getElementById('s'+i);
+    if(el)el.classList.toggle('show',state.step===i);
+  }
+  var inGame=state.step>=1;
+  document.getElementById('topbar').style.display=inGame?'flex':'none';
+  document.getElementById('dock').style.display=inGame?'flex':'none';
+  document.querySelectorAll('.dot').forEach(function(d,i){
+    d.classList.toggle('on',i===state.step-1);
+    d.classList.toggle('done',i<state.step-1);
+  });
+  document.getElementById('backBtn').style.visibility=(state.step===1)?'hidden':'visible';
+  var nb=document.getElementById('nextBtn');
+  if(state.step===7){nb.style.display='none';}
+  else{nb.style.display='block';nb.textContent=(state.step===6)?'生成我的判断卡 →':'下一步';}
+  window.scrollTo(0,0);
+}
+function startGame(){
+  state.challenge=parseChallenge();
+  var notice=document.getElementById('challengeNotice');
+  if(state.challenge){
+    notice.innerHTML='📨 <b>'+(state.challenge.n||'朋友')+' 发来挑战</b>：先独立做完你的判断，最后一步再揭晓他的选择——提前看了，就照不见自己。';
+    notice.classList.add('show');
+  }else{notice.classList.remove('show');}
+  state.step=1;render();
+}
+function goBack(){if(state.step>1){state.step--;render();}}
+function canNext(){
+  if(state.step===1) return state.guessNoIdea||state.guess!==null;
+  if(state.step===3) return state.keep||state.stance!==null;
+  return true;
+}
+function goNext(){
+  if(!canNext()){
+    if(state.step===1) toast('先拖一下滑块，或点"我没概念"');
+    if(state.step===3) toast('选一个你更信的解释，或点"保留判断"');
+    return;
+  }
+  if(state.step===5) state.worry=state.worry||'investment';
+  if(state.step<7){state.step++;render();
+    if(state.step===2) animateReveal();
+    if(state.step===5) renderScenes();
+    if(state.step===6) buildMatrix();
+    if(state.step===7){buildCard();renderChallengeCompare();}
+  }
+}
+function toast(msg){
+  var t=document.createElement('div');
+  t.textContent=msg;
+  t.style.cssText='position:fixed;left:50%;bottom:110px;transform:translateX(-50%);background:rgba(20,26,20,.96);color:#f2c46b;border:1px solid rgba(217,164,65,.5);padding:11px 20px;border-radius:12px;font-size:13px;z-index:200;white-space:nowrap';
+  document.body.appendChild(t);setTimeout(function(){t.remove();},1800);
+}
+function openAbout(){document.getElementById('aboutModal').classList.add('show');}
+function closeAbout(){document.getElementById('aboutModal').classList.remove('show');}
+
+/* ============ 1 猜 ============ */
+function renderGuess(){
+  var r=document.getElementById('gRange');
+  r.addEventListener('input',function(){
+    state.guess=parseInt(r.value);state.guessNoIdea=false;
+    paintGuess();
+  });
+  paintGuess();
+}
+function paintGuess(){
+  var el=document.getElementById('gNum');
+  if(state.guessNoIdea){
+    el.textContent='?';el.className='guess-num';
+    document.querySelectorAll('.chip').forEach(function(c){c.classList.remove('on');});
+    return;
+  }
+  var v=state.guess===null?0:state.guess;
+  el.textContent=(v>0?'+':'')+v+'%';
+  el.className='guess-num '+(v<0?'neg':v>0?'pos':'');
+  document.getElementById('gRange').value=v;
+  document.querySelectorAll('.chip').forEach(function(c){c.classList.remove('on');});
+}
+function setGuess(v){
+  if(v===null){state.guessNoIdea=true;state.guess=null;}
+  else{state.guessNoIdea=false;state.guess=v;}
+  paintGuess();
+  if(v===null){var chips=document.querySelectorAll('.chip');chips[chips.length-1].classList.add('on');}
+}
+
+/* ============ 2 翻 ============ */
+function animateReveal(){
+  setTimeout(function(){
+    var st=document.getElementById('stamp');
+    var diff;
+    if(state.guessNoIdea){st.textContent='留个悬念';}
+    else{diff=Math.abs(state.guess-REAL_INV);st.textContent='差 '+diff.toFixed(1)+' 个点';}
+    st.classList.add('show');
+  },250);
+}
+
+/* ============ 3 辨 ============ */
+function renderStances(){
+  var box=document.getElementById('stanceList');
+  box.innerHTML=STANCES.map(function(s,i){
+    return '<div class="stance" data-k="'+s.key+'" onclick="toggleStance(this)">'+
+      '<div class="head"><div class="view">'+
+        '<span class="badge" style="background:'+s.color+'22;color:'+s.color+';border:1px solid '+s.color+'">'+s.badge+'</span>'+
+        '<div class="oneline">'+s.oneline+'</div>'+
+      '</div><div class="toggle">看证据 ▾</div></div>'+
+      '<div class="evi">'+
+        '<div class="col pro"><h4>支持的证据</h4><ul>'+
+          s.pro.map(function(e){return '<li>'+e[0]+(e[1]?'<div class="r">— '+e[1]+'</div>':'')+'</li>';}).join('')+
+        '</ul></div>'+
+        '<div class="col con"><h4>反对的证据</h4><ul>'+
+          s.con.map(function(e){return '<li>'+e[0]+(e[1]?'<div class="r">— '+e[1]+'</div>':'')+'</li>';}).join('')+
+        '</ul></div>'+
+      '</div></div>';
+  }).join('');
+}
+function toggleStance(el){
+  var k=el.dataset.k;
+  var wasSel=state.stance===k && el.classList.contains('sel');
+  // 收起/展开证据
+  el.classList.toggle('open');
+  if(state.stance===k){
+    // 第二次点：仅切换展开
+    return;
+  }
+  state.stance=k;state.keep=false;
+  document.querySelectorAll('.stance').forEach(function(x){x.classList.remove('sel');});
+  el.classList.add('sel');
+  document.getElementById('keepBtn').classList.remove('on');
+}
+function toggleKeep(){
+  state.keep=!state.keep;
+  state.stance=null;
+  document.querySelectorAll('.stance').forEach(function(x){x.classList.remove('sel');});
+  document.getElementById('keepBtn').classList.toggle('on',state.keep);
+}
+
+/* ============ 4 押 ============ */
+function renderAlloc(){
+  var box=document.getElementById('allocList');
+  box.innerHTML=PATHS.map(function(p,i){
+    return '<div class="path-row">'+
+      '<div class="pr-top"><span class="pname" style="color:'+p.color+'">'+p.name+'<small>'+p.sub+'</small></span>'+
+      '<span class="pval" style="color:'+p.color+'"><span id="wv'+i+'">0</span> 点</span></div>'+
+      '<input type="range" min="0" max="100" step="1" id="ar'+i+'" value="'+state.raw[i]+'" style="--c:'+p.color+'">'+
+    '</div>';
+  }).join('');
+  PATHS.forEach(function(p,i){
+    document.getElementById('ar'+i).addEventListener('input',function(){
+      state.raw[i]=parseInt(this.value);
+      normalizeWeights();
+    });
+  });
+  normalizeWeights();
+  refreshProfile();
+}
+function normalizeWeights(){
+  var sum=state.raw.reduce(function(a,b){return a+b;},0);
+  if(sum<=0){state.w=PATHS.map(function(){return 20;});}
+  else{
+    var w=state.raw.map(function(x){return x/sum*100;});
+    var rounded=w.map(Math.round);
+    var diff=100-rounded.reduce(function(a,b){return a+b;},0);
+    // 修正最大项
+    var mi=0;rounded.forEach(function(v,i){if(v>rounded[mi])mi=i;});
+    rounded[mi]+=diff;
+    state.w=rounded;
+  }
+  PATHS.forEach(function(p,i){
+    document.getElementById('wv'+i).textContent=state.w[i];
+    document.getElementById('ar'+i).style.setProperty('--fill',state.w[i]+'%');
+  });
+  document.getElementById('allocTot').textContent=state.w.reduce(function(a,b){return a+b;},0);
+}
+function presetWeights(k){
+  state.raw=PRESETS[k].slice();state.w=PRESETS[k].slice();
+  PATHS.forEach(function(p,i){document.getElementById('ar'+i).value=state.raw[i];});
+  normalizeWeights();refreshProfile();
+}
+function topPath(){
+  var mi=0;state.w.forEach(function(v,i){if(v>state.w[mi])mi=i;});
+  return {i:mi,p:PATHS[mi],w:state.w[mi]};
+}
+function refreshProfile(){
+  var t=topPath();
+  var concentration=t.w;
+  var style;
+  if(concentration>=45) style='你在<b>重仓押注「'+t.p.name+'」</b>，赌它能跑出来——上限高，一旦逆风，也最受伤。';
+  else if(concentration>=30) style='你的重心偏向<b>「'+t.p.name+'」</b>，同时没完全放弃其他路，是有重点的打法。';
+  else style='你几乎是<b>平均用力</b>，五条路都照顾——稳，但没有重心，资源会被摊薄。';
+  // 对新引擎态度
+  var engine=state.w[0];
+  var more='';
+  if(engine>=45) more='你把宝主要压在新引擎上，等于赌电子信息和新能源能接棒。';
+  else if(engine<30) more='你对新引擎押得偏轻，更多在守存量。';
+  document.getElementById('profile').innerHTML=style+'<br>'+more+'<br><span style="color:#9fb0a1;font-size:12px">具体数字先不揭晓，等你压完、比完，再看这套打法在不同未来里的命运。</span>';
+}
+function persona(){
+  var w=state.w;var engine=w[0],base=w[1],tour=w[2];
+  var max=Math.max.apply(null,w),min=Math.min.apply(null,w);
+  if(engine>=45)return{school:'激进引擎派',color:'#9c2f22',
+    comment:'你赌赢了上限，也把宝押在链主会不会留下、本地配套接不接得住上——顺风你赢得最多，逆风你也最疼。'};
+  if(base>=38)return{school:'托底守成派',color:'#6b4fa0',
+    comment:'你把重心放在工业底盘，想稳就业、扛风浪。底盘在，心不慌，代价是慢，上限也被压着。'};
+  if(tour>=35)return{school:'慢变量派',color:'#a8742a',
+    comment:'你更信人气、消费和本地就业，可文旅短期撑不起总量，回报要慢慢等。'};
+  if(engine>=32)return{school:'引擎为主、多路并进',color:'#2f6094',
+    comment:'你以新引擎为重心，又留了后路。关键不是你押了多少，是新引擎到底能不能兑现。'};
+  if(max-min<=10)return{school:'均衡摊派',color:'#6b6148',
+    comment:'五条路都舍不得放，资源被摊薄，容易样样都做、样样平庸——决策没有重心。'};
+  return{school:'有重心的务实派',color:'#3a6b4a',
+    comment:'你有侧重又没押死一条路。世上没有完美解，剩下的就是在代价之间做清醒的取舍。'};
+}
+
+/* ============ 5 压 ============ */
+function renderScenes(){
+  var box=document.getElementById('sceneList');
+  box.innerHTML=SCENES.map(function(s){
+    var sel=state.worry===s.key;
+    return '<div class="scene-opt'+(sel?' sel':'')+'" data-k="'+s.key+'" onclick="pickScene(this)">'+
+      '<div class="ic">'+s.ic+'</div><div class="tx">'+
+      '<div class="nm">'+s.name+'</div><div class="ds">'+s.desc+'</div>'+
+      '<div class="spr">'+s.sprout+'</div></div></div>';
+  }).join('');
+  runPress(false);
+}
+function pickScene(el){
+  state.worry=el.dataset.k;
+  document.querySelectorAll('.scene-opt').forEach(function(x){x.classList.remove('sel');});
+  el.classList.add('sel');
+  runPress(true);
+}
+var chart=null;
+function runPress(doScroll){
+  var sc=state.worry;
+  var you=runPlan(sc,state.w);
+  var base=runPlan(sc,PRESETS.plan);
+  document.getElementById('pressOut').classList.add('show');
+  document.getElementById('prHit').textContent=you.hit.toFixed(1)+'%';
+  document.getElementById('prYou').textContent=you.hit.toFixed(1)+'%';
+  document.getElementById('prBase').textContent=base.hit.toFixed(1)+'%';
+  document.getElementById('prP10').textContent=fmt(you.p10)+'亿';
+  document.getElementById('prP50').textContent=fmt(you.p50)+'亿';
+  document.getElementById('prP90').textContent=fmt(you.p90)+'亿';
+  drawMountain(you,base);
+  if(doScroll){setTimeout(function(){
+    document.getElementById('pressOut').scrollIntoView({behavior:'smooth',block:'start'});
+  },120);}
+}
+function drawMountain(you,base){
+  var dom=document.getElementById('chart-mountain');
+  if(!window.echarts){dom.style.display='none';return;}
+  if(chart){chart.dispose();}
+  chart=echarts.init(dom);
+  // 用结果样本做直方图（1000~1600，每40一桶）
+  function hist(raw){
+    var bins={};for(var i=1000;i<=1800;i+=40)bins[i]=0;
+    raw.forEach(function(v){var k=Math.floor(v/40)*40;if(bins[k]!==undefined)bins[k]++;});
+    return Object.keys(bins).map(function(k){return [+k,bins[k]];});
+  }
+  var dy=hist(you.rawResults),db=hist(base.rawResults);
+  chart.setOption({
+    grid:{left:8,right:12,top:26,bottom:26},
+    title:{text:'2030年GDP分布（2万次）',left:'center',top:0,textStyle:{color:'#aab6a6',fontSize:11,fontWeight:400}},
+    legend:{data:['你的押法','规划基准'],bottom:0,textStyle:{color:'#cdd7c8',fontSize:10},itemWidth:12,itemHeight:8},
+    xAxis:{type:'value',min:1000,max:1800,axisLabel:{color:'#8da090',fontSize:9,formatter:'{value}'},
+      splitLine:{lineStyle:{color:'rgba(255,255,255,.05)'}}},
+    yAxis:{type:'value',show:false},
+    series:[
+      {name:'规划基准',type:'line',data:db,smooth:true,areaStyle:{color:'rgba(255,255,255,.10)',opacity:.5},lineStyle:{width:1,color:'rgba(200,210,200,.6)'},symbol:'none',xAxisIndex:0},
+      {name:'你的押法',type:'line',data:dy,smooth:true,areaStyle:{color:'rgba(217,164,65,.28)'},lineStyle:{width:2,color:'#d9a441'},symbol:'none',
+       markLine:{silent:true,symbol:'none',label:{formatter:'1600亿目标',color:'#e0816f',fontSize:9,position:'insideEndTop'},
+         lineStyle:{color:'#c2402f',type:'dashed',width:1.5},data:[{xAxis:1600}]}}
+    ]
+  });
+}
+
+/* ============ 6 比 ============ */
+var ROWS=[
+ {key:'me',name:'你的押法',w:null,me:true},
+ {key:'plan',name:'规划基准',w:PRESETS.plan},
+ {key:'engine',name:'重押双引擎',w:PRESETS.engine},
+ {key:'even',name:'平均用力',w:PRESETS.even},
+ {key:'tour',name:'重押文旅',w:PRESETS.tour}
+];
+function buildMatrix(){
+  ROWS[0].w=state.w;
+  var head='<tr><th>打法 ＼ 未来</th>'+SCENE_ORDER.map(function(k){
+    var s=SCENES.find(function(x){return x.key===k;});
+    return '<th>'+s.ic+'<br>'+s.name+'</th>';
+  }).join('')+'</tr>';
+  var body=ROWS.map(function(r){
+    var vals=SCENE_ORDER.map(function(k){return runPlan(k,r.w).hit;});
+    var max=Math.max.apply(null,vals);
+    var cells=vals.map(function(v,i){
+      var hot=(v===max)?'style="color:#f2c46b"':'';
+      var opacity=0.35+0.65*Math.min(1,v/75);
+      return '<td><span class="cell" '+hot+' style="opacity:'+opacity.toFixed(2)+'">'+v.toFixed(1)+'</span></td>';
+    }).join('');
+    return '<tr class="'+(r.me?'me':'')+'"><td class="pname">'+(r.me?'👉 ':'')+r.name+'</td>'+cells+'</tr>';
+  }).join('');
+  document.getElementById('mtx').innerHTML=head+body;
+  buildTakeaway();
+  document.getElementById('costtags').innerHTML=PATHS.map(function(p){
+    return '<span style="border-color:'+p.color+'55"><b style="color:'+p.color+'">'+p.name+'</b>：'+p.cost+'</span>';
+  }).join('');
+}
+function buildTakeaway(){
+  var invYou=runPlan('investment',state.w).hit;
+  var invPlan=runPlan('investment',PRESETS.plan).hit;
+  var upYou=runPlan('upside',state.w).hit;
+  var upEngine=runPlan('upside',PRESETS.engine).hit;
+  var t=topPath();
+  var html='';
+  html+='<div class="tk"><span class="n">1</span><div>在你最担心的「投资持续低迷」里，<b>你的押法只有 '+invYou.toFixed(1)+'%，规划基准 '+invPlan.toFixed(1)+'%，都在个位数</b>。把五条路的存量挪来挪去，填不上新投资熄火的缺口——<b>这不是一道分配题</b>。</div></div>';
+  html+='<div class="tk"><span class="n">2</span><div>真正的分水岭是<b>新引擎能不能兑现</b>：同样的牌，「双引擎超预期」时达标率回到约 '+upEngine.toFixed(0)+'%，「叠加冲击」时只剩约 2%。你押在新引擎上的是 <b>'+state.w[0]+' 点</b>，这才是决定命运的那个判断。</div></div>';
+  html+='<div class="tk"><span class="n">3</span><div>没有一种打法通吃：<b>重押双引擎</b>在顺风时最高、逆风时最伤；<b>平均用力</b>稳，却把资源摊薄、样样平庸；<b>重押文旅</b>能带就业消费，却撑不起短期总量。决策不是选"最优解"，是想清楚<b>你为哪个未来下注、赌错了赔不赔得起</b>。</div></div>';
+  document.getElementById('takeaway').innerHTML=html;
+}
+
+/* ============ 7 留：判断卡 ============ */
+function buildCard(){
+  state.nick=document.getElementById('nick').value.trim()||'我';
+  var canvas=document.getElementById('cardCanvas');
+  var ctx=canvas.getContext('2d');
+  var W=750,H=1334;
+  var g=ctx.createLinearGradient(0,0,0,H);
+  g.addColorStop(0,'#1a231b');g.addColorStop(1,'#10160f');
+  ctx.fillStyle=g;ctx.fillRect(0,0,W,H);
+  var rg=ctx.createRadialGradient(W/2,70,20,W/2,180,520);
+  rg.addColorStop(0,'rgba(240,196,107,.22)');rg.addColorStop(1,'rgba(0,0,0,0)');
+  ctx.fillStyle=rg;ctx.fillRect(0,0,W,H);
+  // 纸卡
+  var px=40,py=100,pw=W-80,ph=1156;
+  ctx.fillStyle='#efe5cc';roundRect(ctx,px,py,pw,ph,18);ctx.fill();
+  ctx.strokeStyle='#cdb98a';ctx.lineWidth=2;ctx.stroke();
+  // 图钉
+  ctx.fillStyle='#c2402f';ctx.beginPath();ctx.arc(W/2,py-6,13,0,7);ctx.fill();
+  ctx.fillStyle='rgba(255,255,255,.35)';ctx.beginPath();ctx.arc(W/2-4,py-10,4,0,7);ctx.fill();
+  // 标题
+  ctx.textAlign='center';
+  ctx.fillStyle='#9c2f22';ctx.font='700 23px "Songti SC",serif';
+  ctx.fillText('博罗决策风洞 · 我的判断卡',W/2,py+44);
+  ctx.fillStyle='#5b5138';ctx.font='14px sans-serif';
+  ctx.fillText('第一局：投资腰斩，2030年1600亿怎么保',W/2,py+72);
+  ctx.strokeStyle='#d9cba0';ctx.lineWidth=1;ctx.beginPath();ctx.moveTo(W/2-130,py+90);ctx.lineTo(W/2+130,py+90);ctx.stroke();
+  // 内容
+  var ix=px+34,iw=pw-68;
+  var y=py+126;
+  ctx.textAlign='left';
+  function lab(t){ctx.textAlign='left';ctx.fillStyle='#a8742a';ctx.font='700 16px sans-serif';ctx.fillText(t,ix,y);y+=28;}
+  function big(t,color,size){ctx.textAlign='left';ctx.fillStyle=color;ctx.font='900 '+(size||30)+'px "Songti SC",serif';ctx.fillText(t,ix,y);y+=(size||30)+13;}
+  function para(t,color,size){
+    ctx.textAlign='left';ctx.fillStyle=color||'#6b6148';ctx.font=''+(size||15)+'px sans-serif';
+    var lh=(size||15)+9;
+    wrapLines(ctx,t,iw).forEach(function(l){ctx.fillText(l,ix,y);y+=lh;});
+    y+=6;
+  }
+  // ① 直觉
+  lab('① 我的直觉');
+  if(state.guessNoIdea){big('当时没敢猜','#2c2616',28);}
+  else{
+    big('我猜 '+(state.guess>0?'+':'')+state.guess+'%','#2c2616',30);
+    var diff=Math.abs(state.guess-REAL_INV);
+    ctx.fillStyle='#c2402f';ctx.font='700 17px sans-serif';ctx.fillText('真实 −46.7%，差 '+diff.toFixed(1)+' 个点',ix,y);y+=30;
+  }
+  y+=8;
+  // ② 立场
+  lab('② 我更倾向的解释');
+  var st=state.keep?null:STANCES.find(function(s){return s.key===state.stance;});
+  if(st){big(st.badge,st.color,26);para(st.oneline.replace(/<[^>]+>/g,''),'#6b6148',15);}
+  else{big('保留自己的判断','#5b5138',26);}
+  y+=6;
+  // ③ 押注
+  lab('③ 我的100点决策重心');
+  PATHS.forEach(function(p,i){
+    ctx.fillStyle='#e0d4b4';roundRect(ctx,ix,y,iw,20,6);ctx.fill();
+    ctx.fillStyle=p.color;roundRect(ctx,ix,y,iw*(state.w[i]/100),20,6);ctx.fill();
+    ctx.fillStyle='#2c2616';ctx.font='700 14px sans-serif';ctx.textAlign='left';ctx.fillText(p.name,ix+10,y+15);
+    ctx.textAlign='right';ctx.fillText(state.w[i]+'点',ix+iw-10,y+15);
+    y+=26;
+  });
+  y+=30;
+  // ④ 担心未来
+  lab('④ 我最担心的未来');
+  var worry=SCENES.find(function(x){return x.key===state.worry;});
+  var hit=runPlan(state.worry,state.w).hit;
+  big(worry.name,'#9c2f22',24);
+  para('我的押法在这个未来里，摸到1600亿概率约 '+hit.toFixed(1)+'%','#6b6148',16);
+  // 系统画像框
+  var pe=persona();
+  var fx=ix,fy=736,fw=iw,fh=178;
+  ctx.fillStyle='rgba(217,164,65,.14)';roundRect(ctx,fx,fy,fw,fh,12);ctx.fill();
+  ctx.strokeStyle='#cdb98a';ctx.lineWidth=1.5;roundRect(ctx,fx,fy,fw,fh,12);ctx.stroke();
+  ctx.fillStyle='#a8742a';ctx.font='700 15px sans-serif';ctx.textAlign='left';ctx.fillText('系统画像 · 你的打法',fx+18,fy+30);
+  ctx.fillStyle=pe.color;ctx.font='900 25px "Songti SC",serif';ctx.fillText(pe.school,fx+18,fy+66);
+  ctx.fillStyle='#5b5138';ctx.font='14px sans-serif';
+  var cl=wrapLines(ctx,pe.comment,fw-36);
+  ctx.fillText(cl[0],fx+18,fy+96);if(cl[1])ctx.fillText(cl[1],fx+18,fy+118);if(cl[2])ctx.fillText(cl[2],fx+18,fy+140);
+  // 一句话
+  ctx.textAlign='center';
+  ctx.fillStyle='#5b5138';ctx.font='italic 17px "Songti SC",serif';
+  ctx.fillText('「不猜数字，做选择；不赌运气，看条件。」',W/2,960);
+  ctx.fillStyle='#2c2616';ctx.font='700 17px sans-serif';
+  ctx.fillText('2030年，回来对答案。',W/2,1006);
+  // 落款
+  ctx.fillStyle='#6b6148';ctx.font='13px sans-serif';
+  ctx.fillText(state.nick+' · 2026 · 教学沙盘（非预测）',W/2,py+ph-74);
+  // 印章
+  ctx.save();ctx.translate(px+pw-95,py+ph-96);ctx.rotate(-12*Math.PI/180);
+  ctx.strokeStyle='rgba(194,64,47,.78)';ctx.lineWidth=3;roundRect(ctx,-46,-32,92,64,8);ctx.stroke();
+  ctx.fillStyle='rgba(194,64,47,.85)';ctx.font='900 21px "Songti SC",serif';ctx.fillText('决策留痕',0,0);
+  ctx.font='700 12px serif';ctx.fillText('1600亿待开奖',0,24);
+  ctx.restore();
+
+  var url=canvas.toDataURL('image/png');
+  document.getElementById('cardPreview').src=url;
+  var payload={n:state.nick,g:state.guessNoIdea?null:state.guess,s:state.stance,k:state.keep?1:0,w:state.w,wor:state.worry};
+  var code=encodeChallenge(payload);
+  var link=location.origin+location.pathname+'?c='+code;
+  state.challengeLink=link;
+  document.getElementById('qrImg').src='https://api.qrserver.com/v1/create-qr-code/?size=240x240&margin=0&data='+encodeURIComponent(link);
+}
+function roundRect(ctx,x,y,w,h,r){
+  ctx.beginPath();ctx.moveTo(x+r,y);ctx.arcTo(x+w,y,x+w,y+h,r);ctx.arcTo(x+w,y+h,x,y+h,r);
+  ctx.arcTo(x,y+h,x,y,r);ctx.arcTo(x,y,x+w,y,r);ctx.closePath();
+}
+function line(ctx,x1,y1,x2,y2,c){ctx.strokeStyle=c;ctx.lineWidth=1;ctx.beginPath();ctx.moveTo(x1,y1);ctx.lineTo(x2,y2);ctx.stroke();}
+function wrapText(ctx,txt,x,y,maxW,lh){
+  var chars=txt.split('');var line='';var yy=y;
+  for(var i=0;i<chars.length;i++){
+    var t=line+chars[i];
+    if(ctx.measureText(t).width>maxW&&line){ctx.fillText(line,x,yy);line=chars[i];yy+=lh;}
+    else line=t;
+  }
+  ctx.fillText(line,x,yy);
+}
+function wrapLines(ctx,txt,maxW){
+  var out=[],line='';
+  for(var i=0;i<txt.length;i++){
+    var t=line+txt[i];
+    if(ctx.measureText(t).width>maxW&&line){out.push(line);line=txt[i];}
+    else line=t;
+  }
+  if(line)out.push(line);
+  return out;
+}
+function stanceName(s,k){
+  if(k)return'保留判断';
+  var st=STANCES.find(function(x){return x.key===s;});
+  return st?st.badge:'—';
+}
+function topPathName(w){
+  var mi=0;w.forEach(function(v,i){if(v>w[mi])mi=i;});
+  return PATHS[mi].name+' '+w[mi]+'点';
+}
+function renderChallengeCompare(){
+  var box=document.getElementById('challengeBanner');
+  if(!state.challenge){box.innerHTML='';box.classList.remove('show');return;}
+  var c=state.challenge;
+  var cGuess=c.g==null?'没敢猜':(c.g>0?'+':'')+c.g+'%';
+  var mGuess=state.guessNoIdea?'没敢猜':(state.guess>0?'+':'')+state.guess+'%';
+  var cWorry=SCENES.find(function(x){return x.key===c.wor;})||SCENES[0];
+  var mWorry=SCENES.find(function(x){return x.key===state.worry;})||SCENES[0];
+  var dEngine=Math.abs(c.w[0]-state.w[0]);
+  var line='';
+  if(dEngine>=15){
+    var hi=c.w[0]>state.w[0]?'他在新引擎上比你重押了'+dEngine+'点，你更留后路':'你在新引擎上比他重押了'+dEngine+'点，他更留后路';
+    line='你们最大的分歧在「新引擎」：'+hi+'。顺风时押得重的人赢，逆风时押得轻的人少赔。';
+  }else if(c.wor!==state.worry){
+    line='你们押法相近，却最担心不同的未来——他怕「'+cWorry.name+'」，你怕「'+mWorry.name+'」。怕的未来不同，选择就难分对错。';
+  }else{
+    line='你们押法和担心都接近，算是同路人。把结果再发给第三个人，看谁先被说服。';
+  }
+  function row(label,a,b){
+    return '<div class="cc-row"><div class="cc-lab">'+label+'</div>'
+      +'<div class="cc-vals"><span class="cc-a">'+a+'</span><span class="cc-b">'+b+'</span></div></div>';
+  }
+  box.innerHTML='<div class="cc-head"><b>🔍 你们的分歧</b>（他='+c.n+'，你='+state.nick+'）</div>'
+    +'<div class="cc-cols"><div class="cc-col cc-a">他的选择</div><div class="cc-col cc-b">你的选择</div></div>'
+    +row('直觉',cGuess,mGuess)
+    +row('解释',stanceName(c.s,c.k),stanceName(state.stance,state.keep?1:0))
+    +row('最重押',topPathName(c.w),topPathName(state.w))
+    +row('担心',cWorry.name,mWorry.name)
+    +'<div class="cc-line">'+line+'</div>'
+    +'<div class="cc-tip">分歧不排名、不判对错。把你的卡也发给他，让他看看你看到的另一个未来。</div>';
+  box.classList.add('show');
+}
+function downloadCard(){
+  var a=document.createElement('a');
+  a.download='博罗决策判断卡.png';a.href=document.getElementById('cardPreview').src;
+  a.click();
+}
+function copyLink(){
+  var link=state.challengeLink||location.href;
+  if(navigator.clipboard){navigator.clipboard.writeText(link).then(function(){
+    document.getElementById('copyhint').textContent='挑战链接已复制，发给朋友吧';
+  },function(){fallbackCopy(link);});}
+  else fallbackCopy(link);
+}
+function fallbackCopy(text){
+  var ta=document.createElement('textarea');ta.value=text;document.body.appendChild(ta);ta.select();
+  try{document.execCommand('copy');document.getElementById('copyhint').textContent='挑战链接已复制';}catch(e){}
+  ta.remove();
+}
+
+/* ============ 初始化 ============ */
+buildDots();
+renderGuess();
+renderStances();
+renderAlloc();
+state.challenge=parseChallenge();
+render();
+window.addEventListener('resize',function(){if(chart)chart.resize();});
+</script>
+</body>
+</html>
