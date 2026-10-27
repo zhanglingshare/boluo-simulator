@@ -32,7 +32,8 @@
  .mobile-only{display:block}
  .right-panel{height:auto}
 }
-</style></head>
+</style><link rel="stylesheet" href="m3/ui.css" />
+</head>
 <body>
 <div id="app">
   <div class="backdrop-gradient"></div>
@@ -734,6 +735,7 @@ function scenarioInspector(){
  const total=G.totalWeight.toFixed(2);
  const rank=G.top.filter(x=>x[1]>0).slice(0,3);
  return `<div class="inspector-title">未知区间实验</div><p class="inspector-summary">上半：真实 B 级流场区间及依据（非实测）；下半：抽象权重实验，由计算函数即时重算网络。</p>
+  <button id="m3-open-dual" class="m3-dual-entry" type="button">◈ 打开双世界对撞 · 同屏比较两个假设的博罗</button>
   <div class="scenario-panel">
    <b style="font-size:12px">${flowTitle(flow)}</b>
    <div class="scenario-presets" style="margin-top:10px">
@@ -925,4 +927,5 @@ if(!gl)toast('设备不支持WebGL2，已启用二维节点备选');
 console.log('看见博罗 V2（M2）；锚点',M.anchors.length,'流场区间',M.flows.length);
 })();
 </script>
+<script type="module" src="m3/ui.mjs"></script>
 </body></html>

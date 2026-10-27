@@ -20,51 +20,579 @@
   "admin": {
     "as_of": "2025-02-12",
     "note": "2025-02-12 起原长宁镇、福田镇合并为新长宁镇；福田不再单列，福田菜心等挂『长宁（原福田片区）』。",
-    "subdistricts": ["罗阳", "龙溪"],
-    "towns": ["石坝", "麻陂", "观音阁", "公庄", "杨村", "杨侨", "柏塘", "湖镇", "长宁", "石湾", "园洲", "龙华", "泰美", "横河"],
+    "subdistricts": [
+      "罗阳",
+      "龙溪"
+    ],
+    "towns": [
+      "石坝",
+      "麻陂",
+      "观音阁",
+      "公庄",
+      "杨村",
+      "杨侨",
+      "柏塘",
+      "湖镇",
+      "长宁",
+      "石湾",
+      "园洲",
+      "龙华",
+      "泰美",
+      "横河"
+    ],
     "total": 16
   },
   "county": {
-    "gdp": {"value": 1005.45, "unit": "亿元", "growth": 5.5, "period": "2025", "level": "A", "source": "url_2025bulletin"},
-    "gdp_industry": {"first": 107.44, "second": 549.01, "third": 349.0, "unit": "亿元", "period": "2025", "level": "A", "source": "url_2025bulletin"},
-    "population_resident": {"value": 123.94, "unit": "万人", "urban": 74.60, "urbanization": 60.19, "period": "2025年末", "level": "A", "source": "url_2025bulletin"},
-    "population_household": {"value": 99.19, "unit": "万人", "period": "2025年末", "level": "A", "source": "url_2025bulletin"},
-    "population_served": {"value": 130.69, "unit": "万人", "period": "2024", "note": "实际服务管理人口，口径不同于常住人口，不能直接当作通勤人数", "level": "A", "source": "url_spatialreview"},
-    "industrial_output": {"value": 2000, "unit": "亿元(约)", "note": "规上工业总产值预计突破2000亿元，十四五年均+10.2%", "period": "2025", "level": "A", "source": "url_govreport2026"},
-    "industrial_enterprises": {"value": 1400, "unit": "家(约)", "target_2026": 1700, "note": "规上工业企业，2026年力争1700家、产值2200亿元", "period": "2025-2026", "level": "A", "source": "url_qcmeeting"},
-    "electronic_info": {"enterprises": 317, "output": 773.8, "growth": 17.1, "unit": "家规上/亿元", "period": "2025", "level": "A", "source": "url_electronic"},
-    "employment_23rdcensus": {"legal_entities": 31535, "employed": 516416, "note": "2023年末第二、三产业法人单位及从业人员", "period": "2023", "level": "A", "source": "url_census2"},
-    "employment_manufacturing": {"electronic_devices": 60061, "electrical_machinery": 33841, "note": "五经普第三号：计算机通信电子设备制造业、电气机械制造业从业人员", "period": "2023", "level": "A", "source": "url_census3"},
-    "industrial_park": {"enterprises": 210, "note": "博罗产业园区规上工业企业210家", "period": "2024", "level": "A", "source": "url_govreport2025"}
+    "gdp": {
+      "value": 1005.45,
+      "unit": "亿元",
+      "growth": 5.5,
+      "period": "2025",
+      "level": "A",
+      "source": "url_2025bulletin"
+    },
+    "gdp_industry": {
+      "first": 107.44,
+      "second": 549.01,
+      "third": 349,
+      "unit": "亿元",
+      "period": "2025",
+      "level": "A",
+      "source": "url_2025bulletin"
+    },
+    "population_resident": {
+      "value": 123.94,
+      "unit": "万人",
+      "urban": 74.6,
+      "urbanization": 60.19,
+      "period": "2025年末",
+      "level": "A",
+      "source": "url_2025bulletin"
+    },
+    "population_household": {
+      "value": 99.19,
+      "unit": "万人",
+      "period": "2025年末",
+      "level": "A",
+      "source": "url_2025bulletin"
+    },
+    "population_served": {
+      "value": 130.69,
+      "unit": "万人",
+      "period": "2024",
+      "note": "实际服务管理人口，口径不同于常住人口，不能直接当作通勤人数",
+      "level": "A",
+      "source": "url_spatialreview"
+    },
+    "industrial_output": {
+      "value": 2000,
+      "unit": "亿元(约)",
+      "note": "规上工业总产值预计突破2000亿元，十四五年均+10.2%",
+      "period": "2025",
+      "level": "A",
+      "source": "url_govreport2026"
+    },
+    "industrial_enterprises": {
+      "value": 1400,
+      "unit": "家(约)",
+      "target_2026": 1700,
+      "note": "规上工业企业，2026年力争1700家、产值2200亿元",
+      "period": "2025-2026",
+      "level": "A",
+      "source": "url_qcmeeting"
+    },
+    "electronic_info": {
+      "enterprises": 317,
+      "output": 773.8,
+      "growth": 17.1,
+      "unit": "家规上/亿元",
+      "period": "2025",
+      "level": "A",
+      "source": "url_electronic"
+    },
+    "employment_23rdcensus": {
+      "legal_entities": 31535,
+      "employed": 516416,
+      "note": "2023年末第二、三产业法人单位及从业人员",
+      "period": "2023",
+      "level": "A",
+      "source": "url_census2"
+    },
+    "employment_manufacturing": {
+      "electronic_devices": 60061,
+      "electrical_machinery": 33841,
+      "note": "五经普第三号：计算机通信电子设备制造业、电气机械制造业从业人员",
+      "period": "2023",
+      "level": "A",
+      "source": "url_census3"
+    },
+    "industrial_park": {
+      "enterprises": 210,
+      "note": "博罗产业园区规上工业企业210家",
+      "period": "2024",
+      "level": "A",
+      "source": "url_govreport2025"
+    }
   },
   "towns": [
-    {"name": "罗阳", "type": "街道", "area_km2": null, "population": {"value": null, "level": "D"}, "role": "县城中心、综合服务", "industries": ["正威新材料", "县城商圈"], "tags": ["县城"], "source": "url_2025bulletin", "pop_level": "D"},
-    {"name": "龙溪", "type": "街道", "area_km2": 119, "population": {"value": 15, "household": 7, "level": "A", "label": "常住约15万/户籍7万+"}, "role": "沿东江经济带核心工业区、电子信息产业集聚区", "industries": ["电子信息", "散热(三创15亿液冷)", "福鹰电子"], "tags": ["电子信息", "县城新区"], "source": "url_longxi,url_longxisan,url_longxipark", "pop_level": "A"},
-    {"name": "石坝", "type": "镇", "area_km2": null, "population": {"value": null, "level": "D"}, "role": "东部农业镇", "industries": ["三黄鸡/胡须鸡"], "tags": ["农业"], "source": "", "pop_level": "D"},
-    {"name": "麻陂", "type": "镇", "area_km2": null, "population": {"value": null, "level": "D"}, "role": "东部镇", "industries": ["麻陂肉丸"], "tags": ["农业"], "source": "", "pop_level": "D"},
-    {"name": "观音阁", "type": "镇", "area_km2": null, "population": {"value": null, "level": "D"}, "role": "东江沿岸农业镇", "industries": ["观音阁花生", "观音阁黑糖"], "tags": ["农业", "东江画廊"], "source": "", "pop_level": "D"},
-    {"name": "公庄", "type": "镇", "area_km2": null, "population": {"value": null, "level": "D"}, "role": "东部农镇", "industries": ["公庄沙地秋花生"], "tags": ["农业"], "source": "", "pop_level": "D"},
-    {"name": "杨村", "type": "镇", "area_km2": null, "population": {"value": null, "level": "D"}, "role": "水果之乡", "industries": ["杨村皇帝柑"], "tags": ["农业", "水果"], "source": "", "pop_level": "D"},
-    {"name": "杨侨", "type": "镇", "area_km2": null, "population": {"value": null, "level": "D"}, "role": "华侨镇", "industries": ["杨侨柑桔/红江橙"], "tags": ["农业", "华侨"], "source": "", "pop_level": "D"},
-    {"name": "柏塘", "type": "镇", "area_km2": null, "population": {"value": 4.86, "level": "B", "label": "七普4.86万(2020)"}, "role": "广东十大名茶之乡", "industries": ["柏塘山茶", "茶旅", "古榄园"], "tags": ["茶乡", "文旅"], "source": "url_census_pop", "pop_level": "B"},
-    {"name": "湖镇", "type": "镇", "area_km2": null, "population": {"value": null, "level": "D"}, "role": "饮用水与航天育种", "industries": ["百岁山", "航天育种/冬瓜"], "tags": ["农业", "饮用水"], "source": "", "pop_level": "D"},
-    {"name": "长宁", "type": "镇", "area_km2": 323.74, "population": {"value": 10.8, "household": 8.42, "level": "A", "label": "常住约10.8万/户籍8.42万（含原福田片区）"}, "role": "罗浮山门户、康养、电子与农业；原福田菜心挂此", "industries": ["罗浮山国药", "罗浮山文旅", "表面处理(原福田)", "福田菜心(原福田片区)"], "tags": ["文旅", "康养", "罗浮山"], "source": "url_changning", "pop_level": "A"},
-    {"name": "石湾", "type": "镇", "area_km2": 83, "population": {"value": 19, "level": "A", "label": "常住近19万"}, "role": "工业重镇，毗邻东莞石龙/石排、广州增城", "industries": ["新一代电子信息", "新材料", "智能装备", "食品饮料", "模具", "电动车配套"], "metrics": {"above_scale_enterprises": "300+", "rank": "规上工业总产值/增加值居全县第2"}, "tags": ["工业重镇", "融莞", "千强镇"], "source": "url_shiwan,url_shiwanbig,url_shiwan2026", "pop_level": "A"},
-    {"name": "园洲", "type": "镇", "area_km2": 112.71, "population": {"value": 20, "household": 7, "migrant": 13, "level": "A", "label": "总人口超20万（户籍7万+/外来13万+）"}, "role": "博罗西南门户，与东莞桥头/企石/石龙相邻，融深融莞前沿", "industries": ["欣旺达/锂威", "江丰电子", "深博(福田)产业园", "电子信息", "智能装备", "新能源", "新材料"], "metrics": {"projects_14th5yr": 84, "output_at_capacity": 625, "layout": "一镇三园区"}, "tags": ["融深", "融莞", "飞地经济", "产业大镇"], "source": "url_yuanzhou,url_yuanzhou2026,url_feidi", "pop_level": "A"},
-    {"name": "龙华", "type": "镇", "area_km2": null, "population": {"value": null, "level": "D"}, "role": "古村文旅", "industries": ["旭日古村"], "tags": ["文旅", "古村"], "source": "", "pop_level": "D"},
-    {"name": "泰美", "type": "镇", "area_km2": 163.4, "population": {"value": 4.14, "household": 4.54, "level": "A", "label": "常住4.14万/户籍4.54万"}, "role": "象头山生态门户、高铁站", "industries": ["生态旅游", "车村乡创盒子", "赣深高铁博罗站"], "tags": ["生态", "高铁"], "source": "url_taimei", "pop_level": "A"},
-    {"name": "横河", "type": "镇", "area_km2": 240, "population": {"value": 1.8, "household": 3.3, "level": "A", "label": "常住约1.8万/户籍3.3万"}, "role": "罗浮山—南昆山之间民宿户外小镇", "industries": ["民宿", "户外", "显岗水库", "罗浮山大米"], "tags": ["文旅", "民宿", "户外"], "source": "url_henghe", "pop_level": "A"}
+    {
+      "name": "罗阳",
+      "type": "街道",
+      "area_km2": null,
+      "population": {
+        "value": null,
+        "level": "D"
+      },
+      "role": "县城中心、综合服务",
+      "industries": [
+        "正威新材料",
+        "县城商圈"
+      ],
+      "tags": [
+        "县城"
+      ],
+      "source": "url_2025bulletin",
+      "pop_level": "D"
+    },
+    {
+      "name": "龙溪",
+      "type": "街道",
+      "area_km2": 119,
+      "population": {
+        "value": 15,
+        "household": 7,
+        "level": "A",
+        "label": "常住约15万/户籍7万+"
+      },
+      "role": "沿东江经济带核心工业区、电子信息产业集聚区",
+      "industries": [
+        "电子信息",
+        "散热(三创15亿液冷)",
+        "福鹰电子"
+      ],
+      "tags": [
+        "电子信息",
+        "县城新区"
+      ],
+      "source": "url_longxi,url_longxisan,url_longxipark",
+      "pop_level": "A"
+    },
+    {
+      "name": "石坝",
+      "type": "镇",
+      "area_km2": null,
+      "population": {
+        "value": null,
+        "level": "D"
+      },
+      "role": "东部农业镇",
+      "industries": [
+        "三黄鸡/胡须鸡"
+      ],
+      "tags": [
+        "农业"
+      ],
+      "source": "",
+      "pop_level": "D"
+    },
+    {
+      "name": "麻陂",
+      "type": "镇",
+      "area_km2": null,
+      "population": {
+        "value": null,
+        "level": "D"
+      },
+      "role": "东部镇",
+      "industries": [
+        "麻陂肉丸"
+      ],
+      "tags": [
+        "农业"
+      ],
+      "source": "",
+      "pop_level": "D"
+    },
+    {
+      "name": "观音阁",
+      "type": "镇",
+      "area_km2": null,
+      "population": {
+        "value": null,
+        "level": "D"
+      },
+      "role": "东江沿岸农业镇",
+      "industries": [
+        "观音阁花生",
+        "观音阁黑糖"
+      ],
+      "tags": [
+        "农业",
+        "东江画廊"
+      ],
+      "source": "",
+      "pop_level": "D"
+    },
+    {
+      "name": "公庄",
+      "type": "镇",
+      "area_km2": null,
+      "population": {
+        "value": null,
+        "level": "D"
+      },
+      "role": "东部农镇",
+      "industries": [
+        "公庄沙地秋花生"
+      ],
+      "tags": [
+        "农业"
+      ],
+      "source": "",
+      "pop_level": "D"
+    },
+    {
+      "name": "杨村",
+      "type": "镇",
+      "area_km2": null,
+      "population": {
+        "value": null,
+        "level": "D"
+      },
+      "role": "水果之乡",
+      "industries": [
+        "杨村皇帝柑"
+      ],
+      "tags": [
+        "农业",
+        "水果"
+      ],
+      "source": "",
+      "pop_level": "D"
+    },
+    {
+      "name": "杨侨",
+      "type": "镇",
+      "area_km2": null,
+      "population": {
+        "value": null,
+        "level": "D"
+      },
+      "role": "华侨镇",
+      "industries": [
+        "杨侨柑桔/红江橙"
+      ],
+      "tags": [
+        "农业",
+        "华侨"
+      ],
+      "source": "",
+      "pop_level": "D"
+    },
+    {
+      "name": "柏塘",
+      "type": "镇",
+      "area_km2": null,
+      "population": {
+        "value": 4.86,
+        "level": "B",
+        "label": "七普4.86万(2020)"
+      },
+      "role": "广东十大名茶之乡",
+      "industries": [
+        "柏塘山茶",
+        "茶旅",
+        "古榄园"
+      ],
+      "tags": [
+        "茶乡",
+        "文旅"
+      ],
+      "source": "url_census_pop",
+      "pop_level": "B"
+    },
+    {
+      "name": "湖镇",
+      "type": "镇",
+      "area_km2": null,
+      "population": {
+        "value": null,
+        "level": "D"
+      },
+      "role": "饮用水与航天育种",
+      "industries": [
+        "百岁山",
+        "航天育种/冬瓜"
+      ],
+      "tags": [
+        "农业",
+        "饮用水"
+      ],
+      "source": "",
+      "pop_level": "D"
+    },
+    {
+      "name": "长宁",
+      "type": "镇",
+      "area_km2": 323.74,
+      "population": {
+        "value": 10.8,
+        "household": 8.42,
+        "level": "A",
+        "label": "常住约10.8万/户籍8.42万（含原福田片区）"
+      },
+      "role": "罗浮山门户、康养、电子与农业；原福田菜心挂此",
+      "industries": [
+        "罗浮山国药",
+        "罗浮山文旅",
+        "表面处理(原福田)",
+        "福田菜心(原福田片区)"
+      ],
+      "tags": [
+        "文旅",
+        "康养",
+        "罗浮山"
+      ],
+      "source": "url_changning",
+      "pop_level": "A"
+    },
+    {
+      "name": "石湾",
+      "type": "镇",
+      "area_km2": 83,
+      "population": {
+        "value": 19,
+        "level": "A",
+        "label": "常住近19万"
+      },
+      "role": "工业重镇，毗邻东莞石龙/石排、广州增城",
+      "industries": [
+        "新一代电子信息",
+        "新材料",
+        "智能装备",
+        "食品饮料",
+        "模具",
+        "电动车配套"
+      ],
+      "metrics": {
+        "above_scale_enterprises": "300+",
+        "rank": "规上工业总产值/增加值居全县第2"
+      },
+      "tags": [
+        "工业重镇",
+        "融莞",
+        "千强镇"
+      ],
+      "source": "url_shiwan,url_shiwanbig,url_shiwan2026",
+      "pop_level": "A"
+    },
+    {
+      "name": "园洲",
+      "type": "镇",
+      "area_km2": 112.71,
+      "population": {
+        "value": 20,
+        "household": 7,
+        "migrant": 13,
+        "level": "A",
+        "label": "总人口超20万（户籍7万+/外来13万+）"
+      },
+      "role": "博罗西南门户，与东莞桥头/企石/石龙相邻，融深融莞前沿",
+      "industries": [
+        "欣旺达/锂威",
+        "江丰电子",
+        "深博(福田)产业园",
+        "电子信息",
+        "智能装备",
+        "新能源",
+        "新材料"
+      ],
+      "metrics": {
+        "projects_14th5yr": 84,
+        "output_at_capacity": 625,
+        "layout": "一镇三园区"
+      },
+      "tags": [
+        "融深",
+        "融莞",
+        "飞地经济",
+        "产业大镇"
+      ],
+      "source": "url_yuanzhou,url_yuanzhou2026,url_feidi",
+      "pop_level": "A"
+    },
+    {
+      "name": "龙华",
+      "type": "镇",
+      "area_km2": null,
+      "population": {
+        "value": null,
+        "level": "D"
+      },
+      "role": "古村文旅",
+      "industries": [
+        "旭日古村"
+      ],
+      "tags": [
+        "文旅",
+        "古村"
+      ],
+      "source": "",
+      "pop_level": "D"
+    },
+    {
+      "name": "泰美",
+      "type": "镇",
+      "area_km2": 163.4,
+      "population": {
+        "value": 4.14,
+        "household": 4.54,
+        "level": "A",
+        "label": "常住4.14万/户籍4.54万"
+      },
+      "role": "象头山生态门户、高铁站",
+      "industries": [
+        "生态旅游",
+        "车村乡创盒子",
+        "赣深高铁博罗站"
+      ],
+      "tags": [
+        "生态",
+        "高铁"
+      ],
+      "source": "url_taimei",
+      "pop_level": "A"
+    },
+    {
+      "name": "横河",
+      "type": "镇",
+      "area_km2": 240,
+      "population": {
+        "value": 1.8,
+        "household": 3.3,
+        "level": "A",
+        "label": "常住约1.8万/户籍3.3万"
+      },
+      "role": "罗浮山—南昆山之间民宿户外小镇",
+      "industries": [
+        "民宿",
+        "户外",
+        "显岗水库",
+        "罗浮山大米"
+      ],
+      "tags": [
+        "文旅",
+        "民宿",
+        "户外"
+      ],
+      "source": "url_henghe",
+      "pop_level": "A"
+    }
   ],
   "crossTransit": [
-    {"id": "t1", "kind": "跨市公交", "route": "莞惠通2路：园洲汽车站—石龙客运中心站(东莞)", "hours": "06:00—18:00", "stops": 25, "connects": ["园洲", "东莞石龙"], "level": "A", "period": "2026-10核验", "source": "url_bus_guanhuizhi2"},
-    {"id": "t2", "kind": "跨市公交", "route": "东莞石龙2路：石龙火车站—园洲换乘站", "hours": "06:40—22:00", "connects": ["园洲", "东莞石龙"], "level": "A", "period": "2026-08核验", "source": "url_bus_shilong2"},
-    {"id": "t3", "kind": "跨市公交(已截短)", "route": "博罗128路：公庄汽车站—石湾沙河大桥（原通达东莞石龙，2024年截短不再进入东莞）", "connects": ["石湾", "公庄"], "level": "A", "note": "跨界段已取消，反映跨界公交政策有调整", "period": "2024", "source": "url_bus_128"},
-    {"id": "t4", "kind": "高铁", "route": "广汕高铁罗浮山站（长宁镇，距长宁主城4.5km、罗浮山景区9.5km）", "opened": "2023-09-26", "connects": ["长宁", "广州", "汕尾方向"], "level": "A", "source": "url_luofushanstation"},
-    {"id": "t5", "kind": "高铁", "route": "赣深高铁博罗站（泰美）", "connects": ["泰美", "赣州", "深圳"], "level": "A", "source": "url_bus_guide"},
-    {"id": "t6", "kind": "高速", "route": "济广、惠肇、莞深(博深)、从莞深高速环绕；园洲距园洲东出口4.2km、20分钟达罗浮山站", "connects": ["园洲", "石湾", "东莞", "深圳"], "level": "A", "source": "url_feidi"}
+    {
+      "id": "t1",
+      "kind": "跨市公交",
+      "route": "莞惠通2路：园洲汽车站—石龙客运中心站(东莞)",
+      "hours": "06:00—18:00",
+      "stops": 25,
+      "connects": [
+        "园洲",
+        "东莞石龙"
+      ],
+      "level": "A",
+      "period": "2026-10核验",
+      "source": "url_bus_guanhuizhi2"
+    },
+    {
+      "id": "t2",
+      "kind": "跨市公交",
+      "route": "东莞石龙2路：石龙火车站—园洲换乘站",
+      "hours": "06:40—22:00",
+      "connects": [
+        "园洲",
+        "东莞石龙"
+      ],
+      "level": "A",
+      "period": "2026-08核验",
+      "source": "url_bus_shilong2"
+    },
+    {
+      "id": "t3",
+      "kind": "跨市公交(已截短)",
+      "route": "博罗128路：公庄汽车站—石湾沙河大桥（原通达东莞石龙，2024年截短不再进入东莞）",
+      "connects": [
+        "石湾",
+        "公庄"
+      ],
+      "level": "A",
+      "note": "跨界段已取消，反映跨界公交政策有调整",
+      "period": "2024",
+      "source": "url_bus_128"
+    },
+    {
+      "id": "t4",
+      "kind": "高铁",
+      "route": "广汕高铁罗浮山站（长宁镇，距长宁主城4.5km、罗浮山景区9.5km）",
+      "opened": "2023-09-26",
+      "connects": [
+        "长宁",
+        "广州",
+        "汕尾方向"
+      ],
+      "level": "A",
+      "source": "url_luofushanstation"
+    },
+    {
+      "id": "t5",
+      "kind": "高铁",
+      "route": "赣深高铁博罗站（泰美）",
+      "connects": [
+        "泰美",
+        "赣州",
+        "深圳"
+      ],
+      "level": "A",
+      "source": "url_bus_guide"
+    },
+    {
+      "id": "t6",
+      "kind": "高速",
+      "route": "济广、惠肇、莞深(博深)、从莞深高速环绕；园洲距园洲东出口4.2km、20分钟达罗浮山站",
+      "connects": [
+        "园洲",
+        "石湾",
+        "东莞",
+        "深圳"
+      ],
+      "level": "A",
+      "source": "url_feidi"
+    }
   ],
   "industrialFlying": [
-    {"id": "f1", "name": "深博(福田)产业园", "location": "园洲·博罗智能装备产业园", "land_mu": 300, "phase1_mu": 102, "buildings": "22栋4层高标准厂房", "opened": "2026年全面开园、首批厂房交付投产", "tenants": ["安徽嘉奇能源", "上梅林实业", "讯凌新(深圳)", "广东胜鉴新材料", "深博福田科技"], "model": "深圳福田总部+博罗智造（五同机制）", "projects": 25, "investment": 54, "output_at_capacity": 100, "unit": "宗/亿元/亿元", "level": "A", "source": "url_feidi,url_feidiopen,url_wutong"}
+    {
+      "id": "f1",
+      "name": "深博(福田)产业园",
+      "location": "园洲·博罗智能装备产业园",
+      "land_mu": 300,
+      "phase1_mu": 102,
+      "buildings": "22栋4层高标准厂房",
+      "opened": "2026年全面开园、首批厂房交付投产",
+      "tenants": [
+        "安徽嘉奇能源",
+        "上梅林实业",
+        "讯凌新(深圳)",
+        "广东胜鉴新材料",
+        "深博福田科技"
+      ],
+      "model": "深圳福田总部+博罗智造（五同机制）",
+      "projects": 25,
+      "investment": 54,
+      "output_at_capacity": 100,
+      "unit": "宗/亿元/亿元",
+      "level": "A",
+      "source": "url_feidi,url_feidiopen,url_wutong"
+    }
   ],
   "flows": [
     {
@@ -75,18 +603,52 @@
       "status": "estimated",
       "evidenceLevel": "B",
       "value": null,
-      "range": {"low": 4500, "mid": 10000, "high": 17000, "unit": "人次/工作日（双向合计）", "period": "2025-2026常态工作日"},
+      "range": {
+        "low": 4500,
+        "mid": 10000,
+        "high": 17000,
+        "unit": "人次/工作日（双向合计）",
+        "period": "2025-2026常态工作日"
+      },
       "directEvidence": [
-        "至少2条每日跨市公交（莞惠通2路06:00-18:00、东莞石龙2路06:40-22:00）连接园洲与石龙",
-        "园洲/石湾与东莞仅隔东江，园洲与松山湖东部工业园一江之隔、紧邻桥头企石",
-        "园洲外来人口13万+、石湾规上企业300+，产业链与东莞连片"
+        "至少2条每日跨市公交（莞惠通2路06:00—18:00、东莞石龙2路06:40—22:00）连接园洲与石龙，另有石排8路（园洲—石排06:30—21:30）、莞353（东莞火车站石龙侧—园洲汽车客运站）",
+        "博罗县十四五纲要明确：石湾、园洲与东莞石龙、石排“日趋同城化，均处于15分钟生活圈内，相互间通勤成为常态”（官方定性，未给人数）",
+        "手机信令研究（中移动2022年9—11月，结合边界客流调查）：莞惠跨市日均出行约40万人次（全目的、双向），跨市出行63%起终点集中在边界10—15km、65%在边界地区，边界组团以通勤为主；该研究未单列园洲段",
+        "石湾+园洲组成罗浮新城县域副中心，集聚近40万常住人口、城镇化率超70%；园洲/石湾与东莞仅隔东江，园洲与松山湖东部工业园一江之隔、15分钟入东莞",
+        "园洲为“承接产业外溢、务工者就近住厂”模式，外来务工者多住厂宿舍，区别于睡城型跨市通勤"
       ],
-      "method": "结构系数法：先估两镇就业人口基数（园洲常住20万、石湾19万，按劳动参与与就业系数推就业约23—27万，取24万），再用都市圈边界镇日跨界通勤系数。本地为『承接产业外溢、外来务工就近住厂』而非睡城，系数取低—中：低2%、中4%、高7%。",
-      "formula": "就业基数约24万 × 跨界通勤系数(2%/4%/7%) = 4800/9600/16800，取整为4500/10000/17000",
-      "scenarios": {"low": {"multiplier": 0.02, "label": "低流动", "note": "跨界以公交和少量商务为主，务工者多住厂内"}, "mid": {"multiplier": 0.04, "label": "中流动", "note": "部分产业工人与技术岗跨江通勤"}, "high": {"multiplier": 0.07, "label": "高流动", "note": "产业链深度一体化、电动车/公交通勤普及"}},
-      "caveats": "这是基于人口、就业与跨界公交的结构推断区间，不是统计值；未区分出行目的、方式与方向；外来务工者多为本地居住，不等于每日跨界。",
+      "method": "方法一（自下而上·结构系数法）：两镇就业人口基数约24万（园洲常住20万、石湾近19万、副中心近40万常住，按劳动参与与就业系数推），乘都市圈边界镇日跨界通勤系数；本地为“承接产业外溢、务工者就近住厂”而非睡城，系数取低—中：2%/4%/7%。\n方法二（自上而下·都市圈总量倒推，仅作合理性校验）：2022年手机信令莞惠跨市日均40万人次（全目的、双向，都市圈跨市出行年均约10%增速），按园洲+石湾承接东莞东北片（石龙/石排/企石/桥头）跨界的份额约10%—25%、跨市出行中通勤占比约35%—55%倒推，园洲+石湾段工作日通勤约1.4万—7.3万人次；该范围假设多、带宽大，不作点估计，只用于校验方法一。\n两法重叠区间约1万—1.7万，中、高情景获总量校验支持；低情景4500低于倒推下界，属保守的“弱通勤”假设。",
+      "formula": "方法一：就业基数约24万 × 跨界通勤系数(2%/4%/7%) = 4800/9600/16800，取整4500/10000/17000。\n方法二（校验）：40万/日 × 份额(10%—25%) × 通勤占比(35%—55%) ≈ 1.4万—7.3万人次/日（全目的倒推，带宽大，仅校验）。",
+      "scenarios": {
+        "low": {
+          "multiplier": 0.02,
+          "label": "低流动",
+          "note": "跨界以公交和少量商务为主，务工者多住厂内；低于都市圈总量倒推下界，属保守弱通勤假设"
+        },
+        "mid": {
+          "multiplier": 0.04,
+          "label": "中流动",
+          "note": "部分产业工人与技术岗跨江通勤；处于结构系数法与总量倒推的重叠区，证据相对最支持"
+        },
+        "high": {
+          "multiplier": 0.07,
+          "label": "高流动",
+          "note": "产业链深度一体化、电动车/公交通勤普及；处两法重叠区上沿，为一体化加深情景"
+        }
+      },
+      "caveats": "这是结构推断区间，不是统计值；未区分出行目的、方式与方向；外来务工者多为本地居住，不等于每日跨界。都市圈40万为2022年全目的、双向手机信令（仅能区分通勤/非通勤，无法区分商务/探亲/旅游），未单列园洲段，份额与通勤占比为假设，倒推仅作天花板校验而非独立点估计。",
       "toTighten": "需要跨界桥梁/道路断面工作日客流、公交IC刷卡/扫码OD、或匿名聚合通勤数据，才能把区间收紧。",
-      "sources": ["url_bus_guanhuizhi2", "url_bus_shilong2", "url_yuanzhou", "url_shiwan", "url_feidi"]
+      "sources": [
+        "url_bus_guanhuizhi2",
+        "url_bus_shilong2",
+        "url_bus_shipai8",
+        "url_yuanzhou",
+        "url_shiwan",
+        "url_14thplan",
+        "url_sdh_crosscity",
+        "url_luofu_newcity",
+        "url_feidi"
+      ]
     },
     {
       "id": "flow_shenzhen_yuanzhou_flying_business",
@@ -96,8 +658,21 @@
       "status": "estimated",
       "evidenceLevel": "B",
       "value": null,
-      "range": {"low": 50, "mid": 250, "high": 500, "unit": "人次/日（深圳—园洲往返，含日通勤/班车）", "period": "园区达产后(约2026起)"},
-      "subRange": {"weekly_business_trips": {"low": 500, "mid": 1000, "high": 2000, "unit": "人次/周（含周通勤、商务、驻厂轮换）"}},
+      "range": {
+        "low": 50,
+        "mid": 250,
+        "high": 500,
+        "unit": "人次/日（深圳—园洲往返，含日通勤/班车）",
+        "period": "园区达产后(约2026起)"
+      },
+      "subRange": {
+        "weekly_business_trips": {
+          "low": 500,
+          "mid": 1000,
+          "high": 2000,
+          "unit": "人次/周（含周通勤、商务、驻厂轮换）"
+        }
+      },
       "directEvidence": [
         "深博福田产业园2026年全面开园，首批5家企业入驻，达产产值预计100亿、落户25宗、总投资54亿",
         "『福田总部+博罗智造』五同机制，存在总部派驻管理/技术需求",
@@ -105,10 +680,27 @@
       ],
       "method": "就业密度法：100亿达产产值按电子/装备制造业8—15人/亿元，推达产就业8000—15000人；总部派驻管理/技术占3%—8%，即240—1200人；派驻以班车/周通勤/出差为主，日通勤占20%—40%，得日往返约50—500人次。",
       "formula": "就业8000—15000 × 派驻3%—8% × 日通勤20%—40% ≈ 50—500；派驻总量240—1200构成周通勤/商务流",
-      "scenarios": {"low": {"label": "低派驻", "note": "人员本地招聘为主，总部仅高层驻点"}, "mid": {"label": "中派驻", "note": "技术/品质骨干班车通勤"}, "high": {"label": "高派驻", "note": "总部多职能外派、周通勤高频"}},
+      "scenarios": {
+        "low": {
+          "label": "低派驻",
+          "note": "人员本地招聘为主，总部仅高层驻点"
+        },
+        "mid": {
+          "label": "中派驻",
+          "note": "技术/品质骨干班车通勤"
+        },
+        "high": {
+          "label": "高派驻",
+          "note": "总部多职能外派、周通勤高频"
+        }
+      },
       "caveats": "这是『总部—基地』商务与技术流，不是大众通勤；园区尚在达产爬坡，当前实际远低于达产值。",
       "toTighten": "需要园区实际在岗人数、深圳派驻人数、班车线路与班次。",
-      "sources": ["url_feidi", "url_feidiopen", "url_wutong"]
+      "sources": [
+        "url_feidi",
+        "url_feidiopen",
+        "url_wutong"
+      ]
     },
     {
       "id": "flow_luofushan_overnight_rate",
@@ -117,9 +709,28 @@
       "destination": "本地住宿",
       "status": "observed+estimated",
       "evidenceLevel": "A_holiday_B_year",
-      "observed": {"golden_week_overnight_rate": {"value": 25.1, "period": "2025国庆8天·引领区惠州口径", "note": "近80万人次、过夜20.07万"}, "golden_week_2026": {"visitors": 91, "overnight": 23, "rate": 25.3, "unit": "万人次/%", "period": "2026国庆8天·引领区所辖各镇"}},
+      "observed": {
+        "golden_week_overnight_rate": {
+          "value": 25.1,
+          "period": "2025国庆8天·引领区惠州口径",
+          "note": "近80万人次、过夜20.07万"
+        },
+        "golden_week_2026": {
+          "visitors": 91,
+          "overnight": 23,
+          "rate": 25.3,
+          "unit": "万人次/%",
+          "period": "2026国庆8天·引领区所辖各镇"
+        }
+      },
       "value": null,
-      "range": {"low": 10, "mid": 15, "high": 20, "unit": "%（全年平均过夜游客比例）", "period": "全年(推断)"},
+      "range": {
+        "low": 10,
+        "mid": 15,
+        "high": 20,
+        "unit": "%（全年平均过夜游客比例）",
+        "period": "全年(推断)"
+      },
       "directEvidence": [
         "2025国庆中秋8天：环南昆山—罗浮山引领区累计接待游客近80万人次，其中过夜游客20.07万人次（过夜率约25.1%）",
         "2026国庆8天：引领区所辖各镇（管委会）累计接待约91万人次，过夜23万人次（过夜率约25.3%），较2023年同期分别增长38%、62%",
@@ -128,18 +739,67 @@
       ],
       "method": "锚点外推：黄金周引领区过夜率约25%为旺季峰值；平日以一日游/周边游为主，全年平均显著低于黄金周，结合山区康养住宿增长但大众不过夜，给全年10%—20%区间。",
       "formula": "旺季锚点过夜率=过夜/接待=20.07/80=25.1%、23/91=25.3%（A级，引领区口径）；全年平均=旺季锚点×平日折减系数，低0.40/中0.60/高0.80 ≈ 10%/15%/20%（B级推断）",
-      "scenarios": {"low": {"label": "低过夜", "multiplier": 0.10, "note": "以一日游为主，住宿转化弱"}, "mid": {"label": "中过夜", "multiplier": 0.15, "note": "康养民宿逐步放量"}, "high": {"label": "高过夜", "multiplier": 0.20, "note": "康养度假成熟、近旺季水平"}},
+      "scenarios": {
+        "low": {
+          "label": "低过夜",
+          "multiplier": 0.1,
+          "note": "以一日游为主，住宿转化弱"
+        },
+        "mid": {
+          "label": "中过夜",
+          "multiplier": 0.15,
+          "note": "康养民宿逐步放量"
+        },
+        "high": {
+          "label": "高过夜",
+          "multiplier": 0.2,
+          "note": "康养度假成熟、近旺季水平"
+        }
+      },
       "caveats": "国庆25%为引领区(含龙门)口径，不能整体记到博罗罗浮山；全年平均过夜率为推断区间，非官方统计。",
       "toTighten": "需要罗浮山景区分月游客量、宾馆民宿入住登记/床位数据，才能给出全年口径。",
-      "sources": ["url_tourism2025", "url_tourism2026"]
+      "sources": [
+        "url_tourism2025",
+        "url_tourism2026"
+      ]
     }
   ],
   "dataGaps": [
-    {"id": "g1", "missing": "园洲/石湾—东莞跨界工作日实际通勤人数与目的分布", "level": "D", "need": "跨界桥梁/道路断面客流、公交OD、匿名聚合通勤数据", "blocks": "flow_yuanzhou_shiwan_dongguan_commute 收紧"},
-    {"id": "g2", "missing": "深博福田产业园实际在岗与深圳派驻人数", "level": "D", "need": "园区/企业用工统计、班车班次", "blocks": "flow_shenzhen_yuanzhou_flying_business"},
-    {"id": "g3", "missing": "罗浮山景区分月/全年游客量与过夜量", "level": "D", "need": "景区与文旅部门口径的游客、住宿统计", "blocks": "flow_luofushan_overnight_rate 全年口径"},
-    {"id": "g4", "missing": "罗阳、石坝、麻陂、观音阁、公庄、杨村、杨侨、湖镇、龙华等镇街常住人口与面积", "level": "D", "need": "各镇政府概况页/七普分镇数据", "blocks": "16镇街锚点人口完整度"},
-    {"id": "g5", "missing": "真实物流量、资金流量OD", "level": "D", "need": "货运、海关、企业供应链或税务口径数据", "blocks": "物流/资金流场；在取得前不展示流量线"}
+    {
+      "id": "g1",
+      "missing": "园洲/石湾—东莞跨界工作日实际通勤人数与目的分布",
+      "level": "D",
+      "need": "跨界桥梁/道路断面客流、公交OD、匿名聚合通勤数据",
+      "blocks": "flow_yuanzhou_shiwan_dongguan_commute 收紧"
+    },
+    {
+      "id": "g2",
+      "missing": "深博福田产业园实际在岗与深圳派驻人数",
+      "level": "D",
+      "need": "园区/企业用工统计、班车班次",
+      "blocks": "flow_shenzhen_yuanzhou_flying_business"
+    },
+    {
+      "id": "g3",
+      "missing": "罗浮山景区分月/全年游客量与过夜量",
+      "level": "D",
+      "need": "景区与文旅部门口径的游客、住宿统计",
+      "blocks": "flow_luofushan_overnight_rate 全年口径"
+    },
+    {
+      "id": "g4",
+      "missing": "罗阳、石坝、麻陂、观音阁、公庄、杨村、杨侨、湖镇、龙华等镇街常住人口与面积",
+      "level": "D",
+      "need": "各镇政府概况页/七普分镇数据",
+      "blocks": "16镇街锚点人口完整度"
+    },
+    {
+      "id": "g5",
+      "missing": "真实物流量、资金流量OD",
+      "level": "D",
+      "need": "货运、海关、企业供应链或税务口径数据",
+      "blocks": "物流/资金流场；在取得前不展示流量线"
+    }
   ],
   "sources": {
     "url_2025bulletin": "http://www.boluo.gov.cn/bmzb/xtjj/tjyj/tjfx/content/post_5801531.html",
@@ -172,6 +832,10 @@
     "url_luofushanstation": "https://m.thepaper.cn/newsDetail_forward_24903776",
     "url_bus_guide": "http://www.boluo.gov.cn/zwfws/zdfw/ggsy/ggjt/content/post_5105733.html",
     "url_tourism2025": "https://www.huizhou.gov.cn/zjhz/yjcs/lysd/content/mpost_5622482.html",
-    "url_tourism2026": "https://www.huizhou.gov.cn/zwgk/hzsz/zwyw/content/post_5865139.html"
+    "url_tourism2026": "https://www.huizhou.gov.cn/zwgk/hzsz/zwyw/content/post_5865139.html",
+    "url_sdh_crosscity": "https://transport.planning.org.cn/upload/202414/6ca716efe3d94979b4fff3c92b83296c.pdf",
+    "url_14thplan": "http://www.boluo.gov.cn/attachment/0/119/119813/4839682.pdf",
+    "url_luofu_newcity": "https://static.nfnews.com/content/202509/26/c11765061.html",
+    "url_bus_shipai8": "https://appassets.mvtdev.com/map/30/l/5455/729625.pdf"
   }
 }

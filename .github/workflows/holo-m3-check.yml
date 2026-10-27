@@ -1,0 +1,38 @@
+name: holo-m3-check
+on:
+  push:
+    branches:
+      - experiment/holo-v2-m3
+  workflow_dispatch:
+jobs:
+  m3:
+    runs-on: ubuntu-latest
+    timeout-minutes: 25
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 20
+      - name: M2 + M3 engine tests
+        run: |
+          node --test experiments/holo-single/tests/m2.engine.test.mjs
+          node --test experiments/holo-single/tests/m3.engine.test.mjs
+          node --test experiments/holo-single/tests/m3.scenario.test.mjs
+      - name: Install Playwright Chromium
+        run: |
+          npm install --no-save playwright
+          npx playwright install --with-deps chromium
+      - name: Start local preview
+        run: |
+          python3 -m http.server 8765 --bind 127.0.0.1 > /tmp/holo-m3-http.log 2>&1 &
+          sleep 2
+          curl --fail http://127.0.0.1:8765/experiments/holo-single/index.html > /dev/null
+      - name: Dual-world desktop and mobile interaction
+        run: node experiments/holo-single/shot-m3.mjs
+      - name: Upload screenshots
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: holo-m3-screenshots
+          path: experiments/holo-single/shots/m3-*.png
+          if-no-files-found: warn
