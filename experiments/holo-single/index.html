@@ -412,6 +412,14 @@ const colorHex=s=>{let h=s.replace('#','');return [0,2,4].map(i=>parseInt(h.slic
 const colorFor=group=>E.groups.get(group)?.color||'#97d8e8';
 const TYPE_LABEL={eco:'生态水系',anchor:'链主企业',champ:'冠军企业',capillary:'配套企业',legacy:'镇村老厂',agri:'特色农业',gi:'地理标志',ext:'外部城市'};
 function safe(s){return String(s??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]))}
+// 三版本深链接（协议见 DEEPLINK.md）；holo-single 到仓库根为 ../../
+const DEEPLINK={
+ root:'../../',
+ topics:{'inv-industry':{entity:'xwd',scene:'investment',q:'投资在下行，工业为什么还在增长？'}},
+ dv:()=>D.snapshot||'snapshot',
+ analyze(entity){return this.root+'network.html?entity='+encodeURIComponent(entity)+'&from=holo&dv='+encodeURIComponent(this.dv());},
+ learn(scene,topic){return this.root+'v2/index.html?scene='+encodeURIComponent(scene)+(topic?'&topic='+encodeURIComponent(topic):'')+'&from=holo&dv='+encodeURIComponent(this.dv());}
+};
 let toastTimer=0;
 function toast(s){const x=el('toast');x.textContent=s;x.classList.add('show');clearTimeout(toastTimer);toastTimer=setTimeout(()=>x.classList.remove('show'),2700)}
 function resize(){dpr=Math.min(window.devicePixelRatio||1,2);width=window.innerWidth;height=window.innerHeight;for(const c of [canvas,linkCanvas]){c.width=Math.round(width*dpr);c.height=Math.round(height*dpr)}if(gl)gl.viewport(0,0,canvas.width,canvas.height);ctx.setTransform(dpr,0,0,dpr,0,0)}
@@ -686,6 +694,10 @@ function townNodeInspector(node){
   <div class="detail-row"><small>直接联系</small><b>${near.length} 条（A ${counts.A}/B ${counts.B}/C ${counts.C}）</b></div></div>
   <div class="inspector-divider"></div><div class="panel-section-title">沿关系探索</div>
   <div class="neighbor-list">${near.map(e=>{let id=e.source===node.id?e.target:e.source;return `<button class="neighbor-btn" data-node="${id}"><b>${safe(M.nodeMap.get(id)?.name||id)}</b><small class="status-tag status-${e.level}">${e.level}级</small></button>`}).join('')||'<div class="muted-note">当前证据筛选下无相连主体。</div>'}</div>
+  <div class="inspector-divider"></div>
+  <div class="panel-section-title">换个方式看这个主体</div>
+  <button class="inspection-link" data-learn="investment">想知道这些联系会怎样影响未来？<br/><small class="source-label">→ 决策沙盘做取舍（聚焦投资情景）</small></button>
+  <button class="inspection-link" data-analyze="${node.id}">查看这个主体的证据与中心度<br/><small class="source-label">→ 产业风洞核验</small></button>
   <button class="inspector-button" id="backToTown" style="width:100%;margin-top:16px">← 返回 ${safe(a.name)} 镇视图</button>`;
 }
 function nodeInspector(node){
@@ -701,6 +713,10 @@ function nodeInspector(node){
   ${towns.length?`<div class="panel-section-title">进入所在镇（跨层）</div><div class="neighbor-list">${towns.map(t=>`<button class="neighbor-btn" data-town="${t}"><b>进入 ${t}${M.anchorMap.get(t)?.type==='街道'?'街道':'镇'}</b><small>产业·生活·事件 ↗</small></button>`).join('')}</div><div class="inspector-divider"></div>`:''}
   <div class="panel-section-title">继续沿关系探索 <span>${near.length} 条</span></div>
   <div class="neighbor-list">${near.map(e=>{let id=e.source===node.id?e.target:e.source;return `<button class="neighbor-btn" data-node="${id}"><b>${safe(M.nodeMap.get(id)?.name||id)}</b><small class="status-tag status-${e.level}">${e.level}级</small></button>`}).join('')||'<div class="muted-note">当前证据筛选下无相连主体。</div>'}</div>
+  <div class="inspector-divider"></div>
+  <div class="panel-section-title">换个方式看这个主体</div>
+  <button class="inspection-link" data-learn="investment">想知道这些联系会怎样影响未来？<br/><small class="source-label">→ 决策沙盘做取舍（聚焦投资情景）</small></button>
+  <button class="inspection-link" data-analyze="${node.id}">查看这个主体的证据与中心度<br/><small class="source-label">→ 产业风洞核验</small></button>
   <p class="source-label" style="margin-top:12px">关系来自原版 network.html；A/B/C 为原版标记，"供应链"仅说明产业关联，不等于已核实直接采购。</p>`;
 }
 function clusterInspector(){
@@ -766,6 +782,8 @@ function bindInspector(){
  all('[data-flow]').forEach(b=>b.onclick=()=>{S.activeFlow=b.dataset.flow;S.flowScenario='mid';inspector();});
  all('[data-fsc]').forEach(b=>b.onclick=()=>{S.flowScenario=b.dataset.fsc;inspector();});
  el('backToTown')&&(el('backToTown').onclick=()=>{S.selected=null;navigationUI();});
+ all('[data-learn]').forEach(b=>b.onclick=()=>{location.href=DEEPLINK.learn(b.dataset.learn,'inv-industry');});
+ all('[data-analyze]').forEach(b=>b.onclick=()=>{location.href=DEEPLINK.analyze(b.dataset.analyze);});
  const slider=el('scenarioSlider');
  if(slider){slider.oninput=()=>{S.uncertainty=Number(slider.value)/100;G=E.compute(S.uncertainty,S.grade,M);el('scenarioValue').textContent=Math.round(S.uncertainty*100)+' / 100';el('scenarioTotal').textContent=G.totalWeight.toFixed(2);if(S.selected)S.aim=G.positions.get(S.selected)?.slice();};
   all('[data-scenario]').forEach(b=>b.onclick=()=>{S.uncertainty=Number(b.dataset.scenario);G=E.compute(S.uncertainty,S.grade,M);navigationUI();});}
