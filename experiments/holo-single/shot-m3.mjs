@@ -27,9 +27,14 @@ async function run(viewport,label,{mobile}){
   const page=await browser.newPage({viewport,deviceScaleFactor:mobile?2:1});
   page.on('pageerror',e=>errors.push('['+label+'] '+e.message));
   page.on('console',m=>{if(m.type()==='error'){const t=m.text();if(/Failed to load resource|503 \(|net::ERR|ERR_FAILED|ERR_INTERNET/.test(t))netErr.push('['+label+'] '+t);else errors.push('['+label+'] '+t);}});
-  await page.goto(URL_PAGE,{waitUntil:'domcontentloaded',timeout:60000});
-  // M3 模块就绪（其 atlas 自带重试）；M2 内联节点数据同步就绪。给模块边缘重试留足时间。
-  await page.waitForFunction(()=>window.BOLUO_M3_APP&&window.BOLUO_DATA&&(window.BOLUO_DATA.nodes||[]).length,{timeout:45000});
+  // 加载并等待 M3 模块 + M2 内联节点就绪；边缘代理连续 503 时整页重载，最多 3 轮
+  let ready=false;
+  for(let r=0;r<3&&!ready;r++){
+   await page.goto(URL_PAGE,{waitUntil:'domcontentloaded',timeout:60000});
+   ready=await page.waitForFunction(()=>window.BOLUO_M3_APP&&window.BOLUO_DATA&&(window.BOLUO_DATA.nodes||[]).length,{timeout:20000}).then(()=>true).catch(()=>false);
+   if(!ready)await page.reload({waitUntil:'domcontentloaded',timeout:60000}).catch(()=>{});
+  }
+  assert.ok(ready,label+' M3 模块多轮重载后仍未就绪（边缘代理持续异常）');
 
   // 入口可见性：桌面用顶栏按钮；手机用浮动按钮（顶栏容器在≤720隐藏）
   const launcher=mobile?'#m3-launch-mobile':'#m3-launch';
