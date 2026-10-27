@@ -1,0 +1,12 @@
+{
+  "name": "boluo-holo-v2",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "description": "看见博罗 V2｜县域全息数据宇宙（M1 实验原型：园洲产业星群）",
+  "scripts": {
+    "test": "node --test tests/holo.test.js",
+    "serve": "python3 -m http.server 8765"
+  },
+  "license": "MIT"
+}

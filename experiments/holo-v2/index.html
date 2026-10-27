@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover" />
+  <meta name="theme-color" content="#04060a" />
+  <title>看见博罗 V2 · 县域全息数据宇宙</title>
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Cdefs%3E%3CradialGradient id='g' cx='50%25' cy='50%25' r='50%25'%3E%3Cstop offset='0%25' stop-color='%235fd0c5'/%3E%3Cstop offset='100%25' stop-color='%23062b27'/%3E%3C/radialGradient%3E%3C/defs%3E%3Ccircle cx='16' cy='16' r='11' fill='url(%23g)'/%3E%3Ccircle cx='16' cy='16' r='4' fill='%23e8f0fb'/%3E%3C/svg%3E" />
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+  <div id="app"></div>
+
+  <!-- WebGL 不可用时的 2D 简化关系图 -->
+  <div id="fallback-wrap">
+    <canvas id="fallback2d"></canvas>
+    <div class="fallback-note">当前设备不支持 WebGL 3D，已切换为 2D 简化关系图（仍可点选节点、搜索与查看关系）。</div>
+  </div>
+
+  <div id="loading">
+    <div class="loading-ring"></div>
+    <div class="loading-text">正在构建博罗数据宇宙…</div>
+  </div>
+
+  <div id="topbar-slot"></div>
+  <div id="legend-toggle-slot"></div>
+  <div id="legend-slot"></div>
+  <aside id="panel" aria-live="polite"></aside>
+  <div id="bottombar-slot"></div>
+
+  <script src="vendor/three.min.js"></script>
+  <script type="module" src="src/main.js"></script>
+</body>
+</html>
