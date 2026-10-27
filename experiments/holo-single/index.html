@@ -927,5 +927,14 @@ if(!gl)toast('设备不支持WebGL2，已启用二维节点备选');
 console.log('看见博罗 V2（M2）；锚点',M.anchors.length,'流场区间',M.flows.length);
 })();
 </script>
-<script type="module" src="m3/ui.mjs"></script>
+<script type="module">
+// M3 叠加模块：GitHub Pages 边缘代理偶发 503 时有限次重试；始终失败也不影响 M2 主体
+(async()=>{
+ for(let i=0;i<5;i++){
+  try{await import('./m3/ui.mjs'+(i?('?retry='+i):''));return;}
+  catch(e){if(i===4){console.warn('M3 双世界模块暂时加载失败，刷新页面即可恢复，不影响主世界浏览。');return;}
+   await new Promise(r=>setTimeout(r,700*(i+1)));}
+ }
+})();
+</script>
 </body></html>

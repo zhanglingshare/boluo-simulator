@@ -13,14 +13,14 @@ try{({chromium}=require('playwright'));}
 catch{({chromium}=require('/opt/vm/preinstall/npm-global/lib/node_modules/playwright/index.js'));}
 const out=new URL('./shots/',import.meta.url).pathname;
 fs.mkdirSync(out,{recursive:true});
-const URL_PAGE='http://localhost:8765/experiments/holo-single/index.html';
+const URL_PAGE=process.env.HOLO_BASE||'http://localhost:8765/experiments/holo-single/index.html';
 const errors=[];
 async function waitFlow(page){
  await page.waitForFunction(()=>{const e=document.getElementById('m3-persons-a');return e&&/4,500/.test(e.textContent);},{timeout:12000});
 }
 
 async function run(viewport,label,{mobile}){
- const opts={headless:true,args:['--no-sandbox','--use-gl=swiftshader','--enable-unsafe-swiftshader']};
+ const opts={headless:true,ignoreHTTPSErrors:true,args:['--no-sandbox','--use-gl=swiftshader','--enable-unsafe-swiftshader','--ignore-certificate-errors']};
  if(fs.existsSync('/opt/vm/preinstall/ms-playwright/chromium_headless_shell-1169/chrome-linux/headless_shell'))opts.executablePath='/opt/vm/preinstall/ms-playwright/chromium_headless_shell-1169/chrome-linux/headless_shell';
  const browser=await chromium.launch(opts);
  try{
