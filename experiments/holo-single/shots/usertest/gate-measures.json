@@ -1,0 +1,282 @@
+{
+  "desktop": {
+    "universe": {
+      "m3EntryText": "◈ 双世界推演",
+      "m3EntryVisible": true,
+      "m3MobileEntryText": "◈ 双世界",
+      "m3MobileEntryVisible": false,
+      "topBarEntries": [
+        "原版 ↗",
+        "◈ 双世界推演"
+      ],
+      "hasAnyOnboarding": true
+    },
+    "open": {
+      "totalChars": 1192,
+      "buttonCount": 11,
+      "buttons": [
+        "返回 M2 宇宙 ×",
+        "低 · 4,500低流动",
+        "中 · 10,000中流动",
+        "高 · 17,000高流动",
+        "低 · 4,500低流动",
+        "中 · 10,000中流动",
+        "高 · 17,000高流动",
+        "保存两情景",
+        "恢复",
+        "导出 JSON",
+        "导入 JSON"
+      ],
+      "legendVisible": true,
+      "legendText": "两世界都连通  \n仅本世界连通  \n另一世界连通  \n随情景变化的B级关系",
+      "legendFontPx": "10px",
+      "jargonCounts": [
+        {
+          "j": "可达",
+          "n": 6
+        },
+        {
+          "j": "连通",
+          "n": 5
+        },
+        {
+          "j": "阈值",
+          "n": 6
+        },
+        {
+          "j": "无量纲",
+          "n": 1
+        },
+        {
+          "j": "B级",
+          "n": 3
+        },
+        {
+          "j": "C级",
+          "n": 5
+        },
+        {
+          "j": "证据",
+          "n": 1
+        },
+        {
+          "j": "情景",
+          "n": 8
+        },
+        {
+          "j": "系数",
+          "n": 2
+        },
+        {
+          "j": "权重",
+          "n": 1
+        },
+        {
+          "j": "敏感性",
+          "n": 1
+        },
+        {
+          "j": "置信",
+          "n": 2
+        },
+        {
+          "j": "区间",
+          "n": 8
+        }
+      ],
+      "hasOnboardingInside": false,
+      "defaultReachA": "4 / 27",
+      "defaultReachB": "9 / 27",
+      "hasShareDiscovery": false,
+      "saveTargets": [
+        "保存两情景",
+        "恢复",
+        "导出 JSON",
+        "导入 JSON"
+      ]
+    },
+    "changeCausality": {
+      "whenBsetLow_reach": [
+        "4 / 27",
+        "4 / 27"
+      ],
+      "whenBsetHigh_reach": [
+        "4 / 27",
+        "9 / 27"
+      ]
+    },
+    "nodeFound": {
+      "gx": 0.575,
+      "gy": 0.47,
+      "t": "当前主体：欣旺达 / 锂威 · 仅世界B连通（双世界已同步高亮）。"
+    },
+    "nodeFeedback": {
+      "selectedText": "当前主体：欣旺达 / 锂威 · 仅世界B连通（双世界已同步高亮）。",
+      "mentionsPath": false,
+      "mentionsEdgeWeight": false,
+      "shellHasNodePathHighlight": false
+    },
+    "edgeOrBlankTap": {
+      "before": "当前主体：欣旺达 / 锂威 · 仅世界B连通（双世界已同步高亮）。",
+      "after": "当前主体：欣旺达 / 锂威 · 仅世界B连通（双世界已同步高亮）。",
+      "changed": false
+    },
+    "evidencePanel": {
+      "sections": [
+        "直接 / 间接证据（9 个来源）",
+        "推断方法",
+        "公式",
+        "口径与限制",
+        "如何收紧（D 级缺口）"
+      ],
+      "hasPerEdgeWeight": false,
+      "mentionsSelectedNode": false
+    },
+    "findings": {
+      "robust": "无论跨界强弱，4 个主体始终与东莞网络连通，是稳健的结构事实。\n\n华通电脑\n石湾模具群落\n电动车配套群落",
+      "conditional": "5 个主体是否连通取决于跨界强度假设，是本模型最敏感的未知。\n\n欣旺达 / 锂威\n阈值 u≈0.45 · 低→中之间连入\n正威新材料\n阈值 u≈0.45 · 低→中之间连入\n嘉奇新能源\n阈值 u≈0.45 · 低→中之间连入\n镇村老厂群落\n阈值 u≈0.45 · 低→中之间连入\n深圳\n阈值 u≈0.45 · 低→中之间连入",
+      "next": "需要跨界桥梁/道路断面工作日客流、公交IC刷卡/扫码OD、或匿名聚合通勤数据，才能把区间收紧。\n\n取到该项原始数据，最能把上面的“条件性”结论转为“稳健”结论。"
+    },
+    "pageErrors": []
+  },
+  "mobile": {
+    "universe": {
+      "m3EntryText": "◈ 双世界推演",
+      "m3EntryVisible": false,
+      "m3MobileEntryText": "◈ 双世界",
+      "m3MobileEntryVisible": true,
+      "topBarEntries": [
+        "原版 ↗",
+        "◈ 双世界推演"
+      ],
+      "hasAnyOnboarding": true
+    },
+    "open": {
+      "totalChars": 1192,
+      "buttonCount": 11,
+      "buttons": [
+        "返回 M2 宇宙 ×",
+        "低 · 4,500低流动",
+        "中 · 10,000中流动",
+        "高 · 17,000高流动",
+        "低 · 4,500低流动",
+        "中 · 10,000中流动",
+        "高 · 17,000高流动",
+        "保存两情景",
+        "恢复",
+        "导出 JSON",
+        "导入 JSON"
+      ],
+      "legendVisible": true,
+      "legendText": "两世界都连通  \n仅本世界连通  \n另一世界连通  \n随情景变化的B级关系",
+      "legendFontPx": "10px",
+      "jargonCounts": [
+        {
+          "j": "可达",
+          "n": 6
+        },
+        {
+          "j": "连通",
+          "n": 5
+        },
+        {
+          "j": "阈值",
+          "n": 6
+        },
+        {
+          "j": "无量纲",
+          "n": 1
+        },
+        {
+          "j": "B级",
+          "n": 3
+        },
+        {
+          "j": "C级",
+          "n": 5
+        },
+        {
+          "j": "证据",
+          "n": 1
+        },
+        {
+          "j": "情景",
+          "n": 8
+        },
+        {
+          "j": "系数",
+          "n": 2
+        },
+        {
+          "j": "权重",
+          "n": 1
+        },
+        {
+          "j": "敏感性",
+          "n": 1
+        },
+        {
+          "j": "置信",
+          "n": 2
+        },
+        {
+          "j": "区间",
+          "n": 8
+        }
+      ],
+      "hasOnboardingInside": false,
+      "defaultReachA": "4 / 27",
+      "defaultReachB": "9 / 27",
+      "hasShareDiscovery": false,
+      "saveTargets": [
+        "保存两情景",
+        "恢复",
+        "导出 JSON",
+        "导入 JSON"
+      ]
+    },
+    "changeCausality": {
+      "whenBsetLow_reach": [
+        "4 / 27",
+        "4 / 27"
+      ],
+      "whenBsetHigh_reach": [
+        "4 / 27",
+        "9 / 27"
+      ]
+    },
+    "nodeFound": {
+      "gx": 0.53,
+      "gy": 0.47,
+      "t": "当前主体：欣旺达 / 锂威 · 仅世界B连通（双世界已同步高亮）。"
+    },
+    "nodeFeedback": {
+      "selectedText": "当前主体：欣旺达 / 锂威 · 仅世界B连通（双世界已同步高亮）。",
+      "mentionsPath": false,
+      "mentionsEdgeWeight": false,
+      "shellHasNodePathHighlight": false
+    },
+    "edgeOrBlankTap": {
+      "before": "当前主体：欣旺达 / 锂威 · 仅世界B连通（双世界已同步高亮）。",
+      "after": "当前主体：欣旺达 / 锂威 · 仅世界B连通（双世界已同步高亮）。",
+      "changed": false
+    },
+    "evidencePanel": {
+      "sections": [
+        "直接 / 间接证据（9 个来源）",
+        "推断方法",
+        "公式",
+        "口径与限制",
+        "如何收紧（D 级缺口）"
+      ],
+      "hasPerEdgeWeight": false,
+      "mentionsSelectedNode": false
+    },
+    "findings": {
+      "robust": "无论跨界强弱，4 个主体始终与东莞网络连通，是稳健的结构事实。\n\n华通电脑\n石湾模具群落\n电动车配套群落",
+      "conditional": "5 个主体是否连通取决于跨界强度假设，是本模型最敏感的未知。\n\n欣旺达 / 锂威\n阈值 u≈0.45 · 低→中之间连入\n正威新材料\n阈值 u≈0.45 · 低→中之间连入\n嘉奇新能源\n阈值 u≈0.45 · 低→中之间连入\n镇村老厂群落\n阈值 u≈0.45 · 低→中之间连入\n深圳\n阈值 u≈0.45 · 低→中之间连入",
+      "next": "需要跨界桥梁/道路断面工作日客流、公交IC刷卡/扫码OD、或匿名聚合通勤数据，才能把区间收紧。\n\n取到该项原始数据，最能把上面的“条件性”结论转为“稳健”结论。"
+    },
+    "pageErrors": []
+  }
+}
