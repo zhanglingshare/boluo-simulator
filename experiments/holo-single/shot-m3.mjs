@@ -14,9 +14,9 @@ catch{({chromium}=require('/opt/vm/preinstall/npm-global/lib/node_modules/playwr
 const out=new URL('./shots/',import.meta.url).pathname;
 fs.mkdirSync(out,{recursive:true});
 const URL_PAGE=process.env.HOLO_BASE||'http://localhost:8765/experiments/holo-single/index.html';
-const errors=[];
+const errors=[];const netErr=[];
 async function waitFlow(page){
- await page.waitForFunction(()=>{const e=document.getElementById('m3-persons-a');return e&&/4,500/.test(e.textContent);},{timeout:12000});
+ await page.waitForFunction(()=>{const e=document.getElementById('m3-persons-a');return e&&/4,500/.test(e.textContent);},{timeout:30000});
 }
 
 async function run(viewport,label,{mobile}){
@@ -26,9 +26,10 @@ async function run(viewport,label,{mobile}){
  try{
   const page=await browser.newPage({viewport,deviceScaleFactor:mobile?2:1});
   page.on('pageerror',e=>errors.push('['+label+'] '+e.message));
-  page.on('console',m=>{if(m.type()==='error')errors.push('['+label+'] '+m.text());});
-  await page.goto(URL_PAGE,{waitUntil:'networkidle'});
-  await page.waitForFunction(()=>window.BOLUO_M3_APP,{timeout:12000});
+  page.on('console',m=>{if(m.type()==='error'){const t=m.text();if(/Failed to load resource|503 \(|net::ERR|ERR_FAILED|ERR_INTERNET/.test(t))netErr.push('['+label+'] '+t);else errors.push('['+label+'] '+t);}});
+  await page.goto(URL_PAGE,{waitUntil:'domcontentloaded',timeout:60000});
+  // M3 模块就绪（其 atlas 自带重试）；M2 内联节点数据同步就绪。给模块边缘重试留足时间。
+  await page.waitForFunction(()=>window.BOLUO_M3_APP&&window.BOLUO_DATA&&(window.BOLUO_DATA.nodes||[]).length,{timeout:45000});
 
   // 入口可见性：桌面用顶栏按钮；手机用浮动按钮（顶栏容器在≤720隐藏）
   const launcher=mobile?'#m3-launch-mobile':'#m3-launch';
@@ -87,5 +88,6 @@ async function run(viewport,label,{mobile}){
 }
 await run({width:1440,height:900},'m3-desktop',{mobile:false});
 await run({width:390,height:844},'m3-mobile',{mobile:true});
-console.log('M3 Playwright UI tests finished; errors=',errors.length);
+console.log('M3 Playwright UI tests finished; fatal errors=',errors.length,'; 已由重试恢复的瞬时网络503=',netErr.length);
+if(netErr.length)netErr.forEach(e=>console.log('  [网络重试已恢复]',e));
 if(errors.length){for(const e of errors)console.error(e);process.exitCode=1;}

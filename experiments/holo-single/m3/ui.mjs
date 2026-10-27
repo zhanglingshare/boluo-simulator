@@ -316,14 +316,20 @@ function openForFlow(flowId){
  let tries=0;const t=setInterval(()=>{tries++;if(state.flow){clearInterval(t);open();}else if(tries>60){clearInterval(t);open();}},100);
 }
 
-// 读取 atlas 通勤流场（B 级区间），与结构引擎并排呈现
-fetch('data/atlas.json',{cache:'no-store'}).then(r=>r.ok?r.json():null).then(atlas=>{
+// 读取 atlas 通勤流场（B 级区间）；GitHub Pages 边缘代理偶发 503，做有限次重试（最终失败 resolve null）
+const fetchJSONRetry=(url,n=4)=>new Promise(resolve=>{
+ let i=0;
+ const go=()=>fetch(url,{cache:'no-store'}).then(r=>r.ok?r.json():Promise.reject(new Error('HTTP '+r.status)))
+  .then(resolve).catch(()=>{i++;if(i>=n)resolve(null);else setTimeout(go,400*i+200);});
+ go();
+});
+fetchJSONRetry('data/atlas.json').then(atlas=>{
  const f=atlas?.flows?.find(x=>x.id===COMMUTE_FLOW_ID)||atlas?.flows?.[0];
  if(!f){get('m3-flow-meta').textContent='未取到 B 级流场，仅显示无量纲结构实验。';return;}
  state.flow=f;state.sc=scenariosFromFlow(f);state.sens=null;
  renderEvidence();
  if(state.open){renderControls();recompute();}
-}).catch(()=>{get('m3-flow-meta').textContent='数据读取失败，仅显示无量纲结构实验。';});
+});
 
 window.BOLUO_M3_APP={
  open:openForFlow,close,
