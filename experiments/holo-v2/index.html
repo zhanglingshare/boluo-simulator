@@ -1,0 +1,35 @@
+<!doctype html>
+<html lang="zh-CN"><head><meta charset="utf-8"/><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover"/><meta name="theme-color" content="#050d18"/>
+<title>看见博罗 V2 · 全息数据探索原型</title><meta name="description" content="探索博罗产业、城镇生活、文旅农业与外部联系，查看数据证据和不确定性情景。独立本地原型，不修改线上版本。"/>
+<link rel="stylesheet" href="src/styles.css"/></head>
+<body>
+<div id="app">
+  <div class="backdrop-gradient"></div>
+  <header class="topbar glass">
+    <div class="brand" aria-label="看见博罗 V2"><div class="brand-glyph" aria-hidden="true"><i></i><i></i><i></i></div><div><b>看见博罗<span>V2</span></b><small>BO LUO · LIVING DATA UNIVERSE</small></div></div>
+    <div class="mode-switch" role="tablist" aria-label="探索模式"><button data-mode="universe" class="mode-tab active" role="tab" aria-selected="true">全景星群</button><button data-mode="relations" class="mode-tab" role="tab" aria-selected="false">关系追踪</button><button data-mode="flows" class="mode-tab" role="tab" aria-selected="false">流动观察</button><button data-mode="scenario" class="mode-tab" role="tab" aria-selected="false">未知实验</button></div>
+    <div class="top-actions"><div class="source-chip"><span class="pulse-dot"></span><span>公开数据快照 · 2026.10.21</span></div><a class="ghost-link" href="https://zhanglingshare.github.io/boluo-simulator/" target="_blank" rel="noreferrer">原版 ↗</a></div>
+  </header>
+  <main id="viewport"><canvas id="universeCanvas" aria-label="可旋转、缩放、选择节点的博罗全息数据空间"></canvas><canvas id="linkCanvas" aria-hidden="true"></canvas><div id="labels" aria-hidden="true"></div>
+    <div class="vignette"></div>
+    <aside class="left-panel glass">
+      <div class="eyebrow"><span class="section-index">01 / EXPLORE</span><span class="glass-chip">M1 独立原型</span></div>
+      <h1>走进<br/><em>数据里的博罗。</em></h1>
+      <p class="intro">不是地理地图，而是一座由产业、生活、文旅、农业与外部联系组成的<span>全息关系宇宙。</span></p>
+      <div class="separator"></div>
+      <div class="panel-section-title">探索起点 <span>选择一个星群</span></div>
+      <div id="clusterOptions" class="cluster-options"></div>
+      <div class="panel-bottom"><div class="hint-line"><span class="hint-icon">◎</span><span>拖动旋转 · 滚轮缩放 · 点击深入</span></div><div class="data-boundary"><span class="alert-symbol">◇</span> 星群距离、光效不代表真实空间距离或人流量。</div></div>
+    </aside>
+    <div class="scene-title" id="sceneTitle"><span class="scene-eyebrow">BO LUO / HOLOGRAPHIC ATLAS</span><strong id="sceneHeadline">五个世界，<br/>一座博罗。</strong><span id="sceneSub">轻触任意星群，沿公开资料中的联系继续探索。</span></div>
+    <div class="scene-compass" aria-hidden="true"><span>↑</span><i></i><span>3D SPACE</span></div>
+    <div class="floating-tools"><button class="tool-btn" id="homeBtn" aria-label="返回全景" title="返回全景">⌂</button><button class="tool-btn" id="zoomIn" aria-label="放大">＋</button><button class="tool-btn" id="zoomOut" aria-label="缩小">−</button><button class="tool-btn" id="autoRotate" aria-pressed="false" title="切换自动旋转">⟳</button></div>
+    <aside class="right-panel glass" id="inspector"><div class="inspector-top"><span class="eyebrow">DATA INSPECTOR</span><span class="indicator-healthy" id="inspectorMode">● 真实资料</span></div><div id="inspectorBody"></div></aside>
+    <div class="bottom-dock glass"><div class="dock-identity"><div class="dock-orbit">✧</div><div><b id="dockTitle">全景宇宙</b><small id="dockSubtitle">5 组星群 · 点击进入</small></div></div><div class="dock-divider"></div><div class="dock-buttons"><button id="backButton" class="dock-btn" disabled>← 返回</button><button id="depthButton" class="dock-btn">展开联系 <span>↗</span></button><button id="evidenceButton" class="dock-btn">证据筛选 <span id="gradeBadge">全部</span></button></div><div class="dock-divider"></div><div class="dock-progress"><span>VIEW / 01</span><i></i><i></i><i></i></div></div>
+    <button id="mobileInfoButton" class="mobile-info-btn glass" aria-label="查看选中信息">数据详情 ↑</button>
+    <div class="bottom-fineprint">DATA ≠ REAL-TIME FLOW　•　真实关系 / 研究推断 / 假设实验分层呈现　•　原始项目：张凌</div>
+  </main>
+  <div id="toast" role="status" aria-live="polite"></div>
+</div>
+<script src="src/data.js"></script><script src="src/engine.js"></script><script src="src/app.js"></script>
+</body></html>

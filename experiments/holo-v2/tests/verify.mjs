@@ -1,0 +1,25 @@
+import fs from 'node:fs';
+import vm from 'node:vm';
+import assert from 'node:assert/strict';
+import path from 'node:path';
+const root=path.resolve(import.meta.dirname,'..');
+const context=vm.createContext({window:{},console});
+for(const file of ['data.js','engine.js']) vm.runInContext(fs.readFileSync(path.join(root,'src',file),'utf8'),context,{filename:file});
+const D=context.window.BOLUO_DATA,E=context.window.BOLUO_ENGINE;
+function ok(message,fn){try{fn();console.log('PASS',message)}catch(e){console.error('FAIL',message,e.message);process.exitCode=1}}
+ok('原版产业主体 27 个',()=>assert.equal(D.nodes.length,27));
+ok('产业关系来源快照 30 条',()=>assert.equal(D.edges.length,30));
+ok('镇街专题 12 条',()=>assert.equal(D.towns.length,12));
+ok('每条关系端点存在',()=>D.edges.forEach(e=>{assert(E.nodeMap.has(e.source));assert(E.nodeMap.has(e.target))}));
+ok('节点ID不重复',()=>assert.equal(new Set(E.dataNodes.map(n=>n.id)).size,E.dataNodes.length));
+ok('关系级别只为A/B/C',()=>D.edges.forEach(e=>assert(['A','B','C'].includes(e.level))));
+ok('关系流量缺失明确记录为null',()=>D.edges.forEach(e=>assert.equal(e.flowValue,null)));
+ok('固定假设的计算可复现',()=>{const a=E.compute(.5),b=E.compute(.5);assert.equal(a.totalWeight,b.totalWeight);for(const n of a.nodes)assert.deepEqual(a.positions.get(n.id),b.positions.get(n.id))});
+ok('切换未知假设后B级权重变化',()=>{const a=E.compute(.16),b=E.compute(.88);const edge=D.edges.find(e=>e.level==='B');assert(E.edgeStrength(edge,.16)<E.edgeStrength(edge,.88));assert(a.totalWeight<b.totalWeight)});
+ok('A级关系权重不随假设变化',()=>{const edge=D.edges.find(e=>e.level==='A');assert.equal(E.edgeStrength(edge,.16),E.edgeStrength(edge,.88))});
+ok('证据过滤数量一致',()=>{for(const g of ['A','B','C'])assert.equal(E.compute(.5,g).edgeCount,D.edges.filter(e=>e.level===g).length)});
+ok('有事实依据的关系邻域可追踪',()=>{const graph=E.compute(.5);assert(E.neighborhood(graph,'dg',1).has('mj'));assert(E.neighborhood(graph,'sz',1).has('xwd'))});
+ok('缩放与假设输入区间安全截断',()=>{assert.equal(E.edgeStrength(D.edges.find(e=>e.level==='B'),2),E.edgeStrength(D.edges.find(e=>e.level==='B'),1));assert.equal(E.edgeStrength(D.edges.find(e=>e.level==='B'),-1),E.edgeStrength(D.edges.find(e=>e.level==='B'),0))});
+ok('概念节点坐标稳定且有限',()=>{for(const pos of E.compute(.5).positions.values())assert(pos.every(Number.isFinite))});
+ok('首页信息来自原版同口径',()=>{assert.equal(D.stats.gdp2025,1005.45);assert.equal(D.stats.industryGrowth2026_1_8,8.9);assert.equal(D.stats.industrialInvestmentGrowth2026_1_8,-46.7)});
+console.log('\nVERIFY',process.exitCode?'FAILED':'PASSED');
