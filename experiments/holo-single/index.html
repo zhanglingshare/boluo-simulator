@@ -123,13 +123,13 @@ window.BOLUO_DATA=(()=>{
  ['lswh','hh','A','生态与文旅','户外活动联系'],
  ['lswh','sc','B','生态与文旅','茶旅结合推断'],
  ['lswh','lsz','B','生态与文旅','荔枝采摘与文旅联系推断'],
- ['gz','lfsgy','C','生态与文旅','与省级医疗机构合作，待核实'],
+ ['gz','lfsgy','B','生态与文旅','与省级医疗机构合作，单源待核实',true],
  ['hz','lswh','B','生态与文旅','主城文旅客流与行政关联推断'],
  ['dj','lsmd','B','供应链','水系和农业灌溉关联推断'],
  ['gyght','gyg','A','同镇关联','观音阁两种特色产品同镇关系；不代表供应链'],
  ['gyg','dj','B','生态与文旅','东江水系与河滩农业联系推断'],
  ['zw','xwd','A','供应链','铜材料及电池产业关联；原版A级，直接供货未另行核实']
- ].map(([source,target,level,kind,detail],i)=>({id:'e'+i,source,target,level,kind,detail,directed:false,flowValue:null,sourceRef:'network.html#rawEdges'}));
+ ].map(([source,target,level,kind,detail,weak],i)=>({id:'e'+i,source,target,level,kind,detail,weak:!!weak,directed:false,flowValue:null,sourceRef:'network.html#rawEdges'}));
  // 出厂精简 life/hot（兜底）。线上由 live hot.json/life.json 覆盖。
  const life={updated:'2026-10-21 07:27',sourceLabel:'出厂快照',
   towns:[
@@ -686,12 +686,12 @@ function townNodeInspector(node){
  const a=M.anchorMap.get(S.focusTown);
  const isExt=node.type==='ext';
  const near=G.edges.filter(e=>e.source===node.id||e.target===node.id);
- const counts={A:near.filter(x=>x.level==='A').length,B:near.filter(x=>x.level==='B').length,C:near.filter(x=>x.level==='C').length};
+ const counts={A:near.filter(x=>x.level==='A').length,B:near.filter(x=>x.level==='B').length,weak:near.filter(x=>x.weak).length};
  return `<div class="inspector-title">${safe(node.name)}</div><span class="status-tag ${isExt?'status-D':'status-A'}">${isExt?'外部城市 · 经 '+a.name+' 关联':a.name+' · 已收录主体'}</span>
   <p class="inspector-summary">${safe(node.desc)}</p>
   <div class="detail-rows"><div class="detail-row"><small>${isExt?'关联视角':'所属'}</small><b>${safe(a.name)}${a.type==='街道'?'街道':'镇'}</b></div>
   <div class="detail-row"><small>分类</small><b>${isExt?'外部联系城市':safe(E.groups.get(node.cluster)?.name)}</b></div>
-  <div class="detail-row"><small>直接联系</small><b>${near.length} 条（A ${counts.A}/B ${counts.B}/C ${counts.C}）</b></div></div>
+  <div class="detail-row"><small>直接联系</small><b>${near.length} 条（A ${counts.A}/B ${counts.B}${counts.weak?`，点线弱证据 ${counts.weak}`:''}）</b></div></div>
   <div class="inspector-divider"></div><div class="panel-section-title">沿关系探索</div>
   <div class="neighbor-list">${near.map(e=>{let id=e.source===node.id?e.target:e.source;return `<button class="neighbor-btn" data-node="${id}"><b>${safe(M.nodeMap.get(id)?.name||id)}</b><small class="status-tag status-${e.level}">${e.level}级</small></button>`}).join('')||'<div class="muted-note">当前证据筛选下无相连主体。</div>'}</div>
   <div class="inspector-divider"></div>
@@ -702,13 +702,13 @@ function townNodeInspector(node){
 }
 function nodeInspector(node){
  const near=G.edges.filter(e=>e.source===node.id||e.target===node.id).sort((a,b)=>a.level.localeCompare(b.level));
- const counts={A:near.filter(x=>x.level==='A').length,B:near.filter(x=>x.level==='B').length,C:near.filter(x=>x.level==='C').length};
+ const counts={A:near.filter(x=>x.level==='A').length,B:near.filter(x=>x.level==='B').length,weak:near.filter(x=>x.weak).length};
  const towns=E.nodeTowns(node.town);
  return `<div class="inspector-title">${safe(node.name)}</div><span class="status-tag status-A">原版已收录节点</span>
   <p class="inspector-summary">${safe(node.desc)}</p>
   <div class="detail-rows"><div class="detail-row"><small>相关镇域</small><b>${safe(node.town)}</b></div>
   <div class="detail-row"><small>分类</small><b>${safe(E.groups.get(node.cluster)?.name)}</b></div>
-  <div class="detail-row"><small>直接联系</small><b>${near.length} 条（A ${counts.A}/B ${counts.B}/C ${counts.C}）</b></div></div>
+  <div class="detail-row"><small>直接联系</small><b>${near.length} 条（A ${counts.A}/B ${counts.B}${counts.weak?`，点线弱证据 ${counts.weak}`:''}）</b></div></div>
   <div class="inspector-divider"></div>
   ${towns.length?`<div class="panel-section-title">进入所在镇（跨层）</div><div class="neighbor-list">${towns.map(t=>`<button class="neighbor-btn" data-town="${t}"><b>进入 ${t}${M.anchorMap.get(t)?.type==='街道'?'街道':'镇'}</b><small>产业·生活·事件 ↗</small></button>`).join('')}</div><div class="inspector-divider"></div>`:''}
   <div class="panel-section-title">继续沿关系探索 <span>${near.length} 条</span></div>
@@ -842,7 +842,7 @@ function back(){
  else home();
 }
 function nextGrade(){
- const vals=['all','A','B','C'];S.grade=vals[(vals.indexOf(S.grade)+1)%vals.length];
+ const vals=['all','A','B'];S.grade=vals[(vals.indexOf(S.grade)+1)%vals.length];
  G=E.compute(S.uncertainty,S.grade,M);navigationUI();toast('证据筛选：'+(S.grade==='all'?'全部':S.grade+'级'));
 }
 function mode(m){

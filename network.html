@@ -99,10 +99,10 @@ h1{font-size:22px;margin-bottom:6px}
 
   <div class="shock-bar">
     <span>💥 注入苗头（沿对应关系级联）：</span>
-    <button class="sbtn" data-shock="xwd" data-kinds="供应链,资源竞争" data-name="链主飞走（欣旺达/锂威）">A 链主飞走</button>
-    <button class="sbtn" data-shock="dj" data-kinds="环保约束,供应链" data-name="东江喊停（环保限产）">B 东江喊停</button>
-    <button class="sbtn" data-shock="lq" data-kinds="资源竞争,供应链" data-name="老厂腾退（亩均改造）">C 老厂腾退</button>
-    <button class="sbtn" data-shock="dg" data-kinds="供应链" data-name="外溢退潮（东莞外溢减弱）">D 外溢退潮</button>
+    <button class="sbtn" data-shock="xwd" data-kinds="供应链,资源竞争" data-name="链主飞走（欣旺达/锂威）">链主飞走</button>
+    <button class="sbtn" data-shock="dj" data-kinds="环保约束,供应链" data-name="东江喊停（环保限产）">东江喊停</button>
+    <button class="sbtn" data-shock="lq" data-kinds="资源竞争,供应链" data-name="老厂腾退（亩均改造）">老厂腾退</button>
+    <button class="sbtn" data-shock="dg" data-kinds="供应链" data-name="外溢退潮（东莞外溢减弱）">外溢退潮</button>
     <button id="shockReset">↺ 重置全景</button>
   </div>
   <div id="shockInfo"></div>
@@ -315,7 +315,7 @@ const rawEdges=[
   {s:"lswh",t:"hh",level:"A",w:2,rel:"户外运动",kind:"生态补偿"},
   {s:"lswh",t:"sc",level:"B",w:1,rel:"茶旅融合",kind:"生态补偿"},
   {s:"lswh",t:"lsz",level:"B",w:1,rel:"荔枝采摘",kind:"生态补偿"},
-  {s:"gz",t:"lfsgy",level:"C",w:2,rel:"省中医院合作",kind:"生态补偿"},
+  {s:"gz",t:"lfsgy",level:"B",weak:true,w:2,rel:"省中医院合作",kind:"生态补偿"},
   {s:"hz",t:"lswh",level:"B",w:2,rel:"文旅客流+行政",kind:"生态补偿"},
   // 农业/水利
   {s:"dj",t:"lsmd",level:"B",w:1,rel:"灌溉",kind:"供应链"},
@@ -446,7 +446,7 @@ const link=svg.append("g").selectAll("line").data(links).enter().append("line")
     return d.level==="A"?"#38bdf8":"#475569";
   })
   .attr("stroke-width",d=>d.w)
-  .attr("stroke-dasharray",d=>d.level==="B"?"5,4":d.level==="C"?"2,4":"none")
+  .attr("stroke-dasharray",d=>d.weak?"2,4":d.level==="B"?"5,4":"none")
   .attr("stroke-opacity",d=>d.level==="A"?0.8:0.5);
 
 // 透明宽点击层（细手机也能点到线）
@@ -455,7 +455,7 @@ const linkHit=svg.append("g").selectAll("line").data(links).enter().append("line
   .on("click",(e,d)=>{
     e.stopPropagation();
     const color=d.kind==="环保约束"?"#ef4444":d.kind==="资源竞争"?"#f59e0b":d.kind==="生态补偿"?"#0ea5e9":"#38bdf8";
-    const lvl=d.level==="A"?"实线·公开依据":d.level==="B"?"虚线·合理推算":"点线·暂不确定";
+    const lvl=d.weak?"点线·单源待核实":d.level==="A"?"实线·公开依据":"虚线·合理推算";
     tip.style.display="block";
     tip.innerHTML=`<b style="color:${color}">${d.source.name} ↔ ${d.target.name}</b><br>关系：${d.rel}<br>依据：${lvl}`;
     tip.style.left=Math.min(e.offsetX+15,W-250)+"px";
