@@ -1,0 +1,392 @@
+<!doctype html>
+<html lang="zh-CN"><head><meta charset="utf-8"/><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover"/><meta name="theme-color" content="#050d18"/>
+<title>看见博罗 V2 · 全息数据探索原型</title><meta name="description" content="探索博罗产业、城镇生活、文旅农业与外部联系，查看数据证据和不确定性情景。独立本地原型，不修改线上版本。"/>
+<style>
+:root{color-scheme:dark;--bg:#040b14;--panel:rgba(7,18,31,.79);--line:rgba(109,171,213,.15);--aqua:#52def1;--muted:#7e99af;--text:#e9f4ff;--gold:#ffc47d;--green:#56e2b4;font-family:Inter,-apple-system,BlinkMacSystemFont,'Segoe UI','PingFang SC','Microsoft YaHei',Arial,sans-serif}
+*{box-sizing:border-box}html,body,#app{height:100%;margin:0;overflow:hidden}body{color:var(--text);background:var(--bg);font-size:14px;user-select:none}button,input{font:inherit}button{cursor:pointer}button:focus-visible,a:focus-visible,input:focus-visible{outline:2px solid #7cdefb;outline-offset:3px}a{color:inherit;text-decoration:none}p{margin:0}
+#app{position:relative;isolation:isolate;background:radial-gradient(ellipse 67% 70% at 54% 52%,#112e43 0%,#071a2d 47%,#030811 94%)}.backdrop-gradient{position:absolute;inset:0;background:radial-gradient(circle at 52% 22%,rgba(18,155,191,.08),transparent 42%),repeating-linear-gradient(0deg,transparent,transparent 69px,rgba(58,115,151,.025) 70px),repeating-linear-gradient(90deg,transparent,transparent 69px,rgba(58,115,151,.022) 70px);pointer-events:none;z-index:0}
+.glass{background:var(--panel);border:1px solid rgba(126,177,218,.18);box-shadow:0 12px 45px rgba(0,4,13,.23),inset 0 1px rgba(212,245,255,.035);backdrop-filter:blur(22px);-webkit-backdrop-filter:blur(22px)}.topbar{position:absolute;z-index:20;top:15px;left:20px;right:20px;height:70px;border-radius:14px;display:flex;align-items:center;justify-content:space-between;padding:0 21px;gap:24px}.brand{display:flex;align-items:center;gap:12px;white-space:nowrap}.brand b{display:block;font-size:22px;letter-spacing:2px;font-weight:800}.brand b span{font-size:13px;vertical-align:5px;padding-left:5px;color:#69dcff;letter-spacing:1px}.brand small{display:block;margin-top:2px;font-size:9px;letter-spacing:2.5px;color:#7eabbf}.brand-glyph{width:40px;height:40px;border-radius:50%;position:relative;border:1px solid rgba(93,215,239,.8);box-shadow:0 0 22px rgba(43,214,245,.19),inset 0 0 16px rgba(43,214,245,.14);transform:rotate(-19deg)}.brand-glyph:before,.brand-glyph:after{content:'';position:absolute;inset:6px;border:1px solid #66d9ed;border-radius:50%}.brand-glyph:before{transform:rotate(65deg) scaleX(.37)}.brand-glyph:after{transform:rotate(-55deg) scaleX(.45)}.brand-glyph i:first-child{position:absolute;width:4px;height:4px;background:#70f6ff;top:4px;left:17px;border-radius:50%;box-shadow:0 0 10px #70f6ff}
+.mode-switch{display:flex;gap:4px;border-radius:12px;background:rgba(19,43,64,.54);padding:5px}.mode-tab{border:0;background:transparent;color:#91aabb;padding:11px 16px;border-radius:8px;font-size:12px;letter-spacing:.6px;transition:.2s;white-space:nowrap}.mode-tab:hover{color:#ecfaff;background:rgba(74,124,163,.15)}.mode-tab.active{color:#eefdff;background:linear-gradient(130deg,rgba(20,128,174,.35),rgba(34,67,94,.68));box-shadow:inset 0 0 0 1px rgba(70,214,249,.3)}.top-actions{display:flex;align-items:center;gap:12px;white-space:nowrap}.source-chip{color:#91a8b9;font-size:10px;display:flex;align-items:center;gap:8px}.pulse-dot{display:inline-block;width:6px;height:6px;border-radius:50%;background:#60ddcc;box-shadow:0 0 10px #3ec7be}.ghost-link{border:1px solid rgba(116,178,217,.23);border-radius:8px;padding:10px 14px;font-size:11px;color:#cde5f1}.ghost-link:hover{background:rgba(45,115,153,.2)}
+#viewport{position:absolute;inset:0;overflow:hidden}#universeCanvas,#linkCanvas{position:absolute;inset:0;width:100%;height:100%;display:block}#universeCanvas{z-index:1;touch-action:none}#linkCanvas{z-index:2;pointer-events:none}#labels{position:absolute;inset:0;z-index:3;pointer-events:none}.vignette{position:absolute;inset:0;z-index:4;background:linear-gradient(90deg,rgba(1,7,14,.56),transparent 30%,transparent 65%,rgba(1,7,14,.49)),linear-gradient(0deg,#02070f 0%,transparent 14%,transparent 75%,rgba(0,5,11,.5));pointer-events:none}
+.left-panel,.right-panel{position:absolute;z-index:10;border-radius:16px}.left-panel{left:24px;top:106px;bottom:118px;width:295px;padding:23px 20px;display:flex;flex-direction:column;gap:0;overflow:auto;scrollbar-width:thin;scrollbar-color:#224c69 transparent}.eyebrow{font-size:10px;color:#66cadc;font-weight:750;letter-spacing:1.8px}.left-panel>.eyebrow{display:flex;align-items:center;justify-content:space-between}.glass-chip{font-size:9px;color:#89baca;letter-spacing:0;border:1px solid #2b6071;border-radius:18px;padding:4px 7px}.left-panel h1{font-size:30px;line-height:1.37;margin:24px 0 13px;font-weight:750;letter-spacing:1px}.left-panel h1 em{font-style:normal;background:linear-gradient(110deg,#daf7ff 15%,#52bfe1 90%);-webkit-background-clip:text;background-clip:text;color:transparent}.intro{font-size:12px;line-height:1.9;color:#94adbf}.intro span{color:#cdefff}.separator{height:1px;background:linear-gradient(90deg,rgba(68,205,236,.28),transparent);margin:23px 0 19px}.panel-section-title{font-size:12px;font-weight:750;display:flex;justify-content:space-between;align-items:center;margin-bottom:12px}.panel-section-title span{font-size:10px;font-weight:400;color:#678ca4}.cluster-options{display:flex;flex-direction:column;gap:8px}.cluster-option{display:flex;align-items:center;gap:11px;width:100%;text-align:left;color:#b7ccda;background:rgba(12,36,53,.66);border:1px solid rgba(111,167,202,.12);border-radius:9px;padding:11px;min-height:58px;transition:border-color .2s,background .2s}.cluster-option:hover,.cluster-option.active{border-color:var(--hue);background:rgba(26,69,87,.43)}.cluster-symbol{flex:0 0 32px;height:32px;border-radius:11px;border:1px solid var(--hue);display:flex;align-items:center;justify-content:center;font-size:19px;color:var(--hue);box-shadow:inset 0 0 12px rgba(123,182,220,.10)}.cluster-option b{display:block;font-size:12px;color:#e9f9ff}.cluster-option small{display:block;font-size:10px;color:#7292a7;margin-top:4px}.cluster-count{margin-left:auto;font-size:10px;color:#84b7c4}.panel-bottom{margin-top:auto;padding-top:20px}.hint-line{display:flex;gap:8px;align-items:center;font-size:10px;color:#87b8cc}.hint-icon{color:#61d9df;font-size:16px}.data-boundary{font-size:10px;line-height:1.75;color:#7693a6;background:rgba(10,36,53,.75);border-radius:8px;padding:9px 10px;margin-top:15px}.alert-symbol{color:#f5c67a}
+.scene-title{position:absolute;z-index:5;top:117px;left:365px;max-width:390px;pointer-events:none;transition:opacity .25s}.scene-eyebrow{display:block;color:#74b7d1;letter-spacing:2.8px;font-size:10px;margin-bottom:12px}.scene-title strong{font-size:clamp(28px,2.7vw,44px);line-height:1.24;display:block;letter-spacing:1.2px;text-shadow:0 6px 45px #050f16}.scene-title>span:last-child{font-size:11px;color:#a1b9c7;line-height:1.7;max-width:315px;display:block;margin-top:14px}.scene-compass{position:absolute;z-index:5;left:365px;bottom:151px;color:#7da6b8;display:flex;align-items:center;gap:9px;font-size:9px;letter-spacing:2px;opacity:.75;pointer-events:none}.scene-compass i{width:55px;border-top:1px solid rgba(113,193,224,.45)}
+.right-panel{width:304px;right:24px;top:106px;bottom:118px;padding:20px;display:flex;flex-direction:column;overflow-y:auto;scrollbar-width:thin;scrollbar-color:#224c69 transparent}.inspector-top{display:flex;align-items:center;justify-content:space-between;padding-bottom:17px;border-bottom:1px solid var(--line)}.indicator-healthy{font-size:10px;color:#7ccbb1}.inspector-title{margin:20px 0 7px;font-size:22px;font-weight:800;letter-spacing:.2px}.inspector-summary{color:#a4bccc;font-size:12px;line-height:1.8;margin:9px 0 18px}.mini-stats{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:9px;margin:15px 0}.mini-stat{border:1px solid rgba(85,159,196,.13);background:rgba(22,58,82,.27);border-radius:9px;padding:12px}.mini-stat b{display:block;font-size:23px;color:#bceefa;font-variant-numeric:tabular-nums}.mini-stat small{color:#83a0b4;font-size:9px;display:block;margin-top:6px}.metric-highlight{border-left:2px solid #63d9e8;padding:9px 0 9px 14px;margin:14px 0}.metric-highlight strong{font-size:27px;display:block;color:#a3eefc}.metric-highlight small{color:#85a7b7;font-size:10px}.metric-highlight.negative{border-color:#e7908a}.metric-highlight.negative strong{color:#ed948d}.inspector-divider{height:1px;background:var(--line);margin:17px 0}.detail-rows{display:flex;flex-direction:column;gap:12px}.detail-row{display:flex;align-items:flex-start;gap:8px;font-size:11px;line-height:1.5}.detail-row small{color:#7291a7;min-width:52px}.detail-row b{font-weight:550;color:#d9e9f3}.inspection-link,.neighbor-btn,.inspector-button{border:1px solid rgba(97,161,198,.18);background:rgba(24,53,72,.5);color:#cce5f1;border-radius:9px;padding:10px 12px;font-size:11px;text-align:left}.inspection-link:hover,.neighbor-btn:hover,.inspector-button:hover{background:rgba(44,104,128,.44);border-color:rgba(107,214,238,.5)}.inspection-link{display:block;margin:8px 0}.source-label{font-size:10px;color:#7c9daf;line-height:1.7}.status-tag{font-size:9px;border-radius:9px;padding:4px 7px;display:inline-block;border:1px solid}.status-A{color:#61dcc4;border-color:#277767}.status-B{color:#f4bf78;border-color:#7b5e37}.status-C{color:#d5a4f9;border-color:#705185}.status-D{color:#a9b1c3;border-color:#4b5665}.neighbor-list{display:flex;flex-direction:column;gap:7px;margin-top:11px}.neighbor-btn{display:flex;align-items:center;justify-content:space-between;gap:8px;line-height:1.4}.neighbor-btn b{font-weight:550;max-width:175px}.neighbor-btn small{font-size:9px;color:#80a8bc}.muted-note{border:1px dashed rgba(125,172,196,.31);padding:11px 12px;border-radius:9px;color:#90aabd;font-size:11px;line-height:1.7;margin-top:12px}.scenario-range{display:flex;justify-content:space-between;align-items:center;gap:10px;margin:12px 0}.scenario-range b{font-size:26px;color:#f2d3a6;font-variant-numeric:tabular-nums}.scenario-slider{width:100%;height:6px;appearance:none;background:linear-gradient(90deg,#20516a,#4b8cb1,#e8ab71);border-radius:8px;outline:none}.scenario-slider::-webkit-slider-thumb{appearance:none;width:19px;height:19px;border-radius:50%;background:#e7f7fb;border:4px solid #3588ae;box-shadow:0 0 15px rgba(56,202,241,.6)}.scenario-presets{display:flex;gap:6px;margin:14px 0}.scenario-presets button{padding:8px 9px;font-size:11px;background:rgba(39,82,108,.5);color:#b8d3df;border:1px solid rgba(89,150,184,.29);border-radius:8px;flex:1}.scenario-presets button.active{color:#0c1d2b;background:#78dbe5;border-color:#78dbe5;font-weight:700}.scenario-panel{border:1px solid rgba(216,176,119,.28);background:linear-gradient(135deg,rgba(103,66,32,.16),rgba(11,33,50,.43));padding:13px;border-radius:11px;margin-top:14px}.scenario-compare{display:grid;grid-template-columns:1fr 1fr;gap:8px}.scenario-compare>div{border-radius:8px;background:#0e2234;border:1px solid #28425c;padding:9px}.scenario-compare small{display:block;color:#83a0b4;margin-bottom:6px;font-size:10px}.scenario-compare b{font-size:15px;color:#c5eaf7}.inspector-footer{font-size:10px;color:#7094aa;margin-top:25px;line-height:1.8}
+.node-label{position:absolute;white-space:nowrap;will-change:transform,opacity;transform:translate(-50%,-50%);transition:opacity .2s;text-align:center;pointer-events:none;filter:drop-shadow(0 3px 8px #020811);font-size:12px;color:#ddf7ff;font-weight:700;letter-spacing:.3px}.node-label.main{font-size:16px}.node-label .tag-en{display:block;font-size:9px;font-weight:500;letter-spacing:1.4px;color:#8db7cb;margin-top:4px}.node-label.selected{color:#fff;text-shadow:0 0 13px #65daef}.edge-label{font-size:10px;position:absolute;border:1px solid rgba(87,180,222,.5);background:rgba(6,23,38,.86);color:#c5efff;border-radius:8px;padding:5px 9px;pointer-events:none}
+.floating-tools{position:absolute;z-index:7;right:352px;bottom:144px;display:flex;flex-direction:column;gap:7px}.tool-btn{width:36px;height:36px;color:#b5e2ee;font-size:19px;background:rgba(8,35,55,.62);border:1px solid rgba(104,180,219,.25);border-radius:10px;backdrop-filter:blur(12px)}.tool-btn:hover{background:#164765;border-color:#57d5f5}.bottom-dock{position:absolute;z-index:15;bottom:40px;left:50%;transform:translateX(-50%);display:flex;gap:18px;align-items:center;padding:10px 16px;border-radius:14px;min-height:64px}.dock-identity{display:flex;align-items:center;gap:10px;min-width:147px}.dock-orbit{font-size:30px;color:#60cce5}.dock-identity b{display:block;font-size:12px}.dock-identity small{font-size:9px;color:#7e9bb1;display:block;margin-top:5px}.dock-divider{height:34px;border-left:1px solid #2d5367}.dock-buttons{display:flex;gap:6px}.dock-btn{border:1px solid transparent;background:transparent;color:#aec6d8;border-radius:8px;padding:10px 11px;font-size:11px;white-space:nowrap}.dock-btn:hover:not(:disabled){border-color:#365f78;background:rgba(54,131,154,.18);color:#fff}.dock-btn:disabled{opacity:.37;cursor:default}.dock-btn span{font-size:9px;margin-left:4px;color:#7ae2ea}.dock-progress{display:flex;align-items:center;gap:4px;color:#82a2b5;font-size:9px;letter-spacing:.5px}.dock-progress i{width:7px;height:4px;border-radius:3px;background:#2c5a72}.dock-progress i:first-of-type{background:#60dff0;width:20px}.bottom-fineprint{position:absolute;bottom:12px;left:0;right:0;text-align:center;color:#58788e;font-size:9px;z-index:7;letter-spacing:.8px;pointer-events:none}.mobile-info-btn{display:none}#toast{z-index:50;position:fixed;bottom:120px;left:50%;transform:translateX(-50%) translateY(20px);opacity:0;pointer-events:none;background:#133b4d;color:#ecf9ff;padding:11px 20px;border-radius:9px;font-size:12px;transition:.25s;max-width:90vw}#toast.show{opacity:1;transform:translateX(-50%) translateY(0)}
+@media(max-width:1280px){.left-panel{left:14px;width:262px}.right-panel{right:14px;width:276px}.scene-title{left:306px}.scene-compass{left:306px}.floating-tools{right:306px}.topbar{left:12px;right:12px}.source-chip{display:none}.dock-progress{display:none}}
+@media(max-width:1000px){.topbar{height:63px}.brand b{font-size:19px}.brand small{font-size:7px}.mode-tab{padding:9px 10px;font-size:11px}.left-panel{width:230px;padding:17px 14px;top:90px;bottom:112px}.left-panel h1{font-size:24px;margin-top:15px}.intro{font-size:11px}.right-panel{width:248px;padding:15px;top:90px;bottom:112px}.scene-title{left:263px;top:98px;max-width:260px}.scene-title strong{font-size:27px}.floating-tools{right:270px}}
+@media(max-width:720px){html,body,#app{height:100dvh}.topbar{height:58px;top:8px;left:8px;right:8px;border-radius:12px;padding:0 11px;gap:7px}.brand{gap:7px}.brand-glyph{width:28px;height:28px}.brand b{font-size:16px;letter-spacing:0}.brand b span{font-size:10px}.brand small{font-size:6px;letter-spacing:1px}.top-actions{display:none}.mode-switch{margin-left:auto;gap:0;padding:2px}.mode-tab{font-size:10px;padding:7px 6px;letter-spacing:0}.left-panel{z-index:9;top:77px;left:9px;right:9px;bottom:auto;width:auto;padding:10px 12px;border-radius:12px;max-height:146px;overflow:hidden;background:rgba(7,18,31,.65)}.left-panel>.eyebrow,.left-panel h1,.left-panel .intro,.left-panel .separator,.left-panel .panel-section-title,.left-panel .panel-bottom{display:none}.cluster-options{flex-direction:row;gap:6px;overflow-x:auto;scrollbar-width:none}.cluster-option{min-height:0;min-width:94px;padding:8px 7px;gap:5px;flex:1 0 auto;max-width:140px}.cluster-option .cluster-symbol{width:24px;height:24px;flex-basis:24px;border-radius:7px;font-size:14px}.cluster-option b{font-size:10px}.cluster-option small,.cluster-count{display:none}.scene-title{top:155px;left:16px;max-width:230px}.scene-eyebrow{font-size:8px;letter-spacing:1.2px;margin-bottom:6px}.scene-title strong{font-size:28px;line-height:1.15}.scene-title>span:last-child{font-size:10px;max-width:200px;margin-top:7px}.scene-compass{left:18px;bottom:218px;font-size:7px}.right-panel{position:absolute;right:9px;left:9px;top:auto;bottom:57px;height:235px;max-height:53dvh;width:auto;z-index:16;padding:14px;overflow-y:auto;border-radius:16px 16px 10px 10px;background:rgba(6,20,34,.95);box-shadow:0 -13px 44px rgba(0,0,0,.55);transform:translateY(200%);transition:transform .29s ease}.right-panel.mobile-open{transform:translateY(0)}.inspector-top{padding-bottom:9px}.inspector-title{margin-top:13px}.inspector-summary{margin:5px 0 10px}.mobile-info-btn{display:block;position:absolute;bottom:109px;right:12px;z-index:14;padding:10px 16px;border-radius:10px;color:#d5edf9;border:1px solid #3a7c98;font-size:11px}.floating-tools{right:12px;bottom:171px;gap:6px}.tool-btn{height:34px;width:34px}.bottom-dock{bottom:11px;left:8px;right:8px;transform:none;padding:7px 8px;justify-content:center;gap:5px;min-height:57px}.dock-identity{min-width:70px;gap:4px}.dock-orbit{font-size:19px}.dock-identity b{font-size:10px}.dock-identity small{font-size:8px}.dock-divider,.dock-progress{display:none}.dock-buttons{gap:1px;flex:1;justify-content:space-around}.dock-btn{font-size:10px;padding:9px 5px}.dock-btn span{display:none}.bottom-fineprint{display:none}.node-label.main{font-size:12px}.node-label{font-size:10px}#toast{bottom:145px;font-size:11px}}
+@media(max-width:380px){.mode-tab{font-size:9px;padding:6px 4px}.brand small{display:none}.left-panel{top:74px}.scene-title{top:151px}.scene-title strong{font-size:24px}.dock-identity small{display:none}.dock-buttons .dock-btn{font-size:9px}}
+@media(prefers-reduced-motion:reduce){*,*:before,*:after{scroll-behavior:auto!important;animation-duration:.01ms!important;transition-duration:.01ms!important}}
+
+</style></head>
+<body>
+<div id="app">
+  <div class="backdrop-gradient"></div>
+  <header class="topbar glass">
+    <div class="brand" aria-label="看见博罗 V2"><div class="brand-glyph" aria-hidden="true"><i></i><i></i><i></i></div><div><b>看见博罗<span>V2</span></b><small>BO LUO · LIVING DATA UNIVERSE</small></div></div>
+    <div class="mode-switch" role="tablist" aria-label="探索模式"><button data-mode="universe" class="mode-tab active" role="tab" aria-selected="true">全景星群</button><button data-mode="relations" class="mode-tab" role="tab" aria-selected="false">关系追踪</button><button data-mode="flows" class="mode-tab" role="tab" aria-selected="false">流动观察</button><button data-mode="scenario" class="mode-tab" role="tab" aria-selected="false">未知实验</button></div>
+    <div class="top-actions"><div class="source-chip"><span class="pulse-dot"></span><span>公开数据快照 · 2026.10.21</span></div><a class="ghost-link" href="https://zhanglingshare.github.io/boluo-simulator/" target="_blank" rel="noreferrer">原版 ↗</a></div>
+  </header>
+  <main id="viewport"><canvas id="universeCanvas" aria-label="可旋转、缩放、选择节点的博罗全息数据空间"></canvas><canvas id="linkCanvas" aria-hidden="true"></canvas><div id="labels" aria-hidden="true"></div>
+    <div class="vignette"></div>
+    <aside class="left-panel glass">
+      <div class="eyebrow"><span class="section-index">01 / EXPLORE</span><span class="glass-chip">M1 独立原型</span></div>
+      <h1>走进<br/><em>数据里的博罗。</em></h1>
+      <p class="intro">不是地理地图，而是一座由产业、生活、文旅、农业与外部联系组成的<span>全息关系宇宙。</span></p>
+      <div class="separator"></div>
+      <div class="panel-section-title">探索起点 <span>选择一个星群</span></div>
+      <div id="clusterOptions" class="cluster-options"></div>
+      <div class="panel-bottom"><div class="hint-line"><span class="hint-icon">◎</span><span>拖动旋转 · 滚轮缩放 · 点击深入</span></div><div class="data-boundary"><span class="alert-symbol">◇</span> 星群距离、光效不代表真实空间距离或人流量。</div></div>
+    </aside>
+    <div class="scene-title" id="sceneTitle"><span class="scene-eyebrow">BO LUO / HOLOGRAPHIC ATLAS</span><strong id="sceneHeadline">五个世界，<br/>一座博罗。</strong><span id="sceneSub">轻触任意星群，沿公开资料中的联系继续探索。</span></div>
+    <div class="scene-compass" aria-hidden="true"><span>↑</span><i></i><span>3D SPACE</span></div>
+    <div class="floating-tools"><button class="tool-btn" id="homeBtn" aria-label="返回全景" title="返回全景">⌂</button><button class="tool-btn" id="zoomIn" aria-label="放大">＋</button><button class="tool-btn" id="zoomOut" aria-label="缩小">−</button><button class="tool-btn" id="autoRotate" aria-pressed="false" title="切换自动旋转">⟳</button></div>
+    <aside class="right-panel glass" id="inspector"><div class="inspector-top"><span class="eyebrow">DATA INSPECTOR</span><span class="indicator-healthy" id="inspectorMode">● 真实资料</span></div><div id="inspectorBody"></div></aside>
+    <div class="bottom-dock glass"><div class="dock-identity"><div class="dock-orbit">✧</div><div><b id="dockTitle">全景宇宙</b><small id="dockSubtitle">5 组星群 · 点击进入</small></div></div><div class="dock-divider"></div><div class="dock-buttons"><button id="backButton" class="dock-btn" disabled>← 返回</button><button id="depthButton" class="dock-btn">展开联系 <span>↗</span></button><button id="evidenceButton" class="dock-btn">证据筛选 <span id="gradeBadge">全部</span></button></div><div class="dock-divider"></div><div class="dock-progress"><span>VIEW / 01</span><i></i><i></i><i></i></div></div>
+    <button id="mobileInfoButton" class="mobile-info-btn glass" aria-label="查看选中信息">数据详情 ↑</button>
+    <div class="bottom-fineprint">DATA ≠ REAL-TIME FLOW　•　真实关系 / 研究推断 / 假设实验分层呈现　•　原始项目：张凌</div>
+  </main>
+  <div id="toast" role="status" aria-live="polite"></div>
+</div>
+<script>
+/* Snapshot manually transcribed from public source: zhanglingshare/boluo-simulator network.html rawNodes/rawEdges, hot.json, life.json.
+   Source snapshot (hot/life): 2026-10-21 07:27. Not live feeds or geocoded locations.
+   The design clusters below are editorial groupings, not physical coordinates. */
+window.BOLUO_DATA = (()=>{
+ const nodes=[
+ ['dj','东江水系','eco','罗阳/石湾/园洲','东江水系与饮用水环境约束'],
+ ['lswh','环两山引领区','eco','长宁/横河/福田','环南昆山—罗浮山，文旅和生态发展区域'],
+ ['xwd','欣旺达 / 锂威','anchor','园洲','深圳总部与博罗生产基地关联'],
+ ['htd','华通电脑','anchor','园洲/石湾','电子信息产业主体'],
+ ['zw','正威新材料','anchor','罗阳','铜材料生产相关主体'],
+ ['jq','嘉奇新能源','anchor','园洲','新能源项目，原版标注黄色状态'],
+ ['jf','江丰精密','anchor','园洲','精密材料产业主体'],
+ ['gj','11家国家级小巨人','champ','多镇','专精特新企业集合节点'],
+ ['sj','74家省级专精特新','champ','多镇','省级专精特新企业集合节点'],
+ ['bmc','表面处理群落','capillary','福田','电镀、喷涂等配套产业'],
+ ['mj','石湾模具群落','capillary','石湾','模具及精密加工相关企业群'],
+ ['ddc','电动车配套群落','capillary','石湾','电动车及零部件相关产业'],
+ ['lq','镇村老厂群落','legacy','龙溪/园洲/罗阳','五金、塑料、建材等存量企业群'],
+ ['bss','百岁山','agri','湖镇','饮用水相关生产主体'],
+ ['lfsgy','罗浮山国药','agri','长宁','中医药产业主体'],
+ ['sc','柏塘山茶','gi','柏塘','地方特色茶产业'],
+ ['xc','福田菜心','gi','福田','地方特色农产品'],
+ ['gyg','观音阁花生','gi','观音阁','地方特色农产品'],
+ ['gyght','观音阁黑糖','gi','观音阁','地方特色农产品'],
+ ['sb','石坝胡须鸡','agri','石坝','地方特色养殖'],
+ ['lsmd','罗浮山大米','gi','长宁/横河','地方特色农产品'],
+ ['lsz','罗浮山荔枝','gi','罗浮山周边','地方特色水果'],
+ ['hh','横河户外小镇','capillary','横河','户外活动和乡村旅游相关节点'],
+ ['gz','广州','ext','外部','博罗外部关联城市'],
+ ['dg','东莞','ext','外部','博罗外部关联城市'],
+ ['sz','深圳','ext','外部','博罗外部关联城市'],
+ ['hz','惠州主城','ext','外部','博罗外部关联城市']
+ ].map(([id,name,type,town,desc])=>({id,name,type,town,desc,cluster:(type==='ext'?'external':type==='eco'||id==='hh'?'tourism':type==='agri'||type==='gi'?'agriculture':type==='legacy'?'life':'industry')}));
+ // A/B/C are the source project's original relationship evidence labels, not independently recertified by this prototype.
+ const edges=[
+ ['dg','mj','A','供应链','隔东江与东莞石龙相望；模具企业跨界发展'],
+ ['dg','ddc','A','供应链','台铃、小刀等电动车产业关联'],
+ ['dg','htd','A','供应链','园洲／石湾承接东莞电子产业外溢'],
+ ['dg','lq','B','供应链','五金塑料小厂沿边界扩散的推算'],
+ ['sz','xwd','A','供应链','欣旺达深圳总部与园洲基地关联'],
+ ['sz','jq','A','供应链','深博福田产业园项目关联'],
+ ['gz','mj','B','供应链','石湾与增城区位和产业外溢推算'],
+ ['mj','ddc','A','供应链','模具零部件产业联系'],
+ ['bmc','ddc','B','供应链','喷涂及表面处理配套推断'],
+ ['jf','htd','B','供应链','靶材供应联系待进一步核实'],
+ ['gj','htd','B','供应链','精密配套关系推算'],
+ ['sj','lq','B','供应链','产业技术升级联系推算'],
+ ['xwd','mj','B','供应链','电池结构件产业联系推算'],
+ ['jq','ddc','B','供应链','新能源与零部件产业关联推算'],
+ ['lq','htd','B','供应链','五金配套联系推算'],
+ ['dj','bmc','A','环保约束','东江水环境与表面处理行业约束'],
+ ['dj','bss','A','环保约束','饮用水水源联系'],
+ ['dj','lq','B','环保约束','沿江工业环境约束推断'],
+ ['xwd','lq','B','资源竞争','用电／用地等资源竞争推断'],
+ ['htd','lq','B','资源竞争','产业升级与厂房腾挪相关联系'],
+ ['lswh','lfsgy','A','生态与文旅','文旅与医药产业联系'],
+ ['lswh','hh','A','生态与文旅','户外活动联系'],
+ ['lswh','sc','B','生态与文旅','茶旅结合推断'],
+ ['lswh','lsz','B','生态与文旅','荔枝采摘与文旅联系推断'],
+ ['gz','lfsgy','C','生态与文旅','与省级医疗机构合作，待核实'],
+ ['hz','lswh','B','生态与文旅','主城文旅客流与行政关联推断'],
+ ['dj','lsmd','B','供应链','水系和农业灌溉关联推断'],
+ ['gyght','gyg','A','同镇关联','观音阁两种特色产品同镇关系；不代表供应链'],
+ ['gyg','dj','B','生态与文旅','东江水系与河滩农业联系推断'],
+ ['zw','xwd','A','供应链','铜材料及电池产业关联；原版A级，直接供货未另行核实']
+ ].map(([source,target,level,kind,detail],i)=>({id:'e'+i,source,target,level,kind,detail,directed:false,flowValue:null,sourceRef:'network.html#rawEdges'}));
+ const towns=[
+ ['长宁','罗浮山大门','罗浮山窑鸡 / 酥醪菜','罗浮山、冲虚观、飞云顶','高'],
+ ['横河','民宿示范镇','山水豆腐花','显岗水库驿站、花园村','高'],
+ ['罗阳','县城中心','客家菜 / 糯米鸡','县城商圈、东江散步','较高'],
+ ['园洲','融深产业镇','东江河鲜','深博福田产业园、东江绿道','较高'],
+ ['石湾','工业重镇','山坑螺 / 河鲜','东江岸线','较高'],
+ ['泰美','生态门户','农家菜','象头山、博罗站','较高'],
+ ['柏塘','茶乡','柏塘山茶','茶山徒步、古榄园','较高'],
+ ['福田','特色农业','福田菜心','产业园相关内容','中'],
+ ['龙华','古村','客家农家菜','旭日古村','中'],
+ ['公庄','东部农镇','沙地秋花生','秋季田园','中'],
+ ['杨村','水果之乡','皇帝柑','柑橘园','较高'],
+ ['观音阁','东江沿岸','花生油','东江画廊','中']
+ ].map(([name,tag,food,play,level])=>({name,tag,food,play,level,verification:'pending'}));
+ const hot=[
+ ['重阳夜罗浮山迎约2万登高游客','文旅','博罗县人民政府','已核验','https://www.boluo.gov.cn/?p=1428'],
+ ['博罗2026年国庆文化旅游综述','文旅','博罗县人民政府','已核验','https://www.boluo.gov.cn/bmzb/xwhgdlytyj/zwgk/bmwj/bmwj/content/post_5871691.html'],
+ ['柏塘交通道路建设动态','城市','博罗县人民政府','已核验','https://www.boluo.gov.cn/xzgwh/btzrmzf/zwgk/qt/ghjh/content/post_5869554.html'],
+ ['园洲精密锌压铸工厂开建报道','产业','新浪财经','待核实','https://finance.sina.com.cn/stock/estate/integration/2026-09-24/doc-inisxhnx5267604.shtml.md']
+ ].map(([title,category,source,status,url])=>({title,category,source,status,url}));
+ const clusters=[
+ {id:'industry',name:'产业制造',en:'INDUSTRY',desc:'企业、配套与产业关系',color:'#48c8ef',pos:[-1.25,0.55,0.05]},
+ {id:'life',name:'城镇生活',en:'LIFE',desc:'生产与日常生活交错',color:'#ffbc70',pos:[0.80,-0.05,0.15]},
+ {id:'tourism',name:'山水文旅',en:'TOURISM',desc:'生态与文旅联系',color:'#55e3b3',pos:[1.65,0.99,-0.65]},
+ {id:'agriculture',name:'农业乡村',en:'AGRICULTURE',desc:'特色农品与乡村底座',color:'#c9e875',pos:[1.35,-1.20,-0.4]},
+ {id:'external',name:'外部联系',en:'EXTERNAL',desc:'东莞、深圳、广州等连接',color:'#aa8eff',pos:[-1.70,-1.05,-0.80]}
+ ];
+ return {nodes,edges,towns,hot,clusters,snapshot:'2026-10-21 07:27',sourceRepo:'https://github.com/zhanglingshare/boluo-simulator',sourceFiles:['network.html','hot.json','life.json','who.html'],stats:{gdp2025:1005.45,industryGrowth2026_1_8:8.9,industrialInvestmentGrowth2026_1_8:-46.7}};
+})();
+
+</script><script>
+/* Pure, deterministic graph/scenario functions. No rendering and no external services. */
+window.BOLUO_ENGINE=(()=>{
+ const D=window.BOLUO_DATA;
+ const clamp=(x,a,b)=>Math.max(a,Math.min(b,x));
+ const groups=new Map(D.clusters.map(c=>[c.id,c]));
+ const hash=(s)=>{let h=2166136261>>>0;for(let i=0;i<s.length;i++){h^=s.charCodeAt(i);h=Math.imul(h,16777619)}return h>>>0};
+ const rand=(key,salt=0)=>((hash(key+'|'+salt)%100000)/100000);
+ const dataNodes=D.nodes.concat(D.towns.map(t=>({id:'town:'+t.name,name:t.name,type:'town',town:t.name,desc:t.tag+' · '+t.food+' · '+t.play,cluster:'life',editorial:true,verification:t.verification})));
+ const nodeMap=new Map(dataNodes.map(n=>[n.id,n]));
+ function originalPosition(n){
+   const c=groups.get(n.cluster), p=c.pos;
+   const r=0.21+rand(n.id,1)*0.65, a=rand(n.id,2)*Math.PI*2, b=(rand(n.id,3)-.5)*1.4;
+   return [p[0]+Math.cos(a)*r,p[1]+Math.sin(a)*r*.78,p[2]+b*.6];
+ }
+ const basePositions=new Map(dataNodes.map(n=>[n.id,originalPosition(n)]));
+ function edgeStrength(edge,uncertainty){
+  const u=clamp(uncertainty,0,1);
+  if(edge.level==='A')return 1;
+  if(edge.level==='B')return 0.12+u*0.85;
+  return 0.035+u*0.22;
+ }
+ function compute(uncertainty=0.50,grade='all'){
+  const nodes=dataNodes.map(n=>({...n}));
+  const edges=D.edges.filter(e=>grade==='all'||e.level===grade).map(e=>({...e,strength:edgeStrength(e,uncertainty)}));
+  const scores=new Map(nodes.map(n=>[n.id,0]));
+  const neighbors=new Map(nodes.map(n=>[n.id,new Set()]));
+  for(const e of edges){scores.set(e.source,(scores.get(e.source)||0)+e.strength);scores.set(e.target,(scores.get(e.target)||0)+e.strength);neighbors.get(e.source)?.add(e.target);neighbors.get(e.target)?.add(e.source)}
+  const top=[...scores.entries()].sort((a,b)=>b[1]-a[1]);
+  const positions=new Map();
+  // Layout displacement derives from weighted evidence links. It is NOT a measured distance/flow.
+  for(const n of nodes){let base=basePositions.get(n.id).slice();
+   const touch=edges.filter(e=>e.source===n.id||e.target===n.id);
+   if(touch.length){let fx=0,fy=0,fz=0,ws=0;for(const e of touch){const other=basePositions.get(e.source===n.id?e.target:e.source);if(!other)continue;const w=e.strength*0.08;fx+=(other[0]-base[0])*w;fy+=(other[1]-base[1])*w;fz+=(other[2]-base[2])*w;ws+=w;}const q=1/(1+ws);base=[base[0]+fx*q,base[1]+fy*q,base[2]+fz*q];}
+   positions.set(n.id,base);
+  }
+  const totalWeight=edges.reduce((a,e)=>a+e.strength,0);
+  return {nodes,edges,scores,neighbors,positions,top,totalWeight,grade,uncertainty, edgeCount:edges.length};
+ }
+ function neighborhood(graph,id,depth=1){let visited=new Set([id]);let frontier=new Set([id]);for(let step=0;step<depth;step++){let next=new Set();for(const n of frontier)for(const x of graph.neighbors.get(n)||[]){if(!visited.has(x)){visited.add(x);next.add(x)}}frontier=next;}return visited}
+ function clusterCounts(){return D.clusters.map(c=>({...c,nodes:dataNodes.filter(n=>n.cluster===c.id).length,edges:D.edges.filter(e=>nodeMap.get(e.source)?.cluster===c.id||nodeMap.get(e.target)?.cluster===c.id).length}))}
+ function intervalComparison(){const low=compute(.16),high=compute(.88);return {low,high,delta:high.totalWeight-low.totalWeight}}
+ return {D,dataNodes,nodeMap,hash,rand,clamp,basePositions,groups,compute,neighborhood,clusterCounts,intervalComparison,edgeStrength};
+})();
+
+</script><script>
+(()=>{'use strict';
+const E=window.BOLUO_ENGINE,D=window.BOLUO_DATA;
+const el=id=>document.getElementById(id), all=sel=>[...document.querySelectorAll(sel)];
+const canvas=el('universeCanvas'), linkCanvas=el('linkCanvas'), ctx=linkCanvas.getContext('2d');
+let gl=canvas.getContext('webgl2',{alpha:true,antialias:true,powerPreference:'high-performance'});
+const fallbackCanvas=gl?null:canvas.getContext('2d');
+const prefersReduced=window.matchMedia&&window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+let width=window.innerWidth,height=window.innerHeight,dpr=1;
+const S={mode:'universe',focusCluster:null,selected:null,grade:'all',uncertainty:.5,rotate:false,yaw:-.18,pitch:-.17,distance:6.9,center:[0,0,0],aim:[0,0,0],targetDistance:6.9,drag:false,moved:false,seen:false,mobileOpen:false,frame:0};
+let G=E.compute(S.uncertainty,S.grade),toastTimer=0;
+const colorHex=s=>{let h=s.replace('#','');return [0,2,4].map(i=>parseInt(h.slice(i,i+2),16)/255)};
+const colorFor=group=>E.groups.get(group)?.color||'#97d8e8';
+const statusSymbol={A:'公开依据',B:'研究推断',C:'待补证据'};
+function safe(s){return String(s??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]))}
+function toast(s){const x=el('toast');x.textContent=s;x.classList.add('show');clearTimeout(toastTimer);toastTimer=setTimeout(()=>x.classList.remove('show'),2700)}
+function resize(){dpr=Math.min(window.devicePixelRatio||1,2);width=window.innerWidth;height=window.innerHeight;for(const c of [canvas,linkCanvas]){c.width=Math.round(width*dpr);c.height=Math.round(height*dpr)}if(gl)gl.viewport(0,0,canvas.width,canvas.height);ctx.setTransform(dpr,0,0,dpr,0,0)}
+window.addEventListener('resize',resize,{passive:true});resize();
+function project(p){const px=p[0]-S.center[0],py=p[1]-S.center[1],pz=p[2]-S.center[2];let ca=Math.cos(S.yaw),sa=Math.sin(S.yaw);let rx=ca*px-sa*pz,rz=sa*px+ca*pz;let cb=Math.cos(S.pitch),sb=Math.sin(S.pitch);let ry=cb*py-sb*rz;rz=sb*py+cb*rz;let depth=Math.max(1.6,S.distance-rz);const scale=Math.min(width,height)*1.35/depth;return {x:width*.51+rx*scale,y:height*.515-ry*scale,z:rz,depth,scale}}
+function lerp(a,b,t){return a+(b-a)*t}
+function interpolate(){const t=prefersReduced?.35:.065;S.center=S.center.map((v,i)=>lerp(v,S.aim[i],t));S.distance=lerp(S.distance,S.targetDistance,t);if(S.rotate&&!S.drag&&!prefersReduced)S.yaw+=.00125}
+function focusedNode(){return S.selected?E.nodeMap.get(S.selected):null}
+function displayNodes(){const visible=[];
+  if(!S.focusCluster){for(const c of D.clusters)visible.push({id:'cluster:'+c.id,name:c.name,cluster:c.id,position:c.pos,major:true,color:c.color,size:68,alpha:1});
+   for(const n of E.dataNodes){if(E.rand(n.id,8)>.78)visible.push({...n,position:G.positions.get(n.id),color:colorFor(n.cluster),size:4.2,alpha:.36})}
+   return visible}
+  for(const c of D.clusters){visible.push({id:'cluster:'+c.id,name:c.name,cluster:c.id,position:c.pos,major:true,color:c.color,size:c.id===S.focusCluster?43:25,alpha:c.id===S.focusCluster?.68:.22})}
+  let valid=G.nodes.filter(n=>n.cluster===S.focusCluster);
+  if(S.selected){let near=E.neighborhood(G,S.selected,S.mode==='relations'?2:1);const selectedNode=E.nodeMap.get(S.selected);valid=G.nodes.filter(n=>n.cluster===S.focusCluster||near.has(n.id)||(selectedNode&&n.id===S.selected))}
+  for(const n of valid){const isSelected=n.id===S.selected;let near=!S.selected||E.neighborhood(G,S.selected,1).has(n.id);let alpha=(S.selected&&!near)?0.38:1;const score=G.scores.get(n.id)||0;
+   visible.push({...n,position:G.positions.get(n.id),color:colorFor(n.cluster),size:isSelected?32:Math.min(21,12+score*1.9),alpha,selected:isSelected, score})}
+  return visible}
+function activeEdges(){if(!S.focusCluster)return[];
+ let list=G.edges.filter(e=>E.nodeMap.get(e.source)?.cluster===S.focusCluster||E.nodeMap.get(e.target)?.cluster===S.focusCluster);
+ if(S.selected){let near=E.neighborhood(G,S.selected,S.mode==='relations'?2:1);list=list.filter(e=>near.has(e.source)&&near.has(e.target))}
+ return list}
+function rgba(rgb,a){return `rgba(${Math.round(rgb[0]*255)},${Math.round(rgb[1]*255)},${Math.round(rgb[2]*255)},${a})`}
+function curvePoint(a,b,t,arc){return {x:(1-t)*a.x+t*b.x,y:(1-t)*a.y+t*b.y-4*arc*Math.sin(t*Math.PI)}}
+function drawOverlay(t,visible){ctx.clearRect(0,0,width,height);const base=ctx;
+ // Spatial reference circles are non-geographic ornamental depth guides.
+ base.save();base.translate(width*.51,height*.515);base.rotate(-.12);base.lineWidth=1;
+ for(let r=125;r<Math.min(750,width*.48);r+=92){base.strokeStyle=`rgba(65,156,182,${.09-r/12000})`;base.beginPath();base.ellipse(0,0,r,r*.35,0,0,Math.PI*2);base.stroke()}
+ base.strokeStyle='rgba(70,153,179,.10)';for(let a=0;a<Math.PI*2;a+=Math.PI/9){base.beginPath();base.moveTo(0,0);base.lineTo(Math.cos(a)*880,Math.sin(a)*350);base.stroke()}base.restore();
+ const selected=S.selected;
+ const edges=activeEdges();
+ for(const edge of edges){const pp=G.positions.get(edge.source),qq=G.positions.get(edge.target);if(!pp||!qq)continue;let a=project(pp),b=project(qq);
+  const incident=!selected||edge.source===selected||edge.target===selected;
+  const alpha=(incident?.75:.18)*(edge.level==='A'?1:edge.level==='B'?.72:.4);
+  const ca=edge.kind.includes('环保')?'#65ddb3':edge.kind.includes('资源')?'#ffb56c':edge.kind.includes('文旅')?'#a9e8a5':'#6bcbf3';
+  const gradeScale=edge.strength;
+  const bend=12+Math.min(30,Math.abs(a.x-b.x)*.12);
+  const control={x:(a.x+b.x)/2,y:(a.y+b.y)/2-bend};
+  const dashed=S.mode==='flows'||edge.level!=='A';
+  ctx.save();ctx.beginPath();ctx.moveTo(a.x,a.y);ctx.quadraticCurveTo(control.x,control.y,b.x,b.y);
+  ctx.lineWidth=(incident?1.15+gradeScale*1.7:.8);ctx.strokeStyle=hexrgba(ca,alpha);ctx.shadowColor=ca;ctx.shadowBlur=incident?9:0;if(dashed)ctx.setLineDash([5,7]);ctx.stroke();ctx.restore();
+  // A luminous moving dot illustrates active *exploration of a known link*, not measured traffic.
+  if(S.mode==='relations'&&incident&&!prefersReduced){const u=(t*.00011 + E.rand(edge.id,3))%1;const x=(1-u)**2*a.x+2*(1-u)*u*control.x+u*u*b.x;const y=(1-u)**2*a.y+2*(1-u)*u*control.y+u*u*b.y;ctx.fillStyle=hexrgba(ca,.7);ctx.shadowColor=ca;ctx.shadowBlur=11;ctx.beginPath();ctx.arc(x,y,2.0,0,Math.PI*2);ctx.fill();ctx.shadowBlur=0}
+ }
+ // Cluster halos: gradients are aesthetic navigation affordances, not quantitative heat maps.
+ const majors=visible.filter(n=>n.major);
+ for(const n of majors){const p=project(n.position),r=(n.id==='cluster:'+S.focusCluster?100:75)*Math.min(1.6,p.scale/150);if(p.x<0||p.x>width||p.y<0||p.y>height)continue;
+  const c=colorHex(n.color);const grad=ctx.createRadialGradient(p.x,p.y,3,p.x,p.y,r);
+  grad.addColorStop(0,rgba(c,n.alpha*.14));grad.addColorStop(.35,rgba(c,n.alpha*.085));grad.addColorStop(1,rgba(c,0));ctx.fillStyle=grad;ctx.beginPath();ctx.arc(p.x,p.y,r,0,Math.PI*2);ctx.fill();
+  const ang=(t*.00014+E.rand(n.id)*6.28);ctx.beginPath();ctx.ellipse(p.x,p.y,r*.75,r*.27,-.18,ang,ang+Math.PI*1.42);ctx.strokeStyle=rgba(c,n.alpha*.38);ctx.lineWidth=1.3;ctx.stroke();
+  for(let i=0;i<3;i++){let a=ang+i*Math.PI*.73;let x=p.x+Math.cos(a)*r*.75, y=p.y+Math.sin(a)*r*.27;ctx.fillStyle=rgba(c,n.alpha*.8);ctx.beginPath();ctx.arc(x,y,1.8,0,Math.PI*2);ctx.fill()}
+ }
+ // selected node pulsing focus indicator.
+ const sn=visible.find(n=>n.selected);if(sn){const p=project(sn.position);const r=22+(prefersReduced?0:Math.sin(t*.002)*2);ctx.beginPath();ctx.arc(p.x,p.y,r,0,Math.PI*2);ctx.strokeStyle='rgba(179,245,255,.7)';ctx.lineWidth=1;ctx.setLineDash([3,6]);ctx.stroke();ctx.setLineDash([])}
+ if(S.mode==='flows'){
+  ctx.font='11px sans-serif';ctx.fillStyle='rgba(242,204,142,.76)';ctx.fillText('方向 / 数量资料缺失：此处仅展示既有关系，非实测人流或物流',Math.max(12,width*.34),Math.max(180,height*.78));
+ }
+}
+function hexrgba(hex,alpha){const r=colorHex(hex);return rgba(r,alpha)}
+function makeShaders(){if(!gl)return null;
+ const vs=`#version 300 es
+ precision highp float;
+ in vec3 aPosition;in vec3 aColor;in float aSize;in float aAlpha;
+ uniform vec2 uResolution;uniform vec3 uCenter;uniform float uYaw;uniform float uPitch;uniform float uDist;uniform float uDpr;
+ out vec3 vColor;out float vAlpha;
+ void main(){vec3 p=aPosition-uCenter;
+  float c=cos(uYaw),s=sin(uYaw);float x=c*p.x-s*p.z;float z=s*p.x+c*p.z;
+  float cp=cos(uPitch),sp=sin(uPitch);float y=cp*p.y-sp*z;z=sp*p.y+cp*z;
+  float den=max(1.6,uDist-z);float scale=min(uResolution.x,uResolution.y)*1.35/den;
+  gl_Position=vec4(x*scale*2.0/uResolution.x+.02,y*scale*2.0/uResolution.y-.03,clamp(-z/20.0,-.9,.9),1.0);
+  gl_PointSize=aSize*uDpr*clamp(scale/160.0,.55,1.7);
+  vColor=aColor;vAlpha=aAlpha;
+ }`;
+ const fs=`#version 300 es
+ precision highp float;in vec3 vColor;in float vAlpha;out vec4 outColor;
+ void main(){vec2 c=gl_PointCoord-vec2(.5);float r=length(c);if(r>.5)discard;
+ float core=smoothstep(.47,.03,r);float glow=pow(max(0.0,1.0-r*2.0),2.1);
+ vec3 normal=normalize(vec3(c*.88,sqrt(max(.001,.25-dot(c,c)))));
+ float lighting=.55+.48*max(0.0,dot(normal,normalize(vec3(-.3,.65,.9))));
+ float rim=pow(max(0.0,1.0-normal.z),2.0);
+ vec3 col=vColor*(.8+lighting*.8)+vec3(.18,.26,.34)*rim;
+ float alpha=vAlpha*(glow*.73+core*.18);
+ outColor=vec4(col,alpha);
+ }`;
+ const compile=(type,source)=>{let s=gl.createShader(type);gl.shaderSource(s,source);gl.compileShader(s);if(!gl.getShaderParameter(s,gl.COMPILE_STATUS))throw Error(gl.getShaderInfoLog(s));return s};
+ let prog=gl.createProgram();gl.attachShader(prog,compile(gl.VERTEX_SHADER,vs));gl.attachShader(prog,compile(gl.FRAGMENT_SHADER,fs));gl.linkProgram(prog);if(!gl.getProgramParameter(prog,gl.LINK_STATUS))throw Error(gl.getProgramInfoLog(prog));
+ const uniforms={};for(const n of ['uResolution','uCenter','uYaw','uPitch','uDist','uDpr'])uniforms[n]=gl.getUniformLocation(prog,n);
+ const attr={};for(const n of ['aPosition','aColor','aSize','aAlpha'])attr[n]=gl.getAttribLocation(prog,n);
+ const buf=gl.createBuffer();gl.enable(gl.BLEND);gl.blendFunc(gl.SRC_ALPHA,gl.ONE);gl.disable(gl.DEPTH_TEST);
+ return {prog,uniforms,attr,buf};}
+let shaders;
+try{shaders=makeShaders()}catch(e){console.warn('WebGL program error',e);gl=null;shaders=null}
+const stars=Array.from({length:450},(_,i)=>({id:'star'+i,position:[(E.rand('st'+i,1)-.5)*16,(E.rand('st'+i,2)-.5)*9,-3-E.rand('st'+i,3)*7],color:'#7dbcd3',size:.45+E.rand('st'+i,4)*1.8,alpha:.09+E.rand('st'+i,5)*.24}));
+function drawGL(visible){if(!gl){drawFallback(visible);return}gl.viewport(0,0,canvas.width,canvas.height);gl.clearColor(0,0,0,0);gl.clear(gl.COLOR_BUFFER_BIT);
+ const all=stars.concat(visible);let a=new Float32Array(all.length*8);for(let i=0;i<all.length;i++){const n=all[i],rgb=colorHex(n.color),o=i*8;[...n.position,...rgb,n.size,n.alpha].forEach((v,j)=>a[o+j]=v)}
+ gl.useProgram(shaders.prog);gl.bindBuffer(gl.ARRAY_BUFFER,shaders.buf);gl.bufferData(gl.ARRAY_BUFFER,a,gl.DYNAMIC_DRAW);
+ const st=8*4;for(const [k,size,offset] of [['aPosition',3,0],['aColor',3,12],['aSize',1,24],['aAlpha',1,28]]){const loc=shaders.attr[k];gl.enableVertexAttribArray(loc);gl.vertexAttribPointer(loc,size,gl.FLOAT,false,st,offset)}
+ gl.uniform2f(shaders.uniforms.uResolution,width,height);gl.uniform3fv(shaders.uniforms.uCenter,S.center);gl.uniform1f(shaders.uniforms.uYaw,S.yaw);gl.uniform1f(shaders.uniforms.uPitch,S.pitch);gl.uniform1f(shaders.uniforms.uDist,S.distance);gl.uniform1f(shaders.uniforms.uDpr,dpr);
+ gl.drawArrays(gl.POINTS,0,all.length);
+}
+function drawFallback(visible){if(!fallbackCanvas)return;fallbackCanvas.clearRect(0,0,canvas.width,canvas.height);fallbackCanvas.save();fallbackCanvas.scale(dpr,dpr);for(const n of visible){const p=project(n.position),r=n.major?33:Math.max(4,n.size*.65);let gradient=fallbackCanvas.createRadialGradient(p.x,p.y,2,p.x,p.y,r);gradient.addColorStop(0,hexrgba(n.color,n.alpha));gradient.addColorStop(1,hexrgba(n.color,0));fallbackCanvas.fillStyle=gradient;fallbackCanvas.beginPath();fallbackCanvas.arc(p.x,p.y,r,0,Math.PI*2);fallbackCanvas.fill()}fallbackCanvas.restore()}
+const labelCache=new Map();function paintLabels(visible){const cont=el('labels'),ids=new Set();
+ for(const n of visible){if(n.size<10&& !n.major)continue;const p=project(n.position);if(p.x<15||p.x>width-15||p.y<65||p.y>height-20)continue;ids.add(n.id);let node=labelCache.get(n.id);if(!node){node=document.createElement('div');node.className='node-label';cont.appendChild(node);labelCache.set(n.id,node)}
+ node.className='node-label'+(n.major?' main':'')+(n.selected?' selected':'');
+ if(n.major){const c=E.groups.get(n.cluster);node.innerHTML=`${safe(c.name)}<span class="tag-en">${safe(c.en)}</span>`}else node.textContent=n.name;
+ node.style.transform=`translate3d(${p.x}px,${p.y+(n.major?48:25)*Math.min(1.4,p.scale/160)}px,0) translate(-50%,0)`;
+ node.style.opacity=String(n.alpha);node.style.color=n.selected?'#efffff':n.major?n.color:'#c1e6f6';node.style.display='block';
+ }
+ for(const [id,node] of labelCache)if(!ids.has(id))node.style.display='none';}
+function tick(t){S.frame++;interpolate();const vis=displayNodes();drawGL(vis);drawOverlay(t,vis);paintLabels(vis);requestAnimationFrame(tick)}requestAnimationFrame(tick);
+function navigationUI(){const counts=E.clusterCounts();const sym={industry:'◈',life:'◉',tourism:'⌁',agriculture:'✳',external:'⟷'};el('clusterOptions').innerHTML=counts.map(c=>`<button class="cluster-option ${S.focusCluster===c.id?'active':''}" data-cluster="${c.id}" style="--hue:${c.color}"><span class="cluster-symbol">${sym[c.id]}</span><span><b>${c.name}</b><small>${c.desc}</small></span><span class="cluster-count">${c.nodes.toString().padStart(2,'0')}</span></button>`).join('');
+ all('.cluster-option').forEach(x=>x.addEventListener('click',()=>openCluster(x.dataset.cluster)));
+ el('backButton').disabled=!S.focusCluster;
+ el('dockTitle').textContent=S.selected?E.nodeMap.get(S.selected)?.name:S.focusCluster?E.groups.get(S.focusCluster)?.name:'全景宇宙';
+ el('dockSubtitle').textContent=S.selected?'探索已收录联系':S.focusCluster?'选择节点继续探索':'5 组星群 · 点击进入';
+ el('gradeBadge').textContent=S.grade==='all'?'全部':S.grade+'级';
+ all('.mode-tab').forEach(b=>{let active=b.dataset.mode===S.mode;b.classList.toggle('active',active);b.setAttribute('aria-selected',String(active))});
+ const sub=S.focusCluster?E.groups.get(S.focusCluster):null;
+ el('sceneHeadline').innerHTML=S.mode==='scenario'?'未知不是空白，<br/>而是新的入口。':S.mode==='flows'?'追踪联系，<br/>不伪装流量。':S.selected?safe(E.nodeMap.get(S.selected)?.name||'')+'.':S.focusCluster?safe(sub?.name||'')+' · 深入': '五个世界，<br/>一座博罗。';
+ el('sceneSub').textContent=S.mode==='scenario'?'手动改变研究假设，观察加权网络怎样变化。':S.mode==='flows'?'目前没有可核实的人流OD；仅展示关系，不渲染虚构客流。':S.selected?'点选相关节点继续追踪；切换透镜不会丢失焦点。':S.focusCluster?'点击光点查看有依据的主体与关联；拖动可旋转观察。':'轻触任意星群，沿公开资料中的联系继续探索。';
+ el('inspectorMode').textContent=S.mode==='scenario'?'◆ 用户假设':S.mode==='flows'?'◇ 数据边界':'● 资料快照';
+ inspector();}
+function openCluster(id){S.focusCluster=id;S.selected=null;S.aim=E.groups.get(id).pos.slice();S.targetDistance=4.9;S.seen=true;navigationUI();if(width<721)closeMobile();toast('已进入 '+E.groups.get(id).name+' 星群')}
+function openNode(id){const n=E.nodeMap.get(id);if(!n)return;S.selected=id;S.focusCluster=n.cluster;S.aim=G.positions.get(id).slice();S.targetDistance=4.6;navigationUI();if(width<721)openMobile();toast('选中 · '+n.name)}
+function home(){S.mode='universe';S.focusCluster=null;S.selected=null;S.aim=[0,0,0];S.targetDistance=6.9;S.grade='all';G=E.compute(S.uncertainty,S.grade);navigationUI();closeMobile()}
+function previous(){if(S.selected){S.selected=null;S.aim=E.groups.get(S.focusCluster).pos.slice();S.targetDistance=4.9}else if(S.focusCluster)home();navigationUI()}
+function nextGrade(){const vals=['all','A','B','C'];S.grade=vals[(vals.indexOf(S.grade)+1)%vals.length];G=E.compute(S.uncertainty,S.grade);navigationUI();toast('关系证据筛选：'+(S.grade==='all'?'全部':S.grade+'级'))}
+function mode(m){S.mode=m;if(m==='scenario'&&!S.focusCluster){S.focusCluster='industry';S.selected='htd';S.aim=G.positions.get('htd').slice();S.targetDistance=5.3}if(m==='relations'&&!S.focusCluster){S.focusCluster='industry';S.aim=E.groups.get('industry').pos.slice();S.targetDistance=5}navigationUI();if(width<721&&(m==='scenario'||m==='flows'))openMobile()}
+function inspector(){let html='', node=focusedNode(), cluster=S.focusCluster?E.groups.get(S.focusCluster):null;
+ const origSource=`<div class="inspector-footer">数据快照：${safe(D.snapshot)}<br/>来源：<a href="${D.sourceRepo}" target="_blank" rel="noreferrer"><u>原版仓库 ↗</u></a><br/>原版证据级别不代表本原型重新独立核验。</div>`;
+ if(S.mode==='scenario'){
+   const pair=E.intervalComparison();const total=G.totalWeight.toFixed(2),rank=G.top.filter(x=>x[1]>0).slice(0,3);
+   html=`<div class="inspector-title">未知区间实验</div><p class="inspector-summary">调整 B/C 级关系的<span style="color:#f4c98e">假设权重</span>，图中的布局与加权连接值由计算函数即时重算。</p>
+   <span class="status-tag status-B">探索假设 · 非观测概率</span><div class="scenario-panel"><div class="scenario-range"><span>假设强度</span><b id="scenarioValue">${Math.round(S.uncertainty*100)} / 100</b></div>
+   <input class="scenario-slider" type="range" id="scenarioSlider" min="0" max="100" value="${Math.round(S.uncertainty*100)}" step="1" aria-label="B/C关系假设强度"/>
+   <div class="scenario-presets"><button data-scenario=".16" class="${S.uncertainty===.16?'active':''}">低</button><button data-scenario=".50" class="${S.uncertainty===.50?'active':''}">中</button><button data-scenario=".88" class="${S.uncertainty===.88?'active':''}">高</button></div>
+   <div class="scenario-compare"><div><small>当前加权联系总值</small><b id="scenarioTotal">${total}</b></div><div><small>参与计算的关系数</small><b>${G.edgeCount} 条</b></div></div>
+   <p class="source-label" style="margin-top:13px">这些是研究实验中的抽象连接权重，不代表真实通勤人数、货流吨数或经济增量。</p></div>
+   <div class="inspector-divider"></div><div class="panel-section-title">哪些主体更靠近网络中心？</div><div id="rankList" class="neighbor-list">${rank.map(([id,score],i)=>`<button class="neighbor-btn" data-node="${safe(id)}"><b>${i+1}. ${safe(E.nodeMap.get(id)?.name||id)}</b><small>${score.toFixed(2)}</small></button>`).join('')}</div>
+   <div class="muted-note">该加权指标取决于人为设置的 A/B/C 映射，不是经经验标定的现实强度；更改假设不改变真实资料。</div>`;
+ }else if(S.mode==='flows'){
+   html=`<div class="inspector-title">流动观察</div><p class="inspector-summary">我们希望观察工作、游客、物流、信息等流动，但目前原版主要提供主体关联，尚不足以重建真实的镇际通勤、游客来源地与货运量。</p><span class="status-tag status-D">OD 数据尚缺失</span><div class="inspector-divider"></div><div class="panel-section-title">现阶段可以查看</div><div class="detail-rows"><div class="detail-row"><small>支持</small><b>既有产业联系、区域联系、公开活动信息</b></div><div class="detail-row"><small>未知</small><b>工作日跨界人数、货流强度与方向性规模</b></div><div class="detail-row"><small>下一步</small><b>公开道路流量、合法匿名聚合数据、代表性抽样</b></div></div><div class="muted-note">画面虚线属于关联可视化，不代表已实测的人流向。点击“未知实验”可操作一个明确标注的权重假设。</div><button class="inspection-link" id="goScenario" style="width:100%;margin-top:20px">进入未知区间实验 ↗</button>`;
+ }else if(node){
+   const near=G.edges.filter(e=>e.source===node.id||e.target===node.id).sort((a,b)=>a.level.localeCompare(b.level));const counts={A:near.filter(x=>x.level==='A').length,B:near.filter(x=>x.level==='B').length,C:near.filter(x=>x.level==='C').length};
+   let town=D.towns.find(t=>t.name===node.town);
+   html=`<div class="inspector-title">${safe(node.name)}</div><span class="status-tag status-${node.editorial?'D':'A'}">${node.editorial?'镇街专题资料 · 待核实':'原版已收录节点'}</span><p class="inspector-summary">${safe(node.desc)}</p><div class="detail-rows"><div class="detail-row"><small>相关镇域</small><b>${safe(node.town)}</b></div><div class="detail-row"><small>分类</small><b>${safe(E.groups.get(node.cluster)?.name)}</b></div><div class="detail-row"><small>直接联系</small><b>${near.length} 条（A ${counts.A} / B ${counts.B} / C ${counts.C}）</b></div></div>`;
+   if(town)html+=`<div class="scenario-panel"><b style="font-size:12px">${safe(town.name)} · 生活层</b><p class="source-label" style="margin-top:7px">${safe(town.tag)} · ${safe(town.food)} · ${safe(town.play)}</p><small style="color:#e6be7b">原版 life.json 对该条目标记 pending，内容待逐条核查</small></div>`;
+   html+=`<div class="inspector-divider"></div><div class="panel-section-title">继续沿关系探索 <span>${near.length} 条</span></div><div class="neighbor-list">`;
+   html+=near.length?near.map(e=>{let id=e.source===node.id?e.target:e.source;return `<button class="neighbor-btn" data-node="${safe(id)}" title="${safe(e.detail)}"><b>${safe(E.nodeMap.get(id)?.name||id)}</b><small class="status-tag status-${e.level}">${e.level}级</small></button>`}).join(''):`<div class="muted-note">当前证据筛选下没有相连主体。可切换“证据筛选”查看其他等级。</div>`;
+   html+=`</div><div class="inspector-divider"></div><p class="source-label">关系来自原版 network.html；A/B/C 为原版标记。某些原版“供应链”关系仅说明产业关联，不等于已核实直接采购合同。</p>`;
+ }else if(cluster){const nodes=E.dataNodes.filter(n=>n.cluster===cluster.id),relations=D.edges.filter(e=>E.nodeMap.get(e.source)?.cluster===cluster.id||E.nodeMap.get(e.target)?.cluster===cluster.id);
+  html=`<div class="inspector-title">${safe(cluster.name)}</div><p class="inspector-summary">${safe(cluster.desc)}。点击其中的光点，展开具体节点及原版已收录的联系。</p><div class="mini-stats"><div class="mini-stat"><b>${nodes.length}</b><small>收录节点 / 专题</small></div><div class="mini-stat"><b>${relations.length}</b><small>涉及的原版关系</small></div></div><div class="panel-section-title">星群内的对象</div><div class="neighbor-list">${nodes.map(n=>`<button class="neighbor-btn" data-node="${safe(n.id)}"><b>${safe(n.name)}</b><small>${safe(n.town)}</small></button>`).join('')}</div>`;
+ }else{
+  const c=E.clusterCounts();
+  html=`<div class="inspector-title">博罗 · 数据星系</div><p class="inspector-summary">五组功能星群构成抽象空间。这里的远近表达观察结构，不代表地理距离。</p><div class="mini-stats"><div class="mini-stat"><b>${D.nodes.length}</b><small>原版网络主体</small></div><div class="mini-stat"><b>${D.edges.length}</b><small>原版关系记录</small></div><div class="mini-stat"><b>${D.towns.length}</b><small>镇街生活条目</small></div><div class="mini-stat"><b>${D.hot.length}</b><small>精选快照话题</small></div></div><div class="inspector-divider"></div><div class="panel-section-title">一组值得注意的反差</div><div class="metric-highlight"><strong>+${D.stats.industryGrowth2026_1_8}%</strong><small>2026年1—8月规上工业增加值同比</small></div><div class="metric-highlight negative"><strong>${D.stats.industrialInvestmentGrowth2026_1_8}%</strong><small>同期工业投资同比</small></div><div class="muted-note">两个指标口径不同，不能相减。它们作为全县统计事实，不映射为各镇热力。</div><div class="inspector-divider"></div><div class="panel-section-title">最近收录的动态</div>${D.hot.slice(0,2).map(h=>`<a class="inspection-link" href="${safe(h.url)}" target="_blank" rel="noreferrer">${safe(h.title)} ↗<br/><small style="color:#7b9faf">${safe(h.source)} · ${safe(h.status)}</small></a>`).join('')}`;
+ }
+ el('inspectorBody').innerHTML=html+origSource;
+ all('[data-node]').forEach(b=>b.addEventListener('click',()=>openNode(b.dataset.node)));
+ el('goScenario')?.addEventListener('click',()=>mode('scenario'));
+ const slider=el('scenarioSlider');if(slider){slider.addEventListener('input',()=>{S.uncertainty=Number(slider.value)/100;G=E.compute(S.uncertainty,S.grade);el('scenarioValue').textContent=Math.round(S.uncertainty*100)+' / 100';el('scenarioTotal').textContent=G.totalWeight.toFixed(2);all('[data-scenario]').forEach(b=>b.classList.remove('active'));if(S.selected&&G.positions.has(S.selected))S.aim=G.positions.get(S.selected).slice();});all('[data-scenario]').forEach(b=>b.addEventListener('click',()=>{S.uncertainty=Number(b.dataset.scenario);G=E.compute(S.uncertainty,S.grade);inspector();if(S.selected)S.aim=G.positions.get(S.selected).slice()}))}
+}
+function openMobile(){S.mobileOpen=true;el('inspector').classList.add('mobile-open');el('mobileInfoButton').textContent='关闭详情 ↓'}
+function closeMobile(){S.mobileOpen=false;el('inspector').classList.remove('mobile-open');el('mobileInfoButton').textContent='数据详情 ↑'}
+let pointer={x:0,y:0,dist:0};
+function chooseAt(x,y){const candidates=displayNodes().map(n=>({...n,p:project(n.position)})).filter(n=>n.alpha>.3);
+  candidates.sort((a,b)=>{const da=Math.hypot(a.p.x-x,a.p.y-y),db=Math.hypot(b.p.x-x,b.p.y-y);return da-db});
+  let v=candidates[0];if(!v)return;let dist=Math.hypot(v.p.x-x,v.p.y-y);let max=v.major?68:Math.max(18,v.size*1.3);if(dist>max)return;
+  if(v.id.startsWith('cluster:'))openCluster(v.cluster);else openNode(v.id);
+}
+canvas.addEventListener('pointerdown',e=>{S.drag=true;S.moved=false;pointer.x=e.clientX;pointer.y=e.clientY;pointer.dist=0;canvas.setPointerCapture?.(e.pointerId)});
+canvas.addEventListener('pointermove',e=>{if(!S.drag)return;const dx=e.clientX-pointer.x,dy=e.clientY-pointer.y;pointer.dist+=Math.abs(dx)+Math.abs(dy);if(pointer.dist>6)S.moved=true;S.yaw+=dx*.004;S.pitch=E.clamp(S.pitch+dy*.003,-1.12,1.12);pointer.x=e.clientX;pointer.y=e.clientY});
+canvas.addEventListener('pointerup',e=>{if(!S.moved)chooseAt(e.clientX,e.clientY);S.drag=false});canvas.addEventListener('pointercancel',()=>{S.drag=false});
+canvas.addEventListener('wheel',e=>{e.preventDefault();S.targetDistance=E.clamp(S.targetDistance+Math.sign(e.deltaY)*.35,3.3,11)},{passive:false});
+let touchLast=0;canvas.addEventListener('touchmove',e=>{if(e.touches.length===2){const a=e.touches[0],b=e.touches[1];const dist=Math.hypot(a.clientX-b.clientX,a.clientY-b.clientY);if(touchLast)S.targetDistance=E.clamp(S.targetDistance+(touchLast-dist)*.012,3.3,11);touchLast=dist}},{passive:true});canvas.addEventListener('touchend',()=>touchLast=0);
+all('.mode-tab').forEach(b=>b.addEventListener('click',()=>mode(b.dataset.mode)));
+el('homeBtn').onclick=home;el('zoomIn').onclick=()=>S.targetDistance=E.clamp(S.targetDistance-.45,3.3,11);el('zoomOut').onclick=()=>S.targetDistance=E.clamp(S.targetDistance+.45,3.3,11);el('autoRotate').onclick=()=>{S.rotate=!S.rotate;el('autoRotate').setAttribute('aria-pressed',String(S.rotate));toast(S.rotate?'自动旋转已开启':'自动旋转已关闭')};
+el('backButton').onclick=previous;el('depthButton').onclick=()=>{if(!S.focusCluster){openCluster('industry');return}if(S.mode!=='relations'){mode('relations');return}if(S.selected){S.targetDistance=E.clamp(S.targetDistance-.5,3.4,11);toast('已展开两度联系')}else toast('请先选择一个节点')};el('evidenceButton').onclick=nextGrade;el('mobileInfoButton').onclick=()=>S.mobileOpen?closeMobile():openMobile();
+window.addEventListener('keydown',e=>{if(e.key==='Escape'){if(S.mobileOpen)closeMobile();else previous()}if(e.key==='+'||e.key==='=')S.targetDistance=E.clamp(S.targetDistance-.35,3.3,11);if(e.key==='-')S.targetDistance=E.clamp(S.targetDistance+.35,3.3,11)});
+// Safe browser-visible debug interface used by automated smoke tests. No secrets exposed.
+window.__boluoDebug={get state(){return {mode:S.mode,focusCluster:S.focusCluster,selected:S.selected,grade:S.grade,uncertainty:S.uncertainty,score:G.totalWeight,webgl:!!gl}},getGraph:()=>({nodes:G.nodes.length,edges:G.edges.length,grades:G.edges.reduce((o,e)=>(o[e.level]=(o[e.level]||0)+1,o),{})}),openCluster,openNode,mode,home,setScenario:v=>{S.uncertainty=E.clamp(v,0,1);G=E.compute(S.uncertainty,S.grade);inspector();},getBounds:()=>({width,height})};
+navigationUI();if(!gl){toast('设备不支持WebGL2，已启用二维节点备选渲染')}console.log('博罗 V2 全息探索原型 M1；数据快照：',D.snapshot,'节点',D.nodes.length,'关系',D.edges.length);
+})();
+
+</script>
+</body></html>
