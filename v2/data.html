@@ -1,0 +1,472 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no">
+<title>博罗产业决策风洞 · 数据看板</title>
+<script src="../model.js"></script>
+<script src="../lib/echarts.min.js"></script>
+<style>
+:root{
+  --desk:#151c17; --desk2:#1c271f; --desk3:#232f26;
+  --paper:#efe5cc; --paper2:#e7d8b6;
+  --ink:#2c2616; --ink2:#5b5138;
+  --amber:#d9a441; --amber2:#f2c46b; --amber-deep:#a8742a;
+  --stamp:#c2402f;
+  --engine:#5b9bd5; --base:#a98bea; --tour:#e2b04e; --link:#3fb6b0; --agri:#5fb877;
+  --good:#6fb07f; --bad:#e0816f; --muted:#9fb0a1;
+  --line:rgba(217,164,65,.22);
+}
+*{box-sizing:border-box;-webkit-tap-highlight-color:transparent}
+html,body{margin:0;padding:0}
+body{
+  background:
+   radial-gradient(1200px 600px at 50% -8%, rgba(217,164,65,.14), transparent 60%),
+   radial-gradient(900px 500px at 50% 115%, rgba(30,60,45,.45), transparent 60%),
+   linear-gradient(180deg,#1a221b,#121813 40%,#101510);
+  color:#e8e3d5;
+  font:14px/1.65 -apple-system,BlinkMacSystemFont,"PingFang SC","Microsoft YaHei",sans-serif;
+  min-height:100vh;
+  padding-bottom:60px;
+}
+.serif{font-family:"Songti SC","STSong","Noto Serif SC","SimSun",serif}
+a{color:#8fb3d6;text-decoration:none}
+/* 顶栏 */
+.topbar{position:sticky;top:0;z-index:40;display:flex;align-items:center;gap:10px;padding:11px 16px;
+  background:linear-gradient(180deg,rgba(18,24,19,.97),rgba(18,24,19,.88));backdrop-filter:blur(10px);border-bottom:1px solid var(--line)}
+.topbar .brand{font-size:13.5px;font-weight:800;color:var(--amber);letter-spacing:.5px;white-space:nowrap}
+.topbar .brand small{display:block;font-size:10px;color:var(--muted);font-weight:600;letter-spacing:1px}
+.topbar .nav{margin-left:auto;display:flex;gap:6px;flex-wrap:wrap;justify-content:flex-end}
+.topbar .nav a{font-size:11.5px;color:var(--muted);border:1px solid var(--line);border-radius:20px;padding:3px 11px;white-space:nowrap}
+.topbar .nav a.on{color:#2a1c05;background:linear-gradient(180deg,var(--amber2),var(--amber));border-color:var(--amber);font-weight:800}
+.wrap{max-width:1080px;margin:0 auto;padding:20px 16px 30px;overflow-x:hidden}
+/* 头部 */
+.head{padding:6px 2px 16px}
+.head .kick{font-size:11px;color:var(--amber);letter-spacing:3px;font-weight:700}
+.head h1{font-size:27px;line-height:1.3;margin:6px 0 4px;font-weight:900;color:#f4ecd6;letter-spacing:.5px}
+.head h1 .hl{color:var(--amber2)}
+.head p{margin:6px 0 0;color:var(--muted);font-size:13px;max-width:760px}
+.chips{display:flex;gap:8px;flex-wrap:wrap;margin-top:14px}
+.chip{font-size:11.5px;color:#cdd7c8;border:1px solid var(--line);border-radius:8px;padding:5px 11px;background:rgba(255,255,255,.04)}
+.chip b{color:var(--amber2)}
+.warn{margin-top:12px;font-size:12px;line-height:1.7;color:#e2c08a;background:rgba(194,64,47,.10);border:1px solid rgba(194,64,47,.35);border-radius:10px;padding:9px 13px}
+/* KPI */
+.kpis{display:grid;grid-template-columns:repeat(4,1fr);gap:10px;margin:16px 0 4px}
+.kpi{background:linear-gradient(180deg,rgba(35,47,38,.92),rgba(28,39,31,.92));border:1px solid var(--line);border-radius:14px;padding:14px 14px 12px}
+.kpi .v{font-size:26px;font-weight:900;color:var(--amber2);font-variant-numeric:tabular-nums;line-height:1.1}
+.kpi .v.alt{color:#e8e3d5}
+.kpi .v.good{color:var(--good)} .kpi .v.bad{color:var(--bad)}
+.kpi .u{font-size:12px;color:var(--muted);margin-top:3px}
+.kpi .l{font-size:11.5px;color:#aab6a6;margin-top:6px;line-height:1.5}
+/* 面板 */
+.grid{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:14px;margin-top:14px}
+.panel{background:linear-gradient(180deg,rgba(35,47,38,.9),rgba(28,39,31,.9));border:1px solid var(--line);border-radius:16px;padding:16px 16px 14px;min-width:0}
+.panel.span{grid-column:1/-1}
+.panel h2{font-size:16.5px;font-weight:800;color:#f4ecd6;margin:0 0 2px;display:flex;align-items:center;gap:8px;flex-wrap:wrap}
+.panel h2 .no{font-size:11px;color:var(--amber);border:1px solid var(--line);border-radius:6px;padding:2px 7px;font-weight:700}
+.panel .sub{font-size:12px;color:var(--muted);margin:3px 0 12px;line-height:1.65}
+.chart{width:100%;height:300px;min-width:0}
+.chart.sm{height:270px}
+.readout{font-size:12.5px;color:#c7d0c2;background:rgba(0,0,0,.18);border-left:3px solid var(--amber);border-radius:0 8px 8px 0;padding:9px 12px;margin-top:10px;line-height:1.7}
+.readout b{color:var(--amber2)}
+.readout .r{color:var(--bad)} .readout .g{color:var(--good)}
+/* 表格 */
+table{width:100%;border-collapse:collapse;font-size:12px;margin-top:6px}
+.twrap{overflow-x:auto;-webkit-overflow-scrolling:touch;margin-top:6px;min-width:0}
+.twrap table{margin-top:0;min-width:440px}
+.twrap.wide table{min-width:600px}
+th,td{padding:7px 6px;text-align:center;border-bottom:1px solid rgba(255,255,255,.07)}
+th{color:var(--muted);font-weight:700;font-size:11px}
+td.pname,th.pname{text-align:left;color:#dfe6d8;font-weight:700;white-space:nowrap}
+td .cell{font-variant-numeric:tabular-nums;font-weight:700}
+.heatlegend{font-size:10.5px;color:var(--muted);margin-top:8px}
+.robust{display:grid;grid-template-columns:repeat(4,1fr);gap:8px;margin-top:12px}
+.robust .r{background:rgba(0,0,0,.2);border:1px solid rgba(255,255,255,.06);border-radius:10px;padding:9px 10px}
+.robust .r .t{font-size:11px;color:var(--muted)}
+.robust .r .n{font-size:17px;font-weight:900;margin-top:2px;font-variant-numeric:tabular-nums}
+/* 系数表 */
+.coef-tbl td{font-size:11.5px}
+.tag{display:inline-block;font-size:10px;border-radius:5px;padding:1px 6px;font-weight:700}
+.tag.A{background:rgba(111,176,127,.18);color:#8fc79b;border:1px solid rgba(111,176,127,.4)}
+.tag.B{background:rgba(226,176,78,.16);color:#e2b04e;border:1px solid rgba(226,176,78,.4)}
+.tag.C{background:rgba(224,129,111,.16);color:#ec9a80;border:1px solid rgba(224,129,111,.4)}
+/* 证据账本 */
+details{background:rgba(0,0,0,.18);border:1px solid rgba(255,255,255,.07);border-radius:11px;padding:0 13px;margin-top:9px}
+details summary{cursor:pointer;font-size:13.5px;font-weight:800;padding:12px 0;list-style:none;display:flex;align-items:center;gap:9px}
+details summary::-webkit-details-marker{display:none}
+details summary .dot{width:9px;height:9px;border-radius:50%;flex:none}
+details[open] summary{border-bottom:1px solid rgba(255,255,255,.07)}
+.evi{display:grid;grid-template-columns:1fr 1fr;gap:14px;padding:12px 0}
+.evi h4{margin:0 0 6px;font-size:11.5px}
+.evi .pro h4{color:#8fc79b} .evi .con h4{color:#ec9a80}
+.evi ul{margin:0;padding-left:16px}
+.evi li{font-size:12px;color:#cdd7c8;margin-bottom:7px;line-height:1.6}
+.evi li .r{display:block;font-size:10.5px;color:var(--muted)}
+.foot{margin-top:18px;font-size:11.5px;color:#8da090;line-height:1.8}
+.foot a{color:#7fa0c8;word-break:break-all}
+/* 移动端 */
+@media(max-width:760px){
+  .wrap{padding:14px 12px 30px}
+  .grid{grid-template-columns:minmax(0,1fr)}
+  .panel.span{grid-column:auto}
+  .kpis{grid-template-columns:repeat(2,1fr)}
+  .head h1{font-size:22px}
+  .chart{height:260px}
+  .chart.sm{height:240px}
+  .robust{grid-template-columns:repeat(2,1fr)}
+  .evi{grid-template-columns:1fr}
+  table{font-size:11px}
+  th,td{padding:6px 3px}
+  .topbar .nav a{padding:3px 8px;font-size:11px}
+}
+</style>
+</head>
+<body>
+<div class="topbar">
+  <div class="brand">博罗产业决策风洞<small>DATA DASHBOARD · 数据看板</small></div>
+  <div class="nav">
+    <a href="index.html">互动版（七幕沙盘）</a>
+    <a href="../report.html">分析报告</a>
+    <a href="../index.html">首页</a>
+  </div>
+</div>
+
+<div class="wrap">
+  <div class="head">
+    <div class="kick">PURE DATA · 不引导选择，只把模型摊开</div>
+    <h1 class="serif">GDP 破千亿、投资腰斩，<span class="hl">2030 年 1600 亿</span>到底有多大把握？</h1>
+    <p>本页不做引导、不预设你的判断，只把教学沙盘的输入、参数、模拟分布、情景压力与策略对比全部用图呈现。所有模拟结果由同一模型内核（model.js）实时计算。</p>
+    <div class="chips">
+      <span class="chip">蒙特卡洛 <b>20000</b> 次/组</span>
+      <span class="chip">随机种子 <b>42</b>（结果可复现）</span>
+      <span class="chip">基期 2025 GDP <b>1005.45 亿</b></span>
+      <span class="chip">目标 2030 GDP <b>1600 亿</b></span>
+    </div>
+    <div class="warn">⚠️ 口径声明：本页是<b>教学沙盘假设</b>，用于理解决策如何在不确定中传导，<b>不是官方预测、不是招商引资承诺</b>。情景调整系数为 C 级假设；真实统计数据均标注口径与来源。</div>
+  </div>
+
+  <div class="kpis">
+    <div class="kpi"><div class="v">1005.45<span style="font-size:14px"> 亿</span></div><div class="u">2025 年 GDP（A 类）</div><div class="l">广东首个千亿县</div></div>
+    <div class="kpi"><div class="v alt">1600<span style="font-size:14px"> 亿</span></div><div class="u">2030 年目标（A 类）</div><div class="l">十五五力争目标</div></div>
+    <div class="kpi"><div class="v">594.55<span style="font-size:14px"> 亿</span></div><div class="u">五年累计缺口</div><div class="l">需靠投资与项目投产补齐</div></div>
+    <div class="kpi"><div class="v good">50.5%</div><div class="u">规划路径达标率</div><div class="l">P50 约 1601 亿，跳一跳够得到</div></div>
+  </div>
+
+  <div class="grid">
+    <!-- §1 剪刀差 -->
+    <div class="panel span">
+      <h2><span class="no">01</span>现实：生产在回暖，投资在失速</h2>
+      <div class="sub">同一段时间里，生产端（绿）与投资端（红）方向相反。这是理解 1600 亿之争的起点，数据来自 2026 年 1—8 月经济运行简析与 2025 年统计公报。</div>
+      <div id="cScissors" class="chart"></div>
+      <div class="readout">生产端两位数增长（电子设备 <b class="g">+12.7%</b>、电气机械 <b class="g">+14.1%</b>），但工业投资 <b class="r">−46.7%</b>、固投 <b class="r">−34.1%</b>。投资是三五年后的产出——今年的投资缺口，可能在 2027—2028 年表现为新产能接续不上。</div>
+    </div>
+
+    <!-- §2 五条路径 -->
+    <div class="panel">
+      <h2><span class="no">02</span>规划靠五条路凑齐缺口</h2>
+      <div class="sub">每条路对“五年累计 GDP 增量”的期望值（μ）与波动（σ），单位亿元。规划五条路期望增量合计约 595 亿，恰好覆盖 594.55 亿缺口。</div>
+      <div id="cPaths" class="chart"></div>
+    </div>
+    <div class="panel">
+      <h2><span class="no">02'</span>路径参数与权重</h2>
+      <div class="sub">μ=五年累计增量期望（亿元），σ=标准差（波动）。规划基准权重按 μ 占比归一化（42/25/19/9/5）。</div>
+      <table id="pathTbl"></table>
+      <div class="readout">双引擎（电子信息+新能源）一条路要贡献约 <b>42%</b> 的增量，是所有路径里天花板最高、波动也最大的一条。</div>
+    </div>
+
+    <!-- §3 双分布 -->
+    <div class="panel span">
+      <h2><span class="no">03</span>两种起点：规划兑现 vs 现状延续</h2>
+      <div class="sub">同一模型、同一种子，分别用“规划兑现路径”与“现状延续路径”（按 2025—2026 上半年实际增速外推）各跑 20000 次，看 2030 年 GDP 的分布。</div>
+      <div id="cDist" class="chart"></div>
+      <div id="distKpis" class="robust"></div>
+      <div class="readout">规划兑现 P50 约 <b>1601 亿</b>、达标率 <b class="g">50.5%</b>；若完全按现状惯性延续，P50 仅约 <b>1350 亿</b>、达标率 <b class="r">0.1%</b>。数据读数：1600 亿不是自然增长能到的，差距主要来自投资能否扭转。</div>
+    </div>
+
+    <!-- §4 情景压测 -->
+    <div class="panel">
+      <h2><span class="no">04</span>五种未来：规划基准打法的达标率</h2>
+      <div class="sub">把同一套“规划基准”权重（42/25/19/9/5）放进五种未来情景，压力测试达标率（%）。</div>
+      <div id="cScene" class="chart"></div>
+      <div class="twrap"><table id="sceneTbl"></table></div>
+    </div>
+    <div class="panel">
+      <h2><span class="no">04'</span>情景调整系数（C 级假设）</h2>
+      <div class="sub">情景对各路径增量期望的乘数。依据真实数据方向设定，<b style="color:#ec9a80">非官方预测</b>，仅用于教学压测。</div>
+      <div class="twrap wide"><table class="coef-tbl" id="adjTbl"></table></div>
+      <div class="readout">最有利（双引擎超预期）达标率 <b class="g">71.2%</b>；最不利（投资+地产叠加）仅 <b class="r">1.9%</b>。同一套打法，结果几乎完全由“未来兑现哪种情景”决定。</div>
+    </div>
+
+    <!-- §5 稳健性矩阵 -->
+    <div class="panel span">
+      <h2><span class="no">05</span>四种打法 × 五种未来：达标率矩阵</h2>
+      <div class="sub">行是四种资源配置打法，列是五种未来，单元格为 2030 年达标率（%）。颜色越亮越高；金色为该行最高。没有一种打法能通吃所有未来。</div>
+      <div class="twrap wide"><table id="heatTbl"></table></div>
+      <div class="heatlegend">数值为达标率 %，由 model.js 实时计算（20000 次 × 20 组）；手机端可左右滑动查看完整矩阵。</div>
+      <div id="robustBox" class="robust"></div>
+      <div class="readout">重押双引擎的上限最高（超预期 <b class="g">75%</b>），但在投资低迷情景仅 <b class="r">4.5%</b>；平均用力与重押文旅在规划情景下达标率就只有 13.5%、15.9%。<b>所有打法在“投资+地产叠加”情景下都跌破 2%——共同的命门是增长前提能否成立。</b></div>
+    </div>
+
+    <!-- §6 相关性 -->
+    <div class="panel">
+      <h2><span class="no">06</span>谁最牵动最终结果</h2>
+      <div class="sub">各路径贡献与 2030 年总 GDP 的相关系数绝对值（0—1），衡量谁动一动，结果最敏感。</div>
+      <div id="cCoef" class="chart sm"></div>
+    </div>
+    <div class="panel">
+      <h2><span class="no">06'</span>读数与方法</h2>
+      <div class="sub">相关性与边际贡献</div>
+      <div class="readout" style="margin-top:4px">双引擎相关性最高（<b>0.6</b>），工业底盘与三产次之（<b>0.4</b>），通道、农业较低（0.2、0.1）。这与“双引擎扛总量、底盘保就业、文旅慢变量”的结构一致。</div>
+      <div class="readout">模型采用加性结构：<b>2030 GDP = 1005.45 + Σ五条路径随机增量 + 全局噪声(σ=50)</b>；路径增量为正态、截断到非负；分位数用线性插值。权重映射为相对基准的乘数并限制在 0.3—1.6，<b>不是完整财政分配模型</b>。</div>
+    </div>
+
+    <!-- §7 证据账本 -->
+    <div class="panel span">
+      <h2><span class="no">07</span>“投资为什么腰斩”：四种解释的证据账本</h2>
+      <div class="sub">同一数据，四种竞争性解释，每种都有支持与反对的证据。数据本身不替你选择立场。</div>
+      <div id="stanceBox"></div>
+    </div>
+
+    <!-- §8 口径 -->
+    <div class="panel span">
+      <h2><span class="no">08</span>数据口径与免责</h2>
+      <div class="sub">证据分级</div>
+      <table style="text-align:left">
+        <tr><td style="text-align:left"><span class="tag A">A 类</span></td><td style="text-align:left">官方统计/政府工作报告原文，如 2025 GDP 1005.45 亿、2030 目标 1600 亿。</td></tr>
+        <tr><td style="text-align:left"><span class="tag B">B 类</span></td><td style="text-align:left">权威媒体报道与公开月度数据，如 1—8 月工业投资 −46.7%。</td></tr>
+        <tr><td style="text-align:left"><span class="tag C">C 类</span></td><td style="text-align:left">教学情景假设（如各情景的乘数），用于压力测试，非预测。</td></tr>
+      </table>
+      <div class="foot">
+        主要来源：博罗县 2025 年国民经济和社会发展统计公报、2026 年政府工作报告、2026 年 1—8 月经济运行简析；
+        博罗县政府公开信息（<a href="https://www.boluo.gov.cn/hzbltjj/gkmlpt/content/5/5860/post_5860920.html">boluo.gov.cn</a>）。
+        本页所有模拟概率均为教学沙盘结果，<b>不构成投资建议或发展预测</b>；模型、权重与情景假设可在 model.js 中核对与复现（种子 42）。
+      </div>
+    </div>
+  </div>
+</div>
+
+<script>
+/* ============ 数据与模型（与 v2 七幕版同源） ============ */
+var SEED=42,N=20000;
+var PATHS=[
+ {name:'双引擎·电子信息+新能源',short:'双引擎',color:'#5b9bd5',mu:250,sd:55,w:42},
+ {name:'工业底盘·智能装备与配套',short:'工业底盘',color:'#a98bea',mu:150,sd:35,w:25},
+ {name:'三产/文旅·罗浮山+消费',short:'三产文旅',color:'#e2b04e',mu:110,sd:35,w:19},
+ {name:'融深融莞·通道与承接',short:'融深融莞',color:'#3fb6b0',mu:55,sd:22,w:9},
+ {name:'一产·特色农业',short:'特色农业',color:'#5fb877',mu:30,sd:12,w:5}
+];
+var SUMM=PATHS.reduce(function(s,p){return s+p.mu;},0);
+var BASE_W=PATHS.map(function(p){return p.mu/SUMM;});
+function clamp(x,lo,hi){return Math.max(lo,Math.min(hi,x));}
+var SCENES=[
+ {key:'base',ic:'🟢',name:'规划兑现',adj:{'0':1,'1':1,'2':1,'3':1,'4':1},mult:{'0':1,'1':1,'2':1,'3':1,'4':1}},
+ {key:'upside',ic:'🚀',name:'双引擎超预期',mult:{'0':1.15,'1':1.10,'2':1,'3':1,'4':1}},
+ {key:'investment',ic:'📉',name:'投资持续低迷',mult:{'0':0.70,'1':0.75,'2':1,'3':0.50,'4':1}},
+ {key:'property',ic:'🏚️',name:'房地产继续探底',mult:{'0':1,'1':1,'2':0.70,'3':1,'4':1}},
+ {key:'combined',ic:'⛈️',name:'投资+地产叠加',mult:{'0':0.65,'1':0.70,'2':0.70,'3':0.45,'4':1}}
+];
+var PRESETS=[
+ {key:'plan',name:'规划基准',w:[42,25,19,9,5]},
+ {key:'engine',name:'重押双引擎',w:[60,15,10,10,5]},
+ {key:'even',name:'平均用力',w:[20,20,20,20,20]},
+ {key:'tour',name:'重押文旅',w:[18,14,42,16,10]}
+];
+function pathsFor(scene,w){
+  var ps=HT.DEFAULT_PATHS.map(function(p){return {mu:p.mu,sd:p.sd,name:p.name,color:p.color};});
+  var sc=SCENES.find(function(x){return x.key===scene;});
+  ps=ps.map(function(p,i){return {mu:p.mu*(sc.mult[i]||1),sd:p.sd,name:p.name,color:p.color};});
+  if(w){var wn=w.map(function(x){return x/100;});
+    ps=ps.map(function(p,i){var f=clamp(wn[i]/BASE_W[i],0.3,1.6);return {mu:Math.max(0,p.mu*f),sd:p.sd,name:p.name,color:p.color};});}
+  return ps;
+}
+function rp(sc,w){return HT.run(SEED,N,pathsFor(sc,w));}
+var f1=function(x){return (Math.round(x*10)/10).toFixed(1);};
+var f0=function(x){return Math.round(x).toLocaleString('zh-CN');};
+var charts=[];
+function mk(id,opt){
+  var dom=document.getElementById(id);
+  var c=echarts.init(dom);
+  c.setOption(opt);charts.push(c);return c;
+}
+var AX={textStyle:{color:'#aab6a6'},axisLine:{lineStyle:{color:'rgba(255,255,255,.15)'}}};
+var SPLIT={lineStyle:{color:'rgba(255,255,255,.06)'}};
+
+/* §1 剪刀差 */
+var scis=[
+ {n:'电气机械制造',v:14.1},{n:'电子设备制造',v:12.7},{n:'高技术制造业总产值',v:11.1},
+ {n:'外贸进出口（2025）',v:26.1},{n:'工业用电',v:11.5},{n:'规上工业增加值',v:8.9},
+ {n:'一般公共预算收入',v:0.4},
+ {n:'金融业增加值（2025）',v:-3.7},{n:'商品房销售面积',v:-22},{n:'房地产开发投资',v:-32.5},
+ {n:'固定资产投资',v:-34.1},{n:'基建投资',v:-35.3},{n:'工业投资',v:-46.7}
+];
+scis.sort(function(a,b){return a.v-b.v;});
+mk('cScissors',{
+ grid:{left:130,right:46,top:10,bottom:26},
+ xAxis:{type:'value',min:-50,max:30,axisLabel:{color:'#8da090',formatter:'{value}%'},splitLine:SPLIT,
+   axisLine:{show:false}},
+ yAxis:{type:'category',data:scis.map(function(s){return s.n;}),axisLabel:{color:'#cdd7c8',fontSize:11},axisLine:AX.axisLine,axisTick:{show:false}},
+ series:[{type:'bar',barWidth:13,data:scis.map(function(s){
+   return {value:s.v,
+     itemStyle:{color:s.v<0?new echarts.graphic.LinearGradient(0,0,1,0,[{offset:0,color:'#7d2f24'},{offset:1,color:'#e0816f'}]):new echarts.graphic.LinearGradient(0,0,1,0,[{offset:0,color:'#3c6b46'},{offset:1,color:'#6fb07f'}]),borderRadius:s.v<0?[0,3,3,0]:[3,0,0,3]},
+     label:{position:s.v<0?'left':'right'}};
+  }),label:{show:true,formatter:function(p){return (p.value>0?'+':'')+p.value+'%';},color:'#e8e3d5',fontSize:10,fontWeight:700},
+   markLine:{silent:true,symbol:'none',data:[{xAxis:0}],lineStyle:{color:'rgba(255,255,255,.35)'}}}]
+});
+
+/* §2 路径贡献 */
+mk('cPaths',{
+ grid:{left:96,right:50,top:10,bottom:26},
+ xAxis:{type:'value',max:300,axisLabel:{color:'#8da090'},splitLine:SPLIT,axisLine:{show:false}},
+ yAxis:{type:'category',inverse:true,data:PATHS.map(function(p){return p.short;}),axisLabel:{color:'#e8e3d5',fontSize:11.5,fontWeight:700},axisLine:AX.axisLine,axisTick:{show:false}},
+ series:[{type:'bar',barWidth:16,
+   data:PATHS.map(function(p){
+     return {value:p.mu,itemStyle:{color:p.color,borderRadius:4},
+       // 用 markArea 太重，这里直接给区间标签
+     };
+   }),
+   label:{show:true,position:'right',color:'#e8e3d5',fontSize:11,fontWeight:700,formatter:function(p){return PATHS[p.dataIndex].mu+' ± '+PATHS[p.dataIndex].sd+' 亿';}}
+ }]
+});
+var pathRows='<tr><th class="pname">路径</th><th>μ</th><th>σ</th><th>基准权重</th></tr>'+
+ PATHS.map(function(p){return '<tr><td class="pname" style="color:'+p.color+'">'+p.short+'</td><td>'+p.mu+'</td><td>'+p.sd+'</td><td>'+p.w+'%</td></tr>';}).join('')+
+ '<tr><td class="pname">合计</td><td><b>'+SUMM+'</b></td><td>—</td><td><b>100%</b></td></tr>';
+document.getElementById('pathTbl').innerHTML=pathRows;
+
+/* §3 双分布 */
+function hist(raw){
+  var bins={};for(var i=950;i<=1850;i+=25)bins[i]=0;
+  raw.forEach(function(v){var k=Math.floor(v/25)*25;if(bins[k]!==undefined)bins[k]++;});
+  return Object.keys(bins).map(function(k){return [+k,bins[k]];});
+}
+var rPlan=HT.run(SEED,N,HT.DEFAULT_PATHS), rTrend=HT.run(SEED,N,HT.TREND_PATHS);
+mk('cDist',{
+ grid:{left:46,right:20,top:30,bottom:40},
+ legend:{data:['规划兑现','现状延续'],top:0,textStyle:{color:'#cdd7c8',fontSize:11},itemWidth:14,itemHeight:9},
+ xAxis:{type:'value',min:1000,max:1800,name:'2030 GDP（亿元）',nameLocation:'middle',nameGap:28,nameTextStyle:{color:'#8da090',fontSize:10},
+   axisLabel:{color:'#8da090',fontSize:10},splitLine:SPLIT,axisLine:{show:false}},
+ yAxis:{type:'value',show:false},
+ series:[
+  {name:'现状延续',type:'line',data:hist(rTrend.rawResults),smooth:true,symbol:'none',
+   areaStyle:{color:'rgba(224,129,111,.16)'},lineStyle:{width:2,color:'#e0816f'}},
+  {name:'规划兑现',type:'line',data:hist(rPlan.rawResults),smooth:true,symbol:'none',
+   areaStyle:{color:'rgba(217,164,65,.26)'},lineStyle:{width:2.4,color:'#d9a441'},
+   markLine:{silent:true,symbol:'none',label:{formatter:'1600亿目标',color:'#e0816f',fontSize:10,position:'insideEndTop'},
+     lineStyle:{color:'#c2402f',type:'dashed',width:1.6},data:[{xAxis:1600}]}}
+ ]
+});
+function distKpi(label,r,cls){
+  return '<div class="r"><div class="t">'+label+'</div><div class="n '+cls+'">'+f1(r.hit)+'%</div>'+
+    '<div class="t" style="margin-top:3px">P10 '+f0(r.p10)+' · P50 '+f0(r.p50)+' · P90 '+f0(r.p90)+'</div></div>';
+}
+document.getElementById('distKpis').innerHTML=
+  distKpi('规划兑现 · 达标率',rPlan,'good')+
+  distKpi('现状延续 · 达标率',rTrend,'bad')+
+  '<div class="r"><div class="t">P50 差距</div><div class="n" style="color:#e8e3d5">'+f0(rPlan.p50-rTrend.p50)+' 亿</div><div class="t" style="margin-top:3px">规划比惯性多出的中位增量</div></div>'+
+  '<div class="r"><div class="t">缺口</div><div class="n" style="color:#e8e3d5">594.55 亿</div><div class="t" style="margin-top:3px">1600 − 1005.45</div></div>';
+
+/* §4 情景压测（规划基准） */
+var sceneRes=SCENES.map(function(s){return {s:s,r:rp(s.key,PRESETS[0].w)};});
+mk('cScene',{
+ grid:{left:98,right:50,top:10,bottom:26},
+ xAxis:{type:'value',max:80,axisLabel:{color:'#8da090',formatter:'{value}%'},splitLine:SPLIT,axisLine:{show:false}},
+ yAxis:{type:'category',inverse:true,data:sceneRes.map(function(x){return x.s.name;}),
+   axisLabel:{color:'#cdd7c8',fontSize:11.5},axisLine:AX.axisLine,axisTick:{show:false}},
+ series:[{type:'bar',barWidth:17,
+   data:sceneRes.map(function(x){
+     var hit=x.r.hit;
+     var col= hit>=60?'#6fb07f': hit>=30?'#d9a441': hit>=10?'#c98a4b':'#c2402f';
+     return {value:+f1(hit),itemStyle:{color:col,borderRadius:[0,4,4,0]}};
+   }),
+   label:{show:true,position:'right',color:'#f4ecd6',fontSize:11.5,fontWeight:800,formatter:'{c}%'},
+   markLine:{silent:true,symbol:'none',data:[{xAxis:50}],lineStyle:{color:'rgba(255,255,255,.25)',type:'dashed'},label:{formatter:'50%',color:'#9fb0a1',fontSize:9}}
+ }]
+});
+document.getElementById('sceneTbl').innerHTML='<tr><th>情景</th><th>达标率</th><th>P10</th><th>P50</th><th>P90</th></tr>'+
+ sceneRes.map(function(x){return '<tr><td class="pname">'+x.s.ic+x.s.name+'</td><td><b>'+f1(x.r.hit)+'%</b></td><td>'+f0(x.r.p10)+'</td><td>'+f0(x.r.p50)+'</td><td>'+f0(x.r.p90)+'</td></tr>';}).join('');
+
+/* 情景系数表 */
+var adjHtml='<tr><th class="pname">情景</th>'+PATHS.map(function(p){return '<th style="color:'+p.color+'">'+p.short+'</th></tr>';}).join('')+'</tr>';
+adjHtml+=SCENES.map(function(s){
+  return '<tr><td class="pname">'+s.ic+s.name+'</td>'+PATHS.map(function(p,i){
+    var m=s.mult[i];return '<td class="'+(m<1?'':'')+'">'+(m===1?'—':(m<1?'<span style="color:#ec9a80">×'+m.toFixed(2)+'</span>':'<span style="color:#8fc79b">×'+m.toFixed(2)+'</span>'))+'</td>';
+  }).join('')+'</tr>';
+}).join('');
+document.getElementById('adjTbl').innerHTML=adjHtml;
+
+/* §5 4×5 矩阵 */
+var matrix=PRESETS.map(function(p){
+  return {name:p.name,w:p.w,vals:SCENES.map(function(s){return rp(s.key,p.w).hit;})};
+});
+var allVals=matrix.reduce(function(a,m){return a.concat(m.vals);},[]);
+var heatHead='<tr><th class="pname">打法 ＼ 未来</th>'+SCENES.map(function(s){return '<th>'+s.ic+'<br>'+s.name+'</th>';}).join('')+'<th class="pname">最差情景</th></tr>';
+var heatBody=matrix.map(function(m){
+  var mx=Math.max.apply(null,m.vals),mn=Math.min.apply(null,m.vals);
+  var cells=m.vals.map(function(v){
+    var hot=(v===mx);
+    var op=0.3+0.7*Math.min(1,v/75);
+    return '<td><span class="cell" style="color:'+(hot?'#f2c46b':'#dfe6d8')+';opacity:'+op.toFixed(2)+'">'+f1(v)+'</span></td>';
+  }).join('');
+  var minIdx=m.vals.indexOf(mn);
+  return '<tr><td class="pname">'+m.name+'</td>'+cells+'<td style="color:#ec9a80;font-weight:700;font-size:11px">'+SCENES[minIdx].ic+f1(mn)+'</td></tr>';
+}).join('');
+document.getElementById('heatTbl').innerHTML=heatHead+heatBody;
+
+/* 稳健性小卡：每打法 最好/最差/极差 */
+document.getElementById('robustBox').innerHTML=matrix.map(function(m){
+  var mx=Math.max.apply(null,m.vals),mn=Math.min.apply(null,m.vals),range=mx-mn;
+  return '<div class="r"><div class="t">'+m.name+'</div>'+
+    '<div class="n" style="color:#8fc79b;font-size:15px">上限 '+f1(mx)+'%</div>'+
+    '<div class="n" style="color:#ec9a80;font-size:15px">下限 '+f1(mn)+'%</div>'+
+    '<div class="t" style="margin-top:2px">波动极差 '+f1(range)+' 个点</div></div>';
+}).join('');
+
+/* §6 相关性（规划基准） */
+var coefs=rPlan.coefs;
+mk('cCoef',{
+ grid:{left:88,right:40,top:10,bottom:26},
+ xAxis:{type:'value',max:0.8,axisLabel:{color:'#8da090'},splitLine:SPLIT,axisLine:{show:false}},
+ yAxis:{type:'category',inverse:true,data:PATHS.map(function(p){return p.short;}),axisLabel:{color:'#e8e3d5',fontSize:11},axisLine:AX.axisLine,axisTick:{show:false}},
+ series:[{type:'bar',barWidth:15,data:PATHS.map(function(p,i){return {value:+f1(coefs[i]),itemStyle:{color:p.color,borderRadius:4}};}),
+   label:{show:true,position:'right',color:'#e8e3d5',fontSize:11,fontWeight:700}}]
+});
+
+/* §7 证据账本 */
+var STANCES=[
+ {badge:'转型视角',color:'#5b9bd5',oneline:'结构性转型阵痛，阵痛是暂时的，新引擎正在接棒',
+  pro:[['规上工业增加值+8.9%，电子设备+12.7%、电气机械+14.1%，两行业贡献率59.3%','1-8月简析'],
+   ['高技术制造业总产值+11.1%，拉动全县规上工业总产值3.2个百分点','2026上半年分析'],
+   ['欣旺达储能电站并网、锂威电芯2027年投产，新项目在落地','政府公开信息']],
+  con:[['投资是三五年后的产出，今年工业投资−46.7%，意味着2027—2028新产能可能接续不上','1-8月简析'],
+   ['2026计划工业投资110亿，上半年腰斩，缺口巨大','计划指标表']]},
+ {badge:'企业视角',color:'#e0a85a',oneline:'企业投资信心不足，不敢投、不敢扩，需求没真正转暖',
+  pro:[['工业投资−46.7%、固投−34.1%，是市场主体用脚投票','1-8月简析'],
+   ['2025年金融业增加值−3.7%，存贷款双降，信用扩张乏力','2025统计公报'],
+   ['一般公共预算收入仅+0.4%，政府腾挪空间同样有限','1-8月简析']],
+  con:[['2025年外贸进出口+26.1%，外需并不差；工业用电+11.5%，企业仍在生产','统计公报/简析'],
+   ['欣旺达、锂威等新投产项目仍在推进，并非全行业观望','政府公开信息']]},
+ {badge:'统计视角',color:'#3fb6b0',oneline:'可能有统计口径与入库节奏扰动，别只盯一个数',
+  pro:[['降幅在收窄：上半年−36.4%→1-7月−35.0%→1-8月−34.1%','固投月度累计'],
+   ['固投按入库项目进度统计，大项目跨年、入库时点会造成月度大幅波动','统计口径说明'],
+   ['生产+8.9%与投资−46.7%并存，部分可由"前期投资形成的产能现在投产"时滞解释','']],
+  con:[['连续第二年负增长（2025固投−18.8%），不像单月噪声','2025统计公报'],
+   ['工业投资−46.7%、基建−35.3%、房地产−32.5%三个分项同步深跌，口径难解释全部','1-8月简析']]},
+ {badge:'周期视角',color:'#d98a7a',oneline:'根子在房地产深度调整，土地财政和上下游被带下来',
+  pro:[['2025房地产开发投资−47.6%，2026年1-8月−32.5%；销售面积较2020高点跌超七成','统计公报/简析'],
+   ['房地产带动建材、装修、家电、基建配套，投资链条长',''],
+   ['基建投资−35.3%，与土地财政承压相关','1-8月简析']],
+  con:[['工业投资−46.7%比房地产−32.5%跌得更深，说明不只是地产的事','1-8月简析'],
+   ['博罗增长主要靠电子信息、新能源制造业，与房地产周期相关性在下降','']]}
+];
+document.getElementById('stanceBox').innerHTML=STANCES.map(function(s){
+  return '<details><summary><span class="dot" style="background:'+s.color+'"></span>'+
+    '<span class="tag" style="background:'+s.color+'22;color:'+s.color+';border:1px solid '+s.color+'">'+s.badge+'</span>'+
+    '<span style="color:#dfe6d8;font-weight:700;font-size:12.5px">'+s.oneline+'</span></summary><div class="evi">'+
+    '<div class="pro"><h4>支持的证据</h4><ul>'+s.pro.map(function(e){return '<li>'+e[0]+'<span class="r">— '+e[1]+'</span></li>';}).join('')+'</ul></div>'+
+    '<div class="con"><h4>反对的证据</h4><ul>'+s.con.map(function(e){return '<li>'+e[0]+'<span class="r">— '+e[1]+'</span></li>';}).join('')+'</ul></div>'+
+  '</div></details>';
+}).join('');
+
+window.addEventListener('resize',function(){charts.forEach(function(c){c.resize();});});
+</script>
+</body>
+</html>
