@@ -74,9 +74,28 @@
 .m3-mini{position:absolute;bottom:12px;left:14px;right:14px;pointer-events:none;border:1px solid #305371;background:rgba(8,24,40,.82);padding:9px 11px;border-radius:9px;font-size:11px;display:flex;justify-content:space-between;gap:10px}
 .m3-mini b{font-size:19px;color:#b0f0f2;font-variant-numeric:tabular-nums}
 .m3-world:last-child .m3-mini b{color:#ffd9a8}
-.m3-legend{grid-column:1/-1;display:flex;flex-wrap:wrap;gap:14px;justify-content:center;font-size:10px;color:#8fb3c7;padding:4px 2px}
+.m3-legend{grid-column:1/-1;display:flex;flex-wrap:wrap;gap:16px;justify-content:center;font-size:11px;color:#b6d0dd;background:rgba(10,26,42,.72);border:1px solid #24425d;border-radius:10px;padding:9px 12px}
 .m3-legend i{display:inline-block;width:10px;height:10px;border-radius:50%;margin-right:5px;vertical-align:-1px}
 .lg-a{background:#82f3fc}.lg-only{background:#ffc47f}.lg-miss{border:1.5px dashed #96a5b9;background:transparent}.lg-focal{background:#e79bff}
+/* 就近浮卡：节点/边解释 */
+.m3-pop{position:absolute;z-index:6;width:228px;max-width:calc(100% - 16px);background:rgba(9,22,38,.96);border:1px solid #3a6384;border-radius:11px;padding:12px 13px;box-shadow:0 14px 40px rgba(0,0,0,.55);font-size:11px;color:#cfe2f1}
+.m3-pop[hidden]{display:none}
+.pop-close{position:absolute;top:6px;right:7px;width:24px;height:24px;border:0;background:transparent;color:#8fa8bd;font-size:16px;line-height:1}
+.pop-close:hover{color:#fff}
+.pop-title{font-size:14px;font-weight:700;color:#f0f8ff;padding-right:24px;line-height:1.3}
+.pop-status{display:inline-block;margin-top:8px;font-size:10px;border-radius:20px;padding:2px 9px;border:1px solid}
+.pop-status.both,.pop-status.lvl-A{color:#8fe3c7;border-color:#2c7a66;background:#0e2a28}
+.pop-status.one,.pop-status.lvl-B{color:#ffd9a8;border-color:#7b5e37;background:#2a1f0e}
+.pop-status.none{color:#9fb0c4;border-color:#4b5665;background:#1a2433}
+.pop-status.lvl-C{color:#d5a4f9;border-color:#705185;background:#241733}
+.pop-plain{margin:9px 0 0;font-size:11px;line-height:1.65;color:#a9c2d4}
+.pop-thr{margin-top:8px;font-size:10px;color:#f0c48a;border:1px dashed #7b5e37;border-radius:7px;padding:6px 8px;line-height:1.5}
+.pop-sec{margin-top:10px;border-top:1px solid #24425d;padding-top:9px}
+.pop-label{font-size:10px;font-weight:700;color:#7cc6e8;margin-bottom:5px}
+.pop-chain{font-size:11px;line-height:1.7;color:#e6f2fb;background:#0c1f31;border-radius:7px;padding:7px 9px}
+.pop-key{margin-top:6px;font-size:10px;line-height:1.6;color:#f0c48a}
+.pop-formula{margin-top:9px;font-family:ui-monospace,Menlo,Consolas,monospace;font-size:10px;line-height:1.6;color:#bfe0ee;background:#0c1f31;border-radius:7px;padding:7px 9px}
+.pop-src{margin-top:8px;font-size:9.5px;line-height:1.6;color:#7e9bad}
 /* 右栏：稳健发现 */
 .m3-aside-grid{display:grid;grid-template-columns:1fr 1fr;gap:9px;margin-bottom:14px}
 .m3-metric{border:1px solid #274b63;background:#0b2236;padding:10px;border-radius:9px}
@@ -102,6 +121,21 @@
 .m3-next p{color:#f0d2a6;font-size:11px;line-height:1.6;margin:0}
 .m3-src{display:block;color:#9b8a6c;font-size:9px;margin-top:8px;line-height:1.5}
 .m3-selected{margin-top:14px;font-size:11px;color:#bcd4e3;line-height:1.6;border-top:1px solid #1d3d55;padding-top:12px}
+/* 首次发现引导：层本身指针穿透，只有卡片可点，避免挡住画布上的节点点击 */
+#m3-guide{position:absolute;inset:0;z-index:20;pointer-events:none}
+#m3-guide[hidden]{display:none}
+.m3-guide-spot{position:absolute;pointer-events:none;border:2px solid #ffd27a;border-radius:12px;box-shadow:0 0 0 9999px rgba(2,7,17,.72),0 0 24px rgba(255,200,110,.5);transition:all .25s;z-index:1}
+.m3-guide-card{pointer-events:auto}
+.m3-guide-spot[hidden]{display:none}
+.m3-guide-card{position:absolute;z-index:2;left:50%;bottom:26px;transform:translateX(-50%);width:min(440px,calc(100% - 28px));background:rgba(10,25,42,.98);border:1px solid #3a6384;border-radius:13px;padding:15px 16px;box-shadow:0 16px 48px rgba(0,0,0,.6)}
+.m3-guide-dots{display:flex;gap:6px;margin-bottom:10px}
+.m3-guide-dots i{width:7px;height:7px;border-radius:50%;background:#2a4258}
+.m3-guide-dots i.on{background:#ffd27a}
+.m3-guide-text{font-size:13px;line-height:1.7;color:#e4f0fa}
+.m3-guide-actions{display:flex;justify-content:flex-end;gap:9px;margin-top:13px}
+.m3-guide-actions button{border-radius:9px;padding:9px 15px;font-size:12px;border:1px solid #35617b;background:#14304a;color:#d8e9f5}
+.m3-guide-actions #m3-guide-next{background:linear-gradient(130deg,#8a6a2c,#c79a4e);border-color:#d9b267;color:#fff;font-weight:700}
+.m3-guide-actions .m3-guide-ghost{background:transparent}
 /* 响应式 */
 @media(max-width:1280px){.m3-layout{grid-template-columns:268px minmax(0,1fr) 248px}}
 @media(max-width:1120px){.m3-layout{grid-template-columns:minmax(0,1fr)}.m3-layout>.m3-side:last-child{grid-column:1/-1}.m3-world{min-height:430px}}
@@ -109,7 +143,7 @@
  .m3-top{padding:11px 12px}.m3-top b{font-size:15px}.m3-top small{font-size:9px}.m3-top button{padding:8px 10px}
  .m3-layout{display:flex;flex-direction:column;padding:8px;gap:8px}
  .m3-side{padding:12px;order:2}.m3-worlds{order:1}
- .m3-side:first-child{order:1}.m3-side:last-child{order:3}
+ .m3-side:first-child{order:2}.m3-side:last-child{order:3}
  .m3-worlds{grid-template-columns:1fr;gap:7px}.m3-world{height:300px;min-height:300px}
  .m3-world h3{font-size:12px}.m3-world h3 span{font-size:9px;max-width:180px}.m3-mini b{font-size:15px}
  .m3-h{margin:13px 0 8px}

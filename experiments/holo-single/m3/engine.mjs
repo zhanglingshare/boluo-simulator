@@ -104,6 +104,38 @@ export function compareWorlds(a,b){
   note:'仅在本无量纲模型与所选参数范围内成立；不代表真实通勤、产出或因果关系'};
 }
 
+/**
+ * 在某个 simulate() 结果上，从起点（默认东莞）到目标节点，沿“已启用”边
+ * （weight>=threshold）求一条最短路径。用于把“该节点为什么连通”的决定
+ * 链路在画面上高亮出来——纯结构计算，不代表真实物流/因果方向。
+ * 不可达时返回 null（界面据此显示“当前世界不连通”，不伪造路径）。
+ */
+export function findPath(model,targetId,startId=SEED_ID){
+ const adj=new Map(model.nodes.map(n=>[n.id,[]]));
+ const edgeOf=new Map();
+ for(const e of model.edges){
+  if(!e.enabled)continue;
+  adj.get(e.source).push(e.target);adj.get(e.target).push(e.source);
+  edgeOf.set(e.source+'|'+e.target,e.id);edgeOf.set(e.target+'|'+e.source,e.id);
+ }
+ const parent=new Map([[startId,null]]);const q=[startId];
+ while(q.length){
+  const id=q.shift();
+  if(id===targetId)break;
+  for(const nb of adj.get(id)||[]){
+   if(!parent.has(nb)){parent.set(nb,{from:id,edge:edgeOf.get(id+'|'+nb)});q.push(nb);}
+  }
+ }
+ if(!parent.has(targetId))return null;
+ const nodeIds=[],edgeIds=[];let cur=targetId;
+ while(cur!==startId){
+  const p=parent.get(cur);if(!p)return null;
+  nodeIds.unshift(cur);edgeIds.unshift(p.edge);cur=p.from;
+ }
+ nodeIds.unshift(startId);
+ return {nodeIds,edgeIds};
+}
+
 /* ===================== 区间 ↔ 情景映射（C 级，仅展示语境） ===================== */
 
 /**

@@ -2,7 +2,7 @@ import test from 'node:test';
 import assert from 'node:assert/strict';
 import fs from 'node:fs';
 import vm from 'node:vm';
-import {M3_VERSION,FOCAL_IDS,simulate,compareWorlds,snapshotSignature,validateSaved,basePositions,weight} from '../m3/engine.mjs';
+import {M3_VERSION,FOCAL_IDS,simulate,compareWorlds,snapshotSignature,validateSaved,basePositions,weight,findPath} from '../m3/engine.mjs';
 
 // 从M2内联底座直接解析事实；不重编造第二套测试图。
 const html=fs.readFileSync(new URL('../index.html',import.meta.url),'utf8');
@@ -79,4 +79,26 @@ test('原M2网页可继续调用其原有脚本',()=>{
 test('权重调整不把A级证据当作概率',()=>{
  const aa=D.edges.find(e=>e.level==='A');assert.equal(weight(aa,0),1);
  assert.equal(weight(aa,1),1);
+});
+test('findPath 给出从东莞到条件性节点的决定路径',()=>{
+ const hi=b(),lo=a();
+ const onlyB=hi.reachable.filter(id=>!lo.reachable.includes(id));
+ assert.ok(onlyB.length>0);
+ const enabled=new Set(hi.edges.filter(e=>e.enabled).map(e=>e.id));
+ for(const id of onlyB){
+  const p=findPath(hi,id);
+  assert.ok(p,'高世界可达节点必须能找到路径');
+  assert.equal(p.nodeIds[0],'dg');assert.equal(p.nodeIds[p.nodeIds.length-1],id);
+  assert.ok(p.edgeIds.every(eid=>enabled.has(eid)));
+  assert.equal(p.nodeIds.length,p.edgeIds.length+1);
+  assert.equal(findPath(lo,id),null); // 低世界不可达 → 无路径，不伪造
+ }
+});
+test('findPath 对始终可达节点同样成立',()=>{
+ const hi=b(),lo=a();
+ const common=hi.reachable.filter(id=>lo.reachable.includes(id)&&id!=='dg');
+ assert.ok(common.length>0);
+ for(const id of common.slice(0,3)){
+  const p=findPath(hi,id);assert.ok(p);assert.equal(p.nodeIds[0],'dg');
+ }
 });

@@ -1,7 +1,7 @@
 import {
  M3_VERSION, FOCAL_IDS, THRESHOLD, U_ANCHORS, COMMUTE_FLOW_ID,
  simulate, compareWorlds, sensitivity, uToFlow, scenariosFromFlow,
- snapshotSignature, validateSaved
+ snapshotSignature, validateSaved, findPath
 } from './engine.mjs';
 
 const D=window.BOLUO_DATA;
@@ -13,6 +13,7 @@ const clusterColors={industry:'#68d5ed',external:'#a88df1',life:'#ffc47f',touris
 const fmt=(n)=>Number(n).toLocaleString('zh-CN');
 
 const state={open:false,a:U_ANCHORS.low.u,b:U_ANCHORS.high.u,yaw:-.2,pitch:-.20,zoom:1,selected:'dg',
+ selectedEdge:null,path:null,guide:null,guideDone:false,
  flow:null,sc:null,models:null,sens:null,animation:[new Map(),new Map()],lastSaved:null};
 
 const root=document.createElement('section');
@@ -34,9 +35,9 @@ root.innerHTML=[
  '<div class="m3-state" id="m3-state" aria-live="polite"></div></aside>',
  // 中间：双世界
  '<section class="m3-worlds" aria-label="两座同步视角、同一布局的全息关系空间">',
- '<div class="m3-world"><h3>世界 A <span id="m3-cap-a"></span></h3><canvas id="m3-canvas-a" aria-label="世界A全息关系空间"></canvas><div class="m3-mini"><span>假设可达节点</span><b id="m3-reach-a">—</b></div></div>',
- '<div class="m3-world"><h3>世界 B <span id="m3-cap-b"></span></h3><canvas id="m3-canvas-b" aria-label="世界B全息关系空间"></canvas><div class="m3-mini"><span>假设可达节点</span><b id="m3-reach-b">—</b></div></div>',
- '<div class="m3-legend"><i class="lg-a"></i>两世界都连通&nbsp;&nbsp;<i class="lg-only"></i>仅本世界连通&nbsp;&nbsp;<i class="lg-miss"></i>另一世界连通&nbsp;&nbsp;<i class="lg-focal"></i>随情景变化的B级关系</div>',
+ '<div class="m3-legend"><i class="lg-a"></i>两个世界都连&nbsp;&nbsp;<i class="lg-only"></i>只有这个世界连&nbsp;&nbsp;<i class="lg-miss"></i>另一个世界连&nbsp;&nbsp;<i class="lg-focal"></i>随强度变化的关系</div>',
+ '<div class="m3-world"><h3>世界 A <span id="m3-cap-a"></span></h3><canvas id="m3-canvas-a" aria-label="世界A全息关系空间"></canvas><div class="m3-pop" id="m3-pop-a" hidden></div><div class="m3-mini"><span>这个世界连到的节点</span><b id="m3-reach-a">—</b></div></div>',
+ '<div class="m3-world"><h3>世界 B <span id="m3-cap-b"></span></h3><canvas id="m3-canvas-b" aria-label="世界B全息关系空间"></canvas><div class="m3-pop" id="m3-pop-b" hidden></div><div class="m3-mini"><span>这个世界连到的节点</span><b id="m3-reach-b">—</b></div></div>',
  '</section>',
  // 右栏：比较 + 稳健发现
  '<aside class="m3-side"><span class="m3-badge alt">稳健发现 · 敏感性分析 · 非事实判断</span><h3>同一个博罗，两套假设</h3>',
@@ -51,6 +52,15 @@ root.innerHTML=[
  '<p id="m3-selected" class="m3-selected">点击或触摸星点查看主体；拖动任一画面，两座世界同步旋转。</p></aside></div>'].join('');
 document.body.append(root);
 const get=(id)=>document.getElementById(id);
+
+// 首次发现引导（4 步，可跳过；完成后 localStorage 标记，不再弹）
+const guideEl=document.createElement('div');guideEl.id='m3-guide';guideEl.hidden=true;
+guideEl.innerHTML='<div class="m3-guide-spot" id="m3-guide-spot" hidden></div>'+
+ '<div class="m3-guide-card"><div class="m3-guide-dots" id="m3-guide-dots"></div>'+
+ '<div class="m3-guide-text" id="m3-guide-text"></div><div class="m3-guide-actions">'+
+ '<button id="m3-guide-skip" class="m3-guide-ghost">跳过引导</button>'+
+ '<button id="m3-guide-next">下一步</button></div></div>';
+root.append(guideEl);
 
 // 桌面入口：放进 M2 顶栏 .top-actions（≤720px 该容器被隐藏，故另配手机浮动按钮）
 const launch=document.createElement('button');launch.id='m3-launch';launch.textContent='◈ 双世界推演';
@@ -217,6 +227,12 @@ function draw(canvas,world){
  const m=state.models[world],other=state.models[1-world];
  const reach=new Set(m.reachable),otherReach=new Set(other.reachable);
  const otherEdgeW=new Map(other.edges.map(e=>[e.id,e.weight]));
+ // 路径高亮 / 选中边：仅在对应世界生效；存在时其余关系降亮
+ const pathOn=state.path&&state.path.world===world;
+ const pathEdgeSet=pathOn?new Set(state.path.edgeIds):null;
+ const pathNodeSet=pathOn?new Set(state.path.nodeIds):null;
+ const selEdgeId=state.selectedEdge&&state.selectedEdge.world===world?state.selectedEdge.id:null;
+ const focusOn=pathOn||!!selEdgeId;
  // 网格环
  ctx.strokeStyle='rgba(101,171,199,.06)';ctx.lineWidth=1;
  for(let r=1;r<5;r++){ctx.beginPath();ctx.ellipse(w*.5,h*.53,r*w*.1,r*h*.09,-.24,0,Math.PI*2);ctx.stroke();}
@@ -224,18 +240,24 @@ function draw(canvas,world){
  const labels=[];
  // 边
  for(const e of m.edges){const a=screen.get(e.source),b=screen.get(e.target);if(!a||!b)continue;
-  const isChanged=e.focal;
+  const onPath=pathEdgeSet?.has(e.id),isSelEdge=selEdgeId===e.id;
   ctx.beginPath();ctx.moveTo(a[0],a[1]);ctx.lineTo(b[0],b[1]);
-  if(e.level==='A'){ctx.lineWidth=1.6;ctx.strokeStyle='rgba(89,203,238,.55)';ctx.setLineDash([]);}
-  else if(isChanged){
+  if(onPath){
+   // 决定路径：A 级明亮青、随情景变化的焦点边明亮金（让用户看到是哪条边点亮它）
+   if(e.level==='A'){ctx.lineWidth=2.6;ctx.strokeStyle='rgba(122,226,250,.95)';ctx.setLineDash([]);}
+   else{ctx.lineWidth=3.0;ctx.strokeStyle=e.focal?'rgba(255,206,130,.98)':'rgba(230,170,255,.9)';ctx.setLineDash([]);}
+  }else if(isSelEdge){
+   ctx.lineWidth=3.0;ctx.strokeStyle='rgba(255,255,255,.95)';ctx.setLineDash([]);
+  }else if(e.level==='A'){ctx.lineWidth=1.6;ctx.strokeStyle=`rgba(89,203,238,${focusOn?.18:.55})`;ctx.setLineDash([]);}
+  else if(e.focal){
    const ew=otherEdgeW.get(e.id)??e.weight;
    const stronger=e.weight>ew+1e-9;
    ctx.lineWidth=Math.max(.6,e.weight*3.0);
-   ctx.strokeStyle=stronger?`rgba(244,191,120,${.20+e.weight*.7})`:`rgba(231,155,255,${.14+e.weight*.7})`;
+   ctx.strokeStyle=stronger?`rgba(244,191,120,${focusOn?.08:.20+e.weight*.7})`:`rgba(231,155,255,${focusOn?.06:.14+e.weight*.7})`;
    ctx.setLineDash(e.level==='C'?[4,6]:[]);
   }else{
    ctx.lineWidth=Math.max(.5,e.weight*2.4);
-   ctx.strokeStyle=e.level==='B'?'rgba(242,174,100,.26)':'rgba(169,123,208,.18)';
+   ctx.strokeStyle=e.level==='B'?`rgba(242,174,100,${focusOn?.08:.26})`:`rgba(169,123,208,${focusOn?.06:.18})`;
    ctx.setLineDash(e.level==='C'?[4,6]:[]);
   }
   ctx.stroke();ctx.setLineDash([]);
@@ -260,6 +282,8 @@ function draw(canvas,world){
   // 仅本世界连通：暖橙描边环；另一世界连通而本世界缺失：灰色空心环
   if(onlyHere){ctx.strokeStyle='rgba(255,196,127,.9)';ctx.lineWidth=1.6;ctx.beginPath();ctx.arc(p[0],p[1],rr*1.35,0,Math.PI*2);ctx.stroke();}
   else if(missing){ctx.strokeStyle='rgba(150,165,185,.4)';ctx.lineWidth=1.2;ctx.setLineDash([2,3]);ctx.beginPath();ctx.arc(p[0],p[1],rr*1.35,0,Math.PI*2);ctx.stroke();ctx.setLineDash([]);}
+  // 决定路径上的节点：白色描边环，标示“从东莞到它”的链路
+  if(pathNodeSet?.has(n.id)&&!selected){ctx.strokeStyle='rgba(255,255,255,.85)';ctx.lineWidth=1.4;ctx.beginPath();ctx.arc(p[0],p[1],rr*1.75,0,Math.PI*2);ctx.stroke();}
   // 标签：选中、起点、共同可达主体、仅本世界连通（收集后统一做碰撞避让）
   if(selected||n.id==='dg'||onlyHere||(here&&['mj','htd','lq','xwd','ddc','sz','jq','jf','bmc'].includes(n.id))){
    labels.push({x:p[0],y:p[1]+rr+13,text:n.name,anchorY:p[1]+rr,
@@ -276,15 +300,107 @@ function draw(canvas,world){
   ctx.fillStyle=t.color;ctx.fillText(t.text,t.x,t.y,90);
  }
 }
-function pick(canvas,world,x,y){const {w,h}=dims(canvas);let best=null,dist=22;
- for(const n of state.models[world].nodes){const p=point(state.animation[world].get(n.id)||state.models[world].positions.get(n.id),w,h),d=Math.hypot(p[0]-x,p[1]-y);
-  if(d<dist){dist=d;best=n.id;}}
- if(best){state.selected=best;
-  const m=state.models[world],other=state.models[1-world];
-  const here=m.reachable.includes(best),there=other.reachable.includes(best);
-  const status=here&&there?'两世界都连通':here?'仅世界'+(world===0?'A':'B')+'连通':there?'仅世界'+(world===1?'A':'B')+'连通':'两世界当前均不连通';
-  get('m3-selected').textContent='当前主体：'+nameOf(best)+' · '+status+'（双世界已同步高亮）。';
+function distToSegment(px,py,x1,y1,x2,y2){
+ const dx=x2-x1,dy=y2-y1,len2=dx*dx+dy*dy;
+ let t=len2?((px-x1)*dx+(py-y1)*dy)/len2:0;t=Math.max(0,Math.min(1,t));
+ const cx=x1+t*dx,cy=y1+t*dy;return Math.hypot(px-cx,py-cy);
+}
+function screenMap(world,w,h){
+ const m=state.models[world];
+ return new Map(m.nodes.map(n=>[n.id,point(state.animation[world].get(n.id)||m.positions.get(n.id),w,h)]));
+}
+function pickEdge(world,x,y){
+ const {w,h}=dims(canvases[world]);const s=screenMap(world,w,h);
+ let best=null,dist=9;
+ for(const e of state.models[world].edges){
+  const a=s.get(e.source),b=s.get(e.target);if(!a||!b)continue;
+  const d=distToSegment(x,y,a[0],a[1],b[0],b[1]);
+  if(d<dist){dist=d;best=e.id;}
  }
+ return best;
+}
+function placePop(pop,x,y,w,h){
+ pop.hidden=false;
+ const cw=pop.offsetWidth||230,ch=pop.offsetHeight||170;
+ let left=x+15,top=y-12;
+ if(left+cw>w-8)left=x-cw-15;
+ if(left<8)left=8;
+ if(top+ch>h-8)top=h-ch-8;
+ if(top<8)top=8;
+ pop.style.left=left+'px';pop.style.top=top+'px';
+}
+const capLetter=(w)=>w===0?'A':'B';
+function closePops(){get('m3-pop-a').hidden=true;get('m3-pop-b').hidden=true;}
+function selectNode(id,world,x,y){
+ state.selected=id;state.selectedEdge=null;
+ const inA=state.models[0].reachable.includes(id),inB=state.models[1].reachable.includes(id);
+ let pathInfo=null;
+ for(const w of [world,1-world]){
+  if(state.models[w].reachable.includes(id)){
+   const p=findPath(state.models[w],id);
+   if(p){pathInfo={...p,world:w};break;}
+  }
+ }
+ state.path=pathInfo;
+ renderNodePop(id,world,x,y,pathInfo,inA,inB);
+ const status=inA&&inB?'两世界都连通':inA?'仅世界 A 连通':inB?'仅世界 B 连通':'两世界当前均不连通';
+ get('m3-selected').textContent='当前主体：'+nameOf(id)+' · '+status+(pathInfo?'（已在世界'+capLetter(pathInfo.world)+'高亮从东莞到它的决定路径）':'')+'。';
+}
+function selectEdge(id,world,x,y){
+ state.selectedEdge={id,world};state.path=null;
+ renderEdgePop(id,world,x,y);
+ const e=state.models[world].edges.find(x=>x.id===id);
+ get('m3-selected').textContent='当前关系：'+nameOf(e.source)+' — '+nameOf(e.target)+'（'+e.level+'级·'+e.kind+'）。';
+}
+function renderNodePop(id,world,x,y,pathInfo,inA,inB){
+ const pop=get(world===0?'m3-pop-a':'m3-pop-b');const n=ids.get(id);
+ const statusCls=inA&&inB?'both':(inA||inB?'one':'none');
+ const statusTxt=inA&&inB?'两世界都连通':inA?'仅世界 A 连通':inB?'仅世界 B 连通':'两世界都不连通';
+ let plain;
+ if(inA&&inB)plain='不管跨界强弱，它都和东莞网络连着，是稳健的结构事实。';
+ else if(inA||inB)plain='它是被跨界联系“点亮”的：只有跨界强度够大时，才连入东莞网络。';
+ else plain='当前两个世界都连不到它。';
+ let pathHtml='';
+ if(pathInfo){
+  const chain=pathInfo.nodeIds.map(nid=>nameOf(nid)).join(' → ');
+  const focalN=pathInfo.edgeIds.map(eid=>state.models[pathInfo.world].edges.find(e=>e.id===eid)).filter(e=>e&&e.focal).length;
+  pathHtml='<div class="pop-sec"><div class="pop-label">在世界'+capLetter(pathInfo.world)+'，从东莞到它的路径</div><div class="pop-chain">'+esc(chain)+'</div>'+
+   (focalN?'<div class="pop-key">金色 '+focalN+' 条边随跨界强度变化，是它“亮/灭”的关键。</div>':'<div class="pop-key">这条路径全部由 A 级关系构成，不随假设变化。</div>')+'</div>';
+ }
+ const cond=state.sens?.conditional?.find(c=>c.id===id);
+ const thrHtml=cond?'<div class="pop-thr">连入阈值：跨界强度 u ≈ '+cond.threshold.toFixed(2)+'</div>':'';
+ pop.innerHTML='<button class="pop-close" aria-label="关闭">×</button><div class="pop-title">'+esc(n.name)+'</div>'+
+  '<span class="pop-status '+statusCls+'">'+statusTxt+'</span><p class="pop-plain">'+esc(plain)+'</p>'+thrHtml+pathHtml;
+ pop.querySelector('.pop-close').onclick=()=>{pop.hidden=true;};
+ const {w,h}=dims(canvases[world]);placePop(pop,x,y,w,h);
+}
+function renderEdgePop(id,world,x,y){
+ const pop=get(world===0?'m3-pop-a':'m3-pop-b');const e=state.models[world].edges.find(x=>x.id===id);
+ const u=world===0?state.a:state.b;
+ let formula,plain;
+ if(e.level==='A'){formula='权重恒为 1（有直接证据，不随假设变化）';plain='A 级关系：有直接证据支撑，任何情景下都连通。';}
+ else if(e.focal){
+  const base=e.level==='B'?0.10:0.02,slope=e.level==='B'?0.85:0.22;
+  formula='权重 = '+base+' + '+slope+' × u<br/>当前 u='+u.toFixed(2)+' → 权重 '+e.weight.toFixed(2)+'（'+(e.enabled?'≥':'<')+' 阈值 '+THRESHOLD+'，'+(e.enabled?'连通':'断开')+'）';
+  plain='这条关系随跨界强度变化，是网络重组的关键边。';
+ }else{formula='权重固定 '+e.weight.toFixed(2);plain=e.level+' 级关系，权重不随跨界强度变化。';}
+ pop.innerHTML='<button class="pop-close" aria-label="关闭">×</button><div class="pop-title">'+esc(nameOf(e.source))+' — '+esc(nameOf(e.target))+'</div>'+
+  '<span class="pop-status lvl-'+e.level+'">'+e.level+'级 · '+esc(e.kind)+'</span><p class="pop-plain">'+esc(plain)+'</p>'+
+  '<div class="pop-formula">'+formula+'</div><div class="pop-src">'+esc(e.detail)+'<br/>来源：'+esc(e.sourceRef)+'</div>';
+ pop.querySelector('.pop-close').onclick=()=>{pop.hidden=true;};
+ const {w,h}=dims(canvases[world]);placePop(pop,x,y,w,h);
+}
+function pick(canvas,world,x,y){const {w,h}=dims(canvas);
+ let node=null,nd=22;
+ for(const n of state.models[world].nodes){
+  const p=point(state.animation[world].get(n.id)||state.models[world].positions.get(n.id),w,h),d=Math.hypot(p[0]-x,p[1]-y);
+  if(d<nd){nd=d;node=n.id;}}
+ if(node){selectNode(node,world,x,y);return;}
+ const edge=pickEdge(world,x,y);
+ if(edge){selectEdge(edge,world,x,y);return;}
+ // 点空白：关闭浮卡、退出路径/选中边（保留节点高亮）
+ state.path=null;state.selectedEdge=null;closePops();
+ get('m3-selected').textContent='点击星点查看主体；点击关系线查看权重；拖动画面，两座世界同步旋转。';
 }
 for(let i=0;i<2;i++){const c=canvases[i];
  c.addEventListener('pointerdown',e=>{dragging={id:e.pointerId,x:e.clientX,y:e.clientY,travel:0};c.setPointerCapture?.(e.pointerId);});
@@ -293,7 +409,7 @@ for(let i=0;i<2;i++){const c=canvases[i];
  c.addEventListener('pointercancel',()=>dragging=null);
  c.addEventListener('wheel',e=>{e.preventDefault();state.zoom=Math.min(2,Math.max(.65,state.zoom-(e.deltaY>0?.1:-.1)));},{passive:false});
 }
-function loop(){if(!state.open)return;draw(canvases[0],0);draw(canvases[1],1);requestAnimationFrame(loop);}
+function loop(){if(!state.open)return;guideTick();draw(canvases[0],0);draw(canvases[1],1);requestAnimationFrame(loop);}
 
 function open(){
  if(state.open)return;
@@ -304,10 +420,69 @@ function open(){
  recompute();
  requestAnimationFrame(loop);
  document.body.style.overflow='hidden';get('m3-exit').focus();
+ startGuide();
 }
 function close(){state.open=false;root.hidden=true;document.body.style.overflow='';launch.focus();}
 get('m3-exit').onclick=close;
 window.addEventListener('keydown',e=>{if(state.open&&e.key==='Escape')close();});
+
+/* ---------- 首次发现引导 ---------- */
+const GUIDE_KEY='boluo_m3_guided';
+const guideSteps=[
+ {text:'先让两个世界回到相同起点：都只有 4 个节点连通。',spot:null,next:'manual'},
+ {text:'现在，把「世界 B」的强度滑块向右拖，看着节点亮起。',spot:'range-b',next:'wait-b'},
+ {text:'新节点被点亮了（4 → 9）。点击一个亮起的橙色节点，看它的路径。',spot:'canvas-b',next:'wait-node'},
+ {text:'这就是它被点亮的路径——金色的边随跨界强度变化。你已经会探索了。',spot:null,next:'done'}
+];
+function startGuide(){
+ if(state.guideDone)return;
+ let seen=false;try{seen=!!localStorage.getItem(GUIDE_KEY);}catch(e){}
+ if(seen)return;
+ state.guide={step:0,active:true};
+ state.a=U_ANCHORS.low.u;state.b=U_ANCHORS.low.u;
+ renderControls();recompute();
+ guideEl.hidden=false;renderGuide();
+}
+function renderGuide(){
+ const s=state.guide.step,st=guideSteps[s];
+ get('m3-guide-text').textContent=(s+1)+' / '+guideSteps.length+' · '+st.text;
+ get('m3-guide-dots').innerHTML=guideSteps.map((_,i)=>'<i class="'+(i===s?'on':'')+'"></i>').join('');
+ const nextBtn=get('m3-guide-next');
+ if(st.next==='manual'){nextBtn.hidden=false;nextBtn.textContent='下一步';}
+ else if(st.next==='done'){nextBtn.hidden=false;nextBtn.textContent='开始探索';}
+ else{nextBtn.hidden=true;}
+ positionSpot(st.spot);
+}
+function positionSpot(target){
+ const spot=get('m3-guide-spot');
+ if(!target){spot.hidden=true;return;}
+ const el=target==='range-b'?get('m3-range-b'):get('m3-canvas-b');
+ if(!el){spot.hidden=true;return;}
+ try{el.scrollIntoView({block:'center',behavior:'smooth'});}catch(e){}
+ const r=el.getBoundingClientRect(),shell=root.getBoundingClientRect();
+ spot.hidden=false;
+ spot.style.left=(r.left-shell.left-8)+'px';spot.style.top=(r.top-shell.top-8)+'px';
+ spot.style.width=(r.width+16)+'px';spot.style.height=(r.height+16)+'px';
+}
+function guideTick(){
+ const g=state.guide;if(!g?.active)return;const st=guideSteps[g.step];
+ if(st.next==='wait-b'&&state.b>0.45){g.step=2;renderGuide();}
+ else if(st.next==='wait-node'){
+  const id=state.selected;
+  if(id&&state.models[1].reachable.includes(id)&&!state.models[0].reachable.includes(id)){g.step=3;renderGuide();}
+ }
+}
+function finishGuide(){
+ if(state.guide)state.guide.active=false;
+ state.guideDone=true;guideEl.hidden=true;
+ try{localStorage.setItem(GUIDE_KEY,'1');}catch(e){}
+}
+get('m3-guide-next').onclick=()=>{
+ const g=state.guide,st=guideSteps[g.step];
+ if(st.next==='manual'){g.step=1;renderGuide();}
+ else if(st.next==='done')finishGuide();
+};
+get('m3-guide-skip').onclick=finishGuide;
 
 // 从 M2 场景面板跳入：window.BOLUO_M3_APP.open(flowId)
 function openForFlow(flowId){
