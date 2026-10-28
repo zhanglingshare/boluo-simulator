@@ -431,7 +431,7 @@ function initWorld(){
  scene.add(new THREE.HemisphereLight("#ffffff","#c9d8d2",1.35));
  const key=new THREE.DirectionalLight("#fff8ed",2.05);key.position.set(-12,23,13);key.castShadow=true;key.shadow.mapSize.set(1024,1024);key.shadow.camera.left=-32;key.shadow.camera.right=32;key.shadow.camera.top=32;key.shadow.camera.bottom=-32;key.shadow.bias=-.0005;scene.add(key);
  const fill=new THREE.DirectionalLight("#dbe9ef",.8);fill.position.set(14,12,-10);scene.add(fill);
- const ground=addMesh(new THREE.PlaneGeometry(110,110),new THREE.MeshStandardMaterial({color:"#f4f1eb",roughness:1,metalness:0}),0,-.5,0);ground.rotation.x=-Math.PI/2;ground.receiveShadow=true;
+ const ground=new THREE.Mesh(new THREE.PlaneGeometry(110,110),new THREE.MeshStandardMaterial({color:"#f4f1eb",roughness:1,metalness:0}));ground.position.set(0,-.5,0);ground.rotation.x=-Math.PI/2;ground.receiveShadow=true;scene.add(ground);
  worldGroup=new THREE.Group();scene.add(worldGroup);
  Object.keys(clusterMeta).forEach(function(key){makePlatform(key,clusterMeta[key])});
  buildHub();assignNodes();buildEdges();buildClusterFlows();
