@@ -4,7 +4,7 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
 <meta name="theme-color" content="#f6f5f2">
-<title>博罗 · 全息关系世界</title>
+<title>博罗 · 全息版</title>
 <style>
 :root{--bg:#f6f5f2;--panel:#fff;--ink:#25323a;--muted:#849097;--line:#e5e7e3;--teal:#3e777e;--teal-soft:#e8f0ef;--blue:#4b91d5;--amber:#d39a4d;--green:#79a77c;--purple:#9584c5;--red:#d76d5d}
 *{box-sizing:border-box}
@@ -129,6 +129,70 @@ kbd{font-family:inherit;border:1px solid #e1e5df;background:#f8f9f6;border-radiu
 @media(max-width:980px){.workspace{grid-template-columns:170px minmax(0,1fr) 245px}.right-panel{display:block;padding:14px 11px}.top-modes{display:none}.top-search{width:230px}.stage-sub{max-width:60vw}.scene-legend{bottom:84px}.bottom-dock{flex-wrap:wrap}.dock-status{display:none}}
 @media(max-width:680px){html,body{height:auto;min-height:100%;overflow:auto}.topbar{height:58px;padding:0 12px;gap:8px}.brand{min-width:0;flex:1}.brand-title{font-size:14px}.brand-sub{font-size:9px}.brand-mark{width:30px;height:30px}.top-search{width:38px;padding:8px;overflow:hidden}.top-search input{display:none}.original-link{display:none}.workspace{height:auto;min-height:calc(100vh - 58px);display:flex;flex-direction:column}.left-panel{order:0;border-right:0;border-bottom:1px solid var(--line);padding:8px 10px;overflow:visible}.left-panel .section-kicker,.left-panel .side-divider,.left-foot,.scenario-list{display:none}.nav-list{flex-direction:row;overflow-x:auto;gap:5px;padding-bottom:2px}.nav-item{width:auto;white-space:nowrap;flex:none;padding:7px 9px;font-size:10px}.nav-item .nav-icon{width:19px;height:19px}.nav-count{display:none}.center-stage{order:1;height:72vh;min-height:510px}.stage-head{height:57px;padding:0 12px}.stage-title{font-size:12px}.stage-sub{font-size:9px}.tool-btn{padding:6px 7px;font-size:9px}.world-wrap{min-height:0}.scene-topline{left:12px;top:12px}.scene-topline span{display:none}.scene-controls{top:10px;right:10px}.scene-control{padding:6px 7px;font-size:9px}.scene-legend{left:9px;bottom:96px;max-width:calc(100% - 18px);gap:7px;padding:7px;font-size:8px}.bottom-dock{left:8px;right:8px;bottom:8px;gap:5px}.dock-actions{width:100%;justify-content:space-between;padding:4px;gap:2px}.dock-btn{font-size:9px;padding:9px 6px;flex:1}.compare-panel{left:8px;right:8px;bottom:60px;padding:10px}.compare-row{gap:7px}.compare-side{font-size:9px}.compare-side b{font-size:10px}.right-panel{display:block;order:2;border-left:0;border-top:1px solid var(--line);padding:14px 12px;overflow:visible}.panel-heading{margin-bottom:10px}.inspect-empty{padding:16px}.scenario-summary{margin-top:10px}}
 @media(prefers-reduced-motion:reduce){*{scroll-behavior:auto!important;transition:none!important;animation:none!important}}
+
+/* Reference-led visual refinement: warm workspace, vivid spatial islands, restrained chrome */
+:root{--bg:#f7f5f1;--panel:#fffdfa;--ink:#1e3442;--muted:#89949b;--line:#e8e8e3;--teal:#3e777e}
+.topbar{height:72px;gap:18px;padding:0 24px;background:rgba(255,254,251,.94);box-shadow:0 3px 20px rgba(65,73,72,.035)}
+.brand{min-width:225px}.brand-mark{background:transparent;border-radius:50%;width:38px;height:38px}.brand-title{font-size:18px;letter-spacing:.4px}.brand-sub{font-size:10px;color:#a1a5a4}
+.top-modes{gap:3px}.top-mode{font-size:12px;padding:10px 11px;color:#52616a}.top-mode.active{background:#193445;color:#fff}.top-mode[data-filter]:hover{background:#edf1ef;color:#34535a}
+.workspace{height:calc(100vh - 72px);grid-template-columns:208px minmax(0,1fr);position:relative}
+.left-panel{padding:18px 12px;background:rgba(255,254,251,.95);border-right:1px solid #ebe9e4}
+.nav-item{padding:11px 10px;font-size:12px}.nav-item.active{background:#e7f0f3;border-color:#d8e5e9;box-shadow:0 4px 14px rgba(63,104,117,.08)}
+.center-stage{background:#f5f3ef}
+.stage-head{height:48px;flex:none;padding:0 18px;background:rgba(255,254,251,.72);border-bottom:0}
+.stage-title{font-size:13px}.stage-sub{font-size:10px}
+.stage-tools{gap:5px}.tool-btn{font-size:10px;padding:6px 9px}
+.metric-strip{height:82px;flex:none;display:grid;grid-template-columns:repeat(5,minmax(88px,1fr)) minmax(180px,1.35fr);gap:9px;padding:5px 15px 10px;background:rgba(255,254,251,.68);overflow:hidden}
+.metric-card,.year-card{position:relative;min-width:0;border:1px solid rgba(233,232,226,.9);border-radius:13px;background:rgba(255,255,255,.9);padding:10px 12px;box-shadow:0 3px 12px rgba(47,60,58,.025)}
+.metric-label{font-size:10px;color:#75838b;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}.metric-label span{color:#a4abae}
+.metric-value{font-size:19px;font-weight:760;color:#203847;margin-top:5px;letter-spacing:-.4px;white-space:nowrap}.metric-value small{font-size:9px;font-weight:500;color:#9ba5a7;letter-spacing:0}.metric-value.negative{color:#b87565}.metric-value.positive{color:#6c9b8d}
+.metric-spark{position:absolute;right:9px;bottom:10px;display:flex;align-items:flex-end;gap:2px;height:22px;opacity:.72}
+.metric-spark i{display:block;width:5px;border-radius:2px 2px 0 0;background:#9fc9ed;height:8px}.metric-spark i:nth-child(2){height:12px}.metric-spark i:nth-child(3){height:9px}.metric-spark i:nth-child(4){height:16px}.metric-spark i:nth-child(5){height:13px}.metric-spark i:nth-child(6){height:19px}.metric-spark i:nth-child(7){height:22px}
+.metric-spark.sky i{background:#88b9e7}.metric-spark.coral i{background:#e5a18b}.metric-spark.violet i{background:#b6a0ec}.metric-spark.green i{background:#9ed4b9}.metric-spark.blue i{background:#8ac8bf}
+.year-card{padding:8px 10px}.year-tabs{display:flex;justify-content:space-between;gap:5px}.year-tab{border:0;border-radius:7px;background:#f2f2ef;color:#929a9c;padding:5px 9px;font-size:10px;flex:1}.year-tab.active{background:#1c3545;color:#fff}
+.year-track{height:4px;border-radius:4px;background:#d8dcda;position:relative;margin:12px 5px 6px;display:flex;justify-content:space-between}.year-track:before{content:"";position:absolute;left:0;top:0;height:4px;width:28%;border-radius:4px;background:#4b7d8d}.year-track i{position:relative;top:-3px;width:10px;height:10px;border-radius:50%;background:#c6ccca;border:1px solid #fff}.year-track i:first-child,.year-track i:nth-child(2){background:#284c5b}.year-note{font-size:9px;color:#9ba3a2}
+.world-wrap{background:radial-gradient(ellipse at 48% 46%,#fffdf9 0%,#f8f5ef 42%,#eceee9 100%);min-height:0}
+#world{cursor:grab}
+.scene-topline{top:12px;left:16px;gap:8px}.scene-topline strong{font-size:10px;color:#5d7274}.scene-topline span{font-size:9px;color:#a0a8a5}
+.scene-pip{background:#71ad9d;box-shadow:0 0 0 4px #71ad9d20}
+.scene-controls{top:12px;right:16px}.scene-control{font-size:9px;background:rgba(255,255,255,.83)}
+.scene-legend{display:none}
+.right-panel{position:absolute;z-index:4;right:18px;top:16px;width:132px;max-height:calc(100% - 185px);overflow:auto;border:1px solid rgba(233,232,226,.92);border-radius:15px;background:rgba(255,254,251,.9);box-shadow:0 7px 26px rgba(46,58,54,.07);padding:12px 12px 13px;backdrop-filter:blur(12px);border-left:1px solid rgba(233,232,226,.92)}
+.legend-panel-title{font-size:12px;font-weight:750;color:#304650;margin:2px 0 13px}
+.legend-scale{display:flex;align-items:center;gap:9px;margin:10px 0;font-size:10px;color:#8b969a}
+.scale-line{width:28px;border-radius:5px;background:#4b91d5;display:block}
+.weight-5{height:4px}.weight-4{height:3px;opacity:.82}.weight-3{height:2.5px;background:#e7a05e}.weight-2{height:2px;background:#8bbac2}.weight-1{height:1.5px;background:#c4d3d4}
+.legend-toggle{border-top:1px solid #eeefea;margin-top:12px;padding-top:11px;display:flex;align-items:center;justify-content:space-between;gap:5px;font-size:10px;color:#748188}
+.switch{border:0;width:29px;height:17px;border-radius:99px;background:#dfe3df;padding:2px;display:flex;align-items:center;flex:none}.switch i{width:13px;height:13px;border-radius:50%;background:#fff;box-shadow:0 1px 3px #0002;transition:transform .2s}.switch.on{background:#1f3b4b}.switch.on i{transform:translateX(12px)}
+.inspector-heading,#inspector,#scenario-summary,.right-panel .disclaimer{display:none}
+.right-panel.has-selection{width:280px;max-height:calc(100% - 155px);padding:14px;background:rgba(255,254,251,.96)}
+.right-panel.has-selection .legend-panel{display:none}
+.right-panel.has-selection .inspector-heading,.right-panel.has-selection #inspector,.right-panel.has-selection #scenario-summary,.right-panel.has-selection .disclaimer{display:block}
+.right-panel.has-selection .panel-heading{display:flex}
+.right-panel.has-selection #inspector{margin-top:12px}
+.right-panel.has-selection .scenario-summary{margin-top:10px}
+.bottom-dock{left:14px;right:14px;bottom:12px;display:grid;grid-template-columns:minmax(350px,1.05fr) minmax(320px,1.15fr);align-items:stretch;gap:12px;pointer-events:none}
+.dock-actions,.scenario-strip{pointer-events:auto;background:rgba(255,254,251,.92);border:1px solid rgba(231,232,226,.95);border-radius:15px;box-shadow:0 8px 28px rgba(43,57,55,.07);backdrop-filter:blur(12px)}
+.dock-actions{padding:7px;display:grid;grid-template-columns:1.3fr 1fr 1fr 1fr;gap:5px;align-items:stretch}
+.dock-btn{display:flex;align-items:center;justify-content:center;gap:8px;padding:8px 9px;border-radius:11px;text-align:left;color:#53636b;white-space:normal;min-width:0}
+.dock-btn .dock-symbol{font-size:20px;flex:none}.dock-btn span:last-child{display:flex;flex-direction:column;gap:3px;min-width:0}.dock-btn b{font-size:11px;white-space:nowrap}.dock-btn small{font-size:8px;color:inherit;opacity:.72;white-space:nowrap}
+.dock-btn.active{background:#193747;color:#fff;box-shadow:0 4px 12px #19374720}
+.scenario-strip{padding:9px 11px 7px;min-width:0}.scenario-strip-head{display:flex;justify-content:space-between;align-items:center;margin-bottom:7px;font-size:11px;color:#43565e}.scenario-strip-head button{border:0;background:transparent;color:#9aa3a4;font-size:9px}
+.scenario-cards{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:7px}
+.scenario-card{border:1px solid transparent;border-radius:9px;background:transparent;padding:3px;text-align:left;min-width:0;color:#627078}.scenario-card.active{border-color:#b6cdd0;background:#edf4f3}.scenario-card b{display:block;font-size:9px;font-weight:600;margin-top:4px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.scenario-thumb{height:36px;border-radius:7px;display:block;position:relative;overflow:hidden;background:#dcebea}
+.scenario-thumb:before,.scenario-thumb:after,.scenario-thumb i{content:"";position:absolute;display:block;border-radius:50%;border:1px solid rgba(255,255,255,.8)}
+.scenario-thumb:before{width:26px;height:16px;left:calc(50% - 13px);top:7px;background:#70b7c0;box-shadow:-18px 9px 0 -4px #80c4c8,18px 9px 0 -4px #6aa6b4}
+.scenario-thumb:after{width:58px;height:2px;left:calc(50% - 29px);top:18px;border:0;border-radius:3px;background:#fff;transform:rotate(-15deg);opacity:.9}
+.scenario-thumb i{width:9px;height:9px;left:calc(50% - 4px);top:11px;background:#e6f8f4}
+.thumb-blue{background:#dcecf7}.thumb-blue:before{background:#5a9bd0;box-shadow:-18px 9px 0 -4px #80b9df,18px 9px 0 -4px #5590c2}.thumb-coral{background:#f6e1dc}.thumb-coral:before{background:#d98172;box-shadow:-18px 9px 0 -4px #e9a28f,18px 9px 0 -4px #c96d63}.thumb-green{background:#e3eee2}.thumb-green:before{background:#77a88d;box-shadow:-18px 9px 0 -4px #a2c6a7,18px 9px 0 -4px #6d9a7f}
+.dock-status{display:none}
+.compare-panel{bottom:118px}
+body.focus-mode .right-panel{opacity:.94}
+@media(max-width:1250px){.topbar{gap:10px;padding:0 14px}.brand{min-width:185px}.top-mode{padding:8px 7px;font-size:11px}.top-search{width:190px}.metric-strip{grid-template-columns:repeat(5,minmax(76px,1fr)) minmax(145px,1.1fr);gap:5px;padding-left:8px;padding-right:8px}.metric-card{padding:9px 8px}.metric-value{font-size:16px}.bottom-dock{grid-template-columns:minmax(310px,1fr) minmax(260px,1fr);gap:7px}.dock-actions{grid-template-columns:repeat(4,minmax(0,1fr))}.dock-btn{gap:5px;padding:7px 5px}.dock-btn small{display:none}}
+@media(max-width:980px){.workspace{grid-template-columns:170px minmax(0,1fr)}.right-panel{right:10px;top:10px}.metric-strip{grid-template-columns:repeat(3,minmax(85px,1fr));height:auto;min-height:80px}.metric-card:nth-child(n+4),.year-card{display:none}.bottom-dock{grid-template-columns:1fr;bottom:8px}.scenario-strip{display:none}.dock-actions{grid-template-columns:repeat(4,minmax(0,1fr))}.dock-btn{justify-content:center}.dock-btn span:last-child{display:none}.dock-btn .dock-symbol{font-size:19px}.compare-panel{bottom:66px}}
+@media(max-width:680px){.workspace{display:flex;flex-direction:column;height:auto;min-height:calc(100vh - 58px)}.topbar{height:58px}.left-panel{display:block}.center-stage{height:calc(100vh - 155px);min-height:490px}.stage-head{height:42px}.stage-tools #view3d{display:none}.metric-strip{grid-template-columns:repeat(2,minmax(0,1fr));height:76px;min-height:76px;padding:4px 8px;gap:5px}.metric-card{padding:7px 8px}.metric-card:nth-child(n+3){display:none}.metric-label{font-size:9px}.metric-value{font-size:15px;margin-top:3px}.metric-spark{height:16px;bottom:7px}.metric-spark i{width:3px}.year-card{display:none}.right-panel{top:8px;right:8px;width:116px;padding:9px}.legend-panel-title{font-size:11px;margin-bottom:9px}.legend-scale{font-size:9px;margin:8px 0;gap:6px}.scale-line{width:22px}.legend-toggle{font-size:9px;margin-top:8px;padding-top:8px}.switch{transform:scale(.9);transform-origin:right center}.right-panel.has-selection{width:min(270px,calc(100% - 20px));max-height:60%;top:auto;bottom:68px}.bottom-dock{left:7px;right:7px;bottom:7px}.dock-actions{padding:4px;border-radius:12px}.dock-btn{padding:8px 4px}.scene-topline{left:8px;top:8px}.scene-controls{right:8px;top:8px}.scene-control{font-size:8px;padding:6px}.scene-legend{display:none}}
+
 </style>
 </head>
 <body>
@@ -137,13 +201,16 @@ kbd{font-family:inherit;border:1px solid #e1e5df;background:#f8f9f6;border-radiu
     <div class="brand-mark" aria-hidden="true">
       <svg width="22" height="22" viewBox="0 0 24 24" fill="none"><circle cx="12" cy="12" r="3" stroke="currentColor" stroke-width="1.8"/><ellipse cx="12" cy="12" rx="10" ry="4.4" stroke="currentColor" stroke-width="1.3" transform="rotate(-35 12 12)"/><ellipse cx="12" cy="12" rx="10" ry="4.4" stroke="currentColor" stroke-width="1.3" transform="rotate(35 12 12)"/><circle cx="20" cy="7" r="1.4" fill="currentColor"/></svg>
     </div>
-    <div><div class="brand-title">博罗 · 全息关系世界</div><div class="brand-sub">看见关系 · 追踪变化 · 理解结构</div></div>
+    <div><div class="brand-title">博罗 · 全息版</div><div class="brand-sub">看见联系 · 理解变化 · 预见可能</div></div>
   </div>
   <nav class="top-modes" aria-label="工作模式">
-    <button class="top-mode active" data-mode="overview">全景</button>
-    <button class="top-mode" data-mode="trace">关系追踪</button>
-    <button class="top-mode" data-mode="simulate">冲击模拟</button>
-    <button class="top-mode" data-mode="compare">前后对照</button>
+    <button class="top-mode active" data-mode="overview">◎ 全景</button>
+    <button class="top-mode" data-filter="manufacturing">♧ 产业</button>
+    <button class="top-mode" data-filter="external">⌂ 城镇</button>
+    <button class="top-mode" data-filter="tourism">◇ 文旅</button>
+    <button class="top-mode" data-filter="agriculture">❋ 农业</button>
+    <button class="top-mode" data-filter="resources">≈ 资源</button>
+    <button class="top-mode" data-mode="simulate">↗ 交通</button>
   </nav>
   <label class="top-search" title="搜索节点">
     <span aria-hidden="true">⌕</span>
@@ -177,16 +244,24 @@ kbd{font-family:inherit;border:1px solid #e1e5df;background:#f8f9f6;border-radiu
 
   <main class="center-stage">
     <div class="stage-head">
-      <div><div class="stage-title" id="stage-title">博罗关系全景</div><div class="stage-sub" id="stage-sub">抽象结构视图 · 非真实地图 · 拖动旋转，滚轮缩放，点击节点查看关联</div></div>
+      <div><div class="stage-title" id="stage-title">博罗 · 关系全景</div><div class="stage-sub" id="stage-sub">抽象三维关系世界 · 拖动旋转 · 滚轮缩放 · 点击节点探索</div></div>
       <div class="stage-tools">
         <button class="tool-btn active" id="view3d">◈ 3D 空间</button>
         <button class="tool-btn" id="focus-btn">◎ 聚焦</button>
         <button class="tool-btn" id="reset-btn">↺ 重置视角</button>
       </div>
     </div>
+    <div class="metric-strip" aria-label="博罗关键指标">
+      <div class="metric-card"><div class="metric-label">GDP <span>（亿元）</span></div><div class="metric-value">1,005.45 <small>2025</small></div><div class="metric-spark blue"><i></i><i></i><i></i><i></i><i></i><i></i><i></i></div></div>
+      <div class="metric-card"><div class="metric-label">规上工业增加值</div><div class="metric-value">+8.7% <small>年度增速</small></div><div class="metric-spark sky"><i></i><i></i><i></i><i></i><i></i><i></i><i></i></div></div>
+      <div class="metric-card"><div class="metric-label">固定资产投资</div><div class="metric-value negative">−18.8% <small>年度增速</small></div><div class="metric-spark coral"><i></i><i></i><i></i><i></i><i></i><i></i><i></i></div></div>
+      <div class="metric-card"><div class="metric-label">外贸进出口</div><div class="metric-value positive">+29.1% <small>年度增速</small></div><div class="metric-spark violet"><i></i><i></i><i></i><i></i><i></i><i></i><i></i></div></div>
+      <div class="metric-card"><div class="metric-label">农业总产值</div><div class="metric-value">107.44 <small>亿元</small></div><div class="metric-spark green"><i></i><i></i><i></i><i></i><i></i><i></i><i></i></div></div>
+      <div class="year-card"><div class="year-tabs"><button class="year-tab active">2025</button><button class="year-tab">2027</button><button class="year-tab">2030</button></div><div class="year-track"><i></i><i></i><i></i><i></i><i></i></div><div class="year-note">现实基准 → 情景探索</div></div>
+    </div>
     <div class="world-wrap" id="world-wrap">
       <canvas id="world" aria-label="可交互的博罗抽象三维关系网络"></canvas>
-      <div class="scene-topline"><i class="scene-pip"></i><strong>结构正在运行</strong><span>关系流向为结构示意，不代表实时交易</span></div>
+      <div class="scene-topline"><i class="scene-pip"></i><strong>博罗关系世界</strong><span>概念性结构 · 非真实地图</span></div>
       <div class="scene-controls">
         <button class="scene-control on" id="motion-btn">动效开启</button>
         <button class="scene-control" id="auto-btn">自动环视</button>
@@ -210,10 +285,19 @@ kbd{font-family:inherit;border:1px solid #e1e5df;background:#f8f9f6;border-radiu
       </div>
       <div class="bottom-dock">
         <div class="dock-actions">
-          <button class="dock-btn active" data-mode="overview">◉ 全景</button>
-          <button class="dock-btn" data-mode="trace">⌁ 追踪关系</button>
-          <button class="dock-btn" data-mode="simulate">ϟ 冲击模拟</button>
-          <button class="dock-btn" data-mode="compare">⇄ 前后对照</button>
+          <button class="dock-btn active" data-mode="overview"><span class="dock-symbol">▶</span><span><b>开始探索</b><small>进入博罗的关系世界</small></span></button>
+          <button class="dock-btn" data-mode="trace"><span class="dock-symbol">⌁</span><span><b>关系追踪</b><small>看见谁与谁相连</small></span></button>
+          <button class="dock-btn" data-mode="simulate"><span class="dock-symbol">ϟ</span><span><b>情景模拟</b><small>改变一个条件</small></span></button>
+          <button class="dock-btn" data-mode="compare"><span class="dock-symbol">⇄</span><span><b>前后对比</b><small>观察结构变化</small></span></button>
+        </div>
+        <div class="scenario-strip">
+          <div class="scenario-strip-head"><b>典型场景</b><button id="more-scenarios">更多情景　›</button></div>
+          <div class="scenario-cards">
+            <button class="scenario-card active" data-scenario="base"><span class="scenario-thumb thumb-base"><i></i></span><b>基准情景</b></button>
+            <button class="scenario-card" data-scenario="dg"><span class="scenario-thumb thumb-blue"><i></i></span><b>外部订单下降</b></button>
+            <button class="scenario-card" data-scenario="xwd"><span class="scenario-thumb thumb-coral"><i></i></span><b>链主外迁</b></button>
+            <button class="scenario-card" data-scenario="dj"><span class="scenario-thumb thumb-green"><i></i></span><b>资源约束</b></button>
+          </div>
         </div>
         <div class="dock-status" id="status">27 个主体 · 30 条关系 · 选择节点开始探索</div>
       </div>
@@ -221,7 +305,17 @@ kbd{font-family:inherit;border:1px solid #e1e5df;background:#f8f9f6;border-radiu
   </main>
 
   <aside class="right-panel">
-    <div class="panel-heading"><h2 id="inspector-heading">关系详情</h2><span id="inspector-count">待选择</span></div>
+    <div class="legend-panel" id="legend-panel">
+      <div class="legend-panel-title">关系强度</div>
+      <div class="legend-scale"><span class="scale-line weight-5"></span><span>很强</span></div>
+      <div class="legend-scale"><span class="scale-line weight-4"></span><span>较强</span></div>
+      <div class="legend-scale"><span class="scale-line weight-3"></span><span>一般</span></div>
+      <div class="legend-scale"><span class="scale-line weight-2"></span><span>较弱</span></div>
+      <div class="legend-scale"><span class="scale-line weight-1"></span><span>很弱</span></div>
+      <div class="legend-toggle"><span>显示标签</span><button class="switch on" id="labels-toggle" aria-pressed="true"><i></i></button></div>
+      <div class="legend-toggle"><span>聚焦模式</span><button class="switch" id="focus-toggle" aria-pressed="false"><i></i></button></div>
+    </div>
+    <div class="panel-heading inspector-heading"><h2 id="inspector-heading">关系详情</h2><span id="inspector-count">待选择</span></div>
     <div id="inspector">
       <div class="inspect-empty">
         <div class="empty-orbit">⌁</div>
@@ -234,7 +328,7 @@ kbd{font-family:inherit;border:1px solid #e1e5df;background:#f8f9f6;border-radiu
       <p id="scenario-summary-desc">没有注入额外情景。所有关系按现有网络设定显示。</p>
       <div class="impact-count" id="impact-count">全景观察</div>
     </div>
-    <div class="disclaimer">公开资料网络 · 结构关系用于探索和压力测试。关系线粗细依据现有模型权重映射；情景动画展示的是规则传导，不是实际损失预测。</div>
+    <div class="disclaimer">公开资料网络 · 关系强度为当前模型权重映射，不等同于真实交易额或因果效应。情景动画用于探索，不是损失预测。</div>
   </aside>
 </div>
 
