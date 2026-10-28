@@ -1,0 +1,783 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no">
+<meta name="theme-color" content="#f5f2ec">
+<title>博罗 · 全息版｜关系世界概念预览</title>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+<style>
+:root{--paper:#f5f2ec;--ink:#19374b;--muted:#83919b;--line:rgba(39,67,83,.09);--glass:rgba(255,255,255,.79);--blue:#4b91d5;--amber:#d39a4d;--teal:#579d9a;--green:#79a77c;--violet:#9584c5;--red:#d76d5d;--shadow:0 8px 28px rgba(31,53,67,.075)}
+*{box-sizing:border-box}
+html,body{margin:0;width:100%;height:100%;overflow:hidden;background:var(--paper);color:var(--ink);font-family:-apple-system,BlinkMacSystemFont,"PingFang SC","Microsoft YaHei",sans-serif}
+button,input{font:inherit}
+button{cursor:pointer;color:inherit}
+.topbar{height:68px;display:flex;align-items:center;gap:25px;padding:0 25px;background:rgba(255,255,255,.74);border-bottom:1px solid rgba(31,58,74,.055);position:relative;z-index:20;backdrop-filter:blur(18px)}
+.brand{display:flex;align-items:center;gap:12px;min-width:265px}
+.brand-mark{width:42px;height:42px;display:grid;place-items:center;color:#245366}
+.brand-mark svg{width:40px;height:40px}
+.brand-name{font-weight:760;letter-spacing:.04em;font-size:21px;line-height:1.15}
+.brand-sub{font-size:10px;color:#a2a9ad;letter-spacing:.1em;margin-top:4px}
+.topnav{display:flex;align-items:center;gap:7px;flex:1;min-width:0}
+.topnav button{border:0;background:transparent;padding:11px 15px;border-radius:15px;font-size:14px;font-weight:620;white-space:nowrap;transition:.2s}
+.topnav button:hover{background:#eef2f2}
+.topnav button.active{background:#18384b;color:white;box-shadow:0 4px 12px #19374b18}
+.search-wrap{display:flex;align-items:center;gap:8px;background:#f2f2ef;border:1px solid #ebece8;border-radius:24px;padding:0 13px;height:40px;width:260px;flex-shrink:0}
+.search-wrap svg{width:17px;height:17px;color:#536978;flex-shrink:0}
+.search-wrap input{border:0;outline:0;background:transparent;min-width:0;width:100%;font-size:12px;color:var(--ink)}
+.shell{height:calc(100% - 68px);display:grid;grid-template-columns:184px minmax(0,1fr);grid-template-rows:84px minmax(0,1fr);gap:10px 13px;padding:12px 15px 14px}
+.sidebar{grid-column:1;grid-row:1/3;display:flex;flex-direction:column;gap:16px;min-height:0;z-index:5}
+.side-nav,.scenario-panel{background:rgba(255,255,255,.63);border:1px solid rgba(255,255,255,.8);border-radius:19px;padding:9px;box-shadow:0 4px 18px rgba(34,60,73,.025)}
+.side-nav{display:flex;flex-direction:column;gap:3px}
+.side-nav button{height:43px;display:flex;align-items:center;gap:12px;padding:0 12px;border:1px solid transparent;border-radius:12px;background:transparent;text-align:left;font-size:13px;color:#304b5c;transition:.18s}
+.side-nav button svg{width:18px;height:18px;flex-shrink:0}
+.side-nav button:hover{background:#f4f6f3}
+.side-nav button.active{background:linear-gradient(115deg,#e9f3f6,#dfeaf0);border-color:white;box-shadow:0 4px 14px rgba(45,87,104,.09);font-weight:700}
+.scenario-panel{margin-top:auto;padding:14px 11px 12px}
+.section-title{font-size:13px;font-weight:760;letter-spacing:.02em;margin:0 0 12px 2px}
+.scenario-list{display:flex;flex-direction:column;gap:5px}
+.scenario-btn{display:flex;align-items:center;gap:9px;width:100%;text-align:left;border:0;border-radius:10px;background:transparent;padding:8px 7px;color:#687b87;font-size:12px;line-height:1.2}
+.scenario-btn:hover{background:#f5f5f0}
+.scenario-btn.active{color:#203f52;font-weight:700;background:#f0f4f2}
+.radio-dot{width:14px;height:14px;border-radius:50%;border:2px solid #d1d7d9;flex-shrink:0;position:relative}
+.scenario-btn.active .radio-dot{border-color:#21445a}
+.scenario-btn.active .radio-dot:after{content:"";position:absolute;inset:3px;border-radius:50%;background:#21445a}
+.metrics{grid-column:2;grid-row:1;display:grid;grid-template-columns:repeat(5,minmax(0,1fr)) minmax(210px,1.45fr);gap:10px;min-width:0}
+.metric{position:relative;overflow:hidden;display:flex;flex-direction:column;justify-content:center;gap:5px;min-width:0;padding:11px 15px;background:rgba(255,255,255,.82);border:1px solid rgba(255,255,255,.92);border-radius:15px;box-shadow:0 3px 12px rgba(35,56,68,.025)}
+.metric-label{font-size:11px;color:#71818c;white-space:nowrap}
+.metric-bottom{display:flex;align-items:baseline;gap:7px;min-width:0}
+.metric-value{font-size:23px;font-weight:760;letter-spacing:-.03em;white-space:nowrap}
+.metric-change{font-size:10px;font-weight:700;white-space:nowrap}
+.spark{position:absolute;right:9px;bottom:11px;height:26px;display:flex;align-items:flex-end;gap:2px;opacity:.7}
+.spark i{display:block;width:4px;border-radius:3px 3px 0 0;background:var(--spark,#7db6cc);height:var(--h,40%)}
+.year-card{display:flex;flex-direction:column;justify-content:center;gap:8px;padding:10px 14px;background:rgba(255,255,255,.77);border:1px solid rgba(255,255,255,.92);border-radius:15px}
+.year-tabs{display:flex;justify-content:space-between;gap:6px}
+.year-tab{border:0;border-radius:10px;padding:7px 12px;min-width:56px;background:#f3f3f0;color:#8b969c;font-size:12px}
+.year-tab.active{background:#18384b;color:#fff;font-weight:700}
+.year-rail{height:12px;position:relative;display:flex;align-items:center;justify-content:space-between;padding:0 2px}
+.year-rail:before{content:"";position:absolute;height:2px;background:#dce1e1;left:3px;right:3px;top:5px}
+.year-rail span{width:9px;height:9px;border-radius:50%;background:#c5ccce;position:relative;z-index:1}
+.year-rail span:first-child,.year-rail span:nth-child(2){background:#21465a}
+.year-note{font-size:9px;color:#9aa5aa;margin-top:-3px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.stage{grid-column:2;grid-row:2;position:relative;min-width:0;min-height:0;border-radius:23px;overflow:hidden;background:radial-gradient(ellipse at 50% 47%,#ffffff 0%,#f7f5ef 50%,#eeeee8 100%);isolation:isolate}
+.stage:before{content:"";position:absolute;inset:0;z-index:1;pointer-events:none;background:radial-gradient(ellipse at center,transparent 44%,rgba(245,242,236,.32) 79%,rgba(245,242,236,.85) 100%)}
+#world{position:absolute;inset:0;width:100%;height:100%;display:block;z-index:0;touch-action:none;outline:none}
+.world-hint{position:absolute;left:18px;top:14px;z-index:3;display:flex;align-items:center;gap:8px;color:#7f9097;font-size:10px;letter-spacing:.03em;pointer-events:none}
+.live-dot{width:6px;height:6px;border-radius:50%;background:#72b2a0;box-shadow:0 0 0 4px rgba(114,178,160,.12)}
+.right-panel{position:absolute;z-index:6;right:14px;top:15px;width:164px;background:rgba(255,255,255,.82);border:1px solid rgba(255,255,255,.94);border-radius:17px;padding:14px 13px 12px;box-shadow:var(--shadow);backdrop-filter:blur(14px)}
+.panel-heading{font-size:13px;font-weight:780;margin:0 0 12px}
+.legend-row{display:flex;align-items:center;gap:9px;margin:10px 0;font-size:10px;color:#7d8b93}
+.legend-line{width:29px;height:0;border-top:var(--thick,2px) solid var(--c,#8cb3c4);border-radius:10px;flex-shrink:0}
+.legend-caption{margin:12px 0 7px;color:#9ba5aa;font-size:9px}
+.toggle-row{display:flex;align-items:center;justify-content:space-between;padding:9px 0 1px;font-size:11px;color:#526a79}
+.switch{width:32px;height:18px;border:0;border-radius:12px;background:#d9dfe0;padding:2px;transition:.2s}
+.switch:after{content:"";display:block;width:14px;height:14px;border-radius:50%;background:#fff;box-shadow:0 1px 3px #0002;transition:.2s}
+.switch.on{background:#1c4054}
+.switch.on:after{transform:translateX(14px)}
+.detail-view{display:none;margin-top:12px;padding-top:12px;border-top:1px solid var(--line)}
+.right-panel.has-detail .legend-view{display:none}
+.right-panel.has-detail .detail-view{display:block}
+.detail-name{font-size:14px;font-weight:780;line-height:1.35;margin-bottom:5px}
+.detail-type{display:inline-flex;align-items:center;border-radius:7px;padding:4px 7px;background:#eef3f3;color:#607783;font-size:9px;margin-bottom:9px}
+.detail-desc{font-size:10px;line-height:1.65;color:#667b86;margin-bottom:10px}
+.detail-meta{font-size:9px;color:#98a3a8;margin-bottom:10px}
+.relation-list{display:flex;flex-direction:column;gap:7px;max-height:185px;overflow:auto}
+.relation-item{border:1px solid #edf0ed;border-radius:9px;padding:8px;background:rgba(248,249,246,.9)}
+.relation-title{font-size:10px;font-weight:700;line-height:1.4}
+.relation-sub{font-size:9px;color:#87949a;margin-top:4px;line-height:1.4}
+.panel-back{border:0;background:#f0f3f1;border-radius:8px;padding:6px 8px;font-size:10px;margin-top:10px}
+.bottom-dock{position:absolute;z-index:7;left:14px;bottom:14px;display:flex;gap:9px;padding:10px;background:rgba(255,255,255,.83);border:1px solid rgba(255,255,255,.94);border-radius:18px;box-shadow:var(--shadow);backdrop-filter:blur(14px);max-width:calc(100% - 420px)}
+.action-btn{display:flex;align-items:center;gap:10px;min-width:118px;border:1px solid transparent;border-radius:13px;padding:11px 14px;background:rgba(247,248,245,.8);font-size:12px;font-weight:730;white-space:nowrap;transition:.2s}
+.action-btn:hover{background:#f1f4f1;border-color:#e6ece9}
+.action-btn svg{width:22px;height:22px;flex-shrink:0}
+.action-btn.primary{background:#18384b;color:white;min-width:168px}
+.action-btn.primary:hover{background:#244d62}
+.action-sub{display:block;font-size:9px;font-weight:450;opacity:.68;margin-top:3px}
+.scenario-shelf{position:absolute;z-index:7;right:14px;bottom:14px;width:min(420px,42%);padding:12px 13px 10px;border-radius:18px;background:rgba(255,255,255,.84);border:1px solid rgba(255,255,255,.95);box-shadow:var(--shadow);backdrop-filter:blur(14px)}
+.shelf-head{display:flex;align-items:center;justify-content:space-between;margin-bottom:10px}
+.shelf-head strong{font-size:12px}
+.more-btn{border:0;background:transparent;color:#85939a;font-size:10px}
+.scenario-cards{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:8px}
+.scenario-card{border:1px solid transparent;background:transparent;border-radius:11px;padding:4px;text-align:left;min-width:0}
+.scenario-card:hover,.scenario-card.active{background:#f1f4f2;border-color:#e2eae6}
+.mini-scene{height:51px;border-radius:8px;position:relative;overflow:hidden;margin-bottom:5px;background:var(--mini,#e2f0f1)}
+.mini-scene:before,.mini-scene:after{content:"";position:absolute;border-radius:50%;width:52px;height:22px;left:calc(50% - 26px);top:16px;background:rgba(255,255,255,.68);box-shadow:0 5px 0 rgba(79,123,133,.14)}
+.mini-scene:after{width:4px;height:4px;left:calc(50% - 2px);top:7px;background:var(--accent,#579d9a);box-shadow:-18px 19px 0 var(--accent,#579d9a),14px 13px 0 var(--accent,#579d9a),26px 24px 0 var(--accent,#579d9a),-28px 12px 0 var(--accent,#579d9a)}
+.mini-scene svg{position:absolute;inset:0;width:100%;height:100%}
+.scenario-card span{display:block;font-size:9px;font-weight:700;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.status-line{position:absolute;z-index:5;left:50%;bottom:104px;transform:translateX(-50%);padding:8px 14px;border-radius:20px;background:rgba(255,255,255,.86);border:1px solid #fff;box-shadow:0 5px 18px #2440520d;font-size:10px;color:#73848e;white-space:nowrap;max-width:75%;overflow:hidden;text-overflow:ellipsis;pointer-events:none;transition:opacity .25s}
+.status-line.hidden{opacity:0}
+.stage-label{position:absolute;top:16px;left:50%;transform:translateX(-50%);z-index:2;font-size:10px;color:#9ba6aa;letter-spacing:.16em;pointer-events:none}
+@media(max-width:1100px){.brand{min-width:205px}.topbar{gap:10px;padding:0 15px}.topnav button{padding:10px}.search-wrap{width:195px}.shell{grid-template-columns:160px minmax(0,1fr);padding:9px}.metrics{grid-template-columns:repeat(5,minmax(0,1fr));}.year-card{display:none}.metric{padding:9px}.metric-value{font-size:19px}.right-panel{width:150px}.bottom-dock{max-width:calc(100% - 360px);gap:5px}.action-btn{min-width:94px;padding:10px}.action-btn.primary{min-width:130px}.scenario-shelf{width:340px}}
+@media(max-width:760px){html,body{overflow:auto;height:auto;min-height:100%;}.topbar{height:58px;padding:0 12px;gap:8px}.brand{min-width:0;flex:1}.brand-mark{width:32px;height:32px}.brand-mark svg{width:31px;height:31px}.brand-name{font-size:16px}.brand-sub{font-size:8px}.topnav{display:none}.search-wrap{width:40px;padding:0 11px}.search-wrap input{display:none}.shell{height:auto;min-height:calc(100vh - 58px);display:flex;flex-direction:column;padding:8px;gap:8px}.sidebar{display:contents}.side-nav{order:2;display:grid;grid-template-columns:repeat(3,1fr);gap:4px;padding:6px}.side-nav button{height:36px;font-size:10px;justify-content:center;gap:5px;padding:0 3px}.side-nav button svg{width:14px;height:14px}.scenario-panel{order:3;margin:0;padding:10px}.scenario-list{display:grid;grid-template-columns:repeat(2,1fr)}.metrics{order:1;display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:6px}.metric{min-height:63px;padding:8px 11px}.metric:last-of-type{grid-column:span 2}.metric-value{font-size:18px}.metric-label{font-size:10px}.year-card{display:flex;grid-column:span 2;order:2}.stage{order:4;height:calc(100vh - 110px);min-height:560px;max-height:780px;flex-shrink:0}.right-panel{right:7px;top:7px;width:132px;padding:10px;border-radius:13px}.panel-heading{font-size:11px}.legend-row{font-size:9px;margin:7px 0}.legend-line{width:22px}.toggle-row{font-size:9px}.scenario-shelf{left:7px;right:7px;bottom:7px;width:auto;padding:8px}.shelf-head{margin-bottom:5px}.scenario-cards{gap:4px}.mini-scene{height:37px}.scenario-card span{font-size:8px}.bottom-dock{left:7px;right:7px;bottom:112px;max-width:none;display:grid;grid-template-columns:repeat(2,1fr);gap:5px;padding:6px}.action-btn,.action-btn.primary{min-width:0;padding:8px;font-size:10px;gap:7px}.action-btn svg{width:17px;height:17px}.action-sub{display:none}.status-line{bottom:230px;font-size:9px;max-width:90%}.stage-label{display:none}}
+@media(prefers-reduced-motion:reduce){*{transition:none!important}}
+
+/* Visual revision: richer 3D contrast + guided workspace */
+.stage{background:radial-gradient(ellipse at 48% 44%,#f7f6f0 0%,#eef0e9 58%,#e2e7e2 100%)}
+.stage:before{background:radial-gradient(ellipse at center,transparent 58%,rgba(236,235,228,.14) 100%)}
+.right-panel{width:300px;top:13px;bottom:116px;max-height:none;overflow:auto;background:rgba(255,255,255,.95);border-color:rgba(255,255,255,.98);box-shadow:0 12px 34px rgba(28,54,67,.14);scrollbar-width:thin}
+.assistant-head{display:flex;align-items:flex-start;justify-content:space-between;gap:10px;margin-bottom:10px}
+.assistant-kicker{font-size:9px;letter-spacing:.14em;font-weight:750;color:#78909a;margin-bottom:5px}
+.assistant-head .panel-heading{font-size:17px;margin:0;color:#18384b}
+.assistant-live{font-size:9px;white-space:nowrap;color:#477e70;background:#edf6f1;border:1px solid #dcece3;border-radius:20px;padding:5px 7px;margin-top:4px}
+.assistant-bubble{display:flex;gap:9px;padding:11px 10px;background:#f3f6f3;border:1px solid #e8eee9;border-radius:13px;margin-bottom:10px}
+.assistant-avatar{width:26px;height:26px;display:grid;place-items:center;flex-shrink:0;background:#1c4054;color:#fff;border-radius:9px;font-size:15px}
+.assistant-bubble strong{font-size:11px;display:block;margin:1px 0 4px;color:#29495b}
+.assistant-bubble p{margin:0;color:#6e818b;font-size:10px;line-height:1.55}
+.prompt-list{display:flex;flex-direction:column;gap:7px}
+.prompt-card{display:flex;align-items:center;gap:9px;width:100%;border:1px solid #e5ebe7;border-radius:12px;background:#fff;padding:9px;text-align:left;transition:background .18s,border-color .18s,transform .18s;box-shadow:0 2px 5px rgba(28,54,67,.025)}
+.prompt-card:hover,.prompt-card.active{background:#f3f7f4;border-color:#9ab9b2;transform:translateY(-1px)}
+.prompt-symbol{width:27px;height:27px;display:grid;place-items:center;flex-shrink:0;border-radius:9px;font-size:15px;font-weight:800}
+.prompt-blue{background:#e4eff9;color:#377fb7}.prompt-amber{background:#fbefdf;color:#b87a2e}.prompt-teal{background:#e1f1ee;color:#438b83}.prompt-violet{background:#eee8f8;color:#7c69ac}
+.prompt-copy{min-width:0;flex:1}
+.prompt-copy strong{display:block;font-size:10.5px;line-height:1.35;color:#284759;font-weight:750}
+.prompt-copy small{display:block;font-size:9px;line-height:1.4;color:#87959a;margin-top:3px}
+.prompt-arrow{font-size:19px;color:#a3b0b3;flex-shrink:0}
+.assistant-response{font-size:10px;line-height:1.6;color:#536d79;background:#f8f7f2;border-left:3px solid #79a99f;padding:9px 10px;border-radius:0 9px 9px 0;margin-top:10px}
+.assistant-reset{display:flex;justify-content:space-between;align-items:center;width:100%;border:0;background:transparent;padding:9px 2px 7px;color:#284b5c;font-size:10px;font-weight:750;text-align:left}
+.assistant-reset span{font-size:9px;font-weight:500;color:#89979c}
+.assistant-legend{display:flex;align-items:center;gap:7px;border-top:1px solid #edf0ec;padding-top:9px;margin-top:1px;color:#758891}
+.legend-mini-title{font-size:9px;white-space:nowrap;font-weight:700;color:#5d7480}
+.assistant-legend .legend-line{width:20px}
+.assistant-legend small{font-size:8px;color:#8d9a9e;white-space:nowrap}
+.assistant-controls{border-top:1px solid #edf0ec;margin-top:7px;padding-top:2px}
+.assistant-controls .toggle-row{padding:6px 0 1px;font-size:10px}
+.right-panel.has-detail{bottom:116px}
+.detail-name{font-size:16px}
+.detail-desc{font-size:11px}
+.relation-title{font-size:11px}
+.relation-sub{font-size:10px}
+@media(max-width:1100px){
+ .right-panel{width:276px;bottom:112px}
+ .assistant-head .panel-heading{font-size:15px}
+ .prompt-copy strong{font-size:10px}
+ .prompt-copy small{font-size:8.5px}
+}
+@media(max-width:760px){
+ .right-panel{width:min(300px,calc(100% - 14px));right:7px;top:7px;bottom:112px;max-height:none;padding:11px}
+ .assistant-live{display:none}
+ .assistant-bubble{padding:8px;margin-bottom:7px}
+ .prompt-list{gap:5px}
+ .prompt-card{padding:7px}
+ .prompt-copy strong{font-size:10px}
+ .prompt-copy small{font-size:8px}
+ .assistant-response{font-size:9px;margin-top:7px;padding:7px}
+ .assistant-legend{padding-top:6px}
+}
+
+
+/* Holo home v3 — AI workspace shell, warm neutrals, change-only graph */
+:root{--paper:#eeece4;--ink:#294653;--shadow:0 10px 28px rgba(42,62,67,.08)}
+html,body{background:#eeece4;color:#294653}
+.topbar{height:62px;padding:0 22px;gap:14px;background:rgba(239,237,229,.94);border-bottom:1px solid #deded4;backdrop-filter:blur(16px)}
+.brand{min-width:0;flex:1}
+.brand-mark{color:#426e70}
+.brand-name{font-size:19px;color:#294653}
+.brand-sub{color:#788680;letter-spacing:.06em}
+.topnav{display:none}
+.search-wrap{background:#e6e4db;border-color:#deddd3;box-shadow:none}
+.search-wrap input{color:#294653}
+.shell{height:calc(100% - 62px);grid-template-columns:210px minmax(0,1fr);grid-template-rows:72px minmax(0,1fr);gap:11px 13px;padding:12px 15px 14px}
+.sidebar{grid-row:1/3;gap:12px}
+.side-nav{height:100%;background:#e8e6dd;border-color:#e1dfd5;border-radius:17px;box-shadow:none;padding:12px 9px}
+.side-nav:before{content:"探索主题";display:block;padding:5px 10px 9px;font-size:10px;font-weight:760;letter-spacing:.08em;color:#87918a}
+.side-nav button{color:#52666a}
+.side-nav button.active{background:#d9e5df;border-color:#d4e0d9;box-shadow:none;color:#284c52}
+.scenario-panel{display:none}
+.metrics{grid-column:2;grid-row:1;grid-template-columns:repeat(4,minmax(0,1fr));gap:9px}
+.metric{background:#e9e7de;border:1px solid #e0ded4;border-radius:13px;box-shadow:none;padding:8px 13px}
+.metric:nth-child(5),.year-card{display:none}
+.metric-label{font-size:10px;color:#71807a}
+.metric-value{font-size:21px;color:#294653}
+.metric-change{font-size:9px}
+.spark{opacity:.42}
+.stage{grid-column:2;grid-row:2;border-radius:20px;background:radial-gradient(ellipse at 42% 45%,#f1efe7 0%,#eae8df 62%,#e3e3d9 100%);border:1px solid #e0ded4}
+.stage:before{background:radial-gradient(ellipse at center,transparent 48%,rgba(224,224,214,.24) 100%)}
+#world{cursor:grab}
+.world-hint{left:18px;top:15px;color:#6e807a;font-size:10px;letter-spacing:.01em}
+.live-dot{background:#4e978b;box-shadow:0 0 0 4px rgba(78,151,139,.12)}
+.stage-label{display:none}
+.change-status{position:absolute;z-index:3;left:18px;top:42px;display:flex;align-items:center;gap:7px;color:#71817b;font-size:9px;padding:7px 10px;background:rgba(237,235,226,.78);border:1px solid rgba(214,215,205,.75);border-radius:20px;pointer-events:none}
+.change-status-dot{width:6px;height:6px;border-radius:50%;background:#c59a5b}
+.right-panel{right:12px;top:12px;bottom:12px;width:286px;overflow:auto;background:rgba(239,237,229,.96);border:1px solid #e1dfd5;border-radius:16px;padding:15px 13px;box-shadow:0 10px 28px rgba(43,62,66,.08);backdrop-filter:blur(16px);scrollbar-width:thin}
+.assistant-head{margin-bottom:9px}
+.assistant-kicker{font-size:9px;color:#819087;letter-spacing:.13em}
+.assistant-head .panel-heading{font-size:17px;color:#294653}
+.assistant-live{font-size:9px;color:#527e73;background:#dfe9df;border-color:#d5e1d6}
+.assistant-bubble{background:#e7e6dc;border-color:#deded3;border-radius:12px;padding:10px;margin-bottom:9px}
+.assistant-avatar{background:#436e70;color:#f4f1e8}
+.assistant-bubble strong{font-size:11px;color:#36545a}
+.assistant-bubble p{font-size:10px;color:#6c7b75}
+.prompt-list{gap:7px}
+.prompt-card{background:#f0eee6;border-color:#deded4;border-radius:11px;padding:10px;box-shadow:none}
+.prompt-card:hover,.prompt-card.active{background:#e3e9e1;border-color:#a8bdb1;transform:translateY(-1px)}
+.prompt-copy strong{font-size:10.5px;color:#2e4b52}
+.prompt-copy small{font-size:9px;color:#7d8981}
+.prompt-blue{background:#dce8e7;color:#397c80}.prompt-amber{background:#eee1ce;color:#9b743f}.prompt-teal{background:#dce8dc;color:#4b8275}.prompt-violet{background:#e6e0ed;color:#78698e}
+.assistant-response{background:#e7e6dc;border-left-color:#729e91;color:#5f746e;font-size:9.5px}
+.assistant-reset{color:#36565b;font-size:10px}
+.assistant-reset span{color:#859087}
+.assistant-legend{border-top-color:#dcded3}
+.legend-mini-title{color:#647971}
+.assistant-legend small{color:#8b938a}
+.detail-view{background:#efede5}
+.detail-name{color:#294653}
+.detail-desc,.detail-meta,.relation-sub{color:#6d7c76}
+.relation-item{background:#e7e6dc;border-color:#deded4}
+.panel-back{background:#dce5de;color:#36565b}
+.bottom-dock,.scenario-shelf{display:none}
+.status-line{left:18px;bottom:14px;transform:none;max-width:calc(100% - 340px);background:rgba(239,237,229,.94);border-color:#deded4;color:#728078;box-shadow:0 4px 14px rgba(43,62,66,.06);font-size:9px}
+@media(max-width:1100px){
+ .shell{grid-template-columns:174px minmax(0,1fr);padding:9px;gap:8px}
+ .right-panel{width:258px}
+ .metric{padding:7px 10px}
+ .metric-value{font-size:18px}
+ .assistant-head .panel-heading{font-size:15px}
+ .prompt-copy strong{font-size:10px}
+ .prompt-copy small{font-size:8.5px}
+ .change-status{max-width:calc(100% - 285px);white-space:normal;line-height:1.4}
+}
+@media(max-width:760px){
+ html,body{overflow:auto;height:auto;min-height:100%;background:#eeece4}
+ .topbar{height:58px;padding:0 12px;gap:8px}
+ .brand{min-width:0;flex:1}
+ .brand-mark{width:32px;height:32px}
+ .brand-mark svg{width:31px;height:31px}
+ .brand-name{font-size:16px}
+ .brand-sub{font-size:8px}
+ .search-wrap{width:40px;padding:0 11px}
+ .search-wrap input{display:none}
+ .shell{height:auto;min-height:calc(100vh - 58px);display:flex;flex-direction:column;padding:8px;gap:8px}
+ .sidebar{display:contents}
+ .side-nav{order:1;height:auto;display:grid;grid-template-columns:repeat(3,1fr);gap:4px;padding:7px}
+ .side-nav:before{grid-column:1/-1;padding:2px 7px 5px}
+ .side-nav button{height:34px;font-size:10px;justify-content:center;gap:4px;padding:0 3px}
+ .side-nav button svg{width:14px;height:14px}
+ .metrics{order:2;display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:6px}
+ .metric{min-height:57px;padding:7px 10px}
+ .metric-value{font-size:17px}
+ .metric-label{font-size:9px}
+ .stage{order:3;height:calc(100vh - 250px);min-height:560px;max-height:800px;flex-shrink:0}
+ .right-panel{right:7px;top:7px;bottom:7px;width:min(278px,76%);padding:10px;border-radius:13px}
+ .assistant-head .panel-heading{font-size:14px}
+ .assistant-live{display:none}
+ .assistant-bubble{padding:8px;margin-bottom:7px}
+ .prompt-list{gap:5px}
+ .prompt-card{padding:8px}
+ .prompt-copy strong{font-size:10px}
+ .prompt-copy small{font-size:8px}
+ .assistant-response{font-size:9px;margin-top:7px;padding:7px}
+ .assistant-legend{padding-top:6px}
+ .change-status{left:9px;top:39px;right:auto;max-width:calc(100% - 300px);font-size:8px;padding:6px 7px}
+ .world-hint{left:9px;top:10px;font-size:8px;max-width:calc(100% - 300px);line-height:1.4}
+ .status-line{left:8px;right:8px;bottom:8px;max-width:none;white-space:normal;line-height:1.4}
+}
+
+</style>
+</head>
+<body>
+<header class="topbar">
+ <div class="brand">
+  <div class="brand-mark"><svg viewBox="0 0 48 48" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"><circle cx="24" cy="24" r="16" stroke-dasharray="2 5"/><path d="M24 4v9M24 35v9M4 24h9M35 24h9M14 14l5 5M29 29l5 5M34 14l-5 5M19 29l-5 5"/><circle cx="24" cy="24" r="5" fill="currentColor" stroke="none"/><path d="M24 16l3 5-3 3-3-3zM32 24l-5 3-3-3 3-3zM24 32l-3-5 3-3 3 3zM16 24l5-3 3 3-3 3z"/></svg></div>
+  <div><div class="brand-name">博罗 · 全息版</div><div class="brand-sub">看见关系 · 发现变化 · 探索世界</div></div>
+ </div>
+ <nav class="topnav">
+  <button class="active" data-filter="all">◎ 全景</button><button data-filter="manufacturing">♧ 产业</button><button data-filter="external">⌘ 城镇</button><button data-filter="tourism">◇ 文旅</button><button data-filter="agriculture">♧ 农业</button><button data-filter="resources">◉ 资源</button>
+ </nav>
+ <label class="search-wrap"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><circle cx="10.8" cy="10.8" r="6.7"/><path d="m16 16 5 5"/></svg><input id="search" placeholder="搜索主体、产业或关系…" aria-label="搜索主体、产业或关系"></label>
+</header>
+<main class="shell">
+ <aside class="sidebar">
+  <nav class="side-nav">
+   <button class="active" data-filter="all"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"><circle cx="5" cy="6" r="2.2"/><circle cx="19" cy="5" r="2.2"/><circle cx="12" cy="18" r="2.2"/><path d="m7 7 4 8M17 7l-4 9M7 6h10"/></svg>关系基本盘</button>
+   <button data-filter="manufacturing"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"><path d="M3 21V9l6 3V7l6 4V4h6v17z"/><path d="M7 17h2m3 0h2m3 0h2"/></svg>产业集群</button>
+   <button data-filter="manufacturing"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"><rect x="3" y="4" width="18" height="16" rx="2"/><path d="M7 8h3v3H7zM14 8h3v3h-3zM7 14h3v3H7zM14 14h3v3h-3z"/></svg>关键主体</button>
+   <button data-filter="external"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"><path d="M4 21V8l5-3v16M9 21V3l6 3v15M15 21V10l5-2v13"/><path d="M6 11h1m4-4h2m-2 4h2m4 2h2"/></svg>外部连接</button>
+   <button data-filter="tourism"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"><path d="M3 20 8 8l4 6 3-9 6 15z"/><path d="M7 20h10"/></svg>文旅与服务</button>
+   <button data-filter="agriculture"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"><path d="M20 4C10 4 4 8 4 15c0 3 2 5 5 5 7 0 11-6 11-16Z"/><path d="M4 20c3-5 7-8 12-11"/></svg>农业与乡村</button>
+   <button data-filter="resources"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"><path d="M3 14h18l-3-7h-4l-2-3H8l-2 5H3z"/><circle cx="7" cy="18" r="2"/><circle cx="17" cy="18" r="2"/></svg>资源与环境</button>
+  </nav>
+  <section class="scenario-panel">
+   <h3 class="section-title">情景模式</h3>
+   <div class="scenario-list" id="scenario-list">
+    <button class="scenario-btn active" data-scenario="base"><span class="radio-dot"></span>基准结构</button>
+    <button class="scenario-btn" data-scenario="xwd"><span class="radio-dot"></span>链主外迁</button>
+    <button class="scenario-btn" data-scenario="dg"><span class="radio-dot"></span>外部外溢减弱</button>
+    <button class="scenario-btn" data-scenario="dj"><span class="radio-dot"></span>东江环保约束</button>
+    <button class="scenario-btn" data-scenario="lq"><span class="radio-dot"></span>老厂腾退改造</button>
+   </div>
+  </section>
+ </aside>
+ <section class="metrics" aria-label="博罗基准指标">
+  <div class="metric"><span class="metric-label">GDP（亿元）</span><div class="metric-bottom"><strong class="metric-value">1,005.45</strong></div><div class="spark" style="--spark:#6fc5a0"><i style="--h:28%"></i><i style="--h:36%"></i><i style="--h:45%"></i><i style="--h:41%"></i><i style="--h:58%"></i><i style="--h:67%"></i><i style="--h:78%"></i></div></div>
+  <div class="metric"><span class="metric-label">规上工业增加值</span><div class="metric-bottom"><strong class="metric-value">+8.7%</strong><span class="metric-change" style="color:#58a4d2">年度增速</span></div><div class="spark" style="--spark:#69b5ed"><i style="--h:25%"></i><i style="--h:42%"></i><i style="--h:38%"></i><i style="--h:56%"></i><i style="--h:49%"></i><i style="--h:72%"></i><i style="--h:84%"></i></div></div>
+  <div class="metric"><span class="metric-label">固定资产投资</span><div class="metric-bottom"><strong class="metric-value">−18.8%</strong><span class="metric-change" style="color:#c17d64">年度增速</span></div><div class="spark" style="--spark:#e4a28b"><i style="--h:78%"></i><i style="--h:66%"></i><i style="--h:61%"></i><i style="--h:49%"></i><i style="--h:42%"></i><i style="--h:32%"></i><i style="--h:24%"></i></div></div>
+  <div class="metric"><span class="metric-label">外贸进出口</span><div class="metric-bottom"><strong class="metric-value">+29.1%</strong><span class="metric-change" style="color:#9c83d8">年度增速</span></div><div class="spark" style="--spark:#aa95e4"><i style="--h:21%"></i><i style="--h:31%"></i><i style="--h:36%"></i><i style="--h:53%"></i><i style="--h:60%"></i><i style="--h:76%"></i><i style="--h:92%"></i></div></div>
+  <div class="metric"><span class="metric-label">游客接待（万人次）</span><div class="metric-bottom"><strong class="metric-value">1,028.09</strong></div><div class="spark" style="--spark:#8bb8a0"><i style="--h:24%"></i><i style="--h:35%"></i><i style="--h:46%"></i><i style="--h:52%"></i><i style="--h:59%"></i><i style="--h:73%"></i><i style="--h:88%"></i></div></div>
+  <div class="year-card"><div class="year-tabs"><button class="year-tab active" data-year="2025">2025</button><button class="year-tab" data-year="2027">2027</button><button class="year-tab" data-year="2030">2030</button></div><div class="year-rail"><span></span><span></span><span></span><span></span><span></span></div><div class="year-note" id="year-note">2025 公开数据基准 · 非预测</div></div>
+ </section>
+ <section class="stage" id="stage">
+  <canvas id="world" aria-label="可旋转的博罗产业关系3D世界"></canvas>
+  <div class="world-hint"><span class="live-dot"></span><span>关键主体与基本盘常驻 · 拖动节点可重排</span></div>
+  <div class="stage-label">BOLUO · RELATIONSHIP WORLD</div><div class="change-status" id="change-status"><span class="change-status-dot"></span><span>近期变化：暂无已核验记录 · 下方为模型情景入口</span></div>
+  <aside class="right-panel" id="right-panel">
+   <div class="legend-view assistant-view">
+    <div class="assistant-head"><div><div class="assistant-kicker">BO LUO · DISCOVER</div><h3 class="panel-heading">你可能没注意到</h3></div><span class="assistant-live">探索入口</span></div>
+    <div class="assistant-bubble"><span class="assistant-avatar">✦</span><div><strong>从一个反常识问题开始</strong><p>不用先看懂整张网络。关键主体与基本盘留作参照，情景涉及的节点和关系才进入变化图。</p></div></div>
+    <div class="prompt-list">
+     <button class="prompt-card" data-prompt-scenario="xwd" aria-pressed="false"><span class="prompt-symbol prompt-amber">↘</span><span class="prompt-copy"><strong>链主退出，谁会失去连接？</strong><small>观察节点退出后，关系网络怎样断开</small></span><span class="prompt-arrow">›</span></button>
+     <button class="prompt-card" data-prompt-scenario="new" aria-pressed="false"><span class="prompt-symbol prompt-blue">＋</span><span class="prompt-copy"><strong>新配套主体接入，会连起谁？</strong><small>观察新节点进入、关系逐条建立</small></span><span class="prompt-arrow">›</span></button>
+     <button class="prompt-card" data-prompt-scenario="break" aria-pressed="false"><span class="prompt-symbol prompt-violet">⌁</span><span class="prompt-copy"><strong>关键群落失去连接，会怎样？</strong><small>看看一个群落孤立后，网络还剩什么</small></span><span class="prompt-arrow">›</span></button>
+     <button class="prompt-card" data-prompt-scenario="dj" aria-pressed="false"><span class="prompt-symbol prompt-teal">↗</span><span class="prompt-copy"><strong>环境约束收紧，哪些关系先受影响？</strong><small>把生态底座与产业群落联系起来看</small></span><span class="prompt-arrow">›</span></button>
+    </div>
+    <div class="assistant-response" id="assistant-response">当前只显示关键主体与基本盘。暂无已核验的近期关系变化记录；点击问题查看的是模型情景，不代表现实已经发生。</div>
+    <button class="assistant-reset" data-prompt-scenario="base">回到关系基本盘 <span>恢复全景　↗</span></button>
+    <div class="assistant-legend"><span class="legend-mini-title">关系强度</span><span class="legend-line" style="--thick:4px;--c:#377fb7"></span><span class="legend-line" style="--thick:2px;--c:#d39a4d"></span><span class="legend-line" style="--thick:1px;--c:#a8b6bb"></span><small>粗 → 强</small></div>
+   </div>
+   <div class="detail-view" id="detail-view">
+    <div class="detail-name" id="detail-name">主体名称</div><div class="detail-type" id="detail-type">主体类型</div>
+    <div class="detail-desc" id="detail-desc"></div><div class="detail-meta" id="detail-meta"></div>
+    <div class="panel-heading" style="font-size:10px;margin-bottom:7px">关联主体</div><div class="relation-list" id="relation-list"></div>
+    <button class="panel-back" id="back-to-legend">返回探索助手</button>
+   </div>
+  </aside>
+  <div class="status-line" id="status">关键主体与基本盘作为参照；情景演示不代表近期事实或预测结果</div>
+  <div class="bottom-dock">
+   <button class="action-btn primary" id="explore-btn"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><circle cx="12" cy="12" r="9"/><path d="m10 8 6 4-6 4z" fill="currentColor" stroke="none"/></svg><span>开始探索<span class="action-sub">进入博罗的关系世界</span></span></button>
+   <button class="action-btn" id="trace-btn"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"><circle cx="5" cy="5" r="2"/><circle cx="19" cy="5" r="2"/><circle cx="12" cy="19" r="2"/><path d="m7 6 4 11M17 6l-4 11M7 5h10"/></svg><span>关系追踪<span class="action-sub">查看主体联系</span></span></button>
+   <button class="action-btn" id="simulate-btn"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"><path d="M3 18h18M5 15l4-5 4 2 6-8"/><path d="M15 4h4v4"/></svg><span>情景模拟<span class="action-sub">观察结构变化</span></span></button>
+   <button class="action-btn" id="compare-btn"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"><rect x="3" y="4" width="8" height="16" rx="1.5"/><rect x="13" y="4" width="8" height="16" rx="1.5"/><path d="M7 9v6m10-6v6"/></svg><span>前后对照<span class="action-sub">突出受影响关系</span></span></button>
+  </div>
+  <section class="scenario-shelf">
+   <div class="shelf-head"><strong>典型场景</strong><button class="more-btn" id="more-scenarios">更多情景　›</button></div>
+   <div class="scenario-cards" id="scenario-cards">
+    <button class="scenario-card active" data-scenario="base"><div class="mini-scene" style="--mini:#d9eff0;--accent:#5daab5"><svg viewBox="0 0 120 60" fill="none"><path d="M8 41Q35 15 61 38T114 31" stroke="#71b5bc" stroke-width="2"/><path d="M10 47Q40 29 66 45T112 39" stroke="#9bcfd0" stroke-width="1.5"/></svg></div><span>基准结构</span></button>
+    <button class="scenario-card" data-scenario="xwd"><div class="mini-scene" style="--mini:#f6dfdc;--accent:#d76d5d"><svg viewBox="0 0 120 60" fill="none"><path d="M8 43Q34 10 60 32T114 22" stroke="#d76d5d" stroke-width="2.5"/><path d="M10 48Q40 28 70 46T113 36" stroke="#edaaa0" stroke-width="1.5"/></svg></div><span>链主外迁</span></button>
+    <button class="scenario-card" data-scenario="dg"><div class="mini-scene" style="--mini:#f6e8d5;--accent:#d39a4d"><svg viewBox="0 0 120 60" fill="none"><path d="M7 41Q34 22 61 36T115 20" stroke="#d39a4d" stroke-width="2.5"/><path d="M11 49Q40 38 67 46T111 35" stroke="#e7bf8b" stroke-width="1.5"/></svg></div><span>外部外溢减弱</span></button>
+    <button class="scenario-card" data-scenario="dj"><div class="mini-scene" style="--mini:#dcefeb;--accent:#579d9a"><svg viewBox="0 0 120 60" fill="none"><path d="M8 43Q34 16 62 35T114 22" stroke="#579d9a" stroke-width="2.5"/><path d="M10 49Q40 31 68 46T112 36" stroke="#a4d2c8" stroke-width="1.5"/></svg></div><span>东江环保约束</span></button>
+   </div>
+  </section>
+ </section>
+</main>
+<script>
+(function(){
+"use strict";
+const $=function(id){return document.getElementById(id)};
+const clusterMeta = {
+  manufacturing:{label:"制造与配套",sub:"链主 · 专精特新 · 配套群落",color:"#4b91d5",x:-9,z:-3,radius:4.6},
+  external:{label:"外部城市",sub:"东莞 · 深圳 · 广州 · 惠城",color:"#d39a4d",x:0,z:-10,radius:3.7},
+  resources:{label:"资源与环境",sub:"东江水系 · 水源与约束",color:"#579d9a",x:10,z:-2,radius:3.5},
+  agriculture:{label:"农业与乡村",sub:"特色农品 · 地理标志",color:"#79a77c",x:-8,z:6,radius:4.3},
+  tourism:{label:"文旅与康养",sub:"罗浮山 · 医药 · 户外",color:"#9584c5",x:2,z:9,radius:3.7}
+};
+const nodes = [
+ {id:"dj",name:"东江水系",type:"eco",cluster:"resources",town:"罗阳 / 石湾 / 园洲",layer:"生态底座",desc:"饮用水源与沿江工业活动的重要环境约束。",state:"green",defaultLabel:true},
+ {id:"lswh",name:"环两山引领区",type:"eco",cluster:"tourism",town:"长宁 / 横河 / 福田",layer:"生态底座",desc:"环南昆山—罗浮山生态与旅游空间。",state:"green",defaultLabel:false},
+ {id:"xwd",name:"欣旺达 / 锂威",type:"anchor",cluster:"manufacturing",town:"园洲",layer:"链主",desc:"锂电池相关主体，与深圳总部及本地生产基地存在公开关联。",state:"green",defaultLabel:true},
+ {id:"htd",name:"华通电脑",type:"anchor",cluster:"manufacturing",town:"园洲 / 石湾",layer:"链主",desc:"电子信息产业代表主体，与配套企业及外部产业网络相连。",state:"green",defaultLabel:true},
+ {id:"zw",name:"正威新材料",type:"anchor",cluster:"manufacturing",town:"罗阳",layer:"链主",desc:"铜杆等材料生产主体，在现有网络中与电池产业存在材料关联。",state:"green",defaultLabel:false},
+ {id:"jq",name:"嘉奇新能源",type:"anchor",cluster:"manufacturing",town:"园洲",layer:"链主",desc:"新能源相关项目主体，与深圳及电动车配套网络存在关联。",state:"yellow",defaultLabel:false},
+ {id:"jf",name:"江丰精密",type:"anchor",cluster:"manufacturing",town:"园洲",layer:"链主",desc:"精密材料相关主体，现有模型设置了与电子信息的配套推断。",state:"green",defaultLabel:false},
+ {id:"gj",name:"11家国家级小巨人",type:"champ",cluster:"manufacturing",town:"多镇",layer:"专精特新",desc:"将公开名录中的国家级专精特新“小巨人”主体聚合展示。",state:"green",defaultLabel:false},
+ {id:"sj",name:"74家省级专精特新",type:"champ",cluster:"manufacturing",town:"多镇",layer:"专精特新",desc:"将省级专精特新主体聚合展示，不代表其与每家链主均有直接交易。",state:"green",defaultLabel:false},
+ {id:"bmc",name:"表面处理群落",type:"capillary",cluster:"manufacturing",town:"福田",layer:"配套群落",desc:"电镀、喷涂等表面处理配套，涉及产业需求与环保约束。",state:"yellow",defaultLabel:false},
+ {id:"mj",name:"石湾模具群落",type:"capillary",cluster:"manufacturing",town:"石湾",layer:"配套群落",desc:"模具与精密加工主体群落，和东莞产业外溢、电动车配套等关系相连。",state:"green",defaultLabel:true},
+ {id:"ddc",name:"电动车配套群落",type:"capillary",cluster:"manufacturing",town:"石湾",layer:"配套群落",desc:"电动车整车及零部件相关主体群落。",state:"green",defaultLabel:true},
+ {id:"lq",name:"镇村老厂群落",type:"legacy",cluster:"manufacturing",town:"龙溪 / 园洲 / 罗阳",layer:"老厂基盘",desc:"五金、塑料、建材等老厂群落，现有模型将其与资源竞争和产业配套联系起来。",state:"yellow",defaultLabel:true},
+ {id:"bss",name:"百岁山",type:"agri",cluster:"resources",town:"湖镇",layer:"水源与产业",desc:"饮用水相关主体，与东江水系存在公开资料关联。",state:"green",defaultLabel:true},
+ {id:"lfsgy",name:"罗浮山国药",type:"agri",cluster:"tourism",town:"长宁",layer:"医药与康养",desc:"医药与康养相关主体，与环两山区域、广州合作线索存在关联。",state:"green",defaultLabel:true},
+ {id:"sc",name:"柏塘山茶",type:"gi",cluster:"agriculture",town:"柏塘",layer:"特色农业",desc:"特色茶产业与区域品牌，当前网络用于观察农业和文旅的关联。",state:"green",defaultLabel:true},
+ {id:"xc",name:"福田菜心",type:"gi",cluster:"agriculture",town:"福田",layer:"特色农业",desc:"福田特色农产品节点。",state:"yellow",defaultLabel:false},
+ {id:"gyg",name:"观音阁花生",type:"gi",cluster:"agriculture",town:"观音阁",layer:"特色农业",desc:"观音阁特色农产品节点，与同镇黑糖及东江环境线索相连。",state:"green",defaultLabel:false},
+ {id:"gyght",name:"观音阁黑糖",type:"gi",cluster:"agriculture",town:"观音阁",layer:"特色农业",desc:"观音阁特色农产品节点；与花生节点的连接表示同镇关联，不代表供货交易。",state:"green",defaultLabel:false},
+ {id:"sb",name:"石坝胡须鸡",type:"agri",cluster:"agriculture",town:"石坝",layer:"特色农业",desc:"地方特色畜禽产业节点。",state:"green",defaultLabel:false},
+ {id:"lsmd",name:"罗浮山大米",type:"gi",cluster:"agriculture",town:"长宁 / 横河",layer:"特色农业",desc:"罗浮山周边特色农产品节点，模型中保留灌溉关联推断。",state:"green",defaultLabel:false},
+ {id:"lsz",name:"罗浮山荔枝",type:"gi",cluster:"agriculture",town:"罗浮山周边",layer:"特色农业",desc:"罗浮山周边特色农产品节点，与文旅采摘场景有关联。",state:"green",defaultLabel:false},
+ {id:"hh",name:"横河户外小镇",type:"capillary",cluster:"tourism",town:"横河",layer:"文旅与服务",desc:"户外运动与民宿服务相关节点。",state:"green",defaultLabel:false},
+ {id:"gz",name:"广州",type:"ext",cluster:"external",town:"外部",layer:"外部连接",desc:"现有模型记录了与石湾产业外溢、医药合作有关的关系线索。",state:"green",defaultLabel:true},
+ {id:"dg",name:"东莞",type:"ext",cluster:"external",town:"外部",layer:"外部连接",desc:"现有网络中，东莞与石湾模具、电动车配套及电子信息外溢有关。",state:"green",defaultLabel:true},
+ {id:"sz",name:"深圳",type:"ext",cluster:"external",town:"外部",layer:"外部连接",desc:"现有网络中，深圳与欣旺达 / 锂威、嘉奇新能源等存在公开关联。",state:"green",defaultLabel:true},
+ {id:"hz",name:"惠城",type:"ext",cluster:"external",town:"外部",layer:"外部连接",desc:"惠州主城区节点；现有模型记录了行政与文旅客流关联。",state:"green",defaultLabel:false},
+ {id:"new_demo",name:"新配套主体（假设）",type:"capillary",cluster:"manufacturing",town:"情景假设",layer:"新接入节点",desc:"用于演示新主体接入后如何建立关系的虚拟节点，不代表现实企业或已发生事件。",state:"blue",defaultLabel:true}
+];
+const edges = [
+ {s:"dg",t:"mj",level:"A",w:5,rel:"东莞产业外溢 / 模具主体迁入",kind:"供应链"},
+ {s:"dg",t:"ddc",level:"A",w:4,rel:"电动车相关企业从东莞方向落户",kind:"供应链"},
+ {s:"dg",t:"htd",level:"A",w:4,rel:"电子信息产业外溢关联",kind:"供应链"},
+ {s:"dg",t:"lq",level:"B",w:2,rel:"五金、塑料等小厂随产业边界扩散（推算）",kind:"供应链"},
+ {s:"sz",t:"xwd",level:"A",w:4,rel:"深圳总部与园洲生产基地关联",kind:"供应链"},
+ {s:"sz",t:"jq",level:"A",w:4,rel:"深博福田产业园项目关联",kind:"供应链"},
+ {s:"gz",t:"mj",level:"B",w:2,rel:"三市交界的产业承接线索（推算）",kind:"供应链"},
+ {s:"mj",t:"ddc",level:"A",w:2,rel:"模具零部件配套",kind:"供应链"},
+ {s:"bmc",t:"ddc",level:"B",w:2,rel:"表面处理配套（推算）",kind:"供应链"},
+ {s:"jf",t:"htd",level:"B",w:2,rel:"精密材料配套（推算）",kind:"供应链"},
+ {s:"gj",t:"htd",level:"B",w:2,rel:"专精特新精密配套（推算）",kind:"供应链"},
+ {s:"sj",t:"lq",level:"B",w:2,rel:"老厂技术升级关联（推算）",kind:"供应链"},
+ {s:"xwd",t:"mj",level:"B",w:2,rel:"电池结构件配套（推算）",kind:"供应链"},
+ {s:"jq",t:"ddc",level:"B",w:2,rel:"汽车零部件关联（推算）",kind:"供应链"},
+ {s:"lq",t:"htd",level:"B",w:2,rel:"五金配套关联（推算）",kind:"供应链"},
+ {s:"dj",t:"bmc",level:"A",w:3,rel:"沿江排污上限与环保约束",kind:"环保约束"},
+ {s:"dj",t:"bss",level:"A",w:3,rel:"水源与饮用水产业关联",kind:"环保约束"},
+ {s:"dj",t:"lq",level:"B",w:1,rel:"沿江工业活动约束（推算）",kind:"环保约束"},
+ {s:"xwd",t:"lq",level:"B",w:1,rel:"用电 / 用地资源竞争（推算）",kind:"资源竞争"},
+ {s:"htd",t:"lq",level:"B",w:1,rel:"腾笼换鸟与资源竞争（推算）",kind:"资源竞争"},
+ {s:"lswh",t:"lfsgy",level:"A",w:3,rel:"文旅与医药康养关联",kind:"生态补偿"},
+ {s:"lswh",t:"hh",level:"A",w:2,rel:"户外运动与生态旅游关联",kind:"生态补偿"},
+ {s:"lswh",t:"sc",level:"B",w:1,rel:"茶旅融合线索（推算）",kind:"生态补偿"},
+ {s:"lswh",t:"lsz",level:"B",w:1,rel:"荔枝采摘与文旅关联（推算）",kind:"生态补偿"},
+ {s:"gz",t:"lfsgy",level:"B",w:2,rel:"省中医院合作线索（推算）",kind:"生态补偿"},
+ {s:"hz",t:"lswh",level:"B",w:2,rel:"文旅客流与行政关联",kind:"生态补偿"},
+ {s:"dj",t:"lsmd",level:"B",w:1,rel:"灌溉关联（推算）",kind:"供应链"},
+ {s:"gyght",t:"gyg",level:"A",w:1,rel:"观音阁同镇关联",kind:"供应链"},
+ {s:"gyg",t:"dj",level:"B",w:1,rel:"东江与农业环境线索（推算）",kind:"供应链"},
+ {s:"zw",t:"xwd",level:"A",w:2,rel:"铜杆材料与电池产业关联",kind:"供应链"},
+ {s:"new_demo",t:"mj",level:"B",w:3,rel:"情景假设：新配套主体与模具群落建立联系",kind:"供应链"},
+ {s:"new_demo",t:"ddc",level:"B",w:3,rel:"情景假设：新配套主体与电动车配套群落建立联系",kind:"供应链"}
+];
+
+const scenarioData = {
+ base:{label:"关系基本盘",seed:null,kinds:[],desc:"仅显示关键主体与基本盘；没有证据的近期变化不进入动态关系图。"},
+ new:{label:"新配套主体接入（假设）",seed:"new_demo",kinds:["供应链"],desc:"虚拟情景节点，用于演示新主体如何建立关系；不代表现实企业已经落地。"},
+ break:{label:"关键群落失去连接（假设）",seed:"mj",kinds:["供应链"],desc:"情景假设：石湾模具群落失去直接连接，观察网络是否出现孤立结构。"},
+ xwd:{label:"链主外迁",seed:"xwd",kinds:["供应链","资源竞争"],desc:"从欣旺达 / 锂威相关节点出发，沿供货与资源竞争关系观察可能的传导路径。"},
+ dg:{label:"外部外溢减弱",seed:"dg",kinds:["供应链"],desc:"从东莞关联节点出发，观察现有供应链连边可能涉及的主体。"},
+ dj:{label:"东江环保约束",seed:"dj",kinds:["环保约束","供应链"],desc:"从东江水系节点出发，观察环境约束与相关产业关系。"},
+ lq:{label:"老厂腾退改造",seed:"lq",kinds:["供应链","资源竞争"],desc:"从镇村老厂群落出发，观察配套联系与资源竞争关系。"}
+};
+
+const nodeById={};nodes.forEach(function(n){nodeById[n.id]=n});
+const baselineNodeIds=new Set(nodes.filter(function(n){return n.type==="anchor"||n.type==="ext"||n.type==="eco"||n.type==="legacy"}).map(function(n){return n.id}));
+const typeColors={anchor:"#4b91d5",champ:"#64a8c1",capillary:"#82928f",legacy:"#c39a62",agri:"#79a77c",gi:"#9fb67b",ext:"#b79bd8",eco:"#579d9a"};
+const kindColors={"供应链":"#4b91d5","环保约束":"#d76d5d","资源竞争":"#d39a4d","生态补偿":"#70a6a0"};
+const typeLabels={anchor:"链主主体",champ:"专精特新",capillary:"配套群落",legacy:"老厂群落",agri:"农业与生态",gi:"特色农产品",ext:"外部连接",eco:"生态底座"};
+let scene,camera,renderer,worldGroup,raycaster,mouse;
+let nodeObjects={},nodeLabels={},edgeObjects=[],flowObjects=[],pickables=[],clusterObjects={};
+let selectedNodeId=null,activeFilter="all",activeScenario="base",labelsOn=true,focusMode=false,compareMode=false,dragging=false,draggingNodeId=null,pointerMoved=false,lastX=0,lastY=0,theta=0,phi=.72,camRadius=45,clock=new THREE.Clock();
+let scenarioAffected=new Set(),neighborIds=new Set(),scenarioEdgeIds=new Set(),exitedNodeIds=new Set(),brokenEdgeIds=new Set(),statusTimer=null;
+function setStatus(text,autoHide){$("status").textContent=text;$("status").classList.remove("hidden");if(statusTimer)clearTimeout(statusTimer);if(autoHide){statusTimer=setTimeout(function(){$("status").classList.add("hidden")},3300)}}
+function color(hex){return new THREE.Color(hex)}
+function material(hex,rough,metal){return new THREE.MeshStandardMaterial({color:hex,roughness:rough===undefined?.68:rough,metalness:metal===undefined?.025:metal})}
+function addMesh(geo,mat,x,y,z,parent){const m=new THREE.Mesh(geo,mat);m.position.set(x,y,z);(parent||worldGroup).add(m);return m}
+function roundedSprite(title,sub,accent){
+ const canvas=document.createElement("canvas");canvas.width=640;canvas.height=170;const ctx=canvas.getContext("2d");
+ ctx.fillStyle="rgba(24,53,70,.94)";ctx.beginPath();ctx.roundRect(7,7,626,156,25);ctx.fill();
+ ctx.fillStyle=accent;ctx.beginPath();ctx.roundRect(7,7,13,156,7);ctx.fill();
+ ctx.fillStyle="#fff";ctx.font="750 56px -apple-system, BlinkMacSystemFont, 'PingFang SC', sans-serif";ctx.fillText(title,40,72);
+ ctx.fillStyle="rgba(255,255,255,.88)";ctx.font="500 30px -apple-system, BlinkMacSystemFont, 'PingFang SC', sans-serif";ctx.fillText(sub,40,124,560);
+ const tex=new THREE.CanvasTexture(canvas);tex.minFilter=THREE.LinearFilter;
+ const sprite=new THREE.Sprite(new THREE.SpriteMaterial({map:tex,transparent:true,depthTest:false,depthWrite:false}));
+ sprite.scale.set(3.1,.83,1);return sprite;
+}
+function nodeSprite(title,accent){
+ const canvas=document.createElement("canvas");canvas.width=440;canvas.height=104;const ctx=canvas.getContext("2d");
+ ctx.fillStyle="rgba(255,255,255,.97)";ctx.beginPath();ctx.roundRect(4,4,432,96,20);ctx.fill();
+ ctx.strokeStyle="rgba(42,78,94,.18)";ctx.lineWidth=3;ctx.stroke();
+ ctx.fillStyle=accent;ctx.beginPath();ctx.roundRect(4,4,9,96,5);ctx.fill();
+ ctx.fillStyle="#203d50";ctx.font="700 54px -apple-system, BlinkMacSystemFont, 'PingFang SC', sans-serif";ctx.fillText(title,27,65,390);
+ const tex=new THREE.CanvasTexture(canvas);tex.minFilter=THREE.LinearFilter;
+ return new THREE.Sprite(new THREE.SpriteMaterial({map:tex,transparent:true,depthTest:false,depthWrite:false}));
+}
+function makeTree(x,z,s,leaf,parent){
+ s*=1.08;
+ const trunk=addMesh(new THREE.CylinderGeometry(.025*s,.045*s,.25*s,7),material("#a9957d",.92),x,.44+.125*s,z,parent);
+ const crown=addMesh(new THREE.IcosahedronGeometry(.18*s,1),material(leaf,.9),x,.44+.32*s,z,parent);crown.scale.set(.92,1.22,.88);
+ const crown2=addMesh(new THREE.IcosahedronGeometry(.12*s,0),material(color(leaf).lerp(new THREE.Color("#ffffff"),.16),.9),x+.07*s,.44+.43*s,z-.03*s,parent);
+ return [trunk,crown,crown2];
+}
+function makeBuilding(x,z,w,d,h,baseColor,windowed,parent){
+ w*=1.06;d*=1.06;h*=1.16;
+ const bodyMat=material(baseColor,.64,.035);
+ const body=addMesh(new THREE.BoxGeometry(w,h,d),bodyMat,x,.43+h/2,z,parent);body.castShadow=true;body.receiveShadow=true;
+ const roof=addMesh(new THREE.BoxGeometry(w*1.07,.065,d*1.07),material(color(baseColor).lerp(new THREE.Color("#ffffff"),.43),.52,.02),x,.43+h+.032,z,parent);
+ if(windowed&&h>.6){
+  const rows=Math.min(4,Math.floor(h/.35)),cols=Math.min(3,Math.max(1,Math.floor(w/.17)));
+  for(let r=0;r<rows;r++)for(let q=0;q<cols;q++){
+   const wx=x-w*.28+q*(w*.56/Math.max(1,cols-1)),wy=.43+h*.22+r*(h*.56/Math.max(1,rows-1));
+   addMesh(new THREE.BoxGeometry(Math.max(.035,w*.09),.055,.012),new THREE.MeshBasicMaterial({color:"#f7fbf7",transparent:true,opacity:.65}),wx,wy,z+d/2+.008,parent);
+  }
+ }
+ return body;
+}
+function makePlatform(key,meta){
+ const col=color(meta.color),top=col.clone().lerp(new THREE.Color("#ffffff"),.49),side=col.clone().lerp(new THREE.Color("#536872"),.31);
+ const base=addMesh(new THREE.CylinderGeometry(meta.radius*.79,meta.radius*.88,.42,48),material(side,.72,.025),meta.x,.08,meta.z);base.castShadow=true;base.receiveShadow=true;base.userData.cluster=key;clusterObjects[key]=base;
+ const topDisk=addMesh(new THREE.CylinderGeometry(meta.radius*.77,meta.radius*.79,.075,48),material(top,.78,.01),meta.x,.325,meta.z);topDisk.receiveShadow=true;topDisk.userData.cluster=key;
+ const rim=addMesh(new THREE.TorusGeometry(meta.radius*.77,.045,8,80),new THREE.MeshStandardMaterial({color:col.clone().lerp(new THREE.Color("#ffffff"),.28),roughness:.46,metalness:.035,emissive:col,emissiveIntensity:.035}),meta.x,.37,meta.z);rim.rotation.x=Math.PI/2;rim.userData.cluster=key;
+ const inner=addMesh(new THREE.TorusGeometry(meta.radius*.65,.014,5,80),new THREE.MeshBasicMaterial({color:"#ffffff",transparent:true,opacity:.56}),meta.x,.375,meta.z);inner.rotation.x=Math.PI/2;
+ const g=new THREE.Group();worldGroup.add(g);g.userData.cluster=key;
+ if(key==="manufacturing"){
+  const factories=[[-1.65,-.8,.72,.52,.48],[-.85,-1.45,.58,.52,.55],[.65,-1.3,.68,.48,.42],[1.55,-.55,.58,.48,.5],[-1.65,.55,.62,.52,.43],[1.55,.75,.55,.48,.42],[-.85,1.25,.68,.48,.52],[.2,1.4,.55,.48,.38]];
+  factories.forEach(function(a,i){makeBuilding(meta.x+a[0],meta.z+a[1],a[2],a[3],a[4],i%2?"#b9d8e2":"#d1e4e8",false,g)});
+  [[-.45,-.25,.42,.44,1.5,"#6cabc9"],[.35,.15,.36,.38,1.15,"#91c3d5"],[.85,-.65,.32,.34,.86,"#9fcdd9"],[-.9,.5,.34,.34,.94,"#78aec8"]].forEach(function(a){makeBuilding(meta.x+a[0],meta.z+a[1],a[2],a[3],a[4],a[5],true,g)});
+  for(let i=0;i<5;i++)makeTree(meta.x-1.75+i*.8,meta.z+1.75,.48,i%2?"#a8cdb1":"#80b79c",g);
+ }else if(key==="external"){
+  const heights=[1.0,1.45,1.75,1.15,2.0,1.38,1.72,1.05,1.52,1.2,1.85];
+  heights.forEach(function(h,i){const a=i*2.4,r=.55+(i%3)*.42,x=Math.cos(a)*r,z=Math.sin(a)*r*.72;makeBuilding(meta.x+x,meta.z+z,.24+(i%2)*.08,.24,h,i%3?"#e8d1b1":"#f1dfc7",true,g)});
+  for(let i=0;i<4;i++)makeTree(meta.x-1.45+i*.92,meta.z+1.25,.42,"#b4c5a6",g);
+ }else if(key==="resources"){
+  [[-.8,-.35,.88,1.15,"#9ac6b4"],[.65,-.2,.76,.9,"#77ad9e"],[.1,.65,.8,1.0,"#b5d4bd"]].forEach(function(a){const hill=addMesh(new THREE.ConeGeometry(a[2],a[3],7),material(a[4],.88),meta.x+a[0],.43+a[3]/2,meta.z+a[1],g);hill.rotation.y=.22});
+  for(let i=0;i<12;i++){const a=i*2.4,r=.9+(i%4)*.31;makeTree(meta.x+Math.cos(a)*r,meta.z+Math.sin(a)*r*.65,.45+(i%3)*.1,i%2?"#7db59e":"#a5cbb0",g)}
+  const riverPts=[new THREE.Vector3(meta.x-1.8,.46,meta.z+.75),new THREE.Vector3(meta.x-.8,.47,meta.z+.15),new THREE.Vector3(meta.x+.15,.46,meta.z+.55),new THREE.Vector3(meta.x+1.7,.46,meta.z+.12)];
+  worldGroup.add(new THREE.Mesh(new THREE.TubeGeometry(new THREE.CatmullRomCurve3(riverPts),32,.07,7,false),new THREE.MeshBasicMaterial({color:"#b5dce0",transparent:true,opacity:.88})));
+ }else if(key==="agriculture"){
+  for(let row=0;row<5;row++){const strip=addMesh(new THREE.BoxGeometry(.16,.035,1.8),material(row%2?"#a6c98e":"#86b67b",.95),meta.x-1.35+row*.62,.455,meta.z+.1,g);strip.rotation.y=-.16;for(let j=0;j<4;j++){const crop=addMesh(new THREE.IcosahedronGeometry(.075,0),material("#79aa79",.92),meta.x-1.38+row*.62,.51,meta.z-.6+j*.4,g);crop.scale.set(.7,1.25,.7)}}
+  for(let i=0;i<12;i++){const a=i*2.4,r=.55+(i%4)*.32;makeTree(meta.x+Math.cos(a)*r,meta.z+Math.sin(a)*r*.65,.42+(i%3)*.11,i%2?"#7fb383":"#a4c89a",g)}
+  for(let i=0;i<4;i++)makeBuilding(meta.x-.9+i*.53,meta.z-.7,.25,.27,.2,"#e4d5b9",false,g);
+ }else if(key==="tourism"){
+  for(let i=0;i<8;i++){const a=i*2.4,r=.72+(i%3)*.35;makeTree(meta.x+Math.cos(a)*r,meta.z+Math.sin(a)*r*.67,.42+(i%2)*.12,i%2?"#8cb99c":"#b4cdb2",g)}
+  [[-.35,.05,.72],[.65,-.45,.48]].forEach(function(p){for(let j=0;j<3;j++){const w=p[2]*(1-j*.2),y=.48+j*.2*p[2];makeBuilding(meta.x+p[0],meta.z+p[1],w*.48,w*.44,.16*p[2],"#d9c7a8",false,g);const roof=addMesh(new THREE.ConeGeometry(w*.78,.2*p[2],4),material(j===0?"#a77e77":"#bd9a86",.72),meta.x+p[0],y+.2*p[2],meta.z+p[1],g);roof.rotation.y=Math.PI/4}});
+  makeBuilding(meta.x-1.05,meta.z+.55,.34,.3,.42,"#e1d3b9",false,g);
+ }
+ const label=roundedSprite(meta.label,meta.sub,meta.color);label.position.set(meta.x,3.45,meta.z);label.scale.set(4.05,1.08,1);worldGroup.add(label);meta.sprite=label;
+}
+function buildHub(){
+ const base=addMesh(new THREE.CylinderGeometry(2.05,2.22,.34,48),material("#d9e4df",.76,.02),0,.02,0);base.castShadow=true;base.receiveShadow=true;
+ addMesh(new THREE.CylinderGeometry(1.98,2.05,.075,48),material("#f8f5ee",.7),0,.23,0);
+ const ring=addMesh(new THREE.TorusGeometry(1.98,.04,8,80),new THREE.MeshStandardMaterial({color:"#9bbdb3",roughness:.5,emissive:"#9bbdb3",emissiveIntensity:.04}),0,.28,0);ring.rotation.x=Math.PI/2;
+ const buildings=[[-.55,-.25,.34,.36,.9,"#87b4c0"],[.1,-.55,.31,.33,.74,"#a7c8c9"],[.55,.12,.34,.31,1.0,"#6e9eae"],[-.35,.5,.29,.3,.62,"#a6cbb8"],[.25,.48,.25,.27,.5,"#c1d7cb"]];
+ buildings.forEach(function(a){makeBuilding(a[0],a[1],a[2],a[3],a[4],a[5],true,worldGroup)});
+ const label=roundedSprite("博罗","区域关系枢纽 · 不是地理地图","#244c60");label.position.set(0,2.8,0);label.scale.set(4.05,1.08,1);worldGroup.add(label);
+}
+function assignNodes(){
+ const grouped={};nodes.forEach(function(n){if(!grouped[n.cluster])grouped[n.cluster]=[];grouped[n.cluster].push(n)});
+ Object.keys(grouped).forEach(function(key){
+  const meta=clusterMeta[key],arr=grouped[key],offset=key.length*.41;
+  arr.forEach(function(n,i){
+   const angle=i*2.399+offset,rad=meta.radius*(.42+(.13*(i%3))),x=meta.x+Math.cos(angle)*rad,z=meta.z+Math.sin(angle)*rad*.7,y=.52;
+   nodePositions[n.id]={x:x,y:y,z:z};
+   const root=new THREE.Group();root.position.set(x,y,z);root.userData.nodeId=n.id;root.userData.phase=i*.73;worldGroup.add(root);
+   const r=n.type==="anchor"?.19:(n.type==="ext"?.16:(n.type==="champ"?.14:.115)),col=typeColors[n.type]||"#8ba3a5";
+   const glow=addMesh(new THREE.SphereGeometry(r*1.75,16,12),new THREE.MeshBasicMaterial({color:col,transparent:true,opacity:0,depthWrite:false}),0,0,0,root);
+   const sphere=addMesh(new THREE.SphereGeometry(r,20,16),new THREE.MeshStandardMaterial({color:col,roughness:.34,metalness:.04,emissive:col,emissiveIntensity:.045,transparent:true,opacity:0}),0,.035,0,root);sphere.castShadow=true;sphere.userData.nodeId=n.id;
+   const ring=addMesh(new THREE.TorusGeometry(r*1.55,.012,5,28),new THREE.MeshBasicMaterial({color:col,transparent:true,opacity:0}),0,.025,0,root);ring.rotation.x=Math.PI/2;
+   root.scale.setScalar(.05);
+   nodeObjects[n.id]={root:root,sphere:sphere,mat:sphere.material,glow:glow,ring:ring,baseColor:col,baseRadius:r,displayOpacity:0,targetOpacity:0,targetScale:.05,entryOffset:0,targetYOffset:0};
+   pickables.push(sphere);
+   const lab=nodeSprite(n.name,col);lab.position.set(x,y+.34,z);lab.scale.set(3.4,.8,1);lab.material.opacity=0;worldGroup.add(lab);nodeLabels[n.id]=lab;lab.visible=false;lab.userData.targetOpacity=0;
+  });
+ });
+}
+const nodePositions={};
+function buildEdges(){
+ edges.forEach(function(e,index){
+  const p=nodePositions[e.s],q=nodePositions[e.t];if(!p||!q)return;
+  const mid=new THREE.Vector3((p.x+q.x)/2,Math.max(p.y,q.y)+.7+e.w*.045,(p.z+q.z)/2);
+  const curve=new THREE.QuadraticBezierCurve3(new THREE.Vector3(p.x,p.y+.1,p.z),mid,new THREE.Vector3(q.x,q.y+.1,q.z));
+  const col=kindColors[e.kind]||"#7d9b9a",radius=.012+e.w*.005;
+  const baseOpacity=e.level==="A"?.46:.24;
+  const geometry=new THREE.TubeGeometry(curve,28,radius,6,false);geometry.setDrawRange(0,0);
+  const mesh=new THREE.Mesh(geometry,new THREE.MeshBasicMaterial({color:col,transparent:true,opacity:0,depthWrite:false}));
+  worldGroup.add(mesh);edgeObjects.push({mesh:mesh,curve:curve,edge:e,index:index,baseOpacity:baseOpacity,displayOpacity:0,targetOpacity:0,displayProgress:0,targetProgress:0});
+ });
+}
+function rebuildNodeEdges(id){
+ edgeObjects.forEach(function(o){
+  if(o.edge.s!==id&&o.edge.t!==id)return;
+  const e=o.edge,p=nodePositions[e.s],q=nodePositions[e.t];if(!p||!q)return;
+  const mid=new THREE.Vector3((p.x+q.x)/2,Math.max(p.y,q.y)+.7+e.w*.045,(p.z+q.z)/2);
+  const curve=new THREE.QuadraticBezierCurve3(new THREE.Vector3(p.x,p.y+.1,p.z),mid,new THREE.Vector3(q.x,q.y+.1,q.z));
+  const radius=.012+e.w*.005,geometry=new THREE.TubeGeometry(curve,28,radius,6,false);
+  geometry.setDrawRange(0,Math.floor(geometry.index.count*o.displayProgress/3)*3);
+  o.mesh.geometry.dispose();o.mesh.geometry=geometry;o.curve=curve;
+ });
+}
+function buildClusterFlows(){
+ const grouped={};
+ edges.forEach(function(e){
+  const ca=nodeById[e.s].cluster,cb=nodeById[e.t].cluster;if(ca===cb)return;
+  const ordered=[ca,cb].sort(),key=ordered[0]+"|"+ordered[1];
+  if(!grouped[key])grouped[key]={a:ordered[0],b:ordered[1],weight:0,count:0,kindWeights:{},edges:[]};
+  grouped[key].weight+=e.w;grouped[key].count++;grouped[key].kindWeights[e.kind]=(grouped[key].kindWeights[e.kind]||0)+e.w;grouped[key].edges.push(e);
+ });
+ Object.keys(grouped).forEach(function(key,index){
+  const g=grouped[key],a=clusterMeta[g.a],b=clusterMeta[g.b];let dominant="供应链";
+  Object.keys(g.kindWeights).forEach(function(k){if(g.kindWeights[k]>g.kindWeights[dominant]||g.kindWeights[dominant]===undefined)dominant=k});
+  const dx=b.x-a.x,dz=b.z-a.z,len=Math.max(.01,Math.sqrt(dx*dx+dz*dz)),ux=dx/len,uz=dz/len,sideX=-uz,sideZ=ux;
+  const start=new THREE.Vector3(a.x+ux*a.radius*.72,.48,a.z+uz*a.radius*.72),end=new THREE.Vector3(b.x-ux*b.radius*.72,.48,b.z-uz*b.radius*.72);
+  const offset=(index%2===0?1:-1)*Math.min(2.0,len*.11),control=new THREE.Vector3((start.x+end.x)/2+sideX*offset,.75+Math.min(.65,g.weight*.025),(start.z+end.z)/2+sideZ*offset);
+  const curve=new THREE.QuadraticBezierCurve3(start,control,end),ca=color(a.color),cb=color(b.color);
+  function ribbon(width,opacity){
+   const steps=70,positions=[],colors=[],indices=[];
+   for(let i=0;i<=steps;i++){const t=i/steps,p=curve.getPoint(t),tan=curve.getTangent(t).normalize(),side=new THREE.Vector3(-tan.z,0,tan.x).normalize(),taper=.18+.82*Math.sin(Math.PI*t),w=width*taper,c=ca.clone().lerp(cb,t);positions.push(p.x+side.x*w,p.y,p.z+side.z*w,p.x-side.x*w,p.y,p.z-side.z*w);colors.push(c.r,c.g,c.b,c.r,c.g,c.b);if(i<steps){const n=i*2;indices.push(n,n+1,n+2,n+1,n+3,n+2)}}
+   const geo=new THREE.BufferGeometry();geo.setAttribute("position",new THREE.Float32BufferAttribute(positions,3));geo.setAttribute("color",new THREE.Float32BufferAttribute(colors,3));geo.setIndex(indices);geo.computeVertexNormals();
+   const mat=new THREE.MeshBasicMaterial({vertexColors:true,transparent:true,opacity:opacity,side:THREE.DoubleSide,depthWrite:false});
+   const mesh=new THREE.Mesh(geo,mat);worldGroup.add(mesh);flowObjects.push({mesh:mesh,material:mat,curve:curve,baseOpacity:opacity,phase:index*.8,edges:g.edges,weight:g.weight});
+  }
+  const width=.15+Math.min(.18,g.weight*.012);
+  ribbon(width*2.15,.085);ribbon(width,.36+Math.min(.12,g.weight*.006));
+  for(let pulse=0;pulse<3;pulse++){
+   const dot=addMesh(new THREE.SphereGeometry(pulse===0?.12:.082,18,14),new THREE.MeshBasicMaterial({color:kindColors[dominant]||"#6babb0"}),0,0,0,worldGroup);
+   flowObjects.push({dot:dot,curve:curve,phase:index*.7+pulse/3,baseOpacity:1,edges:g.edges,weight:g.weight});
+  }
+ });
+}
+function initWorld(){
+ const canvas=$("world");scene=new THREE.Scene();scene.background=null;scene.fog=new THREE.Fog("#ecebe4",66,125);
+ const aspect=canvas.clientWidth/Math.max(1,canvas.clientHeight);camera=new THREE.OrthographicCamera(-12.5*aspect,12.5*aspect,12.5,-12.5,.1,160);camera.position.set(0,28,32);camera.lookAt(0,0,0);
+ renderer=new THREE.WebGLRenderer({canvas:canvas,antialias:true,alpha:true,powerPreference:"high-performance"});renderer.setPixelRatio(Math.min(window.devicePixelRatio||1,1.6));renderer.setSize(canvas.clientWidth,canvas.clientHeight,false);renderer.outputEncoding=THREE.sRGBEncoding;renderer.toneMapping=THREE.ACESFilmicToneMapping;renderer.toneMappingExposure=.88;renderer.shadowMap.enabled=true;renderer.shadowMap.type=THREE.PCFSoftShadowMap;
+ scene.add(new THREE.HemisphereLight("#ffffff","#9eafa9",.92));
+ const key=new THREE.DirectionalLight("#fff8ed",1.55);key.position.set(-12,23,13);key.castShadow=true;key.shadow.mapSize.set(1024,1024);key.shadow.camera.left=-32;key.shadow.camera.right=32;key.shadow.camera.top=32;key.shadow.camera.bottom=-32;key.shadow.bias=-.0005;scene.add(key);
+ const fill=new THREE.DirectionalLight("#dbe9ef",.45);fill.position.set(14,12,-10);scene.add(fill);
+ worldGroup=new THREE.Group();scene.add(worldGroup);
+ assignNodes();buildEdges();
+ raycaster=new THREE.Raycaster();mouse=new THREE.Vector2();
+ resizeWorld();animate();
+}
+function resizeWorld(){
+ if(!renderer||!camera)return;const canvas=$("world"),w=canvas.clientWidth,h=canvas.clientHeight;if(!w||!h)return;
+ const aspect=w/h;camera.left=-12.5*aspect;camera.right=12.5*aspect;camera.top=12.5;camera.bottom=-12.5;camera.updateProjectionMatrix();renderer.setSize(w,h,false);
+}
+function updateCamera(){const r=camRadius,focusX=2.2;camera.position.set(focusX+r*Math.sin(theta)*Math.sin(phi),r*Math.cos(phi),r*Math.cos(theta)*Math.sin(phi));camera.lookAt(focusX,.35,0)}
+function neighborsFor(id){const out=new Set([id]);edges.forEach(function(e){if(e.s===id)out.add(e.t);if(e.t===id)out.add(e.s)});out.delete(id);return out}
+function computeScenario(key){
+ scenarioAffected=new Set();scenarioEdgeIds=new Set();activeScenario=key;
+ const s=scenarioData[key];if(!s||!s.seed)return;
+ scenarioAffected.add(s.seed);
+ for(let step=0;step<2;step++){
+  edges.forEach(function(e,i){if(!s.kinds.includes(e.kind))return;if(scenarioAffected.has(e.s)||scenarioAffected.has(e.t)){scenarioAffected.add(e.s);scenarioAffected.add(e.t);scenarioEdgeIds.add(i)}});
+ }
+}
+function updateVisualState(){
+ neighborIds=selectedNodeId?neighborsFor(selectedNodeId):new Set();
+ Object.keys(nodeObjects).forEach(function(id){
+  const n=nodeById[id],obj=nodeObjects[id],isBaseline=baselineNodeIds.has(id),isScenario=scenarioAffected.has(id),isSelected=id===selectedNodeId&&!exitedNodeIds.has(id);
+  let included=activeScenario==="base"?isBaseline:(isBaseline||isScenario);
+  if(exitedNodeIds.has(id))included=false;
+  if(activeFilter!=="all"&&n.cluster!==activeFilter)included=false;
+  let opacity=included?1:0;
+  if(included&&activeScenario!=="base"&&isBaseline&&!isScenario)opacity=.42;
+  if(selectedNodeId&&included)opacity*=isSelected?1:(neighborIds.has(id)?1:(focusMode?.08:.5));
+  if(isSelected)opacity=1;
+  const wasVisible=obj.targetOpacity>.04;
+  if(opacity>.04&&!wasVisible){obj.displayOpacity=0;obj.root.scale.setScalar(.05);obj.entryOffset=1.7;obj.targetYOffset=0}
+  if(opacity<=.04&&wasVisible)obj.targetYOffset=1.7;
+  if(opacity>.04)obj.targetYOffset=0;
+  obj.targetOpacity=opacity;obj.targetScale=opacity>.04?(isSelected?1.35:1):.05;
+  const lab=nodeLabels[id];lab.userData.targetOpacity=labelsOn?opacity:0;
+  if(labelsOn&&(opacity>.04||lab.material.opacity>.04))lab.visible=true;
+  else if(!labelsOn&&lab.material.opacity<.04)lab.visible=false;
+ });
+ edgeObjects.forEach(function(o){
+  const e=o.edge,baseline=baselineNodeIds.has(e.s)&&baselineNodeIds.has(e.t),scenario=scenarioEdgeIds.has(o.index);
+  let included=activeScenario==="base"?baseline:(baseline||scenario);
+  if(exitedNodeIds.has(e.s)||exitedNodeIds.has(e.t)||brokenEdgeIds.has(o.index))included=false;
+  if(activeFilter!=="all"&&nodeById[e.s].cluster!==activeFilter&&nodeById[e.t].cluster!==activeFilter)included=false;
+  let opacity=included?(scenario?.76:(activeScenario==="base"?.34:.24)):0;
+  if(selectedNodeId){const connected=e.s===selectedNodeId||e.t===selectedNodeId;opacity*=connected?1.25:(focusMode?.18:.55)}
+  if(compareMode)opacity*=scenario?1:.16;
+  if(included&&o.targetProgress<.05)o.displayProgress=0;
+  o.targetProgress=included?1:0;o.targetOpacity=Math.min(.9,opacity);
+ });
+ flowObjects.forEach(function(o){
+  if(!o.material)return;let opacity=o.baseOpacity;
+  if(selectedNodeId){const relevant=o.edges.some(function(e){return e.s===selectedNodeId||e.t===selectedNodeId||neighborIds.has(e.s)&&neighborIds.has(e.t)});opacity*=relevant?1.5:.32}
+  if(activeScenario!=="base")opacity*=o.edges.some(function(e){return scenarioEdgeIds.has(edges.indexOf(e))})?2.4:.18;
+  if(compareMode)opacity*=o.edges.some(function(e){return scenarioEdgeIds.has(edges.indexOf(e))})?2.6:.12;
+  o.currentOpacity=Math.min(.72,opacity);o.material.opacity=o.currentOpacity;
+ });
+ document.querySelectorAll("[data-filter]").forEach(function(b){b.classList.toggle("active",b.dataset.filter===activeFilter)});
+ document.querySelectorAll("[data-scenario]").forEach(function(b){b.classList.toggle("active",b.dataset.scenario===activeScenario)});
+}
+function renderNodeDetails(id){
+ const n=nodeById[id];if(!n)return;
+ selectedNodeId=id;neighborIds=neighborsFor(id);$("right-panel").classList.add("has-detail");
+ $("detail-name").textContent=n.name;$("detail-type").textContent=(typeLabels[n.type]||n.layer)+" · "+n.layer;$("detail-desc").textContent=n.desc;$("detail-meta").textContent="所在区域："+n.town+"　｜　关系数量："+edges.filter(function(e){return e.s===id||e.t===id}).length;
+ const list=$("relation-list");list.replaceChildren();
+ const rels=edges.map(function(e,i){return {e:e,i:i,other:e.s===id?e.t:e.t===id?e.s:null}}).filter(function(x){return x.other});
+ if(!rels.length){const p=document.createElement("div");p.className="relation-sub";p.textContent="当前模型中暂无直接关系记录。";list.appendChild(p)}
+ rels.forEach(function(x){
+  const e=x.e,other=nodeById[x.other],item=document.createElement("div");item.className="relation-item";
+  const title=document.createElement("div");title.className="relation-title";title.textContent=other.name;
+  const sub=document.createElement("div");sub.className="relation-sub";sub.textContent=e.rel+" · 强度 "+e.w+"/5 · "+(e.level==="A"?"公开关联":"推算线索");
+  item.appendChild(title);item.appendChild(sub);item.addEventListener("click",function(){renderNodeDetails(other.id)});list.appendChild(item);
+ });
+ updateVisualState();setStatus("已聚焦："+n.name+"。高亮的是模型记录的直接关系",true);
+}
+function applyScenario(key){
+ computeScenario(key);compareMode=false;exitedNodeIds=new Set();brokenEdgeIds=new Set();
+ if(key==="xwd"){exitedNodeIds.add("xwd");edges.forEach(function(e,i){if(e.s==="xwd"||e.t==="xwd")brokenEdgeIds.add(i)})}
+ if(key==="break"){edges.forEach(function(e,i){if(e.s==="mj"||e.t==="mj")brokenEdgeIds.add(i)})}
+ const promptCopy={base:"当前只显示关键主体与基本盘。暂无已核验的近期关系变化记录；点击问题查看的是模型情景，不代表现实已经发生。",xwd:"情景演示：欣旺达 / 锂威节点退出，相关连线逐条撤回。观察网络是否仍有替代路径；这不是现实外迁消息。",new:"情景演示：一个虚拟配套主体进入网络，随后与模具群落、电动车配套群落逐条建立联系。该节点并非真实企业。",break:"情景演示：石湾模具群落失去直接连接，观察它是否变成孤立节点，以及其他群落是否仍保持连通。",dj:"情景演示：从东江水系出发，突出环境约束相关的模型关系。亮起的连线不代表已经发生因果影响。"};
+ const responseEl=$("assistant-response");if(responseEl)responseEl.textContent=promptCopy[key]||promptCopy.base;
+ document.querySelectorAll("[data-prompt-scenario]").forEach(function(b){b.classList.toggle("active",b.dataset.promptScenario===key);b.setAttribute("aria-pressed",String(b.dataset.promptScenario===key))});
+ const data=scenarioData[key];selectedNodeId=data&&data.seed&&!exitedNodeIds.has(data.seed)?data.seed:null;
+ if(key==="base"){$("right-panel").classList.remove("has-detail");focusMode=false;$("focus-toggle").classList.remove("on");$("focus-toggle").setAttribute("aria-pressed","false")}
+ else{$("right-panel").classList.remove("has-detail");focusMode=true;$("focus-toggle").classList.add("on");$("focus-toggle").setAttribute("aria-pressed","true")}
+ updateVisualState();
+ if(key==="base")setStatus("关系基本盘：仅显示关键主体与稳定底座；暂无已核验的近期变更记录",true);
+ else setStatus("情景演示 · "+data.label+"：动画仅用于探索假设，不代表实际发生或预测结果",false);
+}
+function setFilter(key){
+ activeFilter=key;selectedNodeId=null;compareMode=false;$("right-panel").classList.remove("has-detail");
+ updateVisualState();setStatus(key==="all"?"显示整个博罗关系世界":"已聚焦："+clusterMeta[key].label+" 群落",true);
+}
+function bindUI(){
+ document.querySelectorAll("[data-filter]").forEach(function(b){b.addEventListener("click",function(){setFilter(b.dataset.filter)})});
+ document.querySelectorAll("[data-scenario]").forEach(function(b){b.addEventListener("click",function(){applyScenario(b.dataset.scenario)})});
+ $("labels-toggle").addEventListener("click",function(){labelsOn=!labelsOn;this.classList.toggle("on",labelsOn);this.setAttribute("aria-pressed",String(labelsOn));updateVisualState()});
+ $("focus-toggle").addEventListener("click",function(){focusMode=!focusMode;this.classList.toggle("on",focusMode);this.setAttribute("aria-pressed",String(focusMode));if(focusMode&&!selectedNodeId&&activeScenario==="base")setStatus("先点击一个主体，关系聚焦才会显示它的直接关联",true);updateVisualState()});
+ $("back-to-legend").addEventListener("click",showLegend);
+ document.querySelectorAll("[data-prompt-scenario]").forEach(function(b){b.addEventListener("click",function(){applyScenario(b.dataset.promptScenario);if(b.dataset.promptScenario==="base"){activeFilter="all";updateVisualState()}setStatus(b.dataset.promptScenario==="base"?"已恢复整体关系结构":"已展开情景关系：高亮部分表示模型设定的可能传导路径",true)})});
+ $("explore-btn").addEventListener("click",function(){applyScenario("base");activeFilter="all";setFilter("all");setStatus("拖动旋转全景，点击任意主体查看它连接着谁",true)});
+ $("trace-btn").addEventListener("click",function(){if(!selectedNodeId){setStatus("先点击中央关系世界中的一个主体，再开始追踪",true);return}focusMode=!focusMode;$("focus-toggle").classList.toggle("on",focusMode);$("focus-toggle").setAttribute("aria-pressed",String(focusMode));updateVisualState();setStatus(focusMode?"已突出该主体的直接关系":"已恢复整体关系",true)});
+ $("simulate-btn").addEventListener("click",function(){document.querySelector(".scenario-panel").scrollIntoView({behavior:"smooth",block:"nearest"});setStatus("选择左侧任一情景，观察关系网络如何变化",true)});
+ $("compare-btn").addEventListener("click",function(){if(activeScenario==="base"){setStatus("请先选择一个情景，再查看基准结构与受影响关系的视觉对照",true);return}compareMode=!compareMode;updateVisualState();setStatus(compareMode?"对照模式：突出情景涉及的关系，其余连接淡出":"已退出对照模式",true)});
+ $("more-scenarios").addEventListener("click",function(){const shelf=$("scenario-cards");if(shelf.dataset.expanded==="true"){shelf.dataset.expanded="false";this.textContent="更多情景　›";shelf.querySelectorAll('[data-extra="true"]').forEach(function(n){n.remove()})}else{shelf.dataset.expanded="true";this.textContent="收起　⌃";["lq"].forEach(function(key){const b=document.createElement("button");b.className="scenario-card";b.dataset.scenario=key;b.dataset.extra="true";const m=document.createElement("div");m.className="mini-scene";m.style.setProperty("--mini","#e6e9df");m.style.setProperty("--accent","#c39a62");m.innerHTML='<svg viewBox="0 0 120 60" fill="none"><path d="M8 43Q34 16 62 35T114 22" stroke="#c39a62" stroke-width="2.5"/></svg>';const t=document.createElement("span");t.textContent=scenarioData[key].label;b.appendChild(m);b.appendChild(t);b.addEventListener("click",function(){applyScenario(key)});shelf.appendChild(b)})}});
+ document.querySelectorAll("[data-year]").forEach(function(b){b.addEventListener("click",function(){document.querySelectorAll("[data-year]").forEach(function(x){x.classList.toggle("active",x===b)});$("year-note").textContent=b.dataset.year==="2025"?"2025 公开数据基准 · 非预测":b.dataset.year+" 情景观察点 · 非官方预测";setStatus(b.dataset.year==="2025"?"顶部指标为2025公开数据基准":b.dataset.year+" 仅用于观察结构变化，不代表官方预测数值",true)})});
+ $("search").addEventListener("keydown",function(e){if(e.key!=="Enter")return;const q=this.value.trim().toLowerCase();if(!q)return;const n=nodes.find(function(x){return x.name.toLowerCase().indexOf(q)>=0||x.town.toLowerCase().indexOf(q)>=0||x.desc.toLowerCase().indexOf(q)>=0});if(n){setFilter("all");renderNodeDetails(n.id);this.blur()}else setStatus("没有找到匹配主体，请尝试更短的关键词",true)});
+ const canvas=$("world");
+ function setPointerRay(e){const rect=canvas.getBoundingClientRect();mouse.x=((e.clientX-rect.left)/rect.width)*2-1;mouse.y=-((e.clientY-rect.top)/rect.height)*2+1;raycaster.setFromCamera(mouse,camera)}
+ function visibleHit(){const hits=raycaster.intersectObjects(pickables,false);return hits.find(function(hit){const obj=nodeObjects[hit.object.userData.nodeId];return obj&&obj.targetOpacity>.08})}
+ canvas.addEventListener("pointerdown",function(e){
+  setPointerRay(e);const hit=visibleHit();draggingNodeId=hit?hit.object.userData.nodeId:null;
+  dragging=true;pointerMoved=false;lastX=e.clientX;lastY=e.clientY;canvas.setPointerCapture(e.pointerId);canvas.style.cursor=draggingNodeId?"grabbing":"grabbing";
+ });
+ canvas.addEventListener("pointermove",function(e){
+  if(!dragging)return;const dx=e.clientX-lastX,dy=e.clientY-lastY;
+  if(Math.abs(dx)+Math.abs(dy)>3)pointerMoved=true;
+  if(draggingNodeId){
+   if(pointerMoved){setPointerRay(e);const y=nodePositions[draggingNodeId].y,plane=new THREE.Plane(new THREE.Vector3(0,1,0),-y),point=new THREE.Vector3();
+    if(raycaster.ray.intersectPlane(plane,point)){nodePositions[draggingNodeId].x=point.x;nodePositions[draggingNodeId].z=point.z;const root=nodeObjects[draggingNodeId].root;root.position.x=point.x;root.position.z=point.z;nodeLabels[draggingNodeId].position.x=point.x;nodeLabels[draggingNodeId].position.z=point.z;rebuildNodeEdges(draggingNodeId)}
+   }
+  }else if(pointerMoved){theta-=dx*.006;phi=Math.max(.38,Math.min(1.06,phi+dy*.004));updateCamera()}
+  lastX=e.clientX;lastY=e.clientY;
+ });
+ canvas.addEventListener("pointerup",function(e){
+  const draggedId=draggingNodeId;dragging=false;draggingNodeId=null;canvas.style.cursor="grab";
+  if(pointerMoved){if(draggedId)setStatus("已移动 "+nodeById[draggedId].name+"；相关连线已跟随重排",true);return}
+  if(draggedId){renderNodeDetails(draggedId);return}
+  setPointerRay(e);const hit=visibleHit();if(hit)renderNodeDetails(hit.object.userData.nodeId);
+ });
+ canvas.addEventListener("pointercancel",function(){dragging=false;draggingNodeId=null;canvas.style.cursor="grab"});
+ canvas.addEventListener("wheel",function(e){e.preventDefault();camera.zoom=Math.max(.72,Math.min(1.65,camera.zoom+(e.deltaY<0?.06:-.06));camera.updateProjectionMatrix()},{passive:false});
+ window.addEventListener("resize",resizeWorld);
+}
+function animate(){
+ requestAnimationFrame(animate);const dt=Math.min(clock.getDelta(),.05),t=clock.elapsedTime;
+ Object.keys(nodeObjects).forEach(function(id){
+  const o=nodeObjects[id],speed=.12;
+  o.displayOpacity+=(o.targetOpacity-o.displayOpacity)*.12;
+  o.root.scale.lerp(new THREE.Vector3(o.targetScale,o.targetScale,o.targetScale),.14);
+  o.entryOffset+=(o.targetYOffset-o.entryOffset)*.075;
+  o.root.position.y=nodePositions[id].y+Math.sin(t*.8+o.root.userData.phase)*.025+o.entryOffset;
+  o.mat.opacity=o.displayOpacity;o.glow.material.opacity=o.displayOpacity*.1;o.ring.material.opacity=o.displayOpacity*.42;
+  const lab=nodeLabels[id];lab.material.opacity+=(lab.userData.targetOpacity-lab.material.opacity)*.14;
+  if(!labelsOn&&lab.material.opacity<.04)lab.visible=false;
+  else if(labelsOn&&lab.material.opacity>.025)lab.visible=true;
+ });
+ edgeObjects.forEach(function(o){
+  o.displayOpacity+=(o.targetOpacity-o.displayOpacity)*.13;
+  o.displayProgress+=(o.targetProgress-o.displayProgress)*.12;
+  if(Math.abs(o.targetProgress-o.displayProgress)<.004)o.displayProgress=o.targetProgress;
+  const count=o.mesh.geometry.index?o.mesh.geometry.index.count:0;
+  o.mesh.geometry.setDrawRange(0,Math.max(0,Math.floor(count*o.displayProgress/3)*3));
+  o.mesh.material.opacity=o.displayOpacity;
+ });
+ flowObjects.forEach(function(o){if(o.dot){o.dot.position.copy(o.curve.getPoint((t*.12+o.phase)%1));o.dot.visible=activeScenario==="base"||o.edges.some(function(e){return scenarioEdgeIds.has(edges.indexOf(e))});}if(o.material){o.material.opacity=(o.currentOpacity===undefined?o.baseOpacity:o.currentOpacity)*(.9+.1*Math.sin(t*1.05+o.phase))}});
+ renderer.render(scene,camera);
+}
+if(!window.THREE){setStatus("3D 引擎未加载，请检查网络后刷新页面",false)}else{try{initWorld();updateCamera();bindUI();computeScenario("base");updateVisualState()}catch(e){console.error(e);setStatus("3D 场景初始化失败："+e.message,false)}}
+})();
+</script>
+</body>
+</html>
