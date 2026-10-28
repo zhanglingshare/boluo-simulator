@@ -120,7 +120,7 @@ button:focus-visible{outline:3px solid rgba(71,121,232,.28);outline-offset:2px}
 .edge.weakened{stroke-dasharray:3 6!important;opacity:.12!important}
 .edge.filtered-out{opacity:.045!important}
 .edge.dim{opacity:.075!important}
-.edge.hot-new{stroke-dasharray:2 9;animation:linkBuild 1.05s linear infinite;filter:drop-shadow(0 0 3px rgba(39,169,137,.25))}
+.edge.hot-new{stroke-dasharray:100!important;stroke-dashoffset:100;animation:drawLink 1.05s ease forwards;filter:drop-shadow(0 0 3px rgba(39,169,137,.25))}
 .node{cursor:grab;transition:opacity .28s;outline:none}
 .node:active{cursor:grabbing}
 .node .halo{fill:var(--node-color);opacity:.10;transition:opacity .2s,r .2s}
@@ -144,8 +144,9 @@ button:focus-visible{outline:3px solid rgba(71,121,232,.28);outline-offset:2px}
 @keyframes flowDash{to{stroke-dashoffset:-32}}
 @keyframes breakDash{to{stroke-dashoffset:-20}}
 @keyframes linkBuild{to{stroke-dashoffset:-33}}
-@keyframes nodeEnter{0%{opacity:0;transform:scale(.12)}65%{opacity:1;transform:scale(1.12)}100%{opacity:1;transform:scale(1)}}
-@keyframes nodeExit{0%{opacity:1;transform:scale(1)}65%{opacity:.55;transform:scale(.65)}100%{opacity:.1;transform:scale(.15)}}
+@keyframes drawLink{to{stroke-dashoffset:0}}
+@keyframes nodeEnter{0%{opacity:0}55%{opacity:1}72%{opacity:.72}100%{opacity:1}}
+@keyframes nodeExit{0%{opacity:1}60%{opacity:.52}100%{opacity:.08}}
 @keyframes bridgePulse{0%,100%{opacity:.18}50%{opacity:.45}}
 @media(max-width:1280px){.layout{grid-template-columns:205px minmax(430px,1fr) 270px;gap:10px;padding:12px}.appbar{padding:0 18px}.canvas-head{padding:16px}.mini-tag{display:none}}
 @media(max-width:1020px){.layout{grid-template-columns:190px minmax(0,1fr)}.right-panel{grid-column:1/-1;min-height:auto}.prompt-list{display:grid;grid-template-columns:repeat(2,minmax(0,1fr))}.right-foot{margin-top:14px}.center-panel{min-height:650px}}
@@ -262,8 +263,8 @@ button:focus-visible{outline:3px solid rgba(71,121,232,.28);outline-offset:2px}
       <button class="prompt-card" type="button" data-prompt="dj">
         <span class="prompt-number">04</span><span class="prompt-copy"><span class="prompt-title">东江只是生态节点吗？</span><span class="prompt-desc">查看水系、产业活动与资源约束的关系</span></span><span class="prompt-arrow">↗</span>
       </button>
-      <button class="prompt-card" type="button" data-prompt="dg">
-        <span class="prompt-number">05</span><span class="prompt-copy"><span class="prompt-title">外部连接减弱，哪些关系先变淡？</span><span class="prompt-desc">模拟外部产业联系减弱，不代表现实发生</span></span><span class="prompt-arrow">↗</span>
+      <button class="prompt-card" type="button" data-prompt="xwd">
+        <span class="prompt-number">05</span><span class="prompt-copy"><span class="prompt-title">如果关键企业退出，网络还有替代路径吗？</span><span class="prompt-desc">节点退出、连线撤回，观察替代连接</span></span><span class="prompt-arrow">↗</span>
       </button>
     </div>
     <div class="right-divider"></div>
@@ -429,10 +430,10 @@ function createZones(){
   const tx=svgEl("text",{x:11,y:5,class:"zone-label"});tx.textContent=c.label;g.appendChild(tx);$("zone-labels").appendChild(g);
  });
 }
-function shouldLabel(n){return n.id!=="new_demo"&&(n.defaultLabel||degrees[n.id]>=3)}
+function shouldLabel(n){return n.id==="new_demo"||(n.defaultLabel||degrees[n.id]>=3)}
 function createGraph(){
- baseEdges().forEach(function(item){
-  const e=item.e,p=svgEl("path",{id:"edge-"+item.i,d:edgePath(item),class:"edge "+(e.level==="B"?"level-b":""),stroke:kindColors[e.kind]||"#9eafc3","stroke-width":(0.8+(e.w||1)*.28).toFixed(2),opacity:e.level==="A"?.62:.37});
+ edges.map(function(e,i){return {e:e,i:i}}).forEach(function(item){
+  const e=item.e,p=svgEl("path",{id:"edge-"+item.i,d:edgePath(item),class:"edge "+(e.level==="B"?"level-b":""),pathLength:100,stroke:kindColors[e.kind]||"#9eafc3","stroke-width":(0.8+(e.w||1)*.28).toFixed(2),opacity:e.level==="A"?.62:.37});
   p.dataset.edgeIndex=item.i;
   const title=svgEl("title");title.textContent=e.rel+"；关系类别："+e.kind+"；权重："+e.w; p.appendChild(title);
   edgeLayer.appendChild(p);edgeEls[item.i]=p;
@@ -521,6 +522,7 @@ function updateState(){
   const idx=Number(k),e=edges[idx],el=edgeEls[k];
   el.classList.remove("hot","broken","weakened","filtered-out","dim","hot-new");
   let opacity=e.level==="A"?.62:.37;
+  if((e.s==="new_demo"||e.t==="new_demo")&&activePrompt!=="new"){el.classList.add("filtered-out");el.style.opacity="0";return}
   if(activeKind!=="all"&&e.kind!==activeKind){el.classList.add("filtered-out");opacity=.04}
   if(activePrompt!=="base"&&!hot.has(idx)){opacity*=.19;el.classList.add("dim")}
   if(activePrompt!=="base"&&hot.has(idx)){opacity=activePrompt==="break"||activePrompt==="xwd"?.52:.94;el.classList.add(activePrompt==="new"?"hot-new":"hot")}
@@ -549,6 +551,7 @@ function updateState(){
  });
  Object.keys(labelEls).forEach(function(id){
   const el=labelEls[id].g;el.classList.remove("dim");
+  if(id==="new_demo")el.style.display=activePrompt==="new"?"":"none";
   let opacity=1;
   if(activePrompt!=="base"&&!focus.has(id))opacity=.22;
   if(activePrompt==="xwd"&&id==="xwd")opacity=.05;
@@ -580,13 +583,13 @@ function applyPrompt(key){
   xwd:["情景演示","关键节点退出，网络是否有替代路径？","假设欣旺达 / 锂威节点退出，相关连接逐步撤回。观察它的邻居是否仍能通过其他关系相连。该情景不代表现实外迁消息。","关键节点正在退出，断开的关系以红色标记。"]
  };
  const msg=copy[key]||copy.base;
- setObserve(msg[0],msg[1],msg[2]);updateState();
+ setObserve(msg[0],msg[1],msg[2]);updateGeometry();updateState();
  document.querySelectorAll("[data-prompt]").forEach(function(b){b.setAttribute("aria-pressed",String(b.dataset.prompt===key))});
  showToast(msg[3]);
 }
 function selectNode(id){
  if(!nodeById[id]||(id==="new_demo"&&activePrompt!=="new"))return;
- selectedNodeId=id;updateState();const n=nodeById[id],rel=edges.filter(function(e){return (e.s===id||e.t===id)&&e.s!=="new_demo"&&e.t!=="new_demo"}).sort(function(a,b){return (b.w||0)-(a.w||0)}).slice(0,4);
+ selectedNodeId=id;updateState();const n=nodeById[id],rel=edges.filter(function(e){return (e.s===id||e.t===id)&&(id==="new_demo"||(e.s!=="new_demo"&&e.t!=="new_demo"))}).sort(function(a,b){return (b.w||0)-(a.w||0)}).slice(0,4);
  $("inspect-name").textContent=n.name;$("inspect-type").textContent=(typeLabels[n.type]||n.layer)+" · "+n.layer;
  $("inspect-desc").textContent=n.desc||"当前模型中的关系节点。";
  const list=$("inspect-relations");list.replaceChildren();
