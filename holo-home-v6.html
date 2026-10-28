@@ -151,6 +151,27 @@ button:focus-visible{outline:3px solid rgba(71,121,232,.28);outline-offset:2px}
 @media(max-width:1280px){.layout{grid-template-columns:205px minmax(430px,1fr) 270px;gap:10px;padding:12px}.appbar{padding:0 18px}.canvas-head{padding:16px}.mini-tag{display:none}}
 @media(max-width:1020px){.layout{grid-template-columns:190px minmax(0,1fr)}.right-panel{grid-column:1/-1;min-height:auto}.prompt-list{display:grid;grid-template-columns:repeat(2,minmax(0,1fr))}.right-foot{margin-top:14px}.center-panel{min-height:650px}}
 @media(max-width:680px){.appbar{height:58px;padding:0 12px;gap:10px}.brand{min-width:0}.brand-sub,.top-divider,.breadcrumb,.top-tag{display:none}.live-pill{font-size:0;padding:8px}.layout{display:flex;flex-direction:column;padding:9px;gap:10px}.left-panel{min-height:0;padding:10px}.workspace-label,.side-divider,.side-bottom,.side-heading{display:none}.left-panel nav{display:flex;gap:4px}.nav-item{width:auto;flex:1;margin:0;padding:9px 7px;justify-content:center;font-size:10px}.nav-item svg{display:none}.nav-count{display:none}.filter-list{display:flex;flex-direction:row;flex-wrap:wrap}.filter-btn{padding:7px 8px;font-size:10px}.center-panel{min-height:570px}.canvas-head{padding:14px 12px}.canvas-title{font-size:14px}.canvas-subtitle{font-size:10px}.canvas-tools{gap:4px}.tool-btn{padding:7px;font-size:9px}.graph-wrap,.graph-svg{min-height:420px}.canvas-footer{gap:10px;padding:11px;}.small-caveat{width:100%}.right-panel{padding:15px 12px}.prompt-list{grid-template-columns:1fr}.right-title{font-size:16px}}
+
+/* V6.1 — true-white, neutral canvas; remove decorative background color */
+html,body{background:#fff!important}
+.appbar{background:#fff!important;border-bottom-color:#edf0f4!important;backdrop-filter:none!important}
+.panel{background:#fff!important;border-color:#e9edf2!important;box-shadow:0 4px 20px rgba(27,44,67,.025)!important}
+.graph-wrap{background:#fff!important}
+.graph-wrap:before{display:none!important}
+.canvas-head,.canvas-footer{background:#fff!important;border-color:#edf0f4!important}
+.left-panel,.right-panel,.center-panel{background:#fff!important}
+.nav-item.active{background:#f3f6fc!important;box-shadow:inset 2px 0 0 #6687d7!important}
+.filter-btn.active{background:#f8faff!important;border-color:#e9eef7!important}
+.mini-tag{background:#fff!important}
+.prompt-card,.inspect-card{background:#fff!important}
+.prompt-card.active{background:#fbfcff!important}
+.observe-card{background:#fbfcfe!important}
+.side-note{background:#fcfcfd!important}
+.graph-hint,.graph-status{background:rgba(255,255,255,.97)!important;backdrop-filter:none!important}
+.zone-label-bg{fill:#fff!important;stroke:#edf0f4!important}
+.zone{fill:#f7f9fc!important;fill-opacity:.24!important;stroke:#dfe5ec!important;stroke-opacity:.68!important;stroke-dasharray:2 7!important}
+@media(prefers-reduced-motion:reduce){.edge.hot,.edge.broken,.edge.hot-new,.node.bridge .halo{animation:none!important}}
+
 </style>
 </head>
 <body>
@@ -216,11 +237,11 @@ button:focus-visible{outline:3px solid rgba(71,121,232,.28);outline-offset:2px}
       <div class="toast" id="toast" role="status" aria-live="polite"></div>
       <svg id="network" class="graph-svg" viewBox="0 0 1100 680" preserveAspectRatio="xMidYMid meet" role="img" aria-label="博罗产业、外部城市、资源环境、农业和文旅的抽象关系网络">
         <defs>
-          <radialGradient id="washBlue"><stop offset="0%" stop-color="#dce8ff" stop-opacity=".72"/><stop offset="100%" stop-color="#edf3ff" stop-opacity="0"/></radialGradient>
-          <radialGradient id="washTeal"><stop offset="0%" stop-color="#d8f4ed" stop-opacity=".74"/><stop offset="100%" stop-color="#eefaf7" stop-opacity="0"/></radialGradient>
-          <radialGradient id="washAmber"><stop offset="0%" stop-color="#fbefd7" stop-opacity=".68"/><stop offset="100%" stop-color="#fff9ed" stop-opacity="0"/></radialGradient>
-          <radialGradient id="washViolet"><stop offset="0%" stop-color="#e9e3ff" stop-opacity=".72"/><stop offset="100%" stop-color="#f7f5ff" stop-opacity="0"/></radialGradient>
-          <radialGradient id="washGreen"><stop offset="0%" stop-color="#dcf4e4" stop-opacity=".72"/><stop offset="100%" stop-color="#f2fbf5" stop-opacity="0"/></radialGradient>
+          <radialGradient id="washBlue"><stop offset="0%" stop-color="#f5f7fa" stop-opacity=".42"/><stop offset="100%" stop-color="#ffffff" stop-opacity="0"/></radialGradient>
+          <radialGradient id="washTeal"><stop offset="0%" stop-color="#f5f7fa" stop-opacity=".38"/><stop offset="100%" stop-color="#ffffff" stop-opacity="0"/></radialGradient>
+          <radialGradient id="washAmber"><stop offset="0%" stop-color="#f5f7fa" stop-opacity=".35"/><stop offset="100%" stop-color="#ffffff" stop-opacity="0"/></radialGradient>
+          <radialGradient id="washViolet"><stop offset="0%" stop-color="#f5f7fa" stop-opacity=".4"/><stop offset="100%" stop-color="#ffffff" stop-opacity="0"/></radialGradient>
+          <radialGradient id="washGreen"><stop offset="0%" stop-color="#f5f7fa" stop-opacity=".38"/><stop offset="100%" stop-color="#ffffff" stop-opacity="0"/></radialGradient>
         </defs>
         <g id="zones">
           <ellipse cx="535" cy="345" rx="238" ry="177" fill="url(#washBlue)"/>
