@@ -111,6 +111,60 @@ button{cursor:pointer;color:inherit}
 @media(max-width:1100px){.brand{min-width:205px}.topbar{gap:10px;padding:0 15px}.topnav button{padding:10px}.search-wrap{width:195px}.shell{grid-template-columns:160px minmax(0,1fr);padding:9px}.metrics{grid-template-columns:repeat(5,minmax(0,1fr));}.year-card{display:none}.metric{padding:9px}.metric-value{font-size:19px}.right-panel{width:150px}.bottom-dock{max-width:calc(100% - 360px);gap:5px}.action-btn{min-width:94px;padding:10px}.action-btn.primary{min-width:130px}.scenario-shelf{width:340px}}
 @media(max-width:760px){html,body{overflow:auto;height:auto;min-height:100%;}.topbar{height:58px;padding:0 12px;gap:8px}.brand{min-width:0;flex:1}.brand-mark{width:32px;height:32px}.brand-mark svg{width:31px;height:31px}.brand-name{font-size:16px}.brand-sub{font-size:8px}.topnav{display:none}.search-wrap{width:40px;padding:0 11px}.search-wrap input{display:none}.shell{height:auto;min-height:calc(100vh - 58px);display:flex;flex-direction:column;padding:8px;gap:8px}.sidebar{display:contents}.side-nav{order:2;display:grid;grid-template-columns:repeat(3,1fr);gap:4px;padding:6px}.side-nav button{height:36px;font-size:10px;justify-content:center;gap:5px;padding:0 3px}.side-nav button svg{width:14px;height:14px}.scenario-panel{order:3;margin:0;padding:10px}.scenario-list{display:grid;grid-template-columns:repeat(2,1fr)}.metrics{order:1;display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:6px}.metric{min-height:63px;padding:8px 11px}.metric:last-of-type{grid-column:span 2}.metric-value{font-size:18px}.metric-label{font-size:10px}.year-card{display:flex;grid-column:span 2;order:2}.stage{order:4;height:calc(100vh - 110px);min-height:560px;max-height:780px;flex-shrink:0}.right-panel{right:7px;top:7px;width:132px;padding:10px;border-radius:13px}.panel-heading{font-size:11px}.legend-row{font-size:9px;margin:7px 0}.legend-line{width:22px}.toggle-row{font-size:9px}.scenario-shelf{left:7px;right:7px;bottom:7px;width:auto;padding:8px}.shelf-head{margin-bottom:5px}.scenario-cards{gap:4px}.mini-scene{height:37px}.scenario-card span{font-size:8px}.bottom-dock{left:7px;right:7px;bottom:112px;max-width:none;display:grid;grid-template-columns:repeat(2,1fr);gap:5px;padding:6px}.action-btn,.action-btn.primary{min-width:0;padding:8px;font-size:10px;gap:7px}.action-btn svg{width:17px;height:17px}.action-sub{display:none}.status-line{bottom:230px;font-size:9px;max-width:90%}.stage-label{display:none}}
 @media(prefers-reduced-motion:reduce){*{transition:none!important}}
+
+/* Visual revision: richer 3D contrast + guided workspace */
+.stage{background:radial-gradient(ellipse at 48% 44%,#f7f6f0 0%,#eef0e9 58%,#e2e7e2 100%)}
+.stage:before{background:radial-gradient(ellipse at center,transparent 58%,rgba(236,235,228,.14) 100%)}
+.right-panel{width:300px;top:13px;bottom:116px;max-height:none;overflow:auto;background:rgba(255,255,255,.95);border-color:rgba(255,255,255,.98);box-shadow:0 12px 34px rgba(28,54,67,.14);scrollbar-width:thin}
+.assistant-head{display:flex;align-items:flex-start;justify-content:space-between;gap:10px;margin-bottom:10px}
+.assistant-kicker{font-size:9px;letter-spacing:.14em;font-weight:750;color:#78909a;margin-bottom:5px}
+.assistant-head .panel-heading{font-size:17px;margin:0;color:#18384b}
+.assistant-live{font-size:9px;white-space:nowrap;color:#477e70;background:#edf6f1;border:1px solid #dcece3;border-radius:20px;padding:5px 7px;margin-top:4px}
+.assistant-bubble{display:flex;gap:9px;padding:11px 10px;background:#f3f6f3;border:1px solid #e8eee9;border-radius:13px;margin-bottom:10px}
+.assistant-avatar{width:26px;height:26px;display:grid;place-items:center;flex-shrink:0;background:#1c4054;color:#fff;border-radius:9px;font-size:15px}
+.assistant-bubble strong{font-size:11px;display:block;margin:1px 0 4px;color:#29495b}
+.assistant-bubble p{margin:0;color:#6e818b;font-size:10px;line-height:1.55}
+.prompt-list{display:flex;flex-direction:column;gap:7px}
+.prompt-card{display:flex;align-items:center;gap:9px;width:100%;border:1px solid #e5ebe7;border-radius:12px;background:#fff;padding:9px;text-align:left;transition:background .18s,border-color .18s,transform .18s;box-shadow:0 2px 5px rgba(28,54,67,.025)}
+.prompt-card:hover,.prompt-card.active{background:#f3f7f4;border-color:#9ab9b2;transform:translateY(-1px)}
+.prompt-symbol{width:27px;height:27px;display:grid;place-items:center;flex-shrink:0;border-radius:9px;font-size:15px;font-weight:800}
+.prompt-blue{background:#e4eff9;color:#377fb7}.prompt-amber{background:#fbefdf;color:#b87a2e}.prompt-teal{background:#e1f1ee;color:#438b83}.prompt-violet{background:#eee8f8;color:#7c69ac}
+.prompt-copy{min-width:0;flex:1}
+.prompt-copy strong{display:block;font-size:10.5px;line-height:1.35;color:#284759;font-weight:750}
+.prompt-copy small{display:block;font-size:9px;line-height:1.4;color:#87959a;margin-top:3px}
+.prompt-arrow{font-size:19px;color:#a3b0b3;flex-shrink:0}
+.assistant-response{font-size:10px;line-height:1.6;color:#536d79;background:#f8f7f2;border-left:3px solid #79a99f;padding:9px 10px;border-radius:0 9px 9px 0;margin-top:10px}
+.assistant-reset{display:flex;justify-content:space-between;align-items:center;width:100%;border:0;background:transparent;padding:9px 2px 7px;color:#284b5c;font-size:10px;font-weight:750;text-align:left}
+.assistant-reset span{font-size:9px;font-weight:500;color:#89979c}
+.assistant-legend{display:flex;align-items:center;gap:7px;border-top:1px solid #edf0ec;padding-top:9px;margin-top:1px;color:#758891}
+.legend-mini-title{font-size:9px;white-space:nowrap;font-weight:700;color:#5d7480}
+.assistant-legend .legend-line{width:20px}
+.assistant-legend small{font-size:8px;color:#8d9a9e;white-space:nowrap}
+.assistant-controls{border-top:1px solid #edf0ec;margin-top:7px;padding-top:2px}
+.assistant-controls .toggle-row{padding:6px 0 1px;font-size:10px}
+.right-panel.has-detail{bottom:116px}
+.detail-name{font-size:16px}
+.detail-desc{font-size:11px}
+.relation-title{font-size:11px}
+.relation-sub{font-size:10px}
+@media(max-width:1100px){
+ .right-panel{width:276px;bottom:112px}
+ .assistant-head .panel-heading{font-size:15px}
+ .prompt-copy strong{font-size:10px}
+ .prompt-copy small{font-size:8.5px}
+}
+@media(max-width:760px){
+ .right-panel{width:min(300px,calc(100% - 14px));right:7px;top:7px;bottom:112px;max-height:none;padding:11px}
+ .assistant-live{display:none}
+ .assistant-bubble{padding:8px;margin-bottom:7px}
+ .prompt-list{gap:5px}
+ .prompt-card{padding:7px}
+ .prompt-copy strong{font-size:10px}
+ .prompt-copy small{font-size:8px}
+ .assistant-response{font-size:9px;margin-top:7px;padding:7px}
+ .assistant-legend{padding-top:6px}
+}
+
 </style>
 </head>
 <body>
@@ -159,23 +213,25 @@ button{cursor:pointer;color:inherit}
   <div class="world-hint"><span class="live-dot"></span><span>抽象关系世界 · 拖动旋转 · 滚轮缩放</span></div>
   <div class="stage-label">BOLUO · RELATIONSHIP WORLD</div>
   <aside class="right-panel" id="right-panel">
-   <div class="legend-view">
-    <h3 class="panel-heading">关系强度</h3>
-    <div class="legend-row"><span class="legend-line" style="--thick:4px;--c:#4b91d5"></span>很强</div>
-    <div class="legend-row"><span class="legend-line" style="--thick:3px;--c:#d39a4d"></span>较强</div>
-    <div class="legend-row"><span class="legend-line" style="--thick:2px;--c:#579d9a"></span>一般</div>
-    <div class="legend-row"><span class="legend-line" style="--thick:1px;--c:#b7c6c9"></span>较弱</div>
-    <div class="legend-caption">证据等级</div>
-    <div class="legend-row"><span class="legend-line" style="--thick:2px;--c:#6d9c8c"></span>A · 公开关联</div>
-    <div class="legend-row"><span class="legend-line" style="--thick:2px;border-top-style:dashed;--c:#b4a0c7"></span>B · 推算线索</div>
-    <div class="toggle-row"><span>显示主体标签</span><button class="switch on" id="labels-toggle" aria-pressed="true" aria-label="显示主体标签"></button></div>
-    <div class="toggle-row"><span>关系聚焦</span><button class="switch" id="focus-toggle" aria-pressed="false" aria-label="关系聚焦"></button></div>
+   <div class="legend-view assistant-view">
+    <div class="assistant-head"><div><div class="assistant-kicker">BO LUO · EXPLORE</div><h3 class="panel-heading">关系探索助手</h3></div><span class="assistant-live">4 个探索方向</span></div>
+    <div class="assistant-bubble"><span class="assistant-avatar">✦</span><div><strong>从一个问题开始</strong><p>不必先看懂整张网络。点选一个问题，看看哪些关系会亮起、变化。</p></div></div>
+    <div class="prompt-list">
+     <button class="prompt-card" data-prompt-scenario="xwd" aria-pressed="false"><span class="prompt-symbol prompt-blue">↗</span><span class="prompt-copy"><strong>如果链主离开，谁先被牵动？</strong><small>追踪供应链与资源竞争的传导</small></span><span class="prompt-arrow">›</span></button>
+     <button class="prompt-card" data-prompt-scenario="dg" aria-pressed="false"><span class="prompt-symbol prompt-amber">↗</span><span class="prompt-copy"><strong>东莞外溢减弱，会波及谁？</strong><small>观察外部连接如何传入博罗</small></span><span class="prompt-arrow">›</span></button>
+     <button class="prompt-card" data-prompt-scenario="dj" aria-pressed="false"><span class="prompt-symbol prompt-teal">↗</span><span class="prompt-copy"><strong>环境约束收紧，会牵动哪些产业？</strong><small>把生态底座与产业群落连起来看</small></span><span class="prompt-arrow">›</span></button>
+     <button class="prompt-card" data-prompt-scenario="lq" aria-pressed="false"><span class="prompt-symbol prompt-violet">↗</span><span class="prompt-copy"><strong>老厂改造，会改变哪些联系？</strong><small>观察配套关系与资源竞争</small></span><span class="prompt-arrow">›</span></button>
+    </div>
+    <div class="assistant-response" id="assistant-response">当前展示的是模型中的关系线索。线条越粗，表示设定的关系强度越高；浅色连线可能包含推算。</div>
+    <button class="assistant-reset" data-prompt-scenario="base">先看整体结构 <span>恢复全景　↗</span></button>
+    <div class="assistant-legend"><span class="legend-mini-title">关系强度</span><span class="legend-line" style="--thick:4px;--c:#377fb7"></span><span class="legend-line" style="--thick:2px;--c:#d39a4d"></span><span class="legend-line" style="--thick:1px;--c:#a8b6bb"></span><small>粗 → 强</small></div>
+    <div class="assistant-controls"><div class="toggle-row"><span>显示主体标签</span><button class="switch on" id="labels-toggle" aria-pressed="true" aria-label="显示主体标签"></button></div><div class="toggle-row"><span>关系聚焦</span><button class="switch" id="focus-toggle" aria-pressed="false" aria-label="关系聚焦"></button></div></div>
    </div>
    <div class="detail-view" id="detail-view">
     <div class="detail-name" id="detail-name">主体名称</div><div class="detail-type" id="detail-type">主体类型</div>
     <div class="detail-desc" id="detail-desc"></div><div class="detail-meta" id="detail-meta"></div>
     <div class="panel-heading" style="font-size:10px;margin-bottom:7px">关联主体</div><div class="relation-list" id="relation-list"></div>
-    <button class="panel-back" id="back-to-legend">返回关系图例</button>
+    <button class="panel-back" id="back-to-legend">返回探索助手</button>
    </div>
   </aside>
   <div class="status-line" id="status">关系网络来自现有模型数据；部分连接为推算线索，不代表已确认交易</div>
@@ -293,28 +349,30 @@ function roundedSprite(title,sub,accent){
  const canvas=document.createElement("canvas");canvas.width=640;canvas.height=170;const ctx=canvas.getContext("2d");
  ctx.fillStyle="rgba(24,53,70,.94)";ctx.beginPath();ctx.roundRect(7,7,626,156,25);ctx.fill();
  ctx.fillStyle=accent;ctx.beginPath();ctx.roundRect(7,7,13,156,7);ctx.fill();
- ctx.fillStyle="#fff";ctx.font="700 34px -apple-system, BlinkMacSystemFont, 'PingFang SC', sans-serif";ctx.fillText(title,40,69);
- ctx.fillStyle="rgba(255,255,255,.78)";ctx.font="500 22px -apple-system, BlinkMacSystemFont, 'PingFang SC', sans-serif";ctx.fillText(sub,40,112,560);
+ ctx.fillStyle="#fff";ctx.font="750 56px -apple-system, BlinkMacSystemFont, 'PingFang SC', sans-serif";ctx.fillText(title,40,72);
+ ctx.fillStyle="rgba(255,255,255,.88)";ctx.font="500 30px -apple-system, BlinkMacSystemFont, 'PingFang SC', sans-serif";ctx.fillText(sub,40,124,560);
  const tex=new THREE.CanvasTexture(canvas);tex.minFilter=THREE.LinearFilter;
  const sprite=new THREE.Sprite(new THREE.SpriteMaterial({map:tex,transparent:true,depthTest:false,depthWrite:false}));
  sprite.scale.set(3.1,.83,1);return sprite;
 }
 function nodeSprite(title,accent){
  const canvas=document.createElement("canvas");canvas.width=440;canvas.height=104;const ctx=canvas.getContext("2d");
- ctx.fillStyle="rgba(255,255,255,.92)";ctx.beginPath();ctx.roundRect(4,4,432,96,20);ctx.fill();
- ctx.strokeStyle="rgba(255,255,255,.98)";ctx.lineWidth=3;ctx.stroke();
+ ctx.fillStyle="rgba(255,255,255,.97)";ctx.beginPath();ctx.roundRect(4,4,432,96,20);ctx.fill();
+ ctx.strokeStyle="rgba(42,78,94,.18)";ctx.lineWidth=3;ctx.stroke();
  ctx.fillStyle=accent;ctx.beginPath();ctx.roundRect(4,4,9,96,5);ctx.fill();
- ctx.fillStyle="#304a59";ctx.font="600 27px -apple-system, BlinkMacSystemFont, 'PingFang SC', sans-serif";ctx.fillText(title,27,62,390);
+ ctx.fillStyle="#203d50";ctx.font="700 54px -apple-system, BlinkMacSystemFont, 'PingFang SC', sans-serif";ctx.fillText(title,27,65,390);
  const tex=new THREE.CanvasTexture(canvas);tex.minFilter=THREE.LinearFilter;
  return new THREE.Sprite(new THREE.SpriteMaterial({map:tex,transparent:true,depthTest:false,depthWrite:false}));
 }
 function makeTree(x,z,s,leaf,parent){
+ s*=1.08;
  const trunk=addMesh(new THREE.CylinderGeometry(.025*s,.045*s,.25*s,7),material("#a9957d",.92),x,.44+.125*s,z,parent);
  const crown=addMesh(new THREE.IcosahedronGeometry(.18*s,1),material(leaf,.9),x,.44+.32*s,z,parent);crown.scale.set(.92,1.22,.88);
  const crown2=addMesh(new THREE.IcosahedronGeometry(.12*s,0),material(color(leaf).lerp(new THREE.Color("#ffffff"),.16),.9),x+.07*s,.44+.43*s,z-.03*s,parent);
  return [trunk,crown,crown2];
 }
 function makeBuilding(x,z,w,d,h,baseColor,windowed,parent){
+ w*=1.06;d*=1.06;h*=1.16;
  const bodyMat=material(baseColor,.64,.035);
  const body=addMesh(new THREE.BoxGeometry(w,h,d),bodyMat,x,.43+h/2,z,parent);body.castShadow=true;body.receiveShadow=true;
  const roof=addMesh(new THREE.BoxGeometry(w*1.07,.065,d*1.07),material(color(baseColor).lerp(new THREE.Color("#ffffff"),.43),.52,.02),x,.43+h+.032,z,parent);
@@ -328,7 +386,7 @@ function makeBuilding(x,z,w,d,h,baseColor,windowed,parent){
  return body;
 }
 function makePlatform(key,meta){
- const col=color(meta.color),top=col.clone().lerp(new THREE.Color("#ffffff"),.76),side=col.clone().lerp(new THREE.Color("#536872"),.48);
+ const col=color(meta.color),top=col.clone().lerp(new THREE.Color("#ffffff"),.49),side=col.clone().lerp(new THREE.Color("#536872"),.31);
  const base=addMesh(new THREE.CylinderGeometry(meta.radius*.79,meta.radius*.88,.42,48),material(side,.72,.025),meta.x,.08,meta.z);base.castShadow=true;base.receiveShadow=true;base.userData.cluster=key;clusterObjects[key]=base;
  const topDisk=addMesh(new THREE.CylinderGeometry(meta.radius*.77,meta.radius*.79,.075,48),material(top,.78,.01),meta.x,.325,meta.z);topDisk.receiveShadow=true;topDisk.userData.cluster=key;
  const rim=addMesh(new THREE.TorusGeometry(meta.radius*.77,.045,8,80),new THREE.MeshStandardMaterial({color:col.clone().lerp(new THREE.Color("#ffffff"),.28),roughness:.46,metalness:.035,emissive:col,emissiveIntensity:.035}),meta.x,.37,meta.z);rim.rotation.x=Math.PI/2;rim.userData.cluster=key;
@@ -357,7 +415,7 @@ function makePlatform(key,meta){
   [[-.35,.05,.72],[.65,-.45,.48]].forEach(function(p){for(let j=0;j<3;j++){const w=p[2]*(1-j*.2),y=.48+j*.2*p[2];makeBuilding(meta.x+p[0],meta.z+p[1],w*.48,w*.44,.16*p[2],"#d9c7a8",false,g);const roof=addMesh(new THREE.ConeGeometry(w*.78,.2*p[2],4),material(j===0?"#a77e77":"#bd9a86",.72),meta.x+p[0],y+.2*p[2],meta.z+p[1],g);roof.rotation.y=Math.PI/4}});
   makeBuilding(meta.x-1.05,meta.z+.55,.34,.3,.42,"#e1d3b9",false,g);
  }
- const label=roundedSprite(meta.label,meta.sub,meta.color);label.position.set(meta.x,3.45,meta.z);worldGroup.add(label);meta.sprite=label;
+ const label=roundedSprite(meta.label,meta.sub,meta.color);label.position.set(meta.x,3.45,meta.z);label.scale.set(4.05,1.08,1);worldGroup.add(label);meta.sprite=label;
 }
 function buildHub(){
  const base=addMesh(new THREE.CylinderGeometry(2.05,2.22,.34,48),material("#d9e4df",.76,.02),0,.02,0);base.castShadow=true;base.receiveShadow=true;
@@ -365,7 +423,7 @@ function buildHub(){
  const ring=addMesh(new THREE.TorusGeometry(1.98,.04,8,80),new THREE.MeshStandardMaterial({color:"#9bbdb3",roughness:.5,emissive:"#9bbdb3",emissiveIntensity:.04}),0,.28,0);ring.rotation.x=Math.PI/2;
  const buildings=[[-.55,-.25,.34,.36,.9,"#87b4c0"],[.1,-.55,.31,.33,.74,"#a7c8c9"],[.55,.12,.34,.31,1.0,"#6e9eae"],[-.35,.5,.29,.3,.62,"#a6cbb8"],[.25,.48,.25,.27,.5,"#c1d7cb"]];
  buildings.forEach(function(a){makeBuilding(a[0],a[1],a[2],a[3],a[4],a[5],true,worldGroup)});
- const label=roundedSprite("博罗","区域关系枢纽 · 不是地理地图","#244c60");label.position.set(0,2.8,0);label.scale.set(2.65,.71,1);worldGroup.add(label);
+ const label=roundedSprite("博罗","区域关系枢纽 · 不是地理地图","#244c60");label.position.set(0,2.8,0);label.scale.set(4.05,1.08,1);worldGroup.add(label);
 }
 function assignNodes(){
  const grouped={};nodes.forEach(function(n){if(!grouped[n.cluster])grouped[n.cluster]=[];grouped[n.cluster].push(n)});
@@ -375,13 +433,13 @@ function assignNodes(){
    const angle=i*2.399+offset,rad=meta.radius*(.42+(.13*(i%3))),x=meta.x+Math.cos(angle)*rad,z=meta.z+Math.sin(angle)*rad*.7,y=.52;
    nodePositions[n.id]={x:x,y:y,z:z};
    const root=new THREE.Group();root.position.set(x,y,z);root.userData.nodeId=n.id;root.userData.phase=i*.73;worldGroup.add(root);
-   const r=n.type==="anchor"?.145:(n.type==="ext"?.125:(n.type==="champ"?.105:.085)),col=typeColors[n.type]||"#8ba3a5";
-   const glow=addMesh(new THREE.SphereGeometry(r*1.75,16,12),new THREE.MeshBasicMaterial({color:col,transparent:true,opacity:.045,depthWrite:false}),0,0,0,root);
+   const r=n.type==="anchor"?.19:(n.type==="ext"?.16:(n.type==="champ"?.14:.115)),col=typeColors[n.type]||"#8ba3a5";
+   const glow=addMesh(new THREE.SphereGeometry(r*1.75,16,12),new THREE.MeshBasicMaterial({color:col,transparent:true,opacity:.10,depthWrite:false}),0,0,0,root);
    const sphere=addMesh(new THREE.SphereGeometry(r,20,16),new THREE.MeshStandardMaterial({color:col,roughness:.34,metalness:.04,emissive:col,emissiveIntensity:.045}),0,.035,0,root);sphere.castShadow=true;sphere.userData.nodeId=n.id;
-   const ring=addMesh(new THREE.TorusGeometry(r*1.55,.012,5,28),new THREE.MeshBasicMaterial({color:col,transparent:true,opacity:.23}),0,.025,0,root);ring.rotation.x=Math.PI/2;
+   const ring=addMesh(new THREE.TorusGeometry(r*1.55,.012,5,28),new THREE.MeshBasicMaterial({color:col,transparent:true,opacity:.42}),0,.025,0,root);ring.rotation.x=Math.PI/2;
    nodeObjects[n.id]={root:root,sphere:sphere,mat:sphere.material,glow:glow,ring:ring,baseColor:col,baseRadius:r};
    pickables.push(sphere);
-   const lab=nodeSprite(n.name,col);lab.position.set(x,y+.34,z);lab.scale.set(1.65,.39,1);worldGroup.add(lab);nodeLabels[n.id]=lab;lab.visible=!!n.defaultLabel;
+   const lab=nodeSprite(n.name,col);lab.position.set(x,y+.34,z);lab.scale.set(3.4,.8,1);worldGroup.add(lab);nodeLabels[n.id]=lab;lab.visible=!!n.defaultLabel;
   });
  });
 }
@@ -391,9 +449,10 @@ function buildEdges(){
   const p=nodePositions[e.s],q=nodePositions[e.t];if(!p||!q)return;
   const mid=new THREE.Vector3((p.x+q.x)/2,Math.max(p.y,q.y)+.7+e.w*.045,(p.z+q.z)/2);
   const curve=new THREE.QuadraticBezierCurve3(new THREE.Vector3(p.x,p.y+.1,p.z),mid,new THREE.Vector3(q.x,q.y+.1,q.z));
-  const col=kindColors[e.kind]||"#7d9b9a",radius=.008+e.w*.003;
-  const mesh=new THREE.Mesh(new THREE.TubeGeometry(curve,28,radius,5,false),new THREE.MeshBasicMaterial({color:col,transparent:true,opacity:e.level==="A"?.22:.12,depthWrite:false}));
-  worldGroup.add(mesh);edgeObjects.push({mesh:mesh,curve:curve,edge:e,index:index,baseOpacity:e.level==="A"?.22:.12});
+  const col=kindColors[e.kind]||"#7d9b9a",radius=.012+e.w*.005;
+  const baseOpacity=e.level==="A"?.46:.24;
+  const mesh=new THREE.Mesh(new THREE.TubeGeometry(curve,28,radius,6,false),new THREE.MeshBasicMaterial({color:col,transparent:true,opacity:baseOpacity,depthWrite:false}));
+  worldGroup.add(mesh);edgeObjects.push({mesh:mesh,curve:curve,edge:e,index:index,baseOpacity:baseOpacity});
  });
 }
 function buildClusterFlows(){
@@ -418,20 +477,22 @@ function buildClusterFlows(){
    const mat=new THREE.MeshBasicMaterial({vertexColors:true,transparent:true,opacity:opacity,side:THREE.DoubleSide,depthWrite:false});
    const mesh=new THREE.Mesh(geo,mat);worldGroup.add(mesh);flowObjects.push({mesh:mesh,material:mat,curve:curve,baseOpacity:opacity,phase:index*.8,edges:g.edges,weight:g.weight});
   }
-  const width=.10+Math.min(.2,g.weight*.008);
-  ribbon(width*2.25,.055);ribbon(width,.2+Math.min(.08,g.weight*.003));
-  const dot=addMesh(new THREE.SphereGeometry(.075,16,12),new THREE.MeshBasicMaterial({color:kindColors[dominant]||"#6babb0"}),0,0,0,worldGroup);
-  flowObjects.push({dot:dot,curve:curve,phase:index*.7,baseOpacity:1,edges:g.edges,weight:g.weight});
+  const width=.15+Math.min(.18,g.weight*.012);
+  ribbon(width*2.15,.085);ribbon(width,.36+Math.min(.12,g.weight*.006));
+  for(let pulse=0;pulse<3;pulse++){
+   const dot=addMesh(new THREE.SphereGeometry(pulse===0?.12:.082,18,14),new THREE.MeshBasicMaterial({color:kindColors[dominant]||"#6babb0"}),0,0,0,worldGroup);
+   flowObjects.push({dot:dot,curve:curve,phase:index*.7+pulse/3,baseOpacity:1,edges:g.edges,weight:g.weight});
+  }
  });
 }
 function initWorld(){
- const canvas=$("world");scene=new THREE.Scene();scene.background=new THREE.Color("#f4f1eb");scene.fog=new THREE.Fog("#f4f1eb",42,86);
+ const canvas=$("world");scene=new THREE.Scene();scene.background=new THREE.Color("#ecebe4");scene.fog=new THREE.Fog("#ecebe4",66,125);
  const aspect=canvas.clientWidth/Math.max(1,canvas.clientHeight);camera=new THREE.OrthographicCamera(-12.5*aspect,12.5*aspect,12.5,-12.5,.1,160);camera.position.set(0,28,32);camera.lookAt(0,0,0);
- renderer=new THREE.WebGLRenderer({canvas:canvas,antialias:true,alpha:true,powerPreference:"high-performance"});renderer.setPixelRatio(Math.min(window.devicePixelRatio||1,1.6));renderer.setSize(canvas.clientWidth,canvas.clientHeight,false);renderer.outputEncoding=THREE.sRGBEncoding;renderer.toneMapping=THREE.ACESFilmicToneMapping;renderer.toneMappingExposure=1.05;renderer.shadowMap.enabled=true;renderer.shadowMap.type=THREE.PCFSoftShadowMap;
- scene.add(new THREE.HemisphereLight("#ffffff","#c9d8d2",1.35));
- const key=new THREE.DirectionalLight("#fff8ed",2.05);key.position.set(-12,23,13);key.castShadow=true;key.shadow.mapSize.set(1024,1024);key.shadow.camera.left=-32;key.shadow.camera.right=32;key.shadow.camera.top=32;key.shadow.camera.bottom=-32;key.shadow.bias=-.0005;scene.add(key);
- const fill=new THREE.DirectionalLight("#dbe9ef",.8);fill.position.set(14,12,-10);scene.add(fill);
- const ground=new THREE.Mesh(new THREE.PlaneGeometry(110,110),new THREE.MeshStandardMaterial({color:"#f4f1eb",roughness:1,metalness:0}));ground.position.set(0,-.5,0);ground.rotation.x=-Math.PI/2;ground.receiveShadow=true;scene.add(ground);
+ renderer=new THREE.WebGLRenderer({canvas:canvas,antialias:true,alpha:true,powerPreference:"high-performance"});renderer.setPixelRatio(Math.min(window.devicePixelRatio||1,1.6));renderer.setSize(canvas.clientWidth,canvas.clientHeight,false);renderer.outputEncoding=THREE.sRGBEncoding;renderer.toneMapping=THREE.ACESFilmicToneMapping;renderer.toneMappingExposure=.88;renderer.shadowMap.enabled=true;renderer.shadowMap.type=THREE.PCFSoftShadowMap;
+ scene.add(new THREE.HemisphereLight("#ffffff","#9eafa9",.92));
+ const key=new THREE.DirectionalLight("#fff8ed",1.55);key.position.set(-12,23,13);key.castShadow=true;key.shadow.mapSize.set(1024,1024);key.shadow.camera.left=-32;key.shadow.camera.right=32;key.shadow.camera.top=32;key.shadow.camera.bottom=-32;key.shadow.bias=-.0005;scene.add(key);
+ const fill=new THREE.DirectionalLight("#dbe9ef",.45);fill.position.set(14,12,-10);scene.add(fill);
+ const ground=new THREE.Mesh(new THREE.PlaneGeometry(110,110),new THREE.MeshStandardMaterial({color:"#e9e9e1",roughness:1,metalness:0}));ground.position.set(0,-.5,0);ground.rotation.x=-Math.PI/2;ground.receiveShadow=true;scene.add(ground);
  worldGroup=new THREE.Group();scene.add(worldGroup);
  Object.keys(clusterMeta).forEach(function(key){makePlatform(key,clusterMeta[key])});
  buildHub();assignNodes();buildEdges();buildClusterFlows();
@@ -478,12 +539,12 @@ function updateVisualState(){
   if(selectedNodeId){const relevant=o.edges.some(function(e){return e.s===selectedNodeId||e.t===selectedNodeId||neighborIds.has(e.s)&&neighborIds.has(e.t)});opacity*=relevant?1.5:.32}
   if(activeScenario!=="base")opacity*=o.edges.some(function(e){return scenarioEdgeIds.has(edges.indexOf(e))})?2.4:.18;
   if(compareMode)opacity*=o.edges.some(function(e){return scenarioEdgeIds.has(edges.indexOf(e))})?2.6:.12;
-  o.material.opacity=Math.min(.6,opacity);
+  o.currentOpacity=Math.min(.72,opacity);o.material.opacity=o.currentOpacity;
  });
  document.querySelectorAll("[data-filter]").forEach(function(b){b.classList.toggle("active",b.dataset.filter===activeFilter)});
  document.querySelectorAll("[data-scenario]").forEach(function(b){b.classList.toggle("active",b.dataset.scenario===activeScenario)});
 }
-function showLegend(){ $("right-panel").classList.remove("has-detail");selectedNodeId=null;updateVisualState();setStatus("回到全景：先看群落之间的关系，再点击主体查看细节",true)}
+function showLegend(){ $("right-panel").classList.remove("has-detail");selectedNodeId=null;updateVisualState();setStatus("回到探索助手：选择一个问题，观察关系网络如何变化",true)}
 function renderNodeDetails(id){
  const n=nodeById[id];if(!n)return;
  selectedNodeId=id;neighborIds=neighborsFor(id);$("right-panel").classList.add("has-detail");
@@ -501,6 +562,9 @@ function renderNodeDetails(id){
 }
 function applyScenario(key){
  computeScenario(key);compareMode=false;
+ const promptCopy={base:"当前展示的是模型中的关系线索。线条越粗，表示设定的关系强度越高；浅色连线可能包含推算。",xwd:"从欣旺达 / 锂威相关节点出发，高亮供应链与资源竞争中的关联路径。它展示的是可能的传导结构，不代表外迁已经发生。",dg:"从东莞关联出发，查看模具、电动车配套、电子信息与老厂群落之间的连接。部分连边属于推算线索。",dj:"从东江水系出发，观察环保约束怎样连接表面处理、饮用水相关产业与其他群落。亮起的是模型关联，不是因果结论。",lq:"从镇村老厂群落出发，观察配套联系与资源竞争。试着思考：改造一个群落，周围哪些连接可能跟着变化？"};
+ const responseEl=$("assistant-response");if(responseEl)responseEl.textContent=promptCopy[key]||promptCopy.base;
+ document.querySelectorAll("[data-prompt-scenario]").forEach(function(b){b.classList.toggle("active",b.dataset.promptScenario===key);b.setAttribute("aria-pressed",String(b.dataset.promptScenario===key))});
  const data=scenarioData[key];selectedNodeId=data&&data.seed?data.seed:null;
  if(key==="base"){$("right-panel").classList.remove("has-detail");focusMode=false;$("focus-toggle").classList.remove("on");$("focus-toggle").setAttribute("aria-pressed","false")}
  else{$("right-panel").classList.remove("has-detail");focusMode=true;$("focus-toggle").classList.add("on");$("focus-toggle").setAttribute("aria-pressed","true")}
@@ -518,6 +582,7 @@ function bindUI(){
  $("labels-toggle").addEventListener("click",function(){labelsOn=!labelsOn;this.classList.toggle("on",labelsOn);this.setAttribute("aria-pressed",String(labelsOn));updateVisualState()});
  $("focus-toggle").addEventListener("click",function(){focusMode=!focusMode;this.classList.toggle("on",focusMode);this.setAttribute("aria-pressed",String(focusMode));if(focusMode&&!selectedNodeId&&activeScenario==="base")setStatus("先点击一个主体，关系聚焦才会显示它的直接关联",true);updateVisualState()});
  $("back-to-legend").addEventListener("click",showLegend);
+ document.querySelectorAll("[data-prompt-scenario]").forEach(function(b){b.addEventListener("click",function(){applyScenario(b.dataset.promptScenario);if(b.dataset.promptScenario==="base"){activeFilter="all";updateVisualState()}setStatus(b.dataset.promptScenario==="base"?"已恢复整体关系结构":"已展开情景关系：高亮部分表示模型设定的可能传导路径",true)})});
  $("explore-btn").addEventListener("click",function(){applyScenario("base");activeFilter="all";setFilter("all");setStatus("拖动旋转全景，点击任意主体查看它连接着谁",true)});
  $("trace-btn").addEventListener("click",function(){if(!selectedNodeId){setStatus("先点击中央关系世界中的一个主体，再开始追踪",true);return}focusMode=!focusMode;$("focus-toggle").classList.toggle("on",focusMode);$("focus-toggle").setAttribute("aria-pressed",String(focusMode));updateVisualState();setStatus(focusMode?"已突出该主体的直接关系":"已恢复整体关系",true)});
  $("simulate-btn").addEventListener("click",function(){document.querySelector(".scenario-panel").scrollIntoView({behavior:"smooth",block:"nearest"});setStatus("选择左侧任一情景，观察关系网络如何变化",true)});
@@ -535,7 +600,7 @@ function bindUI(){
 }
 function animate(){
  requestAnimationFrame(animate);const dt=Math.min(clock.getDelta(),.05),t=clock.elapsedTime;
- flowObjects.forEach(function(o){if(o.dot){o.dot.position.copy(o.curve.getPoint((t*.085+o.phase)%1));o.dot.visible=activeScenario==="base"||o.edges.some(function(e){return scenarioEdgeIds.has(edges.indexOf(e))});}if(o.material){o.material.opacity=o.baseOpacity*(.88+.12*Math.sin(t*1.05+o.phase))}});
+ flowObjects.forEach(function(o){if(o.dot){o.dot.position.copy(o.curve.getPoint((t*.12+o.phase)%1));o.dot.visible=activeScenario==="base"||o.edges.some(function(e){return scenarioEdgeIds.has(edges.indexOf(e))});}if(o.material){o.material.opacity=(o.currentOpacity===undefined?o.baseOpacity:o.currentOpacity)*(.9+.1*Math.sin(t*1.05+o.phase))}});
  Object.keys(nodeObjects).forEach(function(id){const o=nodeObjects[id];o.root.position.y=nodePositions[id].y+Math.sin(t*.8+o.root.userData.phase)*.025});
  renderer.render(scene,camera);
 }
