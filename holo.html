@@ -371,9 +371,9 @@ function addLine(points,color,opacity){
 }
 function initWorld(){
  const canvas=$("world");
- scene=new THREE.Scene();scene.background=new THREE.Color("#f0f2ee");scene.fog=new THREE.Fog("#f0f2ee",28,54);
+ scene=new THREE.Scene();scene.background=null;scene.fog=new THREE.Fog("#f0f2ee",32,62);
  camera=new THREE.PerspectiveCamera(42,1,.1,160);
- renderer=new THREE.WebGLRenderer({canvas:canvas,antialias:true,alpha:false,powerPreference:"high-performance"});
+ renderer=new THREE.WebGLRenderer({canvas:canvas,antialias:true,alpha:true,powerPreference:"high-performance"});renderer.setClearColor("#f0f2ee",0);
  renderer.setPixelRatio(Math.min(window.devicePixelRatio||1,2));renderer.outputEncoding=THREE.sRGBEncoding;renderer.toneMapping=THREE.ACESFilmicToneMapping;renderer.toneMappingExposure=1.12;
  scene.add(new THREE.HemisphereLight("#ffffff","#b8c8c1",1.5));
  const keyLight=new THREE.DirectionalLight("#ffffff",2.0);keyLight.position.set(-8,18,12);scene.add(keyLight);
@@ -499,8 +499,8 @@ function selectNode(id){
  selectedNodeId=id;selectedEdgeIndex=null;
  const n=nodeById[id];$("inspector-heading").textContent="节点详情";$("inspector-count").textContent="已选中";
  const list=getEdgesForNode(id);
- let html='<div class="inspector-card"><div class="node-title-row"><i class="node-swatch" style="background:'+clusterMeta[n.cluster].color+'"></i><div><div class="node-title">'+n.name+'</div><div class="node-meta">'+n.layer+' · '+n.town+'</div></div></div><div class="node-desc">'+n.desc+'</div><div class="mini-stats"><div class="mini-stat"><span>直接连接</span><b>'+list.length+' 条</b></div><div class="mini-stat"><span>数据标记</span><b>'+n.state==="yellow"?"待核实":"已收录"+"</b></div></div></div>";
- html=html.replace(/<b>已收录<\/b>/g,'<b>已收录</b>');
+ const stateText=n.state==="yellow"?"待核实":"公开资料已收录";
+ let html='<div class="inspector-card"><div class="node-title-row"><i class="node-swatch" style="background:'+clusterMeta[n.cluster].color+'"></i><div><div class="node-title">'+n.name+'</div><div class="node-meta">'+n.layer+' · '+n.town+'</div></div></div><div class="node-desc">'+n.desc+'</div><div class="mini-stats"><div class="mini-stat"><span>直接连接</span><b>'+list.length+' 条</b></div><div class="mini-stat"><span>数据标记</span><b>'+stateText+'</b></div></div></div>';
  html+='<div class="panel-section-title">直接关联 · 点击查看关系</div><div class="relation-list">';
  if(!list.length){html+='<div class="inspect-empty"><b>当前没有直接连边</b><p>这不代表主体不重要，只代表当前网络没有记录直接关系。</p></div>'}
  list.forEach(function(o){
@@ -628,7 +628,7 @@ function setMode(mode){
   $("status").textContent="情景推演 · 选择左侧任一条件";return;
  }
  if(mode==="compare"){
-  if(activeScenario==="base")computeScenario("xwd");
+  if(activeScenario==="base")applyScenario("xwd");
   compareMode=true;compareMix=Number($("compare-slider").value)/100;$("compare-panel").classList.add("show");
   $("stage-title").textContent="前后对照 · "+scenarioData[activeScenario].label;$("stage-sub").textContent="拖动对照滑杆，在基准结构与情景状态之间平滑切换";
   $("compare-impact-title").textContent=scenarioData[activeScenario].label;
