@@ -157,7 +157,7 @@ kbd{font-family:inherit;border:1px solid #e1e5df;background:#f8f9f6;border-radiu
 .scene-pip{background:#71ad9d;box-shadow:0 0 0 4px #71ad9d20}
 .scene-controls{top:12px;right:16px}.scene-control{font-size:9px;background:rgba(255,255,255,.83)}
 .scene-legend{display:none}
-.right-panel{position:absolute;z-index:4;right:18px;top:16px;width:132px;max-height:calc(100% - 185px);overflow:auto;border:1px solid rgba(233,232,226,.92);border-radius:15px;background:rgba(255,254,251,.9);box-shadow:0 7px 26px rgba(46,58,54,.07);padding:12px 12px 13px;backdrop-filter:blur(12px);border-left:1px solid rgba(233,232,226,.92)}
+.right-panel{position:absolute;z-index:4;right:18px;top:145px;width:132px;max-height:calc(100% - 185px);overflow:auto;border:1px solid rgba(233,232,226,.92);border-radius:15px;background:rgba(255,254,251,.9);box-shadow:0 7px 26px rgba(46,58,54,.07);padding:12px 12px 13px;backdrop-filter:blur(12px);border-left:1px solid rgba(233,232,226,.92)}
 .legend-panel-title{font-size:12px;font-weight:750;color:#304650;margin:2px 0 13px}
 .legend-scale{display:flex;align-items:center;gap:9px;margin:10px 0;font-size:10px;color:#8b969a}
 .scale-line{width:28px;border-radius:5px;background:#4b91d5;display:block}
@@ -191,7 +191,7 @@ kbd{font-family:inherit;border:1px solid #e1e5df;background:#f8f9f6;border-radiu
 body.focus-mode .right-panel{opacity:.94}
 @media(max-width:1250px){.topbar{gap:10px;padding:0 14px}.brand{min-width:185px}.top-mode{padding:8px 7px;font-size:11px}.top-search{width:190px}.metric-strip{grid-template-columns:repeat(5,minmax(76px,1fr)) minmax(145px,1.1fr);gap:5px;padding-left:8px;padding-right:8px}.metric-card{padding:9px 8px}.metric-value{font-size:16px}.bottom-dock{grid-template-columns:minmax(310px,1fr) minmax(260px,1fr);gap:7px}.dock-actions{grid-template-columns:repeat(4,minmax(0,1fr))}.dock-btn{gap:5px;padding:7px 5px}.dock-btn small{display:none}}
 @media(max-width:980px){.workspace{grid-template-columns:170px minmax(0,1fr)}.right-panel{right:10px;top:10px}.metric-strip{grid-template-columns:repeat(3,minmax(85px,1fr));height:auto;min-height:80px}.metric-card:nth-child(n+4),.year-card{display:none}.bottom-dock{grid-template-columns:1fr;bottom:8px}.scenario-strip{display:none}.dock-actions{grid-template-columns:repeat(4,minmax(0,1fr))}.dock-btn{justify-content:center}.dock-btn span:last-child{display:none}.dock-btn .dock-symbol{font-size:19px}.compare-panel{bottom:66px}}
-@media(max-width:680px){.workspace{display:flex;flex-direction:column;height:auto;min-height:calc(100vh - 58px)}.topbar{height:58px}.left-panel{display:block}.center-stage{height:calc(100vh - 155px);min-height:490px}.stage-head{height:42px}.stage-tools #view3d{display:none}.metric-strip{grid-template-columns:repeat(2,minmax(0,1fr));height:76px;min-height:76px;padding:4px 8px;gap:5px}.metric-card{padding:7px 8px}.metric-card:nth-child(n+3){display:none}.metric-label{font-size:9px}.metric-value{font-size:15px;margin-top:3px}.metric-spark{height:16px;bottom:7px}.metric-spark i{width:3px}.year-card{display:none}.right-panel{top:8px;right:8px;width:116px;padding:9px}.legend-panel-title{font-size:11px;margin-bottom:9px}.legend-scale{font-size:9px;margin:8px 0;gap:6px}.scale-line{width:22px}.legend-toggle{font-size:9px;margin-top:8px;padding-top:8px}.switch{transform:scale(.9);transform-origin:right center}.right-panel.has-selection{width:min(270px,calc(100% - 20px));max-height:60%;top:auto;bottom:68px}.bottom-dock{left:7px;right:7px;bottom:7px}.dock-actions{padding:4px;border-radius:12px}.dock-btn{padding:8px 4px}.scene-topline{left:8px;top:8px}.scene-controls{right:8px;top:8px}.scene-control{font-size:8px;padding:6px}.scene-legend{display:none}}
+@media(max-width:680px){.workspace{display:flex;flex-direction:column;height:auto;min-height:calc(100vh - 58px)}.topbar{height:58px}.left-panel{display:block}.center-stage{height:calc(100vh - 155px);min-height:490px}.stage-head{height:42px}.stage-tools #view3d{display:none}.metric-strip{grid-template-columns:repeat(2,minmax(0,1fr));height:76px;min-height:76px;padding:4px 8px;gap:5px}.metric-card{padding:7px 8px}.metric-card:nth-child(n+3){display:none}.metric-label{font-size:9px}.metric-value{font-size:15px;margin-top:3px}.metric-spark{height:16px;bottom:7px}.metric-spark i{width:3px}.year-card{display:none}.right-panel{top:178px;right:8px;width:116px;padding:9px}.legend-panel-title{font-size:11px;margin-bottom:9px}.legend-scale{font-size:9px;margin:8px 0;gap:6px}.scale-line{width:22px}.legend-toggle{font-size:9px;margin-top:8px;padding-top:8px}.switch{transform:scale(.9);transform-origin:right center}.right-panel.has-selection{width:min(270px,calc(100% - 20px));max-height:60%;top:auto;bottom:68px}.bottom-dock{left:7px;right:7px;bottom:7px}.dock-actions{padding:4px;border-radius:12px}.dock-btn{padding:8px 4px}.scene-topline{left:8px;top:8px}.scene-controls{right:8px;top:8px}.scene-control{font-size:8px;padding:6px}.scene-legend{display:none}}
 
 </style>
 </head>
@@ -206,7 +206,7 @@ body.focus-mode .right-panel{opacity:.94}
   <nav class="top-modes" aria-label="工作模式">
     <button class="top-mode active" data-mode="overview">◎ 全景</button>
     <button class="top-mode" data-filter="manufacturing">♧ 产业</button>
-    <button class="top-mode" data-filter="external">⌂ 城镇</button>
+    <button class="top-mode" data-filter="external">⌂ 跨城</button>
     <button class="top-mode" data-filter="tourism">◇ 文旅</button>
     <button class="top-mode" data-filter="agriculture">❋ 农业</button>
     <button class="top-mode" data-filter="resources">≈ 资源</button>
@@ -257,7 +257,7 @@ body.focus-mode .right-panel{opacity:.94}
       <div class="metric-card"><div class="metric-label">固定资产投资</div><div class="metric-value negative">−18.8% <small>年度增速</small></div><div class="metric-spark coral"><i></i><i></i><i></i><i></i><i></i><i></i><i></i></div></div>
       <div class="metric-card"><div class="metric-label">外贸进出口</div><div class="metric-value positive">+29.1% <small>年度增速</small></div><div class="metric-spark violet"><i></i><i></i><i></i><i></i><i></i><i></i><i></i></div></div>
       <div class="metric-card"><div class="metric-label">农业总产值</div><div class="metric-value">107.44 <small>亿元</small></div><div class="metric-spark green"><i></i><i></i><i></i><i></i><i></i><i></i><i></i></div></div>
-      <div class="year-card"><div class="year-tabs"><button class="year-tab active">2025</button><button class="year-tab">2027</button><button class="year-tab">2030</button></div><div class="year-track"><i></i><i></i><i></i><i></i><i></i></div><div class="year-note">现实基准 → 情景探索</div></div>
+      <div class="year-card"><div class="year-tabs"><button class="year-tab active">2025</button><button class="year-tab">2027</button><button class="year-tab">2030</button></div><div class="year-track"><i></i><i></i><i></i><i></i><i></i></div><div class="year-note" id="year-note">现实基准 → 情景探索</div></div>
     </div>
     <div class="world-wrap" id="world-wrap">
       <canvas id="world" aria-label="可交互的博罗抽象三维关系网络"></canvas>
@@ -423,7 +423,7 @@ let scene,camera,renderer,raycaster,mouse,clock,worldGroup;
 let nodeObjects={},nodeLabels={},edgeObjects=[],pickables=[];
 let selectedNodeId=null,selectedEdgeIndex=null,activeFilter="all",activeScenario="base";
 let scenarioLevels={},scenarioMaxHop=0,scenarioAffectedEdges={};
-let compareMode=false,compareMix=.65,motionOn=true,autoRotate=false,dragging=false,dragMoved=false;
+let compareMode=false,compareMix=.65,motionOn=true,autoRotate=false,dragging=false,dragMoved=false,labelsVisible=true,focusMode=false;
 let theta=.42,phi=1.12,cameraRadius=30;
 let cameraTarget=new THREE.Vector3(0,1.2,0);
 let pointerStart={x:0,y:0},lastPointer={x:0,y:0},hoveredId=null;
@@ -463,6 +463,68 @@ function addLine(points,color,opacity){
  const mat=new THREE.LineBasicMaterial({color:color,transparent:true,opacity:opacity,depthWrite:false});
  const line=new THREE.Line(geo,mat);scene.add(line);return line;
 }
+function addIslandDecor(key,meta){
+ const col=new THREE.Color(meta.color);
+ const lighten=function(amount){return col.clone().lerp(new THREE.Color("#ffffff"),amount)};
+ const darken=function(amount){return col.clone().lerp(new THREE.Color("#53656a"),amount)};
+ const mat=function(color,rough){return new THREE.MeshStandardMaterial({color:color,roughness:rough===undefined?.72:rough,metalness:.035})};
+ const addBox=function(x,z,w,h,d,color,rot){
+  const mesh=new THREE.Mesh(new THREE.BoxGeometry(w,h,d),mat(color));
+  mesh.position.set(meta.x+x,.43+h/2,meta.z+z);mesh.rotation.y=rot||0;worldGroup.add(mesh);return mesh;
+ };
+ const addCone=function(x,z,r,h,color,segments){
+  const mesh=new THREE.Mesh(new THREE.ConeGeometry(r,h,segments||6),mat(color));
+  mesh.position.set(meta.x+x,.42+h/2,meta.z+z);worldGroup.add(mesh);return mesh;
+ };
+ const addTree=function(x,z,s){
+  const trunk=new THREE.Mesh(new THREE.CylinderGeometry(.035*s,.05*s,.28*s,6),mat("#9a8b76"));
+  trunk.position.set(meta.x+x,.48+.14*s,meta.z+z);worldGroup.add(trunk);
+  const crown=new THREE.Mesh(new THREE.ConeGeometry(.18*s,.5*s,6),mat(lighten(.18)));
+  crown.position.set(meta.x+x,.56+.38*s,meta.z+z);worldGroup.add(crown);
+ };
+ const platform=new THREE.Mesh(new THREE.CylinderGeometry(meta.radius*.83,meta.radius*.9,.32,10),mat(darken(.04)));
+ platform.position.set(meta.x,.05,meta.z);worldGroup.add(platform);
+ const upper=new THREE.Mesh(new THREE.CylinderGeometry(meta.radius*.76,meta.radius*.82,.15,10),mat(lighten(.34)));
+ upper.position.set(meta.x,.285,meta.z);worldGroup.add(upper);
+ const edgeRing=new THREE.Mesh(new THREE.TorusGeometry(meta.radius*.77,.055,8,64),new THREE.MeshStandardMaterial({color:lighten(.12),roughness:.42,metalness:.08,emissive:col,emissiveIntensity:.08}));
+ edgeRing.rotation.x=Math.PI/2;edgeRing.position.set(meta.x,.37,meta.z);worldGroup.add(edgeRing);
+ const seed=key.split("").reduce(function(sum,ch){return sum+ch.charCodeAt(0)},0);
+ const rnd=function(i){const v=Math.sin(seed*1.17+i*12.9898)*43758.5453;return v-Math.floor(v)};
+ if(key==="manufacturing"){
+  for(let i=0;i<14;i++){
+   const a=i*2.399+0.3,r=.45+rnd(i+1)*1.65,x=Math.cos(a)*r,z=Math.sin(a)*r*.75;
+   const w=.28+rnd(i+8)*.36,d=.26+rnd(i+18)*.28,h=.36+rnd(i+28)*1.05;
+   addBox(x,z,w,h,d,i%3===0?lighten(.58):lighten(.32),rnd(i+35)*.5);
+   addBox(x,z,w*1.08,.07,d*1.08,lighten(.1),rnd(i+35)*.5);
+   if(i%4===0){const stack=new THREE.Mesh(new THREE.CylinderGeometry(.045,.06,.35,7),mat(darken(.1)));stack.position.set(meta.x+x+w*.3,.48+h+.17,meta.z+z);worldGroup.add(stack)}
+  }
+ }else if(key==="external"){
+  for(let i=0;i<13;i++){
+   const a=i*2.4,r=.35+rnd(i+1)*1.7,x=Math.cos(a)*r,z=Math.sin(a)*r*.72;
+   const w=.24+rnd(i+5)*.22,d=.24+rnd(i+15)*.22,h=.65+rnd(i+25)*1.65;
+   addBox(x,z,w,h,d,i%3===0?lighten(.48):lighten(.25),rnd(i+33)*.25);
+   addBox(x,z,w*1.08,.06,d*1.08,lighten(.08),0);
+   if(i%3===0){const spire=new THREE.Mesh(new THREE.ConeGeometry(.07,.32,5),mat(lighten(.08)));spire.position.set(meta.x+x,.48+h+.17,meta.z+z);worldGroup.add(spire)}
+  }
+ }else if(key==="resources"){
+  addCone(-.8,-.45,1.0,1.35,lighten(.25),5);addCone(.75,-.25,.82,1.0,lighten(.4),6);addCone(.1,.75,.95,1.18,lighten(.18),5);
+  for(let i=0;i<9;i++){const a=i*2.4,r=.9+rnd(i+4)*1.45;addTree(Math.cos(a)*r,Math.sin(a)*r*.72,.65+rnd(i+12)*.65)}
+  for(let i=0;i<4;i++)addBox(-1.15+i*.72,1.05,.36,.15,.25,lighten(.45),-.15);
+ }else if(key==="agriculture"){
+  for(let row=0;row<5;row++){
+   const strip=addBox(-1.55+row*.67,.1,.12,.045,2.15,lighten(.22),-.18);
+   strip.material.color.lerp(new THREE.Color("#ffffff"),.15);
+  }
+  for(let i=0;i<11;i++){const a=i*2.4,r=.55+rnd(i+2)*1.55;addTree(Math.cos(a)*r,Math.sin(a)*r*.7,.55+rnd(i+20)*.65)}
+  for(let i=0;i<5;i++)addBox(-.9+i*.43,-.7,.26,.24,.28,lighten(.45),.2);
+ }else{
+  addCone(-.95,-.25,1.0,.8,lighten(.32),7);addCone(.8,.25,.9,.72,lighten(.22),7);
+  for(let i=0;i<7;i++){const a=i*2.4,r=.7+rnd(i+5)*1.35;addTree(Math.cos(a)*r,Math.sin(a)*r*.7,.55+rnd(i+22)*.5)}
+  const pagoda=function(x,z,s){
+   for(let j=0;j<3;j++){const w=s*(1-j*.22),h=.13*s;addBox(x,z,w,h,w*.78,lighten(.25+j*.08),0);const roof=new THREE.Mesh(new THREE.ConeGeometry(w*.78,.18*s,4),mat(darken(.02)));roof.position.set(meta.x+x,.52+j*.18*s+.12*s,meta.z+z);roof.rotation.y=Math.PI/4;worldGroup.add(roof)}
+  };pagoda(-.3,.1,.55);pagoda(.65,-.45,.38);
+ }
+}
 function initWorld(){
  const canvas=$("world");
  scene=new THREE.Scene();scene.background=null;scene.fog=new THREE.Fog("#f0f2ee",32,62);
@@ -477,14 +539,15 @@ function initWorld(){
  worldGroup=new THREE.Group();scene.add(worldGroup);
  Object.keys(clusterMeta).forEach(function(key){
   const meta=clusterMeta[key],col=hexColor(meta.color);
+  addIslandDecor(key,meta);
   const base=new THREE.Mesh(new THREE.CylinderGeometry(meta.radius,meta.radius*1.08,.34,8),new THREE.MeshStandardMaterial({color:col,roughness:.55,metalness:.08,transparent:true,opacity:.18,depthWrite:false}));
   base.position.set(meta.x,.05,meta.z);worldGroup.add(base);
   const rim=new THREE.Mesh(new THREE.TorusGeometry(meta.radius*.88,.035,7,64),new THREE.MeshBasicMaterial({color:col,transparent:true,opacity:.48}));
   rim.rotation.x=Math.PI/2;rim.position.set(meta.x,.25,meta.z);worldGroup.add(rim);
   const inner=new THREE.Mesh(new THREE.CircleGeometry(meta.radius*.76,8),new THREE.MeshBasicMaterial({color:col,transparent:true,opacity:.07,side:THREE.DoubleSide,depthWrite:false}));
   inner.rotation.x=-Math.PI/2;inner.position.set(meta.x,.235,meta.z);worldGroup.add(inner);
-  const label=makeLabelSprite(meta.label,meta.color,true);label.position.set(meta.x,4.65,meta.z);worldGroup.add(label);meta.sprite=label;meta.rim=rim;
-  const sub=makeLabelSprite(meta.sub,meta.color,false);sub.scale.set(3.45,.58,1);sub.position.set(meta.x,4.0,meta.z);sub.material.opacity=.8;worldGroup.add(sub);meta.subSprite=sub;
+  const label=makeLabelSprite(meta.label,meta.color,true);label.position.set(meta.x,4.15,meta.z);worldGroup.add(label);meta.sprite=label;meta.rim=rim;
+  const sub=makeLabelSprite(meta.sub,meta.color,false);sub.scale.set(3.45,.58,1);sub.position.set(meta.x,3.48,meta.z);sub.material.opacity=.8;worldGroup.add(sub);meta.subSprite=sub;
  });
  const centerRing=new THREE.Mesh(new THREE.TorusGeometry(2.25,.035,8,72),new THREE.MeshBasicMaterial({color:"#7ba5a0",transparent:true,opacity:.42}));
  centerRing.rotation.x=Math.PI/2;centerRing.position.set(0,.12,0);worldGroup.add(centerRing);
@@ -590,6 +653,7 @@ function showHover(e){
 }
 function getEdgesForNode(id){return edges.map(function(e,i){return {e:e,i:i}}).filter(function(o){return o.e.s===id||o.e.t===id})}
 function selectNode(id){
+ $("legend-panel").style.display="none";$("world-wrap").classList.add("has-selection");document.querySelector(".right-panel").classList.add("has-selection");
  selectedNodeId=id;selectedEdgeIndex=null;
  const n=nodeById[id];$("inspector-heading").textContent="节点详情";$("inspector-count").textContent="已选中";
  const list=getEdgesForNode(id);
@@ -608,6 +672,7 @@ function selectNode(id){
  focusOnNode(id);updateVisualState();
 }
 function selectEdge(index){
+ $("legend-panel").style.display="none";$("world-wrap").classList.add("has-selection");document.querySelector(".right-panel").classList.add("has-selection");
  selectedEdgeIndex=index;selectedNodeId=null;const e=edges[index];
  $("inspector-heading").textContent="关系详情";$("inspector-count").textContent="已选中";
  const bars=[1,2,3,4,5].map(function(i){return '<i class="'+(i<=e.w?"on":"")+'"></i>'}).join("");
@@ -618,6 +683,7 @@ function selectEdge(index){
  updateVisualState();
 }
 function renderEmptyInspector(){
+ document.querySelector(".right-panel").classList.remove("has-selection");$("legend-panel").style.display="";$("world-wrap").classList.remove("has-selection");
  $("inspector-heading").textContent="关系详情";$("inspector-count").textContent="待选择";
  $("inspector").innerHTML='<div class="inspect-empty"><div class="empty-orbit">⌁</div><b>从一个节点开始</b><p>点击 3D 世界中的企业、主体群或关系线。我们会突出显示它直接连接的对象，并列出关系强度与依据等级。</p></div>';
  $("status").textContent="选择一个节点或关系线，开始探索";
@@ -673,12 +739,12 @@ function updateVisualState(){
   const inScenario=!sc||scenarioLevels[n.id]!==undefined;
   let opacity=inFilter?1:.16;
   if(sc){const scenarioOpacity=inScenario?1:.13;opacity=opacity*(1-mix)+scenarioOpacity*mix}
-  if(selectedNodeId||selectedEdgeIndex!==null){const isNear=neighbors.has(n.id);opacity*=isNear?1:.24}
+  if(selectedNodeId||selectedEdgeIndex!==null){const isNear=neighbors.has(n.id);opacity*=isNear?1:(focusMode?.055:.24)}
   obj.mat.opacity=opacity;obj.glow.material.opacity=.10*opacity;obj.ring.material.opacity=(neighbors.has(n.id)?1:.55)*opacity;
   const impact=sc&&scenarioLevels[n.id]!==undefined&&n.id!==sc.seed;
   obj.mat.emissive.set(impact?"#d76d5d":obj.baseColor);obj.mat.emissiveIntensity=impact?.45:.13;
   obj.root.scale.setScalar(selectedNodeId===n.id?1.32:1);
-  const lab=nodeLabels[n.id];lab.material.opacity=(n.defaultLabel||neighbors.has(n.id)||impact)?opacity:0;
+  const lab=nodeLabels[n.id];lab.material.opacity=(labelsVisible&&(n.defaultLabel||neighbors.has(n.id)||impact))?opacity:0;
   lab.visible=lab.material.opacity>.04;
  });
  edgeObjects.forEach(function(o){
@@ -690,7 +756,7 @@ function updateVisualState(){
   if(sc){scenarioOpacity=affected?.92:.025;if(!filterOk)scenarioOpacity*=.25}
   let opacity=baseOpacity*(1-mix)+scenarioOpacity*mix;
   if(selectedEdgeIndex!==null)opacity*=selectedEdgeIndex===o.index?1:.12;
-  else if(selectedNodeId)opacity*=(e.s===selectedNodeId||e.t===selectedNodeId)?1:.1;
+  else if(selectedNodeId)opacity*=(e.s===selectedNodeId||e.t===selectedNodeId)?1:(focusMode?.025:.1);
   o.mat.opacity=opacity;
   const baseColor=new THREE.Color(o.baseColor);
   if(sc&&affected)baseColor.lerp(new THREE.Color("#d76d5d"),mix);
@@ -753,6 +819,10 @@ function bindUI(){
  $("focus-btn").addEventListener("click",function(){if(selectedNodeId)focusOnNode(selectedNodeId);else if(selectedEdgeIndex!==null){const e=edges[selectedEdgeIndex];cameraTarget.set((nodePositions[e.s].x+nodePositions[e.t].x)/2,1.5,(nodePositions[e.s].z+nodePositions[e.t].z)/2);cameraRadius=20;updateCamera()}else resetView()});
  $("motion-btn").addEventListener("click",function(){motionOn=!motionOn;$("motion-btn").textContent=motionOn?"动效开启":"动效暂停";$("motion-btn").classList.toggle("on",motionOn)});
  $("auto-btn").addEventListener("click",function(){autoRotate=!autoRotate;$("auto-btn").classList.toggle("on",autoRotate)});
+ $("labels-toggle").addEventListener("click",function(){labelsVisible=!labelsVisible;this.classList.toggle("on",labelsVisible);this.setAttribute("aria-pressed",String(labelsVisible));updateVisualState()});
+ $("focus-toggle").addEventListener("click",function(){if(!selectedNodeId&&selectedEdgeIndex===null){$("status").textContent="先选择一个节点或关系，再开启聚焦模式";return}focusMode=!focusMode;this.classList.toggle("on",focusMode);this.setAttribute("aria-pressed",String(focusMode));document.body.classList.toggle("focus-mode",focusMode);updateVisualState()});
+ document.querySelectorAll(".year-tab").forEach(function(btn){btn.addEventListener("click",function(){document.querySelectorAll(".year-tab").forEach(function(b){b.classList.toggle("active",b===btn)});$("year-note")&&($("year-note").textContent=btn.textContent==="2025"?"现实基准数据":btn.textContent+" · 情景探索");$("status").textContent=btn.textContent==="2025"?"当前展示2025现实基准指标；情景动画不改变统计数据":btn.textContent+"用于情景观察，当前顶部指标仍为2025现实基准"})});
+ $("more-scenarios").addEventListener("click",function(){document.querySelectorAll("[data-scenario]").forEach(function(b){b.style.display=""});$("status").textContent="可从左侧选择更多情景：链主外迁、东江环保约束、老厂腾退改造"})
  $("compare-slider").addEventListener("input",function(){compareMix=Number(this.value)/100;updateVisualState();$("compare-impact-text").textContent=Math.round(compareMix*100)+"% 情景强度"});
  $("search").addEventListener("keydown",function(e){
   if(e.key!=="Enter")return;const q=this.value.trim().toLowerCase();if(!q)return;
