@@ -751,7 +751,7 @@ function bindUI(){
   setPointerRay(e);const hit=visibleHit();if(hit)renderNodeDetails(hit.object.userData.nodeId);
  });
  canvas.addEventListener("pointercancel",function(){dragging=false;draggingNodeId=null;canvas.style.cursor="grab"});
- canvas.addEventListener("wheel",function(e){e.preventDefault();camera.zoom=Math.max(.72,Math.min(1.65,camera.zoom+(e.deltaY<0?.06:-.06));camera.updateProjectionMatrix()},{passive:false});
+ canvas.addEventListener("wheel",function(e){e.preventDefault();camera.zoom=Math.max(.72,Math.min(1.65,camera.zoom+(e.deltaY<0?.06:-.06)));camera.updateProjectionMatrix()},{passive:false});
  window.addEventListener("resize",resizeWorld);
 }
 function animate(){
