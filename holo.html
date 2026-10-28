@@ -193,6 +193,7 @@ body.focus-mode .right-panel{opacity:.94}
 @media(max-width:980px){.workspace{grid-template-columns:170px minmax(0,1fr)}.right-panel{right:10px;top:10px}.metric-strip{grid-template-columns:repeat(3,minmax(85px,1fr));height:auto;min-height:80px}.metric-card:nth-child(n+4),.year-card{display:none}.bottom-dock{grid-template-columns:1fr;bottom:8px}.scenario-strip{display:none}.dock-actions{grid-template-columns:repeat(4,minmax(0,1fr))}.dock-btn{justify-content:center}.dock-btn span:last-child{display:none}.dock-btn .dock-symbol{font-size:19px}.compare-panel{bottom:66px}}
 @media(max-width:680px){.workspace{display:flex;flex-direction:column;height:auto;min-height:calc(100vh - 58px)}.topbar{height:58px}.left-panel{display:block}.center-stage{height:calc(100vh - 155px);min-height:490px}.stage-head{height:42px}.stage-tools #view3d{display:none}.metric-strip{grid-template-columns:repeat(2,minmax(0,1fr));height:76px;min-height:76px;padding:4px 8px;gap:5px}.metric-card{padding:7px 8px}.metric-card:nth-child(n+3){display:none}.metric-label{font-size:9px}.metric-value{font-size:15px;margin-top:3px}.metric-spark{height:16px;bottom:7px}.metric-spark i{width:3px}.year-card{display:none}.right-panel{top:178px;right:8px;width:116px;padding:9px}.legend-panel-title{font-size:11px;margin-bottom:9px}.legend-scale{font-size:9px;margin:8px 0;gap:6px}.scale-line{width:22px}.legend-toggle{font-size:9px;margin-top:8px;padding-top:8px}.switch{transform:scale(.9);transform-origin:right center}.right-panel.has-selection{width:min(270px,calc(100% - 20px));max-height:60%;top:auto;bottom:68px}.bottom-dock{left:7px;right:7px;bottom:7px}.dock-actions{padding:4px;border-radius:12px}.dock-btn{padding:8px 4px}.scene-topline{left:8px;top:8px}.scene-controls{right:8px;top:8px}.scene-control{font-size:8px;padding:6px}.scene-legend{display:none}}
 
+body.show-all-scenarios .left-panel .scenario-list{display:flex!important}body.show-all-scenarios .left-panel .side-divider{display:block!important}body.show-all-scenarios .left-panel .section-kicker{display:block!important}
 </style>
 </head>
 <body>
@@ -210,7 +211,7 @@ body.focus-mode .right-panel{opacity:.94}
     <button class="top-mode" data-filter="tourism">◇ 文旅</button>
     <button class="top-mode" data-filter="agriculture">❋ 农业</button>
     <button class="top-mode" data-filter="resources">≈ 资源</button>
-    <button class="top-mode" data-mode="simulate">↗ 交通</button>
+    <button class="top-mode" data-mode="simulate">ϟ 情景</button>
   </nav>
   <label class="top-search" title="搜索节点">
     <span aria-hidden="true">⌕</span>
@@ -822,7 +823,7 @@ function bindUI(){
  $("labels-toggle").addEventListener("click",function(){labelsVisible=!labelsVisible;this.classList.toggle("on",labelsVisible);this.setAttribute("aria-pressed",String(labelsVisible));updateVisualState()});
  $("focus-toggle").addEventListener("click",function(){if(!selectedNodeId&&selectedEdgeIndex===null){$("status").textContent="先选择一个节点或关系，再开启聚焦模式";return}focusMode=!focusMode;this.classList.toggle("on",focusMode);this.setAttribute("aria-pressed",String(focusMode));document.body.classList.toggle("focus-mode",focusMode);updateVisualState()});
  document.querySelectorAll(".year-tab").forEach(function(btn){btn.addEventListener("click",function(){document.querySelectorAll(".year-tab").forEach(function(b){b.classList.toggle("active",b===btn)});$("year-note")&&($("year-note").textContent=btn.textContent==="2025"?"现实基准数据":btn.textContent+" · 情景探索");$("status").textContent=btn.textContent==="2025"?"当前展示2025现实基准指标；情景动画不改变统计数据":btn.textContent+"用于情景观察，当前顶部指标仍为2025现实基准"})});
- $("more-scenarios").addEventListener("click",function(){document.querySelectorAll("[data-scenario]").forEach(function(b){b.style.display=""});$("status").textContent="可从左侧选择更多情景：链主外迁、东江环保约束、老厂腾退改造"})
+ $("more-scenarios").addEventListener("click",function(){document.body.classList.toggle("show-all-scenarios");this.textContent=document.body.classList.contains("show-all-scenarios")?"收起情景　⌃":"更多情景　›";$("status").textContent=document.body.classList.contains("show-all-scenarios")?"已展开全部情景入口":"可从左侧选择链主外迁、东江环保约束、老厂腾退改造等情景"})
  $("compare-slider").addEventListener("input",function(){compareMix=Number(this.value)/100;updateVisualState();$("compare-impact-text").textContent=Math.round(compareMix*100)+"% 情景强度"});
  $("search").addEventListener("keydown",function(e){
   if(e.key!=="Enter")return;const q=this.value.trim().toLowerCase();if(!q)return;
