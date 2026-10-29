@@ -116,6 +116,22 @@ button:focus-visible{outline:3px solid rgba(76,141,255,.3);outline-offset:2px}
 .selected-copy{font-size:10px;line-height:1.75;color:#7f8da1;margin-top:5px}
 .selected-cta{display:flex;align-items:center;gap:6px;margin-top:10px;color:#4c7fca;font-size:10px;font-weight:700}
 .selected-cta svg{width:12px;height:12px}
+.selected-cta{display:flex;align-items:center;justify-content:space-between;gap:8px;margin-top:0;padding:9px 10px;border:1px solid rgba(75,139,232,.22);border-radius:9px;background:linear-gradient(135deg,#eaf3ff,#f7fbff);color:#2f6fbd;font-size:10px;font-weight:750;cursor:pointer;width:100%;text-align:left;transition:transform .18s,border-color .18s,box-shadow .18s}
+.selected-cta:hover{transform:translateY(-1px);border-color:#a9c9f2;box-shadow:0 5px 15px rgba(50,105,180,.12)}
+.selected-cta .cta-label{flex:1}
+.selected-cta .cta-arrow{font-size:14px}
+.explore-actions{display:grid;grid-template-columns:minmax(0,1fr) auto;gap:7px;margin-top:11px}
+.share-button{border:1px solid #d9e4f2;background:rgba(255,255,255,.92);color:#53677f;border-radius:9px;padding:0 10px;font-size:10px;font-weight:650;white-space:nowrap;cursor:pointer;transition:background .18s,border-color .18s}
+.share-button:hover{background:#f1f7ff;border-color:#b8cfea}
+.journey-steps{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:4px;margin-top:11px}
+.journey-step{display:flex;flex-direction:column;gap:3px;padding:7px 5px;border:1px solid rgba(135,155,185,.22);border-radius:8px;background:rgba(244,248,253,.7);color:#98a5b6;font-size:8px;line-height:1.3;min-width:0}
+.journey-step b{font-size:9px;letter-spacing:.5px;color:#8a99ab}
+.journey-step.active{border-color:#a9c9f2;background:#eef6ff;color:#376eae}
+.journey-step.active b{color:#2f6fbd}
+.journey-step.done{border-color:#bfe6db;background:#eefaf6;color:#24836c}
+.journey-step.done b{color:#24836c}
+.share-toast{position:fixed;z-index:60;left:50%;bottom:28px;transform:translateX(-50%);padding:12px 16px;border:1px solid rgba(135,219,194,.4);border-radius:12px;background:rgba(12,28,46,.96);color:#e4fff5;box-shadow:0 16px 40px rgba(0,0,0,.35);font-size:12px;max-width:min(92vw,540px)}
+.share-toast[hidden]{display:none}
 .explore-foot{margin-top:auto;padding:15px 4px 3px;color:#a1acbb;font-size:9px;line-height:1.7}
 .explore-foot strong{color:#718198;font-weight:650}
 .footerbar{display:flex;align-items:center;justify-content:space-between;gap:12px;max-width:1920px;margin:0 auto;padding:0 20px 12px;color:#9ba7b6;font-size:9px}
@@ -128,7 +144,8 @@ svg text{font-family:Inter,-apple-system,BlinkMacSystemFont,"PingFang SC","Micro
 .edge.secondary{stroke-dasharray:3 7}
 .edge.cross{stroke-opacity:.4}
 .edge.dim{opacity:.07!important}
-.edge.hot{stroke-opacity:.98!important;filter:drop-shadow(0 0 4px currentColor)}
+.edge.hot{stroke-opacity:.98!important;filter:drop-shadow(0 0 4px currentColor);animation:hotEdgePulse 1.8s ease-in-out infinite}
+@keyframes hotEdgePulse{0%,100%{stroke-opacity:.65}50%{stroke-opacity:1}}
 .edge.broken{stroke:#ff827c!important;stroke-dasharray:7 7!important;stroke-opacity:1!important;filter:drop-shadow(0 0 4px rgba(255,100,100,.35))}
 .edge.new{stroke-dasharray:120;stroke-dashoffset:120;animation:drawLine 1.4s ease forwards}
 .node{cursor:grab;transition:opacity .3s}
@@ -256,7 +273,9 @@ html,body{background:radial-gradient(ellipse at 48% -25%,rgba(56,91,147,.22),tra
 .node .hub-glow{opacity:.15}
 .edge.hot{stroke-dasharray:5 10;animation:edgeFlow 3s linear infinite;stroke-opacity:.95!important}
 .edge.broken{animation:brokenPulse 1.4s ease-in-out infinite}
-.flow-particle{filter:drop-shadow(0 0 5px currentColor)}
+.flow-particle{filter:drop-shadow(0 0 5px currentColor);animation:particlePulse 1.3s ease-in-out infinite alternate}
+.evidence-flow-particle{pointer-events:none;filter:drop-shadow(0 0 5px currentColor);animation:particlePulse 1.25s ease-in-out infinite alternate}
+@keyframes particlePulse{from{opacity:.35}to{opacity:1}}
 .star{animation:starTwinkle 5.5s ease-in-out infinite alternate}
 @keyframes edgeFlow{to{stroke-dashoffset:-60}}
 @keyframes brokenPulse{0%,100%{stroke-opacity:.62}50%{stroke-opacity:1}}
@@ -338,7 +357,8 @@ html,body{background:radial-gradient(ellipse at 48% -25%,rgba(56,91,147,.22),tra
 @media(max-width:1280px){.evidence-toggle button{padding:6px 7px}.evidence-panel{max-height:300px}}
 @media(max-width:680px){.canvas-head-right{justify-content:flex-start}.evidence-toggle{width:100%;justify-content:stretch}.evidence-toggle button{flex:1}.evidence-panel{max-height:280px}.evidence-stats strong{font-size:15px}.evidence-stats span{font-size:8px}}
 @media(max-width:680px){.evidence-node-title{font-size:13px}.evidence-node-sub{font-size:10px}.brand{min-width:100px;flex:0 0 auto}.brand-mark{width:28px;height:28px}.brand-name{font-size:12px;white-space:nowrap}.brand-sub{display:none}.searchbox.search-open{width:min(50vw,200px)}}
-@media(prefers-reduced-motion:reduce){.evidence-edge.status-changed{animation:none!important}}
+@media(max-width:680px){.explore-actions{grid-template-columns:minmax(0,1fr) auto}.selected-cta{padding:9px 8px}.share-button{padding:0 8px;font-size:9px}.journey-step{padding:6px 3px;font-size:7px}.journey-step b{font-size:8px}}
+@media(prefers-reduced-motion:reduce){.evidence-edge.status-changed,.evidence-edge.scenario-new,.evidence-node.new-highlight .node-core,.flow-particle,.evidence-flow-particle,.edge.hot{animation:none!important}.new-link{animation:none;stroke-dashoffset:0}}
 
 </style>
 </head>
@@ -378,7 +398,7 @@ html,body{background:radial-gradient(ellipse at 48% -25%,rgba(56,91,147,.22),tra
   </aside>
   <section class="canvas" aria-label="博罗关系网络主画布">
     <div class="canvas-head">
-      <div><div class="canvas-eyebrow">BO LUO · RELATIONSHIP OBSERVATORY</div><div class="canvas-title">关系如何改变一座城</div><div class="canvas-desc">概念网络提出问题，公开证据揭示真实连接与变化</div></div>
+      <div><div class="canvas-eyebrow">BO LUO · RELATIONSHIP OBSERVATORY</div><div class="canvas-title">关系如何改变一座城</div><div class="canvas-desc">选一个问题 → 看网络变化 → 核验公开依据 → 分享观察</div></div>
       <div class="canvas-head-right"><div class="live-status" id="liveStatus"><i></i>正在连接公开证据</div><div class="view-toggle"><button class="active" data-view="2d">平面</button><button data-view="space">空间感</button></div><div class="evidence-toggle" role="group" aria-label="网络数据视图"><button id="conceptMode" class="active">概念网络</button><button id="evidenceMode">证据网络 <span id="evidenceCount">36 · 45</span></button></div></div>
     </div>
     <div class="graph-wrap">
@@ -439,7 +459,21 @@ html,body{background:radial-gradient(ellipse at 48% -25%,rgba(56,91,147,.22),tra
         <div class="question-title">如果关键主体离场，网络还能自我修复吗？</div><div class="question-desc">观察替代路径、孤立群落与新的连接机会</div>
       </button>
     </div>
-    <div class="selected-question" aria-live="polite"><div class="selected-label"><span></span>当前探索入口</div><div class="selected-title" id="selectedTitle">谁在连接原本分离的产业群落？</div><div class="selected-copy" id="selectedCopy">点击问题，中央网络将突出相关群落与桥梁关系。这是探索入口，不是自动生成的结论。</div><div class="selected-cta"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M5 12h14M13 5l7 7-7 7"/></svg>点击问题，观察关系变化</div></div>
+    <div class="selected-question" aria-live="polite">
+      <div class="selected-label"><span></span><span id="journeyStatus">第 2 步 · 观察变化</span></div>
+      <div class="selected-title" id="selectedTitle">谁在连接原本分离的产业群落？</div>
+      <div class="selected-copy" id="selectedCopy">点击问题，观察关系变化；再核验公开依据。这是探索入口，不是自动生成的结论。</div>
+      <div class="journey-steps" role="list" aria-label="探索流程">
+        <div class="journey-step done" id="journey1" role="listitem"><b>01</b><span>发现问题</span></div>
+        <div class="journey-step active" id="journey2" role="listitem"><b>02</b><span>看见变化</span></div>
+        <div class="journey-step" id="journey3" role="listitem"><b>03</b><span>核验证据</span></div>
+        <div class="journey-step" id="journey4" role="listitem"><b>04</b><span>分享观察</span></div>
+      </div>
+      <div class="explore-actions">
+        <button type="button" class="selected-cta" id="exploreNext"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M5 12h14M13 5l7 7-7 7"/></svg><span class="cta-label">核验公开依据</span><span class="cta-arrow">↗</span></button>
+        <button type="button" class="share-button" id="shareObservation">复制观察链接</button>
+      </div>
+    </div>
     <div id="evidencePanel" class="evidence-panel" aria-live="polite">
       <div class="evidence-panel-top"><span class="evidence-panel-title">公开证据底座</span><span id="evidenceState" class="evidence-state">连接中</span></div>
       <div class="evidence-stats"><div><strong id="evidenceNodes">36</strong><span>底座节点</span></div><div><strong id="evidenceEdges">45</strong><span>底座关系</span></div><div><strong id="evidenceSources">54</strong><span>公开来源</span></div><div><strong id="evidenceChanges">12</strong><span>变化事件</span></div></div>
@@ -451,6 +485,7 @@ html,body{background:radial-gradient(ellipse at 48% -25%,rgba(56,91,147,.22),tra
   </aside>
 </main>
 <footer class="footerbar"><div class="footer-left"><span class="footer-green"></span><span>关系观测工作区</span><span>·</span><span id="footerGraphMode">概念网络示意 / 非真实地图</span></div><div class="footer-links"><button>关于</button><button>数据口径</button><button>反馈</button></div></footer>
+<div id="shareToast" class="share-toast" role="status" aria-live="polite" hidden></div>
 <script>
 (function(){
 "use strict";
@@ -470,7 +505,7 @@ var clusters=[
 var clusterMap={};clusters.forEach(function(c){clusterMap[c.id]=c;});
 var center={x:500,y:375};
 var scenario="bridge",activeFilter="all",activeQuestion="bridge",playing=false,playTimer=null,drag=null,spaceMode=false;
-var graphMode="concept",evidenceData=null,sourceData=null,changeData=null,evidenceLoadPromise=null,selectedEvidence=null,evidenceNodeMap={},evidenceEdgeMap={},evidencePositionMap={},evidenceSearchTerm="",mobileConceptLayout=false,savedConceptPositions=null;
+var graphMode="concept",evidenceData=null,sourceData=null,changeData=null,evidenceLoadPromise=null,selectedEvidence=null,evidenceNodeMap={},evidenceEdgeMap={},evidencePositionMap={},evidenceSearchTerm="",mobileConceptLayout=false,savedConceptPositions=null,shareCompleted=false,restoredShareState=false,reducedMotion=window.matchMedia&&window.matchMedia("(prefers-reduced-motion: reduce)").matches;
 var questionInfo={
 bridge:{title:"谁在连接原本分离的产业群落？",copy:"点击后突出产业、投资与外部城市之间的桥梁连接。现实中是否存在这些关系，仍需证据核验。",insight:"桥梁关系",detail:"真正重要的节点，未必最大；它可能连接了原本互不相通的群落。",filter:["industry","investment","external"]},
 break:{title:"如果关键连接断开，哪些群落会变成孤岛？",copy:"一条关键连接被标记为断裂，观察网络如何分成不同群落。这是结构假设，不代表现实已发生。",insight:"关系断裂假设",detail:"当关键连接失效，局部问题可能沿着关系传导；也可能存在替代路径。",filter:["industry","investment"]},
@@ -478,6 +513,72 @@ people:{title:"人流方向改变，哪些产业会最先感受到？",copy:"把
 eco:{title:"生态资源，能否接上文旅与消费？",copy:"突出生态、农业文旅与消费之间的潜在连接，寻找协同机会与相互约束。",insight:"潜在协同",detail:"生态资源既可能构成约束，也可能通过农业、文旅与消费形成新的连接。",filter:["ecology","culture","consumption"]},
 exit:{title:"如果关键主体离场，网络还能自我修复吗？",copy:"一个卫星节点退出，原有连接消失，并显示可能的替代路径。该动画用于提出问题，而非预测真实结果。",insight:"节点退出假设",detail:"退出的影响取决于它连接了谁，以及网络中是否存在可替代路径。",filter:["industry","external","investment"]}
 };
+function scenarioForQuestion(q){return ({bridge:"bridge",break:"break",people:"people",eco:"eco",exit:"exit"})[q]||"base";}
+function filterForQuestion(q){return ({bridge:"industry",break:"all",people:"people",eco:"ecology",exit:"all"})[q]||"all";}
+function restoreSharedState(){
+ if(!window.location.hash||window.location.hash.indexOf("=")<0)return;
+ var params=new URLSearchParams(window.location.hash.slice(1));
+ if(!params.has("mode")&&!params.has("q")&&!params.has("scene")&&!params.has("node")&&!params.has("edge"))return;
+ restoredShareState=true;
+ var q=params.get("q"),scene=params.get("scene"),mode=params.get("mode"),filter=params.get("filter"),term=params.get("search");
+ if(questionInfo[q])activeQuestion=q;
+ if(["base","bridge","new","break","exit","people","eco"].indexOf(scene)>=0)scenario=scene;
+ graphMode=mode==="evidence"?"evidence":"concept";
+ if(["all","industry","investment","people","consumption","ecology","external"].indexOf(filter)>=0)activeFilter=filter;
+ if(term){evidenceSearchTerm=term.toLowerCase();document.getElementById("search").value=term;}
+ var node=params.get("node"),edge=params.get("edge");
+ if(node)selectedEvidence={kind:"node",id:node};else if(edge)selectedEvidence={kind:"edge",id:edge};
+ document.body.classList.toggle("evidence-mode",graphMode==="evidence");
+ document.getElementById("conceptMode").classList.toggle("active",graphMode==="concept");
+ document.getElementById("evidenceMode").classList.toggle("active",graphMode==="evidence");
+ syncFilterButtons();
+}
+function updateShareState(){
+ if(!window.history||!window.history.replaceState)return;
+ var params=new URLSearchParams();
+ params.set("q",activeQuestion);params.set("scene",scenario);params.set("mode",graphMode);
+ if(activeFilter!=="all")params.set("filter",activeFilter);
+ var input=document.getElementById("search"),term=input?input.value.trim():"";
+ if(term)params.set("search",term);
+ if(selectedEvidence){if(selectedEvidence.kind==="node")params.set("node",selectedEvidence.id);else params.set("edge",selectedEvidence.id);}
+ var hash="#"+params.toString();
+ if(window.location.hash!==hash)window.history.replaceState(null,"",window.location.pathname+window.location.search+hash);
+}
+function updateExploreActions(){
+ var button=document.getElementById("exploreNext");if(!button)return;
+ if(graphMode==="evidence"){
+  button.innerHTML='<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M19 12H5m7 7-7-7 7-7"/></svg><span class="cta-label">返回概念网络</span><span class="cta-arrow">↗</span>';
+  button.setAttribute("aria-label","返回概念网络继续探索");
+ }else{
+  button.innerHTML='<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M5 12h14M13 5l7 7-7 7"/></svg><span class="cta-label">核验公开依据</span><span class="cta-arrow">↗</span>';
+  button.setAttribute("aria-label","切换到公开证据网络核验依据");
+ }
+}
+function updateJourneyUI(){
+ var step=shareCompleted?4:(graphMode==="evidence"?3:2);
+ var status=document.getElementById("journeyStatus");
+ if(status)status.textContent=shareCompleted?"第 4 步 · 分享观察":graphMode==="evidence"?"第 3 步 · 核验公开依据":"第 2 步 · 观察变化";
+ for(var i=1;i<=4;i++){var el=document.getElementById("journey"+i);if(!el)continue;el.classList.toggle("done",i<step);el.classList.toggle("active",i===step);}
+ updateExploreActions();
+}
+function showShareToast(message){
+ var toast=document.getElementById("shareToast");toast.textContent=message;toast.hidden=false;
+ window.clearTimeout(showShareToast.timer);showShareToast.timer=window.setTimeout(function(){toast.hidden=true;},2800);
+}
+function fallbackCopy(text){
+ var input=document.createElement("textarea");input.value=text;input.setAttribute("readonly","");input.style.position="fixed";input.style.left="-9999px";input.style.top="0";document.body.appendChild(input);input.select();
+ var ok=false;try{ok=document.execCommand("copy");}catch(e){}input.remove();return ok;
+}
+function copyObservationLink(){
+ updateShareState();
+ var q=questionInfo[activeQuestion]||questionInfo.bridge;
+ var sceneLabels={base:"关系基准",bridge:"桥梁关系",new:"接入假设",break:"断裂假设",exit:"退出假设",people:"人流传导",eco:"潜在协同"};
+ var view=graphMode==="evidence"?"公开证据网络":"概念关系网络";
+ var payload="我在博罗全息关系网里探索：「"+q.title+"」\n当前观察："+view+" · "+(sceneLabels[scenario]||"关系基准")+"\n说明：关系图用于探索与核验，假设不等于事实。\n"+window.location.href;
+ function finish(ok){if(ok){shareCompleted=true;updateJourneyUI();showShareToast("观察卡已复制，可以发给朋友一起推演。");}else showShareToast("复制未成功，请手动复制地址栏中的观察链接。");}
+ if(navigator.clipboard&&navigator.clipboard.writeText){navigator.clipboard.writeText(payload).then(function(){finish(true);}).catch(function(){finish(fallbackCopy(payload));});}
+ else finish(fallbackCopy(payload));
+}
 function enterMobileConceptLayout(){
  if(mobileConceptLayout)return;
  savedConceptPositions=clusters.map(function(c){return {id:c.id,x:c.x,y:c.y,label:c.label.slice()};});
@@ -564,7 +665,8 @@ function loadEvidenceData(){
   document.getElementById("evidenceCount").textContent=evidenceData.nodes.length+" · "+evidenceData.edges.length;
   var state=document.getElementById("evidenceState");state.textContent="证据已连接";state.classList.remove("error");
   if(graphMode==="concept")document.getElementById("liveStatus").innerHTML="<i></i>公开证据已就绪 · 概念探索";
-  updateEvidencePanel();return true;
+  else{document.body.classList.add("evidence-mode");document.getElementById("conceptMode").classList.remove("active");document.getElementById("evidenceMode").classList.add("active");if(selectedEvidence&&((selectedEvidence.kind==="node"&&!evidenceNodeMap[selectedEvidence.id])||(selectedEvidence.kind==="edge"&&!evidenceEdgeMap[selectedEvidence.id])))selectedEvidence=null;if(evidenceSearchTerm&&!selectedEvidence){var restoredMatches=findEvidenceMatches(evidenceSearchTerm);selectedEvidence=restoredMatches.nodes.length?{kind:"node",id:restoredMatches.nodes[0].node_id}:restoredMatches.edges.length?{kind:"edge",id:restoredMatches.edges[0].edge_id}:null;}renderGraph();updateCanvasInsightEvidence();}
+  updateEvidencePanel();updateJourneyUI();if(restoredShareState)updateShareState();return true;
  }).catch(function(err){
   var state=document.getElementById("evidenceState");state.textContent="读取失败";state.classList.add("error");
   document.getElementById("evidenceIntro").textContent="公开证据文件暂时无法读取；概念网络仍可使用。请检查 GitHub Pages 的 data/ 文件路径。";
@@ -574,15 +676,16 @@ function loadEvidenceData(){
  return evidenceLoadPromise;
 }
 function setGraphMode(mode){
- stopPlay();graphMode=mode==="evidence"?"evidence":"concept";applyResponsiveLayout();
+ stopPlay();shareCompleted=false;graphMode=mode==="evidence"?"evidence":"concept";applyResponsiveLayout();
  document.body.classList.toggle("evidence-mode",graphMode==="evidence");
  document.getElementById("conceptMode").classList.toggle("active",graphMode==="concept");
  document.getElementById("evidenceMode").classList.toggle("active",graphMode==="evidence");
  document.getElementById("footerGraphMode").textContent=graphMode==="evidence"?"公开证据关系子图 / 非地图":"概念网络示意 / 非真实地图";
+ updateJourneyUI();updateShareState();
  if(graphMode==="evidence"){
   evidenceSearchTerm=document.getElementById("search").value.trim().toLowerCase();
   document.getElementById("liveStatus").innerHTML="<i></i>正在读取公开关系证据";
-  loadEvidenceData().then(function(ok){if(ok){if(evidenceSearchTerm&&!selectedEvidence){var matches=findEvidenceMatches(evidenceSearchTerm);selectedEvidence=matches.nodes.length?{kind:"node",id:matches.nodes[0].node_id}:matches.edges.length?{kind:"edge",id:matches.edges[0].edge_id}:null;}renderGraph();}else{setGraphMode("concept");}});
+  loadEvidenceData().then(function(ok){if(ok){if(evidenceSearchTerm&&!selectedEvidence){var matches=findEvidenceMatches(evidenceSearchTerm);selectedEvidence=matches.nodes.length?{kind:"node",id:matches.nodes[0].node_id}:matches.edges.length?{kind:"edge",id:matches.edges[0].edge_id}:null;}renderGraph();updateCanvasInsightEvidence();updateJourneyUI();updateShareState();}else{setGraphMode("concept");}});
  }else{
   document.getElementById("liveStatus").innerHTML="<i></i>概念探索视图";
   selectedEvidence=null;renderGraph();
@@ -751,10 +854,10 @@ function sourceLinks(ids){
 }
 function evidencePill(grade,label){return '<span class="evidence-pill '+evidenceGradeClass(grade)+'">'+htmlEscape(label||grade+" 级证据")+'</span>';}
 function showEvidenceNode(id){
- selectedEvidence={kind:"node",id:id};renderEvidenceGraph();updateCanvasInsightEvidence();updateEvidencePanel();
+ shareCompleted=false;selectedEvidence={kind:"node",id:id};renderEvidenceGraph();updateCanvasInsightEvidence();updateEvidencePanel();updateJourneyUI();updateShareState();
 }
 function showEvidenceEdge(id){
- selectedEvidence={kind:"edge",id:id};renderEvidenceGraph();updateCanvasInsightEvidence();updateEvidencePanel();
+ shareCompleted=false;selectedEvidence={kind:"edge",id:id};renderEvidenceGraph();updateCanvasInsightEvidence();updateEvidencePanel();updateJourneyUI();updateShareState();
 }
 function updateEvidencePanel(){
  if(!evidenceData||!sourceData||!changeData)return;
@@ -801,16 +904,28 @@ function updateCanvasInsightEvidence(){
 }
 
 function updateCanvasInsight(){var info=questionInfo[activeQuestion]||questionInfo.bridge;var title=info.insight,detail=info.detail;if(scenario==="new"){title="新节点接入";detail="新节点出现后，连接逐条建立；新增关系仍需证据核验。";}if(scenario==="break"){title="关系断裂假设";detail="断裂不等于系统崩溃，下一步要看有没有替代路径。";}if(scenario==="exit"){title="关键节点退出";detail="一个主体离开后，哪些关系随之消失，哪些连接仍然存在？";}document.querySelector(".insight-kicker").textContent="STRUCTURE NOTE / "+({"base":"01","bridge":"02","new":"03","break":"04","exit":"05","people":"06","eco":"07"}[scenario]||"01");document.querySelector(".insight-title").textContent=title;document.querySelector(".insight-copy").textContent=detail;}
-function updateSelectionUI(){document.querySelectorAll(".question-card").forEach(function(b){b.classList.toggle("active",b.getAttribute("data-q")===activeQuestion);});var q=questionInfo[activeQuestion];document.getElementById("selectedTitle").textContent=q.title;document.getElementById("selectedCopy").textContent=q.copy;document.getElementById("timelineTitle").textContent=({"base":"关系演化","bridge":"关键连接","new":"新节点接入","break":"关系断裂","exit":"节点退出","people":"人流传导","eco":"潜在协同"}[scenario]||"关系演化");document.getElementById("timelineSub").textContent=({"base":"选择一个变化，观察结构如何响应","bridge":"高亮可能连接不同群落的桥梁","new":"观察新主体与网络建立连接","break":"观察关键关系失效后的结构","exit":"观察节点退出与替代路径","people":"追踪人流与产业、消费的联系","eco":"寻找生态、农业与文旅的潜在连接"}[scenario]||"观察关系变化");document.getElementById("timelineDate").textContent=({"base":"结构基准","bridge":"桥梁关系","new":"接入假设","break":"断裂假设","exit":"退出假设","people":"传导线索","eco":"协同线索"}[scenario]||"结构基准");document.querySelectorAll(".time-stop").forEach(function(b){b.classList.toggle("active",b.getAttribute("data-scenario")===scenario);});document.querySelectorAll(".timeline-actions button").forEach(function(b){b.classList.toggle("active",b.getAttribute("data-scenario")===scenario);});}
-function setScenario(next,question){if(graphMode==="evidence")selectedEvidence=null;scenario=next;if(question)activeQuestion=question;else if(next==="break")activeQuestion="break";else if(next==="exit")activeQuestion="exit";else if(next==="new")activeQuestion="bridge";else if(next==="people")activeQuestion="people";else if(next==="eco")activeQuestion="eco";else if(next==="bridge")activeQuestion="bridge";renderGraph();updateSelectionUI();}
+function updateSelectionUI(){
+ document.querySelectorAll(".question-card").forEach(function(b){b.classList.toggle("active",b.getAttribute("data-q")===activeQuestion);});
+ var q=questionInfo[activeQuestion]||questionInfo.bridge;
+ document.getElementById("selectedTitle").textContent=q.title;
+ document.getElementById("selectedCopy").textContent=graphMode==="evidence"?"你正在核验与「"+q.title+"」相关的公开关系。这里展示可追溯依据；断裂、接入或退出等情景仍是探索假设，不代表现实已发生。":q.copy;
+ document.getElementById("timelineTitle").textContent=({"base":"关系演化","bridge":"关键连接","new":"新节点接入","break":"关系断裂","exit":"节点退出","people":"人流传导","eco":"潜在协同"}[scenario]||"关系演化");
+ document.getElementById("timelineSub").textContent=({"base":"选择一个变化，观察结构如何响应","bridge":"高亮可能连接不同群落的桥梁","new":"观察新主体与网络建立连接","break":"观察关键关系失效后的结构","exit":"观察节点退出与替代路径","people":"追踪人流与产业、消费的联系","eco":"寻找生态、农业与文旅的潜在连接"}[scenario]||"观察关系变化");
+ document.getElementById("timelineDate").textContent=({"base":"结构基准","bridge":"桥梁关系","new":"接入假设","break":"断裂假设","exit":"退出假设","people":"传导线索","eco":"协同线索"}[scenario]||"结构基准");
+ document.querySelectorAll(".time-stop").forEach(function(b){b.classList.toggle("active",b.getAttribute("data-scenario")===scenario);});
+ document.querySelectorAll(".timeline-actions button").forEach(function(b){b.classList.toggle("active",b.getAttribute("data-scenario")===scenario);});
+ updateJourneyUI();
+}
+function setScenario(next,question){shareCompleted=false;if(graphMode==="evidence")selectedEvidence=null;scenario=next;if(question)activeQuestion=question;else if(next==="break")activeQuestion="break";else if(next==="exit")activeQuestion="exit";else if(next==="new")activeQuestion="bridge";else if(next==="people")activeQuestion="people";else if(next==="eco")activeQuestion="eco";else if(next==="bridge")activeQuestion="bridge";renderGraph();updateSelectionUI();updateShareState();}
 function setQuestion(q){stopPlay();activeQuestion=q;activeFilter="all";var next=q==="bridge"?"bridge":q==="break"?"break":q==="people"?"people":q==="eco"?"eco":"exit";setScenario(next,q);syncFilterButtons();}
-function setFilter(id){stopPlay();activeFilter=id;if(graphMode==="evidence"){renderGraph();syncFilterButtons();return;}if(id==="all")setScenario("base",activeQuestion);else{var q=id==="people"?"people":id==="ecology"?"eco":id==="industry"?"bridge":id==="investment"?"bridge":id==="consumption"?"people":"bridge";activeQuestion=q;scenario=q;renderGraph();updateSelectionUI();}syncFilterButtons();}
+function setFilter(id){stopPlay();shareCompleted=false;activeFilter=id;if(graphMode==="evidence"){renderGraph();syncFilterButtons();updateJourneyUI();updateShareState();return;}if(id==="all")setScenario("base",activeQuestion);else{var q=id==="people"?"people":id==="ecology"?"eco":id==="industry"?"bridge":id==="investment"?"bridge":id==="consumption"?"people":"bridge";activeQuestion=q;scenario=q;renderGraph();updateSelectionUI();}syncFilterButtons();}
 function syncFilterButtons(){document.querySelectorAll("[data-filter]").forEach(function(b){b.classList.toggle("active",b.getAttribute("data-filter")===activeFilter);});}
 function stopPlay(){if(playTimer){clearInterval(playTimer);playTimer=null;}playing=false;var icon=document.getElementById("playIcon");if(icon)icon.innerHTML='<path d="M8 5v14l11-7z"/>';}
 function startPlay(){if(playing){stopPlay();return;}playing=true;var icon=document.getElementById("playIcon");if(icon)icon.innerHTML='<path d="M7 5h4v14H7zM14 5h4v14h-4z"/>';activeFilter="all";syncFilterButtons();var seq=["bridge","new","people","break","exit","eco","base"],i=0;setScenario(seq[0]);playTimer=setInterval(function(){i=(i+1)%seq.length;setScenario(seq[i]);},2600);}
 function initStars(){addStars();}
 document.getElementById("conceptMode").addEventListener("click",function(){setGraphMode("concept");});
 document.getElementById("evidenceMode").addEventListener("click",function(){setGraphMode("evidence");});
+restoreSharedState();
 loadEvidenceData();
 document.querySelectorAll(".question-card").forEach(function(b){b.addEventListener("click",function(){setQuestion(b.getAttribute("data-q"));});});
 document.querySelectorAll("[data-filter]").forEach(function(b){b.addEventListener("click",function(){setFilter(b.getAttribute("data-filter"));});});
@@ -818,27 +933,37 @@ document.querySelectorAll("[data-scenario]").forEach(function(b){b.addEventListe
 document.querySelectorAll("[data-mode]").forEach(function(b){b.addEventListener("click",function(){stopPlay();document.querySelectorAll("[data-mode]").forEach(function(x){x.classList.toggle("active",x===b);});if(b.getAttribute("data-mode")==="motion"){setScenario("new");}else{setScenario("base");}});});
 document.querySelectorAll("[data-view]").forEach(function(b){b.addEventListener("click",function(){stopPlay();spaceMode=b.getAttribute("data-view")==="space";document.querySelectorAll("[data-view]").forEach(function(x){x.classList.toggle("active",x===b);});svg.style.transform=spaceMode?"perspective(1100px) rotateX(5deg) scale(.98)":"none";svg.style.transition="transform .6s ease";});});
 document.getElementById("play").addEventListener("click",startPlay);
+document.getElementById("exploreNext").addEventListener("click",function(){
+ stopPlay();shareCompleted=false;
+ if(graphMode==="evidence"){
+  scenario=scenarioForQuestion(activeQuestion);activeFilter="all";selectedEvidence=null;evidenceSearchTerm="";searchInput.value="";
+  setGraphMode("concept");syncFilterButtons();updateSelectionUI();updateShareState();return;
+ }
+ scenario="base";selectedEvidence=null;evidenceSearchTerm="";searchInput.value="";activeFilter=filterForQuestion(activeQuestion);
+ setGraphMode("evidence");syncFilterButtons();updateSelectionUI();updateShareState();
+});
+document.getElementById("shareObservation").addEventListener("click",copyObservationLink);
 var searchBox=document.querySelector(".searchbox"),searchInput=document.getElementById("search");
 searchBox.addEventListener("click",function(ev){if(window.innerWidth<=680&&!searchBox.classList.contains("search-open")){ev.preventDefault();searchBox.classList.add("search-open");searchInput.focus();}});
 searchInput.addEventListener("blur",function(){if(window.innerWidth<=680&&!searchInput.value.trim())searchBox.classList.remove("search-open");});
 document.getElementById("search").addEventListener("input",function(){
- stopPlay();var term=this.value.trim().toLowerCase();
- if(!term){evidenceSearchTerm="";selectedEvidence=null;activeFilter="all";renderGraph();syncFilterButtons();updateSelectionUI();return;}
+ stopPlay();shareCompleted=false;var term=this.value.trim().toLowerCase();
+ if(!term){evidenceSearchTerm="";selectedEvidence=null;activeFilter="all";renderGraph();syncFilterButtons();updateSelectionUI();updateShareState();return;}
  activeFilter="all";syncFilterButtons();
  if(graphMode==="evidence"){
   evidenceSearchTerm=term;var evidenceMatches=findEvidenceMatches(term);
   selectedEvidence=evidenceMatches.nodes.length?{kind:"node",id:evidenceMatches.nodes[0].node_id}:evidenceMatches.edges.length?{kind:"edge",id:evidenceMatches.edges[0].edge_id}:null;
-  renderGraph();updateEvidencePanel();syncFilterButtons();return;
+  renderGraph();updateEvidencePanel();syncFilterButtons();updateJourneyUI();updateShareState();return;
  }
  var match=clusters.find(function(c){return (c.title+" "+c.sub).toLowerCase().indexOf(term)>=0;});
- if(match){activeFilter=match.id;renderGraph();syncFilterButtons();document.getElementById("selectedTitle").textContent="正在查看："+match.title;document.getElementById("selectedCopy").textContent="已突出显示相关群落。";return;}
+ if(match){activeFilter=match.id;renderGraph();syncFilterButtons();document.getElementById("selectedTitle").textContent="正在查看："+match.title;document.getElementById("selectedCopy").textContent="已突出显示相关群落。";updateJourneyUI();updateShareState();return;}
  evidenceSearchTerm=term;
  var matches=findEvidenceMatches(term);
  if(matches.nodes.length||matches.edges.length){
   selectedEvidence=matches.nodes.length?{kind:"node",id:matches.nodes[0].node_id}:{kind:"edge",id:matches.edges[0].edge_id};
   setGraphMode("evidence");syncFilterButtons();return;
  }
- activeFilter="all";renderGraph();syncFilterButtons();document.getElementById("selectedTitle").textContent="没有找到相关节点或关系";document.getElementById("selectedCopy").textContent="可尝试企业名称、项目名称、交通、通勤、投资、文旅或生态等关键词。";
+ activeFilter="all";renderGraph();syncFilterButtons();document.getElementById("selectedTitle").textContent="没有找到相关节点或关系";document.getElementById("selectedCopy").textContent="可尝试企业名称、项目名称、交通、通勤、投资、文旅或生态等关键词。";updateJourneyUI();updateShareState();
 });
 svg.addEventListener("pointerdown",function(ev){if(ev.button!==0)return;var target=ev.target&&ev.target.closest?ev.target.closest("[data-cluster]"):null;if(!target)return;var id=target.getAttribute("data-cluster"),c=clusterMap[id];if(!c)return;var point=screenToSvg(ev);drag={id:id,startX:ev.clientX,startY:ev.clientY,startSvgX:point.x,startSvgY:point.y,origX:c.x,origY:c.y,moved:false};try{svg.setPointerCapture(ev.pointerId);}catch(e){}ev.preventDefault();});
 svg.addEventListener("pointermove",function(ev){if(!drag)return;var dx=ev.clientX-drag.startX,dy=ev.clientY-drag.startY;if(!drag.moved&&Math.sqrt(dx*dx+dy*dy)<4)return;drag.moved=true;var point=screenToSvg(ev),c=clusterMap[drag.id];c.x=Math.max(70,Math.min(920,drag.origX+point.x-drag.startSvgX));c.y=Math.max(100,Math.min(660,drag.origY+point.y-drag.startSvgY));renderGraph();});
