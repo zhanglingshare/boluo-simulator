@@ -583,10 +583,10 @@ function buildEvidencePositions(){
  spread(groups.cluster,535,80,625,"right");
  var legacyCore=groups.legacy.filter(function(n){return n.change_status!=="退出";});
  var legacyExit=groups.legacy.filter(function(n){return n.change_status==="退出";});
- spread(legacyCore,435,700,700,"right");spread(legacyExit,735,710,710,"left");
+ spread(legacyCore,435,700,700,"right");spread(legacyExit,775,710,710,"left");
  var newNodes=groups.new.filter(function(n){return n.node_type!=="energy";});
  var energyNodes=groups.new.filter(function(n){return n.node_type==="energy";});
- spread(newNodes,825,70,590,"left");spread(energyNodes,825,685,685,"left");
+ spread(newNodes,825,70,590,"left");spread(energyNodes,825,655,655,"left");
  return {nodes:nodes,ids:selected,degree:degree};
 }
 function isEvidenceRelevant(edge){
