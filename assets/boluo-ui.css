@@ -294,3 +294,97 @@ body.bl-paper .wrap,body.bl-paper .hero-inner{max-width:100%}
     scroll-behavior:auto!important;
   }
 }
+
+
+/* ===== Cohesive product polish: non-holographic pages only ===== */
+body.bl-ui .wrap{
+  width:min(100% - 0px, 1120px);
+  margin-inline:auto;
+}
+body.bl-ui .nav{
+  scrollbar-width:thin;
+  overscroll-behavior-x:contain;
+}
+body.bl-ui .nav a,
+body.bl-ui .nav button{
+  white-space:nowrap;
+}
+body.bl-ui :is(.card,.panel,.result,.health,.summary,.press-panel,.lab-panel,.top1){
+  position:relative;
+  overflow-wrap:anywhere;
+}
+body.bl-ui :is(.card,.panel,.evo-card,.town,.topic,.fear,.path,.vegcard,.srccard){
+  transition:border-color var(--bl-fast),box-shadow var(--bl-fast),transform var(--bl-fast);
+}
+@media(hover:hover){
+  body.bl-ui :is(.card,.panel,.evo-card,.town,.topic,.fear,.path,.vegcard,.srccard):hover{
+    box-shadow:0 18px 42px rgba(0,0,0,.22),inset 0 1px 0 rgba(233,244,255,.035);
+  }
+}
+body.bl-ui :is(button,.btn,.fbtn,.sbtn,.cat,.refresh,.next a,.backhome){
+  min-height:38px;
+}
+body.bl-ui :is(input:not([type="range"]),select,textarea){
+  max-width:100%;
+}
+body.bl-ui :is(.chart,#chart,#solarchart,[id^="ch"]){
+  min-width:0;
+  overflow:hidden;
+}
+body.bl-ui :is(.hint,.note,.plain,.disc,.footnote,.algo-note,.brief){
+  line-height:1.75;
+  overflow-wrap:anywhere;
+}
+body.bl-ui :is(.stat .v,.bignum .v,.heatnum,.big,.kpi .num,.metric .num,.val){
+  letter-spacing:-.025em;
+}
+body.bl-ui :is(.next,.next-step,.page-next){
+  margin-block:clamp(18px,3vw,30px);
+}
+body.bl-ui :is(.next a,.backhome){
+  text-align:center;
+  text-wrap:balance;
+}
+body.bl-ui .bl-audit-note{
+  margin:12px 0 18px;
+  padding:12px 14px;
+  border:1px solid rgba(245,201,121,.32);
+  border-left:3px solid var(--bl-gold);
+  border-radius:12px;
+  background:rgba(245,201,121,.065);
+  color:var(--bl-ink-soft);
+  font-size:12px;
+  line-height:1.75;
+}
+body.bl-ui .bl-audit-note strong{color:var(--bl-gold)}
+body.bl-ui--windtunnel .gauges{
+  grid-template-columns:repeat(3,minmax(0,1fr));
+  gap:clamp(8px,1.2vw,14px);
+}
+body.bl-ui--windtunnel .gbox{
+  min-width:0;
+  padding:clamp(12px,1.5vw,18px);
+  border-radius:16px;
+}
+body.bl-ui--windtunnel .gbox .v{
+  overflow-wrap:anywhere;
+  font-size:clamp(18px,2.4vw,29px);
+  line-height:1.25;
+  font-variant-numeric:tabular-nums;
+}
+body.bl-ui--report .chart{min-height:220px}
+body.bl-ui--report .card h2{max-width:70ch}
+body.bl-ui--network .chart{min-height:240px}
+body.bl-ui--future .chart{min-height:220px}
+body.bl-ui--town .town{overflow:hidden}
+body.bl-ui--who .stat,body.bl-ui--who .card{height:100%}
+body.bl-ui--choices .path{height:100%}
+@media(max-width:640px){
+  body.bl-ui .wrap{padding-inline:12px}
+  body.bl-ui :is(.card,.panel,.result,.health,.summary,.press-panel,.lab-panel){border-radius:14px}
+  body.bl-ui--windtunnel .gauges{grid-template-columns:1fr}
+  body.bl-ui--windtunnel .gbox{display:flex;align-items:center;justify-content:space-between;gap:12px}
+  body.bl-ui--windtunnel .gbox .v{text-align:right}
+  body.bl-ui--windtunnel .gbox .l{max-width:45%;line-height:1.45}
+  body.bl-ui :is(.chart,#chart,#solarchart,[id^="ch"]){max-width:100%}
+}

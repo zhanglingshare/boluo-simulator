@@ -99,7 +99,8 @@ ol.find li{margin-bottom:10px;line-height:1.8;font-size:13px;color:#c8d3e0}
 
 <div class="nav">
   <b>博罗产业风洞</b>
-  <a href="index.html">① 今日话题</a>
+  <a href="index.html">今日博罗</a>
+  <a href="holo-home-v10.html">🌌 关系世界</a>
   <a href="town.html">🏘️ 各镇吃喝玩乐</a>
   <a href="network.html">② 产业网络</a>
   <a href="who.html">③ 基本面</a>
@@ -289,9 +290,9 @@ ol.find li{margin-bottom:10px;line-height:1.8;font-size:13px;color:#c8d3e0}
 
   <!-- 因素影响 -->
   <div class="card">
-    <h2>六、哪些因素最牵动结果</h2>
+    <h2>六、模型里的五条路径，与总结果有多紧密地一起变化？</h2>
     <div id="rCoef" class="chart"></div>
-    <div class="plain"><span class="lab">人话版</span>排在最前的是"项目能不能按时投产"和"东莞外溢节奏"；房地产虽然跌得深（-47.6%），但对GDP的实际传导反而靠后。这正是反常识的地方：<b>跌得最响的，不一定是最牵动全局的。</b></div>
+    <div class="plain"><span class="lab">怎么看</span>这里展示共享模型中五条发展路径与模拟总产值的相关程度，标签和数值来自同一套模型路径定义。它描述的是<b>模型内部的联动</b>，不是现实世界已经证实的因果关系，也不能单独当作政策优先级排序。房地产投资等没有作为共享模型独立路径的指标，不混入这张系数图；它们应在相应的现实数据或压力情景中另行讨论。</div>
 
     <div style="margin-top:14px;padding-top:12px;border-top:1px solid #1c2739">
       <div style="font-size:13px;font-weight:700;color:#fbbf24;margin-bottom:8px">补充：参数敏感性分析（参数微分）</div>
@@ -442,20 +443,21 @@ cMatrix.setOption({backgroundColor:'transparent',tooltip:tip,
     label:{show:true,position:'top',color:'#cbd5e1',fontSize:9.5,formatter:p=>p.data.name}}]});
 
 // 影响系数：直接读 model.js 同一内核输出，不再写死
-// coefs 顺序=[产业承接(东莞外溢), 新投产(投产工期), 融深(融深通道), 文旅, 农业]
+// coefs 顺序严格跟随 HT.DEFAULT_PATHS；图表标签、颜色与数值均由同一数组生成。
 const _bm=HT.run(42,10000,HT.DEFAULT_PATHS);
+// 标签、颜色和值都从共享模型的同一条路径元数据生成，避免索引错配。
+// 排序只改变图表显示顺序，不改变模型计算。
+const coefRows=HT.DEFAULT_PATHS.map((p,i)=>({
+  name:p.name,
+  value:+_bm.coefs[i].toFixed(2),
+  color:p.color
+})).sort((a,b)=>a.value-b.value);
 cCoef.setOption({backgroundColor:'transparent',tooltip:{trigger:'axis',...tip},
-  grid:{left:95,right:45,top:15,bottom:30},
+  grid:{left:125,right:45,top:15,bottom:30},
   xAxis:{type:'value',max:1,axisLabel:{color:'#6b7d96'},splitLine:{lineStyle:{color:'#1c2739'}}},
-  yAxis:{type:'category',data:['房地产','文旅','农业','融深通道','东莞外溢','投产工期'],axisLabel:{color:'#cbd5e1',fontSize:11}},
-  series:[{type:'bar',data:[
-    {value:0.28,itemStyle:{color:'#94a3b8'}},
-    {value:+_bm.coefs[3].toFixed(2),itemStyle:{color:'#fbbf24'}},
-    {value:+_bm.coefs[4].toFixed(2),itemStyle:{color:'#84cc16'}},
-    {value:+_bm.coefs[2].toFixed(2),itemStyle:{color:'#a78bfa'}},
-    {value:+_bm.coefs[0].toFixed(2),itemStyle:{color:'#3b82f6'}},
-    {value:+_bm.coefs[1].toFixed(2),itemStyle:{color:'#22c55e'}}
-  ],barWidth:17,label:{show:true,position:'right',color:'#93a4bd',fontSize:10,formatter:p=>p.value+'（模型输出）'}}]});
+  yAxis:{type:'category',data:coefRows.map(r=>r.name),axisLabel:{color:'#cbd5e1',fontSize:11}},
+  series:[{type:'bar',data:coefRows.map(r=>({value:r.value,itemStyle:{color:r.color}})),
+    barWidth:17,label:{show:true,position:'right',color:'#93a4bd',fontSize:10,formatter:p=>p.value+'（模型输出）'}}]});
 
 window.addEventListener('resize',()=>[cStruct,cInd,cClimb,cScen,cMatrix,cCoef].forEach(c=>c.resize()));
 </script>
