@@ -417,6 +417,18 @@ html,body{background:radial-gradient(ellipse at 48% -25%,rgba(56,91,147,.22),tra
 @media(max-width:680px){.change-cards{grid-template-columns:1fr 1fr;gap:6px}.change-card{padding:8px}.change-card-title{-webkit-line-clamp:3;font-size:9px}.change-card-date{font-size:8px}.change-card-kind{font-size:7px}.change-detail{padding:10px}.timeline-track .time-stop[data-change-phase]{width:14px;height:14px}.timeline-track .time-stop[data-change-phase]:after{inset:4px}.timeline-label{min-width:85px}.timeline-actions button[data-change-phase]{padding:6px 5px;font-size:8px}}
 @media(prefers-reduced-motion:reduce){.evidence-edge.change-event-edge,.evidence-node.change-event-node .node-core{animation:none!important}}
 
+
+/* Plain-language layer for first-time visitors. */
+.change-original-title{font-size:9px;line-height:1.7;color:#8ea3bf;margin:-3px 0 9px;overflow-wrap:anywhere}
+.change-detail-title{font-size:13px;line-height:1.7;color:#f0f6ff;font-weight:800;margin-bottom:7px}
+.change-compare-label{font-size:10px;color:#b7c9df;font-weight:800;margin-bottom:4px}
+.change-compare-copy{font-size:11px;line-height:1.8;color:#e0eaf7}
+.change-uncertainty{font-size:11px;line-height:1.8;color:#ffd49a;margin:8px 0 2px;padding-left:9px;border-left:2px solid #c99850}
+.change-focus-note{font-size:10px;line-height:1.8;color:#a7bbd3;margin-top:8px}
+.explore-intro{font-size:11px;line-height:1.8}
+.canvas-desc{max-width:620px;line-height:1.8}
+.question-title{line-height:1.7}
+
 </style>
 </head>
 <body>
@@ -607,8 +619,8 @@ function updateShareState(){
 }
 function updateExploreActions(){
  var button=document.getElementById("exploreNext");if(!button)return;
- if(selectedChangeId){button.innerHTML='<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M5 12h14M13 5l7 7-7 7"/></svg><span class="cta-label">核验这条变化</span><span class="cta-arrow">↗</span>';button.setAttribute("aria-label","查看所选变化的前后状态与公开来源");}
- else if(graphMode==="evidence"){button.innerHTML='<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M5 12h14M13 5l7 7-7 7"/></svg><span class="cta-label">聚焦最新变化</span><span class="cta-arrow">↗</span>';button.setAttribute("aria-label","聚焦最近一条结构变化");}
+ if(selectedChangeId){button.innerHTML='<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M5 12h14M13 5l7 7-7 7"/></svg><span class="cta-label">看看消息来源</span><span class="cta-arrow">↗</span>';button.setAttribute("aria-label","查看这件事的前后情况和公开消息来源");}
+ else if(graphMode==="evidence"){button.innerHTML='<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M5 12h14M13 5l7 7-7 7"/></svg><span class="cta-label">看看最近发生的事</span><span class="cta-arrow">↗</span>';button.setAttribute("aria-label","查看最近一件公开记录的事");}
  else{button.innerHTML='<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M5 12h14M13 5l7 7-7 7"/></svg><span class="cta-label">核验公开依据</span><span class="cta-arrow">↗</span>';button.setAttribute("aria-label","切换到公开证据网络核验依据");}
 }
 function updateJourneyUI(){
@@ -706,7 +718,9 @@ function renderNewNode(){if(scenario!=="new")return;var p0={x:550,y:265};var lin
 function renderGraph(){if(graphMode==="evidence"){renderEvidenceGraph();updateCanvasInsightEvidence();updateEvidencePanel();return;}addOrbits();clearLayer(layers.nodes);clearLayer(layers.labels);clearLayer(layers.overlays);renderEdges();clusters.forEach(addClusterNode);renderCenter();renderNewNode();updateCanvasInsight();updateConceptLegend();updateEvidencePanel();}
 
 
-function changeTypeLabel(type){return ({new_entity:"新主体接入",new_edge:"新连接形成",strengthen:"连接增强",weaken:"关系减弱",exit:"主体退出",break:"关系断裂",alternative:"替代路径"})[type]||"结构变化";}
+function changeTypeLabel(type){return ({new_entity:"新项目 / 企业",new_edge:"交通连接变化",strengthen:"合作正在加强",weaken:"停产 / 联系减弱",exit:"退出 / 停产",break:"联系中断",alternative:"替代办法"})[type]||"发生变化";}
+function changePlainTitle(change){return ({C001:"福田产业园开园，首批企业开始投产",C002:"博罗新增两座储能电站",C003:"铜来顺新生产线点火投产",C004:"4个大项目签约，但还没全部建成",C005:"多个扩产项目落地，仍在建设中",C006:"石洲大桥重建，施工期间出行受影响",C007:"惠霞高速博罗段争取年内通车",C008:"固力水泥一条生产线永久停产",C009:"石湾部分企业停产整改，之后可能复产",C010:"荔枝产业开始抱团合作",C011:"博罗农业获国家级示范区认定",C012:"国庆游客和民宿预订升温"})[change.change_id]||change.title;}
+function changePhaseLabel(phase){return ({before:"事情之前",event:"事情发生时",after:"事情之后"})[phase]||"事情之后";}
 function changeDateRank(value){var m=String(value||"").match(/^(\d{4})-(\d{1,2})(?:-(\d{1,2}))?/);return m?Number(m[1])*10000+Number(m[2])*100+(Number(m[3]||0)):0;}
 function sortedChanges(){return (changeData&&changeData.changes?changeData.changes.slice():[]).sort(function(a,b){return changeDateRank(b.event_date)-changeDateRank(a.event_date)||String(b.event_date||"").localeCompare(String(a.event_date||""));});}
 function latestChangeId(list){var items=(list||[]).slice().sort(function(a,b){return changeDateRank(b.event_date)-changeDateRank(a.event_date)||String(b.event_date||"").localeCompare(String(a.event_date||""));});return items.length?items[0].change_id:null;}
@@ -716,12 +730,12 @@ function renderChangeDeck(){
  var host=document.getElementById("changeCards");if(!host||!changeData)return;
  var all=sortedChanges(),visible=showAllChanges?all:all.slice(0,4),selected=getSelectedChange();
  if(selected&&!visible.some(function(x){return x.change_id===selected.change_id;})){visible=visible.slice(0,3).concat([selected]);}
- document.getElementById("changeCount").textContent=all.length+" 条记录";
- var toggle=document.getElementById("toggleAllChanges");if(toggle){toggle.hidden=all.length<=4;toggle.textContent=showAllChanges?"收起变化记录":"查看全部 "+all.length+" 条";}
+ document.getElementById("changeCount").textContent=all.length+" 件事";
+ var toggle=document.getElementById("toggleAllChanges");if(toggle){toggle.hidden=all.length<=4;toggle.textContent=showAllChanges?"收起变化":"查看全部 "+all.length+" 件事";}
  host.innerHTML=visible.map(function(x){
   var risk=["exit","weaken","break"].indexOf(x.change_type)>=0;
-  var status=x.uncertainty&&/待建|待落地|目标|预计|假设|或阶段性/.test(x.uncertainty)?"待观察":(x.change_type==="exit"?"已退出":x.change_type==="weaken"?"减弱中":"公开事件");
-  return '<button type="button" class="change-card'+(selectedChangeId===x.change_id?' active':'')+'" data-change-card="'+htmlEscape(x.change_id)+'" aria-pressed="'+(selectedChangeId===x.change_id?'true':'false')+'"><span class="change-card-top"><span class="change-card-date">'+htmlEscape(x.event_date||"日期待核")+'</span><span class="change-card-kind'+(risk?' risk':'')+'">'+htmlEscape(changeTypeLabel(x.change_type))+'</span></span><span class="change-card-title">'+htmlEscape(x.title)+'</span><span class="change-card-foot"><span>'+htmlEscape(status)+'</span><span class="change-card-arrow">查看变化 ↗</span></span></button>';
+  var status=x.uncertainty&&/待建|待落地|目标|预计|假设|或阶段性/.test(x.uncertainty)?"还在变化中":(x.change_type==="exit"?"已停产 / 退出":x.change_type==="weaken"?"停产整改":"有公开记录");
+  return '<button type="button" class="change-card'+(selectedChangeId===x.change_id?' active':'')+'" data-change-card="'+htmlEscape(x.change_id)+'" aria-pressed="'+(selectedChangeId===x.change_id?'true':'false')+'"><span class="change-card-top"><span class="change-card-date">'+htmlEscape(x.event_date||"日期待核")+'</span><span class="change-card-kind'+(risk?' risk':'')+'">'+htmlEscape(changeTypeLabel(x.change_type))+'</span></span><span class="change-card-title">'+htmlEscape(changePlainTitle(x))+'</span><span class="change-card-foot"><span>'+htmlEscape(status)+'</span><span class="change-card-arrow">看看前后 ↗</span></span></button>';
  }).join("");
  host.querySelectorAll("[data-change-card]").forEach(function(b){b.addEventListener("click",function(){selectChangeEvent(b.getAttribute("data-change-card"),"after");});});
 }
@@ -729,15 +743,15 @@ function renderChangeDetail(){
  var host=document.getElementById("changeDetail");if(!host)return;
  var change=getSelectedChange();
  if(!change){host.innerHTML='<div class="change-detail-empty">从上面选一件事，就能看到“以前”和“现在”的区别，以及目前还不能确定的部分。</div>';return;}
- var parts=String(change.before_after||"前后状态暂无完整描述").split(/[；;]/),before=parts[0]||"此前状态待核",after=parts.slice(1).join("；")||"事件后的实际状态仍需持续观察";
+ var parts=String(change.before_after||"前后情况还需要核对").split(/[；;]/),before=parts[0]||"此前情况待核",after=parts.slice(1).join("；")||"事情发生后的实际情况仍需观察";
  before=before.replace(/^此前[：:]\s*/,"");after=after.replace(/^此后[：:]\s*/,"");
  var phaseClass=changePhase==="before"?"before":changePhase==="event"?"event":"";
- var phaseCopy=changePhase==="before"?"正在查看变化前的结构示意。新增主体或连接在这一阶段会淡出；这不是完整的历史网络快照。":changePhase==="event"?"变化节点与相关连线已突出显示。动画只呈现事件描述对应的结构差异，不推断未观测到的经济结果。":"当前显示事件记录后的结构状态。签约、在建和目标项目仍按原始不确定性标注，不等同于已经达产。";
- host.innerHTML='<div class="change-detail-kicker"><span>'+htmlEscape(change.event_date||"日期待核")+' · '+htmlEscape(changeTypeLabel(change.change_type))+'</span><span class="change-phase-pill '+phaseClass+'">'+htmlEscape(changePhaseLabel(changePhase))+'</span></div><div class="change-detail-title">'+htmlEscape(change.title)+'</div><div class="change-compare"><div class="change-compare-row"><div class="change-compare-label">变化之前</div><div class="change-compare-copy">'+htmlEscape(before)+'</div></div><div class="change-compare-row"><div class="change-compare-label">变化之后 / 当前记录</div><div class="change-compare-copy">'+htmlEscape(after)+'</div></div></div><div class="change-uncertainty"><strong>还不能下的结论：</strong>'+htmlEscape(change.uncertainty||"影响范围和持续性仍需进一步核验。")+'</div><div class="change-focus-note">'+htmlEscape(phaseCopy)+'</div>'+sourceLinks(change.source_ids);
+ var phaseCopy=changePhase==="before"?"现在看到的是事件发生前的示意，不是完整的历史画面。":changePhase==="event"?"亮起来的是这件事相关的主体和联系，方便观察，不代表已经证明了因果。":"现在看到的是事件记录后的示意。签约、在建和目标项目，不等于已经投产或实现目标。";
+ host.innerHTML='<div class="change-detail-kicker"><span>'+htmlEscape(change.event_date||"日期待核")+' · '+htmlEscape(changeTypeLabel(change.change_type))+'</span><span class="change-phase-pill '+phaseClass+'">'+htmlEscape(changePhaseLabel(changePhase))+'</span></div><div class="change-detail-title">'+htmlEscape(changePlainTitle(change))+'</div><div class="change-original-title">公开记录：'+htmlEscape(change.title)+'</div><div class="change-compare"><div class="change-compare-row"><div class="change-compare-label">以前</div><div class="change-compare-copy">'+htmlEscape(before)+'</div></div><div class="change-compare-row"><div class="change-compare-label">现在 / 接下来</div><div class="change-compare-copy">'+htmlEscape(after)+'</div></div></div><div class="change-uncertainty"><strong>还有什么不知道？</strong>'+htmlEscape(change.uncertainty||"影响范围和持续性还需要继续观察。")+'</div><div class="change-focus-note">'+htmlEscape(phaseCopy)+'</div>'+sourceLinks(change.source_ids);
 }
 function syncChangePhaseUI(){
  var change=getSelectedChange();document.querySelectorAll("[data-change-phase]").forEach(function(b){b.classList.toggle("active",!!change&&b.getAttribute("data-change-phase")===changePhase);b.disabled=!change;});
- var label=document.getElementById("timelineDate");if(label)label.textContent=change?changePhaseLabel(changePhase)+" · "+(change.event_date||"事件记录"):"请选择事件 · 点击右侧变化卡片";
+ var label=document.getElementById("timelineDate");if(label)label.textContent=change?changePhaseLabel(changePhase)+" · "+(change.event_date||"公开记录"):"先从右侧选一件事";
 }
 function selectChangeEvent(id,phase){
  if(!changeData||!changeData.changes.some(function(x){return x.change_id===id;}))return;
@@ -1003,7 +1017,7 @@ function updateEvidencePanel(){
   return;
  }
  detail.hidden=true;
- intro.textContent=selectedChangeId?"已聚焦所选变化及其相邻关系。点击节点或连线可查看公开依据；颜色和动画用于定位变化，不代表影响大小。":"完整关系底图用于核验公开关系。线型表示证据等级，关系线粗细不代表强度。";
+ intro.textContent=selectedChangeId?"现在只看这件事有关的线索。点亮的节点可以继续查看公开资料。":"这里展示目前整理到的关联线索。它不是完整的现实地图，也不能单凭连线判断因果。";
  if(graphMode==="concept"){
   var changes=changeData.changes.slice().sort(function(a,b){return String(b.event_date||"").localeCompare(String(a.event_date||""));}).slice(0,3);
   recent.innerHTML='<div class="evidence-source-title">近期结构变化 · 点击进入证据网络</div>'+changes.map(function(x){return '<button class="evidence-event" data-change-id="'+htmlEscape(x.change_id)+'"><span class="evidence-event-title">'+htmlEscape(x.title)+'</span><span class="evidence-event-meta"><span>'+htmlEscape(x.event_date||"日期待核")+'</span><span>查看关系 ↗</span></span></button>';}).join("");
