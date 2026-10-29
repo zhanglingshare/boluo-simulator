@@ -20,15 +20,13 @@ const { chromium } = require("playwright");
     await page.waitForFunction(() => document.getElementById("liveStatus")?.textContent.includes("公开证据已就绪"), { timeout: 5000 });
     assert.equal(await page.locator("[data-cluster]").count(), 7, "概念网络应显示 7 个关系群落");
     await page.screenshot({ path: path.join(outDir, "holo-v10-desktop-concept.png"), fullPage: true });
-    console.log("LAYOUT_DIAGNOSTICS", JSON.stringify(await page.evaluate(() => {
-      const rect = selector => { const e = document.querySelector(selector); if (!e) return null; const r = e.getBoundingClientRect(); const s = getComputedStyle(e); return {x:r.x,y:r.y,width:r.width,height:r.height,position:s.position,display:s.display,top:s.top,bottom:s.bottom,zIndex:s.zIndex}; };
-      return {canvas:rect(".canvas"),graphWrap:rect(".graph-wrap"),svg:rect("#network"),timeline:rect(".timeline"),canvasHead:rect(".canvas-head"),clusterCount:document.querySelectorAll("[data-cluster]").length,edgeCount:document.querySelectorAll(".edge").length,svgChildCounts:{stars:document.querySelector("#stars").children.length,orbits:document.querySelector("#orbits").children.length,edges:document.querySelector("#edges").children.length,nodes:document.querySelector("#nodes").children.length},svgComputed:getComputedStyle(document.querySelector("#network")).cssText};
-    })));
-    await page.evaluate(() => {
-      window.__pointerLog = [];
-      const svg = document.querySelector("#network");
-      ["pointerdown","pointermove","pointerup","pointercancel"].forEach(type => svg.addEventListener(type, e => window.__pointerLog.push({type,target:e.target.tagName,cls:e.target.getAttribute("class"),x:e.clientX,y:e.clientY}), true));
+    const layoutDiagnostics = await page.evaluate(() => {
+      const rect = selector => { const e = document.querySelector(selector); if (!e) return null; const r = e.getBoundingClientRect(); const s = getComputedStyle(e); return {x:r.x,y:r.y,width:r.width,height:r.height,position:s.position,top:s.top,bottom:s.bottom}; };
+      return {canvas:rect(".canvas"),graphWrap:rect(".graph-wrap"),svg:rect("#network"),timeline:rect(".timeline"),canvasHead:rect(".canvas-head"),clusterCount:document.querySelectorAll("[data-cluster]").length,edgeCount:document.querySelectorAll(".edge").length};
     });
+    console.log("LAYOUT_DIAGNOSTICS", JSON.stringify(layoutDiagnostics));
+    assert.ok(layoutDiagnostics.graphWrap.height > layoutDiagnostics.canvas.height * 0.75, "SVG network canvas must occupy the main panel, not collapse into the header");
+    assert.ok(Math.abs((layoutDiagnostics.timeline.y + layoutDiagnostics.timeline.height) - (layoutDiagnostics.canvas.y + layoutDiagnostics.canvas.height)) < 2, "timeline must stay anchored at the bottom of the canvas");
 
     // Dragging a concept hub should change its coordinates rather than acting like a static image.
     await page.locator('.topnav button[data-filter="all"]').click();
@@ -40,7 +38,6 @@ const { chromium } = require("playwright");
     await page.mouse.move(hubBox.x + hubBox.width / 2 + 38, hubBox.y + hubBox.height / 2 + 20, { steps: 4 });
     await page.mouse.up();
     const afterX = Number(await page.locator('[data-cluster="industry"] .hub-core').getAttribute("cx"));
-    console.log("DRAG_DIAGNOSTICS", JSON.stringify({beforeX,afterX,hubBox,pointerLog:await page.evaluate(()=>window.__pointerLog)}));
     assert.ok(Math.abs(afterX - beforeX) > 10, "概念群落拖拽应改变节点坐标");
 
     // Search for a real entity from the concept landing state; it should open the evidence graph.
@@ -85,6 +82,10 @@ const { chromium } = require("playwright");
     await page.reload({ waitUntil: "networkidle" });
     await page.waitForFunction(() => document.getElementById("evidenceState")?.textContent === "证据已连接", { timeout: 15000 });
     assert.equal(await page.locator("#evidenceMode").isVisible(), true, "手机端必须显示证据网络入口");
+    assert.equal(await page.locator("#network").getAttribute("viewBox"), "0 0 500 760", "手机端概念图应使用紧凑视窗");
+    const mobileHubBox = await page.locator('[data-cluster="industry"] .hub-core').boundingBox();
+    assert.ok(mobileHubBox && mobileHubBox.width > 6, "手机端概念节点必须有可读、可点的尺寸");
+    assert.equal(await page.locator(".brand-name").evaluate(el => getComputedStyle(el).whiteSpace), "nowrap", "展开搜索时品牌名不应折行");
     await page.locator("#evidenceMode").click();
     await page.waitForSelector(".evidence-node");
     await page.locator(".searchbox").click();
@@ -92,6 +93,17 @@ const { chromium } = require("playwright");
     await page.locator("#search").fill("铜来顺");
     await page.waitForSelector('[data-evidence-node="tls"]');
     assert.match(await page.locator("#evidenceDetail").innerText(), /铜来顺/);
+    const mobileLabelAudit = await page.evaluate(() => {
+      const header = document.querySelector(".canvas-head").getBoundingClientRect();
+      const graph = document.querySelector(".graph-wrap").getBoundingClientRect();
+      const cards = Array.from(document.querySelectorAll(".evidence-node-card")).map(el => {
+        const r = el.getBoundingClientRect();
+        return {x:r.x,y:r.y,right:r.right,bottom:r.bottom};
+      });
+      return {graphTop:graph.top,headerBottom:header.bottom,cards,overHeader:cards.filter(r => r.y < header.bottom && r.bottom > header.top && r.x < header.right && r.right > header.left).length};
+    });
+    assert.equal(mobileLabelAudit.overHeader, 0, "手机端证据节点标签不应被标题/切换控件遮挡");
+    assert.ok(mobileLabelAudit.cards.length >= 2 && mobileLabelAudit.cards.length <= 10, "手机端应显示紧凑的可读关系子图");
     await page.screenshot({ path: path.join(outDir, "holo-v10-mobile-search.png"), fullPage: true });
 
     assert.deepEqual(errors, [], "浏览器运行期间不应有 JavaScript/控制台错误");
