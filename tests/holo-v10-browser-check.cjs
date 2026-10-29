@@ -77,9 +77,9 @@ const { chromium } = require("playwright");
     assert.ok(await page.locator(".evidence-edge").count() > 0, "证据图应有真实关系线");
     await page.screenshot({ path: path.join(outDir, "holo-v10-desktop-evidence.png"), fullPage: true });
 
-    // Mobile: evidence mode and search must remain reachable.
+    // Mobile: evidence mode and search must remain reachable from a clean landing state.
     await page.setViewportSize({ width: 390, height: 844 });
-    await page.reload({ waitUntil: "networkidle" });
+    await page.goto("http://127.0.0.1:8765/holo-home-v10.html", { waitUntil: "networkidle" });
     await page.waitForFunction(() => document.getElementById("evidenceState")?.textContent === "证据已连接", { timeout: 15000 });
     assert.equal(await page.locator("#evidenceMode").isVisible(), true, "手机端必须显示证据网络入口");
     assert.equal(await page.locator("#network").getAttribute("viewBox"), "0 0 500 760", "手机端概念图应使用紧凑视窗");
