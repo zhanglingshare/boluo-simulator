@@ -664,7 +664,8 @@ function renderEvidenceGraph(){
   var color=relationColor(e.relation_type),d=pathBetween(a,b,((e.edge_id.charCodeAt(1)||1)%2)?13:-13);
   var classes=["evidence-edge",evidenceGradeClass(e.evidence_grade)];
   if(e.change_status!=="无显著变化")classes.push("status-changed");
-  if(!isEvidenceRelevant(e)||!matchesEvidenceFilter(e))classes.push("dim");
+  var relationRelevant=activeFilter!=="all"?matchesEvidenceFilter(e):isEvidenceRelevant(e);
+  if(!relationRelevant)classes.push("dim");
   if(evidenceSearchTerm&&!layout.matchEdgeIds[e.edge_id]&&!layout.matchNodeIds[e.source_node_id]&&!layout.matchNodeIds[e.target_node_id])classes.push("dim");
   if(scenario==="new"&&e.change_status==="新增")classes.push("scenario-new");
   if(scenario==="exit"&&e.change_status==="退出")classes.push("scenario-exit");
@@ -675,7 +676,7 @@ function renderEvidenceGraph(){
  });
  layout.nodes.forEach(function(n){
   var p=evidencePositionMap[n.node_id],color=nodeColor(n),statusColor=n.change_status==="新增"?"#7de0c7":n.change_status==="增强"?"#f2c47d":n.change_status==="退出"?"#ff8f9d":"#7e9ab9";
-  var incident=evidenceData.edges.filter(function(e){return (e.source_node_id===n.node_id||e.target_node_id===n.node_id)&&isEvidenceRelevant(e)&&matchesEvidenceFilter(e);}).length;
+  var incident=evidenceData.edges.filter(function(e){return (e.source_node_id===n.node_id||e.target_node_id===n.node_id)&&(activeFilter!=="all"?matchesEvidenceFilter(e):isEvidenceRelevant(e));}).length;
   var searchMatch=!!layout.matchNodeIds[n.node_id];
   var dim=((scenario!=="base"||activeFilter!=="all")&&incident===0)&&!searchMatch&&!(selectedEvidence&&selectedEvidence.kind==="node"&&selectedEvidence.id===n.node_id);
   var scenarioClass=scenario==="new"&&n.change_status==="新增"?" new-highlight":scenario==="exit"&&n.change_status==="退出"?" exit-highlight":"";
