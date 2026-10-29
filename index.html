@@ -343,7 +343,7 @@ function render(){
   // topHook：今天大家在看的第一条
   if(allTopics().length){
     const top=allTopics()[0];
-    document.getElementById("topHook").innerHTML="📌 今天大家在看的，是<b>「"+esc(top.t)+"」</b>";
+    document.getElementById("topHook").innerHTML='<span class="bl-hook-label">今日观察</span>📌 今天大家在看的，是<b>「'+esc(top.t)+'」</b>';
   }
   // hot.json 已按关注档排好，直接采用数组顺序
   const grads={ind:"linear-gradient(135deg,#1e3a8a,#0f1a2e)",life:"linear-gradient(135deg,#7c2d12,#1a0f0f)",city:"linear-gradient(135deg,#374151,#0f1a2e)",agri:"linear-gradient(135deg,#1a2f0e,#0f1a2e)",fun:"linear-gradient(135deg,#064e3b,#0f1a2e)"};
