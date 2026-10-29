@@ -108,7 +108,7 @@ const { chromium } = require("playwright");
 
     // Guided exploration should bridge a question, an evidence view, and a shareable state.
     await page.setViewportSize({ width: 1440, height: 1000 });
-    await page.reload({ waitUntil: "networkidle" });
+    await page.goto("http://127.0.0.1:8765/holo-home-v10.html", { waitUntil: "networkidle" });
     await page.waitForFunction(() => document.getElementById("evidenceState")?.textContent === "证据已连接", { timeout: 15000 });
     await page.locator('[data-q="break"]').click();
     assert.equal(await page.locator("#timelineTitle").innerText(), "关系断裂", "点击问题应切换对应情景");
