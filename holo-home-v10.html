@@ -612,9 +612,9 @@ function updateExploreActions(){
  else{button.innerHTML='<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M5 12h14M13 5l7 7-7 7"/></svg><span class="cta-label">核验公开依据</span><span class="cta-arrow">↗</span>';button.setAttribute("aria-label","切换到公开证据网络核验依据");}
 }
 function updateJourneyUI(){
- var step=shareCompleted?4:(graphMode==="evidence"?3:2);
+ var step=shareCompleted?4:(selectedChangeId?2:(graphMode==="evidence"?3:2));
  var status=document.getElementById("journeyStatus");
- if(status)status.textContent=shareCompleted?"第 4 步 · 分享观察":graphMode==="evidence"?"第 3 步 · 核验公开依据":"第 2 步 · 观察变化";
+ if(status)status.textContent=shareCompleted?"第 4 步 · 分享观察":selectedChangeId?"第 2 步 · 观察变化":graphMode==="evidence"?"第 3 步 · 核验公开依据":"第 2 步 · 观察变化";
  for(var i=1;i<=4;i++){var el=document.getElementById("journey"+i);if(!el)continue;el.classList.toggle("done",i<step);el.classList.toggle("active",i===step);}
  updateExploreActions();
 }
@@ -631,7 +631,7 @@ function copyObservationLink(){
  var q=questionInfo[activeQuestion]||questionInfo.bridge;
  var sceneLabels={base:"关系基准",bridge:"桥梁关系",new:"接入假设",break:"断裂假设",exit:"退出假设",people:"人流传导",eco:"潜在协同"};
  var view=graphMode==="evidence"?"公开证据网络":"概念关系网络";
- var change=getSelectedChange();var payload="我在博罗关系世界观察：「"+(change?change.title:q.title)+"」\n当前观察："+(change?changePhaseLabel(changePhase)+" · "+(change.event_date||"事件记录"):view+" · "+(sceneLabels[scenario]||"关系基准"))+"\n说明：公开事实、推断与假设需分开核验；动画不代表完整历史快照。\n"+window.location.href
+ var change=getSelectedChange();var payload="我在博罗关系世界观察：「"+(change?change.title:q.title)+"」\n当前观察："+(change?changePhaseLabel(changePhase)+" · "+(change.event_date||"事件记录"):view+" · "+(sceneLabels[scenario]||"关系基准"))+"\n说明：公开事实、推断与假设需分开核验；动画不代表完整历史快照。\n"+window.location.href;
  function finish(ok){if(ok){shareCompleted=true;updateJourneyUI();showShareToast("观察卡已复制，可以发给朋友一起推演。");}else showShareToast("复制未成功，请手动复制地址栏中的观察链接。");}
  if(navigator.clipboard&&navigator.clipboard.writeText){navigator.clipboard.writeText(payload).then(function(){finish(true);}).catch(function(){finish(fallbackCopy(payload));});}
  else finish(fallbackCopy(payload));
@@ -1036,7 +1036,7 @@ function updateSelectionUI(){
 }
 function setScenario(next,question){shareCompleted=false;if(graphMode==="evidence")selectedEvidence=null;scenario=next;if(question)activeQuestion=question;else if(next==="break")activeQuestion="break";else if(next==="exit")activeQuestion="exit";else if(next==="new")activeQuestion="bridge";else if(next==="people")activeQuestion="people";else if(next==="eco")activeQuestion="eco";else if(next==="bridge")activeQuestion="bridge";renderGraph();updateSelectionUI();updateShareState();}
 function setQuestion(q){stopPlay();activeQuestion=q;activeFilter="all";var eventMap={bridge:"C006",break:"C009",people:"C006",eco:"C012",exit:"C008"};var id=eventMap[q];if(id&&changeData&&changeData.changes.some(function(x){return x.change_id===id;})){selectChangeEvent(id,"after");}else{var next=q==="bridge"?"bridge":q==="break"?"break":q==="people"?"people":q==="eco"?"eco":"exit";selectedChangeId=null;setScenario(next,q);}syncFilterButtons();}
-function setFilter(id){stopPlay();shareCompleted=false;activeFilter=id;if(graphMode==="evidence"){renderGraph();syncFilterButtons();updateJourneyUI();updateShareState();return;}if(id==="all")setScenario("base",activeQuestion);else{var q=id==="people"?"people":id==="ecology"?"eco":id==="industry"?"bridge":id==="investment"?"bridge":id==="consumption"?"people":"bridge";activeQuestion=q;scenario=q;renderGraph();updateSelectionUI();}syncFilterButtons();updateShareState();}
+function setFilter(id){stopPlay();shareCompleted=false;activeFilter=id;if(selectedChangeId&&id!=="all"){selectedChangeId=null;renderChangeDeck();renderChangeDetail();}if(graphMode==="evidence"){renderGraph();syncFilterButtons();updateJourneyUI();updateShareState();return;}if(id==="all")setScenario("base",activeQuestion);else{var q=id==="people"?"people":id==="ecology"?"eco":id==="industry"?"bridge":id==="investment"?"bridge":id==="consumption"?"people":"bridge";activeQuestion=q;scenario=q;renderGraph();updateSelectionUI();}syncFilterButtons();updateShareState();}
 function syncFilterButtons(){document.querySelectorAll("[data-filter]").forEach(function(b){b.classList.toggle("active",b.getAttribute("data-filter")===activeFilter);});}
 function stopPlay(){if(playTimer){clearInterval(playTimer);playTimer=null;}playing=false;var icon=document.getElementById("playIcon");if(icon)icon.innerHTML='<path d="M8 5v14l11-7z"/>';}
 function startPlay(){
@@ -1046,7 +1046,7 @@ function startPlay(){
 }
 function initStars(){addStars();}
 document.getElementById("conceptMode").addEventListener("click",function(){var id=selectedChangeId||(changeData&&latestChangeId(changeData.changes));if(id)selectChangeEvent(id,"after");});
-document.getElementById("evidenceMode").addEventListener("click",function(){stopPlay();selectedChangeId=null;changePhase="after";selectedEvidence=null;evidenceSearchTerm="";setGraphMode("evidence");renderChangeDeck();renderChangeDetail();});
+document.getElementById("evidenceMode").addEventListener("click",function(){stopPlay();selectedChangeId=null;changePhase="after";selectedEvidence=null;evidenceSearchTerm="";var input=document.getElementById("search");if(input)input.value="";setGraphMode("evidence");renderChangeDeck();renderChangeDetail();});
 restoreSharedState();
 loadEvidenceData();
 document.querySelectorAll(".question-card").forEach(function(b){b.addEventListener("click",function(){setQuestion(b.getAttribute("data-q"));var panel=document.querySelector(".selected-question");if(panel)panel.scrollIntoView({behavior:reducedMotion?"auto":"smooth",block:"center"});});});
