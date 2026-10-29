@@ -9,7 +9,7 @@ const ok = m => console.log('  ✓ ' + m);
 const bad = m => { fails++; console.log('  ✗ ' + m); };
 
 console.log('── 1) HTML 内联 script 语法 ──');
-const htmlFiles = ["index.html", "network.html", "who.html", "choices.html", "future.html", "windtunnel.html", "blindspot.html", "report.html", "ending.html", "town.html", "holo.html", "holo-home-v6.html", "holo-home-v7.html", "holo-home-v8.html", "holo-home-v9.html"];
+const htmlFiles = ["index.html", "network.html", "who.html", "choices.html", "future.html", "windtunnel.html", "blindspot.html", "report.html", "ending.html", "town.html", "holo.html", "holo-home-v6.html", "holo-home-v7.html", "holo-home-v8.html", "holo-home-v9.html", "holo-home-v10.html"];
 for (const f of htmlFiles) {
   const fp = path.join(root, f);
   if (!fs.existsSync(fp)) { bad('缺少页面文件 ' + f); continue; }
@@ -87,6 +87,53 @@ if (!fs.existsSync(v9Path)) {
     ['搜索无结果时给出明确反馈', v9.includes('没有找到对应的关系群落')]
   ];
   checks.forEach(([label, passed]) => passed ? ok(label) : bad(label));
+}
+
+
+console.log('── 6) V10 公开证据关系网络与引用完整性 ──');
+const v10Path = path.join(root, 'holo-home-v10.html');
+const evidencePath = path.join(root, 'data', 'relationship-evidence-v1.json');
+const sourcesPath = path.join(root, 'data', 'relationship-sources-v1.json');
+const changesPath = path.join(root, 'data', 'relationship-changes-v1.json');
+if (![v10Path, evidencePath, sourcesPath, changesPath].every(fs.existsSync)) {
+  bad('V10 或关系证据底座文件缺失');
+} else {
+  const v10 = fs.readFileSync(v10Path, 'utf8');
+  let ed, sd, cd;
+  try {
+    ed = JSON.parse(fs.readFileSync(evidencePath, 'utf8'));
+    sd = JSON.parse(fs.readFileSync(sourcesPath, 'utf8'));
+    cd = JSON.parse(fs.readFileSync(changesPath, 'utf8'));
+  } catch (e) { bad('关系证据 JSON 解析失败: ' + e.message); }
+  if (ed && sd && cd) {
+    if (ed.nodes.length !== ed.node_count) bad('relationship-evidence 节点计数不匹配');
+    else ok('关系节点计数一致（' + ed.nodes.length + '）');
+    if (ed.edges.length !== ed.edge_count) bad('relationship-evidence 关系计数不匹配');
+    else ok('关系边计数一致（' + ed.edges.length + '）');
+    const nodeIds = new Set(ed.nodes.map(n => n.node_id));
+    const edgeIds = new Set(ed.edges.map(e => e.edge_id));
+    const sourceIds = new Set(sd.sources.map(s => s.source_id));
+    for (const e of ed.edges) {
+      if (!nodeIds.has(e.source_node_id) || !nodeIds.has(e.target_node_id)) bad(e.edge_id + ' 存在悬空节点引用');
+      for (const sid of e.source_ids || []) if (!sourceIds.has(sid)) bad(e.edge_id + ' 引用了不存在的来源 ' + sid);
+    }
+    for (const n of ed.nodes) for (const sid of n.source_ids || []) if (!sourceIds.has(sid)) bad(n.node_id + ' 引用了不存在的来源 ' + sid);
+    for (const change of cd.changes) {
+      for (const id of change.involved_node_ids || []) if (!nodeIds.has(id)) bad(change.change_id + ' 引用了不存在的节点 ' + id);
+      for (const id of change.involved_edge_ids || []) if (!edgeIds.has(id)) bad(change.change_id + ' 引用了不存在的关系 ' + id);
+      for (const sid of change.source_ids || []) if (!sourceIds.has(sid)) bad(change.change_id + ' 引用了不存在的来源 ' + sid);
+    }
+    ok('节点、关系、变化事件与来源引用完整性已检查');
+  }
+  const uiChecks = [
+    ['V10 可切换概念网络与证据网络', v10.includes('id="conceptMode"') && v10.includes('id="evidenceMode"')],
+    ['V10 从 data/ 加载关系、来源与变化数据', v10.includes('relationship-evidence-v1.json') && v10.includes('relationship-sources-v1.json') && v10.includes('relationship-changes-v1.json')],
+    ['V10 证据关系可点击查看来源', v10.includes('function showEvidenceEdge(id)') && v10.includes('function sourceLinks(ids)')],
+    ['V10 以 A/B/C 线型区分证据等级', v10.includes('evidence-edge.grade-b') && v10.includes('evidence-edge.grade-c')],
+    ['V10 明确声明线粗不代表关系强度', v10.includes('线粗不代表关系强度')],
+    ['V10 使用关系方向箭头', v10.includes('id="evidenceArrow"') && v10.includes('marker-end')]
+  ];
+  uiChecks.forEach(([label, passed]) => passed ? ok(label) : bad(label));
 }
 
 console.log(fails ? '\n✗ 共 ' + fails + ' 项失败' : '\n✓ 全部通过');
