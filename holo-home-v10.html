@@ -337,6 +337,7 @@ html,body{background:radial-gradient(ellipse at 48% -25%,rgba(56,91,147,.22),tra
 @keyframes evidenceGlow{0%,100%{stroke-opacity:.56}50%{stroke-opacity:.88}}
 @media(max-width:1280px){.evidence-toggle button{padding:6px 7px}.evidence-panel{max-height:300px}}
 @media(max-width:680px){.canvas-head-right{justify-content:flex-start}.evidence-toggle{width:100%;justify-content:stretch}.evidence-toggle button{flex:1}.evidence-panel{max-height:280px}.evidence-stats strong{font-size:15px}.evidence-stats span{font-size:8px}}
+@media(max-width:680px){.evidence-node-title{font-size:13px}.evidence-node-sub{font-size:10px}.brand{min-width:100px;flex:0 0 auto}.brand-mark{width:28px;height:28px}.brand-name{font-size:12px;white-space:nowrap}.brand-sub{display:none}.searchbox.search-open{width:min(50vw,200px)}}
 @media(prefers-reduced-motion:reduce){.evidence-edge.status-changed{animation:none!important}}
 
 </style>
@@ -469,7 +470,7 @@ var clusters=[
 var clusterMap={};clusters.forEach(function(c){clusterMap[c.id]=c;});
 var center={x:500,y:375};
 var scenario="bridge",activeFilter="all",activeQuestion="bridge",playing=false,playTimer=null,drag=null,spaceMode=false;
-var graphMode="concept",evidenceData=null,sourceData=null,changeData=null,evidenceLoadPromise=null,selectedEvidence=null,evidenceNodeMap={},evidenceEdgeMap={},evidencePositionMap={},evidenceSearchTerm="";
+var graphMode="concept",evidenceData=null,sourceData=null,changeData=null,evidenceLoadPromise=null,selectedEvidence=null,evidenceNodeMap={},evidenceEdgeMap={},evidencePositionMap={},evidenceSearchTerm="",mobileConceptLayout=false,savedConceptPositions=null;
 var questionInfo={
 bridge:{title:"谁在连接原本分离的产业群落？",copy:"点击后突出产业、投资与外部城市之间的桥梁连接。现实中是否存在这些关系，仍需证据核验。",insight:"桥梁关系",detail:"真正重要的节点，未必最大；它可能连接了原本互不相通的群落。",filter:["industry","investment","external"]},
 break:{title:"如果关键连接断开，哪些群落会变成孤岛？",copy:"一条关键连接被标记为断裂，观察网络如何分成不同群落。这是结构假设，不代表现实已发生。",insight:"关系断裂假设",detail:"当关键连接失效，局部问题可能沿着关系传导；也可能存在替代路径。",filter:["industry","investment"]},
@@ -477,6 +478,26 @@ people:{title:"人流方向改变，哪些产业会最先感受到？",copy:"把
 eco:{title:"生态资源，能否接上文旅与消费？",copy:"突出生态、农业文旅与消费之间的潜在连接，寻找协同机会与相互约束。",insight:"潜在协同",detail:"生态资源既可能构成约束，也可能通过农业、文旅与消费形成新的连接。",filter:["ecology","culture","consumption"]},
 exit:{title:"如果关键主体离场，网络还能自我修复吗？",copy:"一个卫星节点退出，原有连接消失，并显示可能的替代路径。该动画用于提出问题，而非预测真实结果。",insight:"节点退出假设",detail:"退出的影响取决于它连接了谁，以及网络中是否存在可替代路径。",filter:["industry","external","investment"]}
 };
+function enterMobileConceptLayout(){
+ if(mobileConceptLayout)return;
+ savedConceptPositions=clusters.map(function(c){return {id:c.id,x:c.x,y:c.y,label:c.label.slice()};});
+ var mobileLabels={
+  industry:[20,-34],investment:[20,-15],people:[20,28],consumption:[-160,-18],
+  ecology:[-160,-27],external:[-160,-35],culture:[21,-28]
+ };
+ clusters.forEach(function(c){c.x=50+(c.x-150)*(400/700);c.label=mobileLabels[c.id].slice();});
+ center.x=250;mobileConceptLayout=true;
+}
+function restoreDesktopConceptLayout(){
+ if(!mobileConceptLayout||!savedConceptPositions)return;
+ savedConceptPositions.forEach(function(p){var c=clusterMap[p.id];if(c){c.x=p.x;c.y=p.y;c.label=p.label.slice();}});
+ center.x=500;mobileConceptLayout=false;savedConceptPositions=null;
+}
+function applyResponsiveLayout(){
+ var mobile=window.innerWidth<=680;
+ if(mobile&&graphMode==="concept"){enterMobileConceptLayout();svg.setAttribute("viewBox","0 0 500 760");}
+ else{restoreDesktopConceptLayout();svg.setAttribute("viewBox",mobile?"0 0 500 760":"0 0 1000 760");}
+}
 function el(tag,attrs,text){var n=document.createElementNS(svgNS,tag);if(attrs)Object.keys(attrs).forEach(function(k){n.setAttribute(k,attrs[k]);});if(text!==undefined)n.textContent=text;return n;}
 function htmlEscape(s){return String(s).replace(/[&<>"]/g,function(ch){return {"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[ch];});}
 function screenToSvg(ev){var p=svg.createSVGPoint();p.x=ev.clientX;p.y=ev.clientY;var m=svg.getScreenCTM();return m?p.matrixTransform(m.inverse()):{x:ev.clientX,y:ev.clientY};}
@@ -553,7 +574,7 @@ function loadEvidenceData(){
  return evidenceLoadPromise;
 }
 function setGraphMode(mode){
- stopPlay();graphMode=mode==="evidence"?"evidence":"concept";
+ stopPlay();graphMode=mode==="evidence"?"evidence":"concept";applyResponsiveLayout();
  document.body.classList.toggle("evidence-mode",graphMode==="evidence");
  document.getElementById("conceptMode").classList.toggle("active",graphMode==="concept");
  document.getElementById("evidenceMode").classList.toggle("active",graphMode==="evidence");
@@ -585,14 +606,14 @@ function findEvidenceMatches(term){
 function buildEvidencePositions(){
  var degree={};evidenceData.nodes.forEach(function(n){degree[n.node_id]=0;});
  evidenceData.edges.forEach(function(e){degree[e.source_node_id]=(degree[e.source_node_id]||0)+1;degree[e.target_node_id]=(degree[e.target_node_id]||0)+1;});
- var selected={},matchNodeIds={},matchEdgeIds={},matches={nodes:[],edges:[]};
+ var selected={},matchNodeIds={},matchEdgeIds={},matches={nodes:[],edges:[]},selectionLimit=window.innerWidth<=680?10:20;
  if(evidenceSearchTerm){
   matches=findEvidenceMatches(evidenceSearchTerm);
-  matches.nodes.slice().sort(function(a,b){return (degree[b.node_id]||0)-(degree[a.node_id]||0);}).slice(0,12).forEach(function(n){selected[n.node_id]=true;matchNodeIds[n.node_id]=true;});
-  matches.edges.slice(0,12).forEach(function(e){
+  matches.nodes.slice().sort(function(a,b){return (degree[b.node_id]||0)-(degree[a.node_id]||0);}).slice(0,window.innerWidth<=680?8:12).forEach(function(n){selected[n.node_id]=true;matchNodeIds[n.node_id]=true;});
+  matches.edges.slice(0,window.innerWidth<=680?8:12).forEach(function(e){
    matchEdgeIds[e.edge_id]=true;
-   if(Object.keys(selected).length<20||selected[e.source_node_id])selected[e.source_node_id]=true;
-   if(Object.keys(selected).length<20||selected[e.target_node_id])selected[e.target_node_id]=true;
+   if(Object.keys(selected).length<selectionLimit||selected[e.source_node_id])selected[e.source_node_id]=true;
+   if(Object.keys(selected).length<selectionLimit||selected[e.target_node_id])selected[e.target_node_id]=true;
   });
   if(selectedEvidence&&selectedEvidence.kind==="node")selected[selectedEvidence.id]=true;
   if(selectedEvidence&&selectedEvidence.kind==="edge"){
@@ -600,9 +621,9 @@ function buildEvidencePositions(){
   }
   var seeds=Object.keys(selected);
   seeds.forEach(function(id){
-   if(Object.keys(selected).length>=20)return;
+   if(Object.keys(selected).length>=selectionLimit)return;
    var neighbors=evidenceData.edges.filter(function(e){return e.source_node_id===id||e.target_node_id===id;}).sort(function(a,b){return (degree[b.source_node_id]||0)+(degree[b.target_node_id]||0)-(degree[a.source_node_id]||0)-(degree[a.target_node_id]||0);});
-   neighbors.slice(0,2).forEach(function(e){if(Object.keys(selected).length<20){selected[e.source_node_id]=true;selected[e.target_node_id]=true;}});
+   neighbors.slice(0,2).forEach(function(e){if(Object.keys(selected).length<selectionLimit){selected[e.source_node_id]=true;selected[e.target_node_id]=true;}});
   });
  }else{
   evidenceData.nodes.forEach(function(n){if(n.change_status&&n.change_status!=="无显著变化")selected[n.node_id]=true;});
@@ -610,8 +631,23 @@ function buildEvidencePositions(){
   Object.keys(degree).sort(function(a,b){return degree[b]-degree[a];}).slice(0,8).forEach(function(id){selected[id]=true;});
   if(selectedEvidence&&selectedEvidence.kind==="node")selected[selectedEvidence.id]=true;
   if(selectedEvidence&&selectedEvidence.kind==="edge"){var chosenEdge=evidenceEdgeMap[selectedEvidence.id];if(chosenEdge){selected[chosenEdge.source_node_id]=true;selected[chosenEdge.target_node_id]=true;}}
+  if(window.innerWidth<=680){
+   var mobileSelected={};
+   if(selectedEvidence&&selectedEvidence.kind==="node")mobileSelected[selectedEvidence.id]=true;
+   if(selectedEvidence&&selectedEvidence.kind==="edge"){var mobileEdge=evidenceEdgeMap[selectedEvidence.id];if(mobileEdge){mobileSelected[mobileEdge.source_node_id]=true;mobileSelected[mobileEdge.target_node_id]=true;}}
+   var rank={"退出":0,"新增":1,"增强":2,"无显著变化":3};
+   var priority=evidenceData.nodes.filter(function(n){return n.change_status&&n.change_status!=="无显著变化";}).sort(function(a,b){return (rank[a.change_status]===undefined?4:rank[a.change_status])-(rank[b.change_status]===undefined?4:rank[b.change_status])||(degree[b.node_id]||0)-(degree[a.node_id]||0);});
+   priority.forEach(function(n){if(Object.keys(mobileSelected).length<10)mobileSelected[n.node_id]=true;});
+   Object.keys(degree).sort(function(a,b){return degree[b]-degree[a];}).forEach(function(id){if(Object.keys(mobileSelected).length<10)mobileSelected[id]=true;});
+   selected=mobileSelected;
+  }
  }
  var nodes=evidenceData.nodes.filter(function(n){return selected[n.node_id];});
+ if(window.innerWidth<=680){
+  evidencePositionMap={};
+  nodes.forEach(function(n,i){var col=i%2,row=Math.floor(i/2);evidencePositionMap[n.node_id]={x:col?400:100,y:100+row*135+(col?60:0),align:col?"left":"right"};});
+  return {nodes:nodes,ids:selected,degree:degree,matchNodeIds:matchNodeIds,matchEdgeIds:matchEdgeIds,matchCount:matches.nodes.length+matches.edges.length};
+ }
  var groups={external:[],eco:[],agriculture:[],anchor:[],cluster:[],legacy:[],new:[]};
  nodes.forEach(function(n){var g=n.node_type;if(g==="champion")g="anchor";if(g==="energy")g="new";if(!groups[g])g="new";groups[g].push(n);});
  Object.keys(groups).forEach(function(k){groups[k].sort(function(a,b){var rank={"新增":0,"退出":1,"增强":2,"无显著变化":3};return (rank[a.change_status]===undefined?4:rank[a.change_status])-(rank[b.change_status]===undefined?4:rank[b.change_status])||(degree[b.node_id]||0)-(degree[a.node_id]||0);});});
@@ -655,6 +691,7 @@ function isEvidenceRelevant(edge){
 }
 function renderEvidenceGraph(){
  if(!evidenceData)return;
+ if(window.innerWidth<=680)svg.setAttribute("viewBox","0 0 500 760");else svg.setAttribute("viewBox","0 0 1000 760");
  clearLayer(layers.orbits);clearLayer(layers.edges);clearLayer(layers.nodes);clearLayer(layers.labels);clearLayer(layers.overlays);
  append(layers.orbits,"ellipse",{cx:500,cy:375,rx:390,ry:285,fill:"none",stroke:"#7995bb","stroke-opacity":".07","stroke-width":"1","stroke-dasharray":"2 9"});
  append(layers.orbits,"ellipse",{cx:500,cy:375,rx:275,ry:200,fill:"none",stroke:"#7995bb","stroke-opacity":".06","stroke-width":"1","stroke-dasharray":"2 10"});
@@ -807,7 +844,8 @@ svg.addEventListener("pointerdown",function(ev){if(ev.button!==0)return;var targ
 svg.addEventListener("pointermove",function(ev){if(!drag)return;var dx=ev.clientX-drag.startX,dy=ev.clientY-drag.startY;if(!drag.moved&&Math.sqrt(dx*dx+dy*dy)<4)return;drag.moved=true;var point=screenToSvg(ev),c=clusterMap[drag.id];c.x=Math.max(70,Math.min(920,drag.origX+point.x-drag.startSvgX));c.y=Math.max(100,Math.min(660,drag.origY+point.y-drag.startSvgY));renderGraph();});
 svg.addEventListener("pointerup",function(){if(!drag)return;var finished=drag;drag=null;if(!finished.moved)setFilter(finished.id);});
 svg.addEventListener("pointercancel",function(){drag=null;});
-initStars();renderGraph();updateSelectionUI();
+window.addEventListener("resize",function(){applyResponsiveLayout();renderGraph();});
+applyResponsiveLayout();initStars();renderGraph();updateSelectionUI();
 })();
 </script>
 </body>
