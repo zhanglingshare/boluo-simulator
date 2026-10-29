@@ -1,0 +1,62 @@
+name: boluo-nonholo-ui-browser-check
+
+on:
+  workflow_dispatch:
+  push:
+    branches: [main]
+    paths:
+      - "index.html"
+      - "role.html"
+      - "who.html"
+      - "choices.html"
+      - "future.html"
+      - "windtunnel.html"
+      - "blindspot.html"
+      - "report.html"
+      - "ending.html"
+      - "network.html"
+      - "town.html"
+      - "lab.html"
+      - "step2.html"
+      - "v3.html"
+      - "v4.html"
+      - "v2/index.html"
+      - "v2/data.html"
+      - "assets/boluo-ui.css"
+      - "tests/boluo-ui-browser-check.cjs"
+      - ".github/workflows/boluo-ui-browser-check.yml"
+
+permissions:
+  contents: read
+
+jobs:
+  ui-check:
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 20
+      - name: Install browser test runtime
+        run: |
+          npm install --no-save playwright
+          npx playwright install --with-deps chromium
+      - name: Run local site preview
+        run: |
+          python3 -m http.server 8765 --bind 127.0.0.1 >/tmp/boluo-ui-http.log 2>&1 &
+          for i in $(seq 1 20); do
+            if curl --fail --silent http://127.0.0.1:8765/index.html -o /dev/null; then exit 0; fi
+            sleep 1
+          done
+          cat /tmp/boluo-ui-http.log
+          exit 1
+      - name: Check all 17 non-holographic pages at mobile and desktop widths
+        run: node tests/boluo-ui-browser-check.cjs
+      - name: Upload visual audit screenshots
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: boluo-nonholo-ui-audit
+          path: artifacts/
+          if-no-files-found: warn
