@@ -4,7 +4,7 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
 <meta name="theme-color" content="#0a1120">
-<title>博罗变化现场 · 关系演化与证据</title>
+<title>博罗最近发生了什么？｜一件事，看它牵动谁</title>
 <style>
 :root{--ink:#18263d;--muted:#7c8aa0;--line:#e8edf4;--paper:#fff;--blue:#4c8dff;--teal:#50d1c4;--amber:#f2b96a;--violet:#b49aff;--green:#6fdbab;--rose:#ff8f9d;--navy:#0b1425;--navy2:#111e33}
 *{box-sizing:border-box}
@@ -417,6 +417,18 @@ html,body{background:radial-gradient(ellipse at 48% -25%,rgba(56,91,147,.22),tra
 @media(max-width:680px){.change-cards{grid-template-columns:1fr 1fr;gap:6px}.change-card{padding:8px}.change-card-title{-webkit-line-clamp:3;font-size:9px}.change-card-date{font-size:8px}.change-card-kind{font-size:7px}.change-detail{padding:10px}.timeline-track .time-stop[data-change-phase]{width:14px;height:14px}.timeline-track .time-stop[data-change-phase]:after{inset:4px}.timeline-label{min-width:85px}.timeline-actions button[data-change-phase]{padding:6px 5px;font-size:8px}}
 @media(prefers-reduced-motion:reduce){.evidence-edge.change-event-edge,.evidence-node.change-event-node .node-core{animation:none!important}}
 
+
+/* Plain-language layer for first-time visitors. */
+.change-original-title{font-size:9px;line-height:1.7;color:#8ea3bf;margin:-3px 0 9px;overflow-wrap:anywhere}
+.change-detail-title{font-size:13px;line-height:1.7;color:#f0f6ff;font-weight:800;margin-bottom:7px}
+.change-compare-label{font-size:10px;color:#b7c9df;font-weight:800;margin-bottom:4px}
+.change-compare-copy{font-size:11px;line-height:1.8;color:#e0eaf7}
+.change-uncertainty{font-size:11px;line-height:1.8;color:#ffd49a;margin:8px 0 2px;padding-left:9px;border-left:2px solid #c99850}
+.change-focus-note{font-size:10px;line-height:1.8;color:#a7bbd3;margin-top:8px}
+.explore-intro{font-size:11px;line-height:1.8}
+.canvas-desc{max-width:620px;line-height:1.8}
+.question-title{line-height:1.7}
+
 </style>
 </head>
 <body>
@@ -439,24 +451,24 @@ html,body{background:radial-gradient(ellipse at 48% -25%,rgba(56,91,147,.22),tra
   <aside class="sidebar">
     <div class="side-kicker">EXPLORE</div>
     <nav class="side-nav" aria-label="工作区导航">
-      <button class="active" data-filter="all"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><circle cx="12" cy="12" r="3"/><circle cx="5" cy="5" r="2"/><circle cx="19" cy="5" r="2"/><circle cx="5" cy="19" r="2"/><circle cx="19" cy="19" r="2"/><path d="m10 10-3.5-3.5M14 10l3.5-3.5M10 14l-3.5 3.5M14 14l3.5 3.5"/></svg>关系全景</button>
-      <button data-filter="industry"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M3 21V9l6 3V7l6 4V3h5v18z"/><path d="M7 16h2m3 0h2m3 0h2"/></svg>产业网络</button>
-      <button data-filter="investment"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M3 20h18M5 17l5-5 4 2 5-8"/><path d="M15 6h4v4"/></svg>投资流向</button>
-      <button data-filter="people"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><circle cx="9" cy="8" r="3"/><path d="M3 20v-2a6 6 0 0 1 12 0v2M16 5a3 3 0 0 1 0 6m2 3a5 5 0 0 1 3 4v2"/></svg>人口流动</button>
-      <button data-filter="consumption"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M4 8h16l-1.5 12h-13zM8 8a4 4 0 0 1 8 0"/></svg>消费趋势</button>
-      <button data-filter="external"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M3 18h18M5 18V9l7-5 7 5v9M9 18v-5h6v5"/></svg>交通与外部连接</button>
-      <button data-filter="ecology"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M20 4C11 4 5 7 5 14a6 6 0 0 0 6 6c7 0 9-7 9-16Z"/><path d="M4 21c3-5 6-8 11-11"/></svg>生态资源</button>
+      <button class="active" data-filter="all"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><circle cx="12" cy="12" r="3"/><circle cx="5" cy="5" r="2"/><circle cx="19" cy="5" r="2"/><circle cx="5" cy="19" r="2"/><circle cx="19" cy="19" r="2"/><path d="m10 10-3.5-3.5M14 10l3.5-3.5M10 14l-3.5 3.5M14 14l3.5 3.5"/></svg>所有变化</button>
+      <button data-filter="industry"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M3 21V9l6 3V7l6 4V3h5v18z"/><path d="M7 16h2m3 0h2m3 0h2"/></svg>工厂和产业</button>
+      <button data-filter="investment"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M3 20h18M5 17l5-5 4 2 5-8"/><path d="M15 6h4v4"/></svg>项目投资</button>
+      <button data-filter="people"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><circle cx="9" cy="8" r="3"/><path d="M3 20v-2a6 6 0 0 1 12 0v2M16 5a3 3 0 0 1 0 6m2 3a5 5 0 0 1 3 4v2"/></svg>出行与人流</button>
+      <button data-filter="consumption"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M4 8h16l-1.5 12h-13zM8 8a4 4 0 0 1 8 0"/></svg>游客与消费</button>
+      <button data-filter="external"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M3 18h18M5 18V9l7-5 7 5v9M9 18v-5h6v5"/></svg>道路与交通</button>
+      <button data-filter="ecology"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M20 4C11 4 5 7 5 14a6 6 0 0 0 6 6c7 0 9-7 9-16Z"/><path d="M4 21c3-5 6-8 11-11"/></svg>农业与自然</button>
     </nav>
     <div class="side-sep"></div>
-    <div class="side-mini-title">变化观察方式</div>
-    <button class="mode-btn active" data-mode="structure"><span class="mode-dot"></span>事件聚焦</button>
-    <button class="mode-btn" data-mode="motion"><span class="mode-dot"></span>播放变化</button>
-    <div class="sidebar-note"><strong>看见关系，不只看见数据</strong>这里展示的是抽象关系结构。连线用于提出问题，不等于已经证实的因果关系。</div>
+    <div class="side-mini-title">你想怎么看？</div>
+    <button class="mode-btn active" data-mode="structure"><span class="mode-dot"></span>只看这件事</button>
+    <button class="mode-btn" data-mode="motion"><span class="mode-dot"></span>播放前后变化</button>
+    <div class="sidebar-note"><strong>先看一件事，再看它牵动谁</strong>图上的线是公开资料里的关联线索，不代表一件事一定造成另一件事。</div>
   </aside>
   <section class="canvas" aria-label="博罗关系网络主画布">
     <div class="canvas-head">
-      <div><div class="canvas-eyebrow">BO LUO · CHANGE OBSERVATORY</div><div class="canvas-title">博罗的关系，哪里正在改变？</div><div class="canvas-desc">观察近期变化 → 发现相关节点与连接 → 核验公开依据及限制</div></div>
-      <div class="canvas-head-right"><div class="live-status" id="liveStatus"><i></i>正在连接公开证据</div><div class="view-toggle"><button class="active" data-view="2d">平面</button><button data-view="space">空间感</button></div><div class="evidence-toggle" role="group" aria-label="网络数据视图"><button id="conceptMode" class="active">事件聚焦</button><button id="evidenceMode">关系底图 <span id="evidenceCount">36 · 45</span></button></div></div>
+      <div><div class="canvas-eyebrow">博罗 · 看变化</div><div class="canvas-title">这件事，会牵动博罗的哪里？</div><div class="canvas-desc">先选一件事，再看：以前怎样、现在有什么不同、哪些影响还不能确定。</div></div>
+      <div class="canvas-head-right"><div class="live-status" id="liveStatus"><i></i>正在整理公开资料</div><div class="view-toggle"><button class="active" data-view="2d">平面</button><button data-view="space">空间感</button></div><div class="evidence-toggle" role="group" aria-label="网络数据视图"><button id="conceptMode" class="active">只看这件事</button><button id="evidenceMode">看整张图 <span id="evidenceCount" style="display:none">36 · 45</span></button></div></div>
     </div>
     <div class="graph-wrap">
       <svg id="network" viewBox="0 0 1000 760" role="img" aria-label="博罗抽象关系网络图">
@@ -475,8 +487,8 @@ html,body{background:radial-gradient(ellipse at 48% -25%,rgba(56,91,147,.22),tra
       <div class="legend-item"><span class="legend-dot" style="color:#58d0c7;background:#58d0c7"></span>人口</div>
       <div class="legend-item"><span class="legend-dot" style="color:#ff8f9d;background:#ff8f9d"></span>消费</div>
       <div class="legend-item"><span class="legend-dot" style="color:#6fd8a9;background:#6fd8a9"></span>生态</div>
-      <div class="legend-item"><span style="display:block;width:14px;height:1px;background:#93a8c5"></span>关系强度</div>
-      <div class="legend-item"><span style="display:block;width:14px;height:1px;border-top:1px dashed #ff9288"></span>关系断裂 / 假设</div>
+      <div class="legend-item"><span style="display:block;width:14px;height:1px;background:#93a8c5"></span>相关线索</div>
+      <div class="legend-item"><span style="display:block;width:14px;height:1px;border-top:1px dashed #ff9288"></span>尚待确认 / 情景示意</div>
     </div>
     <div class="canvas-insight" id="canvasInsight">
       <div class="insight-kicker">STRUCTURE NOTE / 01</div><div class="insight-title">先看群落，再看连接</div><div class="insight-copy">一个主体的意义，可能来自它连接了哪些原本分离的群落。</div>
@@ -488,46 +500,46 @@ html,body{background:radial-gradient(ellipse at 48% -25%,rgba(56,91,147,.22),tra
         <button class="time-stop" data-change-phase="before" aria-label="变化前"></button><button class="time-stop" data-change-phase="event" aria-label="变化发生"></button><button class="time-stop active" data-change-phase="after" aria-label="变化后"></button>
       </div>
       <div class="timeline-date" id="timelineDate">变化后 · 记录状态</div>
-      <div class="timeline-actions"><button data-change-phase="before">变化前</button><button data-change-phase="event">变化发生</button><button data-change-phase="after" class="active">变化后</button></div>
+      <div class="timeline-actions"><button data-change-phase="before">之前</button><button data-change-phase="event">发生时</button><button data-change-phase="after" class="active">之后</button></div>
     </div>
   </section>
   <aside class="explore">
-    <div class="explore-head change-head"><div class="explore-heading"><span class="bulb"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M12 3v18M3 12h18M5.6 5.6l12.8 12.8M18.4 5.6 5.6 18.4"/></svg></span>正在发生的变化</div><span class="explore-count" id="changeCount">12 条记录</span></div>
-    <div class="explore-intro">先选一件真实发生或正在推进的事，再看它改变了哪些节点与连接。</div>
+    <div class="explore-head change-head"><div class="explore-heading"><span class="bulb"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M12 3v18M3 12h18M5.6 5.6l12.8 12.8M18.4 5.6 5.6 18.4"/></svg></span>最近发生了什么？</div><span class="explore-count" id="changeCount">12 件事</span></div>
+    <div class="explore-intro">点开一件事。我们一起看看：之前是什么样，现在变了什么。</div>
     <div id="changeCards" class="change-cards" aria-label="结构变化事件"><div class="change-loading">正在读取公开变化记录…</div></div><button type="button" id="toggleAllChanges" class="toggle-all-changes" hidden>查看全部变化</button>
     <div id="changeDetail" class="change-detail" aria-live="polite"><div class="change-detail-empty">选择一条变化，观察前后状态与相关证据。</div></div>
-    <div class="explore-subhead">接下来，还可以追问结构问题</div>
+    <div class="explore-subhead">还想多看一眼？</div>
     <div class="question-list">
       <button class="question-card active" data-q="bridge">
         <div class="question-top"><span class="question-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"><circle cx="12" cy="12" r="3"/><circle cx="5" cy="5" r="2"/><circle cx="19" cy="5" r="2"/><circle cx="5" cy="19" r="2"/><circle cx="19" cy="19" r="2"/><path d="m10 10-3.5-3.5M14 10l3.5-3.5M10 14l-3.5 3.5M14 14l3.5 3.5"/></svg></span><span class="question-tag">关键连接</span><span class="question-arrow">↗</span></div>
-        <div class="question-title">谁在连接原本分离的产业群落？</div><div class="question-desc">不起眼的连接，也可能改变整个网络</div>
+        <div class="question-title">哪些工厂和项目正在互相靠近？</div><div class="question-desc">看看新项目周围，原来有哪些企业</div>
       </button>
       <button class="question-card" data-q="break">
         <div class="question-top"><span class="question-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"><path d="M4 5h5l3 5m3 4 2 5h3M4 19l5-5m6-6 5-5"/><path d="m9 9 6 6m0-6-6 6"/></svg></span><span class="question-tag">结构风险</span><span class="question-arrow">↗</span></div>
-        <div class="question-title">如果关键连接断开，哪些群落会变成孤岛？</div><div class="question-desc">失去一条线，影响可能沿网络继续传导</div>
+        <div class="question-title">如果一家工厂停产，谁可能受到影响？</div><div class="question-desc">先找相关联系，再看哪些影响有证据</div>
       </button>
       <button class="question-card" data-q="people">
         <div class="question-top"><span class="question-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"><circle cx="9" cy="8" r="3"/><path d="M3 20v-2a6 6 0 0 1 12 0v2M16 5a3 3 0 0 1 0 6m2 3a5 5 0 0 1 3 4v2"/></svg></span><span class="question-tag">人流变化</span><span class="question-arrow">↗</span></div>
-        <div class="question-title">人流方向改变，哪些产业会最先感受到？</div><div class="question-desc">把就业、通勤、居住与消费放进同一张网</div>
+        <div class="question-title">游客多了，周边生意会跟着变好吗？</div><div class="question-desc">游客人数不等于每家店的收入</div>
       </button>
       <button class="question-card" data-q="eco">
         <div class="question-top"><span class="question-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"><path d="M20 4C11 4 5 7 5 14a6 6 0 0 0 6 6c7 0 9-7 9-16Z"/><path d="M4 21c3-5 6-8 11-11"/></svg></span><span class="question-tag">潜在协同</span><span class="question-arrow">↗</span></div>
-        <div class="question-title">生态资源，能否接上文旅与消费？</div><div class="question-desc">寻找尚未被充分看见的潜在连接</div>
+        <div class="question-title">罗浮山的游客，能不能多住一晚？</div><div class="question-desc">多住一晚，可能给民宿和餐饮带来机会</div>
       </button>
       <button class="question-card" data-q="exit">
         <div class="question-top"><span class="question-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"><circle cx="12" cy="12" r="9"/><path d="M8 12h8M12 8l4 4-4 4"/></svg></span><span class="question-tag">反常识假设</span><span class="question-arrow">↗</span></div>
-        <div class="question-title">如果关键主体离场，网络还能自我修复吗？</div><div class="question-desc">观察替代路径、孤立群落与新的连接机会</div>
+        <div class="question-title">如果一个重要项目没落地，下一步怎么办？</div><div class="question-desc">看看有没有别的项目或道路可以接上</div>
       </button>
     </div>
     <div class="selected-question" aria-live="polite">
       <div class="selected-label"><span></span><span id="journeyStatus">第 2 步 · 观察变化</span></div>
       <div class="selected-title" id="selectedTitle">谁在连接原本分离的产业群落？</div>
-      <div class="selected-copy" id="selectedCopy">点击问题，观察关系变化；再核验公开依据。这是探索入口，不是自动生成的结论。</div>
+      <div class="selected-copy" id="selectedCopy">选一个问题，看看哪些地方可能受影响。图里展示的是线索，不是已经证实的结果。</div>
       <div class="journey-steps" role="list" aria-label="探索流程">
-        <div class="journey-step done" id="journey1" role="listitem"><b>01</b><span>发现问题</span></div>
-        <div class="journey-step active" id="journey2" role="listitem"><b>02</b><span>看见变化</span></div>
-        <div class="journey-step" id="journey3" role="listitem"><b>03</b><span>核验证据</span></div>
-        <div class="journey-step" id="journey4" role="listitem"><b>04</b><span>分享观察</span></div>
+        <div class="journey-step done" id="journey1" role="listitem"><b>01</b><span>选一件事</span></div>
+        <div class="journey-step active" id="journey2" role="listitem"><b>02</b><span>看哪里变了</span></div>
+        <div class="journey-step" id="journey3" role="listitem"><b>03</b><span>看消息来源</span></div>
+        <div class="journey-step" id="journey4" role="listitem"><b>04</b><span>分享给别人</span></div>
       </div>
       <div class="explore-actions">
         <button type="button" class="selected-cta" id="exploreNext"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M5 12h14M13 5l7 7-7 7"/></svg><span class="cta-label">核验公开依据</span><span class="cta-arrow">↗</span></button>
@@ -607,14 +619,14 @@ function updateShareState(){
 }
 function updateExploreActions(){
  var button=document.getElementById("exploreNext");if(!button)return;
- if(selectedChangeId){button.innerHTML='<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M5 12h14M13 5l7 7-7 7"/></svg><span class="cta-label">核验这条变化</span><span class="cta-arrow">↗</span>';button.setAttribute("aria-label","查看所选变化的前后状态与公开来源");}
- else if(graphMode==="evidence"){button.innerHTML='<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M5 12h14M13 5l7 7-7 7"/></svg><span class="cta-label">聚焦最新变化</span><span class="cta-arrow">↗</span>';button.setAttribute("aria-label","聚焦最近一条结构变化");}
+ if(selectedChangeId){button.innerHTML='<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M5 12h14M13 5l7 7-7 7"/></svg><span class="cta-label">看看消息来源</span><span class="cta-arrow">↗</span>';button.setAttribute("aria-label","查看这件事的前后情况和公开消息来源");}
+ else if(graphMode==="evidence"){button.innerHTML='<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M5 12h14M13 5l7 7-7 7"/></svg><span class="cta-label">看看最近发生的事</span><span class="cta-arrow">↗</span>';button.setAttribute("aria-label","查看最近一件公开记录的事");}
  else{button.innerHTML='<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M5 12h14M13 5l7 7-7 7"/></svg><span class="cta-label">核验公开依据</span><span class="cta-arrow">↗</span>';button.setAttribute("aria-label","切换到公开证据网络核验依据");}
 }
 function updateJourneyUI(){
  var step=shareCompleted?4:(selectedChangeId?2:(graphMode==="evidence"?3:2));
  var status=document.getElementById("journeyStatus");
- if(status)status.textContent=shareCompleted?"第 4 步 · 分享观察":selectedChangeId?"第 2 步 · 观察变化":graphMode==="evidence"?"第 3 步 · 核验公开依据":"第 2 步 · 观察变化";
+ if(status)status.textContent=shareCompleted?"第 4 步 · 分享给别人":selectedChangeId?"第 2 步 · 看哪里变了":graphMode==="evidence"?"第 3 步 · 看消息来源":"第 2 步 · 看哪里变了";
  for(var i=1;i<=4;i++){var el=document.getElementById("journey"+i);if(!el)continue;el.classList.toggle("done",i<step);el.classList.toggle("active",i===step);}
  updateExploreActions();
 }
@@ -706,7 +718,9 @@ function renderNewNode(){if(scenario!=="new")return;var p0={x:550,y:265};var lin
 function renderGraph(){if(graphMode==="evidence"){renderEvidenceGraph();updateCanvasInsightEvidence();updateEvidencePanel();return;}addOrbits();clearLayer(layers.nodes);clearLayer(layers.labels);clearLayer(layers.overlays);renderEdges();clusters.forEach(addClusterNode);renderCenter();renderNewNode();updateCanvasInsight();updateConceptLegend();updateEvidencePanel();}
 
 
-function changeTypeLabel(type){return ({new_entity:"新主体接入",new_edge:"新连接形成",strengthen:"连接增强",weaken:"关系减弱",exit:"主体退出",break:"关系断裂",alternative:"替代路径"})[type]||"结构变化";}
+function changeTypeLabel(type){return ({new_entity:"新项目 / 企业",new_edge:"交通连接变化",strengthen:"合作正在加强",weaken:"停产 / 联系减弱",exit:"退出 / 停产",break:"联系中断",alternative:"替代办法"})[type]||"发生变化";}
+function changePlainTitle(change){return ({C001:"福田产业园开园，首批企业开始投产",C002:"博罗新增两座储能电站",C003:"铜来顺新生产线点火投产",C004:"4个大项目签约，但还没全部建成",C005:"多个扩产项目落地，仍在建设中",C006:"石洲大桥重建，施工期间出行受影响",C007:"惠霞高速博罗段争取年内通车",C008:"固力水泥一条生产线永久停产",C009:"石湾部分企业停产整改，之后可能复产",C010:"荔枝产业开始抱团合作",C011:"博罗农业获国家级示范区认定",C012:"国庆游客和民宿预订升温"})[change.change_id]||change.title;}
+function changePhaseLabel(phase){return ({before:"事情之前",event:"事情发生时",after:"事情之后"})[phase]||"事情之后";}
 function changeDateRank(value){var m=String(value||"").match(/^(\d{4})-(\d{1,2})(?:-(\d{1,2}))?/);return m?Number(m[1])*10000+Number(m[2])*100+(Number(m[3]||0)):0;}
 function sortedChanges(){return (changeData&&changeData.changes?changeData.changes.slice():[]).sort(function(a,b){return changeDateRank(b.event_date)-changeDateRank(a.event_date)||String(b.event_date||"").localeCompare(String(a.event_date||""));});}
 function latestChangeId(list){var items=(list||[]).slice().sort(function(a,b){return changeDateRank(b.event_date)-changeDateRank(a.event_date)||String(b.event_date||"").localeCompare(String(a.event_date||""));});return items.length?items[0].change_id:null;}
@@ -716,28 +730,28 @@ function renderChangeDeck(){
  var host=document.getElementById("changeCards");if(!host||!changeData)return;
  var all=sortedChanges(),visible=showAllChanges?all:all.slice(0,4),selected=getSelectedChange();
  if(selected&&!visible.some(function(x){return x.change_id===selected.change_id;})){visible=visible.slice(0,3).concat([selected]);}
- document.getElementById("changeCount").textContent=all.length+" 条记录";
- var toggle=document.getElementById("toggleAllChanges");if(toggle){toggle.hidden=all.length<=4;toggle.textContent=showAllChanges?"收起变化记录":"查看全部 "+all.length+" 条";}
+ document.getElementById("changeCount").textContent=all.length+" 件事";
+ var toggle=document.getElementById("toggleAllChanges");if(toggle){toggle.hidden=all.length<=4;toggle.textContent=showAllChanges?"收起变化":"查看全部 "+all.length+" 件事";}
  host.innerHTML=visible.map(function(x){
   var risk=["exit","weaken","break"].indexOf(x.change_type)>=0;
-  var status=x.uncertainty&&/待建|待落地|目标|预计|假设|或阶段性/.test(x.uncertainty)?"待观察":(x.change_type==="exit"?"已退出":x.change_type==="weaken"?"减弱中":"公开事件");
-  return '<button type="button" class="change-card'+(selectedChangeId===x.change_id?' active':'')+'" data-change-card="'+htmlEscape(x.change_id)+'" aria-pressed="'+(selectedChangeId===x.change_id?'true':'false')+'"><span class="change-card-top"><span class="change-card-date">'+htmlEscape(x.event_date||"日期待核")+'</span><span class="change-card-kind'+(risk?' risk':'')+'">'+htmlEscape(changeTypeLabel(x.change_type))+'</span></span><span class="change-card-title">'+htmlEscape(x.title)+'</span><span class="change-card-foot"><span>'+htmlEscape(status)+'</span><span class="change-card-arrow">查看变化 ↗</span></span></button>';
+  var status=x.uncertainty&&/待建|待落地|目标|预计|假设|或阶段性/.test(x.uncertainty)?"还在变化中":(x.change_type==="exit"?"已停产 / 退出":x.change_type==="weaken"?"停产整改":"有公开记录");
+  return '<button type="button" class="change-card'+(selectedChangeId===x.change_id?' active':'')+'" data-change-card="'+htmlEscape(x.change_id)+'" aria-pressed="'+(selectedChangeId===x.change_id?'true':'false')+'"><span class="change-card-top"><span class="change-card-date">'+htmlEscape(x.event_date||"日期待核")+'</span><span class="change-card-kind'+(risk?' risk':'')+'">'+htmlEscape(changeTypeLabel(x.change_type))+'</span></span><span class="change-card-title">'+htmlEscape(changePlainTitle(x))+'</span><span class="change-card-foot"><span>'+htmlEscape(status)+'</span><span class="change-card-arrow">看看前后 ↗</span></span></button>';
  }).join("");
  host.querySelectorAll("[data-change-card]").forEach(function(b){b.addEventListener("click",function(){selectChangeEvent(b.getAttribute("data-change-card"),"after");});});
 }
 function renderChangeDetail(){
  var host=document.getElementById("changeDetail");if(!host)return;
  var change=getSelectedChange();
- if(!change){host.innerHTML='<div class="change-detail-empty">选择一条变化，观察前后状态与相关证据。这里会区分已发生事实、待落地项目和推断限制。</div>';return;}
- var parts=String(change.before_after||"前后状态暂无完整描述").split(/[；;]/),before=parts[0]||"此前状态待核",after=parts.slice(1).join("；")||"事件后的实际状态仍需持续观察";
+ if(!change){host.innerHTML='<div class="change-detail-empty">从上面选一件事，就能看到“以前”和“现在”的区别，以及目前还不能确定的部分。</div>';return;}
+ var parts=String(change.before_after||"前后情况还需要核对").split(/[；;]/),before=parts[0]||"此前情况待核",after=parts.slice(1).join("；")||"事情发生后的实际情况仍需观察";
  before=before.replace(/^此前[：:]\s*/,"");after=after.replace(/^此后[：:]\s*/,"");
  var phaseClass=changePhase==="before"?"before":changePhase==="event"?"event":"";
- var phaseCopy=changePhase==="before"?"正在查看变化前的结构示意。新增主体或连接在这一阶段会淡出；这不是完整的历史网络快照。":changePhase==="event"?"变化节点与相关连线已突出显示。动画只呈现事件描述对应的结构差异，不推断未观测到的经济结果。":"当前显示事件记录后的结构状态。签约、在建和目标项目仍按原始不确定性标注，不等同于已经达产。";
- host.innerHTML='<div class="change-detail-kicker"><span>'+htmlEscape(change.event_date||"日期待核")+' · '+htmlEscape(changeTypeLabel(change.change_type))+'</span><span class="change-phase-pill '+phaseClass+'">'+htmlEscape(changePhaseLabel(changePhase))+'</span></div><div class="change-detail-title">'+htmlEscape(change.title)+'</div><div class="change-compare"><div class="change-compare-row"><div class="change-compare-label">变化之前</div><div class="change-compare-copy">'+htmlEscape(before)+'</div></div><div class="change-compare-row"><div class="change-compare-label">变化之后 / 当前记录</div><div class="change-compare-copy">'+htmlEscape(after)+'</div></div></div><div class="change-uncertainty"><strong>还不能下的结论：</strong>'+htmlEscape(change.uncertainty||"影响范围和持续性仍需进一步核验。")+'</div><div class="change-focus-note">'+htmlEscape(phaseCopy)+'</div>'+sourceLinks(change.source_ids);
+ var phaseCopy=changePhase==="before"?"现在看到的是事件发生前的示意，不是完整的历史画面。":changePhase==="event"?"亮起来的是这件事相关的主体和联系，方便观察，不代表已经证明了因果。":"现在看到的是事件记录后的示意。签约、在建和目标项目，不等于已经投产或实现目标。";
+ host.innerHTML='<div class="change-detail-kicker"><span>'+htmlEscape(change.event_date||"日期待核")+' · '+htmlEscape(changeTypeLabel(change.change_type))+'</span><span class="change-phase-pill '+phaseClass+'">'+htmlEscape(changePhaseLabel(changePhase))+'</span></div><div class="change-detail-title">'+htmlEscape(changePlainTitle(change))+'</div><div class="change-original-title">公开记录：'+htmlEscape(change.title)+'</div><div class="change-compare"><div class="change-compare-row"><div class="change-compare-label">以前</div><div class="change-compare-copy">'+htmlEscape(before)+'</div></div><div class="change-compare-row"><div class="change-compare-label">现在 / 接下来</div><div class="change-compare-copy">'+htmlEscape(after)+'</div></div></div><div class="change-uncertainty"><strong>还有什么不知道？</strong>'+htmlEscape(change.uncertainty||"影响范围和持续性还需要继续观察。")+'</div><div class="change-focus-note">'+htmlEscape(phaseCopy)+'</div>'+sourceLinks(change.source_ids);
 }
 function syncChangePhaseUI(){
  var change=getSelectedChange();document.querySelectorAll("[data-change-phase]").forEach(function(b){b.classList.toggle("active",!!change&&b.getAttribute("data-change-phase")===changePhase);b.disabled=!change;});
- var label=document.getElementById("timelineDate");if(label)label.textContent=change?changePhaseLabel(changePhase)+" · "+(change.event_date||"事件记录"):"请选择事件 · 点击右侧变化卡片";
+ var label=document.getElementById("timelineDate");if(label)label.textContent=change?changePhaseLabel(changePhase)+" · "+(change.event_date||"公开记录"):"先从右侧选一件事";
 }
 function selectChangeEvent(id,phase){
  if(!changeData||!changeData.changes.some(function(x){return x.change_id===id;}))return;
@@ -1003,7 +1017,7 @@ function updateEvidencePanel(){
   return;
  }
  detail.hidden=true;
- intro.textContent=selectedChangeId?"已聚焦所选变化及其相邻关系。点击节点或连线可查看公开依据；颜色和动画用于定位变化，不代表影响大小。":"完整关系底图用于核验公开关系。线型表示证据等级，关系线粗细不代表强度。";
+ intro.textContent=selectedChangeId?"现在只看这件事有关的线索。点亮的节点可以继续查看公开资料。":"这里展示目前整理到的关联线索。它不是完整的现实地图，也不能单凭连线判断因果。";
  if(graphMode==="concept"){
   var changes=changeData.changes.slice().sort(function(a,b){return String(b.event_date||"").localeCompare(String(a.event_date||""));}).slice(0,3);
   recent.innerHTML='<div class="evidence-source-title">近期结构变化 · 点击进入证据网络</div>'+changes.map(function(x){return '<button class="evidence-event" data-change-id="'+htmlEscape(x.change_id)+'"><span class="evidence-event-title">'+htmlEscape(x.title)+'</span><span class="evidence-event-meta"><span>'+htmlEscape(x.event_date||"日期待核")+'</span><span>查看关系 ↗</span></span></button>';}).join("");
