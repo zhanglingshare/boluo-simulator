@@ -930,7 +930,7 @@ document.getElementById("conceptMode").addEventListener("click",function(){setGr
 document.getElementById("evidenceMode").addEventListener("click",function(){setGraphMode("evidence");});
 restoreSharedState();
 loadEvidenceData();
-document.querySelectorAll(".question-card").forEach(function(b){b.addEventListener("click",function(){setQuestion(b.getAttribute("data-q"));var panel=document.querySelector(".selected-question");if(panel)panel.scrollIntoView({behavior:reducedMotion?"auto":"smooth",block:"nearest"});});});
+document.querySelectorAll(".question-card").forEach(function(b){b.addEventListener("click",function(){setQuestion(b.getAttribute("data-q"));var panel=document.querySelector(".selected-question");if(panel)panel.scrollIntoView({behavior:reducedMotion?"auto":"smooth",block:"center"});});});
 document.querySelectorAll("[data-filter]").forEach(function(b){b.addEventListener("click",function(){setFilter(b.getAttribute("data-filter"));});});
 document.querySelectorAll("[data-scenario]").forEach(function(b){b.addEventListener("click",function(){stopPlay();setScenario(b.getAttribute("data-scenario"));});});
 document.querySelectorAll("[data-mode]").forEach(function(b){b.addEventListener("click",function(){stopPlay();document.querySelectorAll("[data-mode]").forEach(function(x){x.classList.toggle("active",x===b);});if(b.getAttribute("data-mode")==="motion"){setScenario("new");}else{setScenario("base");}});});
