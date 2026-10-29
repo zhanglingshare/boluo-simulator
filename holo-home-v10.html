@@ -803,11 +803,11 @@ function setGraphMode(mode){
  document.body.classList.toggle("evidence-mode",graphMode==="evidence");
  document.getElementById("conceptMode").classList.toggle("active",!!selectedChangeId);
  document.getElementById("evidenceMode").classList.toggle("active",!selectedChangeId);
- document.getElementById("footerGraphMode").textContent=graphMode==="evidence"?"公开证据关系子图 / 非地图":"概念网络示意 / 非真实地图";
+ document.getElementById("footerGraphMode").textContent=graphMode==="evidence"?"这件事相关的关系线索":"关系概念示意图";
  updateSelectionUI();
  if(graphMode==="evidence"){updateShareState();
   evidenceSearchTerm=document.getElementById("search").value.trim().toLowerCase();
-  document.getElementById("liveStatus").innerHTML="<i></i>正在读取公开关系证据";
+  document.getElementById("liveStatus").innerHTML="<i></i>正在整理公开资料";
   loadEvidenceData().then(function(ok){if(ok){if(evidenceSearchTerm&&!selectedEvidence){var matches=findEvidenceMatches(evidenceSearchTerm);selectedEvidence=matches.nodes.length?{kind:"node",id:matches.nodes[0].node_id}:matches.edges.length?{kind:"edge",id:matches.edges[0].edge_id}:null;}renderGraph();updateCanvasInsightEvidence();updateJourneyUI();updateShareState();}else{setGraphMode("concept");}});
  }else{
   document.getElementById("liveStatus").innerHTML="<i></i>概念探索视图";
@@ -883,7 +883,7 @@ function buildEvidencePositions(){
  if(focusedChange){
   var focusIds={},edgeIds={};
   (focusedChange.involved_node_ids||[]).forEach(function(id){if(evidenceNodeMap[id])focusIds[id]=true;});
-  (focusedChange.involved_edge_ids||[]).forEach(function(id){var e=evidenceEdgeMap[id];if(e){edgeIds[id]=true;focusIds[e.source_node_id]=true;focusIds[e.target_node_id]=true;}});
+  (focusedChange.involved_edge_ids||[]).forEach(function(id){var e=evidenceEdgeMap[id];if(e){edgeIds[id]=true;selected[e.source_node_id]=true;selected[e.target_node_id]=true;}});
   if(!Object.keys(focusIds).length){Object.keys(selected).forEach(function(id){focusIds[id]=true;});}
   var focalNodes=nodes.filter(function(n){return focusIds[n.node_id];});
   var contextNodes=nodes.filter(function(n){return !focusIds[n.node_id];});
@@ -967,7 +967,7 @@ function renderEvidenceGraph(){
  var focusChange=getSelectedChange(),focusNodeIds={},focusEdgeIds={};
  if(focusChange){
   (focusChange.involved_node_ids||[]).forEach(function(id){focusNodeIds[id]=true;});
-  (focusChange.involved_edge_ids||[]).forEach(function(id){focusEdgeIds[id]=true;var edge=evidenceEdgeMap[id];if(edge){focusNodeIds[edge.source_node_id]=true;focusNodeIds[edge.target_node_id]=true;}});
+  (focusChange.involved_edge_ids||[]).forEach(function(id){focusEdgeIds[id]=true;});
  }
  var layout=buildEvidencePositions(),visible=layout.ids;
  var shownEdges=evidenceData.edges.filter(function(e){
@@ -1016,9 +1016,9 @@ function renderEvidenceGraph(){
   g.addEventListener("keydown",function(ev){if(ev.key==="Enter"||ev.key===" "){ev.preventDefault();showEvidenceNode(n.node_id);}});
  });
  if(focusChange){var mobileView=window.innerWidth<=680,centerX=mobileView?250:500,tagWidth=mobileView?430:440,tag=append(layers.overlays,"g",{class:"event-graph-guide","pointer-events":"none"});append(tag,"rect",{x:centerX-tagWidth/2,y:20,width:tagWidth,height:27,rx:8,fill:"#0c192a","fill-opacity":".96",stroke:"#47617e","stroke-opacity":".65"});append(tag,"text",{x:centerX,y:37.5,"text-anchor":"middle",fill:"#c9d8ec","font-size":mobileView?"10":"11","font-weight":"650"}, "亮线：这件事直接相关   ·   暗线：周边背景");}
- document.getElementById("liveStatus").innerHTML=evidenceSearchTerm?(layout.matchCount?("<i></i>搜索结果 · "+layout.nodes.length+" 个相关节点"):"<i></i>未找到匹配的节点或关系"):(activeFilter!=="all"?("<i></i>"+({industry:"产业",investment:"投资",people:"人口",consumption:"消费",ecology:"生态",external:"交通"}[activeFilter]||"关系")+" · "+layout.nodes.length+" 个相关节点"):"<i></i>证据网络 · "+layout.nodes.length+" 个关键节点");
+ document.getElementById("liveStatus").innerHTML=evidenceSearchTerm?(layout.matchCount?("<i></i>搜索结果 · "+layout.nodes.length+" 个相关节点"):"<i></i>未找到匹配的节点或关系"):(activeFilter!=="all"?("<i></i>"+({industry:"产业",investment:"投资",people:"人口",consumption:"消费",ecology:"生态",external:"交通"}[activeFilter]||"关系")+" · "+layout.nodes.length+" 个相关节点"):"<i></i>关系线索 · "+layout.nodes.length+" 个相关主体");
  document.getElementById("evidenceCount").textContent=layout.nodes.length+"节点 · "+shownEdges.length+"线";
- document.getElementById("footerGraphMode").textContent="公开证据关系子图 / 近期变化优先";
+ document.getElementById("footerGraphMode").textContent="这件事相关的关系线索";
  updateEvidenceLegend();
 }
 function updateEvidenceLegend(){
