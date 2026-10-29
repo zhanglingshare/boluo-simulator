@@ -379,7 +379,7 @@ html,body{background:radial-gradient(ellipse at 48% -25%,rgba(56,91,147,.22),tra
 .bl-easy-choice:hover,.bl-easy-choice:focus-visible{border-color:#75a9df;transform:translateY(-2px)}
 .bl-easy-choice.active,.bl-easy-choice[aria-pressed="true"]{border-color:#4d98e6;box-shadow:inset 0 0 0 1px #8bbbf3,0 6px 18px rgba(44,104,173,.11);background:linear-gradient(135deg,#f0f7ff,#fff)}
 .bl-easy-readout{font-size:12px;color:#536c86;line-height:1.72;margin-top:9px;padding:10px 12px;border-left:3px solid #81b6ee;border-radius:0 9px 9px 0;background:#f0f5fc}
-.bl-easy-readout strong{color:#27496d}.bl-easy-readout .evidence-source-title{color:#4b718f;font-size:11px;margin:8px 0 4px}.bl-easy-readout .evidence-source-list{display:flex;flex-direction:row;flex-wrap:wrap;gap:8px 12px}.bl-easy-readout .evidence-source-list a{color:#356b9d;font-size:11px;padding:0;border-bottom:0}
+.bl-easy-proof{margin-top:6px}.bl-easy-proof summary{cursor:pointer;color:#386995;font-weight:750;list-style-position:inside;padding:4px 0}.bl-easy-proof[open]{border-top:1px solid #d5e3f0;padding-top:5px}.bl-easy-readout strong{color:#27496d}.bl-easy-readout .evidence-source-title{color:#4b718f;font-size:11px;margin:8px 0 4px}.bl-easy-readout .evidence-source-list{display:flex;flex-direction:row;flex-wrap:wrap;gap:8px 12px}.bl-easy-readout .evidence-source-list a{color:#356b9d;font-size:11px;padding:0;border-bottom:0}
 .bl-easy-page:not(.bl-advanced-on) .workspace{grid-template-columns:minmax(0,1fr);min-height:0}
 .bl-easy-page:not(.bl-advanced-on) .workspace>.sidebar,.bl-easy-page:not(.bl-advanced-on) .workspace>.explore{display:none}
 .bl-easy-page:not(.bl-advanced-on) .canvas{height:min(70vh,760px);min-height:460px}
@@ -993,8 +993,10 @@ function blRenderEasyEvents(){
  kinds.forEach(function(k){var item=entries.find(function(c){return c.change_type===k;});if(item&&sample.indexOf(item)<0)sample.push(item);});
  entries.forEach(function(item){if(sample.length<3&&sample.indexOf(item)<0)sample.push(item);});
  box.innerHTML=sample.map(function(ev){
-  var label=(changeData.change_type_legend||{})[ev.change_type]||"变化记录";
-  return '<button type="button" class="bl-easy-choice" data-bl-change="'+htmlEscape(ev.change_id)+'" aria-pressed="false"><span class="bl-kind">'+htmlEscape(label)+'</span><span class="bl-evtitle">'+htmlEscape(ev.title)+'</span><span class="bl-evdate">'+htmlEscape(ev.event_date||"日期待核")+' · 点开看变化 ↗</span></button>';
+  var labels={"new_edge":"通道与连接的进展","new_entity":"新项目与新主体","exit":"一条产线或主体退出","strengthen":"新的合作进展","weaken":"关系受到限制","break":"连接风险记录","alternative":"替代路径"};
+  var label=labels[ev.change_type]||"变化记录";
+  var shortTitle=String(ev.title||"待核的变化记录").split(/[（(，,：:]/)[0].slice(0,30);
+  return '<button type="button" class="bl-easy-choice" data-bl-change="'+htmlEscape(ev.change_id)+'" aria-pressed="false"><span class="bl-kind">'+htmlEscape(label)+'</span><span class="bl-evtitle">'+htmlEscape(shortTitle)+'</span><span class="bl-evdate">'+htmlEscape(ev.event_date||"日期待核")+' · 点击了解 ↗</span></button>';
  }).join("");
  box.querySelectorAll("[data-bl-change]").forEach(function(button){
   button.addEventListener("click",function(){blSelectEasyEvent(button.getAttribute("data-bl-change"),true);});
@@ -1013,10 +1015,11 @@ function blSelectEasyEvent(id,goToCanvas){
   var yes=button.getAttribute("data-bl-change")===id;button.classList.toggle("active",yes);button.setAttribute("aria-pressed",String(yes));
  });
  document.getElementById("blEasyReadout").innerHTML=
-  '<strong>发生了什么：</strong>'+htmlEscape(ev.title)+
-  '<div><strong>记录中的前后情况：</strong>'+htmlEscape(ev.before_after||"未补充")+'</div>'+
-  '<div><strong>还不能确定：</strong>'+htmlEscape(ev.uncertainty||"仍需持续核验")+'</div>'+
-  sourceLinks(ev.source_ids);
+  '<strong>这件事：</strong>'+htmlEscape(ev.title)+
+  '<div><strong>前后有什么不同：</strong>'+htmlEscape(ev.before_after||"未补充")+'</div>'+
+  '<details class="bl-easy-proof"><summary>哪些还不确定？依据在哪里？</summary>'+
+  '<div><strong>仍需核验：</strong>'+htmlEscape(ev.uncertainty||"仍需持续核验")+'</div>'+
+  sourceLinks(ev.source_ids)+'</details>';
  if(graphMode!=="evidence"){
   setGraphMode("evidence");
   loadEvidenceData().then(function(ok){if(ok)blFocusEasyEvent(ev,exactEdges,exactNodes,goToCanvas);});
