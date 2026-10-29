@@ -1,0 +1,14 @@
+{
+  "schema_version": "relationship-update-proposal-v1",
+  "region": "boluo",
+  "generated_at": "2026-10-29T09:30:00+08:00",
+  "collector": "Doubao Skills",
+  "summary": "近24小时公开来源扫描结果；只记录可核验的结构变化。",
+  "sources": [],
+  "nodes": [],
+  "edges": [],
+  "changes": [],
+  "open_questions": [
+    "示例：需进一步核实某项目是否已从在建进入投产阶段。"
+  ]
+}
