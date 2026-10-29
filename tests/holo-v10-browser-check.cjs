@@ -111,6 +111,8 @@ const { chromium } = require("playwright");
     await page.goto("http://127.0.0.1:8765/holo-home-v10.html", { waitUntil: "networkidle" });
     await page.waitForFunction(() => document.getElementById("evidenceState")?.textContent === "证据已连接", { timeout: 15000 });
     await page.locator('[data-q="break"]').click();
+    await page.waitForFunction(() => { const p = document.querySelector(".selected-question").getBoundingClientRect(); const e = document.querySelector(".explore").getBoundingClientRect(); return p.top >= e.top && p.bottom <= e.bottom; }, { timeout: 5000 });
+    assert.equal(await page.locator("#journeyStatus").evaluate(el => getComputedStyle(el).width !== "5px"), true, "当前步骤状态应可读，不应被压缩成装饰圆点");
     assert.equal(await page.locator("#timelineTitle").innerText(), "关系断裂", "点击问题应切换对应情景");
     assert.equal(await page.locator("#journey2").evaluate(el => el.classList.contains("active")), true, "概念视图应提示第 2 步");
     await page.locator("#exploreNext").click();
