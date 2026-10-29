@@ -874,6 +874,39 @@ function buildEvidencePositions(){
   }
  }
  var nodes=evidenceData.nodes.filter(function(n){return selected[n.node_id];});
+ /* Event view: show a small cast of real entities, with the changed parties on the right
+    and their existing context on the left. Never fabricate a relationship. */
+ var focusedChange=getSelectedChange();
+ if(focusedChange){
+  var focusIds={},edgeIds={};
+  (focusedChange.involved_node_ids||[]).forEach(function(id){if(evidenceNodeMap[id])focusIds[id]=true;});
+  (focusedChange.involved_edge_ids||[]).forEach(function(id){var e=evidenceEdgeMap[id];if(e){edgeIds[id]=true;focusIds[e.source_node_id]=true;focusIds[e.target_node_id]=true;}});
+  if(!Object.keys(focusIds).length){Object.keys(selected).forEach(function(id){focusIds[id]=true;});}
+  var focalNodes=nodes.filter(function(n){return focusIds[n.node_id];});
+  var contextNodes=nodes.filter(function(n){return !focusIds[n.node_id];});
+  var limit=window.innerWidth<=680?8:12;
+  contextNodes.sort(function(a,b){
+   function score(n){var s=degree[n.node_id]||0;evidenceData.edges.forEach(function(e){if((focusIds[e.source_node_id]&&e.target_node_id===n.node_id)||(focusIds[e.target_node_id]&&e.source_node_id===n.node_id)){s+=e.change_status&&e.change_status!=="无显著变化"?8:2;}});return s;}
+   return score(b)-score(a);
+  });
+  nodes=focalNodes.concat(contextNodes.slice(0,Math.max(0,limit-focalNodes.length)));
+  selected={};nodes.forEach(function(n){selected[n.node_id]=true;});
+  evidencePositionMap={};
+  var focal=nodes.filter(function(n){return focusIds[n.node_id];});
+  var context=nodes.filter(function(n){return !focusIds[n.node_id];});
+  function placeColumn(list,x,top,bottom,align){
+   var span=list.length<=1?0:(bottom-top)/(list.length-1);
+   list.forEach(function(n,i){evidencePositionMap[n.node_id]={x:x,y:list.length===1?(top+bottom)/2:top+span*i,align:align};});
+  }
+  if(window.innerWidth<=680){
+   placeColumn(context,82,115,660,"right");
+   placeColumn(focal,420,115,660,"left");
+  }else{
+   placeColumn(context,205,105,660,"right");
+   placeColumn(focal,790,105,660,"left");
+  }
+  return {nodes:nodes,ids:selected,degree:degree,matchNodeIds:matchNodeIds,matchEdgeIds:matchEdgeIds,matchCount:matches.nodes.length+matches.edges.length};
+ }
  if(window.innerWidth<=680){
   evidencePositionMap={};
   var rowCount=Math.ceil(nodes.length/2),rowGap=rowCount>1?Math.min(300,520/(rowCount-1)):0,startY=(760-((rowCount-1)*rowGap))/2;
