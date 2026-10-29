@@ -1,0 +1,373 @@
+{
+  "schema_version": "relationship-update-proposal-v1",
+  "region": "boluo",
+  "generated_at": "2026-10-29T10:22:22+08:00",
+  "collector": "Doubao Skills",
+  "summary": "近24小时公开来源扫描（含底座10-29生成后及近期遗漏）：识别3个可核验的关系变化——广交会53家企业出海、祥浩甜玉米精加工投产、山夏1368冬养罗浮康养；新增4节点、3边、7来源；证据不足项进open_questions，不直接改正式底座。",
+  "sources": [
+    {
+      "source_id": "S055",
+      "title": "【高质量发展】博罗53家企业组团亮相第140届广交会 参展规模创新高",
+      "publisher": "博罗县人民政府（博罗新闻）",
+      "source_type": "官方发布",
+      "credibility": "高",
+      "url": "https://www.boluo.gov.cn/zwgk/zwdt/tpxw/content/post_5874654.html",
+      "published_at": "2026-10-20",
+      "fetched_at": "2026-10-29",
+      "region": "博罗",
+      "data_period": "2026-10",
+      "summary": "第140届广交会博罗53家企业、83个展位，参展规模创历史新高，展示博罗智造国际竞争力。",
+      "independent_corroboration": "S056"
+    },
+    {
+      "source_id": "S056",
+      "title": "拓海外市场！博罗53家企业亮相广交会",
+      "publisher": "南方+（博罗发布）",
+      "source_type": "权威媒体",
+      "credibility": "高",
+      "url": "https://www.nfnews.com/content/5385bE026B.html",
+      "published_at": "2026-10-18",
+      "fetched_at": "2026-10-29",
+      "region": "博罗",
+      "data_period": "2026-10",
+      "summary": "点名汉德精密（空压机，2025产值6.38亿、+14.7%）、聚才精密、合声科技，深耕东南亚/俄罗斯/中亚/非洲。",
+      "independent_corroboration": "S055"
+    },
+    {
+      "source_id": "S057",
+      "title": "【粤来粤好百千万】博罗甜玉米精加工基地新厂区投产",
+      "publisher": "博罗县人民政府（博罗融媒）",
+      "source_type": "官方发布",
+      "credibility": "高",
+      "url": "https://www.boluo.gov.cn/zwgk/zwdt/tpxw/content/post_5872758.html",
+      "published_at": "2026-10-16",
+      "fetched_at": "2026-10-29",
+      "region": "博罗",
+      "data_period": "2026-10",
+      "summary": "麻陂镇祥浩实业新厂区投产，6条自动化生产线，甜玉米精加工，产品供国内高端市场并出口。",
+      "independent_corroboration": "S058"
+    },
+    {
+      "source_id": "S058",
+      "title": "祥浩实业新厂房投产",
+      "publisher": "今日惠州网（惠州日报）",
+      "source_type": "权威媒体",
+      "credibility": "高",
+      "url": "http://e.hznews.com/hzrb/pad/content/202610/20/content_1134021.html",
+      "published_at": "2026-10-20",
+      "fetched_at": "2026-10-29",
+      "region": "博罗",
+      "data_period": "2026-10",
+      "summary": "麻陂祥浩（省甜玉米龙头）新厂房投产，甜玉米全产业链，设计年产能10万吨，预计年产值约5000万、税收约500万。",
+      "independent_corroboration": "S057"
+    },
+    {
+      "source_id": "S059",
+      "title": "【粤来粤好百千万】博罗：古村游定制适老化客房 探索“冬养罗浮”康养旅居新模式",
+      "publisher": "博罗县人民政府（博罗融媒）",
+      "source_type": "官方发布",
+      "credibility": "高",
+      "url": "https://www.boluo.gov.cn/zwgk/zwdt/tpxw/content/post_5877146.html",
+      "published_at": "2026-10-22",
+      "fetched_at": "2026-10-29",
+      "region": "博罗",
+      "data_period": "2026-10",
+      "summary": "长宁山下村山夏1368酒店（泰康之家经营），古村活化+适老化住宿+中医药康养，冬养罗浮银发旅居。",
+      "independent_corroboration": "S060"
+    },
+    {
+      "source_id": "S060",
+      "title": "罗浮登高览胜 山下康养旅居",
+      "publisher": "惠州市人民政府",
+      "source_type": "官方发布",
+      "credibility": "高",
+      "url": "https://www.huizhou.gov.cn/zwgk/hzsz/xqyw/content/post_5874766.html",
+      "published_at": "2026-10-20",
+      "fetched_at": "2026-10-29",
+      "region": "博罗",
+      "data_period": "2026-10",
+      "summary": "重阳罗浮登高客流外溢，山夏1368完成适老化升级，承接中老年“登高+康养”组合出游。",
+      "independent_corroboration": "S059"
+    },
+    {
+      "source_id": "S061",
+      "title": "博罗首家公办托育服务中心试运营 148个普惠托位“医育融合”",
+      "publisher": "博罗县人民政府（博罗新闻）",
+      "source_type": "官方发布",
+      "credibility": "高",
+      "url": "https://www.boluo.gov.cn/xzygdw/xgbdst/tpxw/content/post_5877157.html",
+      "published_at": "2026-10-22",
+      "fetched_at": "2026-10-29",
+      "region": "博罗",
+      "data_period": "2026-10",
+      "summary": "博罗县托育服务中心试运营，148个普惠托位，医育融合，面向0-3岁婴幼儿家庭。",
+      "independent_corroboration": "南方+ c12920238"
+    }
+  ],
+  "nodes": [
+    {
+      "action": "add",
+      "rationale": "博罗智造与农产品出口的目的地，广交会等渠道连接的外部市场；此前底座未表达海外市场，导致出海关系无落点。",
+      "source_ids": [
+        "S055",
+        "S056",
+        "S057"
+      ],
+      "node": {
+        "node_id": "overseas",
+        "name": "海外市场",
+        "node_type": "external",
+        "layer": "外部",
+        "town": "外部",
+        "description": "博罗智造与农产品出口目的地，涵盖东南亚、俄罗斯、中亚、非洲等，通过广交会等渠道连接",
+        "node_status": "active",
+        "change_status": "增强",
+        "evidence_grade": "A",
+        "source_ids": [
+          "S055",
+          "S056",
+          "S057"
+        ]
+      }
+    },
+    {
+      "action": "add",
+      "rationale": "广交会点名的空压机出海代表，国家高新/省专精特新，有产值与海外市场证据，是博罗制造出海的关键新主体。",
+      "source_ids": [
+        "S056"
+      ],
+      "node": {
+        "node_id": "hdjm",
+        "name": "汉德精密",
+        "node_type": "new",
+        "layer": "新主体",
+        "town": "博罗",
+        "description": "广东汉德精密机械，螺杆空压机专精特新，2025产值6.38亿、+14.7%，深耕东南亚/俄罗斯/中亚/非洲",
+        "node_status": "active",
+        "change_status": "新增",
+        "evidence_grade": "A",
+        "source_ids": [
+          "S056"
+        ]
+      }
+    },
+    {
+      "action": "add",
+      "rationale": "甜玉米精加工龙头新厂区投产，是农业从“种得好”向“加工深、卖得远”升级的关键新主体，连接出口。",
+      "source_ids": [
+        "S057",
+        "S058"
+      ],
+      "node": {
+        "node_id": "xh",
+        "name": "祥浩实业",
+        "node_type": "new",
+        "layer": "新主体",
+        "town": "麻陂",
+        "description": "省甜玉米龙头，新厂区6条自动化线、年产能10万吨，预计年产值5000万、税收500万，产品供国内高端并出口",
+        "node_status": "new",
+        "change_status": "新增",
+        "evidence_grade": "A",
+        "source_ids": [
+          "S057",
+          "S058"
+        ]
+      }
+    },
+    {
+      "action": "add",
+      "rationale": "泰康之家经营的古村康养主体，承接环两山文旅客流，是“冬养罗浮”银发旅居新模式的载体。",
+      "source_ids": [
+        "S059",
+        "S060"
+      ],
+      "node": {
+        "node_id": "sx1368",
+        "name": "山夏1368康养",
+        "node_type": "new",
+        "layer": "新主体",
+        "town": "长宁",
+        "description": "泰康之家经营，修缮86间古宅，古村活化+适老化住宿+中医药康养，冬养罗浮银发旅居",
+        "node_status": "new",
+        "change_status": "新增",
+        "evidence_grade": "B",
+        "source_ids": [
+          "S059",
+          "S060"
+        ]
+      }
+    }
+  ],
+  "edges": [
+    {
+      "action": "add",
+      "rationale": "汉德精密空压机通过广交会出海，是博罗制造连接海外市场的已证实新关系。",
+      "source_ids": [
+        "S055",
+        "S056"
+      ],
+      "edge": {
+        "edge_id": "E046",
+        "source_node_id": "hdjm",
+        "target_node_id": "overseas",
+        "relation_type": "supply_chain",
+        "relation_description": "汉德精密螺杆空压机通过广交会出海，深耕东南亚、俄罗斯、中亚、非洲，拓展中东、南美",
+        "direction": "有方向",
+        "valid_period": "2026-10",
+        "evidence_type": "已证实事实",
+        "evidence_grade": "A",
+        "confidence": "高",
+        "metric": {
+          "metric_name": "汉德精密2025年产值",
+          "metric_value": 6.38,
+          "metric_unit": "亿元(+14.7%)"
+        },
+        "comparison_period": "2024年",
+        "strength_basis": "官方/媒体报道+企业负责人，广交会博罗53家企业83展位规模创新高",
+        "source_ids": [
+          "S055",
+          "S056"
+        ],
+        "counter_evidence": "广交会合作咨询/意向不等于已成交订单；具体出口额未披露",
+        "last_verified_at": "2026-10-29",
+        "change_status": "新增"
+      }
+    },
+    {
+      "action": "add",
+      "rationale": "祥浩甜玉米精加工投产并出口，是农业—加工—海外市场的已证实新关系。",
+      "source_ids": [
+        "S057",
+        "S058"
+      ],
+      "edge": {
+        "edge_id": "E047",
+        "source_node_id": "xh",
+        "target_node_id": "overseas",
+        "relation_type": "supply_chain",
+        "relation_description": "祥浩甜玉米精加工，6条自动化线、年产能10万吨，产品供国内高端市场并出口",
+        "direction": "有方向",
+        "valid_period": "2026-10",
+        "evidence_type": "已证实事实",
+        "evidence_grade": "A",
+        "confidence": "高",
+        "metric": {
+          "metric_name": "设计年产能",
+          "metric_value": 10,
+          "metric_unit": "万吨(预计年产值5000万)"
+        },
+        "comparison_period": "2026-10前初级种植",
+        "strength_basis": "官方投产报道+惠州日报，甜玉米全产业链加工",
+        "source_ids": [
+          "S057",
+          "S058"
+        ],
+        "counter_evidence": "年产值/税收为预计值，达产进度与出口规模未披露",
+        "last_verified_at": "2026-10-29",
+        "change_status": "新增"
+      }
+    },
+    {
+      "action": "add",
+      "rationale": "环两山文旅客流外溢到山夏1368康养旅居，是文旅—银发消费的新连接（证据推断，效果待观察）。",
+      "source_ids": [
+        "S059",
+        "S060"
+      ],
+      "edge": {
+        "edge_id": "E048",
+        "source_node_id": "lswh",
+        "target_node_id": "sx1368",
+        "relation_type": "tourism_consumption",
+        "relation_description": "环两山登高文旅客流外溢，山夏1368承接“登高+康养”，冬养罗浮银发旅居",
+        "direction": "有方向",
+        "valid_period": "2026-10",
+        "evidence_type": "证据推断",
+        "evidence_grade": "B",
+        "confidence": "中",
+        "metric": {
+          "metric_name": "修缮古宅",
+          "metric_value": 86,
+          "metric_unit": "间"
+        },
+        "comparison_period": "2025年古村闲置",
+        "strength_basis": "官方报道客流外溢+泰康适老化升级，重阳节点推出秋冬旅居",
+        "source_ids": [
+          "S059",
+          "S060"
+        ],
+        "counter_evidence": "客流承接为推断，实际入住率、平均过夜天数与过夜率未披露",
+        "last_verified_at": "2026-10-29",
+        "change_status": "新增"
+      }
+    }
+  ],
+  "changes": [
+    {
+      "change_id": "C013",
+      "change_type": "new_entity",
+      "title": "53家博罗企业组团亮相第140届广交会，汉德精密等空压机、音响企业出海，规模创新高",
+      "event_date": "2026-10-15",
+      "involved_node_ids": [
+        "overseas",
+        "hdjm"
+      ],
+      "involved_edge_ids": [
+        "E046"
+      ],
+      "before_after": "此前：博罗企业分散参展、出海关系未表达；此后：53家企业83展位、规模创历史新高，空压机/音响等拓展海外市场。",
+      "source_ids": [
+        "S055",
+        "S056"
+      ],
+      "uncertainty": "参展规模为已证实；具体成交订单与出口额未披露，意向不等于成交。",
+      "last_verified_at": "2026-10-29"
+    },
+    {
+      "change_id": "C014",
+      "change_type": "new_entity",
+      "title": "祥浩实业甜玉米精加工新厂区投产，6条自动化线、年产能10万吨，从“种得好”向“加工深、卖得远”升级",
+      "event_date": "2026-10-14",
+      "involved_node_ids": [
+        "xh",
+        "overseas"
+      ],
+      "involved_edge_ids": [
+        "E047"
+      ],
+      "before_after": "此前：甜玉米以初级种植为主；此后：精加工基地投产，6条线、年产能10万吨，产品供国内高端并出口。",
+      "source_ids": [
+        "S057",
+        "S058"
+      ],
+      "uncertainty": "投产为已证实；年产值/税收为预计值，达产进度与出口规模待观察。",
+      "last_verified_at": "2026-10-29"
+    },
+    {
+      "change_id": "C015",
+      "change_type": "new_edge",
+      "title": "山夏1368完成适老化升级，“冬养罗浮”古村康养旅居承接环两山登高客流",
+      "event_date": "2026-10-22",
+      "involved_node_ids": [
+        "lswh",
+        "sx1368"
+      ],
+      "involved_edge_ids": [
+        "E048"
+      ],
+      "before_after": "此前：山下村古村闲置；此后：泰康修缮86间古宅，古村活化+适老+中医药康养，承接银发旅居。",
+      "source_ids": [
+        "S059",
+        "S060"
+      ],
+      "uncertainty": "项目升级为已证实；客流承接为推断，实际入住率与经营效果待观察。",
+      "last_verified_at": "2026-10-29"
+    }
+  ],
+  "open_questions": [
+    "博罗首家公办托育服务中心（148普惠托位、医育融合）试运营，其与产业就业人口、女性劳动参与的配套关系尚待建立证据（S061）。",
+    "第140届广交会博罗企业实际成交订单与出口额尚未披露，参展规模（53家/83展位）不等于成交。",
+    "山夏1368“冬养罗浮”康养旅居的实际入住率、平均过夜天数与过夜率待跟踪。",
+    "聚才精密、合声科技等广交会参展企业是否需要单独建节点，待积累更多关系证据。"
+  ]
+}
