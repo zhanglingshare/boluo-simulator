@@ -451,13 +451,13 @@ html,body{background:radial-gradient(ellipse at 48% -25%,rgba(56,91,147,.22),tra
   <aside class="sidebar">
     <div class="side-kicker">EXPLORE</div>
     <nav class="side-nav" aria-label="工作区导航">
-      <button class="active" data-filter="all"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><circle cx="12" cy="12" r="3"/><circle cx="5" cy="5" r="2"/><circle cx="19" cy="5" r="2"/><circle cx="5" cy="19" r="2"/><circle cx="19" cy="19" r="2"/><path d="m10 10-3.5-3.5M14 10l3.5-3.5M10 14l-3.5 3.5M14 14l3.5 3.5"/></svg>关系全景</button>
-      <button data-filter="industry"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M3 21V9l6 3V7l6 4V3h5v18z"/><path d="M7 16h2m3 0h2m3 0h2"/></svg>产业网络</button>
-      <button data-filter="investment"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M3 20h18M5 17l5-5 4 2 5-8"/><path d="M15 6h4v4"/></svg>投资流向</button>
-      <button data-filter="people"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><circle cx="9" cy="8" r="3"/><path d="M3 20v-2a6 6 0 0 1 12 0v2M16 5a3 3 0 0 1 0 6m2 3a5 5 0 0 1 3 4v2"/></svg>人口流动</button>
-      <button data-filter="consumption"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M4 8h16l-1.5 12h-13zM8 8a4 4 0 0 1 8 0"/></svg>消费趋势</button>
-      <button data-filter="external"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M3 18h18M5 18V9l7-5 7 5v9M9 18v-5h6v5"/></svg>交通与外部连接</button>
-      <button data-filter="ecology"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M20 4C11 4 5 7 5 14a6 6 0 0 0 6 6c7 0 9-7 9-16Z"/><path d="M4 21c3-5 6-8 11-11"/></svg>生态资源</button>
+      <button class="active" data-filter="all"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><circle cx="12" cy="12" r="3"/><circle cx="5" cy="5" r="2"/><circle cx="19" cy="5" r="2"/><circle cx="5" cy="19" r="2"/><circle cx="19" cy="19" r="2"/><path d="m10 10-3.5-3.5M14 10l3.5-3.5M10 14l-3.5 3.5M14 14l3.5 3.5"/></svg>所有变化</button>
+      <button data-filter="industry"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M3 21V9l6 3V7l6 4V3h5v18z"/><path d="M7 16h2m3 0h2m3 0h2"/></svg>工厂和产业</button>
+      <button data-filter="investment"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M3 20h18M5 17l5-5 4 2 5-8"/><path d="M15 6h4v4"/></svg>项目投资</button>
+      <button data-filter="people"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><circle cx="9" cy="8" r="3"/><path d="M3 20v-2a6 6 0 0 1 12 0v2M16 5a3 3 0 0 1 0 6m2 3a5 5 0 0 1 3 4v2"/></svg>出行与人流</button>
+      <button data-filter="consumption"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M4 8h16l-1.5 12h-13zM8 8a4 4 0 0 1 8 0"/></svg>游客与消费</button>
+      <button data-filter="external"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M3 18h18M5 18V9l7-5 7 5v9M9 18v-5h6v5"/></svg>道路与交通</button>
+      <button data-filter="ecology"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M20 4C11 4 5 7 5 14a6 6 0 0 0 6 6c7 0 9-7 9-16Z"/><path d="M4 21c3-5 6-8 11-11"/></svg>农业与自然</button>
     </nav>
     <div class="side-sep"></div>
     <div class="side-mini-title">你想怎么看？</div>
@@ -467,8 +467,8 @@ html,body{background:radial-gradient(ellipse at 48% -25%,rgba(56,91,147,.22),tra
   </aside>
   <section class="canvas" aria-label="博罗关系网络主画布">
     <div class="canvas-head">
-      <div><div class="canvas-eyebrow">BO LUO · CHANGE OBSERVATORY</div><div class="canvas-title">这件事，会牵动博罗的哪里？</div><div class="canvas-desc">先选一件事，再看：以前怎样、现在有什么不同、哪些影响还不能确定。</div></div>
-      <div class="canvas-head-right"><div class="live-status" id="liveStatus"><i></i>正在连接公开证据</div><div class="view-toggle"><button class="active" data-view="2d">平面</button><button data-view="space">空间感</button></div><div class="evidence-toggle" role="group" aria-label="网络数据视图"><button id="conceptMode" class="active">只看这件事</button><button id="evidenceMode">看全部关联 <span id="evidenceCount">36 · 45</span></button></div></div>
+      <div><div class="canvas-eyebrow">博罗 · 看变化</div><div class="canvas-title">这件事，会牵动博罗的哪里？</div><div class="canvas-desc">先选一件事，再看：以前怎样、现在有什么不同、哪些影响还不能确定。</div></div>
+      <div class="canvas-head-right"><div class="live-status" id="liveStatus"><i></i>正在整理公开资料</div><div class="view-toggle"><button class="active" data-view="2d">平面</button><button data-view="space">空间感</button></div><div class="evidence-toggle" role="group" aria-label="网络数据视图"><button id="conceptMode" class="active">只看这件事</button><button id="evidenceMode">看整张图 <span id="evidenceCount" style="display:none">36 · 45</span></button></div></div>
     </div>
     <div class="graph-wrap">
       <svg id="network" viewBox="0 0 1000 760" role="img" aria-label="博罗抽象关系网络图">
@@ -500,7 +500,7 @@ html,body{background:radial-gradient(ellipse at 48% -25%,rgba(56,91,147,.22),tra
         <button class="time-stop" data-change-phase="before" aria-label="变化前"></button><button class="time-stop" data-change-phase="event" aria-label="变化发生"></button><button class="time-stop active" data-change-phase="after" aria-label="变化后"></button>
       </div>
       <div class="timeline-date" id="timelineDate">变化后 · 记录状态</div>
-      <div class="timeline-actions"><button data-change-phase="before">变化前</button><button data-change-phase="event">变化发生</button><button data-change-phase="after" class="active">变化后</button></div>
+      <div class="timeline-actions"><button data-change-phase="before">之前</button><button data-change-phase="event">发生时</button><button data-change-phase="after" class="active">之后</button></div>
     </div>
   </section>
   <aside class="explore">
@@ -626,7 +626,7 @@ function updateExploreActions(){
 function updateJourneyUI(){
  var step=shareCompleted?4:(selectedChangeId?2:(graphMode==="evidence"?3:2));
  var status=document.getElementById("journeyStatus");
- if(status)status.textContent=shareCompleted?"第 4 步 · 分享观察":selectedChangeId?"第 2 步 · 观察变化":graphMode==="evidence"?"第 3 步 · 核验公开依据":"第 2 步 · 观察变化";
+ if(status)status.textContent=shareCompleted?"第 4 步 · 分享给别人":selectedChangeId?"第 2 步 · 看哪里变了":graphMode==="evidence"?"第 3 步 · 看消息来源":"第 2 步 · 看哪里变了";
  for(var i=1;i<=4;i++){var el=document.getElementById("journey"+i);if(!el)continue;el.classList.toggle("done",i<step);el.classList.toggle("active",i===step);}
  updateExploreActions();
 }
