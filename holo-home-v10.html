@@ -399,6 +399,9 @@ html,body{background:radial-gradient(ellipse at 48% -25%,rgba(56,91,147,.22),tra
 .evidence-edge.change-event-edge{stroke-dasharray:5 4!important;animation:evidenceGlow 1.1s ease-in-out infinite}
 .evidence-edge.change-exit-edge{stroke:#ff8f9d!important;stroke-dasharray:7 4!important;stroke-opacity:1!important}
 .evidence-edge.change-weaken-edge{stroke:#f0b967!important;stroke-dasharray:3 5!important;stroke-opacity:.72!important}
+.event-edge-label{filter:drop-shadow(0 2px 5px rgba(0,0,0,.28))}
+.event-edge-label text{font-family:Inter,-apple-system,BlinkMacSystemFont,"PingFang SC","Microsoft YaHei",sans-serif}
+.event-graph-guide text{font-family:Inter,-apple-system,BlinkMacSystemFont,"PingFang SC","Microsoft YaHei",sans-serif}
 .evidence-node.change-context-node{opacity:.38}
 .evidence-node.change-focus-node .evidence-node-card{stroke:#74ddcd;stroke-width:1.8}
 .evidence-node.change-before-node{opacity:.18!important}
@@ -954,14 +957,26 @@ function isEvidenceRelevant(edge){
  if(scenario==="exit")return edge.change_status==="退出"||edge.source_node_id==="glc"||edge.target_node_id==="glc";
  return edge.change_status!=="无显著变化";
 }
+function eventEdgeLabel(e){var labels={E001:"深圳总部 → 博罗基地",E014:"电池回收与配套",E017:"铜材产业补链",E018:"电池零部件配套",E019:"散热配套",E020:"金属循环",E021:"工业动力",E022:"装备制造配套",E023:"储能支撑用电",E025:"总部派驻与往来",E026:"跨市通行变化",E027:"高速通道变化",E030:"环保约束",E037:"户外旅游与民宿",E038:"茶旅融合",E039:"荔枝采摘与旅游",E041:"客流往来",E044:"生产线退出",E045:"环保整改影响产能"};return labels[e.edge_id]||(evidenceData.relation_type_legend[e.relation_type]||"相关联系");}
 function renderEvidenceGraph(){
  if(!evidenceData)return;
  if(window.innerWidth<=680)svg.setAttribute("viewBox","0 0 500 760");else svg.setAttribute("viewBox","0 0 1000 760");
  clearLayer(layers.orbits);clearLayer(layers.edges);clearLayer(layers.nodes);clearLayer(layers.labels);clearLayer(layers.overlays);
  append(layers.orbits,"ellipse",{cx:500,cy:375,rx:390,ry:285,fill:"none",stroke:"#7995bb","stroke-opacity":".07","stroke-width":"1","stroke-dasharray":"2 9"});
  append(layers.orbits,"ellipse",{cx:500,cy:375,rx:275,ry:200,fill:"none",stroke:"#7995bb","stroke-opacity":".06","stroke-width":"1","stroke-dasharray":"2 10"});
- var layout=buildEvidencePositions(),visible=layout.ids,shownEdges=evidenceData.edges.filter(function(e){return visible[e.source_node_id]&&visible[e.target_node_id];}),animatedEvidenceEdges=0,focusChange=getSelectedChange(),focusNodeIds={},focusEdgeIds={};
- if(focusChange){(focusChange.involved_node_ids||[]).forEach(function(id){focusNodeIds[id]=true;});(focusChange.involved_edge_ids||[]).forEach(function(id){focusEdgeIds[id]=true;var e=evidenceEdgeMap[id];if(e){focusNodeIds[e.source_node_id]=true;focusNodeIds[e.target_node_id]=true;}});}
+ var focusChange=getSelectedChange(),focusNodeIds={},focusEdgeIds={};
+ if(focusChange){
+  (focusChange.involved_node_ids||[]).forEach(function(id){focusNodeIds[id]=true;});
+  (focusChange.involved_edge_ids||[]).forEach(function(id){focusEdgeIds[id]=true;var edge=evidenceEdgeMap[id];if(edge){focusNodeIds[edge.source_node_id]=true;focusNodeIds[edge.target_node_id]=true;}});
+ }
+ var layout=buildEvidencePositions(),visible=layout.ids;
+ var shownEdges=evidenceData.edges.filter(function(e){
+  if(!visible[e.source_node_id]||!visible[e.target_node_id])return false;
+  if(!focusChange)return true;
+  if(focusEdgeIds[e.edge_id])return true;
+  return (focusNodeIds[e.source_node_id]||focusNodeIds[e.target_node_id])&&e.change_status&&e.change_status!=="无显著变化";
+ });
+ var animatedEvidenceEdges=0;
  shownEdges.forEach(function(e){
   var a=evidencePositionMap[e.source_node_id],b=evidencePositionMap[e.target_node_id];if(!a||!b)return;
   var color=relationColor(e.relation_type),d=pathBetween(a,b,((e.edge_id.charCodeAt(1)||1)%2)?13:-13);
@@ -977,6 +992,7 @@ function renderEvidenceGraph(){
   var p=append(layers.edges,"path",{d:d,stroke:color,class:classes.join(" "),style:"color:"+color,"data-evidence-edge":e.edge_id,"marker-end":"url(#evidenceArrow)","aria-label":e.relation_description,tabindex:"0",role:"button"});
   p.addEventListener("click",function(ev){ev.stopPropagation();showEvidenceEdge(e.edge_id);});
   p.addEventListener("keydown",function(ev){if(ev.key==="Enter"||ev.key===" "){ev.preventDefault();showEvidenceEdge(e.edge_id);}});
+  if(focusChange&&focusEdgeIds[e.edge_id]){var midX=(a.x+b.x)/2,midY=(a.y+b.y)/2+(animatedEvidenceEdges%2?13:-13),label=eventEdgeLabel(e),w=Math.min(136,Math.max(64,Array.from(label).length*6+16));var tag=append(layers.labels,"g",{class:"event-edge-label","pointer-events":"none"});append(tag,"rect",{x:midX-w/2,y:midY-10,width:w,height:20,rx:6,fill:"#101d30",stroke:color,"stroke-opacity":".8","stroke-width":"1"});append(tag,"text",{x:midX,y:midY+3.5,"text-anchor":"middle",fill:"#f3f7ff","font-size":"9","font-weight":"700"},label);}
   if(!reducedMotion&&animatedEvidenceEdges<8&&classes.indexOf("dim")<0&&(e.change_status!=="无显著变化"||(selectedEvidence&&selectedEvidence.kind==="edge"&&selectedEvidence.id===e.edge_id))){var particle=append(layers.edges,"circle",{cx:0,cy:0,r:2.3,fill:color,class:"evidence-flow-particle",style:"color:"+color});append(particle,"animateMotion",{dur:(3.1+(animatedEvidenceEdges%3)*.45)+"s",repeatCount:"indefinite",path:d,begin:(animatedEvidenceEdges*.27)+"s"});animatedEvidenceEdges++;}
  });
  layout.nodes.forEach(function(n){
@@ -999,6 +1015,7 @@ function renderEvidenceGraph(){
   g.addEventListener("click",function(ev){ev.stopPropagation();showEvidenceNode(n.node_id);});
   g.addEventListener("keydown",function(ev){if(ev.key==="Enter"||ev.key===" "){ev.preventDefault();showEvidenceNode(n.node_id);}});
  });
+ if(focusChange){var mobileView=window.innerWidth<=680,centerX=mobileView?250:500,tagWidth=mobileView?430:440,tag=append(layers.overlays,"g",{class:"event-graph-guide","pointer-events":"none"});append(tag,"rect",{x:centerX-tagWidth/2,y:20,width:tagWidth,height:27,rx:8,fill:"#0c192a","fill-opacity":".96",stroke:"#47617e","stroke-opacity":".65"});append(tag,"text",{x:centerX,y:37.5,"text-anchor":"middle",fill:"#c9d8ec","font-size":mobileView?"10":"11","font-weight":"650"}, "亮线：这件事直接相关   ·   暗线：周边背景");}
  document.getElementById("liveStatus").innerHTML=evidenceSearchTerm?(layout.matchCount?("<i></i>搜索结果 · "+layout.nodes.length+" 个相关节点"):"<i></i>未找到匹配的节点或关系"):(activeFilter!=="all"?("<i></i>"+({industry:"产业",investment:"投资",people:"人口",consumption:"消费",ecology:"生态",external:"交通"}[activeFilter]||"关系")+" · "+layout.nodes.length+" 个相关节点"):"<i></i>证据网络 · "+layout.nodes.length+" 个关键节点");
  document.getElementById("evidenceCount").textContent=layout.nodes.length+"节点 · "+shownEdges.length+"线";
  document.getElementById("footerGraphMode").textContent="公开证据关系子图 / 近期变化优先";
