@@ -631,7 +631,7 @@ function copyObservationLink(){
  var q=questionInfo[activeQuestion]||questionInfo.bridge;
  var sceneLabels={base:"关系基准",bridge:"桥梁关系",new:"接入假设",break:"断裂假设",exit:"退出假设",people:"人流传导",eco:"潜在协同"};
  var view=graphMode==="evidence"?"公开证据网络":"概念关系网络";
- var payload="我在博罗全息关系网里探索：「"+q.title+"」\n当前观察："+view+" · "+(sceneLabels[scenario]||"关系基准")+"\n说明：关系图用于探索与核验，假设不等于事实。\n"+window.location.href;
+ var change=getSelectedChange();var payload="我在博罗关系世界观察：「"+(change?change.title:q.title)+"」\n当前观察："+(change?changePhaseLabel(changePhase)+" · "+(change.event_date||"事件记录"):view+" · "+(sceneLabels[scenario]||"关系基准"))+"\n说明：公开事实、推断与假设需分开核验；动画不代表完整历史快照。\n"+window.location.href
  function finish(ok){if(ok){shareCompleted=true;updateJourneyUI();showShareToast("观察卡已复制，可以发给朋友一起推演。");}else showShareToast("复制未成功，请手动复制地址栏中的观察链接。");}
  if(navigator.clipboard&&navigator.clipboard.writeText){navigator.clipboard.writeText(payload).then(function(){finish(true);}).catch(function(){finish(fallbackCopy(payload));});}
  else finish(fallbackCopy(payload));
@@ -1032,7 +1032,6 @@ function updateSelectionUI(){
  if(focusedChange){document.getElementById("timelineTitle").textContent="变化前后对照";document.getElementById("timelineSub").textContent=focusedChange.title;syncChangePhaseUI();}
  else if(graphMode==="evidence"){document.getElementById("timelineTitle").textContent="选择一条变化开始对照";document.getElementById("timelineSub").textContent="点击右侧事件卡片，播放变化前后";syncChangePhaseUI();}
  else{document.getElementById("timelineTitle").textContent=({"base":"关系演化","bridge":"关键连接","new":"新节点接入","break":"关系断裂","exit":"节点退出","people":"人流传导","eco":"潜在协同"}[scenario]||"关系演化");document.getElementById("timelineSub").textContent=({"base":"选择一个变化，观察结构如何响应","bridge":"高亮可能连接不同群落的桥梁","new":"观察新主体与网络建立连接","break":"观察关键关系失效后的结构","exit":"观察节点退出与替代路径","people":"追踪人流与产业、消费的联系","eco":"寻找生态、农业与文旅的潜在连接"}[scenario]||"观察关系变化");document.getElementById("timelineDate").textContent=({"base":"结构基准","bridge":"桥梁关系","new":"接入假设","break":"断裂假设","exit":"退出假设","people":"传导线索","eco":"协同线索"}[scenario]||"结构基准");}
- renderChangeDeck();renderChangeDetail();document.getElementById("conceptMode").classList.toggle("active",!!focusedChange);document.getElementById("evidenceMode").classList.toggle("active",!focusedChange);
  renderChangeDeck();renderChangeDetail();document.getElementById("conceptMode").classList.toggle("active",!!focusedChange);document.getElementById("evidenceMode").classList.toggle("active",!focusedChange);updateJourneyUI();
 }
 function setScenario(next,question){shareCompleted=false;if(graphMode==="evidence")selectedEvidence=null;scenario=next;if(question)activeQuestion=question;else if(next==="break")activeQuestion="break";else if(next==="exit")activeQuestion="exit";else if(next==="new")activeQuestion="bridge";else if(next==="people")activeQuestion="people";else if(next==="eco")activeQuestion="eco";else if(next==="bridge")activeQuestion="bridge";renderGraph();updateSelectionUI();updateShareState();}
