@@ -434,7 +434,7 @@ html,body{background:radial-gradient(ellipse at 48% -25%,rgba(56,91,147,.22),tra
     <div id="evidencePanel" class="evidence-panel" aria-live="polite">
       <div class="evidence-panel-top"><span class="evidence-panel-title">公开证据底座</span><span id="evidenceState" class="evidence-state">连接中</span></div>
       <div class="evidence-stats"><div><strong id="evidenceNodes">36</strong><span>节点</span></div><div><strong id="evidenceEdges">45</strong><span>关系</span></div><div><strong id="evidenceSources">54</strong><span>来源</span></div><div><strong id="evidenceChanges">12</strong><span>变化事件</span></div></div>
-      <div id="evidenceIntro" class="evidence-intro">概念网络用于提出问题；证据网络展示可追溯的公开关系。线型表示证据等级，关系线粗细不代表强度。</div>
+      <div id="evidenceIntro" class="evidence-intro">概念网络用于提出问题；证据网络展示可追溯的公开关系。签约项目会标注“待落地”；线型表示证据等级，线粗不代表强度。</div>
       <div id="evidenceDetail" class="evidence-detail" hidden></div>
       <div id="evidenceRecent" class="evidence-recent"></div>
     </div>
@@ -562,7 +562,7 @@ function evidenceGradeName(grade){return evidenceData&&evidenceData.evidence_gra
 function relationColor(type){return ({supply_chain:"#79b8ff",regional:"#c2a4ff",commute:"#66d8cf",transport:"#8aaeff",eco_constraint:"#83d7a5",resource_competition:"#ff9d9f",tourism_consumption:"#e0a8ff",investment:"#f1c078"})[type]||"#9bb0cc";}
 function nodeColor(n){return ({external:"#c4a1ff",eco:"#7ed9aa",agriculture:"#9bd79a",anchor:"#7eb9ff",champion:"#7bcbd0",cluster:"#6dd7cf",legacy:n.change_status==="退出"?"#ff8f9d":"#9aabc1",energy:"#f1c078",new:"#ffb37b"})[n.node_type]||"#9ab4d4";}
 function evidenceShortName(name){var special={"高端精密制造项目（具身机器人）":"具身机器人项目","金属绿色冷轧钢项目":"绿色冷轧钢项目","空压机智能制造产业园":"空压机产业园","液冷散热部件项目":"液冷散热项目","独立储能电站（欣城/日盛）":"独立储能电站","固力水泥博罗分公司":"固力水泥（退出）","11家国家级小巨人":"国家级小巨人","74家省级专精特新":"省级专精特新"};if(special[name])return special[name];return Array.from(name).length>13?Array.from(name).slice(0,12).join("")+"…":name;}
-function evidenceStatusText(n){if(n.change_status==="新增")return "近期新增";if(n.change_status==="增强")return "关系增强";if(n.change_status==="退出")return "主体退出";return "关键基本盘";}
+function evidenceStatusText(n){if(n.node_status==="pending")return "签约 · 待落地";if(n.node_status==="new")return "新投产 / 新接入";if(n.node_status==="exit"||n.change_status==="退出")return "已退出";if(n.change_status==="增强")return "关系增强";if(n.change_status==="新增")return "新入驻";return "关键基本盘";}
 function buildEvidencePositions(){
  var degree={};evidenceData.nodes.forEach(function(n){degree[n.node_id]=0;});
  evidenceData.edges.forEach(function(e){degree[e.source_node_id]=(degree[e.source_node_id]||0)+1;degree[e.target_node_id]=(degree[e.target_node_id]||0)+1;});
@@ -591,7 +591,7 @@ function buildEvidencePositions(){
 }
 function isEvidenceRelevant(edge){
  if(scenario==="base")return true;
- if(activeQuestion==="bridge")return ["supply_chain","regional","investment"].indexOf(edge.relation_type)>=0;
+ if(activeQuestion==="bridge")return edge.change_status!=="退出"&&["supply_chain","regional","investment"].indexOf(edge.relation_type)>=0;
  if(activeQuestion==="break")return edge.change_status==="退出"||["resource_competition","eco_constraint"].indexOf(edge.relation_type)>=0;
  if(activeQuestion==="people")return ["commute","transport"].indexOf(edge.relation_type)>=0;
  if(activeQuestion==="eco")return ["tourism_consumption","eco_constraint"].indexOf(edge.relation_type)>=0;
