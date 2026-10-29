@@ -484,8 +484,8 @@ function enterMobileConceptLayout(){
  var mobileLabels={
   industry:[20,-34],investment:[20,-15],people:[20,28],consumption:[-160,-18],
   ecology:[-160,-27],external:[-160,-35],culture:[21,-28]
- };
- clusters.forEach(function(c){c.x=50+(c.x-150)*(400/700);c.label=mobileLabels[c.id].slice();});
+ },mobileY={industry:330,investment:500,people:650,consumption:620,ecology:465,external:280,culture:220};
+ clusters.forEach(function(c){c.x=50+(c.x-150)*(400/700);c.y=mobileY[c.id];c.label=mobileLabels[c.id].slice();});
  center.x=250;mobileConceptLayout=true;
 }
 function restoreDesktopConceptLayout(){
@@ -645,7 +645,7 @@ function buildEvidencePositions(){
  var nodes=evidenceData.nodes.filter(function(n){return selected[n.node_id];});
  if(window.innerWidth<=680){
   evidencePositionMap={};
-  nodes.forEach(function(n,i){var col=i%2,row=Math.floor(i/2);evidencePositionMap[n.node_id]={x:col?400:100,y:100+row*135+(col?60:0),align:col?"left":"right"};});
+  nodes.forEach(function(n,i){var col=i%2,row=Math.floor(i/2);evidencePositionMap[n.node_id]={x:col?400:100,y:220+row*105+(col?45:0),align:col?"left":"right"};});
   return {nodes:nodes,ids:selected,degree:degree,matchNodeIds:matchNodeIds,matchEdgeIds:matchEdgeIds,matchCount:matches.nodes.length+matches.edges.length};
  }
  var groups={external:[],eco:[],agriculture:[],anchor:[],cluster:[],legacy:[],new:[]};
