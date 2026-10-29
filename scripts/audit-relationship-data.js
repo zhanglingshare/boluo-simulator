@@ -114,8 +114,15 @@ if (fs.existsSync(inboxPath)) {
     if (candidate.schema_version !== 'relationship-update-proposal-v1') errors.push('候选包 schema_version 必须为 relationship-update-proposal-v1');
     if (candidate.region !== 'boluo') errors.push('候选包 region 必须为 boluo');
     if (candidate.generated_at && !validDate(candidate.generated_at)) errors.push('候选包 generated_at 日期无效');
+    if (candidate.generated_at && validDate(candidate.generated_at)) {
+      const ageHours = (Date.now() - Date.parse(candidate.generated_at)) / 3600000;
+      if (ageHours > 36) warnings.push('候选包已超过 36 小时，需确认是否为最新采集结果');
+      if (ageHours < -1) errors.push('候选包 generated_at 位于未来，请核对时区与时间');
+    }
     ['sources','nodes','edges','changes','open_questions'].forEach(k => { if (candidate[k] !== undefined && !Array.isArray(candidate[k])) errors.push('候选包 ' + k + ' 必须为数组'); });
     const ps = Array.isArray(candidate.sources) ? candidate.sources : [];
+    const knownRelationTypes = new Set(Object.keys(ed && ed.relation_type_legend || {}));
+    const knownChangeTypes = new Set(Object.keys(cd && cd.change_type_legend || {}));
     const pn = Array.isArray(candidate.nodes) ? candidate.nodes : [];
     const pe = Array.isArray(candidate.edges) ? candidate.edges : [];
     const pc = Array.isArray(candidate.changes) ? candidate.changes : [];
@@ -157,12 +164,20 @@ if (fs.existsSync(inboxPath)) {
         if (allEdges.has(p.edge.edge_id)) errors.push('新增关系 ID 已存在：' + p.edge.edge_id);
         if (p.edge.edge_id) { allEdges.add(p.edge.edge_id); candidateEdges.set(p.edge.edge_id, p.edge); }
         if (gradeType[p.edge.evidence_grade] !== p.edge.evidence_type) errors.push('新增关系 ' + p.edge.edge_id + ' 证据等级与 evidence_type 不一致');
+        if (p.edge.relation_type && knownRelationTypes.size && !knownRelationTypes.has(p.edge.relation_type)) errors.push('新增关系 ' + p.edge.edge_id + ' relation_type 未登记：' + p.edge.relation_type);
         refs(p.edge.source_ids, allSources, '新增关系 ' + p.edge.edge_id);
       } else if (['update','strengthen','weaken','break','exit'].includes(p.action)) {
         if (!edgeMap.has(p.edge_id)) errors.push('关系提案引用不存在的 edge_id：' + p.edge_id);
         if (!p.patch || typeof p.patch !== 'object' || !Object.keys(p.patch).length) errors.push('关系提案必须提供非空 patch');
         if (p.patch && p.patch.edge_id !== undefined) errors.push('patch 不允许修改 edge_id');
         if (p.patch && p.patch.source_ids) refs(p.patch.source_ids, allSources, '关系 patch ' + p.edge_id);
+        if (p.patch) {
+          const oldEdge = edgeMap.get(p.edge_id) || {};
+          const nextGrade = p.patch.evidence_grade || oldEdge.evidence_grade;
+          const nextType = p.patch.evidence_type || oldEdge.evidence_type;
+          if (gradeType[nextGrade] !== nextType) errors.push('关系 patch ' + p.edge_id + ' 证据等级与 evidence_type 不一致');
+          if (p.patch.relation_type && knownRelationTypes.size && !knownRelationTypes.has(p.patch.relation_type)) errors.push('关系 patch ' + p.edge_id + ' relation_type 未登记：' + p.patch.relation_type);
+        }
       } else errors.push('关系提案 action 不受支持：' + p.action);
     });
     allNodes.forEach(id => {});
@@ -173,6 +188,7 @@ if (fs.existsSync(inboxPath)) {
     const allChangeIds = new Set(changeMap.keys());
     pc.forEach(c => {
       required(c, ['change_id','change_type','title','event_date','involved_node_ids','involved_edge_ids','source_ids','uncertainty','last_verified_at'], '候选变化事件 ' + (c.change_id || '?'));
+      if (c.change_type && knownChangeTypes.size && !knownChangeTypes.has(c.change_type)) errors.push('候选变化事件 ' + c.change_id + ' change_type 未登记：' + c.change_type);
       if (allChangeIds.has(c.change_id)) errors.push('候选变化事件 ID 已存在：' + c.change_id);
       if (c.change_id) allChangeIds.add(c.change_id);
       refs(c.involved_node_ids, allNodes, '候选变化事件 ' + c.change_id);
