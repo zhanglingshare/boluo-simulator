@@ -72,5 +72,22 @@ for (const f of evFiles) {
   } catch (e) { bad(f + ' 解析失败: ' + e.message); }
 }
 
+console.log('── 5) V9 交互回归断言 ──');
+const v9Path = path.join(root, 'holo-home-v9.html');
+if (!fs.existsSync(v9Path)) {
+  bad('缺少 holo-home-v9.html，无法检查交互回归');
+} else {
+  const v9 = fs.readFileSync(v9Path, 'utf8');
+  const checks = [
+    ['探索问题先清除旧筛选', v9.includes('function setQuestion(q){stopPlay();activeQuestion=q;activeFilter="all";')],
+    ['节点拖动有移动阈值，避免点击误判为拖动', v9.includes('if(!drag.moved&&Math.sqrt(dx*dx+dy*dy)<4)return;')],
+    ['节点拖动使用 SVG 坐标变换', v9.includes('function screenToSvg(ev)')],
+    ['新节点接入有动态连线', v9.includes('class:"new-link"')],
+    ['手动交互可以停止自动播放', v9.includes('function stopPlay()')],
+    ['搜索无结果时给出明确反馈', v9.includes('没有找到对应的关系群落')]
+  ];
+  checks.forEach(([label, passed]) => passed ? ok(label) : bad(label));
+}
+
 console.log(fails ? '\n✗ 共 ' + fails + ' 项失败' : '\n✓ 全部通过');
 process.exit(fails ? 1 : 0);
