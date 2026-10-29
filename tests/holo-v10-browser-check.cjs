@@ -106,8 +106,43 @@ const { chromium } = require("playwright");
     assert.ok(mobileLabelAudit.cards.length >= 2 && mobileLabelAudit.cards.length <= 10, "手机端应显示紧凑的可读关系子图");
     await page.screenshot({ path: path.join(outDir, "holo-v10-mobile-search.png"), fullPage: true });
 
+    // Guided exploration should bridge a question, an evidence view, and a shareable state.
+    await page.setViewportSize({ width: 1440, height: 1000 });
+    await page.reload({ waitUntil: "networkidle" });
+    await page.waitForFunction(() => document.getElementById("evidenceState")?.textContent === "证据已连接", { timeout: 15000 });
+    await page.locator('[data-q="break"]').click();
+    assert.equal(await page.locator("#timelineTitle").innerText(), "关系断裂", "点击问题应切换对应情景");
+    assert.equal(await page.locator("#journey2").evaluate(el => el.classList.contains("active")), true, "概念视图应提示第 2 步");
+    await page.locator("#exploreNext").click();
+    await page.waitForFunction(() => document.body.classList.contains("evidence-mode"));
+    assert.equal(await page.locator("#journey3").evaluate(el => el.classList.contains("active")), true, "进入证据视图后应提示第 3 步");
+    await page.waitForFunction(() => document.querySelectorAll(".evidence-flow-particle").length > 0, { timeout: 5000 });
+    const selectedNode = page.locator(".evidence-node").first();
+    const selectedNodeId = await selectedNode.getAttribute("data-evidence-node");
+    await selectedNode.click();
+    const selectedNodeName = await page.locator("#evidenceDetail h4").innerText();
+    await page.evaluate(() => {
+      Object.defineProperty(navigator, "clipboard", {
+        configurable: true,
+        value: { writeText: async text => { window.__copiedText = text; } }
+      });
+    });
+    await page.locator("#shareObservation").click();
+    await page.waitForFunction(() => !!window.__copiedText);
+    const copiedText = await page.evaluate(() => window.__copiedText);
+    const currentUrl = await page.evaluate(() => window.location.href);
+    assert.ok(copiedText.includes(currentUrl), "分享卡应包含当前状态的可复现链接");
+    assert.match(currentUrl, /mode=evidence/, "分享链接应保存当前视图");
+    assert.match(currentUrl, new RegExp("node=" + selectedNodeId), "分享链接应保存当前选中节点");
+    assert.equal(await page.locator("#journey4").evaluate(el => el.classList.contains("active")), true, "复制分享链接后应提示第 4 步");
+    await page.reload({ waitUntil: "networkidle" });
+    await page.waitForFunction(() => document.getElementById("evidenceState")?.textContent === "证据已连接", { timeout: 15000 });
+    await page.waitForFunction(() => document.body.classList.contains("evidence-mode"));
+    assert.equal(await page.locator("#evidenceDetail h4").innerText(), selectedNodeName, "分享链接重开后应恢复选中节点");
+    await page.screenshot({ path: path.join(outDir, "holo-v10-guided-share.png"), fullPage: true });
+
     assert.deepEqual(errors, [], "浏览器运行期间不应有 JavaScript/控制台错误");
-    console.log("PASS: desktop load, concept graph, draggable hub, entity search, evidence filter, label collision check, mobile toggle/search.");
+    console.log("PASS: desktop/mobile layout, draggable concept graph, entity search, evidence filters, guided question-to-evidence flow, animated relation highlights, share-link copy and state restoration.");
   } finally {
     await browser.close();
   }
