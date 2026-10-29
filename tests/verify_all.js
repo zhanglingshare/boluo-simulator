@@ -19,6 +19,40 @@ for (const f of htmlFiles) {
   ok(f + '（' + blocks.length + ' 块）');
 }
 
+
+console.log('── 1b) 博罗非全息页面 UI 完整性 ──');
+const nonHoloPages = [
+  'index.html','role.html','who.html','choices.html','future.html',
+  'windtunnel.html','blindspot.html','report.html','ending.html',
+  'network.html','town.html','lab.html','step2.html','v3.html',
+  'v4.html','v2/index.html','v2/data.html'
+];
+const uiCssPath = path.join(root,'assets','boluo-ui.css');
+if (!fs.existsSync(uiCssPath)) bad('缺少共享非全息 UI 样式');
+else {
+  const style = fs.readFileSync(uiCssPath,'utf8');
+  for(const section of ['body.bl-dark','.bl-legacy','.bl-warm','.bl-paper','@media(max-width:560px)','prefers-reduced-motion']){
+    if(!style.includes(section)) bad('共享 UI 样式缺少设计分区：'+section);
+  }
+  ok('共享样式包含深色、故事版、暖色与纸张主题以及手机适配');
+}
+for(const page of nonHoloPages){
+  const pagePath=path.join(root,page);
+  if(!fs.existsSync(pagePath)){bad('缺少非全息页面 '+page);continue;}
+  const html=fs.readFileSync(pagePath,'utf8');
+  const cssHref=page.startsWith('v2/')?'../assets/boluo-ui.css':'assets/boluo-ui.css';
+  if(!html.includes('href="'+cssHref+'"'))bad(page+' 未引用共享 UI 样式');
+  if(!/<body[^>]*\bclass="bl-ui [^"]+"[^>]*>/i.test(html))bad(page+' 缺少 UI 页面级标识');
+  if(/user-scalable\s*=\s*no/i.test(html))bad(page+' 禁止用户缩放');
+}
+if(fs.existsSync(path.join(root,'v2.html'))&&fs.readFileSync(path.join(root,'v2.html'),'utf8').includes('boluo-ui.css'))bad('旧版全息风洞 v2.html 不应加载非全息 UI');
+const holoPaths=['holo.html','holo-concept.html','holo-home-v9.html','holo-home-v10.html','experiments/holo-single/index.html'];
+for(const page of holoPaths){
+  const fp=path.join(root,page);
+  if(fs.existsSync(fp)&&fs.readFileSync(fp,'utf8').includes('boluo-ui.css'))bad('非全息 UI 不得应用于全息页面 '+page);
+}
+ok('17 个非全息页面共享 UI 接入与全息隔离已检查');
+
 console.log('── 2) 模型口径断言（SEED=42 N=10000，规划兑现基准路径；与页面口径同源）──');
 const HT = require(path.join(root, 'model.js'));
 const SEED = 42, N = 10000;
