@@ -399,6 +399,9 @@ html,body{background:radial-gradient(ellipse at 48% -25%,rgba(56,91,147,.22),tra
 .evidence-edge.change-event-edge{stroke-dasharray:5 4!important;animation:evidenceGlow 1.1s ease-in-out infinite}
 .evidence-edge.change-exit-edge{stroke:#ff8f9d!important;stroke-dasharray:7 4!important;stroke-opacity:1!important}
 .evidence-edge.change-weaken-edge{stroke:#f0b967!important;stroke-dasharray:3 5!important;stroke-opacity:.72!important}
+.event-edge-label{filter:drop-shadow(0 2px 5px rgba(0,0,0,.28))}
+.event-edge-label text{font-family:Inter,-apple-system,BlinkMacSystemFont,"PingFang SC","Microsoft YaHei",sans-serif}
+.event-graph-guide text{font-family:Inter,-apple-system,BlinkMacSystemFont,"PingFang SC","Microsoft YaHei",sans-serif}
 .evidence-node.change-context-node{opacity:.38}
 .evidence-node.change-focus-node .evidence-node-card{stroke:#74ddcd;stroke-width:1.8}
 .evidence-node.change-before-node{opacity:.18!important}
@@ -429,6 +432,7 @@ html,body{background:radial-gradient(ellipse at 48% -25%,rgba(56,91,147,.22),tra
 .canvas-desc{max-width:620px;line-height:1.8}
 .question-title{line-height:1.7}
 
+@media(max-width:680px){.event-edge-label text{font-size:11px}.event-graph-guide text{font-size:11px}}
 </style>
 </head>
 <body>
@@ -800,11 +804,11 @@ function setGraphMode(mode){
  document.body.classList.toggle("evidence-mode",graphMode==="evidence");
  document.getElementById("conceptMode").classList.toggle("active",!!selectedChangeId);
  document.getElementById("evidenceMode").classList.toggle("active",!selectedChangeId);
- document.getElementById("footerGraphMode").textContent=graphMode==="evidence"?"公开证据关系子图 / 非地图":"概念网络示意 / 非真实地图";
+ document.getElementById("footerGraphMode").textContent=graphMode==="evidence"?"这件事相关的关系线索":"关系概念示意图";
  updateSelectionUI();
  if(graphMode==="evidence"){updateShareState();
   evidenceSearchTerm=document.getElementById("search").value.trim().toLowerCase();
-  document.getElementById("liveStatus").innerHTML="<i></i>正在读取公开关系证据";
+  document.getElementById("liveStatus").innerHTML="<i></i>正在整理公开资料";
   loadEvidenceData().then(function(ok){if(ok){if(evidenceSearchTerm&&!selectedEvidence){var matches=findEvidenceMatches(evidenceSearchTerm);selectedEvidence=matches.nodes.length?{kind:"node",id:matches.nodes[0].node_id}:matches.edges.length?{kind:"edge",id:matches.edges[0].edge_id}:null;}renderGraph();updateCanvasInsightEvidence();updateJourneyUI();updateShareState();}else{setGraphMode("concept");}});
  }else{
   document.getElementById("liveStatus").innerHTML="<i></i>概念探索视图";
@@ -812,11 +816,11 @@ function setGraphMode(mode){
  }
 }
 function evidenceGradeClass(grade){return grade==="A"?"grade-a":grade==="B"?"grade-b":"grade-c";}
-function evidenceGradeName(grade){return evidenceData&&evidenceData.evidence_grade_legend[grade]?evidenceData.evidence_grade_legend[grade]:("证据等级 "+grade);}
+function evidenceGradeName(grade){return ({A:"官方公开记录",B:"多条线索推断",C:"尚待核实"})[grade]||"来源待核";}
 function relationColor(type){return ({supply_chain:"#79b8ff",regional:"#c2a4ff",commute:"#66d8cf",transport:"#8aaeff",eco_constraint:"#83d7a5",resource_competition:"#ff9d9f",tourism_consumption:"#e0a8ff",investment:"#f1c078"})[type]||"#9bb0cc";}
 function nodeColor(n){return ({external:"#c4a1ff",eco:"#7ed9aa",agriculture:"#9bd79a",anchor:"#7eb9ff",champion:"#7bcbd0",cluster:"#6dd7cf",legacy:n.change_status==="退出"?"#ff8f9d":"#9aabc1",energy:"#f1c078",new:"#ffb37b"})[n.node_type]||"#9ab4d4";}
 function evidenceShortName(name){var special={"高端精密制造项目（具身机器人）":"具身机器人项目","金属绿色冷轧钢项目":"绿色冷轧钢项目","空压机智能制造产业园":"空压机产业园","液冷散热部件项目":"液冷散热项目","独立储能电站（欣城/日盛）":"独立储能电站","固力水泥博罗分公司":"固力水泥（退出）","11家国家级小巨人":"国家级小巨人","74家省级专精特新":"省级专精特新"};if(special[name])return special[name];return Array.from(name).length>13?Array.from(name).slice(0,12).join("")+"…":name;}
-function evidenceStatusText(n){if(n.node_status==="pending")return "签约 · 待落地";if(n.node_status==="new")return "新投产 / 新接入";if(n.node_status==="exit"||n.change_status==="退出")return "已退出";if(n.change_status==="增强")return "关系增强";if(n.change_status==="新增")return "新入驻";return "关键基本盘";}
+function evidenceStatusText(n){if(n.node_status==="pending")return "已签约，尚未落地";if(n.node_status==="new")return "新投产 / 新接入";if(n.node_status==="exit"||n.change_status==="退出")return "已退出";if(n.change_status==="增强")return "联系正在增强";if(n.change_status==="新增")return "新增联系";return ({external:"外部城市",eco:"生态资源",agriculture:"特色农业",anchor:"重点企业",champion:"重点企业",cluster:"产业群落",legacy:"传统产业",energy:"能源设施",new:"新项目"})[n.node_type]||"相关主体";}
 function findEvidenceMatches(term){
  var t=String(term||"").trim().toLowerCase(),nodeMatches=[],edgeMatches=[],sourceMatches=[];
  if(!t||!evidenceData)return {nodes:[],edges:[],sources:[]};
@@ -874,6 +878,54 @@ function buildEvidencePositions(){
   }
  }
  var nodes=evidenceData.nodes.filter(function(n){return selected[n.node_id];});
+ /* Event view: show a small cast of real entities. Changed entities go right;
+    stable context goes left; if the event is a changed connection, use its source/target direction. */
+ var focusedChange=getSelectedChange();
+ if(focusedChange){
+  var involvedIds={},edgeIds={},edgeSources={},edgeTargets={};
+  (focusedChange.involved_node_ids||[]).forEach(function(id){if(evidenceNodeMap[id])involvedIds[id]=true;});
+  (focusedChange.involved_edge_ids||[]).forEach(function(id){
+   var edge=evidenceEdgeMap[id];if(!edge)return;
+   edgeIds[id]=true;selected[edge.source_node_id]=true;selected[edge.target_node_id]=true;
+   edgeSources[edge.source_node_id]=true;edgeTargets[edge.target_node_id]=true;
+  });
+  nodes=evidenceData.nodes.filter(function(n){return selected[n.node_id];});
+  var eventNodeIds={};Object.keys(involvedIds).forEach(function(id){eventNodeIds[id]=true;});
+  Object.keys(edgeSources).forEach(function(id){eventNodeIds[id]=true;});Object.keys(edgeTargets).forEach(function(id){eventNodeIds[id]=true;});
+  var eventNodes=nodes.filter(function(n){return eventNodeIds[n.node_id];});
+  var contextNodes=nodes.filter(function(n){return !eventNodeIds[n.node_id];});
+  var changedNodes=eventNodes.filter(function(n){return ["new","pending","exit"].indexOf(n.node_status)>=0||["新增","退出","增强","减弱"].indexOf(n.change_status)>=0;});
+  var leftIds={},rightIds={};
+  if(changedNodes.length){
+   changedNodes.forEach(function(n){rightIds[n.node_id]=true;});
+   eventNodes.forEach(function(n){if(!rightIds[n.node_id])leftIds[n.node_id]=true;});
+  }else{
+   eventNodes.forEach(function(n){if(edgeTargets[n.node_id])rightIds[n.node_id]=true;else if(edgeSources[n.node_id])leftIds[n.node_id]=true;else rightIds[n.node_id]=true;});
+  }
+  contextNodes.forEach(function(n){leftIds[n.node_id]=true;});
+  var limit=window.innerWidth<=680?8:12;
+  function contextScore(n){var s=degree[n.node_id]||0;evidenceData.edges.forEach(function(e){if((eventNodeIds[e.source_node_id]&&e.target_node_id===n.node_id)||(eventNodeIds[e.target_node_id]&&e.source_node_id===n.node_id)){s+=e.change_status&&e.change_status!=="无显著变化"?8:2;}});return s;}
+  var leftNodes=nodes.filter(function(n){return leftIds[n.node_id];}).sort(function(a,b){var af=eventNodeIds[a.node_id]?1:0,bf=eventNodeIds[b.node_id]?1:0;return bf-af||contextScore(b)-contextScore(a);});
+  var rightNodes=nodes.filter(function(n){return rightIds[n.node_id];});
+  if(!rightNodes.length&&leftNodes.length){rightNodes.push(leftNodes.pop());}
+  leftNodes=leftNodes.slice(0,Math.max(0,limit-rightNodes.length));
+  rightNodes=rightNodes.slice(0,limit);
+  nodes=leftNodes.concat(rightNodes);
+  selected={};nodes.forEach(function(n){selected[n.node_id]=true;});
+  evidencePositionMap={};
+  function placeColumn(list,x,top,bottom,align){
+   var span=list.length<=1?0:(bottom-top)/(list.length-1);
+   list.forEach(function(n,i){evidencePositionMap[n.node_id]={x:x,y:list.length===1?(top+bottom)/2:top+span*i,align:align};});
+  }
+  if(window.innerWidth<=680){
+   placeColumn(leftNodes,190,115,660,"left");
+   placeColumn(rightNodes,310,115,660,"right");
+  }else{
+   placeColumn(leftNodes,375,105,660,"left");
+   placeColumn(rightNodes,625,105,660,"right");
+  }
+  return {nodes:nodes,ids:selected,degree:degree,matchNodeIds:matchNodeIds,matchEdgeIds:matchEdgeIds,matchCount:matches.nodes.length+matches.edges.length};
+ }
  if(window.innerWidth<=680){
   evidencePositionMap={};
   var rowCount=Math.ceil(nodes.length/2),rowGap=rowCount>1?Math.min(300,520/(rowCount-1)):0,startY=(760-((rowCount-1)*rowGap))/2;
@@ -921,17 +973,29 @@ function isEvidenceRelevant(edge){
  if(scenario==="exit")return edge.change_status==="退出"||edge.source_node_id==="glc"||edge.target_node_id==="glc";
  return edge.change_status!=="无显著变化";
 }
+function eventEdgeLabel(e){var labels={E001:"深圳总部 → 博罗基地",E014:"电池回收与配套",E017:"铜材产业补链",E018:"电池零部件配套",E019:"散热配套",E020:"金属循环",E021:"工业动力",E022:"装备制造配套",E023:"储能支撑用电",E025:"总部派驻与往来",E026:"大桥施工影响通行",E027:"高速通道变化",E030:"环保约束",E037:"户外旅游与民宿",E038:"茶旅融合",E039:"荔枝采摘与旅游",E041:"客流往来",E044:"生产线退出",E045:"环保整改影响产能"};return labels[e.edge_id]||(evidenceData.relation_type_legend[e.relation_type]||"相关联系");}
 function renderEvidenceGraph(){
  if(!evidenceData)return;
  if(window.innerWidth<=680)svg.setAttribute("viewBox","0 0 500 760");else svg.setAttribute("viewBox","0 0 1000 760");
  clearLayer(layers.orbits);clearLayer(layers.edges);clearLayer(layers.nodes);clearLayer(layers.labels);clearLayer(layers.overlays);
  append(layers.orbits,"ellipse",{cx:500,cy:375,rx:390,ry:285,fill:"none",stroke:"#7995bb","stroke-opacity":".07","stroke-width":"1","stroke-dasharray":"2 9"});
  append(layers.orbits,"ellipse",{cx:500,cy:375,rx:275,ry:200,fill:"none",stroke:"#7995bb","stroke-opacity":".06","stroke-width":"1","stroke-dasharray":"2 10"});
- var layout=buildEvidencePositions(),visible=layout.ids,shownEdges=evidenceData.edges.filter(function(e){return visible[e.source_node_id]&&visible[e.target_node_id];}),animatedEvidenceEdges=0,focusChange=getSelectedChange(),focusNodeIds={},focusEdgeIds={};
- if(focusChange){(focusChange.involved_node_ids||[]).forEach(function(id){focusNodeIds[id]=true;});(focusChange.involved_edge_ids||[]).forEach(function(id){focusEdgeIds[id]=true;var e=evidenceEdgeMap[id];if(e){focusNodeIds[e.source_node_id]=true;focusNodeIds[e.target_node_id]=true;}});}
+ var focusChange=getSelectedChange(),focusNodeIds={},focusEdgeIds={};
+ if(focusChange){
+  (focusChange.involved_node_ids||[]).forEach(function(id){focusNodeIds[id]=true;});
+  (focusChange.involved_edge_ids||[]).forEach(function(id){focusEdgeIds[id]=true;});
+ }
+ var layout=buildEvidencePositions(),visible=layout.ids;
+ var shownEdges=evidenceData.edges.filter(function(e){
+  if(!visible[e.source_node_id]||!visible[e.target_node_id])return false;
+  if(!focusChange)return true;
+  if(focusEdgeIds[e.edge_id])return true;
+  return (focusNodeIds[e.source_node_id]||focusNodeIds[e.target_node_id])&&e.change_status&&e.change_status!=="无显著变化";
+ });
+ var animatedEvidenceEdges=0;
  shownEdges.forEach(function(e){
   var a=evidencePositionMap[e.source_node_id],b=evidencePositionMap[e.target_node_id];if(!a||!b)return;
-  var color=relationColor(e.relation_type),d=pathBetween(a,b,((e.edge_id.charCodeAt(1)||1)%2)?13:-13);
+  var edgeNum=parseInt(String(e.edge_id).replace(/\D/g,""),10)||1,color=relationColor(e.relation_type),d=pathBetween(a,b,((edgeNum%5)-2)*10);
   var classes=["evidence-edge",evidenceGradeClass(e.evidence_grade)];
   if(e.change_status!=="无显著变化")classes.push("status-changed");
   var relationRelevant=selectedChangeId?true:(activeFilter!=="all"?matchesEvidenceFilter(e):isEvidenceRelevant(e));
@@ -944,6 +1008,7 @@ function renderEvidenceGraph(){
   var p=append(layers.edges,"path",{d:d,stroke:color,class:classes.join(" "),style:"color:"+color,"data-evidence-edge":e.edge_id,"marker-end":"url(#evidenceArrow)","aria-label":e.relation_description,tabindex:"0",role:"button"});
   p.addEventListener("click",function(ev){ev.stopPropagation();showEvidenceEdge(e.edge_id);});
   p.addEventListener("keydown",function(ev){if(ev.key==="Enter"||ev.key===" "){ev.preventDefault();showEvidenceEdge(e.edge_id);}});
+  if(focusChange&&focusEdgeIds[e.edge_id]){var midX=(a.x+b.x)/2,midY=(a.y+b.y)/2+(animatedEvidenceEdges%2?13:-13),label=eventEdgeLabel(e),w=Math.min(136,Math.max(64,Array.from(label).length*6+16));var tag=append(layers.labels,"g",{class:"event-edge-label","pointer-events":"none"});append(tag,"rect",{x:midX-w/2,y:midY-10,width:w,height:20,rx:6,fill:"#101d30",stroke:color,"stroke-opacity":".8","stroke-width":"1"});append(tag,"text",{x:midX,y:midY+3.5,"text-anchor":"middle",fill:"#f3f7ff","font-size":"9","font-weight":"700"},label);}
   if(!reducedMotion&&animatedEvidenceEdges<8&&classes.indexOf("dim")<0&&(e.change_status!=="无显著变化"||(selectedEvidence&&selectedEvidence.kind==="edge"&&selectedEvidence.id===e.edge_id))){var particle=append(layers.edges,"circle",{cx:0,cy:0,r:2.3,fill:color,class:"evidence-flow-particle",style:"color:"+color});append(particle,"animateMotion",{dur:(3.1+(animatedEvidenceEdges%3)*.45)+"s",repeatCount:"indefinite",path:d,begin:(animatedEvidenceEdges*.27)+"s"});animatedEvidenceEdges++;}
  });
  layout.nodes.forEach(function(n){
@@ -966,14 +1031,15 @@ function renderEvidenceGraph(){
   g.addEventListener("click",function(ev){ev.stopPropagation();showEvidenceNode(n.node_id);});
   g.addEventListener("keydown",function(ev){if(ev.key==="Enter"||ev.key===" "){ev.preventDefault();showEvidenceNode(n.node_id);}});
  });
- document.getElementById("liveStatus").innerHTML=evidenceSearchTerm?(layout.matchCount?("<i></i>搜索结果 · "+layout.nodes.length+" 个相关节点"):"<i></i>未找到匹配的节点或关系"):(activeFilter!=="all"?("<i></i>"+({industry:"产业",investment:"投资",people:"人口",consumption:"消费",ecology:"生态",external:"交通"}[activeFilter]||"关系")+" · "+layout.nodes.length+" 个相关节点"):"<i></i>证据网络 · "+layout.nodes.length+" 个关键节点");
+ if(focusChange){var mobileView=window.innerWidth<=680,centerX=mobileView?250:500,tagWidth=mobileView?430:440,tag=append(layers.overlays,"g",{class:"event-graph-guide","pointer-events":"none"});append(tag,"rect",{x:centerX-tagWidth/2,y:20,width:tagWidth,height:27,rx:8,fill:"#0c192a","fill-opacity":".96",stroke:"#47617e","stroke-opacity":".65"});append(tag,"text",{x:centerX,y:37.5,"text-anchor":"middle",fill:"#c9d8ec","font-size":mobileView?"10":"11","font-weight":"650"}, "亮线：这件事直接相关   ·   暗线：周边背景");}
+ document.getElementById("liveStatus").innerHTML=evidenceSearchTerm?(layout.matchCount?("<i></i>搜索结果 · "+layout.nodes.length+" 个相关节点"):"<i></i>未找到匹配的节点或关系"):(activeFilter!=="all"?("<i></i>"+({industry:"产业",investment:"投资",people:"人口",consumption:"消费",ecology:"生态",external:"交通"}[activeFilter]||"关系")+" · "+layout.nodes.length+" 个相关节点"):"<i></i>关系线索 · "+layout.nodes.length+" 个相关主体");
  document.getElementById("evidenceCount").textContent=layout.nodes.length+"节点 · "+shownEdges.length+"线";
- document.getElementById("footerGraphMode").textContent="公开证据关系子图 / 近期变化优先";
+ document.getElementById("footerGraphMode").textContent="这件事相关的关系线索";
  updateEvidenceLegend();
 }
 function updateEvidenceLegend(){
  var legend=document.getElementById("canvasLegend");
- legend.innerHTML='<div class="legend-item"><span style="width:16px;height:2px;background:#a8c5e7"></span>A 直接证据</div><div class="legend-item"><span style="width:16px;border-top:1px dashed #a8c5e7"></span>B 证据推断</div><div class="legend-item"><span style="width:16px;border-top:1px dotted #a8c5e7"></span>C 待验证</div><div class="legend-item"><span class="legend-dot" style="background:#79b8ff"></span>产业连接</div><div class="legend-item"><span class="legend-dot" style="background:#83d7a5"></span>生态 / 文旅</div><div class="legend-item"><span class="legend-dot" style="background:#ff8f9d"></span>退出 / 风险</div><div class="legend-item">线粗不代表关系强度</div>';
+ legend.innerHTML='<div class="legend-item"><span style="width:16px;height:2px;background:#a8c5e7"></span>官方公开记录</div><div class="legend-item"><span style="width:16px;border-top:1px dashed #a8c5e7"></span>多条线索推断</div><div class="legend-item"><span style="width:16px;border-top:1px dotted #a8c5e7"></span>尚待核实</div><div class="legend-item"><span class="legend-dot" style="background:#79b8ff"></span>产业连接</div><div class="legend-item"><span class="legend-dot" style="background:#83d7a5"></span>生态 / 文旅</div><div class="legend-item"><span class="legend-dot" style="background:#ff8f9d"></span>退出 / 风险</div><div class="legend-item">线粗不代表关系强度</div>';
 }
 function updateConceptLegend(){
  var legend=document.getElementById("canvasLegend");
@@ -1004,13 +1070,13 @@ function updateEvidencePanel(){
   if(selectedEvidence.kind==="edge"){
    var e=evidenceEdgeMap[selectedEvidence.id],from=e&&evidenceNodeMap[e.source_node_id],to=e&&evidenceNodeMap[e.target_node_id];
    if(!e){detail.innerHTML="<p>这条关系暂时无法读取。</p>";return;}
-   var metric=e.metric?'<p><strong>关联量化依据：</strong>'+htmlEscape(e.metric.metric_name)+ ' · '+htmlEscape(String(e.metric.metric_value))+htmlEscape(e.metric.metric_unit||"")+'。这不一定等同于关系强度。</p>':"";
-   detail.innerHTML='<h4>'+htmlEscape(from?from.name:e.source_node_id)+' → '+htmlEscape(to?to.name:e.target_node_id)+'</h4><div class="evidence-pill-row">'+evidencePill(e.evidence_grade,evidenceData.evidence_grade_legend[e.evidence_grade])+'<span class="evidence-pill">'+htmlEscape(evidenceData.relation_type_legend[e.relation_type]||e.relation_type)+'</span><span class="evidence-pill">'+htmlEscape(e.change_status||"状态未标注")+'</span></div><p>'+htmlEscape(e.relation_description)+'</p><p><strong>证据依据：</strong>'+htmlEscape(e.strength_basis||"暂无进一步说明")+'</p>'+metric+(e.counter_evidence?'<p><strong>限制 / 反证：</strong>'+htmlEscape(e.counter_evidence)+'</p>':"")+'<p><strong>关系时期：</strong>'+htmlEscape(e.valid_period||"未标注")+' · <strong>最近核验：</strong>'+htmlEscape(e.last_verified_at||"未标注")+'</p>'+sourceLinks(e.source_ids);
+   var metric=e.metric?'<p><strong>相关数据：</strong>'+htmlEscape(e.metric.metric_name)+ ' · '+htmlEscape(String(e.metric.metric_value))+htmlEscape(e.metric.metric_unit||"")+'。这不一定等同于关系强度。</p>':"";
+   detail.innerHTML='<h4>'+htmlEscape(from?from.name:e.source_node_id)+' → '+htmlEscape(to?to.name:e.target_node_id)+'</h4><div class="evidence-pill-row">'+evidencePill(e.evidence_grade,evidenceGradeName(e.evidence_grade))+'<span class="evidence-pill">'+htmlEscape(evidenceData.relation_type_legend[e.relation_type]||e.relation_type)+'</span><span class="evidence-pill">'+htmlEscape(e.change_status||"状态未标注")+'</span></div><p>'+htmlEscape(e.relation_description)+'</p><p><strong>为什么这样连：</strong>'+htmlEscape(e.strength_basis||"暂无进一步说明")+'</p>'+metric+(e.counter_evidence?'<p><strong>需要留意：</strong>'+htmlEscape(e.counter_evidence)+'</p>':"")+'<p><strong>适用时间：</strong>'+htmlEscape(e.valid_period||"未标注")+' · <strong>最近核对：</strong>'+htmlEscape(e.last_verified_at||"未标注")+'</p>'+sourceLinks(e.source_ids);
   }else{
    var n=evidenceNodeMap[selectedEvidence.id];
    if(!n){detail.innerHTML="<p>这个节点暂时无法读取。</p>";return;}
    var rel=evidenceData.edges.filter(function(e){return e.source_node_id===n.node_id||e.target_node_id===n.node_id;});
-   detail.innerHTML='<h4>'+htmlEscape(n.name)+'</h4><div class="evidence-pill-row"><span class="evidence-pill">'+htmlEscape(n.layer||n.node_type)+'</span><span class="evidence-pill">'+htmlEscape(evidenceStatusText(n))+'</span></div><p>'+htmlEscape(n.description||"暂无公开描述")+'</p><p><strong>所在区域：</strong>'+htmlEscape(n.town||"未标注")+' · <strong>相关关系：</strong>'+rel.length+' 条</p><div class="evidence-related">'+rel.slice(0,4).map(function(e){var other=e.source_node_id===n.node_id?e.target_node_id:e.source_node_id;var otherNode=evidenceNodeMap[other];return '<button data-related-edge="'+htmlEscape(e.edge_id)+'">'+htmlEscape(otherNode?otherNode.name:other)+' · '+htmlEscape(evidenceData.relation_type_legend[e.relation_type]||e.relation_type)+' · '+htmlEscape(e.evidence_grade)+'级</button>';}).join("")+'</div>'+sourceLinks(n.source_ids);
+   detail.innerHTML='<h4>'+htmlEscape(n.name)+'</h4><div class="evidence-pill-row"><span class="evidence-pill">'+htmlEscape(n.layer||n.node_type)+'</span><span class="evidence-pill">'+htmlEscape(evidenceStatusText(n))+'</span></div><p>'+htmlEscape(n.description||"暂无公开描述")+'</p><p><strong>所在位置：</strong>'+htmlEscape(n.town||"未标注")+' · <strong>相关联系：</strong>'+rel.length+' 条</p><div class="evidence-related">'+rel.slice(0,4).map(function(e){var other=e.source_node_id===n.node_id?e.target_node_id:e.source_node_id;var otherNode=evidenceNodeMap[other];return '<button data-related-edge="'+htmlEscape(e.edge_id)+'">'+htmlEscape(otherNode?otherNode.name:other)+' · '+htmlEscape(evidenceData.relation_type_legend[e.relation_type]||e.relation_type)+' · '+htmlEscape(evidenceGradeName(e.evidence_grade))+'</button>';}).join("")+'</div>'+sourceLinks(n.source_ids);
   }
   intro.textContent="当前选中的是登记在公开证据底座中的记录。证据等级描述支持程度，不代表影响大小。";
   detail.querySelectorAll("[data-related-edge]").forEach(function(b){b.addEventListener("click",function(){showEvidenceEdge(b.getAttribute("data-related-edge"));});});
@@ -1028,15 +1094,20 @@ function updateEvidencePanel(){
 }
 function updateCanvasInsightEvidence(){
  if(graphMode!=="evidence"||!evidenceData)return;
- var title="公开证据网络",detail="只突出近期变化主体与关键基本盘节点。实线 A、虚线 B、点线 C；线条粗细不代表关系强度。";
- var focusedChange=getSelectedChange();if(focusedChange){title=focusedChange.title;detail=changePhaseLabel(changePhase)+" · "+String(focusedChange.before_after||"结构状态待核")+"。这里只突出事件涉及的节点与连接；影响推断以公开证据及不确定性说明为边界。"};
- if(selectedEvidence&&selectedEvidence.kind==="node"&&evidenceNodeMap[selectedEvidence.id]){var n=evidenceNodeMap[selectedEvidence.id];title=n.name;detail=(n.change_status==="无显著变化"?"关键基本盘节点":n.change_status)+" · 点击连线查看公开依据、时期和限制。";}
- if(selectedEvidence&&selectedEvidence.kind==="edge"&&evidenceEdgeMap[selectedEvidence.id]){var e=evidenceEdgeMap[selectedEvidence.id];title=(evidenceData.relation_type_legend[e.relation_type]||"关系")+" · "+e.evidence_grade+" 级证据";detail=e.relation_description+"。点击右侧记录查看来源与限制。";}
- if(scenario==="break"&&!selectedEvidence){title="结构风险 · 先核验证据";detail="现实退出事件以红色状态标记；其余断裂仅作为探索假设，不把模拟当成已发生事实。";}
- document.querySelector(".insight-kicker").textContent=focusedChange?"CHANGE EVENT / "+(focusedChange.event_date||"日期待核"):"EVIDENCE LAYER / "+evidenceData.generated_at;
+ var title="这件事和谁有关？",detail="选中一件事，看看亮起的主体和连线。它们是公开资料中的关联线索，不单凭连线判断因果。";
+ var focusedChange=getSelectedChange();
+ if(focusedChange){title=changePlainTitle(focusedChange);detail=changePhaseLabel(changePhase)+" · "+String(focusedChange.before_after||"前后情况待核")+"。亮起的线表示相关线索，不代表已经证明因果关系。还需留意："+String(focusedChange.uncertainty||"部分影响仍待核实。");}
+ if(selectedEvidence&&selectedEvidence.kind==="node"&&evidenceNodeMap[selectedEvidence.id]){
+  var n=evidenceNodeMap[selectedEvidence.id];title=n.name;detail=evidenceStatusText(n)+" · 看看它与哪些主体有关。点击连线，可以查看公开资料和仍不确定的部分。";
+ }
+ if(selectedEvidence&&selectedEvidence.kind==="edge"&&evidenceEdgeMap[selectedEvidence.id]){
+  var e=evidenceEdgeMap[selectedEvidence.id],from=evidenceNodeMap[e.source_node_id],to=evidenceNodeMap[e.target_node_id];
+  title=(from?from.name:"一个主体")+" ↔ "+(to?to.name:"另一个主体");detail=e.relation_description+"。这是公开资料中的关联线索，不单凭它判断因果。";
+ }
+ if(scenario==="break"&&!selectedEvidence){title="如果一条联系断开，会怎样？";detail="这是情景假设，不代表现实已经发生。请留意哪些联系有公开依据，哪些仍需要核实。";}
+ document.querySelector(".insight-kicker").textContent=focusedChange?"这件事 · "+(focusedChange.event_date||"日期待核"):"关系线索";
  document.querySelector(".insight-title").textContent=title;document.querySelector(".insight-copy").textContent=detail;
 }
-
 function updateCanvasInsight(){var info=questionInfo[activeQuestion]||questionInfo.bridge;var title=info.insight,detail=info.detail;if(scenario==="new"){title="新节点接入";detail="新节点出现后，连接逐条建立；新增关系仍需证据核验。";}if(scenario==="break"){title="关系断裂假设";detail="断裂不等于系统崩溃，下一步要看有没有替代路径。";}if(scenario==="exit"){title="关键节点退出";detail="一个主体离开后，哪些关系随之消失，哪些连接仍然存在？";}document.querySelector(".insight-kicker").textContent="STRUCTURE NOTE / "+({"base":"01","bridge":"02","new":"03","break":"04","exit":"05","people":"06","eco":"07"}[scenario]||"01");document.querySelector(".insight-title").textContent=title;document.querySelector(".insight-copy").textContent=detail;}
 function updateSelectionUI(){
  document.querySelectorAll(".question-card").forEach(function(b){b.classList.toggle("active",b.getAttribute("data-q")===activeQuestion);});
