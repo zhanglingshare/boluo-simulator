@@ -681,14 +681,14 @@ function setGraphMode(mode){
  document.getElementById("conceptMode").classList.toggle("active",graphMode==="concept");
  document.getElementById("evidenceMode").classList.toggle("active",graphMode==="evidence");
  document.getElementById("footerGraphMode").textContent=graphMode==="evidence"?"公开证据关系子图 / 非地图":"概念网络示意 / 非真实地图";
- updateSelectionUI();updateShareState();
- if(graphMode==="evidence"){
+ updateSelectionUI();
+ if(graphMode==="evidence"){updateShareState();
   evidenceSearchTerm=document.getElementById("search").value.trim().toLowerCase();
   document.getElementById("liveStatus").innerHTML="<i></i>正在读取公开关系证据";
   loadEvidenceData().then(function(ok){if(ok){if(evidenceSearchTerm&&!selectedEvidence){var matches=findEvidenceMatches(evidenceSearchTerm);selectedEvidence=matches.nodes.length?{kind:"node",id:matches.nodes[0].node_id}:matches.edges.length?{kind:"edge",id:matches.edges[0].edge_id}:null;}renderGraph();updateCanvasInsightEvidence();updateJourneyUI();updateShareState();}else{setGraphMode("concept");}});
  }else{
   document.getElementById("liveStatus").innerHTML="<i></i>概念探索视图";
-  selectedEvidence=null;renderGraph();
+  selectedEvidence=null;renderGraph();updateShareState();
  }
 }
 function evidenceGradeClass(grade){return grade==="A"?"grade-a":grade==="B"?"grade-b":"grade-c";}
@@ -748,7 +748,8 @@ function buildEvidencePositions(){
  var nodes=evidenceData.nodes.filter(function(n){return selected[n.node_id];});
  if(window.innerWidth<=680){
   evidencePositionMap={};
-  nodes.forEach(function(n,i){var col=i%2,row=Math.floor(i/2);evidencePositionMap[n.node_id]={x:col?400:100,y:220+row*105+(col?45:0),align:col?"left":"right"};});
+  var rowCount=Math.ceil(nodes.length/2),rowGap=rowCount>1?Math.min(170,460/(rowCount-1)):0,startY=(760-((rowCount-1)*rowGap))/2;
+  nodes.forEach(function(n,i){var col=i%2,row=Math.floor(i/2);evidencePositionMap[n.node_id]={x:col?400:100,y:startY+row*rowGap+(col?45:0),align:col?"left":"right"};});
   return {nodes:nodes,ids:selected,degree:degree,matchNodeIds:matchNodeIds,matchEdgeIds:matchEdgeIds,matchCount:matches.nodes.length+matches.edges.length};
  }
  var groups={external:[],eco:[],agriculture:[],anchor:[],cluster:[],legacy:[],new:[]};
