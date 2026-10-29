@@ -323,9 +323,10 @@ html,body{background:radial-gradient(ellipse at 48% -25%,rgba(56,91,147,.22),tra
 .evidence-edge.dim{stroke-opacity:.09}
 .evidence-edge.focus{stroke-opacity:1;stroke-width:2.15;filter:drop-shadow(0 0 4px currentColor)}
 .evidence-edge.selected{stroke-opacity:1;stroke-width:2.8;filter:drop-shadow(0 0 6px currentColor)}
-.evidence-edge.status-changed{stroke-dasharray:8 5;animation:evidenceFlow 7s linear infinite}
+.evidence-edge.status-changed{animation:evidenceGlow 6s ease-in-out infinite}
 .evidence-node .status-ring{fill:none;stroke-width:1.5;stroke-dasharray:3 3}
 @keyframes evidenceFlow{to{stroke-dashoffset:-52}}
+@keyframes evidenceGlow{0%,100%{stroke-opacity:.56}50%{stroke-opacity:.88}}
 @media(max-width:1280px){.evidence-toggle button{padding:6px 7px}.evidence-panel{max-height:300px}}
 @media(max-width:680px){.canvas-head-right{justify-content:flex-start}.evidence-toggle{width:100%;justify-content:stretch}.evidence-toggle button{flex:1}.evidence-panel{max-height:280px}.evidence-stats strong{font-size:15px}.evidence-stats span{font-size:8px}}
 @media(prefers-reduced-motion:reduce){.evidence-edge.status-changed{animation:none!important}}
@@ -376,7 +377,7 @@ html,body{background:radial-gradient(ellipse at 48% -25%,rgba(56,91,147,.22),tra
         <defs>
           <radialGradient id="centerGlow"><stop offset="0%" stop-color="#b8dcff" stop-opacity=".34"/><stop offset="55%" stop-color="#5b9cff" stop-opacity=".12"/><stop offset="100%" stop-color="#5b9cff" stop-opacity="0"/></radialGradient>
           <radialGradient id="softGlow"><stop offset="0%" stop-color="#9dc8ff" stop-opacity=".13"/><stop offset="100%" stop-color="#9dc8ff" stop-opacity="0"/></radialGradient>
-          <filter id="blurGlow" x="-100%" y="-100%" width="300%" height="300%"><feGaussianBlur stdDeviation="12"/></filter>
+          <filter id="blurGlow" x="-100%" y="-100%" width="300%" height="300%"><feGaussianBlur stdDeviation="12"/></filter><marker id="evidenceArrow" markerWidth="6" markerHeight="6" refX="5" refY="3" orient="auto" markerUnits="strokeWidth"><path d="M0,0 L6,3 L0,6 z" fill="#9bb0cc"/></marker>
         </defs>
         <g id="stars"></g><g id="orbits"></g><g id="edges"></g><g id="nodes"></g><g id="labels"></g><g id="overlays"></g>
       </svg>
