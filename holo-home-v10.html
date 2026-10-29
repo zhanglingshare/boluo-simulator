@@ -490,7 +490,7 @@ html,body{background:radial-gradient(ellipse at 48% -25%,rgba(56,91,147,.22),tra
   <aside class="explore">
     <div class="explore-head change-head"><div class="explore-heading"><span class="bulb"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M12 3v18M3 12h18M5.6 5.6l12.8 12.8M18.4 5.6 5.6 18.4"/></svg></span>正在发生的变化</div><span class="explore-count" id="changeCount">12 条记录</span></div>
     <div class="explore-intro">先选一件真实发生或正在推进的事，再看它改变了哪些节点与连接。</div>
-    <div id="changeCards" class="change-cards" aria-label="结构变化事件"><div class="change-loading">正在读取公开变化记录…</div></div>
+    <div id="changeCards" class="change-cards" aria-label="结构变化事件"><div class="change-loading">正在读取公开变化记录…</div></div><button type="button" id="toggleAllChanges" class="toggle-all-changes" hidden>查看全部变化</button>
     <div id="changeDetail" class="change-detail" aria-live="polite"><div class="change-detail-empty">选择一条变化，观察前后状态与相关证据。</div></div>
     <div class="explore-subhead">接下来，还可以追问结构问题</div>
     <div class="question-list">
@@ -561,7 +561,7 @@ var clusters=[
 var clusterMap={};clusters.forEach(function(c){clusterMap[c.id]=c;});
 var center={x:500,y:375};
 var scenario="bridge",activeFilter="all",activeQuestion="bridge",playing=false,playTimer=null,drag=null,spaceMode=false;
-var graphMode="evidence",evidenceData=null,sourceData=null,changeData=null,evidenceLoadPromise=null,selectedEvidence=null,evidenceNodeMap={},evidenceEdgeMap={},evidencePositionMap={},evidenceSearchTerm="",mobileConceptLayout=false,savedConceptPositions=null,shareCompleted=false,restoredShareState=false,selectedChangeId=null,changePhase="after",reducedMotion=window.matchMedia&&window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+var graphMode="evidence",evidenceData=null,sourceData=null,changeData=null,evidenceLoadPromise=null,selectedEvidence=null,evidenceNodeMap={},evidenceEdgeMap={},evidencePositionMap={},evidenceSearchTerm="",mobileConceptLayout=false,savedConceptPositions=null,shareCompleted=false,restoredShareState=false,selectedChangeId=null,changePhase="after",showAllChanges=false,reducedMotion=window.matchMedia&&window.matchMedia("(prefers-reduced-motion: reduce)").matches;
 var questionInfo={
 bridge:{title:"谁在连接原本分离的产业群落？",copy:"点击后突出产业、投资与外部城市之间的桥梁连接。现实中是否存在这些关系，仍需证据核验。",insight:"桥梁关系",detail:"真正重要的节点，未必最大；它可能连接了原本互不相通的群落。",filter:["industry","investment","external"]},
 break:{title:"如果关键连接断开，哪些群落会变成孤岛？",copy:"一条关键连接被标记为断裂，观察网络如何分成不同群落。这是结构假设，不代表现实已发生。",insight:"关系断裂假设",detail:"当关键连接失效，局部问题可能沿着关系传导；也可能存在替代路径。",filter:["industry","investment"]},
@@ -574,9 +574,10 @@ function filterForQuestion(q){return ({bridge:"industry",break:"all",people:"peo
 function restoreSharedState(){
  if(!window.location.hash||window.location.hash.indexOf("=")<0)return;
  var params=new URLSearchParams(window.location.hash.slice(1));
- if(!params.has("mode")&&!params.has("q")&&!params.has("scene")&&!params.has("node")&&!params.has("edge"))return;
+ if(!params.has("mode")&&!params.has("q")&&!params.has("scene")&&!params.has("node")&&!params.has("edge")&&!params.has("change")&&!params.has("phase"))return;
  restoredShareState=true;
- var q=params.get("q"),scene=params.get("scene"),mode=params.get("mode"),filter=params.get("filter"),term=params.get("search");
+ var q=params.get("q"),scene=params.get("scene"),mode=params.get("mode"),filter=params.get("filter"),term=params.get("search"),change=params.get("change"),phase=params.get("phase");
+ if(change)selectedChangeId=change;if(["before","event","after"].indexOf(phase)>=0)changePhase=phase;
  if(questionInfo[q])activeQuestion=q;
  if(["base","bridge","new","break","exit","people","eco"].indexOf(scene)>=0)scenario=scene;
  graphMode=mode==="evidence"?"evidence":"concept";
@@ -585,14 +586,14 @@ function restoreSharedState(){
  var node=params.get("node"),edge=params.get("edge");
  if(node)selectedEvidence={kind:"node",id:node};else if(edge)selectedEvidence={kind:"edge",id:edge};
  document.body.classList.toggle("evidence-mode",graphMode==="evidence");
- document.getElementById("conceptMode").classList.toggle("active",graphMode==="concept");
- document.getElementById("evidenceMode").classList.toggle("active",graphMode==="evidence");
+ document.getElementById("conceptMode").classList.toggle("active",!!selectedChangeId);
+ document.getElementById("evidenceMode").classList.toggle("active",!selectedChangeId);
  syncFilterButtons();
 }
 function updateShareState(){
  if(!window.history||!window.history.replaceState)return;
  var params=new URLSearchParams();
- params.set("q",activeQuestion);params.set("scene",scenario);params.set("mode",graphMode);
+ params.set("q",activeQuestion);params.set("scene",scenario);params.set("mode",graphMode);if(selectedChangeId)params.set("change",selectedChangeId);if(selectedChangeId)params.set("phase",changePhase);
  if(activeFilter!=="all")params.set("filter",activeFilter);
  var input=document.getElementById("search"),term=input?input.value.trim():"";
  if(term)params.set("search",term);
@@ -602,13 +603,9 @@ function updateShareState(){
 }
 function updateExploreActions(){
  var button=document.getElementById("exploreNext");if(!button)return;
- if(graphMode==="evidence"){
-  button.innerHTML='<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M19 12H5m7 7-7-7 7-7"/></svg><span class="cta-label">返回概念网络</span><span class="cta-arrow">↗</span>';
-  button.setAttribute("aria-label","返回概念网络继续探索");
- }else{
-  button.innerHTML='<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M5 12h14M13 5l7 7-7 7"/></svg><span class="cta-label">核验公开依据</span><span class="cta-arrow">↗</span>';
-  button.setAttribute("aria-label","切换到公开证据网络核验依据");
- }
+ if(selectedChangeId){button.innerHTML='<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M5 12h14M13 5l7 7-7 7"/></svg><span class="cta-label">核验这条变化</span><span class="cta-arrow">↗</span>';button.setAttribute("aria-label","查看所选变化的前后状态与公开来源");}
+ else if(graphMode==="evidence"){button.innerHTML='<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M19 12H5m7 7-7-7 7-7"/></svg><span class="cta-label">提出结构问题</span><span class="cta-arrow">↗</span>';button.setAttribute("aria-label","返回结构问题继续探索");}
+ else{button.innerHTML='<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M5 12h14M13 5l7 7-7 7"/></svg><span class="cta-label">核验公开依据</span><span class="cta-arrow">↗</span>';button.setAttribute("aria-label","切换到公开证据网络核验依据");}
 }
 function updateJourneyUI(){
  var step=shareCompleted?4:(graphMode==="evidence"?3:2);
@@ -703,6 +700,52 @@ function addClusterNode(c){
 function renderCenter(){var g=append(layers.nodes,"g",{class:"center-node",role:"button",tabindex:"0","aria-label":"博罗中心节点"});append(g,"circle",{cx:center.x,cy:center.y,r:70,fill:"url(#centerGlow)"});append(g,"circle",{cx:center.x,cy:center.y,r:54,fill:"none",stroke:"#7ba9e6","stroke-opacity":".15","stroke-width":"1","stroke-dasharray":"2 8"});append(g,"circle",{cx:center.x,cy:center.y,r:39,fill:"none",stroke:"#8bc4ff","stroke-opacity":".15","stroke-width":"1"});append(g,"circle",{cx:center.x,cy:center.y,r:28,fill:"#6caaff","fill-opacity":".09",stroke:"#8bc4ff","stroke-opacity":".45","stroke-width":"1.1"});append(g,"circle",{cx:center.x,cy:center.y,r:19,fill:"#76b8ff","fill-opacity":".15",stroke:"#9bcfff","stroke-opacity":".78","stroke-width":"1.2"});append(g,"circle",{cx:center.x,cy:center.y,r:9.5,fill:"#d5edff","fill-opacity":".95",filter:"url(#blurGlow)"});append(g,"circle",{cx:center.x,cy:center.y,r:5,fill:"#f4fbff"});append(g,"text",{x:center.x,y:center.y+39,class:"center-title","text-anchor":"middle"},"博罗");append(g,"text",{x:center.x,y:center.y+55,class:"center-sub","text-anchor":"middle"},"RELATION HUB");}
 function renderNewNode(){if(scenario!=="new")return;var p0={x:550,y:265};var links=[{id:"industry",to:clusterMap.industry,color:colors.industry},{id:"external",to:clusterMap.external,color:colors.external},{id:"investment",to:clusterMap.investment,color:colors.investment}];links.forEach(function(link,i){var d=pathBetween(p0,link.to,i===1?18:-14);append(layers.edges,"path",{d:d,class:"new-link",stroke:link.color,"stroke-width":"1.5","stroke-linecap":"round","data-new-link":link.id});var particle=append(layers.edges,"circle",{r:2.7,fill:link.color,class:"flow-particle",style:"color:"+link.color});append(particle,"animateMotion",{dur:(2.8+i*.45)+"s",repeatCount:"indefinite",path:d,begin:(i*.2)+"s"});});var n=append(layers.nodes,"g",{class:"new-node",role:"img","aria-label":"新接入主体示意"});append(n,"circle",{cx:p0.x,cy:p0.y,r:20,fill:"#5de0d0","fill-opacity":".12"});var ring=append(n,"circle",{cx:p0.x,cy:p0.y,r:13,fill:"none",stroke:"#67e0d2","stroke-width":"1.2","stroke-opacity":".75"});append(ring,"animate",{attributeName:"r",values:"13;22;13",dur:"2.1s",repeatCount:"indefinite"});append(ring,"animate",{attributeName:"stroke-opacity",values:".8;.18;.8",dur:"2.1s",repeatCount:"indefinite"});append(n,"circle",{cx:p0.x,cy:p0.y,r:4.5,fill:"#8df8e8",filter:"url(#blurGlow)"});append(n,"text",{x:p0.x+15,y:p0.y-12,fill:"#b9fff4","font-size":"10","font-weight":"700"},"新接入主体");append(n,"text",{x:p0.x+15,y:p0.y+2,fill:"#79bdb8","font-size":"8"},"关系待验证");}
 function renderGraph(){if(graphMode==="evidence"){renderEvidenceGraph();updateCanvasInsightEvidence();updateEvidencePanel();return;}addOrbits();clearLayer(layers.nodes);clearLayer(layers.labels);clearLayer(layers.overlays);renderEdges();clusters.forEach(addClusterNode);renderCenter();renderNewNode();updateCanvasInsight();updateConceptLegend();updateEvidencePanel();}
+
+
+function changeTypeLabel(type){return ({new_entity:"新主体接入",new_edge:"新连接形成",strengthen:"连接增强",weaken:"关系减弱",exit:"主体退出",break:"关系断裂",alternative:"替代路径"})[type]||"结构变化";}
+function changeDateRank(value){var m=String(value||"").match(/^(\d{4})-(\d{1,2})(?:-(\d{1,2}))?/);return m?Number(m[1])*10000+Number(m[2])*100+(Number(m[3]||0)):0;}
+function sortedChanges(){return (changeData&&changeData.changes?changeData.changes.slice():[]).sort(function(a,b){return changeDateRank(b.event_date)-changeDateRank(a.event_date)||String(b.event_date||"").localeCompare(String(a.event_date||""));});}
+function latestChangeId(list){var items=(list||[]).slice().sort(function(a,b){return changeDateRank(b.event_date)-changeDateRank(a.event_date)||String(b.event_date||"").localeCompare(String(a.event_date||""));});return items.length?items[0].change_id:null;}
+function getSelectedChange(){return changeData&&selectedChangeId?changeData.changes.find(function(x){return x.change_id===selectedChangeId;}):null;}
+function changePhaseLabel(phase){return ({before:"变化前",event:"变化发生",after:"变化后"})[phase]||"变化后";}
+function renderChangeDeck(){
+ var host=document.getElementById("changeCards");if(!host||!changeData)return;
+ var all=sortedChanges(),visible=showAllChanges?all:all.slice(0,4),selected=getSelectedChange();
+ if(selected&&!visible.some(function(x){return x.change_id===selected.change_id;})){visible=visible.slice(0,3).concat([selected]);}
+ document.getElementById("changeCount").textContent=all.length+" 条记录";
+ var toggle=document.getElementById("toggleAllChanges");if(toggle){toggle.hidden=all.length<=4;toggle.textContent=showAllChanges?"收起变化记录":"查看全部 "+all.length+" 条";}
+ host.innerHTML=visible.map(function(x){
+  var risk=["exit","weaken","break"].indexOf(x.change_type)>=0;
+  var status=x.uncertainty&&/待建|待落地|目标|预计|假设|或阶段性/.test(x.uncertainty)?"待观察":(x.change_type==="exit"?"已退出":x.change_type==="weaken"?"减弱中":"公开事件");
+  return '<button type="button" class="change-card'+(selectedChangeId===x.change_id?' active':'')+'" data-change-card="'+htmlEscape(x.change_id)+'" aria-pressed="'+(selectedChangeId===x.change_id?'true':'false')+'"><span class="change-card-top"><span class="change-card-date">'+htmlEscape(x.event_date||"日期待核")+'</span><span class="change-card-kind'+(risk?' risk':'')+'">'+htmlEscape(changeTypeLabel(x.change_type))+'</span></span><span class="change-card-title">'+htmlEscape(x.title)+'</span><span class="change-card-foot"><span>'+htmlEscape(status)+'</span><span class="change-card-arrow">查看变化 ↗</span></span></button>';
+ }).join("");
+ host.querySelectorAll("[data-change-card]").forEach(function(b){b.addEventListener("click",function(){selectChangeEvent(b.getAttribute("data-change-card"),"after");});});
+}
+function renderChangeDetail(){
+ var host=document.getElementById("changeDetail");if(!host)return;
+ var change=getSelectedChange();
+ if(!change){host.innerHTML='<div class="change-detail-empty">选择一条变化，观察前后状态与相关证据。这里会区分已发生事实、待落地项目和推断限制。</div>';return;}
+ var parts=String(change.before_after||"前后状态暂无完整描述").split(/[；;]/),before=parts[0]||"此前状态待核",after=parts.slice(1).join("；")||"事件后的实际状态仍需持续观察";
+ before=before.replace(/^此前[：:]\s*/,"");after=after.replace(/^此后[：:]\s*/,"");
+ var phaseClass=changePhase==="before"?"before":changePhase==="event"?"event":"";
+ var phaseCopy=changePhase==="before"?"正在查看变化前的结构示意。新增主体或连接在这一阶段会淡出；这不是完整的历史网络快照。":changePhase==="event"?"变化节点与相关连线已突出显示。动画只呈现事件描述对应的结构差异，不推断未观测到的经济结果。":"当前显示事件记录后的结构状态。签约、在建和目标项目仍按原始不确定性标注，不等同于已经达产。";
+ host.innerHTML='<div class="change-detail-kicker"><span>'+htmlEscape(change.event_date||"日期待核")+' · '+htmlEscape(changeTypeLabel(change.change_type))+'</span><span class="change-phase-pill '+phaseClass+'">'+htmlEscape(changePhaseLabel(changePhase))+'</span></div><div class="change-detail-title">'+htmlEscape(change.title)+'</div><div class="change-compare"><div class="change-compare-row"><div class="change-compare-label">变化之前</div><div class="change-compare-copy">'+htmlEscape(before)+'</div></div><div class="change-compare-row"><div class="change-compare-label">变化之后 / 当前记录</div><div class="change-compare-copy">'+htmlEscape(after)+'</div></div></div><div class="change-uncertainty"><strong>还不能下的结论：</strong>'+htmlEscape(change.uncertainty||"影响范围和持续性仍需进一步核验。")+'</div><div class="change-focus-note">'+htmlEscape(phaseCopy)+'</div>'+sourceLinks(change.source_ids);
+}
+function syncChangePhaseUI(){
+ document.querySelectorAll("[data-change-phase]").forEach(function(b){b.classList.toggle("active",b.getAttribute("data-change-phase")===changePhase);});
+ var label=document.getElementById("timelineDate"),change=getSelectedChange();if(label)label.textContent=changePhaseLabel(changePhase)+(change?" · "+(change.event_date||"事件记录"):" · 请选择事件");
+}
+function selectChangeEvent(id,phase){
+ if(!changeData||!changeData.changes.some(function(x){return x.change_id===id;}))return;
+ stopPlay();selectedChangeId=id;changePhase=phase||"after";graphMode="evidence";selectedEvidence=null;evidenceSearchTerm="";activeFilter="all";
+ var input=document.getElementById("search");if(input)input.value="";
+ setGraphMode("evidence");renderChangeDeck();renderChangeDetail();syncFilterButtons();updateSelectionUI();updateShareState();
+}
+function setChangePhase(phase,fromPlayback){
+ if(["before","event","after"].indexOf(phase)<0)return;
+ if(!fromPlayback)stopPlay();
+ changePhase=phase;renderGraph();renderChangeDeck();renderChangeDetail();syncChangePhaseUI();updateSelectionUI();updateShareState();
+}
 
 function loadEvidenceData(){
  if(evidenceData&&sourceData&&changeData)return Promise.resolve(true);
@@ -975,11 +1018,15 @@ function updateSelectionUI(){
  updateJourneyUI();
 }
 function setScenario(next,question){shareCompleted=false;if(graphMode==="evidence")selectedEvidence=null;scenario=next;if(question)activeQuestion=question;else if(next==="break")activeQuestion="break";else if(next==="exit")activeQuestion="exit";else if(next==="new")activeQuestion="bridge";else if(next==="people")activeQuestion="people";else if(next==="eco")activeQuestion="eco";else if(next==="bridge")activeQuestion="bridge";renderGraph();updateSelectionUI();updateShareState();}
-function setQuestion(q){stopPlay();activeQuestion=q;activeFilter="all";var next=q==="bridge"?"bridge":q==="break"?"break":q==="people"?"people":q==="eco"?"eco":"exit";setScenario(next,q);syncFilterButtons();}
+function setQuestion(q){stopPlay();activeQuestion=q;activeFilter="all";var eventMap={bridge:"C006",break:"C009",people:"C006",eco:"C012",exit:"C008"};var id=eventMap[q];if(id&&changeData&&changeData.changes.some(function(x){return x.change_id===id;})){selectChangeEvent(id,"after");}else{var next=q==="bridge"?"bridge":q==="break"?"break":q==="people"?"people":q==="eco"?"eco":"exit";selectedChangeId=null;setScenario(next,q);}syncFilterButtons();}
 function setFilter(id){stopPlay();shareCompleted=false;activeFilter=id;if(graphMode==="evidence"){renderGraph();syncFilterButtons();updateJourneyUI();updateShareState();return;}if(id==="all")setScenario("base",activeQuestion);else{var q=id==="people"?"people":id==="ecology"?"eco":id==="industry"?"bridge":id==="investment"?"bridge":id==="consumption"?"people":"bridge";activeQuestion=q;scenario=q;renderGraph();updateSelectionUI();}syncFilterButtons();updateShareState();}
 function syncFilterButtons(){document.querySelectorAll("[data-filter]").forEach(function(b){b.classList.toggle("active",b.getAttribute("data-filter")===activeFilter);});}
 function stopPlay(){if(playTimer){clearInterval(playTimer);playTimer=null;}playing=false;var icon=document.getElementById("playIcon");if(icon)icon.innerHTML='<path d="M8 5v14l11-7z"/>';}
-function startPlay(){if(playing){stopPlay();return;}playing=true;var icon=document.getElementById("playIcon");if(icon)icon.innerHTML='<path d="M7 5h4v14H7zM14 5h4v14h-4z"/>';activeFilter="all";syncFilterButtons();var seq=["bridge","new","people","break","exit","eco","base"],i=0;setScenario(seq[0]);playTimer=setInterval(function(){i=(i+1)%seq.length;setScenario(seq[i]);},2600);}
+function startPlay(){
+ if(playing){stopPlay();return;}
+ if(selectedChangeId){playing=true;var icon=document.getElementById("playIcon");if(icon)icon.innerHTML='<path d="M7 5h4v14H7zM14 5h4v14h-4z"/>';var seq=["before","event","after"],i=0;setChangePhase(seq[0],true);playTimer=setInterval(function(){i++;if(i>=seq.length){stopPlay();setChangePhase("after",true);return;}setChangePhase(seq[i],true);},1500);return;}
+ playing=true;var icon=document.getElementById("playIcon");if(icon)icon.innerHTML='<path d="M7 5h4v14H7zM14 5h4v14h-4z"/>';activeFilter="all";syncFilterButtons();var seq=["bridge","new","people","break","exit","eco","base"],i=0;setScenario(seq[0]);playTimer=setInterval(function(){i=(i+1)%seq.length;setScenario(seq[i]);},2600);
+}
 function initStars(){addStars();}
 document.getElementById("conceptMode").addEventListener("click",function(){var id=selectedChangeId||(changeData&&latestChangeId(changeData.changes));if(id)selectChangeEvent(id,"after");});
 document.getElementById("evidenceMode").addEventListener("click",function(){stopPlay();selectedChangeId=null;changePhase="after";selectedEvidence=null;evidenceSearchTerm="";setGraphMode("evidence");renderChangeDeck();renderChangeDetail();});
@@ -988,7 +1035,7 @@ loadEvidenceData();
 document.querySelectorAll(".question-card").forEach(function(b){b.addEventListener("click",function(){setQuestion(b.getAttribute("data-q"));var panel=document.querySelector(".selected-question");if(panel)panel.scrollIntoView({behavior:reducedMotion?"auto":"smooth",block:"center"});});});
 document.querySelectorAll("[data-filter]").forEach(function(b){b.addEventListener("click",function(){setFilter(b.getAttribute("data-filter"));});});
 document.querySelectorAll("[data-change-phase]").forEach(function(b){b.addEventListener("click",function(){setChangePhase(b.getAttribute("data-change-phase"));});});
-document.querySelectorAll("[data-mode]").forEach(function(b){b.addEventListener("click",function(){stopPlay();document.querySelectorAll("[data-mode]").forEach(function(x){x.classList.toggle("active",x===b);});if(b.getAttribute("data-mode")==="motion"){setScenario("new");}else{setScenario("base");}});});
+document.querySelectorAll("[data-mode]").forEach(function(b){b.addEventListener("click",function(){stopPlay();document.querySelectorAll("[data-mode]").forEach(function(x){x.classList.toggle("active",x===b);});if(selectedChangeId){if(b.getAttribute("data-mode")==="motion")startPlay();else setChangePhase("after");}else if(b.getAttribute("data-mode")==="motion"){setScenario("new");}else{setScenario("base");}});});
 document.querySelectorAll("[data-view]").forEach(function(b){b.addEventListener("click",function(){stopPlay();spaceMode=b.getAttribute("data-view")==="space";document.querySelectorAll("[data-view]").forEach(function(x){x.classList.toggle("active",x===b);});svg.style.transform=spaceMode?"perspective(1100px) rotateX(5deg) scale(.98)":"none";svg.style.transition="transform .6s ease";});});
 document.getElementById("play").addEventListener("click",startPlay);
 document.getElementById("exploreNext").addEventListener("click",function(){
@@ -998,6 +1045,7 @@ document.getElementById("exploreNext").addEventListener("click",function(){
  scenario="base";selectedEvidence=null;evidenceSearchTerm="";searchInput.value="";activeFilter=filterForQuestion(activeQuestion);setGraphMode("evidence");syncFilterButtons();updateSelectionUI();updateShareState();
 });
 document.getElementById("shareObservation").addEventListener("click",copyObservationLink);
+document.getElementById("toggleAllChanges").addEventListener("click",function(){showAllChanges=!showAllChanges;renderChangeDeck();});
 var searchBox=document.querySelector(".searchbox"),searchInput=document.getElementById("search");
 searchBox.addEventListener("click",function(ev){if(window.innerWidth<=680&&!searchBox.classList.contains("search-open")){ev.preventDefault();searchBox.classList.add("search-open");searchInput.focus();}});
 searchInput.addEventListener("blur",function(){if(window.innerWidth<=680&&!searchInput.value.trim())searchBox.classList.remove("search-open");});
