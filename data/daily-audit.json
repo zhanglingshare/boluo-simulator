@@ -1,6 +1,6 @@
 {
   "audit_version": 1,
-  "audited_at": "2026-10-29T02:12:36.877Z",
+  "audited_at": "2026-10-29T02:23:22.202Z",
   "region": "boluo",
   "baseline": {
     "valid": true,
@@ -10,14 +10,14 @@
     "changes": 12
   },
   "candidate": {
-    "present": false,
-    "valid": null,
-    "source_count": 0,
-    "node_proposals": 0,
-    "edge_proposals": 0,
-    "change_count": 0,
-    "open_questions": 0,
-    "message": "未收到候选包；这不代表现实中没有发生变化。"
+    "present": true,
+    "valid": true,
+    "source_count": 7,
+    "node_proposals": 4,
+    "edge_proposals": 3,
+    "change_count": 3,
+    "open_questions": 4,
+    "message": "结构校验通过；等待人工审查，不会自动发布。"
   },
   "source_url_audit": {
     "performed": false,
@@ -31,7 +31,7 @@
     "warnings": [],
     "notes": [
       "正式底座：节点 36、关系 45、来源 54、变化事件 12",
-      "未收到候选包；这不代表现实中没有发生变化",
+      "候选包：新来源 7、节点提案 4、关系提案 3、变化事件 3",
       "本次未巡检来源链接；每周日自动巡检，也可手动触发完整巡检"
     ]
   },
