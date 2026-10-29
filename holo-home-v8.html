@@ -139,11 +139,11 @@ svg text{font-family:Inter,-apple-system,BlinkMacSystemFont,"PingFang SC","Micro
 .node .hub-ring{fill:none;stroke:currentColor;stroke-opacity:.28;stroke-width:1}
 .node .hub-core{fill:currentColor;filter:drop-shadow(0 0 6px currentColor)}
 .node .hub-glow{fill:currentColor;opacity:.09}
-.node .label-title{font-size:13px;font-weight:700;fill:#e4edf9;letter-spacing:.1px}
-.node .label-sub{font-size:9px;fill:#879bb6}
-.node .label-kicker{font-size:8px;fill:#7188a5;letter-spacing:1.2px}
+.node-label .label-title{font-size:13px;font-weight:700;fill:#e4edf9;letter-spacing:.1px}
+.node-label .label-sub{font-size:9px;fill:#879bb6}
+.node-label .label-kicker{font-size:8px;fill:#7188a5;letter-spacing:1.2px}
 .node.selected .label-title{fill:#fff}
-.node.exiting{animation:nodeExit .85s ease forwards;pointer-events:none}
+.node.exiting,.satellite-node.exiting{animation:nodeExit .85s ease forwards;pointer-events:none}
 .new-node{opacity:0;transform-box:fill-box;transform-origin:center;animation:nodeEnter .9s cubic-bezier(.2,.75,.25,1) forwards}
 .break-x{font-size:17px;font-weight:600;fill:#ff9c93;paint-order:stroke;stroke:#0b1425;stroke-width:5px}
 .center-node{cursor:pointer}
@@ -299,7 +299,7 @@ function pathBetween(a,b,bend){var dx=b.x-a.x,dy=b.y-a.y;var mx=(a.x+b.x)/2,my=(
 function addStars(){clearLayer(layers.stars);for(var i=0;i<118;i++){var x=(i*137.5+47)%1000,y=(i*83.7+19)%760,r=(i%9===0)?1.35:(i%4===0)?.8:.48;append(layers.stars,"circle",{cx:x.toFixed(1),cy:y.toFixed(1),r:r, class:"star",opacity:(.15+(i%6)*.055).toFixed(2)});}for(var j=0;j<16;j++){var x2=(j*191+83)%1000,y2=(j*113+41)%760;append(layers.stars,"circle",{cx:x2,cy:y2,r:2.2,fill:"#c5ddff",opacity:.14});}}
 function addOrbits(){clearLayer(layers.orbits);append(layers.orbits,"ellipse",{cx:center.x,cy:center.y,rx:330,ry:218,class:"orbit",transform:"rotate(-8 "+center.x+" "+center.y+")"});append(layers.orbits,"ellipse",{cx:center.x,cy:center.y,rx:425,ry:294,class:"orbit",transform:"rotate(11 "+center.x+" "+center.y+")"});append(layers.orbits,"circle",{cx:center.x,cy:center.y,r:94,fill:"url(#centerGlow)"});append(layers.orbits,"circle",{cx:center.x,cy:center.y,r:51,fill:"url(#softGlow)"});clusters.forEach(function(c){append(layers.orbits,"ellipse",{cx:c.x,cy:c.y,rx:67,ry:45,fill:"none",stroke:c.color,"stroke-opacity":".12","stroke-width":"1",transform:"rotate(-15 "+c.x+" "+c.y+")"});});}
 function shouldDimCluster(id){if(activeFilter!=="all"&&id!==activeFilter){if(activeFilter==="external"&&id==="culture")return false;return true;}if(scenario!=="base"&&scenario!=="bridge"&&scenario!=="new"&&scenario!=="break"&&scenario!=="exit"){return false;}return false;}
-function edgeClass(e){var classes=["edge"];if(e.secondary)classes.push("secondary");if(e.cross)classes.push("cross");if(scenario==="break"&&e.id==="industry-investment")classes.push("broken");if(scenario==="bridge"&&["industry-investment","industry-external","investment-external"].indexOf(e.id)>=0)classes.push("hot");if(scenario==="people"&&["people-industry","people-consumption","industry-consumption"].indexOf(e.id)>=0)classes.push("hot");if(scenario==="eco"&&["ecology-culture","culture-consumption","ecology-consumption"].indexOf(e.id)>=0)classes.push("hot");if(scenario==="exit"&&e.from==="industry-s5")classes.push("dim");if(activeFilter!=="all"&&e.a!==activeFilter&&e.b!==activeFilter)classes.push("dim");return classes.join(" ");}
+function edgeClass(e){var classes=["edge"];if(e.secondary)classes.push("secondary");if(e.cross)classes.push("cross");if(scenario==="break"&&e.id==="industry-investment")classes.push("broken");if(scenario==="bridge"&&["industry-investment","industry-external","investment-external"].indexOf(e.id)>=0)classes.push("hot");if(scenario==="people"&&["people-industry","people-consumption","industry-consumption"].indexOf(e.id)>=0)classes.push("hot");if(scenario==="eco"&&["ecology-culture","culture-consumption","ecology-consumption"].indexOf(e.id)>=0)classes.push("hot");if(scenario==="exit"&&(e.from==="industry-s5"||e.to==="industry-s5"))classes.push("dim");if(activeFilter!=="all"&&e.a!==activeFilter&&e.b!==activeFilter)classes.push("dim");return classes.join(" ");}
 function clusterConnection(id){var c=clusterMap[id];var dx=c.x-center.x,dy=c.y-center.y;var d=Math.sqrt(dx*dx+dy*dy)||1;return {x:c.x-dx/d*14,y:c.y-dy/d*14};}
 function renderEdges(){
  clearLayer(layers.edges);var satellites=allSatellites(),byId={};satellites.forEach(function(s){byId[s.id]=s;});
@@ -324,7 +324,7 @@ function renderEdges(){
 }
 function addClusterNode(c){
  var dim=shouldDimCluster(c.id)||(activeFilter!=="all"&&activeFilter!==c.id&&!(activeFilter==="external"&&c.id==="culture"));
- var g=append(layers.nodes,"g",{class:"node"+(dim?" dim":"")+(activeQuestion&&questionInfo[activeQuestion].filter.indexOf(c.id)>=0&&scenario!=="base"?" selected":""),"data-cluster":c.id,tabindex:"0",role:"button","aria-label":c.title+"关系群落"});
+ var g=append(layers.nodes,"g",{style:"color:"+c.color,class:"node"+(dim?" dim":"")+(activeQuestion&&questionInfo[activeQuestion].filter.indexOf(c.id)>=0&&scenario!=="base"?" selected":""),"data-cluster":c.id,tabindex:"0",role:"button","aria-label":c.title+"关系群落"});
  var ss=satellitePositions(c);
  ss.forEach(function(s,i){var sat=append(g,"g",{class:"satellite-node"+(scenario==="exit"&&c.id==="industry"&&i===5?" exiting":""),"data-sat":s.id});append(sat,"circle",{cx:s.x,cy:s.y,r:s.r+4,fill:c.color,"fill-opacity":".04"});append(sat,"circle",{cx:s.x,cy:s.y,r:s.r,fill:c.color,"fill-opacity":i%3===0?".92":".63",class:"satellite",style:"color:"+c.color});if(scenario==="exit"&&c.id==="industry"&&i===5){append(sat,"circle",{cx:s.x,cy:s.y,r:8,fill:"none",stroke:"#ff8f9d","stroke-width":"1.2","stroke-dasharray":"2 3"});}});
  append(g,"circle",{cx:c.x,cy:c.y,r:30,fill:c.color,class:"hub-glow",filter:"url(#blurGlow)"});append(g,"circle",{cx:c.x,cy:c.y,r:19,fill:c.color,"fill-opacity":".055",stroke:c.color,"stroke-opacity":".12"});append(g,"circle",{cx:c.x,cy:c.y,r:13.5,class:"hub-ring"});append(g,"circle",{cx:c.x,cy:c.y,r:6.3,class:"hub-core"});append(g,"circle",{cx:c.x-2,cy:c.y-2,r:1.8,fill:"#fff","fill-opacity":".85"});
