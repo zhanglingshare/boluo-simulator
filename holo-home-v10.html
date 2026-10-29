@@ -878,36 +878,51 @@ function buildEvidencePositions(){
   }
  }
  var nodes=evidenceData.nodes.filter(function(n){return selected[n.node_id];});
- /* Event view: show a small cast of real entities, with the changed parties on the right
-    and their existing context on the left. Never fabricate a relationship. */
+ /* Event view: show a small cast of real entities. Changed entities go right;
+    stable context goes left; if the event is a changed connection, use its source/target direction. */
  var focusedChange=getSelectedChange();
  if(focusedChange){
-  var focusIds={},edgeIds={};
-  (focusedChange.involved_node_ids||[]).forEach(function(id){if(evidenceNodeMap[id])focusIds[id]=true;});
-  (focusedChange.involved_edge_ids||[]).forEach(function(id){var e=evidenceEdgeMap[id];if(e){edgeIds[id]=true;selected[e.source_node_id]=true;selected[e.target_node_id]=true;}});
-  if(!Object.keys(focusIds).length){Object.keys(selected).forEach(function(id){focusIds[id]=true;});}
-  var focalNodes=nodes.filter(function(n){return focusIds[n.node_id];});
-  var contextNodes=nodes.filter(function(n){return !focusIds[n.node_id];});
-  var limit=window.innerWidth<=680?8:12;
-  contextNodes.sort(function(a,b){
-   function score(n){var s=degree[n.node_id]||0;evidenceData.edges.forEach(function(e){if((focusIds[e.source_node_id]&&e.target_node_id===n.node_id)||(focusIds[e.target_node_id]&&e.source_node_id===n.node_id)){s+=e.change_status&&e.change_status!=="无显著变化"?8:2;}});return s;}
-   return score(b)-score(a);
+  var involvedIds={},edgeIds={},edgeSources={},edgeTargets={};
+  (focusedChange.involved_node_ids||[]).forEach(function(id){if(evidenceNodeMap[id])involvedIds[id]=true;});
+  (focusedChange.involved_edge_ids||[]).forEach(function(id){
+   var edge=evidenceEdgeMap[id];if(!edge)return;
+   edgeIds[id]=true;selected[edge.source_node_id]=true;selected[edge.target_node_id]=true;
+   edgeSources[edge.source_node_id]=true;edgeTargets[edge.target_node_id]=true;
   });
-  nodes=focalNodes.concat(contextNodes.slice(0,Math.max(0,limit-focalNodes.length)));
+  nodes=evidenceData.nodes.filter(function(n){return selected[n.node_id];});
+  var eventNodeIds={};Object.keys(involvedIds).forEach(function(id){eventNodeIds[id]=true;});
+  Object.keys(edgeSources).forEach(function(id){eventNodeIds[id]=true;});Object.keys(edgeTargets).forEach(function(id){eventNodeIds[id]=true;});
+  var eventNodes=nodes.filter(function(n){return eventNodeIds[n.node_id];});
+  var contextNodes=nodes.filter(function(n){return !eventNodeIds[n.node_id];});
+  var changedNodes=eventNodes.filter(function(n){return ["new","pending","exit"].indexOf(n.node_status)>=0||["新增","退出","增强","减弱"].indexOf(n.change_status)>=0;});
+  var leftIds={},rightIds={};
+  if(changedNodes.length){
+   changedNodes.forEach(function(n){rightIds[n.node_id]=true;});
+   eventNodes.forEach(function(n){if(!rightIds[n.node_id])leftIds[n.node_id]=true;});
+  }else{
+   eventNodes.forEach(function(n){if(edgeTargets[n.node_id])rightIds[n.node_id]=true;else if(edgeSources[n.node_id])leftIds[n.node_id]=true;else rightIds[n.node_id]=true;});
+  }
+  contextNodes.forEach(function(n){leftIds[n.node_id]=true;});
+  var limit=window.innerWidth<=680?8:12;
+  function contextScore(n){var s=degree[n.node_id]||0;evidenceData.edges.forEach(function(e){if((eventNodeIds[e.source_node_id]&&e.target_node_id===n.node_id)||(eventNodeIds[e.target_node_id]&&e.source_node_id===n.node_id)){s+=e.change_status&&e.change_status!=="无显著变化"?8:2;}});return s;}
+  var leftNodes=nodes.filter(function(n){return leftIds[n.node_id];}).sort(function(a,b){var af=eventNodeIds[a.node_id]?1:0,bf=eventNodeIds[b.node_id]?1:0;return bf-af||contextScore(b)-contextScore(a);});
+  var rightNodes=nodes.filter(function(n){return rightIds[n.node_id];});
+  if(!rightNodes.length&&leftNodes.length){rightNodes.push(leftNodes.pop());}
+  leftNodes=leftNodes.slice(0,Math.max(0,limit-rightNodes.length));
+  rightNodes=rightNodes.slice(0,limit);
+  nodes=leftNodes.concat(rightNodes);
   selected={};nodes.forEach(function(n){selected[n.node_id]=true;});
   evidencePositionMap={};
-  var focal=nodes.filter(function(n){return focusIds[n.node_id];});
-  var context=nodes.filter(function(n){return !focusIds[n.node_id];});
   function placeColumn(list,x,top,bottom,align){
    var span=list.length<=1?0:(bottom-top)/(list.length-1);
    list.forEach(function(n,i){evidencePositionMap[n.node_id]={x:x,y:list.length===1?(top+bottom)/2:top+span*i,align:align};});
   }
   if(window.innerWidth<=680){
-   placeColumn(context,190,115,660,"left");
-   placeColumn(focal,310,115,660,"right");
+   placeColumn(leftNodes,190,115,660,"left");
+   placeColumn(rightNodes,310,115,660,"right");
   }else{
-   placeColumn(context,375,105,660,"left");
-   placeColumn(focal,625,105,660,"right");
+   placeColumn(leftNodes,375,105,660,"left");
+   placeColumn(rightNodes,625,105,660,"right");
   }
   return {nodes:nodes,ids:selected,degree:degree,matchNodeIds:matchNodeIds,matchEdgeIds:matchEdgeIds,matchCount:matches.nodes.length+matches.edges.length};
  }
