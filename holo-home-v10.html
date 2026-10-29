@@ -980,7 +980,7 @@ function renderEvidenceGraph(){
  var animatedEvidenceEdges=0;
  shownEdges.forEach(function(e){
   var a=evidencePositionMap[e.source_node_id],b=evidencePositionMap[e.target_node_id];if(!a||!b)return;
-  var color=relationColor(e.relation_type),d=pathBetween(a,b,((e.edge_id.charCodeAt(1)||1)%2)?13:-13);
+  var edgeNum=parseInt(String(e.edge_id).replace(/\D/g,""),10)||1,color=relationColor(e.relation_type),d=pathBetween(a,b,((edgeNum%5)-2)*10);
   var classes=["evidence-edge",evidenceGradeClass(e.evidence_grade)];
   if(e.change_status!=="无显著变化")classes.push("status-changed");
   var relationRelevant=selectedChangeId?true:(activeFilter!=="all"?matchesEvidenceFilter(e):isEvidenceRelevant(e));
