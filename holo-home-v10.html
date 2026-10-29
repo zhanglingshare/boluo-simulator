@@ -749,7 +749,7 @@ function buildEvidencePositions(){
  var nodes=evidenceData.nodes.filter(function(n){return selected[n.node_id];});
  if(window.innerWidth<=680){
   evidencePositionMap={};
-  var rowCount=Math.ceil(nodes.length/2),rowGap=rowCount>1?Math.min(170,460/(rowCount-1)):0,startY=(760-((rowCount-1)*rowGap))/2;
+  var rowCount=Math.ceil(nodes.length/2),rowGap=rowCount>1?Math.min(300,520/(rowCount-1)):0,startY=(760-((rowCount-1)*rowGap))/2;
   nodes.forEach(function(n,i){var col=i%2,row=Math.floor(i/2);evidencePositionMap[n.node_id]={x:col?400:100,y:startY+row*rowGap+(col?45:0),align:col?"left":"right"};});
   return {nodes:nodes,ids:selected,degree:degree,matchNodeIds:matchNodeIds,matchEdgeIds:matchEdgeIds,matchCount:matches.nodes.length+matches.edges.length};
  }
