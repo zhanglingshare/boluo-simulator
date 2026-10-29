@@ -140,6 +140,10 @@ const { chromium } = require("playwright");
     await page.waitForFunction(() => document.body.classList.contains("evidence-mode"));
     assert.equal(await page.locator("#evidenceDetail h4").innerText(), selectedNodeName, "分享链接重开后应恢复选中节点");
     await page.screenshot({ path: path.join(outDir, "holo-v10-guided-share.png"), fullPage: true });
+    await page.locator("#conceptMode").click();
+    const conceptUrl = await page.evaluate(() => window.location.href);
+    assert.match(conceptUrl, /mode=concept/, "切回概念网络后分享链接应同步更新视图");
+    assert.doesNotMatch(conceptUrl, /node=/, "切回概念网络后不应残留旧的证据节点选择");
 
     assert.deepEqual(errors, [], "浏览器运行期间不应有 JavaScript/控制台错误");
     console.log("PASS: desktop/mobile layout, draggable concept graph, entity search, evidence filters, guided question-to-evidence flow, animated relation highlights, share-link copy and state restoration.");
