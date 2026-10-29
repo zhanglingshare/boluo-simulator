@@ -363,6 +363,10 @@ html,body{background:radial-gradient(ellipse at 48% -25%,rgba(56,91,147,.22),tra
 
 
 /* Change-first experience: actual events drive the graph, not decorative motion. */
+.toggle-all-changes{width:100%;margin-top:7px;padding:7px 9px;border:1px solid #2a405c;border-radius:8px;background:#14243a;color:#9fc3e5;font-size:9px;text-align:center;cursor:pointer}
+.toggle-all-changes:hover{border-color:#5a8bb8;color:#e0f0ff}
+.toggle-all-changes[hidden]{display:none}
+.timeline-actions button[data-change-phase]:disabled{opacity:.35;cursor:not-allowed}
 .explore-subhead{font-size:10px;font-weight:800;letter-spacing:.35px;color:#93a9c5;margin:16px 0 9px;padding-top:13px;border-top:1px solid #263851}
 .change-cards{display:flex;flex-direction:column;gap:7px}
 .change-card{width:100%;display:block;text-align:left;padding:10px 10px 9px;border-radius:11px;border:1px solid #2a3e59;background:linear-gradient(145deg,rgba(26,43,66,.92),rgba(16,29,47,.92));color:#dbe8f8;transition:border-color .2s,transform .2s,background .2s;position:relative;overflow:hidden}
@@ -444,9 +448,9 @@ html,body{background:radial-gradient(ellipse at 48% -25%,rgba(56,91,147,.22),tra
       <button data-filter="ecology"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M20 4C11 4 5 7 5 14a6 6 0 0 0 6 6c7 0 9-7 9-16Z"/><path d="M4 21c3-5 6-8 11-11"/></svg>生态资源</button>
     </nav>
     <div class="side-sep"></div>
-    <div class="side-mini-title">关系观察方式</div>
-    <button class="mode-btn active" data-mode="structure"><span class="mode-dot"></span>结构观察</button>
-    <button class="mode-btn" data-mode="motion"><span class="mode-dot"></span>动态演化</button>
+    <div class="side-mini-title">变化观察方式</div>
+    <button class="mode-btn active" data-mode="structure"><span class="mode-dot"></span>事件聚焦</button>
+    <button class="mode-btn" data-mode="motion"><span class="mode-dot"></span>播放变化</button>
     <div class="sidebar-note"><strong>看见关系，不只看见数据</strong>这里展示的是抽象关系结构。连线用于提出问题，不等于已经证实的因果关系。</div>
   </aside>
   <section class="canvas" aria-label="博罗关系网络主画布">
@@ -604,7 +608,7 @@ function updateShareState(){
 function updateExploreActions(){
  var button=document.getElementById("exploreNext");if(!button)return;
  if(selectedChangeId){button.innerHTML='<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M5 12h14M13 5l7 7-7 7"/></svg><span class="cta-label">核验这条变化</span><span class="cta-arrow">↗</span>';button.setAttribute("aria-label","查看所选变化的前后状态与公开来源");}
- else if(graphMode==="evidence"){button.innerHTML='<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M19 12H5m7 7-7-7 7-7"/></svg><span class="cta-label">提出结构问题</span><span class="cta-arrow">↗</span>';button.setAttribute("aria-label","返回结构问题继续探索");}
+ else if(graphMode==="evidence"){button.innerHTML='<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M5 12h14M13 5l7 7-7 7"/></svg><span class="cta-label">聚焦最新变化</span><span class="cta-arrow">↗</span>';button.setAttribute("aria-label","聚焦最近一条结构变化");}
  else{button.innerHTML='<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M5 12h14M13 5l7 7-7 7"/></svg><span class="cta-label">核验公开依据</span><span class="cta-arrow">↗</span>';button.setAttribute("aria-label","切换到公开证据网络核验依据");}
 }
 function updateJourneyUI(){
@@ -732,8 +736,8 @@ function renderChangeDetail(){
  host.innerHTML='<div class="change-detail-kicker"><span>'+htmlEscape(change.event_date||"日期待核")+' · '+htmlEscape(changeTypeLabel(change.change_type))+'</span><span class="change-phase-pill '+phaseClass+'">'+htmlEscape(changePhaseLabel(changePhase))+'</span></div><div class="change-detail-title">'+htmlEscape(change.title)+'</div><div class="change-compare"><div class="change-compare-row"><div class="change-compare-label">变化之前</div><div class="change-compare-copy">'+htmlEscape(before)+'</div></div><div class="change-compare-row"><div class="change-compare-label">变化之后 / 当前记录</div><div class="change-compare-copy">'+htmlEscape(after)+'</div></div></div><div class="change-uncertainty"><strong>还不能下的结论：</strong>'+htmlEscape(change.uncertainty||"影响范围和持续性仍需进一步核验。")+'</div><div class="change-focus-note">'+htmlEscape(phaseCopy)+'</div>'+sourceLinks(change.source_ids);
 }
 function syncChangePhaseUI(){
- document.querySelectorAll("[data-change-phase]").forEach(function(b){b.classList.toggle("active",b.getAttribute("data-change-phase")===changePhase);});
- var label=document.getElementById("timelineDate"),change=getSelectedChange();if(label)label.textContent=changePhaseLabel(changePhase)+(change?" · "+(change.event_date||"事件记录"):" · 请选择事件");
+ var change=getSelectedChange();document.querySelectorAll("[data-change-phase]").forEach(function(b){b.classList.toggle("active",!!change&&b.getAttribute("data-change-phase")===changePhase);b.disabled=!change;});
+ var label=document.getElementById("timelineDate");if(label)label.textContent=change?changePhaseLabel(changePhase)+" · "+(change.event_date||"事件记录"):"请选择事件 · 点击右侧变化卡片";
 }
 function selectChangeEvent(id,phase){
  if(!changeData||!changeData.changes.some(function(x){return x.change_id===id;}))return;
@@ -1026,7 +1030,9 @@ function updateSelectionUI(){
  document.getElementById("selectedTitle").textContent=focusedChange?focusedChange.title:q.title;
  document.getElementById("selectedCopy").textContent=focusedChange?(changePhaseLabel(changePhase)+"。"+String(focusedChange.before_after||"变化前后状态待核")+" 不确定性："+String(focusedChange.uncertainty||"仍需核验。")):(graphMode==="evidence"?"你正在核验与「"+q.title+"」相关的公开关系。这里展示可追溯依据；断裂、接入或退出等情景仍是探索假设，不代表现实已发生。":q.copy);
  if(focusedChange){document.getElementById("timelineTitle").textContent="变化前后对照";document.getElementById("timelineSub").textContent=focusedChange.title;syncChangePhaseUI();}
- else{document.getElementById("timelineTitle").textContent=({"base":"关系演化","bridge":"关键连接","new":"新节点接入","break":"关系断裂","exit":"节点退出","people":"人流传导","eco":"潜在协同"}[scenario]||"关系演化");document.getElementById("timelineSub").textContent=({"base":"选择一个变化，观察结构如何响应","bridge":"高亮可能连接不同群落的桥梁","new":"观察新主体与网络建立连接","break":"观察关键关系失效后的结构","exit":"观察节点退出与替代路径","people":"追踪人流与产业、消费的联系","eco":"寻找生态、农业与文旅的潜在连接"}[scenario]||"观察关系变化");document.getElementById("timelineDate").textContent=({"base":"结构基准","bridge":"桥梁关系","new":"接入假设","break":"断裂假设","exit":"退出假设","people":"传导线索","eco":"协同线索"}[scenario]||"结构基准");document.querySelectorAll(".time-stop").forEach(function(b){b.classList.toggle("active",b.getAttribute("data-scenario")===scenario);});document.querySelectorAll(".timeline-actions button").forEach(function(b){b.classList.toggle("active",b.getAttribute("data-scenario")===scenario);});}
+ else if(graphMode==="evidence"){document.getElementById("timelineTitle").textContent="选择一条变化开始对照";document.getElementById("timelineSub").textContent="点击右侧事件卡片，播放变化前后";syncChangePhaseUI();}
+ else{document.getElementById("timelineTitle").textContent=({"base":"关系演化","bridge":"关键连接","new":"新节点接入","break":"关系断裂","exit":"节点退出","people":"人流传导","eco":"潜在协同"}[scenario]||"关系演化");document.getElementById("timelineSub").textContent=({"base":"选择一个变化，观察结构如何响应","bridge":"高亮可能连接不同群落的桥梁","new":"观察新主体与网络建立连接","break":"观察关键关系失效后的结构","exit":"观察节点退出与替代路径","people":"追踪人流与产业、消费的联系","eco":"寻找生态、农业与文旅的潜在连接"}[scenario]||"观察关系变化");document.getElementById("timelineDate").textContent=({"base":"结构基准","bridge":"桥梁关系","new":"接入假设","break":"断裂假设","exit":"退出假设","people":"传导线索","eco":"协同线索"}[scenario]||"结构基准");}
+ renderChangeDeck();renderChangeDetail();document.getElementById("conceptMode").classList.toggle("active",!!focusedChange);document.getElementById("evidenceMode").classList.toggle("active",!focusedChange);
  renderChangeDeck();renderChangeDetail();document.getElementById("conceptMode").classList.toggle("active",!!focusedChange);document.getElementById("evidenceMode").classList.toggle("active",!focusedChange);updateJourneyUI();
 }
 function setScenario(next,question){shareCompleted=false;if(graphMode==="evidence")selectedEvidence=null;scenario=next;if(question)activeQuestion=question;else if(next==="break")activeQuestion="break";else if(next==="exit")activeQuestion="exit";else if(next==="new")activeQuestion="bridge";else if(next==="people")activeQuestion="people";else if(next==="eco")activeQuestion="eco";else if(next==="bridge")activeQuestion="bridge";renderGraph();updateSelectionUI();updateShareState();}
@@ -1053,7 +1059,7 @@ document.getElementById("play").addEventListener("click",startPlay);
 document.getElementById("exploreNext").addEventListener("click",function(){
  stopPlay();shareCompleted=false;
  if(selectedChangeId){var detail=document.getElementById("changeDetail");if(detail)detail.scrollIntoView({behavior:reducedMotion?"auto":"smooth",block:"nearest"});showShareToast("已定位事件记录、前后状态与公开来源。");return;}
- if(graphMode==="evidence"){scenario=scenarioForQuestion(activeQuestion);activeFilter="all";selectedEvidence=null;evidenceSearchTerm="";searchInput.value="";setGraphMode("concept");syncFilterButtons();updateSelectionUI();updateShareState();return;}
+ if(graphMode==="evidence"){var latest=changeData&&latestChangeId(changeData.changes);if(latest){selectChangeEvent(latest,"after");}return;}
  scenario="base";selectedEvidence=null;evidenceSearchTerm="";searchInput.value="";activeFilter=filterForQuestion(activeQuestion);setGraphMode("evidence");syncFilterButtons();updateSelectionUI();updateShareState();
 });
 document.getElementById("shareObservation").addEventListener("click",copyObservationLink);
@@ -1064,7 +1070,7 @@ searchInput.addEventListener("blur",function(){if(window.innerWidth<=680&&!searc
 document.getElementById("search").addEventListener("input",function(){
  stopPlay();shareCompleted=false;var term=this.value.trim().toLowerCase();
  if(!term){evidenceSearchTerm="";selectedEvidence=null;activeFilter="all";renderGraph();syncFilterButtons();updateSelectionUI();updateShareState();return;}
- activeFilter="all";syncFilterButtons();
+ activeFilter="all";syncFilterButtons();selectedChangeId=null;renderChangeDeck();renderChangeDetail();
  if(graphMode==="evidence"){
   evidenceSearchTerm=term;var evidenceMatches=findEvidenceMatches(term);
   selectedEvidence=evidenceMatches.nodes.length?{kind:"node",id:evidenceMatches.nodes[0].node_id}:evidenceMatches.edges.length?{kind:"edge",id:evidenceMatches.edges[0].edge_id}:null;
