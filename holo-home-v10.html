@@ -681,7 +681,7 @@ function setGraphMode(mode){
  document.getElementById("conceptMode").classList.toggle("active",graphMode==="concept");
  document.getElementById("evidenceMode").classList.toggle("active",graphMode==="evidence");
  document.getElementById("footerGraphMode").textContent=graphMode==="evidence"?"公开证据关系子图 / 非地图":"概念网络示意 / 非真实地图";
- updateJourneyUI();updateShareState();
+ updateSelectionUI();updateShareState();
  if(graphMode==="evidence"){
   evidenceSearchTerm=document.getElementById("search").value.trim().toLowerCase();
   document.getElementById("liveStatus").innerHTML="<i></i>正在读取公开关系证据";
@@ -798,7 +798,7 @@ function renderEvidenceGraph(){
  clearLayer(layers.orbits);clearLayer(layers.edges);clearLayer(layers.nodes);clearLayer(layers.labels);clearLayer(layers.overlays);
  append(layers.orbits,"ellipse",{cx:500,cy:375,rx:390,ry:285,fill:"none",stroke:"#7995bb","stroke-opacity":".07","stroke-width":"1","stroke-dasharray":"2 9"});
  append(layers.orbits,"ellipse",{cx:500,cy:375,rx:275,ry:200,fill:"none",stroke:"#7995bb","stroke-opacity":".06","stroke-width":"1","stroke-dasharray":"2 10"});
- var layout=buildEvidencePositions(),visible=layout.ids,shownEdges=evidenceData.edges.filter(function(e){return visible[e.source_node_id]&&visible[e.target_node_id];});
+ var layout=buildEvidencePositions(),visible=layout.ids,shownEdges=evidenceData.edges.filter(function(e){return visible[e.source_node_id]&&visible[e.target_node_id];}),animatedEvidenceEdges=0;
  shownEdges.forEach(function(e){
   var a=evidencePositionMap[e.source_node_id],b=evidencePositionMap[e.target_node_id];if(!a||!b)return;
   var color=relationColor(e.relation_type),d=pathBetween(a,b,((e.edge_id.charCodeAt(1)||1)%2)?13:-13);
@@ -813,6 +813,7 @@ function renderEvidenceGraph(){
   var p=append(layers.edges,"path",{d:d,stroke:color,class:classes.join(" "),style:"color:"+color,"data-evidence-edge":e.edge_id,"marker-end":"url(#evidenceArrow)","aria-label":e.relation_description,tabindex:"0",role:"button"});
   p.addEventListener("click",function(ev){ev.stopPropagation();showEvidenceEdge(e.edge_id);});
   p.addEventListener("keydown",function(ev){if(ev.key==="Enter"||ev.key===" "){ev.preventDefault();showEvidenceEdge(e.edge_id);}});
+  if(!reducedMotion&&animatedEvidenceEdges<8&&classes.indexOf("dim")<0&&(e.change_status!=="无显著变化"||(selectedEvidence&&selectedEvidence.kind==="edge"&&selectedEvidence.id===e.edge_id))){var particle=append(layers.edges,"circle",{cx:0,cy:0,r:2.3,fill:color,class:"evidence-flow-particle",style:"color:"+color});append(particle,"animateMotion",{dur:(3.1+(animatedEvidenceEdges%3)*.45)+"s",repeatCount:"indefinite",path:d,begin:(animatedEvidenceEdges*.27)+"s"});animatedEvidenceEdges++;}
  });
  layout.nodes.forEach(function(n){
   var p=evidencePositionMap[n.node_id],color=nodeColor(n),statusColor=n.change_status==="新增"?"#7de0c7":n.change_status==="增强"?"#f2c47d":n.change_status==="退出"?"#ff8f9d":"#7e9ab9";
