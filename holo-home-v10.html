@@ -819,7 +819,7 @@ function evidenceGradeName(grade){return evidenceData&&evidenceData.evidence_gra
 function relationColor(type){return ({supply_chain:"#79b8ff",regional:"#c2a4ff",commute:"#66d8cf",transport:"#8aaeff",eco_constraint:"#83d7a5",resource_competition:"#ff9d9f",tourism_consumption:"#e0a8ff",investment:"#f1c078"})[type]||"#9bb0cc";}
 function nodeColor(n){return ({external:"#c4a1ff",eco:"#7ed9aa",agriculture:"#9bd79a",anchor:"#7eb9ff",champion:"#7bcbd0",cluster:"#6dd7cf",legacy:n.change_status==="退出"?"#ff8f9d":"#9aabc1",energy:"#f1c078",new:"#ffb37b"})[n.node_type]||"#9ab4d4";}
 function evidenceShortName(name){var special={"高端精密制造项目（具身机器人）":"具身机器人项目","金属绿色冷轧钢项目":"绿色冷轧钢项目","空压机智能制造产业园":"空压机产业园","液冷散热部件项目":"液冷散热项目","独立储能电站（欣城/日盛）":"独立储能电站","固力水泥博罗分公司":"固力水泥（退出）","11家国家级小巨人":"国家级小巨人","74家省级专精特新":"省级专精特新"};if(special[name])return special[name];return Array.from(name).length>13?Array.from(name).slice(0,12).join("")+"…":name;}
-function evidenceStatusText(n){if(n.node_status==="pending")return "签约 · 待落地";if(n.node_status==="new")return "新投产 / 新接入";if(n.node_status==="exit"||n.change_status==="退出")return "已退出";if(n.change_status==="增强")return "关系增强";if(n.change_status==="新增")return "新入驻";return "关键基本盘";}
+function evidenceStatusText(n){if(n.node_status==="pending")return "已签约，尚未落地";if(n.node_status==="new")return "新投产 / 新接入";if(n.node_status==="exit"||n.change_status==="退出")return "已退出";if(n.change_status==="增强")return "联系正在增强";if(n.change_status==="新增")return "新增联系";return ({external:"外部城市",eco:"生态资源",agriculture:"特色农业",anchor:"重点企业",champion:"重点企业",cluster:"产业群落",legacy:"传统产业",energy:"能源设施",new:"新项目"})[n.node_type]||"相关主体";}
 function findEvidenceMatches(term){
  var t=String(term||"").trim().toLowerCase(),nodeMatches=[],edgeMatches=[],sourceMatches=[];
  if(!t||!evidenceData)return {nodes:[],edges:[],sources:[]};
@@ -957,7 +957,7 @@ function isEvidenceRelevant(edge){
  if(scenario==="exit")return edge.change_status==="退出"||edge.source_node_id==="glc"||edge.target_node_id==="glc";
  return edge.change_status!=="无显著变化";
 }
-function eventEdgeLabel(e){var labels={E001:"深圳总部 → 博罗基地",E014:"电池回收与配套",E017:"铜材产业补链",E018:"电池零部件配套",E019:"散热配套",E020:"金属循环",E021:"工业动力",E022:"装备制造配套",E023:"储能支撑用电",E025:"总部派驻与往来",E026:"跨市通行变化",E027:"高速通道变化",E030:"环保约束",E037:"户外旅游与民宿",E038:"茶旅融合",E039:"荔枝采摘与旅游",E041:"客流往来",E044:"生产线退出",E045:"环保整改影响产能"};return labels[e.edge_id]||(evidenceData.relation_type_legend[e.relation_type]||"相关联系");}
+function eventEdgeLabel(e){var labels={E001:"深圳总部 → 博罗基地",E014:"电池回收与配套",E017:"铜材产业补链",E018:"电池零部件配套",E019:"散热配套",E020:"金属循环",E021:"工业动力",E022:"装备制造配套",E023:"储能支撑用电",E025:"总部派驻与往来",E026:"大桥施工影响通行",E027:"高速通道变化",E030:"环保约束",E037:"户外旅游与民宿",E038:"茶旅融合",E039:"荔枝采摘与旅游",E041:"客流往来",E044:"生产线退出",E045:"环保整改影响产能"};return labels[e.edge_id]||(evidenceData.relation_type_legend[e.relation_type]||"相关联系");}
 function renderEvidenceGraph(){
  if(!evidenceData)return;
  if(window.innerWidth<=680)svg.setAttribute("viewBox","0 0 500 760");else svg.setAttribute("viewBox","0 0 1000 760");
@@ -1054,8 +1054,8 @@ function updateEvidencePanel(){
   if(selectedEvidence.kind==="edge"){
    var e=evidenceEdgeMap[selectedEvidence.id],from=e&&evidenceNodeMap[e.source_node_id],to=e&&evidenceNodeMap[e.target_node_id];
    if(!e){detail.innerHTML="<p>这条关系暂时无法读取。</p>";return;}
-   var metric=e.metric?'<p><strong>关联量化依据：</strong>'+htmlEscape(e.metric.metric_name)+ ' · '+htmlEscape(String(e.metric.metric_value))+htmlEscape(e.metric.metric_unit||"")+'。这不一定等同于关系强度。</p>':"";
-   detail.innerHTML='<h4>'+htmlEscape(from?from.name:e.source_node_id)+' → '+htmlEscape(to?to.name:e.target_node_id)+'</h4><div class="evidence-pill-row">'+evidencePill(e.evidence_grade,evidenceData.evidence_grade_legend[e.evidence_grade])+'<span class="evidence-pill">'+htmlEscape(evidenceData.relation_type_legend[e.relation_type]||e.relation_type)+'</span><span class="evidence-pill">'+htmlEscape(e.change_status||"状态未标注")+'</span></div><p>'+htmlEscape(e.relation_description)+'</p><p><strong>证据依据：</strong>'+htmlEscape(e.strength_basis||"暂无进一步说明")+'</p>'+metric+(e.counter_evidence?'<p><strong>限制 / 反证：</strong>'+htmlEscape(e.counter_evidence)+'</p>':"")+'<p><strong>关系时期：</strong>'+htmlEscape(e.valid_period||"未标注")+' · <strong>最近核验：</strong>'+htmlEscape(e.last_verified_at||"未标注")+'</p>'+sourceLinks(e.source_ids);
+   var metric=e.metric?'<p><strong>相关数据：</strong>'+htmlEscape(e.metric.metric_name)+ ' · '+htmlEscape(String(e.metric.metric_value))+htmlEscape(e.metric.metric_unit||"")+'。这不一定等同于关系强度。</p>':"";
+   detail.innerHTML='<h4>'+htmlEscape(from?from.name:e.source_node_id)+' → '+htmlEscape(to?to.name:e.target_node_id)+'</h4><div class="evidence-pill-row">'+evidencePill(e.evidence_grade,evidenceData.evidence_grade_legend[e.evidence_grade])+'<span class="evidence-pill">'+htmlEscape(evidenceData.relation_type_legend[e.relation_type]||e.relation_type)+'</span><span class="evidence-pill">'+htmlEscape(e.change_status||"状态未标注")+'</span></div><p>'+htmlEscape(e.relation_description)+'</p><p><strong>为什么这样连：</strong>'+htmlEscape(e.strength_basis||"暂无进一步说明")+'</p>'+metric+(e.counter_evidence?'<p><strong>需要留意：</strong>'+htmlEscape(e.counter_evidence)+'</p>':"")+'<p><strong>适用时间：</strong>'+htmlEscape(e.valid_period||"未标注")+' · <strong>最近核对：</strong>'+htmlEscape(e.last_verified_at||"未标注")+'</p>'+sourceLinks(e.source_ids);
   }else{
    var n=evidenceNodeMap[selectedEvidence.id];
    if(!n){detail.innerHTML="<p>这个节点暂时无法读取。</p>";return;}
@@ -1081,7 +1081,7 @@ function updateCanvasInsightEvidence(){
  var title="公开证据网络",detail="只突出近期变化主体与关键基本盘节点。实线 A、虚线 B、点线 C；线条粗细不代表关系强度。";
  var focusedChange=getSelectedChange();if(focusedChange){title=focusedChange.title;detail=changePhaseLabel(changePhase)+" · "+String(focusedChange.before_after||"结构状态待核")+"。这里只突出事件涉及的节点与连接；影响推断以公开证据及不确定性说明为边界。"};
  if(selectedEvidence&&selectedEvidence.kind==="node"&&evidenceNodeMap[selectedEvidence.id]){var n=evidenceNodeMap[selectedEvidence.id];title=n.name;detail=(n.change_status==="无显著变化"?"关键基本盘节点":n.change_status)+" · 点击连线查看公开依据、时期和限制。";}
- if(selectedEvidence&&selectedEvidence.kind==="edge"&&evidenceEdgeMap[selectedEvidence.id]){var e=evidenceEdgeMap[selectedEvidence.id];title=(evidenceData.relation_type_legend[e.relation_type]||"关系")+" · "+e.evidence_grade+" 级证据";detail=e.relation_description+"。点击右侧记录查看来源与限制。";}
+ if(selectedEvidence&&selectedEvidence.kind==="edge"&&evidenceEdgeMap[selectedEvidence.id]){var e=evidenceEdgeMap[selectedEvidence.id];title=(evidenceData.relation_type_legend[e.relation_type]||"关系")+" · "+e.evidence_grade+" 级证据";detail=e.relation_description+"。这是一条公开资料中的关联线索，不单凭它判断因果。";}
  if(scenario==="break"&&!selectedEvidence){title="结构风险 · 先核验证据";detail="现实退出事件以红色状态标记；其余断裂仅作为探索假设，不把模拟当成已发生事实。";}
  document.querySelector(".insight-kicker").textContent=focusedChange?"CHANGE EVENT / "+(focusedChange.event_date||"日期待核"):"EVIDENCE LAYER / "+evidenceData.generated_at;
  document.querySelector(".insight-title").textContent=title;document.querySelector(".insight-copy").textContent=detail;
