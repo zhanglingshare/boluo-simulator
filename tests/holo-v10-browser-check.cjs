@@ -20,6 +20,15 @@ const { chromium } = require("playwright");
     await page.waitForFunction(() => document.getElementById("liveStatus")?.textContent.includes("公开证据已就绪"), { timeout: 5000 });
     assert.equal(await page.locator("[data-cluster]").count(), 7, "概念网络应显示 7 个关系群落");
     await page.screenshot({ path: path.join(outDir, "holo-v10-desktop-concept.png"), fullPage: true });
+    console.log("LAYOUT_DIAGNOSTICS", JSON.stringify(await page.evaluate(() => {
+      const rect = selector => { const e = document.querySelector(selector); if (!e) return null; const r = e.getBoundingClientRect(); const s = getComputedStyle(e); return {x:r.x,y:r.y,width:r.width,height:r.height,position:s.position,display:s.display,top:s.top,bottom:s.bottom,zIndex:s.zIndex}; };
+      return {canvas:rect(".canvas"),graphWrap:rect(".graph-wrap"),svg:rect("#network"),timeline:rect(".timeline"),canvasHead:rect(".canvas-head"),clusterCount:document.querySelectorAll("[data-cluster]").length,edgeCount:document.querySelectorAll(".edge").length,svgChildCounts:{stars:document.querySelector("#stars").children.length,orbits:document.querySelector("#orbits").children.length,edges:document.querySelector("#edges").children.length,nodes:document.querySelector("#nodes").children.length},svgComputed:getComputedStyle(document.querySelector("#network")).cssText};
+    })));
+    await page.evaluate(() => {
+      window.__pointerLog = [];
+      const svg = document.querySelector("#network");
+      ["pointerdown","pointermove","pointerup","pointercancel"].forEach(type => svg.addEventListener(type, e => window.__pointerLog.push({type,target:e.target.tagName,cls:e.target.getAttribute("class"),x:e.clientX,y:e.clientY}), true));
+    });
 
     // Dragging a concept hub should change its coordinates rather than acting like a static image.
     await page.locator('.topnav button[data-filter="all"]').click();
@@ -31,6 +40,7 @@ const { chromium } = require("playwright");
     await page.mouse.move(hubBox.x + hubBox.width / 2 + 38, hubBox.y + hubBox.height / 2 + 20, { steps: 4 });
     await page.mouse.up();
     const afterX = Number(await page.locator('[data-cluster="industry"] .hub-core').getAttribute("cx"));
+    console.log("DRAG_DIAGNOSTICS", JSON.stringify({beforeX,afterX,hubBox,pointerLog:await page.evaluate(()=>window.__pointerLog)}));
     assert.ok(Math.abs(afterX - beforeX) > 10, "概念群落拖拽应改变节点坐标");
 
     // Search for a real entity from the concept landing state; it should open the evidence graph.
