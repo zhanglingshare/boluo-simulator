@@ -1,0 +1,47 @@
+name: holo-v10-browser-check
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - "holo-home-v10.html"
+      - "data/relationship-*.json"
+      - "tests/holo-v10-browser-check.cjs"
+      - ".github/workflows/holo-v10-browser-check.yml"
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  browser-check:
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 20
+      - name: Install Playwright
+        run: |
+          npm install --no-save playwright
+          npx playwright install --with-deps chromium
+      - name: Serve local preview
+        run: |
+          python3 -m http.server 8765 --bind 127.0.0.1 > /tmp/boluo-http.log 2>&1 &
+          echo $! > /tmp/boluo-http.pid
+          for i in $(seq 1 20); do
+            if curl --fail --silent http://127.0.0.1:8765/holo-home-v10.html -o /dev/null; then exit 0; fi
+            sleep 1
+          done
+          cat /tmp/boluo-http.log
+          exit 1
+      - name: Desktop and mobile interaction regression tests
+        run: node tests/holo-v10-browser-check.cjs
+      - name: Upload screenshots
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: holo-v10-browser-audit
+          path: artifacts/holo-v10-*.png
+          if-no-files-found: warn
