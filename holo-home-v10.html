@@ -432,6 +432,7 @@ html,body{background:radial-gradient(ellipse at 48% -25%,rgba(56,91,147,.22),tra
 .canvas-desc{max-width:620px;line-height:1.8}
 .question-title{line-height:1.7}
 
+@media(max-width:680px){.event-edge-label text{font-size:11px}.event-graph-guide text{font-size:11px}}
 </style>
 </head>
 <body>
@@ -902,11 +903,11 @@ function buildEvidencePositions(){
    list.forEach(function(n,i){evidencePositionMap[n.node_id]={x:x,y:list.length===1?(top+bottom)/2:top+span*i,align:align};});
   }
   if(window.innerWidth<=680){
-   placeColumn(context,82,115,660,"right");
-   placeColumn(focal,420,115,660,"left");
+   placeColumn(context,190,115,660,"left");
+   placeColumn(focal,310,115,660,"right");
   }else{
-   placeColumn(context,205,105,660,"right");
-   placeColumn(focal,790,105,660,"left");
+   placeColumn(context,375,105,660,"left");
+   placeColumn(focal,625,105,660,"right");
   }
   return {nodes:nodes,ids:selected,degree:degree,matchNodeIds:matchNodeIds,matchEdgeIds:matchEdgeIds,matchCount:matches.nodes.length+matches.edges.length};
  }
