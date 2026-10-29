@@ -762,9 +762,12 @@ function loadEvidenceData(){
   document.getElementById("evidenceSources").textContent=sourceData.sources.length;
   document.getElementById("evidenceChanges").textContent=changeData.changes.length;
   document.getElementById("evidenceCount").textContent=evidenceData.nodes.length+" · "+evidenceData.edges.length;
+  if(!restoredShareState||!selectedChangeId||!changeData.changes.some(function(x){return x.change_id===selectedChangeId;})){if(!restoredShareState)selectedChangeId=latestChangeId(changeData.changes);}
+  if(selectedChangeId)graphMode="evidence";
+  renderChangeDeck();renderChangeDetail();syncChangePhaseUI();
   var state=document.getElementById("evidenceState");state.textContent="证据已连接";state.classList.remove("error");
   if(graphMode==="concept")document.getElementById("liveStatus").innerHTML="<i></i>公开证据已就绪 · 概念探索";
-  else{document.body.classList.add("evidence-mode");document.getElementById("conceptMode").classList.remove("active");document.getElementById("evidenceMode").classList.add("active");if(selectedEvidence&&((selectedEvidence.kind==="node"&&!evidenceNodeMap[selectedEvidence.id])||(selectedEvidence.kind==="edge"&&!evidenceEdgeMap[selectedEvidence.id])))selectedEvidence=null;if(evidenceSearchTerm&&!selectedEvidence){var restoredMatches=findEvidenceMatches(evidenceSearchTerm);selectedEvidence=restoredMatches.nodes.length?{kind:"node",id:restoredMatches.nodes[0].node_id}:restoredMatches.edges.length?{kind:"edge",id:restoredMatches.edges[0].edge_id}:null;}renderGraph();updateCanvasInsightEvidence();}
+  else{document.body.classList.add("evidence-mode");document.getElementById("conceptMode").classList.toggle("active",!!selectedChangeId);document.getElementById("evidenceMode").classList.toggle("active",!selectedChangeId);if(selectedEvidence&&((selectedEvidence.kind==="node"&&!evidenceNodeMap[selectedEvidence.id])||(selectedEvidence.kind==="edge"&&!evidenceEdgeMap[selectedEvidence.id])))selectedEvidence=null;if(evidenceSearchTerm&&!selectedEvidence){var restoredMatches=findEvidenceMatches(evidenceSearchTerm);selectedEvidence=restoredMatches.nodes.length?{kind:"node",id:restoredMatches.nodes[0].node_id}:restoredMatches.edges.length?{kind:"edge",id:restoredMatches.edges[0].edge_id}:null;}renderGraph();updateCanvasInsightEvidence();}
   updateEvidencePanel();updateJourneyUI();if(restoredShareState)updateShareState();return true;
  }).catch(function(err){
   var state=document.getElementById("evidenceState");state.textContent="读取失败";state.classList.add("error");
@@ -777,8 +780,8 @@ function loadEvidenceData(){
 function setGraphMode(mode){
  stopPlay();shareCompleted=false;graphMode=mode==="evidence"?"evidence":"concept";applyResponsiveLayout();
  document.body.classList.toggle("evidence-mode",graphMode==="evidence");
- document.getElementById("conceptMode").classList.toggle("active",graphMode==="concept");
- document.getElementById("evidenceMode").classList.toggle("active",graphMode==="evidence");
+ document.getElementById("conceptMode").classList.toggle("active",!!selectedChangeId);
+ document.getElementById("evidenceMode").classList.toggle("active",!selectedChangeId);
  document.getElementById("footerGraphMode").textContent=graphMode==="evidence"?"公开证据关系子图 / 非地图":"概念网络示意 / 非真实地图";
  updateSelectionUI();
  if(graphMode==="evidence"){updateShareState();
@@ -809,7 +812,15 @@ function buildEvidencePositions(){
  var degree={};evidenceData.nodes.forEach(function(n){degree[n.node_id]=0;});
  evidenceData.edges.forEach(function(e){degree[e.source_node_id]=(degree[e.source_node_id]||0)+1;degree[e.target_node_id]=(degree[e.target_node_id]||0)+1;});
  var selected={},matchNodeIds={},matchEdgeIds={},matches={nodes:[],edges:[]},selectionLimit=window.innerWidth<=680?10:20;
- if(evidenceSearchTerm){
+ if(selectedChangeId&&changeData&&!evidenceSearchTerm){
+  var focusChange=getSelectedChange();
+  if(focusChange){
+   (focusChange.involved_node_ids||[]).forEach(function(id){if(evidenceNodeMap[id]){selected[id]=true;matchNodeIds[id]=true;}});
+   (focusChange.involved_edge_ids||[]).forEach(function(id){var edge=evidenceEdgeMap[id];if(edge){matchEdgeIds[id]=true;selected[edge.source_node_id]=true;selected[edge.target_node_id]=true;}});
+   var seeds=Object.keys(selected),focusLimit=window.innerWidth<=680?10:18;
+   seeds.forEach(function(id){if(Object.keys(selected).length>=focusLimit)return;var neighbors=evidenceData.edges.filter(function(e){return e.source_node_id===id||e.target_node_id===id;}).sort(function(a,b){var aFocus=(a.change_status&&a.change_status!=="无显著变化")?1:0,bFocus=(b.change_status&&b.change_status!=="无显著变化")?1:0;return bFocus-aFocus;});neighbors.slice(0,2).forEach(function(e){if(Object.keys(selected).length<focusLimit){selected[e.source_node_id]=true;selected[e.target_node_id]=true;}});});
+  }
+ }else if(evidenceSearchTerm){
   matches=findEvidenceMatches(evidenceSearchTerm);
   matches.nodes.slice().sort(function(a,b){return (degree[b.node_id]||0)-(degree[a.node_id]||0);}).slice(0,window.innerWidth<=680?8:12).forEach(function(n){selected[n.node_id]=true;matchNodeIds[n.node_id]=true;});
   matches.edges.slice(0,window.innerWidth<=680?8:12).forEach(function(e){
@@ -898,14 +909,16 @@ function renderEvidenceGraph(){
  clearLayer(layers.orbits);clearLayer(layers.edges);clearLayer(layers.nodes);clearLayer(layers.labels);clearLayer(layers.overlays);
  append(layers.orbits,"ellipse",{cx:500,cy:375,rx:390,ry:285,fill:"none",stroke:"#7995bb","stroke-opacity":".07","stroke-width":"1","stroke-dasharray":"2 9"});
  append(layers.orbits,"ellipse",{cx:500,cy:375,rx:275,ry:200,fill:"none",stroke:"#7995bb","stroke-opacity":".06","stroke-width":"1","stroke-dasharray":"2 10"});
- var layout=buildEvidencePositions(),visible=layout.ids,shownEdges=evidenceData.edges.filter(function(e){return visible[e.source_node_id]&&visible[e.target_node_id];}),animatedEvidenceEdges=0;
+ var layout=buildEvidencePositions(),visible=layout.ids,shownEdges=evidenceData.edges.filter(function(e){return visible[e.source_node_id]&&visible[e.target_node_id];}),animatedEvidenceEdges=0,focusChange=getSelectedChange(),focusNodeIds={},focusEdgeIds={};
+ if(focusChange){(focusChange.involved_node_ids||[]).forEach(function(id){focusNodeIds[id]=true;});(focusChange.involved_edge_ids||[]).forEach(function(id){focusEdgeIds[id]=true;var e=evidenceEdgeMap[id];if(e){focusNodeIds[e.source_node_id]=true;focusNodeIds[e.target_node_id]=true;}});}
  shownEdges.forEach(function(e){
   var a=evidencePositionMap[e.source_node_id],b=evidencePositionMap[e.target_node_id];if(!a||!b)return;
   var color=relationColor(e.relation_type),d=pathBetween(a,b,((e.edge_id.charCodeAt(1)||1)%2)?13:-13);
   var classes=["evidence-edge",evidenceGradeClass(e.evidence_grade)];
   if(e.change_status!=="无显著变化")classes.push("status-changed");
-  var relationRelevant=activeFilter!=="all"?matchesEvidenceFilter(e):isEvidenceRelevant(e);
+  var relationRelevant=selectedChangeId?true:(activeFilter!=="all"?matchesEvidenceFilter(e):isEvidenceRelevant(e));
   if(!relationRelevant)classes.push("dim");
+  if(focusChange){if(focusEdgeIds[e.edge_id]){classes.push("change-focus-edge");if(changePhase==="before"&&["new_entity","new_edge"].indexOf(focusChange.change_type)>=0)classes.push("change-before-edge");if(changePhase==="event")classes.push("change-event-edge");if(changePhase==="after"&&["exit","break"].indexOf(focusChange.change_type)>=0)classes.push("change-exit-edge");if(changePhase==="after"&&focusChange.change_type==="weaken")classes.push("change-weaken-edge");}else classes.push("change-context-edge");}
   if(evidenceSearchTerm&&!layout.matchEdgeIds[e.edge_id]&&!layout.matchNodeIds[e.source_node_id]&&!layout.matchNodeIds[e.target_node_id])classes.push("dim");
   if(scenario==="new"&&e.change_status==="新增")classes.push("scenario-new");
   if(scenario==="exit"&&e.change_status==="退出")classes.push("scenario-exit");
@@ -919,9 +932,10 @@ function renderEvidenceGraph(){
   var p=evidencePositionMap[n.node_id],color=nodeColor(n),statusColor=n.change_status==="新增"?"#7de0c7":n.change_status==="增强"?"#f2c47d":n.change_status==="退出"?"#ff8f9d":"#7e9ab9";
   var incident=evidenceData.edges.filter(function(e){return (e.source_node_id===n.node_id||e.target_node_id===n.node_id)&&(activeFilter!=="all"?matchesEvidenceFilter(e):isEvidenceRelevant(e));}).length;
   var searchMatch=!!layout.matchNodeIds[n.node_id];
-  var dim=((scenario!=="base"||activeFilter!=="all")&&incident===0)&&!searchMatch&&!(selectedEvidence&&selectedEvidence.kind==="node"&&selectedEvidence.id===n.node_id);
+  var dim=!focusChange&&((scenario!=="base"||activeFilter!=="all")&&incident===0)&&!searchMatch&&!(selectedEvidence&&selectedEvidence.kind==="node"&&selectedEvidence.id===n.node_id);
   var scenarioClass=scenario==="new"&&n.change_status==="新增"?" new-highlight":scenario==="exit"&&n.change_status==="退出"?" exit-highlight":"";
   var selected=selectedEvidence&&selectedEvidence.kind==="node"&&selectedEvidence.id===n.node_id;
+  if(focusChange){if(focusNodeIds[n.node_id]){scenarioClass+=" change-focus-node";if(changePhase==="before"&&focusChange.change_type==="new_entity")scenarioClass+=" change-before-node";if(changePhase==="event")scenarioClass+=" change-event-node";if(changePhase==="after"&&["exit","break"].indexOf(focusChange.change_type)>=0)scenarioClass+=" change-exit-node";}else scenarioClass+=" change-context-node";}
   var g=append(layers.nodes,"g",{class:"evidence-node"+(dim?" dim":"")+(selected?" selected":"")+scenarioClass+(searchMatch?" search-match":""),tabindex:"0",role:"button","aria-label":n.name+"，"+evidenceStatusText(n),"data-evidence-node":n.node_id,style:"color:"+color});
   if(n.change_status!=="无显著变化"){append(g,"circle",{cx:p.x,cy:p.y,r:14,fill:color,"fill-opacity":".08"});append(g,"circle",{cx:p.x,cy:p.y,r:10,stroke:statusColor,class:"status-ring"});}
   append(g,"circle",{cx:p.x,cy:p.y,r:n.change_status==="无显著变化"?5.4:7.2,fill:color,class:"node-core"});
@@ -985,7 +999,7 @@ function updateEvidencePanel(){
   return;
  }
  detail.hidden=true;
- intro.textContent="概念网络用于提出问题；证据网络展示可追溯的公开关系。线型表示证据等级，关系线粗细不代表强度。";
+ intro.textContent=selectedChangeId?"已聚焦所选变化及其相邻关系。点击节点或连线可查看公开依据；颜色和动画用于定位变化，不代表影响大小。":"完整关系底图用于核验公开关系。线型表示证据等级，关系线粗细不代表强度。";
  if(graphMode==="concept"){
   var changes=changeData.changes.slice().sort(function(a,b){return String(b.event_date||"").localeCompare(String(a.event_date||""));}).slice(0,3);
   recent.innerHTML='<div class="evidence-source-title">近期结构变化 · 点击进入证据网络</div>'+changes.map(function(x){return '<button class="evidence-event" data-change-id="'+htmlEscape(x.change_id)+'"><span class="evidence-event-title">'+htmlEscape(x.title)+'</span><span class="evidence-event-meta"><span>'+htmlEscape(x.event_date||"日期待核")+'</span><span>查看关系 ↗</span></span></button>';}).join("");
@@ -997,25 +1011,23 @@ function updateEvidencePanel(){
 function updateCanvasInsightEvidence(){
  if(graphMode!=="evidence"||!evidenceData)return;
  var title="公开证据网络",detail="只突出近期变化主体与关键基本盘节点。实线 A、虚线 B、点线 C；线条粗细不代表关系强度。";
+ var focusedChange=getSelectedChange();if(focusedChange){title=focusedChange.title;detail=changePhaseLabel(changePhase)+" · "+String(focusedChange.before_after||"结构状态待核")+"。这里只突出事件涉及的节点与连接；影响推断以公开证据及不确定性说明为边界。"};
  if(selectedEvidence&&selectedEvidence.kind==="node"&&evidenceNodeMap[selectedEvidence.id]){var n=evidenceNodeMap[selectedEvidence.id];title=n.name;detail=(n.change_status==="无显著变化"?"关键基本盘节点":n.change_status)+" · 点击连线查看公开依据、时期和限制。";}
  if(selectedEvidence&&selectedEvidence.kind==="edge"&&evidenceEdgeMap[selectedEvidence.id]){var e=evidenceEdgeMap[selectedEvidence.id];title=(evidenceData.relation_type_legend[e.relation_type]||"关系")+" · "+e.evidence_grade+" 级证据";detail=e.relation_description+"。点击右侧记录查看来源与限制。";}
  if(scenario==="break"&&!selectedEvidence){title="结构风险 · 先核验证据";detail="现实退出事件以红色状态标记；其余断裂仅作为探索假设，不把模拟当成已发生事实。";}
- document.querySelector(".insight-kicker").textContent="EVIDENCE LAYER / "+evidenceData.generated_at;
+ document.querySelector(".insight-kicker").textContent=focusedChange?"CHANGE EVENT / "+(focusedChange.event_date||"日期待核"):"EVIDENCE LAYER / "+evidenceData.generated_at;
  document.querySelector(".insight-title").textContent=title;document.querySelector(".insight-copy").textContent=detail;
 }
 
 function updateCanvasInsight(){var info=questionInfo[activeQuestion]||questionInfo.bridge;var title=info.insight,detail=info.detail;if(scenario==="new"){title="新节点接入";detail="新节点出现后，连接逐条建立；新增关系仍需证据核验。";}if(scenario==="break"){title="关系断裂假设";detail="断裂不等于系统崩溃，下一步要看有没有替代路径。";}if(scenario==="exit"){title="关键节点退出";detail="一个主体离开后，哪些关系随之消失，哪些连接仍然存在？";}document.querySelector(".insight-kicker").textContent="STRUCTURE NOTE / "+({"base":"01","bridge":"02","new":"03","break":"04","exit":"05","people":"06","eco":"07"}[scenario]||"01");document.querySelector(".insight-title").textContent=title;document.querySelector(".insight-copy").textContent=detail;}
 function updateSelectionUI(){
  document.querySelectorAll(".question-card").forEach(function(b){b.classList.toggle("active",b.getAttribute("data-q")===activeQuestion);});
- var q=questionInfo[activeQuestion]||questionInfo.bridge;
- document.getElementById("selectedTitle").textContent=q.title;
- document.getElementById("selectedCopy").textContent=graphMode==="evidence"?"你正在核验与「"+q.title+"」相关的公开关系。这里展示可追溯依据；断裂、接入或退出等情景仍是探索假设，不代表现实已发生。":q.copy;
- document.getElementById("timelineTitle").textContent=({"base":"关系演化","bridge":"关键连接","new":"新节点接入","break":"关系断裂","exit":"节点退出","people":"人流传导","eco":"潜在协同"}[scenario]||"关系演化");
- document.getElementById("timelineSub").textContent=({"base":"选择一个变化，观察结构如何响应","bridge":"高亮可能连接不同群落的桥梁","new":"观察新主体与网络建立连接","break":"观察关键关系失效后的结构","exit":"观察节点退出与替代路径","people":"追踪人流与产业、消费的联系","eco":"寻找生态、农业与文旅的潜在连接"}[scenario]||"观察关系变化");
- document.getElementById("timelineDate").textContent=({"base":"结构基准","bridge":"桥梁关系","new":"接入假设","break":"断裂假设","exit":"退出假设","people":"传导线索","eco":"协同线索"}[scenario]||"结构基准");
- document.querySelectorAll(".time-stop").forEach(function(b){b.classList.toggle("active",b.getAttribute("data-scenario")===scenario);});
- document.querySelectorAll(".timeline-actions button").forEach(function(b){b.classList.toggle("active",b.getAttribute("data-scenario")===scenario);});
- updateJourneyUI();
+ var q=questionInfo[activeQuestion]||questionInfo.bridge,focusedChange=getSelectedChange();
+ document.getElementById("selectedTitle").textContent=focusedChange?focusedChange.title:q.title;
+ document.getElementById("selectedCopy").textContent=focusedChange?(changePhaseLabel(changePhase)+"。"+String(focusedChange.before_after||"变化前后状态待核")+" 不确定性："+String(focusedChange.uncertainty||"仍需核验。")):(graphMode==="evidence"?"你正在核验与「"+q.title+"」相关的公开关系。这里展示可追溯依据；断裂、接入或退出等情景仍是探索假设，不代表现实已发生。":q.copy);
+ if(focusedChange){document.getElementById("timelineTitle").textContent="变化前后对照";document.getElementById("timelineSub").textContent=focusedChange.title;syncChangePhaseUI();}
+ else{document.getElementById("timelineTitle").textContent=({"base":"关系演化","bridge":"关键连接","new":"新节点接入","break":"关系断裂","exit":"节点退出","people":"人流传导","eco":"潜在协同"}[scenario]||"关系演化");document.getElementById("timelineSub").textContent=({"base":"选择一个变化，观察结构如何响应","bridge":"高亮可能连接不同群落的桥梁","new":"观察新主体与网络建立连接","break":"观察关键关系失效后的结构","exit":"观察节点退出与替代路径","people":"追踪人流与产业、消费的联系","eco":"寻找生态、农业与文旅的潜在连接"}[scenario]||"观察关系变化");document.getElementById("timelineDate").textContent=({"base":"结构基准","bridge":"桥梁关系","new":"接入假设","break":"断裂假设","exit":"退出假设","people":"传导线索","eco":"协同线索"}[scenario]||"结构基准");document.querySelectorAll(".time-stop").forEach(function(b){b.classList.toggle("active",b.getAttribute("data-scenario")===scenario);});document.querySelectorAll(".timeline-actions button").forEach(function(b){b.classList.toggle("active",b.getAttribute("data-scenario")===scenario);});}
+ renderChangeDeck();renderChangeDetail();document.getElementById("conceptMode").classList.toggle("active",!!focusedChange);document.getElementById("evidenceMode").classList.toggle("active",!focusedChange);updateJourneyUI();
 }
 function setScenario(next,question){shareCompleted=false;if(graphMode==="evidence")selectedEvidence=null;scenario=next;if(question)activeQuestion=question;else if(next==="break")activeQuestion="break";else if(next==="exit")activeQuestion="exit";else if(next==="new")activeQuestion="bridge";else if(next==="people")activeQuestion="people";else if(next==="eco")activeQuestion="eco";else if(next==="bridge")activeQuestion="bridge";renderGraph();updateSelectionUI();updateShareState();}
 function setQuestion(q){stopPlay();activeQuestion=q;activeFilter="all";var eventMap={bridge:"C006",break:"C009",people:"C006",eco:"C012",exit:"C008"};var id=eventMap[q];if(id&&changeData&&changeData.changes.some(function(x){return x.change_id===id;})){selectChangeEvent(id,"after");}else{var next=q==="bridge"?"bridge":q==="break"?"break":q==="people"?"people":q==="eco"?"eco":"exit";selectedChangeId=null;setScenario(next,q);}syncFilterButtons();}
