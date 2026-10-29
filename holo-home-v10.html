@@ -362,8 +362,36 @@ html,body{background:radial-gradient(ellipse at 48% -25%,rgba(56,91,147,.22),tra
 @media(prefers-reduced-motion:reduce){.evidence-edge.status-changed,.evidence-edge.scenario-new,.evidence-node.new-highlight .node-core,.flow-particle,.evidence-flow-particle,.edge.hot{animation:none!important}.new-link{animation:none;stroke-dashoffset:0}}
 
 </style>
+
+<style>
+/* Change-first guided entry; the full research workspace remains optional. */
+.bl-easy-start{max-width:1920px;margin:0 auto;padding:14px 16px 0;position:relative;z-index:5;color:#18314f}
+.bl-easy-top{display:flex;align-items:flex-start;justify-content:space-between;gap:14px;padding:0 3px 10px}
+.bl-easy-top h2{font-size:clamp(17px,2vw,23px);line-height:1.4;letter-spacing:.1px;color:#192a43;font-weight:800;margin:0}
+.bl-easy-top p{font-size:12px;color:#75869d;line-height:1.7;margin:4px 0 0}
+.bl-easy-more{flex:none;border:1px solid #d9e4f2;background:#fff;color:#4b6585;border-radius:10px;font-size:11px;padding:9px 13px;min-height:39px;cursor:pointer}
+.bl-easy-more:hover,.bl-easy-more:focus-visible{border-color:#72a0d4;color:#234e7e}
+.bl-easy-choices{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:10px}
+.bl-easy-choice{min-width:0;border:1px solid #dae5f0;text-align:left;background:linear-gradient(135deg,#fff,#f2f7fd);border-radius:14px;color:#253c5d;padding:12px 14px;min-height:88px;cursor:pointer;box-shadow:0 2px 10px rgba(21,51,93,.025);transition:transform .17s,border-color .17s,box-shadow .17s}
+.bl-easy-choice .bl-kind{display:block;font-size:10px;color:#5586b0;font-weight:800;margin-bottom:4px}
+.bl-easy-choice .bl-evtitle{display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden;font-size:13px;line-height:1.45;font-weight:800}
+.bl-easy-choice .bl-evdate{display:block;font-size:10px;color:#8194ad;margin-top:5px}
+.bl-easy-choice:hover,.bl-easy-choice:focus-visible{border-color:#75a9df;transform:translateY(-2px)}
+.bl-easy-choice.active,.bl-easy-choice[aria-pressed="true"]{border-color:#4d98e6;box-shadow:inset 0 0 0 1px #8bbbf3,0 6px 18px rgba(44,104,173,.11);background:linear-gradient(135deg,#f0f7ff,#fff)}
+.bl-easy-readout{font-size:12px;color:#536c86;line-height:1.72;margin-top:9px;padding:10px 12px;border-left:3px solid #81b6ee;border-radius:0 9px 9px 0;background:#f0f5fc}
+.bl-easy-readout strong{color:#27496d}.bl-easy-readout .evidence-source-title{color:#4b718f;font-size:11px;margin:8px 0 4px}.bl-easy-readout .evidence-source-list{display:flex;flex-direction:row;flex-wrap:wrap;gap:8px 12px}.bl-easy-readout .evidence-source-list a{color:#356b9d;font-size:11px;padding:0;border-bottom:0}
+.bl-easy-page:not(.bl-advanced-on) .workspace{grid-template-columns:minmax(0,1fr);min-height:0}
+.bl-easy-page:not(.bl-advanced-on) .workspace>.sidebar,.bl-easy-page:not(.bl-advanced-on) .workspace>.explore{display:none}
+.bl-easy-page:not(.bl-advanced-on) .canvas{height:min(70vh,760px);min-height:460px}
+.bl-easy-page:not(.bl-advanced-on) .canvas-head-right,.bl-easy-page:not(.bl-advanced-on) .timeline,.bl-easy-page:not(.bl-advanced-on) .canvas-legend,.bl-easy-page:not(.bl-advanced-on) .canvas-insight{display:none}
+.bl-easy-page:not(.bl-advanced-on) .graph-wrap{inset:65px 0 0}
+.bl-easy-page:not(.bl-advanced-on) .canvas-head{max-width:100%}
+.bl-easy-page:not(.bl-advanced-on) .canvas-title{font-size:20px}
+@media(max-width:680px){.bl-easy-start{padding:12px 9px 0}.bl-easy-top{gap:8px}.bl-easy-top h2{font-size:17px}.bl-easy-top p{font-size:11px}.bl-easy-more{font-size:10px;padding:7px 9px;max-width:110px;white-space:normal}.bl-easy-choices{grid-template-columns:1fr;gap:7px}.bl-easy-choice{min-height:64px;padding:9px 12px}.bl-easy-choice .bl-evtitle{font-size:12px}.bl-easy-choice .bl-evdate{margin-top:3px}.bl-easy-readout{margin-top:8px;padding:7px 10px;font-size:11px}.bl-easy-page:not(.bl-advanced-on) .canvas{height:520px;min-height:520px}.bl-easy-page:not(.bl-advanced-on) .graph-wrap{inset:75px 0 0}.bl-easy-page:not(.bl-advanced-on) .canvas-head{padding:16px 14px 0}}
+@media(prefers-reduced-motion:reduce){.bl-easy-choice{transition:none}.bl-easy-choice:hover{transform:none}}
+</style>
 </head>
-<body>
+<body class="bl-easy-page">
 <header class="appbar">
   <div class="brand">
     <div class="brand-mark" aria-hidden="true">
@@ -379,6 +407,18 @@ html,body{background:radial-gradient(ellipse at 48% -25%,rgba(56,91,147,.22),tra
   <button class="header-icon" aria-label="通知"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"><path d="M18 9a6 6 0 0 0-12 0c0 7-3 7-3 9h18c0-2-3-2-3-9M10 21h4"/></svg></button>
   <div class="avatar" aria-label="用户"></div>
 </header>
+
+<section class="bl-easy-start" aria-label="从真实变化开始">
+  <div class="bl-easy-top">
+    <div><h2>博罗最近哪些事，真的让关系变了？</h2><p>先看三个有记录的变化案例。点一下，图里只突出有关的人、项目和连接。</p></div>
+    <button type="button" id="blMoreTools" class="bl-easy-more" aria-expanded="false">展开更多玩法</button>
+  </div>
+  <div class="bl-easy-choices" id="blEasyEvents" role="group" aria-label="选择一条变化记录">
+    <div class="bl-easy-readout">正在读取公开变化记录…</div>
+  </div>
+  <div class="bl-easy-readout" id="blEasyReadout" role="status" aria-live="polite">选一件事，看变化前后、涉及谁以及证据依据。规划和签约不等于已经落地。</div>
+</section>
+
 <main class="workspace">
   <aside class="sidebar">
     <div class="side-kicker">EXPLORE</div>
@@ -746,6 +786,17 @@ function buildEvidencePositions(){
    selected=mobileSelected;
   }
  }
+
+ if(blEasyChange&&!document.body.classList.contains("bl-advanced-on")){
+  var focused={};
+  (blEasyChange.involved_node_ids||[]).forEach(function(id){if(evidenceNodeMap[id])focused[id]=true;});
+  (blEasyChange.involved_edge_ids||[]).forEach(function(id){
+   var e=evidenceEdgeMap[id];if(e){focused[e.source_node_id]=true;focused[e.target_node_id]=true;}
+  });
+  var relevant=evidenceData.edges.filter(function(e){return focused[e.source_node_id]||focused[e.target_node_id];});
+  relevant.slice(0,window.innerWidth<=680?3:6).forEach(function(e){focused[e.source_node_id]=true;focused[e.target_node_id]=true;});
+  if(Object.keys(focused).length)selected=focused;
+ }
  var nodes=evidenceData.nodes.filter(function(n){return selected[n.node_id];});
  if(window.innerWidth<=680){
   evidencePositionMap={};
@@ -928,8 +979,71 @@ function startPlay(){if(playing){stopPlay();return;}playing=true;var icon=docume
 function initStars(){addStars();}
 document.getElementById("conceptMode").addEventListener("click",function(){setGraphMode("concept");});
 document.getElementById("evidenceMode").addEventListener("click",function(){setGraphMode("evidence");});
+
+/* First-time visitor journey driven by actual relationship-changes-v1 records. */
+var blEasyChange=null;
+function blRenderEasyEvents(){
+ var box=document.getElementById("blEasyEvents");
+ if(!box)return;
+ if(!changeData||!changeData.changes||!changeData.changes.length){
+  box.innerHTML='<div class="bl-easy-readout">暂时没有可核验的变化记录。可稍后刷新，或展开更多玩法查看概念结构。</div>';return;
+ }
+ var entries=changeData.changes.slice().sort(function(a,b){return String(b.event_date||"").localeCompare(String(a.event_date||""));});
+ var kinds=["new_edge","new_entity","exit"],sample=[];
+ kinds.forEach(function(k){var item=entries.find(function(c){return c.change_type===k;});if(item&&sample.indexOf(item)<0)sample.push(item);});
+ entries.forEach(function(item){if(sample.length<3&&sample.indexOf(item)<0)sample.push(item);});
+ box.innerHTML=sample.map(function(ev){
+  var label=(changeData.change_type_legend||{})[ev.change_type]||"变化记录";
+  return '<button type="button" class="bl-easy-choice" data-bl-change="'+htmlEscape(ev.change_id)+'" aria-pressed="false"><span class="bl-kind">'+htmlEscape(label)+'</span><span class="bl-evtitle">'+htmlEscape(ev.title)+'</span><span class="bl-evdate">'+htmlEscape(ev.event_date||"日期待核")+' · 点开看变化 ↗</span></button>';
+ }).join("");
+ box.querySelectorAll("[data-bl-change]").forEach(function(button){
+  button.addEventListener("click",function(){blSelectEasyEvent(button.getAttribute("data-bl-change"),true);});
+ });
+}
+function blSelectEasyEvent(id,goToCanvas){
+ if(!changeData||!evidenceData)return;
+ var ev=changeData.changes.find(function(x){return x.change_id===id;});if(!ev)return;
+ var exactEdges=(ev.involved_edge_ids||[]).filter(function(x){return !!evidenceEdgeMap[x];});
+ var exactNodes=(ev.involved_node_ids||[]).filter(function(x){return !!evidenceNodeMap[x];});
+ if(!exactEdges.length&&!exactNodes.length){
+  document.getElementById("blEasyReadout").textContent="这件事的资料已有记录，但相关节点暂时无法定位。你仍可核对公开来源。";return;
+ }
+ blEasyChange=ev;
+ document.querySelectorAll("[data-bl-change]").forEach(function(button){
+  var yes=button.getAttribute("data-bl-change")===id;button.classList.toggle("active",yes);button.setAttribute("aria-pressed",String(yes));
+ });
+ document.getElementById("blEasyReadout").innerHTML=
+  '<strong>发生了什么：</strong>'+htmlEscape(ev.title)+
+  '<div><strong>记录中的前后情况：</strong>'+htmlEscape(ev.before_after||"未补充")+'</div>'+
+  '<div><strong>还不能确定：</strong>'+htmlEscape(ev.uncertainty||"仍需持续核验")+'</div>'+
+  sourceLinks(ev.source_ids);
+ if(graphMode!=="evidence"){
+  setGraphMode("evidence");
+  loadEvidenceData().then(function(ok){if(ok)blFocusEasyEvent(ev,exactEdges,exactNodes,goToCanvas);});
+ }else{blFocusEasyEvent(ev,exactEdges,exactNodes,goToCanvas);}
+}
+function blFocusEasyEvent(ev,edges,nodes,goToCanvas){
+ scenario="base";activeFilter="all";evidenceSearchTerm="";
+ var search=document.getElementById("search");if(search)search.value="";
+ if(edges.length)showEvidenceEdge(edges[0]);else if(nodes.length)showEvidenceNode(nodes[0]);
+ syncFilterButtons();updateSelectionUI();
+ if(goToCanvas&&window.innerWidth<=680)document.querySelector(".canvas").scrollIntoView({block:"start",behavior:"auto"});
+}
+document.getElementById("blMoreTools").addEventListener("click",function(){
+ var open=document.body.classList.toggle("bl-advanced-on");
+ this.setAttribute("aria-expanded",String(open));this.textContent=open?"收起更多玩法":"展开更多玩法";
+ if(open){blEasyChange=null;renderGraph();}
+ window.dispatchEvent(new Event("resize"));
+});
+
 restoreSharedState();
-loadEvidenceData();
+if(!restoredShareState){scenario="base";activeFilter="all";setGraphMode("evidence");}
+loadEvidenceData().then(function(ok){
+ if(ok){blRenderEasyEvents();if(!restoredShareState){
+  var first=document.querySelector("[data-bl-change]");
+  if(first)blSelectEasyEvent(first.getAttribute("data-bl-change"),false);
+ }}else{document.getElementById("blEasyEvents").innerHTML='<div class="bl-easy-readout">公开资料暂时读取失败。请稍后刷新，或展开更多玩法查看概念结构。</div>';}
+});
 document.querySelectorAll(".question-card").forEach(function(b){b.addEventListener("click",function(){setQuestion(b.getAttribute("data-q"));var panel=document.querySelector(".selected-question");if(panel)panel.scrollIntoView({behavior:reducedMotion?"auto":"smooth",block:"center"});});});
 document.querySelectorAll("[data-filter]").forEach(function(b){b.addEventListener("click",function(){setFilter(b.getAttribute("data-filter"));});});
 document.querySelectorAll("[data-scenario]").forEach(function(b){b.addEventListener("click",function(){stopPlay();setScenario(b.getAttribute("data-scenario"));});});
