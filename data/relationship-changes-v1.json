@@ -1,0 +1,263 @@
+{
+  "schema_version": "relationship-changes-v1",
+  "region": "boluo",
+  "generated_at": "2026-10-29 08:55",
+  "count": 12,
+  "change_type_legend": {
+    "new_entity": "新主体接入",
+    "new_edge": "新连接形成",
+    "strengthen": "连接增强",
+    "weaken": "连接减弱",
+    "exit": "主体退出",
+    "break": "连接失效",
+    "alternative": "替代路径"
+  },
+  "note": "仅收录会改变网络结构或连接状态的事件；签约≠投产，规划/在建均标注不确定性；无法证明现实断裂的只作情景假设，不伪装为已发生。",
+  "changes": [
+    {
+      "change_id": "C001",
+      "change_type": "new_entity",
+      "title": "深博福田产业园全面开园，嘉奇等5家企业集中入驻、首批标准化厂房交付投产",
+      "event_date": "2026-06-30",
+      "involved_node_ids": [
+        "jq",
+        "sz"
+      ],
+      "involved_edge_ids": [
+        "E001",
+        "E025"
+      ],
+      "before_after": "此前：飞地在建、企业未投产；此后：园区近八成空间完成招商，嘉奇等进入投产爬坡",
+      "source_ids": [
+        "S037",
+        "S023",
+        "S051"
+      ],
+      "uncertainty": "达产产值为预计值，实际产出待观察",
+      "last_verified_at": "2026-10-29"
+    },
+    {
+      "change_id": "C002",
+      "change_type": "new_entity",
+      "title": "两个独立（共享）储能电站（欣城、日盛各200MW/400MWh）相继并网投运",
+      "event_date": "2026-09-30",
+      "involved_node_ids": [
+        "ess"
+      ],
+      "involved_edge_ids": [
+        "E023"
+      ],
+      "before_after": "此前：本地无独立储能；此后：新增调峰调频、顶峰保供能力",
+      "source_ids": [
+        "S039"
+      ],
+      "uncertainty": "对具体企业用电/电价的影响无公开数据",
+      "last_verified_at": "2026-10-29"
+    },
+    {
+      "change_id": "C003",
+      "change_type": "new_entity",
+      "title": "铜来顺新材料生产线点火投产，2027年冲刺百亿产值",
+      "event_date": "2026-10-13",
+      "involved_node_ids": [
+        "tls"
+      ],
+      "involved_edge_ids": [
+        "E017"
+      ],
+      "before_after": "此前：铜基新材料以正威为主；此后：新增铜基加工主体",
+      "source_ids": [
+        "S036"
+      ],
+      "uncertainty": "百亿为2027目标，非当前产值",
+      "last_verified_at": "2026-10-29"
+    },
+    {
+      "change_id": "C004",
+      "change_type": "new_entity",
+      "title": "8月3日签约4宗链主级项目（高端精密制造/绿色冷轧钢/空压机/液冷散热），总投资80亿、预计年产值203亿",
+      "event_date": "2026-08-03",
+      "involved_node_ids": [
+        "hpm",
+        "crs",
+        "acc",
+        "lcs"
+      ],
+      "involved_edge_ids": [
+        "E019",
+        "E020",
+        "E021"
+      ],
+      "before_after": "此前：AI机器人/循环钢/空压机/液冷本地无对应主体；此后：签约待落地",
+      "source_ids": [
+        "S041"
+      ],
+      "uncertainty": "签约金额≠实际投资，项目均待建，本地协同为假设",
+      "last_verified_at": "2026-10-29"
+    },
+    {
+      "change_id": "C005",
+      "change_type": "new_entity",
+      "title": "金利源、佳有机械、铣锐精密等一批增资扩产项目落地（杨侨/泰美）",
+      "event_date": "2026-05至09",
+      "involved_node_ids": [
+        "jly",
+        "jy"
+      ],
+      "involved_edge_ids": [
+        "E018",
+        "E022"
+      ],
+      "before_after": "此前：相关镇缺此类配套；此后：绝缘板/水处理装备等项目在建",
+      "source_ids": [
+        "S038",
+        "S043",
+        "S040"
+      ],
+      "uncertainty": "均处在建/待投产，实际产出待观察",
+      "last_verified_at": "2026-10-29"
+    },
+    {
+      "change_id": "C006",
+      "change_type": "new_edge",
+      "title": "石洲大桥重建推进（园洲—东莞石排，双向六车道），施工期交通管制",
+      "event_date": "2026-10-26",
+      "involved_node_ids": [
+        "dg"
+      ],
+      "involved_edge_ids": [
+        "E026"
+      ],
+      "before_after": "此前：双向两车道老桥；此后：施工管制，建成后跨市通行能力提升",
+      "source_ids": [
+        "S045",
+        "S053"
+      ],
+      "uncertainty": "预计2031年建成，工期长；施工期或阶段性影响通勤",
+      "last_verified_at": "2026-10-29"
+    },
+    {
+      "change_id": "C007",
+      "change_type": "new_edge",
+      "title": "惠霞高速博罗段冲刺年内通车，整体进度超八成",
+      "event_date": "2026-07",
+      "involved_node_ids": [
+        "dg"
+      ],
+      "involved_edge_ids": [
+        "E027"
+      ],
+      "before_after": "此前：南北向高速通道未贯通；此后：年内有望新增南北大动脉",
+      "source_ids": [
+        "S004",
+        "S037"
+      ],
+      "uncertainty": "通车时间为目标，以官方为准",
+      "last_verified_at": "2026-10-29"
+    },
+    {
+      "change_id": "C008",
+      "change_type": "exit",
+      "title": "固力水泥博罗分公司日产2500吨熟料生产线关停、主体设备拆除",
+      "event_date": "2026-02-13",
+      "involved_node_ids": [
+        "glc"
+      ],
+      "involved_edge_ids": [
+        "E044"
+      ],
+      "before_after": "此前：公庄保留该熟料产能；此后：该条生产线永久退出、不具备生产条件",
+      "source_ids": [
+        "S048"
+      ],
+      "uncertainty": "仅为单条生产线，企业其他业务未说明",
+      "last_verified_at": "2026-10-29"
+    },
+    {
+      "change_id": "C009",
+      "change_type": "weaken",
+      "title": "石湾环境整治：4家违法企业停产、限期完善环保手续（另有3家违规五金停产）",
+      "event_date": "2026-07-29",
+      "involved_node_ids": [
+        "bmc",
+        "lq"
+      ],
+      "involved_edge_ids": [
+        "E045",
+        "E030"
+      ],
+      "before_after": "此前：违法排污产能在产；此后：停产整改，环保倒逼产能出清",
+      "source_ids": [
+        "S049",
+        "S050"
+      ],
+      "uncertainty": "验收合格后或复产，非永久退出",
+      "last_verified_at": "2026-10-29"
+    },
+    {
+      "change_id": "C010",
+      "change_type": "strengthen",
+      "title": "博罗县荔枝产业协会成立，与省农科院签订科技合作，抱团做强罗浮山荔枝",
+      "event_date": "2026-09-23",
+      "involved_node_ids": [
+        "lsz"
+      ],
+      "involved_edge_ids": [
+        "E039"
+      ],
+      "before_after": "此前：荔枝主体分散；此后：协会统筹、品牌化数字化推进",
+      "source_ids": [
+        "S046",
+        "S047"
+      ],
+      "uncertainty": "品牌价值超12亿为评估口径，非销售额",
+      "last_verified_at": "2026-10-29"
+    },
+    {
+      "change_id": "C011",
+      "change_type": "strengthen",
+      "title": "博罗入选国家农业现代化示范区，7个国家地理标志、37个粤字号、农产品加工产值破百亿",
+      "event_date": "2026-06-25",
+      "involved_node_ids": [
+        "lsz",
+        "sc",
+        "lfsgy"
+      ],
+      "involved_edge_ids": [
+        "E039",
+        "E038"
+      ],
+      "before_after": "此前：农业以分散种养为主；此后：全链条、集群化获国家级认定",
+      "source_ids": [
+        "S047",
+        "S042"
+      ],
+      "uncertainty": "加工产值为县域口径，分单品数据有限",
+      "last_verified_at": "2026-10-29"
+    },
+    {
+      "change_id": "C012",
+      "change_type": "strengthen",
+      "title": "环两山引领区文旅持续走强：国庆博罗片区接待52.97万人次、过夜率约25%，218旅游公路沿线民宿预订率92%",
+      "event_date": "2026-10",
+      "involved_node_ids": [
+        "lswh",
+        "hh",
+        "sc"
+      ],
+      "involved_edge_ids": [
+        "E037",
+        "E038",
+        "E041"
+      ],
+      "before_after": "此前：山区以一日游为主；此后：过夜与民宿显著增长、淡季留人成新课题",
+      "source_ids": [
+        "S052",
+        "S054",
+        "S031"
+      ],
+      "uncertainty": "国庆为旺季峰值，全年过夜率为推断区间",
+      "last_verified_at": "2026-10-29"
+    }
+  ]
+}

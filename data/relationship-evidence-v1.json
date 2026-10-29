@@ -1,0 +1,1649 @@
+{
+  "schema_version": "relationship-evidence-v1",
+  "region": "boluo",
+  "name": "博罗全息关系世界 V9 · 公开证据关系底座",
+  "generated_at": "2026-10-29 08:55",
+  "evidence_grade_legend": {
+    "A": "官方直接观测：政府统计/政府文件/可核验主体公告，带真实 URL 与时期",
+    "B": "多源交叉推断：≥2类间接证据+结构系数约束出的区间，非统计值，不冒充置信区间",
+    "C": "待验证假设/规划意向：签约、在建、产业链位置推断，尚未形成现实关系"
+  },
+  "evidence_type_legend": {
+    "已证实事实": "有官方或主体公开证据直接证实",
+    "证据推断": "多源间接证据推断，给出区间或定性，不编造精确值",
+    "待验证假设": "规划/签约/产业链位置假设，前端须显式标注"
+  },
+  "relation_type_legend": {
+    "supply_chain": "供应链配套",
+    "investment": "投资建设",
+    "commute": "就业通勤",
+    "transport": "交通物流",
+    "tourism_consumption": "消费文旅",
+    "eco_constraint": "生态约束",
+    "resource_competition": "资源竞争",
+    "regional": "区域协作"
+  },
+  "node_count": 36,
+  "edge_count": 45,
+  "note": "关系强度不编造：有公开量化数据才显示 metric，否则只给 strength_basis；C 级为待验证假设，前端须显式标注。",
+  "nodes": [
+    {
+      "node_id": "dj",
+      "name": "东江水系",
+      "node_type": "eco",
+      "layer": "生态底座",
+      "town": "罗阳/石湾/园洲",
+      "description": "母亲河，饮用水源Ⅱ类，沿江镇街排污上限约束",
+      "node_status": "active",
+      "change_status": "无显著变化",
+      "evidence_grade": "A",
+      "source_ids": [
+        "S001",
+        "S050"
+      ]
+    },
+    {
+      "node_id": "lswh",
+      "name": "环两山引领区",
+      "node_type": "eco",
+      "layer": "生态底座",
+      "town": "长宁/横河/福田",
+      "description": "环南昆山-罗浮山，218km 8字旅游公路，北部绿色屏障",
+      "node_status": "active",
+      "change_status": "增强",
+      "evidence_grade": "A",
+      "source_ids": [
+        "S030",
+        "S031",
+        "S054"
+      ]
+    },
+    {
+      "node_id": "xwd",
+      "name": "欣旺达/锂威",
+      "node_type": "anchor",
+      "layer": "链主",
+      "town": "园洲",
+      "description": "锂电池，高用电、高外部订单依赖",
+      "node_status": "active",
+      "change_status": "无显著变化",
+      "evidence_grade": "A",
+      "source_ids": [
+        "S001",
+        "S022"
+      ]
+    },
+    {
+      "node_id": "htd",
+      "name": "华通电脑",
+      "node_type": "anchor",
+      "layer": "链主",
+      "town": "园洲/石湾",
+      "description": "电子信息770亿基本盘代表",
+      "node_status": "active",
+      "change_status": "无显著变化",
+      "evidence_grade": "A",
+      "source_ids": [
+        "S007",
+        "S014"
+      ]
+    },
+    {
+      "node_id": "zw",
+      "name": "正威新材料",
+      "node_type": "anchor",
+      "layer": "链主",
+      "town": "罗阳",
+      "description": "25万吨铜杆/年，重资产原材料底座",
+      "node_status": "active",
+      "change_status": "无显著变化",
+      "evidence_grade": "A",
+      "source_ids": [
+        "S004",
+        "S005"
+      ]
+    },
+    {
+      "node_id": "jq",
+      "name": "嘉奇新能源",
+      "node_type": "anchor",
+      "layer": "链主",
+      "town": "园洲",
+      "description": "奇瑞系，深博福田产业园，华南首个梯次电池基地",
+      "node_status": "new",
+      "change_status": "新增",
+      "evidence_grade": "A",
+      "source_ids": [
+        "S037",
+        "S041",
+        "S051"
+      ]
+    },
+    {
+      "node_id": "jf",
+      "name": "江丰精密",
+      "node_type": "anchor",
+      "layer": "链主",
+      "town": "园洲",
+      "description": "溅射靶材全球第一，3纳米",
+      "node_status": "active",
+      "change_status": "无显著变化",
+      "evidence_grade": "A",
+      "source_ids": [
+        "S007",
+        "S008"
+      ]
+    },
+    {
+      "node_id": "gj",
+      "name": "11家国家级小巨人",
+      "node_type": "champion",
+      "layer": "小巨人",
+      "town": "多镇",
+      "description": "嘉治电子/派沃/力王/凤凰/广麟/奥科/百时达/吉邦/鑫晖源/信立泰/TCL瑞智",
+      "node_status": "active",
+      "change_status": "无显著变化",
+      "evidence_grade": "A",
+      "source_ids": [
+        "S006",
+        "S008"
+      ]
+    },
+    {
+      "node_id": "sj",
+      "name": "74家省级专精特新",
+      "node_type": "champion",
+      "layer": "小巨人",
+      "town": "多镇",
+      "description": "各细分赛道隐形市占率",
+      "node_status": "active",
+      "change_status": "无显著变化",
+      "evidence_grade": "A",
+      "source_ids": [
+        "S006",
+        "S008"
+      ]
+    },
+    {
+      "node_id": "bmc",
+      "name": "表面处理群落",
+      "node_type": "cluster",
+      "layer": "产业群落",
+      "town": "福田",
+      "description": "省级特色集群，电镀/喷涂，受东江环保约束",
+      "node_status": "active",
+      "change_status": "无显著变化",
+      "evidence_grade": "A",
+      "source_ids": [
+        "S012",
+        "S049"
+      ]
+    },
+    {
+      "node_id": "mj",
+      "name": "石湾模具群落",
+      "node_type": "cluster",
+      "layer": "产业群落",
+      "town": "石湾",
+      "description": "全镇2461家工业企业，三市交界，特斯拉/比亚迪/拓竹",
+      "node_status": "active",
+      "change_status": "增强",
+      "evidence_grade": "A",
+      "source_ids": [
+        "S014",
+        "S015"
+      ]
+    },
+    {
+      "node_id": "ddc",
+      "name": "电动车配套群落",
+      "node_type": "cluster",
+      "layer": "产业群落",
+      "town": "石湾",
+      "description": "台铃/小刀/新日/绿佳，产值超150亿",
+      "node_status": "active",
+      "change_status": "无显著变化",
+      "evidence_grade": "A",
+      "source_ids": [
+        "S014",
+        "S015"
+      ]
+    },
+    {
+      "node_id": "lq",
+      "name": "镇村老厂群落",
+      "node_type": "legacy",
+      "layer": "老厂基盘",
+      "town": "龙溪/园洲/罗阳",
+      "description": "数千家五金/塑料/建材，用电+11.5%大头，亩均达标压力",
+      "node_status": "active",
+      "change_status": "无显著变化",
+      "evidence_grade": "A",
+      "source_ids": [
+        "S004",
+        "S016"
+      ]
+    },
+    {
+      "node_id": "ess",
+      "name": "独立储能电站（欣城/日盛）",
+      "node_type": "energy",
+      "layer": "能源设施",
+      "town": "博罗县域",
+      "description": "两个200MW/400MWh独立（共享）储能电站，调峰调频、顶峰保供",
+      "node_status": "new",
+      "change_status": "新增",
+      "evidence_grade": "A",
+      "source_ids": [
+        "S039"
+      ]
+    },
+    {
+      "node_id": "bss",
+      "name": "百岁山",
+      "node_type": "agriculture",
+      "layer": "农业康养",
+      "town": "湖镇",
+      "description": "374万吨/年，罗浮山水源",
+      "node_status": "active",
+      "change_status": "无显著变化",
+      "evidence_grade": "A",
+      "source_ids": [
+        "S001",
+        "S019"
+      ]
+    },
+    {
+      "node_id": "lfsgy",
+      "name": "罗浮山国药",
+      "node_type": "agriculture",
+      "layer": "农业康养",
+      "town": "长宁",
+      "description": "中华老字号，红脚艾、百草油，省中医院合作",
+      "node_status": "active",
+      "change_status": "无显著变化",
+      "evidence_grade": "A",
+      "source_ids": [
+        "S019",
+        "S047"
+      ]
+    },
+    {
+      "node_id": "sc",
+      "name": "柏塘山茶",
+      "node_type": "agriculture",
+      "layer": "国家地理标志",
+      "town": "柏塘",
+      "description": "国家地理标志，省十大茶乡",
+      "node_status": "active",
+      "change_status": "无显著变化",
+      "evidence_grade": "A",
+      "source_ids": [
+        "S047",
+        "S054"
+      ]
+    },
+    {
+      "node_id": "xc",
+      "name": "福田菜心",
+      "node_type": "agriculture",
+      "layer": "国家地理标志",
+      "town": "福田",
+      "description": "国家地理标志，太空育种",
+      "node_status": "active",
+      "change_status": "无显著变化",
+      "evidence_grade": "A",
+      "source_ids": [
+        "S047"
+      ]
+    },
+    {
+      "node_id": "gyg",
+      "name": "观音阁花生",
+      "node_type": "agriculture",
+      "layer": "国家地理标志",
+      "town": "观音阁",
+      "description": "国家地理标志",
+      "node_status": "active",
+      "change_status": "无显著变化",
+      "evidence_grade": "A",
+      "source_ids": [
+        "S042",
+        "S047"
+      ]
+    },
+    {
+      "node_id": "gyght",
+      "name": "观音阁黑糖",
+      "node_type": "agriculture",
+      "layer": "国家地理标志",
+      "town": "观音阁",
+      "description": "国家地理标志",
+      "node_status": "active",
+      "change_status": "无显著变化",
+      "evidence_grade": "A",
+      "source_ids": [
+        "S042",
+        "S047"
+      ]
+    },
+    {
+      "node_id": "sb",
+      "name": "石坝胡须鸡",
+      "node_type": "agriculture",
+      "layer": "农业康养",
+      "town": "石坝",
+      "description": "全国名特优新",
+      "node_status": "active",
+      "change_status": "无显著变化",
+      "evidence_grade": "A",
+      "source_ids": [
+        "S047"
+      ]
+    },
+    {
+      "node_id": "lsmd",
+      "name": "罗浮山大米",
+      "node_type": "agriculture",
+      "layer": "国家地理标志",
+      "town": "长宁/横河",
+      "description": "国家地理标志，太空育种",
+      "node_status": "active",
+      "change_status": "无显著变化",
+      "evidence_grade": "A",
+      "source_ids": [
+        "S047"
+      ]
+    },
+    {
+      "node_id": "lsz",
+      "name": "罗浮山荔枝",
+      "node_type": "agriculture",
+      "layer": "国家地理标志",
+      "town": "罗浮山周边",
+      "description": "国家地理标志，10万亩，品牌价值超12亿",
+      "node_status": "active",
+      "change_status": "增强",
+      "evidence_grade": "A",
+      "source_ids": [
+        "S046",
+        "S047"
+      ]
+    },
+    {
+      "node_id": "hh",
+      "name": "横河户外小镇",
+      "node_type": "cluster",
+      "layer": "农业康养",
+      "town": "横河",
+      "description": "华南户外水经济港，民宿集群",
+      "node_status": "active",
+      "change_status": "增强",
+      "evidence_grade": "A",
+      "source_ids": [
+        "S020",
+        "S054"
+      ]
+    },
+    {
+      "node_id": "tls",
+      "name": "铜来顺新材料",
+      "node_type": "new",
+      "layer": "新主体",
+      "town": "博罗产业园区",
+      "description": "县产投集团牵头引进，2027冲刺百亿产值",
+      "node_status": "new",
+      "change_status": "新增",
+      "evidence_grade": "A",
+      "source_ids": [
+        "S036"
+      ]
+    },
+    {
+      "node_id": "jly",
+      "name": "金利源科技",
+      "node_type": "new",
+      "layer": "新主体",
+      "town": "杨侨",
+      "description": "环保型绝缘板180万㎡、铜排/电源铜片，总投资2亿",
+      "node_status": "pending",
+      "change_status": "新增",
+      "evidence_grade": "A",
+      "source_ids": [
+        "S038"
+      ]
+    },
+    {
+      "node_id": "jy",
+      "name": "佳有机械",
+      "node_type": "new",
+      "layer": "新主体",
+      "town": "泰美",
+      "description": "水处理、灌装及后段包装设备，总投资2亿、年产值5亿",
+      "node_status": "pending",
+      "change_status": "新增",
+      "evidence_grade": "A",
+      "source_ids": [
+        "S043"
+      ]
+    },
+    {
+      "node_id": "hpm",
+      "name": "高端精密制造项目（具身机器人）",
+      "node_type": "new",
+      "layer": "新主体",
+      "town": "待落地",
+      "description": "总投资25亿，机器人结构件/减速器/压铸一体化",
+      "node_status": "pending",
+      "change_status": "新增",
+      "evidence_grade": "A",
+      "source_ids": [
+        "S041"
+      ]
+    },
+    {
+      "node_id": "crs",
+      "name": "金属绿色冷轧钢项目",
+      "node_type": "new",
+      "layer": "新主体",
+      "town": "待落地",
+      "description": "总投资25亿，废钢资源化、绿色压延循环经济",
+      "node_status": "pending",
+      "change_status": "新增",
+      "evidence_grade": "A",
+      "source_ids": [
+        "S041"
+      ]
+    },
+    {
+      "node_id": "acc",
+      "name": "空压机智能制造产业园",
+      "node_type": "new",
+      "layer": "新主体",
+      "town": "待落地",
+      "description": "总投资15亿，工业之肺通用动力母机",
+      "node_status": "pending",
+      "change_status": "新增",
+      "evidence_grade": "A",
+      "source_ids": [
+        "S041"
+      ]
+    },
+    {
+      "node_id": "lcs",
+      "name": "液冷散热部件项目",
+      "node_type": "new",
+      "layer": "新主体",
+      "town": "待落地",
+      "description": "总投资15亿，芯片/汽车散热，为英伟达等供货",
+      "node_status": "pending",
+      "change_status": "新增",
+      "evidence_grade": "A",
+      "source_ids": [
+        "S041"
+      ]
+    },
+    {
+      "node_id": "glc",
+      "name": "固力水泥博罗分公司",
+      "node_type": "legacy",
+      "layer": "退出主体",
+      "town": "公庄",
+      "description": "日产2500吨水泥熟料生产线关停、主体设备拆除",
+      "node_status": "exit",
+      "change_status": "退出",
+      "evidence_grade": "A",
+      "source_ids": [
+        "S048"
+      ]
+    },
+    {
+      "node_id": "gz",
+      "name": "广州",
+      "node_type": "external",
+      "layer": "外部",
+      "town": "外部",
+      "description": "增城接石湾，省中医院医药合作",
+      "node_status": "active",
+      "change_status": "无显著变化",
+      "evidence_grade": "A",
+      "source_ids": [
+        "S014",
+        "S028"
+      ]
+    },
+    {
+      "node_id": "dg",
+      "name": "东莞",
+      "node_type": "external",
+      "layer": "外部",
+      "town": "外部",
+      "description": "紧邻石湾/园洲，模具电子外溢源头",
+      "node_status": "active",
+      "change_status": "无显著变化",
+      "evidence_grade": "A",
+      "source_ids": [
+        "S025",
+        "S033"
+      ]
+    },
+    {
+      "node_id": "sz",
+      "name": "深圳",
+      "node_type": "external",
+      "layer": "外部",
+      "town": "外部",
+      "description": "欣旺达、嘉奇新能源项目来源，福田飞地",
+      "node_status": "active",
+      "change_status": "增强",
+      "evidence_grade": "A",
+      "source_ids": [
+        "S022",
+        "S037"
+      ]
+    },
+    {
+      "node_id": "hz",
+      "name": "惠城",
+      "node_type": "external",
+      "layer": "外部",
+      "town": "外部",
+      "description": "惠州主城，行政与文旅客流",
+      "node_status": "active",
+      "change_status": "无显著变化",
+      "evidence_grade": "A",
+      "source_ids": [
+        "S001",
+        "S031"
+      ]
+    }
+  ],
+  "edges": [
+    {
+      "edge_id": "E001",
+      "source_node_id": "sz",
+      "target_node_id": "jq",
+      "relation_type": "regional",
+      "relation_description": "深圳福田总部+博罗制造基地：嘉奇新能源（奇瑞系动力电池资源再生）入驻深博福田产业园，华南首个梯次电池生产基地",
+      "direction": "有方向",
+      "valid_period": "2026",
+      "evidence_type": "已证实事实",
+      "evidence_grade": "A",
+      "confidence": "高",
+      "metric": {
+        "metric_name": "深博福田产业园总投资",
+        "metric_value": 54,
+        "metric_unit": "亿元"
+      },
+      "comparison_period": "2024年启动",
+      "strength_basis": "官方公告飞地全面开园、25宗项目、达产产值超100亿",
+      "source_ids": [
+        "S037",
+        "S041",
+        "S051"
+      ],
+      "counter_evidence": "达产产值为预计值，非当前实际产出",
+      "last_verified_at": "2026-10-29",
+      "change_status": "新增"
+    },
+    {
+      "edge_id": "E002",
+      "source_node_id": "sz",
+      "target_node_id": "xwd",
+      "relation_type": "supply_chain",
+      "relation_description": "欣旺达深圳总部与锂威园洲生产基地的总部—基地布局",
+      "direction": "有方向",
+      "valid_period": "2021-2026",
+      "evidence_type": "已证实事实",
+      "evidence_grade": "A",
+      "confidence": "高",
+      "metric": null,
+      "comparison_period": "—",
+      "strength_basis": "企业公开布局与政府文件证实总部—基地关系",
+      "source_ids": [
+        "S001",
+        "S022"
+      ],
+      "counter_evidence": null,
+      "last_verified_at": "2026-10-29",
+      "change_status": "无显著变化"
+    },
+    {
+      "edge_id": "E003",
+      "source_node_id": "dg",
+      "target_node_id": "mj",
+      "relation_type": "supply_chain",
+      "relation_description": "隔东江与东莞石龙相望，模具厂迁入（如天倬由东莞50亩扩至石湾150亩）",
+      "direction": "有方向",
+      "valid_period": "近12个月",
+      "evidence_type": "已证实事实",
+      "evidence_grade": "A",
+      "confidence": "高",
+      "metric": {
+        "metric_name": "石湾全镇工业企业",
+        "metric_value": 2461,
+        "metric_unit": "家"
+      },
+      "comparison_period": "2025",
+      "strength_basis": "政府文件与权威媒体证实石湾承接东莞模具外溢",
+      "source_ids": [
+        "S014",
+        "S015"
+      ],
+      "counter_evidence": "迁入为个案+总量数据，未给全部企业来源地",
+      "last_verified_at": "2026-10-29",
+      "change_status": "增强"
+    },
+    {
+      "edge_id": "E004",
+      "source_node_id": "dg",
+      "target_node_id": "ddc",
+      "relation_type": "supply_chain",
+      "relation_description": "台铃、小刀等电动车厂从东莞方向落户石湾，形成电动车配套集群",
+      "direction": "有方向",
+      "valid_period": "近12个月",
+      "evidence_type": "已证实事实",
+      "evidence_grade": "A",
+      "confidence": "高",
+      "metric": {
+        "metric_name": "电动车配套产值",
+        "metric_value": 150,
+        "metric_unit": "亿元(超)"
+      },
+      "comparison_period": "2025",
+      "strength_basis": "政府文件与产业报道证实",
+      "source_ids": [
+        "S014",
+        "S015"
+      ],
+      "counter_evidence": "产值为集群口径，非单家",
+      "last_verified_at": "2026-10-29",
+      "change_status": "无显著变化"
+    },
+    {
+      "edge_id": "E005",
+      "source_node_id": "dg",
+      "target_node_id": "htd",
+      "relation_type": "supply_chain",
+      "relation_description": "园洲/石湾承接东莞电子信息外溢，园洲电子信息为支柱",
+      "direction": "有方向",
+      "valid_period": "2025-2026",
+      "evidence_type": "已证实事实",
+      "evidence_grade": "A",
+      "confidence": "高",
+      "metric": {
+        "metric_name": "电子信息产业产值",
+        "metric_value": 773.8,
+        "metric_unit": "亿元"
+      },
+      "comparison_period": "2025",
+      "strength_basis": "电子信息产业官方数据（317家规上、+17.1%）",
+      "source_ids": [
+        "S007",
+        "S014"
+      ],
+      "counter_evidence": "产值为全县口径，非仅东莞外溢部分",
+      "last_verified_at": "2026-10-29",
+      "change_status": "无显著变化"
+    },
+    {
+      "edge_id": "E006",
+      "source_node_id": "dg",
+      "target_node_id": "lq",
+      "relation_type": "supply_chain",
+      "relation_description": "五金、塑料小厂随边界扩散至镇村",
+      "direction": "有方向",
+      "valid_period": "近3-5年",
+      "evidence_type": "证据推断",
+      "evidence_grade": "B",
+      "confidence": "中",
+      "metric": null,
+      "comparison_period": "—",
+      "strength_basis": "边界空间与产业同构推断，缺逐厂来源统计",
+      "source_ids": [
+        "S033",
+        "S016"
+      ],
+      "counter_evidence": "无逐厂迁入数据，强度为推断",
+      "last_verified_at": "2026-10-29",
+      "change_status": "无显著变化"
+    },
+    {
+      "edge_id": "E007",
+      "source_node_id": "gz",
+      "target_node_id": "mj",
+      "relation_type": "regional",
+      "relation_description": "石湾西北毗邻增城，地处三市交界承接外溢",
+      "direction": "有方向",
+      "valid_period": "近3-5年",
+      "evidence_type": "已证实事实",
+      "evidence_grade": "A",
+      "confidence": "中",
+      "metric": null,
+      "comparison_period": "—",
+      "strength_basis": "政府文件证实三市区位",
+      "source_ids": [
+        "S014",
+        "S015"
+      ],
+      "counter_evidence": "缺广州方向具体项目量",
+      "last_verified_at": "2026-10-29",
+      "change_status": "无显著变化"
+    },
+    {
+      "edge_id": "E008",
+      "source_node_id": "mj",
+      "target_node_id": "ddc",
+      "relation_type": "supply_chain",
+      "relation_description": "石湾模具为电动车提供模具零部件配套",
+      "direction": "有方向",
+      "valid_period": "2025-2026",
+      "evidence_type": "证据推断",
+      "evidence_grade": "B",
+      "confidence": "中",
+      "metric": null,
+      "comparison_period": "—",
+      "strength_basis": "同镇产业集群配套关系推断",
+      "source_ids": [
+        "S014",
+        "S015"
+      ],
+      "counter_evidence": "无配套金额，关系为结构推断",
+      "last_verified_at": "2026-10-29",
+      "change_status": "无显著变化"
+    },
+    {
+      "edge_id": "E009",
+      "source_node_id": "bmc",
+      "target_node_id": "ddc",
+      "relation_type": "supply_chain",
+      "relation_description": "表面处理（喷涂）为电动车提供表面工艺配套",
+      "direction": "有方向",
+      "valid_period": "2025-2026",
+      "evidence_type": "证据推断",
+      "evidence_grade": "B",
+      "confidence": "中",
+      "metric": null,
+      "comparison_period": "—",
+      "strength_basis": "产业链工艺配套推断",
+      "source_ids": [
+        "S012",
+        "S049"
+      ],
+      "counter_evidence": "环保约束下部分产能受限",
+      "last_verified_at": "2026-10-29",
+      "change_status": "无显著变化"
+    },
+    {
+      "edge_id": "E010",
+      "source_node_id": "jf",
+      "target_node_id": "htd",
+      "relation_type": "supply_chain",
+      "relation_description": "江丰精密溅射靶材向电子信息制造供应",
+      "direction": "有方向",
+      "valid_period": "2025-2026",
+      "evidence_type": "证据推断",
+      "evidence_grade": "B",
+      "confidence": "中",
+      "metric": null,
+      "comparison_period": "—",
+      "strength_basis": "靶材—电子制造工艺关系推断",
+      "source_ids": [
+        "S007",
+        "S008"
+      ],
+      "counter_evidence": "无供货合同公开数据",
+      "last_verified_at": "2026-10-29",
+      "change_status": "无显著变化"
+    },
+    {
+      "edge_id": "E011",
+      "source_node_id": "gj",
+      "target_node_id": "htd",
+      "relation_type": "supply_chain",
+      "relation_description": "国家级小巨人向电子信息主导产业提供精密配套",
+      "direction": "有方向",
+      "valid_period": "2025-2026",
+      "evidence_type": "证据推断",
+      "evidence_grade": "B",
+      "confidence": "中",
+      "metric": {
+        "metric_name": "国家级小巨人",
+        "metric_value": 11,
+        "metric_unit": "家"
+      },
+      "comparison_period": "2025",
+      "strength_basis": "小巨人名单与主导产业结构推断",
+      "source_ids": [
+        "S006",
+        "S008"
+      ],
+      "counter_evidence": "为聚合主体，配套关系为整体推断",
+      "last_verified_at": "2026-10-29",
+      "change_status": "无显著变化"
+    },
+    {
+      "edge_id": "E012",
+      "source_node_id": "sj",
+      "target_node_id": "lq",
+      "relation_type": "supply_chain",
+      "relation_description": "省级专精特新对镇村老厂形成技术升级带动",
+      "direction": "有方向",
+      "valid_period": "近12个月",
+      "evidence_type": "证据推断",
+      "evidence_grade": "B",
+      "confidence": "低",
+      "metric": {
+        "metric_name": "省级专精特新",
+        "metric_value": 74,
+        "metric_unit": "家"
+      },
+      "comparison_period": "2025",
+      "strength_basis": "数量与产业升级关系推断",
+      "source_ids": [
+        "S006",
+        "S008"
+      ],
+      "counter_evidence": "带动关系无直接证据",
+      "last_verified_at": "2026-10-29",
+      "change_status": "无显著变化"
+    },
+    {
+      "edge_id": "E013",
+      "source_node_id": "xwd",
+      "target_node_id": "mj",
+      "relation_type": "supply_chain",
+      "relation_description": "欣旺达电池结构件向模具/结构件加工环节外发",
+      "direction": "有方向",
+      "valid_period": "2025-2026",
+      "evidence_type": "证据推断",
+      "evidence_grade": "B",
+      "confidence": "低",
+      "metric": null,
+      "comparison_period": "—",
+      "strength_basis": "电池—结构件工艺关系推断",
+      "source_ids": [
+        "S001",
+        "S014"
+      ],
+      "counter_evidence": "无外发金额公开数据",
+      "last_verified_at": "2026-10-29",
+      "change_status": "无显著变化"
+    },
+    {
+      "edge_id": "E014",
+      "source_node_id": "jq",
+      "target_node_id": "ddc",
+      "relation_type": "supply_chain",
+      "relation_description": "嘉奇（动力电池再生）与电动车配套在零部件/回收环节衔接",
+      "direction": "有方向",
+      "valid_period": "2026",
+      "evidence_type": "待验证假设",
+      "evidence_grade": "C",
+      "confidence": "低",
+      "metric": null,
+      "comparison_period": "—",
+      "strength_basis": "同处新能源赛道的协同假设，尚无合作公告",
+      "source_ids": [
+        "S037",
+        "S041"
+      ],
+      "counter_evidence": "仅为产业链位置推断，无合作证据",
+      "last_verified_at": "2026-10-29",
+      "change_status": "新增"
+    },
+    {
+      "edge_id": "E015",
+      "source_node_id": "lq",
+      "target_node_id": "htd",
+      "relation_type": "supply_chain",
+      "relation_description": "镇村老厂为电子信息提供五金配套",
+      "direction": "有方向",
+      "valid_period": "2025-2026",
+      "evidence_type": "证据推断",
+      "evidence_grade": "B",
+      "confidence": "中",
+      "metric": null,
+      "comparison_period": "—",
+      "strength_basis": "五金—电子配套关系推断",
+      "source_ids": [
+        "S007",
+        "S016"
+      ],
+      "counter_evidence": "无配套金额，亩均达标压力下或腾退",
+      "last_verified_at": "2026-10-29",
+      "change_status": "无显著变化"
+    },
+    {
+      "edge_id": "E016",
+      "source_node_id": "zw",
+      "target_node_id": "xwd",
+      "relation_type": "supply_chain",
+      "relation_description": "正威铜杆向锂电池（铜材/铜排/连接）供应原材料",
+      "direction": "有方向",
+      "valid_period": "2025-2026",
+      "evidence_type": "证据推断",
+      "evidence_grade": "B",
+      "confidence": "中",
+      "metric": {
+        "metric_name": "正威铜杆产能",
+        "metric_value": 25,
+        "metric_unit": "万吨/年"
+      },
+      "comparison_period": "2025",
+      "strength_basis": "铜材—电池原材料关系+产能数据",
+      "source_ids": [
+        "S004",
+        "S005"
+      ],
+      "counter_evidence": "无直接供货比例公开数据",
+      "last_verified_at": "2026-10-29",
+      "change_status": "无显著变化"
+    },
+    {
+      "edge_id": "E017",
+      "source_node_id": "tls",
+      "target_node_id": "zw",
+      "relation_type": "supply_chain",
+      "relation_description": "铜来顺新材料投产，与正威铜材共同补强本地铜基新材料链条",
+      "direction": "有方向",
+      "valid_period": "2026-10",
+      "evidence_type": "已证实事实",
+      "evidence_grade": "A",
+      "confidence": "中",
+      "metric": {
+        "metric_name": "铜来顺目标产值",
+        "metric_value": 100,
+        "metric_unit": "亿元(2027冲刺)"
+      },
+      "comparison_period": "2027目标",
+      "strength_basis": "官方投产公告，县产投集团牵头引进",
+      "source_ids": [
+        "S036"
+      ],
+      "counter_evidence": "百亿为2027目标，非当前产值；两企业协同关系为推断",
+      "last_verified_at": "2026-10-29",
+      "change_status": "新增"
+    },
+    {
+      "edge_id": "E018",
+      "source_node_id": "jly",
+      "target_node_id": "xwd",
+      "relation_type": "supply_chain",
+      "relation_description": "金利源环保绝缘板、铜排/电源铜片为电池与电源提供配套",
+      "direction": "有方向",
+      "valid_period": "2026-12(预计)",
+      "evidence_type": "待验证假设",
+      "evidence_grade": "C",
+      "confidence": "低",
+      "metric": {
+        "metric_name": "金利源总投资",
+        "metric_value": 2,
+        "metric_unit": "亿元"
+      },
+      "comparison_period": "2026",
+      "strength_basis": "节能审查公示载明产品与投产时间，配套关系为推断",
+      "source_ids": [
+        "S038"
+      ],
+      "counter_evidence": "尚未投产，配套关系无合作证据",
+      "last_verified_at": "2026-10-29",
+      "change_status": "新增"
+    },
+    {
+      "edge_id": "E019",
+      "source_node_id": "lcs",
+      "target_node_id": "hpm",
+      "relation_type": "supply_chain",
+      "relation_description": "液冷散热部件为AI算力与具身机器人等高功率装备提供散热",
+      "direction": "有方向",
+      "valid_period": "2026签约(待建)",
+      "evidence_type": "待验证假设",
+      "evidence_grade": "C",
+      "confidence": "低",
+      "metric": {
+        "metric_name": "液冷散热项目投资",
+        "metric_value": 15,
+        "metric_unit": "亿元"
+      },
+      "comparison_period": "2026",
+      "strength_basis": "签约公告载明为英伟达等供货，与机器人协同为推断",
+      "source_ids": [
+        "S041"
+      ],
+      "counter_evidence": "项目待建，本地协同关系为假设",
+      "last_verified_at": "2026-10-29",
+      "change_status": "新增"
+    },
+    {
+      "edge_id": "E020",
+      "source_node_id": "crs",
+      "target_node_id": "zw",
+      "relation_type": "supply_chain",
+      "relation_description": "金属绿色冷轧（废钢资源化）补强本地金属循环与原材料链条",
+      "direction": "有方向",
+      "valid_period": "2026签约(待建)",
+      "evidence_type": "待验证假设",
+      "evidence_grade": "C",
+      "confidence": "低",
+      "metric": {
+        "metric_name": "绿色冷轧钢项目投资",
+        "metric_value": 25,
+        "metric_unit": "亿元"
+      },
+      "comparison_period": "2026",
+      "strength_basis": "签约公告载明循环经济方向",
+      "source_ids": [
+        "S041"
+      ],
+      "counter_evidence": "项目待建，与正威协同为假设",
+      "last_verified_at": "2026-10-29",
+      "change_status": "新增"
+    },
+    {
+      "edge_id": "E021",
+      "source_node_id": "acc",
+      "target_node_id": "hpm",
+      "relation_type": "supply_chain",
+      "relation_description": "空压机（工业之肺）作为通用动力母机，为精密制造与机器人产线提供动力",
+      "direction": "有方向",
+      "valid_period": "2026签约(待建)",
+      "evidence_type": "待验证假设",
+      "evidence_grade": "C",
+      "confidence": "低",
+      "metric": {
+        "metric_name": "空压机产业园投资",
+        "metric_value": 15,
+        "metric_unit": "亿元"
+      },
+      "comparison_period": "2026",
+      "strength_basis": "签约公告载明空压机方向",
+      "source_ids": [
+        "S041"
+      ],
+      "counter_evidence": "项目待建，本地配套关系为假设",
+      "last_verified_at": "2026-10-29",
+      "change_status": "新增"
+    },
+    {
+      "edge_id": "E022",
+      "source_node_id": "jy",
+      "target_node_id": "lq",
+      "relation_type": "supply_chain",
+      "relation_description": "佳有水处理/灌装设备制造，为本地装备制造与食品饮料行业提供设备",
+      "direction": "有方向",
+      "valid_period": "2026-09开工",
+      "evidence_type": "待验证假设",
+      "evidence_grade": "C",
+      "confidence": "低",
+      "metric": {
+        "metric_name": "佳有总投资/年产值",
+        "metric_value": 2,
+        "metric_unit": "亿元 / 5亿元"
+      },
+      "comparison_period": "2026",
+      "strength_basis": "开工公告载明设备方向，本地配套为推断",
+      "source_ids": [
+        "S043"
+      ],
+      "counter_evidence": "在建，本地供货关系为假设",
+      "last_verified_at": "2026-10-29",
+      "change_status": "新增"
+    },
+    {
+      "edge_id": "E023",
+      "source_node_id": "ess",
+      "target_node_id": "xwd",
+      "relation_type": "supply_chain",
+      "relation_description": "独立储能电站并网，为锂电池/电子等高用电产业与电网提供调峰调频、顶峰保供",
+      "direction": "有方向",
+      "valid_period": "2026-09",
+      "evidence_type": "已证实事实",
+      "evidence_grade": "A",
+      "confidence": "中",
+      "metric": {
+        "metric_name": "单站规模",
+        "metric_value": 200,
+        "metric_unit": "MW/400MWh"
+      },
+      "comparison_period": "2026",
+      "strength_basis": "两个独立储能并网公告，保供关系为功能定位",
+      "source_ids": [
+        "S039"
+      ],
+      "counter_evidence": "对具体企业的供电/电价影响无公开数据",
+      "last_verified_at": "2026-10-29",
+      "change_status": "新增"
+    },
+    {
+      "edge_id": "E024",
+      "source_node_id": "dg",
+      "target_node_id": "lq",
+      "relation_type": "commute",
+      "relation_description": "园洲+石湾与东莞（石龙/石排/企石/桥头）跨江通勤，官方定性为15分钟生活圈、通勤常态",
+      "direction": "双向",
+      "valid_period": "2025-2026常态工作日",
+      "evidence_type": "证据推断",
+      "evidence_grade": "B",
+      "confidence": "中",
+      "metric": {
+        "metric_name": "工作日跨城通勤(双向合计)",
+        "metric_value": null,
+        "metric_unit": "人次/日（区间4500/10000/17000）"
+      },
+      "comparison_period": "2022手机信令",
+      "strength_basis": "多源：跨市公交+官方定性+手机信令，结构系数法给区间",
+      "source_ids": [
+        "S025",
+        "S026",
+        "S032",
+        "S033",
+        "S035"
+      ],
+      "counter_evidence": "区间为推断非统计值；务工者多住厂，不等于每日跨界",
+      "last_verified_at": "2026-10-29",
+      "change_status": "增强"
+    },
+    {
+      "edge_id": "E025",
+      "source_node_id": "sz",
+      "target_node_id": "jq",
+      "relation_type": "commute",
+      "relation_description": "深圳福田—园洲飞地的总部派驻、班车与商务往返",
+      "direction": "有方向",
+      "valid_period": "园区达产后(约2026起)",
+      "evidence_type": "证据推断",
+      "evidence_grade": "B",
+      "confidence": "低",
+      "metric": {
+        "metric_name": "深圳—园洲日往返",
+        "metric_value": null,
+        "metric_unit": "人次/日（区间50/250/500）"
+      },
+      "comparison_period": "2026",
+      "strength_basis": "总部—基地派驻机制+就业密度法区间",
+      "source_ids": [
+        "S022",
+        "S024",
+        "S037"
+      ],
+      "counter_evidence": "园区达产爬坡，当前实际远低于达产值",
+      "last_verified_at": "2026-10-29",
+      "change_status": "新增"
+    },
+    {
+      "edge_id": "E026",
+      "source_node_id": "dg",
+      "target_node_id": "mj",
+      "relation_type": "transport",
+      "relation_description": "石洲大桥重建（园洲—东莞石排，双向六车道），施工期交通管制，建成后改写跨市往来",
+      "direction": "有方向",
+      "valid_period": "2026-2031(预计)",
+      "evidence_type": "已证实事实",
+      "evidence_grade": "A",
+      "confidence": "中",
+      "metric": {
+        "metric_name": "石洲大桥车道",
+        "metric_value": 6,
+        "metric_unit": "双向六车道"
+      },
+      "comparison_period": "2031(预计建成)",
+      "strength_basis": "重建管制公告+小城市试点报道",
+      "source_ids": [
+        "S045",
+        "S053"
+      ],
+      "counter_evidence": "预计2031建成，工期长；施工期或阶段性影响通勤",
+      "last_verified_at": "2026-10-29",
+      "change_status": "新增"
+    },
+    {
+      "edge_id": "E027",
+      "source_node_id": "dg",
+      "target_node_id": "lq",
+      "relation_type": "transport",
+      "relation_description": "惠霞高速（丰字交通南北大动脉）博罗段冲刺年内通车，整体进度超八成",
+      "direction": "有方向",
+      "valid_period": "2026年内(目标)",
+      "evidence_type": "已证实事实",
+      "evidence_grade": "A",
+      "confidence": "中",
+      "metric": {
+        "metric_name": "整体建设进度",
+        "metric_value": 80,
+        "metric_unit": "%(超)"
+      },
+      "comparison_period": "2026年6月底",
+      "strength_basis": "官方建设进度报道",
+      "source_ids": [
+        "S004",
+        "S037"
+      ],
+      "counter_evidence": "通车时间为目标，以官方为准",
+      "last_verified_at": "2026-10-29",
+      "change_status": "新增"
+    },
+    {
+      "edge_id": "E028",
+      "source_node_id": "gz",
+      "target_node_id": "lfsgy",
+      "relation_type": "transport",
+      "relation_description": "广汕高铁罗浮山站（长宁）连通广州、汕尾方向",
+      "direction": "有方向",
+      "valid_period": "2023-09起",
+      "evidence_type": "已证实事实",
+      "evidence_grade": "A",
+      "confidence": "高",
+      "metric": null,
+      "comparison_period": "2023-09-26开通",
+      "strength_basis": "高铁站开通公告",
+      "source_ids": [
+        "S028",
+        "S019"
+      ],
+      "counter_evidence": null,
+      "last_verified_at": "2026-10-29",
+      "change_status": "无显著变化"
+    },
+    {
+      "edge_id": "E029",
+      "source_node_id": "sz",
+      "target_node_id": "hz",
+      "relation_type": "transport",
+      "relation_description": "赣深高铁博罗站（泰美）连通深圳、赣州方向",
+      "direction": "有方向",
+      "valid_period": "2021起",
+      "evidence_type": "已证实事实",
+      "evidence_grade": "A",
+      "confidence": "高",
+      "metric": null,
+      "comparison_period": "2021",
+      "strength_basis": "政府交通指南",
+      "source_ids": [
+        "S029",
+        "S021"
+      ],
+      "counter_evidence": null,
+      "last_verified_at": "2026-10-29",
+      "change_status": "无显著变化"
+    },
+    {
+      "edge_id": "E030",
+      "source_node_id": "dj",
+      "target_node_id": "bmc",
+      "relation_type": "eco_constraint",
+      "relation_description": "东江水系对表面处理（电镀/喷涂）设定排污上限约束",
+      "direction": "有方向",
+      "valid_period": "2025-2026",
+      "evidence_type": "已证实事实",
+      "evidence_grade": "A",
+      "confidence": "高",
+      "metric": null,
+      "comparison_period": "—",
+      "strength_basis": "环保督察整改与产业准入文件",
+      "source_ids": [
+        "S050",
+        "S012"
+      ],
+      "counter_evidence": "园区整治后部分产能退出",
+      "last_verified_at": "2026-10-29",
+      "change_status": "无显著变化"
+    },
+    {
+      "edge_id": "E031",
+      "source_node_id": "dj",
+      "target_node_id": "bss",
+      "relation_type": "eco_constraint",
+      "relation_description": "东江作为饮用水源（Ⅱ类）受到严格保护",
+      "direction": "有方向",
+      "valid_period": "长期",
+      "evidence_type": "已证实事实",
+      "evidence_grade": "A",
+      "confidence": "高",
+      "metric": {
+        "metric_name": "饮用水源水质",
+        "metric_value": 2,
+        "metric_unit": "Ⅱ类"
+      },
+      "comparison_period": "2025",
+      "strength_basis": "公报与水源保护文件",
+      "source_ids": [
+        "S001",
+        "S050"
+      ],
+      "counter_evidence": null,
+      "last_verified_at": "2026-10-29",
+      "change_status": "无显著变化"
+    },
+    {
+      "edge_id": "E032",
+      "source_node_id": "dj",
+      "target_node_id": "lq",
+      "relation_type": "eco_constraint",
+      "relation_description": "沿江工业受到排污与岸线约束",
+      "direction": "有方向",
+      "valid_period": "长期",
+      "evidence_type": "证据推断",
+      "evidence_grade": "B",
+      "confidence": "中",
+      "metric": null,
+      "comparison_period": "—",
+      "strength_basis": "沿江产业与环保政策推断",
+      "source_ids": [
+        "S033",
+        "S050"
+      ],
+      "counter_evidence": "无逐企约束清单",
+      "last_verified_at": "2026-10-29",
+      "change_status": "无显著变化"
+    },
+    {
+      "edge_id": "E033",
+      "source_node_id": "dj",
+      "target_node_id": "lsmd",
+      "relation_type": "eco_constraint",
+      "relation_description": "东江水系为罗浮山大米等农业提供灌溉",
+      "direction": "有方向",
+      "valid_period": "长期",
+      "evidence_type": "已证实事实",
+      "evidence_grade": "A",
+      "confidence": "中",
+      "metric": null,
+      "comparison_period": "—",
+      "strength_basis": "农业灌溉与水利关系",
+      "source_ids": [
+        "S047",
+        "S001"
+      ],
+      "counter_evidence": null,
+      "last_verified_at": "2026-10-29",
+      "change_status": "无显著变化"
+    },
+    {
+      "edge_id": "E034",
+      "source_node_id": "xwd",
+      "target_node_id": "lq",
+      "relation_type": "resource_competition",
+      "relation_description": "链主与镇村老厂在用电、用地上存在竞争",
+      "direction": "双向",
+      "valid_period": "2025-2026",
+      "evidence_type": "证据推断",
+      "evidence_grade": "B",
+      "confidence": "中",
+      "metric": null,
+      "comparison_period": "—",
+      "strength_basis": "要素竞争关系推断",
+      "source_ids": [
+        "S004",
+        "S016"
+      ],
+      "counter_evidence": "无要素分配量化数据",
+      "last_verified_at": "2026-10-29",
+      "change_status": "无显著变化"
+    },
+    {
+      "edge_id": "E035",
+      "source_node_id": "htd",
+      "target_node_id": "lq",
+      "relation_type": "resource_competition",
+      "relation_description": "主导产业升级与老厂腾笼换鸟的空间竞争",
+      "direction": "双向",
+      "valid_period": "2025-2026",
+      "evidence_type": "证据推断",
+      "evidence_grade": "B",
+      "confidence": "中",
+      "metric": null,
+      "comparison_period": "—",
+      "strength_basis": "腾笼换鸟政策与空间关系推断",
+      "source_ids": [
+        "S007",
+        "S016"
+      ],
+      "counter_evidence": "腾退进度与再利用数据有限",
+      "last_verified_at": "2026-10-29",
+      "change_status": "无显著变化"
+    },
+    {
+      "edge_id": "E036",
+      "source_node_id": "lswh",
+      "target_node_id": "lfsgy",
+      "relation_type": "tourism_consumption",
+      "relation_description": "环两山引领区文旅与罗浮山国药（百草堂/中医药）文旅+医药融合",
+      "direction": "有方向",
+      "valid_period": "2025-2026",
+      "evidence_type": "证据推断",
+      "evidence_grade": "B",
+      "confidence": "中",
+      "metric": null,
+      "comparison_period": "—",
+      "strength_basis": "文旅+中医药融合关系推断",
+      "source_ids": [
+        "S030",
+        "S047"
+      ],
+      "counter_evidence": "无融合营收数据",
+      "last_verified_at": "2026-10-29",
+      "change_status": "无显著变化"
+    },
+    {
+      "edge_id": "E037",
+      "source_node_id": "lswh",
+      "target_node_id": "hh",
+      "relation_type": "tourism_consumption",
+      "relation_description": "环两山引领区带动横河户外小镇户外运动与民宿",
+      "direction": "有方向",
+      "valid_period": "2025-2026",
+      "evidence_type": "已证实事实",
+      "evidence_grade": "A",
+      "confidence": "中",
+      "metric": {
+        "metric_name": "沿线民宿节前预订率",
+        "metric_value": 92,
+        "metric_unit": "%"
+      },
+      "comparison_period": "2026国庆",
+      "strength_basis": "旅游公路与民宿数据",
+      "source_ids": [
+        "S054",
+        "S020"
+      ],
+      "counter_evidence": "淡季入住率显著回落",
+      "last_verified_at": "2026-10-29",
+      "change_status": "增强"
+    },
+    {
+      "edge_id": "E038",
+      "source_node_id": "lswh",
+      "target_node_id": "sc",
+      "relation_type": "tourism_consumption",
+      "relation_description": "环两山引领区与柏塘山茶茶旅融合（裸心酒店/茶园）",
+      "direction": "有方向",
+      "valid_period": "2025-2026",
+      "evidence_type": "已证实事实",
+      "evidence_grade": "A",
+      "confidence": "中",
+      "metric": {
+        "metric_name": "裸心酒店日经营额",
+        "metric_value": 10,
+        "metric_unit": "万元(超)"
+      },
+      "comparison_period": "2026国庆",
+      "strength_basis": "茶旅融合与经营数据",
+      "source_ids": [
+        "S054",
+        "S047"
+      ],
+      "counter_evidence": "旺季数据，非常态",
+      "last_verified_at": "2026-10-29",
+      "change_status": "增强"
+    },
+    {
+      "edge_id": "E039",
+      "source_node_id": "lswh",
+      "target_node_id": "lsz",
+      "relation_type": "tourism_consumption",
+      "relation_description": "环两山引领区与罗浮山荔枝采摘、荔枝文旅",
+      "direction": "有方向",
+      "valid_period": "2026",
+      "evidence_type": "证据推断",
+      "evidence_grade": "B",
+      "confidence": "中",
+      "metric": {
+        "metric_name": "罗浮山荔枝品牌价值",
+        "metric_value": 12,
+        "metric_unit": "亿元(超)"
+      },
+      "comparison_period": "2026",
+      "strength_basis": "荔枝协会与品牌价值数据",
+      "source_ids": [
+        "S046",
+        "S047"
+      ],
+      "counter_evidence": "品牌价值为评估口径，非销售额",
+      "last_verified_at": "2026-10-29",
+      "change_status": "增强"
+    },
+    {
+      "edge_id": "E040",
+      "source_node_id": "gz",
+      "target_node_id": "lfsgy",
+      "relation_type": "regional",
+      "relation_description": "广州（省中医院等）与罗浮山国药的医药合作",
+      "direction": "有方向",
+      "valid_period": "2025-2026",
+      "evidence_type": "证据推断",
+      "evidence_grade": "B",
+      "confidence": "中",
+      "metric": null,
+      "comparison_period": "—",
+      "strength_basis": "医药合作关系报道",
+      "source_ids": [
+        "S019",
+        "S047"
+      ],
+      "counter_evidence": "合作深度无公开量化",
+      "last_verified_at": "2026-10-29",
+      "change_status": "无显著变化"
+    },
+    {
+      "edge_id": "E041",
+      "source_node_id": "hz",
+      "target_node_id": "lswh",
+      "relation_type": "tourism_consumption",
+      "relation_description": "惠城（主城）向环两山引领区输送文旅客流与行政联系",
+      "direction": "有方向",
+      "valid_period": "2025-2026",
+      "evidence_type": "证据推断",
+      "evidence_grade": "B",
+      "confidence": "中",
+      "metric": {
+        "metric_name": "引领区博罗片区国庆接待",
+        "metric_value": 52.97,
+        "metric_unit": "万人次"
+      },
+      "comparison_period": "2026国庆",
+      "strength_basis": "国庆文旅数据（占全县八成）",
+      "source_ids": [
+        "S052",
+        "S031"
+      ],
+      "counter_evidence": "客源地未细分，惠城占比为推断",
+      "last_verified_at": "2026-10-29",
+      "change_status": "无显著变化"
+    },
+    {
+      "edge_id": "E042",
+      "source_node_id": "gyght",
+      "target_node_id": "gyg",
+      "relation_type": "supply_chain",
+      "relation_description": "观音阁黑糖与花生同镇（观音阁）特色农产品集群",
+      "direction": "双向",
+      "valid_period": "长期",
+      "evidence_type": "已证实事实",
+      "evidence_grade": "A",
+      "confidence": "中",
+      "metric": null,
+      "comparison_period": "—",
+      "strength_basis": "同镇地理标志集群",
+      "source_ids": [
+        "S042",
+        "S047"
+      ],
+      "counter_evidence": null,
+      "last_verified_at": "2026-10-29",
+      "change_status": "无显著变化"
+    },
+    {
+      "edge_id": "E043",
+      "source_node_id": "gyg",
+      "target_node_id": "dj",
+      "relation_type": "eco_constraint",
+      "relation_description": "观音阁花生等种植依托东江沙壤与灌溉条件",
+      "direction": "有方向",
+      "valid_period": "长期",
+      "evidence_type": "证据推断",
+      "evidence_grade": "B",
+      "confidence": "低",
+      "metric": null,
+      "comparison_period": "—",
+      "strength_basis": "土壤—作物关系推断",
+      "source_ids": [
+        "S042",
+        "S033"
+      ],
+      "counter_evidence": "无土壤普查逐地块数据",
+      "last_verified_at": "2026-10-29",
+      "change_status": "无显著变化"
+    },
+    {
+      "edge_id": "E044",
+      "source_node_id": "glc",
+      "target_node_id": "lq",
+      "relation_type": "investment",
+      "relation_description": "固力水泥博罗分公司日产2500吨熟料生产线关停、主体设备拆除，公庄建材产能退出",
+      "direction": "有方向",
+      "valid_period": "2026-02",
+      "evidence_type": "已证实事实",
+      "evidence_grade": "A",
+      "confidence": "高",
+      "metric": {
+        "metric_name": "关停熟料产能",
+        "metric_value": 2500,
+        "metric_unit": "吨/日"
+      },
+      "comparison_period": "2026-02",
+      "strength_basis": "省工信厅关停拆除通告",
+      "source_ids": [
+        "S048"
+      ],
+      "counter_evidence": "为单条生产线，企业其他业务未说明",
+      "last_verified_at": "2026-10-29",
+      "change_status": "退出"
+    },
+    {
+      "edge_id": "E045",
+      "source_node_id": "lq",
+      "target_node_id": "bmc",
+      "relation_type": "eco_constraint",
+      "relation_description": "石湾多部门环境整治，4家违法企业停产、限期完善环保手续，环保倒逼产能出清",
+      "direction": "有方向",
+      "valid_period": "2026-07",
+      "evidence_type": "已证实事实",
+      "evidence_grade": "A",
+      "confidence": "中",
+      "metric": {
+        "metric_name": "停产违法企业",
+        "metric_value": 4,
+        "metric_unit": "家"
+      },
+      "comparison_period": "2026-07",
+      "strength_basis": "政府环境整治公告",
+      "source_ids": [
+        "S049"
+      ],
+      "counter_evidence": "验收合格后或复产，非永久退出",
+      "last_verified_at": "2026-10-29",
+      "change_status": "增强"
+    }
+  ]
+}
