@@ -1,0 +1,42 @@
+{
+  "audit_version": 1,
+  "audited_at": "2026-10-29T02:10:43.452Z",
+  "region": "boluo",
+  "baseline": {
+    "valid": true,
+    "nodes": 36,
+    "edges": 45,
+    "sources": 54,
+    "changes": 12
+  },
+  "candidate": {
+    "present": false,
+    "valid": null,
+    "source_count": 0,
+    "node_proposals": 0,
+    "edge_proposals": 0,
+    "change_count": 0,
+    "open_questions": 0,
+    "message": "未收到候选包；这不代表现实中没有发生变化。"
+  },
+  "source_url_audit": {
+    "performed": false,
+    "checked": 0,
+    "reachable": 0,
+    "results": []
+  },
+  "validation": {
+    "ok": true,
+    "errors": [],
+    "warnings": [],
+    "notes": [
+      "正式底座：节点 36、关系 45、来源 54、变化事件 12",
+      "未收到候选包；这不代表现实中没有发生变化",
+      "本次未巡检来源链接；每周日自动巡检，也可手动触发完整巡检"
+    ]
+  },
+  "publication_policy": {
+    "automatic_publish": false,
+    "rule": "候选更新只做结构校验与审计，不自动覆盖正式关系底座；人工核验后才能合并。"
+  }
+}
