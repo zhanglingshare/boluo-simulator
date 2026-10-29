@@ -157,7 +157,7 @@ svg text{font-family:Inter,-apple-system,BlinkMacSystemFont,"PingFang SC","Micro
 @keyframes pulse{0%,100%{opacity:.35}50%{opacity:.75}}
 @media(max-width:1280px){.appbar{gap:14px;padding:0 16px}.brand{min-width:190px}.topnav button{padding:9px 8px}.workspace{grid-template-columns:145px minmax(0,1fr) 265px;padding:12px;gap:10px}.canvas-title{font-size:20px}.timeline-actions button{padding:6px}.canvas-insight{width:160px}.canvas-legend{max-width:255px}}
 @media(max-width:1050px){.topnav{display:none}.workspace{grid-template-columns:145px minmax(0,1fr)}.explore{grid-column:2;min-height:auto;height:auto;max-height:none}.question-list{display:grid;grid-template-columns:repeat(2,minmax(0,1fr))}.explore-foot{margin-top:12px}.canvas{height:760px}.sidebar{grid-row:1 / span 2}.searchbox{width:220px}}
-@media(max-width:680px){.appbar{height:60px;padding:0 12px;gap:10px}.brand{min-width:0;flex:1}.brand-name{font-size:14px}.brand-sub{font-size:8px}.searchbox{width:38px;padding:9px;overflow:hidden}.searchbox input{display:none}.header-icon{display:none}.workspace{display:flex;flex-direction:column;padding:9px;gap:10px;min-height:0}.sidebar{padding:0;overflow:auto}.side-kicker,.side-sep,.side-mini-title,.mode-btn,.sidebar-note{display:none}.side-nav{flex-direction:row;gap:4px;width:max-content}.side-nav button{width:auto;padding:9px 10px;white-space:nowrap}.side-nav button svg{width:14px;height:14px}.canvas{height:680px;min-height:680px}.canvas-head{padding:17px 16px 0}.canvas-title{font-size:18px}.canvas-desc{font-size:10px;max-width:220px;line-height:1.5}.canvas-head-right{display:none}.canvas-legend{left:12px;bottom:87px;max-width:calc(100% - 24px);gap:7px 10px}.canvas-insight{display:none}.timeline{padding:10px 11px;gap:8px;min-height:68px}.timeline-label{min-width:64px;font-size:10px}.timeline-date{display:none}.timeline-actions button{font-size:8px;padding:6px}.explore{height:auto;min-height:0;padding:13px}.question-list{grid-template-columns:1fr}.selected-question{margin-top:10px}.footerbar{padding:0 12px 10px}.footer-links{display:none}}
+@media(max-width:680px){.appbar{height:60px;padding:0 12px;gap:10px}.brand{min-width:0;flex:1}.brand-name{font-size:14px}.brand-sub{font-size:8px}.searchbox{width:38px;padding:9px;overflow:hidden}.searchbox input{display:none}.header-icon{display:none}.workspace{display:flex;flex-direction:column;padding:9px;gap:10px;min-height:0}.sidebar{padding:0;overflow:auto}.side-kicker,.side-sep,.side-mini-title,.mode-btn,.sidebar-note{display:none}.side-nav{flex-direction:row;gap:4px;width:max-content}.side-nav button{width:auto;padding:9px 10px;white-space:nowrap}.side-nav button svg{width:14px;height:14px}.canvas{height:680px;min-height:680px}.canvas-head{display:block;padding:13px 12px 0}.canvas-title{font-size:18px}.canvas-desc{font-size:10px;max-width:220px;line-height:1.5}.canvas-head-right{display:flex;position:relative;top:auto;right:auto;margin-top:9px;gap:5px;flex-wrap:wrap}.canvas-head-right .live-status,.canvas-head-right .view-toggle{display:none}.evidence-toggle{max-width:100%}.evidence-toggle button{font-size:9px;padding:6px 8px}.evidence-toggle #evidenceCount{font-size:8px}.canvas-legend{left:12px;bottom:87px;max-width:calc(100% - 24px);gap:7px 10px}.canvas-insight{display:none}.timeline{padding:10px 11px;gap:8px;min-height:68px}.timeline-label{min-width:64px;font-size:10px}.timeline-date{display:none}.timeline-actions button{font-size:8px;padding:6px}.explore{height:auto;min-height:0;padding:13px}.question-list{grid-template-columns:1fr}.selected-question{margin-top:10px}.footerbar{padding:0 12px 10px}.footer-links{display:none}}
 @media(prefers-reduced-motion:reduce){*,*:before,*:after{animation-duration:.01ms!important;animation-iteration-count:1!important;scroll-behavior:auto!important;transition-duration:.01ms!important}}
 
 /* V9 art direction: midnight observatory, restrained light, clear information hierarchy */
@@ -308,6 +308,8 @@ html,body{background:radial-gradient(ellipse at 48% -25%,rgba(56,91,147,.22),tra
 .evidence-related button{font-size:10px;line-height:1.5;text-align:left;color:#c0d5ee;border:1px solid #2a405d;background:#14263c;border-radius:7px;padding:7px 8px}
 .evidence-related button:hover{border-color:#5b83ad}
 .evidence-mode .view-toggle{opacity:.4;pointer-events:none}
+.evidence-node.search-match{opacity:1}
+.evidence-node.search-match .node-core{filter:drop-shadow(0 0 8px #eaf4ff)}
 .evidence-mode .canvas-title{color:#f4f8ff}
 .evidence-node{cursor:pointer;outline:none}
 .evidence-node:focus-visible .evidence-node-card{stroke:#eaf4ff;stroke-width:2}
@@ -323,6 +325,12 @@ html,body{background:radial-gradient(ellipse at 48% -25%,rgba(56,91,147,.22),tra
 .evidence-edge.dim{stroke-opacity:.09}
 .evidence-edge.focus{stroke-opacity:1;stroke-width:2.15;filter:drop-shadow(0 0 4px currentColor)}
 .evidence-edge.selected{stroke-opacity:1;stroke-width:2.8;filter:drop-shadow(0 0 6px currentColor)}
+.evidence-edge.scenario-new{stroke-opacity:1;stroke-width:2.25;filter:drop-shadow(0 0 5px currentColor);animation:evidenceGlow 2.2s ease-in-out infinite}
+.evidence-edge.scenario-exit{stroke:#ff8f9d;stroke-opacity:1;stroke-width:2.5;stroke-dasharray:7 4}
+.evidence-node.new-highlight .node-core{animation:evidenceNodePulse 1.8s ease-in-out infinite}
+.evidence-node.exit-highlight .node-core{fill:#ff8f9d;filter:drop-shadow(0 0 7px #ff8f9d)}
+.evidence-node.search-match .evidence-node-card{stroke:#e9f5ff;stroke-width:2}
+@keyframes evidenceNodePulse{0%,100%{filter:drop-shadow(0 0 3px currentColor)}50%{filter:drop-shadow(0 0 10px currentColor)}}
 .evidence-edge.status-changed{animation:evidenceGlow 6s ease-in-out infinite}
 .evidence-node .status-ring{fill:none;stroke-width:1.5;stroke-dasharray:3 3}
 @keyframes evidenceFlow{to{stroke-dashoffset:-52}}
@@ -433,7 +441,7 @@ html,body{background:radial-gradient(ellipse at 48% -25%,rgba(56,91,147,.22),tra
     <div class="selected-question" aria-live="polite"><div class="selected-label"><span></span>当前探索入口</div><div class="selected-title" id="selectedTitle">谁在连接原本分离的产业群落？</div><div class="selected-copy" id="selectedCopy">点击问题，中央网络将突出相关群落与桥梁关系。这是探索入口，不是自动生成的结论。</div><div class="selected-cta"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M5 12h14M13 5l7 7-7 7"/></svg>点击问题，观察关系变化</div></div>
     <div id="evidencePanel" class="evidence-panel" aria-live="polite">
       <div class="evidence-panel-top"><span class="evidence-panel-title">公开证据底座</span><span id="evidenceState" class="evidence-state">连接中</span></div>
-      <div class="evidence-stats"><div><strong id="evidenceNodes">36</strong><span>节点</span></div><div><strong id="evidenceEdges">45</strong><span>关系</span></div><div><strong id="evidenceSources">54</strong><span>来源</span></div><div><strong id="evidenceChanges">12</strong><span>变化事件</span></div></div>
+      <div class="evidence-stats"><div><strong id="evidenceNodes">36</strong><span>底座节点</span></div><div><strong id="evidenceEdges">45</strong><span>底座关系</span></div><div><strong id="evidenceSources">54</strong><span>公开来源</span></div><div><strong id="evidenceChanges">12</strong><span>变化事件</span></div></div>
       <div id="evidenceIntro" class="evidence-intro">概念网络用于提出问题；证据网络展示可追溯的公开关系。签约项目会标注“待落地”；线型表示证据等级，线粗不代表强度。</div>
       <div id="evidenceDetail" class="evidence-detail" hidden></div>
       <div id="evidenceRecent" class="evidence-recent"></div>
@@ -461,7 +469,7 @@ var clusters=[
 var clusterMap={};clusters.forEach(function(c){clusterMap[c.id]=c;});
 var center={x:500,y:375};
 var scenario="bridge",activeFilter="all",activeQuestion="bridge",playing=false,playTimer=null,drag=null,spaceMode=false;
-var graphMode="concept",evidenceData=null,sourceData=null,changeData=null,evidenceLoadPromise=null,selectedEvidence=null,evidenceNodeMap={},evidenceEdgeMap={},evidencePositionMap={};
+var graphMode="concept",evidenceData=null,sourceData=null,changeData=null,evidenceLoadPromise=null,selectedEvidence=null,evidenceNodeMap={},evidenceEdgeMap={},evidencePositionMap={},evidenceSearchTerm="";
 var questionInfo={
 bridge:{title:"谁在连接原本分离的产业群落？",copy:"点击后突出产业、投资与外部城市之间的桥梁连接。现实中是否存在这些关系，仍需证据核验。",insight:"桥梁关系",detail:"真正重要的节点，未必最大；它可能连接了原本互不相通的群落。",filter:["industry","investment","external"]},
 break:{title:"如果关键连接断开，哪些群落会变成孤岛？",copy:"一条关键连接被标记为断裂，观察网络如何分成不同群落。这是结构假设，不代表现实已发生。",insight:"关系断裂假设",detail:"当关键连接失效，局部问题可能沿着关系传导；也可能存在替代路径。",filter:["industry","investment"]},
@@ -534,6 +542,7 @@ function loadEvidenceData(){
   document.getElementById("evidenceChanges").textContent=changeData.changes.length;
   document.getElementById("evidenceCount").textContent=evidenceData.nodes.length+" · "+evidenceData.edges.length;
   var state=document.getElementById("evidenceState");state.textContent="证据已连接";state.classList.remove("error");
+  if(graphMode==="concept")document.getElementById("liveStatus").innerHTML="<i></i>公开证据已就绪 · 概念探索";
   updateEvidencePanel();return true;
  }).catch(function(err){
   var state=document.getElementById("evidenceState");state.textContent="读取失败";state.classList.add("error");
@@ -550,8 +559,9 @@ function setGraphMode(mode){
  document.getElementById("evidenceMode").classList.toggle("active",graphMode==="evidence");
  document.getElementById("footerGraphMode").textContent=graphMode==="evidence"?"公开证据关系子图 / 非地图":"概念网络示意 / 非真实地图";
  if(graphMode==="evidence"){
+  evidenceSearchTerm=document.getElementById("search").value.trim().toLowerCase();
   document.getElementById("liveStatus").innerHTML="<i></i>正在读取公开关系证据";
-  loadEvidenceData().then(function(ok){if(ok){document.getElementById("liveStatus").innerHTML="<i></i>证据网络 · 近期变化优先";renderGraph();}else{setGraphMode("concept");}});
+  loadEvidenceData().then(function(ok){if(ok){if(evidenceSearchTerm&&!selectedEvidence){var matches=findEvidenceMatches(evidenceSearchTerm);selectedEvidence=matches.nodes.length?{kind:"node",id:matches.nodes[0].node_id}:matches.edges.length?{kind:"edge",id:matches.edges[0].edge_id}:null;}renderGraph();}else{setGraphMode("concept");}});
  }else{
   document.getElementById("liveStatus").innerHTML="<i></i>概念探索视图";
   selectedEvidence=null;renderGraph();
@@ -563,39 +573,84 @@ function relationColor(type){return ({supply_chain:"#79b8ff",regional:"#c2a4ff",
 function nodeColor(n){return ({external:"#c4a1ff",eco:"#7ed9aa",agriculture:"#9bd79a",anchor:"#7eb9ff",champion:"#7bcbd0",cluster:"#6dd7cf",legacy:n.change_status==="退出"?"#ff8f9d":"#9aabc1",energy:"#f1c078",new:"#ffb37b"})[n.node_type]||"#9ab4d4";}
 function evidenceShortName(name){var special={"高端精密制造项目（具身机器人）":"具身机器人项目","金属绿色冷轧钢项目":"绿色冷轧钢项目","空压机智能制造产业园":"空压机产业园","液冷散热部件项目":"液冷散热项目","独立储能电站（欣城/日盛）":"独立储能电站","固力水泥博罗分公司":"固力水泥（退出）","11家国家级小巨人":"国家级小巨人","74家省级专精特新":"省级专精特新"};if(special[name])return special[name];return Array.from(name).length>13?Array.from(name).slice(0,12).join("")+"…":name;}
 function evidenceStatusText(n){if(n.node_status==="pending")return "签约 · 待落地";if(n.node_status==="new")return "新投产 / 新接入";if(n.node_status==="exit"||n.change_status==="退出")return "已退出";if(n.change_status==="增强")return "关系增强";if(n.change_status==="新增")return "新入驻";return "关键基本盘";}
+function findEvidenceMatches(term){
+ var t=String(term||"").trim().toLowerCase(),nodeMatches=[],edgeMatches=[],sourceMatches=[];
+ if(!t||!evidenceData)return {nodes:[],edges:[],sources:[]};
+ if(sourceData)sourceMatches=sourceData.sources.filter(function(s){return [s.source_id,s.title,s.publisher,s.summary,s.region,s.data_period].join(" ").toLowerCase().indexOf(t)>=0;});
+ var sourceIds={};sourceMatches.forEach(function(s){sourceIds[s.source_id]=true;});
+ nodeMatches=evidenceData.nodes.filter(function(n){return [n.node_id,n.name,n.description,n.town,n.layer,n.node_type,n.node_status,n.change_status].join(" ").toLowerCase().indexOf(t)>=0||(n.source_ids||[]).some(function(id){return sourceIds[id];});});
+ edgeMatches=evidenceData.edges.filter(function(e){var legend=evidenceData.relation_type_legend[e.relation_type]||e.relation_type;return [e.edge_id,e.relation_description,e.strength_basis,e.valid_period,e.change_status,e.evidence_grade,legend].join(" ").toLowerCase().indexOf(t)>=0||(e.source_ids||[]).some(function(id){return sourceIds[id];});});
+ return {nodes:nodeMatches,edges:edgeMatches,sources:sourceMatches};
+}
 function buildEvidencePositions(){
  var degree={};evidenceData.nodes.forEach(function(n){degree[n.node_id]=0;});
  evidenceData.edges.forEach(function(e){degree[e.source_node_id]=(degree[e.source_node_id]||0)+1;degree[e.target_node_id]=(degree[e.target_node_id]||0)+1;});
- var selected={};
- evidenceData.nodes.forEach(function(n){if(n.change_status&&n.change_status!=="无显著变化")selected[n.node_id]=true;});
- evidenceData.edges.forEach(function(e){if(e.change_status&&e.change_status!=="无显著变化"){selected[e.source_node_id]=true;selected[e.target_node_id]=true;}});
- Object.keys(degree).sort(function(a,b){return degree[b]-degree[a];}).slice(0,8).forEach(function(id){selected[id]=true;});
+ var selected={},matchNodeIds={},matchEdgeIds={},matches={nodes:[],edges:[]};
+ if(evidenceSearchTerm){
+  matches=findEvidenceMatches(evidenceSearchTerm);
+  matches.nodes.slice().sort(function(a,b){return (degree[b.node_id]||0)-(degree[a.node_id]||0);}).slice(0,12).forEach(function(n){selected[n.node_id]=true;matchNodeIds[n.node_id]=true;});
+  matches.edges.slice(0,12).forEach(function(e){
+   matchEdgeIds[e.edge_id]=true;
+   if(Object.keys(selected).length<20||selected[e.source_node_id])selected[e.source_node_id]=true;
+   if(Object.keys(selected).length<20||selected[e.target_node_id])selected[e.target_node_id]=true;
+  });
+  if(selectedEvidence&&selectedEvidence.kind==="node")selected[selectedEvidence.id]=true;
+  if(selectedEvidence&&selectedEvidence.kind==="edge"){
+   var chosen=evidenceEdgeMap[selectedEvidence.id];if(chosen){selected[chosen.source_node_id]=true;selected[chosen.target_node_id]=true;matchEdgeIds[chosen.edge_id]=true;}
+  }
+  var seeds=Object.keys(selected);
+  seeds.forEach(function(id){
+   if(Object.keys(selected).length>=20)return;
+   var neighbors=evidenceData.edges.filter(function(e){return e.source_node_id===id||e.target_node_id===id;}).sort(function(a,b){return (degree[b.source_node_id]||0)+(degree[b.target_node_id]||0)-(degree[a.source_node_id]||0)-(degree[a.target_node_id]||0);});
+   neighbors.slice(0,2).forEach(function(e){if(Object.keys(selected).length<20){selected[e.source_node_id]=true;selected[e.target_node_id]=true;}});
+  });
+ }else{
+  evidenceData.nodes.forEach(function(n){if(n.change_status&&n.change_status!=="无显著变化")selected[n.node_id]=true;});
+  evidenceData.edges.forEach(function(e){if(e.change_status&&e.change_status!=="无显著变化"){selected[e.source_node_id]=true;selected[e.target_node_id]=true;}});
+  Object.keys(degree).sort(function(a,b){return degree[b]-degree[a];}).slice(0,8).forEach(function(id){selected[id]=true;});
+  if(selectedEvidence&&selectedEvidence.kind==="node")selected[selectedEvidence.id]=true;
+  if(selectedEvidence&&selectedEvidence.kind==="edge"){var chosenEdge=evidenceEdgeMap[selectedEvidence.id];if(chosenEdge){selected[chosenEdge.source_node_id]=true;selected[chosenEdge.target_node_id]=true;}}
+ }
  var nodes=evidenceData.nodes.filter(function(n){return selected[n.node_id];});
  var groups={external:[],eco:[],agriculture:[],anchor:[],cluster:[],legacy:[],new:[]};
  nodes.forEach(function(n){var g=n.node_type;if(g==="champion")g="anchor";if(g==="energy")g="new";if(!groups[g])g="new";groups[g].push(n);});
  Object.keys(groups).forEach(function(k){groups[k].sort(function(a,b){var rank={"新增":0,"退出":1,"增强":2,"无显著变化":3};return (rank[a.change_status]===undefined?4:rank[a.change_status])-(rank[b.change_status]===undefined?4:rank[b.change_status])||(degree[b.node_id]||0)-(degree[a.node_id]||0);});});
  evidencePositionMap={};
  function spread(list,x,top,bottom,align){var span=list.length<=1?0:(bottom-top)/(list.length-1);list.forEach(function(n,i){evidencePositionMap[n.node_id]={x:x,y:list.length===1?(top+bottom)/2:top+span*i,align:align||"right"};});}
- spread(groups.external,105,190,430,"right");
- spread(groups.eco,185,555,555,"right");
- spread(groups.agriculture,135,665,710,"right");
- spread(groups.anchor,325,105,565,"right");
- spread(groups.cluster,535,80,625,"right");
+ /* Dedicated vertical bands prevent category labels from colliding even when search reveals more nodes. */
+ spread(groups.external,105,100,250,"right");
+ spread(groups.eco,105,285,360,"right");
+ spread(groups.agriculture,105,410,710,"right");
+ spread(groups.anchor,315,95,620,"right");
+ spread(groups.cluster,530,90,650,"right");
  var legacyCore=groups.legacy.filter(function(n){return n.change_status!=="退出";});
  var legacyExit=groups.legacy.filter(function(n){return n.change_status==="退出";});
- spread(legacyCore,435,700,700,"right");spread(legacyExit,775,710,710,"left");
+ spread(legacyCore,450,690,690,"right");spread(legacyExit,800,690,690,"left");
  var newNodes=groups.new.filter(function(n){return n.node_type!=="energy";});
  var energyNodes=groups.new.filter(function(n){return n.node_type==="energy";});
- spread(newNodes,825,70,590,"left");spread(energyNodes,825,655,655,"left");
- return {nodes:nodes,ids:selected,degree:degree};
+ spread(newNodes,930,80,610,"left");spread(energyNodes,930,645,645,"left");
+ return {nodes:nodes,ids:selected,degree:degree,matchNodeIds:matchNodeIds,matchEdgeIds:matchEdgeIds,matchCount:matches.nodes.length+matches.edges.length};
+}
+function matchesEvidenceFilter(edge){
+ var byFilter={
+  industry:["supply_chain"],
+  investment:["investment"],
+  people:["commute"],
+  consumption:["tourism_consumption"],
+  ecology:["eco_constraint","resource_competition"],
+  external:["regional","transport","commute"]
+ };
+ if(activeFilter==="all")return true;
+ return (byFilter[activeFilter]||[]).indexOf(edge.relation_type)>=0;
 }
 function isEvidenceRelevant(edge){
  if(scenario==="base")return true;
- if(activeQuestion==="bridge")return edge.change_status!=="退出"&&["supply_chain","regional","investment"].indexOf(edge.relation_type)>=0;
- if(activeQuestion==="break")return edge.change_status==="退出"||["resource_competition","eco_constraint"].indexOf(edge.relation_type)>=0;
- if(activeQuestion==="people")return ["commute","transport"].indexOf(edge.relation_type)>=0;
- if(activeQuestion==="eco")return ["tourism_consumption","eco_constraint"].indexOf(edge.relation_type)>=0;
- if(activeQuestion==="exit")return edge.change_status==="退出"||edge.source_node_id==="glc"||edge.target_node_id==="glc";
+ if(scenario==="bridge")return edge.change_status!=="退出"&&["supply_chain","regional","investment"].indexOf(edge.relation_type)>=0;
+ if(scenario==="new")return edge.change_status==="新增";
+ if(scenario==="break")return edge.change_status==="退出"||edge.change_status==="减弱"||["resource_competition","eco_constraint"].indexOf(edge.relation_type)>=0;
+ if(scenario==="people")return ["commute","transport"].indexOf(edge.relation_type)>=0;
+ if(scenario==="eco")return ["tourism_consumption","eco_constraint"].indexOf(edge.relation_type)>=0;
+ if(scenario==="exit")return edge.change_status==="退出"||edge.source_node_id==="glc"||edge.target_node_id==="glc";
  return edge.change_status!=="无显著变化";
 }
 function renderEvidenceGraph(){
@@ -609,7 +664,10 @@ function renderEvidenceGraph(){
   var color=relationColor(e.relation_type),d=pathBetween(a,b,((e.edge_id.charCodeAt(1)||1)%2)?13:-13);
   var classes=["evidence-edge",evidenceGradeClass(e.evidence_grade)];
   if(e.change_status!=="无显著变化")classes.push("status-changed");
-  if(!isEvidenceRelevant(e))classes.push("dim");
+  if(!isEvidenceRelevant(e)||!matchesEvidenceFilter(e))classes.push("dim");
+  if(evidenceSearchTerm&&!layout.matchEdgeIds[e.edge_id]&&!layout.matchNodeIds[e.source_node_id]&&!layout.matchNodeIds[e.target_node_id])classes.push("dim");
+  if(scenario==="new"&&e.change_status==="新增")classes.push("scenario-new");
+  if(scenario==="exit"&&e.change_status==="退出")classes.push("scenario-exit");
   if(selectedEvidence&&selectedEvidence.kind==="edge"&&selectedEvidence.id===e.edge_id)classes.push("selected");
   var p=append(layers.edges,"path",{d:d,stroke:color,class:classes.join(" "),style:"color:"+color,"data-evidence-edge":e.edge_id,"marker-end":"url(#evidenceArrow)","aria-label":e.relation_description,tabindex:"0",role:"button"});
   p.addEventListener("click",function(ev){ev.stopPropagation();showEvidenceEdge(e.edge_id);});
@@ -617,10 +675,12 @@ function renderEvidenceGraph(){
  });
  layout.nodes.forEach(function(n){
   var p=evidencePositionMap[n.node_id],color=nodeColor(n),statusColor=n.change_status==="新增"?"#7de0c7":n.change_status==="增强"?"#f2c47d":n.change_status==="退出"?"#ff8f9d":"#7e9ab9";
-  var incident=evidenceData.edges.filter(function(e){return (e.source_node_id===n.node_id||e.target_node_id===n.node_id)&&isEvidenceRelevant(e);}).length;
-  var dim=scenario!=="base"&&incident===0;
+  var incident=evidenceData.edges.filter(function(e){return (e.source_node_id===n.node_id||e.target_node_id===n.node_id)&&isEvidenceRelevant(e)&&matchesEvidenceFilter(e);}).length;
+  var searchMatch=!!layout.matchNodeIds[n.node_id];
+  var dim=((scenario!=="base"||activeFilter!=="all")&&incident===0)&&!searchMatch&&!(selectedEvidence&&selectedEvidence.kind==="node"&&selectedEvidence.id===n.node_id);
+  var scenarioClass=scenario==="new"&&n.change_status==="新增"?" new-highlight":scenario==="exit"&&n.change_status==="退出"?" exit-highlight":"";
   var selected=selectedEvidence&&selectedEvidence.kind==="node"&&selectedEvidence.id===n.node_id;
-  var g=append(layers.nodes,"g",{class:"evidence-node"+(dim?" dim":"")+(selected?" selected":""),tabindex:"0",role:"button","aria-label":n.name+"，"+evidenceStatusText(n),"data-evidence-node":n.node_id,style:"color:"+color});
+  var g=append(layers.nodes,"g",{class:"evidence-node"+(dim?" dim":"")+(selected?" selected":"")+scenarioClass+(searchMatch?" search-match":""),tabindex:"0",role:"button","aria-label":n.name+"，"+evidenceStatusText(n),"data-evidence-node":n.node_id,style:"color:"+color});
   if(n.change_status!=="无显著变化"){append(g,"circle",{cx:p.x,cy:p.y,r:14,fill:color,"fill-opacity":".08"});append(g,"circle",{cx:p.x,cy:p.y,r:10,stroke:statusColor,class:"status-ring"});}
   append(g,"circle",{cx:p.x,cy:p.y,r:n.change_status==="无显著变化"?5.4:7.2,fill:color,class:"node-core"});
   append(g,"circle",{cx:p.x-1.4,cy:p.y-1.4,r:1.8,fill:"#fff","fill-opacity":".88"});
@@ -632,7 +692,8 @@ function renderEvidenceGraph(){
   g.addEventListener("click",function(ev){ev.stopPropagation();showEvidenceNode(n.node_id);});
   g.addEventListener("keydown",function(ev){if(ev.key==="Enter"||ev.key===" "){ev.preventDefault();showEvidenceNode(n.node_id);}});
  });
- document.getElementById("liveStatus").innerHTML="<i></i>证据网络 · "+layout.nodes.length+" 个关键节点";
+ document.getElementById("liveStatus").innerHTML=evidenceSearchTerm?(layout.matchCount?("<i></i>搜索结果 · "+layout.nodes.length+" 个相关节点"):"<i></i>未找到匹配的节点或关系"):(activeFilter!=="all"?("<i></i>"+({industry:"产业",investment:"投资",people:"人口",consumption:"消费",ecology:"生态",external:"交通"}[activeFilter]||"关系")+" · "+layout.nodes.length+" 个相关节点"):"<i></i>证据网络 · "+layout.nodes.length+" 个关键节点");
+ document.getElementById("evidenceCount").textContent=layout.nodes.length+"节点 · "+shownEdges.length+"线";
  document.getElementById("footerGraphMode").textContent="公开证据关系子图 / 近期变化优先";
  updateEvidenceLegend();
 }
@@ -705,7 +766,7 @@ function updateCanvasInsight(){var info=questionInfo[activeQuestion]||questionIn
 function updateSelectionUI(){document.querySelectorAll(".question-card").forEach(function(b){b.classList.toggle("active",b.getAttribute("data-q")===activeQuestion);});var q=questionInfo[activeQuestion];document.getElementById("selectedTitle").textContent=q.title;document.getElementById("selectedCopy").textContent=q.copy;document.getElementById("timelineTitle").textContent=({"base":"关系演化","bridge":"关键连接","new":"新节点接入","break":"关系断裂","exit":"节点退出","people":"人流传导","eco":"潜在协同"}[scenario]||"关系演化");document.getElementById("timelineSub").textContent=({"base":"选择一个变化，观察结构如何响应","bridge":"高亮可能连接不同群落的桥梁","new":"观察新主体与网络建立连接","break":"观察关键关系失效后的结构","exit":"观察节点退出与替代路径","people":"追踪人流与产业、消费的联系","eco":"寻找生态、农业与文旅的潜在连接"}[scenario]||"观察关系变化");document.getElementById("timelineDate").textContent=({"base":"结构基准","bridge":"桥梁关系","new":"接入假设","break":"断裂假设","exit":"退出假设","people":"传导线索","eco":"协同线索"}[scenario]||"结构基准");document.querySelectorAll(".time-stop").forEach(function(b){b.classList.toggle("active",b.getAttribute("data-scenario")===scenario);});document.querySelectorAll(".timeline-actions button").forEach(function(b){b.classList.toggle("active",b.getAttribute("data-scenario")===scenario);});}
 function setScenario(next,question){if(graphMode==="evidence")selectedEvidence=null;scenario=next;if(question)activeQuestion=question;else if(next==="break")activeQuestion="break";else if(next==="exit")activeQuestion="exit";else if(next==="new")activeQuestion="bridge";else if(next==="people")activeQuestion="people";else if(next==="eco")activeQuestion="eco";else if(next==="bridge")activeQuestion="bridge";renderGraph();updateSelectionUI();}
 function setQuestion(q){stopPlay();activeQuestion=q;activeFilter="all";var next=q==="bridge"?"bridge":q==="break"?"break":q==="people"?"people":q==="eco"?"eco":"exit";setScenario(next,q);syncFilterButtons();}
-function setFilter(id){stopPlay();activeFilter=id;if(id==="all")setScenario("base",activeQuestion);else{var q=id==="people"?"people":id==="ecology"?"eco":id==="industry"?"bridge":id==="investment"?"bridge":id==="consumption"?"people":"bridge";activeQuestion=q;scenario=q;renderGraph();updateSelectionUI();}syncFilterButtons();}
+function setFilter(id){stopPlay();activeFilter=id;if(graphMode==="evidence"){renderGraph();syncFilterButtons();return;}if(id==="all")setScenario("base",activeQuestion);else{var q=id==="people"?"people":id==="ecology"?"eco":id==="industry"?"bridge":id==="investment"?"bridge":id==="consumption"?"people":"bridge";activeQuestion=q;scenario=q;renderGraph();updateSelectionUI();}syncFilterButtons();}
 function syncFilterButtons(){document.querySelectorAll("[data-filter]").forEach(function(b){b.classList.toggle("active",b.getAttribute("data-filter")===activeFilter);});}
 function stopPlay(){if(playTimer){clearInterval(playTimer);playTimer=null;}playing=false;var icon=document.getElementById("playIcon");if(icon)icon.innerHTML='<path d="M8 5v14l11-7z"/>';}
 function startPlay(){if(playing){stopPlay();return;}playing=true;var icon=document.getElementById("playIcon");if(icon)icon.innerHTML='<path d="M7 5h4v14H7zM14 5h4v14h-4z"/>';activeFilter="all";syncFilterButtons();var seq=["bridge","new","people","break","exit","eco","base"],i=0;setScenario(seq[0]);playTimer=setInterval(function(){i=(i+1)%seq.length;setScenario(seq[i]);},2600);}
@@ -719,7 +780,24 @@ document.querySelectorAll("[data-scenario]").forEach(function(b){b.addEventListe
 document.querySelectorAll("[data-mode]").forEach(function(b){b.addEventListener("click",function(){stopPlay();document.querySelectorAll("[data-mode]").forEach(function(x){x.classList.toggle("active",x===b);});if(b.getAttribute("data-mode")==="motion"){setScenario("new");}else{setScenario("base");}});});
 document.querySelectorAll("[data-view]").forEach(function(b){b.addEventListener("click",function(){stopPlay();spaceMode=b.getAttribute("data-view")==="space";document.querySelectorAll("[data-view]").forEach(function(x){x.classList.toggle("active",x===b);});svg.style.transform=spaceMode?"perspective(1100px) rotateX(5deg) scale(.98)":"none";svg.style.transition="transform .6s ease";});});
 document.getElementById("play").addEventListener("click",startPlay);
-document.getElementById("search").addEventListener("input",function(){stopPlay();var term=this.value.trim().toLowerCase();if(!term){activeFilter="all";renderGraph();syncFilterButtons();updateSelectionUI();return;}var match=clusters.find(function(c){return (c.title+" "+c.sub).toLowerCase().indexOf(term)>=0;});if(match){activeFilter=match.id;renderGraph();syncFilterButtons();document.getElementById("selectedTitle").textContent="正在查看："+match.title;document.getElementById("selectedCopy").textContent="已突出显示相关群落。搜索仅匹配当前页面的群落名称与副标题。";}else{activeFilter="all";renderGraph();syncFilterButtons();document.getElementById("selectedTitle").textContent="没有找到对应的关系群落";document.getElementById("selectedCopy").textContent="可尝试产业、投资、人口、消费、生态、外部城市或文旅等关键词。";}});
+document.getElementById("search").addEventListener("input",function(){
+ stopPlay();var term=this.value.trim().toLowerCase();
+ if(!term){evidenceSearchTerm="";selectedEvidence=null;activeFilter="all";renderGraph();syncFilterButtons();updateSelectionUI();return;}
+ if(graphMode==="evidence"){
+  evidenceSearchTerm=term;var evidenceMatches=findEvidenceMatches(term);
+  selectedEvidence=evidenceMatches.nodes.length?{kind:"node",id:evidenceMatches.nodes[0].node_id}:evidenceMatches.edges.length?{kind:"edge",id:evidenceMatches.edges[0].edge_id}:null;
+  renderGraph();updateEvidencePanel();syncFilterButtons();return;
+ }
+ var match=clusters.find(function(c){return (c.title+" "+c.sub).toLowerCase().indexOf(term)>=0;});
+ if(match){activeFilter=match.id;renderGraph();syncFilterButtons();document.getElementById("selectedTitle").textContent="正在查看："+match.title;document.getElementById("selectedCopy").textContent="已突出显示相关群落。";return;}
+ evidenceSearchTerm=term;
+ var matches=findEvidenceMatches(term);
+ if(matches.nodes.length||matches.edges.length){
+  selectedEvidence=matches.nodes.length?{kind:"node",id:matches.nodes[0].node_id}:{kind:"edge",id:matches.edges[0].edge_id};
+  setGraphMode("evidence");syncFilterButtons();return;
+ }
+ activeFilter="all";renderGraph();syncFilterButtons();document.getElementById("selectedTitle").textContent="没有找到相关节点或关系";document.getElementById("selectedCopy").textContent="可尝试企业名称、项目名称、交通、通勤、投资、文旅或生态等关键词。";
+});
 svg.addEventListener("pointermove",function(ev){if(!drag)return;var dx=ev.clientX-drag.startX,dy=ev.clientY-drag.startY;if(!drag.moved&&Math.sqrt(dx*dx+dy*dy)<4)return;drag.moved=true;var point=screenToSvg(ev),c=clusterMap[drag.id];c.x=Math.max(70,Math.min(920,drag.origX+point.x-drag.startSvgX));c.y=Math.max(100,Math.min(660,drag.origY+point.y-drag.startSvgY));renderGraph();});
 svg.addEventListener("pointerup",function(){if(!drag)return;var finished=drag;drag=null;if(!finished.moved)setFilter(finished.id);});
 svg.addEventListener("pointercancel",function(){drag=null;});
