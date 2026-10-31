@@ -26,7 +26,7 @@ const PATHS=['新工厂与新能源','现有工厂做大','旅游与服务业','
 const PICON=['🏭','🔧','🏞️','🌉','🌾'];
 const EVENTS_BIG={C001:['5','家企业集中入驻','园区已开园，不代表全部量产'],C002:['2','座储能电站运行','已并网，不保证每家工厂电费变低'],C003:['100','亿元是2027年目标','生产线已投产，但目标不是实际产值'],C004:['80','亿元计划投资','4个项目签约，不等于钱已经投完'],C005:['在建','部分项目正在推进','不能把在建当成已经投产'],C006:['2 → 6','车道：旧桥到计划新桥','目前是施工期，6车道还不是已通车'],C007:['超80%','2026年7月报道的进度','当时还未通车，之后要看公告'],C008:['2500','吨／日熟料产能退出','只是一条生产线，不是整个公司'],C009:['4','家企业被停产整改','整改不等于永久关停'],C010:['1','个荔枝产业协会成立','成立不等于果农收入马上上涨'],C011:['7','个国家地理标志','获得认定不等于农户收入上涨'],C012:['52.97','万人次（2026年国庆博罗片区）','假期人多，不代表全年都一样']};
 const DATA={hot:null,life:null,net:null,changes:null,sources:null};
-const S={page:'home',event:'C006',phase:'now',node:0,metric:'industrial',town:'长宁',townFilter:'all',wish:[],paths:[1,1,1,1,1],mode:'plan',k:[100,100,100],blind:-1,role:'博罗居民',ask:'',last:null};
+const S={page:'home',event:'C006',phase:'now',node:0,metric:'industrial',town:'长宁',townFilter:'all',wish:[],paths:[1,1,1,1,1],mode:'plan',k:[100,100,100],blind:-1,role:'博罗居民',ask:'',last:null,spend:60};
 const $=s=>document.getElementById(s),safe=v=>String(v??'').replace(/[&<>"']/g,x=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;','\'':'&#39;'}[x])),url=v=>/^https?:\/\//.test(v||'')?v:'';
 const link=(p,t,cl='btn')=>`<a class="${cl}" href="#page=${p}">${t}</a>`;
 const button=(t,action,val='',cl='btn')=>`<button class="${cl}" data-action="${action}" data-value="${safe(val)}">${t}</button>`;
@@ -63,7 +63,7 @@ function money(){
 let list={industrial:['+8.7%','工厂的工业增加值在增长','2025年规上工业增加值增速'],investment:['−18.8%','固定资产投资减少','2025年固定资产投资增速'],houses:['−47.6%','房地产投资减少更多','2025年房地产开发投资增速'],trade:['+29.1%','进出口增长','2025年外贸进出口增速']};let item=list[S.metric];
 return pane(card(`<div class="eyebrow">2025年GDP · 三块拼图</div><div class="giant" style="margin:17px 0;color:#b5f5dd">1005.45<span class="unit">亿元</span></div><div class="splitbar"><span style="width:10.7%;background:#efa953"></span><span style="width:54.6%;background:#45c9b3"></span><span style="width:34.7%;background:#82bbef"></span></div><div class="splitlegend" style="color:#c5dedf"><span>🟠 农业10.7%</span><span>🟢 第二产业54.6%</span><span>🔵 服务业34.7%</span></div><p class="muted" style="color:#a9c8ce;margin:15px 0 0">注意：这不是“大家的钱花到哪里”的银行流水，而是GDP的三部分。</p>`,7,'dark')
 +card(`<div class="cardtitle">哪一项让你吃惊？</div><div class="buttonrow">${Object.entries({industrial:'工厂',investment:'投资',houses:'房地产',trade:'外贸'}).map(([v,l])=>button(l,'metric',v,'choicebtn '+(v===S.metric?'on':''))).join('')}</div><div class="giant" style="margin:20px 0;color:${S.metric==='investment'||S.metric==='houses'?'#d4757d':'#0b9783'}">${item[0]}</div><div class="lead">${item[1]}</div><p class="muted">${item[2]}</p>`,5)
-+card(`<div class="cardtitle">最奇怪的两个数字</div><div class="splitbig"><div class="bigbox"><small>工业增加值</small><strong style="color:#0ea889">+8.7%</strong></div><div class="bigbox"><small>固定资产投资</small><strong style="color:#d8797e">−18.8%</strong></div></div><p class="muted" style="margin:15px 0 2px">以前建好的工厂今天在生产，但新的投资可能放慢。两种变化可以同时出现。</p><div class="buttonrow">${link('paths','接下来靠什么？ →')}</div>`));
++card(`<div class="cardtitle">最奇怪的两个数字</div><div class="splitbig"><div class="bigbox"><small>工业增加值</small><strong style="color:#0ea889">+8.7%</strong></div><div class="bigbox"><small>固定资产投资</small><strong style="color:#d8797e">−18.8%</strong></div></div><p class="muted" style="margin:15px 0 2px">以前建好的工厂今天在生产，但新的投资可能放慢。两种变化可以同时出现。</p><div class="buttonrow">${link('paths','接下来靠什么？ →')}</div>`)+card(`<div class="cardtitle">100元小游戏：你会在哪里花？</div><div class="lead">今天有100元。自己拖一拖。</div><p class="muted">在博罗花多少？</p><input type="range" aria-label="在博罗花的钱" data-spend="1" min="0" max="100" step="10" value="${S.spend}" style="width:100%"><div class="splitbig" style="margin-top:14px"><div class="bigbox"><small>在博罗花</small><strong style="color:#149d83">${S.spend}元</strong></div><div class="bigbox"><small>在县外花</small><strong style="color:#d18d58">${100-S.spend}元</strong></div></div><div class="notice" style="margin-top:12px">你自己调出的小游戏，不代表博罗真实消费调查。</div>`));
 }
 function trip(){
 const towns=DATA.life?.towns||[],t=towns.find(x=>x.n===S.town)||towns[0],veg=DATA.life?.veg||[];
@@ -166,7 +166,7 @@ case'copy':copy();break;
 }
 document.addEventListener('click',e=>{let x=e.target.closest('[data-action]');if(x)action(x.dataset.action,x.dataset.value);});
 document.addEventListener('input',e=>{let x=e.target;if(x.dataset.slider!==undefined){let out=$('o'+x.dataset.slider);if(out)out.textContent=x.value+'%';}if(x.id==='question')S.ask=x.value.slice(0,90);});
-document.addEventListener('change',e=>{let x=e.target;if(x.dataset.slider!==undefined){S.k[Number(x.dataset.slider)]=Number(x.value);render();}});
+document.addEventListener('change',e=>{let x=e.target;if(x.dataset.slider!==undefined){S.k[Number(x.dataset.slider)]=Number(x.value);render();}if(x.dataset.spend!==undefined){S.spend=Number(x.value);render();}});
 $('share-global').onclick=share;
 window.addEventListener('hashchange',()=>{let before=S.page;parseHash();render(before!==S.page);});
 parseHash();render();
