@@ -1,0 +1,242 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="theme-color" content="#081d2d">
+<meta name="description" content="博罗变化现场大众版。2026年博罗发生了什么？用简单的话、能点的画面，看懂变化，发现问题。">
+<title>博罗正在发生什么？｜博罗风洞大众版</title>
+<style>
+:root{--navy:#071e30;--ink:#172c3c;--muted:#687d8c;--paper:#f4f7fa;--line:#e5ebef;--teal:#0b927e;--white:#fff;--warm:#e5a46c;--shadow:0 14px 45px rgba(17,44,62,.065)}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth}body{margin:0;font-family:Inter,"PingFang SC","Microsoft YaHei",system-ui,-apple-system,sans-serif;background:var(--paper);color:var(--ink);line-height:1.55}
+button,a{font:inherit}button{cursor:pointer}button:focus-visible,a:focus-visible{outline:3px solid #4cc0bd;outline-offset:3px}
+a{color:inherit;text-decoration:none}button{border:0} .shell{max-width:1350px;margin:auto;padding:0 28px}
+.top{background:#081d2d;color:#e4f1f4;border-bottom:1px solid #244455}
+.top-inner{min-height:72px;display:flex;align-items:center;justify-content:space-between;gap:16px}
+.mark{width:36px;height:36px;border-radius:11px;display:grid;place-items:center;color:#102d3b;background:#a9eadd;font-size:19px;font-weight:900}
+.brand{display:flex;align-items:center;gap:11px;font-size:17px;font-weight:800;letter-spacing:.02em}.brand small{font-size:10px;color:#95b5c6;display:block;letter-spacing:.18em;font-weight:600}
+.actions{display:flex;align-items:center;gap:10px}.back{border:1px solid #426272;border-radius:100px;padding:8px 15px;color:#deedf2;font-size:13px;white-space:nowrap}.back:hover{background:#17384b}
+.intro{background:radial-gradient(ellipse at 80% 0%,#174c58 0%,transparent 48%),linear-gradient(120deg,#081d2d,#0b2738);color:#fff;padding:49px 0 58px}
+.intro-inner{display:flex;justify-content:space-between;gap:26px;align-items:flex-end}.kicker{font-size:12px;letter-spacing:.14em;font-weight:800;color:#9ce7d3}
+h1{font-size:clamp(31px,4vw,54px);letter-spacing:-.05em;line-height:1.2;margin:12px 0 13px;font-weight:850}
+.intro p{color:#b7ccd5;max-width:650px;font-size:16px;margin:0}.small-hint{color:#b9cfda;font-size:12px;border:1px solid #37596a;border-radius:12px;padding:15px 18px;min-width:190px}
+.small-hint strong{display:block;font-size:25px;color:#f0fdfb;font-weight:750}
+.nav-band{position:relative;margin-top:-23px;z-index:2}
+.filters{display:flex;gap:8px;padding:9px;background:white;box-shadow:var(--shadow);border:1px solid var(--line);border-radius:17px;width:max-content;max-width:100%;overflow-x:auto;scrollbar-width:none}
+.filters::-webkit-scrollbar{display:none}
+.filter{white-space:nowrap;border-radius:11px;background:transparent;color:#657985;font-weight:700;padding:10px 16px;font-size:14px}
+.filter.active{background:#0c4b50;color:white}
+.main{display:grid;grid-template-columns:294px minmax(0,1fr);gap:22px;margin-top:23px;padding-bottom:60px;align-items:start}
+.sidebar,.panel{background:#fff;border:1px solid var(--line);border-radius:21px;box-shadow:var(--shadow)}
+.sidebar{padding:20px;position:sticky;top:16px}
+.section-title{display:flex;align-items:center;justify-content:space-between;gap:8px;font-size:16px;font-weight:850;margin:0 0 10px}
+.subnote{font-size:12px;color:#8b9daa;margin:0 0 14px}
+.story-list{display:flex;flex-direction:column;gap:8px;max-height:calc(100vh - 145px);overflow:auto;padding:2px}
+.story-card{background:#fff;border:1px solid #e8edf0;text-align:left;width:100%;padding:12px;display:grid;grid-template-columns:39px 1fr;gap:11px;border-radius:12px;color:#223a49;transition:background .2s,border-color .2s,transform .2s}
+.story-card:hover{transform:translateY(-1px);background:#f5faf9}
+.story-card.active{background:#e7f6f3;border-color:#87cfc3;box-shadow:inset 3px 0 #138e80}
+.story-card .sicon{font-size:23px;border-radius:11px;background:#edf3f6;width:39px;height:39px;display:grid;place-items:center}
+.story-card b{display:block;font-size:13px;line-height:1.4;font-weight:800}.story-card small{font-size:11px;color:#758c99}
+.panel{overflow:hidden}
+.story-main{padding:28px 31px 20px}
+.story-meta{display:flex;align-items:center;gap:8px;flex-wrap:wrap;font-size:12px;font-weight:700;color:#66828e}
+.pill{display:inline-flex;align-items:center;padding:5px 10px;border-radius:99px;background:#e2f5ef;color:#087767}
+.pill.amber{background:#fff0de;color:#a85c1e}.pill.blue{background:#e8effb;color:#426ba0}
+.story-top{display:flex;justify-content:space-between;align-items:center;gap:15px}
+.story-heading{font-size:clamp(25px,3.3vw,39px);line-height:1.27;letter-spacing:-.035em;margin:16px 0 12px;max-width:790px}
+.story-lead{font-size:17px;color:#4c6876;max-width:780px;margin:0 0 18px;line-height:1.72}
+.share{background:#f0f5f7;color:#3e6372;border-radius:9px;padding:8px 10px;font-size:12px;font-weight:750;white-space:nowrap}
+.share:hover{background:#e3efee}
+.section-head{display:flex;align-items:baseline;justify-content:space-between;gap:10px;margin:27px 0 12px}
+.section-head h3{font-size:19px;line-height:1.45;letter-spacing:-.02em;margin:0}
+.section-head span{font-size:12px;color:#8ca1a9}
+.timeline{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:9px}
+.time-card{display:flex;flex-direction:column;gap:8px;min-width:0;min-height:121px;text-align:left;border-radius:14px;border:1.5px solid #e5ecef;padding:15px;background:#fafcfd;transition:all .2s}
+.time-card .number{font-size:12px;font-weight:850;color:#6c8999}
+.time-card .copy{font-size:14px;font-weight:700;color:#4e6774;line-height:1.55;overflow-wrap:anywhere}
+.time-card.active{border-color:#3ab5a5;background:#eaf9f5;box-shadow:0 0 0 2px #def4ef}
+.time-card.active .number{color:#007b6c}.time-card.active .copy{color:#164a48}
+.stage{border-radius:17px;background:radial-gradient(circle at 52% 2%,#154357,#082b3c 55%,#071e2c);color:white;overflow:hidden;position:relative;padding:24px 24px 22px}
+.stage:after{content:"";position:absolute;inset:0;pointer-events:none;opacity:.16;background-image:radial-gradient(#c9eeed .7px,transparent .7px);background-size:23px 23px}
+.stage-top{position:relative;z-index:1;display:flex;align-items:center;justify-content:space-between;gap:10px;font-size:12px;color:#a8d5d5}
+.live-dot{width:7px;height:7px;border-radius:50%;display:inline-block;background:#4bd4b0;margin-right:6px;box-shadow:0 0 10px #4bd4b088}
+.focus{display:flex;align-items:center;justify-content:center;gap:13px;position:relative;z-index:1;margin:20px auto 0;border-radius:17px;background:#12475a;border:1px solid #42818a;width:fit-content;max-width:100%;padding:11px 19px;box-shadow:0 0 0 5px #18445744}
+.focus-icon{font-size:28px;line-height:1.1}.focus b{font-size:16px}.focus small{font-size:11px;display:block;color:#bad9dd}
+.flowline{height:33px;width:1px;background:linear-gradient(#74d7bf,#34748a);margin:auto;position:relative}.flowline:after{content:"";position:absolute;bottom:-2px;left:-3px;border:4px solid transparent;border-top-color:#74d7bf}
+.people{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:9px;position:relative;z-index:2}
+.impact{background:rgba(241,253,254,.09);border:1px solid #3c6f7e;border-radius:12px;color:#e3f2f4;padding:14px 10px;text-align:center;min-height:93px;transition:background .2s,transform .2s}
+.impact:hover,.impact.active{background:#1d6471;transform:translateY(-2px);border-color:#8ae6d2}
+.impact strong{font-size:14px;line-height:1.3;display:block}.impact .tiny{font-size:11px;display:block;margin-top:7px;color:#b6d2da}
+.impact .tiny.good{color:#9ae7bd}
+.impact.muted{opacity:.45}
+.detailbar{margin-top:13px;min-height:47px;position:relative;z-index:2;border-radius:9px;background:#103c4d;padding:11px 13px;font-size:13px;line-height:1.6;color:#deeff1}
+.detailbar strong{color:#8bf1cf}
+.stage-status{padding-top:10px;font-size:12px;color:#a8c5cc;position:relative;z-index:2}
+.bottom-grid{display:grid;grid-template-columns:1fr 1fr;gap:13px;margin-top:16px}
+.insight,.question{border-radius:15px;padding:21px;min-height:196px}
+.insight{background:#fff7e9;border:1px solid #f3e0bd}.question{background:#f0f8f8;border:1px solid #d8e9e7}
+.t-label{font-size:12px;font-weight:900;letter-spacing:.035em;color:#936323;margin-bottom:9px}
+.question .t-label{color:#128071}
+.insight p,.question p{font-size:15px;line-height:1.72;margin:0;color:#3b5261}
+.question p{margin-bottom:13px}
+.choices{display:flex;flex-wrap:wrap;gap:7px}
+.choice{border-radius:9px;padding:9px 12px;font-size:12px;font-weight:750;background:white;color:#13605c;border:1px solid #c6dedb}
+.choice.selected{background:#107d70;color:#fff}
+.choice-answer{font-size:13px;line-height:1.65;margin-top:10px;color:#235e58;min-height:22px}
+.source-section{background:#fafcfd;border-top:1px solid #edf1f3;padding:18px 31px 26px}
+.source-toggle{display:flex;align-items:center;justify-content:space-between;width:100%;background:transparent;padding:0;color:#5c7986;font-size:13px;font-weight:800;text-align:left}
+.source-list{margin-top:14px;display:none;flex-wrap:wrap;gap:8px}
+.source-list.open{display:flex}
+.source-link{font-size:12px;padding:8px 10px;border:1px solid #dce7e9;border-radius:8px;color:#235f6e;background:white}
+.source-link:hover{background:#edf8f7}
+.note{font-size:12px;line-height:1.7;color:#8b9ca4;margin-top:9px}
+.next-row{display:flex;align-items:center;justify-content:space-between;gap:10px;margin-top:21px}
+.next-tip{font-size:13px;color:#8298a1}.next{background:#0d5b58;border-radius:11px;color:white;padding:11px 17px;font-size:14px;font-weight:800}.next:hover{background:#0b746c}
+.footer{padding:24px 0 40px;font-size:12px;color:#78909c;line-height:1.8}
+.empty{color:#8a9ea6;padding:15px;font-size:13px}
+@media(max-width:1080px){.main{grid-template-columns:250px minmax(0,1fr)}.shell{padding:0 19px}.story-main{padding:24px}.source-section{padding:18px 24px 25px}.story-heading{font-size:29px}}
+@media(max-width:760px){
+.shell{padding:0 14px}.top-inner{min-height:62px}.brand{font-size:15px}.brand small{font-size:9px}.mark{width:32px;height:32px;font-size:17px}
+.back{font-size:12px;padding:7px 10px}
+.intro{padding:29px 0 48px}.intro-inner{align-items:flex-start}.small-hint{display:none}h1{font-size:33px;margin:8px 0 10px;line-height:1.25}.intro p{font-size:14px;line-height:1.65}
+.nav-band{margin-top:-21px}.filters{width:100%;border-radius:14px}.filter{font-size:13px;padding:9px 12px}
+.main{display:flex;flex-direction:column;gap:14px;margin-top:13px}
+.sidebar,.panel{width:100%;border-radius:16px}.sidebar{padding:13px;position:static}.section-title{font-size:15px;margin-bottom:7px}
+.subnote{display:none}.story-list{max-height:none;flex-direction:row;overflow-x:auto;scroll-snap-type:x mandatory;padding-bottom:4px;scrollbar-width:thin}
+.story-card{flex:0 0 218px;grid-template-columns:32px 1fr;padding:10px;scroll-snap-align:start;min-height:73px;gap:8px}.story-card .sicon{width:32px;height:32px;font-size:18px}.story-card b{font-size:12px}
+.story-main{padding:19px 17px 18px}
+.story-meta{font-size:11px}.story-heading{font-size:26px;line-height:1.32;margin:13px 0 9px}.story-lead{font-size:15px;line-height:1.65;margin-bottom:7px}
+.share{font-size:11px}.section-head{margin:20px 0 11px}.section-head h3{font-size:17px}.section-head span{font-size:10px}
+.timeline{gap:6px}.time-card{padding:10px 9px;min-height:133px;border-radius:10px;gap:5px}.time-card .number{font-size:11px}.time-card .copy{font-size:12px;line-height:1.52;font-weight:650}
+.stage{padding:16px 12px 16px;border-radius:14px}.stage-top{font-size:11px}.focus{margin-top:17px;padding:10px 12px;gap:8px}.focus b{font-size:14px}.focus-icon{font-size:24px}
+.people{gap:5px}.impact{padding:12px 4px;min-height:91px;border-radius:8px}.impact strong{font-size:12px;line-height:1.45}.impact .tiny{font-size:10px}.detailbar{font-size:12px;padding:10px}
+.bottom-grid{grid-template-columns:1fr;gap:10px}.insight,.question{padding:16px;min-height:0}.insight p,.question p{font-size:14px}
+.source-section{padding:17px}.footer{padding:15px 0 32px}
+}
+@media(max-width:350px){.shell{padding:0 10px}.time-card .copy{font-size:11.5px}.story-heading{font-size:23px}.brand{font-size:13px}.people{gap:4px}.impact strong{font-size:11px}}
+@media(prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important;scroll-behavior:auto!important}}
+</style></head>
+<body>
+<header class="top"><div class="shell top-inner"><a class="brand" href="./index.html" aria-label="博罗风洞首页"><span class="mark">博</span><span>博罗变化现场<small>人人都能看懂的版本</small></span></a><div class="actions"><a class="back" href="holo-home-v10.html">进入原版 ↗</a></div></div></header>
+<section class="intro"><div class="shell intro-inner"><div><div class="kicker">2026 · 博罗最近发生了什么</div><h1>博罗变了，<br>跟你有什么关系？</h1><p>不说难懂的话。选一件真事，看看以前怎样、现在怎样，接着可能发生什么。</p></div><div class="small-hint"><strong id="totalCount">12 件事</strong>你可以慢慢看，也可以自己点点试试</div></div></section>
+<div class="shell nav-band"><nav id="filters" class="filters" aria-label="按内容查看"><button class="filter active" data-cat="all">全部故事</button><button class="filter" data-cat="road">桥和路</button><button class="filter" data-cat="work">工厂和工作</button><button class="filter" data-cat="trip">出去玩</button><button class="filter" data-cat="home">农田和家乡</button></nav></div>
+<main class="shell main">
+<aside class="sidebar" aria-label="选一件事"><h2 class="section-title">选一件事来看看 <span id="listCount" style="color:#8ea5ae;font-size:12px">12件</span></h2><p class="subnote">点哪一件，右边就讲哪一件。</p><div id="storyList" class="story-list"></div></aside>
+<section class="panel" aria-live="polite">
+<div class="story-main">
+<div class="story-top"><div class="story-meta"><span class="pill" id="storyTag">正在修</span><span id="storyDate">2026年</span><span id="storyIndex">第1件</span></div><button class="share" id="share">分享这件事 ↗</button></div>
+<h2 class="story-heading" id="storyTitle"></h2><p class="story-lead" id="storyLead"></p>
+<div class="section-head"><h3>点一下面，看看它怎么变</h3><span>点三个小框就能切换</span></div>
+<div class="timeline" id="timeline" role="group" aria-label="选择时间阶段">
+<button class="time-card" data-phase="before"><span class="number">① 以前</span><span class="copy" id="beforeTxt"></span></button>
+<button class="time-card active" data-phase="now"><span class="number">② 现在</span><span class="copy" id="nowTxt"></span></button>
+<button class="time-card" data-phase="future"><span class="number">③ 以后呢？</span><span class="copy" id="futureTxt"></span></button>
+</div>
+<div class="section-head"><h3>这件事，连着哪些人和地方？</h3><span>点下面的小卡片</span></div>
+<div class="stage" id="stage">
+<div class="stage-top"><span><i class="live-dot"></i><span id="phaseTitle">看现在</span></span><span>实线是已知 · 其他要再查</span></div>
+<div class="focus"><span class="focus-icon" id="focusIcon"></span><div><b id="focusName"></b><small>今天选的这件事</small></div></div>
+<div class="flowline" aria-hidden="true"></div>
+<div class="people" id="people"></div>
+<div class="detailbar" id="impactDetail">点一个小卡片，看看它和这件事有什么关系。</div>
+<div class="stage-status" id="phaseReminder"></div>
+</div>
+<div class="bottom-grid">
+<div class="insight"><div class="t-label">你可能没想到</div><p id="surprise"></p></div>
+<div class="question"><div class="t-label">你来当小侦探</div><p id="question"></p><div id="choices" class="choices"></div><div id="choiceAnswer" class="choice-answer" aria-live="polite"></div></div>
+</div>
+<div class="next-row"><span class="next-tip" id="nextHint">还有很多件事等你发现</span><button class="next" id="next">再看下一件 →</button></div>
+</div>
+<div class="source-section"><button type="button" class="source-toggle" id="sourceToggle" aria-expanded="false"><span>想知道这些话从哪来？点这里看原始消息</span><span id="sourceArrow">＋</span></button><div class="source-list" id="sourceList"></div><div class="note" id="sourceNote">说明：我们把公开资料改写成容易懂的话。“可能发生”不是“已经发生”。这不是对未来的保证。</div></div>
+</section>
+</main>
+<footer class="shell footer">博罗变化现场 · 大众版｜和原版共用博罗的公开事件记录。这里讲的是现实变化和可能的影响，不会替你下决定。<br><a href="holo-home-v10.html" style="text-decoration:underline">回到原版变化现场</a>　·　<a href="./index.html" style="text-decoration:underline">回到博罗风洞首页</a></footer>
+<script id="story-data" type="application/json">[{"id":"C006","cat":"road","date":"10月26日","icon":"🌉","title":"石洲大桥在重建，过桥的人怎么办？","lead":"园洲到东莞石排的桥正在重建。施工时要留意交通管制。","status":"正在修","short":"一座桥，连着两座城","before":"以前是双向两车道的老桥。","now":"正在重建，施工路段有交通管制。","future":"计划建成双向六车道的新桥，但现在还不能当作已经通车。","surprise":"桥修好可能更方便，可修桥这段时间，出行反而可能更麻烦。","watch":"施工期间怎么走、何时恢复正常通行，还要看新通告。","question":"你觉得哪件事更值得先问清楚？","choices":[["施工时怎么过桥","先看看每天出行的人，会不会需要改路线。"],["新桥什么时候能用","要看后续施工进度，不能把计划当成结果。"]],"links":[["上班的人","出行路线可能变，实际影响还要看交通情况。","可能"],["运货的车","送货时间可能受影响，但目前没有准确延误数字。","可能"],["园洲和石排","两地的跨市道路正在重建。","已知"]]},{"id":"C003","cat":"work","date":"10月13日","icon":"🏭","title":"博罗新开了一条做铜材料的生产线","lead":"铜来顺的生产线点火投产。铜可以做成电线，也能用到不少机器里。","status":"已投产","short":"新工厂出现了","before":"博罗已有做铜材料的企业。","now":"铜来顺新生产线开始投产。","future":"企业想在2027年冲刺百亿元产值。这只是目标，还不是赚到的钱。","surprise":"多一条生产线，不代表本地其他工厂已经拿到订单。","watch":"它真的生产了多少？周边企业有没有接到新订单？","question":"你想先找哪个答案？","choices":[["有没有新工作","新生产线可能需要工人，但新增岗位数量还要核实。"],["有没有本地订单","要看看其他工厂是否真的和它做了生意。"]],"links":[["新生产线","已点火投产。","已知"],["附近工厂","可能有配套机会，还不能说已经合作。","可能"],["做电线的企业","可能使用铜材料，具体买卖关系要查。","可能"]]},{"id":"C012","cat":"trip","date":"10月","icon":"🏞️","title":"国庆游客多，民宿就一定赚得多吗？","lead":"国庆假期，博罗片区接待游客约52.97万人次。有些沿线民宿节前预订率达到92%。","status":"假期数据","short":"人来了，钱留下了吗","before":"部分山区游客主要当天来回。","now":"国庆期间游客多，一些民宿预订很旺。","future":"淡季能不能也有人住，还要继续看。","surprise":"预订多，不等于全年都住满；游客多，也不等于每家店都赚钱。","watch":"游客有没有过夜？住一晚的人多不多？","question":"比游客数量更应该看看什么？","choices":[["住了几晚","住得久一些，餐饮和住宿才可能得到更多生意。"],["每家都赚了吗","还要看各家收入，不能只看一条公路的热闹。"]],"links":[["旅游公路","让不同景点更容易串起来。","已知"],["民宿","部分民宿国庆前预订很旺。","已知"],["附近饭店","可能迎来客人，但收入要另查。","可能"]]},{"id":"C001","cat":"work","date":"6月26日","icon":"🏢","title":"深圳的想法，能在博罗变成产品吗？","lead":"深博福田产业园开园。首批厂房交付，一批企业进来了。","status":"已开园","short":"两地一起做事情","before":"园区还在建设，一些企业还没开始生产。","now":"园区开园，首批厂房交付使用。","future":"以后能生产多少、留住多少工作，还得看真实经营。","surprise":"公司可以在深圳做研发，在博罗建厂房；但开园不是全部企业都已量产。","watch":"新进来的企业有多少真正开始生产？","question":"开园之后，你最想看什么？","choices":[["有多少人上班","要核对企业实际用工人数。"],["产品有没有卖出去","要看真实生产和订单，不能只看签约。"]],"links":[["深圳","提供部分研发和产业资源。","已知"],["博罗园区","已开园，首批厂房交付。","已知"],["本地工人","可能出现工作机会，人数要再查。","可能"]]},{"id":"C002","cat":"work","date":"9月30日","icon":"⚡","title":"两座大电站接上电网，会帮到谁？","lead":"博罗两座独立储能电站相继投入运行。它们像大号充电宝，可以帮助电网调节用电。","status":"已运行","short":"电够不够稳","before":"本地还没有这两座独立储能电站。","now":"两座电站已经接上电网。","future":"能不能让某家工厂电费变少，目前还不知道。","surprise":"电站运行了，不等于所有工厂的电费马上下降。","watch":"电网运行有什么变化？哪些企业真正得到帮助？","question":"你更关心什么？","choices":[["停电会不会少","电站能帮助调节用电，但不能保证不再停电。"],["电费会不会降","没有可靠数字，不能直接说电费会下降。"]],"links":[["储能电站","两座电站已投入运行。","已知"],["电网","可以使用电站帮助调节电力。","已知"],["用电的工厂","可能从供电调节中受益，具体要查。","可能"]]},{"id":"C004","cat":"work","date":"8月3日","icon":"📝","title":"签约80亿元，钱已经花出去了吗？","lead":"博罗签下4个新项目，计划总投资约80亿元。","status":"刚签约","short":"签名字，不等于建好","before":"这些新项目还没作为已建成工厂投入使用。","now":"4个项目签约，计划投资约80亿元。","future":"还要经过建设、投产，才能知道结果。","surprise":"签约就像说好要做一件事，不代表事情已经做完。","watch":"项目有没有动工？什么时候开始生产？","question":"想判断项目有没有进展，先看什么？","choices":[["有没有真正开工","看建设现场和正式进度，而不只看签约。"],["预计产值多少","预计不是实际生产出来的数字。"]],"links":[["4个新项目","已签约。","已知"],["建设现场","是否逐项开工需要跟踪。","可能"],["周边工厂","以后可能有机会，但还不是现成订单。","可能"]]},{"id":"C007","cat":"road","date":"7月","icon":"🛣️","title":"一条新高速，什么时候才能真正通车？","lead":"惠霞高速博罗段在2026年继续建设。报道时工程进度已超过八成。","status":"建设中","short":"修了很多，还没说修完","before":"有关南北方向的高速通道还没贯通。","now":"工程推进中，年内通车曾被列为目标。","future":"真正何时通车，要以最新正式通告为准。","surprise":"修了八成，和能不能开车上去，是两回事。","watch":"通车公告有没有发布？哪些路段能走？","question":"你想先查哪一个？","choices":[["能不能走了","只看最新的正式通车消息。"],["能省多久时间","需要实测路线，不能只凭新路想象。"]],"links":[["在建高速","2026年记录显示仍在推进。","已知"],["开车的人","通车后可能多一条路。","可能"],["沿线店铺","可能迎来新客人，影响未证实。","可能"]]},{"id":"C009","cat":"work","date":"7月29日","icon":"🌿","title":"石湾有工厂停了，为什么？","lead":"石湾开展环保整治，4家违法企业被停产处理。","status":"停产整改","short":"不是所有停产都一样","before":"部分企业存在不符合要求的生产行为。","now":"4家违法企业被停产处理，并要求整改。","future":"符合条件后是否复产，还要看后续检查。","surprise":"停产整改，不等于这几家企业永远关门。","watch":"整改有没有完成？会不会重新生产？","question":"你最想知道哪件事？","choices":[["什么时候能复产","需要按规定完成整改，不能先替企业下结论。"],["附近的河会怎样","要继续看水质与排放检查。"]],"links":[["被停产的工厂","有4家被停产处理。","已知"],["附近环境","治理可能改善环境，成效要看数据。","可能"],["工人和订单","可能受影响，目前没有详细数量。","可能"]]},{"id":"C008","cat":"work","date":"2月13日","icon":"🏗️","title":"一条水泥生产线关了，整家公司都没了吗？","lead":"固力水泥博罗分公司的一条水泥熟料生产线已关停，主要设备拆除。","status":"一条线停了","short":"关掉一条线，不是关掉全部","before":"这条生产线以前还能生产。","now":"这条生产线已关停并拆除主要设备。","future":"其他业务怎样，目前资料没有说清楚。","surprise":"关掉一条生产线，不等于整个企业所有业务都停了。","watch":"相关工人和周边供应商怎么样，需要更多信息。","question":"你觉得哪句话更准确？","choices":[["一条线关停了","这是已有公开记录能支持的说法。"],["整家公司倒闭了","不能这样说，资料只写了这条生产线。"]],"links":[["水泥生产线","关停并拆除设备。","已知"],["其他业务","现在还不能判断。","未知"],["相关工人","可能受到影响，但人数不清楚。","可能"]]},{"id":"C010","cat":"home","date":"9月23日","icon":"🍒","title":"博罗种荔枝的人，开始一起想办法了","lead":"博罗县荔枝产业协会成立，还与科研人员开展合作。","status":"协会成立","short":"从各自卖，到一起想办法","before":"种荔枝、卖荔枝的人比较分散。","now":"新的荔枝产业协会成立。","future":"能不能多卖、卖得更好，要看接下来的实际销售。","surprise":"大家抱团不代表今年每个果农都能多赚钱。","watch":"有没有更多果农加入？荔枝卖得怎么样？","question":"你最想看看哪件事？","choices":[["农民多卖了多少","要看真实销售，不能只看品牌名气。"],["大家怎么合作","可以继续看协会如何帮忙卖货和改进种植。"]],"links":[["果农","是这件事最重要的人。","已知"],["荔枝协会","已经成立。","已知"],["买荔枝的人","以后可能更容易找到博罗荔枝。","可能"]]},{"id":"C011","cat":"home","date":"6月25日","icon":"🌾","title":"博罗农业拿到新名片，农民就会更赚钱吗？","lead":"博罗入选国家农业现代化示范区。","status":"获得认定","short":"有名气，还要看收入","before":"博罗有自己的农业和农产品加工产业。","now":"博罗入选国家农业现代化示范区。","future":"农业收入会不会提高，要继续看收成、销量和价格。","surprise":"拿到一个好称号，并不等于每户农民收入都涨了。","watch":"农产品卖得怎么样？农民收入有没有变化？","question":"哪种数字更能说明农民过得好？","choices":[["拿了多少称号","称号说明得到认可，但不是收入。"],["卖出了多少钱","还要看成本，才能知道最终赚多少。"]],"links":[["农业示范区","博罗已入选。","已知"],["农产品加工","有机会把农产品加工成更多商品。","可能"],["种地的人","收入变化还需要真实数据。","未知"]]},{"id":"C005","cat":"work","date":"5—9月","icon":"🔧","title":"有些老工厂准备做大，但还没全部开工赚钱","lead":"杨侨、泰美等地有企业扩建或新建项目。","status":"项目推进","short":"建厂要花时间","before":"一些相关配套项目还没建成。","now":"部分项目在建，还有项目等待投产。","future":"等真正生产后，再看能带来多少新工作和订单。","surprise":"工地开工，和工厂产品已经卖出去，不是一回事。","watch":"项目有没有建好？是不是已经正式生产？","question":"你最想知道哪件事？","choices":[["新厂有没有招人","招工消息需要单独核实。"],["什么时候开始生产","要等投产消息，不把在建当成投产。"]],"links":[["新建厂房","部分项目正在建设。","已知"],["准备扩建的企业","有项目推进。","已知"],["本地工人","将来可能有岗位，当前数量未知。","可能"]]}]</script>
+<script>
+(function(){
+'use strict';
+var STORIES=JSON.parse(document.getElementById('story-data').textContent);
+var selectedId='',filter='all',phase='now',activeImpact=-1,sourceList=[],events={},dateChecked='2026-10-29',currentChoice=-1;
+var el=function(id){return document.getElementById(id);};
+var els=function(q){return Array.prototype.slice.call(document.querySelectorAll(q));};
+var safeText=function(v){return String(v==null?'':v);};
+var sourceMap={};
+var sourceFallback={
+S045:['博罗县交通运输局：石洲大桥交通管制','https://www.boluo.gov.cn/zwgk/gzwj/tzgg/content/post_5878745.html'],
+S036:['博罗县政府：铜来顺新生产线','https://www.boluo.gov.cn/zwgk/zwdt/tpxw/content/post_5872750.html'],
+S039:['博罗县政府：储能电站投入运行','https://www.boluo.gov.cn/hzblfzggj/gkmlpt/content/5/5862/mpost_5862463.html'],
+S037:['博罗县政府：深博福田园区开园','http://www.boluo.gov.cn/zwgk/zwdt/zwyw/content/post_5800807.html'],
+S041:['博罗县政府：四个新项目签约','https://www.boluo.gov.cn/zwgk/zwdt/zwyw/content/post_5824707.html'],
+S048:['广东省工信厅：生产线关停通告','https://gdii.gd.gov.cn/gkmlpt/content/4/4857/mpost_4857293.html'],
+S049:['博罗县政府：石湾环保整治','https://www.boluo.gov.cn/hzblswz/gkmlpt/content/5/5820/mpost_5820901.html'],
+S046:['博罗县政府：荔枝协会成立','https://www.boluo.gov.cn/zwgk/zwdt/bmdt/content/post_5858118.html'],
+S047:['惠州市农业农村局：农业示范区','http://nyncj.huizhou.gov.cn/gkmlpt/content/5/5797/mpost_5797223.html'],
+S031:['惠州市政府：2026国庆文旅数据','https://www.huizhou.gov.cn/zwgk/hzsz/zwyw/content/post_5865139.html']
+};
+function readHash(){var m=location.hash.match(/(?:^#|&)story=(C\d+)/);return m?m[1]:'';}
+function record(){return STORIES.filter(function(s){return s.id===selectedId;})[0]||STORIES[0];}
+function filtered(){return STORIES.filter(function(s){return filter==='all'||s.cat===filter;});}
+function make(tag,cls,txt){var x=document.createElement(tag);if(cls)x.className=cls;if(txt!==undefined)x.textContent=txt;return x;}
+function paintList(){
+var root=el('storyList');root.textContent='';var arr=filtered();
+arr.forEach(function(s){var b=make('button','story-card'+(s.id===selectedId?' active':''));b.type='button';b.setAttribute('aria-pressed',s.id===selectedId?'true':'false');var ic=make('span','sicon',s.icon);var txt=make('span','');txt.appendChild(make('b','',s.title));txt.appendChild(make('small','',s.date+' · '+s.short));b.appendChild(ic);b.appendChild(txt);b.onclick=function(){chooseStory(s.id,true);};root.appendChild(b);});
+el('listCount').textContent=arr.length+'件';el('totalCount').textContent=STORIES.length+' 件事';
+}
+function phaseTitleText(){return phase==='before'?'以前是什么样':phase==='now'?'现在发生了什么':'以后可能怎样';}
+function chooseStory(id,fromClick){
+var found=STORIES.some(function(s){return s.id===id;});if(!found)return;
+selectedId=id;phase='now';activeImpact=-1;currentChoice=-1;
+if(history.replaceState)history.replaceState(null,'','#story='+id);
+paintList();paintStory();
+if(fromClick&&window.innerWidth<=760){el('storyTitle').scrollIntoView({behavior:'smooth',block:'start'});}
+}
+function phasePaint(){
+var s=record();els('.time-card').forEach(function(b){var active=b.getAttribute('data-phase')===phase;b.classList.toggle('active',active);b.setAttribute('aria-pressed',active?'true':'false');});
+el('phaseTitle').textContent=phaseTitleText();
+el('phaseReminder').textContent=phase==='before'?'这是以前的样子。下方的联系不一定当时就有。':phase==='now'?'这件事有记录，但它会带来多少影响，不能只靠猜。':'这是以后可能出现的情况，不是说它一定会发生。';
+el('stage').classList.toggle('is-future',phase==='future');paintPeople();
+}
+function paintPeople(){
+var s=record();el('people').textContent='';
+s.links.forEach(function(link,i){var b=make('button','impact'+((phase==='before'&&i!==0)?' muted':'')+(i===activeImpact?' active':''));b.type='button';b.setAttribute('aria-pressed',i===activeImpact?'true':'false');b.appendChild(make('strong','',link[0]));var cls=link[2]==='已知'?'tiny good':'tiny';b.appendChild(make('span',cls,link[2]==='已知'?'已有记录':'还要再查'));b.onclick=function(){activeImpact=i;paintPeople();};el('people').appendChild(b);});
+var sel=activeImpact<0?null:s.links[activeImpact];
+el('impactDetail').textContent=sel?'【'+sel[0]+'】'+sel[1]:'点下面一张小卡片，看看这件事和谁有关系。';
+}
+function paintSources(){
+var s=record(),src=(events[s.id]&&events[s.id].source_ids)||[];var root=el('sourceList');root.textContent='';
+if(!src.length){root.appendChild(make('span','empty','这件事的原始记录暂时没有加载。'));return;}
+src.forEach(function(id){var obj=sourceMap[id],fallback=sourceFallback[id];var url=obj&&obj.url||fallback&&fallback[1],title=obj&&(obj.publisher+'：'+obj.title)||fallback&&fallback[0]||('资料 '+id);
+if(!/^https?:\/\//i.test(url||''))return;var a=make('a','source-link',title+' ↗');a.href=url;a.target='_blank';a.rel='noopener noreferrer';root.appendChild(a);});
+if(!root.children.length)root.appendChild(make('span','empty','暂时无法显示原始链接，请查看原版的证据资料。'));
+el('sourceNote').textContent='资料整理日期：'+dateChecked.replace(' ',' · ')+'。已发生、在建设、仅签约、未来可能的事，会分开说。公开消息也可能有新变化，请以最新公告为准。';
+}
+function paintStory(){
+var s=record(),n=STORIES.indexOf(s)+1;
+el('storyTag').textContent=s.status;el('storyTag').className='pill'+(/签约|建设中|正在修|项目推进/.test(s.status)?' amber':'');
+el('storyDate').textContent='2026年'+s.date;el('storyIndex').textContent='第'+n+' / '+STORIES.length+'件';
+el('storyTitle').textContent=s.title;el('storyLead').textContent=s.lead;el('focusIcon').textContent=s.icon;el('focusName').textContent=s.short;
+el('beforeTxt').textContent=s.before;el('nowTxt').textContent=s.now;el('futureTxt').textContent=s.future;
+el('surprise').textContent=s.surprise;el('question').textContent=s.question;
+var choiceRoot=el('choices');choiceRoot.textContent='';s.choices.forEach(function(c,i){var b=make('button','choice'+(i===currentChoice?' selected':''),c[0]);b.type='button';b.onclick=function(){currentChoice=i;paintChoices();};choiceRoot.appendChild(b);});
+el('choiceAnswer').textContent='选一个，看看还有什么要查。';
+el('nextHint').textContent='第'+n+'件看完了，继续找下一件。';
+el('sourceList').classList.remove('open');el('sourceToggle').setAttribute('aria-expanded','false');el('sourceArrow').textContent='＋';
+phasePaint();paintSources();
+}
+function paintChoices(){var s=record();els('.choice').forEach(function(b,i){b.classList.toggle('selected',i===currentChoice);});el('choiceAnswer').textContent=currentChoice<0?'选一个，看看还有什么要查。':s.choices[currentChoice][1];}
+function init(){
+els('.filter').forEach(function(b){b.onclick=function(){filter=b.getAttribute('data-cat');els('.filter').forEach(function(x){x.classList.toggle('active',x===b);});var arr=filtered();if(arr.length&&!arr.some(function(x){return x.id===selectedId;})){selectedId=arr[0].id;phase='now';activeImpact=-1;currentChoice=-1;}paintList();paintStory();};});
+els('.time-card').forEach(function(b){b.onclick=function(){phase=b.getAttribute('data-phase');activeImpact=-1;phasePaint();};});
+el('next').onclick=function(){var list=filtered(),i=list.findIndex(function(x){return x.id===selectedId;});if(list.length)chooseStory(list[(i+1)%list.length].id,true);};
+el('sourceToggle').onclick=function(){var open=el('sourceList').classList.toggle('open');el('sourceToggle').setAttribute('aria-expanded',open?'true':'false');el('sourceArrow').textContent=open?'−':'＋';};
+el('share').onclick=function(){var url=location.href.split('#')[0]+'#story='+selectedId;var s=record();if(navigator.share){navigator.share({title:s.title,text:'用简单的话看懂博罗的变化：'+s.title,url:url}).catch(function(){});return;}if(navigator.clipboard&&navigator.clipboard.writeText){navigator.clipboard.writeText(url).then(function(){el('share').textContent='链接已复制';setTimeout(function(){el('share').textContent='分享这件事 ↗';},1800);});return;}window.prompt('复制下面的链接，发给朋友：',url);};
+var start=readHash();selectedId=STORIES.some(function(s){return s.id===start;})?start:'C006';paintList();paintStory();
+Promise.all([
+fetch('./data/relationship-changes-v1.json',{cache:'no-store'}).then(function(r){if(!r.ok)throw Error('changes');return r.json();}),
+fetch('./data/relationship-sources-v1.json',{cache:'no-store'}).then(function(r){if(!r.ok)throw Error('sources');return r.json();})
+]).then(function(results){var changes=results[0],sources=results[1];dateChecked=changes.generated_at||dateChecked;changes.changes.forEach(function(e){events[e.change_id]=e;});sources.sources.forEach(function(x){sourceMap[x.source_id]=x;});paintSources();}).catch(function(){for(var i=0;i<STORIES.length;i++){var s=STORIES[i];events[s.id]={source_ids:{C006:['S045'],C003:['S036'],C012:['S031'],C001:['S037'],C002:['S039'],C004:['S041'],C009:['S049'],C008:['S048'],C010:['S046'],C011:['S047']}[s.id]||[]};}paintSources();});
+}
+init();
+})();
+</script>
+</body></html>
