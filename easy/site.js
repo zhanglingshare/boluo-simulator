@@ -24,9 +24,10 @@ const LESSONS=[
 ];
 const PATHS=['新工厂与新能源','现有工厂做大','旅游与服务业','深圳东莞往来','农业和农产品'];
 const PICON=['🏭','🔧','🏞️','🌉','🌾'];
+const QUIZZES={"C001":["园区开园，所有工厂都已经生产了吗？","还不能这样说","全部都量产了",0,"开园、进驻和真正大量生产，是几件不同的事。"],"C002":["储能电站运行，所有工厂电费都会马上降吗？","一定会","还不能这样说",1,"电站能帮电网调节用电，但每家工厂的电费要另外核实。"],"C003":["2027年目标100亿元，是今天已经生产出来的吗？","是今天的实际产值","不是，只是未来目标",1,"生产线投产是真的，未来目标不是已经完成。"],"C004":["签约80亿元，是已经花掉80亿元吗？","不是，还要看建设","是，签约就等于花完",0,"项目签约不能算成已完成投资。"],"C005":["正在建的厂房，就是已经量产了吗？","还没法这样算","是的",0,"建厂和正式生产不是一回事。"],"C006":["计划建双向6车道，现在能直接按6车道通行吗？","现在就可以","不行，还在施工",1,"新桥建成后的计划，不等于今天的路况。"],"C007":["工程进度超八成，就能开车上高速了吗？","不一定，要看通车消息","可以上了",0,"修好多少和开放通车是两回事。"],"C008":["一条水泥生产线关了，说明整家公司倒闭了吗？","说明公司倒闭","不能这样说",1,"这里只确认一条生产线退出。"],"C009":["工厂停产整改，就是永远不能重新生产吗？","可能整改后复产","一定永远关闭",0,"要看整改结果和后续检查。"],"C010":["荔枝协会成立，果农就一定马上多赚钱？","一定会","还要看真实销售和成本",1,"开始合作是好消息，但不是已经多赚的钱。"],"C011":["农业拿了新称号，所有农户收入都上涨了吗？","还要看收入","一定涨了",0,"称号和实际收入是两回事。"],"C012":["国庆民宿很忙，全年都会住满吗？","会，全年住满","不一定，要看淡季",1,"假期很热闹，不代表平日也一样。"]};
 const EVENTS_BIG={C001:['5','家企业集中入驻','园区已开园，不代表全部量产'],C002:['2','座储能电站运行','已并网，不保证每家工厂电费变低'],C003:['100','亿元是2027年目标','生产线已投产，但目标不是实际产值'],C004:['80','亿元计划投资','4个项目签约，不等于钱已经投完'],C005:['在建','部分项目正在推进','不能把在建当成已经投产'],C006:['2 → 6','车道：旧桥到计划新桥','目前是施工期，6车道还不是已通车'],C007:['超80%','2026年7月报道的进度','当时还未通车，之后要看公告'],C008:['2500','吨／日熟料产能退出','只是一条生产线，不是整个公司'],C009:['4','家企业被停产整改','整改不等于永久关停'],C010:['1','个荔枝产业协会成立','成立不等于果农收入马上上涨'],C011:['7','个国家地理标志','获得认定不等于农户收入上涨'],C012:['52.97','万人次（2026年国庆博罗片区）','假期人多，不代表全年都一样']};
 const DATA={hot:null,life:null,net:null,changes:null,sources:null};
-const S={page:'home',event:'C006',phase:'now',node:0,metric:'industrial',town:'长宁',townFilter:'all',wish:[],paths:[1,1,1,1,1],mode:'plan',k:[100,100,100],blind:-1,role:'博罗居民',ask:'',last:null,spend:60};
+const S={page:'home',event:'C006',phase:'now',node:0,metric:'industrial',town:'长宁',townFilter:'all',wish:[],paths:[1,1,1,1,1],mode:'plan',k:[100,100,100],blind:-1,role:'博罗居民',ask:'',last:null,spend:60,answers:{}};
 const $=s=>document.getElementById(s),safe=v=>String(v??'').replace(/[&<>"']/g,x=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;','\'':'&#39;'}[x])),url=v=>/^https?:\/\//.test(v||'')?v:'';
 const link=(p,t,cl='btn')=>`<a class="${cl}" href="#page=${p}">${t}</a>`;
 const button=(t,action,val='',cl='btn')=>`<button class="${cl}" data-action="${action}" data-value="${safe(val)}">${t}</button>`;
@@ -57,7 +58,7 @@ let n=Array.from(ids).map(id=>(DATA.net?.nodes||[]).find(x=>x.node_id===id)).fil
 let sources=(DATA.sources?.sources||[]).filter(x=>(e.source_ids||[]).includes(x.source_id)&&url(x.url)).slice(0,4);
 return pane(card(`<div class="cardtitle">一条变化，一张图 <small>已记录${changes.length}件</small></div><div class="events">${changes.map(x=>`<button class="event ${S.event===x.change_id?'on':''}" data-action="event" data-value="${safe(x.change_id)}"><span>${IDS[x.change_id]?.[0]||'🔎'}</span><strong>${safe(IDS[x.change_id]?.[1]||x.title)}</strong><small>${safe(x.event_date)}</small></button>`).join('')}</div>`)
 +card(`<span class="tag">${safe(e.event_date)}</span><h2 class="lead" style="margin:13px 0">${safe(IDS[e.change_id]?.[1]||e.title)}</h2><div class="card dark" style="box-shadow:none;padding:16px;margin:12px 0"><div class="giant" style="color:#b0efd5">${safe(focus[0])}</div><div style="font-size:15px;font-weight:800">${safe(focus[1])}</div><div style="color:#c6d8dd;font-size:12px;margin-top:7px">${safe(focus[2])}</div></div><div class="phase" style="margin:15px 0">${[['before','以前'],['now','现在'],['future','以后呢？']].map(x=>button(x[1],'phase',x[0],S.phase===x[0]?'on':'' )).join('')}</div><div class="card soft"><div class="lead">${safe(content)}</div><div class="muted">哪一件已经发生，哪件只是计划，要分清。</div></div><div class="cardtitle" style="margin-top:20px">这件事涉及谁？<small>点一下主体</small></div><div class="graphstage ${S.phase}"><div class="graphcenter">${IDS[e.change_id]?.[0]||'◉'} ${safe(IDS[e.change_id]?.[1]||'这件事')}</div><div class="graphlines">${n.map((x,i)=>button(safe(x.name),'node',i,S.node===i?'on':'' )).join('')||'尚无可展示的主体'}</div><div class="graphdetail">${n[S.node]?`这条公开记录提到了：${safe(n[S.node].name)}。但被提到不代表已经受益。`:'联系还要继续核实。'}</div><div class="graphlegend">只表示记录中存在联系，不把猜想画成真实订单。</div></div>`,7)
-+card(`<div class="cardtitle">有一个问题别忘了</div><div class="lead" style="color:#9a663b">${safe(e.uncertainty||'后续影响还不知道。')}</div><div class="cardtitle" style="margin-top:23px">看看原始消息</div><div class="buttonrow">${sources.map(x=>`<a class="btn outline" target="_blank" rel="noopener noreferrer" href="${safe(x.url)}">${safe(x.publisher)} ↗</a>`).join('')||'<span class="muted">来源数据未加载。</span>'}</div><div class="buttonrow" style="margin-top:24px"><a class="btn" href="../change-easy.html#story=${safe(e.change_id)}">玩一道猜题 ↗</a>${link('blind','还漏看什么','btn ghost')}</div>`,5));
++card(`<div class="cardtitle">有一个问题别忘了</div><div class="lead" style="color:#9a663b">${safe(e.uncertainty||'后续影响还不知道。')}</div><div class="cardtitle" style="margin-top:23px">🎯 你来猜一猜 <small>答过 ${Object.keys(S.answers).length}/12 题</small></div>${QUIZZES[e.change_id]?`<div class="lead" style="font-size:20px">${safe(QUIZZES[e.change_id][0])}</div><div class="buttonrow">${[1,2].map((j,i)=>button(safe(QUIZZES[e.change_id][j]),"quiz",i,"choicebtn "+(S.answers[e.change_id]===i?"on":""))).join("")}</div><div class="notice" style="margin-top:12px">${S.answers[e.change_id]===undefined?"选一个答案，马上揭晓。":(S.answers[e.change_id]===QUIZZES[e.change_id][3]?"答对了！ ":"再看一眼： ")+safe(QUIZZES[e.change_id][4])}</div>`:""}<div class="cardtitle" style="margin-top:23px">看看原始消息</div><div class="buttonrow">${sources.map(x=>`<a class="btn outline" target="_blank" rel="noopener noreferrer" href="${safe(x.url)}">${safe(x.publisher)} ↗</a>`).join('')||'<span class="muted">来源数据未加载。</span>'}</div><div class="buttonrow" style="margin-top:24px"><a class="btn" href="../change-easy.html#story=${safe(e.change_id)}">玩一道猜题 ↗</a>${link('blind','还漏看什么','btn ghost')}</div>`,5));
 }
 function money(){
 let list={industrial:['+8.7%','工厂的工业增加值在增长','2025年规上工业增加值增速'],investment:['−18.8%','固定资产投资减少','2025年固定资产投资增速'],houses:['−47.6%','房地产投资减少更多','2025年房地产开发投资增速'],trade:['+29.1%','进出口增长','2025年外贸进出口增速']};let item=list[S.metric];
@@ -99,7 +100,7 @@ return pane(card(`<div class="lead">你觉得哪句话不太对？</div><div cla
 +card(`<div class="lead">看到更多可能，才更接近一个好判断。</div><p class="muted">每次你多问一句“还有没有另一面”，就比只看新闻标题多走了一步。</p><div class="buttonrow">${link('report','做我的发现卡 →')}${button('发给朋友猜','share','','btn ghost')}</div>`));
 }
 function reportContent(){
-const r=plans()&&simulate(tuned(),4000);return `我的博罗发现卡｜2026\n2025年GDP：1005.45亿元；2030参考目标：1600亿元。\n我的身份：${S.role}\n我留下的5张牌：${PATHS.filter((x,i)=>S.paths[i]).join('、')||'本轮全部关闭'}\n我的风洞设定：新工厂${S.k[0]}%；旅游${S.k[1]}%；跨市往来${S.k[2]}%。\n2030年模拟中间位置：${r?fmt(r.p50)+'亿元':'未加载'}，只是一组模型情景。\n我的问题：${S.ask||'博罗下一步最该看什么？'}\n来一起玩：https://zhanglingshare.github.io/boluo-simulator/easy/`;
+const r=plans()&&simulate(tuned(),4000);return `我的博罗发现卡｜2026\n2025年GDP：1005.45亿元；2030参考目标：1600亿元。\n我的身份：${S.role}\n我挑战过的变化题：${Object.keys(S.answers).length} / 12\n我留下的5张牌：${PATHS.filter((x,i)=>S.paths[i]).join('、')||'本轮全部关闭'}\n我的风洞设定：新工厂${S.k[0]}%；旅游${S.k[1]}%；跨市往来${S.k[2]}%。\n2030年模拟中间位置：${r?fmt(r.p50)+'亿元':'未加载'}，只是一组模型情景。\n我的问题：${S.ask||'博罗下一步最该看什么？'}\n来一起玩：https://zhanglingshare.github.io/boluo-simulator/easy/`;
 }
 function report(){
 const r=plans()&&simulate(tuned(),4000);
@@ -136,6 +137,7 @@ function go(page,extra){location.hash='page='+page+(extra?'&'+extra:'');}
 function shareUrl(){let h='page='+S.page;if(S.page==='change')h+='&event='+S.event;if(S.page==='trip')h+='&town='+encodeURIComponent(S.town);if(['wind','report'].includes(S.page))h+='&k='+S.k.join('-');if(S.page==='report'&&S.ask)h+='&ask='+encodeURIComponent(S.ask);return location.href.split('#')[0]+'#'+h;}
 async function share(){
 let text='博罗，变了啥？来点一下，看你发现了什么。';
+if(S.page==='change'&&QUIZZES[S.event])text='来猜一道博罗题：'+QUIZZES[S.event][0];
 if(S.page==='trip')text='周末想去：'+(S.wish.join('、')||S.town);
 if(S.page==='report')text='我有一个博罗问题：'+(S.ask||'你觉得博罗下一步最该看什么？');
 let full=text+'\n'+shareUrl();
@@ -160,6 +162,7 @@ case'allpaths':S.paths=[1,1,1,1,1];render();break;
 case'mode':S.mode=v;render();break;
 case'reset':S.k=[100,100,100];render();break;
 case'blind':S.blind=S.blind===Number(v)?-1:Number(v);render();break;
+case'quiz':S.answers[S.event]=Number(v);render();break;
 case'share':share();break;
 case'copy':copy();break;
 }
