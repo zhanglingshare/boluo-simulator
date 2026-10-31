@@ -1,0 +1,241 @@
+<!doctype html>
+<html lang="zh-CN"><head><base href="../../"><link rel="stylesheet" href="easy/plain.css"><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>博罗产业风洞 · 你在网里哪个位置</title>
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+body{background:#080b12;color:#e6edf3;font:14px/1.6 -apple-system,"PingFang SC","Microsoft YaHei",sans-serif}
+.nav{position:sticky;top:0;z-index:50;display:flex;gap:5px;align-items:center;padding:9px 14px;background:rgba(8,11,18,.95);border-bottom:1px solid #1b2434;backdrop-filter:blur(8px);overflow-x:auto}
+.nav b{font-size:14px;margin-right:6px;flex:none}
+.nav a{background:#131c2b;color:#93a4bd;border:1px solid #22304a;padding:6px 12px;border-radius:20px;font-size:12.5px;text-decoration:none;white-space:nowrap;flex:none}
+.nav a.on{background:#15803d;border-color:#22c55e;color:#fff;font-weight:600}
+.wrap{max-width:1200px;margin:auto;padding:20px 16px}
+h1{font-size:22px;margin-bottom:4px}
+.sub{color:#8fa3bf;font-size:13px;margin-bottom:16px}
+.roles{display:grid;grid-template-columns:repeat(auto-fit,minmax(160px,1fr));gap:10px;margin-bottom:16px}
+.rc{background:#0e1523;border:1px solid #1c2739;border-radius:10px;padding:14px;cursor:pointer;text-align:center;transition:.2s}
+.rc:hover{border-color:#22c55e}
+.rc.on{border-color:#22c55e;background:#0f1f18;box-shadow:0 0 12px rgba(34,197,94,.15)}
+.rc .i{font-size:28px}
+.rc .t{font-size:14px;font-weight:700;margin-top:4px}
+.rc .s{font-size:11px;color:#7d8fa8;margin-top:2px}
+.grid2{display:grid;grid-template-columns:1.2fr 1fr;gap:14px}
+@media(max-width:800px){.grid2{grid-template-columns:1fr}}
+.card{background:#0e1523;border:1px solid #1c2739;border-radius:10px;padding:14px;margin-bottom:10px}
+.card b{font-size:13px;color:#cbd5e1}
+.mut{color:#64748b;font-size:12px}
+.worry{background:#1a1015;border-left:3px solid #f87171;padding:8px 10px;margin:6px 0;border-radius:4px;font-size:12.5px;color:#fca5a5}
+.chk{display:flex;gap:8px;align-items:flex-start;padding:8px;border:1px solid #1c2739;border-radius:6px;margin:6px 0;cursor:pointer;transition:.15s}
+.chk:hover{border-color:#22c55e}
+.chk.on{border-color:#22c55e;background:#0f1f18}
+.chk input{margin-top:3px}
+.chk .t{font-size:13px;font-weight:600;color:#e6edf3}
+.chk .d{font-size:12px;color:#8fa3bf;margin:2px 0}
+.chk .g{font-size:11px;color:#4ade80}
+.cmp{display:flex;justify-content:space-between;padding:4px 0;border-bottom:1px solid #1c2739;font-size:12.5px}
+.cmp .l{color:#8fa3bf}
+.cmp .r.cy{color:#fbbf24;font-weight:600}
+.met{display:flex;justify-content:space-between;align-items:center;padding:6px 0;border-bottom:1px solid #1c2739;font-size:12.5px}
+.met .n{color:#8fa3bf}
+.met .a{color:#94a3b8}
+.met .b{color:#4ade80;font-weight:700}
+svg{width:100%;height:auto;background:radial-gradient(ellipse at 50% 45%,#0a1626,#060910);border-radius:10px}
+.disc{margin-top:16px;font-size:11px;color:#5b6b8b;line-height:1.6;padding:10px;background:#0a0f1a;border-radius:8px}
+</style><link rel="stylesheet" href="assets/boluo-ui.css">
+</head><body class="bl-ui bl-dark bl-ui--role" data-bl-page="role">
+
+<div class="nav">
+  <b>博罗产业风洞</b>
+  <a href="index.html">今日博罗</a>
+  <a href="holo-home-v10.html">⚡ 变化现场</a>
+  <a href="town.html">🏘️ 各镇吃喝玩乐</a>
+  <a href="network.html">② 产业网络</a>
+  <a href="role.html" class="on">🎭 你在网里</a>
+  <a href="who.html">③ 基本面</a>
+  <a href="choices.html">④ 五条路</a>
+  <a href="future.html">⑤ 未来</a>
+  <a href="windtunnel.html">⑥ 风洞测试</a>
+  <a href="blindspot.html">⑦ 忽略了什么</a>
+  <a href="report.html">⑧ 分析报告</a>
+  <a href="ending.html">⑨ 结语</a>
+</div>
+
+<div class="wrap">
+  <h1>🎭 你在博罗这张网里，是哪个点？</h1>
+  <p class="sub">认领一种活法 → 看你的位置 → 你担心什么 → 勾个桥，看结构怎么变</p>
+
+  <div class="roles" id="roleBox"></div>
+
+  <div class="grid2">
+    <div class="card">
+      <b>你的局部网络</b> <span class="mut" id="egoTip">先选一种活法</span>
+      <svg id="svg" viewBox="0 0 800 600"></svg>
+    </div>
+    <div>
+      <div class="card"><b>我的处境</b><div id="posBox"></div></div>
+      <div class="card"><b>我可能在担心什么</b><div id="worBox"></div></div>
+      <div class="card"><b>可能存在哪些机会</b><span class="mut"> 勾选看结构变化（静态估算）</span><div id="chBox"></div></div>
+      <div class="card"><b>结构指标 · 搭桥前 → 搭桥后</b><div id="metBox"></div></div>
+    </div>
+  </div>
+
+  <div class="disc"><b>边界声明</b>：本页为<b>静态结构估算</b>——按已公开的镇街/产业关系重算连接数与跨板块联系，不推演时间、不估算产值。不是预测，不构成建议。<br>
+  数据来源：博罗县统计公报、管委会公开报告、南方+/惠州日报。</div>
+</div>
+
+<script>
+const NODES=[
+{id:"dg",name:"东莞",x:60,y:310,t:"ext"},
+{id:"sz",name:"深圳",x:140,y:520,t:"ext"},
+{id:"hz",name:"惠城",x:760,y:310,t:"ext"},
+{id:"yz",name:"园洲",x:180,y:260,t:"ind"},
+{id:"sw",name:"石湾",x:160,y:360,t:"ind"},
+{id:"ft",name:"福田",x:240,y:420,t:"ind"},
+{id:"ly",name:"罗阳",x:420,y:310,t:"ind"},
+{id:"lx",name:"龙溪",x:340,y:220,t:"ind"},
+{id:"hz2",name:"湖镇",x:340,y:430,t:"ind"},
+{id:"cn",name:"长宁",x:300,y:120,t:"tour"},
+{id:"lfs",name:"罗浮山",x:260,y:60,t:"tour"},
+{id:"bh",name:"柏塘",x:400,y:100,t:"agri"},
+{id:"hh",name:"横河",x:480,y:80,t:"agri"},
+{id:"yc",name:"杨村",x:640,y:200,t:"agri"},
+{id:"ht",name:"高新区",x:420,y:200,t:"ind"},
+{id:"xw",name:"欣旺达",x:380,y:160,t:"ind"},
+{id:"dz",name:"电子信息",x:340,y:280,t:"ind"},
+{id:"dq",name:"电气机械",x:460,y:260,t:"ind"},
+{id:"jt",name:"景田百岁山",x:500,y:380,t:"ind"},
+{id:"w1",name:"产业工人",x:180,y:470,t:"people"},
+{id:"w2",name:"县城居民",x:470,y:370,t:"people"},
+{id:"w3",name:"农业人口",x:520,y:100,t:"people"},
+{id:"w4",name:"罗浮山游客",x:200,y:100,t:"people"},
+];
+const EDGES=[
+["yz","dg"],["sw","dg"],["ft","dg"],["yz","sz"],["lfs","sz"],["ly","hz"],
+["yz","ht"],["sw","yz"],["ft","bz"],["ly","ht"],["lx","dq"],["hz2","dq"],
+["cn","lfs"],["lfs","lfsgy"],["ht","gx"],["xw","dq"],["xw","ht"],["dz","dq"],
+["w1","yz"],["w1","sw"],["w2","ly"],["w4","lfs"],["w3","bh"],
+["w5","sz"],["w1","w5"],["w2","ht"],["cn","bh"],["bh","hh"],
+];
+const NODE_MAP={};NODES.forEach((n,i)=>NODE_MAP[n.id]=i);
+const EDGES_I=EDGES.map(e=>[NODE_MAP[e[0]],NODE_MAP[e[1]]]).filter(e=>e[0]!=null&&e[1]!=null);
+const COLORS={ind:"#22c55e",tour:"#a78bfa",agri:"#84cc16",people:"#f97316",ext:"#64748b"};
+
+const ROLES=[
+{k:"ind",i:"🏭",t:"链主企业",s:"欣旺达、高新区这一层",
+ nodes:["xw","ht","dq","dz"],
+ worry:["你的订单跟着深圳和东莞走——那边一打喷嚏，你这里就感冒。","园洲石湾靠近东莞，但离深圳核心区还隔着一条通道。","表面处理、新能源配套还在集聚，链条不够厚。"],
+ opp:[{t:"接深圳外溢订单",d:"让深圳新能源企业把配套放到博罗",g:"跨城连接+1"},
+      {t:"高新区再招2-3家链主",d:"不把鸡蛋放一个篮子",g:"抗风险能力+1"},
+      {t:"完善表面处理配套",d:"让配套厂就近扎根",g:"链条密度+1"}]},
+{k:"people",i:"👷",t:"产业工人",s:"园洲石湾的打工一族",
+ nodes:["w1","yz","sw"],
+ worry:["你在园洲或石湾上班，通勤靠自己骑车或公交。","东莞那边工资高一截，但过来博罗生活成本低。","孩子上学、看病，县城资源还在追赶。"],
+ opp:[{t:"深惠通勤公交开通",d:"深圳上班也能住博罗",g:"跨城流动+1"},
+      {t:"园洲石湾商业配套升级",d:"下班有地方去",g:"留人能力+1"},
+      {t:"产业工人技能培训",d:"涨工资的底气",g:"就业质量+1"}]},
+{k:"tour",i:"🏔️",t:"游客/民宿",s:"罗浮山脚下的那批人",
+ nodes:["lfs","cn","w4"],
+ worry:["罗浮山一年1028万游客，但过夜的少。","周边民宿夏天满、冬天空。","除了爬山，还能玩什么？"],
+ opp:[{t:"罗浮山-横河古村连线游",d:"玩两天而不是半天",g:"过夜率+1"},
+      {t:"柏塘山茶体验游",d:"采茶品茶住一晚",g:"农旅融合+1"},
+      {t:"周末亲子产品",d:"带娃家庭愿意留",g:"复游率+1"}]},
+{k:"agri",i:"🍵",t:"农户/茶农",s:"柏塘山茶、福田菜心这一层",
+ nodes:["bh","hh","w3"],
+ worry:["柏塘山茶好，但牌子还没完全打出去。","福田菜心9-11月才播种，冬天才有收成。","年轻人都外出了，种地靠老人。"],
+ opp:[{t:"山茶品牌溢价",d:"从卖茶叶到卖品牌",g:"单价+1"},
+      {t:"农旅融合采茶体验",d:"城里人来采茶",g:"额外收入+1"},
+      {t:"冷链物流进村",d:"菜心卖到深圳盒马",g:"销路+1"}]},
+{k:"shop",i:"🏪",t:"县城店主",s:"罗阳街上开店的",
+ nodes:["w2","ly"],
+ worry:["年轻人网购多，实体店客流在掉。","周末大家都去深圳惠州了，不在县城消费。","房租不降，流水不涨。"],
+ opp:[{t:"县城夜经济一条街",d:"晚上有地方逛",g:"客流+1"},
+      {t:"罗浮山游客引流到县城吃",d:"游客在县城消费",g:"餐饮收入+1"},
+      {t:"社区团购自提点",d:"线上线下结合",g:"订单+1"}]},
+];
+
+let picked={};
+function nodesFor(roleKey){return ROLES.find(r=>r.k===roleKey).nodes.map(n=>NODE_MAP[n]).filter(i=>i!=null)}
+function edgesFor(idxSet){return EDGES_I.map((e,i)=>i).filter(i=>idxSet.has(EDGES_I[i][0])||idxSet.has(EDGES_I[i][1]))}
+
+function ego(i){
+  const rs=ROLES[i];
+  const idx=new Set(nodesFor(rs.k));
+  const es=new Set(edgesFor(idx));
+  const s=document.getElementById("svg");
+  let html="";
+  EDGES_I.forEach((e,k)=>{
+    const a=NODES[e[0]],b=NODES[e[1]];
+    const hot=es.has(k);
+    html+=`<line x1="${a.x}" y1="${a.y}" x2="${b.x}" y2="${b.y}" stroke="${hot?COLORS[rs.k]:'#1e2b40'}" stroke-width="${hot?1.8:0.7}" stroke-opacity="${hot?0.9:0.3}"/>`;
+  });
+  NODES.forEach((n,j)=>{
+    const on=idx.has(j);
+    const r=on?10:5;
+    html+=`<circle cx="${n.x}" cy="${n.y}" r="${r}" fill="${on?COLORS[n.t]:'#2a3a52'}" opacity="${on?1:0.35}"/>`;
+    if(on)html+=`<text x="${n.x}" y="${n.y+r+12}" text-anchor="middle" font-size="10" fill="#cbd5e1">${n.name}</text>`;
+  });
+  s.innerHTML=html;
+  document.getElementById("egoTip").textContent=rs.t+" · 关注 "+idx.size+" 个主体，"+es.size+" 条直接关系";
+}
+
+function pos(i){
+  const rs=ROLES[i];
+  const idx=nodesFor(rs.k);
+  const deg=idx.map(j=>EDGES_I.filter(e=>e[0]===j||e[1]===j).length);
+  const avg=deg.reduce((a,b)=>a+b,0)/Math.max(deg.length,1);
+  const allAvg=(2*EDGES_I.length)/NODES.length;
+  const b=document.getElementById("posBox");
+  b.innerHTML=[
+    ["你这一层主体数",idx.length+" 个"],
+    ["平均连接数",avg.toFixed(1)+" 条"],
+    ["全网平均连接",allAvg.toFixed(1)+" 条"],
+    ["你的连接是全网的",(avg/allAvg).toFixed(1)+" 倍"]
+  ].map(r=>`<div class="cmp"><span class="l">${r[0]}</span><span class="r cy">${r[1]}</span></div>`).join("");
+}
+
+function worry(i){
+  const b=document.getElementById("worBox");
+  b.innerHTML=ROLES[i].worry.map(w=>`<div class="worry">${w}</div>`).join("");
+}
+
+function opp(i){
+  const b=document.getElementById("chBox");
+  b.innerHTML="";
+  ROLES[i].opp.forEach((o,oi)=>{
+    const d=document.createElement("div");
+    d.className="chk"+(picked[i+"_"+oi]?" on":"");
+    d.innerHTML=`<input type="checkbox" ${picked[i+"_"+oi]?"checked":""}><div><div class="t">${o.t}</div><div class="d">${o.d}</div><div class="g">结构变化：${o.g}</div></div>`;
+    const inp=d.querySelector("input");
+    d.onclick=ev=>{if(ev.target!==inp)inp.checked=!inp.checked;picked[i+"_"+oi]=inp.checked;d.classList.toggle("on",inp.checked);metric(i)};
+    b.appendChild(d);
+  });
+}
+
+function metric(i){
+  const n=Object.keys(picked).filter(k=>k.startsWith(i+"_")&&picked[k]).length;
+  const b=document.getElementById("metBox");
+  const rows=[
+    ["跨城/跨板块连接","基线",`+${n} 条`],
+    ["链条密度","基线",`提升${n>=3?"明显":n>=1?"一点":"无"}`],
+    ["替代链路","—",`+${n} 条`],
+  ];
+  b.innerHTML=rows.map(r=>`<div class="met"><span class="n">${r[0]}</span><span><span class="a">${r[1]}</span> → <span class="b">${r[2]}</span></span></div>`).join("")
+  +`<div class="mut" style="margin-top:6px">按结构关系静态重算，不推演时间、不估算产值</div>`;
+}
+
+function pick(i){
+  ego(i);pos(i);worry(i);opp(i);metric(i);
+  document.querySelectorAll("#roleBox .rc").forEach((el,k)=>el.classList.toggle("on",k===i));
+}
+
+// init
+const rb=document.getElementById("roleBox");
+ROLES.forEach((r,i)=>{
+  const d=document.createElement("div");
+  d.className="rc";
+  d.innerHTML=`<div class="i">${r.i}</div><div class="t">${r.t}</div><div class="s">${r.s}</div>`;
+  d.onclick=()=>pick(i);
+  rb.appendChild(d);
+});
+pick(0);
+</script>
+<script>window.__PLAIN_ORIGINAL__="role.html";</script><script src="easy/plain.js"></script></body></html>
