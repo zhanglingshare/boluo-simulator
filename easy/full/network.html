@@ -1,0 +1,854 @@
+<!doctype html>
+<html lang="zh-CN"><head><base href="../../"><link rel="stylesheet" href="easy/plain.css"><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>博罗产业风洞 · 产业网络X光机</title>
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='7' fill='%23050d18'/%3E%3Cg stroke='%2352def1' stroke-width='1.2' opacity='0.7'%3E%3Cpath d='M16 16L8 9M16 16L24 10M16 16L10 24M16 16L24 23'/%3E%3C/g%3E%3Ccircle cx='16' cy='16' r='3' fill='%2370f6ff'/%3E%3Ccircle cx='8' cy='9' r='1.8' fill='%2352def1'/%3E%3Ccircle cx='24' cy='10' r='1.8' fill='%2352def1'/%3E%3Ccircle cx='10' cy='24' r='1.8' fill='%2352def1'/%3E%3Ccircle cx='24' cy='23' r='1.8' fill='%23ffc47d'/%3E%3C/svg%3E"/>
+<script src="https://d3js.org/d3.v7.min.js"></script>
+<script src="model.js"></script>
+<style>
+*{box-sizing:border-box}
+body{margin:0;background:#080b12;color:#e6edf3;font:14px/1.65 -apple-system,"PingFang SC","Microsoft YaHei",sans-serif}
+.nav{position:sticky;top:0;z-index:50;display:flex;gap:5px;align-items:center;padding:9px 14px;background:rgba(8,11,18,.95);border-bottom:1px solid #1b2434;overflow-x:auto}
+.nav b{font-size:14px;margin-right:6px;flex:none}
+.nav a{background:#131c2b;color:#93a4bd;border:1px solid #22304a;padding:6px 12px;border-radius:20px;font-size:12.5px;text-decoration:none;white-space:nowrap;flex:none}
+.nav a.on{background:#15803d;border-color:#22c55e;color:#fff;font-weight:600}
+.wrap{max-width:900px;margin:auto;padding:20px 16px 60px}
+h1{font-size:22px;margin-bottom:6px}
+.sub{color:#8fa3bf;font-size:13px;margin-bottom:16px}
+.health{background:rgba(34,197,94,.1);border:1px solid rgba(34,197,94,.3);border-radius:8px;padding:10px 14px;margin-bottom:14px;font-size:13px;line-height:1.7}
+.controls{display:flex;gap:8px;margin-bottom:12px;flex-wrap:wrap;align-items:center}
+.controls span{font-size:12px;color:#8fa3bf}
+.fbtn{background:#131c2b;color:#93a4bd;border:1px solid #22304a;padding:6px 14px;border-radius:20px;font-size:12px;cursor:pointer}
+.fbtn.on{background:#15803d;border-color:#22c55e;color:#fff;font-weight:600}
+.evo-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:12px;margin-top:14px}
+.evo-card{background:#0e1523;border:1px solid #1c2739;border-radius:12px;padding:14px}
+.evo-title{font-size:13px;color:#cbd5e1;font-weight:600;margin-bottom:10px;display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:4px}
+.evo-up{font-size:11px;color:#4ade80;font-weight:700}
+.bar-row{display:grid;grid-template-columns:34px minmax(0,1fr) 56px;align-items:center;gap:8px;margin:7px 0}
+.bar-row .yr{font-size:11px;color:#64748b}
+.bar{height:16px;background:#0a0f1a;border-radius:4px;overflow:hidden}
+.bar i{display:block;height:100%;background:linear-gradient(90deg,#1d4ed8,#38bdf8);border-radius:4px;transition:width .6s}
+.bar-row b{text-align:right;font-size:11px;color:#cbd5e1}
+.bar-row.hi .bar i{background:linear-gradient(90deg,#15803d,#22c55e)}
+.evo-note{font-size:10.5px;color:#64748b;margin-top:8px;line-height:1.5}
+@media(max-width:560px){.evo-grid{grid-template-columns:1fr}}
+#chart{background:#0a0f1a;border:1px solid #1c2739;border-radius:14px;overflow:hidden;position:relative}
+#tooltip{position:absolute;display:none;background:#1a2332;border:1px solid #2b3a55;border-radius:8px;padding:12px;font-size:12px;color:#cbd5e1;pointer-events:none;z-index:10;max-width:260px;line-height:1.7}
+.legend{display:flex;gap:16px;margin-top:10px;font-size:11px;color:#8fa3bf;flex-wrap:wrap}
+.legend i{display:inline-block;width:10px;height:10px;border-radius:50%;margin-right:4px;vertical-align:middle}
+.stats{display:grid;grid-template-columns:1fr 1fr 1fr;gap:10px;margin:14px 0}
+.stat{background:#0e1523;border:1px solid #1c2739;border-radius:10px;padding:12px;text-align:center}
+.stat .l{font-size:11px;color:#64748b}
+.stat .v{font-size:18px;font-weight:800;margin-top:4px}
+.brief{background:rgba(167,139,250,.08);border:1px solid rgba(167,139,250,.2);border-radius:8px;padding:10px 14px;margin-top:14px;font-size:12px;color:#8fa3bf;line-height:1.8}
+.algo-note{font-size:11px;color:#6b7d96;line-height:1.8;margin-top:16px;padding-top:12px;border-top:1px solid #162032}
+.next{margin-top:18px}
+.next a{color:#4ade80;text-decoration:none;font-size:14px}
+.lab-panel{background:linear-gradient(135deg,#0f2e1a,#0e1523);border:1px solid #22c55e;border-radius:14px;padding:20px;margin:20px 0}
+.lab-panel h2{font-size:16px;margin-bottom:4px}
+.lab-panel .hint{font-size:12px;color:#94a3b8;margin-bottom:14px;line-height:1.6}
+.lpath{padding:10px 0;border-top:1px solid #162032}
+.lpath:first-of-type{border-top:none}
+.lpath .row{display:flex;justify-content:space-between;font-size:13px;margin-bottom:4px}
+.lpath input[type=range]{width:100%;accent-color:#22c55e}
+.lab-nums{display:grid;grid-template-columns:1fr 1fr 1fr;gap:10px;margin:14px 0}
+.lab-nums .n{text-align:center}
+.lab-nums .n .l{font-size:11px;color:#8fa3bf}
+.lab-nums .n .v{font-size:22px;font-weight:800}
+.lab-hit{font-size:14px;margin:10px 0}
+.lab-hit b{font-size:20px;color:#4ade80}
+.shock-bar{display:flex;gap:8px;margin:12px 0;flex-wrap:wrap;align-items:center}
+.shock-bar>span{font-size:12px;color:#8fa3bf}
+.sbtn{background:#2a1215;color:#fca5a5;border:1px solid #7f1d1d;padding:6px 14px;border-radius:20px;font-size:12px;cursor:pointer}
+.sbtn.on{background:#b91c1c;border-color:#ef4444;color:#fff;font-weight:600}
+#shockReset{background:#131c2b;color:#93a4bd;border:1px solid #22304a;padding:6px 12px;border-radius:20px;font-size:12px;cursor:pointer}
+#shockInfo{background:rgba(239,68,68,.08);border:1px solid rgba(239,68,68,.25);border-radius:10px;padding:12px 14px;font-size:12.5px;line-height:1.8;color:#cbd5e1;margin-bottom:12px;display:none}
+#shockInfo b.t{color:#f87171}
+#shockInfo .dim{color:#94a3b8}
+</style><link rel="stylesheet" href="assets/boluo-ui.css">
+</head><body class="bl-ui bl-dark bl-ui--network" data-bl-page="network">
+
+<div class="nav">
+  <b>博罗产业风洞</b>
+  <a href="index.html">今日博罗</a>
+  <a href="holo-home-v10.html">⚡ 变化现场</a>
+  <a href="town.html">🏘️ 各镇吃喝玩乐</a>
+  <a href="network.html" class="on">② 产业网络</a>
+  <a href="who.html">③ 基本面</a>
+  <a href="choices.html">④ 五条路</a>
+  <a href="future.html">⑤ 未来</a>
+  <a href="windtunnel.html">⑥ 风洞测试</a>
+  <a href="blindspot.html">⑦ 忽略了什么</a>
+  <a href="report.html">⑧ 分析报告</a>
+  <a href="ending.html">⑨ 结语</a>
+  <a href="lab.html">🧪 决策实验室</a>
+</div>
+
+<div class="wrap">
+  <h1>博罗产业网络</h1>
+  <p class="sub">27个节点·6层架构·25条关系。以下数据基于公开报告整理，不做诊断判断。</p>
+
+  <div class="health">
+    <b style="color:#4ade80">📊 工业用电（2026年1-8月）</b><br>
+    <span style="color:#cbd5e1">60.04亿度，同比 <b>+11.5%</b> ｜ 规上工业增加值 +8.2%（1-7月）</span>
+  </div>
+
+  <div class="controls">
+    <span>视图：</span>
+    <button class="fbtn on" data-filter="all">全景</button>
+    <button class="fbtn" data-filter="supply">供货链</button>
+    <button class="fbtn" data-filter="eco">山水农业</button>
+    <button class="fbtn" data-filter="env">环保要素</button>
+    <span style="margin-left:auto;font-size:10px;color:#475569">👆 可以拖动圆点，点击看详情</span>
+  </div>
+
+  <div class="shock-bar">
+    <span>💥 注入苗头（沿对应关系级联）：</span>
+    <button class="sbtn" data-shock="xwd" data-kinds="供应链,资源竞争" data-name="链主飞走（欣旺达/锂威）">链主飞走</button>
+    <button class="sbtn" data-shock="dj" data-kinds="环保约束,供应链" data-name="东江喊停（环保限产）">东江喊停</button>
+    <button class="sbtn" data-shock="lq" data-kinds="资源竞争,供应链" data-name="老厂腾退（亩均改造）">老厂腾退</button>
+    <button class="sbtn" data-shock="dg" data-kinds="供应链" data-name="外溢退潮（东莞外溢减弱）">外溢退潮</button>
+    <button id="shockReset">↺ 重置全景</button>
+  </div>
+  <div id="shockInfo"></div>
+
+  <div id="chart">
+    <div id="tooltip"></div>
+  </div>
+  <div style="font-size:11px;color:#64748b;margin:6px 2px;line-height:1.6">
+    <b>供货链</b>：谁给谁供货、厂从哪搬来（蓝线）　｜　<b>山水农业</b>：罗浮山、东江怎么养人养特产（浅蓝线）　｜　<b>环保要素</b>：东江管着谁排污、谁和谁抢地抢电（红线/橙线）
+  </div>
+
+  <div class="legend">
+    <span><i style="background:#22c55e"></i>链主</span>
+    <span><i style="background:#06b6d4"></i>小巨人</span>
+    <span><i style="background:#64748b"></i>毛细血管</span>
+    <span><i style="background:#f59e0b"></i>老厂群落</span>
+    <span><i style="background:#84cc16"></i>农业康养</span>
+    <span><i style="background:#fbbf24"></i>国家地理标志</span>
+    <span><i style="background:#0ea5e9"></i>生态底座</span>
+    <span><i style="background:#a78bfa"></i>外部</span>
+    <span>━ 实线：有公开依据</span><span>- - 虚线：合理推算</span><span>· · 点线：暂不确定</span>
+  </div>
+  <div class="legend" style="margin-top:6px">
+    <span style="color:#38bdf8">━ 供货关系</span>
+    <span style="color:#ef4444">━ 环保管着</span>
+    <span style="color:#f59e0b">━ 抢地抢电</span>
+    <span style="color:#0ea5e9">━ 山水养人</span>
+  </div>
+
+  <div class="stats" style="grid-template-columns:repeat(4,1fr)">
+    <div class="stat"><div class="l">连得最多的</div><div class="v" id="sHub" style="color:#4ade80;font-size:15px">–</div></div>
+    <div class="stat"><div class="l">图有多密</div><div class="v" id="sDensity" style="color:#fbbf24;font-size:15px">–</div></div>
+    <div class="stat"><div class="l">必经之路</div><div class="v" id="sExt" style="color:#a78bfa;font-size:15px">–</div></div>
+    <div class="stat"><div class="l">连接不同圈子的</div><div class="v" id="sHole" style="color:#ef4444;font-size:15px">–</div></div>
+  </div>
+
+  <h2 style="margin-top:34px">博罗家底图：有什么、多大、卖给谁、来了多少人</h2>
+  <p class="sub">中心是博罗，越往外越是"对外"。圆越大＝规模越大。数字均来自2025统计公报、政府工作报告、统计局月报。</p>
+  <div id="solarchart" style="position:relative">
+    <button id="solarToggle" style="position:absolute;top:8px;right:8px;z-index:8;background:rgba(21,128,61,.85);border:1px solid #22c55e;color:#fff;font-size:12px;border-radius:8px;padding:6px 12px;cursor:pointer">⏸ 暂停运转</button>
+    <div id="solarTip" style="position:absolute;display:none;background:rgba(13,20,33,.96);border:1px solid #334155;border-radius:10px;padding:10px 12px;font-size:11.5px;color:#cbd5e1;max-width:250px;z-index:9;line-height:1.6;box-shadow:0 8px 30px rgba(0,0,0,.5)"></div>
+  </div>
+  <p class="sub" style="margin-top:2px">行星沿轨道缓慢公转（内圈快、外圈慢），像真实产业系统在运转；点任意节点会停住看详情，右上角可暂停。</p>
+  <div class="legend" style="margin-top:6px">
+    <span><i style="background:#fbbf24"></i>博罗（中心）</span>
+    <span><i style="background:#22c55e"></i>六大产业（大小=产值）</span>
+    <span><i style="background:#06b6d4"></i>手里的家底</span>
+    <span><i style="background:#a78bfa"></i>卖到哪·谁来</span>
+  </div>
+
+  <h2 style="margin-top:34px">三年怎么长过来的（2023→2025）</h2>
+  <p class="sub">四条横条按各自最大值归一化，只比三年自己的变化。数字来自2023-2025年统计公报、科工信局总结。</p>
+  <div class="evo-grid">
+    <div class="evo-card">
+      <div class="evo-title">GDP（亿元）<span class="evo-up">两年 +19.9%</span></div>
+      <div class="bar-row"><span class="yr">2023</span><div class="bar"><i style="width:83.4%"></i></div><b>838.9</b></div>
+      <div class="bar-row"><span class="yr">2024</span><div class="bar"><i style="width:94.7%"></i></div><b>952.2</b></div>
+      <div class="bar-row hi"><span class="yr">2025</span><div class="bar"><i style="width:100%"></i></div><b>1005.5</b></div>
+      <div class="evo-note">2025年迈过千亿，成广东首个千亿县</div>
+    </div>
+    <div class="evo-card">
+      <div class="evo-title">接待游客（万人次）<span class="evo-up">+18.0%</span></div>
+      <div class="bar-row"><span class="yr">2023</span><div class="bar"><i style="width:84.8%"></i></div><b>871.3</b></div>
+      <div class="bar-row"><span class="yr">2024</span><div class="bar"><i style="width:89.5%"></i></div><b>920.5</b></div>
+      <div class="bar-row hi"><span class="yr">2025</span><div class="bar"><i style="width:100%"></i></div><b>1028.1</b></div>
+      <div class="evo-note">2025年首破千万人次</div>
+    </div>
+    <div class="evo-card">
+      <div class="evo-title">旅游综合收入（亿元）<span class="evo-up">+25.0%</span></div>
+      <div class="bar-row"><span class="yr">2023</span><div class="bar"><i style="width:80%"></i></div><b>41.5</b></div>
+      <div class="bar-row"><span class="yr">2024</span><div class="bar"><i style="width:84%"></i></div><b>43.6</b></div>
+      <div class="bar-row hi"><span class="yr">2025</span><div class="bar"><i style="width:100%"></i></div><b>51.9</b></div>
+      <div class="evo-note">人均消费逐年走高</div>
+    </div>
+    <div class="evo-card">
+      <div class="evo-title">外贸进出口（亿元）<span class="evo-up">+35.8%</span></div>
+      <div class="bar-row"><span class="yr">2023</span><div class="bar"><i style="width:73.6%"></i></div><b>294.5</b></div>
+      <div class="bar-row"><span class="yr">2024</span><div class="bar"><i style="width:79.3%"></i></div><b>约317</b></div>
+      <div class="bar-row hi"><span class="yr">2025</span><div class="bar"><i style="width:100%"></i></div><b>超400</b></div>
+      <div class="evo-note">2025年 +26.1%，增幅全市第二；2024年值由增速反推</div>
+    </div>
+  </div>
+  <div class="algo-note" style="margin-top:10px">
+    另外两组只给方向性变化、不做条图：2025年规上工业总产值突破<b>2000亿</b>、增加值+8.7%；规上工业企业从2024年1035家（民营）增至2025年1407家。高新技术企业由2024年末710家变为2025年末686家，存量有所下降，如实列出。
+  </div>
+
+  <div class="brief">
+    <b style="color:#a78bfa">周边城市连线的真实数据依据</b><br>
+    <div style="font-size:12px;color:#cbd5e1;line-height:1.9;margin-top:8px">
+      <b style="color:#a78bfa">东莞（最粗）</b>：石湾南隔东江与东莞石龙相望，是承接东莞外溢的第一线。模具企业天倬科技从东莞50亩扩到石湾150亩，制造效率提升20-30%；台铃、小刀等电动车厂从东莞方向落户石湾；园洲镇"十四五"承接优质项目84宗、达产年产值625亿元，以电子信息为主。<br><br>
+      <b style="color:#a78bfa">深圳（粗）</b>：欣旺达总部在深圳、锂威生产基地在园洲；"深博福田产业园"建在园洲，采用"福田总部+博罗生产基地"，已落户25宗项目、总投资约54亿元、投产后总产值超100亿元，含奇瑞系嘉奇新能源。<br><br>
+      <b style="color:#a78bfa">广州（中等）</b>：石湾地处广州、惠州、东莞三市交界，西北毗邻增城三江，承接部分外溢；罗浮山国药与广东省中医院合作红脚艾（合作规模未公开）。<br><br>
+      <b style="color:#a78bfa">惠城（中等）</b>：惠州市主城区，博罗为下辖县，行政关系明确；罗浮山游客的一部分从惠城方向来（客流量未公开）。
+    </div>
+  </div>
+
+  <div class="brief">
+    <b style="color:#cbd5e1">线是怎么画的</b><br>
+    <div style="font-size:12px;color:#cbd5e1;line-height:1.9;margin-top:8px">
+      <b style="color:#4ade80">什么情况下连一条线：</b><br>
+      两个主体之间有公开证据证明存在直接关系——供货、搬迁、取水、排污限制、行政隶属、游客往来。只有"都在博罗"不算。<br><br>
+      <b style="color:#f87171">什么情况下不连：</b><br>
+      没有任何公开证据、也没有行业常识能支撑的直接关系，不连。比如观音阁黑糖和欣旺达之间没有线——它们之间没有关系。<br><br>
+      <b style="color:#38bdf8">线粗代表什么：</b><br>
+      <b>最粗（4-5）</b>：有明确的大量企业搬迁、投资或实物量。比如东莞→石湾模具（整个厂从东莞迁来）、东江→百岁山（374万吨取水）。<br>
+      <b>中等（2-3）</b>：有明确关系或订单，但规模有限。比如模具厂→电动车厂（供货关系存在）。<br>
+      <b>最细（1）</b>：有关系但规模很小，或只是同镇/同区域。<br><br>
+      <b style="color:#cbd5e1">实线、虚线、点线代表什么：</b><br>
+      <b>实线</b>：政府工作报告、统计局月报、工商注册等官方文件里直接写明的。<br>
+      <b>虚线</b>：官方没有直接写，但根据行业常识（电镀是电子厂必经工序、铜杆是电池材料）推算的。<br>
+      <b>点线</b>：有新闻报道提到合作，但合作规模和持续性不确定。<br><br>
+      <b style="color:#ef4444">红线</b>＝环保管着（东江限制排污）；<b style="color:#f59e0b">橙线</b>＝抢地抢电（大厂和老厂竞争资源）；<b style="color:#0ea5e9">浅蓝线</b>＝山水养人（罗浮山带动文旅农业）；<b style="color:#38bdf8">蓝线</b>＝供货关系。
+    </div>
+  </div>
+
+  <div class="brief">
+    <b style="color:#cbd5e1">图上每种颜色代表什么</b><br>
+    <table style="width:100%;border-collapse:collapse;font-size:12px;margin-top:8px;line-height:1.8">
+      <tr><td style="color:#0ea5e9;padding:2px 6px;white-space:nowrap">● 山和水</td><td style="color:#cbd5e1">东江、罗浮山。博罗所有工厂能做什么、不能做什么，都受这山这水管着。</td></tr>
+      <tr><td style="color:#22c55e;padding:2px 6px;white-space:nowrap">● 大厂</td><td style="color:#cbd5e1">欣旺达、华通、正威、嘉奇、江丰。政府报告里点名的、产值最大的几家，一个厂一个圈。</td></tr>
+      <tr><td style="color:#06b6d4;padding:2px 6px;white-space:nowrap">● 技术好的中小厂</td><td style="color:#cbd5e1">国家评了11家、省评了74家"专精特新"。家数太多画不下，打包成两个圈。</td></tr>
+      <tr><td style="color:#64748b;padding:2px 6px;white-space:nowrap">● 给大厂做配套的</td><td style="color:#cbd5e1">石湾做模具的、福田做电镀的、做电动车零件的。大厂要靠它们供货，打包成群落。</td></tr>
+      <tr><td style="color:#f59e0b;padding:2px 6px;white-space:nowrap">● 老厂</td><td style="color:#cbd5e1">龙溪、园洲一带开了很多年的五金厂、塑料厂、建材厂。用电大头，但占地多、交税少的要被改造。</td></tr>
+      <tr><td style="color:#84cc16;padding:2px 6px;white-space:nowrap">● 吃的和药</td><td style="color:#cbd5e1">百岁山矿泉水、罗浮山药厂、石坝三黄鸡。不是地理标志，但也是博罗的名片。</td></tr>
+      <tr><td style="color:#fbbf24;padding:2px 6px;white-space:nowrap">● 国家发了证的特产</td><td style="color:#cbd5e1">山茶、菜心、花生、黑糖、大米、荔枝。国家质检总局认定只有博罗这块地才能叫这个名字。</td></tr>
+      <tr><td style="color:#a78bfa;padding:2px 6px;white-space:nowrap">● 周边城市</td><td style="color:#cbd5e1">东莞、深圳、广州、惠城。博罗的工厂、项目、客人很多从这些地方来。</td></tr>
+    </table>
+  </div>
+
+  <div class="brief">
+    <b style="color:#a78bfa">📐 招商基准与物流摩擦</b><br>
+    准入门槛：投资强度≥450-600万/亩，亩均税收≥35-50万/亩 ｜ 博罗→东莞90km/货运2.6h ｜ 博罗→深圳87km/公路8-12h ｜ 专精特新：11家国家级+74家省级
+  </div>
+
+  <div class="algo-note">
+    <b style="color:#cbd5e1">数据分级与系统边界声明</b><br>
+    <span style="color:#4ade80">🟢 公开硬数据</span>：2026政府工作报告、统计局月报（工业用电60.04亿度+11.5%）、工信部小巨人名录（11家国家级+74家省级）、工商注册地——绝对事实。<br>
+    <span style="color:#fbbf24">🟡 算法推估关系</span>：产业链配套连边基于GB/T行业代码与省级投入产出表概率拟合，为合理假设。<br>
+    <span style="color:#f87171">🔴 内网待接入变量</span>：链主本地配套率%、各镇剩余工业用地亩数、企业真实亩均税收——需授权工信局/税务局/自然资源局网关。<br>
+    当前为公开数据PoC演示版，不触碰企业敏感财务数据。内网数据接入后可升级为高精度决策版。
+  </div>
+
+  <div class="next"><a href="who.html">下一步：博罗的基本面 →</a></div>
+</div>
+
+<script>
+// ===== 数据（6层架构） =====
+const rawNodes=[
+  // 第一层：生态硬约束
+  {id:"dj",name:"东江水系",type:"eco",town:"罗阳/石湾/园洲",state:"green",layer:"生态底座",desc:"母亲河·饮用水源Ⅱ类·沿江镇街排污上限约束"},
+  {id:"lswh",name:"环两山引领区",type:"eco",town:"长宁/横河/福田",state:"green",layer:"生态底座",desc:"环南昆山-罗浮山·218km 8字旅游公路·北部绿色屏障"},
+  // 第二层：链主（独立企业）
+  {id:"xwd",name:"欣旺达/锂威",type:"anchor",town:"园洲",state:"green",layer:"链主",desc:"锂电池·高用电·高外部订单依赖"},
+  {id:"htd",name:"华通电脑",type:"anchor",town:"园洲/石湾",state:"green",layer:"链主",desc:"电子信息770亿基本盘代表"},
+  {id:"zw",name:"正威新材料",type:"anchor",town:"罗阳",state:"green",layer:"链主",desc:"25万吨铜杆/年·重资产原材料底座"},
+  {id:"jq",name:"嘉奇新能源",type:"anchor",town:"园洲",state:"yellow",layer:"链主",desc:"奇瑞系·深博福田产业园(园洲)2026开园·华南首个梯次电池基地"},
+  {id:"jf",name:"江丰精密",type:"anchor",town:"园洲",state:"green",layer:"链主",desc:"溅射靶材全球第一·3纳米"},
+  // 第三层：小巨人聚合
+  {id:"gj",name:"11家国家级小巨人",type:"champ",town:"多镇",state:"green",layer:"小巨人",desc:"嘉治电子/派沃/力王/凤凰/广麟/奥科/百时达/吉邦/鑫晖源/信立泰/TCL瑞智"},
+  {id:"sj",name:"74家省级专精特新",type:"champ",town:"多镇",state:"green",layer:"小巨人",desc:"各细分赛道隐形市占率"},
+  // 第四层：毛细血管群落
+  {id:"bmc",name:"表面处理群落",type:"capillary",town:"福田",state:"yellow",layer:"毛细血管",desc:"省级特色集群·电镀/喷涂·受东江环保约束"},
+  {id:"mj",name:"石湾模具群落",type:"capillary",town:"石湾",state:"green",layer:"毛细血管",desc:"全镇2461家工业企业·三市交界·特斯拉/比亚迪/拓竹"},
+  {id:"ddc",name:"电动车配套群落",type:"capillary",town:"石湾",state:"green",layer:"毛细血管",desc:"台铃/小刀/新日/绿佳·产值超150亿"},
+  // 第五层：老厂基盘
+  {id:"lq",name:"镇村老厂群落",type:"legacy",town:"龙溪/园洲/罗阳",state:"yellow",layer:"老厂基盘",desc:"数千家五金/塑料/建材·用电+11.5%大头·亩均达标压力"},
+  // 第六层：农业与康养
+  {id:"bss",name:"百岁山",type:"agri",town:"湖镇",state:"green",layer:"农业康养",desc:"374万吨/年·罗浮山水源"},
+  {id:"lfsgy",name:"罗浮山国药",type:"agri",town:"长宁",state:"green",layer:"农业康养",desc:"中华老字号·红脚艾·百草油·省中医院"},
+  {id:"sc",name:"柏塘山茶",type:"gi",town:"柏塘",state:"green",layer:"国家地理标志",desc:"国家地理标志·省十大茶乡"},
+  {id:"xc",name:"福田菜心",type:"gi",town:"福田",state:"yellow",layer:"国家地理标志",desc:"国家地理标志·太空育种"},
+  {id:"gyg",name:"观音阁花生",type:"gi",town:"观音阁",state:"green",layer:"国家地理标志",desc:"国家地理标志"},
+  {id:"gyght",name:"观音阁黑糖",type:"gi",town:"观音阁",state:"green",layer:"国家地理标志",desc:"国家地理标志"},
+  {id:"sb",name:"石坝胡须鸡",type:"agri",town:"石坝",state:"green",layer:"农业康养",desc:"全国名特优新"},
+  {id:"lsmd",name:"罗浮山大米",type:"gi",town:"长宁/横河",state:"green",layer:"国家地理标志",desc:"国家地理标志·太空育种"},
+  {id:"lsz",name:"罗浮山荔枝",type:"gi",town:"罗浮山周边",state:"green",layer:"国家地理标志",desc:"国家地理标志·10万亩"},
+  {id:"hh",name:"横河户外小镇",type:"capillary",town:"横河",state:"green",layer:"农业康养",desc:"华南户外水经济港·民宿集群"},
+  // 外部
+  {id:"gz",name:"广州",type:"ext",town:"外部",state:"green",layer:"外部",desc:"增城接石湾·省中医院医药合作"},
+  {id:"dg",name:"东莞",type:"ext",town:"外部",state:"green",layer:"外部",desc:"紧邻石湾/园洲·模具电子外溢源头"},
+  {id:"sz",name:"深圳",type:"ext",town:"外部",state:"green",layer:"外部",desc:"欣旺达·嘉奇新能源项目来源"},
+  {id:"hz",name:"惠城",type:"ext",town:"外部",state:"green",layer:"外部",desc:"惠州主城·行政与文旅客流"},
+];
+const rawEdges=[
+  // 供应链刚需（外部城市连线均有公开数据）
+  {s:"dg",t:"mj",level:"A",w:5,rel:"隔东江与东莞石龙相望·模具厂迁入(天倬东莞50亩→石湾150亩)",kind:"供应链"},
+  {s:"dg",t:"ddc",level:"A",w:4,rel:"台铃/小刀等电动车厂从东莞方向落户石湾",kind:"供应链"},
+  {s:"dg",t:"htd",level:"A",w:4,rel:"园洲/石湾承接东莞电子信息外溢·园洲年产值380亿",kind:"供应链"},
+  {s:"dg",t:"lq",level:"B",w:2,rel:"五金/塑料小厂随边界扩散",kind:"供应链"},
+  {s:"sz",t:"xwd",level:"A",w:4,rel:"欣旺达深圳总部·锂威园洲生产基地",kind:"供应链"},
+  {s:"sz",t:"jq",level:"A",w:4,rel:"深博福田产业园25宗项目·总投资54亿·产值超100亿",kind:"供应链"},
+  {s:"gz",t:"mj",level:"B",w:2,rel:"石湾西北毗邻增城·三市交界承接外溢",kind:"供应链"},
+  {s:"mj",t:"ddc",level:"A",w:2,rel:"模具零部件",kind:"供应链"},
+  {s:"bmc",t:"ddc",level:"B",w:2,rel:"喷涂配套",kind:"供应链"},
+  {s:"jf",t:"htd",level:"B",w:2,rel:"靶材供应",kind:"供应链"},
+  {s:"gj",t:"htd",level:"B",w:2,rel:"精密配套",kind:"供应链"},
+  {s:"sj",t:"lq",level:"B",w:2,rel:"技术升级",kind:"供应链"},
+  {s:"xwd",t:"mj",level:"B",w:2,rel:"电池结构件",kind:"供应链"},
+  {s:"jq",t:"ddc",level:"B",w:2,rel:"汽车零部件",kind:"供应链"},
+  {s:"lq",t:"htd",level:"B",w:2,rel:"五金配套",kind:"供应链"},
+  // 环保硬约束
+  {s:"dj",t:"bmc",level:"A",w:3,rel:"排污上限约束",kind:"环保约束"},
+  {s:"dj",t:"bss",level:"A",w:3,rel:"饮用水源",kind:"环保约束"},
+  {s:"dj",t:"lq",level:"B",w:1,rel:"沿江工业约束",kind:"环保约束"},
+  // 空间竞争
+  {s:"xwd",t:"lq",level:"B",w:1,rel:"用电/用地竞争",kind:"资源竞争"},
+  {s:"htd",t:"lq",level:"B",w:1,rel:"腾笼换鸟",kind:"资源竞争"},
+  // 生态补偿/康养对流
+  {s:"lswh",t:"lfsgy",level:"A",w:3,rel:"文旅+医药",kind:"生态补偿"},
+  {s:"lswh",t:"hh",level:"A",w:2,rel:"户外运动",kind:"生态补偿"},
+  {s:"lswh",t:"sc",level:"B",w:1,rel:"茶旅融合",kind:"生态补偿"},
+  {s:"lswh",t:"lsz",level:"B",w:1,rel:"荔枝采摘",kind:"生态补偿"},
+  {s:"gz",t:"lfsgy",level:"B",weak:true,w:2,rel:"省中医院合作",kind:"生态补偿"},
+  {s:"hz",t:"lswh",level:"B",w:2,rel:"文旅客流+行政",kind:"生态补偿"},
+  // 农业/水利
+  {s:"dj",t:"lsmd",level:"B",w:1,rel:"灌溉",kind:"供应链"},
+  {s:"gyght",t:"gyg",level:"A",w:1,rel:"观音阁同镇",kind:"供应链"},
+  {s:"gyg",t:"dj",level:"B",w:1,rel:"东江沙壤",kind:"供应链"},
+  {s:"zw",t:"xwd",level:"A",w:2,rel:"铜杆→电池",kind:"供应链"},
+];
+
+// ===== SNA 指标计算 =====
+const N=rawNodes.length, E=rawEdges.length;
+const deg={};
+const adj={};
+rawNodes.forEach(n=>{deg[n.id]=0;adj[n.id]=new Set()});
+rawEdges.forEach(e=>{
+  deg[e.s]++;deg[e.t]++;
+  adj[e.s].add(e.t);adj[e.t].add(e.s);
+});
+rawNodes.forEach(n=>n.degree=deg[n.id]);
+
+// 密度
+const density=(2*E)/(N*(N-1));
+
+// 介数中心度（BFS，无权图近似）
+const betweenness={};
+rawNodes.forEach(n=>betweenness[n.id]=0);
+rawNodes.forEach(src=>{
+  const S=[],P={},sig={},d={};
+  rawNodes.forEach(n=>{P[n.id]=[];sig[n.id]=0;d[n.id]=-1});
+  sig[src.id]=1;d[src.id]=0;
+  const Q=[src.id];
+  while(Q.length){
+    const v=Q.shift();S.push(v);
+    adj[v].forEach(w=>{
+      if(d[w]<0){d[w]=d[v]+1;Q.push(w)}
+      if(d[w]===d[v]+1){sig[w]+=sig[v];P[w].push(v)}
+    });
+  }
+  const delta={};rawNodes.forEach(n=>delta[n.id]=0);
+  while(S.length){
+    const w=S.pop();
+    P[w].forEach(v=>{delta[v]+=(sig[v]/sig[w])*(1+delta[w])});
+    if(w!==src.id)betweenness[w]+=delta[w];
+  }
+});
+rawNodes.forEach(n=>n.betweenness=betweenness[n.id]/((N-1)*(N-2)));
+
+// 结构洞限制度（Burt Constraint）：越低=占据结构洞
+const constraint={};
+rawNodes.forEach(v=>{
+  let c=0;
+  const nv=adj[v.id];
+  if(nv.size===0){constraint[v.id]=1;return}
+  nv.forEach(w=>{
+    const pvw=1/nv.size;
+    let indirect=0;
+    nv.forEach(q=>{
+      if(q!==w&&adj[q].has(w)){
+        indirect+=(1/nv.size)*(1/adj[q].size);
+      }
+    });
+    c+=(pvw+indirect)**2;
+  });
+  constraint[v.id]=c;
+});
+rawNodes.forEach(n=>n.constraint=constraint[n.id]);
+const byConstraint=[...rawNodes].filter(n=>n.degree>=2).sort((a,b)=>a.constraint-b.constraint);
+const structuralHole=byConstraint[0];
+
+// 排序
+const byDegree=[...rawNodes].sort((a,b)=>b.degree-a.degree);
+const byBetween=[...rawNodes].sort((a,b)=>b.betweenness-a.betweenness);
+
+document.getElementById("sHub").textContent=byDegree[0].name;
+document.getElementById("sDensity").textContent=(density*100).toFixed(1)+"%";
+document.getElementById("sExt").textContent=byBetween[0].name;
+document.getElementById("sHole").textContent=structuralHole?structuralHole.name:"–";
+
+// ===== 渲染 =====
+const chart=document.getElementById("chart");
+const W=chart.clientWidth||860;
+const isMobile=W<500;
+const canvasH=isMobile?620:560;
+const H=canvasH;
+const svg=d3.select("#chart").append("svg").attr("width","100%").attr("height",canvasH);
+// 东江横带（背景）
+svg.append("rect").attr("x",0).attr("y",H/2-18).attr("width","100%").attr("height",36)
+  .attr("fill","#0ea5e9").attr("opacity",0.06).attr("rx",8);
+svg.append("text").attr("x",8).attr("y",H/2-22).attr("fill","#0ea5e9").attr("font-size","9px").attr("opacity",0.5).text("— 东江 —");
+
+const colorMap={anchor:"#22c55e",champ:"#06b6d4",capillary:"#64748b",agri:"#84cc16",gi:"#fbbf24",ext:"#a78bfa",legacy:"#f59e0b",eco:"#0ea5e9"};
+const rMap={anchor:15,champ:13,capillary:11,agri:9,gi:9,ext:12,legacy:14,eco:16};
+
+let nodes=rawNodes.map(d=>({...d}));
+let links=rawEdges.map(d=>({source:d.s,target:d.t,level:d.level,w:d.w,rel:d.rel,kind:d.kind}));
+
+// 初始位置：南工北农（只决定第一帧，之后自由）
+const geoY={anchor:380,champ:340,capillary:420,legacy:470,agri:150,gi:100};
+const geoX={gz:40,dg:40,sz:40,hz:W-40};
+nodes.forEach(n=>{
+  if(n.id==="dj"){n.y=H/2; n.x=W/2}
+  else if(n.id==="lswh"){n.y=100; n.x=W/2}
+  else if(n.type==="ext"){n.y=geoX[n.id]===40?150+Math.random()*250:H/2; n.x=geoX[n.id]||40}
+  else if(n.type==="gi"){n.y=60+Math.random()*120; n.x=W*0.3+Math.random()*W*0.4}
+  else if(n.type==="agri"){n.y=120+Math.random()*100; n.x=W*0.2+Math.random()*W*0.6}
+  else {n.y=geoY[n.type]+Math.random()*80; n.x=W*0.15+Math.random()*W*0.7}
+});
+
+const chargeStrength=isMobile?-160:-260;
+const linkDist=isMobile?55:90;
+const sim=d3.forceSimulation(nodes)
+  .force("link",d3.forceLink(links).id(d=>d.id).distance(d=>linkDist+d.w*8))
+  .force("charge",d3.forceManyBody().strength(chargeStrength))
+  .force("center",d3.forceCenter(W/2,H/2))
+  .force("collide",d3.forceCollide().radius(d=>rMap[d.type]+(isMobile?5:14)))
+  .force("bounds",()=>{
+    nodes.forEach(n=>{
+      const r=rMap[n.type]+10;
+      n.x=Math.max(r,Math.min(W-r,n.x));
+      n.y=Math.max(r,Math.min(H-r,n.y));
+    });
+  });
+
+const link=svg.append("g").selectAll("line").data(links).enter().append("line")
+  .attr("stroke",d=>{
+    if(d.kind==="环保约束")return "#ef4444";
+    if(d.kind==="资源竞争")return "#f59e0b";
+    if(d.kind==="生态补偿")return "#0ea5e9";
+    return d.level==="A"?"#38bdf8":"#475569";
+  })
+  .attr("stroke-width",d=>d.w)
+  .attr("stroke-dasharray",d=>d.weak?"2,4":d.level==="B"?"5,4":"none")
+  .attr("stroke-opacity",d=>d.level==="A"?0.8:0.5);
+
+// 透明宽点击层（细手机也能点到线）
+const linkHit=svg.append("g").selectAll("line").data(links).enter().append("line")
+  .attr("stroke","transparent").attr("stroke-width",14).style("cursor","pointer")
+  .on("click",(e,d)=>{
+    e.stopPropagation();
+    const color=d.kind==="环保约束"?"#ef4444":d.kind==="资源竞争"?"#f59e0b":d.kind==="生态补偿"?"#0ea5e9":"#38bdf8";
+    const lvl=d.weak?"点线·单源待核实":d.level==="A"?"实线·公开依据":"虚线·合理推算";
+    tip.style.display="block";
+    tip.innerHTML=`<b style="color:${color}">${d.source.name} ↔ ${d.target.name}</b><br>关系：${d.rel}<br>依据：${lvl}`;
+    tip.style.left=Math.min(e.offsetX+15,W-250)+"px";
+    tip.style.top=Math.min(e.offsetY-10,H-120)+"px";
+  });
+
+const node=svg.append("g").selectAll("circle").data(nodes).enter().append("circle")
+  .attr("r",d=>rMap[d.type])
+  .attr("fill",d=>colorMap[d.type])
+  .attr("fill-opacity",0.25)
+  .attr("stroke",d=>d.state==="yellow"?"#eab308":colorMap[d.type])
+  .attr("stroke-width",2)
+  .style("cursor","grab")
+  .call(d3.drag()
+    .on("start",(e,d)=>{if(!e.active)sim.alphaTarget(0.3).restart();d.fx=d.x;d.fy=d.y})
+    .on("drag",(e,d)=>{d.fx=e.x;d.fy=e.y})
+    .on("end",(e,d)=>{if(!e.active)sim.alphaTarget(0);d.fx=null;d.fy=null}));
+
+const label=svg.append("g").selectAll("text").data(nodes).enter().append("text")
+  .text(d=>d.name)
+  .attr("fill","#e6edf3").attr("font-size",isMobile?"9px":"11px").attr("dx",isMobile?14:20).attr("dy",4)
+  .style("pointer-events","none");
+
+// 群落节点加外圈环（聚合节点）
+const clusterTypes=new Set(["capillary","legacy","champ"]);
+const rings=svg.append("g").selectAll("circle").data(nodes.filter(d=>clusterTypes.has(d.type))).enter().append("circle")
+  .attr("r",d=>rMap[d.type]+7)
+  .attr("fill","none")
+  .attr("stroke",d=>colorMap[d.type])
+  .attr("stroke-width",1)
+  .attr("stroke-dasharray","3,3")
+  .attr("stroke-opacity",0.5)
+  .style("pointer-events","none");
+
+sim.on("tick",()=>{
+  link.attr("x1",d=>d.source.x).attr("y1",d=>d.source.y)
+      .attr("x2",d=>d.target.x).attr("y2",d=>d.target.y);
+  linkHit.attr("x1",d=>d.source.x).attr("y1",d=>d.source.y)
+      .attr("x2",d=>d.target.x).attr("y2",d=>d.target.y);
+  node.attr("cx",d=>d.x).attr("cy",d=>d.y);
+  rings.attr("cx",d=>d.x).attr("cy",d=>d.y);
+  label.attr("x",d=>d.x).attr("y",d=>d.y);
+});
+
+// 点击下钻+高亮邻居
+const tip=document.getElementById("tooltip");
+let selected=null;
+function selectNodeById(id){
+  const d=nodes.find(x=>x.id===id);
+  if(!d)return false;
+  selected=d.id;
+  const neighbors=new Set([d.id]);
+  links.forEach(l=>{
+    if(l.source.id===d.id)neighbors.add(l.target.id);
+    if(l.target.id===d.id)neighbors.add(l.source.id);
+  });
+  node.style("opacity",n=>neighbors.has(n.id)?1:0.15);
+  label.style("opacity",n=>neighbors.has(n.id)?1:0.1);
+  rings.style("opacity",n=>neighbors.has(n.id)?0.5:0.05);
+  link.style("stroke-opacity",l=>
+    (l.source.id===d.id||l.target.id===d.id)?0.9:0.05
+  );
+  tip.style.display="block";
+  tip.innerHTML=`<b style="color:${colorMap[d.type]}">${d.name}</b><br>📍 ${d.town}<br>📊 ${d.desc}<br>🔗 连了${d.degree}条线<br>🚦 多少条路要经过它：${(d.betweenness*100).toFixed(1)}%<br>💚 ${d.state==="green"?"指标平稳":d.state==="yellow"?"指标待核实":"数据缺失"}`;
+  tip.style.left=Math.min(d.x+15,W-240)+"px";
+  tip.style.top=Math.min(d.y-10,H-160)+"px";
+  return true;
+}
+node.on("click",(e,d)=>{
+  e.stopPropagation();
+  if(selected===d.id){selected=null;resetHighlight();tip.style.display="none";return}
+  selectNodeById(d.id);
+});
+function resetHighlight(){
+  node.style("opacity",1);
+  label.style("opacity",1);
+  rings.style("opacity",0.5);
+  link.style("stroke-opacity",d=>d.level==="A"?0.8:0.5);
+}
+chart.addEventListener("click",()=>{selected=null;resetHighlight();tip.style.display="none"});
+
+// ===== V2：苗头冲击级联推演（沿供货关系逐层扩散，可复现URL） =====
+(function(){
+  const transKind=new Set(["供应链","资源竞争"]); // 经济冲击只沿这两类边传导，不沿环保/生态
+  const info=document.getElementById("shockInfo");
+  function parseKinds(s){return new Set((s||"供应链,资源竞争").split(","));}
+
+  // BFS 分层 + 随层数和边权重衰减；kinds 决定沿哪类边传导
+  function bfs(seedId, kinds){
+    const level={}; level[seedId]=1;
+    const layers=[[seedId]];
+    let frontier=[seedId], hop=0;
+    while(frontier.length && hop<4){
+      hop++;
+      const next=[];
+      frontier.forEach(nid=>{
+        links.forEach(l=>{
+          if(!kinds.has(l.kind)) return;
+          const sid=l.source.id, tid=l.target.id;
+          const oth=(sid===nid)?tid:(tid===nid?sid:null);
+          if(!oth || level[oth]!==undefined) return;
+          // 层数越远、边越细(w越小)，衰减越多
+          level[oth]=Math.max(0.18, 1 - hop*0.26 - (5-l.w)*0.05);
+          next.push(oth);
+        });
+      });
+      layers.push(next); frontier=next;
+    }
+    return {level,layers};
+  }
+
+  function origLinkColor(l){
+    if(l.kind==="环保约束")return "#ef4444";
+    if(l.kind==="资源竞争")return "#f59e0b";
+    if(l.kind==="生态补偿")return "#0ea5e9";
+    return l.level==="A"?"#38bdf8":"#475569";
+  }
+  function nodeColor(id){
+    const n=nodes.find(x=>x.id===id);
+    return n?(n.state==="yellow"?"#eab308":colorMap[n.type]):"#fff";
+  }
+
+  function resetShock(){
+    info.style.display="none";
+    document.querySelectorAll(".sbtn").forEach(b=>b.classList.remove("on"));
+    node.interrupt().transition().duration(300).style("opacity",1)
+        .attr("stroke",d=>nodeColor(d.id))
+        .attr("stroke-width",2);
+    label.interrupt().transition().duration(300).style("opacity",1);
+    rings.interrupt().transition().duration(300).style("opacity",0.5);
+    link.interrupt().style("stroke-opacity",d=>d.level==="A"?0.8:0.5)
+        .style("stroke-width",d=>d.w)
+        .attr("stroke",d=>origLinkColor(d));
+    try{history.replaceState(null,"",location.pathname+location.search);}catch(e){}
+  }
+
+  function runShock(seedId, seedName, kindsStr){
+    selected=null; tip.style.display="none";
+    document.querySelectorAll(".fbtn").forEach(b=>b.classList.remove("on"));
+    const kinds=parseKinds(kindsStr);
+    const kindLabel={供应链:"供货关系",资源竞争:"抢地抢电",环保约束:"环保红线"};
+    const kindText=[...kinds].map(k=>kindLabel[k]||k).join(" / ");
+    const {level,layers}=bfs(seedId, kinds);
+
+    // 被传播到的边
+    const hitEdges=new Set();
+    Object.keys(level).forEach(nid=>{
+      links.forEach(l=>{
+        if(!kinds.has(l.kind)) return;
+        const sid=l.source.id, tid=l.target.id;
+        if((sid===nid&&level[tid]!==undefined)||(tid===nid&&level[sid]!==undefined)) hitEdges.add(l);
+      });
+    });
+
+    // 先把无关的压暗
+    node.interrupt().style("opacity",d=>level[d.id]!==undefined?1:0.12);
+    label.interrupt().style("opacity",d=>level[d.id]!==undefined?1:0.08);
+    link.interrupt()
+        .style("stroke-opacity",l=>hitEdges.has(l)?0.95:0.05)
+        .style("stroke-width",l=>hitEdges.has(l)?Math.max(2.5,l.w+0.5):l.w)
+        .attr("stroke",l=>hitEdges.has(l)?"#ef4444":origLinkColor(l));
+
+    // 逐层点亮：种子白→红→橙→黄
+    layers.forEach((layer,i)=>{
+      setTimeout(()=>{
+        layer.forEach(id=>{
+          let col;
+          if(level[id]===1) col="#fef2f2";
+          else if(level[id]>0.55) col="#ef4444";
+          else if(level[id]>0.32) col="#f97316";
+          else col="#facc15";
+          node.filter(n=>n.id===id).interrupt().transition().duration(350)
+              .style("opacity",1).attr("stroke",col).attr("stroke-width",3.5);
+        });
+      }, i*480);
+    });
+
+    // 韧性三阶段说明（中性陈述，不诊断）
+    const hop1=(layers[1]||[]).map(id=>nodes.find(n=>n.id===id).name);
+    const hop2=(layers[2]||[]).map(id=>nodes.find(n=>n.id===id).name);
+    const totalAffected=Object.keys(level).length-1;
+    info.style.display="block";
+    info.innerHTML=`<b class="t">💥 苗头：${seedName}</b><br>
+      从该节点沿<b>${kindText}</b>类边级联，共波及 <b>${totalAffected}</b> 个节点、${layers.length-1} 层；不相关的边（山水康养等）不传导这次冲击。<br>
+      <b>① 抵抗（直接受冲击·第1层）</b>：${hop1.length?hop1.join("、"):"—"}<br>
+      <b>② 传导（第2层及以后）</b>：${hop2.length?hop2.join("、"):"末梢已衰减为淡黄色"}<br>
+      <span class="dim">颜色越红＝离冲击源越近、传导路径越粗；越黄＝传得越远、衰减越多。有多条连接的节点会部分"吸收"冲击。</span><br>
+      <span class="dim">这是按公开连边规则做的级联演示，不是预测真实损失；冲击幅度是假设，你可以质疑、改参数重跑。</span>`;
+    try{history.replaceState(null,"","#shock="+seedId);}catch(e){}
+  }
+
+  document.querySelectorAll(".sbtn").forEach(btn=>{
+    btn.onclick=(e)=>{
+      e.stopPropagation();
+      const wasOn=btn.classList.contains("on");
+      document.querySelectorAll(".sbtn").forEach(b=>b.classList.remove("on"));
+      if(wasOn){resetShock();return;}
+      btn.classList.add("on");
+      runShock(btn.dataset.shock, btn.dataset.name, btn.dataset.kinds);
+    };
+  });
+  document.getElementById("shockReset").onclick=(e)=>{e.stopPropagation();resetShock();};
+
+  // 打开链接即复现（社交对局卡地基）
+  const m=location.hash.match(/shock=(\w+)/);
+  if(m){
+    const btn=document.querySelector(`.sbtn[data-shock="${m[1]}"]`);
+    if(btn){btn.classList.add("on");runShock(m[1],btn.dataset.name,btn.dataset.kinds);}
+  }
+})();
+
+// 深链接：?entity=xxx（来自全息版"查看证据"），力导向稳定后选中节点；无法定位则退回普通全景
+(function(){
+  const q=new URLSearchParams(location.search);
+  const entityId=q.get("entity");
+  if(!entityId)return;
+  const apply=()=>{
+    const d=nodes.find(x=>x.id===entityId);
+    if(!d||d.x==null)return false;
+    return selectNodeById(entityId);
+  };
+  let tries=0;
+  const t=setInterval(()=>{
+    if(apply()||++tries>40)clearInterval(t);
+  },120);
+})();
+
+function viewKind(f){
+  if(f==="all")return null;
+  if(f==="supply")return ["供应链"];
+  if(f==="eco")return ["生态补偿"];
+  if(f==="env")return ["环保约束","资源竞争"];
+  return null;
+}
+document.querySelectorAll(".fbtn").forEach(btn=>{
+  btn.onclick=()=>{
+    document.querySelectorAll(".fbtn").forEach(b=>b.classList.remove("on"));
+    btn.classList.add("on");
+    selected=null;tip.style.display="none";
+    const f=btn.dataset.filter;
+    const kinds=viewKind(f);
+    if(!kinds){
+      // 全景
+      node.style("opacity",1);
+      label.style("opacity",1);
+      rings.style("opacity",0.5);
+      link.style("stroke-opacity",d=>d.level==="A"?0.8:0.5).style("display",null);
+      linkHit.style("display",null);
+      return;
+    }
+    // 该视图涉及的边
+    const activeLinks=links.filter(l=>kinds.includes(l.kind));
+    const activeIds=new Set();
+    activeLinks.forEach(l=>{activeIds.add(l.source.id);activeIds.add(l.target.id)});
+    node.style("opacity",d=>activeIds.has(d.id)?1:0.08);
+    label.style("opacity",d=>activeIds.has(d.id)?1:0.05);
+    rings.style("opacity",d=>activeIds.has(d.id)?0.5:0.03);
+    link.style("display",l=>kinds.includes(l.kind)?null:"none")
+        .style("stroke-opacity",l=>kinds.includes(l.kind)?(l.level==="A"?0.9:0.6):0);
+    linkHit.style("display",l=>kinds.includes(l.kind)?null:"none");
+  };
+});
+
+// ===== 太阳系家底图（固定轨道，不做力导向） =====
+(function(){
+  const box=document.getElementById("solarchart");
+  const SW=box.clientWidth||860;
+  const m=SW<500;
+  const SH=m?760:640;
+  const cx=SW/2, cy=SH/2;
+  const R1=m?72:120, R2=m?120:215, R3=m?163:300;
+  const ssvg=d3.select("#solarchart").append("svg").attr("width","100%").attr("height",SH);
+  const stip=document.getElementById("solarTip");
+
+  // 轨道圈
+  [R1,R2,R3].forEach((r,i)=>{
+    ssvg.append("circle").attr("cx",cx).attr("cy",cy).attr("r",r)
+      .attr("fill","none").attr("stroke","#1e293b").attr("stroke-width",1).attr("stroke-dasharray","2,6");
+  });
+  // 轨道标注
+  ssvg.append("text").attr("x",cx+6).attr("y",cy-R1+4).attr("fill","#475569").attr("font-size","9px").text("六大产业");
+  ssvg.append("text").attr("x",cx+6).attr("y",cy-R2+4).attr("fill","#475569").attr("font-size","9px").text("手里的家底");
+  ssvg.append("text").attr("x",cx+6).attr("y",cy-R3+4).attr("fill","#475569").attr("font-size","9px").text("卖到哪·谁来");
+
+  // 数据：产值单位亿元；null=规模未公开
+  const industries=[
+    {name:"电子信息",val:770,note:"产值770亿·317家规上·+17.1%",color:"#22c55e"},
+    {name:"智能装备",val:1000,goal:true,note:"正威铜杆/欣旺达·冲刺千亿级",color:"#22c55e"},
+    {name:"智能出行",val:150,note:"产值超150亿·台铃/小刀/新日/绿佳",color:"#22c55e"},
+    {name:"新能源新材料",val:90,note:"锂威/正威·规模未单列(圆为定性)",color:"#22c55e"},
+    {name:"生命健康",val:60,note:"罗浮山国药/信立泰·规模未单列",color:"#22c55e"},
+    {name:"现代食品",val:60,note:"百岁山374万吨·规模未单列",color:"#22c55e"},
+  ];
+  const assets=[
+    {name:"11家国家级小巨人",note:"工信部名录·技术好的中小厂",color:"#06b6d4"},
+    {name:"74家省级专精特新",note:"广东省工信厅名录",color:"#06b6d4"},
+    {name:"6个国家地理标志",note:"山茶/菜心/花生/黑糖/大米/荔枝",color:"#fbbf24"},
+    {name:"工业用电60.04亿度",note:"2026年1-8月·+11.5%",color:"#06b6d4"},
+    {name:"石湾2461家工业企业",note:"三市交界·承接外溢第一线",color:"#06b6d4"},
+  ];
+  const markets=[
+    {name:"海外",val:400,note:"外贸进出口超400亿·+26.1%·增幅全市第二·12家市百强外贸企业",color:"#a78bfa"},
+    {name:"游客",val:320,note:"2025年接待游客1028万人次·+11.7%·旅游综合收入51.88亿·+19.1%",color:"#a78bfa"},
+    {name:"深圳",val:200,note:"欣旺达总部+锂威园洲·深博福田产业园25宗/54亿/产值超100亿",color:"#a78bfa"},
+    {name:"东莞",val:200,note:"石湾/园洲承接外溢·模具电子电动车·园洲年产值380亿",color:"#a78bfa"},
+    {name:"广州",val:120,note:"石湾三市交界毗邻增城·罗浮山国药与省中医院合作",color:"#a78bfa"},
+  ];
+
+  // 产值→半径（仅产业）
+  const indR=v=>Math.max(11,Math.sqrt(v)/2.0);
+  // 市场→半径
+  const mktR=v=>Math.max(12,Math.sqrt(v)/2.2);
+
+  // 装配：每个节点带轨道半径、初始角度、角速度（内圈快、外圈慢）
+  const TAU=Math.PI*2;
+  function setup(items,R,startDeg,kind,periodSec){
+    items.forEach((d,i)=>{
+      d.R=R; d.kind=kind;
+      d.a=(startDeg+i*360/items.length)*Math.PI/180;
+      d.w=TAU/periodSec;
+      d.rad=kind==="ind"?indR(d.val):(kind==="mkt"?mktR(d.val):13);
+      d.x=cx+R*Math.cos(d.a); d.y=cy+R*Math.sin(d.a);
+    });
+  }
+  setup(industries,R1,-90,"ind",48);
+  setup(assets,R2,-62,"asset",72);
+  setup(markets,R3,-90,"mkt",100);
+  const planets=industries.concat(assets).concat(markets);
+
+  // 中心到各节点的辐射线（随行星转动）
+  const spoke=ssvg.selectAll(null).data(planets).enter().append("line")
+    .attr("x1",cx).attr("y1",cy)
+    .attr("stroke","#1e293b").attr("stroke-width",1).attr("stroke-opacity",0.5);
+
+  // 中心
+  ssvg.append("circle").attr("cx",cx).attr("cy",cy).attr("r",m?30:36)
+    .attr("fill","#fbbf24").attr("fill-opacity",0.18).attr("stroke","#fbbf24").attr("stroke-width",2);
+  ssvg.append("text").attr("x",cx).attr("y",cy-2).attr("text-anchor","middle").attr("fill","#fbbf24").attr("font-size","13px").attr("font-weight","700").text("博罗");
+  ssvg.append("text").attr("x",cx).attr("y",cy+13).attr("text-anchor","middle").attr("fill","#fbbf24").attr("font-size","10px").text("GDP 1005亿");
+
+  // 行星（局部坐标，整组 translate 定位，文字始终水平）
+  const g=ssvg.selectAll(null).data(planets).enter().append("g").style("cursor","pointer");
+  g.append("circle")
+    .attr("r",d=>d.rad)
+    .attr("fill",d=>d.color).attr("fill-opacity",0.2)
+    .attr("stroke",d=>d.color).attr("stroke-width",d=>d.goal?2:1.5)
+    .attr("stroke-dasharray",d=>d.goal?"4,3":null);
+  g.append("text").attr("y",3).attr("text-anchor","middle")
+    .attr("fill","#e6edf3").attr("font-size",m?"8.5px":"10px").text(d=>d.name);
+  g.append("text").attr("y",d=>d.rad+12).attr("text-anchor","middle")
+    .attr("fill","#94a3b8").attr("font-size","8.5px")
+    .text(d=>{
+      if(d.kind==="ind")return d.goal?"目标千亿":(d.val>=100?d.val+"亿":"");
+      if(d.kind==="mkt")return d.name.includes("游客")?"1028万人":(d.val>=300?d.val+"亿":"");
+      return "";
+    });
+
+  let playing=true;
+  const btn=document.getElementById("solarToggle");
+  btn.addEventListener("click",()=>{playing=!playing;btn.textContent=playing?"⏸ 暂停运转":"▶ 继续运转";});
+
+  g.on("click",(e,d)=>{
+    e.stopPropagation();
+    playing=false; btn.textContent="▶ 继续运转";
+    const rect=box.getBoundingClientRect();
+    stip.style.display="block";
+    stip.innerHTML=`<b style="color:${d.color}">${d.name}</b><br>${d.note}`;
+    const px=e.clientX-rect.left+12, py=e.clientY-rect.top+10;
+    stip.style.left=Math.min(px,SW-260)+"px";
+    stip.style.top=Math.min(py,SH-90)+"px";
+  });
+  ssvg.on("click",()=>stip.style.display="none");
+
+  // 公转循环
+  let last=performance.now();
+  function frame(now){
+    const dt=Math.min((now-last)/1000,0.05); last=now;
+    if(playing){
+      for(const p of planets){
+        p.a+=p.w*dt;
+        p.x=cx+p.R*Math.cos(p.a);
+        p.y=cy+p.R*Math.sin(p.a);
+      }
+    }
+    g.attr("transform",d=>`translate(${d.x},${d.y})`);
+    spoke.attr("x2",d=>d.x).attr("y2",d=>d.y);
+    requestAnimationFrame(frame);
+  }
+  requestAnimationFrame(frame);
+})();
+</script>
+<script>window.__PLAIN_ORIGINAL__="network.html";</script><script src="easy/plain.js"></script></body></html>
