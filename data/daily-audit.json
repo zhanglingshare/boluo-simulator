@@ -1,6 +1,6 @@
 {
   "audit_version": 1,
-  "audited_at": "2026-10-30T07:20:41.795Z",
+  "audited_at": "2026-10-31T07:08:38.172Z",
   "region": "boluo",
   "baseline": {
     "valid": true,
@@ -28,7 +28,9 @@
   "validation": {
     "ok": true,
     "errors": [],
-    "warnings": [],
+    "warnings": [
+      "候选包已超过 36 小时，需确认是否为最新采集结果"
+    ],
     "notes": [
       "正式底座：节点 36、关系 45、来源 54、变化事件 12",
       "候选包：新来源 7、节点提案 4、关系提案 3、变化事件 3",
