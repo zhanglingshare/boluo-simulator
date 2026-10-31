@@ -1,7 +1,7 @@
 (function boluoEasyApp(){
 'use strict';
 const META=[
- ['home','◉','今日博罗','博罗变了，跟你有什么关系？','一眼看数字，点一下就明白。'],
+ ['home','◉','开始闯关','博罗变了，你能发现什么？','先玩五关，再决定想深入看哪里。'],
  ['change','◎','变化现场','这一件事，会牵动谁？','从2026年的真事开始，看看关系。'],
  ['money','▥','钱从哪来','工业涨，投资怎么还在跌？','三块经济拼图，一眼看明白。'],
  ['trip','♧','去哪玩','周末去博罗哪里玩？','12个镇，点一个就出发。'],
@@ -42,7 +42,7 @@ function tuned(){let a=plans();return a&&a.map((x,i)=>({...x,mu:x.mu*(i===0?S.k[
 const fmt=n=>Number(n).toFixed(0),rate=n=>Number(n).toFixed(1)+'%';
 function result(r){return r?`<div class="numberboard"><div class="numtile"><div class="v">${fmt(r.p10)}</div><div class="l">偏低 · 亿元</div></div><div class="numtile darknum"><div class="v">${fmt(r.p50)}</div><div class="l">中间 · 亿元</div></div><div class="numtile"><div class="v">${fmt(r.p90)}</div><div class="l">偏高 · 亿元</div></div></div>`:'<div class="notice">暂时无法读取计算模型。</div>';}
 function notes(){return '<div class="notice">这是一种“假如”的模型实验，不是现实发生的概率，也不能保证未来结果。</div>';}
-function home(){
+function home(){if(window.BoluoPlay)return window.BoluoPlay.view();
 let news=(DATA.hot?.items||[]).slice(0,3),changes=latest().slice().sort((a,b)=>String(b.event_date).localeCompare(String(a.event_date))).slice(0,4);
 return pane(card(`<div class="eyebrow">2025年真实数字 → 2030年参考目标</div><div class="lead" style="margin-top:15px">已经过千亿，<br>还差多少到1600亿？</div><div class="giant" style="color:#a7efd8">595<span class="unit">亿元</span></div><div class="barbox" style="margin:21px 0 10px;background:#285164"><i style="width:62.84%"></i></div><div class="minirow small" style="color:#a8d1d0"><span>2025：1005.45亿</span><span>2030：1600亿参考线</span></div><div class="buttonrow">${link('paths','我来选5张牌 →')}${link('wind','直接玩风洞','btn ghost')}</div>`,7,'dark')
 +card(`<div class="cardtitle">先玩哪个？</div><div class="buttonrow">${link('change','🌉 最近的变化','btn outline')}${link('trip','🏞️ 周末去哪玩','btn outline')}${link('money','📊 工业涨、投资跌','btn outline')}${link('future','🎲 看看2030年','btn outline')}</div><div class="cardtitle" style="margin-top:24px">你是谁？</div><div class="buttonrow">${['博罗居民','上班的人','做生意的人','来玩的游客'].map(x=>button(x,'role',x,'choicebtn '+(x===S.role?'on':''))).join('')}</div><p class="muted" style="margin-top:14px">${safe(S.role==='来玩的游客'?'先看看有哪些地方好玩。':S.role==='做生意的人'?'先看谁来了，哪些项目真的开工。':S.role==='上班的人'?'先看工厂和路的变化。':'先找一件和自己有关的事。')}</p>`,5)
@@ -116,7 +116,7 @@ return pane(card(`<div class="eyebrow">最后一站</div><div style="font-size:c
 function view(){
 switch(S.page){case'home':return home();case'change':return changes();case'money':return money();case'trip':return trip();case'paths':return paths();case'future':return future();case'wind':return wind();case'blind':return blind();case'report':return report();case'end':return ending();default:return home();}
 }
-function render(top=false){
+function render(top=false){document.body.classList.toggle('play-home',S.page==='home');
 let m=META.find(x=>x[0]===S.page)||META[0];
 $('headline').textContent=m[3].replace('<br>',' ');$('subtitle').textContent=m[4];
 $('eyebrow').textContent='博罗风洞 · 大众互动版';
@@ -163,6 +163,7 @@ case'mode':S.mode=v;render();break;
 case'reset':S.k=[100,100,100];render();break;
 case'blind':S.blind=S.blind===Number(v)?-1:Number(v);render();break;
 case'quiz':S.answers[S.event]=Number(v);render();break;
+case'play':if(window.BoluoPlay){window.BoluoPlay.handle(v);render();}break;
 case'share':share();break;
 case'copy':copy();break;
 }
@@ -170,7 +171,7 @@ case'copy':copy();break;
 document.addEventListener('click',e=>{let x=e.target.closest('[data-action]');if(x)action(x.dataset.action,x.dataset.value);});
 document.addEventListener('input',e=>{let x=e.target;if(x.dataset.slider!==undefined){let out=$('o'+x.dataset.slider);if(out)out.textContent=x.value+'%';}if(x.id==='question')S.ask=x.value.slice(0,90);});
 document.addEventListener('change',e=>{let x=e.target;if(x.dataset.slider!==undefined){S.k[Number(x.dataset.slider)]=Number(x.value);render();}if(x.dataset.spend!==undefined){S.spend=Number(x.value);render();}});
-$('share-global').onclick=share;
+$('share-global').onclick=()=>{if(S.page==='home'&&window.BoluoPlay)window.BoluoPlay.handle('shareall');else share();};
 window.addEventListener('hashchange',()=>{let before=S.page;parseHash();render(before!==S.page);});
 parseHash();render();
 Promise.allSettled([
