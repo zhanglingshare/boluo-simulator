@@ -54,7 +54,8 @@ const info=GUIDE[filename]||GUIDE['index.html'];
 const originals=new WeakMap();
 let simple=true,scheduled=false,observer=null;
 function skipped(n){const p=n.parentElement;return !p||p.closest('script,style,noscript,textarea,pre,code,svg,canvas,option,select,.plain-layer,[contenteditable="true"]');}
-function simplified(str){let t=str;for(const [a,b] of TERMS){if(t.includes(a))t=t.split(a).join(b);}return t;}
+const lookup=new Map(TERMS);const termRegex=new RegExp(TERMS.map(x=>x[0].replace(/[.*+?^${}()|[\]\\]/g,'\\function simplified(str){let t=str;for(const [a,b] of TERMS){if(t.includes(a))t=t.split(a).join(b);}return t;}')).join('|'),'g');
+function simplified(str){return str.replace(termRegex,t=>lookup.get(t)||t);}
 function setText(n){if(skipped(n))return;let raw=originals.get(n);
 if(raw===undefined){raw=n.nodeValue;originals.set(n,raw);}
 else if(n.nodeValue!==raw && n.nodeValue!==simplified(raw)){raw=n.nodeValue;originals.set(n,raw);}
@@ -69,6 +70,7 @@ function fixLinks(root){
 const links=(root.matches?.('a[href]')?[root]:[]).concat([...root.querySelectorAll?.('a[href]')||[]]);
 for(const a of links){
 const href=a.getAttribute('href')||'';
+if(href.startsWith('#')&&href.length>1&&!a.closest('.plain-layer')){a.setAttribute('href',location.pathname+location.search+href);continue;}
 const found=href.match(/^(\.\/)?([a-z0-9-]+\.html)([?#].*)?$/i);
 if(found&&GUIDE[found[2]]&&a.dataset.plainLink!=='yes'){
 a.setAttribute('href','easy/full/'+found[2]+(found[3]||''));a.dataset.plainLink='yes';
