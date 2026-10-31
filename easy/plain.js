@@ -54,7 +54,7 @@ const info=GUIDE[filename]||GUIDE['index.html'];
 const originals=new WeakMap();
 let simple=true,scheduled=false,observer=null;
 function skipped(n){const p=n.parentElement;return !p||p.closest('script,style,noscript,textarea,pre,code,svg,canvas,option,select,.plain-layer,[contenteditable="true"]');}
-const lookup=new Map(TERMS);const termRegex=new RegExp(TERMS.map(x=>x[0].replace(/[.*+?^${}()|[\]\\]/g,'\\function simplified(str){let t=str;for(const [a,b] of TERMS){if(t.includes(a))t=t.split(a).join(b);}return t;}')).join('|'),'g');
+function simplified(str){let out='',p=0;while(p<str.length){let found=null;for(const x of TERMS){if(str.startsWith(x[0],p)){found=x;break;}}if(found){out+=found[1];p+=found[0].length;}else{out+=str.charAt(p);p++;}}return out;}
 function simplified(str){return str.replace(termRegex,t=>lookup.get(t)||t);}
 function setText(n){if(skipped(n))return;let raw=originals.get(n);
 if(raw===undefined){raw=n.nodeValue;originals.set(n,raw);}
