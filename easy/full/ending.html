@@ -1,0 +1,253 @@
+<!doctype html>
+<html lang="zh-CN"><head><base href="../../"><link rel="stylesheet" href="easy/plain.css"><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>让每一个重大决策，先跑一遍 · 博罗产业风洞</title>
+<script src="lib/echarts.min.js"></script>
+<style>
+*{box-sizing:border-box}
+body{margin:0;background:#080b12;color:#e6edf3;font:14px/1.7 -apple-system,"PingFang SC","Microsoft YaHei",sans-serif}
+.nav{position:sticky;top:0;z-index:50;display:flex;gap:5px;align-items:center;padding:9px 14px;background:rgba(8,11,18,.95);border-bottom:1px solid #1b2434;overflow-x:auto}
+.nav b{font-size:14px;margin-right:6px;flex:none}
+.nav a{background:#131c2b;color:#93a4bd;border:1px solid #22304a;padding:6px 12px;border-radius:20px;font-size:12.5px;text-decoration:none;white-space:nowrap;flex:none}
+.nav a.on{background:#15803d;border-color:#22c55e;color:#fff;font-weight:600}
+.wrap{max-width:880px;margin:auto;padding:18px}
+.hero{text-align:center;padding:44px 22px;background:radial-gradient(ellipse at top,#0c2a1a 0%,#0a0f1a 70%);border:1px solid #1c2739;border-radius:16px;margin-bottom:14px}
+.hero .kick{font-size:12px;letter-spacing:3px;color:#4ade80;margin-bottom:14px}
+.hero h1{font-size:25px;line-height:1.5;margin:0}
+.hero p{font-size:13px;color:#9aa9bd;margin:14px 0 0}
+.card{background:#0e1523;border:1px solid #1c2739;border-radius:12px;padding:18px;margin-bottom:14px}
+.card h2{font-size:16px;margin:0 0 12px;padding-bottom:8px;border-bottom:1px solid #1c2739}
+.policy{background:linear-gradient(160deg,#081a10,#0e1523);border-color:#14532d}
+.quote{border-left:3px solid #4ade80;background:#0a0f1a;border-radius:0 8px 8px 0;padding:9px 12px;margin:9px 0;font-size:12.5px;color:#d7f0dd;line-height:1.85}
+.quote b{color:#86efac}
+.src{font-size:11px;color:#6b7d96;margin-top:6px}
+.world .row{display:flex;gap:11px;align-items:flex-start;background:#0a0f1a;border:1px solid #1c2739;border-radius:10px;padding:11px 13px;margin-bottom:9px}
+.world .flag{flex:none;width:52px;font-size:12px;font-weight:800;color:#fbbf24}
+.world .txt{flex:1;font-size:12.3px;color:#cbd5e1;line-height:1.8}
+.world .txt b{color:#e6edf3}
+.world .note{font-size:12.5px;color:#9aa9bd;text-align:center;margin-top:10px;line-height:1.9}
+.why{display:grid;grid-template-columns:repeat(3,1fr);gap:12px}
+@media(max-width:700px){.why{grid-template-columns:1fr}}
+.why .step{background:#0a0f1a;border:1px solid #1c2739;border-radius:10px;padding:14px}
+.why .step .n{font-size:11px;font-weight:800;color:#4ade80;letter-spacing:1px}
+.why .step h3{font-size:13.5px;margin:6px 0;color:#fbbf24}
+.why .step p{font-size:12px;color:#a9b6c9;margin:0;line-height:1.85}
+.chart{width:100%;height:300px}
+.grid6{display:grid;grid-template-columns:repeat(3,1fr);gap:11px}
+@media(max-width:700px){.grid6{grid-template-columns:1fr 1fr}}
+.feat{background:#0a0f1a;border:1px solid #1c2739;border-radius:10px;padding:13px}
+.feat b{font-size:12.8px;color:#e6edf3;display:block;margin-bottom:4px}
+.feat span{font-size:11px;color:#8fa3bf;line-height:1.7}
+.closing{text-align:center;padding:34px 24px;background:linear-gradient(160deg,#0a1a0e,#0a0f1a);border:1px solid #14532d;border-radius:14px;margin-bottom:14px}
+.closing .big{font-size:15px;line-height:2.1;color:#e6edf3}
+.closing .big b{color:#4ade80}
+.sign{font-size:12px;color:#8fa3bf;margin-top:18px}
+.sign b{color:#fbbf24}
+.btn{background:#15803d;color:#fff;border:0;padding:11px 24px;border-radius:8px;font-size:14px;font-weight:600;cursor:pointer;text-decoration:none;display:inline-block}
+.btn.ghost{background:transparent;border:1px solid #2b3c5a;color:#cbd5e1}
+@media(min-width:1024px){.wrap{max-width:1200px!important;padding:24px}}</style><link rel="stylesheet" href="assets/boluo-ui.css">
+</head><body class="bl-ui bl-dark bl-ui--ending" data-bl-page="ending">
+
+<div class="nav">
+  <b>博罗产业风洞</b>
+  <a href="index.html">今日博罗</a>
+  <a href="holo-home-v10.html">⚡ 变化现场</a>
+  <a href="town.html">🏘️ 各镇吃喝玩乐</a>
+  <a href="network.html">② 产业网络</a>
+  <a href="who.html">③ 基本面</a>
+  <a href="choices.html">④ 五条路</a>
+  <a href="future.html">⑤ 未来</a>
+  <a href="windtunnel.html">⑥ 风洞测试</a>
+  <a href="blindspot.html">⑦ 忽略了什么</a>
+  <a href="report.html">⑧ 分析报告</a>
+  <a href="ending.html" class="on">⑨ 结语</a>
+</div>
+
+<div class="wrap">
+
+  <div class="hero">
+    <div class="kick">结 语</div>
+    <h1>让每一个重大决策，先跑一遍</h1>
+    <p>我们不替任何人做决定，只想在拍板之前，多帮着看一步路。</p>
+  </div>
+
+  <!-- 数字中国 -->
+  <div class="card policy">
+    <h2>这件事，在“数字中国”的蓝图里</h2>
+    <p style="font-size:12.5px;color:#cbd5e1;margin:0">县域决策的科学化，不是心血来潮，而是国家早已指明的方向。</p>
+    <div class="quote">“十四五”规划和2035年远景目标纲要提出：<b>“加快构建数字技术辅助政府决策机制，提高基于高频大数据精准动态监测预测预警水平”</b>，并要求<b>“探索建设数字孪生城市”</b>。</div>
+    <div class="quote">2023年《数字中国建设整体布局规划》按照“2522”整体框架，要求数字技术与经济、政治、社会等深度融合，<b>“发展高效协同的数字政务”</b>，并强调夯实县域数字基础。</div>
+    <p style="font-size:12.5px;color:#cbd5e1;margin:10px 0 0">这台小小的县域风洞，正是把“数字技术辅助决策”落到博罗这样一个千亿县的具体尝试——它不宏大，却是数字中国这座大厦里一块<b style="color:#86efac">看得见、摸得着、可核对</b>的砖。</p>
+    <div class="src">依据来源：中国政府网公开发布的“十四五”规划纲要、《数字中国建设整体布局规划》。</div>
+  </div>
+
+  <!-- 国际 -->
+  <div class="card world">
+    <h2>放眼世界，“先算后干”早已是通行做法</h2>
+    <p style="font-size:12.5px;color:#cbd5e1;margin:0 0 12px">越是成熟的经济体，越舍得在区域决策前的推演上下功夫。</p>
+    <div class="row"><div class="flag">新加坡</div><div class="txt">试错不起，建成全球首个国家级数字孪生 <b>Virtual Singapore</b>，整座城装进电脑，规划、建设、应急都先“试一遍”。</div></div>
+    <div class="row"><div class="flag">美国</div><div class="txt">州和地方政府常用区域经济模型（<b>REMI、IMPLAN</b>），加税、修路、能源政策出台前，先算清带来多少就业、多少收入。</div></div>
+    <div class="row"><div class="flag">日本</div><div class="txt">国土交通省主导 <b>Project PLATEAU</b>，为约250个城市建成三维城市模型并开放数据，规划、防洪防灾先在上面模拟。</div></div>
+    <div class="row"><div class="flag">韩国</div><div class="txt">把“数字孪生国土”写进国家空间政策，首尔用数字孪生实时模拟、调度交通，智慧城市先行试点。</div></div>
+    <div class="row"><div class="flag">英国</div><div class="txt">成立“地方经济增长实证中心” <b>What Works Centre</b>，用证据回答“哪些政策真能拉动地方经济”。</div></div>
+    <div class="note">这些地方并非更聪明，而是更早懂得——<b style="color:#fbbf24">决策前多花一分“算”的功夫，决策后就能少交十分“试错”的学费。</b></div>
+  </div>
+
+  <!-- 为什么 -->
+  <div class="card">
+    <h2>我们为什么想做这件事</h2>
+    <div class="why">
+      <div class="step">
+        <div class="n">第一 · 数字背后是人</div>
+        <h3>每个决策都连着具体的人</h3>
+        <p>园洲赶班车的工人、柏塘种山茶的农户、罗浮山下开民宿的夫妻、为孩子学位操心的父母——县域每个重大决定，最终都落在这样的人身上。</p>
+      </div>
+      <div class="step">
+        <div class="n">第二 · 县域是个整体</div>
+        <h3>牵一发，往往动全身</h3>
+        <p>产业、农业、文旅、通道早已咬合，一个项目晚了、一条路堵了，会牵出一连串反应。只盯一个数字，容易看不见整片森林。</p>
+      </div>
+      <div class="step">
+        <div class="n">第三 · 我们的态度</div>
+        <h3>不炫技，只想帮上忙</h3>
+        <p>模拟器替代不了一线的脚步、群众的智慧和决策者的担当。它只在动手前多提供一种“先看一看”的可能，让选择更透明、能复盘。</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- Demo vs 正式版 -->
+  <div class="card">
+    <h2>这只是一个开始：正式版要更扎实</h2>
+    <div id="chRadar" class="chart"></div>
+    <p style="font-size:12px;color:#8fa3bf;text-align:center;margin:8px 0 0">绿线是当前Demo已做到的，橙线是正式版努力的方向。</p>
+  </div>
+
+  <!-- 首页数据怎么来的 -->
+  <div class="card">
+    <h2>首页那些话题、各镇去处和当季农品，是怎么来的</h2>
+    <div class="grid6">
+      <div class="feat"><div class="ic">📰</div><b>来源公开</b><span>博罗县政府公开公报与官方发布、南方+/惠州日报等媒体，以及公开社交平台上大家正在聊的罗浮山、各镇、农品事，每条都能点回去看原文。</span></div>
+      <div class="feat"><div class="ic">🗓️</div><b>每天更新一次</b><span>统计的是最近24小时的公开讨论；点"重新扫描"读的就是今天这一份，不是每天随时在变。</span></div>
+      <div class="feat"><div class="ic">📊</div><b>数字是合理估算</b><span>阅读、转发、点赞、"想去人数"这些，是按公开热度估出来的，不是平台后台真实统计，只用来排个先后、看个冷热。</span></div>
+      <div class="feat"><div class="ic">🌾</div><b>农品按时令</b><span>当季农产品按月份来，什么季节上什么果、什么菜，不反季；农业是博罗的特色和品牌，连着几十万农户的生计。</span></div>
+      <div class="feat"><div class="ic">🔍</div><b>能回头核对</b><span>页面里的"推演""模拟"，是把公开条件换着组合、重复跑很多遍看大致区间，不是预测，更不是官方结论；每个数都能回到公开资料核对。</span></div>
+      <div class="feat"><div class="ic">🌱</div><b>独立、开源</b><span>张凌博士个人利用业余时间做的小尝试，没有课题、没有赞助，代码与参数全部公开，欢迎一起挑错、一起改。</span></div>
+    </div>
+  </div>
+
+  <!-- 正式版功课 -->
+  <div class="card">
+    <h2>正式版，还要接受更严格的检验</h2>
+    <div class="grid6">
+      <div class="feat"><b>更多压力测试</b><span>投产延期、外需波动、极端天气、产业链断点等多重压力同时发生的组合情景。</span></div>
+      <div class="feat"><b>更细地找“命门”</b><span>把每个项目、每条关系、每个参数逐一扰动，找出“最不能出错”的位置。</span></div>
+      <div class="feat"><b>成千上万次推演</b><span>让未来在不同条件下反复演化，给出更稳健的可能性分布，而不是一个数字。</span></div>
+      <div class="feat"><b>更真实的数据</b><span>对接统计、交通、就业、农业等更多真实数据源，逐步减少假设成分。</span></div>
+      <div class="feat"><b>可交互 · 可核对</b><span>决策者自己改参数、提问题、现场推演，每一步都能回到公开资料核对。</span></div>
+      <div class="feat"><b>从看见到怎么走</b><span>不止于指出哪里脆弱，更进一步和一线一起，推演具体行动怎么走、先后如何排。</span></div>
+    </div>
+  </div>
+
+  <!-- 收尾 -->
+  <div class="closing">
+    <div class="big">
+      一座县城的现代化，<br>
+      不只是产值过了千亿、路宽了、游客多了，<br>
+      更是每一个决策都更<b>郑重、透明、经得起追问</b>。<br>
+      多一个“先看一看”，或许就能让博罗少走一些弯路，<br>
+      让生活在这里的124万人，多一分安心。
+    </div>
+    <div style="background:#0f2a16;border:1px solid #1f3a24;border-left:3px solid #22c55e;border-radius:10px;padding:14px 16px;margin:20px 0;font-size:13px;color:#cbd5e1;line-height:1.9;text-align:left">
+      <b style="color:#4ade80">这个风洞为谁做？</b><br>
+      给<b style="color:#fff">决策者</b>：参数公开可改，投产、通勤、外迁拨一下看系统怎么响应，做方案前先跑压力测试。<br>
+      也给<b style="color:#fff">普通人</b>：你上班的厂、你买的福田菜心、你周末爬的罗浮山、你每天走的那条路，都在这张网里。一个项目晚两年、一条路堵了、一个龙头搬走了，会怎样影响你的工作和日子？<b style="color:#fff">只用公开数据跑一遍，讲人话。</b>
+    </div>
+    <p style="text-align:left;color:#8fa3bf;font-size:13px;margin:18px 0 8px">🧭 这台风洞，带你一层层看博罗</p>
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:8px;text-align:left;margin-bottom:10px">
+      <a href="town.html" style="background:#0e1523;border:1px solid #1c2739;border-radius:8px;padding:10px;color:#cbd5e1;text-decoration:none;font-size:12px">🏘️ 各镇吃喝玩乐<br>12镇吃什么玩什么</a>
+      <a href="network.html" style="background:#0e1523;border:1px solid #1c2739;border-radius:8px;padding:10px;color:#cbd5e1;text-decoration:none;font-size:12px">② 产业网络<br>33个节点飞进来</a>
+      <a href="who.html" style="background:#0e1523;border:1px solid #1c2739;border-radius:8px;padding:10px;color:#cbd5e1;text-decoration:none;font-size:12px">③ 基本面<br>千亿县长什么样</a>
+      <a href="choices.html" style="background:#0e1523;border:1px solid #1c2739;border-radius:8px;padding:10px;color:#cbd5e1;text-decoration:none;font-size:12px">④ 五条路<br>从1005亿到1600亿</a>
+      <a href="future.html" style="background:#0e1523;border:1px solid #1c2739;border-radius:8px;padding:10px;color:#cbd5e1;text-decoration:none;font-size:12px">⑤ 未来<br>跑一万次模拟</a>
+      <a href="windtunnel.html" style="background:#0e1523;border:1px solid #1c2739;border-radius:8px;padding:10px;color:#cbd5e1;text-decoration:none;font-size:12px">⑥ 风洞测试<br>拨一下参数</a>
+      <a href="blindspot.html" style="background:#0e1523;border:1px solid #1c2739;border-radius:8px;padding:10px;color:#cbd5e1;text-decoration:none;font-size:12px">⑦ 被忽略的<br>几个反常识发现</a>
+      <a href="report.html" style="background:#0e1523;border:1px solid #1c2739;border-radius:8px;padding:10px;color:#cbd5e1;text-decoration:none;font-size:12px">⑧ 一页报告<br>图文讲清博罗</a>
+    </div>
+    <div class="sign">
+      博罗产业决策风洞 · Demo版 &nbsp;|&nbsp; <b>张凌 博士</b> · 决策模拟推演
+    </div>
+    <div style="margin-top:20px;display:flex;gap:10px;justify-content:center;flex-wrap:wrap">
+      <a class="btn" href="index.html">重新看一遍</a>
+      <a class="btn ghost" href="report.html">查看分析报告</a>
+      <a class="btn" href="windtunnel.html" style="background:linear-gradient(135deg,#22c55e,#16a34a);border:none">🎲 你来当一次县长</a>
+    </div>
+    <div style="font-size:11px;color:#5b6b82;margin-top:18px;line-height:1.9">
+      本项目为个人独立完成，暂无课题、基金或商业扶持，纯个人兴趣。<br>
+      数据来自博罗县政府公开统计公报与官方发布，可公开核查。代码与参数开源（MIT）。<br>
+      张凌 博士 ｜ 68588368@qq.com ｜ zhangyu0703@gmail.com
+    </div>
+  </div>
+
+</div>
+
+<script>
+const radar=echarts.init(document.getElementById('chRadar'));
+radar.setOption({
+  backgroundColor:'transparent',
+  tooltip:{backgroundColor:'#16203a',borderColor:'#2b3a55',textStyle:{color:'#e6edf3'}},
+  legend:{bottom:0,textStyle:{color:'#93a4bd',fontSize:12}},
+  radar:{center:['50%','48%'],radius:'62%',
+    indicator:[
+      {name:'压力测试广度',max:100},{name:'找命门精度',max:100},{name:'数据真实程度',max:100},
+      {name:'未来情景丰富度',max:100},{name:'决策交互深度',max:100}
+    ],
+    axisName:{color:'#cbd5e1',fontSize:11},
+    splitLine:{lineStyle:{color:'#1c2739'}},
+    splitArea:{areaStyle:{color:['rgba(255,255,255,.01)','rgba(255,255,255,.03)']}},
+    axisLine:{lineStyle:{color:'#1c2739'}}
+  },
+  series:[{type:'radar',data:[
+    {name:'当前Demo',value:[55,50,62,55,60],lineStyle:{color:'#22c55e',width:2},itemStyle:{color:'#22c55e'},areaStyle:{color:'rgba(34,197,94,.18)'}},
+    {name:'正式版',value:[92,90,88,90,93],lineStyle:{color:'#f59e0b',width:2},itemStyle:{color:'#f59e0b'},areaStyle:{color:'rgba(245,158,11,.15)'}}
+  ]}]
+});
+window.addEventListener('resize',()=>radar.resize());
+</script>
+
+<div class="likebar">
+  <button onclick="likePage()">👍 <span id="pcount">0</span></button>
+  <button onclick="sharePage()">🔁 转给朋友</button>
+</div>
+<style>
+.likebar{position:relative;bottom:auto;left:auto;transform:none;display:flex;justify-content:center;margin:20px 0;background:rgba(15,23,42,.96);border:1px solid #3b82f6;border-radius:24px;padding:9px 20px;display:flex;gap:22px;z-index:999;box-shadow:0 6px 24px rgba(0,0,0,.6)}
+.likebar button{background:none;border:none;color:#e2e8f0;font-size:14px;cursor:pointer}
+.likebar button:active{transform:scale(1.15)}
+<script>
+(function(){
+  var k="like_"+location.pathname;
+  var n=parseInt(localStorage.getItem(k)||"0");
+  document.getElementById("pcount").textContent=n;
+  window.likePage=function(){n++;localStorage.setItem(k,n);document.getElementById("pcount").textContent=n;};
+  window.sharePage=function(){
+    var m=document.getElementById("shareModal");
+    if(!m){
+      m=document.createElement("div");m.id="shareModal";
+      m.style.cssText="position:fixed;inset:0;background:rgba(0,0,0,.8);z-index:9999;display:flex;align-items:center;justify-content:center;padding:20px";
+      m.onclick=function(){m.remove();};
+      m.innerHTML='<div style="background:#0f172a;padding:20px;border-radius:14px;text-align:center" onclick="event.stopPropagation()"><div style="color:#fff;font-size:14px;margin-bottom:12px">截图二维码，发给朋友/群</div><img src="https://api.qrserver.com/v1/create-qr-code/?size=200x200&data='+encodeURIComponent(location.href)+'" style="width:200px;height:200px;background:#fff;padding:8px;border-radius:8px"><div style="color:#94a3b8;font-size:12px;margin-top:12px">扫码打开</div></div>';
+      document.body.appendChild(m);
+    }
+    navigator.clipboard && navigator.clipboard.writeText(location.href);
+  };
+})();
+</script>
+<!-- 百度统计：去 mtj.baidu.com 注册后替换 YOUR_ID -->
+<script>
+var _hmt = _hmt || [];
+(function() {
+  var hm = document.createElement("script");
+  hm.src = "https://hm.baidu.com/hm.js?YOUR_ID";
+  var s = document.getElementsByTagName("script")[0]; 
+  s.parentNode.insertBefore(hm, s);
+})();
+</script>
+<script>window.__PLAIN_ORIGINAL__="ending.html";</script><script src="easy/plain.js"></script></body></html>
