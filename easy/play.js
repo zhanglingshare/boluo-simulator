@@ -7,13 +7,13 @@ const QUESTIONS=[
 {id:'C006-LINK',kind:'links',icon:'🔗',label:'第4关 · 找到那条联系',question:'石洲大桥施工，最该先看哪条联系？',options:['园洲和东莞的跨市往来','博罗所有民宿都涨价了'],correct:0,explain:'桥连着园洲和东莞石排。施工会涉及跨市通行，但影响多少还要查。',source:'2026-10-26 · 交通管制通告',stat:'园洲 ↔ 东莞',status:'已知地点 · 影响待查'}
 ];
 const $=v=>document.getElementById(v);
-let step=0,answers={},speed=null,best=0,roundDone=false;
+let step=0,answers={},speed=null,best=0,roundDone=false,singleQuestion=-1;
 try{const v=JSON.parse(localStorage.getItem('boluo-easy-quest-v1')||'{}');best=Number.isFinite(v.best)?Math.min(100,Math.max(0,v.best)):0;}catch(e){}
 const hash=new URLSearchParams(location.hash.replace(/^#/,''));
-if(hash.get('challenge')==='1'){const n=Number(hash.get('q'));if(Number.isInteger(n)&&n>=0&&n<4)step=n;}
+if(hash.get('challenge')==='1'&&hash.get('q')!==null){const n=Number(hash.get('q'));if(Number.isInteger(n)&&n>=0&&n<4){step=n;singleQuestion=n;}}
 const fmt=n=>Math.round(n).toLocaleString('zh-CN');
 const correctCount=()=>Object.keys(answers).filter(i=>answers[i]===QUESTIONS[Number(i)].correct).length;
-const score=()=>correctCount()*25;
+const score=()=>singleQuestion>=0?(answers[singleQuestion]===undefined?0:answers[singleQuestion]===QUESTIONS[singleQuestion].correct?100:0):correctCount()*25;
 let reportCache=new Map();
 function simulate(v){
 if(typeof HT==='undefined'||typeof HT.run!=='function')return null;
@@ -32,7 +32,7 @@ const q=QUESTIONS[step],pick=answers[step],answered=pick!==undefined,win=pick===
 return `<div class="bp-sub">${q.label}</div><h2 class="bp-question">${q.question}</h2>
 ${answered?`<div class="bp-visual">${visual(q.kind)}</div>`:`<div class="bp-visual" style="display:flex;align-items:center;justify-content:center;min-height:117px"><span style="font-size:58px;margin-right:20px">${q.icon}</span><div><span style="font-size:13px;color:#9edbd2">博罗真实变化</span><div class="bp-result">${q.stat}</div><div class="bp-tiny">${q.status}</div></div></div>`}
 <div class="bp-choices" role="group" aria-label="选择答案">${q.options.map((x,i)=>`<button data-action="play" data-value="answer:${i}" ${answered?'disabled':''} class="bp-choice ${pick===i?(win?'picked':'wrong'):''}" aria-pressed="${pick===i}">${x}</button>`).join('')}</div>
-${answered?`<div class="bp-reveal"><strong>${win?'✓ 答对了，得25分！':'再看一眼，答案出来了'}</strong><p>${q.explain}</p><p style="opacity:.77;font-size:11px">${q.source}</p></div><button class="bp-next" data-action="play" data-value="next">${step===3?'去改变未来条件 →':'下一关 →'}</button><button class="bp-mini-share" data-action="play" data-value="shareq">发这一题给朋友</button>`:'<div class="bp-tiny" style="margin-top:8px">选一个。答完马上看图。</div>'}`;
+${answered?`<div class="bp-reveal"><strong>${win?'✓ 答对了，得25分！':'再看一眼，答案出来了'}</strong><p>${q.explain}</p><p style="opacity:.77;font-size:11px">${q.source}</p></div><button class="bp-next" data-action="play" data-value="next">${singleQuestion>=0?'查看我的答题结果 →':step===3?'去改变未来条件 →':'下一关 →'}</button><button class="bp-mini-share" data-action="play" data-value="shareq">发这一题给朋友</button>`:'<div class="bp-tiny" style="margin-top:8px">选一个。答完马上看图。</div>'}`;
 }
 function sandbox(){
 const base=simulate(100),r=speed===null?null:simulate(speed),d=base&&r?r.p50-base.p50:0;
@@ -42,6 +42,7 @@ ${r&&base?`<div class="bp-visual"><div class="bp-sub">2030年 · 模型结果中
 ${speed!==null?'<button class="bp-next" data-action="play" data-value="finish">完成挑战 · 领发现卡 →</button>':'<div class="bp-tiny">条件范围：75%—110%。只能改变模型里的假设。</div>'}`;
 }
 function done(){
+if(singleQuestion>=0){const q=QUESTIONS[singleQuestion],ok=answers[singleQuestion]===q.correct;return `<div class="bp-sub">来自朋友的单题挑战</div><h2 class="bp-question">${ok?'你答对了！':'又发现一个新知识！'}</h2><div class="bp-done-stats"><div><strong>${ok?'1 / 1':'0 / 1'}</strong><small>本题答对数</small></div><div><strong>${ok?'100':'0'}</strong><small>本题分数</small></div></div><div class="bp-visual">${visual(q.kind)}</div><div class="bp-reveal"><strong>记住这一点</strong><p>${q.explain}</p></div><button class="bp-next" data-action="play" data-value="restart">我也想玩完整5关 →</button><button class="bp-mini-share" data-action="play" data-value="shareq">再发这题给朋友</button>`;}
 const sim=simulate(speed??100);
 return `<div class="bp-sub">闯关完成 · 你的个人发现卡</div><h2 class="bp-question">你发现了什么？</h2>
 <div class="bp-done-stats"><div><strong>${correctCount()} / 4</strong><small>答对的真相题</small></div><div><strong>${score()}</strong><small>本轮学习分 · 满分100</small></div></div>
@@ -50,28 +51,29 @@ return `<div class="bp-sub">闯关完成 · 你的个人发现卡</div><h2 class
 <button class="bp-next" data-action="play" data-value="shareall">把同一套题发给朋友 →</button><button class="bp-mini-share" data-action="play" data-value="restart">再挑战一次</button>`;
 }
 function side(){
+if(singleQuestion>=0)return `<aside class="bp-side"><div class="bp-aside"><h3>朋友发来的题</h3><div class="bp-mission current"><span class="bp-num">★</span><span>同一道题，看你怎么答</span></div><div class="bp-bottom"><a href="#page=change">看博罗更多变化 ↗</a></div></div><div class="bp-aside bp-fact"><h3>还可以接着玩</h3><p>完成这一题，再试试五关挑战。不用登录。</p><div class="bp-role"><button data-action="play" data-value="restart">开始完整挑战 →</button></div></div></aside>`;
 const titles=['签约的钱','桥修好了？','涨跌反转','找到关系','亲手推演'];
 return `<aside class="bp-side"><div class="bp-aside"><h3>你的5关挑战</h3>${titles.map((x,i)=>`<div class="bp-mission ${step>i?'done':step===i?'current':''}"><span class="bp-num">${step>i?'✓':i+1}</span><span>${x}</span></div>`).join('')}<div class="bp-bottom"><a href="#page=wind">自由玩风洞 ↗</a><a href="#page=change">看全部变化 ↗</a></div></div><div class="bp-aside bp-fact"><h3>没有假装的排行榜</h3><b>${best}分</b><p>这是你在这台设备上的历史最好成绩。没有编造其他玩家的数据。</p><div class="bp-role"><button data-action="play" data-value="shareall">邀朋友来挑战 ↗</button></div></div></aside>`;
 }
 function view(){
-const progress=step>=5?100:step/5*100;
+const progress=singleQuestion>=0?(answers[singleQuestion]===undefined?0:100):(step>=5?100:step/5*100);
 return `<div class="bp-layout"><section class="bp-game" aria-label="博罗互动闯关游戏"><div class="bp-hero"><span class="bp-kicker">BO LUO · 5关挑战</span><span class="bp-score">得分 ${score()} / 100</span></div><div class="bp-progress" role="progressbar" aria-label="完成进度" aria-valuenow="${progress}" aria-valuemin="0" aria-valuemax="100"><i style="width:${progress}%"></i></div>${step<4?question():step===4?sandbox():done()}</section>${side()}</div>`;
 }
 function persist(){try{localStorage.setItem('boluo-easy-quest-v1',JSON.stringify({best,completed:Date.now()}));}catch(e){}}
 function handle(v){
 const [op,arg]=String(v||'').split(':');
 if(op==='answer'&&step<4&&answers[step]===undefined&&['0','1'].includes(arg)){answers[step]=Number(arg);return;}
-if(op==='next'&&step<4&&answers[step]!==undefined){step+=1;return;}
+if(op==='next'&&step<4&&answers[step]!==undefined){if(singleQuestion>=0){step=5;roundDone=true;}else{step+=1;}return;}
 if(op==='speed'&&step===4&&[75,100,110].includes(Number(arg))){speed=Number(arg);return;}
 if(op==='finish'&&step===4&&speed!==null){step=5;roundDone=true;best=Math.max(best,score());persist();return;}
-if(op==='restart'){step=0;answers={};speed=null;roundDone=false;return;}
-if(op==='shareq'){share(step);return;}
+if(op==='restart'){step=0;answers={};speed=null;roundDone=false;singleQuestion=-1;return;}
+if(op==='shareq'){share(singleQuestion>=0?singleQuestion:step);return;}
 if(op==='shareall'){share(-1);return;}
 }
 async function share(question){
 const link=location.href.split('#')[0]+'#page=home&challenge=1'+(question>=0&&question<4?'&q='+question:'');
 const title=question>=0?'猜一题：'+QUESTIONS[question].question:'来挑战“博罗变了啥？”的5关游戏';
-const message=roundDone&&question<0?`我在博罗挑战答对 ${correctCount()}/4 题。你也来试试？`:title;
+const message=roundDone&&question<0&&singleQuestion<0?`我在博罗挑战答对 ${correctCount()}/4 题。你也来试试？`:title;
 try{if(navigator.share){await navigator.share({title:'博罗 · 一眼看懂',text:message,url:link});return;}if(navigator.clipboard?.writeText){await navigator.clipboard.writeText(message+'\n'+link);notice('挑战链接已复制，发给朋友吧');return;}}catch(e){if(e.name==='AbortError')return;}
 window.prompt('复制下面的挑战链接：',message+'\n'+link);
 }
