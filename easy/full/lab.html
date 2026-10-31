@@ -1,0 +1,309 @@
+<!doctype html>
+<html lang="zh-CN"><head><base href="../../"><link rel="stylesheet" href="easy/plain.css"><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>博罗决策实验室 · 压测你的担忧</title>
+<script src="model.js"></script>
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+body{font:14px/1.6 -apple-system,"PingFang SC","Microsoft YaHei",sans-serif;background:#080b12;color:#e6edf3}
+.nav{position:sticky;top:0;z-index:50;display:flex;gap:5px;align-items:center;padding:9px 14px;background:rgba(8,11,18,.95);border-bottom:1px solid #1b2434;backdrop-filter:blur(8px);overflow-x:auto}
+.nav b{font-size:14px;margin-right:6px;letter-spacing:.5px;flex:none}
+.nav a{background:#131c2b;color:#93a4bd;border:1px solid #22304a;padding:6px 12px;border-radius:20px;font-size:12.5px;text-decoration:none;white-space:nowrap;flex:none}
+.nav a.on{background:#15803d;border-color:#22c55e;color:#fff;font-weight:600}
+.wrap{max-width:860px;margin:auto;padding:20px 16px 60px}
+.hero{padding:24px 4px 8px}
+.hero .kick{font-size:12px;color:#fbbf24;letter-spacing:1px;font-weight:700;margin-bottom:8px}
+.hero h1{font-size:24px;line-height:1.3;margin-bottom:10px}
+.hero .soul{font-size:14px;color:#94a3b8;line-height:1.7;border-left:3px solid #fbbf24;padding-left:12px}
+.hero .soul b{color:#fbbf24}
+.sandbox-note{margin-top:12px;font-size:11.5px;color:#f87171;background:#2a1215;border:1px solid #7f1d1d;border-radius:8px;padding:9px 12px;line-height:1.6}
+.fears{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin:20px 0}
+.fear{background:#0e1523;border:1px solid #1c2739;border-radius:12px;padding:14px;cursor:pointer;transition:.2s;text-align:left;color:inherit}
+.fear:hover{border-color:#22c55e}
+.fear.sel{border-color:#fbbf24;background:#1a1a10}
+.fear .q{font-size:14px;font-weight:700;line-height:1.45}
+.fear .tag{font-size:11px;color:#64748b;margin-top:6px}
+@media(max-width:680px){.fears{grid-template-columns:1fr}}
+.panel{background:#0e1523;border:1px solid #1c2739;border-radius:14px;padding:18px;margin:16px 0}
+.panel h2{font-size:15px;margin-bottom:4px}
+.panel .hint{font-size:12px;color:#64748b;margin-bottom:12px;line-height:1.6}
+.budget{display:flex;align-items:center;gap:10px;font-size:12px;color:#94a3bd;padding:10px 12px;background:#131c2b;border-radius:8px;margin-bottom:8px}
+.budget .track{flex:1;height:8px;background:#16233a;border-radius:4px;overflow:hidden}
+.budget .track i{display:block;height:100%;background:#22c55e;transition:.2s}
+.budget.over{color:#f87171}
+.budget.over .track i{background:#ef4444}
+.warn{display:none;margin-top:10px;font-size:12px;color:#fca5a5;background:#2a1215;border:1px solid #7f1d1d;border-radius:8px;padding:9px 12px;line-height:1.6}
+.warn.show{display:block}
+.path{padding:12px 0;border-top:1px solid #162032}
+.path:first-of-type{border-top:none}
+.path .row{display:flex;justify-content:space-between;align-items:baseline;margin-bottom:6px}
+.path .nm{font-size:13.5px;font-weight:700}
+.path .nm .dot{display:inline-block;width:9px;height:9px;border-radius:50%;margin-right:7px;vertical-align:middle}
+.path .val{font-size:13px;font-weight:800;font-variant-numeric:tabular-nums}
+.path .range{font-size:10.5px;color:#5b6b82;margin-top:2px}
+.path input[type=range]{width:100%;accent-color:#22c55e;margin:4px 0}
+.result{background:linear-gradient(135deg,#0f2e1a,#0e1523);border:1px solid #22c55e;border-radius:14px;padding:20px;margin:16px 0}
+.bignums{display:grid;grid-template-columns:1fr 1fr 1fr;gap:12px;margin:14px 0}
+.bignum .l{font-size:11px;color:#8fa3bf}
+.bignum .v{font-size:26px;font-weight:800;font-variant-numeric:tabular-nums}
+.bignum .s{font-size:10.5px;color:#5b6b82}
+.bignum.p10 .v{color:#f87171}.bignum.p50 .v{color:#fbbf24}.bignum.p90 .v{color:#4ade80}
+.hitline{font-size:14px;margin-top:8px}
+.hitline b{font-size:22px;color:#4ade80}
+.hitline .sd{font-size:12px;color:#64748b}
+.rangebar{position:relative;height:10px;background:#16233a;border-radius:5px;margin:18px 0 6px}
+.rangebar .mid{position:absolute;top:-3px;width:16px;height:16px;border-radius:50%;background:#fbbf24;transform:translateX(-50%);border:2px solid #080b12}
+.rangelab{display:flex;justify-content:space-between;font-size:10.5px;color:#64748b}
+.levers{margin-top:8px}
+.levers .lv{display:flex;align-items:center;gap:10px;padding:6px 0;font-size:12.5px}
+.levers .lv .n{width:120px;flex:none;color:#cbd5e1}
+.levers .lv .bar{flex:1;height:8px;background:#16233a;border-radius:4px;overflow:hidden}
+.levers .lv .bar i{display:block;height:100%;border-radius:4px}
+.levers .lv .p{width:42px;text-align:right;color:#8fa3b8;font-variant-numeric:tabular-nums}
+.takeaway{background:#14233a;border:1px solid #3b82f644;border-radius:12px;padding:14px;font-size:12.5px;color:#cbd5e1;line-height:1.7;margin-top:14px}
+.footnote{font-size:10.5px;color:#5b6b82;line-height:1.7;margin-top:16px;padding-top:12px;border-top:1px solid #162032}
+.footnote .g{color:#4ade80}.footnote .b{color:#60a5fa}.footnote .c{color:#fbbf24}
+.backhome{display:inline-block;margin-top:18px;font-size:13px;color:#4ade80;text-decoration:none}
+</style>
+<link rel="stylesheet" href="assets/boluo-ui.css">
+</head><body class="bl-ui bl-dark bl-ui--lab" data-bl-page="lab">
+
+<div class="nav">
+  <b>博罗产业风洞</b>
+  <a href="index.html">今日博罗</a>
+  <a href="holo-home-v10.html">⚡ 变化现场</a>
+  <a href="town.html">🏘️ 各镇吃喝玩乐</a>
+  <a href="network.html">② 产业网络</a>
+  <a href="who.html">③ 基本面</a>
+  <a href="choices.html">④ 五条路</a>
+  <a href="future.html">⑤ 未来</a>
+  <a href="windtunnel.html">⑥ 风洞测试</a>
+  <a href="blindspot.html">⑦ 忽略了什么</a>
+  <a href="report.html">⑧ 分析报告</a>
+  <a href="ending.html">⑨ 结语</a>
+  <a href="lab.html" style="background:#fbbf2422;border-color:#fbbf24;color:#fbbf24">🧪 决策实验室</a>
+</div>
+
+<div class="wrap">
+
+  <div class="hero">
+    <div class="kick">决策实验室 · 先接你的担忧</div>
+    <h1>你在担心什么？</h1>
+    <div class="soul">不展示大屏。你带着怕来，我们把它压一遍。<br>
+    背后那个总问题是——<b>博罗从1000亿到1600亿，是继续做东莞的外溢车间，还是长成一个留得住人、留得住钱的城？</b></div>
+    <div class="sandbox-note">⚠️ 本页是 <b>GDP 路径加性沙盒</b>：五条路径独立加和、不互相传导，不含产业链网络效应与主体博弈。它用来感觉"某张牌一动盘子怎么晃"，<b>不回答链主外迁后具体倒几家</b>——那请看 <a href="windtunnel.html" style="color:#fca5a5">⑥风洞测试</a>。结果为模型设定下的情景，非预测。</div>
+  </div>
+
+  <div class="fears" id="fears"></div>
+
+  <div class="panel">
+    <h2>🎚 五张牌，左右滑——从「崩溃」到「跃迁」</h2>
+    <div class="hint">每条牌是博罗的一条增长路径（到2030年累计贡献，亿）。往左压＝恶化，往右推＝做厚。<b>注意：这不是免费午餐</b>——五张牌共享一个现实资源盘子，拉太猛会触顶。</div>
+
+    <div class="budget" id="budget">
+      <span>资源盘</span>
+      <span class="track"><i id="budgetBar"></i></span>
+      <span id="budgetTxt"></span>
+    </div>
+    <div class="warn" id="budgetWarn">⛔ 此组合已超过政府"力争1600亿"所需总盘子(595亿)。比官方目标还激进，需要额外土地/财政配套并挤压其他牌——五张牌不可能同时拉满。</div>
+
+    <div id="paths"></div>
+  </div>
+
+  <div class="result">
+    <h2 style="font-size:15px">📊 压出来的结果（多种子稳健）</h2>
+    <div class="bignums">
+      <div class="bignum p10"><div class="l">P10 最坏</div><div class="v" id="o10">–</div><div class="s" id="s10"></div></div>
+      <div class="bignum p50"><div class="l">P50 中位</div><div class="v" id="o50">–</div><div class="s" id="s50"></div></div>
+      <div class="bignum p90"><div class="l">P90 最好</div><div class="v" id="o90">–</div><div class="s" id="s90"></div></div>
+    </div>
+    <div class="rangebar"><div class="mid" id="barMid"></div></div>
+    <div class="rangelab"><span>P10 最坏</span><span>P50</span><span>P90 最好</span></div>
+    <div class="hitline">2030年到1600亿的概率：<b id="oHit">–</b> <span class="sd" id="oHitSd"></span></div>
+
+    <div style="margin-top:18px">
+      <div style="font-size:12.5px;color:#94a3b8;margin-bottom:6px">🔦 波动贡献：在<b>本模型设定</b>下，哪条牌对总结果方差影响大（统计相关，非博罗真实因果弹性）</div>
+      <div class="levers" id="levers"></div>
+    </div>
+
+    <div class="takeaway" id="takeaway"></div>
+
+    <div style="margin-top:16px;padding-top:14px;border-top:1px solid #1c2739">
+      <button onclick="exportBrief()" style="background:#fbbf24;color:#000;border:none;padding:10px 18px;border-radius:8px;font-size:13px;font-weight:700;cursor:pointer">📄 导出决策简报</button>
+      <span style="font-size:11px;color:#5b6b82;margin-left:10px">自动生成：核心结论+翻转点+先查三件事+数据血统</span>
+    </div>
+  </div>
+
+  <div class="footnote">
+    <span class="g">● A类官方</span> BASE 1005亿(2025公报)、TARGET 1600亿(2026政府工作报告"力争2030") ｜
+    <span class="b">● B级推算</span> 各路径 μ 按2024三次产业结构+真实增速外推：二产+6.9%、三产仅+0.2%、电子信息+17.1% ｜
+    <span class="c">● D级假设</span> 融深通道贡献无公开分项、σ 为经验设定；五路径独立加和、无耦合 ｜
+    <span class="c">● 稳健性</span> 5个随机种子各跑4000遍取均值，±为种子间极差 ｜
+    资源盘595亿=1600−1005政府目标所需总增量。本页不预测任何具体企业命运。
+  </div>
+
+  <a class="backhome" href="index.html">← 回到博罗日常（公众版）</a>
+</div>
+
+<script>
+const FEARS=[
+  {q:"电子信息/新能源这两个引擎万一失速，怎么办？", tag:"压「双引擎」", p:0},
+  {q:"房地产腰斩、固投掉两成，新产能顶得上吗？", tag:"压「工业底盘」", p:1},
+  {q:"千万游客为什么留不住钱？", tag:"压「三产/文旅」", p:2},
+  {q:"融深融莞半小时，人为什么不来？", tag:"压「融深通道」", p:3},
+];
+// 真实锚定（非凑数）：按2024三次产业结构+真实增速外推的五年累计GDP增量
+// 一产104亿/+3.5%、二产513亿/+6.9%、三产334亿/+0.2%(2024统计公报)；电子信息773.8亿/+17.1%
+const PATHS=[
+  {mu:150, sd:40, name:"双引擎·电子信息+新能源",   color:"#3b82f6"},
+  {mu:100, sd:28, name:"工业底盘自然延续",         color:"#8b5cf6"},
+  {mu:50,  sd:30, name:"三产/文旅破局(现状仅+0.2%)", color:"#fbbf24"},
+  {mu:25,  sd:20, name:"融深融莞通道",             color:"#06b6d4"},
+  {mu:18,  sd:10, name:"一产·特色农业",            color:"#34d399"},
+];
+const RANGES=[[60,260],[40,180],[10,140],[5,100],[5,45]];
+const SEEDS=[42,137,2024,7,99];
+const BUDGET=595;   // = 1600-1005，政府"力争"2030目标所需总增量
+let curFear=null;
+const paths=PATHS.map(p=>({...p}));
+
+document.getElementById("fears").innerHTML=FEARS.map((f,i)=>
+  `<button class="fear" data-i="${i}"><div class="q">${f.q}</div><div class="tag">${f.tag}</div></button>`).join("");
+
+document.getElementById("paths").innerHTML=paths.map((p,i)=>{
+  const [lo,hi]=RANGES[i];
+  return `<div class="path" data-i="${i}">
+    <div class="row">
+      <span class="nm"><span class="dot" style="background:${p.color}"></span>${p.name}</span>
+      <span class="val" style="color:${p.color}"><span id="v${i}">${Math.round(p.mu)}</span> 亿</span>
+    </div>
+    <input type="range" id="s${i}" min="${lo}" max="${hi}" value="${p.mu}" step="5">
+    <div class="range">崩溃 ${lo} ── 现实延续 ${Math.round(PATHS[i].mu)} ── 加力 ${hi}</div>
+  </div>`;
+}).join("");
+
+// 多种子蒙特卡洛：均值 + 种子间极差
+function runMulti(testPaths){
+  const runs=SEEDS.map(s=>HT.run(s,4000,testPaths));
+  const avg=k=>runs.reduce((a,r)=>a+r[k],0)/runs.length;
+  const spread=k=>Math.max(...runs.map(r=>r[k]))-Math.min(...runs.map(r=>r[k]));
+  const coefAvg=paths.map((_,j)=>runs.reduce((a,r)=>a+r.coefs[j],0)/runs.length);
+  return {p10:avg('p10'),p50:avg('p50'),p90:avg('p90'),
+          p10s:spread('p10'),p50s:spread('p50'),p90s:spread('p90'),
+          hit:avg('hit'),hits:spread('hit'),coefs:coefAvg};
+}
+
+function run(){
+  paths.forEach((p,i)=>{ p.mu=parseFloat(document.getElementById("s"+i).value); });
+  paths.forEach((p,i)=>{ document.getElementById("v"+i).textContent=document.getElementById("s"+i).value; });
+
+  // 资源盘
+  const sum=paths.reduce((a,p)=>a+p.mu,0);
+  const over=sum>BUDGET;
+  document.getElementById("budgetTxt").textContent=Math.round(sum)+" / "+BUDGET+" 亿";
+  document.getElementById("budgetBar").style.width=Math.min(100,sum/BUDGET*100)+"%";
+  document.getElementById("budget").classList.toggle("over",over);
+  document.getElementById("budgetWarn").classList.toggle("show",over);
+
+  const r=runMulti(paths);
+  document.getElementById("o10").textContent=Math.round(r.p10)+"亿";
+  document.getElementById("o50").textContent=Math.round(r.p50)+"亿";
+  document.getElementById("o90").textContent=Math.round(r.p90)+"亿";
+  document.getElementById("s10").textContent="±"+(r.p10s/2).toFixed(0);
+  document.getElementById("s50").textContent="±"+(r.p50s/2).toFixed(0);
+  document.getElementById("s90").textContent="±"+(r.p90s/2).toFixed(0);
+  document.getElementById("oHit").textContent=r.hit.toFixed(0)+"%";
+  document.getElementById("oHitSd").textContent="(±"+(r.hits/2).toFixed(0)+"pp，多种子)";
+
+  const span=r.p90-r.p10||1;
+  const midPct=(r.p50-r.p10)/span*100;
+  document.getElementById("barMid").style.left=Math.max(6,Math.min(94,midPct))+"%";
+
+  const order=paths.map((p,i)=>({name:p.name,c:r.coefs[i],color:p.color})).sort((a,b)=>b.c-a.c);
+  const maxc=order[0].c||1;
+  document.getElementById("levers").innerHTML=order.map(o=>
+    `<div class="lv"><span class="n">${o.name}</span><span class="bar"><i style="width:${(o.c/maxc*100).toFixed(0)}%;background:${o.color}"></i></span><span class="p">${o.c.toFixed(2)}</span></div>`).join("");
+
+  const top=order[0];
+  let msg=`📌 在本沙盒里，<b style="color:${top.color}">${top.name}</b> 对结果方差影响最大。<i>注意：这是加性模型下的统计相关，不代表博罗真实经济弹性。</i>`;
+  if(over) msg+=`<br><span style="color:#fca5a5">⛔ 当前配置已超资源盘，下面的高概率不具现实可行性。</span>`;
+  if(curFear!=null){
+    const f=FEARS[curFear], fp=paths[f.p];
+    msg+=`<br>你担心「${f.q}」：把「${fp.name}」压到崩溃端，到1600概率约 <b>${probAt(f.p,-1)}</b>；推到跃迁端约 <b>${probAt(f.p,1)}</b>。`;
+  }
+  document.getElementById("takeaway").innerHTML=msg;
+}
+function probAt(idx,dir){
+  const test=paths.map(p=>({...p}));
+  test[idx].mu= dir<0? RANGES[idx][0] : RANGES[idx][1];
+  return runMulti(test).hit.toFixed(0)+"%";
+}
+
+function exportBrief(){
+  paths.forEach((p,i)=>{ p.mu=parseFloat(document.getElementById("s"+i).value); });
+  const r=runMulti(paths);
+  const order=paths.map((p,i)=>({name:p.name,c:r.coefs[i]})).sort((a,b)=>b.c-a.c);
+  const top=order[0];
+  const date=new Date().toISOString().slice(0,10);
+
+  // 先查三件事：方差贡献最大的三个参数
+  const checks=order.slice(0,3).map((o,i)=>`${i+1}. 优先核查「${o.name}」——它对结果方差贡献最大（相关系数${o.c.toFixed(2)}）`).join("\n");
+
+  const md=`# 博罗产业决策简报（${date}）
+
+## 一、核心结论
+- 2030年GDP预测：P10=${Math.round(r.p10)}亿 / P50=${Math.round(r.p50)}亿 / P90=${Math.round(r.p90)}亿
+- 到1600亿概率：${r.hit.toFixed(0)}%（多种子±${(r.hits/2).toFixed(0)}pp）
+- 当前资源盘使用：${paths.reduce((a,p)=>a+p.mu,0)} / ${BUDGET} 亿
+
+## 二、生死翻转点
+- 最敏感路径：**${top.name}**（统计相关系数${top.c.toFixed(2)}）
+- 这条牌从崩溃端拉到跃迁端，到1600概率变化最大。
+- 注意：这是加性模型下的统计相关，不代表博罗真实经济弹性。
+
+## 三、本地配套率与毛细血管（数据现状）
+- 欣旺达/华通/正威等大厂的本地实际采购额占比（本地配套率%）：🔴内网待接入，当前无公开数据。
+- 石湾精密模具群落：对接特斯拉/比亚迪/拓竹，公开报道确认存在配套关系。
+- 福田表面处理：省级特色产业集群，电镀/喷涂为硬约束工序，环保容量具体数值待核实。
+- 11家国家级小巨人、74家省级专精特新：名单公开，产能利用率未公开。
+
+## 四、老厂基盘（数据现状）
+- 1-8月工业用电+11.5%，分行业/分镇的用电结构未公开。
+- 招商准入门槛：投资强度≥450-600万/亩，亩均税收≥35-50万/亩（博罗自然资源局2026.8土地出让公告）。
+- 龙溪/园洲/石湾老厂的具体数量、亩均效益、用工规模：🔴待接入。
+
+## 五、待核实事项（公开数据无法回答）
+1. 欣旺达/华通在博罗本地的实际采购额占比。
+2. 福田表面处理集群排污指标与变电站负载余量。
+3. 11家国家级小巨人当前产能利用率。
+4. 各镇老厂亩均效益分布及技改/腾退底数。
+
+## 六、数据血统与诚实声明
+- BASE=1005亿（2025统计公报·A类官方）
+- TARGET=1600亿（2026政府工作报告·A类官方）
+- 各路径μ按2024三次产业结构+真实增速外推（B级推算）
+- σ为经验设定、五路径独立加和无耦合（D级假设）
+- 本地配套率%/剩余用地/亩均税收为🔴内网待接入变量
+- 模型：5个种子×4000次蒙特卡洛，加性路径沙盒
+- ⚠️ **本简报基于公开数据骨架图，不是完整企业微观图谱。内网数据接入后，网络边数与SNA指标将重新计算。**
+- ⚠️ 本简报为模型设定下的情景推演，非预测。不回答链主外迁后具体倒几家。
+`;
+
+  const blob=new Blob([md],{type:"text/markdown;charset=utf-8"});
+  const a=document.createElement("a");
+  a.href=URL.createObjectURL(blob);
+  a.download=`boluo-brief-${date}.md`;
+  a.click();
+}
+
+paths.forEach((p,i)=>{ document.getElementById("s"+i).oninput=run; });
+document.querySelectorAll(".fear").forEach(btn=>{
+  btn.onclick=()=>{
+    document.querySelectorAll(".fear").forEach(b=>b.classList.remove("sel"));
+    btn.classList.add("sel");
+    curFear=parseInt(btn.dataset.i);
+    run();
+  };
+});
+run();
+</script>
+<script>window.__PLAIN_ORIGINAL__="lab.html";</script><script src="easy/plain.js"></script></body></html>
