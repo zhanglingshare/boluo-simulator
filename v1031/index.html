@@ -1,0 +1,143 @@
+<!doctype html>
+<html lang="zh-CN"><head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="theme-color" content="#071827">
+<title>V1031 · 变化与你有关</title>
+<meta name="description" content="V1031 大众版：从生活中的变化出发，发现不容易看见的联系。原版数据与模型保留。">
+<style>
+:root{--ink:#eaf3f5;--muted:#a3b9c2;--accent:#69d9c1;--accent2:#9cbbff;--bg:#071827;--panel:#102538;--card:#142a3b;--line:#294352;--warm:#ffb77f;--danger:#fc9a96}
+*{box-sizing:border-box}html{scroll-behavior:smooth}body{margin:0;font:15px/1.65 -apple-system,BlinkMacSystemFont,"PingFang SC","Microsoft Yahei",sans-serif;background:var(--bg);color:var(--ink)}a{color:inherit;text-decoration:none}button{font:inherit;cursor:pointer}button:focus-visible,a:focus-visible,[tabindex]:focus-visible{outline:3px solid var(--accent);outline-offset:3px}
+.shell{max-width:1500px;margin:auto;padding:0 30px}.top{position:sticky;top:0;z-index:30;backdrop-filter:blur(22px);background:rgba(7,24,39,.88);border-bottom:1px solid var(--line)}
+.topin{min-height:67px;display:flex;align-items:center;justify-content:space-between;gap:16px}.brand{display:flex;align-items:center;gap:13px;font-weight:850;letter-spacing:.02em}.brandmark{width:36px;height:36px;border-radius:11px;background:var(--accent);color:#092029;display:grid;place-items:center;font-size:19px}.version{color:var(--accent);font-size:10px;letter-spacing:.18em;font-weight:800}.toplinks{display:flex;gap:10px;align-items:center}.toplinks a,.ghost{border:1px solid var(--line);padding:8px 14px;border-radius:12px;color:#c8d9e1;font-size:12px;background:rgba(255,255,255,.03)}.toplinks a:hover,.ghost:hover{border-color:var(--accent)}
+.hero{position:relative;overflow:hidden;padding:68px 0 45px;background:radial-gradient(ellipse at 80% 12%,rgba(94,180,164,.18),transparent 42%),radial-gradient(ellipse at 18% 70%,rgba(87,130,234,.11),transparent 52%)}
+.hero:before{content:"";position:absolute;inset:0;opacity:.16;background-image:linear-gradient(to right,#507585 1px,transparent 1px),linear-gradient(to bottom,#507585 1px,transparent 1px);background-size:72px 72px;mask-image:linear-gradient(to right,transparent,black 85%);pointer-events:none}
+.hero-inner{position:relative}.eyebrow{color:var(--accent);font-weight:800;font-size:11px;letter-spacing:.22em}.hero h1{font-size:clamp(38px,6vw,76px);line-height:1.13;max-width:900px;letter-spacing:-.06em;margin:12px 0 19px}.hero p{color:#bfd0d8;font-size:clamp(14px,1.6vw,18px);max-width:760px;margin:0}.introfoot{display:flex;align-items:center;gap:10px;margin-top:25px;flex-wrap:wrap}.smallpill{border-radius:99px;border:1px solid #385866;padding:5px 11px;color:#9eb7c2;font-size:11px}
+.layout{display:grid;grid-template-columns:205px minmax(0,1fr) 290px;gap:26px;padding-top:28px;padding-bottom:100px}.rail{position:sticky;top:98px;align-self:start}.rail p{color:#6f96a4;font-size:11px;font-weight:800;letter-spacing:.13em;margin:0 0 11px}.rail button{display:block;width:100%;text-align:left;color:#94b1bd;border:1px solid transparent;background:transparent;border-radius:13px;padding:12px 14px;margin-bottom:5px;font-size:13px}.rail button.active{background:#18364a;color:#fff;border-color:#34576a;font-weight:800}.rail button:hover{color:white}.rail .railnote{margin-top:26px;font-size:12px;line-height:1.8;color:#6e94a3;border-top:1px solid var(--line);padding-top:16px}
+main{min-width:0}.view{display:none;animation:rise .3s ease both}.view.active{display:block}@keyframes rise{from{opacity:.35;transform:translateY(8px)}to{opacity:1;transform:none}}
+.sec-head{margin-bottom:20px}.sec-head .overline{font-size:11px;color:var(--accent);font-weight:850;letter-spacing:.16em}.sec-head h2{font-size:clamp(27px,3vw,39px);letter-spacing:-.045em;line-height:1.23;margin:8px 0}.sec-head p{font-size:13px;color:var(--muted);margin:0}
+.topicgrid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px}.topic{position:relative;background:linear-gradient(140deg,#1b3949,#102a3a);border:1px solid #315064;border-radius:17px;padding:23px 20px;min-height:120px;text-align:left;color:white;overflow:hidden;transition:transform .2s,border-color .2s}.topic:after{content:"↗";position:absolute;right:18px;top:12px;color:var(--accent);font-size:23px}.topic strong{display:block;font-size:17px;letter-spacing:-.02em}.topic span{display:block;font-size:11px;color:#9fbcc7;margin-top:5px}.topic:hover{transform:translateY(-2px)}.topic.selected{border-color:var(--accent);background:linear-gradient(130deg,#245368,#142f40);box-shadow:0 0 0 1px var(--accent) inset}
+.card{background:linear-gradient(155deg,#122a3c,#0d2232);border:1px solid var(--line);border-radius:20px;padding:23px;margin-top:16px;min-width:0}.card h3{font-size:18px;letter-spacing:-.025em;margin:0 0 8px}.card p{color:var(--muted);font-size:13px;line-height:1.85;margin:6px 0}.eyeline{color:var(--accent);font-size:11px;letter-spacing:.1em;font-weight:850;margin-bottom:9px}.bigquestion{font-size:clamp(24px,3vw,34px);line-height:1.3;letter-spacing:-.035em;margin:5px 0 10px}.action{display:inline-flex;align-items:center;justify-content:center;gap:8px;border:none;background:var(--accent);color:#06202a;border-radius:12px;font-weight:850;padding:11px 17px;margin-top:14px;font-size:13px}.action.secondary{background:#213c51;color:#dcecf1;border:1px solid #3b6074}.actions{display:flex;gap:9px;flex-wrap:wrap}
+.pathsvg{width:100%;height:auto;margin:14px 0 0}.path-line{stroke:#577989;stroke-width:2;stroke-dasharray:5 5;fill:none;opacity:.63}.path-line.active{stroke:var(--accent);stroke-width:3;opacity:1;stroke-dasharray:none}.path-node{cursor:pointer;outline:none}.path-node rect{fill:#19394c;stroke:#43677a;stroke-width:1.5;transition:.2s}.path-node.active rect{fill:#25626b;stroke:var(--accent);stroke-width:2.3}.path-node text{fill:#e4f5f2;font-size:14px;font-weight:750;pointer-events:none}.path-node:focus-visible rect{stroke:var(--accent2);stroke-width:3}
+.insight{background:rgba(103,217,193,.08);border:1px solid #427b7b;border-radius:14px;padding:15px;margin-top:12px}.insight b{color:var(--accent)}.insight p{margin:5px 0;font-size:13px}
+.sectionmini{font-size:11px;color:var(--accent);font-weight:850;margin-bottom:10px;text-transform:uppercase;letter-spacing:.1em}
+.side{position:sticky;top:95px;align-self:start;max-height:calc(100vh - 115px);overflow:auto}.side .card{margin-top:0}.sidehead{display:flex;justify-content:space-between;align-items:center;gap:8px}.sidehead strong{font-size:14px}.sidehead span{font-size:10px;color:#7599a5}.feedrow{padding:13px 0;border-bottom:1px solid var(--line);display:block}.feedrow:last-child{border-bottom:0}.feedrow b{font-size:12px;line-height:1.5;display:block;font-weight:650}.feedrow small{display:block;font-size:10px;color:#7395a2;margin-top:6px}.feedrow:hover b{color:var(--accent)}.feedempty{font-size:12px;color:var(--muted)}
+.selectrow{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px}.scene{background:#173143;color:#d3e8ec;border:1px solid #35546b;padding:15px;border-radius:13px;text-align:left;min-height:75px}.scene strong{display:block;font-size:13px}.scene small{display:block;font-size:11px;color:#89a8b7;line-height:1.6}.scene.active{border-color:var(--accent);background:#1b494d}.statgrid{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin:14px 0}.stat{background:#0b2030;border-radius:14px;padding:16px}.stat label{color:#97b4bf;font-size:11px;display:block}.stat strong{font-size:clamp(23px,3.2vw,33px);color:#eafffb;font-variant-numeric:tabular-nums;display:block;margin:4px 0}.stat small{color:#92aab7;font-size:11px}.range{height:120px;position:relative;border-radius:13px;background:linear-gradient(90deg,rgba(79,164,176,.12),rgba(133,221,190,.14));border:1px solid #325263;overflow:hidden}.axis{position:absolute;bottom:12px;width:100%;display:flex;justify-content:space-between;padding:0 12px;color:#91b4c2;font-size:10px}.rangebar{position:absolute;top:49px;height:16px;border-radius:99px;background:linear-gradient(90deg,#5b9ab8,var(--accent));transition:.4s}.middle{position:absolute;top:43px;width:3px;height:30px;background:#fff;transition:.4s}.target{position:absolute;top:15px;bottom:32px;border-left:2px dashed var(--warm)}.target span{position:absolute;left:5px;top:-3px;color:var(--warm);font-size:10px;white-space:nowrap}.rangesub{display:flex;justify-content:space-between;margin-top:10px;font-size:12px;color:#a8c6d0}
+.factlist{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-top:13px}.fact{background:#102c39;border:1px solid #294c5a;border-radius:14px;padding:13px}.fact b{display:block;font-size:13px}.fact small{display:block;font-size:11px;color:#a3b9c2;margin-top:5px;line-height:1.7}.feedbig .feedrow{padding:15px 2px}.feedbig .feedrow b{font-size:15px}.feedbig .feedrow small{font-size:11px}.revealgrid{display:grid;grid-template-columns:repeat(2,1fr);gap:12px}.revealgrid .card{margin:0}.library{display:grid;grid-template-columns:repeat(2,1fr);gap:10px}.library a{border:1px solid #37596a;background:#102d3e;border-radius:12px;padding:14px 15px;font-weight:650;font-size:13px}.library a:hover{border-color:var(--accent);color:var(--accent)}.library a:after{content:"↗";float:right;color:var(--accent)}
+footer{padding:25px 30px 95px;border-top:1px solid var(--line);color:#6e8e9e;font-size:11px;text-align:center}.bottomnav{display:none}.note{font-size:11px!important;color:#8aabb5!important;line-height:1.7!important}
+@media(max-width:1200px){.layout{grid-template-columns:168px minmax(0,1fr);gap:18px}.side{display:none}}
+@media(max-width:750px){.shell{padding-left:17px;padding-right:17px}.topin{min-height:58px}.toplinks a{font-size:11px;padding:7px 9px}.hero{padding:44px 0 30px}.hero h1{font-size:39px}.layout{display:block;padding-top:15px;padding-bottom:85px}.rail{display:none}.topicgrid,.selectrow{grid-template-columns:1fr 1fr}.topic{min-height:104px;padding:17px 14px}.topic strong{font-size:14px}.topic span{font-size:10px}.topic:after{right:9px;top:7px;font-size:17px}.card{padding:18px;border-radius:17px}.range{height:112px}.statgrid,.factlist,.revealgrid,.library{grid-template-columns:1fr 1fr}.bottomnav{position:fixed;z-index:50;bottom:0;left:0;right:0;display:flex;background:rgba(8,26,40,.96);backdrop-filter:blur(24px);border-top:1px solid #315263;padding:8px 6px max(8px,env(safe-area-inset-bottom))}.bottomnav button{flex:1;background:transparent;color:#90aab8;border:0;padding:6px 0;font-size:11px}.bottomnav button.active{color:var(--accent);font-weight:850}}
+@media(max-width:380px){.hero h1{font-size:34px}.topicgrid,.statgrid,.factlist,.revealgrid,.library{grid-template-columns:1fr}.toplinks a:last-child{display:none}}
+@media(prefers-reduced-motion:reduce){*,*:before,*:after{animation:none!important;transition:none!important}}
+</style></head><body>
+<header class="top"><div class="shell topin"><div class="brand"><span class="brandmark" id="brandMark">变</span><span id="brandName">变化现场</span><span class="version">V1031</span></div><div class="toplinks"><a href="../index.html">原版完整入口 ↗</a><a href="#" id="topShare">分享这个发现</a></div></div></header>
+<section class="hero"><div class="shell hero-inner"><div class="eyebrow">A WORLD THAT CHANGES WITH YOU · V1031</div><h1 id="heroTitle"></h1><p id="heroText"></p><div class="introfoot"><span class="smallpill">真实变化</span><span class="smallpill">可试的未来</span><span class="smallpill">不同判断</span><span class="smallpill" id="dataTime">加载最近情报中</span></div></div></section>
+<div class="shell layout">
+<nav class="rail" aria-label="探索导航"><p>EXPLORE · 探索</p>
+<button class="nav active" data-view="discover">01　我关心的变化</button>
+<button class="nav" data-view="test">02　我来试一试</button>
+<button class="nav" data-view="reveal">03　我忽略了什么</button>
+<button class="nav" data-view="library">04　继续深入</button>
+<div class="railnote">不需要研究企业，也不需要学习算法。先找一件你愿意关心的事。<br><br>所有模型计算调用原项目；现实新闻与模拟情景分别呈现。</div>
+</nav>
+<main>
+<section id="discover" class="view active" aria-label="我关心的变化"><div class="sec-head"><div class="overline">01 / THE QUESTION</div><h2>你更想知道，什么会变？</h2><p>不必先了解经济。选一件你原本就在意的事情。</p></div>
+<div class="topicgrid" id="topicGrid"></div>
+<div class="card"><div class="eyeline">你选择关注的变化</div><h2 class="bigquestion" id="qTitle"></h2><p id="qSub"></p>
+<svg id="pathSvg" class="pathsvg" viewBox="0 0 680 275" role="img" aria-label="点击连接点，探索可能的影响传导路径">
+<path class="path-line active" d="M112 132 C172 132 192 69 265 69"/><path class="path-line" d="M112 132 C172 132 192 204 265 204"/><path class="path-line" d="M376 69 C434 69 457 132 522 132"/><path class="path-line" d="M376 204 C434 204 457 132 522 132"/>
+<g class="path-node active" data-node="0" tabindex="0" role="button" aria-label="起点"><rect x="14" y="106" rx="14" width="150" height="53"/><text x="89" y="139" text-anchor="middle" id="node0"></text></g>
+<g class="path-node" data-node="1" tabindex="0" role="button" aria-label="影响环节一"><rect x="227" y="43" rx="14" width="150" height="53"/><text x="302" y="76" text-anchor="middle" id="node1"></text></g>
+<g class="path-node" data-node="2" tabindex="0" role="button" aria-label="影响环节二"><rect x="227" y="178" rx="14" width="150" height="53"/><text x="302" y="211" text-anchor="middle" id="node2"></text></g>
+<g class="path-node" data-node="3" tabindex="0" role="button" aria-label="与你可能有关的地方"><rect x="471" y="106" rx="14" width="184" height="53"/><text x="563" y="139" text-anchor="middle" id="node3"></text></g>
+<text x="340" y="264" text-anchor="middle" fill="#7b9da9" font-size="12">点亮任何一环，看看变化如何可能传递 · 关系示意，非实测强度</text>
+</svg>
+<div class="insight"><b id="pathLabel">变化如何传过来？</b><p id="pathExplain"></p></div><div class="actions"><button class="action" id="goTest">如果条件变了，未来会怎样？　→</button><button class="action secondary" id="goReveal">可能忽略了什么</button></div>
+</div>
+<div class="card"><div class="sectionmini">现实中正在发生 · 来自已有情报</div><div class="feedbig" id="featureFeed"><p>正在读取现实事件…</p></div><p class="note" id="featureNote"></p></div>
+<div class="card"><div class="sectionmini">你熟悉的地方</div><div class="factlist" id="lifeList"><p class="note">正在读取地方线索…</p></div><p class="note">地点与生活线索来自原项目更新库；关注档位不是实时客流人数或收益预测。</p></div>
+</section>
+<section id="test" class="view" aria-label="我来试一试"><div class="sec-head"><div class="overline">02 / WHAT IF</div><h2>先做个判断，再看另一种未来。</h2><p>你可以随时换条件。这里展示的是在设定条件下的可能结果，不是对个人生活的预测。</p></div>
+<div class="card"><div class="eyeline">你觉得哪种情况最值得担心或期待？</div><div class="selectrow" id="sceneGrid"></div></div>
+<div class="card"><div class="eyeline">2030 · 变化之后</div><h3 id="sceneTitle"></h3><p id="sceneDescription"></p><div class="statgrid"><div class="stat"><label>模拟结果的中间位置</label><strong id="p50">—</strong><small>亿元 · 对应地区与原版口径</small></div><div class="stat"><label>达到参考线的模拟次数占比</label><strong id="hit">—</strong><small>不是现实世界的成功概率</small></div></div>
+<div class="range"><div class="target" id="targetLine"><span id="targetTag"></span></div><div class="rangebar" id="rangeBar"></div><div class="middle" id="middleLine"></div><div class="axis" id="axis"><span id="axisLeft"></span><span id="axisRight"></span></div></div>
+<div class="rangesub"><span id="p10"></span><span id="p90"></span></div><div class="insight"><b id="deltaTitle">对照结果</b><p id="deltaDesc"></p></div><p class="note" id="modelNote"></p><div class="actions"><button class="action" id="goInsight">看看这背后隐藏了什么　→</button><button class="action secondary" id="testShare">分享我的情景</button></div>
+</div>
+</section>
+<section id="reveal" class="view" aria-label="我忽略了什么"><div class="sec-head"><div class="overline">03 / THE BLIND SPOT</div><h2>最容易忽略的，往往不是最大的数字。</h2><p>有的变化很显眼，却不一定影响到你；有的变量很不起眼，却可能牵动整条路径。</p></div>
+<div class="revealgrid"><div class="card"><div class="sectionmini">你可能忽略了 · 01</div><h3 id="blindOne"></h3><p id="blindOneDesc"></p></div><div class="card"><div class="sectionmini">你可能忽略了 · 02</div><h3 id="blindTwo"></h3><p id="blindTwoDesc"></p></div></div>
+<div class="card"><div class="sectionmini">别让一张图替你下结论</div><h3>哪些事情，我们还不能确定？</h3><p>一个重要变化与你有关，只能说存在潜在传导路径。真实影响还取决于你所处的位置、行业、行为和其他同时发生的条件。模型不能凭空知道你的收入、店铺流水或个人未来。</p><div class="actions"><a class="action secondary" href="../blindspot.html">看原版完整分析　↗</a><a class="action secondary" href="../report.html">看完整报告　↗</a></div></div>
+</section>
+<section id="library" class="view" aria-label="继续深入"><div class="sec-head"><div class="overline">04 / GO DEEPER</div><h2>想了解更多，所有原版内容都还在。</h2><p>这里不省略模型、报告、完整图表与独立页面。按你的兴趣直接深入，不要求从头学起。</p></div><div class="library" id="libraryLinks"></div>
+<div class="card"><h3>V1031 是独立入口，不是旧版升级覆盖</h3><p>原版文件、模型和每天更新的数据仍由原有项目独立维护。新版从原始数据读取变化，从原版模型获取情景计算，不改变计算内核。</p><p class="note">旧版现有页面可能包含更深入的参数与技术表达；V1031 只负责帮助你找到值得探索的入口。</p></div></section>
+</main>
+<aside class="side"><div class="card"><div class="sidehead"><strong>这座地方最近发生什么</strong><span id="feedUpdated">—</span></div><div id="sideFeed"><p class="feedempty">读取事件中…</p></div><a href="../index.html" style="font-size:11px;color:var(--accent)">浏览原版全部动态 ↗</a></div></aside>
+</div>
+<nav class="bottomnav" aria-label="移动端导航"><button data-view="discover" class="nav active">我关心的</button><button data-view="test" class="nav">试一试</button><button data-view="reveal" class="nav">没想到</button><button data-view="library" class="nav">完整内容</button></nav>
+<footer>V1031 · 独立大众体验入口 · 真实观察与条件推演严格区分 · 旧版保持不变</footer>
+<script src="../model.js"></script>
+<script src="../bl-viz/data.js"></script><script>window.V1031_PROFILE={"region":"博罗","tagline":"增长来了，究竟会改变谁的生活？","kicker":"同一座县城，不同的人看见不同的未来。","line":"投资、制造、旅游与各镇的变化，可能同时发生，却未必让每个人得到相同结果。","key":"bl","bg":"#10221d","accent":"#b5e586","accent2":"#80d5e4","targetLabel":"博罗2030参考线","questions":[{"id":"money","label":"热闹背后的钱","title":"游客很多，为什么本地生意未必都能分到一杯羹？","sub":"过夜、吃饭、购物和在地供应，可能比游客总数更值得观察。","from":"游客到来","mid1":"停留时间","mid2":"本地消费","to":"商家供给","end":"收入留存","explain":["游客到达不等于发生同样金额的消费。","停留时间和消费场景影响支出构成。","本地商家能否承接需求决定消费去向。","缺少完整资金流，不能据此给出个人收入预测。"]},{"id":"jobs","label":"哪里有新机会","title":"工厂更忙了，为什么新的机会可能没那么快出现？","sub":"生产增长和新投资可以不同步，后续项目才是关键变量之一。","from":"工厂生产","mid1":"订单变化","mid2":"项目投资","to":"岗位需求","end":"周边服务","explain":["生产回升可能利用已有设备和订单。","新投资与投产需要时间。","岗位形成可能滞后于产值变化。","周边生意是否受益取决于本地配套。"]},{"id":"travel","label":"哪些地方会变","title":"一条路通了，会不会改变一个镇的吸引力？","sub":"更近不一定等于更繁荣，连接之后还要看人为什么留下。","from":"道路连接","mid1":"可达时间","mid2":"外来客流","to":"镇区商业","end":"生活空间","explain":["道路改变出行成本与可达范围。","客流需要目的地和服务供给承接。","便利交通也可能让消费更容易外流。","对具体镇街的影响仍需实地与数据核验。"]},{"id":"future","label":"五年后的博罗","title":"如果今天的增长延续，1600亿就会自然到来吗？","sub":"你可以先作判断，再看看不同条件带来的未来差别。","from":"工业增长","mid1":"新增投资","mid2":"地产与服务","to":"增长贡献","end":"2030情景","explain":["现有产能的增长无法代替所有新增投资。","房地产与服务业可能呈现不同节奏。","项目兑现需要额外条件。","1600亿是目标情景，不是确定预测。"]}],"scenes":[{"id":"base","label":"规划逐步兑现","desc":"按原版规划基准"},{"id":"investment","label":"工业投资继续放慢","desc":"新项目受到影响"},{"id":"property","label":"房地产持续承压","desc":"服务相关环节受影响"},{"id":"combined","label":"两个问题一起发生","desc":"叠加压力"},{"id":"trend","label":"仅按现状延续","desc":"不额外加码"},{"id":"upside","label":"产业项目更顺利","desc":"观察上行情景"}],"library":[["今日博罗","index.html"],["变化现场","holo-home-v10.html"],["完整关系网络","network.html"],["各镇生活","town.html"],["产业全息","holo.html"],["基本面","who.html"],["五条发展路径","choices.html"],["2030未来","future.html"],["风洞测试","windtunnel.html"],["忽略了什么","blindspot.html"],["分析报告","report.html"],["结语","ending.html"],["既有通俗版","easy/index.html"],["变化现场通俗版","change-easy.html"],["角色体验","role.html"]],"modelNote":"基准为博罗2025年GDP 1005.45亿元，2030参考线1600亿元；情景使用原版同一组受控压力参数，属于条件推演而不是现实发生概率。","themeName":"博罗 · 县城与机会"};</script>
+<script>
+(function(){
+'use strict';
+var P=window.V1031_PROFILE;
+document.documentElement.style.setProperty('--bg',P.bg);
+document.documentElement.style.setProperty('--accent',P.accent);
+document.documentElement.style.setProperty('--accent2',P.accent2);
+document.querySelector('meta[name=theme-color]').setAttribute('content',P.bg);
+document.title=P.region+' · 变化与你有关 | V1031';
+var $=function(id){return document.getElementById(id)};
+var esc=function(s){return String(s==null?'':s).replace(/[&<>"']/g,function(c){return {'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]})};
+var url=function(s){try{var u=new URL(String(s||''),location.href);return u.protocol==='https:'||u.protocol==='http:'?u.href:'#'}catch(e){return '#'}};
+var data={hot:[],life:[]}, interest=P.questions[0].id, scene='base', activeNode=0;
+var prefs=Object.fromEntries(P.questions.map(function(q){return [q.id,q]}));
+var qs=new URLSearchParams(location.search);
+if(prefs[qs.get('focus')])interest=qs.get('focus');
+if(P.scenes.some(function(s){return s.id===qs.get('scene')}))scene=qs.get('scene');
+$('brandName').textContent=P.region+' · 变化现场';$('brandMark').textContent=P.region[0];$('heroTitle').textContent=P.tagline;$('heroText').textContent=P.line;$('modelNote').textContent=P.modelNote;
+function view(id){document.querySelectorAll('.view').forEach(function(n){n.classList.toggle('active',n.id===id)});document.querySelectorAll('button.nav').forEach(function(n){n.classList.toggle('active',n.dataset.view===id)});window.scrollTo({top:0,behavior:'smooth'});try{history.replaceState(null,'',location.pathname+'?focus='+interest+'&scene='+scene)}catch(e){}}
+document.querySelectorAll('button.nav').forEach(function(n){n.addEventListener('click',function(){view(n.dataset.view)})});
+$('goTest').onclick=function(){view('test')};$('goReveal').onclick=function(){view('reveal')};$('goInsight').onclick=function(){view('reveal')};
+$('libraryLinks').innerHTML=P.library.map(function(l){return '<a href="../'+encodeURI(l[1])+'">'+esc(l[0])+'</a>'}).join('');
+function topics(){var html=P.questions.map(function(q){return '<button class="topic '+(q.id===interest?'selected':'')+'" data-id="'+esc(q.id)+'" aria-pressed="'+(q.id===interest?'true':'false')+'"><strong>'+esc(q.label)+'</strong><span>看看与我可能有关的变化</span></button>'}).join('');$('topicGrid').innerHTML=html;$('topicGrid').querySelectorAll('button').forEach(function(b){b.onclick=function(){interest=b.dataset.id;activeNode=0;topics();question()}})}
+function question(){var q=prefs[interest];$('qTitle').textContent=q.title;$('qSub').textContent=q.sub;[q.from,q.mid1,q.mid2,q.to].forEach(function(t,i){$('node'+i).textContent=t});pathNode(activeNode);renderEvents();renderLife();renderBlind()}
+function pathNode(i){activeNode=i;document.querySelectorAll('.path-node').forEach(function(g,n){g.classList.toggle('active',n===i)});document.querySelectorAll('.path-line').forEach(function(n,k){n.classList.toggle('active',k===i||k===(i===0?0:i===3?2:i===2?1:0))});var q=prefs[interest];$('pathLabel').textContent=[q.from,q.mid1,q.mid2,q.to][i];$('pathExplain').textContent=q.explain[i]}
+document.querySelectorAll('.path-node').forEach(function(n){n.addEventListener('click',function(){pathNode(Number(n.dataset.node))});n.addEventListener('keydown',function(e){if(e.key==='Enter'||e.key===' '){e.preventDefault();pathNode(Number(n.dataset.node))}})});
+function pickEvents(){var names={travel:['city','livelihood'],money:['tourism','fun','livelihood','city'],jobs:['industry','livelihood'],future:['city','industry']};var tags=names[interest]||[];return data.hot.slice().sort(function(a,b){return (tags.includes(b.cat)?1:0)-(tags.includes(a.cat)?1:0)});}
+function eventHTML(a){return '<a class="feedrow" target="_blank" rel="noopener noreferrer" href="'+esc(url(a.url))+'"><b>'+esc(a.title)+'</b><small>'+esc(a.source||'公开来源')+' · '+esc(a.published_at||a.event_date||'日期未注明')+' · '+esc(a.verified_status||'待核实')+'</small></a>'}
+function renderEvents(){var events=pickEvents();$('sideFeed').innerHTML=events.length?events.slice(0,5).map(eventHTML).join(''):'<p class="feedempty">当前事件数据未加载，可以前往原版查看。</p>';$('featureFeed').innerHTML=events.length?events.slice(0,5).map(eventHTML).join(''):'<p class="note">尚未取得事件列表；请检查网络或到原版查看。</p>';$('featureNote').textContent='仅按话题与兴趣的相关类别排列，不代表对个人影响的确定程度；请点原文核实。'}
+function renderLife(){var list=P.key==='hc'?data.life.spots:data.life.towns;if(!Array.isArray(list))list=[];$('lifeList').innerHTML=list.slice(0,6).map(function(o){var hint=o.d||o.tag||((o.plays||[]).join('、'));return '<div class="fact"><b>'+esc(o.n)+'</b><small>'+esc(hint)+'</small></div>'}).join('')||'<p class="note">本地生活信息未能读取。</p>'}
+function renderBlind(){var q=prefs[interest];$('blindOne').textContent='变化不一定平均发生';$('blindOneDesc').textContent='同一座'+P.region+'，不同地方和不同人感受到的变化可能不同。'+q.explain[3];$('blindTwo').textContent='看起来相关，不等于一定是因果';$('blindTwoDesc').textContent=q.explain[1]+' 需要数据和现实条件支持，不能仅凭一张关系图下结论。'}
+var results={};
+function run(k){if(results[k])return results[k];if(typeof HT==='undefined')return null;if(P.key==='bl'&&typeof blRunScene==='function')return results[k]=blRunScene(k);
+var p=HT.DEFAULT_PATHS.map(function(x){return Object.assign({},x)});
+function cut(path,loss){p[path].mu=Math.max(0,p[path].mu-loss)}
+if(k==='delay'||k==='both')cut(0,90);
+if(k==='commute'||k==='both'){cut(3,120);cut(0,36)}
+return results[k]=HT.run(42,20000,p)}
+function sceneButtons(){$('sceneGrid').innerHTML=P.scenes.map(function(s){return '<button class="scene '+(s.id===scene?'active':'')+'" data-scene="'+esc(s.id)+'" aria-pressed="'+(s.id===scene?'true':'false')+'"><strong>'+esc(s.label)+'</strong><small>'+esc(s.desc)+'</small></button>'}).join('');$('sceneGrid').querySelectorAll('button').forEach(function(b){b.onclick=function(){scene=b.dataset.scene;sceneButtons();renderScene()}})}
+function num(n){return Math.round(n).toLocaleString('zh-CN')}
+function renderScene(){var s=P.scenes.find(function(x){return x.id===scene});$('sceneTitle').textContent=s.label;$('sceneDescription').textContent=s.desc;
+var r=run(scene),base=run('base');if(!r||!base){$('sceneDescription').textContent='原版模型暂时未能加载，请使用下方原版入口。';return}
+$('p50').textContent=num(r.p50)+'亿';$('hit').textContent=r.hit.toFixed(1)+'%';$('p10').textContent='较低情景：'+num(r.p10)+'亿';$('p90').textContent='较高情景：'+num(r.p90)+'亿';
+var min=Math.floor(Math.min(r.p10,base.p10,HT.TARGET)-90),max=Math.ceil(Math.max(r.p90,base.p90,HT.TARGET)+90);
+var pos=function(v){return Math.max(0,Math.min(100,(v-min)/(max-min)*100))};
+$('rangeBar').style.left=pos(r.p10)+'%';$('rangeBar').style.width=(pos(r.p90)-pos(r.p10))+'%';$('middleLine').style.left=pos(r.p50)+'%';$('targetLine').style.left=pos(HT.TARGET)+'%';$('targetTag').textContent=P.targetLabel;$('axisLeft').textContent=num(min)+'亿';$('axisRight').textContent=num(max)+'亿';
+var d=r.hit-base.hit,v=r.p50-base.p50;
+$('deltaTitle').textContent=scene==='base'?'这是起点，不是结局':'相比没有额外压力的基准情景';
+$('deltaDesc').textContent=scene==='base'?'你可以切换不同条件，观察范围与模拟结果如何变化。':('达到参考线的模拟占比变化 '+(d>=0?'+':'')+d.toFixed(1)+' 个百分点；中间位置变化 '+(v>=0?'+':'')+num(v)+'亿元。这是同一原版模型在不同设定下的结果，不代表个人损益。');
+renderBlind();
+}
+function share(){var t=P.region+' V1031 · '+prefs[interest].title+'｜情景：'+P.scenes.find(function(x){return x.id===scene}).label;var link=location.origin+location.pathname+'?focus='+encodeURIComponent(interest)+'&scene='+encodeURIComponent(scene);
+if(navigator.share){navigator.share({title:t,text:'我在变化现场试了一个情景，你会怎么判断？',url:link}).catch(function(){})}
+else if(navigator.clipboard&&navigator.clipboard.writeText){navigator.clipboard.writeText(t+'\n'+link).then(function(){alert('已复制分享文字和链接')}).catch(function(){prompt('复制分享链接',link)})}
+else prompt('复制分享链接',link)}
+$('topShare').onclick=function(e){e.preventDefault();share()};$('testShare').onclick=share;
+topics();question();sceneButtons();renderScene();
+Promise.allSettled([fetch('../hot.json',{cache:'no-store'}).then(function(r){if(!r.ok)throw Error(r.status);return r.json()}),fetch('../life.json',{cache:'no-store'}).then(function(r){if(!r.ok)throw Error(r.status);return r.json()})]).then(function(rs){
+if(rs[0].status==='fulfilled'){data.hot=Array.isArray(rs[0].value.items)?rs[0].value.items:[];var u=rs[0].value.updated||rs[0].value.fetched_at||'未注明';$('dataTime').textContent='情报更新：'+u;$('feedUpdated').textContent=u;}
+else{$('dataTime').textContent='情报暂未连接';$('feedUpdated').textContent='不可用'}
+if(rs[1].status==='fulfilled')data.life=rs[1].value;
+question();
+});
+})();
+</script></body></html>
