@@ -1,7 +1,7 @@
 (function (root) {
   'use strict';
   const industries = [
-    { id: 'tea', title: '茶产业', subtitle: '从柏塘山茶进入', group: '特色农业 / 茶产业', icon: 'leaf', class: 'tea', question: '一片茶叶，怎样变成一门生意？', questions: ['谁把茶卖出去？', '订单来了，谁能接住？'], nodes: ['sc','lswh','hh'], note: '从品质、加工到品牌、渠道与交付，把一条关系往深处看。', capability: '关系探索 · 可试条件' },
+    { id: 'tea', title: '茶产业', subtitle: '从柏塘山茶进入', group: '特色农业 / 茶产业', icon: 'leaf', class: 'tea', question: '一片茶叶，怎样变成一门生意？', questions: ['湾区订单，谁来接稳？', '课程之后，陪跑做什么？'], nodes: ['sc','lswh','hh'], note: '沿真实的科研、协会、课程与茶旅线索，寻找值得先做的一步。', capability: '公开主体 · 证据研判 · 条件试验' },
     { id: 'electronics', title: '电子信息', subtitle: '看生产与配套怎样接起来', icon: 'chip', class: 'electronics', question: '有了大项目，配套就一定跟得上吗？', questions: ['谁连接上下游？', '哪一环缺少替代？'], nodes: ['htd','jf','gj','sj','bmc','mj','jly','tls','dg','sz'], note: '先看已登记的企业、材料与配套关系，再追项目和供给变化。', capability: '公开关系与事件' },
     { id: 'energy', title: '新能源', subtitle: '看项目、供给与能源连接', icon: 'bolt', class: 'energy', question: '项目在增加，哪一环最不能掉链子？', questions: ['哪些供给相互依赖？', '项目处于哪个阶段？'], nodes: ['xwd','jq','ess','zw','tls','ddc','sz','dg','dj'], note: '签约、在建与投产分别看；储能存在不等于已知企业电价改变。', capability: '公开关系与事件' },
     { id: 'tourism', title: '文旅住宿', subtitle: '看客人为什么来，又为什么留下', icon: 'mountain', class: 'tourism', question: '客人来了，能不能多留一晚？', questions: ['住宿与消费怎样承接？', '旺季之后还看什么？'], nodes: ['lswh','hh','sc','lsz','lfsgy','hz','gz'], note: '看人流、住宿、茶旅与服务之间的联系；县域游客数不当成景区人数。', capability: '公开关系与事件' },
