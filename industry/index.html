@@ -1,0 +1,39 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <meta name="theme-color" content="#0b191c">
+  <meta name="description" content="从一个产业进入博罗：看清关系、发现变化、比较条件，保存值得继续核实的连接。">
+  <title>博罗产业风洞 · 进入一门产业</title>
+  <link rel="stylesheet" href="style.css">
+  <script defer src="engine.js"></script>
+  <script defer src="data.js"></script>
+  <script defer src="app.js"></script>
+</head>
+<body>
+  <a class="skip-link" href="#main">跳到主要内容</a>
+  <aside class="sidebar" aria-label="主导航">
+    <a class="brand" href="#" data-view="home" aria-label="博罗产业风洞首页">
+      <svg viewBox="0 0 58 46" aria-hidden="true"><path d="M3 28 17 10l10 13L39 6l16 22M5 34q14-11 27-5t23-1M7 41q15-9 29-4t18-2"/></svg>
+      <span>博罗<small>产业风洞</small></span>
+    </a>
+    <nav id="navigation"></nav>
+    <div class="sidebar-bottom"><span class="small-label">在具体的事情里，看见关系</span><button class="county-link" data-action="library"><span data-icon="globe"></span>全县视图与完整内容<span>↗</span></button></div>
+  </aside>
+  <div class="workspace">
+    <header class="topbar">
+      <button class="industry-switch" data-view="home" aria-label="切换产业"><span id="currentIndustry">博罗 / 产业入口</span><span>⌄</span></button>
+      <div class="top-search"><span data-icon="search"></span><input id="search" type="search" placeholder="搜索产业、节点或问题" aria-label="搜索产业、节点或问题"><div id="searchResults" class="search-results" hidden></div></div>
+      <button class="quiet top-records" data-view="records" aria-label="打开我的记录"><span data-icon="bookmark"></span></button>
+      <span id="dataStatus" class="data-status">正在连接资料</span>
+    </header>
+    <main id="main" tabindex="-1"></main>
+    <footer class="page-footer"><span>博罗产业风洞 · 产业工作区</span><button class="text-button" data-action="about">资料与试验说明</button><span>给桥，走不走，由你决定。</span></footer>
+  </div>
+  <nav id="mobileNavigation" class="mobile-navigation" aria-label="手机导航"></nav>
+  <div id="toast" class="toast" role="status" aria-live="polite" hidden></div>
+  <dialog id="modal"><div class="modal-header"><h2 id="modalTitle"></h2><button class="quiet" data-action="close-modal" aria-label="关闭">×</button></div><div id="modalContent"></div></dialog>
+  <noscript><div class="noscript">请启用 JavaScript 以使用关系图和情景试验。<a href="../index.html">查看原版完整内容</a></div></noscript>
+</body>
+</html>
