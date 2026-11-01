@@ -188,7 +188,7 @@
   document.addEventListener('click', async event => {
     const t = event.target.closest('button,a[data-view]'); if (!t) return;
     if(t.dataset.inquiry){const h=I.hypotheses.find(h=>h.id===t.dataset.inquiry);if(h){state.inquiry=h.id;state.graphLayer='public';state.trialMode='evidence';state.node=h.node;state.question=h.short;positions={};zoom=1;setView(t.dataset.inquiryView||state.view);}return;}
-    if(t.dataset.graphLayer){state.graphLayer=t.dataset.graphLayer==='mechanism'?'mechanism':'public';state.node=state.graphLayer==='public'?research.current().node:'packing';state.question=state.graphLayer==='public'?research.current().short:'从订单到交付';positions={};zoom=1;persist();render();return;}
+    if(t.dataset.graphLayer){state.graphLayer=t.dataset.graphLayer==='mechanism'?'mechanism':'public';state.trialMode=state.graphLayer==='public'?'evidence':'capacity';state.node=state.graphLayer==='public'?research.current().node:'packing';state.question=state.graphLayer==='public'?research.current().short:'从订单到交付';positions={};zoom=1;persist();render();return;}
     if(t.dataset.publicNode){const n=I.entities.find(n=>n.id===t.dataset.publicNode);if(n){if(!I.graphs[state.inquiry].nodes.some(([id])=>id===n.id)){const topic=Object.keys(I.graphs).find(k=>I.graphs[k].nodes.some(([id])=>id===n.id));if(topic)state.inquiry=topic;}state.graphLayer='public';state.industry='tea';state.node=n.id;state.question=research.current().short;setView('graph');}return;}
     if(t.dataset.researchSource){const ids=t.dataset.researchSource.split(',');modal('资料原文与使用边界',research.sources(ids));return;}
     if(t.dataset.trialMode){state.trialMode=t.dataset.trialMode==='capacity'?'capacity':'evidence';setView(t.dataset.view||'trial');return;}
