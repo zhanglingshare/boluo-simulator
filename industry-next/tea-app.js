@@ -62,17 +62,16 @@ function path(){return heading('03','柏塘不是没有路，它已经在走三�
 function gapDetails(g){return '<div class="gap-detail"><div class="eyebrow">待检验能力缺口 · '+esc(g.type)+'</div><h2>'+esc(g.title)+'</h2><p>'+esc(g.basis)+'</p><h3>最该补哪项证据？</h3><p>'+esc(g.test)+'</p><div class="callout"><strong>不能这样下结论：</strong>'+esc(g.not)+'</div><div class="buttons gap-top"><button class="btn" data-view="stress">放进风险与压力测试 →</button><button class="btn" data-view="report">写入报告 →</button></div></div>'}
 function gapsView(){return heading('04','柏塘可能还缺什么？','先发现值得追问的产业能力，再用证据检验。没有企业级样本，就不伪造“SEM关键因素排序”。')+'<div class="grid3">'+gaps.map((g,i)=>'<button class="panel gap-card" data-gap="'+i+'"><span class="pill '+(i===state.gap?'gold':'muted')+'">'+esc(g.type)+' · 待验证</span><strong>'+esc(g.title)+'</strong><p>'+esc(g.label)+'</p><div class="foot">打开理由、证据缺口与反证 <span>↗</span></div></button>').join('')+'</div>'+gapDetails(gaps[state.gap])+'<div class="panel gap-top"><h2>SEM是用来找可能的结构，不是用来凭空排名</h2><p>当前可提出：品质标准化→供货稳定→买方验收；加工与产品开发→产品结构→市场承接；茶旅体验→到店转化→复访购买；组织协调→跨企业协作→交付可靠性。</p><p class="tiny">这些是结构假设，既不等于已识别因果，更不等于SmartPLS拟合结果。要取得逐主体跨期观测后才能估计与检验路径关系。</p></div>'}
 function chart(bands,compareBands){
- const left=54,right=930,top=22,bottom=274,years=[2025,...bands.map(x=>x.year)];
- const all=[{year:2025,p10:100,p50:100,p90:100},...bands];
- const ys=all.flatMap(x=>[x.p10,x.p90]).concat(compareBands.map(x=>x.p50));
- const lo=Math.floor((Math.min(...ys)-8)/10)*10,hi=Math.ceil((Math.max(...ys)+8)/10)*10;
- const X=i=>left+i*(right-left)/(all.length-1),Y=n=>bottom-(n-lo)/(hi-lo)*(bottom-top);
- const pt=(xs,key)=>xs.map((n,i)=>X(i).toFixed(1)+','+Y(n[key]).toFixed(1)).join(' ');
- const poly=all.map((n,i)=>X(i).toFixed(1)+','+Y(n.p90).toFixed(1)).concat(all.slice().reverse().map((n,k)=>X(all.length-1-k).toFixed(1)+','+Y(n.p10).toFixed(1))).join(' ');
- const baseline=[{p50:100},...compareBands];
- return '<svg viewBox="0 0 970 310" class="chart-plot" role="img" aria-label="2025到2035产业情景指数的P10、P50、P90和均衡路径对照">'+[0,.25,.5,.75,1].map(r=>{const v=lo+(hi-lo)*r,y=Y(v);return '<path class="gridline" d="M'+left+' '+y.toFixed(1)+'H'+right+'"/><text x="6" y="'+(y+4)+'">'+Math.round(v)+'</text>'}).join('')+
- '<polygon class="band" points="'+poly+'"/><polyline class="baseline" points="'+pt(baseline,'p50')+'"/><polyline class="line" points="'+pt(all,'p50')+'"/>'+
- [0,5,10].map(i=>'<text x="'+X(i)+'" y="302" text-anchor="middle">'+years[i]+'</text>').join('')+'</svg>';
+const all=[{year:2025,p10:100,p50:100,p90:100},...bands],baseline=[{year:2025,p50:100},...compareBands];
+const vals=[...all.flatMap(x=>[x.p10,x.p90]),...baseline.map(x=>x.p50)],lo=Math.floor((Math.min(...vals)-8)/10)*10,hi=Math.ceil((Math.max(...vals)+8)/10)*10;
+const X=i=>67+i*88.3,Y=n=>308-(n-lo)/(hi-lo)*255;
+const pts=(v,k)=>v.map((a,i)=>X(i).toFixed(1)+','+Y(a[k]).toFixed(1)).join(' ');
+const cone=all.map((a,i)=>X(i).toFixed(1)+','+Y(a.p90).toFixed(1)).concat(all.slice().reverse().map((a,i)=>X(10-i).toFixed(1)+','+Y(a.p10).toFixed(1))).join(' ');
+const defs='<defs><linearGradient id="coneShade" x1="0" x2="1" y1="0" y2="0"><stop stop-color="#52b68a" stop-opacity=".04"/><stop offset="1" stop-color="#8ee0bb" stop-opacity=".40"/></linearGradient><linearGradient id="medianLine" x1="0" x2="1"><stop stop-color="#95e5c8"/><stop offset="1" stop-color="#ffcf88"/></linearGradient><filter id="chartGlow"><feGaussianBlur stdDeviation="5"/></filter></defs>';
+const grid=[0,.25,.5,.75,1].map(t=>{const v=lo+(hi-lo)*t,y=Y(v);return '<g><line class="cinema-grid" x1="63" y1="'+y+'" x2="952" y2="'+y+'"/><text class="cinema-axis" x="51" y="'+(y+4)+'" text-anchor="end">'+Math.round(v)+'</text></g>'}).join('');
+const years=[2025,2027,2029,2031,2033,2035].map(y=>'<text class="cinema-axis" x="'+X(y-2025)+'" y="346" text-anchor="middle">'+y+'</text>').join('');
+const marks=[0,2,4,6,8,10].map(i=>{const a=all[i],x=X(i),y=Y(a.p50);return '<g class="cinema-point" data-chart-year="'+a.year+'" tabindex="0" role="button" aria-label="'+a.year+'年中位'+a.p50+'，低位'+a.p10+'，高位'+a.p90+'"><line class="cinema-interval" x1="'+x+'" y1="'+Y(a.p90)+'" x2="'+x+'" y2="'+Y(a.p10)+'"/><circle class="cinema-dot-halo" cx="'+x+'" cy="'+y+'" r="11"/><circle class="cinema-dot" cx="'+x+'" cy="'+y+'" r="4.5"/><title>'+a.year+'年：P10 '+a.p10+' · P50 '+a.p50+' · P90 '+a.p90+'</title></g>'}).join('');
+return '<svg class="chart-plot cinematic-chart" viewBox="0 0 1000 370" aria-label="2025到2035蒙特卡洛情景区间图" role="img">'+defs+grid+'<polygon points="'+cone+'" fill="url(#coneShade)" class="cinema-cone"/><polyline points="'+pts(baseline,'p50')+'" class="cinema-baseline"/><polyline points="'+pts(all,'p50')+'" class="cinema-median-halo"/><polyline points="'+pts(all,'p50')+'" class="cinema-median"/>'+marks+years+'<text x="960" y="19" text-anchor="end" class="cinema-caption">条件样本 P10 — P90</text></svg>';
 }
 function presetButtons(){return '<div class="preset-row">'+Object.entries(M.PRESETS).map(([k,p])=>'<button data-preset="'+k+'" class="'+(state.preset===k?'active':'')+'">'+p.name+'</button>').join('')+'</div>'}
 function leverControls(){return '<div class="resource">假设资源总量　<b>100 点</b><small>只代表路径选择的资源比例，不是实际财政支出或投资额。</small></div>'+M.KEYS.map((k,i)=>'<div class="lever"><label for="lever-'+k+'">'+M.LABELS[i]+'<output id="out-'+k+'">'+Math.round(state.weights[i])+'点</output></label><input type="range" id="lever-'+k+'" data-lever="'+i+'" value="'+Math.round(state.weights[i])+'" min="0" max="70" step="5"></div>').join('')}
