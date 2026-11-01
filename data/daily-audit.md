@@ -1,6 +1,6 @@
 # 博罗全息关系数据每日审计
 
-- 审计时间（UTC）：2026-10-31T07:08:38.172Z
+- 审计时间（UTC）：2026-11-01T07:42:54.236Z
 - 结构校验：**通过**
 - 自动发布：**关闭**；候选内容不会自动覆盖正式关系底座。
 
@@ -24,7 +24,53 @@
 
 ## 来源链接巡检
 
-- 本次未执行；每周日自动巡检，或手动触发。
+- 可访问：11/54
+
+| 来源 ID | 状态 | HTTP | 备注 |
+|---|---|---:|---|
+| S001 | unreachable | — | 访问失败：fetch failed |
+| S002 | unreachable | — | 访问失败：fetch failed |
+| S003 | unreachable | — | 访问失败：fetch failed |
+| S004 | unreachable | — | 访问失败：fetch failed |
+| S005 | unreachable | — | 访问失败：fetch failed |
+| S006 | unreachable | — | 访问失败：fetch failed |
+| S007 | unreachable | — | 访问失败：fetch failed |
+| S008 | unreachable | — | 访问失败：fetch failed |
+| S009 | unreachable | — | 访问失败：fetch failed |
+| S010 | unreachable | — | 访问失败：fetch failed |
+| S011 | unreachable | — | 访问失败：fetch failed |
+| S012 | unreachable | — | 访问失败：fetch failed |
+| S013 | unreachable | — | 访问失败：fetch failed |
+| S015 | unreachable | — | 访问失败：fetch failed |
+| S016 | unreachable | — | 访问失败：fetch failed |
+| S017 | blocked | 403 | 站点限制自动访问，不等于来源无效 |
+| S018 | unreachable | — | 访问失败：fetch failed |
+| S019 | unreachable | — | 访问失败：fetch failed |
+| S020 | unreachable | — | 访问失败：fetch failed |
+| S021 | unreachable | — | 访问失败：fetch failed |
+| S022 | unreachable | — | 访问失败：fetch failed |
+| S024 | blocked | 403 | 站点限制自动访问，不等于来源无效 |
+| S028 | not_found | 404 | 地址可能失效，需人工复核 |
+| S029 | unreachable | — | 访问失败：fetch failed |
+| S030 | unreachable | — | 访问失败：fetch failed |
+| S031 | unreachable | — | 访问失败：fetch failed |
+| S032 | unreachable | — | 访问失败：fetch failed |
+| S033 | unreachable | — | 访问失败：fetch failed |
+| S036 | unreachable | — | 访问失败：fetch failed |
+| S037 | unreachable | — | 访问失败：fetch failed |
+| S038 | unreachable | — | 访问失败：fetch failed |
+| S039 | unreachable | — | 访问失败：fetch failed |
+| S040 | unreachable | — | 访问失败：fetch failed |
+| S041 | unreachable | — | 访问失败：fetch failed |
+| S042 | unreachable | — | 访问失败：fetch failed |
+| S043 | unreachable | — | 访问失败：fetch failed |
+| S044 | unreachable | — | 访问失败：fetch failed |
+| S045 | unreachable | — | 访问失败：fetch failed |
+| S046 | unreachable | — | 访问失败：fetch failed |
+| S047 | unreachable | — | 访问失败：fetch failed |
+| S049 | unreachable | — | 访问失败：fetch failed |
+| S050 | unreachable | — | 访问失败：fetch failed |
+| S053 | blocked | 403 | 站点限制自动访问，不等于来源无效 |
 
 ## 阻断错误
 
@@ -33,6 +79,7 @@
 ## 警告与待复核
 
 - ⚠️ 候选包已超过 36 小时，需确认是否为最新采集结果
+- ⚠️ 来源链接巡检有 43 条需人工复核；403/超时不等于来源无效
 
 ## 审计规则
 

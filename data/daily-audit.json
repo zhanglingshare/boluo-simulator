@@ -1,6 +1,6 @@
 {
   "audit_version": 1,
-  "audited_at": "2026-10-31T07:08:38.172Z",
+  "audited_at": "2026-11-01T07:42:54.236Z",
   "region": "boluo",
   "baseline": {
     "valid": true,
@@ -20,21 +20,509 @@
     "message": "结构校验通过；等待人工审查，不会自动发布。"
   },
   "source_url_audit": {
-    "performed": false,
-    "checked": 0,
-    "reachable": 0,
-    "results": []
+    "performed": true,
+    "checked": 54,
+    "reachable": 11,
+    "results": [
+      {
+        "source_id": "S001",
+        "title": "2025年博罗县国民经济和社会发展统计公报",
+        "url": "http://www.boluo.gov.cn/bmzb/xtjj/tjyj/tjfx/content/post_5801531.html",
+        "status": "unreachable",
+        "http_status": null,
+        "final_url": null,
+        "note": "访问失败：fetch failed"
+      },
+      {
+        "source_id": "S002",
+        "title": "2024年博罗县国民经济和社会发展统计公报",
+        "url": "https://www.boluo.gov.cn/bmzb/xtjj/tjyj/tjsj/content/post_5557633.html",
+        "status": "unreachable",
+        "http_status": null,
+        "final_url": null,
+        "note": "访问失败：fetch failed"
+      },
+      {
+        "source_id": "S003",
+        "title": "博罗县国土空间总体规划（2021-2035年）阶段成果",
+        "url": "https://www.boluo.gov.cn/attachment/0/340/340023/5732840.pdf",
+        "status": "unreachable",
+        "http_status": null,
+        "final_url": null,
+        "note": "访问失败：fetch failed"
+      },
+      {
+        "source_id": "S004",
+        "title": "2026年博罗县政府工作报告",
+        "url": "http://www.boluo.gov.cn/zwgk/zfgzbg/content/post_5717382.html",
+        "status": "unreachable",
+        "http_status": null,
+        "final_url": null,
+        "note": "访问失败：fetch failed"
+      },
+      {
+        "source_id": "S005",
+        "title": "2025年博罗县政府工作报告",
+        "url": "https://www.boluo.gov.cn/zwgk/zfgzbg/content/post_5473617.html",
+        "status": "unreachable",
+        "http_status": null,
+        "final_url": null,
+        "note": "访问失败：fetch failed"
+      },
+      {
+        "source_id": "S006",
+        "title": "全县高质量发展暨招商引资工作会议",
+        "url": "https://www.boluo.gov.cn/bmzb/xkjgyhxxhj/zsyz/content/post_5722319.html",
+        "status": "unreachable",
+        "http_status": null,
+        "final_url": null,
+        "note": "访问失败：fetch failed"
+      },
+      {
+        "source_id": "S007",
+        "title": "博罗电子信息产业发展情况",
+        "url": "https://www.boluo.gov.cn/xzygdw/xgbdst/blxw/content/post_5768459.html",
+        "status": "unreachable",
+        "http_status": null,
+        "final_url": null,
+        "note": "访问失败：fetch failed"
+      },
+      {
+        "source_id": "S008",
+        "title": "博罗县第五次全国经济普查主要数据公报（第二号）",
+        "url": "https://www.boluo.gov.cn/hzbltjj/attachment/0/312/312365/5570151.pdf",
+        "status": "unreachable",
+        "http_status": null,
+        "final_url": null,
+        "note": "访问失败：fetch failed"
+      },
+      {
+        "source_id": "S009",
+        "title": "博罗县第五次全国经济普查主要数据公报（第三号）",
+        "url": "https://www.boluo.gov.cn/hzbltjj/attachment/0/312/312366/5570151.pdf",
+        "status": "unreachable",
+        "http_status": null,
+        "final_url": null,
+        "note": "访问失败：fetch failed"
+      },
+      {
+        "source_id": "S010",
+        "title": "博罗县第七次全国人口普查主要数据",
+        "url": "http://www.boluo.gov.cn/bmzb/xtjj/zwgk/bmwj/tzgg/content/post_4303699.html",
+        "status": "unreachable",
+        "http_status": null,
+        "final_url": null,
+        "note": "访问失败：fetch failed"
+      },
+      {
+        "source_id": "S011",
+        "title": "园洲镇概况",
+        "url": "https://www.boluo.gov.cn/xzgwh/yzzrmzf/yzgk/content/post_5828241.html",
+        "status": "unreachable",
+        "http_status": null,
+        "final_url": null,
+        "note": "访问失败：fetch failed"
+      },
+      {
+        "source_id": "S012",
+        "title": "园洲镇2026年政府工作报告",
+        "url": "https://www.boluo.gov.cn/xzgwh/yzzrmzf/zwgk/qt/ghjh/content/post_5737313.html",
+        "status": "unreachable",
+        "http_status": null,
+        "final_url": null,
+        "note": "访问失败：fetch failed"
+      },
+      {
+        "source_id": "S013",
+        "title": "石湾镇人民政府门户",
+        "url": "https://www.boluo.gov.cn/xzgwh/swzrmzf/index.html",
+        "status": "unreachable",
+        "http_status": null,
+        "final_url": null,
+        "note": "访问失败：fetch failed"
+      },
+      {
+        "source_id": "S014",
+        "title": "石湾：三市交界制造重镇（南方日报）",
+        "url": "https://epaper.nfnews.com/m/ipaper/nfrb/html/202512/16/content_10156733.html",
+        "status": "reachable",
+        "http_status": 200,
+        "final_url": "https://epaper.nfnews.com/m/ipaper/nfrb/html/202512/16/content_10156733.html",
+        "note": ""
+      },
+      {
+        "source_id": "S015",
+        "title": "石湾镇2026年规划计划",
+        "url": "https://www.boluo.gov.cn/xzgwh/swzrmzf/zwgk/qt/ghjh/content/post_5832923.html",
+        "status": "unreachable",
+        "http_status": null,
+        "final_url": null,
+        "note": "访问失败：fetch failed"
+      },
+      {
+        "source_id": "S016",
+        "title": "龙溪街道概况",
+        "url": "https://www.boluo.gov.cn/xzgwh/lxjdbsc/lxgk/content/post_5828173.html",
+        "status": "unreachable",
+        "http_status": null,
+        "final_url": null,
+        "note": "访问失败：fetch failed"
+      },
+      {
+        "source_id": "S017",
+        "title": "龙溪三旧改造报道",
+        "url": "https://www.nfnews.com/content/voDDxbEOow.html",
+        "status": "blocked",
+        "http_status": 403,
+        "final_url": "https://www.nfnews.com/content/voDDxbEOow.html",
+        "note": "站点限制自动访问，不等于来源无效"
+      },
+      {
+        "source_id": "S018",
+        "title": "龙溪产业园相关报道",
+        "url": "https://www.huizhou.gov.cn/zwgk/hzsz/xqyw/content/mpost_5478797.html",
+        "status": "unreachable",
+        "http_status": null,
+        "final_url": null,
+        "note": "访问失败：fetch failed"
+      },
+      {
+        "source_id": "S019",
+        "title": "长宁镇概况",
+        "url": "https://www.boluo.gov.cn/xzgwh/cnzrmzf/cngk/content/post_5722658.html",
+        "status": "unreachable",
+        "http_status": null,
+        "final_url": null,
+        "note": "访问失败：fetch failed"
+      },
+      {
+        "source_id": "S020",
+        "title": "横河镇概况",
+        "url": "https://www.boluo.gov.cn/xzgwh/hhzrmzf/hhgk/content/post_5828474.html",
+        "status": "unreachable",
+        "http_status": null,
+        "final_url": null,
+        "note": "访问失败：fetch failed"
+      },
+      {
+        "source_id": "S021",
+        "title": "泰美镇概况",
+        "url": "https://www.boluo.gov.cn/xzgwh/tmzrmzf/tmgk/content/post_5647951.html",
+        "status": "unreachable",
+        "http_status": null,
+        "final_url": null,
+        "note": "访问失败：fetch failed"
+      },
+      {
+        "source_id": "S022",
+        "title": "深博福田产业园（飞地）介绍",
+        "url": "https://www.boluo.gov.cn/gkmlpt/content/5/5534/mpost_5534366.html",
+        "status": "unreachable",
+        "http_status": null,
+        "final_url": null,
+        "note": "访问失败：fetch failed"
+      },
+      {
+        "source_id": "S023",
+        "title": "深博福田产业园开园（广东省政府）",
+        "url": "http://www.gd.gov.cn/gdywdt/dsdt/content/mpost_4917839.html",
+        "status": "reachable",
+        "http_status": 200,
+        "final_url": "http://www.gd.gov.cn/gdywdt/dsdt/content/mpost_4917839.html",
+        "note": ""
+      },
+      {
+        "source_id": "S024",
+        "title": "惠州博罗：五同机制催生区域协作标杆",
+        "url": "https://www.nfnews.com/content/J3WY1A1Doz.html",
+        "status": "blocked",
+        "http_status": 403,
+        "final_url": "https://www.nfnews.com/content/J3WY1A1Doz.html",
+        "note": "站点限制自动访问，不等于来源无效"
+      },
+      {
+        "source_id": "S025",
+        "title": "莞惠通2路跨市公交",
+        "url": "http://hzjtfw.com/pcweb/query_bus_stop.spg?szbid=712EFD5CCDA94C18B263644567C01E1C",
+        "status": "reachable",
+        "http_status": 200,
+        "final_url": "http://hzjtfw.com/pcweb/query_bus_stop.spg?szbid=712EFD5CCDA94C18B263644567C01E1C",
+        "note": ""
+      },
+      {
+        "source_id": "S026",
+        "title": "东莞石龙2路跨市公交",
+        "url": "http://gd.xumap.com/dgbus/gnfma/",
+        "status": "reachable",
+        "http_status": 200,
+        "final_url": "http://gd.xumap.com/dgbus/gnfma/",
+        "note": ""
+      },
+      {
+        "source_id": "S027",
+        "title": "博罗128路跨市段截短",
+        "url": "http://www.bilibili.com/video/BV1unHuzjETx",
+        "status": "reachable",
+        "http_status": 200,
+        "final_url": "https://www.bilibili.com/video/BV1unHuzjETx/",
+        "note": ""
+      },
+      {
+        "source_id": "S028",
+        "title": "广汕高铁罗浮山站",
+        "url": "https://m.thepaper.cn/newsDetail_forward24903776",
+        "status": "not_found",
+        "http_status": 404,
+        "final_url": "https://m.thepaper.cn/newsDetail_forward24903776",
+        "note": "地址可能失效，需人工复核"
+      },
+      {
+        "source_id": "S029",
+        "title": "博罗交通指南",
+        "url": "http://www.boluo.gov.cn/zwfws/zdfw/ggsy/ggjt/content/post_5105733.html",
+        "status": "unreachable",
+        "http_status": null,
+        "final_url": null,
+        "note": "访问失败：fetch failed"
+      },
+      {
+        "source_id": "S030",
+        "title": "2025国庆环南昆山-罗浮山引领区文旅",
+        "url": "https://www.huizhou.gov.cn/zjhz/yjcs/lysd/content/mpost_5622482.html",
+        "status": "unreachable",
+        "http_status": null,
+        "final_url": null,
+        "note": "访问失败：fetch failed"
+      },
+      {
+        "source_id": "S031",
+        "title": "2026国庆引领区文旅数据",
+        "url": "https://www.huizhou.gov.cn/zwgk/hzsz/zwyw/content/post_5865139.html",
+        "status": "unreachable",
+        "http_status": null,
+        "final_url": null,
+        "note": "访问失败：fetch failed"
+      },
+      {
+        "source_id": "S032",
+        "title": "莞惠跨市出行手机信令研究",
+        "url": "https://transport.planning.org.cn/upload/202414/6ca716efe3d94979b4fff3c92b83296c.pdf",
+        "status": "unreachable",
+        "http_status": null,
+        "final_url": null,
+        "note": "访问失败：fetch failed"
+      },
+      {
+        "source_id": "S033",
+        "title": "博罗县国民经济和社会发展第十四个五年规划纲要",
+        "url": "http://www.boluo.gov.cn/attachment/0/119/119813/4839682.pdf",
+        "status": "unreachable",
+        "http_status": null,
+        "final_url": null,
+        "note": "访问失败：fetch failed"
+      },
+      {
+        "source_id": "S034",
+        "title": "罗浮新城县域副中心报道",
+        "url": "https://static.nfnews.com/content/202509/26/c11765061.html",
+        "status": "reachable",
+        "http_status": 200,
+        "final_url": "https://static.nfnews.com/content/202509/26/c11765061.html",
+        "note": ""
+      },
+      {
+        "source_id": "S035",
+        "title": "石排8路跨市公交",
+        "url": "https://appassets.mvtdev.com/map/30/l/5455/729625.pdf",
+        "status": "reachable",
+        "http_status": 200,
+        "final_url": "https://appassets.mvtdev.com/map/30/l/5455/729625.pdf",
+        "note": ""
+      },
+      {
+        "source_id": "S036",
+        "title": "博罗铜来顺新材料有限公司投产",
+        "url": "https://www.boluo.gov.cn/zwgk/zwdt/tpxw/content/post_5872750.html",
+        "status": "unreachable",
+        "http_status": null,
+        "final_url": null,
+        "note": "访问失败：fetch failed"
+      },
+      {
+        "source_id": "S037",
+        "title": "深博福田产业园全面开园 共建大湾区产业协作新高地",
+        "url": "http://www.boluo.gov.cn/zwgk/zwdt/zwyw/content/post_5800807.html",
+        "status": "unreachable",
+        "http_status": null,
+        "final_url": null,
+        "note": "访问失败：fetch failed"
+      },
+      {
+        "source_id": "S038",
+        "title": "金利源科技年产绝缘板等项目节能报告审查意见",
+        "url": "https://www.boluo.gov.cn/bmzb/xfzhggj/zwgk/bmwj/bmwj/content/post_5775796.html",
+        "status": "unreachable",
+        "http_status": null,
+        "final_url": null,
+        "note": "访问失败：fetch failed"
+      },
+      {
+        "source_id": "S039",
+        "title": "博罗两个独立储能电站并网投运",
+        "url": "https://www.boluo.gov.cn/hzblfzggj/gkmlpt/content/5/5862/mpost_5862463.html",
+        "status": "unreachable",
+        "http_status": null,
+        "final_url": null,
+        "note": "访问失败：fetch failed"
+      },
+      {
+        "source_id": "S040",
+        "title": "铣锐精密科技厂区项目奠基",
+        "url": "https://www.boluo.gov.cn/xzgwh/yqzrmzf/zwgk/gzdt/content/post_5790975.html",
+        "status": "unreachable",
+        "http_status": null,
+        "final_url": null,
+        "note": "访问失败：fetch failed"
+      },
+      {
+        "source_id": "S041",
+        "title": "总投资80亿！博罗签约四宗优质产业项目",
+        "url": "https://www.boluo.gov.cn/zwgk/zwdt/zwyw/content/post_5824707.html",
+        "status": "unreachable",
+        "http_status": null,
+        "final_url": null,
+        "note": "访问失败：fetch failed"
+      },
+      {
+        "source_id": "S042",
+        "title": "博罗签约12宗项目！乡村振兴招商对接会",
+        "url": "https://www.boluo.gov.cn/gkmlpt/content/5/5743/mpost_5743253.html",
+        "status": "unreachable",
+        "http_status": null,
+        "final_url": null,
+        "note": "访问失败：fetch failed"
+      },
+      {
+        "source_id": "S043",
+        "title": "总投资2亿项目落户博罗泰美（佳有机械）",
+        "url": "https://www.huizhou.gov.cn/zwgk/hzsz/zwyw/content/mpost_5855286.html",
+        "status": "unreachable",
+        "http_status": null,
+        "final_url": null,
+        "note": "访问失败：fetch failed"
+      },
+      {
+        "source_id": "S044",
+        "title": "博罗县2026年国庆假期文化旅游市场综述",
+        "url": "https://www.boluo.gov.cn/hzblwgltj/gkmlpt/content/5/5871/post_5871692.html",
+        "status": "unreachable",
+        "http_status": null,
+        "final_url": null,
+        "note": "访问失败：fetch failed"
+      },
+      {
+        "source_id": "S045",
+        "title": "石洲大桥重建工程交通管制通告",
+        "url": "https://www.boluo.gov.cn/zwgk/gzwj/tzgg/content/post_5878745.html",
+        "status": "unreachable",
+        "http_status": null,
+        "final_url": null,
+        "note": "访问失败：fetch failed"
+      },
+      {
+        "source_id": "S046",
+        "title": "博罗县荔枝产业协会成立",
+        "url": "https://www.boluo.gov.cn/zwgk/zwdt/bmdt/content/post_5858118.html",
+        "status": "unreachable",
+        "http_status": null,
+        "final_url": null,
+        "note": "访问失败：fetch failed"
+      },
+      {
+        "source_id": "S047",
+        "title": "博罗入选国家农业现代化示范区",
+        "url": "http://nyncj.huizhou.gov.cn/gkmlpt/content/5/5797/mpost_5797223.html",
+        "status": "unreachable",
+        "http_status": null,
+        "final_url": null,
+        "note": "访问失败：fetch failed"
+      },
+      {
+        "source_id": "S048",
+        "title": "固力水泥博罗分公司日产2500吨水泥熟料生产线关停拆除通告",
+        "url": "https://gdii.gd.gov.cn/gkmlpt/content/4/4857/mpost_4857293.html",
+        "status": "reachable",
+        "http_status": 200,
+        "final_url": "https://gdii.gd.gov.cn/gkmlpt/content/4/4857/mpost_4857293.html",
+        "note": ""
+      },
+      {
+        "source_id": "S049",
+        "title": "石湾镇多部门联动 4家违法企业被停产处置",
+        "url": "https://www.boluo.gov.cn/hzblswz/gkmlpt/content/5/5820/mpost_5820901.html",
+        "status": "unreachable",
+        "http_status": null,
+        "final_url": null,
+        "note": "访问失败：fetch failed"
+      },
+      {
+        "source_id": "S050",
+        "title": "惠州市第二轮省级生态环保督察整改情况（园洲中心排渠）",
+        "url": "https://shj.huizhou.gov.cn/gkmlpt/content/5/5824/mpost_5824604.html",
+        "status": "unreachable",
+        "http_status": null,
+        "final_url": null,
+        "note": "访问失败：fetch failed"
+      },
+      {
+        "source_id": "S051",
+        "title": "一场协作改变一座城：深圳福田与博罗共建新型飞地",
+        "url": "http://difang.gmw.cn/sz/2026-08/25/content_38963408.htm",
+        "status": "reachable",
+        "http_status": 200,
+        "final_url": "https://difang.gmw.cn/sz/2026-08/25/content_38963408.htm",
+        "note": ""
+      },
+      {
+        "source_id": "S052",
+        "title": "博罗民宿靠什么淡季不淡",
+        "url": "http://m.toutiao.com/group/7701172970466722347/",
+        "status": "reachable",
+        "http_status": 200,
+        "final_url": "https://www.toutiao.com/article/7701172970466722347/?&source=m_redirect",
+        "note": ""
+      },
+      {
+        "source_id": "S053",
+        "title": "大镇变小城：博罗县域副中心崛起（园洲小城市试点）",
+        "url": "https://www.nfnews.com/content/lyKmj2jQ65.html",
+        "status": "blocked",
+        "http_status": 403,
+        "final_url": "https://www.nfnews.com/content/lyKmj2jQ65.html",
+        "note": "站点限制自动访问，不等于来源无效"
+      },
+      {
+        "source_id": "S054",
+        "title": "广东最美旅游公路出圈记",
+        "url": "http://m.toutiao.com/group/7699824374493086259/",
+        "status": "reachable",
+        "http_status": 200,
+        "final_url": "https://www.toutiao.com/article/7699824374493086259/?&source=m_redirect",
+        "note": ""
+      }
+    ]
   },
   "validation": {
     "ok": true,
     "errors": [],
     "warnings": [
-      "候选包已超过 36 小时，需确认是否为最新采集结果"
+      "候选包已超过 36 小时，需确认是否为最新采集结果",
+      "来源链接巡检有 43 条需人工复核；403/超时不等于来源无效"
     ],
     "notes": [
       "正式底座：节点 36、关系 45、来源 54、变化事件 12",
       "候选包：新来源 7、节点提案 4、关系提案 3、变化事件 3",
-      "本次未巡检来源链接；每周日自动巡检，也可手动触发完整巡检"
+      "来源链接巡检：11/54 可访问"
     ]
   },
   "publication_policy": {
