@@ -49,27 +49,48 @@ function scoreGrowth(year,w,world,execution,shock) {
  const concentration=Math.max(...w)/100;const fragile=Math.max(0,concentration-.35)*.027;
  return .016+qual+proc+channel+tourism+coordination-fragile+effect+world;
 }
-function simulate(opts={}){
- const weights=normalize(opts.weights),stress=STRESSES[opts.stress]?opts.stress:'none',n=clamp(Math.round(Number(opts.samples)||2400),300,6000),seed=(Number(opts.seed)||20261101)|0,rand=rng(seed);
+/* Incremental sampler: each progress update represents actual completed stochastic paths.
+   All samples reuse exactly one PRNG stream; no animations impersonate computational work. */
+function createSession(opts={}){
+ const weights=normalize(opts.weights),stress=STRESSES[opts.stress]?opts.stress:'none';
+ const n=clamp(Math.round(Number(opts.samples)||2400),300,6000),seed=(Number(opts.seed)||20261101)|0,rand=rng(seed);
  const years=Array.from({length:10},(_,i)=>2026+i),arrays=years.map(()=>[]),strength=years.map(()=>[]);
- for(let i=0;i<n;i++){
-  let index=100,prod=100;
-  const region=normal(rand)*.012,market=normal(rand)*.012;
+ let completed=0;
+ function one(){
+  let index=100,prod=100;const region=normal(rand)*.012,market=normal(rand)*.012;
   const execution=clamp(0.84+rand()*.31,.84,1.15);
   for(let j=0;j<years.length;j++){
-   const year=years[j];
-   const zMarket=normal(rand),zClimate=normal(rand),zOperations=normal(rand);
-   // shared market shock and correlated climate/operations components; NOT observed covariance
+   const year=years[j],zMarket=normal(rand),zClimate=normal(rand),zOperations=normal(rand);
    const world=region+market+(.019*zMarket+.015*zClimate+.014*zOperations);
    const g=clamp(scoreGrowth(year,weights,world,execution,stress),-.23,.22);
    index=Math.max(1,index*(1+g));
    const volumeGrowth=clamp(.01+.021*zClimate+.008*zOperations-.008*(stress==='labor'&&year===2029?1:0),-.17,.18);
-   prod=Math.max(1,prod*(1+volumeGrowth));
-   arrays[j].push(index);strength[j].push(prod);
+   prod=Math.max(1,prod*(1+volumeGrowth));arrays[j].push(index);strength[j].push(prod);
   }
  }
- const bands=years.map((year,j)=>{const v=arrays[j].sort((a,b)=>a-b);const s=strength[j].sort((a,b)=>a-b);return {year,p10:f(quantile(v,.1)),p50:f(quantile(v,.5)),p90:f(quantile(v,.9)),volumeP50:f(quantile(s,.5))}});
- return {weights,stress,samples:n,seed,bands,ending:bands[bands.length-1],mid:bands[4],unit:'2025结构价值指数=100',kind:'假设情景分布，非真实发展预测',assumptions:'增长响应、滞后、随机扰动和冲击传导是模型假设；未经本地逐年经营与产业统计数据校准。'};
+ function current(){
+  if(!completed)return null;
+  const bands=years.map((year,j)=>{
+   const v=arrays[j].slice().sort((a,b)=>a-b),u=strength[j].slice().sort((a,b)=>a-b);
+   return {year,p10:f(quantile(v,.1)),p50:f(quantile(v,.5)),p90:f(quantile(v,.9)),volumeP50:f(quantile(u,.5))};
+  });
+  return {weights,stress,samples:completed,requestedSamples:n,seed,bands,ending:bands[9],mid:bands[4],
+   unit:'2025结构价值指数=100',kind:'假设情景分布，非真实发展预测',
+   assumptions:'增长响应、滞后、随机扰动和冲击传导是模型假设；未经本地逐年经营与产业统计数据校准。'};
+ }
+ return {
+  get completed(){return completed},get total(){return n},get done(){return completed===n},
+  step(batchSize=200){
+   const stop=Math.min(n,completed+Math.max(1,Math.floor(Number(batchSize)||200)));
+   while(completed<stop){one();completed++}
+   return {completed,total:n,done:completed===n};
+  },
+  snapshot:current
+ };
+}
+function simulate(opts={}){
+ const session=createSession(opts);session.step(session.total);
+ return session.snapshot();
 }
 function compare({weights,stress='none',samples=2400,seed=20261101}={}){
  const base=simulate({weights:PRESETS.balance.weights,stress:'none',samples,seed});
@@ -87,6 +108,6 @@ function sensitivity({weights,stress='none',samples=1200,seed=20261101}={}){
  });
  return out.sort((a,b)=>b.gain-a.gain);
 }
-root.BoluoTeaModel=Object.freeze({KEYS,LABELS,DEFAULT,PRESETS,STRESSES,normalize,simulate,compare,sensitivity});
+root.BoluoTeaModel=Object.freeze({KEYS,LABELS,DEFAULT,PRESETS,STRESSES,normalize,simulate,createSession,compare,sensitivity});
 if(typeof module==='object'&&module.exports)module.exports=root.BoluoTeaModel;
 })(typeof window!=='undefined'?window:globalThis);
