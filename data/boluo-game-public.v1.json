@@ -1,0 +1,1637 @@
+{
+  "release": {
+    "release_id": "boluo-game-public-20261103-01",
+    "schema": "boluo-game-public/v1",
+    "region": "博罗县",
+    "generatedAt": "2026-11-03T07:11:23+08:00",
+    "status": "candidate",
+    "dataClassLegend": {
+      "fact": "已发生事实：官方发布/媒体报道，已核验或标注待核实，带来源与日期，可核实。",
+      "sim": "模拟体验：由真实事实与现实机制支撑，但玩家操作、压力注入、资源分配、选择及由此产生的得分、趋势、热度、预警、结局均为游戏情景，非现实预测。"
+    },
+    "disclaimer": "本体验由博罗县公开事实与现实机制支撑。三轮挑战、压力注入、资源分配、玩家选择，以及由此产生的得分、趋势、热度、预警与世界线结局，均为模拟体验，不代表真实预测或政策效果。"
+  },
+  "facts": {
+    "headline": {
+      "dataClass": "fact",
+      "value": 203,
+      "unit": "亿元",
+      "label": "4 宗链主项目达产后预计年产值",
+      "context": "2026-08-03 签约，总投资 80 亿元",
+      "uncertainty": "签约金额≠实际投资，项目均待建；203 亿为达产预计值，非当前产值。",
+      "sources": [
+        "https://www.boluo.gov.cn/gkmlpt/content/5/5826/mpost_5826440.html",
+        "https://www.huizhou.gov.cn/zwgk/hzsz/xqyw/content/mpost_5826791.html"
+      ]
+    },
+    "indicators": [
+      {
+        "id": "ind-chain-output",
+        "dataClass": "fact",
+        "value": 203,
+        "unit": "亿元",
+        "subject": "4 宗链主项目（达产后）",
+        "period": "2026-08 签约，达产年预计",
+        "scope": "博罗县域",
+        "caliber": "达产预计年产值，非当前产值；项目均待建",
+        "sources": [
+          "https://www.boluo.gov.cn/gkmlpt/content/5/5826/mpost_5826440.html",
+          "https://www.huizhou.gov.cn/zwgk/hzsz/xqyw/content/mpost_5826791.html"
+        ]
+      },
+      {
+        "id": "ind-chain-invest",
+        "dataClass": "fact",
+        "value": 80,
+        "unit": "亿元",
+        "subject": "4 宗链主项目",
+        "period": "2026-08-03",
+        "scope": "博罗县域",
+        "caliber": "签约总投资；签约金额不等于实际投资",
+        "sources": [
+          "https://www.boluo.gov.cn/gkmlpt/content/5/5826/mpost_5826440.html"
+        ]
+      },
+      {
+        "id": "ind-tour-zone",
+        "dataClass": "fact",
+        "value": 52.97,
+        "unit": "万人次",
+        "subject": "环两山引领区博罗片区",
+        "period": "2026 国庆假期",
+        "scope": "引领区片区",
+        "caliber": "片区口径，同比 +9.77%；非全县口径",
+        "sources": [
+          "https://www.boluo.gov.cn/bmzb/xwhgdlytyj/zwgk/bmwj/bmwj/content/post_5871691.html"
+        ]
+      },
+      {
+        "id": "ind-tour-county",
+        "dataClass": "fact",
+        "value": 63.82,
+        "unit": "万人次",
+        "subject": "博罗全县",
+        "period": "2026 国庆假期",
+        "scope": "全县",
+        "caliber": "全县口径，同比 +9.26%；与片区口径不可混用",
+        "sources": [],
+        "sourceLabel": "南方+ / 惠州市政府"
+      },
+      {
+        "id": "ind-tour-income",
+        "dataClass": "fact",
+        "value": 3.38,
+        "unit": "亿元",
+        "subject": "博罗全县旅游综合收入",
+        "period": "2026 国庆假期",
+        "scope": "全县",
+        "caliber": "综合收入口径，同比 +12.39%；游客人次≠消费收入",
+        "sources": [],
+        "sourceLabel": "南方+ / 惠州市政府"
+      },
+      {
+        "id": "ind-ess",
+        "dataClass": "fact",
+        "value": 400,
+        "unit": "MWh",
+        "subject": "欣城、日盛两座共享储能电站",
+        "period": "2026 相继并网",
+        "scope": "博罗县域",
+        "caliber": "各 200MW/400MWh，合计 400MW/800MWh 功率口径需区分",
+        "sources": []
+      },
+      {
+        "id": "ind-canton-fair",
+        "dataClass": "fact",
+        "value": 53,
+        "unit": "家",
+        "subject": "博罗参展企业",
+        "period": "第140届广交会 2026-10",
+        "scope": "博罗县域",
+        "caliber": "参展规模创历史新高",
+        "sources": [
+          "https://www.boluo.gov.cn/zwgk/zwdt/tpxw/"
+        ]
+      },
+      {
+        "id": "ind-bnb-rate",
+        "dataClass": "fact",
+        "value": 92,
+        "unit": "%",
+        "subject": "218 旅游公路沿线民宿",
+        "period": "2026 国庆期间",
+        "scope": "218 公路沿线",
+        "caliber": "预订率，非全年入住率",
+        "sources": [],
+        "sourceLabel": "公开报道（来源链接待补）"
+      },
+      {
+        "id": "ind-agri-processing",
+        "dataClass": "fact",
+        "value": 100,
+        "unit": "亿元+",
+        "subject": "博罗农产品加工产值",
+        "period": "近期",
+        "scope": "博罗县域",
+        "caliber": "已破百亿；含 7 个国家地理标志、37 个粤字号",
+        "sources": [],
+        "sourceLabel": "政府工作报告（来源链接待补）"
+      },
+      {
+        "id": "ind-cum-projects",
+        "dataClass": "fact",
+        "value": 1042,
+        "unit": "宗",
+        "subject": "博罗累计引进项目",
+        "period": "截至政府工作报告",
+        "scope": "博罗县域",
+        "caliber": "累计引进宗数；新签约≠新投产",
+        "sources": [],
+        "sourceLabel": "政府工作报告（来源链接待补）"
+      },
+      {
+        "id": "ind-cum-invest",
+        "dataClass": "fact",
+        "value": 2357.7,
+        "unit": "亿元",
+        "subject": "累计引进项目总投资",
+        "period": "截至政府工作报告",
+        "scope": "博罗县域",
+        "caliber": "协议/签约总投资口径，非实际到位",
+        "sources": [],
+        "sourceLabel": "政府工作报告（来源链接待补）"
+      },
+      {
+        "id": "ind-childcare",
+        "dataClass": "fact",
+        "value": 148,
+        "unit": "个",
+        "subject": "公办普惠托位",
+        "period": "2026",
+        "scope": "博罗县域",
+        "caliber": "普惠托位数量",
+        "sources": [],
+        "sourceLabel": "公开报道（来源链接待补）"
+      },
+      {
+        "id": "ind-house-yuanzhou",
+        "dataClass": "fact",
+        "value": 6158,
+        "unit": "元/㎡",
+        "subject": "园洲二手房",
+        "period": "2026-10",
+        "scope": "园洲镇",
+        "caliber": "媒体挂牌均价，待核实，非官方成交价",
+        "sources": [],
+        "sourceLabel": "媒体报道·待核实"
+      },
+      {
+        "id": "ind-house-shiwan",
+        "dataClass": "fact",
+        "value": 6461,
+        "unit": "元/㎡",
+        "subject": "石湾二手房",
+        "period": "2026-10",
+        "scope": "石湾镇",
+        "caliber": "媒体挂牌均价，待核实，非官方成交价",
+        "sources": [],
+        "sourceLabel": "媒体报道·待核实"
+      }
+    ],
+    "towns": [
+      {
+        "name": "罗阳",
+        "tag": "县城中心",
+        "foods": [
+          "客家菜·糯米鸡"
+        ],
+        "plays": [
+          "县城商圈",
+          "东江边散步"
+        ],
+        "note": "27万人的县城，服务本县人",
+        "heat": 72,
+        "heatLevel": "较高",
+        "verified": "待核实"
+      },
+      {
+        "name": "龙溪",
+        "tag": "智造新城",
+        "foods": [
+          "龙溪农家菜"
+        ],
+        "plays": [
+          "智能制造配套园区"
+        ],
+        "note": "智能制造配套项目推进，街道产业与居住配套持续完善",
+        "heat": 52,
+        "heatLevel": "中",
+        "verified": "待核实"
+      },
+      {
+        "name": "石坝",
+        "tag": "三黄鸡之乡",
+        "foods": [
+          "石坝三黄鸡"
+        ],
+        "plays": [
+          "乡间田园"
+        ],
+        "note": "秋冬季石坝三黄鸡食客增多，圩镇烟火渐旺",
+        "heat": 48,
+        "heatLevel": "中",
+        "verified": "待核实"
+      },
+      {
+        "name": "麻陂",
+        "tag": "肉丸名镇",
+        "foods": [
+          "麻陂肉丸"
+        ],
+        "plays": [
+          "圩镇烟火"
+        ],
+        "note": "中医义诊进校园，圩镇民生服务持续升温",
+        "heat": 46,
+        "heatLevel": "中",
+        "verified": "待核实"
+      },
+      {
+        "name": "观音阁",
+        "tag": "东江沿岸",
+        "foods": [
+          "观音阁花生油"
+        ],
+        "plays": [
+          "东江画廊"
+        ],
+        "note": "霜降时节甜柿红火，东江沿岸秋色宜人",
+        "heat": 40,
+        "heatLevel": "中",
+        "verified": "待核实"
+      },
+      {
+        "name": "公庄",
+        "tag": "东部农镇",
+        "foods": [
+          "公庄沙地秋花生"
+        ],
+        "plays": [
+          "秋季田园"
+        ],
+        "note": "10月刚刨出来，带泥香",
+        "heat": 44,
+        "heatLevel": "中",
+        "verified": "待核实"
+      },
+      {
+        "name": "杨村",
+        "tag": "水果之乡",
+        "foods": [
+          "杨村皇帝柑"
+        ],
+        "plays": [
+          "柑橘园"
+        ],
+        "note": "皇帝柑果皮转色、糖分积累中，10月下旬即将开摘，产地预热",
+        "heat": 56,
+        "heatLevel": "较高",
+        "verified": "待核实"
+      },
+      {
+        "name": "杨侨",
+        "tag": "侨乡柑桔",
+        "foods": [
+          "杨侨柑桔"
+        ],
+        "plays": [
+          "华侨风情"
+        ],
+        "note": "侨乡柑桔陆续进入成熟季，侨乡风情受关注",
+        "heat": 42,
+        "heatLevel": "中",
+        "verified": "待核实"
+      },
+      {
+        "name": "柏塘",
+        "tag": "茶乡",
+        "foods": [
+          "柏塘山茶·广东十大名茶"
+        ],
+        "plays": [
+          "千亩古榄园",
+          "茶山徒步"
+        ],
+        "note": "腊味企业提前开工备年货，线上线下同步发力，茶乡客家风味走俏",
+        "heat": 68,
+        "heatLevel": "较高",
+        "verified": "待核实"
+      },
+      {
+        "name": "湖镇",
+        "tag": "航天农业",
+        "foods": [
+          "湖镇冬瓜"
+        ],
+        "plays": [
+          "航天育种基地"
+        ],
+        "note": "航天育种与特色农业持续受到关注",
+        "heat": 48,
+        "heatLevel": "中",
+        "verified": "待核实"
+      },
+      {
+        "name": "长宁",
+        "tag": "罗浮山大门",
+        "foods": [
+          "罗浮山窑鸡",
+          "酥醪菜",
+          "福田菜心·地理标志（原福田片区）"
+        ],
+        "plays": [
+          "罗浮山5A",
+          "冲虚观·飞云顶"
+        ],
+        "note": "11月7—8日罗浮山杯网球邀请赛在白线里网球民宿举行，东坡乐事打卡同步进行，秋日康养热度走高",
+        "heat": 90,
+        "heatLevel": "高",
+        "verified": "待核实"
+      },
+      {
+        "name": "石湾",
+        "tag": "工业重镇",
+        "foods": [
+          "炒山坑螺·河边夜宵"
+        ],
+        "plays": [
+          "东江岸线"
+        ],
+        "note": "企业密集，夜里是河鲜味",
+        "heat": 68,
+        "heatLevel": "较高",
+        "verified": "待核实"
+      },
+      {
+        "name": "园洲",
+        "tag": "融深第一镇",
+        "foods": [
+          "东江河鲜"
+        ],
+        "plays": [
+          "深博福田产业园",
+          "东江绿道"
+        ],
+        "note": "全省首个跨市域总部+基地示范园，挨着东莞",
+        "heat": 77,
+        "heatLevel": "较高",
+        "verified": "待核实"
+      },
+      {
+        "name": "龙华",
+        "tag": "古村",
+        "foods": [
+          "客家农家菜"
+        ],
+        "plays": [
+          "旭日古村·明清建筑群"
+        ],
+        "note": "多部门联合开展道路交通秩序“严管严控三个月”专项整治",
+        "heat": 46,
+        "heatLevel": "中",
+        "verified": "待核实"
+      },
+      {
+        "name": "泰美",
+        "tag": "生态门户",
+        "foods": [
+          "农家菜"
+        ],
+        "plays": [
+          "象头山",
+          "赣深高铁博罗站"
+        ],
+        "note": "到深圳半小时，山脚天然氧吧",
+        "heat": 60,
+        "heatLevel": "较高",
+        "verified": "待核实"
+      },
+      {
+        "name": "横河",
+        "tag": "民宿示范镇",
+        "foods": [
+          "山水豆腐花"
+        ],
+        "plays": [
+          "显岗水库驿站",
+          "花园村·秋枫寨"
+        ],
+        "note": "横河籍运动员关晓燕勇夺桨板世界杯苏州站冠军，户外运动小镇名片再添高光",
+        "heat": 80,
+        "heatLevel": "高",
+        "verified": "待核实"
+      }
+    ],
+    "entities": [
+      {
+        "id": "dj",
+        "name": "东江水系",
+        "type": "生态本底",
+        "town": "罗阳/石湾/园洲",
+        "state": "稳定",
+        "layer": "生态底座",
+        "desc": "母亲河·饮用水源Ⅱ类·沿江镇街排污上限约束"
+      },
+      {
+        "id": "lswh",
+        "name": "环两山引领区",
+        "type": "生态本底",
+        "town": "长宁/横河/福田",
+        "state": "稳定",
+        "layer": "生态底座",
+        "desc": "环南昆山-罗浮山·218km 8字旅游公路·北部绿色屏障"
+      },
+      {
+        "id": "xwd",
+        "name": "欣旺达/锂威",
+        "type": "锚点企业",
+        "town": "园洲",
+        "state": "稳定",
+        "layer": "链主",
+        "desc": "锂电池·高用电·高外部订单依赖"
+      },
+      {
+        "id": "htd",
+        "name": "华通电脑",
+        "type": "锚点企业",
+        "town": "园洲/石湾",
+        "state": "稳定",
+        "layer": "链主",
+        "desc": "电子信息770亿基本盘代表"
+      },
+      {
+        "id": "zw",
+        "name": "正威新材料",
+        "type": "锚点企业",
+        "town": "罗阳",
+        "state": "稳定",
+        "layer": "链主",
+        "desc": "25万吨铜杆/年·重资产原材料底座"
+      },
+      {
+        "id": "jq",
+        "name": "嘉奇新能源",
+        "type": "锚点企业",
+        "town": "园洲",
+        "state": "关注",
+        "layer": "链主",
+        "desc": "奇瑞系·深博福田产业园(园洲)2026开园·华南首个梯次电池基地"
+      },
+      {
+        "id": "jf",
+        "name": "江丰精密",
+        "type": "锚点企业",
+        "town": "园洲",
+        "state": "稳定",
+        "layer": "链主",
+        "desc": "溅射靶材全球第一·3纳米"
+      },
+      {
+        "id": "gj",
+        "name": "11家国家级小巨人",
+        "type": "冠军企业",
+        "town": "多镇",
+        "state": "稳定",
+        "layer": "小巨人",
+        "desc": "嘉治电子/派沃/力王/凤凰/广麟/奥科/百时达/吉邦/鑫晖源/信立泰/TCL瑞智"
+      },
+      {
+        "id": "sj",
+        "name": "74家省级专精特新",
+        "type": "冠军企业",
+        "town": "多镇",
+        "state": "稳定",
+        "layer": "小巨人",
+        "desc": "各细分赛道隐形市占率"
+      },
+      {
+        "id": "bmc",
+        "name": "表面处理群落",
+        "type": "毛细群落",
+        "town": "福田",
+        "state": "关注",
+        "layer": "毛细血管",
+        "desc": "省级特色集群·电镀/喷涂·受东江环保约束"
+      },
+      {
+        "id": "mj",
+        "name": "石湾模具群落",
+        "type": "毛细群落",
+        "town": "石湾",
+        "state": "稳定",
+        "layer": "毛细血管",
+        "desc": "全镇2461家工业企业·三市交界·特斯拉/比亚迪/拓竹"
+      },
+      {
+        "id": "ddc",
+        "name": "电动车配套群落",
+        "type": "毛细群落",
+        "town": "石湾",
+        "state": "稳定",
+        "layer": "毛细血管",
+        "desc": "台铃/小刀/新日/绿佳·产值超150亿"
+      },
+      {
+        "id": "lq",
+        "name": "镇村老厂群落",
+        "type": "镇村老厂",
+        "town": "龙溪/园洲/罗阳",
+        "state": "关注",
+        "layer": "老厂基盘",
+        "desc": "数千家五金/塑料/建材·用电+11.5%大头·亩均达标压力"
+      },
+      {
+        "id": "bss",
+        "name": "百岁山",
+        "type": "农业主体",
+        "town": "湖镇",
+        "state": "稳定",
+        "layer": "农业康养",
+        "desc": "374万吨/年·罗浮山水源"
+      },
+      {
+        "id": "lfsgy",
+        "name": "罗浮山国药",
+        "type": "农业主体",
+        "town": "长宁",
+        "state": "稳定",
+        "layer": "农业康养",
+        "desc": "中华老字号·红脚艾·百草油·省中医院"
+      },
+      {
+        "id": "sc",
+        "name": "柏塘山茶",
+        "type": "地理标志",
+        "town": "柏塘",
+        "state": "稳定",
+        "layer": "国家地理标志",
+        "desc": "国家地理标志·省十大茶乡"
+      },
+      {
+        "id": "xc",
+        "name": "福田菜心",
+        "type": "地理标志",
+        "town": "福田",
+        "state": "关注",
+        "layer": "国家地理标志",
+        "desc": "国家地理标志·太空育种"
+      },
+      {
+        "id": "gyg",
+        "name": "观音阁花生",
+        "type": "地理标志",
+        "town": "观音阁",
+        "state": "稳定",
+        "layer": "国家地理标志",
+        "desc": "国家地理标志"
+      },
+      {
+        "id": "gyght",
+        "name": "观音阁黑糖",
+        "type": "地理标志",
+        "town": "观音阁",
+        "state": "稳定",
+        "layer": "国家地理标志",
+        "desc": "国家地理标志"
+      },
+      {
+        "id": "sb",
+        "name": "石坝胡须鸡",
+        "type": "农业主体",
+        "town": "石坝",
+        "state": "稳定",
+        "layer": "农业康养",
+        "desc": "全国名特优新"
+      },
+      {
+        "id": "lsmd",
+        "name": "罗浮山大米",
+        "type": "地理标志",
+        "town": "长宁/横河",
+        "state": "稳定",
+        "layer": "国家地理标志",
+        "desc": "国家地理标志·太空育种"
+      },
+      {
+        "id": "lsz",
+        "name": "罗浮山荔枝",
+        "type": "地理标志",
+        "town": "罗浮山周边",
+        "state": "稳定",
+        "layer": "国家地理标志",
+        "desc": "国家地理标志·10万亩"
+      },
+      {
+        "id": "hh",
+        "name": "横河户外小镇",
+        "type": "毛细群落",
+        "town": "横河",
+        "state": "稳定",
+        "layer": "农业康养",
+        "desc": "华南户外水经济港·民宿集群"
+      },
+      {
+        "id": "gz",
+        "name": "广州",
+        "type": "外部城市",
+        "town": "外部",
+        "state": "稳定",
+        "layer": "外部",
+        "desc": "增城接石湾·省中医院医药合作"
+      },
+      {
+        "id": "dg",
+        "name": "东莞",
+        "type": "外部城市",
+        "town": "外部",
+        "state": "稳定",
+        "layer": "外部",
+        "desc": "紧邻石湾/园洲·模具电子外溢源头"
+      },
+      {
+        "id": "sz",
+        "name": "深圳",
+        "type": "外部城市",
+        "town": "外部",
+        "state": "稳定",
+        "layer": "外部",
+        "desc": "欣旺达·嘉奇新能源项目来源"
+      },
+      {
+        "id": "hz",
+        "name": "惠城",
+        "type": "外部城市",
+        "town": "外部",
+        "state": "稳定",
+        "layer": "外部",
+        "desc": "惠州主城·行政与文旅客流"
+      }
+    ],
+    "relations": [
+      {
+        "id": "R001",
+        "source": "dg",
+        "target": "mj",
+        "type": "供应链",
+        "weight": 5,
+        "weak": false,
+        "description": "隔东江与东莞石龙相望·模具厂迁入(天倬东莞50亩→石湾150亩)"
+      },
+      {
+        "id": "R002",
+        "source": "dg",
+        "target": "ddc",
+        "type": "供应链",
+        "weight": 4,
+        "weak": false,
+        "description": "台铃/小刀等电动车厂从东莞方向落户石湾"
+      },
+      {
+        "id": "R003",
+        "source": "dg",
+        "target": "htd",
+        "type": "供应链",
+        "weight": 4,
+        "weak": false,
+        "description": "园洲/石湾承接东莞电子信息外溢·园洲年产值380亿"
+      },
+      {
+        "id": "R004",
+        "source": "dg",
+        "target": "lq",
+        "type": "供应链",
+        "weight": 2,
+        "weak": false,
+        "description": "五金/塑料小厂随边界扩散"
+      },
+      {
+        "id": "R005",
+        "source": "sz",
+        "target": "xwd",
+        "type": "供应链",
+        "weight": 4,
+        "weak": false,
+        "description": "欣旺达深圳总部·锂威园洲生产基地"
+      },
+      {
+        "id": "R006",
+        "source": "sz",
+        "target": "jq",
+        "type": "供应链",
+        "weight": 4,
+        "weak": false,
+        "description": "深博福田产业园25宗项目·总投资54亿·产值超100亿"
+      },
+      {
+        "id": "R007",
+        "source": "gz",
+        "target": "mj",
+        "type": "供应链",
+        "weight": 2,
+        "weak": false,
+        "description": "石湾西北毗邻增城·三市交界承接外溢"
+      },
+      {
+        "id": "R008",
+        "source": "mj",
+        "target": "ddc",
+        "type": "供应链",
+        "weight": 2,
+        "weak": false,
+        "description": "模具零部件"
+      },
+      {
+        "id": "R009",
+        "source": "bmc",
+        "target": "ddc",
+        "type": "供应链",
+        "weight": 2,
+        "weak": false,
+        "description": "喷涂配套"
+      },
+      {
+        "id": "R010",
+        "source": "jf",
+        "target": "htd",
+        "type": "供应链",
+        "weight": 2,
+        "weak": false,
+        "description": "靶材供应"
+      },
+      {
+        "id": "R011",
+        "source": "gj",
+        "target": "htd",
+        "type": "供应链",
+        "weight": 2,
+        "weak": false,
+        "description": "精密配套"
+      },
+      {
+        "id": "R012",
+        "source": "sj",
+        "target": "lq",
+        "type": "供应链",
+        "weight": 2,
+        "weak": false,
+        "description": "技术升级"
+      },
+      {
+        "id": "R013",
+        "source": "xwd",
+        "target": "mj",
+        "type": "供应链",
+        "weight": 2,
+        "weak": false,
+        "description": "电池结构件"
+      },
+      {
+        "id": "R014",
+        "source": "jq",
+        "target": "ddc",
+        "type": "供应链",
+        "weight": 2,
+        "weak": false,
+        "description": "汽车零部件"
+      },
+      {
+        "id": "R015",
+        "source": "lq",
+        "target": "htd",
+        "type": "供应链",
+        "weight": 2,
+        "weak": false,
+        "description": "五金配套"
+      },
+      {
+        "id": "R016",
+        "source": "dj",
+        "target": "bmc",
+        "type": "环保约束",
+        "weight": 3,
+        "weak": false,
+        "description": "排污上限约束"
+      },
+      {
+        "id": "R017",
+        "source": "dj",
+        "target": "bss",
+        "type": "环保约束",
+        "weight": 3,
+        "weak": false,
+        "description": "饮用水源"
+      },
+      {
+        "id": "R018",
+        "source": "dj",
+        "target": "lq",
+        "type": "环保约束",
+        "weight": 1,
+        "weak": false,
+        "description": "沿江工业约束"
+      },
+      {
+        "id": "R019",
+        "source": "xwd",
+        "target": "lq",
+        "type": "资源竞争",
+        "weight": 1,
+        "weak": false,
+        "description": "用电/用地竞争"
+      },
+      {
+        "id": "R020",
+        "source": "htd",
+        "target": "lq",
+        "type": "资源竞争",
+        "weight": 1,
+        "weak": false,
+        "description": "腾笼换鸟"
+      },
+      {
+        "id": "R021",
+        "source": "lswh",
+        "target": "lfsgy",
+        "type": "生态补偿",
+        "weight": 3,
+        "weak": false,
+        "description": "文旅+医药"
+      },
+      {
+        "id": "R022",
+        "source": "lswh",
+        "target": "hh",
+        "type": "生态补偿",
+        "weight": 2,
+        "weak": false,
+        "description": "户外运动"
+      },
+      {
+        "id": "R023",
+        "source": "lswh",
+        "target": "sc",
+        "type": "生态补偿",
+        "weight": 1,
+        "weak": false,
+        "description": "茶旅融合"
+      },
+      {
+        "id": "R024",
+        "source": "lswh",
+        "target": "lsz",
+        "type": "生态补偿",
+        "weight": 1,
+        "weak": false,
+        "description": "荔枝采摘"
+      },
+      {
+        "id": "R025",
+        "source": "gz",
+        "target": "lfsgy",
+        "type": "生态补偿",
+        "weight": 2,
+        "weak": true,
+        "description": "省中医院合作"
+      },
+      {
+        "id": "R026",
+        "source": "hz",
+        "target": "lswh",
+        "type": "生态补偿",
+        "weight": 2,
+        "weak": false,
+        "description": "文旅客流+行政"
+      },
+      {
+        "id": "R027",
+        "source": "dj",
+        "target": "lsmd",
+        "type": "供应链",
+        "weight": 1,
+        "weak": false,
+        "description": "灌溉"
+      },
+      {
+        "id": "R028",
+        "source": "gyght",
+        "target": "gyg",
+        "type": "供应链",
+        "weight": 1,
+        "weak": false,
+        "description": "观音阁同镇"
+      },
+      {
+        "id": "R029",
+        "source": "gyg",
+        "target": "dj",
+        "type": "供应链",
+        "weight": 1,
+        "weak": false,
+        "description": "东江沙壤"
+      },
+      {
+        "id": "R030",
+        "source": "zw",
+        "target": "xwd",
+        "type": "供应链",
+        "weight": 2,
+        "weak": false,
+        "description": "铜杆→电池"
+      }
+    ],
+    "events": [
+      {
+        "id": "ev-01",
+        "dataClass": "fact",
+        "title": "博罗53家企业组团亮相第140届广交会",
+        "category": "产业",
+        "source": "博罗县人民政府",
+        "sourceLevel": "官方发布",
+        "verified": "已核验",
+        "date": "2026-10-20",
+        "url": "https://www.boluo.gov.cn/zwgk/zwdt/tpxw/",
+        "summary": "博罗53家企业组团参加第140届广交会，参展规模创历史新高，集中展示电子信息、电气机械、智能制造等优势产品。"
+      },
+      {
+        "id": "ev-02",
+        "dataClass": "fact",
+        "title": "博罗发布首批低空经济新赛道项目",
+        "category": "产业",
+        "source": "博罗县人民政府",
+        "sourceLevel": "官方发布",
+        "verified": "已核验",
+        "date": "2026-10-28",
+        "url": "https://www.boluo.gov.cn/?c=ql7gm",
+        "summary": "博罗竞速低空新赛道，发布首批低空经济相关项目，探索无人机应用、低空文旅等新业态布局。"
+      },
+      {
+        "id": "ev-03",
+        "dataClass": "fact",
+        "title": "博罗首家公办托育服务中心试运营",
+        "category": "民生",
+        "source": "博罗县人民政府",
+        "sourceLevel": "官方发布",
+        "verified": "已核验",
+        "date": "2026-10-22",
+        "url": "https://www.boluo.gov.cn/zwgk/zwdt/tpxw/",
+        "summary": "博罗首家公办托育服务中心开始试运营，提供148个普惠托位，采用“医育融合”模式，缓解0-3岁婴幼儿照护需求。"
+      },
+      {
+        "id": "ev-04",
+        "dataClass": "fact",
+        "title": "柏塘腊味企业提前开工备年货",
+        "category": "食品农业",
+        "source": "博罗县人民政府",
+        "sourceLevel": "官方发布",
+        "verified": "已核验",
+        "date": "2026-10-30",
+        "url": "https://www.boluo.gov.cn/?c=ql7gm",
+        "summary": "柏塘腊味企业提前开工备战年货季，线上线下同步发力，客家腊味特色品牌持续拓展市场。"
+      },
+      {
+        "id": "ev-05",
+        "dataClass": "fact",
+        "title": "博罗甜玉米精加工基地新厂区投产",
+        "category": "产业",
+        "source": "博罗县人民政府",
+        "sourceLevel": "官方发布",
+        "verified": "已核验",
+        "date": "2026-10-15",
+        "url": "https://www.boluo.gov.cn/zwgk/zwdt/tpxw/",
+        "summary": "博罗甜玉米精加工基地新厂区正式投产，延长甜玉米产业链，从鲜食销售向精加工制品延伸，带动农户增收。"
+      },
+      {
+        "id": "ev-06",
+        "dataClass": "fact",
+        "title": "县人社局深入园洲龙溪企业助企纾困",
+        "category": "民生",
+        "source": "博罗县人民政府",
+        "sourceLevel": "官方发布",
+        "verified": "已核验",
+        "date": "2026-10-20",
+        "url": "https://www.boluo.gov.cn/hzblrsj/gkmlpt/content/5/5875/post_5875417.html",
+        "summary": "县人社局党组书记带队深入园洲、龙溪企业，聚焦用工难、招才难问题开展助企纾困，同步排查欠薪隐患，稳就业保民生。"
+      },
+      {
+        "id": "ev-07",
+        "dataClass": "fact",
+        "title": "博罗县发布2026年度第102批次征地补偿公告",
+        "category": "城市治理",
+        "source": "博罗县人民政府",
+        "sourceLevel": "官方发布",
+        "verified": "已核验",
+        "date": "2026-10-26",
+        "url": "https://www.boluo.gov.cn/gkmlpt/mindex",
+        "summary": "博罗县人民政府发布2026年度第一百零二批次城镇建设用地征收土地补偿安置方案公告，涉及相关镇街建设用地。"
+      },
+      {
+        "id": "ev-08",
+        "dataClass": "fact",
+        "title": "2026“罗浮山杯”网球团体邀请赛11月7日开赛",
+        "category": "文旅",
+        "source": "博罗发布",
+        "sourceLevel": "媒体报道",
+        "verified": "待核实",
+        "date": "2026-11-01",
+        "url": "http://m.toutiao.com/group/7702992136745239040/",
+        "summary": "11月7日至8日，2026“罗浮山杯”网球团体邀请赛将在长宁镇白线里网球民宿举行，广州、深圳、东莞、惠州等地及博罗本地14支队伍参赛。"
+      },
+      {
+        "id": "ev-09",
+        "dataClass": "fact",
+        "title": "园洲镇二手房10月均价6158元/㎡",
+        "category": "城市治理",
+        "source": "房天下",
+        "sourceLevel": "媒体报道",
+        "verified": "待核实",
+        "date": "2026-10-31",
+        "url": "https://fangjia.fang.com/HUIZHOU/a093/",
+        "summary": "博罗园洲镇10月二手房均价约6158元/㎡，石湾约6461元/㎡，毗邻深圳东莞的工业镇楼市保持平稳。"
+      },
+      {
+        "id": "ev-10",
+        "dataClass": "fact",
+        "title": "“寻东坡十六乐事”打卡活动启动 集驿章赢温泉票客房券",
+        "category": "文旅",
+        "source": "博罗县人民政府",
+        "sourceLevel": "官方发布",
+        "verified": "已核验",
+        "date": "2026-10-30",
+        "url": "https://www.boluo.gov.cn/xzygdw/xgbdst/blxw/content/post_5870440.html",
+        "summary": "2026年10月至12月，环南昆山—罗浮山引领区沿线16座东坡主题驿站开放打卡，线上小程序定位集驿章可解锁免费温泉票、精品客房体验券等福利。"
+      },
+      {
+        "id": "ev-11",
+        "dataClass": "fact",
+        "title": "博罗民政扎实推进“惠居行动” 困难家庭房屋修缮暖民心",
+        "category": "民生",
+        "source": "博罗县人民政府",
+        "sourceLevel": "官方发布",
+        "verified": "已核验",
+        "date": "2026-10-30",
+        "url": "https://www.boluo.gov.cn/bmzb/xmzj/index.html",
+        "summary": "博罗县民政局推进“惠居行动”，为困难群众修缮存在安全隐患的房屋、更新必需生活设施，改善困难家庭人居环境。"
+      },
+      {
+        "id": "ev-12",
+        "dataClass": "fact",
+        "title": "龙华镇开展道路交通秩序“严管严控三个月”专项整治",
+        "category": "城市治理",
+        "source": "博罗县人民政府",
+        "sourceLevel": "官方发布",
+        "verified": "已核验",
+        "date": "2026-11-02",
+        "url": "https://www.boluo.gov.cn/xzgwh/lhzrmzf/index.html",
+        "summary": "龙华镇多部门联合开展道路交通秩序“严管严控三个月”专项整治，规范路面通行秩序，预防和减少道路交通事故。"
+      }
+    ],
+    "changes": [
+      {
+        "id": "C001",
+        "type": "new_entity",
+        "title": "深博福田产业园全面开园，嘉奇等5家企业集中入驻、首批标准化厂房交付投产",
+        "date": "2026-06-30",
+        "involvedNodes": [
+          "jq",
+          "sz"
+        ],
+        "beforeAfter": "此前：飞地在建、企业未投产；此后：园区近八成空间完成招商，嘉奇等进入投产爬坡",
+        "uncertainty": "达产产值为预计值，实际产出待观察",
+        "lastVerified": "2026-10-29"
+      },
+      {
+        "id": "C002",
+        "type": "new_entity",
+        "title": "两个独立（共享）储能电站（欣城、日盛各200MW/400MWh）相继并网投运",
+        "date": "2026-09-30",
+        "involvedNodes": [
+          "ess"
+        ],
+        "beforeAfter": "此前：本地无独立储能；此后：新增调峰调频、顶峰保供能力",
+        "uncertainty": "对具体企业用电/电价的影响无公开数据",
+        "lastVerified": "2026-10-29"
+      },
+      {
+        "id": "C003",
+        "type": "new_entity",
+        "title": "铜来顺新材料生产线点火投产，2027年冲刺百亿产值",
+        "date": "2026-10-13",
+        "involvedNodes": [
+          "tls"
+        ],
+        "beforeAfter": "此前：铜基新材料以正威为主；此后：新增铜基加工主体",
+        "uncertainty": "百亿为2027目标，非当前产值",
+        "lastVerified": "2026-10-29"
+      },
+      {
+        "id": "C004",
+        "type": "new_entity",
+        "title": "8月3日签约4宗链主级项目（高端精密制造/绿色冷轧钢/空压机/液冷散热），总投资80亿、预计年产值203亿",
+        "date": "2026-08-03",
+        "involvedNodes": [
+          "hpm",
+          "crs",
+          "acc",
+          "lcs"
+        ],
+        "beforeAfter": "此前：AI机器人/循环钢/空压机/液冷本地无对应主体；此后：签约待落地",
+        "uncertainty": "签约金额≠实际投资，项目均待建，本地协同为假设",
+        "lastVerified": "2026-10-29"
+      },
+      {
+        "id": "C005",
+        "type": "new_entity",
+        "title": "金利源、佳有机械、铣锐精密等一批增资扩产项目落地（杨侨/泰美）",
+        "date": "2026-05至09",
+        "involvedNodes": [
+          "jly",
+          "jy"
+        ],
+        "beforeAfter": "此前：相关镇缺此类配套；此后：绝缘板/水处理装备等项目在建",
+        "uncertainty": "均处在建/待投产，实际产出待观察",
+        "lastVerified": "2026-10-29"
+      },
+      {
+        "id": "C006",
+        "type": "new_edge",
+        "title": "石洲大桥重建推进（园洲—东莞石排，双向六车道），施工期交通管制",
+        "date": "2026-10-26",
+        "involvedNodes": [
+          "dg"
+        ],
+        "beforeAfter": "此前：双向两车道老桥；此后：施工管制，建成后跨市通行能力提升",
+        "uncertainty": "预计2031年建成，工期长；施工期或阶段性影响通勤",
+        "lastVerified": "2026-10-29"
+      },
+      {
+        "id": "C007",
+        "type": "new_edge",
+        "title": "惠霞高速博罗段冲刺年内通车，整体进度超八成",
+        "date": "2026-07",
+        "involvedNodes": [
+          "dg"
+        ],
+        "beforeAfter": "此前：南北向高速通道未贯通；此后：年内有望新增南北大动脉",
+        "uncertainty": "通车时间为目标，以官方为准",
+        "lastVerified": "2026-10-29"
+      },
+      {
+        "id": "C008",
+        "type": "exit",
+        "title": "固力水泥博罗分公司日产2500吨熟料生产线关停、主体设备拆除",
+        "date": "2026-02-13",
+        "involvedNodes": [
+          "glc"
+        ],
+        "beforeAfter": "此前：公庄保留该熟料产能；此后：该条生产线永久退出、不具备生产条件",
+        "uncertainty": "仅为单条生产线，企业其他业务未说明",
+        "lastVerified": "2026-10-29"
+      },
+      {
+        "id": "C009",
+        "type": "weaken",
+        "title": "石湾环境整治：4家违法企业停产、限期完善环保手续（另有3家违规五金停产）",
+        "date": "2026-07-29",
+        "involvedNodes": [
+          "bmc",
+          "lq"
+        ],
+        "beforeAfter": "此前：违法排污产能在产；此后：停产整改，环保倒逼产能出清",
+        "uncertainty": "验收合格后或复产，非永久退出",
+        "lastVerified": "2026-10-29"
+      },
+      {
+        "id": "C010",
+        "type": "strengthen",
+        "title": "博罗县荔枝产业协会成立，与省农科院签订科技合作，抱团做强罗浮山荔枝",
+        "date": "2026-09-23",
+        "involvedNodes": [
+          "lsz"
+        ],
+        "beforeAfter": "此前：荔枝主体分散；此后：协会统筹、品牌化数字化推进",
+        "uncertainty": "品牌价值超12亿为评估口径，非销售额",
+        "lastVerified": "2026-10-29"
+      },
+      {
+        "id": "C011",
+        "type": "strengthen",
+        "title": "博罗入选国家农业现代化示范区，7个国家地理标志、37个粤字号、农产品加工产值破百亿",
+        "date": "2026-06-25",
+        "involvedNodes": [
+          "lsz",
+          "sc",
+          "lfsgy"
+        ],
+        "beforeAfter": "此前：农业以分散种养为主；此后：全链条、集群化获国家级认定",
+        "uncertainty": "加工产值为县域口径，分单品数据有限",
+        "lastVerified": "2026-10-29"
+      },
+      {
+        "id": "C012",
+        "type": "strengthen",
+        "title": "环两山引领区文旅持续走强：国庆博罗片区接待52.97万人次、过夜率约25%，218旅游公路沿线民宿预订率92%",
+        "date": "2026-10",
+        "involvedNodes": [
+          "lswh",
+          "hh",
+          "sc"
+        ],
+        "beforeAfter": "此前：山区以一日游为主；此后：过夜与民宿显著增长、淡季留人成新课题",
+        "uncertainty": "国庆为旺季峰值，全年过夜率为推断区间",
+        "lastVerified": "2026-10-29"
+      }
+    ]
+  },
+  "game": {
+    "dataClass": "sim",
+    "notice": "本区块全部为游戏情景：背景与机制可由真实事实支撑，但选择、得分、冲击、干预、趋势与结局均为模拟，不构成预测或建议。",
+    "kpi": [
+      {
+        "id": "gkpi-1",
+        "dataClass": "sim",
+        "baselineRef": "ind-chain-invest",
+        "label": "链主项目总投资",
+        "note": "基线为真实事实；游戏内随玩家操作的变化为模拟"
+      },
+      {
+        "id": "gkpi-2",
+        "dataClass": "sim",
+        "baselineRef": "ind-tour-zone",
+        "label": "国庆片区游客",
+        "note": "基线为真实事实；游戏内变化为模拟"
+      },
+      {
+        "id": "gkpi-3",
+        "dataClass": "sim",
+        "baselineRef": "ind-ess",
+        "label": "储能并网规模",
+        "note": "基线为真实事实；游戏内变化为模拟"
+      },
+      {
+        "id": "gkpi-4",
+        "dataClass": "sim",
+        "baselineRef": "ind-canton-fair",
+        "label": "广交会参展企业",
+        "note": "基线为真实事实；游戏内变化为模拟"
+      }
+    ],
+    "timeSeries": {
+      "id": "ts-vitality",
+      "dataClass": "sim",
+      "periods": 30,
+      "initial": [
+        54,
+        57,
+        53,
+        60,
+        58,
+        62,
+        56,
+        59,
+        61,
+        55,
+        64,
+        62,
+        67,
+        60,
+        63,
+        66,
+        59,
+        68,
+        65,
+        71,
+        64,
+        69,
+        72,
+        70,
+        74,
+        68,
+        76,
+        74,
+        79,
+        77
+      ],
+      "note": "模拟活力序列，非真实统计；玩家操作与冲击会改变后续走势，结果均为模拟。"
+    },
+    "holoNodes": [
+      {
+        "id": "hn-1",
+        "dataClass": "sim",
+        "name": "通勤客流",
+        "desc": "跨镇通勤牵动产业招工、生活选择和交通接驳。",
+        "entityRef": null
+      },
+      {
+        "id": "hn-2",
+        "dataClass": "sim",
+        "name": "工厂订单",
+        "desc": "产业链订单变化可能沿上下游扩散。",
+        "entityRef": null
+      },
+      {
+        "id": "hn-3",
+        "dataClass": "sim",
+        "name": "柏塘山茶",
+        "desc": "茶农、加工、现金流和市场渠道相互影响。",
+        "entityRef": "sc"
+      },
+      {
+        "id": "hn-4",
+        "dataClass": "sim",
+        "name": "罗浮山文旅",
+        "desc": "游客数量与本地消费、停留时间是不同口径。",
+        "entityRef": "lswh"
+      },
+      {
+        "id": "hn-5",
+        "dataClass": "sim",
+        "name": "高铁新城",
+        "desc": "交通枢纽需要与岗位、服务、居住形成实际连接。",
+        "entityRef": null
+      }
+    ],
+    "missions": [
+      {
+        "id": "m1",
+        "dataClass": "sim",
+        "title": "跨镇接驳突然变慢",
+        "place": "高铁新城与工业园",
+        "background": "通勤变慢，让人才和产业之间的连接开始松动。背景为现实机制，非具体真实事件。",
+        "entityRef": null,
+        "clues": [
+          [
+            "通勤信号",
+            "接驳时间在模拟场景中延长，人员流动指数同步下降。"
+          ],
+          [
+            "产业回响",
+            "相关企业的用工稳定性可能受到影响。"
+          ],
+          [
+            "隐藏限制",
+            "修复通勤链条需要资源，单纯扩建道路并非唯一方案。"
+          ]
+        ],
+        "options": [
+          [
+            "新增定制接驳与错峰班次",
+            10,
+            10,
+            "成功缓解通勤压力，连接恢复较快。"
+          ],
+          [
+            "先改造一个交通路口",
+            5,
+            5,
+            "局部改善，但跨镇连接仍然紧张。"
+          ],
+          [
+            "暂时只加强宣传沟通",
+            0,
+            1,
+            "沟通没有改变模拟的接驳能力。"
+          ]
+        ]
+      },
+      {
+        "id": "m2",
+        "dataClass": "sim",
+        "title": "柏塘山茶回款突然放慢",
+        "place": "柏塘镇 · 茶产业网络",
+        "background": "订单没有消失，但钱迟迟不到账，茶农和加工端开始承压。",
+        "entityRef": "sc",
+        "clues": [
+          [
+            "资金链",
+            "采购与销售节点之间的结算周期被拉长。"
+          ],
+          [
+            "传导路径",
+            "加工厂库存增加，农户现金周转进一步收紧。"
+          ],
+          [
+            "可能的桥梁",
+            "订单分批结算和渠道对接不同于扩大种植的行动路径。"
+          ]
+        ],
+        "options": [
+          [
+            "建立分批结算与订单协调",
+            10,
+            10,
+            "减少应收账款挤压，茶产业链重新连起来。"
+          ],
+          [
+            "让加工厂暂时扩大库存",
+            4,
+            3,
+            "产能暂时稳定，但现金流压力未完全解除。"
+          ],
+          [
+            "只扩大茶园种植面积",
+            0,
+            0,
+            "上游增产没有直接解决回款问题。"
+          ]
+        ]
+      },
+      {
+        "id": "m3",
+        "dataClass": "sim",
+        "title": "罗浮山游客多，消费却没跟上",
+        "place": "罗浮山 · 文旅与服务",
+        "background": "游客仍在经过，但停留时间缩短，周边消费节点开始承压。",
+        "entityRef": "lswh",
+        "clues": [
+          [
+            "客流与收入",
+            "旅游人次与当地收入在游戏情景中不同步。"
+          ],
+          [
+            "停留问题",
+            "住宿和二次消费环节的网络联系偏弱。"
+          ],
+          [
+            "潜在机会",
+            "把旅游体验、特色产品和过夜服务联结起来可能改变结果。"
+          ]
+        ],
+        "options": [
+          [
+            "串联夜间体验与本地消费",
+            10,
+            11,
+            "旅游与服务网络增强，消费在本地留下更多。"
+          ],
+          [
+            "增加景区入口广告",
+            4,
+            3,
+            "短期关注度提高，但停留能力改善有限。"
+          ],
+          [
+            "只增设更多打卡背景板",
+            0,
+            1,
+            "热闹有余，消费转化仍然偏弱。"
+          ]
+        ]
+      }
+    ],
+    "shockResults": {
+      "id": "shock-1",
+      "dataClass": "sim",
+      "triggers": [
+        "阵风冲击",
+        "超级冲击",
+        "注入热点"
+      ],
+      "effects": {
+        "healthDelta": -24,
+        "heatDelta": 27,
+        "negativeShareDelta": 8,
+        "description": "突发冲击使世界线活力瞬时下降、热度与预警占比上升；均为游戏参数。"
+      },
+      "note": "冲击数值是游戏机制，不代表真实事件冲击或政策效果。"
+    },
+    "interventions": [
+      {
+        "id": "iv-1",
+        "dataClass": "sim",
+        "missionRef": "m1",
+        "name": "定制接驳与错峰班次",
+        "maxScore": 10,
+        "result": "连接恢复较快，通勤压力缓解。"
+      },
+      {
+        "id": "iv-2",
+        "dataClass": "sim",
+        "missionRef": "m2",
+        "name": "分批结算与订单协调",
+        "maxScore": 10,
+        "result": "应收挤压缓解，茶产业链重新连接。"
+      },
+      {
+        "id": "iv-3",
+        "dataClass": "sim",
+        "missionRef": "m3",
+        "name": "夜间体验与本地消费串联",
+        "maxScore": 11,
+        "result": "文旅网络增强，消费在本地留存更多。"
+      }
+    ],
+    "endingSnapshots": [
+      {
+        "id": "end-1",
+        "dataClass": "sim",
+        "minScore": 25,
+        "title": "连接者的 2030",
+        "description": "网络修复轨迹完整，关键连接被重新建立。"
+      },
+      {
+        "id": "end-2",
+        "dataClass": "sim",
+        "minScore": 15,
+        "title": "寻找新平衡的 2030",
+        "description": "部分连接修复，系统在调整中达到新平衡。"
+      },
+      {
+        "id": "end-3",
+        "dataClass": "sim",
+        "minScore": 0,
+        "title": "波动中的 2030",
+        "description": "关键压力仍在，网络保持波动。"
+      }
+    ]
+  },
+  "idMap": {
+    "authority": "权威实体 ID 为私有证据底座的 node_id；27 个公开实体直接复用同一 ID。",
+    "baseOnlyNodes": [
+      {
+        "id": "acc",
+        "name": "空压机智能制造产业园",
+        "state": "待落地"
+      },
+      {
+        "id": "crs",
+        "name": "金属绿色冷轧钢项目",
+        "state": "待落地"
+      },
+      {
+        "id": "ess",
+        "name": "独立储能电站（欣城/日盛）",
+        "state": "已并网（指标已引用）"
+      },
+      {
+        "id": "glc",
+        "name": "固力水泥博罗分公司",
+        "state": "退出主体"
+      },
+      {
+        "id": "hpm",
+        "name": "高端精密制造项目（具身机器人）",
+        "state": "待落地"
+      },
+      {
+        "id": "jly",
+        "name": "金利源科技",
+        "state": "已落地（杨侨）"
+      },
+      {
+        "id": "jy",
+        "name": "佳有机械",
+        "state": "已落地（泰美）"
+      },
+      {
+        "id": "lcs",
+        "name": "液冷散热部件项目",
+        "state": "待落地"
+      },
+      {
+        "id": "tls",
+        "name": "铜来顺新材料",
+        "state": "已投产（产业园区）"
+      }
+    ],
+    "relationIdNote": "公开关系以 R 编号标识；底座内部 E 编号与证据分级不进入公开包。"
+  },
+  "missing": [
+    {
+      "type": "source_url_pending",
+      "items": [
+        "ind-tour-county",
+        "ind-tour-income",
+        "ind-ess",
+        "ind-bnb-rate",
+        "ind-agri-processing",
+        "ind-cum-projects",
+        "ind-cum-invest",
+        "ind-childcare",
+        "ind-house-yuanzhou",
+        "ind-house-shiwan"
+      ],
+      "note": "这些指标有来源名称但公开链接待补，不编造 URL"
+    },
+    {
+      "type": "real_time_series_unavailable",
+      "note": "无完整真实 30 周期序列，游戏使用显式标注的模拟序列"
+    },
+    {
+      "type": "events_pending_verification",
+      "items": [
+        "ev-08",
+        "ev-09"
+      ]
+    }
+  ]
+}
