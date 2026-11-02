@@ -63,7 +63,7 @@ function createSession(o={}){
   }
   const end=path[path.length-1];for(const k of FIELDS)terminal[k].push(end[k]);
   visitorHits+=+(end.visitorsWan>=350);incomeHits+=+(end.tourismRevenueYi>=15);bothHits+=+(end.visitorsWan>=350&&end.tourismRevenueYi>=15);
-  if(trajectories.length<100)trajectories.push(path.map(p=>({year:p.year,valueIndex:rnd(p.valueIndex),teaTonnes:rnd(p.teaTonnes),visitorsWan:rnd(p.visitorsWan)})));
+  if(trajectories.length<100)trajectories.push(path.map(p=>Object.fromEntries(['year',...FIELDS].map(k=>[k,rnd(p[k])]))));
  }
  function snapshot(){if(!completed)return null;
   const bands=years.map((year,i)=>({year,...Object.fromEntries(FIELDS.map(k=>[k,stats(raw[i][k])]))}));
