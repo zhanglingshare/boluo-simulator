@@ -562,7 +562,6 @@ html,body{background:radial-gradient(ellipse at 48% -25%,rgba(56,91,147,.22),tra
 </main>
 <footer class="footerbar"><div class="footer-left"><span class="footer-green"></span><span>变化观察工作区</span><span>·</span><span id="footerGraphMode">概念网络示意 / 非真实地图</span></div><div class="footer-links"><button>关于</button><button>数据口径</button><button>反馈</button></div></footer>
 <div id="shareToast" class="share-toast" role="status" aria-live="polite" hidden></div>
-<script src="industry-next/case-bridge-v1.js"></script>
 <script>
 (function(){
 "use strict";
@@ -1078,19 +1077,6 @@ function updateEvidencePanel(){
    if(!n){detail.innerHTML="<p>这个节点暂时无法读取。</p>";return;}
    var rel=evidenceData.edges.filter(function(e){return e.source_node_id===n.node_id||e.target_node_id===n.node_id;});
    detail.innerHTML='<h4>'+htmlEscape(n.name)+'</h4><div class="evidence-pill-row"><span class="evidence-pill">'+htmlEscape(n.layer||n.node_type)+'</span><span class="evidence-pill">'+htmlEscape(evidenceStatusText(n))+'</span></div><p>'+htmlEscape(n.description||"暂无公开描述")+'</p><p><strong>所在位置：</strong>'+htmlEscape(n.town||"未标注")+' · <strong>相关联系：</strong>'+rel.length+' 条</p><div class="evidence-related">'+rel.slice(0,4).map(function(e){var other=e.source_node_id===n.node_id?e.target_node_id:e.source_node_id;var otherNode=evidenceNodeMap[other];return '<button data-related-edge="'+htmlEscape(e.edge_id)+'">'+htmlEscape(otherNode?otherNode.name:other)+' · '+htmlEscape(evidenceData.relation_type_legend[e.relation_type]||e.relation_type)+' · '+htmlEscape(evidenceGradeName(e.evidence_grade))+'</button>';}).join("")+'</div>'+sourceLinks(n.source_ids);
-  }
-  // 深入模型只对柏塘实体和其相关关系出现，不在整个全息页塞新菜单。
-  var teaDeep=(selectedEvidence.kind==="node"&&selectedEvidence.id==="sc")||
-    (selectedEvidence.kind==="edge"&&evidenceEdgeMap[selectedEvidence.id]&&
-     (evidenceEdgeMap[selectedEvidence.id].source_node_id==="sc"||
-      evidenceEdgeMap[selectedEvidence.id].target_node_id==="sc"));
-  if(teaDeep&&window.BoluoCaseBridge){
-    var returning=new URLSearchParams(window.location.hash.slice(1));
-    returning.set("mode","evidence");
-    if(selectedEvidence.kind==="node"){returning.set("node",selectedEvidence.id);returning.delete("edge");}
-    else{returning.set("edge",selectedEvidence.id);returning.delete("node");}
-    var link=window.BoluoCaseBridge.entry("holo",{page:"mechanism",hash:"#"+returning.toString()});
-    detail.innerHTML+='<div style="margin-top:13px;padding:12px;border:1px solid #98c89d;border-radius:11px;background:linear-gradient(120deg,#153b30,#162a36)"><div style="font-size:11px;font-weight:800;color:#d9ebbb">从证据节点深入产业模型</div><p style="font-size:11px;color:#c0d4cf">查看柏塘品质、加工、原料茶和茶旅的结构约束，并运行2030蒙特卡洛。返回时恢复本条观察。</p><a href="'+htmlEscape(link)+'" style="display:inline-block;padding:9px 12px;background:#e5c38d;border-radius:7px;color:#1b2b28;text-decoration:none;font-weight:800;font-size:11px">放大柏塘产业世界 ↗</a></div>';
   }
   intro.textContent="当前选中的是登记在公开证据底座中的记录。证据等级描述支持程度，不代表影响大小。";
   detail.querySelectorAll("[data-related-edge]").forEach(function(b){b.addEventListener("click",function(){showEvidenceEdge(b.getAttribute("data-related-edge"));});});
