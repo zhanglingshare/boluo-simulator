@@ -16,6 +16,7 @@ const state={page:validPages.includes(params.get('page'))?params.get('page'):'la
  field:M.FIELDS.includes(params.get('field'))?params.get('field'):'valueIndex',
  view:validViews.includes(params.get('view'))?params.get('view'):'hist'};
 let result=null,base=null,runKey='',runId=0,notifyTimer;
+let structureFilter='all',structureSelected='plant';
 function key(){return JSON.stringify([state.weights,state.stress,state.uncertainty])}
 function toast(message){const el=$('toast');el.hidden=false;el.textContent=message;clearTimeout(notifyTimer);notifyTimer=setTimeout(()=>el.hidden=true,2500)}
 function share(){const p=new URLSearchParams({page:state.page,w:state.weights.map(x=>f(x)).join(','),stress:state.stress,u:state.uncertainty,view:state.view,field:state.field});
@@ -63,40 +64,65 @@ panelHead('核实材料与原始入口','包含县级十五五规划发布、镇
 '<div class="board">'+E.sources.map(s=>'<div class="panel"><div>'+badge(s.grade)+'</div><div class="name" style="font-size:18px">'+esc(s.title)+'</div><p>'+esc(s.publisher)+' · '+esc(s.date)+'</p><p>'+esc(s.limit)+'</p><div>'+rawLink(s.id,'打开来源')+'</div></div>').join('')+'</div>';
 }
 function renderMechanism(){
-const cards=[
-['01','品质标准与特色茶','已有地方标准、科研协作和区域品牌建设。模型将标准执行和品牌渠道影响分开，不以“有没有标准”替代“标准是否执行”。','真正需要：连续批次抽检、产品等级、验收记录、退货率。'],
-['02','标准化原料茶与B端采购','产业综合体设计150吨干茶年产能力，发展B端原料茶是公开报道方向；不能把150吨当成新增全镇产量。','真正需要：工厂实际利用率、产品配方、订单分类、采购合同。'],
-['03','茶旅、停留和本地收入','2025年全镇游客约130万人次，2030年提出350万人次、15亿元综合收入目标。','真正需要：过夜率、消费结构、重复购买、本地收入留存。'],
-['04','组织协同和劳动力','58家茶企合作社、产业协会和产学研合作网络已出现，但协同关系强度不能只靠成员数推定。','真正需要：季节采工到岗、共享加工与质量台账、采购网络证据。']
-];
-const benchmarks=[
-{name:'英德',title:'规模化供给与品牌标准',why:'研究批次稳定和与大型采购方的规格匹配',caution:'市级全产业链收入不能同镇级产值直接对比'},
-{name:'安溪',title:'加工配套和市场网络',why:'研究专业化分工与长期渠道协同',caution:'县域完整产业链与镇域资源条件并不等同'},
-{name:'武夷山',title:'茶文化与消费体验',why:'研究茶旅、住宿和后续产品消费能否连成链',caution:'有茶旅项目不等于游客转化率已被证实'}
-];
-return heading('03','重点不是造一张更大的网，而是找到机制。','每个模型变量都对应可验证的现实行为：批次、订单、产线利用、游客消费和跨企业协作。')+
-panelHead('四个相互作用的产业机制','模型不是把“旅游、加工、品质”当作独立加分项：它们存在共同约束、产品分流与资源竞争。')+
-'<div class="policy-flow">'+cards.map(c=>'<article class="panel policy-card"><div class="count">'+c[0]+'</div><h3>'+c[1]+'</h3><p>'+c[2]+'</p><div class="insight-highlight">'+c[3]+'</div></article>').join('')+'</div>'+
-panelHead('标杆的意义，是机制，不是直接比较数值','这些参考案例是研究问题的来源，不能简单将外地增长率套进柏塘。')+
-'<div class="board">'+benchmarks.map(b=>'<article class="panel"><div class="eyebrow">BENCHMARK CASE</div><h3>'+b.name+'</h3><div class="gold">'+b.title+'</div><p>'+b.why+'</p><p class="tiny">'+b.caution+'</p></article>').join('')+'</div>'+
-'<div class="insight-highlight"><b>结构性发现：</b>如果标准化原料茶增强，可能改善采购稳定性，但未必同步提高特色茶品牌溢价；茶旅客流增加，也不等于同等比例的本地综合收入增加。两者必须分别测试。</div>'+
-'<div class="buttons" style="margin-top:18px"><button data-page="lab" class="btn primary">把不同机制放进2030风洞 →</button></div>';
+const I=window.BaitangInsights;
+if(!I)return '<p>结构可视化尚未加载</p>';
+const r=result&&runKey===key()&&result.samples===result.total?result:M.simulate({weights:state.weights,stress:state.stress,uncertainty:state.uncertainty,samples:2600,seed:20261102});
+const links=['all','tea','b2b','tour'],labels=['全部关系','特色茶','标准化原料茶','茶旅'];
+return heading('03','看见柏塘的产业关系，而不是读产业名词。','通过网络节点发现实际证据、推断机制与缺口；再把机制放进2030年的真实模型样本里。')+
+'<section class="structure-surface"><div class="structure-world"><div class="structure-world-head"><div><div class="eyebrow">INDUSTRY RELATIONSHIP WORLD</div><h2>产业价值网络 · 待检验机制</h2></div><div class="structure-filters">'+links.map((key,i)=>'<button data-network-filter="'+key+'" class="'+(structureFilter===key?'active':'')+'">'+labels[i]+'</button>').join('')+'</div></div><div id="structureCanvas">'+I.network(structureFilter,structureSelected)+'</div></div>'+
+'<aside class="structure-right"><div class="panel" id="structureDetail">'+I.nodeDetail(structureSelected)+'</div><div class="panel"><div class="eyebrow">RELATIONSHIP STATUS</div><h3>关系不是自动证明了的</h3><p>节点显示公开资料对应的事实等级；连线全部表示待验证的产业传导机制，**没有以线粗细伪造交易额或SNA权重**。</p>'+I.sourceLegend()+'</div></aside></section>'+
+'<div class="structure-legend"><span>点击任何节点，查看来源和下一项必须补的真实数据</span><span>切换特色茶 / 原料茶 / 茶旅，查看不同机制</span></div>'+
+panelHead('产业事实的变化：2024—2025','真实产量报道以并列刻度呈现，另一家媒体的口径用虚线保留。')+
+'<div class="structure-report-grid"><div class="viz-block"><div class="eyebrow">REPORTED OBSERVATIONS · B/C</div><h3>茶叶产量的两年变化</h3>'+I.production()+'</div><div class="viz-block"><div class="eyebrow">EVIDENCE & UNCERTAINTY</div><h3>现有信息究竟有多完整？</h3>'+I.evidenceBars()+'<p>证据等级统计包括公开事实、派生指标和未知参数，不是“可信度百分比”。</p></div></div>'+
+panelHead('不同产品路线，影响的机制不同','从模型实际生成的2030样本观察结构变化，D级B端份额不冒充真实订单。')+
+'<div class="structure-report-grid"><div class="viz-block"><div class="eyebrow">MODEL PRODUCT SPLIT · D-TIER ASSUMPTIONS</div><h3>特色茶与原料茶：两种不同的供给机制</h3>'+I.productMix(r)+'</div><div class="viz-block"><div class="eyebrow">MODEL 2026—2030</div><h3>产业价值能力如何分化？</h3>'+C.draw(r,null,'traces','valueIndex')+'<p>每条细线都来自抽样路径；指数不等于产业产值。</p></div></div>'+
+panelHead('茶旅增长与2030目标之间，还差哪些条件？','游客目标和收入目标各有统计范围；先放入约束，再观察模拟样本。')+
+'<div class="structure-report-grid"><div class="viz-block"><div class="eyebrow">PUBLIC TARGET VS CONDITIONAL OUTPUT</div><h3>2025基线 / 2030目标 / 模拟分布</h3>'+I.tourismGoal(r)+'</div><div class="viz-block"><div class="eyebrow">DIFFERENT MEASURES · DIFFERENT UNITS</div><h3>2030：多维结果区间</h3>'+I.rangeRows(r)+'</div></div>'+
+panelHead('标杆机制对照：要查的是能力，不是名次','同一行对照“已有证据—尚缺样本—可参照机制”，不虚构标杆分数。')+
+'<div class="panel">'+I.mechanismMatrix()+'</div>'+
+'<div class="buttons" style="margin-top:18px"><button data-page="lab" class="btn primary">回到模型运行台，改变条件 →</button><button data-page="report" class="btn">把这组图加入报告 →</button><button data-page="evidence" class="btn">核对证据来源 →</button></div>';
 }
 function report(){
-const r=result&&runKey===key()&&result.samples===result.total?result:M.simulate({weights:state.weights,stress:state.stress,uncertainty:state.uncertainty,samples:2600,seed:20261102});
-const baseRun=base||M.simulate({weights:M.DEFAULT,stress:'none',uncertainty:state.uncertainty,samples:2600,seed:20261102});
-const end=r.ending,delta=f(end.valueIndex.p50-baseRun.ending.valueIndex.p50),focus=M.LABELS[state.weights.indexOf(Math.max(...state.weights))],coverage=r.coverage;
-return heading('04','柏塘山茶 · 人话版模型报告','这份报告跟随你本次选择的产业路径、压力情景和C/D估算条件变化，不是静态宣传稿。')+
-'<div class="report-toolbar"><p>完整专业内核，图文方式讲清楚结果与盲点。</p><div class="buttons"><button data-action="print" class="btn primary">打印 / 另存PDF</button><button data-action="copy-summary" class="btn">复制核心发现</button><button data-page="lab" class="btn">返回改条件</button></div></div>'+
-'<article class="report-sheet"><div class="report-hero"><div><div class="eyebrow" style="color:#688975">BAITANG 2030 · EVIDENCE-LED WIND TUNNEL</div><h1>柏塘茶，<br>到2030年可能走向哪里？</h1><p>茶园不是从零开始，问题是如何把品质、产品、渠道和茶旅服务真正接起来。</p><p class="tiny">公开资料快照 2026-11-02 · 固定种子'+r.seed+' · '+n(r.samples)+'条条件模拟路径</p></div><div class="report-image" role="img" aria-label="柏塘茶园视觉背景"></div></div>'+
-'<h2>01　先看真实基本面</h2><div class="report-stats"><div><label>2025茶叶产量</label><strong>2449吨</strong><small>另有2570吨报道口径</small></div><div><label>2025茶产业产值</label><strong>约12亿元</strong><small>统计范围待核</small></div><div><label>2025全镇游客</label><strong>约130万人次</strong><small>并非茶叶购买人数</small></div></div><p>柏塘有现行的地理标志地方标准、58家合作社与茶企、新建茶产业综合体及茶旅场景。2025年游客人次为报道的近似下限参考。</p>'+
-'<h2>02　别人做对了什么？</h2><div class="report-text"><div class="report-card"><b>英德、安溪</b><p>标准化供应和长期渠道网络值得研究，但不能照抄县市级产业规模。</p></div><div class="report-card"><b>武夷山</b><p>体验、住宿、消费互相带动；值得看真实留存，而不只是游客量。</p></div></div>'+
-'<h2>03　你刚才选择的道路</h2><p>本轮侧重<strong>'+esc(focus)+'</strong>；资源权重为'+state.weights.map((v,i)=>M.LABELS[i]+f(v)+'点').join('，')+'。风险情景为<strong>'+esc(M.STRESSES[state.stress].name)+'</strong>，C/D估算采用<strong>'+({central:'中性',cautious:'谨慎',optimistic:'扩张'}[state.uncertainty])+'</strong>假设。</p>'+
-'<h2>04　2030年模型运行结果</h2><div class="report-stats"><div><label>2030茶产业价值能力指数P50</label><strong>'+end.valueIndex.p50+'</strong><small>2025=100，非真实产值</small></div><div><label>2030游客人次P50</label><strong>'+end.visitorsWan.p50+'万</strong><small>仅条件推演</small></div><div><label>2030茶叶供给P50</label><strong>'+end.teaTonnes.p50+'吨</strong><small>不直接等于成交量</small></div></div><div class="report-chart">'+C.draw(r,baseRun,'hist','valueIndex')+'</div>'+
-'<div class="report-quote">看图一句话：同一套事实，在不同的产业机制和未知变量下，可以出现差别很大的2030结果。最重要的不是挑最漂亮的一条，而是查清造成差异的条件。</div>'+
-'<h2>05　2030旅游目标，条件样本支持到什么程度？</h2><p>政府报道提出游客超过350万人次、文旅综合收入15亿元。按目前有假设的模型，游客目标在'+coverage.visitors350+'%的抽样中被覆盖；两项目标同时被覆盖的抽样占'+coverage.both+'%。这些不是现实预测概率，因为旅游人均收入等参数仍为D级假设。</p>'+
-'<h2>06　可能最值得补的证据</h2><div class="report-text"><div class="report-card"><b>茶叶与B端</b><p>补批次检测、原料茶合同、综合体真实利用率。先确认产品结构怎样改变，才能谈增长。</p></div><div class="report-card"><b>茶旅与价值留存</b><p>补游客停留时间、客单与文旅收入统计范围。只增加客流不保证实现收入目标。</p></div></div><p>模型内当前与均衡基准的2030指数中位差额为'+(delta>0?'+':'')+delta+'点。这是情景对照，不能认定为真实政策收益。</p>'+
-'<h2>数据与模型边界</h2><p>事实为政府规划、地方标准和公开报道；产量口径冲突没有被平均。假设包含游客增速、B端份额、加工使用率与人均旅游收入。没有柏塘真实企业样本，不宣称已有SmartPLS或SEM有效路径系数，也不预测实际茶价、企业利润或政绩。</p><ol class="source-list">'+E.sources.slice(0,9).map(s=>'<li>'+rawLink(s.id,s.title)+'（'+esc(s.grade)+'级；'+esc(s.publisher)+'）</li>').join('')+'</ol></article>';
+const I=window.BaitangInsights;
+if(!I)return '<p>报告可视化模块未加载</p>';
+const opts={weights:state.weights,stress:state.stress,uncertainty:state.uncertainty,samples:2600,seed:20261102};
+const r=result&&runKey===key()&&result.samples===result.total?result:M.simulate(opts);
+const baseRun=base&&base.uncertainty===state.uncertainty?base:M.simulate({...opts,weights:M.DEFAULT,stress:'none'});
+const end=r.ending,delta=f(end.valueIndex.p50-baseRun.ending.valueIndex.p50),focus=M.LABELS[state.weights.indexOf(Math.max(...state.weights))],cover=r.coverage;
+const sensitivity=M.sensitivity({weights:state.weights,stress:state.stress,uncertainty:state.uncertainty,seed:20261102});
+const observed=E.byId,photoSource=E.source('prov2026');
+return heading('04','让模型自己交付一份会说话的报告。','报告里的图形与2030年蒙特卡洛样本、当前情景和A/B/C/D证据库联动。每个结果都能追问依据。')+
+'<div class="report-toolbar"><p>2025事实基准 · 2026—2030推演 · '+n(r.samples)+'条模型样本</p><div class="buttons"><button data-action="print" class="btn primary">打印 / 另存PDF</button><button data-action="copy-summary" class="btn">复制研究发现</button><button data-page="lab" class="btn">改变参数，重新出图</button></div></div>'+
+'<article class="report-sheet">'+
+'<div class="report-hero"><div><div class="eyebrow" style="color:#688975">BAITANG 2030 · LIVE MODEL REPORT</div><h1>柏塘茶，2030年<br>可能有几种走法？</h1><p>不先写一个结论，而是让证据、产业网络与数千条模拟路径共同说明问题。</p><div class="report-title-band"><span>B级公开报道</span><span>·</span><span>C/D级情景假设</span><span>·</span><span>固定随机种子 '+r.seed+'</span></div></div><div class="report-image" role="img" aria-label="茶园环境图"></div></div>'+
+'<h2>01　柏塘已经有什么？</h2>'+
+'<div class="report-stats"><div><label>2025茶叶产量 · B级</label><strong>'+f(observed('tea2025').value)+'吨</strong><small>另一报道 '+f(observed('tea2025alt').value)+'吨</small></div><div><label>2025茶产业产值 · B级</label><strong>约'+observed('teaValue').value+'亿元</strong><small>统计范围未核</small></div><div><label>2025全镇游客 · B级</label><strong>'+observed('visits').value+'万+</strong><small>不等于茶叶购买人数</small></div></div>'+
+'<div class="report-viz-row report-main-graphic"><div class="eyebrow">OBSERVED DATA · 2024—2025</div><div class="report-graphic-label" style="color:#f1dfc4">两年真实产量报道与口径冲突</div>'+I.production()+'</div>'+
+'<div class="report-quote">产量有变化，但不能拿这两年的增速直接推到2030年。真正值得研究的是产品、加工和渠道是否发生结构性变化。</div>'+
+'<h2>02　它究竟是一张怎样的产业网？</h2><p class="report-section-sub">图中的主体或制度依据公开资料；所有连线为有待检验的机制假设，绝不表示已经发生的订单或交易。</p>'+
+'<div class="report-visual-flow">'+I.network('all','')+'</div>'+
+'<div class="report-viz-row viz-block"><div class="eyebrow">COMPARATIVE MECHANISMS · NO FAKE RATINGS</div><h3>标杆能借鉴什么，柏塘还要验证什么？</h3>'+I.mechanismMatrix()+'</div>'+
+'<h2>03　你的选择，改变哪几种机制？</h2>'+
+'<p>本轮最侧重 <strong>'+esc(focus)+'</strong>；压力设置为 <strong>'+esc(M.STRESSES[state.stress].name)+'</strong>；未观测参数采用 <strong>'+({central:'中性',cautious:'谨慎',optimistic:'扩张'}[state.uncertainty])+'</strong>假设。五条路径共用100点资源，并非真实投资预算。</p>'+
+'<div class="report-viz-row viz-block"><div class="eyebrow">PRODUCT STRUCTURE · D-TIER RANGE</div><h3>特色品牌茶和B端原料茶不是同一种商业模式</h3>'+I.productMix(r)+'</div>'+
+'<h2>04　2030年真正跑出来什么结果？</h2>'+
+'<div class="report-stats"><div><label>价值能力指数 P50</label><strong>'+f(end.valueIndex.p50)+'</strong><small>2025=100，非实际产值</small></div><div><label>茶叶供给 P50</label><strong>'+f(end.teaTonnes.p50)+'吨</strong><small>条件模拟，非保证产量</small></div><div><label>全镇游客 P50</label><strong>'+f(end.visitorsWan.p50)+'万</strong><small>未校准的模拟样本</small></div></div>'+
+'<div class="report-viz-row report-main-graphic"><div class="eyebrow">2,600 GENERATED OUTCOMES · MONTE CARLO</div><div class="report-graphic-label" style="color:#f4dbb6">2030年结果分布：不是只看一条中位线</div>'+C.draw(r,baseRun,'hist','valueIndex')+'</div>'+
+'<div class="report-dual"><div class="report-main-graphic"><div class="eyebrow">CUMULATIVE SAMPLE SHARE</div><div class="report-graphic-label" style="color:#f4dbb6">累计样本占比</div>'+C.draw(r,baseRun,'cdf','valueIndex')+'</div><div class="report-main-graphic"><div class="eyebrow">REAL STOCHASTIC PATHS</div><div class="report-graphic-label" style="color:#f4dbb6">2025—2030路径分叉</div>'+C.draw(r,baseRun,'traces','valueIndex')+'</div></div>'+
+'<div class="report-viz-row viz-block"><div class="eyebrow">MULTI-OUTPUT · INDEPENDENT UNITS</div><h3>四种结果，不用一个数字冒充全部发展</h3>'+I.rangeRows(r)+'</div>'+
+'<h2>05　目标与模拟，差在什么地方？</h2>'+
+'<div class="report-viz-row report-main-graphic"><div class="eyebrow">TOURISM 2030 · TARGET IS NOT FORECAST</div><div class="report-graphic-label" style="color:#f2dfbe">目标350万人次，与条件模拟分布对照</div>'+I.tourismGoal(r)+'</div>'+
+'<div class="report-dual"><div class="report-mini"><b>350万人次目标</b><p>在当前假设下，有 '+cover.visitors350+'% 的模型样本达到门槛。</p><small>不是已校准的现实达标概率</small></div><div class="report-mini"><b>15亿元文旅综合收入目标</b><p>有 '+cover.both+'% 的模型样本同时覆盖游客与收入两个目标。</p><small>收入用到D级人均综合收入假设</small></div></div>'+
+'<h2>06　不同方案为何会出现不同结果？</h2>'+
+'<div class="report-viz-row report-main-graphic"><div class="eyebrow">BASELINE VS CURRENT · SAME RANDOM SEED</div><div class="report-graphic-label" style="color:#f2dfbe">均衡基准与本轮选择：结果分布移动了多少？</div>'+I.scenarioCompare(r,baseRun)+'</div>'+
+'<div class="report-viz-row viz-block"><div class="eyebrow">MODEL SENSITIVITY · NOT ESTIMATED SEM</div><h3>调整哪个因素，模型结果变化最大？</h3>'+I.sensitivityRows(sensitivity)+'</div>'+
+'<p>当前结果的2030年模型中位比均衡基准 '+(delta>=0?'+':'')+delta+' 指数点。它只是同一组假设中的条件对照，不能被认作真实政策效益或因果效应。</p>'+
+'<h2>07　看不见的部分，才是下一步数据采集重点</h2>'+
+'<div class="report-viz-row viz-block"><div class="eyebrow">A / B / C / D EVIDENCE MAP</div><h3>现有事实与未知参数的分级分布</h3>'+I.evidenceBars()+'<p>要优先补齐B端采购合同、真实产线利用率、茶叶批次验收、游客消费和协作台账。</p></div>'+
+'<div class="report-quote">这台风洞不负责替你选择。它负责告诉你：哪些关系值得验证、哪些条件改变结果、哪些数据缺口足以推翻现在的判断。</div>'+
+'<h2>方法和原始依据</h2><p>同一条件下使用固定随机种子进行'+n(r.samples)+'条蒙特卡洛抽样，显示P10/P50/P90、累计样本占比和方案对照。未用本地企业样本校准SEM/SmartPLS路径；没有预测实际茶价、企业利润或政府绩效。C/D未知变量属于透明情景假设，不能宣称为实测概率。</p>'+
+'<ol class="source-list">'+E.sources.map(source=>'<li>'+rawLink(source.id,source.title)+'（'+esc(source.grade)+'级 · '+esc(source.publisher)+'；'+esc(source.limit)+'）</li>').join('')+'</ol>'+
+'</article>';
 }
 function setResult(resultObj){result=resultObj;updateChart();updateInterpret();}
 function updateChart(){
@@ -157,6 +183,8 @@ return '柏塘山茶2030产业风洞\n2025茶叶2449吨、产值约12亿元、�
 }
 function copyText(s){if(navigator.clipboard?.writeText)navigator.clipboard.writeText(s).then(()=>toast('已复制')).catch(()=>prompt('复制内容',s));else prompt('复制内容',s)}
 document.addEventListener('click',e=>{
+ const node=e.target.closest('[data-node]');if(node){structureSelected=node.dataset.node;const detail=$('structureDetail');if(detail)detail.innerHTML=window.BaitangInsights.nodeDetail(structureSelected);if($('structureCanvas'))$('structureCanvas').innerHTML=window.BaitangInsights.network(structureFilter,structureSelected);return;}
+ const filter=e.target.closest('[data-network-filter]');if(filter){structureFilter=filter.dataset.networkFilter;if($('structureCanvas'))$('structureCanvas').innerHTML=window.BaitangInsights.network(structureFilter,structureSelected);document.querySelectorAll('[data-network-filter]').forEach(b=>b.classList.toggle('active',b.dataset.networkFilter===structureFilter));return;}
  const el=e.target.closest('[data-page],[data-preset],[data-chart],[data-action]');
  if(!el)return;
  if(el.dataset.page)return goto(el.dataset.page);
@@ -166,6 +194,7 @@ document.addEventListener('click',e=>{
  if(el.dataset.action==='print'){window.print();return}
  if(el.dataset.action==='copy-summary'){copyText(summary());return}
 });
+document.addEventListener('keydown',e=>{if((e.key==='Enter'||e.key===' ')&&e.target.matches('[data-node]')){e.preventDefault();e.target.dispatchEvent(new MouseEvent('click',{bubbles:true}));}});
 document.addEventListener('change',e=>{
  if(e.target.id==='metricSelect'){state.field=M.FIELDS.includes(e.target.value)?e.target.value:'valueIndex';updateChart();return}
  if(e.target.id==='stressSelect'){state.stress=M.STRESSES[e.target.value]?e.target.value:'none';start(true);return}
