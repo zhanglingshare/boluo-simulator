@@ -1,0 +1,42 @@
+name: baitang-bridge-browser-check
+on:
+  push:
+    branches: [main]
+    paths:
+      - "v1031/index.html"
+      - "v1031/tea-case-bridge.js"
+      - "v1031/tea-case-bridge.css"
+      - "network.html"
+      - "holo-home-v10.html"
+      - "industry-next/case-bridge-v1.js"
+      - "industry-next/tea-lab-v3.js"
+      - "industry-next/tea-lab-v3.html"
+      - "tests/baitang-bridge-browser-check.cjs"
+      - ".github/workflows/baitang-bridge-browser-check.yml"
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  bridge-check:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+      - name: Install headless browser
+        run: |
+          npm install --no-save playwright
+          npx playwright install --with-deps chromium
+      - name: Serve project
+        run: |
+          python3 -m http.server 8765 --bind 127.0.0.1 > /tmp/tea-bridge-http.log 2>&1 &
+          for i in $(seq 1 20); do
+            if curl -fsS http://127.0.0.1:8765/v1031/ -o /dev/null; then exit 0; fi
+            sleep 1
+          done
+          cat /tmp/tea-bridge-http.log
+          exit 1
+      - name: Desktop mobile and contextual return validation
+        run: node tests/baitang-bridge-browser-check.cjs
