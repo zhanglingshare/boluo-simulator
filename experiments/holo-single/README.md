@@ -4,7 +4,7 @@
 
 - 线上（M1 基线）：<https://zhanglingshare.github.io/boluo-simulator/experiments/holo-single/index.html>
 - M2 目前在分支 `experiment/holo-v2-m2`，**未经明确"发布"指令不合并 main、不部署**。
-- 原版站点与 `/v2/` 完全不动，本原型独立于 `experiments/holo-single/`。
+- 原版站点完全不动，本原型独立部署于 `experiments/holo-single/`。
 
 ## 它解决什么
 

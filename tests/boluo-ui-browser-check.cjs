@@ -10,9 +10,9 @@ const pages=[
  'index.html','role.html','who.html','choices.html','future.html',
  'windtunnel.html','blindspot.html','report.html','ending.html',
  'network.html','town.html','lab.html','step2.html','v3.html',
- 'v4.html','v2/index.html','v2/data.html'
+ 'v4.html'
 ];
-const screenshotPages=new Set(['index.html','role.html','choices.html','future.html','windtunnel.html','report.html','network.html','town.html','lab.html','v4.html','v2/index.html']);
+const screenshotPages=new Set(['index.html','role.html','choices.html','future.html','windtunnel.html','report.html','network.html','town.html','lab.html','v4.html']);
 const fileName=p=>p.replace(/[/.]/g,'-');
 (async()=>{
  const browser=await chromium.launch({headless:true});

@@ -25,7 +25,7 @@ const nonHoloPages = [
   'index.html','role.html','who.html','choices.html','future.html',
   'windtunnel.html','blindspot.html','report.html','ending.html',
   'network.html','town.html','lab.html','step2.html','v3.html',
-  'v4.html','v2/index.html','v2/data.html'
+  'v4.html'
 ];
 const uiCssPath = path.join(root,'assets','boluo-ui.css');
 if (!fs.existsSync(uiCssPath)) bad('缺少共享非全息 UI 样式');
@@ -51,7 +51,7 @@ for(const page of holoPaths){
   const fp=path.join(root,page);
   if(fs.existsSync(fp)&&fs.readFileSync(fp,'utf8').includes('boluo-ui.css'))bad('非全息 UI 不得应用于全息页面 '+page);
 }
-ok('17 个非全息页面共享 UI 接入与全息隔离已检查');
+ok('15 个非全息页面共享 UI 接入与全息隔离已检查');
 
 console.log('── 2) 模型口径断言（SEED=42 N=10000，规划兑现基准路径；与页面口径同源）──');
 const HT = require(path.join(root, 'model.js'));
