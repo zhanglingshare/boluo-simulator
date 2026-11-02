@@ -168,5 +168,35 @@ if (![v10Path, evidencePath, sourcesPath, changesPath].every(fs.existsSync)) {
   uiChecks.forEach(([label, passed]) => passed ? ok(label) : bad(label));
 }
 
+console.log('── 7) 柏塘山茶产业情报（tea/ 数据引用完整性）──');
+const teaFiles = ['meta', 'sources', 'facts', 'network', 'conflicts', 'changes'];
+const td = {};
+let teaReady = true;
+for (const f of teaFiles) {
+  const fp = path.join(root, 'tea', 'data', f + '.json');
+  if (!fs.existsSync(fp)) { bad('tea 缺少 ' + f + '.json'); teaReady = false; continue; }
+  try { td[f] = JSON.parse(fs.readFileSync(fp, 'utf8')); }
+  catch (e) { bad('tea ' + f + '.json 解析失败: ' + e.message); teaReady = false; }
+}
+if (teaReady) {
+  const tSrc = new Set(td.sources.sources.map(s => s.id));
+  const tNode = new Set(td.network.nodes.map(n => n.id));
+  let tFails = 0;
+  const tBad = m => { bad(m); tFails++; };
+  td.facts.groups.forEach(g => g.facts.forEach(f =>
+    (f.sources || []).forEach(s => { if (!tSrc.has(s)) tBad('事实 ' + f.id + ' 悬空来源 ' + s); })));
+  td.network.nodes.forEach(n =>
+    (n.sources || []).forEach(s => { if (!tSrc.has(s)) tBad('节点 ' + n.id + ' 悬空来源 ' + s); }));
+  td.network.edges.forEach(e => {
+    if (!tNode.has(e.from) || !tNode.has(e.to)) tBad('边 ' + e.id + ' 悬空节点');
+    (e.sources || []).forEach(s => { if (!tSrc.has(s)) tBad('边 ' + e.id + ' 悬空来源 ' + s); });
+  });
+  td.conflicts.conflicts.forEach(c => c.versions.forEach(v =>
+    (v.sources || []).forEach(s => { if (!tSrc.has(s)) tBad('冲突 ' + c.id + ' 悬空来源 ' + s); })));
+  td.changes.changes.forEach(ch =>
+    (ch.sources || []).forEach(s => { if (!tSrc.has(s)) tBad('变化 ' + ch.id + ' 悬空来源 ' + s); }));
+  if (!tFails) ok('tea 引用完整（' + td.sources.sources.length + ' 来源、' + td.network.nodes.length + ' 节点、' + td.network.edges.length + ' 边、' + td.changes.changes.length + ' 事件）');
+}
+
 console.log(fails ? '\n✗ 共 ' + fails + ' 项失败' : '\n✓ 全部通过');
 process.exit(fails ? 1 : 0);
