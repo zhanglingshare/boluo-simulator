@@ -1,0 +1,32 @@
+{
+  "schema": "boluo-today-facts/v1",
+  "region": "博罗县",
+  "updated": "2026-11-02T14:11:00+08:00",
+  "note": "今日博罗页面专属事实文件：剪刀差专题与关键指标引用。剪刀差数字来自博罗县统计局2026年1-8月经济运行简析；关键指标引用 boluo-game-public.v1.json 的 indicators（同一口径，不重复维护）。",
+  "scissors": {
+    "period": "2026年1-8月",
+    "source": "博罗县统计局2026年1-8月经济运行简析",
+    "verified_status": "已核验",
+    "title": "2026年1-8月，博罗出现一个剪刀差",
+    "production": {
+      "label": "生产端在爬坡",
+      "headline": "工业增加值 +8.9%",
+      "detail": "工业用电 +11.5%，电子设备 +12.7%、电气机械 +14.1%——工厂在满负荷运转。",
+      "trend": "up"
+    },
+    "investment": {
+      "label": "投资端在失速",
+      "headline": "工业投资 −46.7%",
+      "detail": "固投 −34.1%、基建 −35.3%；年初1-2月还是 +1.1%，随后一路下滑。",
+      "trend": "down"
+    },
+    "impact": "今年的投资，是三五年后的产出。工厂在交付旧订单，新项目却在减少开工——把这一幕喂给模型，1600亿的达标率会从约50%掉到约6.6%。"
+  },
+  "kpiRefs": [
+    "ind-chain-output",
+    "ind-chain-invest",
+    "ind-tour-zone",
+    "ind-ess",
+    "ind-canton-fair"
+  ]
+}
