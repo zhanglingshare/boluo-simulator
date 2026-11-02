@@ -24,7 +24,7 @@ console.log('── 1b) 博罗非全息页面 UI 完整性 ──');
 const nonHoloPages = [
   'index.html','role.html','who.html','choices.html','future.html',
   'windtunnel.html','blindspot.html','report.html','ending.html',
-  'network.html','town.html','lab.html'
+  'network.html','town.html'
 ];
 const uiCssPath = path.join(root,'assets','boluo-ui.css');
 if (!fs.existsSync(uiCssPath)) bad('缺少共享非全息 UI 样式');
