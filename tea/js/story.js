@@ -160,7 +160,11 @@
           h('div', { class: 'purpose-bar reveal d2' },
             h('span', null, '目标路径'),
             h('i'), h('span', null, '资源投向'),
-            h('i'), h('span', null, '风险把握'))),
+            h('i'), h('span', null, '风险把握')),
+          h('a', { class: 'dk-entry reveal d2', href: 'deck.html' },
+            '进入数据探索台 · 多图表 / 筛选',
+            h('svg', { width: 16, height: 16, viewBox: '0 0 24 24', fill: 'none', stroke: 'currentColor', 'stroke-width': 2, 'stroke-linecap': 'round', 'stroke-linejoin': 'round' },
+              h('path', { d: 'M5 12h14M13 6l6 6-6 6' })))),
         chart));
     sec.append(topbar(1, '', true),
       h('div', { class: 'stage-wrap' }, stage),
