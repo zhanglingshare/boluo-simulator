@@ -152,10 +152,17 @@
       ...nodes.flat());
   }
 
+  /* changes 最终仍不可用时的降级（不阻塞其余模块） */
+  function changesUnavailable() {
+    return h('div', { class: 'dk-empty' }, '事件数据暂未加载',
+      h('button', { class: 'dk-btn', style: 'margin-top:12px;', onclick: () => location.reload() }, '重试'));
+  }
+
   /* ============================================================
      3) 分段堆叠条（事件三大类）
      ============================================================ */
   function stackedBar() {
+    if (!DATA.changes) return changesUnavailable();
     const officialTypes = ['官方报告', '官方综述', '官方发布', '官方报道'];
     const b = { 官方类: 0, 媒体类: 0, 产业协作类: 0 };
     DATA.changes.changes.forEach(c => {
@@ -265,6 +272,7 @@
      7) 事件流时间线（下拉 + 搜索）
      ============================================================ */
   function feedPanel() {
+    if (!DATA.changes) return changesUnavailable();
     const officialTypes = ['官方报告', '官方综述', '官方发布', '官方报道'];
     const list = h('div', { class: 'dk-feed' });
     const search = h('input', { class: 'dk-input', placeholder: '搜索事件标题…' });
@@ -360,16 +368,31 @@
       content);
   }
 
+  /* 本台自行带退避加载 changes，避免平台波动时可选后台加载静默为 null */
+  async function loadChanges() {
+    const BACK = [300, 500, 750, 1000, 1300, 1600, 2000];
+    for (let k = 0; k <= BACK.length; k++) {
+      try {
+        const res = await fetch('data/changes.json', { cache: 'no-store' });
+        if (!res.ok) throw new Error('HTTP ' + res.status);
+        return await res.json();
+      } catch (e) {
+        if (k === BACK.length) return null;
+        await new Promise(r => setTimeout(r, BACK[k]));
+      }
+    }
+    return null;
+  }
+
   /* ============================================================
      组装
      ============================================================ */
   async function boot() {
     DATA = await TeaData.loadAll();
     FLAT = TeaData.flatFacts(DATA);
-    // changes 为后台可选加载，等待其就绪
-    for (let i = 0; i < 40 && !DATA.changes; i++) {
-      await new Promise(r => setTimeout(r, 250));
-    }
+    // changes 为可选后台加载；先给它一点时间，未就绪则本台自行带重试加载
+    for (let i = 0; i < 8 && !DATA.changes; i++) await new Promise(r => setTimeout(r, 250));
+    if (!DATA.changes) DATA.changes = await loadChanges();
 
     /* 指标切换下拉（折线） */
     const metricSel = h('select', { class: 'dk-select' },
