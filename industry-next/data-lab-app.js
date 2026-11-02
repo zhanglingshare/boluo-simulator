@@ -88,7 +88,7 @@ function renderResult(){
  $('storyTitle').textContent=dd<0?'当前情景交付减少，传导值得进一步追踪':dd>0?'交付增加，但不等于真实获利':'本轮交付没有变化，可能瓶颈在另一环';
  $('storyText').textContent='相较未受冲击的同一份台账，已交付干茶变化'+display(dd)+'kg，期末订单等待变化'+display(wait)+'kg。请核实库存保质期、返工、真实产能与采购合同；不能直接等同收入损失。';
  }else{$('storyTitle').textContent='数据不足以模拟完整交付链';$('storyText').textContent='当前只能使用已经具备完整数据的模块，不能填充缺失字段。'}
- const proposals=M.evaluateStrengthening({rows,scenario,openingCashYuan:opening});
+ const proposals=M.evaluateStrengthening({rows,scenario:stateScenario(),openingCashYuan:$('openingCash').value.trim()===''?null:Number($('openingCash').value)});
  $('reinforceRows').innerHTML=proposals.ok?proposals.proposals.map(x=>'<tr><td>'+esc(x.label)+'</td><td>'+display(x.deltaDeliveredDryKg)+'kg</td><td>'+display(x.deltaOrderWaitingEndKg)+'kg</td><td>'+display(x.deltaFreshWaitingPeakKg)+'kg</td></tr>').join(''):'<tr><td colspan="4">'+esc(proposals.reason||'没有完整数据')+'</td></tr>';
  $('runStatus').textContent='已完成本机运行：'+current.trace.from+'—'+current.trace.to+'；'+current.trace.days+'天';
 }
