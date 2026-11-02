@@ -1,6 +1,6 @@
 # 柏塘山茶 2030 · 情报分级与机制风洞 V3
 
-> 入口：[`tea-lab-v3.html`](tea-lab-v3.html)。独立预览，不替换 `industry/`、`v1031/` 或惠城项目。
+> 入口：[`tea-lab-v3.html`](tea-lab-v3.html)。独立预览，不替换 `industry/` 或惠城项目。
 
 ## 五步闭环
 

@@ -184,7 +184,7 @@
     const link = `${location.origin}${location.pathname}#s=${encode(snapshot)}`;
     modal('分享同一次观察', `<p>打开链接会还原关注问题、节点、试验条件、现场记录与核实进度。接收者能看到这些内容，请先检查记录中是否有不宜分享的信息。</p><textarea class="share-field" id="shareLink" readonly aria-label="可复制的观察链接">${esc(link)}</textarea><div class="inline-actions"><button class="primary" data-action="copy-share">复制观察链接 ${icon('link')}</button><button class="secondary" data-action="close-modal">返回工作区</button></div>`);
   }
-  const library = [['今日博罗','index.html'],['变化现场','holo-home-v10.html'],['关系图谱','holo-home-v9.html'],['产业网络','network.html'],['博罗基本面','who.html'],['五条发展路径','choices.html'],['2030未来推演','future.html'],['全县风洞测试','windtunnel.html'],['忽略了什么','blindspot.html'],['完整分析报告','report.html'],['结语','ending.html'],['各镇吃喝玩乐','town.html'],['角色体验','role.html'],['决策实验室','lab.html'],['既有完整通俗版','easy/'],['既有风洞2.0','v2/'],['既有V1031','v1031/']];
+  const library = [['今日博罗','index.html'],['变化现场','holo-home-v10.html'],['关系图谱','holo-home-v9.html'],['产业网络','network.html'],['博罗基本面','who.html'],['五条发展路径','choices.html'],['2030未来推演','future.html'],['全县风洞测试','windtunnel.html'],['忽略了什么','blindspot.html'],['完整分析报告','report.html'],['结语','ending.html'],['各镇吃喝玩乐','town.html'],['角色体验','role.html'],['决策实验室','lab.html'],['既有风洞2.0','v2/']];
   document.addEventListener('click', async event => {
     const t = event.target.closest('button,a[data-view]'); if (!t) return;
     if(t.dataset.inquiry){const h=I.hypotheses.find(h=>h.id===t.dataset.inquiry);if(h){state.inquiry=h.id;state.graphLayer='public';state.trialMode='evidence';state.node=h.node;state.question=h.short;positions={};zoom=1;setView(t.dataset.inquiryView||state.view);}return;}
