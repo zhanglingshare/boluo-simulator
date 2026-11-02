@@ -1,4 +1,4 @@
-/* 柏塘产业级情景实验 v1 — 公开数据只用于事实基线；模拟为假设指数，不是已校准预测。
+/* 柏塘产业级情景实验 2026—2030 v2 — 公开数据只用于事实基线；模拟为假设指数，不是已校准预测。
  * 2025年产业结构指数=100。 Monte Carlo with seeded, correlated yearly shocks.
  * 变更、算法和参数可复现。无SEM样本，不报告已估系数。
  */
@@ -54,7 +54,7 @@ function scoreGrowth(year,w,world,execution,shock) {
 function createSession(opts={}){
  const weights=normalize(opts.weights),stress=STRESSES[opts.stress]?opts.stress:'none';
  const n=clamp(Math.round(Number(opts.samples)||2400),300,6000),seed=(Number(opts.seed)||20261101)|0,rand=rng(seed);
- const years=Array.from({length:10},(_,i)=>2026+i),arrays=years.map(()=>[]),strength=years.map(()=>[]);
+ const years=Array.from({length:5},(_,i)=>2026+i),arrays=years.map(()=>[]),strength=years.map(()=>[]);
  let completed=0;
  function one(){
   let index=100,prod=100;const region=normal(rand)*.012,market=normal(rand)*.012;
@@ -74,7 +74,7 @@ function createSession(opts={}){
    const v=arrays[j].slice().sort((a,b)=>a-b),u=strength[j].slice().sort((a,b)=>a-b);
    return {year,p10:f(quantile(v,.1)),p50:f(quantile(v,.5)),p90:f(quantile(v,.9)),volumeP50:f(quantile(u,.5))};
   });
-  return {weights,stress,samples:completed,requestedSamples:n,seed,bands,ending:bands[9],mid:bands[4],
+  return {weights,stress,samples:completed,requestedSamples:n,seed,bands,ending:bands[bands.length-1],mid:bands[2],
    unit:'2025结构价值指数=100',kind:'假设情景分布，非真实发展预测',
    assumptions:'增长响应、滞后、随机扰动和冲击传导是模型假设；未经本地逐年经营与产业统计数据校准。'};
  }
@@ -96,7 +96,7 @@ function compare({weights,stress='none',samples=2400,seed=20261101}={}){
  const base=simulate({weights:PRESETS.balance.weights,stress:'none',samples,seed});
  const chosen=simulate({weights,stress,samples,seed});
  const baselineShock=stress==='none'?base:simulate({weights,stress:'none',samples,seed});
- return {base,chosen,noShock:baselineShock,shift2035:f(chosen.ending.p50-baselineShock.ending.p50)};
+ return {base,chosen,noShock:baselineShock,shift2030:f(chosen.ending.p50-baselineShock.ending.p50)};
 }
 function sensitivity({weights,stress='none',samples=1200,seed=20261101}={}){
  const w=normalize(weights),base=simulate({weights:w,stress,samples,seed});
