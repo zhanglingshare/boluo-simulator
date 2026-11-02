@@ -28,7 +28,7 @@ footer{padding:25px 30px 95px;border-top:1px solid var(--line);color:#6e8e9e;fon
 @media(max-width:750px){.shell{padding-left:17px;padding-right:17px}.topin{min-height:58px}.toplinks a{font-size:11px;padding:7px 9px}.hero{padding:44px 0 30px}.hero h1{font-size:39px}.layout{display:block;padding-top:15px;padding-bottom:85px}.rail{display:none}.topicgrid,.selectrow{grid-template-columns:1fr 1fr}.topic{min-height:104px;padding:17px 14px}.topic strong{font-size:14px}.topic span{font-size:10px}.topic:after{right:9px;top:7px;font-size:17px}.card{padding:18px;border-radius:17px}.range{height:112px}.statgrid,.factlist,.revealgrid,.library{grid-template-columns:1fr 1fr}.bottomnav{position:fixed;z-index:50;bottom:0;left:0;right:0;display:flex;background:rgba(8,26,40,.96);backdrop-filter:blur(24px);border-top:1px solid #315263;padding:8px 6px max(8px,env(safe-area-inset-bottom))}.bottomnav button{flex:1;background:transparent;color:#90aab8;border:0;padding:6px 0;font-size:11px}.bottomnav button.active{color:var(--accent);font-weight:850}}
 @media(max-width:380px){.hero h1{font-size:34px}.topicgrid,.statgrid,.factlist,.revealgrid,.library{grid-template-columns:1fr}.toplinks a:last-child{display:none}}
 @media(prefers-reduced-motion:reduce){*,*:before,*:after{animation:none!important;transition:none!important}}
-</style><link rel="stylesheet" href="tea-case-bridge.css"></head><body>
+</style></head><body>
 <header class="top"><div class="shell topin"><div class="brand"><span class="brandmark" id="brandMark">变</span><span id="brandName">变化现场</span><span class="version">V1031</span></div><div class="toplinks"><a href="../index.html">原版完整入口 ↗</a><a href="#" id="topShare">分享这个发现</a></div></div></header>
 <section class="hero"><div class="shell hero-inner"><div class="eyebrow">A WORLD THAT CHANGES WITH YOU · V1031</div><h1 id="heroTitle"></h1><p id="heroText"></p><div class="introfoot"><span class="smallpill">真实变化</span><span class="smallpill">可试的未来</span><span class="smallpill">不同判断</span><span class="smallpill" id="dataTime">加载最近情报中</span></div></div></section>
 <div class="shell layout">
@@ -94,7 +94,7 @@ var qs=new URLSearchParams(location.search);
 if(prefs[qs.get('focus')])interest=qs.get('focus');
 if(P.scenes.some(function(s){return s.id===qs.get('scene')}))scene=qs.get('scene');
 $('brandName').textContent=P.region+' · 变化现场';$('brandMark').textContent=P.region[0];$('heroTitle').textContent=P.tagline;$('heroText').textContent=P.line;$('modelNote').textContent=P.modelNote;
-function view(id){document.querySelectorAll('.view').forEach(function(n){n.classList.toggle('active',n.id===id)});document.querySelectorAll('button.nav').forEach(function(n){n.classList.toggle('active',n.dataset.view===id)});window.scrollTo({top:0,behavior:'smooth'});try{history.replaceState(null,'',location.pathname+'?focus='+encodeURIComponent(interest)+'&scene='+encodeURIComponent(scene)+'&view='+encodeURIComponent(id))}catch(e){}}
+function view(id){document.querySelectorAll('.view').forEach(function(n){n.classList.toggle('active',n.id===id)});document.querySelectorAll('button.nav').forEach(function(n){n.classList.toggle('active',n.dataset.view===id)});window.scrollTo({top:0,behavior:'smooth'});try{history.replaceState(null,'',location.pathname+'?focus='+interest+'&scene='+scene)}catch(e){}}
 document.querySelectorAll('button.nav').forEach(function(n){n.addEventListener('click',function(){view(n.dataset.view)})});
 $('goTest').onclick=function(){view('test')};$('goReveal').onclick=function(){view('reveal')};$('goInsight').onclick=function(){view('reveal')};
 $('libraryLinks').innerHTML=P.library.map(function(l){return '<a href="../'+encodeURI(l[1])+'">'+esc(l[0])+'</a>'}).join('');
@@ -133,8 +133,6 @@ else if(navigator.clipboard&&navigator.clipboard.writeText){navigator.clipboard.
 else prompt('复制分享链接',link)}
 $('topShare').onclick=function(e){e.preventDefault();share()};$('testShare').onclick=share;
 topics();question();sceneButtons();renderScene();
-if(['discover','test','reveal','library'].includes(qs.get('view'))&&qs.get('view')!=='discover')view(qs.get('view'));
-
 Promise.allSettled([fetch('../hot.json',{cache:'no-store'}).then(function(r){if(!r.ok)throw Error(r.status);return r.json()}),fetch('../life.json',{cache:'no-store'}).then(function(r){if(!r.ok)throw Error(r.status);return r.json()})]).then(function(rs){
 if(rs[0].status==='fulfilled'){data.hot=Array.isArray(rs[0].value.items)?rs[0].value.items:[];var u=rs[0].value.updated||rs[0].value.fetched_at||'未注明';$('dataTime').textContent='情报更新：'+u;$('feedUpdated').textContent=u;}
 else{$('dataTime').textContent='情报暂未连接';$('feedUpdated').textContent='不可用'}
@@ -142,4 +140,4 @@ if(rs[1].status==='fulfilled')data.life=rs[1].value;
 question();
 });
 })();
-</script><script src="../industry-next/case-bridge-v1.js"></script><script src="tea-case-bridge.js"></script></body></html>
+</script></body></html>
