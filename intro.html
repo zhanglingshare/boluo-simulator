@@ -7,8 +7,8 @@
 <style>
 *{box-sizing:border-box}
 :root{
-  --bg:#080b12; --panel:#0e1523; --panel2:#111b2d; --line:#1c2739; --line2:#2a3a56;
-  --tx:#e8eef6; --tx2:#9fb0c7; --tx3:#66778f;
+  --bg:#05080f; --panel:#0e1728; --panel2:#111d31; --line:#1b2740; --line2:#2b3d5e;
+  --tx:#e9f0f8; --tx2:#a3b4cc; --tx3:#6b7d99;
   --cyan:#6ee7d2; --blue:#7db8ff; --indigo:#93a3ff; --violet:#c79fff; --gold:#f4c76b; --green:#87e3ad;
 }
 html,body{margin:0;padding:0}
@@ -18,28 +18,38 @@ body{
   -webkit-font-smoothing:antialiased;min-height:100vh;overflow-x:hidden;
 }
 body::before{content:"";position:fixed;inset:0;z-index:0;pointer-events:none;
-  background-image:linear-gradient(rgba(125,160,220,.045) 1px,transparent 1px),linear-gradient(90deg,rgba(125,160,220,.045) 1px,transparent 1px);
+  background-image:linear-gradient(rgba(125,160,220,.04) 1px,transparent 1px),linear-gradient(90deg,rgba(125,160,220,.04) 1px,transparent 1px);
   background-size:46px 46px;mask-image:radial-gradient(ellipse 92% 72% at 50% 0%,#000 28%,transparent 94%)}
 body::after{content:"";position:fixed;inset:0;z-index:0;pointer-events:none;
-  background:radial-gradient(640px 400px at 10% -4%,rgba(110,231,210,.12),transparent 60%),
-    radial-gradient(720px 480px at 90% 4%,rgba(147,163,255,.13),transparent 62%),
-    radial-gradient(820px 560px at 50% 120%,rgba(199,159,255,.10),transparent 64%)}
+  background:radial-gradient(680px 420px at 10% -4%,rgba(110,231,210,.13),transparent 60%),
+    radial-gradient(760px 500px at 90% 4%,rgba(147,163,255,.14),transparent 62%),
+    radial-gradient(860px 580px at 50% 120%,rgba(199,159,255,.11),transparent 64%)}
 a{color:inherit;text-decoration:none}
 
+/* 3D 透视网格地板（传送门空间纵深） */
+.grid-floor{position:fixed;left:-50%;bottom:-6%;width:200%;height:62%;z-index:0;pointer-events:none;
+  background-image:linear-gradient(rgba(110,231,210,.12) 1px,transparent 1px),linear-gradient(90deg,rgba(110,231,210,.12) 1px,transparent 1px);
+  background-size:58px 58px;transform:perspective(620px) rotateX(62deg);transform-origin:top center;
+  -webkit-mask-image:linear-gradient(to bottom,transparent 0%,#000 52%);
+  mask-image:linear-gradient(to bottom,transparent 0%,#000 52%);opacity:.8}
+
 /* 精简导航 */
-.topbar{position:sticky;top:0;z-index:50;backdrop-filter:blur(12px);background:rgba(8,11,18,.84);border-bottom:1px solid var(--line)}
+.topbar{position:sticky;top:0;z-index:50;backdrop-filter:blur(14px);-webkit-backdrop-filter:blur(14px);background:rgba(5,8,15,.8);border-bottom:1px solid var(--line)}
 .topbar .in{display:flex;align-items:center;gap:12px;height:56px;max-width:1360px;margin:0 auto;padding:0 20px}
 .brand{display:flex;align-items:center;gap:10px;font-weight:800;font-size:15px;letter-spacing:.3px}
 .brand .mk{width:25px;height:25px;flex:none}
+.live{display:flex;align-items:center;gap:7px;margin-left:14px;font-size:11.5px;color:var(--cyan);font-weight:700}
+.live .p{width:7px;height:7px;border-radius:50%;background:var(--cyan);box-shadow:0 0 10px var(--cyan);animation:pulse 2s infinite}
+@keyframes pulse{50%{opacity:.3}}
 .topbar .enter{margin-left:auto;font-size:13px;font-weight:700;color:#06141f;
-  background:linear-gradient(135deg,var(--cyan),#7fc9ec);padding:8px 18px;border-radius:20px;white-space:nowrap;box-shadow:0 6px 18px rgba(110,231,210,.18)}
+  background:linear-gradient(135deg,var(--cyan),#7fc9ec);padding:8px 18px;border-radius:20px;white-space:nowrap;box-shadow:0 6px 18px rgba(110,231,210,.2)}
 .topbar .enter:active{transform:scale(.97)}
 
-/* ============ 桌面架构图（固定设计稿 1360） ============ */
+/* 架构图根 */
 .stage{position:relative;z-index:1;max-width:1360px;margin:0 auto;padding:34px 40px 60px}
 
 /* 标题 */
-.arch-head{text-align:center;margin-bottom:30px}
+.arch-head{text-align:center;margin-bottom:30px;animation:rise .7s cubic-bezier(.16,1,.3,1) both}
 .arch-head h1{font-size:clamp(26px,3vw,38px);font-weight:850;letter-spacing:-.5px;margin:0 0 8px}
 .arch-head .sub{color:var(--tx2);font-size:14px;letter-spacing:1px}
 .arch-head .sub b{color:var(--cyan);font-weight:700}
@@ -49,29 +59,37 @@ a{color:inherit;text-decoration:none}
 /* 今日博罗入口 */
 .entry{display:inline-flex;flex-direction:column;justify-content:center;align-items:center;
   width:158px;height:68px;border:1.4px solid rgba(244,199,107,.7);border-radius:12px;
-  background:radial-gradient(circle at 50% 0,rgba(244,199,107,.14),transparent 70%);
-  color:var(--gold);font-weight:800;font-size:15px;line-height:1.5;transition:.2s}
-.entry:hover{background:rgba(244,199,107,.16);transform:translateY(-2px)}
+  background:rgba(244,199,107,.07);backdrop-filter:blur(10px);-webkit-backdrop-filter:blur(10px);
+  color:var(--gold);font-weight:800;font-size:15px;line-height:1.5;transition:.25s}
+.entry:hover{background:rgba(244,199,107,.16);transform:translateY(-2px);box-shadow:0 14px 34px rgba(244,199,107,.16)}
 .entry small{font-size:11px;font-weight:700;color:#d8b56a}
 .entry-row{display:flex;align-items:center;gap:14px;margin-bottom:8px}
 .disc-tag{color:var(--tx3);font-size:12px}
 .disc-tag b{color:var(--blue)}
 
-/* 连接器：竖线 / 箭头 */
+/* 连接器 */
 .vlink{display:flex;flex-direction:column;align-items:center;color:var(--tx3)}
-.vlink .bar{width:1.5px;background:linear-gradient(var(--line2),var(--cyan));opacity:.8}
+.vlink .bar{width:1.5px;background:linear-gradient(var(--line2),var(--cyan));opacity:.85}
 .vlink .ah{width:9px;height:9px;border-right:1.5px solid var(--cyan);border-bottom:1.5px solid var(--cyan);transform:rotate(45deg);margin-top:-2px}
 .dash{background:repeating-linear-gradient(to bottom,var(--cyan) 0 4px,transparent 4px 9px)!important}
 
-/* 三仪表 */
+/* 三仪表（磨砂玻璃舱门） */
 .instruments{display:grid;grid-template-columns:repeat(3,1fr);gap:34px;align-items:stretch;position:relative}
 .inst{position:relative;display:flex;flex-direction:column;padding:26px 26px 22px;border-radius:18px;overflow:hidden;
-  background:linear-gradient(165deg,rgba(20,30,48,.94),rgba(12,19,32,.96));border:1px solid var(--line2);transition:.2s}
-.inst:hover{transform:translateY(-4px);box-shadow:0 22px 48px rgba(0,0,0,.36)}
+  background:linear-gradient(165deg,rgba(20,32,52,.6),rgba(12,20,34,.72));
+  backdrop-filter:blur(18px);-webkit-backdrop-filter:blur(18px);
+  border:1px solid var(--line2);transition:transform .3s cubic-bezier(.16,1,.3,1),box-shadow .3s,border-color .3s;
+  animation:rise .7s cubic-bezier(.16,1,.3,1) both}
+.inst.i1{animation-delay:.06s}.inst.i2{animation-delay:.12s}.inst.i3{animation-delay:.18s}
+.inst::after{content:"";position:absolute;inset:0;opacity:0;transition:.3s;
+  background:radial-gradient(420px 200px at 50% 0%,rgba(255,255,255,.1),transparent 62%)}
+.inst:hover{transform:translateY(-6px)}.inst:hover::after{opacity:1}
 .inst.i1::before{content:"";position:absolute;inset:0;background:radial-gradient(440px 210px at 0% 0,rgba(110,231,210,.16),transparent 60%)}
 .inst.i2::before{content:"";position:absolute;inset:0;background:radial-gradient(440px 210px at 100% 0,rgba(147,163,255,.18),transparent 60%)}
 .inst.i3::before{content:"";position:absolute;inset:0;background:radial-gradient(440px 210px at 60% 0,rgba(199,159,255,.17),transparent 60%)}
-.i1:hover{border-color:rgba(110,231,210,.55)}.i2:hover{border-color:rgba(147,163,255,.55)}.i3:hover{border-color:rgba(199,159,255,.6)}
+.i1:hover{border-color:rgba(110,231,210,.6);box-shadow:0 24px 56px rgba(0,0,0,.5),0 0 36px rgba(110,231,210,.18)}
+.i2:hover{border-color:rgba(147,163,255,.6);box-shadow:0 24px 56px rgba(0,0,0,.5),0 0 36px rgba(147,163,255,.2)}
+.i3:hover{border-color:rgba(199,159,255,.65);box-shadow:0 24px 56px rgba(0,0,0,.5),0 0 36px rgba(199,159,255,.2)}
 .inst .dim{position:relative;font-size:12px;font-weight:800;letter-spacing:1.5px;margin-bottom:12px}
 .i1 .dim{color:var(--cyan)}.i2 .dim{color:var(--indigo)}.i3 .dim{color:var(--violet)}
 .inst h3{position:relative;font-size:24px;font-weight:840;margin:0 0 12px;letter-spacing:-.3px}
@@ -79,67 +97,78 @@ a{color:inherit;text-decoration:none}
 .inst .go{position:relative;margin-top:16px;font-size:12.5px;font-weight:800}
 .i1 .go{color:var(--cyan)}.i2 .go{color:var(--indigo)}.i3 .go{color:var(--violet)}
 
-/* 仪表间关系（放在 gap 上的绝对定位标签） */
+/* 仪表间关系 */
 .rel{position:absolute;top:50%;transform:translateY(-50%);z-index:3;display:flex;flex-direction:column;align-items:center;gap:6px;pointer-events:none}
-.rel .lab{font-size:11px;font-weight:800;color:var(--tx2);background:rgba(10,16,27,.92);border:1px solid var(--line2);padding:3px 9px;border-radius:12px;white-space:nowrap}
+.rel .lab{font-size:11px;font-weight:800;color:var(--tx2);background:rgba(8,14,26,.9);border:1px solid var(--line2);padding:3px 9px;border-radius:12px;white-space:nowrap}
 .rel .ln{width:30px;height:1.5px;background:repeating-linear-gradient(90deg,var(--blue) 0 4px,transparent 4px 8px)}
 .rel.r1{left:calc(33.333% - 17px)}.rel.r2{left:calc(66.666% - 17px)}
-.rel .two{display:flex;flex-direction:column;gap:2px}
 
-/* 功能页面群 */
+/* 功能页面群（玻璃小卡） */
 .funcs{display:grid;grid-template-columns:repeat(8,1fr);gap:12px;margin-top:6px}
 .func{display:flex;flex-direction:column;align-items:center;gap:8px;padding:16px 8px 14px;border-radius:13px;
-  background:var(--panel);border:1px solid var(--line);text-align:center;transition:.2s}
-.func:hover{border-color:var(--line2);background:var(--panel2);transform:translateY(-2px)}
+  background:rgba(14,23,40,.62);backdrop-filter:blur(12px);-webkit-backdrop-filter:blur(12px);
+  border:1px solid var(--line);text-align:center;transition:.25s}
+.func:hover{border-color:var(--line2);background:rgba(20,33,55,.8);transform:translateY(-3px);box-shadow:0 14px 30px rgba(0,0,0,.35)}
 .func svg{width:24px;height:24px;stroke:var(--blue);flex:none}
 .func .t{font-size:12.5px;font-weight:720;color:var(--tx);line-height:1.4}
 
-/* 镇街 / 柏塘支路 */
+/* 镇街 / 柏塘 */
 .branch{display:flex;align-items:center;justify-content:flex-end;gap:16px;margin:26px 0 4px}
 .branch .hint{color:var(--tx3);font-size:12px;margin-right:auto}
 .town-node{display:flex;align-items:center;justify-content:center;width:96px;height:64px;border-radius:12px;
-  background:var(--panel2);border:1px solid var(--line2);font-weight:800;text-align:center;line-height:1.4;transition:.2s}
+  background:rgba(17,29,49,.7);backdrop-filter:blur(10px);-webkit-backdrop-filter:blur(10px);
+  border:1px solid var(--line2);font-weight:800;text-align:center;line-height:1.4;transition:.25s}
 .town-node:hover{transform:translateY(-2px);border-color:var(--blue)}
 .horz{width:34px;height:1.5px;background:repeating-linear-gradient(90deg,var(--gold) 0 4px,transparent 4px 8px)}
 .tea-node{display:flex;flex-direction:column;align-items:center;justify-content:center;width:172px;height:68px;border-radius:12px;
-  border:1.4px solid rgba(244,199,107,.7);color:var(--gold);font-weight:820;background:radial-gradient(circle at 50% 0,rgba(244,199,107,.14),transparent 70%);transition:.2s}
-.tea-node:hover{background:rgba(244,199,107,.16);transform:translateY(-2px)}
+  border:1.4px solid rgba(244,199,107,.7);color:var(--gold);font-weight:820;background:rgba(244,199,107,.08);transition:.25s}
+.tea-node:hover{background:rgba(244,199,107,.16);transform:translateY(-2px);box-shadow:0 14px 34px rgba(244,199,107,.16)}
 .tea-node small{font-size:10.5px;font-weight:700;color:#d8b56a;margin-top:2px}
 
 /* 唯一数据源 */
 .source-wrap{display:flex;justify-content:center;margin:22px 0 6px}
 .source{display:inline-flex;align-items:center;gap:9px;padding:11px 28px;border-radius:24px;
-  background:linear-gradient(135deg,#14233a,#0f1a2e);border:1px solid var(--line2);font-weight:800;font-size:14.5px}
+  background:linear-gradient(135deg,rgba(20,35,58,.85),rgba(15,26,46,.9));border:1px solid var(--line2);font-weight:800;font-size:14.5px}
 .source .dot{width:8px;height:8px;border-radius:50%;background:var(--cyan);box-shadow:0 0 10px var(--cyan)}
 
 /* 后台引擎条 */
-.engine-box{margin-top:24px;border:1.5px solid rgba(110,231,210,.55);border-radius:18px;padding:24px 26px;
-  background:linear-gradient(160deg,rgba(13,26,34,.7),rgba(9,16,26,.85));box-shadow:0 0 36px rgba(110,231,210,.1),inset 0 0 30px rgba(110,231,210,.05)}
+.engine-box{margin-top:24px;border:1.5px solid rgba(110,231,210,.5);border-radius:18px;padding:24px 26px;
+  background:linear-gradient(160deg,rgba(13,26,34,.62),rgba(9,16,26,.78));
+  backdrop-filter:blur(14px);-webkit-backdrop-filter:blur(14px);
+  box-shadow:0 0 36px rgba(110,231,210,.1),inset 0 0 30px rgba(110,231,210,.05)}
 .engine-head{display:flex;align-items:center;margin-bottom:20px}
 .engine-head .t{font-size:14.5px;font-weight:830}
 .engine-head .t b{color:var(--cyan)}
 .engine-head .right{margin-left:auto;font-size:12px;color:var(--tx3)}
 .engines{display:flex;align-items:center}
 .eng{display:flex;flex:0 1 188px;width:188px;max-width:200px;flex-direction:column;align-items:center;gap:9px;padding:18px 10px;border-radius:13px;
-  background:rgba(14,24,36,.8);border:1px solid var(--line2)}
+  background:rgba(14,24,36,.72);border:1px solid var(--line2)}
 .eng .ic{width:30px;height:30px;border-radius:50%;border:1.5px solid rgba(110,231,210,.6);display:flex;align-items:center;justify-content:center}
 .eng .ic svg{width:16px;height:16px;stroke:var(--cyan)}
 .eng .t{font-size:13.5px;font-weight:780}
-.ear{position:relative;height:1.5px;background:repeating-linear-gradient(90deg,var(--cyan) 0 4px,transparent 4px 8px)}
+.ear{position:relative;flex:1;min-width:24px;height:1.5px;background:repeating-linear-gradient(90deg,var(--cyan) 0 4px,transparent 4px 8px)}
 .ear::after{content:"";position:absolute;right:0;top:-3.5px;width:8px;height:8px;border-right:1.5px solid var(--cyan);border-top:1.5px solid var(--cyan);transform:rotate(45deg)}
 .engine-foot{display:flex;justify-content:flex-end;margin-top:18px;font-size:12px;color:var(--tx3)}
 .engine-foot b{color:var(--green)}
 
-/* 底部说明 */
-.foot-note{margin-top:34px;text-align:center;color:var(--tx3);font-size:12px;line-height:1.9}
-.foot-note b{color:var(--tx2)}
-.foot-note .arch{display:inline-flex;margin-top:10px;color:var(--blue);font-weight:780;border:1px solid var(--line2);padding:9px 20px;border-radius:11px;background:rgba(20,30,48,.55)}
-.foot-note .arch:hover{border-color:rgba(125,184,255,.55)}
+/* 实时数据 Ticker（数据总线） */
+.ticker-wrap{margin-top:26px;overflow:hidden;border:1px solid var(--line2);border-radius:14px;
+  background:rgba(10,18,30,.62);backdrop-filter:blur(12px);-webkit-backdrop-filter:blur(12px);padding:13px 0}
+.ticker{display:inline-block;white-space:nowrap;animation:ticker 30s linear infinite;font-family:ui-monospace,Menlo,Consolas,monospace;font-size:12.5px;color:var(--tx2)}
+.ticker span{margin:0 26px}.ticker b{color:var(--cyan);font-weight:700}
+.ticker-wrap:hover .ticker{animation-play-state:paused}
+@keyframes ticker{to{transform:translateX(-50%)}}
 
-/* 移动端专用连接（桌面隐藏） */
+/* 底部说明 */
+.foot-note{margin-top:30px;text-align:center;color:var(--tx3);font-size:12px;line-height:1.9}
+.foot-note b{color:var(--tx2)}
+
+/* 移动端连接 */
 .m-connect{display:none}
 
-/* ============ 平板 ============ */
+@keyframes rise{from{opacity:0;transform:translateY(22px)}to{opacity:1;transform:translateY(0)}}
+
+/* 平板 */
 @media(max-width:1099px){
   .stage{padding:26px 24px 48px}
   .instruments{gap:18px}
@@ -151,10 +180,12 @@ a{color:inherit;text-decoration:none}
   .ear{min-width:16px}
 }
 
-/* ============ 手机 ============ */
+/* 手机 */
 @media(max-width:767px){
   .topbar .in{height:52px;padding:0 16px}
+  .live{display:none}
   .stage{padding:22px 16px 40px}
+  .grid-floor{height:48%;bottom:-4%}
   .arch-head{margin-bottom:22px}
   .arch-head .sub{font-size:12.5px;line-height:1.7}
   .entry-row{justify-content:center}
@@ -174,11 +205,14 @@ a{color:inherit;text-decoration:none}
   .ear{display:none}
   .engine-head{flex-direction:column;align-items:flex-start;gap:4px}
   .engine-head .right{margin-left:0}
+  .ticker{font-size:11px}
 }
-@media(prefers-reduced-motion:reduce){*{transition:none!important;animation:none!important}}
+@media(prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}}
 </style>
 </head>
 <body>
+
+<div class="grid-floor" aria-hidden="true"></div>
 
 <header class="topbar">
   <div class="in">
@@ -190,6 +224,7 @@ a{color:inherit;text-decoration:none}
       </svg>
       博罗产业风洞模拟器
     </div>
+    <div class="live"><span class="p"></span>实时监测中</div>
     <a class="enter" href="index.html">进入今日博罗 →</a>
   </div>
 </header>
@@ -202,56 +237,44 @@ a{color:inherit;text-decoration:none}
     <div class="glowline"></div>
   </div>
 
-  <!-- 今日博罗入口 -->
   <div class="entry-row">
     <a class="entry" href="index.html">今日博罗<small>入口</small></a>
     <span class="disc-tag">从一个真实问题出发，<b>发现</b>关系与变化</span>
   </div>
   <div class="vlink" style="height:26px"><span class="bar dash" style="flex:1"></span><span class="ah"></span></div>
 
-  <!-- 三块仪表 -->
   <section class="instruments">
-
     <a class="inst i1" href="holo-home-v9.html">
       <span class="dim">时间 · 变化情报</span>
       <h3>变化现场</h3>
       <p>最近在动什么？每一个变化的依据多硬、来自哪里。用时间轴看清博罗的一举一动。</p>
       <span class="go">进入变化现场 →</span>
     </a>
-
     <a class="inst i2" href="experiments/holo-single/index.html">
       <span class="dim">空间 · 全息探索</span>
       <h3>关系图谱</h3>
       <p>博罗怎么长在一起？产业、镇街、项目如何跨层穿透。在全息关系网络里自由探索。</p>
       <span class="go">进入关系图谱 →</span>
     </a>
-
     <a class="inst i3" href="network.html">
       <span class="dim">受力 · 压力测试</span>
       <h3>产业网络</h3>
       <p>哪里是命门？一次冲击会沿什么路径传导、谁先承压。给产业网络做一次X光与压测。</p>
       <span class="go">进入产业网络 →</span>
     </a>
-
-    <!-- 仪表间关系（桌面） -->
     <div class="rel r1">
-      <span class="lab">核验</span>
-      <span class="ln"></span>
+      <span class="lab">核验</span><span class="ln"></span>
       <span class="lab" style="padding:2px 8px;font-size:10px">核验</span>
     </div>
     <div class="rel r2">
-      <span class="lab">深链接力</span>
-      <span class="ln"></span>
+      <span class="lab">深链接力</span><span class="ln"></span>
       <span class="lab" style="padding:2px 8px;font-size:10px">推演</span>
     </div>
   </section>
 
-  <!-- 手机端仪表间连接 -->
   <div class="m-connect"><span class="vl"></span><span class="ah"></span></div>
-
   <div class="vlink" style="height:26px;margin-top:6px"><span class="bar" style="flex:1"></span><span class="ah"></span></div>
 
-  <!-- 功能页面群 -->
   <section class="funcs">
     <a class="func" href="who.html">
       <svg viewBox="0 0 24 24" fill="none" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><rect x="4" y="3" width="16" height="18" rx="2"/><path d="M8 8h8M8 12h8M8 16h5"/></svg>
@@ -287,7 +310,6 @@ a{color:inherit;text-decoration:none}
     </a>
   </section>
 
-  <!-- 镇街 / 柏塘支路 -->
   <div class="branch">
     <span class="hint">镇级专题 · 非一级入口，双路径同版数据</span>
     <a class="town-node" href="town.html">16<br>镇街</a>
@@ -297,14 +319,12 @@ a{color:inherit;text-decoration:none}
 
   <div class="vlink" style="height:24px"><span class="bar dash" style="flex:1"></span><span class="ah"></span></div>
 
-  <!-- 唯一数据源 -->
   <div class="source-wrap">
     <div class="source"><span class="dot"></span>唯一数据源</div>
   </div>
 
   <div class="vlink" style="height:24px"><span class="bar dash" style="flex:1"></span><span class="ah"></span></div>
 
-  <!-- 后台引擎 -->
   <section class="engine-box">
     <div class="engine-head">
       <span class="t">后台引擎 · <b>多引擎协同</b></span>
@@ -321,6 +341,22 @@ a{color:inherit;text-decoration:none}
     </div>
     <div class="engine-foot"><b>证据分层 · 后台审计</b></div>
   </section>
+
+  <!-- 实时数据总线（内容均为仓库可核实的结构事实） -->
+  <div class="ticker-wrap">
+    <div class="ticker">
+      <span><b>监测 //</b> 覆盖 16 个镇街</span>
+      <span><b>关系网络 //</b> 27 个产业节点 · 30 条关联</span>
+      <span><b>变化情报 //</b> 近期变化事件 12 项</span>
+      <span><b>数据总线 //</b> 唯一数据源 · 单源一致</span>
+      <span><b>后台 //</b> 多引擎协同运转</span>
+      <span><b>监测 //</b> 覆盖 16 个镇街</span>
+      <span><b>关系网络 //</b> 27 个产业节点 · 30 条关联</span>
+      <span><b>变化情报 //</b> 近期变化事件 12 项</span>
+      <span><b>数据总线 //</b> 唯一数据源 · 单源一致</span>
+      <span><b>后台 //</b> 多引擎协同运转</span>
+    </div>
+  </div>
 
   <div class="foot-note">
     <b>公开资料 · 关系观察 · 情景推演</b>，模拟数值为情景推演结果，并非确定预测，也不代表已发生事实。
