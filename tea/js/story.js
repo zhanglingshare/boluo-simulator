@@ -461,18 +461,19 @@
   /* ---------- 星星 ---------- */
   function makeStars() {
     const wrap = document.getElementById('stars');
+    wrap.innerHTML = '';
     for (let i = 0; i < 26; i++) {
       const st = h('i', { style: 'left:' + Math.random() * 100 + '%;top:' + Math.random() * 52 + '%;animation-delay:' + (Math.random() * 4).toFixed(2) + 's' });
       wrap.appendChild(st);
     }
   }
 
-  /* ---------- 初始化 ---------- */
-  async function init() {
+  /* ---------- 初始化（可重试） ---------- */
+  async function boot() {
+    const deck = document.getElementById('deck');
+    deck.innerHTML = '';
     DATA = await TeaData.loadAll();
     makeStars();
-    const deck = document.getElementById('deck');
-    document.getElementById('boot') && document.getElementById('boot').remove();
     [screen1, screen2, screen3, screen4, screen5, screen6, screen7].forEach(fn => deck.appendChild(fn()));
     observe();
     if (location.hash) {
@@ -480,8 +481,22 @@
       if (t) t.scrollIntoView();
     }
   }
-  init().catch(err => {
+
+  function showError(err) {
     const deck = document.getElementById('deck');
-    deck.innerHTML = '<div class="stage-wrap"><div class="note-line">数据加载失败：' + err.message + '<br>请检查网络后刷新。</div></div>';
-  });
+    deck.innerHTML = '';
+    const retry = h('button', { class: 'btn-reset', style: 'margin:18px auto 0;' }, '重新加载');
+    retry.addEventListener('click', () => {
+      deck.innerHTML = '<div class="stage-wrap"><div class="note-line">正在重试…</div></div>';
+      boot().catch(showError);
+    });
+    const card = h('div', { class: 'stage-card narrow', style: 'max-width:520px;text-align:center;' },
+      h('div', { class: 'kicker', style: 'justify-content:center;' }, '加载遇到问题'),
+      h('div', { style: 'font-size:18px;font-weight:800;margin-bottom:8px;' }, '数据暂时没取到'),
+      h('p', { class: 'note-line' }, err.message || '网络或服务波动，请稍后重试。'),
+      retry);
+    deck.appendChild(h('div', { class: 'stage-wrap' }, card));
+  }
+
+  boot().catch(showError);
 })();

@@ -13,7 +13,8 @@
 
   const sleep = ms => new Promise(r => setTimeout(r, ms));
 
-  // 对瞬时网络错误/5xx 做有限重试（最多 3 次），避免边缘节点波动导致整页不可用
+  // 对瞬时网络错误/5xx 做有限重试（最多 6 次，指数退避），避免边缘节点波动导致整页不可用
+  const BACKOFF = [300, 500, 800, 1200, 1800];
   async function loadJson(file, attempt) {
     attempt = attempt || 1;
     try {
@@ -21,8 +22,8 @@
       if (!res.ok) throw new Error(file + ' 加载失败 (' + res.status + ')');
       return await res.json();
     } catch (err) {
-      if (attempt >= 4) throw err;
-      await sleep(350 * attempt);
+      if (attempt > BACKOFF.length) throw err;
+      await sleep(BACKOFF[attempt - 1]);
       return loadJson(file, attempt + 1);
     }
   }
