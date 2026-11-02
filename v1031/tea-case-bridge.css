@@ -1,0 +1,14 @@
+
+/* V1031原风格中的现实产业深潜模块，仅柏塘话题显示 */
+.tea-case-experience{margin:16px 0 18px;border:1px solid #b0d59e78;border-radius:17px;overflow:hidden;padding:22px;background:radial-gradient(ellipse at 84% 4%,#aec98628,transparent 44%),linear-gradient(140deg,#163b31,#122a31 69%,#0d2930);box-shadow:0 18px 38px #061d1a55}
+.tea-case-experience[hidden]{display:none}
+.tea-case-label{font-size:11px;color:#c5e5aa;font-weight:800;letter-spacing:1.3px}.tea-case-beacon{display:inline-block;height:8px;width:8px;border-radius:100%;background:#c6e887;box-shadow:0 0 12px #b1dc72;margin-right:8px}
+.tea-case-top{display:grid;grid-template-columns:minmax(0,2.2fr) minmax(103px,1fr) minmax(103px,1fr);align-items:center;gap:12px;margin-top:15px}
+.tea-case-top h3{font:600 clamp(22px,2.6vw,33px)/1.35 "Songti SC",Georgia,serif;margin:0 0 8px;color:#f9eacf}.tea-case-top p{margin:0;color:#bbd3c5;font-size:12px}
+.tea-case-metric{min-height:108px;display:flex;flex-direction:column;justify-content:center;border:1px solid #4b786a;border-radius:11px;background:#17484092;padding:12px}.tea-case-metric.gold{border-color:#c39b60;background:#6346285c}.tea-case-metric small{font-size:10px;color:#c0d2c4}.tea-case-metric strong{font-size:clamp(22px,2.5vw,32px);color:#f6d49b;line-height:1.55}.tea-case-metric span{font-size:10px;color:#a7c7b3}
+.tea-case-experiment{display:grid;grid-template-columns:1fr 185px;gap:20px;align-items:center;padding:17px 15px;margin-top:17px;background:#061e2382;border:1px solid #447362;border-radius:11px}
+.tea-case-experiment label{font-size:13px;color:#d3e8d3}.tea-case-experiment label b{font-size:20px;color:#f2c88f}.tea-case-experiment input{width:100%;accent-color:#e6be7c}.tea-case-experiment small{display:block;font-size:10px;color:#9db9ac}
+.tea-case-result span{display:block;font-size:10px;color:#acccbd}.tea-case-result b{display:block;font-size:27px;color:#f1d292}.tea-case-actions{display:flex;gap:9px;flex-wrap:wrap;margin:14px 0 10px}.tea-case-actions button,.tea-reveal-go{padding:11px 14px;border:1px solid #c4ad73;background:#f0c98b;color:#202b24;font-size:12px;font-weight:800;border-radius:8px;cursor:pointer}.tea-case-actions button+button{color:#d8ebd8;background:#285244;border-color:#649c83}.tea-case-foot{font-size:10px;color:#9dbdab;line-height:1.8}.tea-library-link{color:#d8ebaa!important;border:1px solid #769d6e!important;background:#2b4c35!important}.tea-reveal{margin:15px 0}.tea-reveal-go{background:#245644;color:#e5eddb;border:1px solid #a6cf93}
+@media(max-width:900px){.tea-case-top{grid-template-columns:1fr 1fr}.tea-case-top>div:first-child{grid-column:1/-1}.tea-case-experiment{grid-template-columns:1fr}}
+@media(max-width:540px){.tea-case-experience{padding:15px}.tea-case-top{gap:7px}.tea-case-metric{padding:9px}.tea-case-actions button{width:100%}}
+@media(prefers-reduced-motion:reduce){.tea-case-experience *{transition:none!important}}
