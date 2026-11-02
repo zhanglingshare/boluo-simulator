@@ -3,138 +3,177 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
-<title>博罗产业风洞模拟器 · 门户导览</title>
+<title>博罗产业风洞模拟器 · 全站架构</title>
 <style>
 *{box-sizing:border-box}
 :root{
-  --bg:#080b12; --panel:#0e1523; --line:#1c2739; --line2:#26344c;
-  --tx:#e6edf3; --tx2:#9fb0c7; --tx3:#64748b;
-  --cyan:#6ee7d2; --blue:#7db8ff; --indigo:#8fa0ff; --violet:#c39bff; --rose:#fb7da0; --gold:#f4c66b; --green:#86e3ac;
+  --bg:#080b12; --panel:#0e1523; --panel2:#111b2d; --line:#1c2739; --line2:#2a3a56;
+  --tx:#e8eef6; --tx2:#9fb0c7; --tx3:#66778f;
+  --cyan:#6ee7d2; --blue:#7db8ff; --indigo:#93a3ff; --violet:#c79fff; --gold:#f4c76b; --green:#87e3ad;
 }
 html,body{margin:0;padding:0}
 body{
-  background:var(--bg); color:var(--tx);
+  background:var(--bg);color:var(--tx);
   font:15px/1.7 -apple-system,BlinkMacSystemFont,"PingFang SC","Microsoft YaHei","Segoe UI",sans-serif;
-  -webkit-font-smoothing:antialiased; min-height:100vh; overflow-x:hidden;
+  -webkit-font-smoothing:antialiased;min-height:100vh;overflow-x:hidden;
 }
-/* 作品级底图：网格 + 多色径向光晕（纯CSS，不抢镜） */
-body::before{
-  content:"";position:fixed;inset:0;z-index:0;pointer-events:none;
+body::before{content:"";position:fixed;inset:0;z-index:0;pointer-events:none;
   background-image:linear-gradient(rgba(125,160,220,.045) 1px,transparent 1px),linear-gradient(90deg,rgba(125,160,220,.045) 1px,transparent 1px);
-  background-size:46px 46px;
-  mask-image:radial-gradient(ellipse 90% 70% at 50% 0%,#000 30%,transparent 92%);
-}
-body::after{
-  content:"";position:fixed;inset:0;z-index:0;pointer-events:none;
-  background:
-    radial-gradient(620px 380px at 12% -4%,rgba(110,231,210,.13),transparent 60%),
-    radial-gradient(700px 460px at 88% 6%,rgba(140,150,255,.14),transparent 62%),
-    radial-gradient(760px 520px at 50% 118%,rgba(195,155,255,.10),transparent 64%);
-}
+  background-size:46px 46px;mask-image:radial-gradient(ellipse 92% 72% at 50% 0%,#000 28%,transparent 94%)}
+body::after{content:"";position:fixed;inset:0;z-index:0;pointer-events:none;
+  background:radial-gradient(640px 400px at 10% -4%,rgba(110,231,210,.12),transparent 60%),
+    radial-gradient(720px 480px at 90% 4%,rgba(147,163,255,.13),transparent 62%),
+    radial-gradient(820px 560px at 50% 120%,rgba(199,159,255,.10),transparent 64%)}
 a{color:inherit;text-decoration:none}
-.wrap{position:relative;z-index:1;width:min(1180px,100% - 40px);margin:0 auto}
 
-/* 顶部精简导航 */
-.topbar{position:sticky;top:0;z-index:40;backdrop-filter:blur(12px);
-  background:rgba(8,11,18,.82);border-bottom:1px solid var(--line)}
-.topbar .in{display:flex;align-items:center;gap:14px;height:58px}
-.brand{display:flex;align-items:center;gap:10px;font-weight:800;letter-spacing:.4px;font-size:15px}
-.brand .mk{width:26px;height:26px;flex:none}
-.brand small{color:var(--tx3);font-weight:600;letter-spacing:2px;font-size:10px}
+/* 精简导航 */
+.topbar{position:sticky;top:0;z-index:50;backdrop-filter:blur(12px);background:rgba(8,11,18,.84);border-bottom:1px solid var(--line)}
+.topbar .in{display:flex;align-items:center;gap:12px;height:56px;max-width:1360px;margin:0 auto;padding:0 20px}
+.brand{display:flex;align-items:center;gap:10px;font-weight:800;font-size:15px;letter-spacing:.3px}
+.brand .mk{width:25px;height:25px;flex:none}
 .topbar .enter{margin-left:auto;font-size:13px;font-weight:700;color:#06141f;
   background:linear-gradient(135deg,var(--cyan),#7fc9ec);padding:8px 18px;border-radius:20px;white-space:nowrap;box-shadow:0 6px 18px rgba(110,231,210,.18)}
 .topbar .enter:active{transform:scale(.97)}
 
-/* Hero */
-.hero{padding:clamp(52px,9vw,104px) 0 clamp(34px,5vw,58px);text-align:center}
-.eyebrow{display:inline-flex;align-items:center;gap:8px;color:var(--cyan);
-  font-size:11px;font-weight:800;letter-spacing:2.4px;text-transform:uppercase;margin-bottom:22px}
-.eyebrow i{width:7px;height:7px;border-radius:50%;background:var(--cyan);box-shadow:0 0 12px var(--cyan)}
-.hero h1{font-size:clamp(32px,6.2vw,60px);line-height:1.14;font-weight:850;letter-spacing:-1.4px;margin:0 0 20px}
-.hero h1 .grad{background:linear-gradient(100deg,var(--cyan) 0%,var(--blue) 45%,var(--violet) 100%);
-  -webkit-background-clip:text;background-clip:text;color:transparent}
-.hero p.lead{color:var(--tx2);font-size:clamp(14.5px,1.5vw,17px);line-height:1.95;
-  max-width:680px;margin:0 auto 32px}
-.hero-cta{display:flex;gap:12px;justify-content:center;flex-wrap:wrap}
-.btn{display:inline-flex;align-items:center;gap:9px;min-height:48px;padding:13px 26px;border-radius:12px;
-  font-size:14px;font-weight:800;transition:transform .18s,border-color .18s,background .18s}
-.btn:active{transform:translateY(1px)}
-.btn-primary{color:#06141f;background:linear-gradient(135deg,#a7ecff,#7fc9ec);box-shadow:0 12px 30px rgba(110,200,235,.22)}
-.btn-ghost{color:var(--tx);border:1px solid var(--line2);background:rgba(20,30,48,.6)}
-.btn:hover{transform:translateY(-2px)}
-.hero .note{margin-top:18px;font-size:11.5px;color:var(--tx3);letter-spacing:.3px}
+/* ============ 桌面架构图（固定设计稿 1360） ============ */
+.stage{position:relative;z-index:1;max-width:1360px;margin:0 auto;padding:34px 40px 60px}
 
-/* 区块标题 */
-.sec-h{display:flex;align-items:baseline;gap:14px;margin:clamp(40px,6vw,64px) 0 22px}
-.sec-h h2{font-size:clamp(19px,2.4vw,25px);font-weight:820;letter-spacing:-.4px;margin:0}
-.sec-h .en{color:var(--tx3);font-size:11px;font-weight:700;letter-spacing:2px;text-transform:uppercase}
-.sec-h .rule{flex:1;height:1px;background:linear-gradient(90deg,var(--line2),transparent)}
+/* 标题 */
+.arch-head{text-align:center;margin-bottom:30px}
+.arch-head h1{font-size:clamp(26px,3vw,38px);font-weight:850;letter-spacing:-.5px;margin:0 0 8px}
+.arch-head .sub{color:var(--tx2);font-size:14px;letter-spacing:1px}
+.arch-head .sub b{color:var(--cyan);font-weight:700}
+.glowline{width:220px;height:2px;margin:16px auto 0;border-radius:2px;
+  background:linear-gradient(90deg,transparent,var(--cyan),transparent);box-shadow:0 0 16px rgba(110,231,210,.7)}
 
-/* 三块仪表 */
-.gauges{display:grid;grid-template-columns:repeat(3,1fr);gap:16px}
-.gauge{position:relative;display:flex;flex-direction:column;padding:26px 24px 22px;border-radius:18px;
-  background:linear-gradient(165deg,rgba(20,30,48,.92),rgba(12,19,32,.94));
-  border:1px solid var(--line2);overflow:hidden;transition:transform .2s,border-color .2s,box-shadow .2s}
-.gauge::before{content:"";position:absolute;inset:0;pointer-events:none;opacity:.9}
-.gauge.g1::before{background:radial-gradient(420px 200px at 0% 0%,rgba(110,231,210,.15),transparent 60%)}
-.gauge.g2::before{background:radial-gradient(420px 200px at 100% 0%,rgba(143,160,255,.17),transparent 60%)}
-.gauge.g3::before{background:radial-gradient(420 200px at 50% 0%,rgba(195,155,255,.16),transparent 60%)}
-.gauge:hover{transform:translateY(-4px);box-shadow:0 22px 48px rgba(0,0,0,.35)}
-.g1:hover{border-color:rgba(110,231,210,.55)}.g2:hover{border-color:rgba(143,160,255,.55)}.g3:hover{border-color:rgba(195,155,255,.55)}
-.gauge .top{display:flex;align-items:center;justify-content:space-between;margin-bottom:18px;position:relative}
-.gauge .no{font-size:13px;font-weight:850;letter-spacing:1px;padding:4px 10px;border-radius:8px;border:1px solid}
-.g1 .no{color:var(--cyan);border-color:rgba(110,231,210,.4);background:rgba(110,231,210,.08)}
-.g2 .no{color:var(--indigo);border-color:rgba(143,160,255,.4);background:rgba(143,160,255,.08)}
-.g3 .no{color:var(--violet);border-color:rgba(195,155,255,.4);background:rgba(195,155,255,.08)}
-.gauge .dim{font-size:11px;font-weight:800;letter-spacing:1.5px;color:var(--tx3)}
-.gauge h3{font-size:22px;font-weight:830;margin:0 0 4px;position:relative;letter-spacing:-.3px}
-.gauge .file{font-size:11.5px;color:var(--tx3);font-weight:600;margin-bottom:14px;position:relative}
-.gauge p{color:var(--tx2);font-size:13.5px;line-height:1.8;margin:0 0 20px;position:relative;flex:1}
-.gauge .go{display:inline-flex;align-items:center;gap:8px;font-size:13px;font-weight:800;position:relative}
-.g1 .go{color:var(--cyan)}.g2 .go{color:var(--indigo)}.g3 .go{color:var(--violet)}
-.gauge .go svg{transition:transform .2s}.gauge:hover .go svg{transform:translateX(4px)}
+/* 今日博罗入口 */
+.entry{display:inline-flex;flex-direction:column;justify-content:center;align-items:center;
+  width:158px;height:68px;border:1.4px solid rgba(244,199,107,.7);border-radius:12px;
+  background:radial-gradient(circle at 50% 0,rgba(244,199,107,.14),transparent 70%);
+  color:var(--gold);font-weight:800;font-size:15px;line-height:1.5;transition:.2s}
+.entry:hover{background:rgba(244,199,107,.16);transform:translateY(-2px)}
+.entry small{font-size:11px;font-weight:700;color:#d8b56a}
+.entry-row{display:flex;align-items:center;gap:14px;margin-bottom:8px}
+.disc-tag{color:var(--tx3);font-size:12px}
+.disc-tag b{color:var(--blue)}
 
-/* 链接卡片组 */
-.linkgroups{display:grid;grid-template-columns:repeat(2,1fr);gap:22px}
-.lgroup{border:1px solid var(--line);border-radius:18px;padding:22px;background:rgba(14,21,35,.5)}
-.lgroup > h4{display:flex;align-items:center;gap:10px;font-size:15px;font-weight:820;margin:0 0 16px}
-.lgroup > h4 .dot{width:9px;height:9px;border-radius:3px;flex:none}
-.lg1 .dot{background:var(--cyan)}.lg2 .dot{background:var(--indigo)}
-.lg3 .dot{background:var(--violet)}.lg4 .dot{background:var(--gold)}
-.links{display:grid;grid-template-columns:repeat(2,1fr);gap:10px}
-.lcard{display:flex;flex-direction:column;gap:3px;padding:13px 14px;border-radius:12px;
-  background:var(--panel);border:1px solid var(--line);transition:border-color .18s,background .18s,transform .18s;min-width:0}
-.lcard:hover{border-color:var(--line2);background:#111b2e;transform:translateY(-2px)}
-.lcard .t{font-size:13.5px;font-weight:750;color:var(--tx);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
-.lcard .f{font-size:10.5px;color:var(--tx3);font-weight:600;letter-spacing:.3px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
-.lcard .d{font-size:11.5px;color:var(--tx2);line-height:1.55;margin-top:2px}
-.lcard .arrow{font-size:11px;font-weight:800;color:var(--tx3);margin-top:5px}
-.lg1 .lcard:hover{border-color:rgba(110,231,210,.45)}.lg2 .lcard:hover{border-color:rgba(143,160,255,.45)}
-.lg3 .lcard:hover{border-color:rgba(195,155,255,.45)}.lg4 .lcard:hover{border-color:rgba(244,198,107,.5)}
-.lg1 .lcard:hover .arrow{color:var(--cyan)}.lg2 .lcard:hover .arrow{color:var(--indigo)}
-.lg3 .lcard:hover .arrow{color:var(--violet)}.lg4 .lcard:hover .arrow{color:var(--gold)}
+/* 连接器：竖线 / 箭头 */
+.vlink{display:flex;flex-direction:column;align-items:center;color:var(--tx3)}
+.vlink .bar{width:1.5px;background:linear-gradient(var(--line2),var(--cyan));opacity:.8}
+.vlink .ah{width:9px;height:9px;border-right:1.5px solid var(--cyan);border-bottom:1.5px solid var(--cyan);transform:rotate(45deg);margin-top:-2px}
+.dash{background:repeating-linear-gradient(to bottom,var(--cyan) 0 4px,transparent 4px 9px)!important}
 
-/* 底部 */
-.footer{margin-top:clamp(48px,7vw,80px);border-top:1px solid var(--line);padding:34px 0 46px;text-align:center}
-.footer .archlink{display:inline-flex;align-items:center;gap:9px;font-size:13.5px;font-weight:800;color:var(--blue);
-  border:1px solid var(--line2);padding:11px 22px;border-radius:12px;background:rgba(20,30,48,.55);margin-bottom:22px}
-.footer .archlink:hover{border-color:rgba(125,184,255,.55)}
-.footer .meta{font-size:11.5px;color:var(--tx3);line-height:1.9;max-width:680px;margin:0 auto}
-.footer .meta b{color:var(--tx2);font-weight:700}
+/* 三仪表 */
+.instruments{display:grid;grid-template-columns:repeat(3,1fr);gap:34px;align-items:stretch;position:relative}
+.inst{position:relative;display:flex;flex-direction:column;padding:26px 26px 22px;border-radius:18px;overflow:hidden;
+  background:linear-gradient(165deg,rgba(20,30,48,.94),rgba(12,19,32,.96));border:1px solid var(--line2);transition:.2s}
+.inst:hover{transform:translateY(-4px);box-shadow:0 22px 48px rgba(0,0,0,.36)}
+.inst.i1::before{content:"";position:absolute;inset:0;background:radial-gradient(440px 210px at 0% 0,rgba(110,231,210,.16),transparent 60%)}
+.inst.i2::before{content:"";position:absolute;inset:0;background:radial-gradient(440px 210px at 100% 0,rgba(147,163,255,.18),transparent 60%)}
+.inst.i3::before{content:"";position:absolute;inset:0;background:radial-gradient(440px 210px at 60% 0,rgba(199,159,255,.17),transparent 60%)}
+.i1:hover{border-color:rgba(110,231,210,.55)}.i2:hover{border-color:rgba(147,163,255,.55)}.i3:hover{border-color:rgba(199,159,255,.6)}
+.inst .dim{position:relative;font-size:12px;font-weight:800;letter-spacing:1.5px;margin-bottom:12px}
+.i1 .dim{color:var(--cyan)}.i2 .dim{color:var(--indigo)}.i3 .dim{color:var(--violet)}
+.inst h3{position:relative;font-size:24px;font-weight:840;margin:0 0 12px;letter-spacing:-.3px}
+.inst p{position:relative;color:var(--tx2);font-size:13.5px;line-height:1.85;margin:0}
+.inst .go{position:relative;margin-top:16px;font-size:12.5px;font-weight:800}
+.i1 .go{color:var(--cyan)}.i2 .go{color:var(--indigo)}.i3 .go{color:var(--violet)}
 
-/* 响应式 */
-@media(max-width:900px){
-  .gauges{grid-template-columns:1fr;gap:14px}
-  .linkgroups{grid-template-columns:1fr;gap:16px}
+/* 仪表间关系（放在 gap 上的绝对定位标签） */
+.rel{position:absolute;top:50%;transform:translateY(-50%);z-index:3;display:flex;flex-direction:column;align-items:center;gap:6px;pointer-events:none}
+.rel .lab{font-size:11px;font-weight:800;color:var(--tx2);background:rgba(10,16,27,.92);border:1px solid var(--line2);padding:3px 9px;border-radius:12px;white-space:nowrap}
+.rel .ln{width:30px;height:1.5px;background:repeating-linear-gradient(90deg,var(--blue) 0 4px,transparent 4px 8px)}
+.rel.r1{left:calc(33.333% - 17px)}.rel.r2{left:calc(66.666% - 17px)}
+.rel .two{display:flex;flex-direction:column;gap:2px}
+
+/* 功能页面群 */
+.funcs{display:grid;grid-template-columns:repeat(8,1fr);gap:12px;margin-top:6px}
+.func{display:flex;flex-direction:column;align-items:center;gap:8px;padding:16px 8px 14px;border-radius:13px;
+  background:var(--panel);border:1px solid var(--line);text-align:center;transition:.2s}
+.func:hover{border-color:var(--line2);background:var(--panel2);transform:translateY(-2px)}
+.func svg{width:24px;height:24px;stroke:var(--blue);flex:none}
+.func .t{font-size:12.5px;font-weight:720;color:var(--tx);line-height:1.4}
+
+/* 镇街 / 柏塘支路 */
+.branch{display:flex;align-items:center;justify-content:flex-end;gap:16px;margin:26px 0 4px}
+.branch .hint{color:var(--tx3);font-size:12px;margin-right:auto}
+.town-node{display:flex;align-items:center;justify-content:center;width:96px;height:64px;border-radius:12px;
+  background:var(--panel2);border:1px solid var(--line2);font-weight:800;text-align:center;line-height:1.4;transition:.2s}
+.town-node:hover{transform:translateY(-2px);border-color:var(--blue)}
+.horz{width:34px;height:1.5px;background:repeating-linear-gradient(90deg,var(--gold) 0 4px,transparent 4px 8px)}
+.tea-node{display:flex;flex-direction:column;align-items:center;justify-content:center;width:172px;height:68px;border-radius:12px;
+  border:1.4px solid rgba(244,199,107,.7);color:var(--gold);font-weight:820;background:radial-gradient(circle at 50% 0,rgba(244,199,107,.14),transparent 70%);transition:.2s}
+.tea-node:hover{background:rgba(244,199,107,.16);transform:translateY(-2px)}
+.tea-node small{font-size:10.5px;font-weight:700;color:#d8b56a;margin-top:2px}
+
+/* 唯一数据源 */
+.source-wrap{display:flex;justify-content:center;margin:22px 0 6px}
+.source{display:inline-flex;align-items:center;gap:9px;padding:11px 28px;border-radius:24px;
+  background:linear-gradient(135deg,#14233a,#0f1a2e);border:1px solid var(--line2);font-weight:800;font-size:14.5px}
+.source .dot{width:8px;height:8px;border-radius:50%;background:var(--cyan);box-shadow:0 0 10px var(--cyan)}
+
+/* 后台引擎条 */
+.engine-box{margin-top:24px;border:1.5px solid rgba(110,231,210,.55);border-radius:18px;padding:24px 26px;
+  background:linear-gradient(160deg,rgba(13,26,34,.7),rgba(9,16,26,.85));box-shadow:0 0 36px rgba(110,231,210,.1),inset 0 0 30px rgba(110,231,210,.05)}
+.engine-head{display:flex;align-items:center;margin-bottom:20px}
+.engine-head .t{font-size:14.5px;font-weight:830}
+.engine-head .t b{color:var(--cyan)}
+.engine-head .right{margin-left:auto;font-size:12px;color:var(--tx3)}
+.engines{display:flex;align-items:center}
+.eng{display:flex;flex:0 1 188px;width:188px;max-width:200px;flex-direction:column;align-items:center;gap:9px;padding:18px 10px;border-radius:13px;
+  background:rgba(14,24,36,.8);border:1px solid var(--line2)}
+.eng .ic{width:30px;height:30px;border-radius:50%;border:1.5px solid rgba(110,231,210,.6);display:flex;align-items:center;justify-content:center}
+.eng .ic svg{width:16px;height:16px;stroke:var(--cyan)}
+.eng .t{font-size:13.5px;font-weight:780}
+.ear{position:relative;height:1.5px;background:repeating-linear-gradient(90deg,var(--cyan) 0 4px,transparent 4px 8px)}
+.ear::after{content:"";position:absolute;right:0;top:-3.5px;width:8px;height:8px;border-right:1.5px solid var(--cyan);border-top:1.5px solid var(--cyan);transform:rotate(45deg)}
+.engine-foot{display:flex;justify-content:flex-end;margin-top:18px;font-size:12px;color:var(--tx3)}
+.engine-foot b{color:var(--green)}
+
+/* 底部说明 */
+.foot-note{margin-top:34px;text-align:center;color:var(--tx3);font-size:12px;line-height:1.9}
+.foot-note b{color:var(--tx2)}
+.foot-note .arch{display:inline-flex;margin-top:10px;color:var(--blue);font-weight:780;border:1px solid var(--line2);padding:9px 20px;border-radius:11px;background:rgba(20,30,48,.55)}
+.foot-note .arch:hover{border-color:rgba(125,184,255,.55)}
+
+/* 移动端专用连接（桌面隐藏） */
+.m-connect{display:none}
+
+/* ============ 平板 ============ */
+@media(max-width:1099px){
+  .stage{padding:26px 24px 48px}
+  .instruments{gap:18px}
+  .inst{padding:20px 18px}
+  .inst h3{font-size:20px}
+  .rel{display:none}
+  .funcs{grid-template-columns:repeat(4,1fr);gap:10px}
+  .eng{flex-basis:138px;width:138px;padding:14px 6px}
+  .ear{min-width:16px}
 }
-@media(max-width:560px){
-  .wrap{width:calc(100% - 28px)}
-  .topbar .in{height:54px}
-  .brand small{display:none}
-  .links{grid-template-columns:1fr}
-  .gauge{padding:22px 20px 18px}
-  .btn{width:100%;justify-content:center}
-  .lgroup{padding:18px}
+
+/* ============ 手机 ============ */
+@media(max-width:767px){
+  .topbar .in{height:52px;padding:0 16px}
+  .stage{padding:22px 16px 40px}
+  .arch-head{margin-bottom:22px}
+  .arch-head .sub{font-size:12.5px;line-height:1.7}
+  .entry-row{justify-content:center}
+  .disc-tag{display:none}
+  .instruments{grid-template-columns:1fr;gap:0}
+  .inst{padding:20px 18px}
+  .m-connect{display:flex;justify-content:center;align-items:center;height:34px;color:var(--cyan)}
+  .m-connect .vl{width:1.5px;height:18px;background:repeating-linear-gradient(to bottom,var(--cyan) 0 4px,transparent 4px 8px)}
+  .m-connect .ah{width:8px;height:8px;border-right:1.5px solid var(--cyan);border-bottom:1.5px solid var(--cyan);transform:rotate(45deg);margin-top:-2px}
+  .funcs{grid-template-columns:repeat(2,1fr);gap:10px;margin-top:16px}
+  .branch{flex-wrap:wrap;justify-content:center;gap:12px}
+  .branch .hint{width:100%;text-align:center;margin-right:0}
+  .source-wrap{margin:18px 0}
+  .engine-box{padding:18px 16px}
+  .engines{display:grid;grid-template-columns:repeat(2,1fr);gap:10px}
+  .eng{width:auto;max-width:none;flex-basis:auto}
+  .ear{display:none}
+  .engine-head{flex-direction:column;align-items:flex-start;gap:4px}
+  .engine-head .right{margin-left:0}
 }
 @media(prefers-reduced-motion:reduce){*{transition:none!important;animation:none!important}}
 </style>
@@ -142,173 +181,170 @@ a{color:inherit;text-decoration:none}
 <body>
 
 <header class="topbar">
-  <div class="wrap in">
+  <div class="in">
     <div class="brand">
       <svg class="mk" viewBox="0 0 32 32" fill="none" aria-hidden="true">
         <circle cx="16" cy="16" r="14" stroke="#6ee7d2" stroke-width="1.6" opacity=".85"/>
         <circle cx="16" cy="16" r="9" stroke="#7db8ff" stroke-width="1.4" stroke-dasharray="3 4"/>
         <circle cx="16" cy="16" r="3.4" fill="#6ee7d2"/>
       </svg>
-      博罗产业风洞模拟器 <small>BOLUO SIMULATOR</small>
+      博罗产业风洞模拟器
     </div>
     <a class="enter" href="index.html">进入今日博罗 →</a>
   </div>
 </header>
 
-<main class="wrap">
+<main class="stage" data-device="desktop">
 
-  <!-- Hero -->
-  <section class="hero">
-    <span class="eyebrow"><i></i> 关系与变化的观察推演系统</span>
-    <h1>把一个县的产业，<br><span class="grad">先放进风洞，再做决策。</span></h1>
-    <p class="lead">博罗产业风洞模拟器，把产业、项目、交通与生活交织的关系网络放进同一座风洞：先看见变化，再看清结构，然后压测压力——让每一个重大决策，先跑一遍。</p>
-    <div class="hero-cta">
-      <a class="btn btn-primary" href="index.html">进入今日博罗
-        <svg width="15" height="15" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg>
-      </a>
-      <a class="btn btn-ghost" href="docs/architecture.html">查看完整架构图</a>
-    </div>
-    <div class="note">公开资料 · 关系观察 · 情景推演（不是确定预测）</div>
-  </section>
+  <div class="arch-head">
+    <h1>博罗产业风洞 · 全站架构</h1>
+    <div class="sub">一个风洞，三块仪表 · <b>结构 / 变化 / 压力</b></div>
+    <div class="glowline"></div>
+  </div>
+
+  <!-- 今日博罗入口 -->
+  <div class="entry-row">
+    <a class="entry" href="index.html">今日博罗<small>入口</small></a>
+    <span class="disc-tag">从一个真实问题出发，<b>发现</b>关系与变化</span>
+  </div>
+  <div class="vlink" style="height:26px"><span class="bar dash" style="flex:1"></span><span class="ah"></span></div>
 
   <!-- 三块仪表 -->
-  <div class="sec-h">
-    <h2>一个风洞，三块仪表</h2><span class="en">Three Instruments</span><span class="rule"></span>
-  </div>
-  <section class="gauges">
+  <section class="instruments">
 
-    <a class="gauge g1" href="holo-home-v9.html">
-      <div class="top"><span class="no">01</span><span class="dim">时间 · TIME</span></div>
+    <a class="inst i1" href="holo-home-v9.html">
+      <span class="dim">时间 · 变化情报</span>
       <h3>变化现场</h3>
-      <div class="file">holo-home-v9</div>
-      <p>最近在动什么？每一个变化事件依据多硬、来自哪里。用时间轴看清博罗的一举一动。</p>
-      <span class="go">进入变化现场
-        <svg width="15" height="15" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg>
-      </span>
+      <p>最近在动什么？每一个变化的依据多硬、来自哪里。用时间轴看清博罗的一举一动。</p>
+      <span class="go">进入变化现场 →</span>
     </a>
 
-    <a class="gauge g2" href="experiments/holo-single/index.html">
-      <div class="top"><span class="no">02</span><span class="dim">空间 · SPACE</span></div>
+    <a class="inst i2" href="experiments/holo-single/index.html">
+      <span class="dim">空间 · 全息探索</span>
       <h3>关系图谱</h3>
-      <div class="file">holo-single</div>
       <p>博罗怎么长在一起？产业、镇街、项目如何跨层穿透。在全息关系网络里自由探索。</p>
-      <span class="go">进入关系图谱
-        <svg width="15" height="15" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg>
-      </span>
+      <span class="go">进入关系图谱 →</span>
     </a>
 
-    <a class="gauge g3" href="network.html">
-      <div class="top"><span class="no">03</span><span class="dim">压力 · PRESSURE</span></div>
+    <a class="inst i3" href="network.html">
+      <span class="dim">受力 · 压力测试</span>
       <h3>产业网络</h3>
-      <div class="file">network</div>
-      <p>哪里是命门？一次冲击会沿什么路径传导、谁先承压。给产业网络做一次X光与压力测试。</p>
-      <span class="go">进入产业网络
-        <svg width="15" height="15" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg>
-      </span>
+      <p>哪里是命门？一次冲击会沿什么路径传导、谁先承压。给产业网络做一次X光与压测。</p>
+      <span class="go">进入产业网络 →</span>
     </a>
 
+    <!-- 仪表间关系（桌面） -->
+    <div class="rel r1">
+      <span class="lab">核验</span>
+      <span class="ln"></span>
+      <span class="lab" style="padding:2px 8px;font-size:10px">核验</span>
+    </div>
+    <div class="rel r2">
+      <span class="lab">深链接力</span>
+      <span class="ln"></span>
+      <span class="lab" style="padding:2px 8px;font-size:10px">推演</span>
+    </div>
   </section>
 
-  <!-- 完整链接卡片 -->
-  <div class="sec-h">
-    <h2>全部工作区</h2><span class="en">All Workspaces</span><span class="rule"></span>
+  <!-- 手机端仪表间连接 -->
+  <div class="m-connect"><span class="vl"></span><span class="ah"></span></div>
+
+  <div class="vlink" style="height:26px;margin-top:6px"><span class="bar" style="flex:1"></span><span class="ah"></span></div>
+
+  <!-- 功能页面群 -->
+  <section class="funcs">
+    <a class="func" href="who.html">
+      <svg viewBox="0 0 24 24" fill="none" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><rect x="4" y="3" width="16" height="18" rx="2"/><path d="M8 8h8M8 12h8M8 16h5"/></svg>
+      <span class="t">基本面</span>
+    </a>
+    <a class="func" href="choices.html">
+      <svg viewBox="0 0 24 24" fill="none" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><circle cx="5" cy="19" r="2"/><circle cx="19" cy="5" r="2"/><path d="M7 17L17 7M19 19h-6a4 4 0 0 0-4-4"/></svg>
+      <span class="t">五条路</span>
+    </a>
+    <a class="func" href="future.html">
+      <svg viewBox="0 0 24 24" fill="none" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M3 21h18M5 21V10l7-5 7 5v11"/><path d="M9 21v-6h6v6"/></svg>
+      <span class="t">未来</span>
+    </a>
+    <a class="func" href="windtunnel.html">
+      <svg viewBox="0 0 24 24" fill="none" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="13" r="8"/><path d="M12 13l3-3M9 3h6"/></svg>
+      <span class="t">风洞测试</span>
+    </a>
+    <a class="func" href="blindspot.html">
+      <svg viewBox="0 0 24 24" fill="none" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M2 12s3.5-7 10-7 10 7 10 7-3.5 7-10 7-10-7-10-7z"/><circle cx="12" cy="12" r="3"/></svg>
+      <span class="t">忽略了什么</span>
+    </a>
+    <a class="func" href="report.html">
+      <svg viewBox="0 0 24 24" fill="none" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M4 20V10M10 20V4M16 20v-7M22 20H2"/></svg>
+      <span class="t">分析报告</span>
+    </a>
+    <a class="func" href="ending.html">
+      <svg viewBox="0 0 24 24" fill="none" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M5 21V4h11l3 3v14z"/><path d="M9 9h6M9 13h6M9 17h4"/></svg>
+      <span class="t">结语</span>
+    </a>
+    <a class="func" href="town.html">
+      <svg viewBox="0 0 24 24" fill="none" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M12 21s-7-6.3-7-11a7 7 0 0 1 14 0c0 4.7-7 11-7 11z"/><circle cx="12" cy="10" r="2.5"/></svg>
+      <span class="t">各镇吃喝玩乐</span>
+    </a>
+  </section>
+
+  <!-- 镇街 / 柏塘支路 -->
+  <div class="branch">
+    <span class="hint">镇级专题 · 非一级入口，双路径同版数据</span>
+    <a class="town-node" href="town.html">16<br>镇街</a>
+    <span class="horz"></span>
+    <a class="tea-node" href="tea/">柏塘山茶专题<small>三级专题 · 可无限扩展</small></a>
   </div>
-  <section class="linkgroups">
 
-    <div class="lgroup lg1">
-      <h4><span class="dot"></span>变化 · 时间视角</h4>
-      <div class="links">
-        <a class="lcard" href="index.html">
-          <span class="t">今日博罗</span><span class="f">index.html</span>
-          <span class="d">关系与变化的观察入口，每日公开话题与今日观察。</span><span class="arrow">进入 →</span>
-        </a>
-        <a class="lcard" href="holo-home-v9.html">
-          <span class="t">变化现场</span><span class="f">holo-home-v9.html</span>
-          <span class="d">统一变化图谱，按时间追踪事件与证据。</span><span class="arrow">进入 →</span>
-        </a>
-      </div>
+  <div class="vlink" style="height:24px"><span class="bar dash" style="flex:1"></span><span class="ah"></span></div>
+
+  <!-- 唯一数据源 -->
+  <div class="source-wrap">
+    <div class="source"><span class="dot"></span>唯一数据源</div>
+  </div>
+
+  <div class="vlink" style="height:24px"><span class="bar dash" style="flex:1"></span><span class="ah"></span></div>
+
+  <!-- 后台引擎 -->
+  <section class="engine-box">
+    <div class="engine-head">
+      <span class="t">后台引擎 · <b>多引擎协同</b></span>
+      <span class="right">页面数据 · 单源一致</span>
     </div>
-
-    <div class="lgroup lg2">
-      <h4><span class="dot"></span>结构 · 空间视角</h4>
-      <div class="links">
-        <a class="lcard" href="experiments/holo-single/index.html">
-          <span class="t">关系图谱</span><span class="f">holo-single</span>
-          <span class="d">全息关系世界，跨层穿透的自由探索。</span><span class="arrow">进入 →</span>
-        </a>
-        <a class="lcard" href="network.html">
-          <span class="t">产业网络</span><span class="f">network.html</span>
-          <span class="d">产业网络X光机，专业视图与压力测试。</span><span class="arrow">进入 →</span>
-        </a>
-        <a class="lcard" href="role.html">
-          <span class="t">关系角色</span><span class="f">role.html</span>
-          <span class="d">你在网里哪个位置，看懂每个主体的角色。</span><span class="arrow">进入 →</span>
-        </a>
-      </div>
+    <div class="engines">
+      <div class="eng"><span class="ic"><svg viewBox="0 0 24 24" fill="none" stroke-width="1.7" stroke-linecap="round"><circle cx="12" cy="12" r="3"/><path d="M12 2v3M12 19v3M2 12h3M19 12h3"/></svg></span><span class="t">情报引擎</span></div>
+      <span class="ear"></span>
+      <div class="eng"><span class="ic"><svg viewBox="0 0 24 24" fill="none" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M9 12l2 2 4-4"/><circle cx="12" cy="12" r="9"/></svg></span><span class="t">证据引擎</span></div>
+      <span class="ear"></span>
+      <div class="eng"><span class="ic"><svg viewBox="0 0 24 24" fill="none" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M4 7h16M4 12h16M4 17h10"/><circle cx="18" cy="17" r="2"/></svg></span><span class="t">专题引擎</span></div>
+      <span class="ear"></span>
+      <div class="eng"><span class="ic"><svg viewBox="0 0 24 24" fill="none" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3v3M5.6 5.6l2.1 2.1M3 12h3M18 12h3M16.3 7.7l2.1-2.1"/><circle cx="12" cy="13" r="5"/></svg></span><span class="t">判断引擎</span></div>
     </div>
-
-    <div class="lgroup lg3">
-      <h4><span class="dot"></span>压力 · 实验与报告</h4>
-      <div class="links">
-        <a class="lcard" href="choices.html">
-          <span class="t">五条路</span><span class="f">choices.html</span>
-          <span class="d">面向未来的五条路径，不同选择不同结果。</span><span class="arrow">进入 →</span>
-        </a>
-        <a class="lcard" href="windtunnel.html">
-          <span class="t">风洞测试</span><span class="f">windtunnel.html</span>
-          <span class="d">调节参数做情景压测，看目标够不够得着。</span><span class="arrow">进入 →</span>
-        </a>
-        <a class="lcard" href="future.html">
-          <span class="t">未来</span><span class="f">future.html</span>
-          <span class="d">推演未来情景与目标兑现的可能性。</span><span class="arrow">进入 →</span>
-        </a>
-        <a class="lcard" href="blindspot.html">
-          <span class="t">忽略了什么</span><span class="f">blindspot.html</span>
-          <span class="d">盲区发现，找出容易被忽略的关键信号。</span><span class="arrow">进入 →</span>
-        </a>
-        <a class="lcard" href="report.html">
-          <span class="t">分析报告</span><span class="f">report.html</span>
-          <span class="d">完整分析报告，图形化结论与证据。</span><span class="arrow">进入 →</span>
-        </a>
-        <a class="lcard" href="ending.html">
-          <span class="t">结语</span><span class="f">ending.html</span>
-          <span class="d">收束全篇，让每个重大决策先跑一遍。</span><span class="arrow">进入 →</span>
-        </a>
-      </div>
-    </div>
-
-    <div class="lgroup lg4">
-      <h4><span class="dot"></span>画像与专题</h4>
-      <div class="links">
-        <a class="lcard" href="who.html">
-          <span class="t">博罗画像</span><span class="f">who.html</span>
-          <span class="d">博罗基本面，先看清家底与账本。</span><span class="arrow">进入 →</span>
-        </a>
-        <a class="lcard" href="town.html">
-          <span class="t">16 镇街</span><span class="f">town.html</span>
-          <span class="d">各镇吃喝玩乐与镇街画像，一镇一饭碗。</span><span class="arrow">进入 →</span>
-        </a>
-        <a class="lcard" href="tea/">
-          <span class="t">柏塘山茶专题</span><span class="f">tea/</span>
-          <span class="d">三级专题·不占一级入口，双路径同版数据。</span><span class="arrow">进入 →</span>
-        </a>
-      </div>
-    </div>
-
+    <div class="engine-foot"><b>证据分层 · 后台审计</b></div>
   </section>
 
-  <!-- 底部 -->
-  <footer class="footer">
-    <a class="archlink" href="docs/architecture.html">
-      <svg width="15" height="15" viewBox="0 0 24 24" fill="none" aria-hidden="true"><rect x="3" y="3" width="7" height="7" rx="1.5" stroke="currentColor" stroke-width="1.8"/><rect x="14" y="3" width="7" height="7" rx="1.5" stroke="currentColor" stroke-width="1.8"/><rect x="3" y="14" width="7" height="7" rx="1.5" stroke="currentColor" stroke-width="1.8"/><rect x="14" y="14" width="7" height="7" rx="1.5" stroke="currentColor" stroke-width="1.8"/></svg>
-      查看全站架构图
-    </a>
-    <div class="meta">
-      <b>公开资料 · 关系观察 · 情景推演</b>，模拟数值为情景推演结果，并非确定预测，也不代表已发生事实。<br>
-      一个统一情报底座 · 多个专业 Skills · 一套审核发布机制 · 七个公开工作区 · 无限扩展的产业专题 · 一个永不公开的内核审计台。
-    </div>
-  </footer>
+  <div class="foot-note">
+    <b>公开资料 · 关系观察 · 情景推演</b>，模拟数值为情景推演结果，并非确定预测，也不代表已发生事实。
+    <br><a class="arch" href="docs/architecture.html">查看完整技术架构图</a>
+  </div>
 
 </main>
+
+<script>
+/* 自动判断终端：phone / tablet / desktop，写入 data-device；CSS 媒体查询兜底 */
+(function(){
+  var root=document.documentElement, stage=document.querySelector('.stage'), t;
+  function detect(){
+    var w=window.innerWidth;
+    var touch=('ontouchstart' in window)||navigator.maxTouchPoints>0;
+    var d = w<768 ? 'phone' : (w<1100 ? 'tablet' : 'desktop');
+    if(stage) stage.setAttribute('data-device', d);
+    root.setAttribute('data-device', d);
+    root.setAttribute('data-touch', touch?'1':'0');
+  }
+  detect();
+  window.addEventListener('resize',function(){clearTimeout(t);t=setTimeout(detect,120);},{passive:true});
+  window.addEventListener('orientationchange',detect);
+})();
+</script>
 </body>
 </html>
