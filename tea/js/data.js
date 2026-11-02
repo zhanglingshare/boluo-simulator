@@ -28,15 +28,15 @@
     }
   }
 
-  const CORE = ['meta', 'sources', 'facts'];       // 渲染必需
-  const OPTIONAL = ['network', 'conflicts', 'changes']; // 当前视图不直接使用，后台加载
+  const CORE = ['meta', 'sources', 'facts', 'network']; // 渲染必需（SNA 屏直接使用 network）
+  const OPTIONAL = ['conflicts', 'changes']; // 当前视图不直接使用，后台加载
 
   async function loadAll() {
     const data = {};
     // 核心文件并行加载，成功即放行首屏（loadJson 内部已对瞬时 5xx 重试）
     const core = await Promise.all(CORE.map(async k => [k, await loadJson(FILES[k])]));
     core.forEach(([k, v]) => { data[k] = v; });
-    if (!data.meta || !data.sources || !data.facts) {
+    if (!data.meta || !data.sources || !data.facts || !data.network) {
       throw new Error('核心数据文件缺失，无法渲染');
     }
     // 非核心文件后台加载，不阻塞首屏；失败静默为 null

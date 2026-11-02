@@ -156,7 +156,11 @@
         h('div', null,
           h('div', { class: 'kicker reveal' }, 'Δ 核心命题'),
           h('h1', { class: 'hero-title reveal d1', html: '数字都在涨。<br>关系，<span class="coral">对不上。</span>' }),
-          h('p', { class: 'hero-sub reveal d2' }, '我们不替你下结论，只把变化、缺口和口径，摆到你面前。')),
+          h('p', { class: 'hero-sub reveal d2' }, '我们不替你下结论，只把变化、缺口和口径，摆到你面前。'),
+          h('div', { class: 'purpose-bar reveal d2' },
+            h('span', null, '目标路径'),
+            h('i'), h('span', null, '资源投向'),
+            h('i'), h('span', null, '风险把握'))),
         chart));
     sec.append(topbar(1, '', true),
       h('div', { class: 'stage-wrap' }, stage),
@@ -322,16 +326,109 @@
 
     sec.append(topbar(5, '空白悬念'),
       h('div', { class: 'stage-wrap' }, stage),
-      foot(6, '向下，第 6 屏自己拨一下'));
+      foot(6, '向下，第 6 屏看关系网里的堵点'));
     arm(sec);
     return sec;
   }
 
   /* ============================================================
-     第 6 屏 · 自己拨一下（滑块沙盘）
+     第 6 屏 · 关系网（断点 / 堵点）
+     ============================================================ */
+  function screenSNA() {
+    const sec = h('section', { class: 'screen', id: 's6' });
+    const net = DATA.network;
+    const nodeById = {};
+    net.nodes.forEach(n => { nodeById[n.id] = n; });
+    const GROUP_COLOR = { 0: 'var(--neon)', 1: 'var(--amber)', 2: 'var(--neon)', 3: 'var(--grade-d)' };
+    const W = net.canvas.width, H = net.canvas.height;
+
+    const svg = h('svg', { class: 'sna-svg', viewBox: '0 0 ' + W + ' ' + H, role: 'img' });
+    const edgeLayer = h('g');
+    const nodeLayer = h('g');
+    const edgeEls = {};
+    net.edges.forEach(e => {
+      const a = nodeById[e.from], b = nodeById[e.to];
+      const line = h('line', {
+        class: 'sna-edge ' + (e.dashed ? 'hyp' : 'solid'),
+        x1: a.x, y1: a.y, x2: b.x, y2: b.y,
+        'stroke-dasharray': e.dashed ? '6 6' : 'none'
+      });
+      edgeEls[e.id] = { el: line, from: e.from, to: e.to };
+      edgeLayer.appendChild(line);
+    });
+    const nodeEls = {};
+    net.nodes.forEach(n => {
+      const g = h('g', { class: 'sna-node' + (n.gap ? ' is-gap' : ''), transform: 'translate(' + n.x + ',' + n.y + ')' });
+      const r = n.gap ? 19 : 15;
+      if (n.gap) g.appendChild(h('circle', { class: 'gap-ring', r: r + 7 }));
+      g.appendChild(h('circle', { class: 'node-dot', r: r, fill: GROUP_COLOR[n.group] }));
+      g.appendChild(h('text', { class: 'node-label', y: r + 15, text: n.name }));
+      if (n.gap) g.appendChild(h('text', { class: 'gap-mark', y: 5, text: '!' }));
+      nodeEls[n.id] = { el: g, node: n };
+      nodeLayer.appendChild(g);
+    });
+    svg.append(edgeLayer, nodeLayer);
+
+    const detailTitle = h('div', { class: 'sna-d-title' }, '点一个节点看它的关系');
+    const detailSub = h('div', { class: 'sna-d-sub note-line' }, '红色节点是现在接不上的堵点，虚线是待验证的关系。');
+    const detailBody = h('p', { class: 'sna-d-body note-line' }, '点击任意节点，会高亮它连着的边，其余变暗。');
+    const detailSrc = h('div', { class: 'sna-d-src' });
+
+    function select(id) {
+      const connected = new Set([id]);
+      Object.values(edgeEls).forEach(x => {
+        if (x.from === id || x.to === id) { connected.add(x.from); connected.add(x.to); }
+      });
+      Object.entries(nodeEls).forEach(([nid, x]) => {
+        x.el.classList.toggle('dim', !connected.has(nid));
+        x.el.classList.toggle('active', nid === id);
+      });
+      Object.values(edgeEls).forEach(x => {
+        const linked = x.from === id || x.to === id;
+        x.el.classList.toggle('dim', !linked);
+        x.el.classList.toggle('lit', linked);
+      });
+      const n = nodeById[id];
+      detailTitle.textContent = n.name;
+      detailSub.textContent = n.sub;
+      detailBody.textContent = n.detail;
+      detailSrc.innerHTML = '';
+      detailSrc.appendChild(h('span', { class: 'badge ' + n.grade }, n.grade));
+      if (n.gap) detailSrc.appendChild(h('span', { class: 'coral-tag' }, '堵点 · 关键空白'));
+    }
+    Object.entries(nodeEls).forEach(([id, x]) => {
+      x.el.style.cursor = 'pointer';
+      x.el.addEventListener('click', () => select(id));
+    });
+
+    const legend = h('div', { class: 'sna-legend' },
+      h('span', { class: 'sna-lg' }, h('i', { class: 'lg-dot' }), '堵点（关键空白）'),
+      h('span', { class: 'sna-lg' }, h('svg', { width: 26, height: 10 }, h('line', { x1: 1, y1: 5, x2: 25, y2: 5, 'stroke-dasharray': '5 4', 'stroke-width': 2, class: 'lg-hyp' })), '待验证关系'),
+      h('span', { class: 'sna-lg' }, h('svg', { width: 26, height: 10 }, h('line', { x1: 1, y1: 5, x2: 25, y2: 5, 'stroke-width': 2, class: 'lg-solid' })), '已核实关系'));
+
+    const stage = h('div', { class: 'stage-card' },
+      h('div', { class: 'kicker reveal' }, '关系网 · 断点与堵点'),
+      h('h2', { class: 'answer-line reveal' }, '一张网里，红色的是', h('span', { class: 'coral-text' }, '接不上的地方。')),
+      h('div', { class: 'use-tag reveal' }, '决策用途：判断有限的资源该补生产端，还是补渠道末端'),
+      h('div', { class: 'sna-layout reveal' },
+        h('div', { class: 'sna-canvas' }, svg),
+        h('div', { class: 'sna-detail' }, detailTitle, detailSub, detailBody, detailSrc)),
+      legend,
+      h('hr', { class: 'divider' }),
+      h('p', { class: 'note-line reveal' }, '节点与关系均来自已核实证据；待验证关系不进结论，堵点对应第 5 屏的数据空白。'));
+
+    sec.append(topbar(6, '关系网'),
+      h('div', { class: 'stage-wrap' }, stage),
+      foot(7, '向下，第 7 屏自己拨一下'));
+    arm(sec);
+    return sec;
+  }
+
+  /* ============================================================
+     第 7 屏 · 自己拨一下（滑块沙盘）
      ============================================================ */
   function screen6() {
-    const sec = h('section', { class: 'screen', id: 's6' });
+    const sec = h('section', { class: 'screen', id: 's7' });
 
     const state = { area: 3.5, price: 250, yield: 140, downstream: 0 };
     const big = h('div', { class: 'rb-big tnum' }, '0', h('span', { class: 'u' }, '亿'));
@@ -399,9 +496,9 @@
       h('hr', { class: 'divider' }),
       h('p', { class: 'note-line reveal' }, '假设推演沙盘 · 公式透明（面积×单产×均价 + 下游增量）· 情景非预测；官方 12 亿构成未公开，本沙盘不替代官方核算。'));
 
-    sec.append(topbar(6, '自己拨一下'),
+    sec.append(topbar(7, '自己拨一下'),
       h('div', { class: 'stage-wrap' }, stage),
-      foot(7, '向下，第 7 屏看证据库'));
+      foot(8, '向下，第 8 屏看有多大把握'));
     arm(sec);
     sec._activate = (function (orig) {
       return function () { orig.call(sec); calc(); };
@@ -410,10 +507,159 @@
   }
 
   /* ============================================================
-     第 7 屏 · 证据库
+     第 8 屏 · 情景模拟（不确定性下，有多大把握）
+     说明：不出现算法术语，只讲"跑很多种可能、看把握"。
+     ============================================================ */
+  function screenMonte() {
+    const sec = h('section', { class: 'screen', id: 's8' });
+    const RUNS = 2000;
+    const base = { area: 3.5, yield: 140, price: 250, downstream: 0 };
+    let spread = 0.12;
+
+    // 基准在 1±s 间浮动，两个随机平均让结果更集中在中间（仅内部使用）
+    function jitter(s) {
+      const t = (Math.random() + Math.random()) / 2;
+      return 1 - s + t * 2 * s;
+    }
+    function runOnce() {
+      const a = base.area * jitter(spread);
+      const y = base.yield * jitter(spread);
+      const p = base.price * jitter(spread);
+      const d = base.downstream * jitter(spread);
+      return (a * 10000 * y * p) / 1e8 + d;
+    }
+
+    /* 结果区 */
+    const probNum = h('span', { class: 'mc-prob-num tnum' }, '—');
+    const probWrap = h('div', { class: 'mc-prob reveal' },
+      h('div', { class: 'mc-prob-label' }, '够到 20 亿目标的把握'),
+      h('div', { class: 'mc-prob-big' }, probNum, h('span', { class: 'mc-prob-pct' }, '%')),
+      h('div', { class: 'mc-prob-note note-line' }, '基于上千种可能的结果，不是预测。'));
+
+    const HW = 620, HH = 250, PAD_L = 8, PAD_R = 8, BASE_Y = 210, TOP_Y = 24;
+    const histSvg = h('svg', { class: 'mc-hist-svg', viewBox: '0 0 ' + HW + ' ' + HH });
+    const histPlaceholder = h('div', { class: 'mc-hist-ph note-line' }, '点"跑一遍"，看结果落在哪些位置。');
+    const histBox = h('div', { class: 'mc-hist reveal' }, histSvg, histPlaceholder);
+
+    const qLow = h('b', { class: 'tnum' }, '—');
+    const qMid = h('b', { class: 'tnum' }, '—');
+    const qHigh = h('b', { class: 'tnum' }, '—');
+    const quant = h('div', { class: 'mc-quant reveal' },
+      h('div', { class: 'mq' }, h('span', { class: 'mq-k' }, '保守'), h('span', { class: 'mq-v' }, qLow, ' 亿')),
+      h('div', { class: 'mq mid' }, h('span', { class: 'mq-k' }, '中位'), h('span', { class: 'mq-v' }, qMid, ' 亿')),
+      h('div', { class: 'mq' }, h('span', { class: 'mq-k' }, '乐观'), h('span', { class: 'mq-v' }, qHigh, ' 亿')));
+
+    function qOf(sorted, q) {
+      const idx = Math.min(sorted.length - 1, Math.floor(q * sorted.length));
+      return sorted[idx];
+    }
+
+    function render() {
+      const totals = [];
+      for (let i = 0; i < RUNS; i++) totals.push(runOnce());
+      const sorted = totals.slice().sort((a, b) => a - b);
+      const hit = totals.filter(t => t >= 20).length;
+      const prob = Math.round(hit / RUNS * 100);
+      probNum.textContent = String(prob);
+      probNum.classList.toggle('low', prob < 50);
+      qLow.textContent = f1(qOf(sorted, 0.1));
+      qMid.textContent = f1(qOf(sorted, 0.5));
+      qHigh.textContent = f1(qOf(sorted, 0.9));
+
+      // 直方图分箱：横轴强制包含 20 亿目标，让"够不到"成为可见的右侧空白
+      const lo = sorted[0], hi = Math.max(sorted[sorted.length - 1], 20.5);
+      const BINS = 22;
+      const counts = new Array(BINS).fill(0);
+      const spanR = hi - lo || 1;
+      totals.forEach(t => {
+        let b = Math.floor((t - lo) / spanR * BINS);
+        b = Math.min(BINS - 1, b);
+        counts[b]++;
+      });
+      const maxC = Math.max.apply(null, counts);
+      const innerW = HW - PAD_L - PAD_R;
+      const bw = innerW / BINS;
+      histSvg.innerHTML = '';
+      const rects = [];
+      counts.forEach((c, i) => {
+        const hgt = (c / maxC) * (BASE_Y - TOP_Y);
+        const x = PAD_L + i * bw + 1;
+        const binCenter = lo + ((i + 0.5) / BINS) * spanR;
+        const r = h('rect', {
+          class: 'mc-bar ' + (binCenter >= 20 ? 'good' : 'bad'),
+          x: x, y: BASE_Y, width: bw - 2, height: 0
+        });
+        r._target = { y: BASE_Y - hgt, h: hgt };
+        histSvg.appendChild(r);
+        rects.push(r);
+      });
+      // 20 亿目标线
+      const tx = PAD_L + ((20 - lo) / spanR) * innerW;
+      if (tx >= PAD_L && tx <= HW - PAD_R) {
+        histSvg.appendChild(h('line', { class: 'mc-target', x1: tx, y1: TOP_Y - 6, x2: tx, y2: BASE_Y, 'stroke-dasharray': '5 4' }));
+        const tlabel = h('text', { class: 'mc-target-text', x: tx, y: 14, 'text-anchor': 'middle', text: '20 亿' });
+        histSvg.appendChild(tlabel);
+      }
+      histSvg.appendChild(h('line', { class: 'mc-axis', x1: PAD_L, y1: BASE_Y, x2: HW - PAD_R, y2: BASE_Y }));
+      histPlaceholder.style.display = 'none';
+      // 克制生长
+      requestAnimationFrame(() => rects.forEach((r, i) => {
+        setTimeout(() => { r.setAttribute('y', r._target.y); r.setAttribute('height', r._target.h); }, i * 18);
+      }));
+    }
+
+    /* 控件 */
+    const spreadCur = h('span', { class: 'cur' }, Math.round(spread * 100) + '%');
+    const spreadInput = h('input', { type: 'range', min: 5, max: 25, step: 1, value: Math.round(spread * 100) });
+    spreadInput.addEventListener('input', () => {
+      spread = parseFloat(spreadInput.value) / 100;
+      spreadCur.textContent = spreadInput.value + '%';
+      runBtn.classList.add('hint');
+      runBtn.textContent = '再跑一遍';
+    });
+    const runBtn = h('button', { class: 'btn-run' }, '跑一遍');
+    runBtn.addEventListener('click', () => {
+      runBtn.disabled = true;
+      runBtn.textContent = '模拟中…';
+      setTimeout(() => {
+        render();
+        runBtn.disabled = false;
+        runBtn.classList.remove('hint');
+        runBtn.textContent = '再跑一遍';
+      }, 120);
+    });
+
+    const controls = h('div', { class: 'mc-controls reveal' },
+      h('div', { class: 'mc-base note-line' }, '基准：3.5 万亩 · 140 斤/亩 · 250 元/斤（真实锚点）'),
+      h('div', { class: 'slider-field' },
+        h('div', { class: 'sf-top' }, h('span', null, '变量上下浮动幅度'), spreadCur),
+        spreadInput,
+        h('div', { class: 'sf-range' }, h('span', null, '5%'), h('span', null, '25%'))),
+      runBtn);
+
+    const leftCol = h('div', { class: 'mc-col-left' }, controls, probWrap);
+    const rightCol = h('div', { class: 'mc-col-right' }, histBox, quant);
+
+    const stage = h('div', { class: 'stage-card' },
+      h('div', { class: 'kicker reveal' }, '情景模拟 · 有多大把握'),
+      h('h2', { class: 'answer-line reveal' }, '拨得对不对，先看', h('span', { class: 'accent' }, '把握。')),
+      h('div', { class: 'use-tag reveal' }, '决策用途：把 20 亿目标翻译成“有多大把握”，避免拍脑袋'),
+      h('div', { class: 'mc-grid reveal' }, leftCol, rightCol),
+      h('hr', { class: 'divider' }),
+      h('p', { class: 'note-line reveal' }, '情景模拟（C 级）：让每个变量在基准上下浮动，跑上千种可能，看够到目标的比例与区间；不是预测，也不替代官方核算。'));
+
+    sec.append(topbar(8, '情景模拟'),
+      h('div', { class: 'stage-wrap' }, stage),
+      foot(9, '向下，第 9 屏看证据库'));
+    arm(sec);
+    return sec;
+  }
+
+  /* ============================================================
+     第 9 屏 · 证据库
      ============================================================ */
   function screen7() {
-    const sec = h('section', { class: 'screen', id: 's7' });
+    const sec = h('section', { class: 'screen', id: 's9' });
     const srcs = DATA.sources.sources;
     const rows = srcs.map(s => h('tr', null,
       h('td', null, h('span', { class: 'badge ' + s.grade }, s.grade)),
@@ -445,7 +691,7 @@
       stats, table, legend,
       h('p', { class: 'note-line reveal', style: 'margin-top:14px' }, '数据更新时间 ', h('b', null, DATA.meta.updated), ' · 无真实可访问 URL 的数字一律不收录。'));
 
-    sec.append(topbar(7, '证据库'),
+    sec.append(topbar(9, '证据库'),
       h('div', { class: 'stage-wrap' }, stage),
       h('div', { class: 'screen-foot' },
         h('span', { class: 'note-line' }, '公开信息 · 分级证据'),
@@ -475,7 +721,7 @@
     DATA = await TeaData.loadAll();
     deck.innerHTML = '';
     makeStars();
-    [screen1, screen2, screen3, screen4, screen5, screen6, screen7].forEach(fn => deck.appendChild(fn()));
+    [screen1, screen2, screen3, screen4, screen5, screenSNA, screen6, screenMonte, screen7].forEach(fn => deck.appendChild(fn()));
     observe();
     if (location.hash) {
       const t = document.querySelector(location.hash);
