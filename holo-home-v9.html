@@ -251,6 +251,142 @@ button:focus-visible,a:focus-visible{outline:2px solid rgba(98,230,224,.65);outl
 @media(prefers-reduced-motion:reduce){
   *,*:before,*:after{animation-duration:.01ms!important;animation-iteration-count:1!important;transition-duration:.01ms!important;scroll-behavior:auto!important}
 }
+
+/* ================= 布局形态切换器 ================= */
+.layout-switch{position:absolute;top:13px;left:50%;transform:translateX(-50%);z-index:7;
+  display:flex;gap:3px;padding:4px;border:1px solid rgba(120,150,190,.22);border-radius:11px;
+  background:rgba(7,16,29,.78);backdrop-filter:blur(14px);-webkit-backdrop-filter:blur(14px)}
+.layout-switch button{border:0;background:transparent;color:var(--muted);padding:7px 14px;border-radius:8px;
+  font-size:11px;font-weight:700;white-space:nowrap;transition:.18s;display:flex;align-items:center;gap:6px}
+.layout-switch button svg{width:13px;height:13px}
+.layout-switch button:hover{color:#e2ecfa}
+.layout-switch button.active{color:#06151c;background:linear-gradient(120deg,#5fe3db,#9ff0d0);
+  box-shadow:0 4px 14px rgba(98,230,224,.25);font-weight:800}
+.stage.morphing .layout-switch{pointer-events:none}
+
+/* ================= 播放控制 ================= */
+.play-controls{display:flex;align-items:center;gap:8px}
+.play-btn{width:34px;height:34px;border-radius:50%;border:1px solid rgba(98,230,224,.4);
+  background:linear-gradient(145deg,#16303c,#102530);color:var(--cyan);display:grid;place-items:center;
+  transition:.18s;flex:none}
+.play-btn:hover{box-shadow:0 0 0 3px rgba(98,230,224,.14),0 6px 18px rgba(0,0,0,.35)}
+.play-btn svg{width:15px;height:15px}
+.play-btn.playing{background:linear-gradient(145deg,#1a3a44,#143038)}
+.play-step{border:1px solid var(--line);background:rgba(17,30,49,.8);color:var(--muted);
+  border-radius:9px;padding:7px 10px;font-size:10px;font-weight:700;transition:.16s}
+.play-step:hover{color:#e2ecfa;border-color:#5b86ad}
+.play-progress{font-size:10px;color:var(--faint);font-variant-numeric:tabular-nums;min-width:42px;text-align:right}
+/* 2D 降级：形态切换与播放不可用，直接置灰禁用 */
+body.mode-2d .layout-switch,body.mode-2d .play-controls{opacity:.38;pointer-events:none;filter:grayscale(.5)}
+
+/* ================= 分析舱 / 明细表（长页面模块） ================= */
+.analysis,.ledger{max-width:2000px;margin:0 auto;padding:6px 20px 22px}
+.module-head{display:flex;align-items:flex-end;gap:14px;margin:18px 2px 14px;flex-wrap:wrap}
+.module-kicker{font-size:9.5px;font-weight:800;letter-spacing:2.2px;color:var(--cyan)}
+.module-title{font-size:clamp(18px,1.7vw,24px);font-weight:850;letter-spacing:-.01em;margin:4px 0 0}
+.module-desc{font-size:11.5px;color:var(--muted);line-height:1.6;max-width:640px;margin-top:5px}
+.module-head .mh-spacer{flex:1}
+.module-tag{font-size:9.5px;color:var(--faint);border:1px solid var(--line);border-radius:8px;padding:6px 10px;white-space:nowrap}
+
+.chart-grid{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:14px}
+.chart-card{border-radius:var(--radius);padding:16px;
+  background:linear-gradient(160deg,rgba(18,30,49,.92),rgba(13,23,40,.94));
+  border:1px solid rgba(120,150,190,.16);box-shadow:0 16px 44px rgba(0,0,0,.28);display:flex;flex-direction:column}
+.chart-card.wide{grid-column:span 2}
+.chart-name{font-size:12px;font-weight:800;color:#e2ecfa;margin-bottom:3px}
+.chart-sub{font-size:9.5px;color:var(--faint);margin-bottom:14px;line-height:1.5}
+.donut-wrap{display:flex;align-items:center;gap:14px;flex:1}
+.donut{flex:none;position:relative;width:128px;height:128px}
+.donut svg{transform:rotate(-90deg);width:100%;height:100%}
+.donut-center{position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center;pointer-events:none}
+.donut-center .dc-num{font-size:24px;font-weight:850;font-family:var(--mono);line-height:1;letter-spacing:-.02em}
+.donut-center .dc-lbl{font-size:8.5px;color:var(--faint);margin-top:4px;letter-spacing:.5px}
+.donut-legend{display:flex;flex-direction:column;gap:7px;flex:1;min-width:0}
+.dl-row{display:flex;align-items:center;gap:7px;font-size:10.5px;color:var(--muted);min-width:0}
+.dl-dot{width:8px;height:8px;border-radius:3px;flex:none}
+.dl-name{white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.dl-val{margin-left:auto;font-weight:800;font-family:var(--mono);color:#dce8f7;font-variant-numeric:tabular-nums}
+.dl-pct{font-size:9px;color:var(--faint);width:38px;text-align:right;font-variant-numeric:tabular-nums}
+
+/* 水平条形图 */
+.bar-chart{display:flex;flex-direction:column;gap:10px;flex:1;justify-content:center}
+.bar-row{display:grid;grid-template-columns:74px 1fr 40px;align-items:center;gap:9px;font-size:10px}
+.bar-name{color:var(--muted);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.bar-track{height:9px;border-radius:6px;background:rgba(20,34,54,.85);overflow:hidden}
+.bar-fill{height:100%;border-radius:6px;transition:width .8s cubic-bezier(.22,.8,.3,1)}
+.bar-val{font-weight:800;font-family:var(--mono);text-align:right;color:#dce8f7;font-variant-numeric:tabular-nums}
+
+/* 证据等级卡 */
+.grade-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin-top:4px}
+.grade-box{border-radius:12px;padding:13px 10px;text-align:center;border:1px solid var(--line-soft);background:rgba(9,19,34,.6)}
+.grade-box .gb-num{font-size:23px;font-weight:850;font-family:var(--mono);line-height:1}
+.grade-box .gb-lbl{font-size:9px;margin-top:6px;color:var(--faint);letter-spacing:.4px}
+.grade-box.gA .gb-num{color:var(--green)}
+.grade-box.gB .gb-num{color:var(--blue)}
+.grade-box.gC .gb-num{color:var(--gold)}
+.grade-note{font-size:10px;color:var(--muted);line-height:1.6;margin-top:12px;padding-top:12px;border-top:1px solid var(--line-soft)}
+.grade-note b{color:var(--gold)}
+
+/* ================= 明细表 ================= */
+.table-card{border-radius:var(--radius);padding:18px;
+  background:linear-gradient(160deg,rgba(18,30,49,.92),rgba(13,23,40,.94));
+  border:1px solid rgba(120,150,190,.16);box-shadow:0 16px 44px rgba(0,0,0,.28)}
+.filter-bar{display:flex;align-items:center;gap:8px;flex-wrap:wrap;margin-bottom:14px}
+.filter-chips{display:flex;gap:6px;flex-wrap:wrap}
+.fchip{border:1px solid var(--line);background:rgba(17,30,49,.8);color:var(--muted);
+  border-radius:99px;padding:6px 12px;font-size:10.5px;font-weight:700;transition:.16s}
+.fchip:hover{color:#e2ecfa;border-color:#5b86ad}
+.fchip.active{color:#06151c;background:linear-gradient(120deg,#5fe3db,#9ff0d0);border-color:transparent;font-weight:800}
+.filter-search{display:flex;align-items:center;gap:7px;margin-left:auto;border:1px solid var(--line);
+  border-radius:99px;background:rgba(17,30,49,.8);padding:7px 13px;min-width:200px}
+.filter-search svg{width:13px;height:13px;color:var(--faint);flex:none}
+.filter-search input{border:0;outline:0;background:transparent;font-size:11px;color:#e2ecfa;width:100%}
+.table-wrap{overflow-x:auto;border-radius:12px;border:1px solid var(--line-soft)}
+.data-table{width:100%;border-collapse:collapse;min-width:760px}
+.data-table th{font-size:9.5px;font-weight:800;letter-spacing:.5px;color:var(--faint);text-align:left;
+  padding:11px 14px;background:rgba(10,20,36,.8);border-bottom:1px solid var(--line);white-space:nowrap;position:sticky;top:0}
+.data-table td{font-size:11px;padding:12px 14px;border-bottom:1px solid var(--line-soft);color:var(--muted);vertical-align:top;line-height:1.55}
+.data-table tbody tr{transition:.14s;cursor:pointer}
+.data-table tbody tr:hover{background:rgba(28,48,74,.4)}
+.data-table tbody tr:last-child td{border-bottom:0}
+.dt-id{font-family:var(--mono);font-size:10px;color:var(--faint);white-space:nowrap}
+.dt-title-cell{color:#e2ecfa;font-weight:700;min-width:220px}
+.mini-badge{font-size:9px;font-weight:800;border-radius:99px;padding:3px 8px;white-space:nowrap;display:inline-block}
+.dt-date{font-family:var(--mono);font-size:10px;white-space:nowrap;color:var(--muted)}
+.dt-grade{font-size:10px;font-weight:800;white-space:nowrap}
+.dt-grade.a{color:var(--green)}.dt-grade.b{color:var(--blue)}.dt-grade.c{color:var(--gold)}
+.table-empty{padding:30px;text-align:center;color:var(--faint);font-size:11.5px}
+.table-foot{display:flex;align-items:center;gap:10px;margin-top:12px;font-size:10px;color:var(--faint);flex-wrap:wrap}
+.table-foot b{color:var(--muted);font-family:var(--mono)}
+
+.site-footer{max-width:2000px;margin:8px auto 0;padding:24px 20px 40px;border-top:1px solid var(--line-soft)}
+.footer-grid{display:grid;grid-template-columns:1.4fr 1fr 1fr;gap:24px}
+.footer-brand{font-size:13px;font-weight:800;margin-bottom:10px}
+.footer-copy{font-size:10.5px;color:var(--faint);line-height:1.8}
+.footer-h{font-size:10px;font-weight:800;letter-spacing:1px;color:var(--muted);margin-bottom:10px}
+.footer-li{font-size:10.5px;color:var(--faint);line-height:2}
+.footer-bottom{font-size:10px;color:var(--faint);margin-top:26px;padding-top:18px;border-top:1px solid var(--line-soft);display:flex;gap:14px;flex-wrap:wrap}
+
+/* ---------- 新增模块响应式 ---------- */
+@media(max-width:1280px){
+  .chart-grid{grid-template-columns:repeat(2,minmax(0,1fr))}
+  .chart-card.wide{grid-column:span 2}
+  .footer-grid{grid-template-columns:1fr 1fr}
+}
+@media(max-width:680px){
+  .analysis,.ledger{padding:6px 12px 18px}
+  .chart-grid{grid-template-columns:1fr;gap:12px}
+  .chart-card.wide{grid-column:span 1}
+  .module-head{margin:14px 2px 12px}
+  .table-card{padding:14px}
+  .filter-search{min-width:100%;margin-left:0}
+  .donut{width:112px;height:112px}
+  .grade-grid{gap:7px}
+  .footer-grid{grid-template-columns:1fr}
+  .layout-switch{top:10px;width:calc(100% - 26px);justify-content:center}
+  .layout-switch button{padding:7px 10px;font-size:10.5px;flex:1;justify-content:center}
+  .play-step{display:none}
+}
 </style>
 </head>
 <body>
@@ -294,6 +430,17 @@ button:focus-visible,a:focus-visible{outline:2px solid rgba(98,230,224,.65);outl
     <div class="stage" id="stage">
       <div class="stage-fallback" id="fallback"><canvas id="fallbackCanvas"></canvas></div>
       <div class="label-layer" id="labelLayer"></div>
+      <div class="layout-switch" role="group" aria-label="图谱形态">
+        <button data-layout="network" class="active">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><circle cx="6" cy="7" r="2.4"/><circle cx="18" cy="6" r="2.4"/><circle cx="12" cy="15" r="2.6"/><circle cx="18.5" cy="18" r="2"/><path d="M8 8.2 10.5 13M14.5 13.2 17 7.5M12 17.5 17 18.5M8.5 8 16 6.5"/></svg>
+          关系网络</button>
+        <button data-layout="cluster">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><circle cx="12" cy="12" r="2.6"/><circle cx="12" cy="5" r="1.8"/><circle cx="18.5" cy="8.5" r="1.8"/><circle cx="18.5" cy="15.5" r="1.8"/><circle cx="12" cy="19" r="1.8"/><circle cx="5.5" cy="15.5" r="1.8"/><circle cx="5.5" cy="8.5" r="1.8"/></svg>
+          群簇分区</button>
+        <button data-layout="timeline">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M4 12h16"/><circle cx="8" cy="12" r="2"/><circle cx="16" cy="12" r="2"/></svg>
+          时间长河</button>
+      </div>
       <div class="stage-hud">
         <div class="hud-chip hud-tl" id="hudTl">BOLUO · 3D ATLAS</div>
         <div class="hud-chip hud-tr" id="hudTr">拖拽旋转 · 滚轮缩放</div>
@@ -305,6 +452,13 @@ button:focus-visible,a:focus-visible{outline:2px solid rgba(98,230,224,.65);outl
     <div class="timeline">
       <div class="timeline-head">
         <div class="timeline-title" id="timelineTitle">变化时间轴<span id="timelineSub">按时间排列，点击定位</span></div>
+        <div class="play-controls">
+          <span class="play-progress" id="playProgress">0/0</span>
+          <button class="play-step" id="playReset" aria-label="回到开头">重置</button>
+          <button class="play-btn" id="playBtn" aria-label="播放演化" aria-pressed="false">
+            <svg id="playIcon" viewBox="0 0 24 24" fill="currentColor"><path d="M8 5.5v13a1 1 0 0 0 1.52.86l10.5-6.5a1 1 0 0 0 0-1.72L9.52 4.64A1 1 0 0 0 8 5.5Z"/></svg>
+          </button>
+        </div>
       </div>
       <div class="timeline-track" id="timelineTrack"><div class="tl-line"></div></div>
       <div class="tl-labels" id="timelineLabels"></div>
@@ -349,6 +503,109 @@ button:focus-visible,a:focus-visible{outline:2px solid rgba(98,230,224,.65);outl
     </div>
   </aside>
 </main>
+
+<!-- ================= 分析舱：基本盘体检 ================= -->
+<section class="analysis" aria-label="基本盘分析">
+  <div class="module-head">
+    <div>
+      <div class="module-kicker">STRUCTURE · 基本盘体检</div>
+      <h2 class="module-title">一张图看清博罗的产业结构与证据成色</h2>
+      <p class="module-desc">基于 36 个主体、45 条关系、12 处变化与 54 份公开来源实时计算。这里看的是全局结构，不随上方时间范围切换；A/B/C 是证据等级，不是好坏评分。</p>
+    </div>
+    <div class="mh-spacer"></div>
+    <span class="module-tag" id="analysisStamp">数据核验中…</span>
+  </div>
+  <div class="chart-grid">
+    <div class="chart-card">
+      <div class="chart-name">变化类型构成</div>
+      <div class="chart-sub">12 处变化按事件类型分布</div>
+      <div class="donut-wrap" id="donutChange"></div>
+    </div>
+    <div class="chart-card">
+      <div class="chart-name">证据等级成色</div>
+      <div class="chart-sub">45 条关系的证据等级分布</div>
+      <div class="grade-grid">
+        <div class="grade-box gA"><div class="gb-num" id="gA">–</div><div class="gb-lbl">A 级公开证据</div></div>
+        <div class="grade-box gB"><div class="gb-num" id="gB">–</div><div class="gb-lbl">B 级合理推断</div></div>
+        <div class="grade-box gC"><div class="gb-num" id="gC">–</div><div class="gb-lbl">C 级待验证</div></div>
+      </div>
+      <div class="grade-note" id="gradeNote"></div>
+    </div>
+    <div class="chart-card wide">
+      <div class="chart-name">主体类型构成</div>
+      <div class="chart-sub">36 个主体按 9 类角色分布</div>
+      <div class="bar-chart" id="barNode"></div>
+    </div>
+    <div class="chart-card wide">
+      <div class="chart-name">关系类型构成</div>
+      <div class="chart-sub">45 条关系按 8 类关系分布</div>
+      <div class="bar-chart" id="barEdge"></div>
+    </div>
+  </div>
+</section>
+
+<!-- ================= 明细表：变化账本 ================= -->
+<section class="ledger" aria-label="变化明细表">
+  <div class="module-head">
+    <div>
+      <div class="module-kicker">LEDGER · 变化账本</div>
+      <h2 class="module-title">12 处变化，逐条可查、可筛选</h2>
+      <p class="module-desc">每一行都可回溯到具体公开来源。点击任意行回到上方图谱，只看它牵动的路径。模糊日期（如"2026-07"）保留原始写法，不伪造精确日期。</p>
+    </div>
+  </div>
+  <div class="table-card">
+    <div class="filter-bar">
+      <div class="filter-chips" id="rangeChips">
+        <button class="fchip active" data-frange="all">全部</button>
+        <button class="fchip" data-frange="month">近 30 天</button>
+        <button class="fchip" data-frange="year">今年</button>
+      </div>
+      <div class="filter-chips" id="typeChips"></div>
+      <label class="filter-search">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><circle cx="10.8" cy="10.8" r="6.8"/><path d="m16 16 4.5 4.5"/></svg>
+        <input id="tableSearch" type="search" placeholder="筛选标题、主体或来源" aria-label="筛选明细表">
+      </label>
+    </div>
+    <div class="table-wrap">
+      <table class="data-table">
+        <thead><tr>
+          <th>编号</th><th>变化</th><th>类型</th><th>日期</th><th>证据</th><th>涉及主体</th>
+        </tr></thead>
+        <tbody id="tableBody"></tbody>
+      </table>
+    </div>
+    <div class="table-foot">
+      <span>显示 <b id="tblShown">0</b> / <b id="tblTotal">0</b> 处</span>
+      <span style="margin-left:auto">数字实时计算，无真实来源的内容不进入数据</span>
+    </div>
+  </div>
+</section>
+
+<!-- ================= 页脚 ================= -->
+<footer class="site-footer">
+  <div class="footer-grid">
+    <div>
+      <div class="footer-brand">博罗变化图谱 · BOLUO CHANGE ATLAS</div>
+      <p class="footer-copy">一套以"变化"为主角的关系图谱：变化是主角，基本盘是背景；一处变化只亮一条路径。所有数字由公开证据文件实时计算，不写死、不夸大；关系是线索而非已证实的因果，目标与事实分开呈现。</p>
+    </div>
+    <div>
+      <div class="footer-h">数据口径</div>
+      <div class="footer-li">· 时间范围：近 30 天滚动 / 今年全年</div>
+      <div class="footer-li">· 证据等级：A 公开证据 / B 合理推断 / C 待验证</div>
+      <div class="footer-li">· 模糊日期保留原始写法，不伪造精度</div>
+    </div>
+    <div>
+      <div class="footer-h">使用与边界</div>
+      <div class="footer-li">· 支持键盘操作，Esc 回到全景</div>
+      <div class="footer-li">· WebGL 不可用时自动降级 2D 画布</div>
+      <div class="footer-li">· 本页不构成投资或行政决策结论</div>
+    </div>
+  </div>
+  <div class="footer-bottom">
+    <span>数据来源：政府公开信息、权威媒体、公开企业与项目资料（共 54 份）</span>
+    <span style="margin-left:auto" id="footerStamp"></span>
+  </div>
+</footer>
 
 <div class="toast" id="toast" role="status" aria-live="polite"></div>
 <script src="lib/three.min.js"></script>
@@ -499,9 +756,10 @@ window.__AtlasUtil={$:$,el:el,hashStr:hashStr,clamp:clamp,mulberry32:mulberry32,
 var Store=window.__AtlasStore, U=window.__AtlasUtil;
 var $=U.$, el=U.el, clamp=U.clamp, mulberry32=U.mulberry32, nodeColor=U.nodeColor, shortName=U.shortName;
 var THREE_=window.THREE;
+function easeInOutCubic(t){return t<0.5?4*t*t*t:1-Math.pow(-2*t+2,3)/2;}
 
-/* ---------- 确定性 3D 力导向布局 ---------- */
-function buildLayout(){
+/* ---------- 布局 1：确定性 3D 力导向（关系网络） ---------- */
+function buildNetworkLayout(){
   var nodes=Store.evidence.nodes, edges=Store.evidence.edges;
   var layers=[];
   nodes.forEach(function(n){if(layers.indexOf(n.layer)<0)layers.push(n.layer);});
@@ -572,6 +830,86 @@ function buildLayout(){
   return pos;
 }
 
+/* ---------- 布局 2：群簇分区（按 layer 归位的平面星图） ---------- */
+function buildClusterLayout(){
+  var nodes=Store.evidence.nodes;
+  var rnd=mulberry32(55102);
+  // 按 layer 分组，保持出现顺序
+  var order=[];var groups={};
+  nodes.forEach(function(n){
+    if(!groups[n.layer]){groups[n.layer]=[];order.push(n.layer);}
+    groups[n.layer].push(n);
+  });
+  var total=nodes.length, gap=0.085;
+  var usable=Math.PI*2-gap*order.length;
+  var cursor=-Math.PI/2; // 顶部起
+  var pos={};
+  order.forEach(function(ly){
+    var arr=groups[ly], span=usable*(arr.length/total);
+    var start=cursor+gap/2;
+    arr.forEach(function(n,j){
+      var frac=arr.length===1?0.5:j/(arr.length-1);
+      var ang=start+frac*span;
+      // 大组内外两层，避免拥挤
+      var ring=(arr.length>4&&j%2===1)?10.8:15.2;
+      pos[n.node_id]=new THREE_.Vector3(
+        ring*Math.cos(ang),
+        (rnd()-0.5)*1.6,
+        ring*Math.sin(ang)
+      );
+    });
+    cursor+=span+gap;
+  });
+  return pos;
+}
+
+/* ---------- 布局 3：时间长河（节点按最早变化日期沿 X 轴排列） ---------- */
+function buildTimelineLayout(){
+  var nodes=Store.evidence.nodes, all=Store.changes.changes;
+  var parse=U.parseDate;
+  // 每个节点最早参与的变化时间
+  var earliest={};
+  all.slice().sort(function(a,b){return parse(a.event_date)-parse(b.event_date);}).forEach(function(c){
+    (c.involved_node_ids||[]).forEach(function(id){
+      var d=parse(c.event_date);
+      if(d&&(earliest[id]==null||d.getTime()<earliest[id]))earliest[id]=d.getTime();
+    });
+  });
+  var pos={};
+  var buckets={};
+  var timeless=[];
+  nodes.forEach(function(n){
+    var t=earliest[n.node_id];
+    if(t==null)timeless.push(n);
+    else{if(!buckets[t])buckets[t]=[];buckets[t].push(n);}
+  });
+  var keys=Object.keys(buckets).map(Number).sort(function(a,b){return a-b;});
+  var minT=keys[0],maxT=keys[keys.length-1], span=Math.max(1,maxT-minT);
+  keys.forEach(function(t){
+    var x=-18+36*((t-minT)/span);
+    var arr=buckets[t];
+    arr.forEach(function(n,j){
+      var a=arr.length===1?0:j/arr.length*Math.PI*2;
+      var rr=arr.length===1?0:3.4;
+      pos[n.node_id]=new THREE_.Vector3(x,rr*Math.cos(a),rr*Math.sin(a));
+    });
+  });
+  // 无变化的基本盘节点：时间起点之前的"基本盘"环
+  var R=Math.max(4,2.2+timeless.length*0.42);
+  timeless.forEach(function(n,j){
+    var a=timeless.length===1?0:j/timeless.length*Math.PI*2;
+    pos[n.node_id]=new THREE_.Vector3(-22,R*Math.cos(a),R*Math.sin(a));
+  });
+  return pos;
+}
+
+/* ---------- 布局入口 ---------- */
+function getLayout(name){
+  if(name==="cluster")return buildClusterLayout();
+  if(name==="timeline")return buildTimelineLayout();
+  return buildNetworkLayout();
+}
+
 /* ---------- 光晕纹理 ---------- */
 function glowTexture(){
   var c=document.createElement("canvas");c.width=c.height=128;
@@ -587,9 +925,11 @@ function glowTexture(){
 
 var Atlas3D={
   available:false,scene:null,camera:null,renderer:null,
-  positions:null,nodeMeshes:[],nodeGlows:[],edgeLines:[],edgeData:[],
+  positions:null,fromPositions:null,targetPositions:null,
+  nodeMeshes:[],nodeGlows:[],edgeLines:[],edgeTubes:[],edgeData:[],
   labelTags:[],glowTex:null,
   raf:null,disposed:false,
+  layoutName:"network",morphT0:0,morphDur:1100,morphing:false,idlePhase:{},
   theta:0.7,phi:1.0,radius:30,
   targetTheta:0.7,targetPhi:1.0,targetRadius:30,
   tx:0,ty:0,tz:0, ttx:0,tty:0,ttz:0,
@@ -597,6 +937,8 @@ var Atlas3D={
   raycaster:null,pointer:null,
   particleSystem:null,grid:null,
   focusNodeIds:{},focusEdgeIds:{},hasFocus:false,
+  // 时间演化
+  evoOn:false,evoIndex:-1,nodeBirth:{},edgeBirth:{},reduced:false,
 
   init:function(){
     var self=this;
@@ -605,6 +947,9 @@ var Atlas3D={
       var stage=$("stage");
       var w=stage.clientWidth,h=stage.clientHeight;
       this.renderer=new THREE_.WebGLRenderer({antialias:true,alpha:true,powerPreference:"high-performance"});
+      // 立即校验 WebGL 上下文真实可用（禁用 WebGL 时构造可能不立即抛错）
+      var glc=this.renderer.getContext?this.renderer.getContext():null;
+      if(!glc||(glc.isContextLost&&glc.isContextLost()))throw new Error("WebGL 上下文不可用");
       this.renderer.setPixelRatio(Math.min(window.devicePixelRatio||1,2));
       this.renderer.setSize(w,h);
       this.renderer.setClearColor(0x000000,0);
@@ -616,7 +961,15 @@ var Atlas3D={
     this.scene.fog=new THREE_.FogExp2(0x07101f,0.011);
     this.camera=new THREE_.PerspectiveCamera(55,w/h,0.1,400);
     this.glowTex=glowTexture();
-    this.positions=buildLayout();
+    this.reduced=window.matchMedia&&window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+    this.positions=getLayout("network");
+    this.fromPositions={};this.targetPositions={};
+    Store.evidence.nodes.forEach(function(n){
+      var p=self.positions[n.node_id];
+      self.fromPositions[n.node_id]=p.clone();
+      self.targetPositions[n.node_id]=p.clone();
+      self.idlePhase[n.node_id]=(U.hashStr(n.node_id)%628)/100;
+    });
 
     // 网格地面
     var grid=new THREE_.GridHelper(80,32,0x3a8aa0,0x1e4058);
@@ -662,11 +1015,10 @@ var Atlas3D={
       self2.scene.add(line);
       self2.edgeLines.push(line);
       self2.edgeData.push(e);
-      // 发光管（默认透明，focus 时亮起）
-      var curve=new THREE_.LineCurve3(pa,pb);
-      var tg=new THREE_.TubeGeometry(curve,1,0.06,6,false);
+      // 发光管：圆柱（默认沿 Y、高 1），运行时用 transform 匹配两端，默认透明
+      var cg=new THREE_.CylinderGeometry(0.06,0.06,1,8,1,true);
       var tm=new THREE_.MeshBasicMaterial({color:colr,transparent:true,opacity:0,blending:THREE_.AdditiveBlending,depthWrite:false});
-      var tube=new THREE_.Mesh(tg,tm);
+      var tube=new THREE_.Mesh(cg,tm);
       self2.scene.add(tube);
       self2.edgeTubes.push(tube);
     });
@@ -792,21 +1144,32 @@ var Atlas3D={
     // 节点
     this.nodeMeshes.forEach(function(mesh,i){
       var nid=mesh.userData.nodeId;
+      var glow=self.nodeGlows[i];
+      // 演化模式：未出生节点保持隐藏
+      if(self.evoOn){
+        var b=self.nodeBirth[nid];
+        if(b!==-1&&b>self.evoIndex){mesh.visible=false;glow.visible=false;return;}
+      }
       var inFocus=!hasFocus||self.focusNodeIds[nid];
-      mesh.visible=true;
+      mesh.visible=true;glow.visible=true;
       mesh.material.opacity=inFocus?1:0.28;
       mesh.material.transparent=!inFocus;
-      var glow=self.nodeGlows[i];
       glow.material.opacity=inFocus?0.95:0.18;
+      if(mesh.userData.growT0!=null)return; // 生长中，scale 交给 applyGrowth
       var base=mesh.userData.baseRadius||1;
       mesh.scale.setScalar(hasFocus&&self.focusNodeIds[nid]?base*1.2:base);
     });
     // 边：direct=变化直接涉及（发光）；neighbor=两端在焦点内的上下文（淡色）
     this.edgeLines.forEach(function(line,i){
-      var e=self.edgeData[i];
+      var e=self.edgeData[i],tube=self.edgeTubes[i];
+      if(self.evoOn){
+        var b=self.edgeBirth[e.edge_id];
+        if(b!==-1&&b>self.evoIndex){line.visible=false;tube.visible=false;return;}
+      }
       var isC=e.evidence_grade==="C";
       var direct=!!self.focusEdgeIds[e.edge_id];
       var neighbor=(self.focusNodeIds[e.source_node_id]&&self.focusNodeIds[e.target_node_id]);
+      line.visible=true;tube.visible=true;
       if(!hasFocus){
         line.material.opacity=isC?0.4:0.32;
       }else if(direct){
@@ -817,7 +1180,6 @@ var Atlas3D={
         line.material.opacity=0.07;
       }
       // 发光管只亮直接路径
-      var tube=self.edgeTubes[i];
       if(tube){
         if(hasFocus&&direct)tube.material.opacity=isC?0.6:0.95;
         else tube.material.opacity=0;
@@ -846,6 +1208,116 @@ var Atlas3D={
     this.ttx=0;this.tty=0;this.ttz=0;
   },
 
+  /* ---------- 形态切换：节点平滑飞行 ---------- */
+  morphTo:function(layout){
+    if(this.layoutName===layout)return;
+    var self=this,target=getLayout(layout),now=performance.now();
+    Store.evidence.nodes.forEach(function(n){
+      self.fromPositions[n.node_id]=self.positions[n.node_id].clone();
+      self.targetPositions[n.node_id]=target[n.node_id];
+    });
+    this.layoutName=layout;this.morphT0=now;this.morphing=true;
+    this.morphDur=this.reduced?1:1100;
+    // 时间长河：切到接近水平的侧视，让沿时间轴的线性排列一目了然
+    this.targetPhi=layout==="timeline"?1.45:1.0;
+    $("stage").classList.add("morphing");
+  },
+
+  /* ---------- 节点位置：morph 插值 + 静止后 idle 微浮动 ---------- */
+  updateNodePositions:function(now){
+    var self=this;
+    var t=this.morphing?clamp((now-this.morphT0)/this.morphDur,0,1):1;
+    var eased=this.morphing?easeInOutCubic(t):1;
+    var off=new THREE_.Vector3();
+    Store.evidence.nodes.forEach(function(n){
+      var id=n.node_id,anchor;
+      if(self.morphing){
+        anchor=self.positions[id].copy(self.fromPositions[id]).lerp(self.targetPositions[id],eased);
+      }else{
+        anchor=self.targetPositions[id];
+        if(!self.reduced){
+          var ph=self.idlePhase[id],tt=now*0.0011;
+          off.set(Math.sin(tt+ph)*0.15,Math.cos(tt*0.9+ph*1.3)*0.13,Math.sin(tt*0.8+ph*0.7)*0.15);
+          self.positions[id].copy(anchor).add(off);
+        }else{
+          self.positions[id].copy(anchor);
+        }
+      }
+    });
+    if(this.morphing&&t>=1){this.morphing=false;$("stage").classList.remove("morphing");}
+  },
+
+  /* ---------- 边实时跟随节点 ---------- */
+  updateEdgeGeometries:function(){
+    var self=this,up=new THREE_.Vector3(0,1,0),dir=new THREE_.Vector3();
+    this.edgeData.forEach(function(e,i){
+      var pa=self.positions[e.source_node_id],pb=self.positions[e.target_node_id];
+      if(!pa||!pb)return;
+      var line=self.edgeLines[i],attr=line.geometry.attributes.position;
+      attr.setXYZ(0,pa.x,pa.y,pa.z);attr.setXYZ(1,pb.x,pb.y,pb.z);attr.needsUpdate=true;
+      if(e.evidence_grade==="C")line.computeLineDistances();
+      var tube=self.edgeTubes[i];
+      dir.subVectors(pb,pa);var d=Math.max(dir.length(),1e-3);
+      tube.position.copy(pa).addScaledVector(dir,0.5);
+      tube.scale.set(1,d,1);
+      tube.quaternion.setFromUnitVectors(up,dir.multiplyScalar(1/d));
+    });
+  },
+
+  /* ---------- 时间演化：计算每个对象的出生事件索引 ---------- */
+  computeBirth:function(){
+    var list=Store.filtered,nodeIn={},edgeIn={};
+    list.forEach(function(c,idx){
+      (c.involved_node_ids||[]).forEach(function(id){if(!(id in nodeIn))nodeIn[id]=idx;});
+      (c.involved_edge_ids||[]).forEach(function(id){if(!(id in edgeIn))edgeIn[id]=idx;});
+    });
+    var nodeBirth={},edgeBirth={};
+    Store.evidence.nodes.forEach(function(n){nodeBirth[n.node_id]=(n.node_id in nodeIn)?nodeIn[n.node_id]:-1;});
+    Store.evidence.edges.forEach(function(e){edgeBirth[e.edge_id]=(e.edge_id in edgeIn)?edgeIn[e.edge_id]:-1;});
+    this.nodeBirth=nodeBirth;this.edgeBirth=edgeBirth;
+  },
+
+  /* 推进演化到第 index 个事件；基本盘（-1）始终可见 */
+  setEvolution:function(index){
+    var self=this;this.evoIndex=index;
+    this.nodeMeshes.forEach(function(mesh){
+      var id=mesh.userData.nodeId,b=self.nodeBirth[id];
+      if(b!==-1&&b>index){mesh.visible=false;self.glowById(id).visible=false;return;}
+      mesh.visible=true;self.glowById(id).visible=true;
+      if(b===index&&mesh.userData.growT0==null)mesh.userData.growT0=performance.now();
+    });
+    this.edgeData.forEach(function(e,i){
+      var b=self.edgeBirth[e.edge_id],born=b===-1||b<=index;
+      self.edgeLines[i].visible=born;self.edgeTubes[i].visible=born;
+    });
+  },
+
+  /* 生长动画（在 loop 中调用），结束后交给 setFocus 控制 scale */
+  applyGrowth:function(now){
+    var self=this;
+    this.nodeMeshes.forEach(function(mesh){
+      if(mesh.userData.growT0==null)return;
+      var g=clamp((now-mesh.userData.growT0)/520,0,1);
+      if(g>=1){mesh.userData.growT0=null;return;}
+      var base=mesh.userData.baseRadius||1;
+      mesh.scale.setScalar(base*(1-Math.pow(1-g,3)));
+    });
+  },
+
+  startEvolution:function(){this.evoOn=true;},
+  stopEvolution:function(){
+    var self=this;this.evoOn=false;this.evoIndex=-1;
+    this.nodeMeshes.forEach(function(mesh){mesh.visible=true;mesh.userData.growT0=null;});
+    this.nodeGlows.forEach(function(g){g.visible=true;});
+    this.edgeLines.forEach(function(l){l.visible=true;});
+    this.edgeTubes.forEach(function(t){t.visible=true;});
+  },
+  glowById:function(id){
+    for(var i=0;i<this.nodeMeshes.length;i++)
+      if(this.nodeMeshes[i].userData.nodeId===id)return this.nodeGlows[i];
+    return null;
+  },
+
   loop:function(){
     var self=this;
     if(this.disposed)return;
@@ -863,6 +1335,16 @@ var Atlas3D={
     );
     this.camera.lookAt(this.tx,this.ty,this.tz);
     if(this.particleSystem){this.particleSystem.rotation.y+=0.0007;this.particleSystem.rotation.x+=0.0002;}
+
+    // 节点位置 morph/idle + 网格同步 + 边跟随 + 生长
+    var now=performance.now();
+    this.updateNodePositions(now);
+    this.nodeMeshes.forEach(function(mesh,i){
+      mesh.position.copy(self.positions[mesh.userData.nodeId]);
+      self.nodeGlows[i].position.copy(mesh.position);
+    });
+    this.updateEdgeGeometries();
+    this.applyGrowth(now);
 
     // 节点查找缓存
     if(!this.meshById){this.meshById={};this.nodeMeshes.forEach(function(m){self.meshById[m.userData.nodeId]=m;});}
@@ -932,7 +1414,7 @@ function buildLayout2D(){
     var temp=1-Math.pow(iter/420,1.6),f=[];
     nodes.forEach(function(){f.push(v3(0,0,0));});
     for(var a=0;a<nodes.length;a++)for(var b=a+1;b<nodes.length;b++){
-      var d=sub(pos[nodes[a.node_id]],pos[nodes[b.node_id]]),dist=Math.max(len(d),0.6),rep=110/(dist*dist);
+      var d=sub(pos[nodes[a].node_id],pos[nodes[b].node_id]),dist=Math.max(len(d),0.6),rep=110/(dist*dist);
       d=scale(norm(d),rep);f[a]=add(f[a],d);f[b]=sub(f[b],d);
     }
     edges.forEach(function(e){
@@ -1000,6 +1482,7 @@ var Atlas2D={
     Store.evidence.edges.forEach(function(e){
       var pa=self.pos[e.source_node_id],pb=self.pos[e.target_node_id];if(!pa||!pb)return;
       var a=self.project(pa),b=self.project(pb),isC=e.evidence_grade==="C";
+      if(!(a.s>0&&b.s>0))return;
       var inFocus=!self.hasFocus||self.focusEdgeIds[e.edge_id]||(self.focusNodeIds[e.source_node_id]&&self.focusNodeIds[e.target_node_id]);
       var op=self.hasFocus?(inFocus?0.95:0.07):(isC?0.45:0.32);
       ctx.save();ctx.globalAlpha=op;ctx.strokeStyle=U.REL_COLOR[e.relation_type]||"#9ab4d4";ctx.lineWidth=inFocus?1.6:1;
@@ -1010,7 +1493,9 @@ var Atlas2D={
     var arr=Store.evidence.nodes.map(function(n){return {n:n,p:self.project(self.pos[n.node_id])};}).sort(function(a,b){return b.p.z-a.p.z;});
     arr.forEach(function(o){
       var n=o.n,pr=o.p,inFocus=!self.hasFocus||self.focusNodeIds[n.node_id];
-      var deg=Store.degree[n.node_id]||1,r=(4+Math.min(deg,9)*0.55)*pr.s*self.zoom;
+      // 相机后面的点（透视因子非正）投影无意义，跳过
+      if(!(pr.s>0))return;
+      var deg=Store.degree[n.node_id]||1,r=Math.max(1.2,(4+Math.min(deg,9)*0.55)*pr.s*self.zoom);
       self.screen[n.node_id]={x:pr.x,y:pr.y,r:r};
       var col=nodeColor(n);
       ctx.save();ctx.globalAlpha=inFocus?1:0.3;
@@ -1211,6 +1696,7 @@ function renderHeading(){
 
 /* ---------- 选中变化 ---------- */
 function selectChange(id){
+  if(playActive)stopPlayback();
   var c=Store.getChange(id);
   Store.selectedId=id;
   if(c){
@@ -1262,13 +1748,14 @@ window.__AtlasHooks={
 
 /* ---------- 引擎初始化 ---------- */
 function initEngine(){
-  if(window.THREE&&window.__Atlas3D.init()){engine=window.__Atlas3D;}
-  else if(window.__Atlas2D.init()){engine=window.__Atlas2D;}
+  if(window.THREE&&window.__Atlas3D.init()){engine=window.__Atlas3D;document.body.classList.add("mode-3d");}
+  else if(window.__Atlas2D.init()){engine=window.__Atlas2D;document.body.classList.add("mode-2d");}
   $("hudTl").textContent=engine===window.__Atlas3D?"BOLUO · 3D ATLAS":"BOLUO · 2D ATLAS";
 }
 
 /* ---------- 范围切换 ---------- */
 function setRange(r){
+  if(playActive)stopPlayback();
   Store.range=r;
   document.querySelectorAll(".range-seg button").forEach(function(b){b.classList.toggle("active",b.getAttribute("data-range")===r);});
   Store.applyRange();
@@ -1293,6 +1780,222 @@ function showError(){
   $("changeList").appendChild(retry);
 }
 
+/* ================= 形态切换 / 播放 / 分析舱 / 明细表 接线 ================= */
+var REL_TYPE_LBL={supply_chain:"供应链",regional:"区域协同",commute:"通勤联系",transport:"交通连接",eco_constraint:"生态约束",resource_competition:"资源竞争",tourism_consumption:"旅游消费",investment:"投资关系"};
+
+/* ---------- 形态切换 ---------- */
+function bindLayoutSwitch(){
+  document.querySelectorAll(".layout-switch button").forEach(function(b){
+    b.addEventListener("click",function(){
+      if(engine!==window.__Atlas3D){toast("2D 降级模式仅支持关系网络形态");return;}
+      var layout=b.getAttribute("data-layout");
+      if(engine.layoutName===layout)return;
+      document.querySelectorAll(".layout-switch button").forEach(function(x){x.classList.toggle("active",x===b);});
+      engine.morphTo(layout);
+    });
+  });
+}
+
+/* ---------- 时间演化播放 ---------- */
+var playTimer=null,playActive=false;
+function setPlayIcon(playing){
+  var icon=$("playIcon"),btn=$("playBtn");
+  if(playing){
+    icon.innerHTML='<path d="M8 5h3.2v14H8zM12.8 5H16v14h-3.2z"/>';
+    btn.classList.add("playing");btn.setAttribute("aria-pressed","true");
+  }else{
+    icon.innerHTML='<path d="M8 5.5v13a1 1 0 0 0 1.52.86l10.5-6.5a1 1 0 0 0 0-1.72L9.52 4.64A1 1 0 0 0 8 5.5Z"/>';
+    btn.classList.remove("playing");btn.setAttribute("aria-pressed","false");
+  }
+}
+function stopPlayback(){
+  if(playTimer){clearInterval(playTimer);playTimer=null;}
+  playActive=false;
+  if(engine===window.__Atlas3D)engine.stopEvolution();
+  setPlayIcon(false);
+  $("playProgress").textContent="0/"+Store.filtered.length;
+}
+function startPlayback(){
+  if(engine!==window.__Atlas3D){toast("2D 降级模式不支持演化播放");return;}
+  if(!Store.filtered.length){toast("当前范围没有变化可播放");return;}
+  engine.computeBirth();
+  engine.startEvolution();
+  playActive=true;setPlayIcon(true);
+  var idx=0;engine.setEvolution(idx);
+  $("playProgress").textContent=(idx+1)+"/"+Store.filtered.length;
+  playTimer=setInterval(function(){
+    idx++;
+    if(idx>=Store.filtered.length){
+      engine.setEvolution(Store.filtered.length-1);
+      $("playProgress").textContent=Store.filtered.length+"/"+Store.filtered.length;
+      stopPlayback();
+      if(Store.selectedId){var c=Store.getChange(Store.selectedId);if(c){var f=Store.computeFocus(c);engine.setFocus(f.nodeIds,f.edgeIds,true);}}
+      else engine.setFocus({},{},false);
+      return;
+    }
+    engine.setEvolution(idx);
+    $("playProgress").textContent=(idx+1)+"/"+Store.filtered.length;
+  },1200);
+}
+function bindPlay(){
+  $("playBtn").addEventListener("click",function(){if(playActive)stopPlayback();else startPlayback();});
+  $("playReset").addEventListener("click",function(){
+    if(playActive)stopPlayback();
+    $("playProgress").textContent="0/"+Store.filtered.length;
+  });
+}
+
+/* ---------- 分析舱：SVG 工具 ---------- */
+function svgEl(tag,attrs){
+  var n=document.createElementNS("http://www.w3.org/2000/svg",tag);
+  if(attrs)for(var k in attrs)n.setAttribute(k,attrs[k]);
+  return n;
+}
+function renderDonutChange(){
+  var wrap=$("donutChange");wrap.innerHTML="";
+  var all=Store.changes.changes,total=all.length,groups={},order=[];
+  all.forEach(function(c){if(!(c.change_type in groups)){groups[c.change_type]=0;order.push(c.change_type);}groups[c.change_type]++;});
+  var size=128,stroke=16,r=(size-stroke)/2,circ=2*Math.PI*r,c=size/2;
+  var donut=el("div",{class:"donut"});
+  var svg=svgEl("svg",{viewBox:"0 0 "+size+" "+size});
+  svg.appendChild(svgEl("circle",{cx:c,cy:c,r:r,fill:"none",stroke:"rgba(120,150,190,.16)","stroke-width":stroke}));
+  var acc=0;
+  order.forEach(function(tp){
+    var dash=(groups[tp]/total)*circ;
+    svg.appendChild(svgEl("circle",{cx:c,cy:c,r:r,fill:"none",stroke:U.CHANGE_CFG[tp].color,"stroke-width":stroke,"stroke-dasharray":dash+" "+(circ-dash),"stroke-dashoffset":-acc}));
+    acc+=dash;
+  });
+  donut.appendChild(svg);
+  var center=el("div",{class:"donut-center"});
+  center.appendChild(el("span",{class:"dc-num"},total));
+  center.appendChild(el("span",{class:"dc-lbl"},"处变化"));
+  donut.appendChild(center);
+  wrap.appendChild(donut);
+  var lg=el("div",{class:"donut-legend"});
+  order.forEach(function(tp){
+    var row=el("div",{class:"dl-row"});
+    var dot=el("span",{class:"dl-dot"});dot.style.background=U.CHANGE_CFG[tp].color;
+    row.appendChild(dot);
+    row.appendChild(el("span",{class:"dl-name"},U.CHANGE_CFG[tp].label));
+    row.appendChild(el("span",{class:"dl-val"},groups[tp]));
+    row.appendChild(el("span",{class:"dl-pct"},Math.round(groups[tp]/total*100)+"%"));
+    lg.appendChild(row);
+  });
+  wrap.appendChild(lg);
+}
+function renderGrade(){
+  var gc={A:0,B:0,C:0};
+  Store.evidence.edges.forEach(function(e){gc[e.evidence_grade]++;});
+  $("gA").textContent=gc.A;$("gB").textContent=gc.B;$("gC").textContent=gc.C;
+  $("gradeNote").innerHTML='其中 <b>'+gc.C+' 条 C 级关系（占 '+Math.round(gc.C/Store.evidence.edges.length*100)+'%）证据较弱、带反证，仅作为待验证假设，不与 A/B 级同等对待。';
+}
+function renderBar(targetId,counts,labelMap,colorFn){
+  var box=$(targetId);box.innerHTML="";
+  var keys=Object.keys(counts).sort(function(a,b){return counts[b]-counts[a];});
+  var max=Math.max.apply(null,keys.map(function(k){return counts[k];}));
+  keys.forEach(function(k){
+    var row=el("div",{class:"bar-row"});
+    row.appendChild(el("span",{class:"bar-name"},labelMap[k]||k));
+    var track=el("span",{class:"bar-track"});
+    var fill=el("span",{class:"bar-fill"});
+    fill.style.background=colorFn(k);
+    fill.style.width=(counts[k]/max*100)+"%";
+    track.appendChild(fill);row.appendChild(track);
+    row.appendChild(el("span",{class:"bar-val"},counts[k]));
+    box.appendChild(row);
+  });
+}
+function renderBars(){
+  var nc={};Store.evidence.nodes.forEach(function(n){nc[n.node_type]=(nc[n.node_type]||0)+1;});
+  renderBar("barNode",nc,U.NODE_TYPE_LBL,function(k){return U.NODE_COLOR[k]||"#9ab4d4";});
+  var ec={};Store.evidence.edges.forEach(function(e){ec[e.relation_type]=(ec[e.relation_type]||0)+1;});
+  renderBar("barEdge",ec,REL_TYPE_LBL,function(k){return U.REL_COLOR[k]||"#9ab4d4";});
+}
+function renderAnalysis(){
+  renderDonutChange();renderGrade();renderBars();
+  $("analysisStamp").textContent="已核验 · 全量实时计算";
+  $("footerStamp").textContent="全量结构不随上方时间范围切换";
+}
+
+/* ---------- 明细表：多条件筛选 ---------- */
+var tblRange="all",tblType=null,tblTerm="";
+function buildTypeChips(){
+  var box=$("typeChips");box.innerHTML="";
+  box.appendChild(el("button",{class:"fchip active","data-ttype":""},"全部类型"));
+  var seen=[];
+  Store.changes.changes.forEach(function(c){if(seen.indexOf(c.change_type)<0)seen.push(c.change_type);});
+  seen.forEach(function(tp){
+    box.appendChild(el("button",{class:"fchip","data-ttype":tp},U.CHANGE_CFG[tp].label));
+  });
+}
+function tableRows(){
+  var now=new Date(),cutoff=new Date(now.getTime()-30*86400000);
+  return Store.changes.changes.filter(function(c){
+    var d=parseDate(c.event_date);
+    if(tblRange==="month"){if(!(d&&d>=cutoff))return false;}
+    else if(tblRange==="year"){if(!(d&&d.getFullYear()===now.getFullYear()))return false;}
+    if(tblType&&c.change_type!==tblType)return false;
+    if(tblTerm){
+      var hay=(c.title+" "+c.event_date+" "+c.change_id).toLowerCase();
+      var nh=(c.involved_node_ids||[]).map(function(id){var n=Store.nodeMap[id];return n?n.name:"";}).join(" ").toLowerCase();
+      var sh=(c.source_ids||[]).map(function(id){var s=Store.sourceMap[id];return s?(s.title+" "+s.publisher):"";}).join(" ").toLowerCase();
+      if((hay+" "+nh+" "+sh).indexOf(tblTerm)<0)return false;
+    }
+    return true;
+  });
+}
+function changeGradeMini(c){
+  var grades=(c.involved_edge_ids||[]).map(function(id){var e=Store.edgeMap[id];return e?e.evidence_grade:null;});
+  if(grades.indexOf("C")>=0)return{txt:"C 待验证",cls:"c"};
+  if(grades.indexOf("B")>=0)return{txt:"B 推断",cls:"b"};
+  return{txt:"A 公开",cls:"a"};
+}
+function renderTable(){
+  var body=$("tableBody");body.innerHTML="";
+  var rows=tableRows();
+  if(!rows.length){
+    var td=el("td",{colspan:6,class:"table-empty"},"没有符合当前筛选条件的变化。");
+    body.appendChild(el("tr")).appendChild(td);
+  }else{
+    rows.forEach(function(c){
+      var tr=el("tr");
+      tr.appendChild(el("td",{class:"dt-id"},c.change_id));
+      tr.appendChild(el("td",{class:"dt-title-cell"},c.title));
+      var cfg=U.CHANGE_CFG[c.change_type],badge=el("span",{class:"mini-badge"});
+      badge.textContent=cfg.label;
+      badge.style.color=cfg.color;badge.style.background=cfg.color+"26";badge.style.border="1px solid "+cfg.color+"44";
+      tr.appendChild(el("td")).appendChild(badge);
+      tr.appendChild(el("td",{class:"dt-date"},c.event_date));
+      var gm=changeGradeMini(c);
+      tr.appendChild(el("td",{class:"dt-grade "+gm.cls},gm.txt));
+      var names=(c.involved_node_ids||[]).map(function(id){var n=Store.nodeMap[id];return n?shortName(n.name):id;}).join("、");
+      tr.appendChild(el("td",null,names));
+      tr.addEventListener("click",function(){
+        selectChange(c.change_id);
+        $("stage").scrollIntoView({behavior:"smooth",block:"center"});
+      });
+      body.appendChild(tr);
+    });
+  }
+  $("tblShown").textContent=rows.length;
+  $("tblTotal").textContent=Store.changes.changes.length;
+}
+function bindTable(){
+  $("rangeChips").addEventListener("click",function(e){
+    var b=e.target.closest("button[data-frange]");if(!b)return;
+    tblRange=b.getAttribute("data-frange");
+    $("rangeChips").querySelectorAll(".fchip").forEach(function(x){x.classList.toggle("active",x===b);});
+    renderTable();
+  });
+  $("typeChips").addEventListener("click",function(e){
+    var b=e.target.closest("button[data-ttype]");if(!b)return;
+    tblType=b.getAttribute("data-ttype")||null;
+    $("typeChips").querySelectorAll(".fchip").forEach(function(x){x.classList.toggle("active",x===b);});
+    renderTable();
+  });
+  $("tableSearch").addEventListener("input",function(){tblTerm=$("tableSearch").value.trim().toLowerCase();renderTable();});
+}
+
 /* ---------- 初始化 ---------- */
 function boot(){
   renderLegend();
@@ -1309,6 +2012,7 @@ function boot(){
     Store.applyRange();
     initEngine();
     renderHeading();renderStats();renderList();renderTimeline();
+    renderAnalysis();buildTypeChips();renderTable();
     // 深链回放
     var hash=location.hash.match(/change=([A-Za-z0-9]+)/);
     var target=hash?hash[1]:null;
@@ -1323,6 +2027,8 @@ function boot(){
   document.querySelectorAll(".range-seg button").forEach(function(b){
     b.addEventListener("click",function(){setRange(b.getAttribute("data-range"));});
   });
+  // 形态切换 / 播放 / 明细表
+  bindLayoutSwitch();bindPlay();bindTable();
   // 搜索
   var si=$("searchInput"),sb=$("searchBox");
   si.addEventListener("input",function(){Store.searchTerm=si.value.trim();renderList();});
