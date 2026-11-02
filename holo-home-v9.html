@@ -658,6 +658,20 @@ function parseDate(raw){
 }
 
 /* ================= 数据层 ================= */
+// 带有限次重试的 JSON 拉取，抵御平台间歇 503/404
+function fetchJSON(url,tries){
+  return new Promise(function(resolve,reject){
+    (function attempt(n){
+      fetch(url,{cache:"no-cache"}).then(function(r){
+        if(!r.ok)throw new Error("HTTP "+r.status);
+        return r.json();
+      }).then(resolve).catch(function(e){
+        if(n<=1)reject(e);
+        else setTimeout(function(){attempt(n-1);},(tries-n+1)*700);
+      });
+    })(tries);
+  });
+}
 var Store={
   ready:false,ok:false,
   evidence:null,sources:null,changes:null,
@@ -670,9 +684,9 @@ var Store={
   focusNodeIds:{},focusEdgeIds:{},
   load:function(){
     var p=Promise.all([
-      fetch("./data/relationship-evidence-v1.json",{cache:"no-cache"}).then(function(r){if(!r.ok)throw new Error("证据 "+r.status);return r.json();}),
-      fetch("./data/relationship-sources-v1.json",{cache:"no-cache"}).then(function(r){if(!r.ok)throw new Error("来源 "+r.status);return r.json();}),
-      fetch("./data/relationship-changes-v1.json",{cache:"no-cache"}).then(function(r){if(!r.ok)throw new Error("变化 "+r.status);return r.json();})
+      fetchJSON("./data/relationship-evidence-v1.json",3),
+      fetchJSON("./data/relationship-sources-v1.json",3),
+      fetchJSON("./data/relationship-changes-v1.json",3)
     ]);
     return p.then(function(all){
       Store.evidence=all[0];Store.sources=all[1];Store.changes=all[2];
