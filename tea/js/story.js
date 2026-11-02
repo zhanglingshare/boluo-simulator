@@ -665,10 +665,12 @@
 
     /* 结果区 */
     const probNum = h('span', { class: 'mc-prob-num tnum' }, '—');
+    const insight = h('div', { class: 'mc-insight' }, '');
     const probWrap = h('div', { class: 'mc-prob reveal' },
       h('div', { class: 'mc-prob-label' }, '够到 20 亿目标的把握'),
       h('div', { class: 'mc-prob-big' }, probNum, h('span', { class: 'mc-prob-pct' }, '%')),
-      h('div', { class: 'mc-prob-note note-line' }, '基于上千种可能的结果，不是预测。'));
+      h('div', { class: 'mc-prob-note note-line' }, '基于上千种可能的结果，不是预测。'),
+      insight);
 
     const HW = 620, HH = 250, PAD_L = 8, PAD_R = 8, BASE_Y = 210, TOP_Y = 24;
     const histSvg = h('svg', { class: 'mc-hist-svg', viewBox: '0 0 ' + HW + ' ' + HH });
@@ -696,6 +698,13 @@
       const prob = Math.round(hit / RUNS * 100);
       probNum.textContent = String(prob);
       probNum.classList.toggle('low', prob < 50);
+      if (base.downstream <= 0.01) {
+        insight.textContent = '生产端再怎么浮动都够不到——缺口不在山上，在下游。';
+      } else if (prob < 5) {
+        insight.textContent = '加了 ' + f1(base.downstream) + ' 亿下游，中位盘子抬高了，但把握仍接近 0：现有下游规模还远不够。';
+      } else {
+        insight.textContent = '当前约 ' + prob + '% 的可能够到目标，仍需更大的下游链条。';
+      }
       qLow.textContent = f1(qOf(sorted, 0.1));
       qMid.textContent = f1(qOf(sorted, 0.5));
       qHigh.textContent = f1(qOf(sorted, 0.9));
@@ -763,12 +772,26 @@
       }, 120);
     });
 
+    /* 下游增量滑块（默认 0；官方构成未公开，让用户自己加，诚实标注） */
+    const downCur = h('span', { class: 'cur' }, '0.0 亿');
+    const downInput = h('input', { type: 'range', min: 0, max: 3, step: 0.5, value: 0 });
+    downInput.addEventListener('input', () => {
+      base.downstream = parseFloat(downInput.value);
+      downCur.textContent = f1(base.downstream) + ' 亿';
+      runBtn.classList.add('hint');
+      runBtn.textContent = '再跑一遍';
+    });
+
     const controls = h('div', { class: 'mc-controls reveal' },
       h('div', { class: 'mc-base note-line' }, '基准：3.5 万亩 · 140 斤/亩 · 250 元/斤（真实锚点）'),
       h('div', { class: 'slider-field' },
         h('div', { class: 'sf-top' }, h('span', null, '变量上下浮动幅度'), spreadCur),
         spreadInput,
         h('div', { class: 'sf-range' }, h('span', null, '5%'), h('span', null, '25%'))),
+      h('div', { class: 'slider-field' },
+        h('div', { class: 'sf-top' }, h('span', null, '下游增量（自加，官方未公开）'), downCur),
+        downInput,
+        h('div', { class: 'sf-range' }, h('span', null, '0'), h('span', null, '3 亿'))),
       runBtn);
 
     const leftCol = h('div', { class: 'mc-col-left' }, controls, probWrap);
@@ -780,7 +803,7 @@
       h('div', { class: 'use-tag reveal' }, '决策用途：把 20 亿目标翻译成“有多大把握”，避免拍脑袋'),
       h('div', { class: 'mc-grid reveal' }, leftCol, rightCol),
       h('hr', { class: 'divider' }),
-      h('p', { class: 'note-line reveal' }, '情景模拟（C 级）：让每个变量在基准上下浮动，跑上千种可能，看够到目标的比例与区间；不是预测，也不替代官方核算。'));
+      h('p', { class: 'note-line reveal' }, '情景模拟（C 级）：让每个变量在基准上下浮动，跑上千种可能，看够到目标的比例与区间；下游增量官方构成未公开，需你自行假设。不是预测，也不替代官方核算。'));
 
     sec.append(topbar(8, '情景模拟'),
       h('div', { class: 'stage-wrap' }, stage),
