@@ -114,6 +114,14 @@ h1{font-size:22px;margin-bottom:6px}
   <div id="chart">
     <div id="tooltip"></div>
   </div>
+  <section id="teaDeepPanel" hidden aria-label="柏塘山茶模型深入入口" style="margin:12px 0;padding:17px 19px;border:1px solid #80b59a;border-radius:12px;background:linear-gradient(115deg,#113833,#122c3a);box-shadow:0 10px 25px #020b1544">
+    <div style="font-size:10px;letter-spacing:1.5px;color:#aed9b5">柏塘山茶 · 可深入的真实产业案例</div>
+    <div style="display:flex;gap:14px;flex-wrap:wrap;justify-content:space-between;align-items:center;margin:8px 0">
+      <div><strong style="font-size:21px;color:#f4e0bf">从县域关系节点，放大到产业模型</strong><p style="font-size:12px;color:#abc4bd;margin:5px 0">继续调查品质、加工、B端原料茶和茶旅，运行2030情景分布；不改变博罗县级计算。</p></div>
+      <a id="teaDeepLaunch" href="industry-next/tea-lab-v3.html?page=mechanism" style="display:inline-block;border-radius:9px;padding:12px 15px;background:#f3c88d;color:#18281e;font-weight:800;font-size:12px">进入柏塘产业深潜 →</a>
+    </div>
+    <div style="font-size:10px;color:#9eb5ae">产业关系有证据等级；模拟中的未知参数另行标注，不把模型指数加到博罗GDP。</div>
+  </section>
   <div style="font-size:11px;color:#64748b;margin:6px 2px;line-height:1.6">
     <b>供货链</b>：谁给谁供货、厂从哪搬来（蓝线）　｜　<b>山水农业</b>：罗浮山、东江怎么养人养特产（浅蓝线）　｜　<b>环保要素</b>：东江管着谁排污、谁和谁抢地抢电（红线/橙线）
   </div>
@@ -252,6 +260,7 @@ h1{font-size:22px;margin-bottom:6px}
   <div class="next"><a href="who.html">下一步：博罗的基本面 →</a></div>
 </div>
 
+<script src="industry-next/case-bridge-v1.js"></script>
 <script>
 // ===== 数据（6层架构） =====
 const rawNodes=[
@@ -522,6 +531,11 @@ function selectNodeById(id){
   link.style("stroke-opacity",l=>
     (l.source.id===d.id||l.target.id===d.id)?0.9:0.05
   );
+  const teaPanel=document.getElementById("teaDeepPanel");
+  if(teaPanel){
+    teaPanel.hidden=d.id!=="sc";
+    if(d.id==="sc"&&window.BoluoCaseBridge)document.getElementById("teaDeepLaunch").href=window.BoluoCaseBridge.entry("network",{page:"mechanism"});
+  }
   tip.style.display="block";
   tip.innerHTML=`<b style="color:${colorMap[d.type]}">${d.name}</b><br>📍 ${d.town}<br>📊 ${d.desc}<br>🔗 连了${d.degree}条线<br>🚦 多少条路要经过它：${(d.betweenness*100).toFixed(1)}%<br>💚 ${d.state==="green"?"指标平稳":d.state==="yellow"?"指标待核实":"数据缺失"}`;
   tip.style.left=Math.min(d.x+15,W-240)+"px";
@@ -530,7 +544,7 @@ function selectNodeById(id){
 }
 node.on("click",(e,d)=>{
   e.stopPropagation();
-  if(selected===d.id){selected=null;resetHighlight();tip.style.display="none";return}
+  if(selected===d.id){selected=null;resetHighlight();tip.style.display="none";document.getElementById("teaDeepPanel").hidden=true;return}
   selectNodeById(d.id);
 });
 function resetHighlight(){
@@ -539,7 +553,7 @@ function resetHighlight(){
   rings.style("opacity",0.5);
   link.style("stroke-opacity",d=>d.level==="A"?0.8:0.5);
 }
-chart.addEventListener("click",()=>{selected=null;resetHighlight();tip.style.display="none"});
+chart.addEventListener("click",()=>{selected=null;resetHighlight();tip.style.display="none";document.getElementById("teaDeepPanel").hidden=true});
 
 // ===== V2：苗头冲击级联推演（沿供货关系逐层扩散，可复现URL） =====
 (function(){
