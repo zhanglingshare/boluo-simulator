@@ -17,9 +17,6 @@ on:
       - "network.html"
       - "town.html"
       - "lab.html"
-      - "step2.html"
-      - "v3.html"
-      - "v4.html"
       - "assets/boluo-ui.css"
       - "tests/boluo-ui-browser-check.cjs"
       - ".github/workflows/boluo-ui-browser-check.yml"
@@ -49,7 +46,7 @@ jobs:
           done
           cat /tmp/boluo-ui-http.log
           exit 1
-      - name: Check all 15 non-holographic pages at mobile and desktop widths
+      - name: Check all 12 non-holographic pages at mobile and desktop widths
         run: node tests/boluo-ui-browser-check.cjs
       - name: Upload visual audit screenshots
         if: always()
