@@ -5,6 +5,7 @@
 (function(root){
 'use strict';
 const sources=[
+{id:"tea2024",grade:"B",title:"茶+咖啡改写流量密码：2024年柏塘茶业与就业",publisher:"南方日报",date:"2025-05-09",url:"https://epaper.nfnews.com/nfdaily/html/202505/09/content_10134795.html",limit:"媒体转述：2024年产量2188吨、产值超10亿元、茶产业用工缺口减少70%；缺绝对缺工人数和统计底表"},
 {id:"gov15",grade:"A",title:"博罗县十五五规划纲要发布通知",publisher:"博罗县人民政府",date:"2026-08-31",url:"https://www.boluo.gov.cn/zwgk/qt/gzjh/content/post_5842396.html",limit:"已核实正式发布；附件全文尚未逐条审读，不填入未经核实的柏塘任务"},
 {id:"city15",grade:"A",title:"惠州市十五五规划纲要",publisher:"惠州市人民政府",date:"2026-07-08",url:"https://www.cnbayarea.org.cn/city/huizhou/zxdt/content/mpost_1334550.html",limit:"城市政策背景，不等于柏塘镇单项绩效"},
 {id:"std",grade:"A",title:"DB4413/T 6—2019 地理标志产品 柏塘山茶",publisher:"全国标准信息公共服务平台",date:"2019-12-26",url:"https://std.samr.gov.cn/db/search/stdDBDetailed?id=9AF7A3B2130735D6E05397BE0A0A00E1",limit:"证明标准存在，不等于所有经营主体执行或通过检验"},
@@ -19,6 +20,11 @@ const sources=[
 {id:"national",grade:"B",title:"茶产业提质升级指导意见（2026—2030年）相关政策",publisher:"工信部等五部门政策（媒体转引）",date:"2026-02",url:"https://ep.ycwb.com/epaper/ywdf/h5/html5/2026-03/20/content_1001_745177.htm",limit:"当前链接为报道而非已核原始发文，政策存在性待直接匹配后再提升原始来源等级"}
 ];
 const facts=[
+{id:"tea2024",name:"2024年茶叶产量",value:2188,unit:"吨",grade:"B",sourceIds:["tea2024"],qualifier:"南方日报引述柏塘镇统计，作为2025基准交叉观察",kind:"observed"},
+{id:"value2024",name:"2024年茶产业产值",value:10,unit:"亿元以上",grade:"B",sourceIds:["tea2024"],qualifier:"超过10亿元的下限报道，不把10亿当作精确值",kind:"observed"},
+{id:"labor2024",name:"2024年茶产业用工缺口变化",value:-70,unit:"%（较此前）",grade:"B",sourceIds:["tea2024"],qualifier:"报道用工缺口减少70%，但未提供原始缺口人数；不等于劳动者人数减少",kind:"observed"},
+{id:"spring2026",name:"2026春茶采摘参与",value:15000,unit:"人左右",grade:"B",sourceIds:["tour2026"],qualifier:"为春茶参与者，不是外来采工数、全职岗位或年度工时",kind:"observed"},
+{id:"yoy2025",name:"2024→2025年产量报道增幅",value:11.93,unit:"%",grade:"C",sourceIds:["tea2024","prov2026"],qualifier:"(2449/2188−1)×100%；媒体两年报道的派生变化，不能作为2026—2030固定增长率",kind:"derived"},
 {id:"tea2025",name:"2025年茶叶产量",value:2449,unit:"吨",grade:"B",sourceIds:["prov2026","tea2026"],qualifier:"约值，媒体引用镇级统计；另有2570吨口径",use:"tea_volume",kind:"observed"},
 {id:"tea2025alt",name:"2025年茶叶产量不同口径",value:2570,unit:"吨",grade:"B",sourceIds:["tour2026"],qualifier:"不可与2449吨取平均，需对照原始统计底表",kind:"conflict"},
 {id:"teaValue",name:"2025年茶产业产值",value:12,unit:"亿元",grade:"B",sourceIds:["prov2026","tea2026"],qualifier:"未核实是否含上下游/服务增加值，不据此乘指数预测真实收入",kind:"observed"},
