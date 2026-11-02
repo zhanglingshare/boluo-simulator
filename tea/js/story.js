@@ -471,8 +471,9 @@
   /* ---------- 初始化（可重试） ---------- */
   async function boot() {
     const deck = document.getElementById('deck');
-    deck.innerHTML = '';
+    deck.innerHTML = '<div class="stage-wrap"><div class="note-line">正在加载产业数据…</div></div>';
     DATA = await TeaData.loadAll();
+    deck.innerHTML = '';
     makeStars();
     [screen1, screen2, screen3, screen4, screen5, screen6, screen7].forEach(fn => deck.appendChild(fn()));
     observe();

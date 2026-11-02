@@ -13,8 +13,8 @@
 
   const sleep = ms => new Promise(r => setTimeout(r, ms));
 
-  // 对瞬时网络错误/5xx 做有限重试（最多 6 次，指数退避），避免边缘节点波动导致整页不可用
-  const BACKOFF = [300, 500, 800, 1200, 1800];
+  // 对瞬时网络错误/5xx 做有限重试（最多 8 次，平缓退避），避免边缘节点波动导致整页不可用
+  const BACKOFF = [200, 350, 500, 700, 900, 1100, 1400];
   async function loadJson(file, attempt) {
     attempt = attempt || 1;
     try {
