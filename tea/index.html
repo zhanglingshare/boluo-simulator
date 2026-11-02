@@ -32,7 +32,7 @@
 <!-- 内联引导器：随 HTML 到达，动态加载脚本并对瞬时 5xx 自动重试 -->
 <script>
 (function () {
-  var SCRIPTS = ['js/data.js', 'js/story.js'];
+  var SCRIPTS = ['js/data.js', 'js/holo.js', 'js/holo-2d.js', 'js/holo-gl.js', 'js/story.js'];
   var BACKOFF = [300, 500, 800, 1200, 1800, 2500];
   var wait = function (ms) { return new Promise(function (r) { setTimeout(r, ms); }); };
   function load(src, attempt) {

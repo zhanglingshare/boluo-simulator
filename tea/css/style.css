@@ -157,13 +157,32 @@ ul { list-style: none; }
 /* 中央舞台 */
 .stage-wrap { flex: 1; display: flex; align-items: center; justify-content: center; min-height: 0; padding: 22px 0; }
 .stage-card {
+  position: relative;
   width: 100%; max-width: 1180px;
   background: var(--glass); backdrop-filter: blur(18px); -webkit-backdrop-filter: blur(18px);
   border: 1px solid var(--glass-b); border-radius: var(--r-lg);
   padding: clamp(22px, 3vw, 40px);
   box-shadow: 0 24px 60px rgba(0, 0, 0, 0.38);
+  overflow: hidden;
 }
 .stage-card.narrow { max-width: 980px; }
+
+/* 透视网格 + 扫描线：统一全息 HUD 质感（在内容之下，不抢信息） */
+.stage-card::before {
+  content: ""; position: absolute; inset: 0; z-index: -1;
+  background:
+    linear-gradient(rgba(52, 211, 153, 0.055) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(52, 211, 153, 0.055) 1px, transparent 1px);
+  background-size: 38px 38px;
+  transform: perspective(500px) rotateX(62deg) scale(1.7) translateY(28%);
+  transform-origin: bottom;
+  pointer-events: none;
+}
+.stage-card::after {
+  content: ""; position: absolute; inset: 0; z-index: -1; pointer-events: none;
+  background: repeating-linear-gradient(0deg, transparent 0 3px, rgba(94, 234, 212, 0.045) 4px);
+  mix-blend-mode: screen;
+}
 
 /* 屏内标题层级 */
 .kicker {
@@ -410,6 +429,27 @@ input[type=range]::-moz-range-thumb { width: 18px; height: 18px; border-radius: 
 .use-tag::before { content: "用途"; font-family: var(--mono); font-size: 10px; font-weight: 700;
   color: var(--amber); border: 1px solid rgba(245, 196, 107, 0.4); padding: 2px 7px; border-radius: var(--r-pill); }
 .coral-text { color: var(--coral); text-shadow: var(--glow-coral); }
+.neon-text { color: var(--neon); text-shadow: var(--glow-neon); }
+
+/* ============ 全息 3D 场景容器（第6/7屏） ============ */
+.holo-wrap { width: 100%; margin: 6px 0 4px; }
+.holo-stage {
+  position: relative;
+  width: 100%;
+  height: 480px;
+  background: radial-gradient(ellipse at 50% 36%, rgba(18, 48, 37, 0.5), rgba(6, 14, 11, 0.78));
+  border: 1px solid var(--glass-b-soft);
+  border-radius: var(--r-md);
+  overflow: hidden;
+  touch-action: none; /* 移动端拖拽环绕时不触发页面滚动 */
+  cursor: grab;
+}
+.holo-stage:active { cursor: grabbing; }
+.holo-stage.holo-tea { height: 440px; }
+.holo-canvas { display: block; width: 100%; height: 100%; }
+.holo-fail {
+  position: absolute; inset: 0; display: flex; align-items: center; justify-content: center;
+}
 
 /* ============ 第6屏：SNA 关系网 ============ */
 .sna-layout { display: grid; grid-template-columns: 1.55fr 0.9fr; gap: 20px; align-items: stretch; }
@@ -505,6 +545,7 @@ input[type=range]::-moz-range-thumb { width: 18px; height: 18px; border-radius: 
   .stat-cards { grid-template-columns: 1fr; }
   .sna-layout { grid-template-columns: 1fr; }
   .mc-grid { grid-template-columns: 1fr; }
+  .holo-stage, .holo-stage.holo-tea { height: 380px; }
 }
 @media (max-width: 600px) {
   body { font-size: 14px; }
@@ -519,6 +560,7 @@ input[type=range]::-moz-range-thumb { width: 18px; height: 18px; border-radius: 
   .evidence-table thead th, .evidence-table tbody td { padding: 9px 10px; }
   .sna-svg { min-width: 460px; }
   .use-tag { font-size: 12px; padding: 9px 12px; }
+  .holo-stage, .holo-stage.holo-tea { height: 300px; }
 }
 
 /* 滚动条美化 */

@@ -339,55 +339,56 @@
     const net = DATA.network;
     const nodeById = {};
     net.nodes.forEach(n => { nodeById[n.id] = n; });
-    const GROUP_COLOR = { 0: 'var(--neon)', 1: 'var(--amber)', 2: 'var(--neon)', 3: 'var(--grade-d)' };
-    const W = net.canvas.width, H = net.canvas.height;
 
-    const svg = h('svg', { class: 'sna-svg', viewBox: '0 0 ' + W + ' ' + H, role: 'img' });
-    const edgeLayer = h('g');
-    const nodeLayer = h('g');
-    const edgeEls = {};
-    net.edges.forEach(e => {
-      const a = nodeById[e.from], b = nodeById[e.to];
-      const line = h('line', {
-        class: 'sna-edge ' + (e.dashed ? 'hyp' : 'solid'),
-        x1: a.x, y1: a.y, x2: b.x, y2: b.y,
-        'stroke-dasharray': e.dashed ? '6 6' : 'none'
-      });
-      edgeEls[e.id] = { el: line, from: e.from, to: e.to };
-      edgeLayer.appendChild(line);
-    });
-    const nodeEls = {};
-    net.nodes.forEach(n => {
-      const g = h('g', { class: 'sna-node' + (n.gap ? ' is-gap' : ''), transform: 'translate(' + n.x + ',' + n.y + ')' });
-      const r = n.gap ? 19 : 15;
-      if (n.gap) g.appendChild(h('circle', { class: 'gap-ring', r: r + 7 }));
-      g.appendChild(h('circle', { class: 'node-dot', r: r, fill: GROUP_COLOR[n.group] }));
-      g.appendChild(h('text', { class: 'node-label', y: r + 15, text: n.name }));
-      if (n.gap) g.appendChild(h('text', { class: 'gap-mark', y: 5, text: '!' }));
-      nodeEls[n.id] = { el: g, node: n };
-      nodeLayer.appendChild(g);
-    });
-    svg.append(edgeLayer, nodeLayer);
+    const C = TeaHolo.COLORS;
+    const GROUP_HEX = { 0: C.neon, 1: C.amber, 2: C.neon, 3: C.gradeD };
 
+    /* 2D 证据坐标 → 3D 世界坐标（确定性；z 按分组轻微分层 + 稳定抖动，不随机） */
+    const XS = 18, YS = 9;
+    const GROUP_Z = { 0: -2, 1: -0.7, 2: 0.8, 3: 2 };
+    const modelNodes = net.nodes.map(n => ({
+      id: n.id,
+      pos: {
+        x: (n.x / net.canvas.width - 0.5) * XS,
+        y: (0.5 - n.y / net.canvas.height) * YS,
+        z: GROUP_Z[n.group] + (TeaHolo.hash01(n.id) - 0.5) * 2
+      },
+      color: n.gap ? C.coral : GROUP_HEX[n.group],
+      pulseColor: C.coral,
+      radius: n.gap ? 0.46 : 0.38,
+      gap: n.gap,
+      grade: n.grade,
+      state: 'normal'
+    }));
+    const modelEdges = net.edges.map(e => ({
+      from: e.from, to: e.to,
+      dashed: e.dashed,
+      color: e.dashed ? C.amber : C.neon,
+      state: 'normal'
+    }));
+    const model = { nodes: modelNodes, edges: modelEdges, particles: [], rings: [], labels: [] };
+
+    /* 详情卡 */
     const detailTitle = h('div', { class: 'sna-d-title' }, '点一个节点看它的关系');
     const detailSub = h('div', { class: 'sna-d-sub note-line' }, '红色节点是现在接不上的堵点，虚线是待验证的关系。');
-    const detailBody = h('p', { class: 'sna-d-body note-line' }, '点击任意节点，会高亮它连着的边，其余变暗。');
+    const detailBody = h('p', { class: 'sna-d-body note-line' }, '点击任意节点，会高亮它连着的边，其余变暗；也可以拖拽整个星群环绕查看。');
     const detailSrc = h('div', { class: 'sna-d-src' });
+
+    const holoEl = h('div', { class: 'holo-stage' });
+    let ctrl = null;
 
     function select(id) {
       const connected = new Set([id]);
-      Object.values(edgeEls).forEach(x => {
-        if (x.from === id || x.to === id) { connected.add(x.from); connected.add(x.to); }
+      net.edges.forEach(e => {
+        if (e.from === id || e.to === id) { connected.add(e.from); connected.add(e.to); }
       });
-      Object.entries(nodeEls).forEach(([nid, x]) => {
-        x.el.classList.toggle('dim', !connected.has(nid));
-        x.el.classList.toggle('active', nid === id);
+      modelNodes.forEach(n => {
+        n.state = n.id === id ? 'active' : (connected.has(n.id) ? 'normal' : 'dim');
       });
-      Object.values(edgeEls).forEach(x => {
-        const linked = x.from === id || x.to === id;
-        x.el.classList.toggle('dim', !linked);
-        x.el.classList.toggle('lit', linked);
+      modelEdges.forEach(e => {
+        e.state = (e.from === id || e.to === id) ? 'lit' : 'dim';
       });
+      if (ctrl) ctrl.update(model);
       const n = nodeById[id];
       detailTitle.textContent = n.name;
       detailSub.textContent = n.sub;
@@ -396,10 +397,14 @@
       detailSrc.appendChild(h('span', { class: 'badge ' + n.grade }, n.grade));
       if (n.gap) detailSrc.appendChild(h('span', { class: 'coral-tag' }, '堵点 · 关键空白'));
     }
-    Object.entries(nodeEls).forEach(([id, x]) => {
-      x.el.style.cursor = 'pointer';
-      x.el.addEventListener('click', () => select(id));
-    });
+
+    TeaHolo.mount(holoEl, {
+      orbit: { radius: 16, theta: Math.PI / 2, phi: 1.42, target: { x: 0, y: 0, z: 0 }, autoRotate: true, autoSpeed: 0.1 },
+      onPick: select
+    }).then(c => { ctrl = c; sec._holo = c; c.update(model); })
+      .catch(() => {
+        holoEl.innerHTML = '<div class="note-line holo-fail">3D 场景暂时不可用，请刷新重试</div>';
+      });
 
     const legend = h('div', { class: 'sna-legend' },
       h('span', { class: 'sna-lg' }, h('i', { class: 'lg-dot' }), '堵点（关键空白）'),
@@ -407,15 +412,15 @@
       h('span', { class: 'sna-lg' }, h('svg', { width: 26, height: 10 }, h('line', { x1: 1, y1: 5, x2: 25, y2: 5, 'stroke-width': 2, class: 'lg-solid' })), '已核实关系'));
 
     const stage = h('div', { class: 'stage-card' },
-      h('div', { class: 'kicker reveal' }, '关系网 · 断点与堵点'),
+      h('div', { class: 'kicker reveal' }, '关系星群 · 断点与堵点'),
       h('h2', { class: 'answer-line reveal' }, '一张网里，红色的是', h('span', { class: 'coral-text' }, '接不上的地方。')),
       h('div', { class: 'use-tag reveal' }, '决策用途：判断有限的资源该补生产端，还是补渠道末端'),
       h('div', { class: 'sna-layout reveal' },
-        h('div', { class: 'sna-canvas' }, svg),
+        holoEl,
         h('div', { class: 'sna-detail' }, detailTitle, detailSub, detailBody, detailSrc)),
       legend,
       h('hr', { class: 'divider' }),
-      h('p', { class: 'note-line reveal' }, '节点与关系均来自已核实证据；待验证关系不进结论，堵点对应第 5 屏的数据空白。'));
+      h('p', { class: 'note-line reveal' }, '节点与关系均来自已核实证据；待验证关系不进结论，堵点对应第 5 屏的数据空白。拖拽环绕、滚轮缩放、双击复位。'));
 
     sec.append(topbar(6, '关系网'),
       h('div', { class: 'stage-wrap' }, stage),
@@ -429,18 +434,135 @@
      ============================================================ */
   function screen6() {
     const sec = h('section', { class: 'screen', id: 's7' });
+    const C = TeaHolo.COLORS;
+    const isMobile = matchMedia('(max-width: 760px)').matches;
 
     const state = { area: 3.5, price: 250, yield: 140, downstream: 0 };
+
+    /* ---------- 茶山地形高度（静态，确定性） ---------- */
+    function smoothstep(a, b, x) {
+      const t = Math.max(0, Math.min(1, (x - a) / (b - a)));
+      return t * t * (3 - 2 * t);
+    }
+    function heightAt(x, z) {
+      const r = Math.hypot(x, z);
+      let h = 3.4 * Math.exp(-(r * r) / 26);
+      h += 1.7 * Math.exp(-((x - 4.5) * (x - 4.5) + (z + 4) * (z + 4)) / 15);
+      h += 1.3 * Math.exp(-((x + 5) * (x + 5) + (z - 3.5) * (z - 3.5)) / 16);
+      h += 0.45 * Math.sin(x * 0.65) + 0.4 * Math.cos(z * 0.75);
+      h += 0.16 * Math.sin(r * 3.0);
+      h -= 0.8;
+      /* 岛屿化：外围径向下沉，隐藏方形地形边界，形成圆润悬浮茶山 */
+      const e = smoothstep(5.8, 8.6, r);
+      return h * (1 - e) - 3.2 * e;
+    }
+
+    /* ---------- 覆盖半径（面积滑块）与发光垄线 ---------- */
+    const N_RIDGE = 14, RIDGE_PTS = 72;
+    function coverageR() {
+      return 5.0 + (state.area - 3.5) / (4.32 - 3.5) * 2.0;
+    }
+    function buildRidges(Rcov) {
+      const out = [];
+      for (let i = 0; i < N_RIDGE; i++) {
+        const rr = 0.5 + (Rcov - 0.5) * (i / (N_RIDGE - 1));
+        const pts = [];
+        for (let k = 0; k < RIDGE_PTS; k++) {
+          const a = k / RIDGE_PTS * Math.PI * 2;
+          const x = Math.cos(a) * rr, z = Math.sin(a) * rr;
+          pts.push({ x, y: heightAt(x, z) + 0.12, z });
+        }
+        out.push({ id: 'ridge-' + i, points: pts, color: C.neon, opacity: 0.55 });
+      }
+      return out;
+    }
+
+    /* ---------- 生产端价值流粒子 ---------- */
+    const N_FLOW = isMobile ? 130 : 260;
+    const flowPos = new Float32Array(N_FLOW * 3);
+    const flowState = [];
+    for (let i = 0; i < N_FLOW; i++) {
+      flowState.push({
+        a: TeaHolo.hash01('fa' + i) * Math.PI * 2,
+        r: 0.6 + TeaHolo.hash01('fr' + i) * 4.6,
+        sp: 0.35 + TeaHolo.hash01('fs' + i) * 0.5
+      });
+    }
+    let econFactor = 1;
+    function flowUpdate(arr, dt) {
+      for (let i = 0; i < N_FLOW; i++) {
+        const s = flowState[i];
+        s.a += s.sp * econFactor * dt;
+        const x = Math.cos(s.a) * s.r, z = Math.sin(s.a) * s.r;
+        arr[i * 3] = x;
+        arr[i * 3 + 1] = heightAt(x, z) + 0.28;
+        arr[i * 3 + 2] = z;
+      }
+    }
+    flowUpdate(flowPos, 0);
+
+    /* ---------- 下游增量粒子（外围向中心汇聚） ---------- */
+    const N_DOWN = isMobile ? 60 : 120;
+    const downPos = new Float32Array(N_DOWN * 3);
+    const downState = [];
+    for (let i = 0; i < N_DOWN; i++) {
+      downState.push({
+        a: TeaHolo.hash01('da' + i) * Math.PI * 2,
+        r: 6 + TeaHolo.hash01('dr' + i) * 3,
+        sp: 0.8 + TeaHolo.hash01('ds' + i) * 0.8
+      });
+    }
+    function downUpdate(arr, dt) {
+      for (let i = 0; i < N_DOWN; i++) {
+        const s = downState[i];
+        s.a += 0.5 * dt;
+        s.r -= s.sp * dt;
+        if (s.r < 0.6) s.r = 8 + TeaHolo.hash01('reset' + s.a) * 1.5;
+        const x = Math.cos(s.a) * s.r, z = Math.sin(s.a) * s.r;
+        arr[i * 3] = x;
+        arr[i * 3 + 1] = heightAt(x, z) + 0.3;
+        arr[i * 3 + 2] = z;
+      }
+    }
+    downUpdate(downPos, 0);
+
+    /* ---------- 结果 DOM ---------- */
     const big = h('div', { class: 'rb-big tnum' }, '0', h('span', { class: 'u' }, '亿'));
     const fill = h('div', { class: 'fill' });
     const statusPill = h('span', { class: 'status-pill bad' }, '未达标');
     const gapText = h('span', { class: 'tnum' }, '还差 0 亿');
 
+    const model = {
+      nodes: [], edges: [],
+      polylines: buildRidges(coverageR()),
+      particles: [
+        { key: 'tea-flow', positions: flowPos, color: C.neon, size: 0.16, opacity: 0.95, update: flowUpdate },
+        { key: 'down-flow', positions: downPos, color: C.amber, size: 0.2, opacity: 0, update: downUpdate }
+      ],
+      rings: [
+        { id: 'coverage', pos: { x: 0, y: 0.25, z: 0 }, radius: coverageR(), inner: 0.97, color: C.neon, opacity: 0.8 },
+        { id: 'target', pos: { x: 0, y: 4.4, z: 0 }, radius: 4.0, inner: 0.93, color: C.amber, opacity: 0.95 }
+      ],
+      labels: [
+        { id: 'target-label', pos: { x: 0, y: 5.0, z: 0 }, text: '20亿目标', color: C.amber, height: 0.85 }
+      ],
+      terrain: { size: 18, color: 0x123025, heightAt }
+    };
+
+    const holoEl = h('div', { class: 'holo-stage holo-tea' });
+    let ctrl = null;
+    TeaHolo.mount(holoEl, {
+      orbit: {
+        radius: 15.5, phi: 1.02, target: { x: 0, y: 1.2, z: 0 },
+        autoRotate: true, autoSpeed: 0.1, minRadius: 9, maxRadius: 30
+      }
+    }).then(c => { ctrl = c; sec._holo = c; c.update(model); })
+      .catch(() => { holoEl.innerHTML = '<div class="note-line holo-fail">3D 场景暂时不可用，请刷新重试</div>'; });
+
     function calc() {
       const total = (state.area * 10000 * state.yield * state.price) / 1e8 + state.downstream;
       big.firstChild.textContent = f1(total);
-      const pct = Math.min(100, total / 20 * 100);
-      fill.style.width = pct + '%';
+      fill.style.width = Math.min(100, total / 20 * 100) + '%';
       const gap = 20 - total;
       if (gap > 0) {
         statusPill.className = 'status-pill bad';
@@ -451,6 +573,15 @@
         statusPill.textContent = '够到 20 亿';
         gapText.textContent = '已补上缺口';
       }
+
+      /* 3D 联动：经济强度、垄线、覆盖、下游粒子 */
+      econFactor = (state.price / 250) * (state.yield / 140);
+      const Rcov = coverageR();
+      model.polylines = buildRidges(Rcov);
+      model.rings[0].radius = Rcov;
+      model.particles[0].opacity = 0.6 + Math.min(0.4, (econFactor - 1) * 0.5);
+      model.particles[1].opacity = state.downstream > 0 ? (state.downstream / 3) * 0.95 : 0;
+      if (ctrl) ctrl.update(model);
     }
 
     function slider(label, key, min, max, unit, fmt) {
@@ -491,10 +622,13 @@
       h('div', { class: 'meter-status' }, gapText, statusPill)));
 
     const stage = h('div', { class: 'stage-card' },
-      h('div', { class: 'kicker reveal' }, '自己拨一下'),
+      h('div', { class: 'kicker reveal' }, '自己拨一下 · 3D 茶山'),
+      h('h2', { class: 'answer-line reveal' }, '拨一下，看这座茶山', h('span', { class: 'neon-text' }, '能长出多大的盘子。')),
+      h('div', { class: 'use-tag reveal' }, '决策用途：看清生产端乘法的天花板，和下游链条的分量'),
+      h('div', { class: 'holo-wrap reveal' }, holoEl),
       h('div', { class: 'sandbox reveal' }, controls, result),
       h('hr', { class: 'divider' }),
-      h('p', { class: 'note-line reveal' }, '假设推演沙盘 · 公式透明（面积×单产×均价 + 下游增量）· 情景非预测；官方 12 亿构成未公开，本沙盘不替代官方核算。'));
+      h('p', { class: 'note-line reveal' }, '假设推演沙盘 · 公式透明（面积×单产×均价 + 下游增量）· 情景非预测；官方 12 亿构成未公开，本沙盘不替代官方核算。拖拽环绕、滑块实时改变茶山。'));
 
     sec.append(topbar(7, '自己拨一下'),
       h('div', { class: 'stage-wrap' }, stage),
