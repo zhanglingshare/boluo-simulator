@@ -9,7 +9,7 @@ const ok = m => console.log('  ✓ ' + m);
 const bad = m => { fails++; console.log('  ✗ ' + m); };
 
 console.log('── 1) HTML 内联 script 语法 ──');
-const htmlFiles = ["index.html", "network.html", "who.html", "choices.html", "future.html", "windtunnel.html", "blindspot.html", "report.html", "ending.html", "town.html", "holo.html", "holo-home-v6.html", "holo-home-v7.html", "holo-home-v8.html", "holo-home-v9.html", "holo-home-v10.html"];
+const htmlFiles = ["index.html", "network.html", "who.html", "choices.html", "future.html", "windtunnel.html", "blindspot.html", "report.html", "ending.html", "town.html", "holo-home-v9.html", "holo-home-v10.html"];
 for (const f of htmlFiles) {
   const fp = path.join(root, f);
   if (!fs.existsSync(fp)) { bad('缺少页面文件 ' + f); continue; }
@@ -46,7 +46,7 @@ for(const page of nonHoloPages){
   if(/user-scalable\s*=\s*no/i.test(html))bad(page+' 禁止用户缩放');
 }
 if(fs.existsSync(path.join(root,'v2.html'))&&fs.readFileSync(path.join(root,'v2.html'),'utf8').includes('boluo-ui.css'))bad('旧版全息风洞 v2.html 不应加载非全息 UI');
-const holoPaths=['holo.html','holo-concept.html','holo-home-v9.html','holo-home-v10.html','experiments/holo-single/index.html'];
+const holoPaths=['holo-home-v9.html','holo-home-v10.html','experiments/holo-single/index.html'];
 for(const page of holoPaths){
   const fp=path.join(root,page);
   if(fs.existsSync(fp)&&fs.readFileSync(fp,'utf8').includes('boluo-ui.css'))bad('非全息 UI 不得应用于全息页面 '+page);
