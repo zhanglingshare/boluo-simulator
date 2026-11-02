@@ -1,0 +1,260 @@
+<!DOCTYPE html>
+<html lang="zh-CN" data-canvas-width="1600" data-canvas-height="1072" style="width:1600px;height:1072px;margin:0;padding:0;box-sizing:border-box;">
+<head>
+<meta charset="UTF-8">
+<title>博罗决策风洞 3.0 全站架构</title>
+<style>
+  :root{
+    --bg:#070c16; --bg2:#0a1222; --panel:#0e1a2e; --panel2:#122238;
+    --line:#1c3a4e; --line2:#2a4a5e;
+    --cyan:#62e6e0; --blue:#79b8ff; --gold:#f4c66b; --green:#83e0ac;
+    --violet:#c4a1ff; --red:#ff6b6b; --orange:#ff9f43;
+    --txt:#dbe7f3; --dim:#8fa8c4; --dim2:#5d7a99;
+    --mono:"SF Mono","Consolas","Menlo",monospace;
+  }
+  *{margin:0;padding:0;box-sizing:border-box;}
+  body{background:var(--bg);font-family:"Segoe UI","PingFang SC","Microsoft YaHei",-apple-system,sans-serif;color:var(--txt);-webkit-font-smoothing:antialiased;}
+  .canvas{position:relative;width:1600px;height:1150px;overflow:hidden;background:
+    radial-gradient(ellipse at 20% 0%, rgba(98,230,224,.06) 0%, transparent 45%),
+    radial-gradient(ellipse at 80% 100%, rgba(121,184,255,.05) 0%, transparent 40%),
+    linear-gradient(180deg,#070c16 0%,#0a1222 100%);}
+
+  /* ===== 顶栏 ===== */
+  .top{position:absolute;top:0;left:0;width:1600px;height:128px;
+    border-bottom:1px solid var(--line);
+    background:linear-gradient(180deg,rgba(14,26,46,.55),rgba(10,18,34,0));}
+  .top .t-wrap{position:absolute;top:22px;left:0;width:1600px;text-align:center;}
+  .top h1{font-size:34px;font-weight:800;letter-spacing:6px;color:#eef6ff;
+    text-shadow:0 0 18px rgba(98,230,224,.35);}
+  .top .sub{font-size:15px;color:var(--dim);letter-spacing:2px;margin-top:10px;}
+  .top .sub b{color:var(--cyan);font-weight:600;}
+  .top .sub b.g{color:var(--green);font-weight:600;}
+  .top .line{width:420px;height:2px;margin:12px auto 0;border-radius:2px;
+    background:linear-gradient(90deg,transparent,rgba(98,230,224,.8),transparent);
+    box-shadow:0 0 12px rgba(98,230,224,.5);}
+  .top .tag{position:absolute;right:24px;top:18px;font-family:var(--mono);font-size:11px;
+    color:var(--dim2);letter-spacing:1px;}
+
+  /* ===== 分区标题 ===== */
+  .zone{position:absolute;left:0;width:1600px;}
+  .zone .z-label{position:absolute;left:28px;top:8px;font-size:13px;font-weight:700;
+    letter-spacing:3px;color:var(--cyan);}
+  .zone .z-label::before{content:"";display:inline-block;width:8px;height:8px;margin-right:8px;
+    border-radius:2px;background:var(--cyan);box-shadow:0 0 8px rgba(98,230,224,.8);}
+
+  /* ===== 公开体验空间 ===== */
+  .pub{top:128px;height:470px;border-bottom:1px dashed var(--line2);}
+  .pub .z-label{color:var(--blue);}
+  .pub .z-label::before{background:var(--blue);box-shadow:0 0 8px rgba(121,184,255,.8);}
+  .pub .z-note{position:absolute;right:28px;top:8px;font-size:12px;color:var(--dim2);letter-spacing:1px;}
+
+  .entries{position:absolute;top:38px;left:0;width:1600px;display:flex;justify-content:center;gap:12px;}
+  .entry{width:172px;text-align:center;}
+  .entry .e-node{height:44px;border-radius:10px;display:flex;align-items:center;justify-content:center;
+    gap:6px;font-size:14px;font-weight:700;color:#eaf4ff;letter-spacing:.5px;
+    border:1px solid rgba(121,184,255,.45);background:linear-gradient(180deg,rgba(121,184,255,.18),rgba(121,184,255,.06));
+    box-shadow:0 0 14px rgba(121,184,255,.18), inset 0 1px 0 rgba(255,255,255,.08);}
+  .entry .e-node .n{font-family:var(--mono);font-size:10.5px;font-weight:400;color:var(--dim);letter-spacing:0;}
+  .entry .e-pages{margin-top:10px;display:flex;flex-direction:column;gap:7px;align-items:center;}
+  .page{width:148px;min-height:32px;border-radius:8px;display:flex;flex-wrap:wrap;align-content:center;
+    align-items:center;justify-content:center;gap:4px 6px;padding:4px 8px;
+    font-size:12px;font-weight:600;color:#cfe3f7;letter-spacing:.3px;
+    border:1px solid rgba(121,184,255,.22);background:rgba(15,26,44,.85);}
+  .page .id{font-family:var(--mono);font-size:11px;color:var(--dim);font-weight:400;}
+  .page .tag{font-size:10px;color:var(--dim2);font-weight:400;letter-spacing:0;}
+  .page .v10tag{font-size:9px;color:var(--orange);font-weight:400;letter-spacing:0;border:1px solid rgba(255,159,67,.4);border-radius:4px;padding:0 3px;line-height:1.6;}
+  .page .pro{font-size:9px;color:var(--violet);font-weight:400;letter-spacing:0;border:1px solid rgba(196,161,255,.4);border-radius:4px;padding:0 3px;line-height:1.6;}
+  .page .consume{position:absolute;right:-9999px;}
+  .entry .consume-line{width:120px;height:1px;margin-top:6px;background:repeating-linear-gradient(90deg,rgba(131,224,172,.5) 0 4px,transparent 4px 8px);}
+
+  /* 页面卡底部数据消费标注（统一一条） */
+  .pub .consume-note{position:absolute;left:0;top:436px;width:1600px;text-align:center;font-size:11.5px;
+    color:var(--green);letter-spacing:2px;}
+  .pub .consume-note::before{content:"↕ ";}
+
+  /* ===== 引擎层 ===== */
+  .eng{top:598px;height:300px;border-bottom:1px dashed var(--line2);}
+  .eng .z-label{color:var(--cyan);}
+  .eng .z-label::before{background:var(--cyan);box-shadow:0 0 8px rgba(98,230,224,.8);}
+  .eng .z-note{position:absolute;right:28px;top:8px;font-size:12px;color:var(--green);letter-spacing:1px;}
+
+  .pipe{position:absolute;top:36px;left:0;width:1600px;display:flex;justify-content:center;align-items:center;gap:14px;}
+  .engine{width:172px;height:52px;border-radius:10px;display:flex;flex-direction:column;align-items:center;
+    justify-content:center;gap:2px;font-size:14px;font-weight:700;color:#e6f6ff;letter-spacing:.5px;
+    border:1px solid rgba(98,230,224,.4);background:linear-gradient(180deg,rgba(98,230,224,.16),rgba(98,230,224,.04));
+    box-shadow:0 0 12px rgba(98,230,224,.12);position:relative;}
+  .engine .en{font-family:var(--mono);font-size:10px;color:var(--cyan);font-weight:400;letter-spacing:1px;}
+  .engine.pub-e{height:58px;border-color:rgba(131,224,172,.55);background:linear-gradient(180deg,rgba(131,224,172,.18),rgba(131,224,172,.05));
+    box-shadow:0 0 14px rgba(131,224,172,.18);}
+  .engine.pub-e .en{color:var(--green);}
+  .pipe .arr{width:26px;height:14px;position:relative;flex-shrink:0;}
+  .pipe .arr::before{content:"";position:absolute;top:6px;left:0;width:22px;height:2px;background:var(--cyan);opacity:.7;}
+  .pipe .arr::after{content:"";position:absolute;top:3px;right:0;width:0;height:0;border-left:7px solid var(--cyan);border-top:5px solid transparent;border-bottom:5px solid transparent;opacity:.85;}
+
+  .base{position:absolute;top:176px;left:0;width:1600px;display:flex;justify-content:center;}
+  .base-inner{width:1060px;height:52px;border-radius:12px;display:flex;align-items:center;justify-content:center;
+    gap:14px;font-size:15px;font-weight:800;letter-spacing:3px;color:#eafcff;
+    border:1px solid rgba(98,230,224,.55);background:linear-gradient(180deg,rgba(98,230,224,.2),rgba(98,230,224,.06));
+    box-shadow:0 0 18px rgba(98,230,224,.22);}
+  .base-inner .u{font-family:var(--mono);font-size:11px;color:var(--cyan);font-weight:400;letter-spacing:1px;}
+  .base-inner .dom{font-size:11px;font-weight:600;letter-spacing:1px;color:var(--dim);
+    border-left:1px solid rgba(98,230,224,.3);padding-left:14px;}
+  .eng .audit-note{position:absolute;left:0;top:242px;width:1600px;text-align:center;font-size:11.5px;
+    color:var(--dim);letter-spacing:2px;}
+
+  /* ===== 审计台 ===== */
+  .audit{top:898px;height:170px;}
+  .audit .z-label{color:var(--green);}
+  .audit .z-label::before{background:var(--green);box-shadow:0 0 8px rgba(131,224,172,.8);}
+  .audit .z-note{position:absolute;right:28px;top:8px;font-size:11px;color:var(--red);letter-spacing:2px;
+    border:1px solid rgba(255,107,107,.45);border-radius:6px;padding:2px 10px;background:rgba(255,107,107,.08);}
+  .audit-box{position:absolute;top:36px;left:50%;transform:translateX(-50%);width:980px;height:78px;
+    border-radius:14px;display:flex;align-items:center;justify-content:center;gap:16px;
+    border:1px solid rgba(131,224,172,.45);background:linear-gradient(180deg,rgba(131,224,172,.14),rgba(15,26,44,.9));
+    box-shadow:0 0 16px rgba(131,224,172,.16);}
+  .audit-box .name{font-size:18px;font-weight:800;letter-spacing:4px;color:#eafff4;}
+  .audit-box .sub{font-size:11px;color:var(--dim);letter-spacing:1px;}
+  .audit-box .lock{font-size:12px;color:var(--green);letter-spacing:1px;
+    border:1px solid rgba(131,224,172,.5);border-radius:6px;padding:3px 10px;}
+  .audit .foot{position:absolute;left:0;top:150px;width:1600px;text-align:center;font-size:11px;
+    color:var(--dim2);letter-spacing:1px;font-family:var(--mono);}
+
+  /* ===== 柏塘支路 ===== */
+  .tea{position:absolute;left:1450px;top:190px;width:140px;}
+  .tea .t-node{height:50px;border-radius:10px;display:flex;flex-direction:column;align-items:center;
+    justify-content:center;gap:3px;font-size:13px;font-weight:700;color:#fff8ea;letter-spacing:.5px;
+    border:1.5px solid rgba(244,198,107,.65);background:linear-gradient(180deg,rgba(244,198,107,.2),rgba(244,198,107,.05));
+    box-shadow:0 0 14px rgba(244,198,107,.22);}
+  .tea .t-node .id{font-family:var(--mono);font-size:11px;color:var(--gold);font-weight:400;}
+  .tea .t-note{font-size:10px;color:var(--gold);letter-spacing:.5px;margin-top:9px;text-align:center;line-height:1.7;}
+
+  /* ===== SVG 连线层 ===== */
+  .lines{position:absolute;top:0;left:0;width:1600px;height:1072px;pointer-events:none;}
+</style>
+</head>
+<body style="width:1600px;height:1072px;margin:0;padding:0;box-sizing:border-box;">
+<main class="canvas" style="position:relative;width:1600px;height:1072px;box-sizing:border-box;">
+
+  <!-- 顶栏 -->
+  <div class="top">
+    <div class="t-wrap">
+      <h1>博罗决策风洞 · 全站架构</h1>
+      <div class="sub">一个统一情报底座 · 七个公开工作区 · <b>一个永不公开的内核审计台</b></div>
+      <div class="line"></div>
+    </div>
+    <div class="tag">BOLUO SIMULATOR 3.0 · ARCHITECTURE</div>
+  </div>
+
+  <!-- 公开体验空间 -->
+  <div class="zone pub">
+    <div class="z-label">公开体验空间</div>
+    <div class="z-note">页面只消费数据 · 不判断 · 不各自带数</div>
+    <div class="entries">
+      <div class="entry">
+        <div class="e-node">今日博罗 <span class="n">index</span></div>
+        <div class="e-pages"><div class="page"><span class="id">index</span></div></div>
+      </div>
+      <div class="entry">
+        <div class="e-node">变化现场 <span class="n">v9</span></div>
+        <div class="e-pages">
+          <div class="page"><span class="id">v9</span><span class="v10tag">v10 兼容跳转 · 不独立导航</span></div>
+        </div>
+      </div>
+      <div class="entry">
+        <div class="e-node">关系世界 <span class="n">holo</span></div>
+        <div class="e-pages">
+          <div class="page"><span class="id">holo-single</span></div>
+          <div class="page"><span class="id">network</span><span class="pro">专业视图</span></div>
+          <div class="page"><span class="id">role</span></div>
+        </div>
+      </div>
+      <div class="entry">
+        <div class="e-node">博罗画像 <span class="n">who+town</span></div>
+        <div class="e-pages">
+          <div class="page"><span class="id">who</span></div>
+          <div class="page"><span class="id">town</span></div>
+        </div>
+      </div>
+      <div class="entry">
+        <div class="e-node">路径与未来 <span class="n">cf</span></div>
+        <div class="e-pages">
+          <div class="page"><span class="id">choices</span></div>
+          <div class="page"><span class="id">future</span></div>
+        </div>
+      </div>
+      <div class="entry">
+        <div class="e-node">风洞实验 <span class="n">wind</span></div>
+        <div class="e-pages"><div class="page"><span class="id">windtunnel</span></div></div>
+      </div>
+      <div class="entry">
+        <div class="e-node">发现与报告 <span class="n">br</span></div>
+        <div class="e-pages">
+          <div class="page"><span class="id">blindspot</span></div>
+          <div class="page"><span class="id">report</span></div>
+          <div class="page"><span class="id">ending</span></div>
+        </div>
+      </div>
+    </div>
+    <div class="consume-note">页面数据 · 单源一致</div>
+  </div>
+
+  <!-- 引擎层 -->
+  <div class="zone eng">
+    <div class="z-label">决策风洞核心引擎</div>
+    <div class="z-note">证据分层 · 后台审计</div>
+    <div class="pipe">
+      <div class="engine"><div class="en">01</div>情报采集</div>
+      <div class="arr"></div>
+      <div class="engine"><div class="en">02</div>事实核验</div>
+      <div class="arr"></div>
+      <div class="engine"><div class="en">03</div>关系建构</div>
+      <div class="arr"></div>
+      <div class="engine"><div class="en">04</div>情报预判</div>
+      <div class="arr"></div>
+      <div class="engine"><div class="en">05</div>模型推演</div>
+      <div class="arr"></div>
+      <div class="engine"><div class="en">06</div>交叉审查</div>
+      <div class="arr"></div>
+      <div class="engine pub-e"><div class="en">PUB</div>统一发布</div>
+    </div>
+    <div class="base">
+      <div class="base-inner"><span class="u">UNIFIED</span>统一情报底座 <span class="dom">产业网络 · 关系证据 · 镇街流动 · 话题热度 · 生活人气 · 模型参数</span></div>
+    </div>
+    <div class="audit-note">引擎协同 · 交叉核验 · 唯一权威版本 · 冲突审核 · 发布锁定</div>
+  </div>
+
+  <!-- 审计台 -->
+  <div class="zone audit">
+    <div class="z-label">内核审计台</div>
+    <div class="z-note">PRIVATE · 永不公开</div>
+    <div class="audit-box">
+      <div class="name">风洞内核审计台</div>
+      <div class="sub">运行总览 / 数据档案 / 关系档案 / 判断档案 / 模型档案 / 发布控制</div>
+      <div class="lock">物理隔离 · 独立存储</div>
+    </div>
+    <div class="foot">每个数字 · 关系 · 判断 · 模拟均可追溯复核 · 不在公开导航出现 · 不上线</div>
+  </div>
+
+  <!-- 柏塘支路 -->
+  <div class="tea">
+    <div class="t-node"><span class="id">tea/</span>柏塘山茶专题</div>
+    <div class="t-note">三级专题 · 不占一级入口<br>双路径同版数据 · 可无限扩展</div>
+  </div>
+
+  <!-- 连线层（SVG 确定性构建） -->
+  <svg class="lines" width="1600" height="1072" viewBox="0 0 1600 1072" fill="none">
+    <!-- 引擎 → 页面供数虚线（从引擎区顶部到页面群，3 条主干） -->
+    <path d="M 520 598 L 520 470" stroke="#62e6e0" stroke-width="1.2" stroke-dasharray="4 5" opacity=".5"/>
+    <path d="M 800 598 L 800 470" stroke="#62e6e0" stroke-width="1.2" stroke-dasharray="4 5" opacity=".5"/>
+    <path d="M 1080 598 L 1080 470" stroke="#62e6e0" stroke-width="1.2" stroke-dasharray="4 5" opacity=".5"/>
+    <!-- 引擎 → 审计台 -->
+    <path d="M 620 898 L 620 935" stroke="#83e0ac" stroke-width="1.2" stroke-dasharray="4 5" opacity=".45"/>
+    <path d="M 980 898 L 980 935" stroke="#83e0ac" stroke-width="1.2" stroke-dasharray="4 5" opacity=".45"/>
+    <!-- 柏塘支路虚线（从 town 列底部绕行页面群下方，接入 tea 节点底） -->
+    <path d="M 800 285 L 800 320 L 1520 320 L 1520 240" stroke="#f4c66b" stroke-width="1.2" stroke-dasharray="4 5" opacity=".55"/>
+  </svg>
+
+  <div data-canvas-bottom-safe-area="8" style="width:1600px;height:8px;margin-top:1064px;"></div>
+</main>
+</body>
+</html>
