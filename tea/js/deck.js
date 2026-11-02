@@ -410,6 +410,7 @@
           h('h1', { text: '柏塘山茶 · 数据探索台' }),
           h('div', { class: 'dk-header-sub note-line' }, 'BAITANG TEA DATA DECK · 更新于 ' + DATA.meta.updated))),
       h('div', { class: 'dk-header-actions' },
+        h('a', { class: 'dk-btn', href: '../index.html', target: '_blank', rel: 'noreferrer' }, icon('back', 16), '返回博罗风洞'),
         h('button', { class: 'dk-btn', onclick: () => window.print() }, icon('print', 16), '导出 / 打印'),
         h('button', { class: 'dk-btn primary', onclick: () => location.href = 'index.html' }, icon('back', 16), '回到 9 屏')));
 

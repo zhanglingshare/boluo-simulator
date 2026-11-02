@@ -153,6 +153,14 @@ ul { list-style: none; }
   background: rgba(255, 255, 255, 0.04);
 }
 .clock { flex: none; font-size: 11px; color: var(--muted); text-align: right; line-height: 1.4; }
+.tea-home-link {
+  flex: none; font-size: 12px; font-weight: 700; color: var(--neon);
+  padding: 7px 14px; border-radius: var(--r-pill);
+  border: 1px solid rgba(52, 211, 153, 0.35);
+  background: rgba(52, 211, 153, 0.08);
+  transition: 0.18s;
+}
+.tea-home-link:hover { background: rgba(52, 211, 153, 0.18); border-color: var(--neon); }
 
 /* 中央舞台 */
 .stage-wrap { flex: 1; display: flex; align-items: center; justify-content: center; min-height: 0; padding: 22px 0; }

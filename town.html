@@ -48,7 +48,8 @@ h1{font-size:21px;margin:0}
 <div class="nav">
   <b>博罗产业风洞</b>
   <a href="index.html">今日博罗</a>
-  <a href="holo-home-v10.html">⚡ 变化现场</a>
+  <a href="holo-home-v9.html">⚡ 变化现场</a>
+  <a href="experiments/holo-single/index.html">◉ 关系世界</a>
   <a href="town.html" class="on">🏘️ 各镇吃喝玩乐</a>
   <a href="network.html">② 产业网络</a>
   <a href="who.html">③ 基本面</a>
@@ -124,6 +125,7 @@ function render(){
       <div class="row"><span class="k">🍜 吃</span>${t.foods.join("、")}</div>
       <div class="row"><span class="k">🏔️ 玩</span>${t.plays.join("、")}</div>
       <div class="why">→ ${t.why}</div>
+      ${t.n==='柏塘'?'<div style="margin-top:9px"><a href="tea/" style="display:inline-block;font-size:12px;font-weight:800;color:#e9d9a8;border:1px solid #8a7a3f;border-radius:9px;padding:5px 12px;background:linear-gradient(135deg,rgba(122,105,45,.28),rgba(70,90,60,.18))">🍵 柏塘山茶产业专题 ↗</a></div>':''}
       <div style="margin-top:8px"><span style="font-size:11px;font-weight:800;color:${lc};border:1px solid ${lc};border-radius:8px;padding:3px 10px">人气 · ${t.level}</span></div>
       <div style="font-size:9.5px;color:#5b6b82;margin-top:4px;line-height:1.4">📎 来源：${SRC}<br>近期公开打卡热度分档，非人数统计</div>
     </div>`;

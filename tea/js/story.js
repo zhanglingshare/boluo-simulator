@@ -108,7 +108,8 @@
         h('span', null, h('span', { class: 'b-name' }, '柏塘山茶 · 产业情报'),
           h('span', { class: 'b-sub' }, 'BAITANG TEA INTEL'))),
       center,
-      h('div', { class: 'clock' }, '更新于', h('br'), h('b', { text: DATA.meta.updated }))
+      h('div', { class: 'clock' }, '更新于', h('br'), h('b', { text: DATA.meta.updated })),
+      h('a', { class: 'tea-home-link', href: '../index.html', target: '_blank', rel: 'noreferrer' }, '返回博罗风洞 ↗')
     );
   }
   function res(f, v, unit, label, coral) {

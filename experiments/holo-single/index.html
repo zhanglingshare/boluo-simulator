@@ -69,7 +69,24 @@
    设计星群为编辑分组，不是地理坐标；A/B/C 为原版证据标记，未在本原型独立重核。
 ============================================================================ */
 window.BOLUO_DATA=(()=>{
- const nodes=[
+ // 产业网络节点/边：优先加载单源 data/industry-graph.json；失败时用内联兜底（离线可用）
+ const loaded=(function(){
+   try{
+     const xhr=new XMLHttpRequest();
+     xhr.open('GET','../../data/industry-graph.json',false);
+     xhr.send(null);
+     if(xhr.responseText && (xhr.status===200||xhr.status===0)){
+       const g=JSON.parse(xhr.responseText);
+       const clusterOf=id=>{const n=g.nodes.find(x=>x.id===id);if(!n)return 'industry';
+         const t=n.type;return (t==='ext'?'external':t==='eco'||id==='hh'?'tourism':t==='agri'||t==='gi'?'agriculture':t==='legacy'?'life':'industry')};
+       const nodes=g.nodes.map(n=>({id:n.id,name:n.name,type:n.type,town:n.town,desc:n.desc,state:n.state,layer:n.layer,cluster:clusterOf(n.id)}));
+       const edges=g.edges.map((e,i)=>({id:'e'+i,source:e.s,target:e.t,level:e.level,kind:e.kind,detail:e.rel,weak:!!e.weak,directed:false,flowValue:null,sourceRef:'data/industry-graph.json'}));
+       return {nodes,edges,fromJson:true};
+     }
+   }catch(err){ console.warn('industry-graph.json 加载失败，使用内联兜底:',err); }
+   return {fromJson:false};
+ })();
+ const nodes=loaded.fromJson?loaded.nodes:[
  ['dj','东江水系','eco','罗阳/石湾/园洲','东江水系与饮用水环境约束'],
  ['lswh','环两山引领区','eco','长宁/横河/福田','环南昆山—罗浮山，文旅和生态发展区域'],
  ['xwd','欣旺达 / 锂威','anchor','园洲','深圳总部与博罗生产基地关联'],
@@ -98,7 +115,7 @@ window.BOLUO_DATA=(()=>{
  ['sz','深圳','ext','外部','博罗外部关联城市'],
  ['hz','惠州主城','ext','外部','博罗外部关联城市']
  ].map(([id,name,type,town,desc])=>({id,name,type,town,desc,cluster:(type==='ext'?'external':type==='eco'||id==='hh'?'tourism':type==='agri'||type==='gi'?'agriculture':type==='legacy'?'life':'industry')}));
- const edges=[
+ const edges=loaded.fromJson?loaded.edges:[
  ['dg','mj','A','供应链','隔东江与东莞石龙相望；模具企业跨界发展'],
  ['dg','ddc','A','供应链','台铃、小刀等电动车产业关联'],
  ['dg','htd','A','供应链','园洲／石湾承接东莞电子产业外溢'],

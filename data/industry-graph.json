@@ -1,0 +1,525 @@
+{
+ "schema_version": "boluo-industry-graph/1",
+ "region": "boluo",
+ "name": "博罗产业网络 · 27节点关系图（公开视图数据）",
+ "generated_at": "2026-11-03",
+ "updated": "2026-11-03",
+ "evidence_note": "节点与边来源于公开报告整理；A/B 分级为证据强度标注，页面不展示分级规则",
+ "nodes": [
+  {
+   "id": "dj",
+   "name": "东江水系",
+   "type": "eco",
+   "town": "罗阳/石湾/园洲",
+   "state": "green",
+   "layer": "生态底座",
+   "desc": "母亲河·饮用水源Ⅱ类·沿江镇街排污上限约束"
+  },
+  {
+   "id": "lswh",
+   "name": "环两山引领区",
+   "type": "eco",
+   "town": "长宁/横河/福田",
+   "state": "green",
+   "layer": "生态底座",
+   "desc": "环南昆山-罗浮山·218km 8字旅游公路·北部绿色屏障"
+  },
+  {
+   "id": "xwd",
+   "name": "欣旺达/锂威",
+   "type": "anchor",
+   "town": "园洲",
+   "state": "green",
+   "layer": "链主",
+   "desc": "锂电池·高用电·高外部订单依赖"
+  },
+  {
+   "id": "htd",
+   "name": "华通电脑",
+   "type": "anchor",
+   "town": "园洲/石湾",
+   "state": "green",
+   "layer": "链主",
+   "desc": "电子信息770亿基本盘代表"
+  },
+  {
+   "id": "zw",
+   "name": "正威新材料",
+   "type": "anchor",
+   "town": "罗阳",
+   "state": "green",
+   "layer": "链主",
+   "desc": "25万吨铜杆/年·重资产原材料底座"
+  },
+  {
+   "id": "jq",
+   "name": "嘉奇新能源",
+   "type": "anchor",
+   "town": "园洲",
+   "state": "yellow",
+   "layer": "链主",
+   "desc": "奇瑞系·深博福田产业园(园洲)2026开园·华南首个梯次电池基地"
+  },
+  {
+   "id": "jf",
+   "name": "江丰精密",
+   "type": "anchor",
+   "town": "园洲",
+   "state": "green",
+   "layer": "链主",
+   "desc": "溅射靶材全球第一·3纳米"
+  },
+  {
+   "id": "gj",
+   "name": "11家国家级小巨人",
+   "type": "champ",
+   "town": "多镇",
+   "state": "green",
+   "layer": "小巨人",
+   "desc": "嘉治电子/派沃/力王/凤凰/广麟/奥科/百时达/吉邦/鑫晖源/信立泰/TCL瑞智"
+  },
+  {
+   "id": "sj",
+   "name": "74家省级专精特新",
+   "type": "champ",
+   "town": "多镇",
+   "state": "green",
+   "layer": "小巨人",
+   "desc": "各细分赛道隐形市占率"
+  },
+  {
+   "id": "bmc",
+   "name": "表面处理群落",
+   "type": "capillary",
+   "town": "福田",
+   "state": "yellow",
+   "layer": "毛细血管",
+   "desc": "省级特色集群·电镀/喷涂·受东江环保约束"
+  },
+  {
+   "id": "mj",
+   "name": "石湾模具群落",
+   "type": "capillary",
+   "town": "石湾",
+   "state": "green",
+   "layer": "毛细血管",
+   "desc": "全镇2461家工业企业·三市交界·特斯拉/比亚迪/拓竹"
+  },
+  {
+   "id": "ddc",
+   "name": "电动车配套群落",
+   "type": "capillary",
+   "town": "石湾",
+   "state": "green",
+   "layer": "毛细血管",
+   "desc": "台铃/小刀/新日/绿佳·产值超150亿"
+  },
+  {
+   "id": "lq",
+   "name": "镇村老厂群落",
+   "type": "legacy",
+   "town": "龙溪/园洲/罗阳",
+   "state": "yellow",
+   "layer": "老厂基盘",
+   "desc": "数千家五金/塑料/建材·用电+11.5%大头·亩均达标压力"
+  },
+  {
+   "id": "bss",
+   "name": "百岁山",
+   "type": "agri",
+   "town": "湖镇",
+   "state": "green",
+   "layer": "农业康养",
+   "desc": "374万吨/年·罗浮山水源"
+  },
+  {
+   "id": "lfsgy",
+   "name": "罗浮山国药",
+   "type": "agri",
+   "town": "长宁",
+   "state": "green",
+   "layer": "农业康养",
+   "desc": "中华老字号·红脚艾·百草油·省中医院"
+  },
+  {
+   "id": "sc",
+   "name": "柏塘山茶",
+   "type": "gi",
+   "town": "柏塘",
+   "state": "green",
+   "layer": "国家地理标志",
+   "desc": "国家地理标志·省十大茶乡"
+  },
+  {
+   "id": "xc",
+   "name": "福田菜心",
+   "type": "gi",
+   "town": "福田",
+   "state": "yellow",
+   "layer": "国家地理标志",
+   "desc": "国家地理标志·太空育种"
+  },
+  {
+   "id": "gyg",
+   "name": "观音阁花生",
+   "type": "gi",
+   "town": "观音阁",
+   "state": "green",
+   "layer": "国家地理标志",
+   "desc": "国家地理标志"
+  },
+  {
+   "id": "gyght",
+   "name": "观音阁黑糖",
+   "type": "gi",
+   "town": "观音阁",
+   "state": "green",
+   "layer": "国家地理标志",
+   "desc": "国家地理标志"
+  },
+  {
+   "id": "sb",
+   "name": "石坝胡须鸡",
+   "type": "agri",
+   "town": "石坝",
+   "state": "green",
+   "layer": "农业康养",
+   "desc": "全国名特优新"
+  },
+  {
+   "id": "lsmd",
+   "name": "罗浮山大米",
+   "type": "gi",
+   "town": "长宁/横河",
+   "state": "green",
+   "layer": "国家地理标志",
+   "desc": "国家地理标志·太空育种"
+  },
+  {
+   "id": "lsz",
+   "name": "罗浮山荔枝",
+   "type": "gi",
+   "town": "罗浮山周边",
+   "state": "green",
+   "layer": "国家地理标志",
+   "desc": "国家地理标志·10万亩"
+  },
+  {
+   "id": "hh",
+   "name": "横河户外小镇",
+   "type": "capillary",
+   "town": "横河",
+   "state": "green",
+   "layer": "农业康养",
+   "desc": "华南户外水经济港·民宿集群"
+  },
+  {
+   "id": "gz",
+   "name": "广州",
+   "type": "ext",
+   "town": "外部",
+   "state": "green",
+   "layer": "外部",
+   "desc": "增城接石湾·省中医院医药合作"
+  },
+  {
+   "id": "dg",
+   "name": "东莞",
+   "type": "ext",
+   "town": "外部",
+   "state": "green",
+   "layer": "外部",
+   "desc": "紧邻石湾/园洲·模具电子外溢源头"
+  },
+  {
+   "id": "sz",
+   "name": "深圳",
+   "type": "ext",
+   "town": "外部",
+   "state": "green",
+   "layer": "外部",
+   "desc": "欣旺达·嘉奇新能源项目来源"
+  },
+  {
+   "id": "hz",
+   "name": "惠城",
+   "type": "ext",
+   "town": "外部",
+   "state": "green",
+   "layer": "外部",
+   "desc": "惠州主城·行政与文旅客流"
+  }
+ ],
+ "edges": [
+  {
+   "s": "dg",
+   "t": "mj",
+   "level": "A",
+   "w": 5,
+   "rel": "隔东江与东莞石龙相望·模具厂迁入(天倬东莞50亩→石湾150亩)",
+   "kind": "供应链",
+   "weak": false
+  },
+  {
+   "s": "dg",
+   "t": "ddc",
+   "level": "A",
+   "w": 4,
+   "rel": "台铃/小刀等电动车厂从东莞方向落户石湾",
+   "kind": "供应链",
+   "weak": false
+  },
+  {
+   "s": "dg",
+   "t": "htd",
+   "level": "A",
+   "w": 4,
+   "rel": "园洲/石湾承接东莞电子信息外溢·园洲年产值380亿",
+   "kind": "供应链",
+   "weak": false
+  },
+  {
+   "s": "dg",
+   "t": "lq",
+   "level": "B",
+   "w": 2,
+   "rel": "五金/塑料小厂随边界扩散",
+   "kind": "供应链",
+   "weak": false
+  },
+  {
+   "s": "sz",
+   "t": "xwd",
+   "level": "A",
+   "w": 4,
+   "rel": "欣旺达深圳总部·锂威园洲生产基地",
+   "kind": "供应链",
+   "weak": false
+  },
+  {
+   "s": "sz",
+   "t": "jq",
+   "level": "A",
+   "w": 4,
+   "rel": "深博福田产业园25宗项目·总投资54亿·产值超100亿",
+   "kind": "供应链",
+   "weak": false
+  },
+  {
+   "s": "gz",
+   "t": "mj",
+   "level": "B",
+   "w": 2,
+   "rel": "石湾西北毗邻增城·三市交界承接外溢",
+   "kind": "供应链",
+   "weak": false
+  },
+  {
+   "s": "mj",
+   "t": "ddc",
+   "level": "A",
+   "w": 2,
+   "rel": "模具零部件",
+   "kind": "供应链",
+   "weak": false
+  },
+  {
+   "s": "bmc",
+   "t": "ddc",
+   "level": "B",
+   "w": 2,
+   "rel": "喷涂配套",
+   "kind": "供应链",
+   "weak": false
+  },
+  {
+   "s": "jf",
+   "t": "htd",
+   "level": "B",
+   "w": 2,
+   "rel": "靶材供应",
+   "kind": "供应链",
+   "weak": false
+  },
+  {
+   "s": "gj",
+   "t": "htd",
+   "level": "B",
+   "w": 2,
+   "rel": "精密配套",
+   "kind": "供应链",
+   "weak": false
+  },
+  {
+   "s": "sj",
+   "t": "lq",
+   "level": "B",
+   "w": 2,
+   "rel": "技术升级",
+   "kind": "供应链",
+   "weak": false
+  },
+  {
+   "s": "xwd",
+   "t": "mj",
+   "level": "B",
+   "w": 2,
+   "rel": "电池结构件",
+   "kind": "供应链",
+   "weak": false
+  },
+  {
+   "s": "jq",
+   "t": "ddc",
+   "level": "B",
+   "w": 2,
+   "rel": "汽车零部件",
+   "kind": "供应链",
+   "weak": false
+  },
+  {
+   "s": "lq",
+   "t": "htd",
+   "level": "B",
+   "w": 2,
+   "rel": "五金配套",
+   "kind": "供应链",
+   "weak": false
+  },
+  {
+   "s": "dj",
+   "t": "bmc",
+   "level": "A",
+   "w": 3,
+   "rel": "排污上限约束",
+   "kind": "环保约束",
+   "weak": false
+  },
+  {
+   "s": "dj",
+   "t": "bss",
+   "level": "A",
+   "w": 3,
+   "rel": "饮用水源",
+   "kind": "环保约束",
+   "weak": false
+  },
+  {
+   "s": "dj",
+   "t": "lq",
+   "level": "B",
+   "w": 1,
+   "rel": "沿江工业约束",
+   "kind": "环保约束",
+   "weak": false
+  },
+  {
+   "s": "xwd",
+   "t": "lq",
+   "level": "B",
+   "w": 1,
+   "rel": "用电/用地竞争",
+   "kind": "资源竞争",
+   "weak": false
+  },
+  {
+   "s": "htd",
+   "t": "lq",
+   "level": "B",
+   "w": 1,
+   "rel": "腾笼换鸟",
+   "kind": "资源竞争",
+   "weak": false
+  },
+  {
+   "s": "lswh",
+   "t": "lfsgy",
+   "level": "A",
+   "w": 3,
+   "rel": "文旅+医药",
+   "kind": "生态补偿",
+   "weak": false
+  },
+  {
+   "s": "lswh",
+   "t": "hh",
+   "level": "A",
+   "w": 2,
+   "rel": "户外运动",
+   "kind": "生态补偿",
+   "weak": false
+  },
+  {
+   "s": "lswh",
+   "t": "sc",
+   "level": "B",
+   "w": 1,
+   "rel": "茶旅融合",
+   "kind": "生态补偿",
+   "weak": false
+  },
+  {
+   "s": "lswh",
+   "t": "lsz",
+   "level": "B",
+   "w": 1,
+   "rel": "荔枝采摘",
+   "kind": "生态补偿",
+   "weak": false
+  },
+  {
+   "s": "gz",
+   "t": "lfsgy",
+   "level": "B",
+   "w": 2,
+   "rel": "省中医院合作",
+   "kind": "生态补偿",
+   "weak": true
+  },
+  {
+   "s": "hz",
+   "t": "lswh",
+   "level": "B",
+   "w": 2,
+   "rel": "文旅客流+行政",
+   "kind": "生态补偿",
+   "weak": false
+  },
+  {
+   "s": "dj",
+   "t": "lsmd",
+   "level": "B",
+   "w": 1,
+   "rel": "灌溉",
+   "kind": "供应链",
+   "weak": false
+  },
+  {
+   "s": "gyght",
+   "t": "gyg",
+   "level": "A",
+   "w": 1,
+   "rel": "观音阁同镇",
+   "kind": "供应链",
+   "weak": false
+  },
+  {
+   "s": "gyg",
+   "t": "dj",
+   "level": "B",
+   "w": 1,
+   "rel": "东江沙壤",
+   "kind": "供应链",
+   "weak": false
+  },
+  {
+   "s": "zw",
+   "t": "xwd",
+   "level": "A",
+   "w": 2,
+   "rel": "铜杆→电池",
+   "kind": "供应链",
+   "weak": false
+  }
+ ]
+}
