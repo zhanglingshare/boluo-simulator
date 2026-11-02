@@ -16,7 +16,7 @@ const sources=[
 {id:"workreport",grade:"B",title:"柏塘镇2025年政府工作报告收录记录",publisher:"国研网数据库镜像",date:"2025-11-07",url:"https://guoyanwang.clcn.net.cn/DRCNet.Mirror.Documents.Web/DocSummary.aspx?DocID=8069124&leafID=3405",limit:"仅核到摘要/收录信息；全文未验证，不能导入其中未读数值"},
 {id:"county2030",grade:"B",title:"博罗县十五五未来格局和2030目标报道",publisher:"南方日报",date:"2026-01-27",url:"https://epaper.nfnews.com/nfdaily/html/202601/27/content_10161535.html",limit:"县级目标非柏塘茶产业目标"},
 {id:"yingde",grade:"B",title:"英德茶产业标准化与B端供应案例",publisher:"英德政府与媒体资料",date:"2026",url:"https://www.yingde.gov.cn/",limit:"仅作机制参照，不能把英德路径增长率直接套用柏塘"},
-{id:"national",grade:"A",title:"茶产业提质升级指导意见（2026—2030年）相关政策",publisher:"工信部等五部门政策（媒体转引）",date:"2026-02",url:"https://ep.ycwb.com/epaper/ywdf/h5/html5/2026-03/20/content_1001_745177.htm",limit:"当前链接为报道而非已核原始发文，政策存在性待直接匹配后再提升原始来源等级"}
+{id:"national",grade:"B",title:"茶产业提质升级指导意见（2026—2030年）相关政策",publisher:"工信部等五部门政策（媒体转引）",date:"2026-02",url:"https://ep.ycwb.com/epaper/ywdf/h5/html5/2026-03/20/content_1001_745177.htm",limit:"当前链接为报道而非已核原始发文，政策存在性待直接匹配后再提升原始来源等级"}
 ];
 const facts=[
 {id:"tea2025",name:"2025年茶叶产量",value:2449,unit:"吨",grade:"B",sourceIds:["prov2026","tea2026"],qualifier:"约值，媒体引用镇级统计；另有2570吨口径",use:"tea_volume",kind:"observed"},
