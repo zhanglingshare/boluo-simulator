@@ -83,7 +83,7 @@ panelHead('标杆的意义，是机制，不是直接比较数值','这些参考
 '<div class="buttons" style="margin-top:18px"><button data-page="lab" class="btn primary">把不同机制放进2030风洞 →</button></div>';
 }
 function report(){
-const r=result&&runKey===key()?result:M.simulate({weights:state.weights,stress:state.stress,uncertainty:state.uncertainty,samples:2600,seed:20261102});
+const r=result&&runKey===key()&&result.samples===result.total?result:M.simulate({weights:state.weights,stress:state.stress,uncertainty:state.uncertainty,samples:2600,seed:20261102});
 const baseRun=base||M.simulate({weights:M.DEFAULT,stress:'none',uncertainty:state.uncertainty,samples:2600,seed:20261102});
 const end=r.ending,delta=f(end.valueIndex.p50-baseRun.ending.valueIndex.p50),focus=M.LABELS[state.weights.indexOf(Math.max(...state.weights))],coverage=r.coverage;
 return heading('04','柏塘山茶 · 人话版模型报告','这份报告跟随你本次选择的产业路径、压力情景和C/D估算条件变化，不是静态宣传稿。')+
@@ -110,7 +110,7 @@ document.querySelectorAll('[data-chart]').forEach(x=>x.classList.toggle('active'
 if($('metricSelect'))$('metricSelect').value=state.field;
 }
 function updateInterpret(){
-if(!result||state.page!=='lab'||!$('interpretResults'))return;
+if(!result||state.page!=='lab'||!$('interpretResults'))return;if(result.samples<result.total){$('sensitivityResults').innerHTML='<p class="muted">正在收集 '+n(result.samples)+' 条样本；完成抽样后将重新运行五种路径敏感性试验。</p>';$('interpretResults').innerHTML='<p class="muted">当前分布仍是部分样本，结果解读在全部计算结束后呈现。</p>';return;}
 const v=result.ending,goal=result.coverage,baseRun=base||result,delta=f(v.valueIndex.p50-baseRun.ending.valueIndex.p50);
 const sensitivity=M.sensitivity({weights:state.weights,stress:state.stress,uncertainty:state.uncertainty,seed:20261102});
 const largest=Math.max(1,...sensitivity.map(x=>Math.abs(x.deltaIndex)));
@@ -121,7 +121,7 @@ if($('goalSummary'))$('goalSummary').textContent='本轮有'+goal.visitors350+'%
 }
 function start(force=false){
 if(state.page!=='lab')return;
-const k=key();if(!force&&result&&runKey===k){updateChart();updateInterpret();$('runState').textContent='已完成 '+n(result.samples)+' 条路径';$('runState').classList.remove('running');$('runBar').style.width='100%';$('runCounter').textContent=n(result.samples)+' / '+n(result.samples)+'条样本路径';$('runPct').textContent='100%';return}
+const k=key();if(!force&&result&&result.samples===result.total&&runKey===k){updateChart();updateInterpret();$('runState').textContent='已完成 '+n(result.samples)+' 条路径';$('runState').classList.remove('running');$('runBar').style.width='100%';$('runCounter').textContent=n(result.samples)+' / '+n(result.samples)+'条样本路径';$('runPct').textContent='100%';return}
 runKey=k;result=null;const id=++runId;
 const count=2600,seed=20261102;
 const session=M.createSession({weights:state.weights,stress:state.stress,uncertainty:state.uncertainty,samples:count,seed});
