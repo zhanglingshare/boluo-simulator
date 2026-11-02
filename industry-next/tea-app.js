@@ -56,7 +56,72 @@ const edges=data.slice(0,-1).map((n,i)=>{const b=data[i+1],d='M'+n.x+' '+n.y+'Q'
 const nodes=data.map(n=>'<g class="atlas-point" role="button" tabindex="0" data-view="'+n.v+'" aria-label="查看'+n.t+'" transform="translate('+n.x+' '+n.y+')"><circle r="73" class="atlas-haze"/><circle r="53" class="atlas-ring"/><circle r="43" class="atlas-core"/><circle r="53" class="atlas-orbit"/><text class="atlas-num" y="-9">'+n.code+'</text><text class="atlas-label" y="12">'+n.t+'</text><text class="atlas-sub" y="84">'+n.sub+'</text></g>').join('');
 return '<svg class="atlas" viewBox="0 0 950 355" role="img" aria-label="产业五环动态关系，点击任意环节探索">'+defs+'<path class="atlas-backline" d="M70 290Q475 395 884 290"/>'+edges+nodes+'<text x="474" y="342" class="atlas-foot">共同标准 / 产业组织 / 科研服务　贯穿整条产业价值链</text></svg>';
 }
-function overview(){return '<section class="hero"><div><div class="eyebrow">BAITANG TEA · INDUSTRY FUTURES 2026—2030</div><h1>柏塘茶，<br>下一棒从哪里接？</h1><p>先看已有的产业基础，再看别人做对什么、柏塘现在走到哪里。风洞不预言唯一未来，只让不同选择的可能结果摆在面前。</p><div class="buttons"><button class="btn primary" data-view="benchmark">与标杆对照　→</button><button class="btn" data-view="future">直接试不同路径　↗</button></div></div><div class="hero-badge">已核事实是起点。<br>2030年的每一个数字，都必须经过可复现的条件试验，而不是写在页面上的愿望。</div></section>'+factCards()+'<div class="panel gap-top"><div class="eyebrow">同口径报道趋势 · 2024 → 2025</div><div class="grid2"><div><div class="quote">2,188吨 → 2,449吨</div><p>两年南方日报报道的柏塘镇茶叶产量相比，增加261吨，约11.9%。不是未来增速预测。</p></div><div><div class="report-paper" style="padding:14px;background:#eaf0e7"><div class="mini-bars"><div class="rbar"><span>2024</span><div class="rail"><div class="fill" style="width:85%"></div></div><strong>2188吨</strong></div><div class="rbar"><span>2025</span><div class="rail"><div class="fill" style="width:95%"></div></div><strong>2449吨</strong></div></div></div></div></div><div>'+sourceLink('bt-2024','2024来源 ↗')+' · '+sourceLink('bt-base','2025来源 ↗')+'</div></div><div class="grid2"><div class="panel"><div class="eyebrow">最值得关注的变化</div><h2>从分散卖茶，走向更完整的产业组织</h2><p class="long-narrative">2026年报道显示，柏塘茶产业综合体正在推进研发、加工、展示和茶旅融合。这改变的不只是“多一个厂房”，还可能改变产品标准、合作社组织与产业链分工，但真实效果仍要看后续投产、销售和协同记录。</p>'+sourceLink('bt-base')+'</div><div class="panel"><div class="eyebrow">数据一定要说清楚</div><h2>2449吨，还是2570吨？</h2><p class="long-narrative">两家媒体对2025年茶叶产量分别报道2449吨和2570吨。羊城晚报同时使用单价估算法得到12.8亿元。不同的统计口径没有得到统一前，不能简单取平均，也不能把它们当成“误差区间”。</p>'+sourceLink('bt-conflict','对照另一口径 ↗')+'</div></div><div class="panel world-preview gap-top">'+chainSvg()+'<div class="caption"><div class="eyebrow">从数字进入关系世界</div><h2>真正要研究的，不只是茶叶多不多。</h2><p>要看品质、加工、品牌、渠道、茶旅与组织服务能否相互带动；以及某一环承压时，是否会把问题传给其他环节。</p><button class="btn" data-view="path">看柏塘现在的三条路 →</button></div></div>'}
+
+/* Visible five-step model run. An evidence snapshot is NOT a realtime ingestion job;
+   progress numbers only advance after actual Monte Carlo paths have run. */
+let runSerial=0;
+function overview(){
+ const role=M.PRESETS[state.preset]||null;
+ const sourceCount=I.sources.length;
+ const steps=[['公开数据',sourceCount+'条资料'],['变量建模','5项发展路径'],['运算过程','0 / 2600'],['结果分布','等待运行'],['结果解读','等待结果']];
+ const pButtons=Object.entries(M.PRESETS).map(([k,v])=>'<button data-preset="'+k+'" class="'+(state.preset===k?'active':'')+'">'+esc(v.name)+'</button>').join('');
+ return '<section class="model-cockpit">'+
+ '<div class="console-title"><div class="eyebrow">BAITANG / EVIDENCE-LED SCENARIO ENGINE · 2026—2030</div><h1>柏塘茶的五年，不是看一张预测图。</h1><p>先看真实资料如何进入模型，再亲手改条件，看2600条模拟路径怎样分化。这里没有经过校准的产值预测，结果统一以2025=100的情景指数呈现。</p></div>'+
+ '<div class="console-pipeline" aria-label="从数据到结果的五段流程">'+steps.map(([name,sub],i)=>'<div class="console-step '+(i<2?'is-done':i===2?'is-on':'')+'" id="consoleStep'+i+'"><span class="st-num">'+String(i+1).padStart(2,'0')+'</span><span><span class="st-name">'+name+'</span><span class="st-sub" id="consoleStepSub'+i+'">'+sub+'</span></span></div>').join('')+'</div>'+
+ '<div class="console-grid"><section class="panel console-main"><div class="console-head"><div><div class="eyebrow">04 / MODEL OUTPUT · 2025=100</div><h2>2030，可能出现怎样的结果分化？</h2></div><span class="console-runstate active" id="consoleStatus">正在启动抽样</span></div>'+
+ '<div class="console-runbar" role="progressbar" id="consoleProgress" aria-valuenow="0" aria-valuemin="0" aria-valuemax="2600" aria-label="实际完成的蒙特卡洛抽样数"><div class="console-runbar-fill" id="consoleProgressFill"></div></div>'+
+ '<div class="console-count"><span id="consoleCount">已完成 0 / 2,600 次真实抽样</span><span id="consolePercent">0%</span></div>'+
+ '<div class="console-plot" id="consolePlot"><div class="console-skeleton"><b>等待第一批模型路径</b><small>图表会随着实际运算的样本增加而形成，不播放虚假的进度动画。</small></div></div>'+
+ '<div class="console-outcomes" id="consoleOutcomes"><div class="console-outcome"><label>2030低位 P10</label><strong>—</strong></div><div class="console-outcome primary-outcome"><label>2030中位 P50</label><strong>—</strong></div><div class="console-outcome"><label>2030高位 P90</label><strong>—</strong></div></div>'+
+ '<div class="console-rundisclaimer">抽样区间来自假设条件下的模拟分布，不是2025年约12亿元产值的推算金额。SEM路径系数尚未经真实样本估计，模型响应与冲击强度需要持续校准。</div></section>'+
+ '<aside class="console-side"><section class="panel"><div class="eyebrow">01 / DATA COLLECTION</div><h3>数据从哪里来？</h3><div class="console-source-list"><div class="console-source"><b>'+sourceCount+'</b><small>现有公开情报来源</small></div><div class="console-source"><b>2025</b><small>事实基准年</small></div><div class="console-source"><b>2,449吨</b><small>一个报道产量口径</small></div><div class="console-source"><b>12亿元</b><small>报道的产业规模约值</small></div></div><div class="console-input-diff">2025年产量另有2570吨的报道。模型不将冲突口径取平均，也不把静态资料快照当作实时抓取。</div><div class="buttons">'+sourceLink('bt-base','原始报道 ↗')+sourceLink('bt-conflict','口径对照 ↗')+'</div><div class="tiny">资料快照 '+esc(I.snapshot_at)+'；商业交易台账未接入。</div></section>'+
+ '<section class="panel"><div class="eyebrow">02 / MODEL CONSTRUCTION</div><h3>这次要改变哪条路径？</h3><div class="console-scenario">'+pButtons+'</div><label class="tiny" for="consoleStress">叠加一个压力苗头</label><select class="choice-select" id="consoleStress">'+Object.entries(M.STRESSES).map(([k,v])=>'<option value="'+k+'" '+(state.stress===k?'selected':'')+'>'+esc(v.name)+'</option>').join('')+'</select><div class="tiny" style="margin-top:10px">模型假设：五条路径争夺100点资源，建设见效有延迟，市场与气候扰动影响多条路径。不是SEM实测系数。</div><button class="btn primary" data-action="rerun">↻ 重新运行这组条件</button><button class="btn" data-view="future" style="width:100%;margin-top:8px">精调五条路径 →</button></section></aside></div>'+
+ '<div class="console-interpret"><section class="panel"><div class="eyebrow">05 / KEY FACTORS · MODEL SENSITIVITY ONLY</div><h3>哪个因素真正改变了模型结果？</h3><div id="consoleFactors"><p>完成全部样本后，以“从其他路径挪10点资源”的对照显示模型敏感性。没有企业样本时，不把这种敏感性冒充SEM重要性排名。</p></div></section>'+
+ '<section class="panel"><div class="eyebrow">05 / INTERPRETATION</div><h3>这次运行说明什么？</h3><div id="consoleExplain"><p>等待真实抽样结束。输出将解释本轮区间、同一条件下冲击差额，以及下一步需要验证的数据。</p></div><div class="buttons"><button class="btn" data-view="stress">进一步压力测试 →</button><button class="btn primary" data-view="report">打开图文报告 →</button></div></section></div>'+
+ '</section><details class="console-evidence-details"><summary>展开全部产业基本面、事实来源与关系世界（原内容完整保留）</summary><div class="inner">'+overviewBackground()+'</div></details>';
+}
+function startConsole(){
+ if(state.view!=='overview'||!$('consolePlot'))return;
+ const token=++runSerial,options={weights:state.weights,stress:state.stress,samples:2600,seed:20261101};
+ const session=M.createSession(options),baseline=base();
+ const setText=(id,t)=>{const node=$(id);if(node)node.textContent=t};
+ const plot=$('consolePlot'),results=$('consoleOutcomes'),bar=$('consoleProgressFill'),progress=$('consoleProgress');
+ setText('consoleStatus','正在运算 · 同一随机种子');
+ function iterate(){
+  if(token!==runSerial||state.view!=='overview'||!$('consolePlot'))return;
+  session.step(220);
+  const n=session.completed,total=session.total,pct=Math.round(n/total*100),snapshot=session.snapshot();
+  setText('consoleCount','已完成 '+n.toLocaleString('zh-CN')+' / '+total.toLocaleString('zh-CN')+' 条模拟路径');
+  setText('consolePercent',pct+'%');
+  setText('consoleStepSub2',n+' / '+total);
+  if(bar)bar.style.width=pct+'%';
+  if(progress)progress.setAttribute('aria-valuenow',String(n));
+  if(snapshot){
+   plot.innerHTML=chart(snapshot.bands,baseline.bands);
+   results.innerHTML=[['2030低位 P10',snapshot.ending.p10],['2030中位 P50',snapshot.ending.p50],['2030高位 P90',snapshot.ending.p90]].map(([name,value],i)=>'<div class="console-outcome '+(i===1?'primary-outcome':'')+'"><label>'+name+'</label><strong>'+value+'</strong><small>模型内分位数 · 2025=100</small></div>').join('');
+  }
+  if(!session.done){
+   const schedule=window.requestAnimationFrame?window.requestAnimationFrame.bind(window):(fn)=>setTimeout(fn,0);
+   schedule(iterate);return;
+  }
+  const finished=session.snapshot();cached[JSON.stringify([state.weights,state.stress])]=finished;
+  setText('consoleStatus','已完成 · '+total+'条路径');const status=$('consoleStatus');if(status)status.classList.remove('active');
+  setText('consoleStepSub2',total+'次已完成');
+  setText('consoleStepSub3','2030 · P10/P50/P90');setText('consoleStepSub4','敏感性与反证');
+  for(const id of [2,3,4]){const step=$('consoleStep'+id);if(step){step.classList.remove('is-on');step.classList.add('is-done')}}
+  const sensitivities=M.sensitivity({weights:state.weights,stress:state.stress,samples:850,seed:20261101});
+  const max=Math.max(1,...sensitivities.map(x=>Math.abs(x.gain)));
+  $('consoleFactors').innerHTML=sensitivities.map((x,i)=>'<div class="console-factor-row"><span>'+esc(x.label)+'</span><div class="console-factor-rail"><span class="console-factor-fill" style="width:'+Math.max(3,Math.abs(x.gain)/max*100)+'%"></span></div><b>'+(x.gain>0?'+':'')+x.gain+'</b></div>').join('')+'<p class="tiny">每次只将其他路径的资源转移最多10点；横条为模型内2030中位数变化，不是因果系数或现实投资效益。</p>';
+  const neutral=state.stress==='none'?finished:model('none');
+  const delta=Math.round((finished.ending.p50-neutral.ending.p50)*10)/10;
+  const maxIndex=state.weights.indexOf(Math.max(...state.weights));
+  $('consoleExplain').innerHTML='<div class="number">'+finished.ending.p50+'</div><p>2030年情景指数中位；低位'+finished.ending.p10+'，高位'+finished.ending.p90+'。本轮侧重<strong>'+esc(M.LABELS[maxIndex])+'</strong>，压力情景为<strong>'+esc(M.STRESSES[state.stress].name)+'</strong>。</p><div class="console-explain"><b>模型内冲击差额：'+(delta>0?'+':'')+delta+'指数点</b><p>需要真实批次质量、加工利用率、采购复购和持续经营数据，才能判断哪些假设符合柏塘现实。现阶段不能将模拟指数转换成真实产值。</p></div>';
+ }
+ const schedule=window.requestAnimationFrame?window.requestAnimationFrame.bind(window):(fn)=>setTimeout(fn,0);
+ schedule(iterate);
+}
+
+function overviewBackground(){return '<section class="hero"><div><div class="eyebrow">BAITANG TEA · INDUSTRY FUTURES 2026—2030</div><h1>柏塘茶，<br>下一棒从哪里接？</h1><p>先看已有的产业基础，再看别人做对什么、柏塘现在走到哪里。风洞不预言唯一未来，只让不同选择的可能结果摆在面前。</p><div class="buttons"><button class="btn primary" data-view="benchmark">与标杆对照　→</button><button class="btn" data-view="future">直接试不同路径　↗</button></div></div><div class="hero-badge">已核事实是起点。<br>2030年的每一个数字，都必须经过可复现的条件试验，而不是写在页面上的愿望。</div></section>'+factCards()+'<div class="panel gap-top"><div class="eyebrow">同口径报道趋势 · 2024 → 2025</div><div class="grid2"><div><div class="quote">2,188吨 → 2,449吨</div><p>两年南方日报报道的柏塘镇茶叶产量相比，增加261吨，约11.9%。不是未来增速预测。</p></div><div><div class="report-paper" style="padding:14px;background:#eaf0e7"><div class="mini-bars"><div class="rbar"><span>2024</span><div class="rail"><div class="fill" style="width:85%"></div></div><strong>2188吨</strong></div><div class="rbar"><span>2025</span><div class="rail"><div class="fill" style="width:95%"></div></div><strong>2449吨</strong></div></div></div></div></div><div>'+sourceLink('bt-2024','2024来源 ↗')+' · '+sourceLink('bt-base','2025来源 ↗')+'</div></div><div class="grid2"><div class="panel"><div class="eyebrow">最值得关注的变化</div><h2>从分散卖茶，走向更完整的产业组织</h2><p class="long-narrative">2026年报道显示，柏塘茶产业综合体正在推进研发、加工、展示和茶旅融合。这改变的不只是“多一个厂房”，还可能改变产品标准、合作社组织与产业链分工，但真实效果仍要看后续投产、销售和协同记录。</p>'+sourceLink('bt-base')+'</div><div class="panel"><div class="eyebrow">数据一定要说清楚</div><h2>2449吨，还是2570吨？</h2><p class="long-narrative">两家媒体对2025年茶叶产量分别报道2449吨和2570吨。羊城晚报同时使用单价估算法得到12.8亿元。不同的统计口径没有得到统一前，不能简单取平均，也不能把它们当成“误差区间”。</p>'+sourceLink('bt-conflict','对照另一口径 ↗')+'</div></div><div class="panel world-preview gap-top">'+chainSvg()+'<div class="caption"><div class="eyebrow">从数字进入关系世界</div><h2>真正要研究的，不只是茶叶多不多。</h2><p>要看品质、加工、品牌、渠道、茶旅与组织服务能否相互带动；以及某一环承压时，是否会把问题传给其他环节。</p><button class="btn" data-view="path">看柏塘现在的三条路 →</button></div></div>'}
 function benchmark(){return heading('02','他们做对了什么，柏塘能学什么？','不把英德、安溪、武夷山的收入规模混在一个排行榜里；只提取真正能够解释差异的机制。')+'<div class="grid3">'+bench.map(b=>'<article class="panel benchmark-card"><div class="bench-num">'+b.number+'</div><div class="eyebrow">产业标杆 · '+esc(b.tag)+'</div><h2>'+esc(b.name)+'</h2><div class="mechanism">'+esc(b.fact)+'</div><p><b>做对的事情：</b>'+esc(b.right)+'</p><div class="bottom"><b>对柏塘可能有用：</b><p>'+esc(b.transfer)+'</p><p class="tiny">'+esc(b.caution)+'</p>'+sourceLink(b.source,'追溯官方来源 ↗')+'</div></article>').join('')+'</div><div class="comparison"><div class="panel"><h3>柏塘已有的优势</h3><p>特色茶叶、地理标志、万亩茶园、产业综合体以及真实茶旅场景。差异化发展的起点不低。</p></div><div class="panel"><h3>需要检验的差别</h3><p>标准落到批次了吗？品牌形成可持续渠道了吗？加工能否支撑新产品？游客是否变为稳定消费？目前尚无同口径指标证明差距大小。</p></div></div><div class="callout gap-top"><strong>看图一句话：</strong>标杆厉害的地方不是某个漂亮数字，而是把品质、组织、产品和市场变成了持续运转的机制。柏塘要研究哪些机制可迁移、哪些必须另走自己的路。</div><div class="buttons gap-top"><button class="btn primary" data-view="path">回看柏塘正在走的路 →</button></div>'}
 function path(){return heading('03','柏塘不是没有路，它已经在走三条。','把现实进度与尚待落实的环节分别标清，避免把规划、建成、实际经营效果混成一回事。')+'<div class="pathline">'+paths.map((p,i)=>'<article class="panel"><div class="section-label">路径 '+p.n+'</div><h2>'+esc(p.name)+'</h2><span class="pill gold">'+esc(p.tag)+'</span><p>'+esc(p.what)+'</p><div class="bottom">'+esc(p.where)+'<div style="margin-top:12px">'+sourceLink(p.src,'公开报道 ↗')+'</div></div></article>'+(i<2?'<span class="arrow-small">→</span>':'')).join('')+'</div><div class="panel timeline-stage"><div class="eyebrow">产业项目与发展路径，不能只看一个“已启动”标签</div><h2>四道必须区分的进度门</h2><div class="items">'+[['规划提出','方向、预算和主体是否清楚？'],['项目落地','设施和组织条件是否到位？'],['实际运行','真实产能、订单、服务是否形成？'],['持续见效','盈利、复购、质量和产业关联是否稳定？']].map(([a,b])=>'<div class="item"><strong>'+a+'</strong><p>'+b+'</p></div>').join('')+'</div><p class="tiny">当前部分项目有公开建设报道，但不据此宣称全部跨越到“持续见效”。</p></div><div class="grid2 gap-top"><div class="panel"><h2>这三条路可能互相加强</h2><p>标准化使新加工产品更容易稳定交付；加工提高产品选择空间；茶旅提供产品接触渠道。也存在资源争夺与执行滞后，不是简单相加。</p></div><div class="panel"><h2>也可能各走各的，没形成网络</h2><p>如果没有真实批次、采购、转化和复购记录，不能判断这些机制已经形成稳定反馈。下一步要验证的是连接质量，而不只是活动次数。</p></div></div><div class="buttons gap-top"><button class="btn primary" data-view="gaps">找可能漏掉的能力 →</button></div>'}
 function gapDetails(g){return '<div class="gap-detail"><div class="eyebrow">待检验能力缺口 · '+esc(g.type)+'</div><h2>'+esc(g.title)+'</h2><p>'+esc(g.basis)+'</p><h3>最该补哪项证据？</h3><p>'+esc(g.test)+'</p><div class="callout"><strong>不能这样下结论：</strong>'+esc(g.not)+'</div><div class="buttons gap-top"><button class="btn" data-view="stress">放进风险与压力测试 →</button><button class="btn" data-view="report">写入报告 →</button></div></div>'}
@@ -105,7 +170,7 @@ return heading('07','柏塘山茶 · 人话版报告','图文报告直接读取�
 '<div class="report-card report-figure"><strong>2026—2030 · 不同选择下的可能分化</strong><div class="report-mini-visual">'+chart(m.bands,base().bands)+'</div><p>金色中位线、绿色P10—P90区间、虚线均衡路径。数字为未校准模型的假设指数，而不是现实产值预测。</p></div><h2>06　如果再遭遇冲击？</h2><div class="report-row"><div class="report-card"><strong>当前压力情景：'+esc(M.STRESSES[state.stress].name)+'</strong><p>'+esc(M.STRESSES[state.stress].note)+'</p></div><div class="report-card"><strong>模型内2030中位对照</strong><p>无额外冲击 '+m.ending.p50+' → 当前冲击 '+p.ending.p50+'；差额 '+(Number(delta)>0?'+':'')+delta+' 指数点。</p></div></div><p>冲击通过需求、劳动力、加工时滞等机制影响情景；真实冲击强度、发生时间和企业承压程度仍然无法由当前公开材料直接认定。</p>'+
 '<h2>07　下一步真正应该补什么？</h2><div class="report-card"><strong>先补证据，再判断补强优先级</strong><p>逐批次品质记录、加工实际利用率、同一产品的采购与复购、茶旅消费转化、跨企业协作，以及季节性用工的逐日台账。这些记录将决定哪些假设能被验证或推翻。</p></div><p class="report-meta">本报告不预测茶叶价格、具体企业盈利、真实岗位数量，不评判经营绩效。模型尚未经柏塘历年数据校准，SEM关系仍是假设。报告保留口径冲突与反证要求。</p>'+
 '<h2>资料与出处</h2><ol class="source-list">'+sources.map(x=>'<li><a href="'+esc(x.url)+'" target="_blank" rel="noopener noreferrer">'+esc(x.title)+'</a>（'+esc(x.publisher)+'，'+esc(x.date)+'）</li>').join('')+'</ol></article>'}
-function refresh(){main.innerHTML=({overview,benchmark,path,gaps:gapsView,future,stress,report})[state.view]();document.querySelectorAll('[data-view]').forEach(x=>{if(x.closest('#main'))return;x.classList.toggle('active',x.dataset.view===state.view)});$('mobileNav').innerHTML=Object.entries(views).map(([k,[t,icon]])=>'<button class="'+(state.view===k?'active':'')+'" data-view="'+k+'"><span>'+icon+'</span>'+t.slice(0,4)+'</button>').join('');try{const params=new URLSearchParams(location.search);params.set('view',state.view);history.replaceState(null,'','?'+params.toString())}catch(e){}}
+function refresh(){runSerial++;main.innerHTML=({overview,benchmark,path,gaps:gapsView,future,stress,report})[state.view]();document.querySelectorAll('[data-view]').forEach(x=>{if(x.closest('#main'))return;x.classList.toggle('active',x.dataset.view===state.view)});$('mobileNav').innerHTML=Object.entries(views).map(([k,[t,icon]])=>'<button class="'+(state.view===k?'active':'')+'" data-view="'+k+'"><span>'+icon+'</span>'+t.slice(0,4)+'</button>').join('');try{const params=new URLSearchParams(location.search);params.set('view',state.view);history.replaceState(null,'','?'+params.toString())}catch(e){}if(state.view==='overview')startConsole();}
 function notify(t){$('toast').textContent=t;$('toast').hidden=false;clearTimeout(notify.timer);notify.timer=setTimeout(()=>$('toast').hidden=true,2900)}
 function go(name){if(!views[name])return;state.view=name;refresh();window.scrollTo({top:0,behavior:'instant'});main.focus({preventScroll:true})}
 function moveLever(i,val){
@@ -122,11 +187,13 @@ if(x.dataset.view)return go(x.dataset.view);
 if(x.dataset.preset){const p=M.PRESETS[x.dataset.preset];if(!p)return;state.weights=p.weights.slice();state.preset=x.dataset.preset;cached={};refresh();return}
 if(x.dataset.gap!==undefined){state.gap=Number(x.dataset.gap);refresh();return}
 if(x.dataset.stress){state.stress=x.dataset.stress;refresh();return}
+if(x.dataset.action==='rerun'){cached={};refresh();return}
 if(x.dataset.action==='default'){state.weights=M.DEFAULT.slice();state.preset='balance';cached={};refresh();return}
 if(x.dataset.action==='print'){window.print();return}
 if(x.dataset.action==='copy-report'){copyText(summaryText());return}
 });
 document.addEventListener('keydown',e=>{if((e.key==='Enter'||e.key===' ')&&e.target.matches('[data-view],[data-chart-year]')){e.preventDefault();e.target.dispatchEvent(new MouseEvent('click',{bubbles:true}));}});
+document.addEventListener('change',e=>{if(e.target.id==='consoleStress'){state.stress=e.target.value in M.STRESSES?e.target.value:'none';cached={};refresh();}});
 document.addEventListener('input',e=>{if(!e.target.matches('[data-lever]'))return;const i=Number(e.target.dataset.lever);if(i<0||i>4)return;moveLever(i,Number(e.target.value));futureUpdate()});
 $('copyLink').addEventListener('click',share);
 refresh();
