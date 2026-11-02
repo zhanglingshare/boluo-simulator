@@ -17,9 +17,18 @@ const state={page:validPages.includes(params.get('page'))?params.get('page'):'la
  view:validViews.includes(params.get('view'))?params.get('view'):'hist'};
 let result=null,base=null,runKey='',runId=0,notifyTimer;
 let structureFilter='all',structureSelected='plant';
+const bridge=window.BoluoCaseBridge||null;
+const returnInfo=bridge?bridge.getReturn(params):null;
+function bridgeBar(){
+ if(!returnInfo)return '';
+ const caption=returnInfo.origin==='v1031'?'从V1031生活问题进入':returnInfo.origin==='network'?'从博罗产业网络的柏塘山茶节点进入':'从博罗全息关系世界进入';
+ return '<div class="case-bridge-bar" style="display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between;gap:12px;border:1px solid #719881;border-radius:12px;background:linear-gradient(100deg,#1a453b,#17343c);padding:12px 16px;margin-bottom:14px"><div><div style="color:#c8e8c7;font-size:11px;font-weight:800">'+esc(caption)+'</div><div style="color:#a6c3b3;font-size:10px">带着原来的问题进入柏塘，实验结束后返回原来的观察位置。</div></div><a href="'+esc(returnInfo.url)+'" class="btn" style="color:#f5d6a5;border-color:#ba9f75">← '+esc(returnInfo.label)+'</a></div>';
+}
+
 function key(){return JSON.stringify([state.weights,state.stress,state.uncertainty])}
 function toast(message){const el=$('toast');el.hidden=false;el.textContent=message;clearTimeout(notifyTimer);notifyTimer=setTimeout(()=>el.hidden=true,2500)}
 function share(){const p=new URLSearchParams({page:state.page,w:state.weights.map(x=>f(x)).join(','),stress:state.stress,u:state.uncertainty,view:state.view,field:state.field});
+if(returnInfo){for(const k of ['origin','focus','scene','returnView','returnHash','case'])if(params.has(k))p.set(k,params.get(k).slice(0,1200));}
 const url=location.origin+location.pathname+'?'+p.toString();if(navigator.clipboard?.writeText)navigator.clipboard.writeText(url).then(()=>toast('当前模型条件的链接已复制')).catch(()=>prompt('复制链接',url));else prompt('复制链接',url)}
 function nav(){document.querySelectorAll('[data-page]').forEach(el=>{if(el.closest('#stage'))return;el.classList.toggle('active',el.dataset.page===state.page)});
 const pages=[['lab','运算','◈'],['evidence','证据','◇'],['mechanism','结构','⌁'],['report','报告','▤']];
@@ -142,7 +151,7 @@ const sensitivity=M.sensitivity({weights:state.weights,stress:state.stress,uncer
 const largest=Math.max(1,...sensitivity.map(x=>Math.abs(x.deltaIndex)));
 $('sensitivityResults').innerHTML='<div class="finding-bars">'+sensitivity.map(x=>'<div class="finding-row"><span>'+esc(x.label)+'</span><div class="bar-rail"><span class="bar-fill" style="width:'+Math.max(3,Math.abs(x.deltaIndex)/largest*100)+'%"></span></div><b>'+(x.deltaIndex>0?'+':'')+x.deltaIndex+'</b></div>').join('')+'</div><p class="tiny">各方案从其他路径转移最多10点资源，使用相同种子和600个样本重跑；只是模型敏感性，非SEM系数或现实效益排名。</p>';
 const label=state.stress==='none'?'本轮没有额外指定冲击':'本轮已叠加'+M.STRESSES[state.stress].name;
-$('interpretResults').innerHTML='<div class="finding-tally">'+v.valueIndex.p50+' <small style="font-size:13px">指数</small></div><p>2030年茶产业价值能力指数中位，不是实际产值；对照均衡方案变化'+(delta>0?'+':'')+delta+'点。</p><div class="insight-highlight"><b>'+label+'。</b>柏塘2030年游客达到350万人次目标的样本覆盖为'+goal.visitors350+'%，两项目标同时覆盖'+goal.both+'%。这仍取决于D级消费估算，绝非真实达标概率。</div><p>下一步优先补：B端采购合同、茶企真实加工利用率、旅游消费样本。最缺的是约束机制的实测，而不是更多漂亮的指标。</p>';
+$('interpretResults').innerHTML='<div class="finding-tally">'+v.valueIndex.p50+' <small style="font-size:13px">指数</small></div><p>2030年茶产业价值能力指数中位，不是实际产值；对照均衡方案变化'+(delta>0?'+':'')+delta+'点。</p><div class="insight-highlight"><b>'+label+'。</b>柏塘2030年游客达到350万人次目标的样本覆盖为'+goal.visitors350+'%，两项目标同时覆盖'+goal.both+'%。这仍取决于D级消费估算，绝非真实达标概率。</div><p>下一步优先补：B端采购合同、茶企真实加工利用率、旅游消费样本。最缺的是约束机制的实测，而不是更多漂亮的指标。</p><button type="button" class="btn" data-action="copy-discovery">复制本轮发现卡 · 可分享、可复验 ↗</button>';
 if($('goalSummary'))$('goalSummary').textContent='本轮有'+goal.visitors350+'%的条件样本达到游客350万目标；不代表现实发生概率。';
 }
 function start(force=false){
@@ -167,7 +176,7 @@ const schedule=window.requestAnimationFrame?window.requestAnimationFrame.bind(wi
 }
 function render(){
 nav();if(state.page!=='lab')runId++;
-stage.innerHTML=({lab:renderLab,evidence:renderEvidence,mechanism:renderMechanism,report})[state.page]();
+stage.innerHTML=bridgeBar()+({lab:renderLab,evidence:renderEvidence,mechanism:renderMechanism,report})[state.page]();
 if(state.page==='lab')start();
 try{const q=new URLSearchParams(location.search);q.set('page',state.page);history.replaceState(null,'','?'+q.toString())}catch(e){}
 }
@@ -176,6 +185,16 @@ function moveLever(i,value){
 const w=state.weights.slice(),v=Math.max(0,Math.min(70,Math.round(value/5)*5)),rest=100-v,oldTotal=w.reduce((s,x,j)=>s+(j===i?0:x),0);
 let sum=0;for(let j=0;j<5;j++){if(j===i)continue;w[j]=oldTotal?Math.floor(w[j]/oldTotal*rest):Math.floor(rest/4);sum+=w[j]}
 const donor=w.map((v,j)=>({v,j})).filter(x=>x.j!==i).sort((a,b)=>b.v-a.v)[0].j;w[donor]+=rest-sum;w[i]=v;state.weights=w;state.preset='custom';
+}
+function discoveryText(){
+ const r=result&&result.samples===result.total&&runKey===key()?result:M.simulate({weights:state.weights,stress:state.stress,uncertainty:state.uncertainty,samples:2600,seed:20261102});
+ const v=r.ending.valueIndex,vis=r.ending.visitorsWan;
+ return '我的博罗发现｜柏塘山茶 · 2030\n'+
+ '我的选择：'+M.LABELS.map((label,i)=>label+' '+f(state.weights[i])+'点').join('、')+'；冲击：'+M.STRESSES[state.stress].name+'；未知变量：'+state.uncertainty+'。\n'+
+ '模型情景：价值能力指数P10/P50/P90='+v.p10+'/'+v.p50+'/'+v.p90+'（2025=100）；2030游客P50='+vis.p50+'万人次。\n'+
+ '警告：这些条件样本不是现实发生概率，部分输入仍是C/D级假设，需要实际B端采购与游客消费等台账核验。\n'+
+ '模型：BaitangMechanism '+M.version+'；随机种子：'+r.seed+'；证据快照：'+E.asOf+'。\n'+
+ '复验地址：'+location.href;
 }
 function summary(){
 const r=result||M.simulate({weights:state.weights,stress:state.stress,uncertainty:state.uncertainty,samples:2600,seed:20261102});
@@ -193,6 +212,7 @@ document.addEventListener('click',e=>{
  if(el.dataset.action==='rerun'){start(true);return}
  if(el.dataset.action==='print'){window.print();return}
  if(el.dataset.action==='copy-summary'){copyText(summary());return}
+ if(el.dataset.action==='copy-discovery'){copyText(discoveryText());return}
 });
 document.addEventListener('keydown',e=>{if((e.key==='Enter'||e.key===' ')&&e.target.matches('[data-node]')){e.preventDefault();e.target.dispatchEvent(new MouseEvent('click',{bubbles:true}));}});
 document.addEventListener('change',e=>{
