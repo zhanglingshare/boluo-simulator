@@ -41,7 +41,7 @@ async function suite(){
    assert.ok(state.planLink,name+' missing 06 link');
    assert.ok(state.overflow<=4,name+' horizontal overflow '+state.overflow);
    assert.ok(state.font.includes('PingFang')||state.font.includes('SF Pro'),name+' font stack');
-   if(name==='05-compare')assert.equal(state.heroBackground,'rgb(255, 255, 255)',name+' after network background');
+   if(name==='05-compare')assert.equal(state.heroBackground,'rgb(25, 38, 51)',name+' after network uses matte dark material');
    await page.screenshot({path:path.join(art,name+'-1440.png'),animations:'disabled'});
    await page.close();
   }
