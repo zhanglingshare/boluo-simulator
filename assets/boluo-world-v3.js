@@ -17,6 +17,14 @@ const validId=x=>/^C\d{3}$/.test(x||'')?x:'';
 const params=new URLSearchParams(location.search),hash=new URLSearchParams(location.hash.slice(1));
 const ctx={topic:(params.get('topic')||'').slice(0,120),town:(params.get('town')||'').slice(0,60),change:validId(hash.get('change')||params.get('change'))};
 let notify=()=>{};
+/* Native views can display a default example. Do not silently turn that example
+   into the user's news/town trail without an explicit event click. */
+let skipFirstAutomaticSelection=(page==='changes'||page==='comparison')&&!!(ctx.topic||ctx.town)&&!ctx.change;
+function acceptNativeSelection(ev){
+ const id=validId(ev.detail?.changeId);if(!id)return;
+ if(skipFirstAutomaticSelection){skipFirstAutomaticSelection=false;notify();return;}
+ ctx.change=id;notify();
+}
 function flash(n){if(!n||reduce||!n.animate)return;n.animate([{boxShadow:'0 0 0 0 rgba(187,78,96,.34)'},{boxShadow:'0 0 0 15px rgba(187,78,96,0)'}],{duration:710});}
 function observe(host,fn){
  if(!host||!window.MutationObserver)return;
@@ -81,8 +89,8 @@ function makeRibbon(){
  notify();
 }
 makeRibbon();
-document.addEventListener('bl:change-selected',ev=>{if(validId(ev.detail?.changeId)){ctx.change=ev.detail.changeId;notify();}});
-document.addEventListener('bl:compare-selected',ev=>{if(validId(ev.detail?.changeId)){ctx.change=ev.detail.changeId;notify();}});
+document.addEventListener('bl:change-selected',acceptNativeSelection);
+document.addEventListener('bl:compare-selected',acceptNativeSelection);
 function initToday(){
  const cards=$('#topicList'),hero=$('.bl-home-hero'),nativeFeed=$('#bl-live-brief');
  if(!cards||!hero||!nativeFeed)return;
@@ -238,17 +246,17 @@ function initChanges(){
  const right=el('div','v3-dock-actions');
  const isolate=btn('只看本次变化','v3-switch',()=>{isolateMode=!isolateMode;isolate.setAttribute('aria-pressed',String(isolateMode));graph.classList.toggle('v3-only-change',isolateMode);});
  const replay=btn('播放变化','v3-action-hot',()=>pulse());
- const restore=btn('恢复布局','v3-switch',()=>{positions.delete(ctx.change);applyDrag();annotate();});
+ const restore=btn('恢复布局','v3-switch',()=>{positions.delete(activeId);applyDrag();annotate();});
  isolate.setAttribute('aria-pressed','false');right.append(isolate,replay,restore);dock.append(left,right);
  frame.insertAdjacentElement('beforebegin',dock);
  const cards=el('div','v3-relation-cards');frame.insertAdjacentElement('afterend',cards);
  const note=el('p','v3-graph-note','连线标注来自已收录事件与证据等级。位置是结构示意而非地图；签约、施工、推断不等于实际交易或已投产。');
  cards.insertAdjacentElement('afterend',note);
- let data=null,pack=null,queued=false,isolateMode=false,suppress=false,drag=null;
+ let data=null,pack=null,queued=false,isolateMode=false,suppress=false,drag=null,activeId=ctx.change;
  const positions=new Map();
  function build(){
-  if(!pack||!validId(ctx.change))return null;
-  try{return window.BoluoCompareModel.build(pack.a,pack.b,pack.c,ctx.change);}catch{return null;}
+  if(!pack||!validId(activeId))return null;
+  try{return window.BoluoCompareModel.build(pack.a,pack.b,pack.c,activeId);}catch{return null;}
  }
  function annotate(){
   if(!data||!graph.querySelector('.ec-graph-node'))return;
@@ -265,7 +273,7 @@ function initChanges(){
  }
  function applyDrag(){
   if(!data)return;
-  const offset=positions.get(ctx.change)||new Map();
+  const offset=positions.get(activeId)||new Map();
   const nmap=new Map();
   $$('.ec-graph-node',graph).forEach(g=>{
    const c=g.querySelector('circle');if(!c)return;
@@ -302,7 +310,8 @@ function initChanges(){
  }
  function sync(){if(queued)return;queued=true;requestAnimationFrame(()=>{queued=false;annotate();});}
  observe(graph,()=>{if(!graph.querySelector('.v3-annotations'))sync();});
- document.addEventListener('bl:change-selected',()=>{
+ document.addEventListener('bl:change-selected',ev=>{
+  activeId=validId(ev.detail?.changeId)||activeId;
   data=build();paint();if(data)pulse();
  });
  function pulse(){
@@ -317,16 +326,16 @@ function initChanges(){
  graph.addEventListener('pointerdown',ev=>{
   if(ev.button!==0)return;const target=ev.target.closest?.('.ec-graph-node');
   if(!target||!graph.contains(target))return;
-  const orig=coord(ev),offset=positions.get(ctx.change)?.get(target.dataset.node)||{x:0,y:0};
+  const orig=coord(ev),offset=positions.get(activeId)?.get(target.dataset.node)||{x:0,y:0};
   drag={pid:ev.pointerId,node:target.dataset.node,start:orig,base:offset,moved:false};
  });
  window.addEventListener('pointermove',ev=>{
   if(!drag||ev.pointerId!==drag.pid||!data)return;
   const p=coord(ev);if(!drag.moved&&Math.hypot(p.x-drag.start.x,p.y-drag.start.y)<7)return;
   drag.moved=true;
-  const map=positions.get(ctx.change)||new Map();
+  const map=positions.get(activeId)||new Map();
   map.set(drag.node,{x:drag.base.x+p.x-drag.start.x,y:drag.base.y+p.y-drag.start.y});
-  positions.set(ctx.change,map);annotate();
+  positions.set(activeId,map);annotate();
  });
  function finish(ev){
   if(!drag||ev.pointerId!==drag.pid)return;
@@ -338,8 +347,8 @@ function initChanges(){
  graph.addEventListener('click',()=>requestAnimationFrame(annotate));
  readModel().then(x=>{
   pack=x;
-  const first=validId($('#ec-detail-id')?.textContent)||ctx.change;
-  if(first){ctx.change=first;data=build();paint();notify();}
+  const first=validId($('#ec-detail-id')?.textContent)||activeId;
+  if(first){activeId=first;data=build();paint();notify();}
  }).catch(()=>{sub.textContent='关系附加视图未加载，原始事件图与证据仍可使用。';});
 }
 function initBasic(){
@@ -397,7 +406,7 @@ function initComparison(){
  const caution=el('p','v3-delta-warning','前后对照是单项事件的局部重建，不是两份完整历史网络快照；签约、在建、待验证联系不自动算成新增供货。');
  board.append(top,summary,chips,caution);
  stage.insertAdjacentElement('beforebegin',board);
- let pack=null,data=null;
+ let pack=null,data=null,activeId=ctx.change;
  function stop(){timers.forEach(clearTimeout);timers=[];play.disabled=false;play.textContent='播放一遍变化';}
  function setPhase(i){
   phase=i;document.body.classList.remove('v3-phase-before','v3-phase-now','v3-phase-both');
@@ -419,8 +428,8 @@ function initComparison(){
   timers.push(setTimeout(()=>{setPhase(2);stop();},speed*2.6));
  }
  function show(){
-  if(!pack||!validId(ctx.change))return;
-  try{data=window.BoluoCompareModel.build(pack.a,pack.b,pack.c,ctx.change);}catch{return;}
+  if(!pack||!validId(activeId))return;
+  try{data=window.BoluoCompareModel.build(pack.a,pack.b,pack.c,activeId);}catch{return;}
   const changed=data.selectedEdges.filter(e=>e.before!==e.after),pending=changed.filter(e=>['hypothesis','inferred','construction'].includes(e.after)).length;
   summary.replaceChildren();
   const facts=[
@@ -459,10 +468,10 @@ function initComparison(){
   queued=true;requestAnimationFrame(()=>{queued=false;highlight();});
  });
  document.addEventListener('bl:compare-selected',ev=>{
-  if(validId(ev.detail?.changeId)){ctx.change=ev.detail.changeId;stop();show();notify();}
+  if(validId(ev.detail?.changeId)){activeId=ev.detail.changeId;stop();show();notify();}
  });
  readModel().then(x=>{
-  pack=x;ctx.change=validId($('#bc-event-id')?.textContent)||ctx.change||'C004';show();notify();
+  pack=x;activeId=validId($('#bc-event-id')?.textContent)||activeId||'C004';show();notify();
  }).catch(()=>{summary.textContent='变化附加视图未加载。原有双图、证据与事件选择仍可用。';});
  setPhase(phase);
 }
