@@ -38,7 +38,11 @@ nav.append(links);
 // 在窄屏中让当前认知步骤可见，避免第05步被横向导航遮住。
 if(typeof requestAnimationFrame==='function')requestAnimationFrame(function(){
  var active=links.querySelector('[aria-current="page"]');
- if(active&&links.scrollWidth>links.clientWidth)active.scrollIntoView({block:'nearest',inline:'nearest',behavior:'instant'});
+ if(active&&links.scrollWidth>links.clientWidth){
+  // Scroll ONLY the horizontal step strip; scrollIntoView could move the whole page on load.
+  var target=active.offsetLeft-links.offsetLeft-(links.clientWidth-active.offsetWidth)/2;
+  links.scrollLeft=Math.max(0,target);
+ }
 });
 var next=el("div","blj-next");
 var nextCaption=el("span",null,"继续观察");next.append(nextCaption);
