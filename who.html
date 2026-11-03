@@ -64,7 +64,7 @@ h1{font-size:20px;margin:0 0 2px}
     <div class="card">
       <h2>📈 GDP怎么涨上来的</h2>
       <div id="c1" class="chart"></div>
-      <div class="plain" style="margin-top:8px"><span class="lab">人话</span>只显示本轮核验的2024年GDP最终核实值970.87亿元与2025年初步核算值1005.45亿元；两年的核算阶段不同，需注明。</div>
+      <div class="plain" style="margin-top:8px"><span class="lab">人话</span>只显示本轮核验的2024年GDP最终核实值970.87亿元与2025年初步核算值1005.45亿元；两年的核算阶段不同，需注明。 图表纵轴从900亿元起，放大局部差异，请结合实际数值阅读。</div>
     </div>
     <div class="card">
       <h2>🥧 三次产业结构</h2>
@@ -115,16 +115,16 @@ h1{font-size:20px;margin:0 0 2px}
 const dark={text:'#607283',axis:'#ccd5dd'};
 const baseGrid={left:50,right:20,top:30,bottom:30};
 
-echarts.init(document.getElementById('c1')).setOption({
+echarts.init(document.getElementById('c1')).setOption({animation:false,
   backgroundColor:'transparent',
   tooltip:{trigger:'axis',backgroundColor:'#fff',borderColor:'#d8e0e6',textStyle:{color:'#283d4d'}},
   grid:baseGrid,
   xAxis:{type:'category',data:['2024年（最终核实）','2025年（初步核算）'],axisLine:{lineStyle:{color:dark.axis}},axisLabel:{color:dark.text}},
-  yAxis:{type:'value',axisLine:{lineStyle:{color:dark.axis}},axisLabel:{color:dark.text},splitLine:{lineStyle:{color:'#1c2739'}}},
+  yAxis:{type:'value',min:900,max:1050,axisLine:{lineStyle:{color:dark.axis}},axisLabel:{color:dark.text,formatter:'{value}亿'},splitLine:{lineStyle:{color:'#e5ebef'}}},
   series:[{type:'line',data:[970.87,1005.45],smooth:true,lineStyle:{color:'#22c55e',width:3},areaStyle:{color:{type:'linear',x:0,y:0,x2:0,y2:1,colorStops:[{offset:0,color:'rgba(34,197,94,.3)'},{offset:1,color:'rgba(34,197,94,0)'}]}},itemStyle:{color:'#22c55e'},label:{show:true,color:'#922f39',fontSize:10}}]
 });
 
-echarts.init(document.getElementById('c2')).setOption({
+echarts.init(document.getElementById('c2')).setOption({animation:false,
   backgroundColor:'transparent',
   tooltip:{trigger:'item',backgroundColor:'#fff',borderColor:'#d8e0e6',textStyle:{color:'#283d4d'}},
   legend:{bottom:0,textStyle:{color:dark.text,fontSize:11}},
@@ -134,7 +134,7 @@ echarts.init(document.getElementById('c2')).setOption({
   }]
 });
 
-echarts.init(document.getElementById('c3')).setOption({
+echarts.init(document.getElementById('c3')).setOption({animation:false,
   backgroundColor:'transparent',
   tooltip:{trigger:'axis',backgroundColor:'#fff',borderColor:'#d8e0e6',textStyle:{color:'#283d4d'}},
   grid:baseGrid,
@@ -149,7 +149,7 @@ echarts.init(document.getElementById('c3')).setOption({
   ],barWidth:18,label:{show:true,position:'right',color:'#922f39',fontSize:11,formatter:'{c}%'}}]
 });
 
-echarts.init(document.getElementById('c4')).setOption({
+echarts.init(document.getElementById('c4')).setOption({animation:false,
   backgroundColor:'transparent',
   tooltip:{trigger:'axis',backgroundColor:'#fff',borderColor:'#d8e0e6',textStyle:{color:'#283d4d'}},
   grid:{left:80,right:30,top:20,bottom:30},
@@ -158,7 +158,7 @@ echarts.init(document.getElementById('c4')).setOption({
   series:[{type:'bar',data:[{value:327,itemStyle:{color:'#922f39'}},{value:1080,itemStyle:{color:'#b8c6d0'}}],barWidth:28,label:{show:true,position:'right',color:'#536c7c',fontSize:11,formatter:'{c}家'}}]
 });
 
-echarts.init(document.getElementById('c5')).setOption({
+echarts.init(document.getElementById('c5')).setOption({animation:false,
   backgroundColor:'transparent',
   tooltip:{trigger:'axis',backgroundColor:'#fff',borderColor:'#d8e0e6',textStyle:{color:'#283d4d'}},
   grid:{left:50,right:20,top:20,bottom:30},
@@ -172,7 +172,7 @@ echarts.init(document.getElementById('c5')).setOption({
   ],barWidth:24,label:{show:true,position:'top',color:'#5b6d7c',fontSize:10,formatter:'{c}%'}}]
 });
 
-echarts.init(document.getElementById('c6')).setOption({
+echarts.init(document.getElementById('c6')).setOption({animation:false,
   backgroundColor:'transparent',
   tooltip:{trigger:'item',backgroundColor:'#fff',borderColor:'#d8e0e6',textStyle:{color:'#283d4d'}},
   legend:{bottom:0,textStyle:{color:dark.text,fontSize:11}},
@@ -182,7 +182,7 @@ echarts.init(document.getElementById('c6')).setOption({
   }]
 });
 
-echarts.init(document.getElementById('c7')).setOption({
+echarts.init(document.getElementById('c7')).setOption({animation:false,
   backgroundColor:'transparent',
   tooltip:{trigger:'axis',backgroundColor:'#fff',borderColor:'#d8e0e6',textStyle:{color:'#283d4d'}},
   legend:{top:0,textStyle:{color:dark.text,fontSize:10}},
