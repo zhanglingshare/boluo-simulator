@@ -75,7 +75,7 @@ function svgStatus(edge,which){
  if(stateName==='normal'){
   return {color:edge.focus?'#98a6b4':'#cdd5dd',width:edge.focus?2:1.25,dash:null,opacity:edge.focus?.9:.78};
  }
- if(stateName==='hypothesis'||stateName==='construction'){
+ if(stateName==='hypothesis'||stateName==='construction'||stateName==='inferred'){
   return {color:'#b57a40',width:selected?3.4:2.35,dash:'6 5',opacity:1};
  }
  if(stateName==='closed'){
