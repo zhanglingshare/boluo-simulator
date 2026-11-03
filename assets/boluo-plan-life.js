@@ -9,7 +9,7 @@ const ns='http://www.w3.org/2000/svg',svg=(tag,attrs={},txt)=>{const x=document.
 const safeLink=u=>{try{const v=new URL(u);return ['http:','https:'].includes(v.protocol)?v.href:'';}catch{return '';}};
 const state={data:null,role:'commuter',theme:'travel',shock:false};
 const q=new URLSearchParams(location.search);
-const requestedRole=(q.get('role')||'').slice(0,35),requestedTheme=(q.get('theme')||'').slice(0,45),requestedShock=q.get('pressure')==='1';
+const requestedRole=(q.get('role')||'').slice(0,35),requestedTheme=(q.get('theme')||'').slice(0,45),requestedChange=/^C\d{3}$/.test(q.get('change')||'')?q.get('change'):'',requestedShock=q.get('pressure')==='1';
 const reduced=!!(window.matchMedia&&window.matchMedia('(prefers-reduced-motion: reduce)').matches);
 const sourceIndex=()=>new Map(state.data.sources.map(x=>[x.id,x]));
 const role=()=>state.data.roles.find(x=>x.id===state.role);
@@ -117,7 +117,7 @@ function renderSources(){
   host.append(a);
  });
  text('pl-evidence-note',theme().evidence+'。以上来源不能单独证明当前路径已实际发生。正式纲要全文条款尚未逐条校核。');
- const first=theme().events[0];
+ const first=theme().events.includes(requestedChange)?requestedChange:theme().events[0];
  $('#pl-event-link').href='intel-lab.html'+(first?'?change='+encodeURIComponent(first):'');
  $('#pl-event-link').textContent=first?'打开对应事件 '+first+' · 查看真实证据盲区 ↗':'打开证据实验台 · 查证结构关系 ↗';
 }
@@ -158,7 +158,11 @@ async function init(){
   if(!Array.isArray(data.roles)||!Array.isArray(data.themes)||!Array.isArray(data.headlineMetrics)||!Array.isArray(data.sources))throw Error('规划资料结构缺失');
   state.data=data;
   if(data.roles.some(x=>x.id===requestedRole))state.role=requestedRole;
-  state.theme=themeForRole().some(x=>x.id===requestedTheme)?requestedTheme:themeForRole()[0]?.id;
+  // Handoff from 05 keeps the selected real event without inventing a personal causal link.
+  const matchedEvent=!requestedTheme&&data.themes.find(t=>t.events.includes(requestedChange));
+  if(matchedEvent&&!requestedRole)state.role=matchedEvent.roles[0];
+  state.theme=themeForRole().some(x=>x.id===requestedTheme)?requestedTheme:
+    matchedEvent?.roles.includes(state.role)?matchedEvent.id:themeForRole()[0]?.id;
   if(!state.theme)throw Error('没有适配该身份的可检验路径');
   state.shock=requestedShock;
   renderMetrics();render();updateQuery();
