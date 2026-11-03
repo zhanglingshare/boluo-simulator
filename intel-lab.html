@@ -85,6 +85,10 @@
       <textarea id="ia-notes" rows="3" placeholder="例如：是否有实际采购、投产或运量证据？"></textarea>
     </label>
     <button type="button" id="ia-export" class="ia-export" disabled>导出完整 Run-ID 与输入快照 JSON</button>
+    <label class="ia-import-label">复核已有实验记录（本机读取，不上传）
+      <input id="ia-import" type="file" accept=".json,application/json">
+    </label>
+    <div id="ia-import-status" class="ia-assumption" role="status" aria-live="polite">导入后自动比对引擎版本、原始输入和 Run-ID。</div>
    </div>
    <div class="ia-results" aria-live="polite">
     <div class="ia-result-hero"><div><span>实验前 · 有记录的可达主体</span><strong id="ia-before">—</strong></div><div class="ia-arrow">→</div><div><span>移除该条联系后</span><strong id="ia-after">—</strong></div><div class="ia-change"><b id="ia-change">—</b><small>失去研究性可达路径的主体</small></div></div>
