@@ -4,6 +4,10 @@ on:
   pull_request:
     paths:
       - 'assets/boluo-editorial.css'
+      - 'assets/boluo-world-v3.*'
+      - 'tests/boluo-world-v3-browser.cjs'
+      - 'assets/boluo-world-v3.*'
+      - 'tests/boluo-world-v3-browser.cjs'
       - 'hot.json'
       - 'index-legacy-2026-11-03.html'
       - 'town.html'
@@ -57,10 +61,14 @@ jobs:
           exit 1
       - name: Check 01-05 editorial visuals and interactions at desktop/mobile widths
         run: node tests/boluo-editorial-browser.cjs
+      - name: Check coherent five-scene world, deep links, real node drag and mobile UX
+        run: node tests/boluo-world-v3-browser.cjs
       - name: Publish visual inspection captures
         if: always()
         uses: actions/upload-artifact@v4
         with:
           name: boluo-01-05-editorial-visual-audit
-          path: artifacts/boluo-editorial/*.png
+          path: |
+            artifacts/boluo-editorial/*.png
+            artifacts/boluo-world-v3/*.png
           if-no-files-found: warn
