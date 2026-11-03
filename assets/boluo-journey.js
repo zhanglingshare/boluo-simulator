@@ -7,7 +7,7 @@
 var body=document.body;
 if(!body)return;
 var page=body.getAttribute("data-bl-journey");
-if(!/^(today|town|changes|basic)$/.test(page))return;
+if(!/^(today|town|changes|basic|comparison)$/.test(page))return;
 var root="index-legacy-2026-11-03.html";
 var params=new URLSearchParams(location.search);
 var queryTopic=(params.get("topic")||"").slice(0,140);
@@ -20,15 +20,15 @@ function el(tag,cls,text){
  if(text!=null)n.textContent=String(text);return n;
 }
 function pageUrl(code){
- return ({today:root,town:"town.html",changes:"holo-home-v9.html",basic:"who.html"})[code];
+ return ({today:root,town:"town.html",changes:"holo-home-v9.html",basic:"who.html",comparison:"relation-compare.html"})[code];
 }
 var nav=document.createElement("nav");nav.id="bl-journey-bar";nav.setAttribute("aria-label","博罗真实世界感知顺序");
-var brand=el("a","blj-brand");brand.href=root;brand.append(el("strong",null,"博罗 · 真实世界观察"),el("small",null,"碎片情报 → 产业变化 → 县域基本面"));
+var brand=el("a","blj-brand");brand.href=root;brand.append(el("strong",null,"博罗 · 真实世界观察"),el("small",null,"碎片感知 → 微观变化 → 宏观底盘 → 关系对比"));
 nav.append(brand);
 var links=el("div","blj-links");
 [
  ["01","today","今日博罗"],["02","town","各镇好玩好吃"],
- ["03","changes","产业变化"],["04","basic","博罗基本面"]
+ ["03","changes","产业变化"],["04","basic","博罗基本面"],["05","comparison","前后对比"]
 ].forEach(function(t){
  var a=el("a","blj-link");a.href=pageUrl(t[1]);a.append(el("em",null,t[0]),document.createTextNode(t[2]));
  if(page===t[1])a.setAttribute("aria-current","page");
@@ -39,8 +39,8 @@ var next=el("div","blj-next");
 var nextCaption=el("span",null,"继续观察");next.append(nextCaption);
 var nextAnchor=el("a",null,"");
 nextAnchor.id="bl-journey-next";
-var nextStub=el("div","blj-future","05 前后关系对比 · 待建");
-if(page==="basic"){nextCaption.textContent="下一环节";next.append(nextStub);}
+var nextStub=el("div","blj-future","下一阶段 · 十五五规划与路径研究");
+if(page==="comparison"){nextCaption.textContent="后续阶段";next.append(nextStub);}
 else{next.append(nextAnchor);}
 nav.append(next);
 body.insertBefore(nav,body.firstChild);
@@ -68,9 +68,13 @@ function setNext(change){
  }else if(page==="changes"){
   var dest="who.html?from=changes";if(change)dest+="&change="+encodeURIComponent(change);
   nextAnchor.href=dest;nextAnchor.textContent="04 进入博罗基本面 →";
+ }else if(page==="basic"){
+  var dest="relation-compare.html?from=basic";if(change)dest+="&change="+encodeURIComponent(change);
+  nextAnchor.href=dest;nextAnchor.textContent="05 看前后关系变化 →";
  }
 }
 setNext(getChange());
+if(page==="comparison"){document.addEventListener("bl:compare-selected",function(e){if(e.detail?.changeId)focusId=e.detail.changeId;});}
 if(page==="changes"){
  var handoffLabel=function(){
   var c=getChange();setNext(c);
