@@ -1,0 +1,34 @@
+name: verify-journey
+
+on:
+  push:
+    paths:
+      - 'assets/boluo-journey.js'
+      - 'assets/boluo-journey.css'
+      - 'index-legacy-2026-11-03.html'
+      - 'town.html'
+      - 'holo-home-v9.html'
+      - 'who.html'
+      - 'tests/verify_journey.js'
+      - '.github/workflows/verify-journey.yml'
+  pull_request:
+    paths:
+      - 'assets/boluo-journey.js'
+      - 'assets/boluo-journey.css'
+      - 'index-legacy-2026-11-03.html'
+      - 'town.html'
+      - 'holo-home-v9.html'
+      - 'who.html'
+      - 'tests/verify_journey.js'
+      - '.github/workflows/verify-journey.yml'
+
+jobs:
+  test-journey:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+      - name: 01→03→04 认知接力回归
+        run: node tests/verify_journey.js
