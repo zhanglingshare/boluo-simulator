@@ -106,6 +106,22 @@ body{background:#040d16;color:var(--ink);font-family:-apple-system,BlinkMacSyste
 @media(max-width:950px){.cinematic-hero{grid-template-columns:1fr;min-height:auto;padding:60px 10px 118px}.hero-orbit{position:absolute;right:-110px;top:35px;width:400px;min-width:0;opacity:.23;z-index:-1;transform:scale(.9)}.mission-grid{grid-template-columns:1fr}.mission-side{display:grid;grid-template-columns:1fr 1fr;align-items:start}.mission-aside-header{grid-column:1/-1}.aside-bottom{grid-column:1/-1}.story-options{grid-column:1/-1;grid-template-columns:repeat(3,minmax(0,1fr))}.story-choice strong{font-size:14px}}
 @media(max-width:580px){.cinematic-hero{padding:40px 1px 104px}.cinematic-hero h1{font-size:clamp(53px,12vw,68px)}.hero-year{margin-top:25px}.clash-stat strong{font-size:43px}.clash-versus{font-size:27px}.hero-question{font-size:14px}.hero-orbit{right:-190px;top:55px;opacity:.2}.hero-data{left:0;right:0;gap:15px;flex-wrap:wrap;bottom:50px}.hero-data small{display:none}.mission-title{padding:0 18px;font-size:29px}.mission-top{padding:21px 18px 0}.mission-ribbon{padding:0 18px 12px}.challenge{padding:18px}.mission-graph{margin:0 8px}.mission-graph .network{height:340px}.story-options{grid-template-columns:1fr}.story-choice{min-height:82px}.story-choice strong{font-size:15px}.mission-side{display:block}.graph-vignette{flex-direction:column;align-items:start}.graph-vignette strong{text-align:left;max-width:100%}.hero-cta{width:100%}.guess{min-width:95px}.topnav{justify-content:start}}
 
+
+.truth-reveal{border:1px solid #3c867c;background:linear-gradient(110deg,#164a46aa,#10364d88);border-radius:13px;padding:15px 17px;animation:rise .35s ease}
+.truth-top{display:flex;gap:12px;align-items:center;justify-content:space-between;flex-wrap:wrap;font-size:11px;color:#a7ead4}
+.truth-top b{font-variant-numeric:tabular-nums;color:#d7ffec}
+.truth-reveal>strong{display:block;font-size:17px;line-height:1.5;letter-spacing:-.02em;margin:10px 0;font-weight:730}
+.truth-reveal p{font-size:11px;color:#a8c5cb;margin:0;line-height:1.65}
+.truth-mark{display:inline-block;border:1px solid #80624f;border-radius:6px;color:#ffd0a2;margin-right:7px;padding:2px 6px}
+.bar-item{width:100%;text-align:left;border:1px solid #34516a;background:#0e2536;color:inherit;border-radius:13px;padding:16px;transition:border-color .2s,background .2s}
+.bar-item:hover{border-color:#76cbbb}
+.bar-item.selected{border-color:#adf6da;background:#163748;box-shadow:inset 3px 0 #9df7d6}
+.bar-insight{margin-top:23px;border:1px solid #3c6d72;border-radius:15px;background:#102b39;padding:18px}
+.bar-insight strong{display:block;font-size:19px;margin:7px 0}.bar-insight p{color:#b7d6de;margin:0;font-size:13px}
+.node{cursor:pointer;outline:none}.node:focus-visible{stroke:#fff;stroke-width:4;opacity:1}
+.node-wave{transform-box:fill-box;transform-origin:center;animation:node-wave 2.7s ease-out infinite}
+@keyframes node-wave{0%{transform:scale(.6);opacity:.55}70%,100%{transform:scale(1.6);opacity:0}}
+@media(prefers-reduced-motion:reduce){.node-wave{animation:none}}
 </style></head><body>
 <header class="top"><div class="brand">博罗 · 变化世界<small>EVIDENCE-DRIVEN EXPERIENCE</small></div><nav id="nav" class="topnav" aria-label="五幕体验"></nav><a href="../../index.html" style="white-space:nowrap;font-size:12px">原站首页</a></header>
 <main class="container"><div class="hero cinematic-hero" id="cinematicHero">
@@ -144,12 +160,8 @@ body{background:#040d16;color:var(--ink);font-family:-apple-system,BlinkMacSyste
        <div class="graph-vignette"><span>不是凭空画的</span><strong id="missionEntities">点击主体可查看证据身份</strong></div>
     </div>
     <div class="challenge">
-      <div class="challenge-copy"><span class="label">你的第一步</span><h3>猜一猜：这件事涉及几条已登记关系？</h3></div>
-      <div class="guess-row" id="guessRow">
-        <button class="guess" data-guess="low">0—1 条</button>
-        <button class="guess" data-guess="mid">2 条</button>
-        <button class="guess" data-guess="high">3 条及以上</button>
-      </div>
+      <div class="challenge-copy"><span class="label">你的第一步</span><h3 id="missionQuestion">看懂这条线索，先别被表面数字带偏。</h3></div>
+      <div class="guess-row" id="guessRow"></div>
       <div id="reveal" class="reveal" aria-live="polite"><span class="mini-note">选一个答案，网络才会告诉你实际登记的关联。</span></div>
       <div class="mission-actions"><button id="openComparison" class="action-primary">看前后关系 <span>→</span></button><button id="shareFinding" class="action-outline">分享这条发现</button><span id="shareStatus" role="status"></span></div>
     </div>
@@ -164,7 +176,7 @@ body{background:#040d16;color:var(--ink);font-family:-apple-system,BlinkMacSyste
 </div></section>
 <section class="stage" id="stage1"><div class="layout"><div class="panel"><div class="panel-head"><span class="label">02 / 感知</span><h2>各镇：从地名进入联系</h2><p>点选镇街，观察数据库中与它相关的主体和变化。没有足够数据的镇街不会编造热度。</p></div><div class="inner"><div id="towns" class="towns"></div><div class="notice">本页先交付证据驱动的镇街探索。吃、玩与真实商家信息仍保留在原有<a href="../../town.html">各镇好玩好吃页面</a>，不使用未经核实的评价或人流量。</div></div></div><aside class="panel"><div class="panel-head"><span class="label">镇街关联档案</span><h2 id="townTitle">请选择镇街</h2></div><div class="inner details" id="townDetails"></div></aside></div></section>
 <section class="stage" id="stage2"><div class="layout"><div class="panel"><div class="panel-head"><span class="label">03 / 追踪</span><h2>产业变化：一件事点亮一张网</h2><p>右侧点情报，左侧立即高亮主体与关系；实线表示证据连接，高亮不代表经济影响强度。</p></div><div class="inner"><div class="toolrow"><button class="chip active" id="networkAll">显示关联网络</button><span class="live">读取仓库证据数据</span></div><svg class="network" id="network" viewBox="0 0 900 470" role="img" aria-label="博罗产业关系网络"></svg><div id="networkCaption" class="info"></div></div></div><aside class="panel"><div class="panel-head"><span class="label">情报流 / 变化详情</span><h2>点击，网络响应</h2></div><div class="inner"><div class="toolrow"><button class="chip active" data-tab="feed">情报流</button><button class="chip" data-tab="detail">变化详情</button></div><div id="networkSide"></div></div></aside></div></section>
-<section class="stage" id="stage3"><div class="layout"><div class="panel"><div class="panel-head"><span class="label">04 / 理解</span><h2>基本面：增长与下滑为什么同时出现？</h2><p>历史统计不是预测。正负方向不同，反映经济的不同侧面。</p></div><div class="inner"><div class="bars" id="bars"></div><div class="notice">数据为仓库 2025 年基期公开统计口径，非 2026 年最新实时增长率。<a href="../../who.html">查看原基本面与完整图表</a></div></div></div><aside class="panel"><div class="panel-head"><span class="label">看完数字再问</span><h2>它们如何影响关系网？</h2></div><div class="inner"><p class="info">工业增加值上涨与投资下滑能够同时成立，但不能单凭并存就断言原因。点击下一幕，把已登记的变化事件放到网络前后对照。</p><div class="callout"><strong>下一步：</strong>选择具体事件，查看哪些主体或关系被标记为新增、强化、减弱、消失；不将推演直接当作已经发生的事实。</div></div></aside></div></section>
+<section class="stage" id="stage3"><div class="layout"><div class="panel"><div class="panel-head"><span class="label">04 / 理解</span><h2>基本面：增长与下滑为什么同时出现？</h2><p>历史统计不是预测。正负方向不同，反映经济的不同侧面。</p></div><div class="inner"><div class="bars" id="bars"></div><div id="barInsight" class="bar-insight" aria-live="polite"></div><div class="notice">数据为仓库 2025 年基期公开统计口径，非 2026 年最新实时增长率。<a href="../../who.html">查看原基本面与完整图表</a></div></div></div><aside class="panel"><div class="panel-head"><span class="label">看完数字再问</span><h2>它们如何影响关系网？</h2></div><div class="inner"><p class="info">工业增加值上涨与投资下滑能够同时成立，但不能单凭并存就断言原因。点击下一幕，把已登记的变化事件放到网络前后对照。</p><div class="callout"><strong>下一步：</strong>选择具体事件，查看哪些主体或关系被标记为新增、强化、减弱、消失；不将推演直接当作已经发生的事实。</div></div></aside></div></section>
 <section class="stage" id="stage4"><div class="panel"><div class="panel-head"><span class="label">05 / 前后对照</span><h2>变化会影响谁？让关系自己说话</h2><p>以登记的事件关联边为线索进行前后高亮。画面呈现的是证据标记对照，不是模型计算出的未来网络。</p></div><div class="inner"><div class="toolrow"><label for="compareSelect" class="info">选择一条变化：</label><select id="compareSelect" class="chip" style="max-width:min(660px,100%);border-radius:9px"></select></div><div class="compare"><div><h3>此前 · 关联尚未在本事件中标记</h3><svg class="network" id="before" viewBox="0 0 900 470" role="img" aria-label="变化前的证据网络示意"></svg></div><div><h3>此后 · 事件关联主体与边被点亮</h3><svg class="network" id="after" viewBox="0 0 900 470" role="img" aria-label="变化后的证据网络示意"></svg></div></div><div id="compareExplanation" class="callout" aria-live="polite"></div><div class="notice">特别说明：“此前”是同一证据底图的中性显示，不证明某条边当时不存在；“此后”表示事件涉及关系被突出显示，不能推断所有关联边都因本事件而新增。事件原始的 before_after 描述与证据等级可在详情中核验。</div></div></div></section>
 <div class="route"><button class="next quiet" id="prev">上一幕</button><button class="next" id="next">继续探索下一幕</button><span id="progress" class="info"></span></div></div><footer class="footer">独立实验分支 · 只读 data/relationship-*.json · 不改变原站数据、模型和算法 · 不将关联误写为因果。<a href="../../holo-home-v9.html">原变化现场</a></footer></main>
 <script>
@@ -180,14 +192,42 @@ function drawEvents(){const types=['all',...new Set(changes.map(c=>c.change_type
 function townNames(){const all=new Set();nodes.forEach(n=>String(n.town||'').split(/[\/、，,]/).forEach(x=>{x=x.trim();if(x&&x.length<12)all.add(x)}));return [...all].sort((a,b)=>a.localeCompare(b,'zh'));}
 function drawTowns(){const ts=townNames();if(!selectedTown)selectedTown=ts[0]||'';$('towns').innerHTML=ts.map(t=>'<button class="town '+(selectedTown===t?'selected':'')+'" data-town="'+esc(t)+'">'+esc(t)+'<small>查看已有证据关联</small></button>').join('');$('towns').querySelectorAll('button').forEach(b=>b.onclick=()=>{selectedTown=b.dataset.town;drawTowns()});$('townTitle').textContent=selectedTown||'无镇街字段';const linked=nodes.filter(n=>String(n.town||'').includes(selectedTown)),ids=new Set(linked.map(n=>n.node_id)),ev=changes.filter(c=>arr(c.involved_node_ids).some(id=>ids.has(id)));$('townDetails').innerHTML='<p>登记主体：<strong>'+linked.length+'</strong> 个；相关事件：<strong>'+ev.length+'</strong> 条。该数量只代表当前证据库覆盖，不代表当地经济规模。</p><p>'+esc(linked.slice(0,12).map(n=>n.name).join('、')||'目前无足够主体资料')+'</p><div class="label">相关变化</div>'+ev.slice(0,5).map(c=>'<button class="event" data-id="'+esc(c.change_id)+'">'+esc(c.title)+'</button>').join('');$('townDetails').querySelectorAll('button').forEach(b=>b.onclick=()=>{choose(changes.find(c=>c.change_id===b.dataset.id));navigate(2)});}
 function pos(n,i){const x=nodes.indexOf(n);const count=nodes.length;const ang=x*2.39996;const rad=48+Math.sqrt((x+.6)/count)*150;return {x:450+Math.cos(ang)*rad*1.65,y:235+Math.sin(ang)*rad};}
-function graph(svgId,highlight,mode){const svg=$(svgId);if(!svg)return;const activeIds=new Set(arr(highlight?.involved_node_ids)),activeEdges=new Set(arr(highlight?.involved_edge_ids));const ps=new Map(nodes.map((n,i)=>[n.node_id,pos(n,i)]));let output='<defs><filter id="glow-'+svgId+'"><feGaussianBlur stdDeviation="4"/></filter></defs>';edges.forEach(e=>{const a=ps.get(e.source_node_id),b=ps.get(e.target_node_id);if(!a||!b)return;const hi=mode!=='before'&&activeEdges.has(e.edge_id);output+='<line class="edge '+(hi?'highlight':'')+'" x1="'+a.x+'" y1="'+a.y+'" x2="'+b.x+'" y2="'+b.y+'" '+(e.evidence_grade==='B'?'stroke-dasharray="4 4"':'')+'><title>'+esc(e.relation_description||e.relation_type||'关系')+' · '+esc(e.evidence_grade||'')+'</title></line>';});nodes.forEach((n,i)=>{const p=ps.get(n.node_id),hi=mode!=='before'&&activeIds.has(n.node_id);output+='<circle class="node '+(hi?'highlight':'')+'" cx="'+p.x+'" cy="'+p.y+'" r="'+(hi?8:4.4)+'"><title>'+esc(n.name)+' · '+esc(n.evidence_grade||'未知')+'</title></circle>';if(hi)output+='<text class="node-label" x="'+(p.x+11)+'" y="'+(p.y-10)+'">'+esc(n.name)+'</text>';});svg.innerHTML=output;}
+function graph(svgId,highlight,mode){
+ const svg=$(svgId);if(!svg)return;
+ const activeIds=new Set(arr(highlight?.involved_node_ids)),activeEdges=new Set(arr(highlight?.involved_edge_ids));
+ const background=nodes.filter(n=>!activeIds.has(n.node_id)),foreground=nodes.filter(n=>activeIds.has(n.node_id));
+ const positions=new Map();
+ background.forEach((n,i)=>{let t=(i+0.5)/Math.max(background.length,1)*Math.PI*2;positions.set(n.node_id,{x:450+Math.cos(t)*340,y:235+Math.sin(t)*175});});
+ foreground.forEach((n,i)=>{const t=(i-foreground.length/2)*2.4/Math.max(foreground.length,2);positions.set(n.node_id,{x:450+Math.sin(t)*185,y:225+Math.cos(t*1.6)*62});});
+ let output='<defs><radialGradient id="nodeGradient-'+svgId+'"><stop offset="0" stop-color="#ecfff5"/><stop offset="1" stop-color="#7af1c9"/></radialGradient></defs>';
+ edges.forEach(e=>{const a=positions.get(e.source_node_id),b=positions.get(e.target_node_id);if(!a||!b)return;const active=mode!=='before'&&activeEdges.has(e.edge_id);output+='<line class="edge '+(active?'highlight':'')+'" x1="'+a.x+'" y1="'+a.y+'" x2="'+b.x+'" y2="'+b.y+'" '+(e.evidence_grade==='B'?'stroke-dasharray="5 6"':'')+'><title>'+esc(e.relation_description||e.relation_type||'登记关系')+'</title></line>';});
+ nodes.forEach(n=>{const p=positions.get(n.node_id);if(!p)return;const active=mode!=='before'&&activeIds.has(n.node_id);output+='<circle class="node '+(active?'highlight':'')+'" data-node="'+esc(n.node_id)+'" tabindex="0" role="button" aria-label="'+esc(n.name)+'" cx="'+p.x+'" cy="'+p.y+'" r="'+(active?10:5.1)+'"><title>'+esc(n.name)+' · '+esc(n.evidence_grade||'等级待核')+'</title></circle>';if(active){output+='<text class="node-label" x="'+(p.x+14)+'" y="'+(p.y-15)+'">'+esc(n.name)+'</text>';output+='<circle cx="'+p.x+'" cy="'+p.y+'" r="17" fill="none" stroke="#88fbd9" stroke-width="1" opacity=".3" class="node-wave"></circle>'; }});
+ svg.innerHTML=output;
+ svg.querySelectorAll('[data-node]').forEach(el=>{const activate=()=>{const n=nodeBy(el.getAttribute('data-node'));if(!n)return;const connection=edges.filter(e=>e.source_node_id===n.node_id||e.target_node_id===n.node_id);const content=n.name+'｜证据级别 '+(n.evidence_grade||'待核')+' · 登记连接 '+connection.length+' 条。'+(n.description||'');if(svgId==='spotlightNetwork')$('missionEntities').textContent=content;else if(svgId==='network')$('networkCaption').textContent=content;else $('compareExplanation').querySelector('strong').textContent=n.name+' · '+(n.description||'查看当前证据主体');};el.addEventListener('click',activate);el.addEventListener('keydown',event=>{if(event.key==='Enter'||event.key===' '){event.preventDefault();activate();}});});
+}
 function drawNetwork(){graph('network',selected,'after');if($('networkCaption'))$('networkCaption').innerHTML='当前高亮：<strong>'+arr(selected?.involved_node_ids).length+' 个主体、'+arr(selected?.involved_edge_ids).length+' 条登记关系</strong>。鼠标或手指触碰节点可查看名称；浅色为当前事件关联。';}
 function drawNetworkSide(){$('networkSide').innerHTML=tab==='feed'?'<div class="event-list">'+changes.map(c=>'<button class="event '+(selected?.change_id===c.change_id?'active':'')+'" data-id="'+esc(c.change_id)+'"><small>'+esc(c.event_date||'')+'</small><b>'+esc(c.title)+'</b></button>').join('')+'</div>':detailsHTML(selected);$('networkSide').querySelectorAll('[data-id]').forEach(b=>b.onclick=()=>{choose(changes.find(c=>c.change_id===b.dataset.id));tab='detail';syncTabs();drawNetworkSide();});}
 function syncTabs(){document.querySelectorAll('[data-tab]').forEach(b=>b.classList.toggle('active',b.dataset.tab===tab));}
-function drawBars(){const values=[['规上工业增加值',8.7],['固定资产投资',-18.8],['房地产开发投资',-47.6],['外贸进出口',29.1],['第一产业增加值',7.8]];$('bars').innerHTML=values.map(([label,v])=>'<div><div class="barhead"><strong>'+label+'</strong><b style="color:'+(v>=0?'#8df2d3':'#ffb39d')+'">'+(v>0?'+':'')+v.toFixed(1)+'%</b></div><div class="track"><div class="fill '+(v<0?'down':'')+'" style="width:'+Math.min(Math.abs(v)/50*100,100)+'%"></div></div></div>').join('');}
+function drawBars(){
+ const values=[
+ ['规上工业增加值',8.7,'工业增加值增长，并不能证明当年所有新签约项目已经投产。要追的是哪些产能在贡献增长。'],
+ ['固定资产投资',-18.8,'投资下降说明当年投资完成额收缩，不等于所有工业产能同时收缩。重点是新增项目落地的时间差。'],
+ ['房地产开发投资',-47.6,'这是房地产开发投资，不等于所有固定资产投资，也不能用它直接代表全县工业。'],
+ ['外贸进出口',29.1,'外贸增长描述跨境交易规模变化，不直接等于本地利润或居民收入增长。'],
+ ['第一产业增加值',7.8,'农业增加值增长可与工业和房地产走势不同步。进一步观察加工、品牌与销售链条如何连接。']
+ ];
+ $('bars').innerHTML=values.map(([label,v],i)=>'<button class="bar-item '+(i===1?'selected':'')+'" data-bar="'+i+'"><div class="barhead"><strong>'+label+'</strong><b style="color:'+(v>=0?'#8df2d3':'#ffb39d')+'">'+(v>0?'+':'')+v.toFixed(1)+'%</b></div><div class="track"><div class="fill '+(v<0?'down':'')+'" style="width:'+Math.min(Math.abs(v)/50*100,100)+'%"></div></div></button>').join('');
+ const explain=i=>{$('bars').querySelectorAll('.bar-item').forEach(b=>b.classList.toggle('selected',Number(b.dataset.bar)===i));$('barInsight').innerHTML='<span class="label">你可能忽略了什么</span><strong>'+esc(values[i][0])+'</strong><p>'+esc(values[i][2])+'</p>';};
+ $('bars').querySelectorAll('[data-bar]').forEach(b=>b.onclick=()=>explain(Number(b.dataset.bar)));explain(1);
+}
 function drawComparison(){if(!selected)return;$('compareSelect').innerHTML=changes.map(c=>'<option value="'+esc(c.change_id)+'" '+(selected.change_id===c.change_id?'selected':'')+'>'+esc(c.title)+'</option>').join('');$('compareSelect').onchange=e=>choose(changes.find(c=>c.change_id===e.target.value));graph('before',selected,'before');graph('after',selected,'after');$('compareExplanation').innerHTML='<strong>'+esc(selected.title)+'</strong><p>'+esc(selected.before_after||'没有前后状态描述')+'</p><p>事件关联主体 '+arr(selected.involved_node_ids).length+' 个，关联关系 '+arr(selected.involved_edge_ids).length+' 条。<strong>仍未确定：</strong>'+esc(selected.uncertainty||'后续结果待观察')+'</p>'+sourceHTML(selected.source_ids);}
 
 let missionGuess=null;
+const missionLibrary={
+ C004:{question:"203亿元预计年产值，能当成今天的成绩吗？",options:[["yes","可以算"],["no","现在不能算"]],correct:"no",insight:"4宗项目处于签约待落地阶段。预计产值不等于实际产值；投产时间、产能兑现和本地配套仍需追踪。"},
+ C008:{question:"一条熟料线关停，等于整家公司退出吗？",options:[["yes","是，企业退出"],["no","不是一回事"]],correct:"no",insight:"公开记录确认的是日产2500吨熟料生产线退出；企业其他业务是否退出，现有材料没有说明。"},
+ C012:{question:"国庆过夜率约25%，能代表全年吗？",options:[["yes","可以代表全年"],["no","不能直接代表"]],correct:"no",insight:"节假日旺季与全年结构不同。现有资料中的全年过夜率仍属于推断区间，不能把旺季读成常态。"}
+};
 const featuredIds=['C004','C008','C012'];
 const featuredNames={'C004':['签约了，就算赢了吗？','80亿签约 / 203亿预计'],'C008':['一条生产线，突然退出。','日产2500吨熟料生产线关闭'],'C012':['人来了，就等于钱留下？','国庆52.97万接待 / 过夜约25%']};
 function featured(){const chosen=featuredIds.map(id=>changes.find(c=>c.change_id===id)).filter(Boolean);return chosen.length>=2?chosen:changes.slice(0,3);}
@@ -203,18 +243,21 @@ function renderSpotlight(){if(!selected||!$('spotlightStories'))return;
  $('spotlightStories').innerHTML=fs.map((item,i)=>{let label=featuredNames[item.change_id]?.[0]||item.title,summary=featuredNames[item.change_id]?.[1]||item.before_after||'已登记的结构变化';return '<button class="story-choice '+(item.change_id===c.change_id?'active':'')+'" data-story="'+esc(item.change_id)+'"><span class="small">线索 '+String(i+1).padStart(2,'0')+' / '+esc(item.event_date||'')+'</span><strong>'+esc(label)+'</strong><em>'+esc(summary)+'</em></button>';}).join('');
  $('spotlightStories').querySelectorAll('[data-story]').forEach(b=>b.onclick=()=>choose(changes.find(item=>item.change_id===b.dataset.story)));
  $('allCount').textContent=changes.length;
- $('guessRow').querySelectorAll('button').forEach(b=>b.classList.toggle('selected',missionGuess===b.dataset.guess));
  const count=arr(c.involved_edge_ids).length;
- $('reveal').innerHTML=!wasAnswered?'<span class="mini-note">选一个答案，网络才会告诉你实际登记的关联。</span>':('<div class="reveal-actual"><strong>'+count+'<small style="font-size:13px;margin-left:4px">条</small></strong><span>'+(missionGuess===(count<=1?'low':count===2?'mid':'high')?'你猜中了登记数量。':'你的直觉与已登记的数量不一致。')+'<br>这只是事件的直接登记关系，不等于完整影响范围。</span></div>');
+ const mission=missionLibrary[c.change_id]||{question:"这件事直接涉及多少条已登记联系？",options:[["low","0—1 条"],["mid","2 条"],["high","3 条及以上"]],correct:count<=1?"low":count===2?"mid":"high",insight:"数量仅指登记在事件档案中的直接关系，不能当作经济影响范围。"};
+ $('missionQuestion').textContent=mission.question;
+ $('guessRow').innerHTML=mission.options.map(([key,label])=>'<button class="guess '+(missionGuess===key?'selected':'')+'" data-guess="'+esc(key)+'">'+esc(label)+'</button>').join('');
+ $('guessRow').querySelectorAll('button').forEach(b=>b.onclick=()=>{missionGuess=b.dataset.guess;renderSpotlight();});
+ const correct=missionGuess===mission.correct;
+ $('reveal').innerHTML=!wasAnswered?'<span class="mini-note">先选一个判断，再让证据回应你。</span>':('<div class="truth-reveal"><div class="truth-top"><span>'+ (correct?'你的判断与证据一致':'这条信息值得重新判断')+'</span><b>'+count+' 条关系被登记</b></div><strong>'+esc(mission.insight)+'</strong><p><span class="truth-mark">仍待核验</span>'+esc(c.uncertainty||'后续影响尚无完整观测')+'</p></div>');
  graph('spotlightNetwork',c,wasAnswered?'after':'before');
  if(!wasAnswered){$('missionEntities').textContent='选一个答案，再点亮事件关联主体';}
  if($('openComparison')){$('openComparison').textContent=wasAnswered?'继续：看前后关系 →':'先猜一次，解锁对照 →';$('openComparison').disabled=!wasAnswered;}
 }
 function wireExperience(){
  $('enterExperience').onclick=()=>{$('stage0').scrollIntoView({behavior:'smooth',block:'start'});};
- $('guessRow').querySelectorAll('button').forEach(b=>b.onclick=()=>{missionGuess=b.dataset.guess;renderSpotlight();});
  $('openComparison').onclick=()=>{if(missionGuess!==null)navigate(4)};
- $('shareFinding').onclick=async()=>{if(!selected)return;const url=location.href.split('#')[0]+'#case='+encodeURIComponent(selected.change_id);const copy='博罗变化｜'+selected.title+'\\n'+(selected.uncertainty||'仍待核验')+'\\n'+url;try{if(navigator.share){await navigator.share({title:'博罗变化 · 一件事牵动什么？',text:copy,url});$('shareStatus').textContent='已打开系统分享';return;}if(navigator.clipboard?.writeText){await navigator.clipboard.writeText(copy);$('shareStatus').textContent='已复制发现和链接';return;}throw new Error('clipboard unavailable');}catch(e){if(e.name!=='AbortError')$('shareStatus').textContent='本机无法自动分享，请使用浏览器分享菜单';}};
+ $('shareFinding').onclick=async()=>{if(!selected)return;const url=location.href.split('#')[0]+'#case='+encodeURIComponent(selected.change_id);const copy='博罗变化｜'+selected.title+'\n值得继续追踪：'+(selected.uncertainty||'仍待核验')+'\n'+url;try{if(navigator.share){await navigator.share({title:'博罗变化 · 一件事牵动什么？',text:copy,url});$('shareStatus').textContent='已打开系统分享';return;}if(navigator.clipboard?.writeText){await navigator.clipboard.writeText(copy);$('shareStatus').textContent='已复制发现和链接';return;}throw new Error('clipboard unavailable');}catch(e){if(e.name!=='AbortError')$('shareStatus').textContent='本机无法自动分享，请使用浏览器分享菜单';}};
 }
 
 function navigate(n){step=Math.max(0,Math.min(4,n));document.querySelectorAll('.stage').forEach((s,i)=>s.classList.toggle('active',i===step));$('nav').querySelectorAll('button').forEach((b,i)=>b.classList.toggle('active',i===step));$('prev').disabled=step===0;$('next').textContent=step===4?'返回第一幕':'继续探索下一幕';$('progress').textContent=(step+1)+' / 5';const titles=['一件变化，可能牵动多少人？','博罗的每个镇，连接着什么？','看见产业关系正在发生什么','工业涨、投资跌，矛盾吗？','同一张网，变化前后有何不同？'];document.title='博罗 · '+names[step]+'｜五幕变化体验';if(window.__fiveStageReady){document.querySelector('.stage.active')?.scrollIntoView({behavior:'smooth',block:'start'});}window.__fiveStageReady=true;}
