@@ -1,0 +1,70 @@
+name: boluo-intelligence-evidence-stress-check
+
+on:
+  pull_request:
+    paths:
+      - 'intel-lab.html'
+      - 'assets/boluo-intel-*'
+      - 'assets/boluo-compare-model.js'
+      - 'data/relationship-*.json'
+      - 'index-legacy-2026-11-03.html'
+      - 'town.html'
+      - 'industry-changes.html'
+      - 'who.html'
+      - 'relation-compare.html'
+      - 'tests/boluo-intel-*'
+      - '.github/workflows/boluo-intel-check.yml'
+  push:
+    branches: [main]
+    paths:
+      - 'intel-lab.html'
+      - 'assets/boluo-intel-*'
+      - 'assets/boluo-compare-model.js'
+      - 'data/relationship-*.json'
+      - 'index-legacy-2026-11-03.html'
+      - 'town.html'
+      - 'industry-changes.html'
+      - 'who.html'
+      - 'relation-compare.html'
+      - 'tests/boluo-intel-*'
+      - '.github/workflows/boluo-intel-check.yml'
+
+permissions:
+  contents: read
+
+jobs:
+  intel-evidence-acceptance:
+    runs-on: ubuntu-latest
+    timeout-minutes: 25
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+      - name: Run structural evidence and reproducibility tests
+        run: |
+          node --test tests/boluo-intel-engine.test.cjs
+          node --test tests/boluo-compare-model.test.cjs
+          node tests/verify_journey.js
+      - name: Install Chromium
+        run: |
+          npm install --no-save playwright
+          npx playwright install --with-deps chromium
+      - name: Serve local site
+        run: |
+          python3 -m http.server 8765 --bind 127.0.0.1 > /tmp/boluo-intel-http.log 2>&1 &
+          for i in $(seq 1 20); do
+            if curl --fail --silent http://127.0.0.1:8765/intel-lab.html -o /dev/null; then exit 0; fi
+            sleep 1
+          done
+          cat /tmp/boluo-intel-http.log
+          exit 1
+      - name: Test intelligence workspace and all five blindspot trays
+        run: node tests/boluo-intel-browser.cjs
+      - name: Upload desktop and mobile evidence screenshots
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: boluo-intel-evidence-lab-desktop-mobile
+          path: artifacts/boluo-intel/*.png
+          if-no-files-found: warn
