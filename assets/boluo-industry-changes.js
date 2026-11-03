@@ -51,7 +51,7 @@ function select(id,updateURL=true){
  $('ec-compare').href='relation-compare.html?change='+encodeURIComponent(id)+'&from=changes';
  $('ec-deep').href='holo-home-v9.html#change='+encodeURIComponent(id);
  $('ec-next').href='who.html?from=changes&change='+encodeURIComponent(id);
- renderFeed();renderGraph();renderInspector();renderSources();
+ renderFeed();drawGraph();renderInspector();renderSources();
  if(updateURL){
   const url=new URL(location.href);url.hash='#change='+id;history.replaceState(null,'',url.toString());
  }
@@ -78,7 +78,7 @@ function renderFeed(){
  }
  if(!list.length)host.append(n('div','ed-note','该筛选下没有匹配记录。清空搜索或选择“全部”。'));
 }
-function setInspect(type,id){app.inspect={type,id};renderGraph();renderInspector();}
+function setInspect(type,id){app.inspect={type,id};drawGraph();renderInspector();}
 function renderInspector(){
  const d=app.model,x=app.inspect;
  if(!d||!x){
