@@ -96,7 +96,9 @@ h1{font-size:22px;margin:0 0 2px;letter-spacing:.5px}
 @media(prefers-reduced-motion:reduce){.bl-network-links path,.bl-network-orbits,.bl-network-pulse{animation:none!important}.bl-primary-cta,.bl-secondary-cta{transition:none}}
 </style>
 <link rel="stylesheet" href="assets/boluo-journey.css">
+<link rel="stylesheet" href="assets/boluo-editorial.css">
 <script defer src="assets/boluo-journey.js"></script>
+<script defer src="assets/boluo-editorial.js"></script>
 </head><body class="bl-ui bl-dark bl-ui--index" data-bl-page="index" data-bl-journey="today">
 
 <div class="nav">
@@ -120,16 +122,16 @@ h1{font-size:22px;margin:0 0 2px;letter-spacing:.5px}
   <section class="bl-home-hero" aria-labelledby="homeHeroTitle">
     <div class="bl-hero-copy">
       <div class="bl-eyebrow"><span class="bl-live-dot"></span> BO LUO · 关系与变化的观察入口</div>
-      <h1 id="homeHeroTitle">博罗正在发生什么？<br><span>看见数字背后的关系。</span></h1>
-      <p class="bl-hero-lead">从一个真实问题出发，进入产业、项目、交通与生活交织的关系网络。先看见变化，再决定要追问什么。</p>
+      <h1 id="homeHeroTitle">今天的博罗，<br><span>有哪些值得注意的事？</span></h1>
+      <p class="bl-hero-lead">先看公开信息、镇街生活和近期项目。辨认事实，保留疑问；真正改变产业结构的事件，再到下一页深入追踪。</p>
       <div id="topHook" class="bl-hero-hook"><span class="bl-hook-label">今日观察</span>正在读取今日公开话题…</div>
       <div class="bl-hero-actions">
-        <a class="bl-primary-cta" href="holo-home-v9.html?from=today">进入变化现场 <span aria-hidden="true">↗</span></a>
-        <a class="bl-secondary-cta" href="who.html">先看博罗基本面 <span aria-hidden="true">→</span></a>
+        <a class="bl-primary-cta" href="industry-changes.html?from=today">进入变化现场 <span aria-hidden="true">↗</span></a>
+        <a class="bl-secondary-cta" href="town.html">看各镇好玩好吃 <span aria-hidden="true">→</span></a>
       </div>
       <div class="bl-hero-foot">公开资料 · 关系观察 · 情景推演（不是确定预测）</div>
     </div>
-    <a class="bl-hero-visual" href="holo-home-v9.html?from=today" aria-label="进入博罗变化图谱，查看关系变化与公开证据">
+    <a class="bl-hero-visual" href="industry-changes.html?from=today" aria-label="进入博罗变化图谱，查看关系变化与公开证据">
       <div class="bl-visual-top"><span>CHANGE OBSERVATORY</span><span class="bl-visual-status"><i></i> 进入交互网络</span></div>
       <svg class="bl-network-art" viewBox="0 0 560 350" role="img" aria-label="关系网络视觉预览示意图，点击进入变化现场核验事件与关系">
         <defs>
@@ -168,7 +170,7 @@ h1{font-size:22px;margin:0 0 2px;letter-spacing:.5px}
 
   <!-- 今日关键指标（数据来自 boluo-game-public.v1.json indicators，按 today-facts.kpiRefs 取） -->
   <div style="margin:12px 0;padding:14px;border-radius:14px;border:1px solid #263b55;background:linear-gradient(135deg,#0e1a2b,#0f172a)">
-    <div style="font-size:14px;font-weight:800;color:#fff;margin-bottom:4px">今日关键指标</div>
+    <div style="font-size:14px;font-weight:800;color:#fff;margin-bottom:4px">县域基本指标 · 最近公开年度</div>
     <div style="font-size:11px;color:#6b7d96;margin-bottom:10px" id="kpiNote">口径与来源见数据包</div>
     <div id="kpiGrid" style="display:grid;grid-template-columns:repeat(auto-fit,minmax(140px,1fr));gap:8px"></div>
   </div>
@@ -186,7 +188,7 @@ h1{font-size:22px;margin:0 0 2px;letter-spacing:.5px}
   </div>
 
   <!-- 你的判断：模型联动 -->
-  <div style="margin:12px 0;padding:14px;background:linear-gradient(135deg,#14231a,#0f172a);border:1px solid #22c55e;border-radius:14px">
+  <div id="forecastVote" style="margin:12px 0;padding:14px;background:linear-gradient(135deg,#14231a,#0f172a);border:1px solid #22c55e;border-radius:14px">
     <div style="font-size:14px;font-weight:800;color:#fff;margin-bottom:4px">2030年博罗能到1600亿吗？说说你的判断</div>
     <div style="font-size:12px;color:#94a3b8;margin-bottom:10px">在<b style="color:#cbd5e1">规划兑现</b>基准下，同一模型跑了2万遍，过1600亿概率约 <b id="baseHit" style="color:#4ade80">…</b>，中位数约 <b id="baseP50" style="color:#4ade80">…</b>亿。<span style="color:#6b7d96">（按现状自然延续则几乎摸不到——去风洞看压力情景）</span>你比它乐观还是悲观？</div>
     <div id="voteBar" style="display:flex;gap:8px"></div>
@@ -227,7 +229,7 @@ h1{font-size:22px;margin:0 0 2px;letter-spacing:.5px}
     </div>
   </details>
 
-  <div class="next"><a href="network.html">下一步：看博罗怎么长出来 →</a></div>
+  <div class="next"><a href="industry-changes.html?from=today">下一步：哪些近期事件真正改变了产业关系？ →</a></div>
 
   <div id="dataStatus" style="margin:14px 0 6px;padding:10px 14px;border-top:1px solid #1e2a3d;color:#5b6b82;font-size:10.5px;line-height:1.7">数据版本读取中…</div>
 </div>
@@ -379,7 +381,7 @@ function render(){
     c.onclick=()=>{const d=c.querySelector(".detail");d.style.display=d.style.display==="none"?"block":"none";};
     const link=document.createElement("a");
     link.className="blj-topic-continue";
-    link.href="holo-home-v9.html?from=today&topic="+encodeURIComponent(c.getAttribute("data-t")||"");
+    link.href="industry-changes.html?from=today&topic="+encodeURIComponent(c.getAttribute("data-t")||"");
     link.textContent="以此为观察线索，继续看经过筛选的产业变化 →";
     link.style.cssText="display:block;margin-top:10px;padding-top:8px;border-top:1px solid #ffffff22;color:#b9d8e9;font-size:11px;font-weight:750;text-decoration:none";
     link.addEventListener("click",e=>e.stopPropagation());
