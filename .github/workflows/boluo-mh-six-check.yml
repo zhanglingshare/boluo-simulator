@@ -6,6 +6,8 @@ on:
       - 'plan-with-me.html'
       - 'assets/boluo-plan-life.*'
       - 'assets/boluo-mh-six.css'
+      - 'assets/boluo-six-native.css'
+      - 'assets/boluo-six-native.js'
       - 'assets/boluo-journey.js'
       - 'data/boluo-plan-life.v1.json'
       - 'index-legacy-2026-11-03.html'
@@ -15,6 +17,7 @@ on:
       - 'relation-compare.html'
       - 'tests/boluo-plan-life.test.cjs'
       - 'tests/boluo-mh-six-browser.cjs'
+      - 'tests/boluo-six-native-browser.cjs'
       - '.github/workflows/boluo-mh-six-check.yml'
   push:
     branches: [main]
@@ -22,6 +25,8 @@ on:
       - 'plan-with-me.html'
       - 'assets/boluo-plan-life.*'
       - 'assets/boluo-mh-six.css'
+      - 'assets/boluo-six-native.css'
+      - 'assets/boluo-six-native.js'
       - 'assets/boluo-journey.js'
       - 'data/boluo-plan-life.v1.json'
       - 'index-legacy-2026-11-03.html'
@@ -31,6 +36,7 @@ on:
       - 'relation-compare.html'
       - 'tests/boluo-plan-life.test.cjs'
       - 'tests/boluo-mh-six-browser.cjs'
+      - 'tests/boluo-six-native-browser.cjs'
       - '.github/workflows/boluo-mh-six-check.yml'
 
 permissions:
@@ -64,11 +70,15 @@ jobs:
           cat /tmp/boluo-six-http.log
           exit 1
       - name: Browser-check six pages, mobile, planning counterfactual and event handoff
-        run: node tests/boluo-mh-six-browser.cjs
+        run: |
+          node tests/boluo-mh-six-browser.cjs
+          node tests/boluo-six-native-browser.cjs
       - name: Preserve real desktop and mobile screenshots
         if: always()
         uses: actions/upload-artifact@v4
         with:
           name: boluo-mac-harmony-01-to-06
-          path: artifacts/boluo-mh-six/*.png
+          path: |
+            artifacts/boluo-mh-six/*.png
+            artifacts/boluo-six-native/*.png
           if-no-files-found: warn
