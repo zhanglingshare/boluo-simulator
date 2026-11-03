@@ -6,8 +6,6 @@ on:
       - 'assets/boluo-editorial.css'
       - 'assets/boluo-world-v3.*'
       - 'tests/boluo-world-v3-browser.cjs'
-      - 'assets/boluo-world-v3.*'
-      - 'tests/boluo-world-v3-browser.cjs'
       - 'hot.json'
       - 'index-legacy-2026-11-03.html'
       - 'town.html'
@@ -21,6 +19,8 @@ on:
     branches: [main]
     paths:
       - 'assets/boluo-editorial.css'
+      - 'assets/boluo-world-v3.*'
+      - 'tests/boluo-world-v3-browser.cjs'
       - 'hot.json'
       - 'index-legacy-2026-11-03.html'
       - 'town.html'
