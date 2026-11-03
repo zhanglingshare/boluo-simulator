@@ -374,7 +374,7 @@ function render(){
         <span style="font-size:11px;font-weight:800;color:${tc};border:1px solid ${tc};border-radius:8px;padding:3px 10px">关注 · ${esc(x.tier||"")}</span>
         <span class="likeBtn" onclick="event.stopPropagation();like(this,'${esc(x.t)}')" style="font-size:12px;color:#94a3b8;cursor:pointer">赞 <b class="ln">0</b></span>
       </div>
-      <div class="detail" style="font-size:11.5px;color:#cbd5e1;margin-top:8px;display:none">${esc(x.d||"")}${x.pub?'<span style="color:#64748b"> · '+esc(x.pub)+'</span>':''}${x.url?'<div style="margin-top:8px"><a href="'+esc(x.url)+'" target="_blank" rel="noopener nofollow" style="color:#7dd3fc;text-decoration:underline" onclick="event.stopPropagation()">查看原始报道 ↗</a></div>':''}</div>
+      <div class="detail" style="font-size:11.5px;color:#cbd5e1;margin-top:8px;display:none">${esc(x.d||"")}${x.pub?'<span style="color:#64748b"> · '+esc(x.pub)+'</span>':''}${x.url?'<div style="margin-top:8px"><a href="'+esc(x.url)+'" target="_blank" rel="noopener nofollow" style="color:#7dd3fc;text-decoration:underline" onclick="event.stopPropagation()">查看公开资料入口 ↗</a></div>':''}</div>
     </div>`;
   }).join("")||'<div style="grid-column:1/-1;color:#5b6b82;text-align:center;padding:26px 0">今日话题快照暂不可用（读取失败），可点「重新扫描」重试；页面其余内容不受影响。</div>';
   document.querySelectorAll("#topicList .tcard").forEach(c=>{
