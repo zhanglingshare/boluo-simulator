@@ -489,8 +489,10 @@ body.mode-2d .layout-switch,body.mode-2d .play-controls{opacity:.38;pointer-even
   .play-step{display:none}
 }
 </style>
+<link rel="stylesheet" href="assets/boluo-journey.css">
+<script defer src="assets/boluo-journey.js"></script>
 </head>
-<body>
+<body data-bl-journey="changes">
 <header class="appbar">
   <div class="brand">
     <div class="brand-mark" aria-hidden="true">
@@ -508,9 +510,9 @@ body.mode-2d .layout-switch,body.mode-2d .play-controls{opacity:.38;pointer-even
     <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><circle cx="10.8" cy="10.8" r="6.8"/><path d="m16 16 4.5 4.5"/></svg>
     <input id="searchInput" type="search" placeholder="搜索主体、关系或关键词" aria-label="搜索主体、关系或关键词">
   </label>
-  <a class="appbar-legacy" href="./index.html" aria-label="返回今日博罗页">
+  <a class="appbar-legacy" href="./index-legacy-2026-11-03.html" aria-label="返回今日博罗页">
     <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M19 12H5M11 6l-6 6 6 6"/></svg>
-    <span>旧版·今日博罗</span>
+    <span>今日博罗</span>
   </a>
   <div class="appbar-avatar" aria-hidden="true">博</div>
 </header>
@@ -2110,7 +2112,8 @@ function selectChange(id){
     engine&&engine.setFocus(f.nodeIds,f.edgeIds,true);
   }
   renderList();renderDetail(c);renderTimeline();renderSceneModules(c);renderSceneTail(c);
-  if(c&&history.replaceState){history.replaceState(null,"","#change="+id);}
+  if(c&&history.replaceState){history.replaceState(null,"",location.pathname+location.search+"#change="+id);}
+  if(c){document.dispatchEvent(new CustomEvent("bl:change-selected",{detail:{changeId:id}}));}
 }
 
 /* C004 三状态面板：view=before/after/future；null 隐藏 */
