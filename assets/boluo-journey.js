@@ -20,7 +20,7 @@ function el(tag,cls,text){
  if(text!=null)n.textContent=String(text);return n;
 }
 function pageUrl(code){
- return ({today:root,town:"town.html",changes:"holo-home-v9.html",basic:"who.html",comparison:"relation-compare.html"})[code];
+ return ({today:root,town:"town.html",changes:"industry-changes.html",basic:"who.html",comparison:"relation-compare.html"})[code];
 }
 var nav=document.createElement("nav");nav.id="bl-journey-bar";nav.setAttribute("aria-label","博罗真实世界感知顺序");
 var brand=el("a","blj-brand");brand.href=root;brand.append(el("strong",null,"博罗 · 真实世界观察"),el("small",null,"碎片感知 → 微观变化 → 宏观底盘 → 关系对比"));
@@ -67,9 +67,9 @@ function getChange(){
 }
 function setNext(change){
  if(page==="today"){
-  nextAnchor.href="holo-home-v9.html?from=today";nextAnchor.textContent="03 看产业变化 →";
+  nextAnchor.href="industry-changes.html?from=today";nextAnchor.textContent="03 看产业变化 →";
  }else if(page==="town"){
-  nextAnchor.href="holo-home-v9.html?from=town";nextAnchor.textContent="03 看产业变化 →";
+  nextAnchor.href="industry-changes.html?from=town";nextAnchor.textContent="03 看产业变化 →";
  }else if(page==="changes"){
   var dest="who.html?from=changes";if(change)dest+="&change="+encodeURIComponent(change);
   nextAnchor.href=dest;nextAnchor.textContent="04 进入博罗基本面 →";
