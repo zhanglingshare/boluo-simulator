@@ -1,0 +1,78 @@
+{
+  "schema": "boluo-editorial-fact-audit-v1",
+  "scope": "01/02/03/04/05 UI evidence reconciliation",
+  "audited_at": "2026-11-03",
+  "method": "External cross-check with public reporting; no replacement of Skills-owned daily intelligence packs",
+  "baselines": [
+    {
+      "id": "gdp_2025",
+      "year": 2025,
+      "value": 1005.45,
+      "unit": "亿元",
+      "status": "preliminary",
+      "url": "https://static.nfnews.com/content/202601/31/c12129042.html",
+      "note": "惠州市统一核算初步核算"
+    },
+    {
+      "id": "gdp_2024",
+      "year": 2024,
+      "value": 970.87,
+      "unit": "亿元",
+      "status": "final_revision",
+      "url": "https://static.nfnews.com/content/202601/31/c12129042.html",
+      "note": "2024年GDP最终核实，取代旧版2024初步核算952.24亿元；不可用2025/2024现价变动代替不变价GDP增速"
+    },
+    {
+      "id": "tourism_arrivals_2025",
+      "year": 2025,
+      "value": 1028.09,
+      "unit": "万人次",
+      "url": "https://maptable.com/tjgb/2025/%E6%83%A0%E5%B7%9E%E5%B8%82/%E5%8D%9A%E7%BD%97%E5%8E%BF/report/hui-zhou-shi-2025-nian-bo-luo-guo-min-jing-ji-he-she-hui-fa-zhan-tong-ji-gong-bao-2"
+    },
+    {
+      "id": "tourism_revenue_2025",
+      "year": 2025,
+      "value": 51.88,
+      "unit": "亿元",
+      "url": "https://maptable.com/tjgb/2025/%E6%83%A0%E5%B7%9E%E5%B8%82/%E5%8D%9A%E7%BD%97%E5%8E%BF/report/hui-zhou-shi-2025-nian-bo-luo-guo-min-jing-ji-he-she-hui-fa-zhan-tong-ji-gong-bao-2"
+    },
+    {
+      "id": "county_regulated_enterprises_2025",
+      "year": 2025,
+      "value": 1407,
+      "unit": "家",
+      "url": "https://epaper.nfnews.com/nfdaily/html/202602/03/content_10162180.html",
+      "note": "年末附近公开数据"
+    },
+    {
+      "id": "shiwan_regulated_enterprises_2025",
+      "year": 2025,
+      "value": 327,
+      "unit": "家",
+      "url": "https://static.nfnews.com/content/202512/03/c11962873.html",
+      "note": "2025年12月报道，石湾规上企业327家；占全县约23.2%只作同口径结构对比"
+    },
+    {
+      "id": "town_count",
+      "value": 16,
+      "unit": "镇街",
+      "status": "current_life_json",
+      "note": "From published life.json towns array"
+    },
+    {
+      "id": "recent_macro_signal",
+      "event_date": "2026-10-30",
+      "title": "千亿强县再出发：博罗构建三区三核县域格局",
+      "type": "reported_development_strategy",
+      "url": "https://epaper.nfnews.com/nfdaily/html/202610/30/content_10184753.html?origin=4",
+      "note": "2026最新宏观规划背景，未以此生成新产业交易或更改关系模型"
+    }
+  ],
+  "caveats": [
+    "2026年县级前三季度GDP未取得在本轮可验证的可比官方数据，因此04仍使用2025完整年度基线",
+    "hot.json与life.json均由日常Skills管线维护，2026-11-02更新，本轮不伪造2026-11-03抓取结果",
+    "hot.json若仅提供政府目录页URL，前台须标注目录入口非原文，已核验标签需以上游来源审计为准",
+    "2025镇街工业产值条形图旧版本把工业企业家数混入亿元轴，已改为同单位的企业数结构图",
+    "03/05为局部事件关系重建，不是两份完整历史网络快照，不给未证实的关系添加确定性权重"
+  ]
+}

@@ -1,0 +1,75 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="theme-color" content="#fbfaf8">
+<title>今日博罗 · 产业变化｜决策风洞</title>
+<meta name="description" content="从近期经过整理的企业、项目、交通与产业联系变化入手，识别真实事实、相关主体和待核实的潜在联系。">
+<link rel="stylesheet" href="assets/boluo-journey.css">
+<link rel="stylesheet" href="assets/boluo-editorial.css">
+<link rel="stylesheet" href="assets/boluo-industry-changes.css">
+<script defer src="assets/boluo-journey.js"></script>
+<script defer src="assets/boluo-compare-model.js"></script>
+<script defer src="assets/boluo-industry-changes.js"></script>
+</head>
+<body data-bl-journey="changes">
+<main class="ec-page">
+  <header class="ec-head">
+    <div>
+      <div class="ed-kicker">03 · CHANGE OBSERVATORY / 真实产业变化</div>
+      <h1>近期，博罗的哪些关系发生了变化？</h1>
+      <p>先看事件，再看它关联的主体与路径。已发生、在建、签约、推断各有不同状态；一处变化，只突出其对应的一组关系。</p>
+    </div>
+    <div class="ec-top-meta"><b id="ec-snapshot-date">读取数据快照中</b><span id="ec-snapshot-count">仅展示已收录事件</span><a href="index-legacy-2026-11-03.html">← 返回今日博罗</a></div>
+  </header>
+  <section class="ec-intro" aria-label="数据状态">
+    <div class="ec-intro-lead"><span>变化记录</span><b id="ec-total">—</b><small>已收录结构事件</small></div>
+    <div class="ec-intro-lead"><span>主体档案</span><b id="ec-nodes">—</b><small>县域及外围主体</small></div>
+    <div class="ec-intro-lead"><span>关系记录</span><b id="ec-edges">—</b><small>含研究假设</small></div>
+    <div class="ec-intro-explain"><b>本页的判断边界</b><span>单项事实不代表已经改变整个县域。先观察有哪些关联，再到05查看前后两种结构状态。</span></div>
+  </section>
+  <section class="ec-controls" aria-label="事件主题筛选">
+    <div class="ec-sectionlabel">从一件事开始</div>
+    <div id="ec-filters" class="ec-filters">
+      <button type="button" class="is-active" data-filter="all" aria-pressed="true">全部</button>
+      <button type="button" data-filter="new_entity" aria-pressed="false">新主体</button>
+      <button type="button" data-filter="new_edge" aria-pressed="false">通道与连接</button>
+      <button type="button" data-filter="exit" aria-pressed="false">退出与停产</button>
+      <button type="button" data-filter="weaken" aria-pressed="false">约束与整改</button>
+      <button type="button" data-filter="strengthen" aria-pressed="false">增强线索</button>
+    </div>
+    <label class="ec-search"><span>搜索</span><input id="ec-search" type="search" placeholder="企业、镇街、产业或事件编号" autocomplete="off"></label>
+  </section>
+  <div id="ec-error" class="ec-error" role="alert" hidden></div>
+  <div class="ec-layout" id="ec-layout">
+    <aside class="ec-feed" aria-label="近期结构变化事件">
+      <div class="ec-feed-head"><b>事件时间线</b><span id="ec-feed-total">—</span></div>
+      <div id="ec-feed-list" class="ec-feed-list" role="group" aria-label="选择变化事件"></div>
+      <div class="ec-feed-foot">显示的是已收录证据库快照，不是实时抓取的全县全部事件。</div>
+    </aside>
+    <section class="ec-graph-panel" aria-label="当前事件关联结构图">
+      <div class="ec-graph-top"><div><div class="ed-overline">STRUCTURAL CHANGE / 关系观察</div><h2 id="ec-graph-title">选中一条变化，查看它牵动哪些联系</h2></div><span id="ec-graph-badge">事实与推断分离</span></div>
+      <div class="ec-graph-wrap"><svg id="ec-graph" viewBox="0 0 600 420" role="img" aria-label="选中事件的结构关联子图"><title>关系变化局部网络</title></svg></div>
+      <div class="ec-graph-key"><span><i class="ec-ink"></i>已收录背景</span><span><i class="ec-change"></i>事件对应变化</span><span><i class="ec-dashed"></i>施工／待验证</span></div>
+      <p class="ec-graph-caution">只显示事件涉及的局部节点与相邻背景联系；图中空间位置不代表真实地理距离，关系存在不等于直接交易或因果影响。</p>
+      <div class="ec-graph-actions"><a id="ec-compare" class="ec-primary" href="relation-compare.html">用两张图对比加入前后 →</a><a id="ec-deep" class="ec-quiet" href="holo-home-v9.html">查看完整证据观察页 ↗</a></div>
+    </section>
+    <aside class="ec-detail" aria-label="选中事件的证据与状态">
+      <div class="ec-detail-head"><span id="ec-detail-id">事件事实</span><b id="ec-event-status">等待选择</b></div>
+      <h2 id="detailTitle">请选择一条变化</h2>
+      <div class="ec-event-time" id="ec-event-time">事件时间与核验状态</div>
+      <div class="ec-detail-box"><b>此前</b><p id="ec-before">先从左边选择一个事件</p></div>
+      <div class="ec-detail-box ec-detail-box-after"><b>目前已记录</b><p id="ec-after">所选事件在关系库中对应的变化会显示在中间。</p></div>
+      <div class="ec-inspector"><div class="ed-overline">SELECTED RELATION / 点击图中对象</div><b id="ec-inspector-title">查看一个主体或一条关联</b><p id="ec-inspector-text">结构图中的节点和连线可以点选；由此查看关系类型与证据边界。</p></div>
+      <div class="ec-uncertainty"><b>仍需留意</b><p id="ec-uncertainty">签约不等于投产、施工不等于通车、推断不等于已核实的交易。</p></div>
+      <div class="ec-source-title">原始来源</div><div id="ec-sources" class="ec-sources"></div>
+      <a id="ec-next" class="ec-next" href="who.html?from=changes">04 · 继续看博罗基本面 →</a>
+    </aside>
+  </div>
+  <footer class="ec-footer">
+    <span>博罗真实世界感知 · 第03环节</span><span>事实 → 结构 → 宏观基本盘 → 加入前后</span>
+  </footer>
+</main>
+</body>
+</html>

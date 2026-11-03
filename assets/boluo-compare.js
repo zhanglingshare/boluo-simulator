@@ -224,7 +224,7 @@ function eventView(c){
  setText('bc-method-note',data.caution+' 本页不使用虚构关系强度或影响概率。');
  setText('bc-uncertainty','仍待观察：'+data.uncertainty+' '+summarizeCase(data.event));
  const encoded=encodeURIComponent(c);
- $('bc-back-change').href='holo-home-v9.html#change='+encoded;
+ $('bc-back-change').href='industry-changes.html#change='+encoded;
  $('bc-back-baseline').href='who.html?from=changes&change='+encoded;
  $('bc-explore').href='experiments/holo-single/index.html?change='+encoded;
  renderEvents();renderGraphs();renderInspection();renderSources();
