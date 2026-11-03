@@ -130,7 +130,7 @@ function drawGraph(which){
   const radius=core?20:14;
   const circleFill=ghost?'#fff':node.pending?'#fff9ef':node.closedLine&&!isBefore?'#fff3f2':core?'#eef2f5':'#fff';
   const color=ghost?'#cbd5dd':chosen?'#304d66':node.pending?'#b57a40':node.closedLine&&!isBefore?'#9e3035':
-   core&&!isBefore&&node.introduced?'#9e3035':core?'#677b8d':'#aebbc5';
+   core&&!isBefore&&node.affected?'#9e3035':core?'#677b8d':'#aebbc5';
   const nodeG=svgEl('g',{'class':'bc-node '+(ghost?'bc-node-muted':core?'bc-node-focus':'')+
     (node.pending&&!isBefore?' bc-node-pending':''),
     tabindex:'0',role:'button','data-node':node.id,
