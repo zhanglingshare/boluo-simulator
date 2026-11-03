@@ -75,9 +75,14 @@ function makeNode(svgRoot,x,y,title,subtitle,eyebrow,stressed=false){
  const group=svg('g',{class:'pl-map-node','data-name':title});
  const rect=svg('rect',{x:x-width/2,y:y-height/2,width,height,rx:14,class:'pl-svg-card'+(stressed?' is-stressed':' is-current')});
  group.append(rect,svg('text',{x,y:y-30,class:'pl-svg-badge'},eyebrow));
- const label=title.length>10?title.slice(0,10)+'…':title;
- group.append(svg('text',{x,y:y+1,class:'pl-svg-text'},label));
- group.append(svg('text',{x,y:y+26,class:'pl-svg-sub'},subtitle));
+ // Keep long Chinese planning directions INSIDE the node, on desktop and mobile.
+ // Node width is 222 SVG units; a 22px Chinese font should never render 10+ glyphs on one line.
+ const first=String(title||'').slice(0,7),rest=String(title||'').slice(7);
+ const lines=rest?[first,rest.slice(0,7)+(rest.length>7?'…':'')]:[first];
+ const heading=svg('text',{x,y:y+(lines.length===2?-1:7),class:'pl-svg-text'});
+ lines.forEach((part,i)=>heading.append(svg('tspan',{x,dy:i?23:0},part)));
+ group.append(heading);
+ group.append(svg('text',{x,y:y+(lines.length===2?45:32),class:'pl-svg-sub'},subtitle));
  svgRoot.append(group);
 }
 function drawGraph(){
