@@ -154,6 +154,9 @@ body[data-bl-journey="changes"] #ec-graph .ec-graph-node circle:first-of-type{fi
 body[data-bl-journey="changes"] #ec-graph .ec-graph-node.v3-event-node circle:first-of-type{fill:#3b2d40!important;stroke:#ff8b9a!important;stroke-width:3!important}
 body[data-bl-journey="changes"] #ec-graph .ec-graph-edge .ec-line-visible{stroke:#668b9f!important;stroke-width:1.65!important}
 body[data-bl-journey="changes"] #ec-graph .ec-graph-edge.v3-event-edge .ec-line-visible{stroke:#fb7791!important;stroke-width:3.9!important;filter:drop-shadow(0 0 3px #f8748e7e)}
+/* The original SVG encodes construction/inference as amber. Keep the evidence boundary visible in a dark canvas. */
+body[data-bl-journey="changes"] #ec-graph .ec-graph-edge .ec-line-visible[stroke="#b78a52"]{stroke:#e6b66f!important;stroke-dasharray:6 5!important}
+body[data-bl-journey="changes"] #ec-graph .ec-graph-edge.v3-event-edge .ec-line-visible[stroke="#b78a52"]{stroke:#f4c178!important;filter:drop-shadow(0 0 3px #e9af669c)}
 body[data-bl-journey="changes"] #ec-graph.v3-only-change .ec-graph-edge:not(.v3-event-edge){opacity:.09}
 body[data-bl-journey="changes"] #ec-graph.v3-only-change .ec-graph-node:not(.v3-event-node){opacity:.25}
 body[data-bl-journey="changes"] .v3-graph-dock{
