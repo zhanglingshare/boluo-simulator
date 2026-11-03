@@ -28,8 +28,8 @@ for(const [page,file] of Object.entries(expected)){
 assert.doesNotThrow(()=>new vm.Script(JS),'导航脚本语法');
 assert.match(get(expected.today),/href="industry-changes\.html\?from=today"/,'01必须带上下文到03');
 assert.match(get(expected.today),/topic="\+encodeURIComponent\(/,'每条公开话题应传递标题线索');
-assert.match(get(expected.changes),/bl:change-selected/,'03切事件保留查询参数');
-assert.match(get(expected.changes),/bl:change-selected/,'03向接力栏广播真实选中事件');
+assert.match(get('assets/boluo-industry-changes.js'),/history\.replaceState/,'03切事件保留查询参数');
+assert.match(get('assets/boluo-industry-changes.js'),/bl:change-selected/,'03向接力栏广播真实选中事件');
 assert.match(get(expected.basic),/<\/style>\s*<script>/,'04社交脚本不应被错误放入style里');
 assert.match(get(expected.town),/<\/style>\s*<script>/,'02社交脚本不应被错误放入style里');
 
