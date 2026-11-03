@@ -234,8 +234,8 @@ button:focus-visible,a:focus-visible{outline:2px solid rgba(98,230,224,.65);outl
   .searchbox.open input{display:block}
   .appbar-avatar{display:none}
   .workspace{display:flex;flex-direction:column;padding:12px;gap:12px}
-  .deck{order:2}
-  .side{order:1}
+  .deck{order:1}
+  .side{order:2}
   .deck-head{padding:16px 16px 0}
   .deck-desc{font-size:11px}
   .range-seg button{padding:7px 12px;font-size:10.5px}
@@ -264,6 +264,9 @@ button:focus-visible,a:focus-visible{outline:2px solid rgba(98,230,224,.65);outl
 .impact-bar{flex:1;height:4px;border-radius:99px;background:rgba(120,150,190,.14);overflow:hidden}
 .impact-fill{height:100%;border-radius:99px;background:linear-gradient(90deg,#5fe3db,#79b8ff);width:0;transition:width .5s}
 .change-card.active .impact-fill{background:linear-gradient(90deg,#5fe3db,#9ff0d0)}
+.score-note{margin-top:10px;padding:9px 11px;border-radius:10px;border:1px solid rgba(120,150,190,.16);
+  background:rgba(120,150,190,.07);font-size:9.5px;line-height:1.6;color:var(--faint)}
+.score-note b{color:var(--muted);font-weight:700}
 /* 变化档案四模块 */
 .scene-modules{max-width:2000px;margin:0 auto;padding:4px 20px 10px}
 .sm-grid{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:14px}
@@ -292,6 +295,32 @@ button:focus-visible,a:focus-visible{outline:2px solid rgba(98,230,224,.65);outl
 .sm-opt:hover{border-color:#5b86ad;color:#e2ecfa}
 .sm-opt.picked{border-color:var(--gold);background:rgba(210,170,90,.12);color:#f2d4a0}
 .sm-note{font-size:8.5px;color:var(--faint);margin-top:9px;line-height:1.55}
+/* C004 项目进度链 */
+.project-chain{margin-bottom:16px;padding:16px 18px;border-radius:var(--radius);
+  background:linear-gradient(160deg,rgba(18,30,49,.92),rgba(13,23,40,.94));border:1px solid rgba(120,150,190,.16);
+  box-shadow:0 16px 44px rgba(0,0,0,.28)}
+.pc-head{display:flex;align-items:center;justify-content:space-between;gap:10px;margin-bottom:16px;flex-wrap:wrap}
+.pc-title{font-size:12.5px;font-weight:800;color:#e2ecfa}
+.pc-state{font-size:10px;font-weight:700;color:var(--cyan);background:rgba(98,230,224,.1);
+  border:1px solid rgba(98,230,224,.3);border-radius:20px;padding:4px 11px;white-space:nowrap}
+.pc-steps{display:flex;align-items:flex-start}
+.pc-step{flex:1;position:relative;display:flex;flex-direction:column;align-items:center;gap:8px;text-align:center;padding:0 6px}
+.pc-dot{width:20px;height:20px;border-radius:50%;display:grid;place-items:center;z-index:2;background:#0d1728}
+.pc-step.done .pc-dot{background:linear-gradient(135deg,#5fe3db,#9ff0d0);box-shadow:0 0 0 4px rgba(98,230,224,.14)}
+.pc-step.todo .pc-dot{border:1.5px dashed var(--faint);background:rgba(120,150,190,.08)}
+.pc-name{font-size:11px;font-weight:800;line-height:1.4}
+.pc-step.done .pc-name{color:#dff6f4}
+.pc-step.todo .pc-name{color:var(--muted)}
+.pc-desc{font-size:9px;line-height:1.55;color:var(--faint)}
+/* 步骤间连接线 */
+.pc-step:not(:last-child)::before{content:"";position:absolute;top:10px;left:calc(50% + 14px);right:calc(-50% + 14px);
+  height:1.5px;background:repeating-linear-gradient(90deg,var(--faint) 0 4px,transparent 4px 8px);z-index:1}
+.pc-step.done:not(:last-child)::before{background:rgba(98,230,224,.5)}
+@media(max-width:680px){
+  .pc-steps{flex-direction:column;gap:14px}
+  .pc-step:not(:last-child)::before{top:auto;bottom:-14px;left:50%;right:auto;width:1.5px;height:14px;
+    background:repeating-linear-gradient(180deg,var(--faint) 0 4px,transparent 4px 8px)}
+}
 /* 情景尾注 */
 .timeline-foot{display:flex;align-items:center;gap:6px;margin-top:11px;padding-top:10px;
   border-top:1px dashed rgba(120,150,190,.16);font-size:10px;color:var(--faint);flex-wrap:wrap}
@@ -316,6 +345,25 @@ button:focus-visible,a:focus-visible{outline:2px solid rgba(98,230,224,.65);outl
 .layout-switch button.active{color:#06151c;background:linear-gradient(120deg,#5fe3db,#9ff0d0);
   box-shadow:0 4px 14px rgba(98,230,224,.25);font-weight:800}
 .stage.morphing .layout-switch{pointer-events:none}
+
+/* ================= C004 签约—落地—成链 三状态 ================= */
+.c004-panel{position:absolute;top:52px;left:50%;transform:translateX(-50%);z-index:7;
+  display:flex;flex-direction:column;align-items:center;gap:8px;pointer-events:none}
+.c004-badge{pointer-events:auto;font-size:10px;font-weight:800;letter-spacing:.4px;padding:5px 12px;border-radius:20px;
+  color:#06151c;background:linear-gradient(120deg,#5fe3db,#9ff0d0);border:1px solid rgba(98,230,224,.4);
+  box-shadow:0 4px 16px rgba(98,230,224,.22);white-space:nowrap}
+.c004-badge.sim{color:#241803;background:linear-gradient(120deg,#f4c66b,#f0a85a);border-color:rgba(244,198,107,.5);
+  box-shadow:0 4px 16px rgba(244,198,107,.25)}
+.c004-badge.pre{color:var(--muted);background:rgba(17,30,49,.85);border:1px solid var(--line);box-shadow:none}
+.c004-switch{pointer-events:auto;display:flex;gap:3px;padding:4px;border:1px solid rgba(120,150,190,.22);border-radius:11px;
+  background:rgba(7,16,29,.82);backdrop-filter:blur(14px);-webkit-backdrop-filter:blur(14px)}
+.c004-switch button{border:0;background:transparent;color:var(--muted);padding:7px 15px;border-radius:8px;
+  font-size:11px;font-weight:700;white-space:nowrap;transition:.18s}
+.c004-switch button:hover{color:#e2ecfa}
+.c004-switch button.active{color:#06151c;background:linear-gradient(120deg,#5fe3db,#9ff0d0);
+  box-shadow:0 4px 14px rgba(98,230,224,.25);font-weight:800}
+.node-tag.pending::after{content:"待落地";display:inline-block;margin-left:6px;padding:1px 7px;border-radius:9px;
+  font-size:9px;font-weight:800;color:var(--gold);border:1px solid rgba(244,198,107,.55);background:rgba(244,198,107,.1)}
 
 /* ================= 播放控制 ================= */
 .play-controls{display:flex;align-items:center;gap:8px}
@@ -498,6 +546,14 @@ body.mode-2d .layout-switch,body.mode-2d .play-controls{opacity:.38;pointer-even
           <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M4 12h16"/><circle cx="8" cy="12" r="2"/><circle cx="16" cy="12" r="2"/></svg>
           时间长河</button>
       </div>
+      <div class="c004-panel" id="c004Panel" hidden>
+        <div class="c004-badge" id="c004Badge">签约已确认 · 待落地</div>
+        <div class="c004-switch" role="group" aria-label="C004 签约—落地—成链">
+          <button data-c004="before">签约之前</button>
+          <button data-c004="after" class="active">签约之后</button>
+          <button data-c004="future">模拟未来</button>
+        </div>
+      </div>
       <div class="stage-hud">
         <div class="hud-chip hud-tl" id="hudTl">博罗 · 变化全景</div>
         <div class="hud-chip hud-tr" id="hudTr">拖拽旋转 · 滚轮缩放</div>
@@ -539,12 +595,13 @@ body.mode-2d .layout-switch,body.mode-2d .play-controls{opacity:.38;pointer-even
         <span class="panel-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M13 2 3 14h7l-1 8 10-12h-7z"/></svg></span>
         <div style="display:flex;flex-direction:column;gap:2px">
           <span class="panel-title">正在发生的变化</span>
-          <span class="panel-sub">影响多大 · 按影响排序，点击切换</span>
+          <span class="panel-sub">结构重要性 · 待观察价值，按结构排序，点击切换</span>
         </div>
         <span class="panel-count" id="listCount">–</span>
       </div>
       <div class="change-list" id="changeList"></div>
       <div class="state-box" id="listState" hidden></div>
+      <div class="score-note" id="scoreNote">结构排序反映网络结构层面的重要性与待观察价值，<b>不等于现实经济影响</b>；待落地项目与 C 级待验证边不视为已发生事实。</div>
     </div>
 
     <div class="panel detail" id="detailPanel">
@@ -573,6 +630,13 @@ body.mode-2d .layout-switch,body.mode-2d .play-controls{opacity:.38;pointer-even
       <h2 class="module-title" id="smTitle">围绕一件事看变化</h2>
       <p class="module-desc">前后对比、牵动的联系、还可能牵动谁，以及你会怎么看。内容随右侧选中的变化切换。</p>
     </div>
+  </div>
+  <div class="project-chain" id="projectChain" hidden>
+    <div class="pc-head">
+      <span class="pc-title">项目进度链：从签约到真正产生价值</span>
+      <span class="pc-state" id="pcState">当前停在第 1 步 · 签约</span>
+    </div>
+    <div class="pc-steps" id="pcSteps"></div>
   </div>
   <div class="sm-grid" id="smGrid"></div>
 </section>
@@ -1013,7 +1077,7 @@ function glowTexture(){
 var Atlas3D={
   available:false,scene:null,camera:null,renderer:null,
   positions:null,fromPositions:null,targetPositions:null,
-  nodeMeshes:[],nodeGlows:[],edgeLines:[],edgeTubes:[],edgeData:[],
+  nodeMeshes:[],nodeGlows:[],nodeWires:[],edgeLines:[],edgeTubes:[],edgeData:[],
   labelTags:[],glowTex:null,
   raf:null,disposed:false,
   layoutName:"network",morphT0:0,morphDur:1100,morphing:false,idlePhase:{},
@@ -1024,6 +1088,8 @@ var Atlas3D={
   raycaster:null,pointer:null,
   particleSystem:null,grid:null,
   focusNodeIds:{},focusEdgeIds:{},hasFocus:false,
+  // C004 签约—落地—成链：pendingNodes/pendingEdges 为待落地集合，c004View=before/after/future
+  pendingNodes:{},pendingEdges:{},c004View:null,
   // 时间演化
   evoOn:false,evoIndex:-1,nodeBirth:{},edgeBirth:{},reduced:false,
 
@@ -1131,6 +1197,15 @@ var Atlas3D={
       sp.position.copy(self2.positions[n.node_id]);
       self2.scene.add(sp);
       self2.nodeGlows.push(sp);
+      // 空心线框外壳：待落地（签约未投产）节点用，默认隐藏，由 setC004 控制
+      var wireGeo=new THREE_.SphereGeometry(1,12,9);
+      var wmat=new THREE_.MeshBasicMaterial({color:col,wireframe:true,transparent:true,opacity:0});
+      var wire=new THREE_.Mesh(wireGeo,wmat);
+      wire.scale.setScalar(radius*1.12);
+      wire.position.copy(self2.positions[n.node_id]);
+      wire.userData.nodeId=n.node_id;wire.visible=false;
+      self2.scene.add(wire);
+      self2.nodeWires.push(wire);
     });
 
     this.raycaster=new THREE_.Raycaster();
@@ -1232,6 +1307,8 @@ var Atlas3D={
     this.nodeMeshes.forEach(function(mesh,i){
       var nid=mesh.userData.nodeId;
       var glow=self.nodeGlows[i];
+      // C004 待落地节点：交给 applyC004State 统一处理
+      if(self.c004View&&self.pendingNodes[nid])return;
       // 演化模式：未出生节点保持隐藏
       if(self.evoOn){
         var b=self.nodeBirth[nid];
@@ -1249,6 +1326,8 @@ var Atlas3D={
     // 边：direct=变化直接涉及（发光）；neighbor=两端在焦点内的上下文（淡色）
     this.edgeLines.forEach(function(line,i){
       var e=self.edgeData[i],tube=self.edgeTubes[i];
+      // C004 待落地边：交给 applyC004State 统一处理
+      if(self.c004View&&self.pendingEdges[e.edge_id])return;
       if(self.evoOn){
         var b=self.edgeBirth[e.edge_id];
         if(b!==-1&&b>self.evoIndex){line.visible=false;tube.visible=false;return;}
@@ -1273,6 +1352,78 @@ var Atlas3D={
       }
     });
     this.focusCamera(nodeIds,hasFocus);
+    if(this.c004View)this.applyC004State();
+  },
+
+  /* ---------- C004：签约—落地—成链 ---------- */
+  setC004:function(view,nodeIds,edgeIds){
+    this.pendingNodes={};this.pendingEdges={};
+    (nodeIds||[]).forEach(function(id){this.pendingNodes[id]=true;},this);
+    (edgeIds||[]).forEach(function(id){this.pendingEdges[id]=true;},this);
+    // 记录待落地边原始颜色，future 改金色后切回可恢复
+    this.pendingEdgeColor={};
+    var self=this;
+    this.edgeData.forEach(function(e,i){
+      if(self.pendingEdges[e.edge_id])self.pendingEdgeColor[e.edge_id]=self.edgeLines[i].material.color.clone();
+    });
+    this.c004View=view||"after";
+    this.applyC004State();
+  },
+  clearC004:function(){
+    var self=this;
+    this.c004View=null;
+    // 恢复 wire 隐藏、实心 mesh 显示
+    this.nodeWires.forEach(function(w){w.visible=false;w.material.opacity=0;});
+    this.nodeMeshes.forEach(function(m){m.visible=true;});
+    this.nodeGlows.forEach(function(g){g.visible=true;});
+    this.labelTags.forEach(function(t){t.el.classList.remove("pending");});
+    this.pendingNodes={};this.pendingEdges={};
+  },
+  applyC004State:function(){
+    var self=this,view=this.c004View;
+    if(!view)return;
+    var gold=new THREE_.Color(0xf4c66b);
+    this.nodeMeshes.forEach(function(mesh,i){
+      var nid=mesh.userData.nodeId;
+      if(!self.pendingNodes[nid])return;
+      var glow=self.nodeGlows[i],wire=self.nodeWires[i];
+      var base=mesh.userData.baseRadius||1;
+      if(view==="before"){
+        mesh.visible=false;glow.visible=false;
+        wire.visible=true;wire.material.opacity=0.16;wire.scale.setScalar(base*1.12);
+      }else if(view==="after"){
+        mesh.visible=false;
+        glow.visible=true;glow.material.opacity=0.32;
+        wire.visible=true;wire.material.opacity=0.9;wire.scale.setScalar(base*1.12);
+      }else{ /* future：假设投产 */
+        mesh.visible=true;mesh.material.opacity=0.92;mesh.material.transparent=true;
+        mesh.scale.setScalar(base*1.2);
+        glow.visible=true;glow.material.opacity=0.95;
+        wire.visible=false;wire.material.opacity=0;
+      }
+    });
+    this.edgeLines.forEach(function(line,i){
+      var e=self.edgeData[i],tube=self.edgeTubes[i];
+      if(!self.pendingEdges[e.edge_id])return;
+      var orig=self.pendingEdgeColor[e.edge_id];
+      if(view==="before"){
+        if(orig){line.material.color.copy(orig);tube.material.color.copy(orig);}
+        line.visible=false;tube.visible=false;
+      }else if(view==="after"){
+        if(orig){line.material.color.copy(orig);tube.material.color.copy(orig);}
+        line.visible=true;line.material.opacity=0.45; // 待验证虚线，不强化
+        tube.visible=false;tube.material.opacity=0;
+      }else{ /* future：琥珀色潜在传导 */
+        line.visible=true;line.material.color.copy(gold);line.material.opacity=0.85;
+        tube.visible=true;tube.material.color.copy(gold);tube.material.opacity=0.5;
+      }
+    });
+    // 标签：after 显示待落地，before 隐藏，future 正常
+    this.labelTags.forEach(function(t){
+      if(!self.pendingNodes[t.id])return;
+      t.el.classList.toggle("pending",view==="after");
+      t.el.style.opacity=view==="before"?0:1;
+    });
   },
 
   /* 选中变化时，镜头平滑聚焦到路径包围中心；无焦点回到全景 */
@@ -1429,6 +1580,7 @@ var Atlas3D={
     this.nodeMeshes.forEach(function(mesh,i){
       mesh.position.copy(self.positions[mesh.userData.nodeId]);
       self.nodeGlows[i].position.copy(mesh.position);
+      if(self.nodeWires[i])self.nodeWires[i].position.copy(mesh.position);
     });
     this.updateEdgeGeometries();
     this.applyGrowth(now);
@@ -1447,6 +1599,8 @@ var Atlas3D={
       var onScreen=!behind&&sx>-60&&sx<w+60&&sy>-40&&sy<h+40;
       var important=t.node.change_status!=="无显著变化"||(Store.degree[t.id]||0)>=3;
       var show=onScreen&&(self.hasFocus?!!self.focusNodeIds[t.id]:important);
+      // C004 签约之前：待落地节点标签强制隐藏
+      if(show&&self.c004View==="before"&&self.pendingNodes[t.id])show=false;
       if(show){
         t.el.style.transform="translate(-50%,-50%) translate("+sx.toFixed(1)+"px,"+sy.toFixed(1)+"px)";
         t.el.style.opacity=self.hasFocus&&self.focusNodeIds[t.id]?1:(self.hasFocus?0:0.92);
@@ -1527,6 +1681,7 @@ var Atlas2D={
   theta:0.7,phi:1.15,zoom:1,
   dragging:false,lastX:0,lastY:0,moved:0,pinch:0,
   screen:{},focusNodeIds:{},focusEdgeIds:{},hasFocus:false,
+  pendingNodes:{},pendingEdges:{},c004View:null,
 
   init:function(){
     var stage=$("stage");
@@ -1570,10 +1725,20 @@ var Atlas2D={
       var pa=self.pos[e.source_node_id],pb=self.pos[e.target_node_id];if(!pa||!pb)return;
       var a=self.project(pa),b=self.project(pb),isC=e.evidence_grade==="C";
       if(!(a.s>0&&b.s>0))return;
+      // C004 待落地边：签约之前不画
+      if(self.c004View==="before"&&self.pendingEdges[e.edge_id])return;
       var inFocus=!self.hasFocus||self.focusEdgeIds[e.edge_id]||(self.focusNodeIds[e.source_node_id]&&self.focusNodeIds[e.target_node_id]);
-      var op=self.hasFocus?(inFocus?0.95:0.07):(isC?0.45:0.32);
-      ctx.save();ctx.globalAlpha=op;ctx.strokeStyle=U.REL_COLOR[e.relation_type]||"#9ab4d4";ctx.lineWidth=inFocus?1.6:1;
-      if(isC){ctx.setLineDash([5,4]);}
+      var isPending=self.pendingEdges[e.edge_id];
+      var op;
+      if(self.c004View&&isPending){
+        op=self.c004View==="after"?0.45:0.85; // after 待验证不强化，future 模拟
+      }else{
+        op=self.hasFocus?(inFocus?0.95:0.07):(isC?0.45:0.32);
+      }
+      ctx.save();ctx.globalAlpha=op;
+      ctx.strokeStyle=(self.c004View==="future"&&isPending)?"#f4c66b":(U.REL_COLOR[e.relation_type]||"#9ab4d4");
+      ctx.lineWidth=inFocus?1.6:1;
+      if(isC||(self.c004View==="future"&&isPending)){ctx.setLineDash([5,4]);}
       ctx.beginPath();ctx.moveTo(a.x,a.y);ctx.lineTo(b.x,b.y);ctx.stroke();ctx.restore();
     });
     // 节点（按 z 排序，远的先画）
@@ -1582,16 +1747,33 @@ var Atlas2D={
       var n=o.n,pr=o.p,inFocus=!self.hasFocus||self.focusNodeIds[n.node_id];
       // 相机后面的点（透视因子非正）投影无意义，跳过
       if(!(pr.s>0))return;
+      var isPending=self.pendingNodes[n.node_id];
+      // C004 签约之前：待落地节点不画、不可点
+      if(self.c004View==="before"&&isPending)return;
       var deg=Store.degree[n.node_id]||1,r=Math.max(1.2,(4+Math.min(deg,9)*0.55)*pr.s*self.zoom);
       self.screen[n.node_id]={x:pr.x,y:pr.y,r:r};
-      var col=nodeColor(n);
-      ctx.save();ctx.globalAlpha=inFocus?1:0.3;
-      var grad=ctx.createRadialGradient(pr.x,pr.y,0,pr.x,pr.y,r*2.6);
-      grad.addColorStop(0,col);grad.addColorStop(0.3,col+"aa");grad.addColorStop(1,"transparent");
-      ctx.fillStyle=grad;ctx.beginPath();ctx.arc(pr.x,pr.y,r*2.6,0,7);ctx.fill();
-      ctx.fillStyle=col;ctx.beginPath();ctx.arc(pr.x,pr.y,r,0,7);ctx.fill();
-      if(inFocus){ctx.globalAlpha=0.92;ctx.font="700 11px Inter,sans-serif";ctx.fillStyle="#e6f0fb";ctx.textAlign="center";
-        ctx.fillText(shortName(n.name),pr.x,pr.y-r-7);}
+      var col=(self.c004View==="future"&&isPending)?"#f4c66b":nodeColor(n);
+      var pendingAfter=self.c004View==="after"&&isPending;
+      ctx.save();
+      if(pendingAfter){
+        // 待落地：淡光晕 + 空心线框，区别于已投产实心球
+        ctx.globalAlpha=0.5;
+        var grad2=ctx.createRadialGradient(pr.x,pr.y,0,pr.x,pr.y,r*2.4);
+        grad2.addColorStop(0,col+"66");grad2.addColorStop(1,"transparent");
+        ctx.fillStyle=grad2;ctx.beginPath();ctx.arc(pr.x,pr.y,r*2.4,0,7);ctx.fill();
+        ctx.globalAlpha=0.95;ctx.strokeStyle=col;ctx.lineWidth=1.4;
+        ctx.beginPath();ctx.arc(pr.x,pr.y,r,0,7);ctx.stroke();
+        ctx.globalAlpha=0.92;ctx.font="700 11px Inter,sans-serif";ctx.fillStyle="#f4c66b";ctx.textAlign="center";
+        ctx.fillText(shortName(n.name)+" 待落地",pr.x,pr.y-r-7);
+      }else{
+        ctx.globalAlpha=inFocus?1:0.3;
+        var grad=ctx.createRadialGradient(pr.x,pr.y,0,pr.x,pr.y,r*2.6);
+        grad.addColorStop(0,col);grad.addColorStop(0.3,col+"aa");grad.addColorStop(1,"transparent");
+        ctx.fillStyle=grad;ctx.beginPath();ctx.arc(pr.x,pr.y,r*2.6,0,7);ctx.fill();
+        ctx.fillStyle=col;ctx.beginPath();ctx.arc(pr.x,pr.y,r,0,7);ctx.fill();
+        if(inFocus){ctx.globalAlpha=0.92;ctx.font="700 11px Inter,sans-serif";ctx.fillStyle="#e6f0fb";ctx.textAlign="center";
+          ctx.fillText(shortName(n.name),pr.x,pr.y-r-7);}
+      }
       ctx.restore();
     });
   },
@@ -1612,6 +1794,13 @@ var Atlas2D={
     if(best)window.__AtlasHooks&&window.__AtlasHooks.onNodeClick(best);
   },
   setFocus:function(n,e,h){this.focusNodeIds=n||{};this.focusEdgeIds=e||{};this.hasFocus=!!h;},
+  setC004:function(view,nodeIds,edgeIds){
+    this.pendingNodes={};this.pendingEdges={};
+    (nodeIds||[]).forEach(function(id){this.pendingNodes[id]=true;},this);
+    (edgeIds||[]).forEach(function(id){this.pendingEdges[id]=true;},this);
+    this.c004View=view||"after";
+  },
+  clearC004:function(){this.c004View=null;this.pendingNodes={};this.pendingEdges={};},
   resetView:function(){this.theta=0.7;this.phi=1.15;this.zoom=1;},
   dispose:function(){this.disposed=true;if(this.raf)cancelAnimationFrame(this.raf);}
 };
@@ -1662,18 +1851,10 @@ function renderStats(){
    结构性退出（exit）为全库唯一的永久退出事件，方向权重最高；new_entity/new_edge 为进入型、次之。 */
 var NODE_TYPE_W={anchor:5,champion:4,legacy:3,new:3,cluster:2,agriculture:2,eco:2,energy:2,external:1};
 var CHANGE_ST_W={exit:15,new_entity:2,new_edge:2,strengthen:1,weaken:1};
+/* 结构分由后台 scripts/compute-structure-score.js 统一计算并写入 JSON，前端只读取呈现，不写浏览器固定权重 */
 function impactOf(c){
-  var nodes=c.involved_node_ids||[],edges=c.involved_edge_ids||[];
-  var degreeSum=0,structSum=0;
-  nodes.forEach(function(id){
-    var n=Store.nodeMap[id];
-    if(n){degreeSum+=(Store.degree[id]||0);structSum+=(NODE_TYPE_W[n.node_type]||1);}
-  });
-  var rangeScore=nodes.length*2+edges.length*2+degreeSum*0.35;
-  var status=CHANGE_ST_W[c.change_type]||1;
-  var d=parseDate(c.event_date);
-  if(d){var age=(Date.now()-d.getTime())/86400000;if(age<=30)status+=1;}
-  return {score:rangeScore+structSum+status,bar:0};
+  var score=(typeof c.structure_score==="number")?c.structure_score:0;
+  return {score:score,bar:0};
 }
 function priorityList(list){
   var scored=list.map(function(c){return {c:c,im:impactOf(c)};});
@@ -1713,7 +1894,7 @@ function renderList(){
     var ncount=(c.involved_node_ids||[]).length,ecount=(c.involved_edge_ids||[]).length;
     card.appendChild(el("div",{class:"cc-meta"},"牵动 "+ncount+" 个主体 · "+ecount+" 条联系"));
     var imp=el("div",{class:"impact-row"});
-    imp.appendChild(el("span",{class:"impact-label"},"影响多大"));
+    imp.appendChild(el("span",{class:"impact-label"},"结构重要性"));
     var bar=el("span",{class:"impact-bar"});var fill=el("span",{class:"impact-fill"});
     fill.style.width=s.im.bar+"%";bar.appendChild(fill);
     imp.appendChild(bar);
@@ -1795,8 +1976,29 @@ function decisionOptions(type){
   if(type==="weaken")return ["A 帮助整改复产","B 关注关联影响","C 支持转型安置"];
   return ["A 继续支持","B 引导规范发展","C 关注波动与淡季"];
 }
+/* C004 项目进度链：签约 → 建设落地 → 投产达产 → 形成产业网络（当前停在第 1 步） */
+function renderProjectChain(change){
+  var wrap=$("projectChain");
+  if(!change||change.change_id!=="C004"){wrap.hidden=true;return;}
+  wrap.hidden=false;
+  var steps=[
+    {name:"签约 · "+change.event_date,desc:"四宗项目集中签约，计划投资 80 亿元",done:true},
+    {name:"建设落地",desc:"用地、开工、建设进度，需后续证据确认",done:false},
+    {name:"投产达产",desc:"203 亿元为全部达产后预计年产值，尚未证实",done:false},
+    {name:"形成产业网络",desc:"本地采购、供货与关联企业合作，不能仅凭签约推定",done:false}
+  ];
+  var box=$("pcSteps");box.innerHTML="";
+  steps.forEach(function(s){
+    var st=el("div",{class:"pc-step "+(s.done?"done":"todo")});
+    st.appendChild(el("div",{class:"pc-dot"}));
+    st.appendChild(el("div",{class:"pc-name"},s.name));
+    st.appendChild(el("div",{class:"pc-desc"},s.desc));
+    box.appendChild(st);
+  });
+}
 function renderSceneModules(change){
   var grid=$("smGrid");grid.innerHTML="";
+  renderProjectChain(change);
   if(!change)return;
   $("smTitle").textContent=change.title+"｜"+change.event_date;
   // 1 前后对比
@@ -1897,6 +2099,13 @@ function selectChange(id){
   var c=Store.getChange(id);
   Store.selectedId=id;
   if(c){
+    if(c.change_id==="C004"){
+      engine&&engine.setC004("after",c.involved_node_ids,c.involved_edge_ids);
+      setC004UI("after");
+    }else{
+      engine&&engine.clearC004();
+      setC004UI(null);
+    }
     var f=Store.computeFocus(c);
     engine&&engine.setFocus(f.nodeIds,f.edgeIds,true);
   }
@@ -1904,9 +2113,24 @@ function selectChange(id){
   if(c&&history.replaceState){history.replaceState(null,"","#change="+id);}
 }
 
+/* C004 三状态面板：view=before/after/future；null 隐藏 */
+function setC004UI(view){
+  var panel=$("c004Panel"),badge=$("c004Badge");
+  if(!view){panel.hidden=true;return;}
+  panel.hidden=false;
+  document.querySelectorAll("#c004Panel [data-c004]").forEach(function(b){
+    b.classList.toggle("active",b.getAttribute("data-c004")===view);
+  });
+  badge.classList.remove("sim","pre");
+  if(view==="before"){badge.classList.add("pre");badge.textContent="签约之前 · 本地尚无对应主体";}
+  else if(view==="after"){badge.textContent="签约已确认 · 待落地";}
+  else{badge.classList.add("sim");badge.textContent="模拟假设 · 非现实";}
+}
+
 /* 取消选择，回到全景（Esc 也可触发） */
 function clearSelection(){
   Store.selectedId=null;
+  engine&&engine.clearC004();setC004UI(null);
   engine&&engine.setFocus({},{},false);
   renderList();renderTimeline();renderDetail(null);renderSceneModules(null);renderSceneTail(null);
   if(history.replaceState)history.replaceState(null,"",location.pathname+location.search);
@@ -1989,6 +2213,15 @@ function bindLayoutSwitch(){
       if(engine.layoutName===layout)return;
       document.querySelectorAll(".layout-switch button").forEach(function(x){x.classList.toggle("active",x===b);});
       engine.morphTo(layout);
+    });
+  });
+  // C004 签约—落地—成链 三状态切换
+  document.querySelectorAll("#c004Panel [data-c004]").forEach(function(b){
+    b.addEventListener("click",function(){
+      var view=b.getAttribute("data-c004");
+      var c=Store.getChange("C004");if(!c)return;
+      engine&&engine.setC004(view,c.involved_node_ids,c.involved_edge_ids);
+      setC004UI(view);
     });
   });
 }

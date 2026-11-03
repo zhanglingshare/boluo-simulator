@@ -34,7 +34,8 @@
         "S051"
       ],
       "uncertainty": "达产产值为预计值，实际产出待观察",
-      "last_verified_at": "2026-10-29"
+      "last_verified_at": "2026-10-29",
+      "structure_score": 18.5
     },
     {
       "change_id": "C002",
@@ -52,7 +53,8 @@
         "S039"
       ],
       "uncertainty": "对具体企业用电/电价的影响无公开数据",
-      "last_verified_at": "2026-10-29"
+      "last_verified_at": "2026-10-29",
+      "structure_score": 8.4
     },
     {
       "change_id": "C003",
@@ -70,7 +72,8 @@
         "S036"
       ],
       "uncertainty": "百亿为2027目标，非当前产值",
-      "last_verified_at": "2026-10-29"
+      "last_verified_at": "2026-10-29",
+      "structure_score": 10.4
     },
     {
       "change_id": "C004",
@@ -92,8 +95,10 @@
       "source_ids": [
         "S041"
       ],
+      "lifecycle_stage": "signed",
       "uncertainty": "签约金额≠实际投资，项目均待建，本地协同为假设",
-      "last_verified_at": "2026-10-29"
+      "last_verified_at": "2026-10-29",
+      "structure_score": 29.8
     },
     {
       "change_id": "C005",
@@ -115,7 +120,8 @@
         "S040"
       ],
       "uncertainty": "均处在建/待投产，实际产出待观察",
-      "last_verified_at": "2026-10-29"
+      "last_verified_at": "2026-10-29",
+      "structure_score": 16.7
     },
     {
       "change_id": "C006",
@@ -134,7 +140,8 @@
         "S053"
       ],
       "uncertainty": "预计2031年建成，工期长；施工期或阶段性影响通勤",
-      "last_verified_at": "2026-10-29"
+      "last_verified_at": "2026-10-29",
+      "structure_score": 10.5
     },
     {
       "change_id": "C007",
@@ -153,7 +160,8 @@
         "S037"
       ],
       "uncertainty": "通车时间为目标，以官方为准",
-      "last_verified_at": "2026-10-29"
+      "last_verified_at": "2026-10-29",
+      "structure_score": 9.5
     },
     {
       "change_id": "C008",
@@ -171,7 +179,8 @@
         "S048"
       ],
       "uncertainty": "仅为单条生产线，企业其他业务未说明",
-      "last_verified_at": "2026-10-29"
+      "last_verified_at": "2026-10-29",
+      "structure_score": 22.4
     },
     {
       "change_id": "C009",
@@ -192,7 +201,8 @@
         "S050"
       ],
       "uncertainty": "验收合格后或复产，非永久退出",
-      "last_verified_at": "2026-10-29"
+      "last_verified_at": "2026-10-29",
+      "structure_score": 18.9
     },
     {
       "change_id": "C010",
@@ -211,7 +221,8 @@
         "S047"
       ],
       "uncertainty": "品牌价值超12亿为评估口径，非销售额",
-      "last_verified_at": "2026-10-29"
+      "last_verified_at": "2026-10-29",
+      "structure_score": 7.4
     },
     {
       "change_id": "C011",
@@ -233,7 +244,8 @@
         "S042"
       ],
       "uncertainty": "加工产值为县域口径，分单品数据有限",
-      "last_verified_at": "2026-10-29"
+      "last_verified_at": "2026-10-29",
+      "structure_score": 18.8
     },
     {
       "change_id": "C012",
@@ -257,7 +269,37 @@
         "S031"
       ],
       "uncertainty": "国庆为旺季峰值，全年过夜率为推断区间",
-      "last_verified_at": "2026-10-29"
+      "last_verified_at": "2026-10-29",
+      "structure_score": 21.5
     }
-  ]
+  ],
+  "score_meta": {
+    "name": "结构重要性 · 待观察价值",
+    "method": "影响范围（牵动主体/联系数、涉及节点网络度）+ 节点类型权重 + 事件结构方向 + 近30天新近度，后台统一计算",
+    "weights": {
+      "node_type": {
+        "anchor": 5,
+        "champion": 4,
+        "legacy": 3,
+        "new": 3,
+        "cluster": 2,
+        "agriculture": 2,
+        "eco": 2,
+        "energy": 2,
+        "external": 1
+      },
+      "direction": {
+        "exit": 15,
+        "new_entity": 2,
+        "new_edge": 2,
+        "strengthen": 1,
+        "weaken": 1
+      },
+      "range": "主体数×2 + 联系数×2 + 节点度之和×0.35",
+      "recent_bonus": "近30天事件 +1"
+    },
+    "disclaimer": "结构排序仅反映网络结构层面的重要性与待观察价值，不等于现实经济影响；C级待验证边、签约待落地项目不视为已发生事实",
+    "generated_by": "scripts/compute-structure-score.js",
+    "generated_at": "2026-11-03 02:54"
+  }
 }

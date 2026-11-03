@@ -39,6 +39,10 @@
 9. [关于作者与项目独立性](#九关于作者与项目独立性)
 10. [版权声明与免责](#十版权声明与免责)
 
+> **接手审计/修改的 AI 先读**：[`docs/SKILLS-INTEGRATION.md`](docs/SKILLS-INTEGRATION.md)
+> （Skills 如何与页面/数据联动、更新 SOP、验证方式与审计清单）。
+> 另见 [`docs/DATA-DICTIONARY.md`](docs/DATA-DICTIONARY.md)、[`docs/DATA-GOVERNANCE.md`](docs/DATA-GOVERNANCE.md)。
+
 ---
 
 ## 一、它是什么，不是什么
