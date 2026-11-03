@@ -252,6 +252,59 @@ button:focus-visible,a:focus-visible{outline:2px solid rgba(98,230,224,.65);outl
   *,*:before,*:after{animation-duration:.01ms!important;animation-iteration-count:1!important;transition-duration:.01ms!important;scroll-behavior:auto!important}
 }
 
+/* ================= 变化现场对齐：旧版入口 / 影响条 / 变化档案四模块 / 情景尾注 ================= */
+.appbar-legacy{margin-left:6px;padding:8px 14px;border-radius:10px;border:1px solid rgba(120,150,190,.25);
+  background:rgba(17,30,49,.8);color:var(--muted);font-size:11px;font-weight:800;display:flex;align-items:center;gap:6px;
+  transition:.18s;white-space:nowrap;text-decoration:none}
+.appbar-legacy:hover{color:#e2ecfa;border-color:#5b86ad}
+.appbar-legacy svg{width:13px;height:13px}
+.panel-sub{font-size:9px;color:var(--faint);font-weight:600;margin-left:2px}
+.impact-row{display:flex;align-items:center;gap:8px;margin-top:7px}
+.impact-label{font-size:8.5px;color:var(--faint);white-space:nowrap}
+.impact-bar{flex:1;height:4px;border-radius:99px;background:rgba(120,150,190,.14);overflow:hidden}
+.impact-fill{height:100%;border-radius:99px;background:linear-gradient(90deg,#5fe3db,#79b8ff);width:0;transition:width .5s}
+.change-card.active .impact-fill{background:linear-gradient(90deg,#5fe3db,#9ff0d0)}
+/* 变化档案四模块 */
+.scene-modules{max-width:2000px;margin:0 auto;padding:4px 20px 10px}
+.sm-grid{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:14px}
+.sm-card{border-radius:var(--radius);padding:16px;
+  background:linear-gradient(160deg,rgba(18,30,49,.92),rgba(13,23,40,.94));
+  border:1px solid rgba(120,150,190,.16);box-shadow:0 16px 44px rgba(0,0,0,.28);display:flex;flex-direction:column;min-height:176px}
+.sm-name{font-size:12px;font-weight:800;color:#e2ecfa;margin-bottom:3px}
+.sm-sub{font-size:9px;color:var(--faint);margin-bottom:11px;line-height:1.5}
+.sm-body{flex:1;font-size:11px;line-height:1.65;color:#d6e2f2;display:flex;flex-direction:column;gap:7px}
+.sm-pair{padding:9px 10px;border-radius:9px;background:rgba(8,17,30,.6);border:1px solid var(--line-soft)}
+.sm-pair .sm-lbl{font-size:8.5px;font-weight:800;letter-spacing:.6px;color:var(--faint);margin-bottom:4px}
+.sm-pair.after .sm-lbl{color:var(--cyan)}
+.sm-rel{display:flex;align-items:flex-start;gap:7px;font-size:10.5px;line-height:1.55;color:var(--muted)}
+.sm-rel>div{min-width:0}
+.sm-rel b{color:#d6e2f2;font-weight:700}
+.sm-grade{font-size:8px;font-weight:800;border-radius:5px;padding:1px 5px;flex:none}
+.sm-grade.a{color:#8fe0b4;background:rgba(80,180,130,.14)}
+.sm-grade.b{color:#9cc4ff;background:rgba(90,140,220,.14)}
+.sm-grade.c{color:var(--gold);background:rgba(210,170,90,.13)}
+.sm-chain{display:flex;flex-wrap:wrap;gap:6px}
+.sm-chip{font-size:9.5px;color:#a9c2d8;background:rgba(20,36,58,.8);border:1px solid var(--line);border-radius:8px;padding:5px 9px}
+.sm-chip.hot{border-color:rgba(98,230,224,.35);color:#cfeef0;background:rgba(24,48,66,.8)}
+.sm-opts{display:flex;flex-direction:column;gap:7px}
+.sm-opt{text-align:left;padding:9px 11px;border-radius:9px;border:1px solid var(--line-soft);
+  background:rgba(8,17,30,.6);color:#d6e2f2;font-size:10.5px;line-height:1.55;transition:.16s;cursor:pointer}
+.sm-opt:hover{border-color:#5b86ad;color:#e2ecfa}
+.sm-opt.picked{border-color:var(--gold);background:rgba(210,170,90,.12);color:#f2d4a0}
+.sm-note{font-size:8.5px;color:var(--faint);margin-top:9px;line-height:1.55}
+/* 情景尾注 */
+.timeline-foot{display:flex;align-items:center;gap:6px;margin-top:11px;padding-top:10px;
+  border-top:1px dashed rgba(120,150,190,.16);font-size:10px;color:var(--faint);flex-wrap:wrap}
+.timeline-foot b{color:#f2d4a0;font-weight:800}
+@media(max-width:960px){
+  .sm-grid{grid-template-columns:repeat(2,minmax(0,1fr))}
+}
+@media(max-width:680px){
+  .sm-grid{grid-template-columns:1fr}
+  .appbar-legacy span{display:none}
+  .appbar-legacy{padding:8px 10px}
+}
+
 /* ================= 布局形态切换器 ================= */
 .layout-switch{position:absolute;top:13px;left:50%;transform:translateX(-50%);z-index:7;
   display:flex;gap:3px;padding:4px;border:1px solid rgba(120,150,190,.22);border-radius:11px;
@@ -407,6 +460,10 @@ body.mode-2d .layout-switch,body.mode-2d .play-controls{opacity:.38;pointer-even
     <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><circle cx="10.8" cy="10.8" r="6.8"/><path d="m16 16 4.5 4.5"/></svg>
     <input id="searchInput" type="search" placeholder="搜索主体、关系或关键词" aria-label="搜索主体、关系或关键词">
   </label>
+  <a class="appbar-legacy" href="./index.html" aria-label="返回今日博罗页">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M19 12H5M11 6l-6 6 6 6"/></svg>
+    <span>旧版·今日博罗</span>
+  </a>
   <div class="appbar-avatar" aria-hidden="true">博</div>
 </header>
 
@@ -416,9 +473,9 @@ body.mode-2d .layout-switch,body.mode-2d .play-controls{opacity:.38;pointer-even
     <div class="deck-head">
       <div class="deck-toprow">
         <div>
-          <div class="kicker">CHANGE ATLAS · 变化优先</div>
-          <h1 class="deck-title" id="deckTitle">今年以来，博罗变了 <b>12</b> 处</h1>
-          <p class="deck-desc" id="deckDesc">在 36 个主体、45 条联系的基本盘上叠加变化。点开一条变化，只亮它牵动的路径；灰色是背景，不是结论。</p>
+          <div class="kicker">变化现场 · 看见正在发生什么</div>
+          <h1 class="deck-title" id="deckTitle">博罗·变化现场</h1>
+          <p class="deck-desc" id="deckDesc">今年已记录 12 处变化。看见真实发生的变化，以及它如何在博罗产生连锁反应。</p>
         </div>
         <div class="range-seg" role="group" aria-label="时间范围">
           <button data-range="month">这个月<span class="seg-sub">近 30 天</span></button>
@@ -462,6 +519,7 @@ body.mode-2d .layout-switch,body.mode-2d .play-controls{opacity:.38;pointer-even
       </div>
       <div class="timeline-track" id="timelineTrack"><div class="tl-line"></div></div>
       <div class="tl-labels" id="timelineLabels"></div>
+      <div class="timeline-foot" id="timelineFoot">换个剧本看看：<b>如果它没发生</b> / 换个方式发生 / 再进一步推进…</div>
     </div>
   </section>
 
@@ -479,7 +537,10 @@ body.mode-2d .layout-switch,body.mode-2d .play-controls{opacity:.38;pointer-even
     <div class="panel">
       <div class="panel-head">
         <span class="panel-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M13 2 3 14h7l-1 8 10-12h-7z"/></svg></span>
-        <span class="panel-title">变化列表</span>
+        <div style="display:flex;flex-direction:column;gap:2px">
+          <span class="panel-title">正在发生的变化</span>
+          <span class="panel-sub">影响多大 · 按影响排序，点击切换</span>
+        </div>
         <span class="panel-count" id="listCount">–</span>
       </div>
       <div class="change-list" id="changeList"></div>
@@ -503,6 +564,18 @@ body.mode-2d .layout-switch,body.mode-2d .play-controls{opacity:.38;pointer-even
     </div>
   </aside>
 </main>
+
+<!-- ================= 变化档案：选中事件四模块 ================= -->
+<section class="scene-modules" aria-label="变化档案">
+  <div class="module-head">
+    <div>
+      <div class="module-kicker">变化档案</div>
+      <h2 class="module-title" id="smTitle">围绕一件事看变化</h2>
+      <p class="module-desc">前后对比、牵动的联系、还可能牵动谁，以及你会怎么看。内容随右侧选中的变化切换。</p>
+    </div>
+  </div>
+  <div class="sm-grid" id="smGrid"></div>
+</section>
 
 <!-- ================= 分析舱：基本盘体检 ================= -->
 <section class="analysis" aria-label="基本盘分析">
@@ -652,7 +725,7 @@ function parseDate(raw){
     var yr=+m[1],mo=+m[2];
     var end=s.match(/至\s*(\d{1,2})/);
     if(end)mo=+end[1];
-    return new Date(yr,mo,0);
+    return new Date(yr,mo-1,1);
   }
   return null;
 }
@@ -1584,6 +1657,31 @@ function renderStats(){
 }
 
 /* ---------- 变化列表 ---------- */
+/* 影响多大：由影响范围（牵动主体/联系数、涉及节点在网络中的度）+ 结构重要性（节点类型权重）
+   + 事件状态（结构变化方向、近 30 天新近）综合排序。纯数据计算，不依赖视觉或时间。
+   结构性退出（exit）为全库唯一的永久退出事件，方向权重最高；new_entity/new_edge 为进入型、次之。 */
+var NODE_TYPE_W={anchor:5,champion:4,legacy:3,new:3,cluster:2,agriculture:2,eco:2,energy:2,external:1};
+var CHANGE_ST_W={exit:15,new_entity:2,new_edge:2,strengthen:1,weaken:1};
+function impactOf(c){
+  var nodes=c.involved_node_ids||[],edges=c.involved_edge_ids||[];
+  var degreeSum=0,structSum=0;
+  nodes.forEach(function(id){
+    var n=Store.nodeMap[id];
+    if(n){degreeSum+=(Store.degree[id]||0);structSum+=(NODE_TYPE_W[n.node_type]||1);}
+  });
+  var rangeScore=nodes.length*2+edges.length*2+degreeSum*0.35;
+  var status=CHANGE_ST_W[c.change_type]||1;
+  var d=parseDate(c.event_date);
+  if(d){var age=(Date.now()-d.getTime())/86400000;if(age<=30)status+=1;}
+  return {score:rangeScore+structSum+status,bar:0};
+}
+function priorityList(list){
+  var scored=list.map(function(c){return {c:c,im:impactOf(c)};});
+  scored.sort(function(a,b){return b.im.score-a.im.score;});
+  var max=scored.length?scored[0].im.score:1;
+  scored.forEach(function(s){s.im.bar=Math.max(8,Math.round(s.im.score/max*100));});
+  return scored;
+}
 function renderList(){
   var box=$("changeList"),state=$("listState");
   box.innerHTML="";state.hidden=true;
@@ -1602,8 +1700,8 @@ function renderList(){
     return;
   }
   if(!list.length){box.innerHTML="";state.hidden=false;state.textContent="没有匹配「"+Store.searchTerm+"」的变化。";return;}
-  list.forEach(function(c){
-    var cfg=U.CHANGE_CFG[c.change_type];
+  priorityList(list).forEach(function(s){
+    var c=s.c,cfg=U.CHANGE_CFG[c.change_type];
     var card=el("button",{class:"change-card"+(c.change_id===Store.selectedId?" active":""),"data-id":c.change_id,"aria-label":c.title});
     var top=el("div",{class:"cc-top"});
     var badge=el("span",{class:"cc-badge"});badge.textContent=cfg.label;
@@ -1614,6 +1712,12 @@ function renderList(){
     card.appendChild(el("div",{class:"cc-title"},c.title));
     var ncount=(c.involved_node_ids||[]).length,ecount=(c.involved_edge_ids||[]).length;
     card.appendChild(el("div",{class:"cc-meta"},"牵动 "+ncount+" 个主体 · "+ecount+" 条联系"));
+    var imp=el("div",{class:"impact-row"});
+    imp.appendChild(el("span",{class:"impact-label"},"影响多大"));
+    var bar=el("span",{class:"impact-bar"});var fill=el("span",{class:"impact-fill"});
+    fill.style.width=s.im.bar+"%";bar.appendChild(fill);
+    imp.appendChild(bar);
+    card.appendChild(imp);
     card.addEventListener("click",function(){selectChange(c.change_id);});
     box.appendChild(card);
   });
@@ -1684,6 +1788,86 @@ function renderDetail(change){
   });
 }
 
+/* ---------- 变化档案：选中事件四模块 ---------- */
+function decisionOptions(type){
+  if(type==="exit")return ["A 引进替代项目","B 帮助转型升级","C 稳就业、保民生"];
+  if(type==="new_entity"||type==="new_edge")return ["A 紧盯落地进度","B 支持配套协同","C 关注实际产出"];
+  if(type==="weaken")return ["A 帮助整改复产","B 关注关联影响","C 支持转型安置"];
+  return ["A 继续支持","B 引导规范发展","C 关注波动与淡季"];
+}
+function renderSceneModules(change){
+  var grid=$("smGrid");grid.innerHTML="";
+  if(!change)return;
+  $("smTitle").textContent=change.title+"｜"+change.event_date;
+  // 1 前后对比
+  var ba=Store.splitBeforeAfter(change.before_after);
+  var c1=el("div",{class:"sm-card"});
+  c1.appendChild(el("div",{class:"sm-name"},"前后对比"));
+  c1.appendChild(el("div",{class:"sm-sub"},"变化前后的公开口径"));
+  var b1=el("div",{class:"sm-body"});
+  if(ba.before){var p1=el("div",{class:"sm-pair before"});p1.appendChild(el("div",{class:"sm-lbl"},"此前"));p1.appendChild(el("div",null,ba.before));b1.appendChild(p1);}
+  if(ba.after){var p2=el("div",{class:"sm-pair after"});p2.appendChild(el("div",{class:"sm-lbl"},"此后"));p2.appendChild(el("div",null,ba.after));b1.appendChild(p2);}
+  c1.appendChild(b1);grid.appendChild(c1);
+  // 2 牵动的联系
+  var c2=el("div",{class:"sm-card"});
+  c2.appendChild(el("div",{class:"sm-name"},"牵动的联系"));
+  c2.appendChild(el("div",{class:"sm-sub"},"直接涉及的联系 · 证据等级（C 级为待验证假设）"));
+  var b2=el("div",{class:"sm-body"});
+  (change.involved_edge_ids||[]).forEach(function(id){
+    var e=Store.edgeMap[id];if(!e)return;
+    var row=el("div",{class:"sm-rel"});
+    var src=Store.nodeMap[e.source_node_id],tgt=Store.nodeMap[e.target_node_id];
+    row.appendChild(el("span",{class:"sm-grade "+String(e.evidence_grade||"c").toLowerCase()},(e.evidence_grade||"C")+" 级"));
+    var d=el("div");
+    var head=el("div");head.appendChild(el("b",null,(src?shortName(src.name):e.source_node_id)+" → "+(tgt?shortName(tgt.name):e.target_node_id)));
+    d.appendChild(head);
+    d.appendChild(el("div",null,e.relation_description||""));
+    row.appendChild(d);
+    b2.appendChild(row);
+  });
+  c2.appendChild(b2);grid.appendChild(c2);
+  // 3 连锁反应：还可能牵动谁
+  var c3=el("div",{class:"sm-card"});
+  c3.appendChild(el("div",{class:"sm-name"},"连锁反应"));
+  c3.appendChild(el("div",{class:"sm-sub"},"还可能牵动谁 · 从证据网向外扩一环（灰=背景主体）"));
+  var b3=el("div",{class:"sm-body"});
+  var focus=Store.computeFocus(change);
+  var coreIds=change.involved_node_ids||[];
+  var extra=Object.keys(focus.nodeIds||{}).filter(function(id){return coreIds.indexOf(id)<0;});
+  var chain=el("div",{class:"sm-chain"});
+  coreIds.forEach(function(id){var n=Store.nodeMap[id];if(n)chain.appendChild(el("span",{class:"sm-chip hot"},shortName(n.name)));});
+  extra.forEach(function(id){var n=Store.nodeMap[id];if(n)chain.appendChild(el("span",{class:"sm-chip"},shortName(n.name)));});
+  b3.appendChild(chain);
+  if(!extra.length)b3.appendChild(el("div",{class:"sm-note"},"暂无向外扩展的联系（以证据网为准）。"));
+  c3.appendChild(b3);grid.appendChild(c3);
+  // 4 你会怎么看
+  var c4=el("div",{class:"sm-card"});
+  c4.appendChild(el("div",{class:"sm-name"},"你会怎么看"));
+  c4.appendChild(el("div",{class:"sm-sub"},"面对这类变化，你会优先做什么"));
+  var b4=el("div",{class:"sm-body sm-opts"});
+  decisionOptions(change.change_type).forEach(function(o){
+    var btn=el("button",{class:"sm-opt"},o);
+    btn.addEventListener("click",function(){
+      c4.querySelectorAll(".sm-opt").forEach(function(x){x.classList.remove("picked");});
+      btn.classList.add("picked");
+      toast("已记录你的判断（仅决策练习，不构成结论）");
+    });
+    b4.appendChild(btn);
+  });
+  c4.appendChild(b4);
+  c4.appendChild(el("div",{class:"sm-note"},"仅决策练习 · 不构成行政或投资结论"));
+  grid.appendChild(c4);
+}
+/* 情景尾注：换个剧本看看 */
+function renderSceneTail(change){
+  var foot=$("timelineFoot");if(!foot)return;
+  if(change&&change.change_id==="C008"){
+    foot.innerHTML='换个剧本看看：<b>不关停</b> / 提前转型 / 来了新产业…';
+  }else{
+    foot.innerHTML='换个剧本看看：<b>如果它没发生</b> / 换个方式发生 / 再进一步推进…';
+  }
+}
+
 /* ---------- 时间轴 ---------- */
 function renderTimeline(){
   var track=$("timelineTrack"),labels=$("timelineLabels");
@@ -1699,12 +1883,11 @@ function renderTimeline(){
 /* ---------- 标题 ---------- */
 function renderHeading(){
   var n=Store.filtered.length;
+  $("deckTitle").textContent="博罗·变化现场";
   if(Store.range==="month"){
-    $("deckTitle").innerHTML='近 30 天，博罗变了 <b>'+n+'</b> 处';
-    $("deckDesc").textContent="滚动近 30 天的变化，叠加在 36 个主体、45 条联系的基本盘上。点开一条，只看它牵动的路径。";
+    $("deckDesc").textContent="近 30 天已记录 "+n+" 处变化。看见真实发生的变化，以及它如何在博罗产生连锁反应。";
   }else{
-    $("deckTitle").innerHTML='今年以来，博罗变了 <b>'+n+'</b> 处';
-    $("deckDesc").textContent="在 36 个主体、45 条联系的基本盘上叠加变化。点开一条变化，只亮它牵动的路径；灰色是背景，不是结论。";
+    $("deckDesc").textContent="今年已记录 "+n+" 处变化。看见真实发生的变化，以及它如何在博罗产生连锁反应。";
   }
 }
 
@@ -1717,7 +1900,7 @@ function selectChange(id){
     var f=Store.computeFocus(c);
     engine&&engine.setFocus(f.nodeIds,f.edgeIds,true);
   }
-  renderList();renderDetail(c);renderTimeline();
+  renderList();renderDetail(c);renderTimeline();renderSceneModules(c);renderSceneTail(c);
   if(c&&history.replaceState){history.replaceState(null,"","#change="+id);}
 }
 
@@ -1725,7 +1908,7 @@ function selectChange(id){
 function clearSelection(){
   Store.selectedId=null;
   engine&&engine.setFocus({},{},false);
-  renderList();renderTimeline();renderDetail(null);
+  renderList();renderTimeline();renderDetail(null);renderSceneModules(null);renderSceneTail(null);
   if(history.replaceState)history.replaceState(null,"",location.pathname+location.search);
 }
 
@@ -1738,7 +1921,7 @@ function focusSingleNode(nid){
     }
   });
   engine&&engine.setFocus(nodeIds,edgeIds,true);
-  Store.selectedId=null;renderList();renderTimeline();
+  Store.selectedId=null;renderList();renderTimeline();renderSceneModules(null);renderSceneTail(null);
   var n=Store.nodeMap[nid];
   $("detailTitle").textContent=n?n.name:nid;
   $("detailCompare").innerHTML="";
@@ -1778,9 +1961,9 @@ function setRange(r){
   var keep=Store.selectedId&&Store.filtered.some(function(c){return c.change_id===Store.selectedId;});
   if(keep){selectChange(Store.selectedId);}
   else{
-    var latest=Store.filtered.length?Store.filtered[Store.filtered.length-1].change_id:null;
-    if(latest)selectChange(latest);
-    else{Store.selectedId=null;engine&&engine.setFocus({},{},false);renderDetail(null);}
+    var top=Store.filtered.length?priorityList(Store.filtered)[0].c.change_id:null;
+    if(top)selectChange(top);
+    else{Store.selectedId=null;engine&&engine.setFocus({},{},false);renderDetail(null);renderSceneModules(null);renderSceneTail(null);}
   }
 }
 
@@ -2032,8 +2215,8 @@ function boot(){
     var target=hash?hash[1]:null;
     if(target&&Store.getChange(target)){selectChange(target);}
     else{
-      var latest=Store.filtered.length?Store.filtered[Store.filtered.length-1].change_id:null;
-      if(latest)selectChange(latest);else{engine&&engine.setFocus({},{},false);renderDetail(null);}
+      var top=Store.filtered.length?priorityList(Store.filtered)[0].c.change_id:null;
+      if(top)selectChange(top);else{engine&&engine.setFocus({},{},false);renderDetail(null);renderSceneModules(null);renderSceneTail(null);}
     }
   });
 
@@ -2057,7 +2240,7 @@ function boot(){
       document.querySelectorAll(".topnav button").forEach(function(x){x.classList.remove("active");});
       b.classList.add("active");
       var tab=b.getAttribute("data-view-tab");
-      if(tab==="events"){$("changeList").scrollIntoView({behavior:"smooth",block:"center"});toast("变化列表：按时间排列当前范围的变化");}
+      if(tab==="events"){$("changeList").scrollIntoView({behavior:"smooth",block:"center"});toast("变化列表：按影响排序，点击切换任意变化");}
       else if(tab==="method"){document.querySelector(".side .side-note").scrollIntoView({behavior:"smooth",block:"center"});toast("数据说明：证据等级与口径");}
       else{$("stage").scrollIntoView({behavior:"smooth",block:"center"});}
     });
