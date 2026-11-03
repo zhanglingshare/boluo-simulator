@@ -1,6 +1,6 @@
 <!doctype html>
 <html lang="zh-CN"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
-<title>博罗产业风洞 · 关系与变化的观察入口</title>
+<title>01 · 今日博罗｜真实世界情报观察</title>
 <script src="model.js"></script>
 <style>
 *{box-sizing:border-box}
@@ -97,6 +97,7 @@ h1{font-size:22px;margin:0 0 2px;letter-spacing:.5px}
 </style>
 <link rel="stylesheet" href="assets/boluo-journey.css">
 <script defer src="assets/boluo-journey.js"></script>
+<link rel="stylesheet" href="assets/boluo-editorial.css">
 </head><body class="bl-ui bl-dark bl-ui--index" data-bl-page="index" data-bl-journey="today">
 
 <div class="nav">
@@ -495,7 +496,7 @@ document.getElementById("btnScan").onclick=async function(){
     }).join("");
     if(voted){
       const my=opts.find(o=>d[o.k]>0);
-      document.getElementById("voteOut").innerHTML=`你这一票投给了「<b style="color:${my.c}">${my.label}</b>」——${my.mood}。<br>这是你本机的记录。2026年我们在这，一年后回来，看看自己的判断准不准。`;
+      document.getElementById("voteOut").innerHTML=`你在本机记录的观察是「<b style="color:${my.c}">${my.label}</b>」——${my.mood}。<br>这是你本机的记录。2026年我们在这，一年后回来，看看自己的判断准不准。`;
     } else {
       document.getElementById("voteOut").innerHTML="还没表态，选一个。";
     }
