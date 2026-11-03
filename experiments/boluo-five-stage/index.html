@@ -122,6 +122,15 @@ body{background:#040d16;color:var(--ink);font-family:-apple-system,BlinkMacSyste
 .node-wave{transform-box:fill-box;transform-origin:center;animation:node-wave 2.7s ease-out infinite}
 @keyframes node-wave{0%{transform:scale(.6);opacity:.55}70%,100%{transform:scale(1.6);opacity:0}}
 @media(prefers-reduced-motion:reduce){.node-wave{animation:none}}
+
+.edge.hypothetical{stroke:#c9a57c;opacity:.2;stroke-width:1.6;animation:none!important}
+.edge.highlight.exit{stroke:#ff8e90;stroke-width:3.5}
+.edge.highlight.weaken{stroke:#ecb271;stroke-width:3.2}
+.node.highlight.exit{fill:#ff9fa7;stroke:#ffdae0}
+.node.highlight.weaken{fill:#ffc69c;stroke:#ffe6d3}
+.node.highlight.planned{fill:#f1c68e;stroke:#fff1d8;stroke-dasharray:2 2;filter:drop-shadow(0 0 3px #f0b87b)}
+.node-label{font-weight:720;fill:#f2faff}
+.node-label.hidden{display:none}
 </style></head><body>
 <header class="top"><div class="brand">博罗 · 变化世界<small>EVIDENCE-DRIVEN EXPERIENCE</small></div><nav id="nav" class="topnav" aria-label="五幕体验"></nav><a href="../../index.html" style="white-space:nowrap;font-size:12px">原站首页</a></header>
 <main class="container"><div class="hero cinematic-hero" id="cinematicHero">
@@ -200,12 +209,12 @@ function graph(svgId,highlight,mode){
  background.forEach((n,i)=>{let t=(i+0.5)/Math.max(background.length,1)*Math.PI*2;positions.set(n.node_id,{x:450+Math.cos(t)*340,y:235+Math.sin(t)*175});});
  foreground.forEach((n,i)=>{const t=(i-foreground.length/2)*2.4/Math.max(foreground.length,2);positions.set(n.node_id,{x:450+Math.sin(t)*185,y:225+Math.cos(t*1.6)*62});});
  let output='<defs><radialGradient id="nodeGradient-'+svgId+'"><stop offset="0" stop-color="#ecfff5"/><stop offset="1" stop-color="#7af1c9"/></radialGradient></defs>';
- edges.forEach(e=>{const a=positions.get(e.source_node_id),b=positions.get(e.target_node_id);if(!a||!b)return;const active=mode!=='before'&&activeEdges.has(e.edge_id);output+='<line class="edge '+(active?'highlight':'')+'" x1="'+a.x+'" y1="'+a.y+'" x2="'+b.x+'" y2="'+b.y+'" '+(e.evidence_grade==='B'?'stroke-dasharray="5 6"':'')+'><title>'+esc(e.relation_description||e.relation_type||'登记关系')+'</title></line>';});
- nodes.forEach(n=>{const p=positions.get(n.node_id);if(!p)return;const active=mode!=='before'&&activeIds.has(n.node_id);output+='<circle class="node '+(active?'highlight':'')+'" data-node="'+esc(n.node_id)+'" tabindex="0" role="button" aria-label="'+esc(n.name)+'" cx="'+p.x+'" cy="'+p.y+'" r="'+(active?10:5.1)+'"><title>'+esc(n.name)+' · '+esc(n.evidence_grade||'等级待核')+'</title></circle>';if(active){output+='<text class="node-label" x="'+(p.x+14)+'" y="'+(p.y-15)+'">'+esc(n.name)+'</text>';output+='<circle cx="'+p.x+'" cy="'+p.y+'" r="17" fill="none" stroke="#88fbd9" stroke-width="1" opacity=".3" class="node-wave"></circle>'; }});
+ edges.forEach(e=>{const a=positions.get(e.source_node_id),b=positions.get(e.target_node_id);if(!a||!b)return;const related=mode!=='before'&&activeEdges.has(e.edge_id);const hypothetical=e.evidence_grade==='C';const active=related&&!hypothetical;const direction=highlight?.change_type||'';output+='<line class="edge '+(active?'highlight '+esc(direction):'')+(hypothetical?' hypothetical':'')+'" x1="'+a.x+'" y1="'+a.y+'" x2="'+b.x+'" y2="'+b.y+'" '+(e.evidence_grade==='C'?'stroke-dasharray="3 8"':e.evidence_grade==='B'?'stroke-dasharray="5 6"':'')+'><title>'+esc(e.evidence_grade==='C'?'待验证的联系假设：':'')+esc(e.relation_description||e.relation_type||'登记关系')+'</title></line>';});
+ nodes.forEach(n=>{const p=positions.get(n.node_id);if(!p)return;const active=mode!=='before'&&activeIds.has(n.node_id);const pending=n.node_status==='pending';const direction=highlight?.change_type||'';output+='<circle class="node '+(active?'highlight '+esc(direction):'')+(pending?' planned':'')+'" data-node="'+esc(n.node_id)+'" tabindex="0" role="button" aria-label="'+esc(n.name)+'" cx="'+p.x+'" cy="'+p.y+'" r="'+(active?10:5.1)+'"><title>'+esc(n.name)+' · '+esc(n.evidence_grade||'等级待核')+'</title></circle>';if(active){output+='<text class="node-label" x="'+(p.x+14)+'" y="'+(p.y-15)+'">'+esc(n.name)+'</text>';if(!pending)output+='<circle cx="'+p.x+'" cy="'+p.y+'" r="17" fill="none" stroke="#88fbd9" stroke-width="1" opacity=".3" class="node-wave"></circle>'; }});
  svg.innerHTML=output;
  svg.querySelectorAll('[data-node]').forEach(el=>{const activate=()=>{const n=nodeBy(el.getAttribute('data-node'));if(!n)return;const connection=edges.filter(e=>e.source_node_id===n.node_id||e.target_node_id===n.node_id);const content=n.name+'｜证据级别 '+(n.evidence_grade||'待核')+' · 登记连接 '+connection.length+' 条。'+(n.description||'');if(svgId==='spotlightNetwork')$('missionEntities').textContent=content;else if(svgId==='network')$('networkCaption').textContent=content;else $('compareExplanation').querySelector('strong').textContent=n.name+' · '+(n.description||'查看当前证据主体');};el.addEventListener('click',activate);el.addEventListener('keydown',event=>{if(event.key==='Enter'||event.key===' '){event.preventDefault();activate();}});});
 }
-function drawNetwork(){graph('network',selected,'after');if($('networkCaption'))$('networkCaption').innerHTML='当前高亮：<strong>'+arr(selected?.involved_node_ids).length+' 个主体、'+arr(selected?.involved_edge_ids).length+' 条登记关系</strong>。鼠标或手指触碰节点可查看名称；浅色为当前事件关联。';}
+function drawNetwork(){graph('network',selected,'after');if($('networkCaption'))$('networkCaption').innerHTML='当前事件：<strong>'+arr(selected?.involved_node_ids).length+' 个主体，'+arr(selected?.involved_edge_ids).length+' 条关联记录</strong>。绿色实线为A/B关联中的高亮；虚线可能仍为待验证假设。点击节点可看主体。';}
 function drawNetworkSide(){$('networkSide').innerHTML=tab==='feed'?'<div class="event-list">'+changes.map(c=>'<button class="event '+(selected?.change_id===c.change_id?'active':'')+'" data-id="'+esc(c.change_id)+'"><small>'+esc(c.event_date||'')+'</small><b>'+esc(c.title)+'</b></button>').join('')+'</div>':detailsHTML(selected);$('networkSide').querySelectorAll('[data-id]').forEach(b=>b.onclick=()=>{choose(changes.find(c=>c.change_id===b.dataset.id));tab='detail';syncTabs();drawNetworkSide();});}
 function syncTabs(){document.querySelectorAll('[data-tab]').forEach(b=>b.classList.toggle('active',b.dataset.tab===tab));}
 function drawBars(){
@@ -220,7 +229,7 @@ function drawBars(){
  const explain=i=>{$('bars').querySelectorAll('.bar-item').forEach(b=>b.classList.toggle('selected',Number(b.dataset.bar)===i));$('barInsight').innerHTML='<span class="label">你可能忽略了什么</span><strong>'+esc(values[i][0])+'</strong><p>'+esc(values[i][2])+'</p>';};
  $('bars').querySelectorAll('[data-bar]').forEach(b=>b.onclick=()=>explain(Number(b.dataset.bar)));explain(1);
 }
-function drawComparison(){if(!selected)return;$('compareSelect').innerHTML=changes.map(c=>'<option value="'+esc(c.change_id)+'" '+(selected.change_id===c.change_id?'selected':'')+'>'+esc(c.title)+'</option>').join('');$('compareSelect').onchange=e=>choose(changes.find(c=>c.change_id===e.target.value));graph('before',selected,'before');graph('after',selected,'after');$('compareExplanation').innerHTML='<strong>'+esc(selected.title)+'</strong><p>'+esc(selected.before_after||'没有前后状态描述')+'</p><p>事件关联主体 '+arr(selected.involved_node_ids).length+' 个，关联关系 '+arr(selected.involved_edge_ids).length+' 条。<strong>仍未确定：</strong>'+esc(selected.uncertainty||'后续结果待观察')+'</p>'+sourceHTML(selected.source_ids);}
+function drawComparison(){if(!selected)return;$('compareSelect').innerHTML=changes.map(c=>'<option value="'+esc(c.change_id)+'" '+(selected.change_id===c.change_id?'selected':'')+'>'+esc(c.title)+'</option>').join('');$('compareSelect').onchange=e=>choose(changes.find(c=>c.change_id===e.target.value));graph('before',selected,'before');graph('after',selected,'after');$('compareExplanation').innerHTML='<strong>'+esc(selected.title)+'</strong><p>'+esc(selected.before_after||'没有前后状态描述')+'</p><p>事件登记主体 '+arr(selected.involved_node_ids).length+' 个，关联关系 '+arr(selected.involved_edge_ids).length+' 条。C级虚线仍属假设，不能当作实际协同。<strong>仍未确定：</strong>'+esc(selected.uncertainty||'后续结果待观察')+'</p>'+sourceHTML(selected.source_ids);}
 
 let missionGuess=null;
 const missionLibrary={
@@ -229,7 +238,7 @@ const missionLibrary={
  C012:{question:"国庆过夜率约25%，能代表全年吗？",options:[["yes","可以代表全年"],["no","不能直接代表"]],correct:"no",insight:"节假日旺季与全年结构不同。现有资料中的全年过夜率仍属于推断区间，不能把旺季读成常态。"}
 };
 const featuredIds=['C004','C008','C012'];
-const featuredNames={'C004':['签约了，就算赢了吗？','80亿签约 / 203亿预计'],'C008':['一条生产线，突然退出。','日产2500吨熟料生产线关闭'],'C012':['人来了，就等于钱留下？','国庆52.97万接待 / 过夜约25%']};
+const featuredNames={'C004':['80亿签约，关系网还没长成。','80亿签约 / 203亿预计 / 协同待核'],'C008':['一条生产线，突然退出。','日产2500吨熟料生产线关闭'],'C012':['人来了，就等于钱留下？','国庆52.97万接待 / 过夜约25%']};
 function featured(){const chosen=featuredIds.map(id=>changes.find(c=>c.change_id===id)).filter(Boolean);return chosen.length>=2?chosen:changes.slice(0,3);}
 function renderSpotlight(){if(!selected||!$('spotlightStories'))return;
  const c=selected;
@@ -243,13 +252,14 @@ function renderSpotlight(){if(!selected||!$('spotlightStories'))return;
  $('spotlightStories').innerHTML=fs.map((item,i)=>{let label=featuredNames[item.change_id]?.[0]||item.title,summary=featuredNames[item.change_id]?.[1]||item.before_after||'已登记的结构变化';return '<button class="story-choice '+(item.change_id===c.change_id?'active':'')+'" data-story="'+esc(item.change_id)+'"><span class="small">线索 '+String(i+1).padStart(2,'0')+' / '+esc(item.event_date||'')+'</span><strong>'+esc(label)+'</strong><em>'+esc(summary)+'</em></button>';}).join('');
  $('spotlightStories').querySelectorAll('[data-story]').forEach(b=>b.onclick=()=>choose(changes.find(item=>item.change_id===b.dataset.story)));
  $('allCount').textContent=changes.length;
- const count=arr(c.involved_edge_ids).length;
+ const relatedEdges=arr(c.involved_edge_ids).map(id=>edges.find(e=>e.edge_id===id)).filter(Boolean);const gradeCount=g=>relatedEdges.filter(e=>e.evidence_grade===g).length;
+ const count=relatedEdges.length;
  const mission=missionLibrary[c.change_id]||{question:"这件事直接涉及多少条已登记联系？",options:[["low","0—1 条"],["mid","2 条"],["high","3 条及以上"]],correct:count<=1?"low":count===2?"mid":"high",insight:"数量仅指登记在事件档案中的直接关系，不能当作经济影响范围。"};
  $('missionQuestion').textContent=mission.question;
  $('guessRow').innerHTML=mission.options.map(([key,label])=>'<button class="guess '+(missionGuess===key?'selected':'')+'" data-guess="'+esc(key)+'">'+esc(label)+'</button>').join('');
  $('guessRow').querySelectorAll('button').forEach(b=>b.onclick=()=>{missionGuess=b.dataset.guess;renderSpotlight();});
  const correct=missionGuess===mission.correct;
- $('reveal').innerHTML=!wasAnswered?'<span class="mini-note">先选一个判断，再让证据回应你。</span>':('<div class="truth-reveal"><div class="truth-top"><span>'+ (correct?'你的判断与证据一致':'这条信息值得重新判断')+'</span><b>'+count+' 条关系被登记</b></div><strong>'+esc(mission.insight)+'</strong><p><span class="truth-mark">仍待核验</span>'+esc(c.uncertainty||'后续影响尚无完整观测')+'</p></div>');
+ $('reveal').innerHTML=!wasAnswered?'<span class="mini-note">先选一个判断，再让证据回应你。</span>':('<div class="truth-reveal"><div class="truth-top"><span>'+ (correct?'你的判断与证据一致':'这条信息值得重新判断')+'</span><b>A证实 '+gradeCount('A')+' · B推断 '+gradeCount('B')+' · C待验证 '+gradeCount('C')+'</b></div><strong>'+esc(mission.insight)+'</strong><p><span class="truth-mark">仍待核验</span>'+esc(c.uncertainty||'后续影响尚无完整观测')+'</p></div>');
  graph('spotlightNetwork',c,wasAnswered?'after':'before');
  if(!wasAnswered){$('missionEntities').textContent='选一个答案，再点亮事件关联主体';}
  if($('openComparison')){$('openComparison').textContent=wasAnswered?'继续：看前后关系 →':'先猜一次，解锁对照 →';$('openComparison').disabled=!wasAnswered;}
