@@ -1,5 +1,5 @@
 import {
- M3_VERSION, FOCAL_IDS, THRESHOLD, U_ANCHORS, COMMUTE_FLOW_ID,
+ M3_VERSION, FOCAL_IDS, U_ANCHORS, COMMUTE_FLOW_ID,
  simulate, compareWorlds, sensitivity, uToFlow, scenariosFromFlow,
  snapshotSignature, validateSaved, findPath
 } from './engine.mjs';
@@ -398,7 +398,7 @@ function pick(canvas,world,x,y){const {w,h}=dims(canvas);
  if(edge){selectEdge(edge,world,x,y);return;}
  // 点空白：关闭浮卡、退出路径/选中边（保留节点高亮）
  state.path=null;state.selectedEdge=null;closePops();
- get('m3-selected').textContent='点击星点查看主体；点击关系线查看权重；拖动画面，两座世界同步旋转。';
+ get('m3-selected').textContent='点击主体或关系查看结构信息；拖动画面，两座情景同步旋转。';
 }
 for(let i=0;i<2;i++){const c=canvases[i];
  c.addEventListener('pointerdown',e=>{dragging={id:e.pointerId,x:e.clientX,y:e.clientY,travel:0};c.setPointerCapture?.(e.pointerId);});
