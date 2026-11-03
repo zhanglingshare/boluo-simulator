@@ -15,6 +15,7 @@
  const short=t=>String(t||'').replace(/[（(][^（）()]{12,}[）)]/g,'').replace(/项目（.*?）/g,'项目');
  const byId=(arr,k)=>new Map((arr||[]).map(x=>[x[k],x]));
  const isAssumption=e=>e?.evidence_grade==='C'||e?.evidence_type==='待验证假设';
+ const isInferred=e=>e?.evidence_grade==='B'||e?.evidence_type==='证据推断';
  const hasConstruction=(c,e)=>/施工|重建|建设|在建|预计|目标|冲刺|尚未通车/.test([c.title,c.uncertainty,e?.valid_period].join(''));
  function validate(evidence,changes){
   if(!evidence||!Array.isArray(evidence.nodes)||!Array.isArray(evidence.edges)||!changes||!Array.isArray(changes.changes))throw Error('数据包结构不完整');
@@ -32,6 +33,7 @@
  }
  function lifecycle(c,e,nm){
   if(isAssumption(e)||isPending(nm.get(e.source_node_id))||isPending(nm.get(e.target_node_id)))return 'hypothesis';
+  if(isInferred(e))return 'inferred';
   if(c.change_id==='C006')return 'construction';
   if(c.change_id==='C007')return 'not_open';
   if(c.change_id==='C008')return 'line_closed';
@@ -85,13 +87,14 @@
    const status=focus?lifecycle(c,e,nm):'background';
    const introduced=e.source_node_id&&nodes.some(n=>n.id===e.source_node_id&&n.introduced)||nodes.some(n=>n.id===e.target_node_id&&n.introduced);
    let before='normal',after='normal',label='已有关系';
-   if(introduced){before='absent';after=(status==='hypothesis'?'hypothesis':'recorded');}
+   if(introduced){before='absent';after=(status==='hypothesis'?'hypothesis':status==='inferred'?'inferred':'recorded');}
    else if(focus){
     if(status==='line_closed'){before='normal';after='closed';label='生产线退出';}
     else if(status==='construction'){before='normal';after='construction';label='施工中，不代表新桥已通车';}
     else if(status==='not_open'){before='absent';after='construction';label='建设／目标，不代表已通车';}
     else if(status==='rectification'){before='normal';after=e.change_status==='无显著变化'?'normal':'related';label='停产整改，非永久退出';}
     else if(status==='hypothesis'){before='absent';after='hypothesis';label='待验证产业关联';}
+    else if(status==='inferred'){before='normal';after='inferred';label='间接证据关联，不等于已核验传导';}
     else if(c.change_type==='new_edge'){before='absent';after='recorded';label='新增记录';}
     else if(c.change_type==='strengthen'){before='normal';after='related';label='事件相关，关系变化幅度未量化';}
     else if(c.change_type==='weaken'){before='normal';after='related';label='事件相关，不可据此判断所有关系减弱';}
@@ -99,6 +102,7 @@
    if(!focus){label='背景关系（未认定由本事件改变）';}
    if(focus&&e.change_status==='无显著变化'){after='normal';label='与事件关联，未记录本次发生变化';}
    if(isAssumption(e)&&focus&&after!=='absent'&&after!=='closed'){after='hypothesis';label='待验证关系，不代表实际供货';}
+   else if(isInferred(e)&&focus&&after!=='absent'&&after!=='closed'&&after!=='normal'){after='inferred';label='根据间接证据建立的研究性关联';}
    return {id:e.edge_id,source:e.source_node_id,target:e.target_node_id,relation:e.relation_type,description:e.relation_description,
     evidence:e.evidence_type,grade:e.evidence_grade,status,focus,before,after,label,source_ids:e.source_ids||[],change_status:e.change_status,
     counter_evidence:e.counter_evidence||''};
