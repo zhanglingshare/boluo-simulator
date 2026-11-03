@@ -31,7 +31,7 @@ async function run(){
   await desktop.locator('#bc-after [data-node="hpm"]').click({force:true});
   assert.match(await desktop.locator('#bc-selected-text').innerText(),/待落地/);
   const view0=await desktop.locator('#bc-before').getAttribute('viewBox');
-  await desktop.locator('#bc-zoom').fill('130');
+  await desktop.locator('#bc-zoom').evaluate(el=>{el.value='130';el.dispatchEvent(new Event('input',{bubbles:true}));});
   const view1=await desktop.locator('#bc-before').getAttribute('viewBox');
   assert.notEqual(view0,view1,'同步缩放必须有效');
   assert.equal(view1,await desktop.locator('#bc-after').getAttribute('viewBox'),'两图缩放必须同步');
