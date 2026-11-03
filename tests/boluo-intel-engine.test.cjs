@@ -23,6 +23,16 @@ test('uncertain evidence remains conditional, never auto promoted to observed ed
  assert.ok(all.blindspots.some(b=>b.kind==='关系待核验'));
  assert.ok(all.blindspots.some(b=>b.kind==='机制盲区'));
 });
+test('relationship propositions must keep mechanism hypotheses separate from recorded evidence',()=>{
+ const s=Engine.withInputs(...data,'C004');
+ const rows=Engine.propositions(s);
+ assert.ok(rows.some(x=>x.kind==='关系命题'&&x.grade==='C'));
+ assert.ok(rows.some(x=>x.kind==='机制候选'));
+ for(const x of rows.filter(x=>x.kind==='机制候选')){
+  assert.match(x.status,/待检验|非已证实/);
+  assert.match(x.caveat,/需补证据/);
+ }
+});
 test('a single-edge stress is deterministic and only changes recorded reachability',()=>{
  const s=Engine.withInputs(...data,'C006');
  const pivot=s.model.coreIds[0],base=Engine.inspect(s,{mode:'ABC',pivot});
