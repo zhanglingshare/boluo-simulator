@@ -1,0 +1,75 @@
+name: boluo-editorial-five-page-check
+
+on:
+  pull_request:
+    paths:
+      - 'index-legacy-2026-11-03.html'
+      - 'town.html'
+      - 'industry-changes.html'
+      - 'who.html'
+      - 'relation-compare.html'
+      - 'assets/boluo-editorial*'
+      - 'assets/boluo-industry-changes*'
+      - 'assets/boluo-journey.js'
+      - 'assets/boluo-compare.js'
+      - 'data/boluo-editorial-fact-audit-20261103.json'
+      - 'tests/boluo-editorial*'
+      - 'tests/verify_journey.js'
+      - '.github/workflows/boluo-editorial-check.yml'
+  push:
+    branches: [main]
+    paths:
+      - 'index-legacy-2026-11-03.html'
+      - 'town.html'
+      - 'industry-changes.html'
+      - 'who.html'
+      - 'relation-compare.html'
+      - 'assets/boluo-editorial*'
+      - 'assets/boluo-industry-changes*'
+      - 'assets/boluo-journey.js'
+      - 'assets/boluo-compare.js'
+      - 'data/boluo-editorial-fact-audit-20261103.json'
+      - 'tests/boluo-editorial*'
+      - 'tests/verify_journey.js'
+      - '.github/workflows/boluo-editorial-check.yml'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  accept:
+    runs-on: ubuntu-latest
+    timeout-minutes: 25
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - name: Evidence, page semantics and cognition handoff
+        run: |
+          node --test tests/boluo-editorial-data.test.cjs
+          node --test tests/boluo-compare-model.test.cjs
+          node tests/verify_journey.js
+      - name: Install Playwright browser
+        run: |
+          npm install --no-save playwright
+          npx playwright install --with-deps chromium
+      - name: Start local GitHub Pages preview
+        run: |
+          python3 -m http.server 8765 --bind 127.0.0.1 >/tmp/boluo-editorial.log 2>&1 &
+          for i in $(seq 1 30); do
+            if curl --silent --fail http://127.0.0.1:8765/industry-changes.html -o /dev/null; then exit 0; fi
+            sleep 1
+          done
+          cat /tmp/boluo-editorial.log
+          exit 1
+      - name: Acceptance browser test 1440 desktop and 390 mobile
+        run: node tests/boluo-editorial-browser.cjs
+      - name: Upload 10 UI acceptance screenshots
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: boluo-editorial-01-05-desktop-mobile
+          path: artifacts/editorial/*.png
+          if-no-files-found: warn
