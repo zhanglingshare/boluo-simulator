@@ -1,6 +1,6 @@
 <!doctype html>
 <html lang="zh-CN"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
-<title>博罗产业风洞 · 基本面</title>
+<title>04 · 博罗基本面｜真实数据与发展约束</title>
 <script src="lib/echarts.min.js"></script>
 <style>
 *{box-sizing:border-box}
@@ -30,6 +30,7 @@ h1{font-size:20px;margin:0 0 2px}
 @media(min-width:1024px){.wrap{max-width:1200px!important;padding:24px}}</style><link rel="stylesheet" href="assets/boluo-ui.css">
 <link rel="stylesheet" href="assets/boluo-journey.css">
 <script defer src="assets/boluo-journey.js"></script>
+<link rel="stylesheet" href="assets/boluo-editorial.css">
 </head><body class="bl-ui bl-dark bl-ui--who" data-bl-page="who" data-bl-journey="basic">
 
 <div class="nav">
@@ -50,8 +51,9 @@ h1{font-size:20px;margin:0 0 2px}
 
 <div class="wrap">
   <h1>博罗现在长什么样</h1>
-  <p class="sub">全部来自2025统计公报。广东首个千亿县，到底是什么结构？</p>
+  <p class="sub">2025统计基准 · 看博罗拥有什么、依赖什么、可能缺什么。2026年微观变化请从03追踪。</p>
 
+  <div class="be-quality-note">核查口径：2024年GDP已按最终核实值更正为970.87亿元；2025年1005.45亿元为公布值，工业、人口、投资等使用2025年统计公报口径。<a href="https://static.nfnews.com/content/202601/31/c12129042.html" target="_blank" rel="noopener noreferrer">查看GDP修订依据 ↗</a>　<a href="https://www.boluo.gov.cn/bmzb/xtjj/tjyj/tjfx/content/post_5801531.html" target="_blank" rel="noopener noreferrer">查看统计公报 ↗</a></div>
   <div class="kpis">
     <div class="kpi"><div class="v">1005亿</div><div class="l">GDP</div><div class="d">+5.5%</div></div>
     <div class="kpi"><div class="v">+8.7%</div><div class="l">规上工业增加值</div><div class="d">电子信息+23%</div></div>
@@ -63,7 +65,7 @@ h1{font-size:20px;margin:0 0 2px}
     <div class="card">
       <h2>📈 GDP怎么涨上来的</h2>
       <div id="c1" class="chart"></div>
-      <div class="plain" style="margin-top:8px"><span class="lab">人话</span>博罗用了多少年从几百亿冲到一千亿？这条线就是答案。2025年迈过千亿门槛。</div>
+      <div class="plain" style="margin-top:8px"><span class="lab">人话</span>博罗用了多少年从几百亿冲到一千亿？这条线就是答案。2025年迈过千亿门槛。2024年值采用最终核实口径。</div>
     </div>
     <div class="card">
       <h2>🥧 三次产业结构</h2>
@@ -74,14 +76,14 @@ h1{font-size:20px;margin:0 0 2px}
 
   <div class="grid2">
     <div class="card">
-      <h2>🏭 工业里什么在涨</h2>
+      <h2>规上工业：哪类行业在涨</h2>
       <div id="c3" class="chart"></div>
-      <div class="plain" style="margin-top:8px"><span class="lab">人话</span>电子信息+23%最猛，电气机械+13.7%。这两个行业占了工业近四成。</div>
+      <div class="plain" style="margin-top:8px"><span class="lab">人话</span>电子设备制造增加值+23.0%，占规上工业增加值23.2%；电气机械+13.7%，占14.2%。两项占比合计37.4%，增速与占比不能混淆。</div>
     </div>
     <div class="card">
-      <h2>🏘️ 镇街工业谁在扛</h2>
+      <h2>工业基本盘：四个结构信号</h2>
       <div id="c4" class="chart"></div>
-      <div class="plain" style="margin-top:8px"><span class="lab">人话</span>园洲344亿第一，石湾企业最多。这两个镇都挨着东莞——博罗的工业重心在西边。</div>
+      <div class="plain" style="margin-top:8px"><span class="lab">人话</span>这些指标分别反映工业所有制、企业规模、工业投资和创新主体。原镇街图混用了企业数和产值，已撤下，不再虚构统一排名。</div>
     </div>
   </div>
 
@@ -89,7 +91,7 @@ h1{font-size:20px;margin:0 0 2px}
     <div class="card">
       <h2>✂️ 工业在涨，投资在跌</h2>
       <div id="c5" class="chart"></div>
-      <div class="plain" style="margin-top:8px"><span class="lab">人话</span>规上工业+8.7%，但固投-18.8%、房地产-47.6%。现在的增长来自之前投的产能，新投资在调整。</div>
+      <div class="plain" style="margin-top:8px"><span class="lab">人话</span>规上工业+8.7%，但固投-18.8%、房地产-47.6%。工业增长和投资下降同时出现；但不能据此认定增长全部来自旧产能，需要核验新增项目、产能利用率与订单变化。</div>
     </div>
     <div class="card">
       <h2>👥 人在哪</h2>
@@ -102,7 +104,7 @@ h1{font-size:20px;margin:0 0 2px}
     <h2>🎯 从1005亿到1600亿，差多少</h2>
     <div id="c7" class="chart" style="height:260px"></div>
     <div class="plain">
-      <span class="lab">人话</span>2025年1005亿，2030年目标1600亿。五年要涨59%，年均约9.7%——比2025年实际增速5.5%快了近一倍。这中间的差距，就是后面五条路要填的。
+      <span class="lab">人话</span>2025年GDP现价1005.45亿元，2030年1600亿元为规划目标。若只做名义量数学换算，五年复合增幅约9.7%／年，不能直接与按不变价计算的2025年实际增长5.5%比较。各年度点仅为等额插值示意，非官方逐年目标或预测。
     </div>
   </div>
 
@@ -110,94 +112,93 @@ h1{font-size:20px;margin:0 0 2px}
 </div>
 
 <script>
-const dark={text:'#93a4bd',axis:'#2b3a55'};
-const baseGrid={left:50,right:20,top:30,bottom:30};
+const dark={text:'#617688',axis:'#e0e7ec'};
+const baseGrid={left:58,right:26,top:36,bottom:36};
 
 echarts.init(document.getElementById('c1')).setOption({
+  animation:false,
   backgroundColor:'transparent',
-  tooltip:{trigger:'axis',backgroundColor:'#16203a',borderColor:'#2b3a55',textStyle:{color:'#e6edf3'}},
+  tooltip:{trigger:'axis',backgroundColor:'#ffffff',borderColor:'#dfe6ed',textStyle:{color:'#294152'}},
   grid:baseGrid,
-  xAxis:{type:'category',data:['2020','2021','2022','2023','2024','2025'],axisLine:{lineStyle:{color:dark.axis}},axisLabel:{color:dark.text}},
-  yAxis:{type:'value',axisLine:{lineStyle:{color:dark.axis}},axisLabel:{color:dark.text},splitLine:{lineStyle:{color:'#1c2739'}}},
-  series:[{type:'line',data:[613,695,783,869,952,1005.45],smooth:true,lineStyle:{color:'#22c55e',width:3},areaStyle:{color:{type:'linear',x:0,y:0,x2:0,y2:1,colorStops:[{offset:0,color:'rgba(34,197,94,.3)'},{offset:1,color:'rgba(34,197,94,0)'}]}},itemStyle:{color:'#22c55e'},label:{show:true,color:'#4ade80',fontSize:10}}]
+  xAxis:{type:'category',data:['2024最终核实','2025初步核算'],axisLine:{lineStyle:{color:dark.axis}},axisLabel:{color:dark.text}},
+  yAxis:{type:'value',min:900,max:1100,axisLine:{lineStyle:{color:dark.axis}},axisLabel:{color:dark.text,formatter:'{value}亿元'},splitLine:{lineStyle:{color:'#edf1f4'}}},
+  series:[{type:'line',data:[970.87,1005.45],smooth:true,lineStyle:{color:'#a3444c',width:3},areaStyle:{color:{type:'linear',x:0,y:0,x2:0,y2:1,colorStops:[{offset:0,color:'rgba(34,197,94,.3)'},{offset:1,color:'rgba(34,197,94,0)'}]}},itemStyle:{color:'#a3444c'},label:{show:true,color:'#ad5059',fontSize:10}}]
 });
 
 echarts.init(document.getElementById('c2')).setOption({
+  animation:false,
   backgroundColor:'transparent',
-  tooltip:{trigger:'item',backgroundColor:'#16203a',borderColor:'#2b3a55',textStyle:{color:'#e6edf3'}},
+  tooltip:{trigger:'item',backgroundColor:'#ffffff',borderColor:'#dfe6ed',textStyle:{color:'#294152'}},
   legend:{bottom:0,textStyle:{color:dark.text,fontSize:11}},
   series:[{type:'pie',radius:['40%','70%'],center:['50%','45%'],
-    data:[{value:107.44,name:'一产 10.7%',itemStyle:{color:'#84cc16'}},{value:549.01,name:'二产 54.6%',itemStyle:{color:'#22c55e'}},{value:349.00,name:'三产 34.7%',itemStyle:{color:'#3b82f6'}}],
+    data:[{value:107.44,name:'一产 10.7%',itemStyle:{color:'#84cc16'}},{value:549.01,name:'二产 54.6%',itemStyle:{color:'#a3444c'}},{value:349.00,name:'三产 34.7%',itemStyle:{color:'#3b82f6'}}],
     label:{color:'#cbd5e1',fontSize:11,formatter:'{b}'}
   }]
 });
 
 echarts.init(document.getElementById('c3')).setOption({
+  animation:false,
   backgroundColor:'transparent',
-  tooltip:{trigger:'axis',backgroundColor:'#16203a',borderColor:'#2b3a55',textStyle:{color:'#e6edf3'}},
+  tooltip:{trigger:'axis',backgroundColor:'#ffffff',borderColor:'#dfe6ed',textStyle:{color:'#294152'}},
   grid:baseGrid,
-  xAxis:{type:'value',axisLine:{lineStyle:{color:dark.axis}},axisLabel:{color:dark.text},splitLine:{lineStyle:{color:'#1c2739'}}},
-  yAxis:{type:'category',data:['生物医药','食品饮料','精细化工','电气机械','电子信息'],axisLine:{lineStyle:{color:dark.axis}},axisLabel:{color:dark.text}},
+  xAxis:{type:'value',axisLine:{lineStyle:{color:dark.axis}},axisLabel:{color:dark.text},splitLine:{lineStyle:{color:'#edf1f4'}}},
+  yAxis:{type:'category',data:['橡胶塑料','金属制品','电气机械','电力热力','电子设备'],axisLine:{lineStyle:{color:dark.axis}},axisLabel:{color:dark.text}},
   series:[{type:'bar',data:[
-    {value:5.2,itemStyle:{color:'#3b82f6'}},
-    {value:6.8,itemStyle:{color:'#3b82f6'}},
-    {value:8.1,itemStyle:{color:'#3b82f6'}},
-    {value:13.7,itemStyle:{color:'#22c55e'}},
-    {value:23.0,itemStyle:{color:'#4ade80'}}
-  ],barWidth:18,label:{show:true,position:'right',color:'#4ade80',fontSize:11,formatter:'{c}%'}}]
+    {value:-4.2,itemStyle:{color:'#b55759'}},
+    {value:11.1,itemStyle:{color:'#7d91a5'}},
+    {value:13.7,itemStyle:{color:'#64879a'}},
+    {value:14.0,itemStyle:{color:'#7797a7'}},
+    {value:23.0,itemStyle:{color:'#a13e47'}}
+  ],barWidth:18,label:{show:true,position:'right',color:'#ad5059',fontSize:11,formatter:'{c}%'}}]
 });
 
-echarts.init(document.getElementById('c4')).setOption({
-  backgroundColor:'transparent',
-  tooltip:{trigger:'axis',backgroundColor:'#16203a',borderColor:'#2b3a55',textStyle:{color:'#e6edf3'}},
-  grid:{left:80,right:30,top:20,bottom:30},
-  xAxis:{type:'value',axisLine:{lineStyle:{color:dark.axis}},axisLabel:{color:dark.text},splitLine:{lineStyle:{color:'#1c2739'}}},
-  yAxis:{type:'category',data:['杨侨','湖镇','罗阳','石湾(企业数)','园洲'],axisLine:{lineStyle:{color:dark.axis}},axisLabel:{color:dark.text}},
-  series:[{type:'bar',data:[
-    {value:23,itemStyle:{color:'#475569'}},
-    {value:68,itemStyle:{color:'#475569'}},
-    {value:238,itemStyle:{color:'#3b82f6'}},
-    {value:251,itemStyle:{color:'#22c55e'}},
-    {value:344,itemStyle:{color:'#4ade80'}}
-  ],barWidth:16,label:{show:true,position:'right',color:'#cbd5e1',fontSize:10,formatter:'{value}亿'}}]
-});
+// 原镇街图将企业数和产值混成“亿元”，不允许以同一刻度比较。
+document.getElementById('c4').innerHTML=
+ '<div class="be-town-matrix">'+
+ '<div class="be-town"><strong>68.6%</strong><span>民营企业占规上工业增加值比重</span></div>'+
+ '<div class="be-town"><strong>56.8%</strong><span>小微企业占规上工业增加值比重</span></div>'+
+ '<div class="be-town"><strong>−12.7%</strong><span>2025工业投资同比变化</span></div>'+
+ '<div class="be-town"><strong>686家</strong><span>2025年末高新技术企业（含迁入）</span></div>'+
+ '</div>';
 
 echarts.init(document.getElementById('c5')).setOption({
+  animation:false,
   backgroundColor:'transparent',
-  tooltip:{trigger:'axis',backgroundColor:'#16203a',borderColor:'#2b3a55',textStyle:{color:'#e6edf3'}},
+  tooltip:{trigger:'axis',backgroundColor:'#ffffff',borderColor:'#dfe6ed',textStyle:{color:'#294152'}},
   grid:{left:50,right:20,top:20,bottom:30},
   xAxis:{type:'category',data:['规上工业','社消零','固投','房地产'],axisLine:{lineStyle:{color:dark.axis}},axisLabel:{color:dark.text,fontSize:10}},
-  yAxis:{type:'value',axisLine:{lineStyle:{color:dark.axis}},axisLabel:{color:dark.text,formatter:'{value}%'},splitLine:{lineStyle:{color:'#1c2739'}}},
+  yAxis:{type:'value',axisLine:{lineStyle:{color:dark.axis}},axisLabel:{color:dark.text,formatter:'{value}%'},splitLine:{lineStyle:{color:'#edf1f4'}}},
   series:[{type:'bar',data:[
-    {value:8.7,itemStyle:{color:'#22c55e'}},
-    {value:3.9,itemStyle:{color:'#22c55e'}},
+    {value:8.7,itemStyle:{color:'#4c8198'}},
+    {value:3.9,itemStyle:{color:'#4c8198'}},
     {value:-18.8,itemStyle:{color:'#f87171'}},
     {value:-47.6,itemStyle:{color:'#ef4444'}}
   ],barWidth:24,label:{show:true,position:'top',color:'#cbd5e1',fontSize:10,formatter:'{c}%'}}]
 });
 
 echarts.init(document.getElementById('c6')).setOption({
+  animation:false,
   backgroundColor:'transparent',
-  tooltip:{trigger:'item',backgroundColor:'#16203a',borderColor:'#2b3a55',textStyle:{color:'#e6edf3'}},
+  tooltip:{trigger:'item',backgroundColor:'#ffffff',borderColor:'#dfe6ed',textStyle:{color:'#294152'}},
   legend:{bottom:0,textStyle:{color:dark.text,fontSize:11}},
   series:[{type:'pie',radius:['40%','70%'],center:['50%','45%'],
-    data:[{value:74.6,name:'城镇 60.2%',itemStyle:{color:'#3b82f6'}},{value:49.3,name:'农村 39.8%',itemStyle:{color:'#84cc16'}}],
+    data:[{value:74.60,name:'城镇 60.2%',itemStyle:{color:'#466a84'}},{value:49.34,name:'农村 39.8%',itemStyle:{color:'#8fa8a0'}}],
     label:{color:'#cbd5e1',fontSize:11,formatter:'{b}'}
   }]
 });
 
 echarts.init(document.getElementById('c7')).setOption({
-  backgroundColor:'transparent',
-  tooltip:{trigger:'axis',backgroundColor:'#16203a',borderColor:'#2b3a55',textStyle:{color:'#e6edf3'}},
-  legend:{top:0,textStyle:{color:dark.text,fontSize:10}},
-  grid:baseGrid,
-  xAxis:{type:'category',data:['2025','2026','2027','2028','2029','2030'],axisLine:{lineStyle:{color:dark.axis}},axisLabel:{color:dark.text}},
-  yAxis:{type:'value',min:900,axisLine:{lineStyle:{color:dark.axis}},axisLabel:{color:dark.text},splitLine:{lineStyle:{color:'#1c2739'}}},
-  series:[
-    {name:'实际',type:'line',data:[1005.45,null,null,null,null,null],lineStyle:{color:'#22c55e',width:3},itemStyle:{color:'#22c55e'},symbolSize:10},
-    {name:'目标轨道',type:'line',data:[1005.45,1070,1145,1240,1380,1600],lineStyle:{color:'#fbbf24',width:2,type:'dashed'},itemStyle:{color:'#fbbf24'}},
-    {name:'当前速度外推',type:'line',data:[1005.45,1060,1118,1179,1244,1312],lineStyle:{color:'#f87171',width:2,type:'dotted'},itemStyle:{color:'#f87171'}}
-  ]
+  animation:false,
+ backgroundColor:'transparent',
+ tooltip:{trigger:'axis',backgroundColor:'#fff',borderColor:'#dfe6ed',textStyle:{color:'#25384d'}},
+ legend:{top:0,textStyle:{color:'#536779',fontSize:11}},
+ grid:baseGrid,
+ xAxis:{type:'category',data:['2025','2026','2027','2028','2029','2030'],axisLine:{lineStyle:{color:'#dfe6ed'}},axisLabel:{color:'#61788b'}},
+ yAxis:{type:'value',min:900,axisLine:{lineStyle:{color:'#dfe6ed'}},axisLabel:{color:'#61788b'},splitLine:{lineStyle:{color:'#edf1f4'}}},
+ series:[
+   {name:'2025统计基准',type:'line',data:[1005.45,null,null,null,null,null],symbolSize:9,itemStyle:{color:'#345d77'}},
+   {name:'1600亿元的等额插值（示意）',type:'line',data:[1005.45,1124.36,1243.27,1362.18,1481.09,1600],lineStyle:{color:'#ad444c',width:2,type:'dashed'},itemStyle:{color:'#ad444c'},symbolSize:7}
+ ]
 });
 </script>
 

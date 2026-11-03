@@ -1,12 +1,12 @@
 {
   "schema_version": 2,
   "region": "boluo",
-  "updated": "2026-11-02 14:11",
+  "updated": "2026-11-03",
   "fetched_at": "2026-11-02 14:11",
   "frequency": "每日更新一次",
-  "count": 12,
+  "count": 13,
   "stats": [],
-  "note": "话题按编辑关注程度排序，标注关注档（高/较高/中）与来源级别；每条显示原报道时间、最近抓取与核验状态（官方原文或≥2独立来源=已核验，单源媒体/本地=待核实），缺失标「待核实」。本页不展示平台后台真实阅读、转发、点赞数据。话题均来自公开渠道，每日更新。",
+  "note": "话题按编辑关注程度排序，标注关注档（高/较高/中）与来源级别；每条显示原报道时间、最近抓取与核验状态（官方原文或≥2独立来源=已核验，单源媒体/本地=待核实），缺失标「待核实」。本页不展示平台后台真实阅读、转发、点赞数据。话题来自公开渠道；具体是否更新以各条发布时间与采集时间为准。2026-11-03人工核查：新增广州日报两县文旅报道；列表页或门户页链接暂不作为单篇新闻直接核验证据。 更新日反映本次人工编辑发布；fetched_at仍反映原数据雷达的上次采集时间，新增条目有各自的fetched_at。",
   "items": [
     {
       "title": "博罗53家企业组团亮相第140届广交会",
@@ -21,7 +21,7 @@
       "published_at": "2026-10-20",
       "event_date": "2026-10-15",
       "fetched_at": "2026-11-02 14:11",
-      "verified_status": "已核验",
+      "verified_status": "待核实",
       "fate": {
         "kind": "info",
         "ident": "",
@@ -29,6 +29,31 @@
         "objects": "",
         "direction": "利好",
         "assumption": ""
+      },
+      "source_audit_note": "当前链接指向列表/入口页，尚缺与标题一一对应的原始报道直链；不否定事实，但暂停独立核验标识"
+    },
+    {
+      "title": "环南昆山—罗浮山引领区：2026年前9个月博罗与龙门合计游客1672万人次",
+      "cat": "tourism",
+      "emoji": "🧭",
+      "tier": "较高",
+      "srcLevel": "媒体报道",
+      "live": false,
+      "source": "广州日报·大洋网",
+      "url": "https://news.dayoo.com/guangdong/202611/02/139996_55019452.htm",
+      "summary": "广州日报11月2日报道：2026年1—9月，博罗、龙门两县合计游客1672万人次，住宿游客419万人次、旅游收入85亿元；属于两县合并口径，不得记为博罗单县数据，也不代表新增产业交易关系。",
+      "published_at": "2026-11-02",
+      "event_date": "2026-01至09",
+      "fetched_at": "2026-11-03",
+      "verified_status": "待核实",
+      "source_audit_note": "单一权威媒体公开报道；待取得独立官方统计核对",
+      "fate": {
+        "kind": "info",
+        "ident": "",
+        "shocks": [],
+        "objects": "博罗—龙门跨区域文旅流动",
+        "direction": "待判断",
+        "assumption": "两县合并数据不可拆分成博罗县独立值"
       }
     },
     {
@@ -44,7 +69,7 @@
       "published_at": "2026-10-28",
       "event_date": "2026-10-28",
       "fetched_at": "2026-11-02 14:11",
-      "verified_status": "已核验",
+      "verified_status": "待核实",
       "fate": {
         "kind": "info",
         "ident": "",
@@ -52,7 +77,8 @@
         "objects": "",
         "direction": "利好",
         "assumption": ""
-      }
+      },
+      "source_audit_note": "当前链接指向列表/入口页，尚缺与标题一一对应的原始报道直链；不否定事实，但暂停独立核验标识"
     },
     {
       "title": "博罗首家公办托育服务中心试运营",
@@ -67,7 +93,7 @@
       "published_at": "2026-10-22",
       "event_date": "2026-10-22",
       "fetched_at": "2026-11-02 14:11",
-      "verified_status": "已核验",
+      "verified_status": "待核实",
       "fate": {
         "kind": "info",
         "ident": "",
@@ -75,7 +101,8 @@
         "objects": "",
         "direction": "利好",
         "assumption": ""
-      }
+      },
+      "source_audit_note": "当前链接指向列表/入口页，尚缺与标题一一对应的原始报道直链；不否定事实，但暂停独立核验标识"
     },
     {
       "title": "柏塘腊味企业提前开工备年货",
@@ -90,7 +117,7 @@
       "published_at": "2026-10-30",
       "event_date": "2026-10-30",
       "fetched_at": "2026-11-02 14:11",
-      "verified_status": "已核验",
+      "verified_status": "待核实",
       "fate": {
         "kind": "life",
         "ident": "",
@@ -98,7 +125,8 @@
         "objects": "",
         "direction": "利好",
         "assumption": ""
-      }
+      },
+      "source_audit_note": "当前链接指向列表/入口页，尚缺与标题一一对应的原始报道直链；不否定事实，但暂停独立核验标识"
     },
     {
       "title": "博罗甜玉米精加工基地新厂区投产",
@@ -113,7 +141,7 @@
       "published_at": "2026-10-15",
       "event_date": "2026-10-15",
       "fetched_at": "2026-11-02 14:11",
-      "verified_status": "已核验",
+      "verified_status": "待核实",
       "fate": {
         "kind": "info",
         "ident": "",
@@ -121,7 +149,8 @@
         "objects": "",
         "direction": "利好",
         "assumption": ""
-      }
+      },
+      "source_audit_note": "当前链接指向列表/入口页，尚缺与标题一一对应的原始报道直链；不否定事实，但暂停独立核验标识"
     },
     {
       "title": "县人社局深入园洲龙溪企业助企纾困",
@@ -159,7 +188,7 @@
       "published_at": "2026-10-26",
       "event_date": "2026-10-26",
       "fetched_at": "2026-11-02 14:11",
-      "verified_status": "已核验",
+      "verified_status": "待核实",
       "fate": {
         "kind": "info",
         "ident": "",
@@ -167,7 +196,8 @@
         "objects": "",
         "direction": "中性",
         "assumption": ""
-      }
+      },
+      "source_audit_note": "当前链接指向列表/入口页，尚缺与标题一一对应的原始报道直链；不否定事实，但暂停独立核验标识"
     },
     {
       "title": "2026“罗浮山杯”网球团体邀请赛11月7日开赛",
@@ -251,7 +281,7 @@
       "published_at": "2026-10-30",
       "event_date": "2026-10-30",
       "fetched_at": "2026-11-02 14:11",
-      "verified_status": "已核验",
+      "verified_status": "待核实",
       "fate": {
         "kind": "info",
         "ident": "",
@@ -259,7 +289,8 @@
         "objects": "",
         "direction": "利好",
         "assumption": ""
-      }
+      },
+      "source_audit_note": "当前链接指向列表/入口页，尚缺与标题一一对应的原始报道直链；不否定事实，但暂停独立核验标识"
     },
     {
       "title": "龙华镇开展道路交通秩序“严管严控三个月”专项整治",
@@ -274,7 +305,7 @@
       "published_at": "2026-11-02",
       "event_date": "2026-11-02",
       "fetched_at": "2026-11-02 14:11",
-      "verified_status": "已核验",
+      "verified_status": "待核实",
       "fate": {
         "kind": "info",
         "ident": "",
@@ -282,7 +313,9 @@
         "objects": "",
         "direction": "中性",
         "assumption": ""
-      }
+      },
+      "source_audit_note": "当前链接指向列表/入口页，尚缺与标题一一对应的原始报道直链；不否定事实，但暂停独立核验标识"
     }
-  ]
+  ],
+  "editorial_reviewed_at": "2026-11-03"
 }
