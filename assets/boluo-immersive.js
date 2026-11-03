@@ -196,9 +196,8 @@ function changeBridge(){
   if(!node||!graph.contains(node))return;
   const original=pointerPosition(ev),id=node.dataset.node;
   drag={id,pid:ev.pointerId,start:original,last:original,orig:layout.get(eventKey())?.get(id)||{x:0,y:0},moved:false};
-  try{graph.setPointerCapture(ev.pointerId);}catch(e){}
  });
- graph.addEventListener('pointermove',ev=>{
+ window.addEventListener('pointermove',ev=>{
   if(!drag||ev.pointerId!==drag.pid)return;
   const p=pointerPosition(ev);
   if(!drag.moved&&Math.hypot(p.x-drag.start.x,p.y-drag.start.y)<6)return;
@@ -218,11 +217,10 @@ function changeBridge(){
    graph.dispatchEvent(new Event('keyup',{bubbles:true}));
    window.setTimeout(()=>{suppress=false;},180);
   }
-  try{graph.releasePointerCapture(ev.pointerId);}catch(e){}
   drag=null;
  }
- graph.addEventListener('pointerup',endDrag);
- graph.addEventListener('pointercancel',endDrag);
+ window.addEventListener('pointerup',endDrag);
+ window.addEventListener('pointercancel',endDrag);
  graph.addEventListener('click',ev=>{if(suppress){ev.preventDefault();ev.stopImmediatePropagation();suppress=false;}},true);
  schedule();
 }
