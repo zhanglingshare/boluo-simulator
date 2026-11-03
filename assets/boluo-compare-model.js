@@ -101,7 +101,7 @@
     else if(c.change_type==='weaken'){before='normal';after='related';label='事件相关，不可据此判断所有关系减弱';}
    }
    if(!focus){label='背景关系（未认定由本事件改变）';}
-   if(focus&&e.change_status==='无显著变化'){after='normal';label='与事件关联，未记录本次发生变化';}
+   if(focus&&e.change_status==='无显著变化'){after=baseline;label='与事件关联，未记录本次发生变化';}
    if(isAssumption(e)&&focus&&after!=='absent'&&after!=='closed'){after='hypothesis';label='待验证关系，不代表实际供货';}
    else if(isInferred(e)&&focus&&after!=='absent'&&after!=='closed'&&after!=='normal'){after='inferred';label='根据间接证据建立的研究性关联';}
    return {id:e.edge_id,source:e.source_node_id,target:e.target_node_id,relation:e.relation_type,description:e.relation_description,
