@@ -10,7 +10,8 @@ const expected={
  today:'index-legacy-2026-11-03.html',
  town:'town.html',
  changes:'holo-home-v9.html',
- basic:'who.html'
+ basic:'who.html',
+ comparison:'relation-compare.html'
 };
 const changeData=JSON.parse(get('data/relationship-changes-v1.json'));
 assert.ok(changeData.changes.some(c=>c.change_id==='C004'),'C004必须是已收录的正式变化ID');
@@ -81,9 +82,11 @@ assert.ok(find(changes.nav,'bl-journey-next').href.startsWith('who.html?from=cha
 const basic=make('basic','?from=changes&change=C004');
 const baseline=find(basic.body,'bl-journey-baseline');
 assert.ok(baseline&&!baseline.hidden,'04页必须展示选中事件的宏观上下文');
-assert.ok(find(basic.nav,'bl-journey-next')===null,'05未建成时不得制造假链接');
+assert.equal(find(basic.nav,'bl-journey-next').href,'relation-compare.html?from=basic&change=C004','04应带事件进入05');
+const comparison=make('comparison','?from=basic&change=C004');
+assert.equal(find(comparison.nav,'bl-journey-next'),null,'06规划未完成时不得制造假入口');
 Promise.resolve().then(()=>Promise.resolve()).then(()=>{
  const text=(n)=>[n?.textContent,...(n?.children||[]).map(text)].join(' ');
  assert.ok(text(baseline).includes('80亿')||text(baseline).includes('签约'),'基本面应接收C004正式记录');
- console.log('✓ 01/02/03/04 统一导航、上下文传递、C004数据关联、语法和样式标签检查通过');
+ console.log('✓ 01→03→04→05 真实世界认知接力、C004上下文与兼容导航检查通过');
 }).catch(e=>{console.error(e);process.exitCode=1;});

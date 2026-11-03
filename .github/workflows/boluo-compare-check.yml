@@ -1,0 +1,62 @@
+name: boluo-05-before-after-check
+
+on:
+  pull_request:
+    paths:
+      - 'relation-compare.html'
+      - 'assets/boluo-compare*'
+      - 'assets/boluo-journey.js'
+      - 'who.html'
+      - 'tests/boluo-compare*'
+      - 'tests/verify_journey.js'
+      - '.github/workflows/boluo-compare-check.yml'
+  push:
+    branches: [main]
+    paths:
+      - 'relation-compare.html'
+      - 'assets/boluo-compare*'
+      - 'assets/boluo-journey.js'
+      - 'who.html'
+      - 'tests/boluo-compare*'
+      - 'tests/verify_journey.js'
+      - '.github/workflows/boluo-compare-check.yml'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  compare:
+    runs-on: ubuntu-latest
+    timeout-minutes: 25
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+      - name: Evidence/lifecycle reconstruction for all 12 events
+        run: |
+          node --test tests/boluo-compare-model.test.cjs
+          node tests/verify_journey.js
+      - name: Install Chromium browser testing
+        run: |
+          npm install --no-save playwright
+          npx playwright install --with-deps chromium
+      - name: Start static site server
+        run: |
+          python3 -m http.server 8765 --bind 127.0.0.1 >/tmp/boluo-05-http.log 2>&1 &
+          for i in $(seq 1 20); do
+            if curl --silent --fail http://127.0.0.1:8765/relation-compare.html -o /dev/null; then exit 0; fi
+            sleep 1
+          done
+          cat /tmp/boluo-05-http.log
+          exit 1
+      - name: Test synced twin graphs at desktop and mobile viewports
+        run: node tests/boluo-compare-browser.cjs
+      - name: Save acceptance screenshots
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: boluo-05-before-after-desktop-mobile
+          path: artifacts/boluo-compare-*.png
+          if-no-files-found: warn

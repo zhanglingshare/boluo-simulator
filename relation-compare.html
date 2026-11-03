@@ -1,0 +1,117 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="theme-color" content="#ffffff">
+<title>博罗关系变化 · 加入前 VS 加入后｜决策风洞</title>
+<meta name="description" content="从一项已经收录的博罗微观事件出发，让前后两张关系图同步呈现：哪些主体出现、哪些关系变化、哪些仍待确认。">
+<link rel="stylesheet" href="assets/boluo-journey.css">
+<link rel="stylesheet" href="assets/boluo-compare.css">
+<script defer src="assets/boluo-journey.js"></script>
+<script defer src="assets/boluo-compare-model.js"></script>
+<script defer src="assets/boluo-compare.js"></script>
+</head>
+<body class="bc-view-after" data-bl-journey="comparison">
+<main class="bc-shell" id="main-content">
+  <div class="bc-top">
+    <div>
+      <div class="bc-eyebrow">05 · REALITY TO STRUCTURE / BEFORE VS AFTER</div>
+      <h1 class="bc-title">关系变化 · 加入前 VS 加入后</h1>
+      <p class="bc-lead">先看到一件真实变化，再把它放回博罗原有的关系结构：究竟多了什么、少了什么，哪些还只是值得研究的可能？</p>
+    </div>
+    <div class="bc-meta">
+      <a class="bc-back" href="who.html">← 返回博罗基本面</a>
+      <div class="bc-date" id="bc-datestamp">读取证据快照中…</div>
+      <div class="bc-source">事实、关联与假设分开显示</div>
+    </div>
+  </div>
+  <div id="bc-error" class="bc-err" hidden role="alert"></div>
+  <section class="bc-brief" aria-label="当前变化与结构基准">
+    <div class="bc-brief-main">
+      <div class="bc-brief-kicker"><span id="bc-event-id">选择变化</span><span class="bc-status" id="bc-event-status">正在核对事实</span></div>
+      <h2 class="bc-brief-title" id="bc-event-title">正在加载博罗结构变化数据…</h2>
+      <p class="bc-brief-note" id="bc-event-date">不会将签约、建设、估算或假设冒充成已经落地的产业联系。</p>
+    </div>
+    <div class="bc-brief-metrics" aria-label="数据底座规模，均来自当前文件">
+      <div class="bc-metric"><strong id="bc-nodes">—</strong><span>已收录主体</span></div>
+      <div class="bc-metric"><strong id="bc-edges">—</strong><span>已收录关系</span></div>
+      <div class="bc-metric"><strong id="bc-cases">—</strong><span>结构变化记录</span></div>
+      <div class="bc-metric"><strong id="bc-local">—</strong><span>本次局部主体</span></div>
+    </div>
+  </section>
+  <div class="bc-controls">
+    <div class="bc-section-label">选择一处变化</div>
+    <div class="bc-controls-note">横向浏览全部记录 · 选中后两图同步切换</div>
+  </div>
+  <div class="bc-events" id="bc-event-list" role="group" aria-label="事件选择时间线"></div>
+  <div class="bc-compare-head">
+    <div class="bc-section-label" id="bc-graph-label">同一组主体 · 同一位置 · 两种状态</div>
+    <div class="bc-comp-right">
+      <div class="bc-mode" role="group" aria-label="手机对照图切换">
+        <button type="button" data-bc-view="before" aria-pressed="false">此前</button>
+        <button type="button" data-bc-view="after" class="is-active" aria-pressed="true">当前</button>
+        <button type="button" data-bc-view="both" aria-pressed="false">并排</button>
+      </div>
+      <label class="bc-zoom" for="bc-zoom">同步缩放
+        <input id="bc-zoom" type="range" min="70" max="155" step="5" value="100" aria-label="同步调整两个结构图的缩放">
+      </label>
+      <button type="button" id="bc-reset" class="bc-back">重置视野</button>
+    </div>
+  </div>
+  <section class="bc-stage" aria-label="前后网络结构对比">
+    <div class="bc-panel bc-panel--before">
+      <div class="bc-panel-head">
+        <div class="bc-panel-name">加入前 <small>BEFORE</small></div>
+        <span class="bc-panel-tag">从事件描述重建</span>
+      </div>
+      <p class="bc-panel-summary" id="bc-before-sub">同一组节点的历史参考状态</p>
+      <div class="bc-chart"><svg id="bc-before" viewBox="0 0 600 415" role="img" aria-label="事件发生前的局部结构参考图"></svg></div>
+      <div class="bc-panel-foot"><span>灰色：背景关系</span><span id="bc-before-count">—</span></div>
+    </div>
+    <div class="bc-panel bc-panel--after">
+      <div class="bc-panel-head">
+        <div class="bc-panel-name">加入后 <small>AFTER / REPORTED</small></div>
+        <span class="bc-panel-tag">变化突出显示</span>
+      </div>
+      <p class="bc-panel-summary" id="bc-after-sub">当前核验到的事实、施工状态或候选联系</p>
+      <div class="bc-chart"><svg id="bc-after" viewBox="0 0 600 415" role="img" aria-label="事件记录当前状态的局部结构示意图"></svg></div>
+      <div class="bc-panel-foot"><span>深红：关注变化；虚线：未证实或未建成</span><span id="bc-after-count">—</span></div>
+    </div>
+  </section>
+  <div class="bc-legend" aria-label="可视编码">
+    <span><i></i>原有背景</span><span><i class="bc-red"></i>有记录的变化</span>
+    <span><i class="bc-pending"></i>签约/施工/待验证</span><span><i class="bc-exit"></i>停产/退出范围</span>
+  </div>
+  <div class="bc-warn" id="bc-method-note">
+    局部前后对照由公开关系底座和单项事件重建，不是两份历史全网快照；线条表示已收录关系或研究线索，不自动证明直接供货和经济因果。
+  </div>
+  <section class="bc-detail" aria-label="前后变化解释与来源">
+    <div class="bc-detail-card">
+      <div class="bc-small-head">这件事具体改变了什么？</div>
+      <div class="bc-before-after">
+        <div class="bc-statusbox"><div class="bc-ey">此前</div><p id="bc-previous-text">请先选择变化</p></div>
+        <div class="bc-statusbox is-after"><div class="bc-ey">当前记录</div><p id="bc-current-text">请先选择变化</p></div>
+      </div>
+      <div class="bc-focus-panel">
+        <b id="bc-selected-title">点击两张图中的主体或关系</b>
+        <p id="bc-selected-text" class="bc-inspect-note">你会同时定位两图中的同一个对象，并看到它的证据含义、变化范围和限制。</p>
+      </div>
+    </div>
+    <div class="bc-detail-card">
+      <div class="bc-small-head">证据与待观察事项</div>
+      <div class="bc-evidence-list" id="bc-sources"></div>
+      <div class="bc-uncertainty" id="bc-uncertainty">不确定性与数据边界正在读取…</div>
+      <div class="bc-actions" id="bc-actions">
+        <a id="bc-back-change" href="holo-home-v9.html">← 回到产业变化</a>
+        <a id="bc-back-baseline" href="who.html">查看博罗基本面</a>
+        <a id="bc-explore" class="bc-primary" href="experiments/holo-single/index.html">深入关系世界</a>
+        <button type="button" id="bc-copy">复制本次对比链接</button>
+        <span class="bc-readout" id="bc-copy-state" role="status" aria-live="polite"></span>
+      </div>
+    </div>
+  </section>
+  <p class="bc-footnote">本页是现实结构的局部观察与对比，不是GDP预测或投资建议。历史基准不足之处均以事件描述重建，不能反推未记录的企业关系。后续数据更新须先核验再发布。</p>
+</main>
+</body>
+</html>
