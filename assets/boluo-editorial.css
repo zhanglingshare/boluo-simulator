@@ -187,3 +187,20 @@ body[data-bl-journey="comparison"] .bc-node-focus .bc-node-label{font-weight:850
  body[data-bl-journey="town"] .town{transition:none}
  body[data-bl-journey="town"] .veg-inner{animation:none!important}
 }
+
+
+/* Final visual audit: preserve sharing, remove the old dark floating footer. */
+body[data-bl-journey="today"] .likebar,
+body[data-bl-journey="town"] .likebar,
+body[data-bl-journey="basic"] .likebar{
+ position:relative!important;left:auto!important;bottom:auto!important;transform:none!important;
+ margin:23px auto 20px!important;max-width:320px!important;width:max-content!important;
+ padding:9px 16px!important;border:1px solid #e0e5e9!important;
+ background:#fff!important;color:#394d60!important;border-radius:10px!important;
+ box-shadow:0 6px 18px #2135490d!important;gap:16px!important;display:flex!important;
+}
+body[data-bl-journey="today"] .likebar button,
+body[data-bl-journey="town"] .likebar button,
+body[data-bl-journey="basic"] .likebar button{color:#4f6173!important;font-weight:780!important;font-size:11px!important}
+body[data-bl-journey="town"] .wrap>div[style*="background:#0a0f1a"]{background:#fff!important;border:1px solid #e1e7eb!important;color:#647588!important;border-radius:9px!important;line-height:1.8!important}
+body[data-bl-journey="today"] .wrap>#dataStatus{background:#fff!important;border:1px solid #e5e9ed!important;border-radius:7px!important;padding:11px!important;color:#8293a1!important}
