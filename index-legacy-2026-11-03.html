@@ -95,11 +95,13 @@ h1{font-size:22px;margin:0 0 2px;letter-spacing:.5px}
 @media(max-width:480px){.bl-home-hero{padding:17px;border-radius:18px;margin-top:8px}.bl-eyebrow{font-size:9px;letter-spacing:1.1px;margin-bottom:13px}.bl-hero-copy h1{font-size:30px}.bl-hero-actions{display:grid;grid-template-columns:1fr}.bl-primary-cta,.bl-secondary-cta{width:100%}.bl-hero-visual{padding:10px}.bl-visual-bottom{align-items:flex-start}.bl-visual-bottom strong{white-space:nowrap}}
 @media(prefers-reduced-motion:reduce){.bl-network-links path,.bl-network-orbits,.bl-network-pulse{animation:none!important}.bl-primary-cta,.bl-secondary-cta{transition:none}}
 </style>
-</head><body class="bl-ui bl-dark bl-ui--index" data-bl-page="index">
+<link rel="stylesheet" href="assets/boluo-journey.css">
+<script defer src="assets/boluo-journey.js"></script>
+</head><body class="bl-ui bl-dark bl-ui--index" data-bl-page="index" data-bl-journey="today">
 
 <div class="nav">
   <b>博罗产业风洞</b>
-  <a href="index.html" class="on">今日博罗</a>
+  <a href="index-legacy-2026-11-03.html" class="on">今日博罗</a>
   <a href="holo-home-v9.html">变化现场</a>
   <a href="experiments/holo-single/index.html">关系世界</a>
   <a href="town.html">各镇吃喝玩乐</a>
@@ -122,12 +124,12 @@ h1{font-size:22px;margin:0 0 2px;letter-spacing:.5px}
       <p class="bl-hero-lead">从一个真实问题出发，进入产业、项目、交通与生活交织的关系网络。先看见变化，再决定要追问什么。</p>
       <div id="topHook" class="bl-hero-hook"><span class="bl-hook-label">今日观察</span>正在读取今日公开话题…</div>
       <div class="bl-hero-actions">
-        <a class="bl-primary-cta" href="holo-home-v9.html#range=month">进入变化现场 <span aria-hidden="true">↗</span></a>
+        <a class="bl-primary-cta" href="holo-home-v9.html?from=today">进入变化现场 <span aria-hidden="true">↗</span></a>
         <a class="bl-secondary-cta" href="who.html">先看博罗基本面 <span aria-hidden="true">→</span></a>
       </div>
       <div class="bl-hero-foot">公开资料 · 关系观察 · 情景推演（不是确定预测）</div>
     </div>
-    <a class="bl-hero-visual" href="holo-home-v9.html#range=month" aria-label="进入博罗变化图谱，查看关系变化与公开证据">
+    <a class="bl-hero-visual" href="holo-home-v9.html?from=today" aria-label="进入博罗变化图谱，查看关系变化与公开证据">
       <div class="bl-visual-top"><span>CHANGE OBSERVATORY</span><span class="bl-visual-status"><i></i> 进入交互网络</span></div>
       <svg class="bl-network-art" viewBox="0 0 560 350" role="img" aria-label="关系网络视觉预览示意图，点击进入变化现场核验事件与关系">
         <defs>
@@ -352,7 +354,7 @@ function render(){
   // topHook：今天大家在看的第一条
   if(allTopics().length){
     const top=allTopics()[0];
-    document.getElementById("topHook").innerHTML='<span class="bl-hook-label">今日观察</span>今天大家在看的，是<b>「'+esc(top.t)+'」</b>';
+    document.getElementById("topHook").innerHTML='<span class="bl-hook-label">今日观察</span>当前收录的公开话题：<b>「'+esc(top.t)+'」</b>';
   }
   // hot.json 已按关注档排好，直接采用数组顺序
   const grads={ind:"linear-gradient(135deg,#1e3a8a,#0f1a2e)",life:"linear-gradient(135deg,#7c2d12,#1a0f0f)",city:"linear-gradient(135deg,#374151,#0f1a2e)",agri:"linear-gradient(135deg,#1a2f0e,#0f1a2e)",fun:"linear-gradient(135deg,#064e3b,#0f1a2e)"};
@@ -375,6 +377,13 @@ function render(){
   }).join("")||'<div style="grid-column:1/-1;color:#5b6b82;text-align:center;padding:26px 0">今日话题快照暂不可用（读取失败），可点「重新扫描」重试；页面其余内容不受影响。</div>';
   document.querySelectorAll("#topicList .tcard").forEach(c=>{
     c.onclick=()=>{const d=c.querySelector(".detail");d.style.display=d.style.display==="none"?"block":"none";};
+    const link=document.createElement("a");
+    link.className="blj-topic-continue";
+    link.href="holo-home-v9.html?from=today&topic="+encodeURIComponent(c.getAttribute("data-t")||"");
+    link.textContent="以此为观察线索，继续看经过筛选的产业变化 →";
+    link.style.cssText="display:block;margin-top:10px;padding-top:8px;border-top:1px solid #ffffff22;color:#b9d8e9;font-size:11px;font-weight:750;text-decoration:none";
+    link.addEventListener("click",e=>e.stopPropagation());
+    c.appendChild(link);
   });
 }
 function like(el,t){
