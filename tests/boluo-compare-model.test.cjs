@@ -37,7 +37,7 @@ test('12起变化均能建立局部关系对照，节点位置不随前后状态
    assert.ok(d.nodes.some(n=>n.id===e.source),ch.change_id+': missing '+e.source);
    assert.ok(d.nodes.some(n=>n.id===e.target),ch.change_id+': missing '+e.target);
   }
-  assert.match(d.caution,/不是两份完整历史网络快照/);
+  assert.match(d.caution,/并非两份完整历史网络快照/);
   assert.ok(d.sources.every(x=>x.source_id));
  }
 });
