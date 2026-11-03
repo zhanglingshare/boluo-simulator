@@ -101,7 +101,7 @@ function initToday(){
  const h=el('strong','v3-current-title','加载今日公开资料…');
  const m=el('span','v3-current-meta','按当前数据快照，不冒充实时监测');
  showcase.append(h,m);
- const list=el('div','v3-topic-list');const actions=el('div','v3-topic-actions');
+ const list=el('div','v3-topic-list');list.id='v3-topic-list';const actions=el('div','v3-topic-actions');
  const locate=btn('展开这条新闻','v3-action-light',()=>focusCard());
  const follow=el('a','v3-action-hot','沿此线索追问关系 →');follow.href='industry-changes.html?from=today';
  actions.append(locate,follow);consoleBox.append(showcase,list,actions);
