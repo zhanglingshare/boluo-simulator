@@ -58,7 +58,7 @@ function renderContext(tag,message,note,href,label){
 }
 function getChange(){
  var hash=(location.hash||"").match(/(?:^#|&)change=(C\d{3})(?:$|&)/);
- return hash?.[1]||queryChange||focusId||null;
+ return hash?.[1]||focusId||queryChange||null;
 }
 function setNext(change){
  if(page==="today"){
@@ -115,6 +115,8 @@ function splitBeforeAfter(text){
  return {before:(next[0]||"").trim(),after:next.slice(1).join("此后：").trim()};
 }
 if(page==="basic"){
+ var directNext=id("bl-compare-next");
+ if(directNext)directNext.href="relation-compare.html?from=basic"+(queryChange?"&change="+encodeURIComponent(queryChange):"");
  var card=el("section");card.id="bl-journey-baseline";card.hidden=true;
  var wrap=body.querySelector(".wrap")||body;
  var place=wrap.querySelector(".kpis")||wrap.firstElementChild;
