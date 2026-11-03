@@ -48,8 +48,8 @@ function linkWithState(a){
   if(ctx.topic&&!to.searchParams.has('topic'))to.searchParams.set('topic',ctx.topic);
   if(ctx.town&&!to.searchParams.has('town'))to.searchParams.set('town',ctx.town);
   if(ctx.change){
-   if(file==='industry-changes.html')to.hash='change='+ctx.change;
-   else to.searchParams.set('change',ctx.change);
+   if(file==='industry-changes.html'&&!new URLSearchParams(to.hash.slice(1)).has('change'))to.hash='change='+ctx.change;
+   else if(file!=='industry-changes.html'&&!to.searchParams.has('change'))to.searchParams.set('change',ctx.change);
   }
  }
  // For first two pages, do not auto-assert a structural event association.
