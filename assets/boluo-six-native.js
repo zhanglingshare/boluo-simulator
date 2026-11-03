@@ -58,7 +58,7 @@ if(brand){
  for(let i=0;i<4;i++)mark.append(el('i'));
  brand.prepend(mark);
  brand.querySelector('strong').textContent='博罗观察';
- brand.querySelector('small').textContent='发现联系，看见变化';
+ brand.querySelector('small').textContent='先看见不一样的博罗';
 }
 const navLinks=[...nav.querySelectorAll('.blj-link')];
 const compactNav=window.matchMedia('(max-width:800px)');
@@ -70,8 +70,8 @@ function labelNav(){
  });
 }
 labelNav();compactNav.addEventListener?.('change',labelNav);
-const navSection=el('div','sn-nav-section','观察工作台');navSection.setAttribute('aria-hidden','true');nav.append(navSection);
-const locationLabel=el('div','sn-location');locationLabel.append(el('small',null,'工作台'),el('span',null,'/'),icon(journey),el('b',null,navNames[journey]));
+const navSection=el('div','sn-nav-section','六次发现');navSection.setAttribute('aria-hidden','true');nav.append(navSection);
+const locationLabel=el('div','sn-location');locationLabel.append(el('small',null,'发现'),el('span',null,'/'),icon(journey),el('b',null,navNames[journey]));
 nav.append(locationLabel);
 const sidebarFoot=el('div','sn-sidebar-foot');
 const original=el('a');original.href='windtunnel.html';original.append(icon('layers'),el('span',null,'进入决策风洞'),icon('arrow'));

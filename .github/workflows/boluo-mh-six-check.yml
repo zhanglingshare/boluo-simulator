@@ -8,6 +8,8 @@ on:
       - 'assets/boluo-mh-six.css'
       - 'assets/boluo-six-native.css'
       - 'assets/boluo-six-native.js'
+      - 'assets/boluo-participation.*'
+      - 'tests/boluo-participation-browser.cjs'
       - 'assets/boluo-journey.js'
       - 'data/boluo-plan-life.v1.json'
       - 'index-legacy-2026-11-03.html'
@@ -27,6 +29,8 @@ on:
       - 'assets/boluo-mh-six.css'
       - 'assets/boluo-six-native.css'
       - 'assets/boluo-six-native.js'
+      - 'assets/boluo-participation.*'
+      - 'tests/boluo-participation-browser.cjs'
       - 'assets/boluo-journey.js'
       - 'data/boluo-plan-life.v1.json'
       - 'index-legacy-2026-11-03.html'
@@ -73,6 +77,7 @@ jobs:
         run: |
           node tests/boluo-mh-six-browser.cjs
           node tests/boluo-six-native-browser.cjs
+          node tests/boluo-participation-browser.cjs
       - name: Preserve real desktop and mobile screenshots
         if: always()
         uses: actions/upload-artifact@v4
@@ -81,4 +86,5 @@ jobs:
           path: |
             artifacts/boluo-mh-six/*.png
             artifacts/boluo-six-native/*.png
+            artifacts/boluo-participation/*.png
           if-no-files-found: warn
