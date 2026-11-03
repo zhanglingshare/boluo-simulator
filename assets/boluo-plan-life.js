@@ -83,19 +83,34 @@ function makeNode(svgRoot,x,y,title,subtitle,eyebrow,stressed=false){
 function drawGraph(){
  const target=$('#pl-network');
  const src=theme(),persona=role(),stressed=state.shock;
+ const narrow=!!(window.matchMedia&&window.matchMedia('(max-width:620px)').matches);
+ target.setAttribute('viewBox',narrow?'0 0 380 500':'0 0 850 300');
  target.replaceChildren(svg('title',{},'规划—现实条件—个人生活的候选传导图，虚线为待验证机制'));
- const groups=[{x:131,eyebrow:'PLAN / DIRECTION',title:src.label,sub:'规划方向'},
-   {x:425,eyebrow:'EVIDENCE / GATE',title:stressed?'条件未满足':'仍需实测验证',sub:stressed?'压力情景':'待补充证据'},
-   {x:719,eyebrow:'LIFE / POSITION',title:persona.short+'的生活',sub:'不是自动兑现'}];
- [[242,314],[536,608]].forEach(([x1,x2],i)=>{
-  target.append(svg('line',{x1,y1:146,x2,y2:146,class:'pl-svg-line'+(stressed?' is-stressed':'')}));
-  const arrow=svg('path',{d:'M '+(x2-12)+' 138 L '+x2+' 146 L '+(x2-12)+' 154',
-   fill:'none',stroke:stressed?'#b65f60':'#9caab5','stroke-width':1.9,'stroke-linejoin':'round'});
-  target.append(arrow);
-  target.append(svg('text',{x:(x1+x2)/2,y:117,class:'pl-svg-badge'},stressed&&i===1?'条件受阻':'条件未证实'));
- });
- groups.forEach((g,i)=>makeNode(target,g.x,146,g.title,g.sub,g.eyebrow,stressed&&i===1));
- target.append(svg('text',{x:425,y:260,class:'pl-svg-sub'},'研究性关系示意 · 图中距离没有地理或因果强度含义'));
+ const tags=[
+  {eyebrow:'PLAN / DIRECTION',title:src.label,sub:'规划方向'},
+  {eyebrow:'EVIDENCE / GATE',title:stressed?'条件未满足':'仍需实测验证',sub:stressed?'压力情景':'待补充证据'},
+  {eyebrow:'LIFE / POSITION',title:persona.short+'的生活',sub:'不是自动兑现'}
+ ];
+ if(narrow){
+  const centers=[90,250,410];
+  [[148,192],[308,352]].forEach(([y1,y2],i)=>{
+   target.append(svg('line',{x1:190,y1,x2:190,y2,class:'pl-svg-line'+(stressed?' is-stressed':'')}));
+   target.append(svg('path',{d:'M 182 '+(y2-11)+' L 190 '+y2+' L 198 '+(y2-11),
+    fill:'none',stroke:stressed?'#b65f60':'#9caab5','stroke-width':1.9,'stroke-linejoin':'round'}));
+   target.append(svg('text',{x:285,y:(y1+y2)/2,class:'pl-svg-badge'},stressed&&i===1?'条件受阻':'待检验'));
+  });
+  tags.forEach((g,i)=>makeNode(target,190,centers[i],g.title,g.sub,g.eyebrow,stressed&&i===1));
+  target.append(svg('text',{x:190,y:493,class:'pl-svg-sub'},'虚线是假设，不是因果结论'));
+ }else{
+  [[242,314],[536,608]].forEach(([x1,x2],i)=>{
+   target.append(svg('line',{x1,y1:146,x2,y2:146,class:'pl-svg-line'+(stressed?' is-stressed':'')}));
+   target.append(svg('path',{d:'M '+(x2-12)+' 138 L '+x2+' 146 L '+(x2-12)+' 154',
+    fill:'none',stroke:stressed?'#b65f60':'#9caab5','stroke-width':1.9,'stroke-linejoin':'round'}));
+   target.append(svg('text',{x:(x1+x2)/2,y:117,class:'pl-svg-badge'},stressed&&i===1?'条件受阻':'条件未证实'));
+  });
+  tags.forEach((g,i)=>makeNode(target,[131,425,719][i],146,g.title,g.sub,g.eyebrow,stressed&&i===1));
+  target.append(svg('text',{x:425,y:260,class:'pl-svg-sub'},'研究性关系示意 · 图中距离没有地理或因果强度含义'));
+ }
 }
 function renderSteps(){
  const path=theme().mechanisms[state.role],list=$('#pl-steps');list.replaceChildren();
@@ -151,6 +166,7 @@ function copyState(){
 }
 $('#pl-shock').addEventListener('change',e=>{state.shock=e.target.checked;render();updateQuery();});
 $('#pl-copy').addEventListener('click',copyState);
+window.addEventListener('resize',()=>{if(state.data)drawGraph();},{passive:true});
 async function init(){
  try{
   const resp=await fetch('data/boluo-plan-life.v1.json',{cache:'no-store'});if(!resp.ok)throw Error('规划资料 HTTP '+resp.status);
