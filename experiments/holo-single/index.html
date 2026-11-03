@@ -33,7 +33,7 @@
  .mobile-only{display:block}
  .right-panel{height:auto}
 }
-</style><link rel="stylesheet" href="m3/ui.css" />
+</style><link rel="stylesheet" href="m3/ui.css" /><link rel="stylesheet" href="./discovery.css" />
 </head>
 <body>
 <div id="app">
@@ -69,6 +69,8 @@
    设计星群为编辑分组，不是地理坐标；A/B/C 为原版证据标记，未在本原型独立重核。
 ============================================================================ */
 window.BOLUO_DATA=(()=>{
+ // Stable relation IDs derived from meaning, never the position of an incoming Skills array.
+ const stableRelationId=(a,b,kind)=>'rel:'+ [String(a),String(b)].sort().join(':')+':'+encodeURIComponent(String(kind||''));
  // 产业网络节点/边：优先加载单源 data/industry-graph.json；失败时用内联兜底（离线可用）
  const loaded=(function(){
    try{
@@ -80,7 +82,7 @@ window.BOLUO_DATA=(()=>{
        const clusterOf=id=>{const n=g.nodes.find(x=>x.id===id);if(!n)return 'industry';
          const t=n.type;return (t==='ext'?'external':t==='eco'||id==='hh'?'tourism':t==='agri'||t==='gi'?'agriculture':t==='legacy'?'life':'industry')};
        const nodes=g.nodes.map(n=>({id:n.id,name:n.name,type:n.type,town:n.town,desc:n.desc,state:n.state,layer:n.layer,cluster:clusterOf(n.id)}));
-       const edges=g.edges.map((e,i)=>({id:'e'+i,source:e.s,target:e.t,level:e.level,kind:e.kind,detail:e.rel,weak:!!e.weak,directed:false,flowValue:null,sourceRef:'data/industry-graph.json'}));
+       const edges=g.edges.map((e)=>({id:stableRelationId(e.s,e.t,e.kind),source:e.s,target:e.t,level:e.level,kind:e.kind,detail:e.rel,weak:!!e.weak,directed:false,flowValue:null,sourceRef:'data/industry-graph.json'}));
        return {nodes,edges,fromJson:true};
      }
    }catch(err){ console.warn('industry-graph.json 加载失败，使用内联兜底:',err); }
@@ -146,7 +148,7 @@ window.BOLUO_DATA=(()=>{
  ['gyght','gyg','A','同镇关联','观音阁两种特色产品同镇关系；不代表供应链'],
  ['gyg','dj','B','生态与文旅','东江水系与河滩农业联系推断'],
  ['zw','xwd','A','供应链','铜材料及电池产业关联；原版A级，直接供货未另行核实']
- ].map(([source,target,level,kind,detail,weak],i)=>({id:'e'+i,source,target,level,kind,detail,weak:!!weak,directed:false,flowValue:null,sourceRef:'network.html#rawEdges'}));
+ ].map(([source,target,level,kind,detail,weak])=>({id:stableRelationId(source,target,kind),source,target,level,kind,detail,weak:!!weak,directed:false,flowValue:null,sourceRef:'network.html#rawEdges'}));
  // 出厂精简 life/hot（兜底）。线上由 live hot.json/life.json 覆盖。
  const life={updated:'2026-10-21 07:27',sourceLabel:'出厂快照',
   towns:[
@@ -882,6 +884,7 @@ function navigationUI(){
  else if(S.focusCluster){h.innerHTML=safe(E.groups.get(S.focusCluster).name)+' · 深入';sub.textContent='点击光点查看主体；企业可进入所在镇，跨产业·生活·事件。';}
  else{h.innerHTML='五个世界，<br/>一座博罗。';sub.textContent='轻触星群，沿公开资料中的联系跨层探索。';}
  el('inspectorMode').textContent=S.mode==='scenario'?'◆ 区间/假设':S.mode==='flows'?'◇ 数据边界':'● 资料快照';
+ if(window.__BOLUO_DISCOVERY?.sync)window.__BOLUO_DISCOVERY.sync();
 }
 /* ---------- 数据加载 ---------- */
 async function getJSON(path){
@@ -902,8 +905,8 @@ async function getJSON(path){
 }
 function updateSourceChip(okCount){
  const chip=el('sourceChip'),dot=el('sourceDot');
- if(okCount===3){S.dataSource='live';chip.textContent='实时数据 · '+M.hot.updated;dot.className='pulse-dot';}
- else if(okCount>0){S.dataSource='partial';chip.textContent='部分实时 · 已用兜底补齐';dot.className='pulse-dot snap';}
+ if(okCount===3){S.dataSource='live';chip.textContent='已加载数据快照 · '+M.hot.updated;dot.className='pulse-dot';}
+ else if(okCount>0){S.dataSource='partial';chip.textContent='部分数据快照 · 已用出厂备份补齐';dot.className='pulse-dot snap';}
  else{S.dataSource='boot';chip.textContent='出厂快照 · '+(M.hot.updated||D.snapshot);dot.className='pulse-dot snap';}
 }
 async function loadData(){
@@ -969,4 +972,5 @@ console.log('看见博罗 V2（M2）；锚点',M.anchors.length,'流场区间',M
  }
 })();
 </script>
+<script src="./discovery.js"></script>
 </body></html>
