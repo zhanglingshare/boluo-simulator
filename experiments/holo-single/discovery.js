@@ -141,22 +141,189 @@ async function openC004(){
  }
  renderSheet(ev);
 }
-id('bl-discover-c004').onclick=openC004;
-id('bl-discover-industry').onclick=()=>window.__boluoDebug?.openNode?.('xwd');
-id('bl-discover-external').onclick=()=>window.__boluoDebug?.openNode?.('dg');
-sheet.addEventListener('click',e=>{if(e.target===sheet)closeSheet();});
-window.addEventListener('keydown',e=>{if(e.key==='Escape'&&!sheet.hidden){e.stopImmediatePropagation();closeSheet();}},true);
+
+/* ---------- 关联主体、可验证的结构路径与回访记录 ---------- */
+const SAVE_KEY='boluo_relation_observations_v1';
+function nodes(){return window.BOLUO_DATA?.nodes||[];}
+function edges(){return window.BOLUO_DATA?.edges||[];}
+function getNode(nodeId){return nodes().find(n=>n.id===nodeId);}
+function touching(nodeId){return edges().filter(e=>e.source===nodeId||e.target===nodeId);}
+function adjacent(nodeId){return touching(nodeId).map(e=>({edge:e,other:getNode(e.source===nodeId?e.target:e.source)})).filter(x=>x.other);}
+function twoHop(nodeId){
+ const direct=new Set(adjacent(nodeId).map(x=>x.other.id));
+ for(const step of adjacent(nodeId)){
+  for(const next of adjacent(step.other.id)){
+   if(next.other.id!==nodeId&&!direct.has(next.other.id)){
+    return {via:step.other,end:next.other,first:step.edge,second:next.edge};
+   }
+  }
+ }
+ return null;
+}
+const publicLevel=e=>e.level==='A'?'已收录且有公开依据':'研究性产业关联';
+const relLabel=e=>String(e.kind||'联系').replace('供应链','产业关联');
+function shareLink(state){
+ const url=new URL(location.pathname,location.origin);
+ if(state.selected&&getNode(state.selected))url.searchParams.set('entity',state.selected);
+ else if(state.focusTown)url.searchParams.set('town',state.focusTown);
+ else if(state.focusCluster)url.searchParams.set('cluster',state.focusCluster);
+ return url.toString();
+}
+function getSaved(){
+ try{const a=JSON.parse(localStorage.getItem(SAVE_KEY)||'[]');return Array.isArray(a)?a:[];}
+ catch(e){return [];}
+}
+function showFeedback(message){
+ let n=id('bl-discovery-feedback');
+ if(!n){
+  n=document.createElement('div');n.id='bl-discovery-feedback';n.setAttribute('role','status');
+  rail.appendChild(n);
+ }
+ n.textContent=message;n.hidden=false;
+}
+function saveObservation(state){
+ const target=getNode(state.selected);
+ if(!target){showFeedback('请先选择一个主体，再保存观察');return;}
+ try{
+  const observations=getSaved().filter(o=>o.id!==target.id);
+  observations.unshift({id:target.id,name:target.name,town:target.town,
+   loggedAt:new Date().toISOString(),directCount:adjacent(target.id).length,
+   question:'这些已收录关联对我有什么意义？还有哪些关系需要核验？',
+   link:shareLink(state)});
+  localStorage.setItem(SAVE_KEY,JSON.stringify(observations.slice(0,30)));
+  showFeedback('已保存到本机浏览器（不上传服务器）；可在「我的观察」中回访');
+  const b=id('bl-saved-count');if(b)b.textContent=String(getSaved().length);
+ }catch(e){showFeedback('当前浏览器未允许本地存储，请使用复制链接');}
+}
+async function copyFocus(state){
+ const value=shareLink(state);
+ try{
+  if(navigator.clipboard&&window.isSecureContext){await navigator.clipboard.writeText(value);}
+  else{
+   const field=document.createElement('textarea');field.value=value;document.body.appendChild(field);
+   field.select();const ok=document.execCommand('copy');field.remove();if(!ok)throw Error('copy failed');
+  }
+  showFeedback('已复制当前研究位置的链接');
+ }catch(e){showFeedback('复制受到浏览器限制，可从地址栏复制：'+value);}
+}
+function showSaved(){
+ lastFocusEl=document.activeElement;sheet.hidden=false;
+ const records=getSaved();
+ sheet.innerHTML='<div class="bl-sheet" tabindex="-1">'+
+  '<div class="bl-sheet-top"><div><div class="bl-eyebrow">PRIVATE / LOCAL</div><h2>我的结构观察</h2></div>'+
+  '<button class="bl-close" type="button" id="bl-sheet-close" aria-label="关闭">×</button></div>'+
+  '<p class="bl-prompt">这些观察只存于当前浏览器，尚未与报告页同步，不包含用户身份信息。</p>'+
+  (records.length?records.map(o=>'<a class="bl-record" href="'+escapeHTML(o.link)+'"><b>'+escapeHTML(o.name)+'</b>'+
+   '<span>'+escapeHTML(o.town||'')+' · '+escapeHTML(o.loggedAt?.slice(0,10)||'')+' · '+Number(o.directCount||0)+'条当时直接联系</span></a>').join(''):
+   '<div class="bl-unavailable">暂无记录。选择一个主体后点击「保存观察」。</div>')+
+  '<div class="bl-actions"><button class="bl-action" id="bl-clear-local" type="button">清空本机记录</button></div></div>';
+ id('bl-sheet-close').onclick=closeSheet;
+ id('bl-clear-local').onclick=()=>{try{localStorage.removeItem(SAVE_KEY);}catch(e){}showSaved();};
+ sheet.querySelector('.bl-sheet').focus();
+}
+function selectedToolkit(state){
+ const target=getNode(state.selected);
+ const old=id('bl-connection-insight');if(old)old.remove();
+ if(!target)return;
+ const near=adjacent(target.id).sort((a,b)=>(a.edge.level==='A'?0:1)-(b.edge.level==='A'?0:1));
+ const hop=twoHop(target.id);
+ const el=document.createElement('section');el.id='bl-connection-insight';el.setAttribute('aria-label','沿着关系继续研究');
+ let html='<div class="bl-insight-heading">沿着关系继续研究 <span>'+near.length+' 条直接联系</span></div>';
+ html+='<p class="bl-insight-sub">下列联系来自已发布的产业网络；结构路径不等于采购、投资或现实影响的因果证明。</p>';
+ html+='<div class="bl-insight-list">'+(near.length?near.slice(0,5).map(x=>
+   '<button type="button" class="bl-insight-link" data-bl-next="'+escapeHTML(x.other.id)+'">'+
+   '<b>'+escapeHTML(x.other.name)+'</b><span>'+escapeHTML(relLabel(x.edge))+' · '+publicLevel(x.edge)+' ↗</span></button>'
+ ).join(''):'<div class="bl-insight-empty">当前筛选条件下未显示直接联系，可以切换关系筛选。</div>')+'</div>';
+ if(hop)html+='<div class="bl-insight-bridge"><span class="bl-insight-label">一个值得进一步研究的两跳路径</span>'+
+   '<b>'+escapeHTML(target.name)+' → '+escapeHTML(hop.via.name)+' → '+escapeHTML(hop.end.name)+'</b>'+
+   '<small>这代表图中可找到的间接连接，不是两端已建立直接交易。</small>'+
+   '<button type="button" data-bl-next="'+escapeHTML(hop.end.id)+'">继续看 '+escapeHTML(hop.end.name)+' ↗</button></div>';
+ html+='<div class="bl-insight-action-row">'+
+  '<button type="button" id="bl-save-current">保存观察</button>'+
+  '<button type="button" id="bl-copy-current">复制研究链接</button>'+
+  '<a href="../../network.html?entity='+encodeURIComponent(target.id)+'&from=relation-world">进入产业X光 ↗</a>'+
+  '</div>';
+ el.innerHTML=html;
+ const inspector=id('inspectorBody');
+ if(inspector){inspector.appendChild(el);
+  el.querySelectorAll('[data-bl-next]').forEach(b=>b.onclick=()=>window.__boluoDebug?.openNode?.(b.getAttribute('data-bl-next')));
+  id('bl-save-current').onclick=()=>saveObservation(window.__boluoDebug?.state||state);
+  id('bl-copy-current').onclick=()=>copyFocus(window.__boluoDebug?.state||state);
+ }
+}
+function updateRail(state){
+ const b1=id('bl-discover-industry'),b2=id('bl-discover-external'),focus=id('bl-discovery-focus');
+ if(!b1||!b2||!focus)return;
+ const target=getNode(state.selected);
+ if(target){
+  currentFocus=target.id;
+  focus.textContent='已聚焦：'+target.name+' · '+(state.depth===2?'两跳':'直接联系');
+  const neigh=adjacent(target.id);
+  const go=neigh[0]?.other;
+  if(go){
+   b1.dataset.nextNode=go.id;
+   b1.querySelector('strong').textContent='继续：'+go.name;
+   b1.querySelector('small').textContent='沿现有记录追踪直接联系';
+  }else{
+   b1.dataset.nextNode='xwd';
+   b1.querySelector('strong').textContent='进入园洲制造';
+   b1.querySelector('small').textContent='从欣旺达看产业结构';
+  }
+  b2.querySelector('strong').textContent='切换到两跳探索';
+  b2.querySelector('small').textContent=state.depth===2?'已显示两跳 · 点击可收起':'经由中间主体寻找关联';
+  b2.dataset.action='depth';
+ }else{
+  delete b1.dataset.nextNode;b2.dataset.action='external';
+  b1.querySelector('strong').textContent='园洲制造的联系';
+  b1.querySelector('small').textContent='从欣旺达进入产业网络';
+  b2.querySelector('strong').textContent='跨界联系在哪里';
+  b2.querySelector('small').textContent='从东莞观察跨市关联';
+  focus.textContent=state.focusTown?'当前镇街：'+state.focusTown:
+   state.focusCluster?'当前群落：'+({
+    industry:'产业制造',external:'外部联系',tourism:'山水文旅',agriculture:'农业乡村',life:'城镇生活'
+   }[state.focusCluster]||state.focusCluster):'选择一处群落开始结构探索';
+ }
+}
 function sync(){
  const state=window.__boluoDebug?.state;
  if(!state)return;
- const node=window.BOLUO_DATA?.nodes?.find(n=>n.id===state.selected);
- const focus=id('bl-discovery-focus');
- if(node){currentFocus=node.id;focus.textContent='已选中：'+node.name;}
- else if(state.focusTown){focus.textContent='当前镇街：'+state.focusTown;}
- else if(state.focusCluster){focus.textContent='当前群落：'+(state.focusCluster==='industry'?'产业制造':state.focusCluster==='external'?'外部联系':state.focusCluster==='tourism'?'山水文旅':state.focusCluster==='agriculture'?'农业乡村':'城镇生活');}
- else focus.textContent='从五群进入真实结构';
+ updateRail(state);
+ selectedToolkit(state);
 }
-window.__BOLUO_DISCOVERY={sync,openC004,closeSheet};
+id('bl-discover-c004').onclick=openC004;
+id('bl-discover-industry').onclick=()=>{
+ const n=id('bl-discover-industry').dataset.nextNode||'xwd';
+ window.__boluoDebug?.openNode?.(n);
+};
+id('bl-discover-external').onclick=()=>{
+ if(id('bl-discover-external').dataset.action==='depth'&&window.__boluoDebug?.state?.selected)
+  id('depthButton')?.click();
+ else window.__boluoDebug?.openNode?.('dg');
+};
+const saved=document.createElement('button');
+saved.id='bl-saved-menu';saved.type='button';
+saved.innerHTML='我的观察 <span id="bl-saved-count">0</span>';
+saved.onclick=showSaved;
+rail.querySelector('.bl-discover-head').appendChild(saved);
+sheet.addEventListener('click',e=>{if(e.target===sheet)closeSheet();});
+window.addEventListener('keydown',e=>{if(e.key==='Escape'&&!sheet.hidden){e.stopImmediatePropagation();closeSheet();}},true);
+window.__BOLUO_DISCOVERY={sync,openC004,closeSheet,showSaved};
+try{id('bl-saved-count').textContent=String(getSaved().length);}catch(e){}
 sync();
-loadEvent(); // 非阻塞预取；不影响M2和M3
+loadEvent();
+const query=new URLSearchParams(location.search);
+const hash=new URLSearchParams(location.hash.replace(/^#/,''));
+const change=query.get('change')||hash.get('change');
+const intentEntity=query.get('entity')||hash.get('entity');
+const intentTown=query.get('town')||hash.get('town');
+const intentCluster=query.get('cluster')||hash.get('cluster');
+if(change==='C004'||['hpm','crs','acc','lcs'].includes(intentEntity||'')){
+ openC004();
+}else if(intentEntity&&getNode(intentEntity)){
+ window.__boluoDebug?.openNode?.(intentEntity);
+}else if(intentTown){
+ window.__boluoDebug?.enterTown?.(intentTown);
+}else if(intentCluster&&window.BOLUO_DATA?.clusters?.some(c=>c.id===intentCluster)){
+ window.__boluoDebug?.openCluster?.(intentCluster);
+}
 })();
