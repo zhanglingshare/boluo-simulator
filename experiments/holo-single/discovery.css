@@ -59,3 +59,47 @@
  body:has(.right-panel.mobile-open) #bl-discovery-rail{visibility:hidden;pointer-events:none}
 }
 @media(prefers-reduced-motion:reduce){#bl-discovery-rail .bl-discover-card{transition:none!important}}
+
+
+/* Decision-focused navigation / discovery without replacing the existing hologram */
+#bl-discovery-rail .bl-discover-head{min-height:24px}
+#bl-saved-menu{flex:none;background:rgba(33,71,85,.55);color:#cce5ef;border:1px solid rgba(95,185,202,.24);border-radius:8px;padding:5px 8px;font-size:10px;cursor:pointer;white-space:nowrap}
+#bl-saved-menu span{display:inline-grid;place-items:center;min-width:18px;height:17px;border-radius:6px;margin-left:3px;background:#174c62;color:#90f1f4;font-size:10px}
+#bl-discovery-feedback{padding:7px 9px;margin-top:7px;border:1px solid rgba(72,202,180,.3);background:rgba(22,79,77,.32);color:#b3f3e9;font-size:10px;line-height:1.5;border-radius:8px}
+#bl-discovery-feedback[hidden]{display:none}
+#bl-connection-insight{border-top:1px solid rgba(97,179,197,.23);margin-top:16px;padding-top:15px;padding-bottom:15px}
+#bl-connection-insight .bl-insight-heading{display:flex;justify-content:space-between;align-items:center;gap:5px;font-size:13px;color:#eafaff;font-weight:850;margin-bottom:7px}
+#bl-connection-insight .bl-insight-heading span{color:#82b0c2;font-size:10px;font-weight:500}
+#bl-connection-insight .bl-insight-sub{font-size:10px;line-height:1.75;color:#829fb2;margin-bottom:12px}
+#bl-connection-insight .bl-insight-list{display:grid;gap:6px}
+#bl-connection-insight .bl-insight-link{border:1px solid rgba(116,185,219,.17);border-radius:9px;background:rgba(12,51,69,.55);padding:9px 10px;text-align:left;color:#dff7ff;cursor:pointer}
+#bl-connection-insight .bl-insight-link:hover{border-color:rgba(75,218,230,.66);background:rgba(22,80,104,.65)}
+#bl-connection-insight .bl-insight-link b{display:block;font-size:11px;font-weight:750}
+#bl-connection-insight .bl-insight-link span{display:block;margin-top:4px;font-size:9.5px;color:#8cb6c8;line-height:1.4}
+#bl-connection-insight .bl-insight-bridge{margin:12px 0;padding:12px;background:linear-gradient(150deg,rgba(94,71,39,.18),rgba(14,50,65,.48));border:1px dashed rgba(230,175,100,.32);border-radius:11px}
+#bl-connection-insight .bl-insight-bridge .bl-insight-label{display:block;font-size:9.5px;color:#ffd19b;margin-bottom:7px}
+#bl-connection-insight .bl-insight-bridge b{font-size:11px;line-height:1.8;font-weight:700;display:block;color:#f3e2c5}
+#bl-connection-insight .bl-insight-bridge small{display:block;color:#98b6c4;font-size:9.5px;line-height:1.6;margin-top:5px}
+#bl-connection-insight .bl-insight-bridge button{display:block;margin-top:10px;border-radius:7px;padding:7px 10px;background:rgba(190,127,56,.18);border:1px solid rgba(227,165,81,.3);color:#ffe5bd;font-size:10px;cursor:pointer}
+#bl-connection-insight .bl-insight-action-row{display:flex;gap:6px;flex-wrap:wrap;margin-top:12px}
+#bl-connection-insight .bl-insight-action-row button,#bl-connection-insight .bl-insight-action-row a{display:inline-flex;align-items:center;justify-content:center;text-align:center;min-height:32px;padding:7px 9px;border:1px solid rgba(96,181,204,.31);color:#d3f3fb;background:rgba(16,63,82,.44);font-size:10px;border-radius:8px;cursor:pointer;text-decoration:none}
+#bl-connection-insight .bl-insight-action-row button:hover,#bl-connection-insight .bl-insight-action-row a:hover{background:rgba(42,118,141,.56)}
+#bl-discovery-sheet .bl-record{display:flex;flex-wrap:wrap;justify-content:space-between;gap:6px;padding:14px 13px;margin:7px 0;background:rgba(23,60,83,.6);border:1px solid rgba(99,172,195,.2);border-radius:11px}
+#bl-discovery-sheet .bl-record:hover{border-color:#51d4e1}
+#bl-discovery-sheet .bl-record b{font-size:13px;font-weight:800}
+#bl-discovery-sheet .bl-record span{font-size:10px;color:#9ebfce}
+#bl-discovery-sheet .bl-prospect-map svg{overflow:visible}
+#bl-discovery-sheet .bl-proposal-list{line-height:1.65}
+#bl-discovery-sheet .bl-action:focus-visible,#bl-discovery-rail button:focus-visible,#bl-connection-insight button:focus-visible{outline:2px solid #8ce8fb;outline-offset:2px}
+@media(max-width:720px){
+ #bl-discovery-rail .bl-discover-head{font-size:10px;gap:4px}
+ #bl-discovery-rail .bl-discover-head b{overflow:hidden;text-overflow:ellipsis;white-space:nowrap;min-width:0}
+ #bl-saved-menu{padding:5px 6px;font-size:9px}
+ #bl-connection-insight{margin-top:11px;padding-top:12px}
+ #bl-connection-insight .bl-insight-action-row a{width:100%}
+ #bl-discovery-sheet .bl-record{padding:11px}
+}
+@media(max-height:650px) and (min-width:721px){
+ #bl-discovery-rail{bottom:76px;padding:8px}
+ #bl-discovery-rail .bl-discover-card{padding:6px 8px}
+}
