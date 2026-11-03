@@ -116,15 +116,17 @@ const dark={text:'#617688',axis:'#e0e7ec'};
 const baseGrid={left:58,right:26,top:36,bottom:36};
 
 echarts.init(document.getElementById('c1')).setOption({
+  animation:false,
   backgroundColor:'transparent',
   tooltip:{trigger:'axis',backgroundColor:'#ffffff',borderColor:'#dfe6ed',textStyle:{color:'#294152'}},
   grid:baseGrid,
   xAxis:{type:'category',data:['2024最终核实','2025初步核算'],axisLine:{lineStyle:{color:dark.axis}},axisLabel:{color:dark.text}},
-  yAxis:{type:'value',axisLine:{lineStyle:{color:dark.axis}},axisLabel:{color:dark.text},splitLine:{lineStyle:{color:'#edf1f4'}}},
+  yAxis:{type:'value',min:900,max:1100,axisLine:{lineStyle:{color:dark.axis}},axisLabel:{color:dark.text,formatter:'{value}亿元'},splitLine:{lineStyle:{color:'#edf1f4'}}},
   series:[{type:'line',data:[970.87,1005.45],smooth:true,lineStyle:{color:'#a3444c',width:3},areaStyle:{color:{type:'linear',x:0,y:0,x2:0,y2:1,colorStops:[{offset:0,color:'rgba(34,197,94,.3)'},{offset:1,color:'rgba(34,197,94,0)'}]}},itemStyle:{color:'#a3444c'},label:{show:true,color:'#ad5059',fontSize:10}}]
 });
 
 echarts.init(document.getElementById('c2')).setOption({
+  animation:false,
   backgroundColor:'transparent',
   tooltip:{trigger:'item',backgroundColor:'#ffffff',borderColor:'#dfe6ed',textStyle:{color:'#294152'}},
   legend:{bottom:0,textStyle:{color:dark.text,fontSize:11}},
@@ -135,6 +137,7 @@ echarts.init(document.getElementById('c2')).setOption({
 });
 
 echarts.init(document.getElementById('c3')).setOption({
+  animation:false,
   backgroundColor:'transparent',
   tooltip:{trigger:'axis',backgroundColor:'#ffffff',borderColor:'#dfe6ed',textStyle:{color:'#294152'}},
   grid:baseGrid,
@@ -159,20 +162,22 @@ document.getElementById('c4').innerHTML=
  '</div>';
 
 echarts.init(document.getElementById('c5')).setOption({
+  animation:false,
   backgroundColor:'transparent',
   tooltip:{trigger:'axis',backgroundColor:'#ffffff',borderColor:'#dfe6ed',textStyle:{color:'#294152'}},
   grid:{left:50,right:20,top:20,bottom:30},
   xAxis:{type:'category',data:['规上工业','社消零','固投','房地产'],axisLine:{lineStyle:{color:dark.axis}},axisLabel:{color:dark.text,fontSize:10}},
   yAxis:{type:'value',axisLine:{lineStyle:{color:dark.axis}},axisLabel:{color:dark.text,formatter:'{value}%'},splitLine:{lineStyle:{color:'#edf1f4'}}},
   series:[{type:'bar',data:[
-    {value:8.7,itemStyle:{color:'#a3444c'}},
-    {value:3.9,itemStyle:{color:'#a3444c'}},
+    {value:8.7,itemStyle:{color:'#4c8198'}},
+    {value:3.9,itemStyle:{color:'#4c8198'}},
     {value:-18.8,itemStyle:{color:'#f87171'}},
     {value:-47.6,itemStyle:{color:'#ef4444'}}
   ],barWidth:24,label:{show:true,position:'top',color:'#cbd5e1',fontSize:10,formatter:'{c}%'}}]
 });
 
 echarts.init(document.getElementById('c6')).setOption({
+  animation:false,
   backgroundColor:'transparent',
   tooltip:{trigger:'item',backgroundColor:'#ffffff',borderColor:'#dfe6ed',textStyle:{color:'#294152'}},
   legend:{bottom:0,textStyle:{color:dark.text,fontSize:11}},
@@ -183,6 +188,7 @@ echarts.init(document.getElementById('c6')).setOption({
 });
 
 echarts.init(document.getElementById('c7')).setOption({
+  animation:false,
  backgroundColor:'transparent',
  tooltip:{trigger:'axis',backgroundColor:'#fff',borderColor:'#dfe6ed',textStyle:{color:'#25384d'}},
  legend:{top:0,textStyle:{color:'#536779',fontSize:11}},
