@@ -12,7 +12,8 @@
  const MAX_NODES=14;
  const isPending=n=>n&&n.node_status==='pending';
  const isIntroduced=n=>n&&(n.node_status==='new'||n.node_status==='pending');
- const short=t=>String(t||'').replace(/[（(][^（）()]{12,}[）)]/g,'').replace(/项目（.*?）/g,'项目');
+ const short=t=>String(t||'').split(/[（(]/)[0].replace(/智能制造产业园/g,'制造园区').replace(/博罗分公司/g,'').slice(0,7);
+ const shortFor=(id,name)=>({hpm:'精密制造',crs:'绿色冷轧钢',acc:'空压机园区',lcs:'液冷散热',glc:'固力水泥产线',ess:'独立储能',lswh:'环两山引领区',lfsgy:'罗浮山国药',lsz:'罗浮山荔枝'}[id]||short(name));
  const byId=(arr,k)=>new Map((arr||[]).map(x=>[x[k],x]));
  const isAssumption=e=>e?.evidence_grade==='C'||e?.evidence_type==='待验证假设';
  const isInferred=e=>e?.evidence_grade==='B'||e?.evidence_type==='证据推断';
@@ -76,7 +77,7 @@
   const nodes=list.map((id,i)=>{
    const n=nm.get(id),intro=c.change_type==='new_entity'&&explicitNodes.has(id)&&isIntroduced(n);
    const isClosed=c.change_id==='C008'&&id==='glc';
-   return {id,name:n.name,shortName:short(n.name),description:n.description||'',status:n.node_status,core:core.has(id),affected:explicitNodes.has(id),pending:isPending(n),
+   return {id,name:n.name,shortName:shortFor(id,n.name),description:n.description||'',status:n.node_status,core:core.has(id),affected:explicitNodes.has(id),pending:isPending(n),
     introduced:intro,closedLine:isClosed,
     beforeVisible:!intro,afterVisible:true,position:position(id,i,list.length,coreIds.length),source_ids:n.source_ids||[]};
   });
