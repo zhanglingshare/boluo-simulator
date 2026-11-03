@@ -1,0 +1,74 @@
+name: boluo-mac-harmony-six-scenes
+
+on:
+  pull_request:
+    paths:
+      - 'plan-with-me.html'
+      - 'assets/boluo-plan-life.*'
+      - 'assets/boluo-mh-six.css'
+      - 'assets/boluo-journey.js'
+      - 'data/boluo-plan-life.v1.json'
+      - 'index-legacy-2026-11-03.html'
+      - 'town.html'
+      - 'industry-changes.html'
+      - 'who.html'
+      - 'relation-compare.html'
+      - 'tests/boluo-plan-life.test.cjs'
+      - 'tests/boluo-mh-six-browser.cjs'
+      - '.github/workflows/boluo-mh-six-check.yml'
+  push:
+    branches: [main]
+    paths:
+      - 'plan-with-me.html'
+      - 'assets/boluo-plan-life.*'
+      - 'assets/boluo-mh-six.css'
+      - 'assets/boluo-journey.js'
+      - 'data/boluo-plan-life.v1.json'
+      - 'index-legacy-2026-11-03.html'
+      - 'town.html'
+      - 'industry-changes.html'
+      - 'who.html'
+      - 'relation-compare.html'
+      - 'tests/boluo-plan-life.test.cjs'
+      - 'tests/boluo-mh-six-browser.cjs'
+      - '.github/workflows/boluo-mh-six-check.yml'
+
+permissions:
+  contents: read
+
+jobs:
+  six-scene-acceptance:
+    runs-on: ubuntu-latest
+    timeout-minutes: 28
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+      - name: Verify planning provenance, mechanism boundary, six-page navigation
+        run: |
+          node --test tests/boluo-plan-life.test.cjs
+          node --test tests/boluo-intel-engine.test.cjs
+          node tests/verify_journey.js
+      - name: Install Playwright Chromium
+        run: |
+          npm install --no-save playwright
+          npx playwright install --with-deps chromium
+      - name: Start HTTP server
+        run: |
+          python3 -m http.server 8765 --bind 127.0.0.1 >/tmp/boluo-six-http.log 2>&1 &
+          for i in $(seq 1 20); do
+            if curl -fsS http://127.0.0.1:8765/plan-with-me.html -o /dev/null; then exit 0; fi
+            sleep 1
+          done
+          cat /tmp/boluo-six-http.log
+          exit 1
+      - name: Browser-check six pages, mobile, planning counterfactual and event handoff
+        run: node tests/boluo-mh-six-browser.cjs
+      - name: Preserve real desktop and mobile screenshots
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: boluo-mac-harmony-01-to-06
+          path: artifacts/boluo-mh-six/*.png
+          if-no-files-found: warn
