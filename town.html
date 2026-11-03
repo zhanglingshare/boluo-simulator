@@ -1,6 +1,6 @@
 <!doctype html>
 <html lang="zh-CN"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
-<title>博罗产业风洞 · 各镇吃喝玩乐</title>
+<title>02 · 各镇好玩好吃｜镇街生活与变化</title>
 <style>
 *{box-sizing:border-box}
 body{margin:0;background:#080b12;color:#e6edf3;font:14px/1.65 -apple-system,"PingFang SC","Microsoft YaHei",sans-serif}
@@ -45,6 +45,7 @@ h1{font-size:21px;margin:0}
 @media(min-width:1024px){.wrap{max-width:1200px!important;padding:24px}}</style><link rel="stylesheet" href="assets/boluo-ui.css">
 <link rel="stylesheet" href="assets/boluo-journey.css">
 <script defer src="assets/boluo-journey.js"></script>
+<link rel="stylesheet" href="assets/boluo-editorial.css">
 </head><body class="bl-ui bl-dark bl-ui--town" data-bl-page="town" data-bl-journey="town">
 
 <div class="nav">
@@ -127,7 +128,7 @@ function render(){
       <div class="row"><span class="k">🍜 吃</span>${t.foods.join("、")}</div>
       <div class="row"><span class="k">🏔️ 玩</span>${t.plays.join("、")}</div>
       <div class="why">→ ${t.why}</div>
-      ${t.n==='柏塘'?'<div style="margin-top:9px"><a href="tea/" style="display:inline-block;font-size:12px;font-weight:800;color:#e9d9a8;border:1px solid #8a7a3f;border-radius:9px;padding:5px 12px;background:linear-gradient(135deg,rgba(122,105,45,.28),rgba(70,90,60,.18))">🍵 柏塘山茶产业专题 ↗</a></div>':''}
+      
       <div style="margin-top:8px"><span style="font-size:11px;font-weight:800;color:${lc};border:1px solid ${lc};border-radius:8px;padding:3px 10px">人气 · ${t.level}</span></div>
       <div style="font-size:9.5px;color:#5b6b82;margin-top:4px;line-height:1.4">📎 来源：${SRC}<br>近期公开打卡热度分档，非人数统计</div>
     </div>`;
@@ -141,7 +142,7 @@ async function loadLife(){
     if(d.season)document.getElementById("vegTitle").textContent=`🚜 博罗${d.season}季当季农品 · 按当月真实时令（悬停暂停）`;
   }catch(e){}
   renderVeg();pickThree();render();
-  document.getElementById("scanInfo").textContent=`数据每日自动刷新 · 上次更新 ${UPDATED} · 共${TOWNS.length}个镇街 · 人气档排序`;
+  document.getElementById("scanInfo").textContent=`当前公开资料快照 · 上次更新 ${UPDATED} · 共${TOWNS.length}个镇街 · 人气档排序`;
   document.getElementById("livebar").innerHTML=PULSE.length
     ?"📡 最近大家在聊（公开渠道）："+PULSE.join("　｜　")
     :"📡 博罗的好吃好玩，不用上热搜也值得去。";
