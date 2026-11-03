@@ -111,5 +111,5 @@ test('敏感性结果不含真实经济产出字段',()=>{
 });
 
 test('模型版本随引擎升级',()=>{
- assert.equal(M3_VERSION,'m3-structural-0.2');
+ assert.equal(M3_VERSION,'m3-structural-0.3');
 });
