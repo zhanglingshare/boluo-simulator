@@ -26,7 +26,7 @@ function setOpen(on){
 trigger.addEventListener('click',()=>setOpen(!open));
 close.addEventListener('click',()=>setOpen(false));
 document.addEventListener('keydown',e=>{if(e.key==='Escape'&&open){setOpen(false);trigger.focus();}});
-function updateLink(){more.href='intel-lab.html'+(id?'?change='+encodeURIComponent(id):'');count.textContent=id?'!':'?';}
+function updateLink(){const target='intel-lab.html'+(id?'?change='+encodeURIComponent(id):'');more.href=target;document.querySelectorAll('[data-bl-intel-link]').forEach(a=>a.href=target);count.textContent=id?'!':'?';}
 function select(event){
  const next=valid(event?.detail?.changeId);if(!next)return;
  if(firstAutomatic){firstAutomatic=false;return;}
