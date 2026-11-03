@@ -147,6 +147,33 @@
   }
   return out.sort((a,b)=>a.priority-b.priority||a.id.localeCompare(b.id));
  }
+ function mechanismCandidate(e){
+  // Research-only conditional mechanisms: evidence of an association is not evidence for transmission.
+  if(e.after==='construction')return {
+   premise:'只有工程实际完成、通行安排发生变化，才可能出现新的通达结构。',
+   needs:'通车或验收公告、同口径车流/通勤时间的前后观测，以及绕行和替代路径资料。'};
+  if(e.after==='closed')return {
+   premise:'只有确认该产线退出的产能范围和替代供给，才能讨论下游影响。',
+   needs:'停产设备清单、上下游实际订单、产能替代和企业其余业务的证据。'};
+  const type=e.relation;
+  if(type==='supply_chain')return {
+   premise:'只有存在实际交付、采购或稳定的生产依赖，这条关联才可能传递供应冲击。',
+   needs:'可核对采购合同、交付记录、企业披露和替代供应商能力；当前关系收录本身不能证明交易。'};
+  if(type==='investment')return {
+   premise:'只有项目资金、设备和产线形成实际能力，投资关联才可能传导到产能和就业。',
+   needs:'到资、开工、设备安装、正式投产时间及同口径真实产出。'};
+  if(type==='regional')return {
+   premise:'只有跨区合作形成真实业务、人员或要素联系，区域关系才可能形成传导通道。',
+   needs:'合作实际履约、就业与采购所在地、通勤观测和跨域业务记录。'};
+  if(type==='transport')return {
+   premise:'只有道路可用能力、真实流量或通勤时耗改变，通道关联才可能改变网络约束。',
+   needs:'正式通行状态、分时交通量、出行时长、货运分布和替代通道信息。'};
+  if(type==='tourism_consumption')return {
+   premise:'只有能观察到真实消费或停留结构变化，文旅关联才可能传导至本地收益。',
+   needs:'过夜游客同口径数据、游客消费结构、酒店经营数据以及淡旺季对照。'};
+  return {premise:'只有确认主体之间存在可观察的实际依赖，才可能提出具有传导意义的假设。',
+   needs:'明确传导方向、影响对象、时滞、容量约束与可反驳的实际观测指标。'};
+ }
  function propositions(snapshot){
   const event=snapshot.event;
   const sourceNames=(ids)=>ids.map(id=>snapshot.sources.get(id)?.title||'来源条目未收录：'+id);
@@ -157,6 +184,14 @@
    rows.push({id:x.id,kind:'关系命题',title:(snapshot.nodes.get(x.source)?.name||x.source)+' ↔ '+(snapshot.nodes.get(x.target)?.name||x.target),
     status:x.grade+' · '+gradeName[x.grade],basis:x.description||x.label,caveat:x.counter_evidence||x.original_counter_evidence||'关系仅表示收录证据中的关联，不单独证明因果机制。',
     sourceIds:x.source_ids||[],sourceNames:sourceNames(x.source_ids||[]),after:x.after,grade:x.grade});
+   const mechanism=mechanismCandidate(x);
+   rows.push({id:'mechanism-'+x.id,kind:'机制候选',
+    title:'如果 '+(snapshot.nodes.get(x.source)?.name||x.source)+' 与 '+(snapshot.nodes.get(x.target)?.name||x.target)+' 的依赖成立…',
+    status:'待检验机制 · 非已证实因果',
+    basis:mechanism.premise,
+    caveat:'需补证据：'+mechanism.needs+'。相关来源只能支持上游关联，不能直接支持此机制已经发生。',
+    sourceIds:x.source_ids||[],sourceNames:sourceNames(x.source_ids||[]),
+    originatingEdgeId:x.id});
   });
   return rows;
  }
