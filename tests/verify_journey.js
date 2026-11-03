@@ -48,7 +48,7 @@ class MockNode{
 function make(page,search='',hash=''){
  const body=new MockNode('body');body.setAttribute('data-bl-journey',page);body.append(new MockNode('old-content'));
  const wrap=new MockNode('div'),kpis=new MockNode('div');wrap.append(new MockNode('h1'),new MockNode('p'),kpis);
- body.queryMap={'.wrap':wrap};wrap.queryMap={'.kpis':kpis};
+ body.queryMap={'.wrap':wrap};wrap.queryMap={'.kpis':kpis};body.append(wrap);
  const listeners={};const ids={detailTitle:new MockNode('div')};
  ids.detailTitle.textContent='四宗项目签约';
  const document={body,createElement:tag=>new MockNode(tag),
