@@ -270,5 +270,36 @@ $id('ia-export').addEventListener('click',()=>{
  a.href=url;a.download=run.runId+'.json';document.body.append(a);a.click();a.remove();
  setTimeout(()=>URL.revokeObjectURL(url),700);
 });
+$id('ia-import').addEventListener('change',async ev=>{
+ const file=ev.target.files?.[0];if(!file)return;
+ const status=$id('ia-import-status');
+ try{
+  if(file.size>5*1024*1024)throw Error('记录超过5 MB，不能作为单次实验快照读取');
+  const archive=JSON.parse(await file.text());
+  if(archive?.manifest?.engine!==Engine.VERSION)throw Error('引擎版本不同，无法声称同口径复现');
+  if(!archive?.inputs?.evidence||!archive?.inputs?.changes||!archive?.inputs?.sources||!archive?.selection?.eventId)throw Error('缺少完整原始输入或选择条件');
+  const saved=Engine.withInputs(archive.inputs.evidence,archive.inputs.changes,archive.inputs.sources,archive.selection.eventId);
+  const replay=Engine.inspect(saved,archive.selection);
+  if(replay.runId!==archive?.manifest?.runId||replay.runId!==archive?.result?.runId){
+   throw Error('Run-ID 与输入/条件不一致；拒绝将此文件视为真实记录');
+  }
+  const same=payload&&Engine.hash(JSON.stringify([payload.evidence,payload.changes,payload.sources]))===saved.digest;
+  if(same){
+   selectEvent(archive.selection.eventId);
+   $id('ia-grade').value=archive.selection.mode;
+   updateEdges();
+   $id('ia-pivot').value=archive.selection.pivot;
+   pivot=archive.selection.pivot;
+   $id('ia-remove').value=archive.selection.omitEdge||'';
+   $id('ia-notes').value=archive.selection.analystNotes||'';
+   const restored=perform();
+   if(!restored||restored.runId!==replay.runId)throw Error('页面重放结果和存档不一致');
+   status.textContent='Run-ID 校验通过：'+replay.runId+'。已恢复参数、观察主体和证据快照。';
+  }else{
+   status.textContent='存档已在其原始快照中独立复算通过：'+replay.runId+'。与当前站点快照不同，未擅自替换当前数据。';
+  }
+ }catch(e){status.textContent='无法确认这份记录：'+e.message;}
+ finally{ev.target.value='';}
+});
 setTab('blind');boot();
 })();
