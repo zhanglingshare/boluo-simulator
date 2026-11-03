@@ -188,3 +188,39 @@ body[data-bl-journey="comparison"] .bc-detail-card{box-shadow:var(--be-shadow)}
 @media(prefers-reduced-motion:reduce){
  body[data-bl-journey] :is(.town,.tcard,.tour a,.change-card){transition:none!important;transform:none!important}
 }
+
+
+/* 01真实消息证据预览：没有任何伪装成真实关系的概念连线 */
+body[data-bl-journey="today"] .bl-evidence-window{display:flex;flex-direction:column;min-height:320px;padding:21px!important;background:#f9fafb!important;border:1px solid #dce4ea!important;text-decoration:none;cursor:default}
+body[data-bl-journey="today"] .bl-evidence-window .bl-visual-top{display:flex;justify-content:space-between;font-weight:850;font-size:10px;letter-spacing:.9px;color:#8392a1!important}
+body[data-bl-journey="today"] .bl-evidence-window .bl-visual-status{color:#9c434b!important;background:#f9eff0!important;border:1px solid #eed7da;border-radius:4px;padding:4px 7px;letter-spacing:0}
+body[data-bl-journey="today"] .bl-evidence-title{font-size:17px!important;margin:13px 0 10px!important;letter-spacing:-.2px;color:#1c3448!important;font-weight:830}
+body[data-bl-journey="today"] .bl-evidence-title span{color:#9e4048!important}
+body[data-bl-journey="today"] .bl-evidence-feed{display:grid;gap:7px;flex:1}
+body[data-bl-journey="today"] .bl-evidence-row{padding:10px 12px;background:#fff;border:1px solid #e4e8ed;border-radius:8px;min-width:0}
+body[data-bl-journey="today"] .bl-evidence-meta{color:#8995a1;font-size:10px;line-height:1.4;word-break:break-word}
+body[data-bl-journey="today"] .bl-evidence-item-title{color:#2e4458;font-size:12px;line-height:1.52;font-weight:780;margin-top:3px}
+body[data-bl-journey="today"] .bl-evidence-deep{font-size:10px;font-weight:800;color:#9f3540;display:inline-flex;margin-top:6px;text-decoration:none}
+body[data-bl-journey="today"] .bl-evidence-deep:hover{text-decoration:underline}
+body[data-bl-journey="today"] .bl-evidence-window .bl-visual-bottom{display:flex;flex-wrap:wrap;justify-content:space-between;gap:9px;margin-top:12px;border-top:1px solid #e2e7ed;padding-top:12px}
+body[data-bl-journey="today"] .bl-evidence-window .bl-visual-bottom a{font-size:11px;color:#9f3540!important;font-weight:820;text-decoration:none}
+body[data-bl-journey="today"] #topicList .tcard{padding:18px!important;box-shadow:0 7px 22px rgba(21,44,64,.045)!important}
+body[data-bl-journey="today"] #topicList .tcard>div[style*="color:#fff"]{font-size:15px!important}
+body[data-bl-journey="today"] #topicList .tcard .detail[style*="display:none"]{display:none}
+body[data-bl-journey="today"] #topicList .tcard .detail[style*="display: block"]{display:block}
+body[data-bl-journey="today"] .wrap>details{border:1px solid #e0e6eb!important;background:#fff!important;border-radius:13px!important;padding:0 15px!important}
+body[data-bl-journey="today"] .wrap>details summary{color:#364f64!important;font-weight:820}
+body[data-bl-journey="today"] .wrap>details div[style*="background:linear-gradient"]{background:#f8fafb!important;border:1px solid #e2e8ed!important;border-radius:10px!important}
+body[data-bl-journey="today"] .wrap>details div[style*="color:#fff"]{color:#284257!important}
+body[data-bl-journey="today"] .wrap>details div[style*="color:#cbd5e1"]{color:#566a7b!important}
+body[data-bl-journey="today"] .wrap>details div[style*="color:#94a3b8"]{color:#778a9b!important}
+body[data-bl-journey="today"] #townGrid button{background:#f1f5f7!important;border:1px solid #dbe5eb!important;color:#35526b!important}
+body[data-bl-journey="today"] #proudGrid button{background:#fff!important;color:#465d71!important;border-color:#dce4ea!important}
+body[data-bl-journey="town"] .vegcard div[style*="color:#fff"]{color:#273f53!important}
+body[data-bl-journey="town"] .vegcard div[style*="color:#cbd5e1"]{color:#5e7181!important}
+body[data-bl-journey="town"] .vegcard div[style*="color:#94a3b8"]{color:#718394!important}
+body[data-bl-journey="basic"] .be-quality-note{color:#5f7080}
+@media(max-width:740px){
+ body[data-bl-journey="today"] .bl-evidence-window{min-height:0!important;padding:14px!important}
+ body[data-bl-journey="today"] .bl-evidence-feed{grid-template-columns:1fr}
+}
