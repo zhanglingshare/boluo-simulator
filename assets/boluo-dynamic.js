@@ -292,8 +292,8 @@ function initCompare(){
  function schedule(){if(queued)return;queued=true;requestAnimationFrame(()=>{queued=false;annotate();});}
  if(typeof MutationObserver!=='undefined')new MutationObserver(()=>{if(!busy&&!stage.querySelector('.blx-svg-annotations'))schedule();}).observe(stage,{childList:true});
  stage.addEventListener('click',schedule);stage.addEventListener('keyup',schedule);
- document.addEventListener('bl:compare-selected',()=>{stop();setPhase('both');schedule();});
- setPhase('both');schedule();
+ document.addEventListener('bl:compare-selected',()=>{stop();setPhase(window.matchMedia('(max-width:580px)').matches?'after':'both');schedule();});
+ setPhase(window.matchMedia('(max-width:580px)').matches?'after':'both');schedule();
 }
 if(page==='today')initToday();
 if(page==='town')initTown();
