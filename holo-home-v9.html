@@ -418,7 +418,7 @@ body.mode-2d .layout-switch,body.mode-2d .play-controls{opacity:.38;pointer-even
         <div>
           <div class="kicker">CHANGE ATLAS · 变化优先</div>
           <h1 class="deck-title" id="deckTitle">今年以来，博罗变了 <b>12</b> 处</h1>
-          <p class="deck-desc" id="deckDesc">在 36 个主体、45 条关系的基本盘上叠加变化。点开一条变化，只亮它牵动的路径；灰色是背景，不是结论。</p>
+          <p class="deck-desc" id="deckDesc">在 36 个主体、45 条联系的基本盘上叠加变化。点开一条变化，只亮它牵动的路径；灰色是背景，不是结论。</p>
         </div>
         <div class="range-seg" role="group" aria-label="时间范围">
           <button data-range="month">这个月<span class="seg-sub">近 30 天</span></button>
@@ -442,7 +442,7 @@ body.mode-2d .layout-switch,body.mode-2d .play-controls{opacity:.38;pointer-even
           时间长河</button>
       </div>
       <div class="stage-hud">
-        <div class="hud-chip hud-tl" id="hudTl">BOLUO · 3D ATLAS</div>
+        <div class="hud-chip hud-tl" id="hudTl">博罗 · 变化全景</div>
         <div class="hud-chip hud-tr" id="hudTr">拖拽旋转 · 滚轮缩放</div>
         <div class="hud-chip hud-bl" id="hudBl">连线是关系线索，<b>不等于已证实的因果</b>；C 级为待验证假设。</div>
       </div>
@@ -470,7 +470,7 @@ body.mode-2d .layout-switch,body.mode-2d .play-controls{opacity:.38;pointer-even
     <div class="panel">
       <div class="stats">
         <div class="stat"><div class="stat-num" id="statNodes">–</div><div class="stat-lbl">主体</div></div>
-        <div class="stat"><div class="stat-num" id="statEdges">–</div><div class="stat-lbl">关系</div></div>
+        <div class="stat"><div class="stat-num" id="statEdges">–</div><div class="stat-lbl">联系</div></div>
         <div class="stat"><div class="stat-num" id="statSources">–</div><div class="stat-lbl">来源</div></div>
         <div class="stat"><div class="stat-num" id="statChanges">–</div><div class="stat-lbl">变化</div></div>
       </div>
@@ -508,9 +508,9 @@ body.mode-2d .layout-switch,body.mode-2d .play-controls{opacity:.38;pointer-even
 <section class="analysis" aria-label="基本盘分析">
   <div class="module-head">
     <div>
-      <div class="module-kicker">STRUCTURE · 基本盘体检</div>
+      <div class="module-kicker">基本盘体检</div>
       <h2 class="module-title">一张图看清博罗的产业结构与证据成色</h2>
-      <p class="module-desc">基于 36 个主体、45 条关系、12 处变化与 54 份公开来源实时计算。这里看的是全局结构，不随上方时间范围切换；A/B/C 是证据等级，不是好坏评分。</p>
+      <p class="module-desc">基于 36 个主体、45 条联系、12 处变化与 54 份公开来源实时计算。这里看的是全局结构，不随上方时间范围切换；A/B/C 是证据等级，不是好坏评分。</p>
     </div>
     <div class="mh-spacer"></div>
     <span class="module-tag" id="analysisStamp">数据核验中…</span>
@@ -523,7 +523,7 @@ body.mode-2d .layout-switch,body.mode-2d .play-controls{opacity:.38;pointer-even
     </div>
     <div class="chart-card">
       <div class="chart-name">证据等级成色</div>
-      <div class="chart-sub">45 条关系的证据等级分布</div>
+      <div class="chart-sub">45 条联系的证据等级分布</div>
       <div class="grade-grid">
         <div class="grade-box gA"><div class="gb-num" id="gA">–</div><div class="gb-lbl">A 级公开证据</div></div>
         <div class="grade-box gB"><div class="gb-num" id="gB">–</div><div class="gb-lbl">B 级合理推断</div></div>
@@ -538,7 +538,7 @@ body.mode-2d .layout-switch,body.mode-2d .play-controls{opacity:.38;pointer-even
     </div>
     <div class="chart-card wide">
       <div class="chart-name">关系类型构成</div>
-      <div class="chart-sub">45 条关系按 8 类关系分布</div>
+      <div class="chart-sub">45 条联系按 8 类分布</div>
       <div class="bar-chart" id="barEdge"></div>
     </div>
   </div>
@@ -548,7 +548,7 @@ body.mode-2d .layout-switch,body.mode-2d .play-controls{opacity:.38;pointer-even
 <section class="ledger" aria-label="变化明细表">
   <div class="module-head">
     <div>
-      <div class="module-kicker">LEDGER · 变化账本</div>
+      <div class="module-kicker">变化账本</div>
       <h2 class="module-title">12 处变化，逐条可查、可筛选</h2>
       <p class="module-desc">每一行都可回溯到具体公开来源。点击任意行回到上方图谱，只看它牵动的路径。模糊日期（如"2026-07"）保留原始写法，不伪造精确日期。</p>
     </div>
@@ -632,7 +632,7 @@ var CHANGE_CFG={
   new_edge:{label:"新连接形成",color:"#79b8ff"},
   strengthen:{label:"连接增强",color:"#62e6e0"},
   weaken:{label:"连接减弱",color:"#f4c66b"},
-  exit:{label:"主体退出",color:"#ff7e86"}
+  exit:{label:"关停退出",color:"#ff7e86"}
 };
 var NODE_TYPE_LBL={external:"外部联系",eco:"生态底座",agriculture:"特色农业",anchor:"链主企业",champion:"小巨人",cluster:"产业群落",legacy:"老厂基盘",energy:"能源设施",new:"新主体"};
 function nodeColor(n){if(n.node_type==="legacy"&&(n.node_status==="exit"||n.change_status==="退出"))return "#ff8f9d";return NODE_COLOR[n.node_type]||"#9ab4d4";}
@@ -1613,7 +1613,7 @@ function renderList(){
     card.appendChild(top);
     card.appendChild(el("div",{class:"cc-title"},c.title));
     var ncount=(c.involved_node_ids||[]).length,ecount=(c.involved_edge_ids||[]).length;
-    card.appendChild(el("div",{class:"cc-meta"},"涉及 "+ncount+" 个主体 · "+ecount+" 条关系"));
+    card.appendChild(el("div",{class:"cc-meta"},"牵动 "+ncount+" 个主体 · "+ecount+" 条联系"));
     card.addEventListener("click",function(){selectChange(c.change_id);});
     box.appendChild(card);
   });
@@ -1650,7 +1650,7 @@ function renderDetail(change){
   var ev=$("detailEvidence");ev.innerHTML="";
   var meta=el("div",{class:"ev-row"});
   meta.innerHTML='<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><circle cx="12" cy="12" r="8"/><path d="M12 8v5M12 16h.01"/></svg>';
-  meta.appendChild(el("span",null,"涉及 "+(change.involved_node_ids||[]).length+" 个主体、"+(change.involved_edge_ids||[]).length+" 条关系，核验于 "+change.last_verified_at));
+  meta.appendChild(el("span",null,"牵动 "+(change.involved_node_ids||[]).length+" 个主体、"+(change.involved_edge_ids||[]).length+" 条联系，核验于 "+change.last_verified_at));
   ev.appendChild(meta);
   (change.involved_edge_ids||[]).forEach(function(id){
     var e=Store.edgeMap[id];if(!e)return;
@@ -1701,10 +1701,10 @@ function renderHeading(){
   var n=Store.filtered.length;
   if(Store.range==="month"){
     $("deckTitle").innerHTML='近 30 天，博罗变了 <b>'+n+'</b> 处';
-    $("deckDesc").textContent="滚动近 30 天的变化，叠加在 36 个主体、45 条关系的基本盘上。点开一条，只看它牵动的路径。";
+    $("deckDesc").textContent="滚动近 30 天的变化，叠加在 36 个主体、45 条联系的基本盘上。点开一条，只看它牵动的路径。";
   }else{
     $("deckTitle").innerHTML='今年以来，博罗变了 <b>'+n+'</b> 处';
-    $("deckDesc").textContent="在 36 个主体、45 条关系的基本盘上叠加变化。点开一条变化，只亮它牵动的路径；灰色是背景，不是结论。";
+    $("deckDesc").textContent="在 36 个主体、45 条联系的基本盘上叠加变化。点开一条变化，只亮它牵动的路径；灰色是背景，不是结论。";
   }
 }
 
@@ -1764,7 +1764,7 @@ window.__AtlasHooks={
 function initEngine(){
   if(window.THREE&&window.__Atlas3D.init()){engine=window.__Atlas3D;document.body.classList.add("mode-3d");}
   else if(window.__Atlas2D.init()){engine=window.__Atlas2D;document.body.classList.add("mode-2d");}
-  $("hudTl").textContent=engine===window.__Atlas3D?"BOLUO · 3D ATLAS":"BOLUO · 2D ATLAS";
+  $("hudTl").textContent=engine===window.__Atlas3D?"博罗 · 变化全景（3D）":"博罗 · 变化全景（2D）";
 }
 
 /* ---------- 范围切换 ---------- */
