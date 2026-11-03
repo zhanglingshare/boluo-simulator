@@ -48,7 +48,9 @@ body[data-bl-journey] .v3-action-quiet{background:#153c4e;color:#c3f3ef;border-c
 body[data-bl-journey] :is(.v3-action-hot,.v3-action-light,.v3-action-quiet):hover{transform:translateY(-2px);box-shadow:0 7px 17px #12314425}
 body[data-bl-journey] :is(button,a,[role=button]):focus-visible{outline:3px solid #56c3c8!important;outline-offset:3px}
 /* 01: the original newsroom is now a stage, not another stack of cards. */
-body[data-bl-journey="today"] .bl-home-hero{
+/* Legacy editorial :is(.tour a,...) has higher specificity because the a element
+   participates in :is() specificity; make the actual hero background unambiguous. */
+body[data-bl-journey="today"].v3-world .bl-home-hero{
  background:radial-gradient(circle at 15% 5%,#1d5369 0,transparent 44%),linear-gradient(120deg,#091a2a,#103047 65%,#123f52)!important;
  border:1px solid #286179!important;box-shadow:0 28px 62px #173b4e36!important;overflow:hidden;position:relative
 }
