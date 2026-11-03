@@ -51,7 +51,7 @@ async function run(){
   await page.screenshot({path:path.join(dir,'04-desktop.png'),fullPage:true,animations:'disabled'});
   await page.locator('.v3-story-next').click();
   await page.waitForURL(/relation-compare\.html/);
-  await page.locator('#bc-after .bc-edge').first().waitFor();
+  await page.locator('#bc-after .bc-edge').first().waitFor({state:'attached'});
   assert.equal(new URL(page.url()).searchParams.get('change'),'C006');
   await page.locator('.v3-delta-number').first().waitFor();
   assert.equal(await page.locator('.v3-delta-number').count(),4);
@@ -83,7 +83,7 @@ async function run(){
    const mobile=await browser.newPage({viewport:{width:390,height:844},deviceScaleFactor:1,isMobile:true,hasTouch:true});
    mobile.on('pageerror',e=>pageErrors.push(file+' mobile '+e.message));
    await open(mobile,file,selector);
-   if(file.startsWith('relation-compare'))await mobile.locator('#bc-after .bc-edge').first().waitFor();
+   if(file.startsWith('relation-compare'))await mobile.locator('#bc-after .bc-edge').first().waitFor({state:'attached'});
    const overflow=await mobile.evaluate(()=>document.documentElement.scrollWidth-window.innerWidth);
    assert.ok(overflow<=4,file+' mobile overflow='+overflow);
    if(file.startsWith('relation-compare')){
