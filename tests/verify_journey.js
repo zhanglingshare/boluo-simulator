@@ -11,7 +11,8 @@ const expected={
  town:'town.html',
  changes:'industry-changes.html',
  basic:'who.html',
- comparison:'relation-compare.html'
+ comparison:'relation-compare.html',
+ planning:'plan-with-me.html'
 };
 const changeData=JSON.parse(get('data/relationship-changes-v1.json'));
 assert.ok(changeData.changes.some(c=>c.change_id==='C004'),'C004必须是已收录的正式变化ID');
@@ -84,9 +85,13 @@ const baseline=find(basic.body,'bl-journey-baseline');
 assert.ok(baseline&&!baseline.hidden,'04页必须展示选中事件的宏观上下文');
 assert.equal(find(basic.nav,'bl-journey-next').href,'relation-compare.html?from=basic&change=C004','04应带事件进入05');
 const comparison=make('comparison','?from=basic&change=C004');
-assert.equal(find(comparison.nav,'bl-journey-next'),null,'06规划未完成时不得制造假入口');
+assert.equal(find(comparison.nav,'bl-journey-next').href,'plan-with-me.html?from=comparison&change=C004','05应将事件交给06规划与你');
+comparison.listeners['bl:compare-selected']({detail:{changeId:'C006'}});
+assert.equal(find(comparison.nav,'bl-journey-next').href,'plan-with-me.html?from=comparison&change=C006','05切换事件后应更新06链接');
+const planning=make('planning','?from=comparison&change=C006');
+assert.equal(find(planning.nav,'bl-journey-next').href,'choices.html','06保留通往原五条路径的下一步');
 Promise.resolve().then(()=>Promise.resolve()).then(()=>{
  const text=(n)=>[n?.textContent,...(n?.children||[]).map(text)].join(' ');
  assert.ok(text(baseline).includes('80亿')||text(baseline).includes('签约'),'基本面应接收C004正式记录');
- console.log('✓ 01→03→04→05 真实世界认知接力、C004上下文与兼容导航检查通过');
+ console.log('✓ 01→03→04→05→06 真实世界认知接力、C004上下文与兼容导航检查通过');
 }).catch(e=>{console.error(e);process.exitCode=1;});
