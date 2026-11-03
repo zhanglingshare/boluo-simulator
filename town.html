@@ -43,11 +43,13 @@ h1{font-size:21px;margin:0}
 .next{text-align:center;margin-top:18px}
 .next a{background:#15803d;color:#fff;padding:11px 24px;border-radius:8px;text-decoration:none;font-weight:600;display:inline-block}
 @media(min-width:1024px){.wrap{max-width:1200px!important;padding:24px}}</style><link rel="stylesheet" href="assets/boluo-ui.css">
-</head><body class="bl-ui bl-dark bl-ui--town" data-bl-page="town">
+<link rel="stylesheet" href="assets/boluo-journey.css">
+<script defer src="assets/boluo-journey.js"></script>
+</head><body class="bl-ui bl-dark bl-ui--town" data-bl-page="town" data-bl-journey="town">
 
 <div class="nav">
   <b>博罗产业风洞</b>
-  <a href="index.html">今日博罗</a>
+  <a href="index-legacy-2026-11-03.html">今日博罗</a>
   <a href="holo-home-v9.html">⚡ 变化现场</a>
   <a href="experiments/holo-single/index.html">◉ 关系世界</a>
   <a href="town.html" class="on">🏘️ 各镇吃喝玩乐</a>
@@ -168,6 +170,7 @@ document.getElementById("btnScan").onclick=refresh;
 .likebar{position:relative;bottom:auto;left:auto;transform:none;display:flex;justify-content:center;margin:20px 0;background:rgba(15,23,42,.96);border:1px solid #3b82f6;border-radius:24px;padding:9px 20px;display:flex;gap:22px;z-index:999;box-shadow:0 6px 24px rgba(0,0,0,.6)}
 .likebar button{background:none;border:none;color:#e2e8f0;font-size:14px;cursor:pointer}
 .likebar button:active{transform:scale(1.15)}
+</style>
 <script>
 (function(){
   var k="like_"+location.pathname;
