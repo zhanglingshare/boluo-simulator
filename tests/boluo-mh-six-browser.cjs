@@ -49,7 +49,7 @@ async function suite(){
   page.on('pageerror',e=>errs.push('06-interaction: '+e.message));
   await page.goto(root+'plan-with-me.html?change=C004',{waitUntil:'domcontentloaded'});
   await page.locator('#pl-role-title').waitFor();
-  await page.waitForFunction(()=>document.querySelector('#pl-metrics .pl-stat')?.textContent?.includes('1600'),{timeout:15000});
+  await page.waitForFunction(()=>document.querySelector('#pl-metrics .pl-stat')?.textContent?.includes('1,600'),{timeout:15000});
   assert.equal(await page.locator('.pl-stat').count(),4,'Four sourced planning headline indicators');
   assert.equal(await page.locator('[data-role="worker"]').getAttribute('aria-pressed'),'true','C004 selects relevant worker role');
   assert.equal(await page.locator('[data-theme="industry"]').getAttribute('aria-pressed'),'true','C004 keeps actual industry event');
