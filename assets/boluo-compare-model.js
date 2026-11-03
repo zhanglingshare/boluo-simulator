@@ -86,7 +86,8 @@
    const focus=involvedEdgeSet.has(e.edge_id);
    const status=focus?lifecycle(c,e,nm):'background';
    const introduced=e.source_node_id&&nodes.some(n=>n.id===e.source_node_id&&n.introduced)||nodes.some(n=>n.id===e.target_node_id&&n.introduced);
-   let before='normal',after='normal',label='已有关系';
+   const baseline=isAssumption(e)?'hypothesis':isInferred(e)?'inferred':'normal';
+   let before=baseline,after=baseline,label='已收录背景关系';
    if(introduced){before='absent';after=(status==='hypothesis'?'hypothesis':status==='inferred'?'inferred':'recorded');}
    else if(focus){
     if(status==='line_closed'){before='normal';after='closed';label='生产线退出';}
@@ -94,7 +95,7 @@
     else if(status==='not_open'){before='absent';after='construction';label='建设／目标，不代表已通车';}
     else if(status==='rectification'){before='normal';after=e.change_status==='无显著变化'?'normal':'related';label='停产整改，非永久退出';}
     else if(status==='hypothesis'){before='absent';after='hypothesis';label='待验证产业关联';}
-    else if(status==='inferred'){before='normal';after='inferred';label='间接证据关联，不等于已核验传导';}
+    else if(status==='inferred'){before='inferred';after='inferred';label='间接证据关联：此事件未证实该边新增或增强';}
     else if(c.change_type==='new_edge'){before='absent';after='recorded';label='新增记录';}
     else if(c.change_type==='strengthen'){before='normal';after='related';label='事件相关，关系变化幅度未量化';}
     else if(c.change_type==='weaken'){before='normal';after='related';label='事件相关，不可据此判断所有关系减弱';}
