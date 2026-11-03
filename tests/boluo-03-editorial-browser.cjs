@@ -14,6 +14,7 @@ async function run(){
    assert.equal(await page.locator('#ec-feed-list .ec-feed-item').count(),12);
    assert.match(await page.locator('#detailTitle').innerText(),/签约4宗/);
    assert.ok((await page.locator('#ec-graph [data-edge]').count())>=3,'graph edges must be real');
+   await page.locator('.ec-detail .sn-fold > summary').click();
    assert.match(await page.locator('#ec-uncertainty').innerText(),/签约|待落地|未投产|待建/);
    assert.match(await page.locator('#ec-compare').getAttribute('href'),/relation-compare\.html\?change=C004/);
    assert.match(await page.locator('#ec-next').getAttribute('href'),/who\.html\?from=changes&change=C004/);

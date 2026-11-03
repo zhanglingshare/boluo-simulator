@@ -56,7 +56,7 @@ async function run(){
   await load(mobile,'relation-compare.html?from=basic&change=C004');
   assert.equal(await mobile.locator('.bc-panel--before').isVisible(),false,'手机默认突出当前变化');
   assert.equal(await mobile.locator('.bc-panel--after').isVisible(),true);
-  await mobile.locator('[data-bc-view="both"]').click();
+  await mobile.getByRole('button',{name:'并排',exact:true}).click();
   assert.equal(await mobile.locator('.bc-panel--before').isVisible(),true,'手机必须可以开启同屏对比');
   assert.equal(await mobile.locator('.bc-panel--after').isVisible(),true);
   const overflow=await mobile.evaluate(()=>document.documentElement.scrollWidth-window.innerWidth);

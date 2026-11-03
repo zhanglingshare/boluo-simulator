@@ -24,7 +24,7 @@ const scenes=[['today','index-legacy-2026-11-03.html',3],['town','town.html',16]
    const url=await p.locator('.bp-share-url').inputValue();const u=new URL(url);
    assert.equal(u.searchParams.get('challenge'),'boluo-discover-v1-'+id);
    assert.ok(u.searchParams.get('pick'),'selected view is in the share link');
-   if(width===390){const box=await p.locator('.bp-sheet').boundingBox();assert.ok(Math.abs(box.y+box.height-844)<=4,'iOS sheet reaches bottom');assert.ok(box.width<=390,'mobile sheet stays in viewport');}
+   if(width===390){await p.waitForFunction(()=>{const r=document.querySelector('.bp-sheet')?.getBoundingClientRect();return r&&Math.abs(r.y+r.height-innerHeight)<=4;},null,{timeout:2500});const box=await p.locator('.bp-sheet').boundingBox();assert.ok(Math.abs(box.y+box.height-844)<=4,'iOS sheet reaches bottom');assert.ok(box.width<=390,'mobile sheet stays in viewport');}
    await p.locator('.bp-sheet-done').click();await p.locator('.bp-sheet[open]').waitFor({state:'hidden'});
    assert.equal(await p.locator('.bp-share').evaluate(e=>e===document.activeElement),true,'focus returns to the invoking control');
    const overflow=await p.evaluate(()=>document.documentElement.scrollWidth-innerWidth);assert.ok(overflow<=4,id+' no horizontal overflow '+width);
