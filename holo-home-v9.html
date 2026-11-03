@@ -491,6 +491,7 @@ body.mode-2d .layout-switch,body.mode-2d .play-controls{opacity:.38;pointer-even
 </style>
 <link rel="stylesheet" href="assets/boluo-journey.css">
 <script defer src="assets/boluo-journey.js"></script>
+<link rel="stylesheet" href="assets/boluo-editorial.css">
 </head>
 <body data-bl-journey="changes">
 <header class="appbar">
@@ -518,18 +519,18 @@ body.mode-2d .layout-switch,body.mode-2d .play-controls{opacity:.38;pointer-even
 </header>
 
 <main class="workspace">
-  <!-- 左：3D 图谱舱 -->
+  <!-- 产业变化观察画布：保留现有渲染内核与交互；外壳统一证据页视觉 -->
   <section class="deck" aria-label="变化图谱主画布">
     <div class="deck-head">
       <div class="deck-toprow">
         <div>
           <div class="kicker">变化现场 · 看见正在发生什么</div>
           <h1 class="deck-title" id="deckTitle">博罗·变化现场</h1>
-          <p class="deck-desc" id="deckDesc">今年已记录 12 处变化。看见真实发生的变化，以及它如何在博罗产生连锁反应。</p>
+          <p class="deck-desc" id="deckDesc">今年已记录 12 处变化。看见已收录的事实变化，以及仍待验证的潜在结构影响。</p>
         </div>
         <div class="range-seg" role="group" aria-label="时间范围">
           <button data-range="month">这个月<span class="seg-sub">近 30 天</span></button>
-          <button data-range="year" class="active">今年<span class="seg-sub">2026 全年</span></button>
+          <button data-range="year" class="active">今年<span class="seg-sub">2026年内</span></button>
         </div>
       </div>
     </div>
@@ -715,7 +716,7 @@ body.mode-2d .layout-switch,body.mode-2d .play-controls{opacity:.38;pointer-even
     </div>
     <div class="table-foot">
       <span>显示 <b id="tblShown">0</b> / <b id="tblTotal">0</b> 处</span>
-      <span style="margin-left:auto">数字实时计算，无真实来源的内容不进入数据</span>
+      <span style="margin-left:auto">根据已发布数据快照计算，非实时采集；缺少来源的关系不认定为事实</span>
     </div>
   </div>
 </section>
