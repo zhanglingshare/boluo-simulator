@@ -31,6 +31,9 @@ async function run(){
   assert.equal(data.inputs.evidence.nodes.length,36);
   assert.equal(data.inputs.changes.changes.length,12);
   assert.equal(data.manifest.runId,id);
+  await page.locator('#ia-import').setInputFiles(await dl.path());
+  await page.waitForFunction(()=>document.querySelector('#ia-import-status')?.textContent?.includes('校验通过'),{timeout:10000});
+  assert.equal(await page.locator('#ia-run-id').innerText(),id,'importing restores the same run');
   await page.locator('[data-ia-tab="sources"]').click();
   assert.ok(await page.locator('#ia-tab-sources a[href^="http"]').count()>=1,'real source links');
   await page.locator('.ia-event[data-id="C008"]').click();
