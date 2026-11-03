@@ -38,7 +38,7 @@ async function run(){
     assert.equal(await page.locator('.ec-detail').evaluate(el=>getComputedStyle(el).display),'none');
     await focus.click();
     assert.notEqual(await page.locator('.ec-detail').evaluate(el=>getComputedStyle(el).display),'none');
-    await page.screenshot({path:path.join(dir,'03-matte-network-1440.png'),animations:'disabled'});
+    await page.screenshot({path:path.join(dir,'03-matte-network-1440.png'),fullPage:true,animations:'disabled'});
    }
    if(step==='05'){
     await page.locator('#bc-after .bc-node').first().waitFor({timeout:15000,state:'attached'});
@@ -47,16 +47,17 @@ async function run(){
     assert.equal(fg,'rgb(25, 38, 51)','05 current panel matte dark');
     assert.equal(bg,'rgb(255, 255, 255)','05 previous panel remains white');
     assert.equal(await page.locator('#bc-after').evaluate(el=>getComputedStyle(el.parentElement).backgroundColor),'rgb(16, 28, 40)');
-    await page.screenshot({path:path.join(dir,'05-dual-material-1440.png'),animations:'disabled'});
+    await page.screenshot({path:path.join(dir,'05-dual-material-1440.png'),fullPage:true,animations:'disabled'});
    }
    if(step==='06'){
     await page.locator('#pl-role-title').waitFor();
     await page.waitForFunction(()=>document.querySelector('.pl-role .sn-role-glyph'),{timeout:15000});
     assert.equal(await page.locator('.pl-role .sn-role-glyph').count(),6,'six roles have tactile identity badges');
+    assert.ok(await page.locator('#pl-network .pl-svg-text tspan').count()>=3,'planning node labels use bounded line wrapping');
     await page.locator('.pl-role[data-role="worker"]').click();
     assert.equal(await page.locator('.pl-role .sn-role-glyph').count(),6,'role badges survive render');
     assert.equal(await page.locator('.pl-role[data-role="worker"]').getAttribute('aria-pressed'),'true');
-    await page.screenshot({path:path.join(dir,'06-role-workspace-1440.png'),animations:'disabled'});
+    await page.screenshot({path:path.join(dir,'06-role-workspace-1440.png'),fullPage:true,animations:'disabled'});
    }
    if(step==='01'){
     await page.locator('.sn-search-open').click();
