@@ -8,7 +8,7 @@
 - 字体 `-apple-system, BlinkMacSystemFont, "SF Pro Display", "PingFang SC", sans-serif`；核心数字 `"SF Pro Text", "JetBrains Mono", Menlo, monospace`，单位与口径另以普通字体标识。
 - 卡片可用 20px 圆角、按钮 10px 圆角；基准内间距 24px，复杂内容 32px；避免堆叠大圆角和无限卡片流。
 - 阴影只能是微弱的物理分离：`0 4px 24px rgba(0,0,0,.04), 0 1px 2px rgba(0,0,0,.02)`，hover 位移最多 `translateY(-2px)`，过渡 `.3s cubic-bezier(.25,.1,.25,1)`。
-- 禁止高饱和渐变、外发光、`drop-shadow` 发光、无意义 `backdrop-filter`、无目的粒子、自动闪烁与跳动。暗色仅在用户主动选择 dark mode 时另行审计。
+- 禁止高饱和渐变、外发光、`drop-shadow` 发光、无意义 `backdrop-filter`、无目的粒子、自动闪烁与跳动。**用户明确指定第03产业变化、第05前后对比的关系网络采用哑光深色画布**（03中间关系窗；05当前状态画布，加入前仍为浅色），其他页面和检查器维持浅色；深色文字对比度、证据等级线型必须单独验收。
 - **不得为了纯白而牺牲网络判读**：关系图应保留清楚的实体标签、区分已核实/间接推断/候选假设的线型、显著状态变化；动画只服务于用户点击、事件变动或运行回放。
 - 390px 手机、键盘焦点、`prefers-reduced-motion` 是必须验证的交付条件，不能只给 desktop 效果图。
 
@@ -29,6 +29,6 @@
 node --test tests/boluo-plan-life.test.cjs
 node tests/verify_journey.js
 ```
-浏览器验收需覆盖 1440 与 390 宽度、六页共用样式、原有交互未退化、05→06 事件 `Cxxx` 无损传递，以及 06 改身份/改方向/施压时的实际状态变化。CI：`.github/workflows/boluo-mh-six-check.yml`。
+浏览器验收需覆盖 1440 与 390 宽度，Cmd/Ctrl+K 真实页和事件检索、03专注模式、03/05深色网络标签可读、六页共用样式、原有交互未退化、05→06 事件 `Cxxx` 无损传递，以及 06 改身份/改方向/施压时的实际状态变化。CI：`.github/workflows/boluo-mh-six-check.yml`。其中 `assets/boluo-six-native.js/css` 是六页公共控件与局部深色关系画布的实现；任何修改不得使 UI 网络计数与真实入库关系数矛盾。
 
 **核心准则：外观克制，信息运动；动画应揭示现实中的差异，不制造虚假的确定性。**
