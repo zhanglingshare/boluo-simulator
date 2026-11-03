@@ -1,6 +1,6 @@
 <!doctype html>
 <html lang="zh-CN"><head><meta charset="utf-8"/><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover"/><meta name="theme-color" content="#050d18"/>
-<title>看见博罗 V2 · 县域全息关系与流动图谱</title><meta name="description content="沿产业、城镇生活、文旅农业、事件与外部联系，在同一全息空间内跨层探索博罗；真实关系、研究推断、假设实验分层呈现。独立原型，不修改线上版本。"/>
+<title>博罗 · 关系世界｜决策能力升级系统</title><meta name="description" content="从真实主体和已收录关系出发，追踪博罗产业、镇街与外部联系。结构发现与情景对照不等于现实预测。"/>
 <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='7' fill='%23050d18'/%3E%3Cg stroke='%2352def1' stroke-width='1.2' opacity='0.7'%3E%3Cpath d='M16 16L8 9M16 16L24 10M16 16L10 24M16 16L24 23'/%3E%3C/g%3E%3Ccircle cx='16' cy='16' r='3' fill='%2370f6ff'/%3E%3Ccircle cx='8' cy='9' r='1.8' fill='%2352def1'/%3E%3Ccircle cx='24' cy='10' r='1.8' fill='%2352def1'/%3E%3Ccircle cx='10' cy='24' r='1.8' fill='%2352def1'/%3E%3Ccircle cx='24' cy='23' r='1.8' fill='%23ffc47d'/%3E%3C/svg%3E"/>
 <style>
 :root{color-scheme:dark;--bg:#040b14;--panel:rgba(7,18,31,.79);--line:rgba(109,171,213,.15);--aqua:#52def1;--muted:#7e99af;--text:#e9f4ff;--gold:#ffc47d;--green:#56e2b4;font-family:Inter,-apple-system,BlinkMacSystemFont,'Segoe UI','PingFang SC','Microsoft YaHei',Arial,sans-serif}
@@ -33,15 +33,15 @@
  .mobile-only{display:block}
  .right-panel{height:auto}
 }
-</style><link rel="stylesheet" href="m3/ui.css" />
+</style><link rel="stylesheet" href="m3/ui.css" /><link rel="stylesheet" href="./discovery.css" />
 </head>
 <body>
 <div id="app">
   <div class="backdrop-gradient"></div>
   <header class="topbar glass">
-    <div class="brand" aria-label="看见博罗 V2"><div class="brand-glyph" aria-hidden="true"><i></i><i></i><i></i></div><div><b>看见博罗<span>V2</span></b><small>BO LUO · LIVING DATA UNIVERSE</small></div></div>
-    <div class="mode-switch" role="tablist" aria-label="探索模式"><button data-mode="universe" class="mode-tab active" role="tab" aria-selected="true">全景星群</button><button data-mode="relations" class="mode-tab" role="tab" aria-selected="false">关系追踪</button><button data-mode="flows" class="mode-tab" role="tab" aria-selected="false">流动观察</button><button data-mode="scenario" class="mode-tab" role="tab" aria-selected="false">未知实验</button></div>
-    <div class="top-actions"><div class="source-chip"><span class="pulse-dot" id="sourceDot"></span><span id="sourceChip">正在读取数据…</span></div><a class="ghost-link" href="https://zhanglingshare.github.io/boluo-simulator/" target="_blank" rel="noreferrer">原版 ↗</a></div>
+    <div class="brand" aria-label="博罗关系世界"><div class="brand-glyph" aria-hidden="true"><i></i><i></i><i></i></div><div><b>博罗<span>关系世界</span></b><small>STRUCTURE · CONNECTION · DECISION</small></div></div>
+    <div class="mode-switch" role="tablist" aria-label="探索模式"><button data-mode="universe" class="mode-tab active" role="tab" aria-selected="true">五群全景</button><button data-mode="relations" class="mode-tab" role="tab" aria-selected="false">关系追踪</button><button data-mode="flows" class="mode-tab" role="tab" aria-selected="false">流动边界</button><button data-mode="scenario" class="mode-tab" role="tab" aria-selected="false">结构对照</button></div>
+    <div class="top-actions"><div class="source-chip"><span class="pulse-dot" id="sourceDot"></span><span id="sourceChip">正在读取数据…</span></div><a class="ghost-link" href="../../index.html">返回观察台 ↗</a></div>
   </header>
   <main id="viewport"><canvas id="universeCanvas" aria-label="可旋转、缩放、选择节点的博罗全息数据空间"></canvas><canvas id="linkCanvas" aria-hidden="true"></canvas><div id="labels" aria-hidden="true"></div>
     <div class="vignette"></div>
@@ -54,8 +54,8 @@
     <div class="scene-title" id="sceneTitle"><span class="scene-eyebrow" id="sceneEyebrow">BO LUO / HOLOGRAPHIC ATLAS</span><strong id="sceneHeadline">五个世界，<br/>一座博罗。</strong><span id="sceneSub">轻触任意星群，沿公开资料中的联系继续探索。</span></div>
     <div class="scene-compass" aria-hidden="true"><span>↑</span><i></i><span>3D SPACE</span></div>
     <div class="floating-tools"><button class="tool-btn" id="homeBtn" aria-label="返回全景" title="返回全景">⌂</button><button class="tool-btn" id="zoomIn" aria-label="放大">＋</button><button class="tool-btn" id="zoomOut" aria-label="缩小">−</button><button class="tool-btn" id="autoRotate" aria-pressed="false" title="切换自动旋转">⟳</button></div>
-    <aside class="right-panel glass" id="inspector"><div class="inspector-top"><span class="eyebrow">DATA INSPECTOR</span><span class="indicator-healthy" id="inspectorMode">● 真实资料</span></div><div id="inspectorBody"></div></aside>
-    <div class="bottom-dock glass"><div class="dock-identity"><div class="dock-orbit" id="dockOrbit">✧</div><div><b id="dockTitle">全景宇宙</b><small id="dockSubtitle">5 组星群 · 点击进入</small></div></div><div class="dock-divider"></div><div class="dock-buttons"><button id="backButton" class="dock-btn" disabled>← 返回</button><button id="depthButton" class="dock-btn">展开联系 <span>↗</span></button><button id="evidenceButton" class="dock-btn">证据筛选 <span id="gradeBadge">全部</span></button></div><div class="dock-divider"></div><div class="dock-progress"><span>VIEW / 01</span><i></i><i></i><i></i></div></div>
+    <aside class="right-panel glass" id="inspector"><div class="inspector-top"><span class="eyebrow">RELATION INSPECTOR</span><span class="indicator-healthy" id="inspectorMode">● 已发布资料</span></div><div id="inspectorBody"></div></aside>
+    <div class="bottom-dock glass"><div class="dock-identity"><div class="dock-orbit" id="dockOrbit">✧</div><div><b id="dockTitle">全景宇宙</b><small id="dockSubtitle">5 组星群 · 点击进入</small></div></div><div class="dock-divider"></div><div class="dock-buttons"><button id="backButton" class="dock-btn" disabled>← 返回</button><button id="depthButton" class="dock-btn">展开联系 <span>↗</span></button><button id="evidenceButton" class="dock-btn">关系筛选 <span id="gradeBadge">全部</span></button></div><div class="dock-divider"></div><div class="dock-progress"><span>VIEW / 01</span><i></i><i></i><i></i></div></div>
     <button id="mobileInfoButton" class="mobile-info-btn glass" aria-label="查看选中信息">数据详情 ↑</button>
     <div class="bottom-fineprint">DATA ≠ REAL-TIME FLOW　•　真实关系 / 研究推断 / 假设实验分层呈现　•　同镇不等于供应链　•　原始项目：张凌</div>
   </main>
@@ -69,6 +69,8 @@
    设计星群为编辑分组，不是地理坐标；A/B/C 为原版证据标记，未在本原型独立重核。
 ============================================================================ */
 window.BOLUO_DATA=(()=>{
+ // Stable relation IDs derived from meaning, never the position of an incoming Skills array.
+ const stableRelationId=(a,b,kind)=>'rel:'+ [String(a),String(b)].sort().join(':')+':'+encodeURIComponent(String(kind||''));
  // 产业网络节点/边：优先加载单源 data/industry-graph.json；失败时用内联兜底（离线可用）
  const loaded=(function(){
    try{
@@ -80,7 +82,9 @@ window.BOLUO_DATA=(()=>{
        const clusterOf=id=>{const n=g.nodes.find(x=>x.id===id);if(!n)return 'industry';
          const t=n.type;return (t==='ext'?'external':t==='eco'||id==='hh'?'tourism':t==='agri'||t==='gi'?'agriculture':t==='legacy'?'life':'industry')};
        const nodes=g.nodes.map(n=>({id:n.id,name:n.name,type:n.type,town:n.town,desc:n.desc,state:n.state,layer:n.layer,cluster:clusterOf(n.id)}));
-       const edges=g.edges.map((e,i)=>({id:'e'+i,source:e.s,target:e.t,level:e.level,kind:e.kind,detail:e.rel,weak:!!e.weak,directed:false,flowValue:null,sourceRef:'data/industry-graph.json'}));
+       const edges=g.edges.map((e)=>({id:stableRelationId(e.s,e.t,e.kind),source:e.s,target:e.t,level:e.level,kind:e.kind,detail:e.rel,weak:!!e.weak,directed:false,flowValue:null,sourceRef:'data/industry-graph.json'}));
+       const nodeIds=new Set(nodes.map(n=>n.id));
+       if(nodeIds.size!==nodes.length||new Set(edges.map(e=>e.id)).size!==edges.length||edges.some(e=>!nodeIds.has(e.source)||!nodeIds.has(e.target)))throw Error('industry graph has duplicate or broken node/edge references');
        return {nodes,edges,fromJson:true};
      }
    }catch(err){ console.warn('industry-graph.json 加载失败，使用内联兜底:',err); }
@@ -146,7 +150,7 @@ window.BOLUO_DATA=(()=>{
  ['gyght','gyg','A','同镇关联','观音阁两种特色产品同镇关系；不代表供应链'],
  ['gyg','dj','B','生态与文旅','东江水系与河滩农业联系推断'],
  ['zw','xwd','A','供应链','铜材料及电池产业关联；原版A级，直接供货未另行核实']
- ].map(([source,target,level,kind,detail,weak],i)=>({id:'e'+i,source,target,level,kind,detail,weak:!!weak,directed:false,flowValue:null,sourceRef:'network.html#rawEdges'}));
+ ].map(([source,target,level,kind,detail,weak])=>({id:stableRelationId(source,target,kind),source,target,level,kind,detail,weak:!!weak,directed:false,flowValue:null,sourceRef:'network.html#rawEdges'}));
  // 出厂精简 life/hot（兜底）。线上由 live hot.json/life.json 覆盖。
  const life={updated:'2026-10-21 07:27',sourceLabel:'出厂快照',
   towns:[
@@ -419,7 +423,7 @@ let gl=canvas.getContext('webgl2',{alpha:true,antialias:true,powerPreference:'hi
 const fallbackCanvas=gl?null:canvas.getContext('2d');
 const prefersReduced=window.matchMedia&&window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 let width=window.innerWidth,height=window.innerHeight,dpr=1;
-const S={mode:'universe',focusCluster:null,focusTown:null,layer:'industry',selected:null,path:[],grade:'all',uncertainty:.5,
+const S={mode:'universe',focusCluster:null,focusTown:null,layer:'industry',selected:null,path:[],grade:'all',depth:1,uncertainty:.5,
  activeFlow:null,flowScenario:'mid',snapshotDiff:null,dataSource:'boot',
  rotate:false,yaw:-.18,pitch:-.17,distance:6.9,center:[0,0,0],aim:[0,0,0],targetDistance:6.9,drag:false,moved:false,mobileOpen:false,frame:0};
 let M=E.buildModel(D.life,D.hot,null);
@@ -470,15 +474,15 @@ function displayNodes(){
   return visible}
  for(const c of D.clusters){visible.push({id:'cluster:'+c.id,name:c.name,cluster:c.id,position:c.pos,major:true,color:c.color,size:c.id===S.focusCluster?43:25,alpha:c.id===S.focusCluster?.68:.2})}
  let valid=G.nodes.filter(n=>n.cluster===S.focusCluster);
- if(S.selected){let near=E.neighborhood(G,S.selected,S.mode==='relations'?2:1);const sn=M.nodeMap.get(S.selected);valid=G.nodes.filter(n=>n.cluster===S.focusCluster||near.has(n.id)||(sn&&n.id===S.selected))}
- for(const n of valid){const isSel=n.id===S.selected;let near=!S.selected||E.neighborhood(G,S.selected,1).has(n.id);let alpha=(S.selected&&!near)?0.38:1;const score=G.scores.get(n.id)||0;
+ if(S.selected){let near=E.neighborhood(G,S.selected,S.depth);const sn=M.nodeMap.get(S.selected);valid=G.nodes.filter(n=>n.cluster===S.focusCluster||near.has(n.id)||(sn&&n.id===S.selected))}
+ for(const n of valid){const isSel=n.id===S.selected;let near=!S.selected||E.neighborhood(G,S.selected,S.depth).has(n.id);let alpha=(S.selected&&!near)?0.38:1;const score=G.scores.get(n.id)||0;
   visible.push({...n,position:G.positions.get(n.id),color:colorFor(n.cluster),size:isSel?32:Math.min(21,12+score*1.9),alpha,selected:isSel,score})}
  return visible}
 function activeEdges(){
  if(S.focusTown)return townEdges();
  if(!S.focusCluster)return[];
  let list=G.edges.filter(e=>M.nodeMap.get(e.source)?.cluster===S.focusCluster||M.nodeMap.get(e.target)?.cluster===S.focusCluster);
- if(S.selected){let near=E.neighborhood(G,S.selected,S.mode==='relations'?2:1);list=list.filter(e=>near.has(e.source)&&near.has(e.target))}
+ if(S.selected){let near=E.neighborhood(G,S.selected,S.depth);list=G.edges.filter(e=>near.has(e.source)&&near.has(e.target))}
  return list}
 function townEdges(){
  const tv=getTV(),L=S.layer;
@@ -508,7 +512,7 @@ function drawEdgeLine(a,b,edge,opts){
   const ix=(_cs==='industry'&&_ct==='external')||(_ct==='industry'&&_cs==='external');
   ca=ix?'#b79cff':edge.kind.includes('环保')?'#65ddb3':edge.kind.includes('资源')?'#ffb56c':edge.kind.includes('文旅')?'#a9e8a5':'#6bcbf3';
   const incident=!S.selected||edge.source===S.selected||edge.target===S.selected;
-  alpha=(incident?.75:.18)*(edge.level==='A'?1:edge.level==='B'?.72:.4);
+  alpha=(incident?.82:(S.selected&&S.depth===2?.48:.18))*(edge.level==='A'?1:edge.level==='B'?.72:.4);
   width=incident?1.15+edge.strength*1.7:.8;
   dashed=S.mode==='flows'||edge.level!=='A';
  }
@@ -583,7 +587,7 @@ function drawFallback(visible){if(!fallbackCanvas)return;fallbackCanvas.clearRec
 /* ---------- 标签 ---------- */
 const labelCache=new Map();
 function paintLabels(visible){const cont=el('labels'),ids=new Set();
- const _near=S.selected?E.neighborhood(G,S.selected,1):null;
+ const _near=S.selected?E.neighborhood(G,S.selected,S.depth):null;
  if(S.focusTown){
   const tv=getTV(),L=S.layer;
   for(const it of tv.items){
@@ -663,7 +667,7 @@ function renderTownLayer(a){
 /* ---------- 右栏 inspector ---------- */
 function inspector(){
  const body=el('inspectorBody');
- const origSource=`<div class="inspector-footer">数据来源：${safe(S.dataSource==='live'?('live · '+M.hot.updated):'出厂快照 '+D.snapshot)}<br/>结构：产业/生活/事件来自对应 JSON；B 级区间为推断，非统计值。<br/>原版证据级别不代表本原型重新独立核验。</div>`;
+ const origSource=`<div class="inspector-footer">数据来源：${safe(S.dataSource==='live'?('live · '+M.hot.updated):'出厂快照 '+D.snapshot)}<br/>结构：产业、生活、事件使用已发布数据；估算区间非官方统计，不代表真实交易或流量。<br/>本页面不替代原始来源核验。</div>`;
  if(S.focusTown&&!S.selected){body.innerHTML=townInspector()+origSource;bindInspector();return}
  if(S.mode==='scenario'){body.innerHTML=scenarioInspector()+origSource;bindInspector();return}
  if(S.mode==='flows'){body.innerHTML=flowsInspector()+origSource;bindInspector();return}
@@ -677,7 +681,7 @@ function townInspector(){
  const a=M.anchorMap.get(S.focusTown);
  const flow=M.flows.find(f=>f.origin&&f.origin.includes(a.name))||M.flows[0];
  return `<div class="inspector-title">${safe(a.name)}${a.type==='街道'?'街道':'镇'}</div>
-  <span class="status-tag status-${a.popLevel==='A'?'A':a.popLevel==='B'?'B':'D'}">人口 ${a.popLevel} · ${a.type}</span>
+  <span class="status-tag status-${a.popLevel==='A'?'A':a.popLevel==='B'?'B':'D'}">人口资料：${a.popLevel==='A'?'有公开依据':a.popLevel==='B'?'间接估算':'暂无可靠数据'} · ${a.type}</span>
   <p class="inspector-summary">${safe(a.role||a.tag)}</p>
   <div class="mini-stats">
    <div class="mini-stat"><b>${a.population??'—'}</b><small>常住人口（万）</small></div>
@@ -686,7 +690,7 @@ function townInspector(){
    <div class="mini-stat"><b>${(M.eventsByTown.get(a.name)||[]).length}</b><small>明确归属事件</small></div>
   </div>
   <div class="inspector-divider"></div>
-  <div class="panel-section-title">相关流场（B 级区间，非实测）</div>
+  <div class="panel-section-title">相关流动估算（非实测）</div>
   ${M.flows.map(f=>`<button class="inspection-link ${S.activeFlow===f.id?'active':''}" data-flow="${f.id}"><b>${flowTitle(f)}</b><br/><small class="source-label">${f.range.low}—${f.range.high} ${f.range.unit}</small></button>`).join('')}
   <div class="muted-note">切换左侧"产业/生活/事件"层，在同一空间内穿透观察；这些是归属与关联，不自动构成供应链或流量。</div>
   <div class="mobile-only"><div class="inspector-divider"></div>
@@ -707,9 +711,9 @@ function townNodeInspector(node){
   <p class="inspector-summary">${safe(node.desc)}</p>
   <div class="detail-rows"><div class="detail-row"><small>${isExt?'关联视角':'所属'}</small><b>${safe(a.name)}${a.type==='街道'?'街道':'镇'}</b></div>
   <div class="detail-row"><small>分类</small><b>${isExt?'外部联系城市':safe(E.groups.get(node.cluster)?.name)}</b></div>
-  <div class="detail-row"><small>直接联系</small><b>${near.length} 条（A ${counts.A}/B ${counts.B}${counts.weak?`，点线弱证据 ${counts.weak}`:''}）</b></div></div>
+  <div class="detail-row"><small>直接联系</small><b>${near.length} 条（已核实 ${counts.A}／研究关联 ${counts.B}）</b></div></div>
   <div class="inspector-divider"></div><div class="panel-section-title">沿关系探索</div>
-  <div class="neighbor-list">${near.map(e=>{let id=e.source===node.id?e.target:e.source;return `<button class="neighbor-btn" data-node="${id}"><b>${safe(M.nodeMap.get(id)?.name||id)}</b><small class="status-tag status-${e.level}">${e.level}级</small></button>`}).join('')||'<div class="muted-note">当前证据筛选下无相连主体。</div>'}</div>
+  <div class="neighbor-list">${near.map(e=>{let id=e.source===node.id?e.target:e.source;return `<button class="neighbor-btn" data-node="${id}"><b>${safe(M.nodeMap.get(id)?.name||id)}</b><small class="status-tag status-${e.level}">${e.level==='A'?'公开依据':'研究关联'}</small></button>`}).join('')||'<div class="muted-note">当前证据筛选下无相连主体。</div>'}</div>
   <div class="inspector-divider"></div>
   <div class="panel-section-title">换个方式看这个主体</div>
   <button class="inspection-link" data-analyze="${node.id}">查看这个主体的证据与中心度<br/><small class="source-label">→ 产业风洞核验</small></button>
@@ -723,15 +727,15 @@ function nodeInspector(node){
   <p class="inspector-summary">${safe(node.desc)}</p>
   <div class="detail-rows"><div class="detail-row"><small>相关镇域</small><b>${safe(node.town)}</b></div>
   <div class="detail-row"><small>分类</small><b>${safe(E.groups.get(node.cluster)?.name)}</b></div>
-  <div class="detail-row"><small>直接联系</small><b>${near.length} 条（A ${counts.A}/B ${counts.B}${counts.weak?`，点线弱证据 ${counts.weak}`:''}）</b></div></div>
+  <div class="detail-row"><small>直接联系</small><b>${near.length} 条（已核实 ${counts.A}／研究关联 ${counts.B}）</b></div></div>
   <div class="inspector-divider"></div>
   ${towns.length?`<div class="panel-section-title">进入所在镇（跨层）</div><div class="neighbor-list">${towns.map(t=>`<button class="neighbor-btn" data-town="${t}"><b>进入 ${t}${M.anchorMap.get(t)?.type==='街道'?'街道':'镇'}</b><small>产业·生活·事件 ↗</small></button>`).join('')}</div><div class="inspector-divider"></div>`:''}
   <div class="panel-section-title">继续沿关系探索 <span>${near.length} 条</span></div>
-  <div class="neighbor-list">${near.map(e=>{let id=e.source===node.id?e.target:e.source;return `<button class="neighbor-btn" data-node="${id}"><b>${safe(M.nodeMap.get(id)?.name||id)}</b><small class="status-tag status-${e.level}">${e.level}级</small></button>`}).join('')||'<div class="muted-note">当前证据筛选下无相连主体。</div>'}</div>
+  <div class="neighbor-list">${near.map(e=>{let id=e.source===node.id?e.target:e.source;return `<button class="neighbor-btn" data-node="${id}"><b>${safe(M.nodeMap.get(id)?.name||id)}</b><small class="status-tag status-${e.level}">${e.level==='A'?'公开依据':'研究关联'}</small></button>`}).join('')||'<div class="muted-note">当前证据筛选下无相连主体。</div>'}</div>
   <div class="inspector-divider"></div>
   <div class="panel-section-title">换个方式看这个主体</div>
   <button class="inspection-link" data-analyze="${node.id}">查看这个主体的证据与中心度<br/><small class="source-label">→ 产业风洞核验</small></button>
-  <p class="source-label" style="margin-top:12px">关系来自原版 network.html；A/B/C 为原版标记，"供应链"仅说明产业关联，不等于已核实直接采购。</p>`;
+  <p class="source-label" style="margin-top:12px">关系来自已收录公开资料；“产业关联”不等于已签订直接采购合同。请结合来源与后续核验使用。</p>`;
 }
 function clusterInspector(){
  const c=E.groups.get(S.focusCluster);
@@ -742,19 +746,16 @@ function clusterInspector(){
   <div class="panel-section-title">星群内对象</div><div class="neighbor-list">${nodes.map(n=>`<button class="neighbor-btn" data-node="${n.id}"><b>${safe(n.name)}</b><small>${safe(n.town)}</small></button>`).join('')}</div>`;
 }
 function homeInspector(){
- return `<div class="inspector-title">博罗 · 数据星系</div><p class="inspector-summary">五组功能星群构成抽象空间，远近表达观察结构，不代表地理距离。建议从"产业制造"进入园洲样板。</p>
-  <div class="mini-stats"><div class="mini-stat"><b>${D.nodes.length}</b><small>原版网络主体</small></div><div class="mini-stat"><b>${D.edges.length}</b><small>原版关系记录</small></div><div class="mini-stat"><b>${M.anchors.length}</b><small>镇街锚点</small></div><div class="mini-stat"><b>${M.flows.length}</b><small>B 级流场区间</small></div></div>
-  <div class="inspector-divider"></div><div class="panel-section-title">一组值得注意的反差</div>
-  <div class="metric-highlight"><strong>+${D.stats.industryGrowth2026_1_8}%</strong><small>2026年1—8月规上工业增加值同比</small></div>
-  <div class="metric-highlight negative"><strong>${D.stats.industrialInvestmentGrowth2026_1_8}%</strong><small>同期工业投资同比</small></div>
-  <div class="muted-note">两指标口径不同不能相减；作为全县统计事实，不映射为各镇热力。</div>`;
+ return `<div class="inspector-title">从一条联系，理解博罗</div><p class="inspector-summary">五组星群代表产业、城镇、文旅、农业与外部联系。位置用于探索，不代表真实地理距离；连线是已收录关系或研究关联，不自动代表实际供货。</p>
+  <div class="mini-stats"><div class="mini-stat"><b>${D.nodes.length}</b><small>原版网络主体</small></div><div class="mini-stat"><b>${D.edges.length}</b><small>原版关系记录</small></div><div class="mini-stat"><b>${M.anchors.length}</b><small>镇街锚点</small></div><div class="mini-stat"><b>${M.flows.length}</b><small>待检验流动场景</small></div></div>
+  <div class="inspector-divider"></div><div class="panel-section-title">从哪开始？</div><div class="muted-note">选择「产业制造」，再点击一个主体；继续沿相邻关系追踪。也可以研究 C004 四宗待落地项目，观察“签约”和“形成真实供应链”的区别。</div>`;
 }
 function flowsInspector(){
  return `<div class="inspector-title">流动观察</div><p class="inspector-summary">真实 OD 大多没有官方直接统计。已用人口、就业、跨界公交、客流等间接证据，按情报学方法给出可追溯的 B 级区间；物流/资金仍为 D 级。</p>
-  <div class="panel-section-title">已有 B 级流场区间（非实测）</div>
+  <div class="panel-section-title">间接证据估算区间（非实测）</div>
   ${M.flows.map(f=>`<button class="inspection-link" data-flow="${f.id}"><b>${flowTitle(f)}</b><br/><small class="source-label">${f.range.low}—${f.range.high} ${f.range.unit} · ${f.range.period}</small></button>`).join('')}
   <div class="inspector-divider"></div>
-  <div class="panel-section-title">仍缺失（D 级）</div>
+  <div class="panel-section-title">仍需调查的关键数据</div>
   <div class="neighbor-list">${M.dataGaps.slice(0,4).map(g=>`<div class="neighbor-btn" style="cursor:default"><b>${safe(g.missing)}</b><small>${safe(g.need.slice(0,14))}</small></div>`).join('')}</div>
   <div class="muted-note">B 级区间是结构性估算，不是统计值；车辆流量≠人数、过境≠通勤、节假日≠全年。进入"未知实验"可查看依据与方法。</div>`;
 }
@@ -775,8 +776,7 @@ function scenarioInspector(){
     <button data-fsc="high" class="${S.flowScenario==='high'?'active':''}">高 · ${flow.range.high}</button>
    </div>
    <p class="source-label" style="margin-top:8px">单位：${safe(flow.range.unit)}<br/>所选情景值：<b style="color:#f4c98e">${val}</b></p>
-   <p class="source-label" style="margin-top:8px">方法：${safe(flow.method)}</p>
-   <p class="source-label">公式：${safe(flow.formula)}</p>
+   <p class="source-label" style="margin-top:8px">这些数值来自间接证据形成的估算区间，不是实测通勤流量。比较情景只为检验结构敏感性。</p>
    <p class="source-label" style="color:#e6a">注意：${safe(flow.caveats)}</p>
    <p class="source-label">收紧需：${safe(flow.toTighten)}</p>
   </div>
@@ -788,7 +788,7 @@ function scenarioInspector(){
   <div class="scenario-compare"><div><small>加权联系总值</small><b id="scenarioTotal">${total}</b></div><div><small>参与关系数</small><b>${G.edgeCount}</b></div></div>
   <div class="inspector-divider"></div>
   <div class="panel-section-title">网络中心度（重算）</div><div id="rankList" class="neighbor-list">${rank.map(([id,score],i)=>`<button class="neighbor-btn" data-node="${safe(id)}"><b>${i+1}. ${safe(M.nodeMap.get(id)?.name||id)}</b><small>${score.toFixed(2)}</small></button>`).join('')}</div>
-  <div class="muted-note">下方网络随抽象权重真实重算；它不代表真实通勤/货流，也不改变 A 级事实。</div>`;
+  <div class="muted-note">下方结构是可复现的情景演示，不代表真实通勤、货流或经济预测；不改变已核实事实。</div>`;
 }
 function bindInspector(){
  all('[data-node]').forEach(b=>b.onclick=()=>selectNode(b.dataset.node));
@@ -804,13 +804,14 @@ function bindInspector(){
 /* ---------- 导航/视图动作 ---------- */
 function selectNode(id){
  if(id.startsWith('town:')){enterTown(id.slice(5));return}
- S.selected=id;
+ if(!M.nodeMap.has(id))return;
+ S.selected=id;S.depth=1;
  if(S.focusTown)S.aim=getTV().items.find(x=>x.id===id)?.pos.slice()||S.aim;
  else{const n=M.nodeMap.get(id);S.focusCluster=n.cluster;S.aim=G.positions.get(id).slice();S.targetDistance=4.6;}
  navigationUI();if(width<721)openMobile();
 }
 function openCluster(id){
- S.mode='universe';S.focusCluster=id;S.focusTown=null;S.selected=null;
+ S.mode='universe';S.focusCluster=id;S.focusTown=null;S.selected=null;S.depth=1;
  S.path=[{type:'cluster',id}];
  S.aim=E.groups.get(id).pos.slice();S.targetDistance=5.7;
  navigationUI();if(width<721)closeMobile();toast('已进入 '+E.groups.get(id).name+' 星群');
@@ -840,7 +841,7 @@ function jumpCrumb(i){
  navigationUI();
 }
 function home(){
- S.mode='universe';S.focusCluster=null;S.focusTown=null;S.selected=null;S.path=[];S.grade='all';
+ S.mode='universe';S.focusCluster=null;S.focusTown=null;S.selected=null;S.path=[];S.grade='all';S.depth=1;
  S.aim=[0,0,0];S.targetDistance=6.9;
  G=E.compute(S.uncertainty,S.grade,M);
  navigationUI();closeMobile();
@@ -856,7 +857,7 @@ function back(){
 }
 function nextGrade(){
  const vals=['all','A','B'];S.grade=vals[(vals.indexOf(S.grade)+1)%vals.length];
- G=E.compute(S.uncertainty,S.grade,M);navigationUI();toast('证据筛选：'+(S.grade==='all'?'全部':S.grade+'级'));
+ G=E.compute(S.uncertainty,S.grade,M);navigationUI();toast('关系筛选：'+(S.grade==='all'?'全部':S.grade==='A'?'已核实':'研究关联'));
 }
 function mode(m){
  S.mode=m;
@@ -869,10 +870,11 @@ function navigationUI(){
  el('sceneTitle').classList.toggle('town',!!S.focusTown);
  renderLeft();inspector();
  el('backButton').disabled=!S.focusCluster&&!S.focusTown&&!S.selected&&S.path.length===0;
+ el('depthButton').textContent=S.selected&&!S.focusTown?(S.depth===1?'展开两跳 ↗':'收起两跳 ←'):'展开联系 ↗';
  const name=S.focusTown||(S.selected?M.nodeMap.get(S.selected)?.name:S.focusCluster?E.groups.get(S.focusCluster)?.name:null);
  el('dockTitle').textContent=name||'全景宇宙';
  el('dockSubtitle').textContent=S.focusTown?'产业·生活·事件跨层':S.selected?'探索已收录联系':S.focusCluster?'选择节点/进入镇':'5 组星群 · 点击进入';
- el('gradeBadge').textContent=S.grade==='all'?'全部':S.grade+'级';
+ el('gradeBadge').textContent=S.grade==='all'?'全部':S.grade==='A'?'已核实':'研究关联';
  all('.mode-tab').forEach(b=>{const a=b.dataset.mode===S.mode;b.classList.toggle('active',a);b.setAttribute('aria-selected',String(a))});
  const h=el('sceneHeadline'),sub=el('sceneSub');
  if(S.focusTown){h.innerHTML=safe(S.focusTown)+(M.anchorMap.get(S.focusTown).type==='街道'?'街道':'镇')+'.';sub.textContent='左侧切换产业/生活/事件，在同一空间穿透；沿边可进入外部或其他镇。';}
@@ -882,6 +884,7 @@ function navigationUI(){
  else if(S.focusCluster){h.innerHTML=safe(E.groups.get(S.focusCluster).name)+' · 深入';sub.textContent='点击光点查看主体；企业可进入所在镇，跨产业·生活·事件。';}
  else{h.innerHTML='五个世界，<br/>一座博罗。';sub.textContent='轻触星群，沿公开资料中的联系跨层探索。';}
  el('inspectorMode').textContent=S.mode==='scenario'?'◆ 区间/假设':S.mode==='flows'?'◇ 数据边界':'● 资料快照';
+ if(window.__BOLUO_DISCOVERY?.sync)window.__BOLUO_DISCOVERY.sync();
 }
 /* ---------- 数据加载 ---------- */
 async function getJSON(path){
@@ -902,8 +905,8 @@ async function getJSON(path){
 }
 function updateSourceChip(okCount){
  const chip=el('sourceChip'),dot=el('sourceDot');
- if(okCount===3){S.dataSource='live';chip.textContent='实时数据 · '+M.hot.updated;dot.className='pulse-dot';}
- else if(okCount>0){S.dataSource='partial';chip.textContent='部分实时 · 已用兜底补齐';dot.className='pulse-dot snap';}
+ if(okCount===3){S.dataSource='live';chip.textContent='已加载数据快照 · '+M.hot.updated;dot.className='pulse-dot';}
+ else if(okCount>0){S.dataSource='partial';chip.textContent='部分数据快照 · 已用出厂备份补齐';dot.className='pulse-dot snap';}
  else{S.dataSource='boot';chip.textContent='出厂快照 · '+(M.hot.updated||D.snapshot);dot.className='pulse-dot snap';}
 }
 async function loadData(){
@@ -944,11 +947,11 @@ all('.mode-tab').forEach(b=>b.onclick=()=>mode(b.dataset.mode));
 el('homeBtn').onclick=home;el('zoomIn').onclick=()=>S.targetDistance=E.clamp(S.targetDistance-.45,3.2,11);el('zoomOut').onclick=()=>S.targetDistance=E.clamp(S.targetDistance+.45,3.2,11);
 el('autoRotate').onclick=()=>{S.rotate=!S.rotate;el('autoRotate').setAttribute('aria-pressed',String(S.rotate));toast(S.rotate?'自动旋转已开启':'自动旋转已关闭')};
 el('backButton').onclick=back;
-el('depthButton').onclick=()=>{if(!S.focusCluster&&!S.focusTown){openCluster('industry');return}if(S.mode!=='relations')mode('relations');else if(S.selected){S.targetDistance=E.clamp(S.targetDistance-.5,3.2,11);toast('已展开两度联系')}else toast('请先选择节点')};
+el('depthButton').onclick=()=>{if(!S.focusCluster&&!S.focusTown){openCluster('industry');return}if(!S.selected){if(S.mode!=='relations')mode('relations');toast('选择主体后，可继续展开一跳、两跳关系');return}if(S.focusTown){toast('镇街关系请通过左侧产业／生活／事件继续探索');return}S.depth=S.depth===1?2:1;S.mode='relations';navigationUI();toast(S.depth===2?'已展示两跳结构；外围关系仅表示已收录关联':'已回到直接联系')};
 el('evidenceButton').onclick=nextGrade;
 el('mobileInfoButton').onclick=()=>S.mobileOpen?closeMobile():openMobile();
 window.addEventListener('keydown',e=>{if(e.key==='Escape'){if(S.mobileOpen)closeMobile();else back()}if(e.key==='+'||e.key==='=')S.targetDistance=E.clamp(S.targetDistance-.35,3.2,11);if(e.key==='-')S.targetDistance=E.clamp(S.targetDistance+.35,3.2,11)});
-window.__boluoDebug={get state(){return{mode:S.mode,focusCluster:S.focusCluster,focusTown:S.focusTown,layer:S.layer,selected:S.selected,grade:S.grade,uncertainty:S.uncertainty,score:G.totalWeight,webgl:!!gl,dataSource:S.dataSource}},
+window.__boluoDebug={get state(){return{mode:S.mode,focusCluster:S.focusCluster,focusTown:S.focusTown,layer:S.layer,selected:S.selected,grade:S.grade,uncertainty:S.uncertainty,score:G.totalWeight,webgl:!!gl,dataSource:S.dataSource,depth:S.depth}},
  getGraph:()=>({nodes:G.nodes.length,edges:G.edges.length,anchors:M.anchors.length,flows:M.flows.length}),
  openCluster,openNode:(id)=>selectNode(id),enterTown,setLayer,mode,home,back,loadData,
  setScenario:v=>{S.uncertainty=E.clamp(v,0,1);G=E.compute(S.uncertainty,S.grade,M);inspector();},
@@ -969,4 +972,5 @@ console.log('看见博罗 V2（M2）；锚点',M.anchors.length,'流场区间',M
  }
 })();
 </script>
+<script src="./discovery.js"></script>
 </body></html>

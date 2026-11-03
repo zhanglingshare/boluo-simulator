@@ -11,8 +11,10 @@
  * 结构怎么变只由 u 决定；人次只是情景标签。两者关系是可解释的单调对应，
  * 不是因果换算，更不能解释为真实通勤人数、产值或 2030 概率。
  */
-export const M3_VERSION = 'm3-structural-0.2';
-export const FOCAL_IDS = Object.freeze(['e3','e12','e13','e14']);
+export const M3_VERSION = 'm3-structural-0.3';
+// Meaning-based IDs: preserve the same four bridge relations even if Skills reorder the graph.
+const relationId=(a,b,kind='供应链')=>'rel:'+ [a,b].sort().join(':')+':'+encodeURIComponent(kind);
+export const FOCAL_IDS = Object.freeze([relationId('dg','lq'),relationId('xwd','mj'),relationId('jq','ddc'),relationId('lq','htd')]);
 const FOCAL = new Set(FOCAL_IDS);
 export const INPUT_RANGE = Object.freeze({min:0,max:1,defaultA:0.2,defaultB:0.8});
 export const SEED_ID = 'dg';

@@ -1,5 +1,5 @@
 import {
- M3_VERSION, FOCAL_IDS, THRESHOLD, U_ANCHORS, COMMUTE_FLOW_ID,
+ M3_VERSION, FOCAL_IDS, U_ANCHORS, COMMUTE_FLOW_ID,
  simulate, compareWorlds, sensitivity, uToFlow, scenariosFromFlow,
  snapshotSignature, validateSaved, findPath
 } from './engine.mjs';
@@ -19,17 +19,17 @@ const state={open:false,a:U_ANCHORS.low.u,b:U_ANCHORS.high.u,yaw:-.2,pitch:-.20,
 const root=document.createElement('section');
 root.id='m3-shell';root.hidden=true;root.setAttribute('role','dialog');root.setAttribute('aria-modal','true');root.setAttribute('aria-label','博罗M3双世界全息情景推演');
 root.innerHTML=[
- '<header class="m3-top"><div><b>看见博罗 V2 · M3 · 双世界推演</b><small>两个可能世界｜园洲—东莞跨界联系强度情景 · 结构由真实计算驱动，非预制动画</small></div>',
- '<button id="m3-exit" aria-label="返回M2宇宙">返回 M2 宇宙 ×</button></header>',
+ '<header class="m3-top"><div><b>博罗 · 结构对照实验</b><small>两个可能世界｜园洲—东莞跨界联系强度情景 · 结构由真实计算驱动，非预制动画</small></div>',
+ '<button id="m3-exit" aria-label="返回M2宇宙">返回关系世界 ×</button></header>',
  '<div class="m3-layout">',
  // 左栏：证据 + 区间
- '<aside class="m3-side"><span class="m3-badge" id="m3-flow-badge">B级推断区间 · C级情景推演</span>',
+ '<aside class="m3-side"><span class="m3-badge" id="m3-flow-badge">间接证据估算 · 模拟情景</span>',
  '<h3 id="m3-flow-title">园洲—东莞 · 跨界通勤</h3>',
  '<div id="m3-flow-meta" class="m3-flow-meta"></div>',
- '<details class="m3-evidence" id="m3-evidence"><summary>查看证据、方法与口径（'+''+'）</summary><div id="m3-evidence-body"></div></details>',
+ '<details class="m3-evidence" id="m3-evidence"><summary>查看证据与适用边界（'+''+'）</summary><div id="m3-evidence-body"></div></details>',
  '<div class="m3-input" id="m3-ctrl-a"></div>',
  '<div class="m3-input" id="m3-ctrl-b"></div>',
- '<div class="m3-note">A 级关系权重恒为 1、不可调；只有四条与东莞产业联动相关的 B 级供应链关系随情景改变。可达阈值 '+THRESHOLD+' 是结构模型规则，无交通或统计含义。</div>',
+ '<div class="m3-note">模型仅对已设定的跨界联系条件进行结构对照。可达性属于模型内指标，不代表已经发生的供货、通勤或投资。</div>',
  '<div class="m3-actions"><button class="m3-act" id="m3-save">保存两情景</button><button class="m3-act" id="m3-load">恢复</button></div>',
  '<div class="m3-actions"><button class="m3-act" id="m3-export">导出 JSON</button><button class="m3-act" id="m3-import">导入 JSON</button><input type="file" accept=".json,application/json" id="m3-restorefile"></div>',
  '<div class="m3-state" id="m3-state" aria-live="polite"></div></aside>',
@@ -131,11 +131,10 @@ function renderEvidence(){
  const ev=f.directEvidence.map(x=>`<li>${esc(x)}</li>`).join('');
  get('m3-evidence-body').innerHTML=
   `<div class="m3-ev-sec"><div class="m3-ev-label">直接 / 间接证据（${f.sources.length} 个来源）</div><ul>${ev}</ul></div>
-   <div class="m3-ev-sec"><div class="m3-ev-label">推断方法</div><p>${esc(f.method).replace(/\n/g,'<br/>')}</p></div>
-   <div class="m3-ev-sec"><div class="m3-ev-label">公式</div><p class="m3-mono">${esc(f.formula).replace(/\n/g,'<br/>')}</p></div>
+   <div class="m3-ev-sec"><div class="m3-ev-label">结果解释</div><p>当前为根据间接证据设定的估算区间；不能用来代替实际通勤量或证明现实因果关系。</p></div>
    <div class="m3-ev-sec"><div class="m3-ev-label warn">口径与限制</div><p>${esc(f.caveats)}</p></div>
    <div class="m3-ev-sec"><div class="m3-ev-label">如何收紧（D 级缺口）</div><p>${esc(f.toTighten)}</p></div>`;
- get('m3-evidence').querySelector('summary').textContent='查看证据、方法与口径（'+f.sources.length+' 个来源，含手机信令总量校验）';
+ get('m3-evidence').querySelector('summary').textContent='查看证据与适用边界（'+f.sources.length+' 个来源，含手机信令总量校验）';
 }
 
 /* ---------- 模型计算 + 右栏 ---------- */
@@ -368,25 +367,24 @@ function renderNodePop(id,world,x,y,pathInfo,inA,inB){
    (focalN?'<div class="pop-key">金色 '+focalN+' 条边随跨界强度变化，是它“亮/灭”的关键。</div>':'<div class="pop-key">这条路径全部由 A 级关系构成，不随假设变化。</div>')+'</div>';
  }
  const cond=state.sens?.conditional?.find(c=>c.id===id);
- const thrHtml=cond?'<div class="pop-thr">连入阈值：跨界强度 u ≈ '+cond.threshold.toFixed(2)+'</div>':'';
+ const thrHtml=cond?'<div class="pop-thr">该主体的连通状态对假设条件敏感，请结合现实证据检验。</div>':'';
  pop.innerHTML='<button class="pop-close" aria-label="关闭">×</button><div class="pop-title">'+esc(n.name)+'</div>'+
   '<span class="pop-status '+statusCls+'">'+statusTxt+'</span><p class="pop-plain">'+esc(plain)+'</p>'+thrHtml+pathHtml;
  pop.querySelector('.pop-close').onclick=()=>{pop.hidden=true;};
  const {w,h}=dims(canvases[world]);placePop(pop,x,y,w,h);
 }
 function renderEdgePop(id,world,x,y){
- const pop=get(world===0?'m3-pop-a':'m3-pop-b');const e=state.models[world].edges.find(x=>x.id===id);
- const u=world===0?state.a:state.b;
- let formula,plain;
- if(e.level==='A'){formula='权重恒为 1（有直接证据，不随假设变化）';plain='A 级关系：有直接证据支撑，任何情景下都连通。';}
- else if(e.focal){
-  const base=e.level==='B'?0.10:0.02,slope=e.level==='B'?0.85:0.22;
-  formula='权重 = '+base+' + '+slope+' × u<br/>当前 u='+u.toFixed(2)+' → 权重 '+e.weight.toFixed(2)+'（'+(e.enabled?'≥':'<')+' 阈值 '+THRESHOLD+'，'+(e.enabled?'连通':'断开')+'）';
-  plain='这条关系随跨界强度变化，是网络重组的关键边。';
- }else{formula='权重固定 '+e.weight.toFixed(2);plain=e.level+' 级关系，权重不随跨界强度变化。';}
- pop.innerHTML='<button class="pop-close" aria-label="关闭">×</button><div class="pop-title">'+esc(nameOf(e.source))+' — '+esc(nameOf(e.target))+'</div>'+
-  '<span class="pop-status lvl-'+e.level+'">'+e.level+'级 · '+esc(e.kind)+'</span><p class="pop-plain">'+esc(plain)+'</p>'+
-  '<div class="pop-formula">'+formula+'</div><div class="pop-src">'+esc(e.detail)+'<br/>来源：'+esc(e.sourceRef)+'</div>';
+ const pop=get(world===0?'m3-pop-a':'m3-pop-b');
+ const e=state.models[world].edges.find(x=>x.id===id);
+ if(!e)return;
+ const plain=e.level==='A'?'该关系有已收录的公开依据，但仍不等于双方存在已核实的直接交易。':
+  e.focal?'该联系在两个假设下呈现不同的网络连通状态；这种差异是模型结果，不代表现实关系已经变化。':
+  '该关系属于研究性产业关联。具体交易和传导机制仍需要独立证据。';
+ pop.innerHTML='<button class="pop-close" aria-label="关闭">×</button>'+
+  '<div class="pop-title">'+esc(nameOf(e.source))+' — '+esc(nameOf(e.target))+'</div>'+
+  '<span class="pop-status lvl-'+e.level+'">'+(e.level==='A'?'已收录依据':'研究关联')+' · '+esc(e.kind)+'</span>'+
+  '<p class="pop-plain">'+esc(plain)+'</p>'+
+  '<div class="pop-src">'+esc(e.detail)+'<br/>资料入口：'+esc(e.sourceRef)+'</div>';
  pop.querySelector('.pop-close').onclick=()=>{pop.hidden=true;};
  const {w,h}=dims(canvases[world]);placePop(pop,x,y,w,h);
 }
@@ -400,7 +398,7 @@ function pick(canvas,world,x,y){const {w,h}=dims(canvas);
  if(edge){selectEdge(edge,world,x,y);return;}
  // 点空白：关闭浮卡、退出路径/选中边（保留节点高亮）
  state.path=null;state.selectedEdge=null;closePops();
- get('m3-selected').textContent='点击星点查看主体；点击关系线查看权重；拖动画面，两座世界同步旋转。';
+ get('m3-selected').textContent='点击主体或关系查看结构信息；拖动画面，两座情景同步旋转。';
 }
 for(let i=0;i<2;i++){const c=canvases[i];
  c.addEventListener('pointerdown',e=>{dragging={id:e.pointerId,x:e.clientX,y:e.clientY,travel:0};c.setPointerCapture?.(e.pointerId);});
