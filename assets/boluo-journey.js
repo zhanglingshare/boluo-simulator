@@ -20,7 +20,7 @@ function el(tag,cls,text){
  if(text!=null)n.textContent=String(text);return n;
 }
 function pageUrl(code){
- return ({today:root,town:"town.html",changes:"holo-home-v9.html",basic:"who.html",comparison:"relation-compare.html"})[code];
+ return ({today:root,town:"town.html",changes:"industry-changes.html",basic:"who.html",comparison:"relation-compare.html"})[code];
 }
 var nav=document.createElement("nav");nav.id="bl-journey-bar";nav.setAttribute("aria-label","博罗真实世界感知顺序");
 var brand=el("a","blj-brand");brand.href=root;brand.append(el("strong",null,"博罗 · 真实世界观察"),el("small",null,"碎片感知 → 微观变化 → 宏观底盘 → 关系对比"));
@@ -38,7 +38,10 @@ nav.append(links);
 // 在窄屏中让当前认知步骤可见，避免第05步被横向导航遮住。
 if(typeof requestAnimationFrame==='function')requestAnimationFrame(function(){
  var active=links.querySelector('[aria-current="page"]');
- if(active&&links.scrollWidth>links.clientWidth)active.scrollIntoView({block:'nearest',inline:'nearest',behavior:'instant'});
+ if(active&&links.scrollWidth>links.clientWidth){
+  var left=active.offsetLeft-links.offsetLeft-(links.clientWidth-active.offsetWidth)/2;
+  links.scrollLeft=Math.max(0,left);
+ }
 });
 var next=el("div","blj-next");
 var nextCaption=el("span",null,"继续观察");next.append(nextCaption);
@@ -67,9 +70,9 @@ function getChange(){
 }
 function setNext(change){
  if(page==="today"){
-  nextAnchor.href="holo-home-v9.html?from=today";nextAnchor.textContent="03 看产业变化 →";
+  nextAnchor.href="industry-changes.html?from=today";nextAnchor.textContent="03 看产业变化 →";
  }else if(page==="town"){
-  nextAnchor.href="holo-home-v9.html?from=town";nextAnchor.textContent="03 看产业变化 →";
+  nextAnchor.href="industry-changes.html?from=town";nextAnchor.textContent="03 看产业变化 →";
  }else if(page==="changes"){
   var dest="who.html?from=changes";if(change)dest+="&change="+encodeURIComponent(change);
   nextAnchor.href=dest;nextAnchor.textContent="04 进入博罗基本面 →";
@@ -136,7 +139,7 @@ if(page==="basic"){
   var warning=el("p","blj-warning","该事件与宏观指标之间的传导关系仍需要进一步模型检验，不能直接把预计产值计入当前GDP。");
   var actions=el("div","blj-links");
   var back=el("a",null,"← 返回选中的变化");
-  back.href="holo-home-v9.html?from=basic#change="+encodeURIComponent(queryChange);
+  back.href="industry-changes.html?from=basic#change="+encodeURIComponent(queryChange);
   var today=el("a",null,"再看今日情报");today.href=root;
   actions.append(back,today);card.append(eyebrow,title,lead,fields,warning,actions);
   function field(label,value){

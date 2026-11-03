@@ -9,7 +9,7 @@ const JS=get('assets/boluo-journey.js');
 const expected={
  today:'index-legacy-2026-11-03.html',
  town:'town.html',
- changes:'holo-home-v9.html',
+ changes:'industry-changes.html',
  basic:'who.html',
  comparison:'relation-compare.html'
 };
@@ -26,10 +26,10 @@ for(const [page,file] of Object.entries(expected)){
   assert.doesNotThrow(()=>new vm.Script(m[1]),file+' 内联脚本语法');
 }
 assert.doesNotThrow(()=>new vm.Script(JS),'导航脚本语法');
-assert.match(get(expected.today),/href="holo-home-v9\.html\?from=today"/,'01必须带上下文到03');
+assert.match(get(expected.today),/href="industry-changes\.html\?from=today"/,'01必须带上下文到03');
 assert.match(get(expected.today),/topic="\+encodeURIComponent\(/,'每条公开话题应传递标题线索');
-assert.match(get(expected.changes),/location\.pathname\+location\.search\+"#change="/,'03切事件保留查询参数');
-assert.match(get(expected.changes),/bl:change-selected/,'03向接力栏广播真实选中事件');
+assert.match(get('assets/boluo-industry-changes.js'),/history\.replaceState/,'03切事件保留查询参数');
+assert.match(get('assets/boluo-industry-changes.js'),/bl:change-selected/,'03向接力栏广播真实选中事件');
 assert.match(get(expected.basic),/<\/style>\s*<script>/,'04社交脚本不应被错误放入style里');
 assert.match(get(expected.town),/<\/style>\s*<script>/,'02社交脚本不应被错误放入style里');
 
@@ -71,9 +71,9 @@ function find(n,id){
  return null;
 }
 const today=make('today');
-assert.equal(find(today.nav,'bl-journey-next').href,'holo-home-v9.html?from=today');
+assert.equal(find(today.nav,'bl-journey-next').href,'industry-changes.html?from=today');
 const town=make('town');
-assert.equal(find(town.nav,'bl-journey-next').href,'holo-home-v9.html?from=town');
+assert.equal(find(town.nav,'bl-journey-next').href,'industry-changes.html?from=town');
 const changes=make('changes','?from=today&topic='+encodeURIComponent('企业重大消息'),'#change=C004');
 assert.equal(find(changes.nav,'bl-journey-next').href,'who.html?from=changes&change=C004');
 assert.equal(changes.ctx.hidden,false);

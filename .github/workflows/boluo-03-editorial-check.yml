@@ -1,0 +1,70 @@
+name: boluo-03-evidence-editorial-check
+
+on:
+  pull_request:
+    paths:
+      - 'industry-changes.html'
+      - 'assets/boluo-industry-changes.*'
+      - 'assets/boluo-journey.js'
+      - 'assets/boluo-compare.js'
+      - 'index-legacy-2026-11-03.html'
+      - 'town.html'
+      - 'who.html'
+      - 'relation-compare.html'
+      - 'tests/verify_journey.js'
+      - 'tests/boluo-03-editorial*'
+      - '.github/workflows/boluo-03-editorial-check.yml'
+  push:
+    branches: [main]
+    paths:
+      - 'industry-changes.html'
+      - 'assets/boluo-industry-changes.*'
+      - 'assets/boluo-journey.js'
+      - 'assets/boluo-compare.js'
+      - 'index-legacy-2026-11-03.html'
+      - 'town.html'
+      - 'who.html'
+      - 'relation-compare.html'
+      - 'tests/verify_journey.js'
+      - 'tests/boluo-03-editorial*'
+      - '.github/workflows/boluo-03-editorial-check.yml'
+
+permissions:
+  contents: read
+
+jobs:
+  new-03:
+    runs-on: ubuntu-latest
+    timeout-minutes: 22
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+      - name: Validate references, evidence and 01→03→04→05 journey
+        run: |
+          node --test tests/boluo-03-editorial-model.test.cjs
+          node tests/verify_journey.js
+          node --test tests/boluo-compare-model.test.cjs
+      - name: Install Chromium
+        run: |
+          npm install --no-save playwright
+          npx playwright install --with-deps chromium
+      - name: Serve local pages
+        run: |
+          python3 -m http.server 8765 --bind 127.0.0.1 > /tmp/boluo03-http.log 2>&1 &
+          for i in $(seq 1 20); do
+            if curl --fail --silent http://127.0.0.1:8765/industry-changes.html -o /dev/null; then exit 0; fi
+            sleep 1
+          done
+          cat /tmp/boluo03-http.log
+          exit 1
+      - name: Check 03 desktop and mobile UI
+        run: node tests/boluo-03-editorial-browser.cjs
+      - name: Preserve 03 real-browser screenshots
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: boluo-03-evidence-observer-1440-390
+          path: artifacts/boluo03/*.png
+          if-no-files-found: warn
