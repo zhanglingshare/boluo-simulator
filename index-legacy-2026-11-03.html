@@ -103,7 +103,7 @@ h1{font-size:22px;margin:0 0 2px;letter-spacing:.5px}
 <div class="nav">
   <b>博罗产业风洞</b>
   <a href="index-legacy-2026-11-03.html" class="on">今日博罗</a>
-  <a href="holo-home-v9.html">变化现场</a>
+  <a href="industry-changes.html">产业变化</a>
   <a href="experiments/holo-single/index.html">关系世界</a>
   <a href="town.html">各镇吃喝玩乐</a>
   <a href="network.html">产业网络</a>
@@ -125,7 +125,7 @@ h1{font-size:22px;margin:0 0 2px;letter-spacing:.5px}
       <p class="bl-hero-lead">从一个真实问题出发，进入产业、项目、交通与生活交织的关系网络。先看见变化，再决定要追问什么。</p>
       <div id="topHook" class="bl-hero-hook"><span class="bl-hook-label">今日观察</span>正在读取今日公开话题…</div>
       <div class="bl-hero-actions">
-        <a class="bl-primary-cta" href="holo-home-v9.html?from=today">进入变化现场 <span aria-hidden="true">↗</span></a>
+        <a class="bl-primary-cta" href="industry-changes.html?from=today">进入变化现场 <span aria-hidden="true">↗</span></a>
         <a class="bl-secondary-cta" href="who.html">先看博罗基本面 <span aria-hidden="true">→</span></a>
       </div>
       <div class="bl-hero-foot">公开资料 · 关系观察 · 情景推演（不是确定预测）</div>
@@ -134,7 +134,7 @@ h1{font-size:22px;margin:0 0 2px;letter-spacing:.5px}
       <div class="bl-visual-top"><span>PUBLIC SIGNALS · 公开情报</span><span class="bl-visual-status">来源可查</span></div>
       <h2 class="bl-evidence-title">先看发生了什么，<span>再问它影响谁。</span></h2>
       <div id="bl-live-brief" class="bl-evidence-feed" aria-live="polite">正在读取最新公开话题…</div>
-      <div class="bl-visual-bottom"><span>事实、来源、核验状态</span><a href="holo-home-v9.html?from=today">追踪结构变化 →</a></div>
+      <div class="bl-visual-bottom"><span>事实、来源、核验状态</span><a href="industry-changes.html?from=today">追踪结构变化 →</a></div>
     </aside>
   </section>
 
@@ -313,7 +313,7 @@ function render(){
       meta.textContent=(item.pub||"时间待核实")+" · "+(item.verified||"待核实")+" · "+(item.src||"来源待核实");
       const title=document.createElement("div");title.className="bl-evidence-item-title";title.textContent=item.t;
       const link=document.createElement("a");link.className="bl-evidence-deep";
-      link.href="holo-home-v9.html?from=today&topic="+encodeURIComponent(item.t);link.textContent="继续看结构";
+      link.href="industry-changes.html?from=today&topic="+encodeURIComponent(item.t);link.textContent="继续看结构";
       row.append(meta,title,link);preview.append(row);
     });
   }
@@ -340,7 +340,7 @@ function render(){
     c.onclick=()=>{const d=c.querySelector(".detail");d.style.display=d.style.display==="none"?"block":"none";};
     const link=document.createElement("a");
     link.className="blj-topic-continue";
-    link.href="holo-home-v9.html?from=today&topic="+encodeURIComponent(c.getAttribute("data-t")||"");
+    link.href="industry-changes.html?from=today&topic="+encodeURIComponent(c.getAttribute("data-t")||"");
     link.textContent="以此为观察线索，继续看经过筛选的产业变化 →";
     link.style.cssText="display:block;margin-top:10px;padding-top:8px;border-top:1px solid #ffffff22;color:#b9d8e9;font-size:11px;font-weight:750;text-decoration:none";
     link.addEventListener("click",e=>e.stopPropagation());
