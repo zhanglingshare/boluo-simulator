@@ -396,7 +396,9 @@ input[type="range"]::-webkit-slider-thumb{
 <link rel="stylesheet" href="assets/boluo-ui.css">
 <link rel="stylesheet" href="assets/boluo-tail-bridge.css">
 <link rel="stylesheet" href="assets/boluo-unified-nav.css">
+<link rel="stylesheet" href="assets/boluo-core-kpi.css">
 </head><body class="bl-ui bl-dark bl-ui--windtunnel bl-tail" data-bl-page="windtunnel">
+<section class="bl-kpi-hero" aria-label="风洞当前情景结果"><div><div class="bl-kpi-kicker">BOLUO / 同一模型与随机种子</div><h2>选一个压力，<br>看1600亿还够不够得到。</h2><div class="bl-kpi-context">左侧情景改变后，这里直接同步原模型计算结果。不新造“综合评分”。</div></div><div class="bl-kpi-numbers"><div class="bl-kpi-digit goal"><small>模拟达到参考线比例</small><strong id="bl-kpi-hit">—</strong><span class="bl-kpi-foot">条件模拟样本占比 · 非预测概率</span></div><div class="bl-kpi-versus">→</div><div class="bl-kpi-digit"><small>2030中位GDP</small><strong id="bl-kpi-p50">—</strong><span class="bl-kpi-foot">亿元 · 同情景模型输出</span></div></div></section>
 
 <style>
 .unified-nav{
@@ -836,4 +838,5 @@ var _hmt = _hmt || [];
 })();
 </script>
 <script defer src="assets/boluo-unified-nav.js"></script>
+<script defer src="assets/boluo-core-kpi.js"></script>
 </body></html>
