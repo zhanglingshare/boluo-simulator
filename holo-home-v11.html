@@ -655,64 +655,11 @@ html,body{
 .break-x{ fill: #f58b7d !important; stroke: #fff !important; stroke-width: 4px !important; }
 </style>
 <link rel="stylesheet" href="assets/boluo-core-kpi.css">
+<link rel="stylesheet" href="assets/boluo-unified-nav.css">
+<link rel="stylesheet" href="assets/boluo-overview-mobile-fix.css">
 </head>
-<body>
+<body class="boluo-overview">
 <section class="bl-kpi-hero" aria-label="博罗2026年最关键的经济反差"><div><div class="bl-kpi-kicker">BOLUO / 2026年1—8月 · 官方统计</div><h2>工厂在增长，<br>投资却在收缩。</h2><div class="bl-kpi-context">同一时期的两个指标走向相反。真正值得追踪的是新增产能和项目投产接力，而不是只看当期产量。</div></div><div class="bl-kpi-numbers"><div class="bl-kpi-digit negative"><small>工业投资同比</small><strong>−46.7<em>%</em></strong><span class="bl-kpi-foot">2026年1—8月</span></div><div class="bl-kpi-versus">VS</div><div class="bl-kpi-digit"><small>规上工业增加值</small><strong>+8.9<em>%</em></strong><span class="bl-kpi-foot">2026年1—8月</span></div></div></section>
-<style>
-.unified-nav{
-  position: sticky; top:0; z-index:100;
-  display:flex; align-items:center; justify-content:space-between;
-  padding:14px 28px;
-  background: rgba(255,255,255,.82);
-  backdrop-filter: blur(24px) saturate(1.8);
-  border-bottom:1px solid #e2e8f0;
-}
-.nav-brand{ font-weight:800; font-size:16px; color:#1a2b45; letter-spacing:.5px; }
-.nav-links{ display:flex; gap:8px; align-items:center; }
-.nav-links a, .dropdown-btn{
-  padding:8px 14px; border-radius:10px; text-decoration:none;
-  color:#64748b; font-size:13px; font-weight:500;
-  background:transparent; border:0; cursor:pointer;
-}
-.nav-links a:hover, .dropdown-btn:hover{ background:rgba(241,245,249,.9); color:#1a2b45; }
-.nav-links a.active{ background:rgba(74,143,231,.1); color:#4a8fe7; font-weight:600; }
-.nav-dropdown{ position:relative; }
-.dropdown-menu{
-  position:absolute; top:calc(100% + 8px); right:0;
-  background:#fff; border:1px solid #e2e8f0; border-radius:12px;
-  box-shadow:0 12px 32px rgba(30,58,95,.12);
-  min-width:180px; padding:6px; display:none;
-}
-.nav-dropdown:hover .dropdown-menu{ display:block; }
-.dropdown-menu a{ display:block; padding:10px 12px; border-radius:8px; }
-@media(max-width:768px){ .nav-links{ display:none; } }
-</style>
-<div class="unified-nav">
-  <div class="nav-brand">博罗 · 决策风洞</div>
-  <div class="nav-links">
-    <a href="industry-changes.html">怎么长起来</a>
-    <a href="index.html">今日博罗</a>
-    <a href="who.html">基本盘</a>
-    <a href="plan-with-me.html">规划与你</a>
-    <a href="windtunnel-v2.html">未来推演</a>
-    <a href="blindspot.html">可能忽略</a>
-    <a href="report.html">报告</a>
-    <a href="ending.html">结语</a>
-    <div class="nav-dropdown">
-      <button class="dropdown-btn">探索实验 ▾</button>
-      <div class="dropdown-menu">
-        <a href="experiments/holo-single/index-v2.html">全息关系</a>
-        <a href="tea/bridge.html">└ 柏塘案例（1镇1案例）</a>
-        <a href="windtunnel.html">全息风洞</a>
-      </div>
-    </div>
-  </div>
-  </div>
-  </div>
-    <a href="windtunnel-v2.html">风洞测试</a>
-    <a href="report.html">决策报告</a>
-  </div>
-</div>
 <header class="appbar" style="display:none">
   <div class="brand">
     <div class="brand-mark" aria-hidden="true">
@@ -751,6 +698,7 @@ html,body{
       <div><div class="canvas-eyebrow">博罗 · 看变化</div><div class="canvas-title">这件事，会牵动博罗的哪里？</div><div class="canvas-desc">先选一件事，再看：以前怎样、现在有什么不同、哪些影响还不能确定。</div></div>
       <div class="canvas-head-right"><div class="live-status" id="liveStatus"><i></i>正在整理公开资料</div><div class="view-toggle"><button class="active" data-view="2d">平面</button><button data-view="space">空间感</button></div><div class="evidence-toggle" role="group" aria-label="网络数据视图"><button id="conceptMode" class="active">只看这件事</button><button id="evidenceMode">看整张图 <span id="evidenceCount" style="display:none">36 · 45</span></button></div></div>
     </div>
+    <a class="bl-mobile-detail-jump" href="#changes-panel">查看最近变化和详情 ↓</a>
     <div class="graph-wrap">
       <svg id="network" viewBox="0 0 1000 760" role="img" aria-label="博罗抽象关系网络图">
         <defs>
@@ -784,7 +732,7 @@ html,body{
       <div class="timeline-actions"><button data-change-phase="before">之前</button><button data-change-phase="event">发生时</button><button data-change-phase="after" class="active">之后</button></div>
     </div>
   </section>
-  <aside class="explore">
+  <aside class="explore" id="changes-panel">
     <div class="explore-head change-head"><div class="explore-heading"><span class="bulb"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M12 3v18M3 12h18M5.6 5.6l12.8 12.8M18.4 5.6 5.6 18.4"/></svg></span>最近发生了什么？</div><span class="explore-count" id="changeCount">12 件事</span></div>
     <div class="explore-intro">点开一件事。我们一起看看：之前是什么样，现在变了什么。</div>
     <div id="changeCards" class="change-cards" aria-label="结构变化事件"><div class="change-loading">正在读取公开变化记录…</div></div><button type="button" id="toggleAllChanges" class="toggle-all-changes" hidden>查看全部变化</button>
@@ -1455,5 +1403,6 @@ window.addEventListener("resize",function(){applyResponsiveLayout();renderGraph(
 applyResponsiveLayout();initStars();renderGraph();updateSelectionUI();
 })();
 </script>
+<script defer src="assets/boluo-unified-nav.js"></script>
 </body>
 </html>

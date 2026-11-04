@@ -1,0 +1,42 @@
+name: Boluo mobile navigation smoke
+on:
+  pull_request:
+    paths:
+      - 'holo-home-v11.html'
+      - 'assets/boluo-overview-mobile-fix.css'
+      - 'assets/boluo-unified-nav.*'
+      - 'tests/overview-mobile-smoke.cjs'
+      - '.github/workflows/boluo-mobile-navigation.yml'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  mobile-qa:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+      - name: Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+      - name: Install Playwright browser
+        run: |
+          npm install --no-save playwright@1.57.0
+          npx playwright install --with-deps chromium
+      - name: Start local static site
+        run: |
+          python3 -m http.server 8765 --bind 127.0.0.1 > /tmp/boluo-http.log 2>&1 &
+          sleep 2
+      - name: Mobile and desktop smoke checks
+        run: node tests/overview-mobile-smoke.cjs
+      - name: Upload screenshots
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: boluo-mobile-qa
+          path: artifacts/boluo-qa/
+          if-no-files-found: ignore
