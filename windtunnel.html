@@ -104,7 +104,7 @@ input[type=range]{width:100%;accent-color:#22c55e;height:4px}
   <!-- 现实压力测试（受控场景压测，2026真实数据） -->
   <div class="card" id="pressCard" style="border-color:#713f12">
     <h2 style="color:#fbbf24">⚠️ 现实压力测试：先选一个"如果"，看1600亿还够不够得着</h2>
-    <p class="press-intro">下面每个情景都用<b>同一个模型内核、同一粒种子（42）</b>真实重跑2万次，差异只来自注入的事件——不是凭感觉打分。情景默认站在<b>规划兑现基准</b>（中位约1601亿、达标率约50%），再看压力一来会怎样。</p>
+    <details class="bl-tail-evidence"><summary>查看压力测试的模型口径</summary><div class="bl-tail-evidence-body"><p class="press-intro">下面每个情景都用<b>同一个模型内核、同一粒种子（42）</b>真实重跑2万次，差异只来自注入的事件——不是凭感觉打分。情景默认站在<b>规划兑现基准</b>（中位约1601亿、达标率约50%），再看压力一来会怎样。</p></div></details>
     <div class="press-grid" id="pressGrid"></div>
     <div class="press-result">
       <div class="press-panel">
@@ -154,25 +154,25 @@ input[type=range]{width:100%;accent-color:#22c55e;height:4px}
       <div class="gbox"><div class="v" id="gRate" style="color:#3b82f6">—</div><div class="l">年均增速</div></div>
       <div class="gbox"><div class="v" id="gProb" style="color:#fbbf24">—</div><div class="l">模型达标比例*</div></div>
     </div>
-    <div class="bl-audit-note"><strong>*模型口径提示：</strong>该比例来自共享模型对已映射发展路径的重算。当前房地产滑块参与年度增长轨道计算，但尚未映射到共享模型的路径参数，因此该比例不能解释为房地产变化的独立概率影响。完成经验证的映射前，请勿将两项结果视为完全同口径。</div>
+    <details class="bl-tail-evidence"><summary>核对参数边界与未映射变量</summary><div class="bl-tail-evidence-body"><div class="bl-audit-note"><strong>*模型口径提示：</strong>该比例来自共享模型对已映射发展路径的重算。当前房地产滑块参与年度增长轨道计算，但尚未映射到共享模型的路径参数，因此该比例不能解释为房地产变化的独立概率影响。完成经验证的映射前，请勿将两项结果视为完全同口径。</div></div></details>
   </div>
 
   <!-- 轨迹图 -->
   <div class="card">
     <h2><span class="step">2</span>三条增长轨道：你现在在哪条路上？</h2>
     <div id="chTrack" class="chart"></div>
-    <div class="plain"><span class="lab">这张图怎么看</span>
+    <details class="bl-tail-evidence"><summary>为什么图表这样变化？</summary><div class="bl-tail-evidence-body"><div class="plain"><span class="lab">这张图怎么看</span>
       <b>黄色虚线</b>是1600亿目标轨道（年均要跑9.7%）；<b>灰色线</b>是按2025年5.5%自然走的基准；<b>绿色线</b>是你当前滑块设置下的实际轨迹。往左拖滑块，绿线会往下掉——你能直观看到"投产晚两年"让博罗掉到哪条轨道上。
-    </div>
+    </div></div></details>
   </div>
 
   <!-- 变量贡献 -->
   <div class="card">
     <h2><span class="step">3</span>四个变量各管多少：谁在拉动，谁在拖后腿</h2>
     <div id="chContrib" class="chart"></div>
-    <div class="plain"><span class="lab">这张图怎么看</span>
+    <details class="bl-tail-evidence"><summary>为什么图表这样变化？</summary><div class="bl-tail-evidence-body"><div class="plain"><span class="lab">这张图怎么看</span>
       往右的绿色条=这个变量在给GDP加分；往左的红色条=在拖后腿。你会发现：投产节奏（最上面）的条最长——拨动它，结果变化最大。房地产现在是红色（-47.6%在拖后腿），但即使把它拖回0，加分也有限——因为它本来对GDP的传导就弱。
-    </div>
+    </div></div></details>
   </div>
 
   <!-- 场景按钮 -->
@@ -207,18 +207,18 @@ input[type=range]{width:100%;accent-color:#22c55e;height:4px}
   <div class="card">
     <h2><span class="step">5</span>四个场景五维对比：哪条路让博罗更稳</h2>
     <div id="chRadar" class="chart chart-tall"></div>
-    <div class="plain"><span class="lab">这张图怎么看</span>
+    <details class="bl-tail-evidence"><summary>为什么图表这样变化？</summary><div class="bl-tail-evidence-body"><div class="plain"><span class="lab">这张图怎么看</span>
       五个角分别是：工业增长、文旅潜力、人口流入、投资韧性、财政健康。面积越大=这个场景下博罗综合状态越好。你会发现"高铁效应"面积最大，但"投产推迟"在投资韧性和工业增长两个角明显塌陷——一个变量就能让两个维度同时失血。
-    </div>
+    </div></div></details>
   </div>
 
   <!-- 龙卷风敏感性 -->
   <div class="card">
     <h2><span class="step">6</span>敏感性排序：拨哪个变量，结果抖得最厉害</h2>
     <div id="chTornado" class="chart"></div>
-    <div class="plain warn"><span class="lab">核心发现</span>
+    <details class="bl-tail-evidence"><summary>为什么图表这样变化？</summary><div class="bl-tail-evidence-body"><div class="plain warn"><span class="lab">核心发现</span>
       龙卷风图从上到下按"拨动后结果变化幅度"排序。<b>投产节奏排第一</b>——从推迟40%到提前40%，2030 GDP能差出近400亿。东莞外溢排第二。房地产排最后——它现在跌得狠（-47.6%），但对GDP的实际传导反而最弱。这和直觉相反：跌得最响的，不一定是最要命的。
-    </div>
+    </div></div></details>
   </div>
 
   <!-- 反转结论 -->
@@ -230,9 +230,9 @@ input[type=range]{width:100%;accent-color:#22c55e;height:4px}
       博罗真正的警报在<b style="color:#f87171">投资端</b>。2026年1-8月，固投已经不是2025年的−18.8%，而是<b>−34.1%</b>，其中工业投资<b>−46.7%</b>（上半年一度−51.3%）；与此同时，工业增加值却从一季度的+3.5%爬到了+8.9%。<b style="color:#4ade80">工厂在满产、订单在交付，但新开工、新投产的管线在收缩。</b><br><br>
       页面顶部的压力测试把这一幕喂给了模型：<b>如果工业投资腰斩延续，规划兑现路径的达标率会从约50%直接跌到约6.6%，中位GDP少约139亿；若再叠加房地产探底，达标率只剩约2%。</b>而"双引擎超预期"（电子信息、储能、新能源提前放量）能把达标率抬到约71%。<b>这不是博罗独有问题——所有工业县换挡期都会遇到；区别在于博罗手里还有东莞外溢、罗浮山、特色农业三张牌，关键是让在建项目按时投产、把工业投资这台播种机重新点起来。</b>
     </div>
-    <div class="plain" style="margin-top:14px"><span class="lab">边界声明</span>
+    <details class="bl-tail-evidence"><summary>为什么图表这样变化？</summary><div class="bl-tail-evidence-body"><div class="plain" style="margin-top:14px"><span class="lab">边界声明</span>
       顶部"现实压力测试"是用同一模型内核、同一粒种子（42）、2万次蒙特卡洛的真实重跑，路径参数与现实苗头的对应关系在数据层 bl-viz/data.js 公开；下方滑块是参数敏感性实验。全部是假设情景下的结构模拟，不是预测，更不是投资建议。你觉得哪个参数不对，可以自己改——这正是风洞的意义。
-    </div>
+    </div></div></details>
   </div>
 
   <!-- 县长结论 -->
