@@ -698,6 +698,7 @@ html,body{
       <div><div class="canvas-eyebrow">博罗 · 看变化</div><div class="canvas-title">这件事，会牵动博罗的哪里？</div><div class="canvas-desc">先选一件事，再看：以前怎样、现在有什么不同、哪些影响还不能确定。</div></div>
       <div class="canvas-head-right"><div class="live-status" id="liveStatus"><i></i>正在整理公开资料</div><div class="view-toggle"><button class="active" data-view="2d">平面</button><button data-view="space">空间感</button></div><div class="evidence-toggle" role="group" aria-label="网络数据视图"><button id="conceptMode" class="active">只看这件事</button><button id="evidenceMode">看整张图 <span id="evidenceCount" style="display:none">36 · 45</span></button></div></div>
     </div>
+    <a class="bl-mobile-detail-jump" href="#changes-panel">查看最近变化和详情 ↓</a>
     <div class="graph-wrap">
       <svg id="network" viewBox="0 0 1000 760" role="img" aria-label="博罗抽象关系网络图">
         <defs>
@@ -731,7 +732,7 @@ html,body{
       <div class="timeline-actions"><button data-change-phase="before">之前</button><button data-change-phase="event">发生时</button><button data-change-phase="after" class="active">之后</button></div>
     </div>
   </section>
-  <aside class="explore">
+  <aside class="explore" id="changes-panel">
     <div class="explore-head change-head"><div class="explore-heading"><span class="bulb"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M12 3v18M3 12h18M5.6 5.6l12.8 12.8M18.4 5.6 5.6 18.4"/></svg></span>最近发生了什么？</div><span class="explore-count" id="changeCount">12 件事</span></div>
     <div class="explore-intro">点开一件事。我们一起看看：之前是什么样，现在变了什么。</div>
     <div id="changeCards" class="change-cards" aria-label="结构变化事件"><div class="change-loading">正在读取公开变化记录…</div></div><button type="button" id="toggleAllChanges" class="toggle-all-changes" hidden>查看全部变化</button>
