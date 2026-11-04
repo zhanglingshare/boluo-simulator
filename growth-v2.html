@@ -1,0 +1,386 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>博罗，是怎么长起来的｜决策风洞</title>
+<style>
+* { box-sizing: border-box; margin: 0; padding: 0; }
+body {
+  font-family: -apple-system, BlinkMacSystemFont, "PingFang SC", "Microsoft YaHei", sans-serif;
+  background: radial-gradient(ellipse at 50% -10%, #eef4ff 0%, #f5f7fa 60%, #f0f4f9 100%);
+  color: #1a2b45;
+  min-height: 100vh;
+}
+/* 统一导航 */
+.unified-nav {
+  position: sticky; top: 0; z-index: 100;
+  display: flex; align-items: center; justify-content: space-between;
+  padding: 14px 28px;
+  background: rgba(255,255,255,.82);
+  backdrop-filter: blur(24px) saturate(1.8);
+  border-bottom: 1px solid #e2e8f0;
+}
+.nav-brand { font-weight: 800; font-size: 16px; letter-spacing: .5px; }
+.nav-links { display: flex; gap: 8px; align-items: center; }
+.nav-links a, .dropdown-btn {
+  padding: 8px 14px; border-radius: 10px; text-decoration: none;
+  color: #64748b; font-size: 13px; font-weight: 500;
+  background: transparent; border: 0; cursor: pointer;
+}
+.nav-links a:hover, .dropdown-btn:hover { background: rgba(241,245,249,.9); color: #1a2b45; }
+.nav-links a.active { background: rgba(74,143,231,.1); color: #4a8fe7; font-weight: 600; }
+.nav-dropdown { position: relative; }
+.dropdown-menu {
+  position: absolute; top: calc(100% + 8px); right: 0;
+  background: #fff; border: 1px solid #e2e8f0; border-radius: 12px;
+  box-shadow: 0 12px 32px rgba(30,58,95,.12);
+  min-width: 180px; padding: 6px; display: none;
+}
+.nav-dropdown:hover .dropdown-menu { display: block; }
+.dropdown-menu a { display: block; padding: 10px 12px; border-radius: 8px; }
+@media(max-width: 768px) { .nav-links { display: none; } }
+
+/* 页面容器 */
+.container { max-width: 1200px; margin: 0 auto; padding: 48px 24px; }
+.page-header { margin-bottom: 48px; }
+.page-header h1 { font-size: 36px; font-weight: 700; margin-bottom: 12px; letter-spacing: -.5px; }
+.page-header p { font-size: 16px; color: #64748b; line-height: 1.7; }
+.disclaimer {
+  display: inline-block; margin-top: 16px;
+  padding: 6px 12px; border-radius: 8px;
+  background: rgba(74,143,231,.08);
+  font-size: 12px; color: #4a8fe7;
+}
+
+/* 时间轴 */
+.timeline {
+  position: relative; margin-bottom: 48px;
+  display: grid; grid-template-columns: repeat(4, 1fr); gap: 20px;
+}
+.timeline::before {
+  content: ''; position: absolute; top: 24px; left: 5%; right: 5%;
+  height: 2px; background: #e2e8f0; z-index: 0;
+}
+.timeline-node {
+  position: relative; z-index: 1;
+  background: rgba(255,255,255,.78);
+  border: 1px solid rgba(220,228,240,.85);
+  border-radius: 16px; padding: 24px 20px;
+  backdrop-filter: blur(20px) saturate(1.4);
+  box-shadow: 0 8px 32px rgba(30,58,95,.07);
+  cursor: pointer; transition: all .2s;
+}
+.timeline-node:hover { transform: translateY(-4px); box-shadow: 0 12px 40px rgba(30,58,95,.12); }
+.timeline-dot {
+  width: 48px; height: 48px; border-radius: 50%;
+  background: #4a8fe7; color: #fff;
+  display: flex; align-items: center; justify-content: center;
+  font-weight: 700; margin-bottom: 16px;
+}
+.timeline-node h3 { font-size: 18px; font-weight: 600; margin-bottom: 8px; }
+.timeline-node .period { font-size: 13px; color: #64748b; margin-bottom: 12px; }
+.structure-badge {
+  display: inline-block; padding: 4px 10px; border-radius: 6px;
+  background: rgba(74,143,231,.08); font-size: 12px; color: #4a8fe7;
+}
+@media(max-width: 900px) { .timeline { grid-template-columns: 1fr; } .timeline::before { display: none; } }
+
+/* 阶段详情卡片 */
+.stage-card {
+  background: rgba(255,255,255,.78);
+  border: 1px solid rgba(220,228,240,.85);
+  border-radius: 18px; padding: 32px;
+  backdrop-filter: blur(20px) saturate(1.4);
+  box-shadow: 0 8px 32px rgba(30,58,95,.07);
+  margin-bottom: 24px;
+}
+.stage-grid { display: grid; grid-template-columns: 1.2fr 1fr; gap: 32px; align-items: start; }
+@media(max-width: 768px) { .stage-grid { grid-template-columns: 1fr; } }
+.stage-text h2 { font-size: 22px; font-weight: 600; margin-bottom: 16px; }
+.stage-text p { font-size: 15px; line-height: 1.9; color: #334155; margin-bottom: 12px; }
+.event-tag {
+  display: inline-block; margin: 4px 6px 4px 0;
+  padding: 6px 12px; border-radius: 8px;
+  background: rgba(63,168,126,.1); color: #3fa87e;
+  font-size: 13px;
+}
+/* 环形图占位 */
+.chart-box {
+  background: rgba(255,255,255,.6);
+  border-radius: 12px; padding: 24px;
+  text-align: center;
+}
+.chart-box .ring {
+  width: 180px; height: 180px; border-radius: 50%;
+  margin: 0 auto 16px;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 24px; font-weight: 700;
+}
+.ring-1 { background: conic-gradient(#4a8fe7 0 11%, #3fa87e 11% 50%, #94a3b8 50% 100%); }
+.ring-2 { background: conic-gradient(#4a8fe7 0 11%, #3fa87e 11% 55%, #94a3b8 55% 100%); }
+.ring-3 { background: conic-gradient(#4a8fe7 0 11%, #3fa87e 11% 54%, #94a3b8 54% 100%); }
+.ring-4 { background: conic-gradient(#4a8fe7 0 11%, #3fa87e 11% 55%, #94a3b8 55% 100%); }
+.ring-inner {
+  width: 120px; height: 120px; border-radius: 50%;
+  background: #fff; display: flex; align-items: center; justify-content: center;
+  font-size: 16px; color: #1a2b45;
+}
+.legend { display: flex; gap: 16px; justify-content: center; flex-wrap: wrap; font-size: 12px; color: #64748b; }
+.legend span { display: flex; align-items: center; gap: 6px; }
+.legend-dot { width: 10px; height: 10px; border-radius: 2px; }
+
+/* 证据按钮 */
+.evidence-btn {
+  margin-top: 12px; padding: 8px 16px;
+  border: 1px solid #e2e8f0; border-radius: 8px;
+  background: #fff; font-size: 13px; color: #64748b;
+  cursor: pointer;
+}
+.evidence-btn:hover { background: #f8fafc; }
+.evidence-modal {
+  display: none; position: fixed; inset: 0; z-index: 200;
+  background: rgba(0,0,0,.3); align-items: center; justify-content: center;
+}
+.evidence-modal.open { display: flex; }
+.modal-content {
+  background: #fff; border-radius: 16px; padding: 32px;
+  max-width: 480px; width: 90%;
+  box-shadow: 0 20px 60px rgba(0,0,0,.2);
+}
+.modal-content h3 { margin-bottom: 16px; font-size: 18px; }
+.modal-row { margin-bottom: 12px; font-size: 14px; line-height: 1.7; }
+.modal-row b { color: #1a2b45; }
+.modal-close {
+  margin-top: 16px; width: 100%; padding: 12px;
+  background: #4a8fe7; color: #fff; border: 0; border-radius: 10px;
+  font-weight: 600; cursor: pointer;
+}
+
+/* 下一页 */
+.next-box { text-align: center; margin-top: 48px; }
+.next-btn {
+  display: inline-block; padding: 14px 32px;
+  background: #4a8fe7; color: #fff; text-decoration: none;
+  border-radius: 12px; font-weight: 600; font-size: 15px;
+}
+</style>
+</head>
+<body>
+<div class="unified-nav">
+  <div class="nav-brand">博罗 · 决策风洞</div>
+  <div class="nav-links">
+    <a href="growth-v2.html" class="active">怎么长起来</a>
+    <a href="index.html">今日博罗</a>
+    <a href="who-v2.html">基本盘</a>
+    <a href="plan-with-me.html">规划与你</a>
+    <a href="windtunnel-v2.html">未来推演</a>
+    <a href="blindspot.html">可能忽略</a>
+    <a href="report.html">报告</a>
+    <a href="ending.html">结语</a>
+    <div class="nav-dropdown">
+      <button class="dropdown-btn">探索实验 ▾</button>
+      <div class="dropdown-menu">
+        <a href="experiments/holo-single/index-v2.html">全息关系</a>
+        <a href="experiments/holo-single/index-v2.html?entity=bt">└ 柏塘案例</a>
+        <a href="windtunnel.html">全息风洞</a>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="container">
+  <div class="page-header">
+    <h1>博罗，是怎么一步步长起来的</h1>
+    <p>从传统农业县，到广东首个千亿县，四个真实阶段，看清产业发展的完整路径。所有数据均来自官方公开统计公报与政府工作报告。</p>
+    <div class="disclaimer">公开信息整理 · 非官方报告 · 不替代决策</div>
+  </div>
+
+  <!-- 时间轴 -->
+  <div class="timeline">
+    <div class="timeline-node" onclick="openEvidence(1)">
+      <div class="timeline-dot">01</div>
+      <h3>农业主导期</h3>
+      <div class="period">2015年之前</div>
+      <div class="structure-badge">传统农业+零散工业</div>
+    </div>
+    <div class="timeline-node" onclick="openEvidence(2)">
+      <div class="timeline-dot">02</div>
+      <h3>园区起步期</h3>
+      <div class="period">2015-2020</div>
+      <div class="structure-badge">2020结构 11:49.6:39.4</div>
+    </div>
+    <div class="timeline-node" onclick="openEvidence(3)">
+      <div class="timeline-dot">03</div>
+      <h3>工业加速期</h3>
+      <div class="period">2021-2025</div>
+      <div class="structure-badge">2025结构 10.7:54.6:34.7</div>
+    </div>
+    <div class="timeline-node" onclick="openEvidence(4)">
+      <div class="timeline-dot">04</div>
+      <h3>协同发展期</h3>
+      <div class="period">2026之后（十五五）</div>
+      <div class="structure-badge">目标GDP 1600亿元</div>
+    </div>
+  </div>
+
+  <!-- 阶段详情1 -->
+  <div class="stage-card">
+    <div class="stage-grid">
+      <div class="stage-text">
+        <h2>01 农业主导期：2015年才拿到省级产业园“入场券”</h2>
+        <p>在2015年之前，博罗是惠州传统农业大县，工业以零散乡镇企业为主，没有统一的省级产业园区平台，是惠州最后一个拿到省级产业园执照的县区。</p>
+        <p>2015年5月，博西、博东片区正式纳入惠州产业转移工业园博罗产业集聚地，产业集聚发展的政策窗口正式打开。</p>
+        <div>
+          <span class="event-tag">2015年获批省级产业转移园</span>
+          <span class="event-tag">传统农业主导</span>
+        </div>
+        <button class="evidence-btn" onclick="openEvidence(1)">查看证据来源</button>
+      </div>
+      <div class="chart-box">
+        <div class="ring ring-1">
+          <div class="ring-inner">阶段特征</div>
+        </div>
+        <div class="legend">
+          <span><div class="legend-dot" style="background:#4a8fe7"></div>一产</span>
+          <span><div class="legend-dot" style="background:#3fa87e"></div>二产</span>
+          <span><div class="legend-dot" style="background:#94a3b8"></div>三产</span>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- 阶段详情2 -->
+  <div class="stage-card">
+    <div class="stage-grid">
+      <div class="stage-text">
+        <h2>02 园区起步期：承接产业外溢，工业占比稳步提升</h2>
+        <p>拿到省级园区资质后，博罗开始承接深圳、东莞的产业外溢，沿交通线布局产业园区，工业逐步成为县域经济的核心支撑。</p>
+        <p>到2020年，三次产业结构调整为11:49.6:39.4，二产占比接近50%，完成从农业主导向工业主导的转型。</p>
+        <div>
+          <span class="event-tag">承接湾区产业外溢</span>
+          <span class="event-tag">2020年二产占比49.6%</span>
+        </div>
+        <button class="evidence-btn" onclick="openEvidence(2)">查看证据来源</button>
+      </div>
+      <div class="chart-box">
+        <div class="ring ring-2">
+          <div class="ring-inner">2020结构</div>
+        </div>
+        <div class="legend">
+          <span><div class="legend-dot" style="background:#4a8fe7"></div>一产 11%</span>
+          <span><div class="legend-dot" style="background:#3fa87e"></div>二产 49.6%</span>
+          <span><div class="legend-dot" style="background:#94a3b8"></div>三产 39.4%</span>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- 阶段详情3 -->
+  <div class="stage-card">
+    <div class="stage-grid">
+      <div class="stage-text">
+        <h2>03 工业加速期：博罗产业园区从零起步，跻身千亿县</h2>
+        <p>2021年博罗产业园区正式启动建设，作为县域高质量发展主战场，以“四个一”模式集中资源打造，引进欣旺达、江丰电子等一批优质企业，形成智能装备、新能源主导的产业集群。</p>
+        <p>2025年博罗成为广东首个“千亿县”，全年二产增加值549.01亿元，三次产业结构为10.7:54.6:34.7，工业主导的产业结构完全稳固。</p>
+        <div>
+          <span class="event-tag">2021年博罗产业园启动</span>
+          <span class="event-tag">2025年广东首个千亿县</span>
+          <span class="event-tag">二产增加值549.01亿</span>
+        </div>
+        <button class="evidence-btn" onclick="openEvidence(3)">查看证据来源</button>
+      </div>
+      <div class="chart-box">
+        <div class="ring ring-3">
+          <div class="ring-inner">2025结构</div>
+        </div>
+        <div class="legend">
+          <span><div class="legend-dot" style="background:#4a8fe7"></div>一产 10.7%</span>
+          <span><div class="legend-dot" style="background:#3fa87e"></div>二产 54.6%</span>
+          <span><div class="legend-dot" style="background:#94a3b8"></div>三产 34.7%</span>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- 阶段详情4 -->
+  <div class="stage-card">
+    <div class="stage-grid">
+      <div class="stage-text">
+        <h2>04 协同发展期：十五五目标GDP 1600亿，多产业协同</h2>
+        <p>进入十五五阶段，博罗在千亿县基础上，提出GDP达到1600亿元的目标，同时推进产业园区、绿色农产品基地、文旅产业协同发展，打造湾区产业腹地与民生保障基地。</p>
+        <p>这一阶段不再只追求工业增速，同时聚焦区域协调、本地配套、民生保障，推动产城融合。</p>
+        <div>
+          <span class="event-tag">十五五GDP目标1600亿</span>
+          <span class="event-tag">产城融合+区域协调</span>
+        </div>
+        <button class="evidence-btn" onclick="openEvidence(4)">查看证据来源</button>
+      </div>
+      <div class="chart-box">
+        <div class="ring ring-4">
+          <div class="ring-inner">十五五目标</div>
+        </div>
+        <div class="legend">
+          <span>目标：GDP 1600亿元</span>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="next-box">
+    <a class="next-btn" href="index.html">下一页：看看今天的博罗，大家在怎么生活 →</a>
+  </div>
+</div>
+
+<!-- 证据弹窗 -->
+<div class="evidence-modal" id="evidenceModal">
+  <div class="modal-content">
+    <h3 id="modalTitle">证据来源</h3>
+    <div class="modal-row"><b>证据等级：</b><span id="modalLevel"></span></div>
+    <div class="modal-row"><b>信息来源：</b><span id="modalSource"></span></div>
+    <div class="modal-row"><b>口径说明：</b><span id="modalNote"></span></div>
+    <button class="modal-close" onclick="closeEvidence()">关闭</button>
+  </div>
+</div>
+
+<script>
+const evidenceData = {
+  1: {
+    title: "01 农业主导期 证据",
+    level: "A级（官方公开信息）",
+    source: "南方+《产业园晋级能否缩小博罗县东西部差距?》、博罗县政府公开信息",
+    note: "2015年5月正式获批省级产业转移集聚地，为惠州最后一个拿到省级产业园资质的县区"
+  },
+  2: {
+    title: "02 园区起步期 证据",
+    level: "A级（官方政府工作报告）",
+    source: "2023年博罗县政府工作报告",
+    note: "2020年三次产业结构官方口径为11:49.6:39.4"
+  },
+  3: {
+    title: "03 工业加速期 证据",
+    level: "A级（官方统计公报）",
+    source: "2025年博罗国民经济和社会发展统计公报、惠州市政府公开信息",
+    note: "2025年三次产业结构10.7:54.6:34.7，二产增加值549.01亿元，为广东首个千亿县"
+  },
+  4: {
+    title: "04 协同发展期 证据",
+    level: "A级（官方公开规划）",
+    source: "博罗县政府公开信息、十五五规划公开报道",
+    note: "十五五公开目标为GDP达到1600亿元，属于规划目标，非已实现数据"
+  }
+};
+function openEvidence(id) {
+  const d = evidenceData[id];
+  document.getElementById('modalTitle').innerText = d.title;
+  document.getElementById('modalLevel').innerText = d.level;
+  document.getElementById('modalSource').innerText = d.source;
+  document.getElementById('modalNote').innerText = d.note;
+  document.getElementById('evidenceModal').classList.add('open');
+}
+function closeEvidence() {
+  document.getElementById('evidenceModal').classList.remove('open');
+}
+</script>
+</body>
+</html>
