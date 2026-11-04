@@ -1,0 +1,44 @@
+name: Boluo unified observatory acceptance
+on:
+  push:
+    branches: [main, 'ui/**']
+    paths: ['**.html', 'assets/**', 'tea/css/**', 'experiments/holo-single/**.css', 'tests/**', '.github/workflows/boluo-observatory-check.yml']
+permissions:
+  contents: read
+jobs:
+  evidence:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with: {node-version: 22}
+      - run: node --test tests/boluo-plan-life.test.cjs tests/boluo-compare-model.test.cjs tests/boluo-03-editorial-model.test.cjs tests/boluo-editorial-data.test.cjs tests/boluo-intel-engine.test.cjs
+      - run: node tests/verify_journey.js
+  browser:
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    strategy:
+      fail-fast: false
+      matrix:
+        suite: [boluo-system, boluo-six-native, boluo-mh-six, boluo-participation, boluo-03-editorial, boluo-compare, boluo-editorial, boluo-intel]
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with: {node-version: 22}
+      - run: npm install --no-save playwright
+      - run: npx playwright install --with-deps chromium
+      - name: Serve checkout
+        run: |
+          python3 -m http.server 8765 --bind 127.0.0.1 >/tmp/boluo-ui-http.log 2>&1 &
+          for i in $(seq 1 20); do
+            if curl -fsS http://127.0.0.1:8765/index.html -o /dev/null; then exit 0; fi
+            sleep 1
+          done
+          exit 1
+      - run: node tests/${{ matrix.suite }}-browser.cjs
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: observatory-${{ matrix.suite }}
+          path: artifacts/
+          if-no-files-found: warn

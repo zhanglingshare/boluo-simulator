@@ -20,9 +20,11 @@ async function suite(){
    const page=await browser.newPage({viewport:{width:1440,height:900},deviceScaleFactor:1});
    page.on('pageerror',e=>errs.push(name+': '+e.message));
    await page.goto(root+file,{waitUntil:'domcontentloaded'});
+  await page.locator('.bl-header').waitFor();
+  if(await page.locator('.bp-full-disclosure').count())await page.locator('.bp-full-disclosure > summary').click();
    await page.locator(element).waitFor({timeout:20000});
    if(name==='06-plan')await page.locator('.pl-stat').first().waitFor({timeout:20000});
-   else await page.locator('#bl-journey-bar').waitFor({timeout:10000});
+   else await page.locator('.bl-header').waitFor({timeout:10000});
    await page.waitForTimeout(350);
    const state=await page.evaluate(selector=>{
     const body=document.body,item=document.querySelector(selector),bar=document.querySelector('#bl-journey-bar');
@@ -36,18 +38,20 @@ async function suite(){
       font:getComputedStyle(body).fontFamily};
    },element);
    assert.equal(state.theme,true,name+' theme class');
-   assert.equal(state.bodyBackground,'rgb(245, 245, 247)',name+' background');
+   assert.equal(state.bodyBackground,'rgb(14, 20, 32)',name+' background');
    assert.equal(state.heroGradient,'none',name+' no hero gradient');
    assert.ok(state.planLink,name+' missing 06 link');
    assert.ok(state.overflow<=4,name+' horizontal overflow '+state.overflow);
    assert.ok(state.font.includes('PingFang')||state.font.includes('SF Pro'),name+' font stack');
-   if(name==='05-compare')assert.equal(state.heroBackground,'rgb(25, 38, 51)',name+' after network uses matte dark material');
+   if(name==='05-compare')assert.equal(state.heroBackground,'rgb(11, 18, 30)',name+' after network uses matte dark material');
    await page.screenshot({path:path.join(art,name+'-1440.png'),animations:'disabled'});
    await page.close();
   }
   const page=await browser.newPage({viewport:{width:1440,height:900},deviceScaleFactor:1});
   page.on('pageerror',e=>errs.push('06-interaction: '+e.message));
   await page.goto(root+'plan-with-me.html?change=C004',{waitUntil:'domcontentloaded'});
+  await page.locator('.bl-header').waitFor();
+  if(await page.locator('.bp-full-disclosure').count())await page.locator('.bp-full-disclosure > summary').click();
   await page.locator('#pl-role-title').waitFor();
   await page.waitForFunction(()=>document.querySelector('#pl-metrics .pl-stat')?.textContent?.includes('1,600'),{timeout:15000});
   assert.equal(await page.locator('.pl-stat').count(),4,'Four sourced planning headline indicators');
@@ -72,16 +76,20 @@ async function suite(){
   await page.close();
   const comparison=await browser.newPage({viewport:{width:1440,height:900}});
   await comparison.goto(root+'relation-compare.html?change=C006',{waitUntil:'domcontentloaded'});
-  await comparison.locator('#bl-journey-next').waitFor();
+  await comparison.locator('.bl-header').waitFor();
+  if(await comparison.locator('.bp-full-disclosure').count())await comparison.locator('.bp-full-disclosure > summary').click();
+  await comparison.locator('#bl-journey-next').waitFor({state:'attached'});
   assert.match(await comparison.locator('#bl-journey-next').getAttribute('href'),/plan-with-me\.html\?from=comparison.*C006/);
   await comparison.close();
   for(const [name,file,selector] of pages){
    const mobile=await browser.newPage({viewport:{width:390,height:844},deviceScaleFactor:1,isMobile:true,hasTouch:true});
    mobile.on('pageerror',e=>errs.push(name+' mobile: '+e.message));
    await mobile.goto(root+file,{waitUntil:'domcontentloaded'});
+  await mobile.locator('.bl-header').waitFor();
+  if(await mobile.locator('.bp-full-disclosure').count())await mobile.locator('.bp-full-disclosure > summary').click();
    await mobile.locator(selector).waitFor({timeout:20000});
    if(name==='06-plan')await mobile.locator('.pl-stat').first().waitFor({timeout:20000});
-   else await mobile.locator('#bl-journey-bar').waitFor({timeout:10000});
+   else await mobile.locator('.bl-header').waitFor({timeout:10000});
    await mobile.waitForTimeout(300);
    const ov=await mobile.evaluate(()=>document.documentElement.scrollWidth-window.innerWidth);
    assert.ok(ov<=4,name+' 390px horizontal overflow '+ov);

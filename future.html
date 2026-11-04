@@ -4,56 +4,64 @@
 <script src="lib/echarts.min.js"></script>
 <script src="model.js"></script>
 <style>
-*{box-sizing:border-box}
-body{margin:0;background:#080b12;color:#e6edf3;font:14px/1.6 -apple-system,"PingFang SC","Microsoft YaHei",sans-serif}
-.nav{position:sticky;top:0;z-index:50;display:flex;gap:5px;align-items:center;padding:9px 14px;background:rgba(8,11,18,.95);border-bottom:1px solid #1b2434;overflow-x:auto}
-.nav b{font-size:14px;margin-right:6px;flex:none}
-.nav a{background:#131c2b;color:#93a4bd;border:1px solid #22304a;padding:6px 12px;border-radius:20px;font-size:12.5px;text-decoration:none;white-space:nowrap;flex:none}
-.nav a.on{background:#15803d;border-color:#22c55e;color:#fff;font-weight:600}
-.wrap{max-width:880px;margin:auto;padding:16px}
-h1{font-size:20px;margin:0 0 2px}
-.sub{color:#8fa3bf;font-size:13px;margin:0 0 14px}
-.card{background:#0e1523;border:1px solid #1c2739;border-radius:12px;padding:18px;margin-bottom:12px}
-.card h2{font-size:14.5px;margin:0 0 12px;color:#cbd5e1}
-.btn{background:#15803d;color:#fff;border:0;padding:10px 22px;border-radius:8px;font-size:14px;font-weight:600;cursor:pointer}
-.btn.gh{background:#059669}
-.ctrl{display:flex;gap:10px;align-items:center;flex-wrap:wrap}
-select{background:#16203a;color:#e6edf3;border:1px solid #2b3a55;padding:8px 12px;border-radius:6px;font-size:12.5px}
-.seed-in{background:#0a0f1a;border:1px solid #2b3a55;color:#fbbf24;padding:8px 10px;border-radius:6px;font-size:13px;width:90px}
-.prob{font-size:38px;font-weight:800;text-align:center;margin:6px 0}
-.gauges{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin:12px 0}
-@media(max-width:700px){.gauges{grid-template-columns:1fr}}
-.gauge{background:#0a0f1a;border:1px solid #1c2739;border-radius:10px;padding:14px;text-align:center}
-.gauge .l{font-size:11px;color:#6b7d96}
-.gauge .v{font-size:24px;font-weight:800;margin-top:5px;font-variant-numeric:tabular-nums}
-.gauge .d{font-size:10.5px;color:#5b6b82;margin-top:4px}
-.chart{width:100%;height:280px}
-.chart-sm{height:200px}
-.note{font-size:12.5px;color:#93a4bf;margin-top:10px;line-height:2;background:#0a0f1a;border-radius:8px;padding:12px 14px}
-.note b{color:#cbd5e1}
-.note .h{color:#4ade80;font-weight:800;display:block;font-size:11px;letter-spacing:1px;margin-bottom:5px}
-.note .warn-h{color:#fbbf24}
-.scen3{display:grid;grid-template-columns:repeat(3,1fr);gap:9px}
-@media(max-width:700px){.scen3{grid-template-columns:1fr}}
-.scen3 .s{background:#0a0f1a;border-radius:9px;padding:12px;text-align:center;border:1px solid}
-.scen3 .s .l{font-size:10.5px;color:#6b7d96}
-.scen3 .s .v{font-size:19px;font-weight:800;margin-top:4px}
-.param-panel{font-size:12px;color:#93a4bf;line-height:2}
-.param-panel .row{display:flex;gap:8px;padding:3px 0}
-.param-panel .k{color:#cbd5e1;flex:none;min-width:110px}
-.param-panel .v2{color:#fbbf24}
-table.sens{width:100%;border-collapse:collapse;font-size:11.5px;margin-top:10px}
-table.sens th{color:#6b7d96;font-weight:600;padding:6px 8px;text-align:right;border-bottom:1px solid #1c2739;font-size:10.5px}
-table.sens th:first-child,table.sens td:first-child{text-align:left}
-table.sens td{padding:6px 8px;text-align:right;border-bottom:1px solid #152033;color:#93a4bf}
-.status{font-size:11.5px;color:#6b7d96;margin-left:8px}
-.conclusion{background:#0e1523;border:1px solid #1c2739;border-radius:12px;padding:18px;font-size:13px;line-height:2;color:#cbd5e1}
-.next{text-align:center;margin-top:16px}
-.next a{background:#15803d;color:#fff;padding:11px 24px;border-radius:8px;text-decoration:none;font-weight:600;display:inline-block}
-#out{display:none}
-@media(min-width:1024px){.wrap{max-width:1200px!important;padding:24px}}</style><link rel="stylesheet" href="assets/boluo-ui.css">
-<link rel="stylesheet" href="assets/boluo-unified-nav.css">
-</head><body class="bl-ui bl-dark bl-ui--future" data-bl-page="future">
+*{box-sizing:border-box;}
+body{margin:0;background:var(--ui-panel);color:var(--ui-text);font:14px/1.6 -apple-system,"PingFang SC","Microsoft YaHei",sans-serif;}
+.nav{position:sticky;top:0;z-index:50;display:flex;gap:5px;align-items:center;padding:9px 14px;background:var(--ui-panel);border-bottom:1px solid var(--ui-line);overflow-x:auto;}
+.nav b{font-size:14px;margin-right:6px;flex:none;}
+.nav a{background:var(--ui-panel);color:var(--ui-muted);border:1px solid var(--ui-line);padding:6px 12px;border-radius:20px;font-size:12.5px;text-decoration:none;white-space:nowrap;flex:none;}
+.nav a.on{background:var(--ui-panel);border-color:var(--ui-line);color:var(--ui-text);font-weight:600;}
+.wrap{max-width:880px;margin:auto;padding:16px;}
+h1{font-size:20px;margin:0 0 2px;}
+.sub{color:var(--ui-muted);font-size:13px;margin:0 0 14px;}
+.card{background:var(--ui-panel);border:1px solid var(--ui-line);border-radius:12px;padding:18px;margin-bottom:12px;}
+.card h2{font-size:14.5px;margin:0 0 12px;color:var(--ui-text);}
+.btn{background:var(--ui-panel);color:var(--ui-text);border:0;padding:10px 22px;border-radius:8px;font-size:14px;font-weight:600;cursor:pointer;}
+.btn.gh{background:var(--ui-panel);}
+.ctrl{display:flex;gap:10px;align-items:center;flex-wrap:wrap;}
+select{background:var(--ui-panel);color:var(--ui-text);border:1px solid var(--ui-line);padding:8px 12px;border-radius:6px;font-size:12.5px;}
+.seed-in{background:var(--ui-panel);border:1px solid var(--ui-line);color:var(--ui-gold);padding:8px 10px;border-radius:6px;font-size:13px;width:90px;}
+.prob{font-size:38px;font-weight:800;text-align:center;margin:6px 0;}
+.gauges{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin:12px 0;}
+@media (max-width:700px){
+.gauges{grid-template-columns:1fr;}
+}
+.gauge{background:var(--ui-panel);border:1px solid var(--ui-line);border-radius:10px;padding:14px;text-align:center;}
+.gauge .l{font-size:11px;color:var(--ui-muted);}
+.gauge .v{font-size:24px;font-weight:800;margin-top:5px;font-variant-numeric:tabular-nums;}
+.gauge .d{font-size:10.5px;color:var(--ui-muted);margin-top:4px;}
+.chart{width:100%;height:280px;}
+.chart-sm{height:200px;}
+.note{font-size:12.5px;color:var(--ui-muted);margin-top:10px;line-height:2;background:var(--ui-panel);border-radius:8px;padding:12px 14px;}
+.note b{color:var(--ui-text);}
+.note .h{color:var(--ui-green);font-weight:800;display:block;font-size:11px;letter-spacing:1px;margin-bottom:5px;}
+.note .warn-h{color:var(--ui-gold);}
+.scen3{display:grid;grid-template-columns:repeat(3,1fr);gap:9px;}
+@media (max-width:700px){
+.scen3{grid-template-columns:1fr;}
+}
+.scen3 .s{background:var(--ui-panel);border-radius:9px;padding:12px;text-align:center;border:1px solid;}
+.scen3 .s .l{font-size:10.5px;color:var(--ui-muted);}
+.scen3 .s .v{font-size:19px;font-weight:800;margin-top:4px;}
+.param-panel{font-size:12px;color:var(--ui-muted);line-height:2;}
+.param-panel .row{display:flex;gap:8px;padding:3px 0;}
+.param-panel .k{color:var(--ui-text);flex:none;min-width:110px;}
+.param-panel .v2{color:var(--ui-gold);}
+table.sens{width:100%;border-collapse:collapse;font-size:11.5px;margin-top:10px;}
+table.sens th{color:var(--ui-muted);font-weight:600;padding:6px 8px;text-align:right;border-bottom:1px solid var(--ui-line);font-size:10.5px;}
+table.sens th:first-child,table.sens td:first-child{text-align:left;}
+table.sens td{padding:6px 8px;text-align:right;border-bottom:1px solid var(--ui-line);color:var(--ui-muted);}
+.status{font-size:11.5px;color:var(--ui-muted);margin-left:8px;}
+.conclusion{background:var(--ui-panel);border:1px solid var(--ui-line);border-radius:12px;padding:18px;font-size:13px;line-height:2;color:var(--ui-text);}
+.next{text-align:center;margin-top:16px;}
+.next a{background:var(--ui-panel);color:var(--ui-text);padding:11px 24px;border-radius:8px;text-decoration:none;font-weight:600;display:inline-block;}
+#out{display:none;}
+@media (min-width:1024px){
+.wrap{max-width:1200px!important;padding:24px;}
+}
+</style><link rel="stylesheet" href="assets/boluo-layout.css">
+<link rel="stylesheet" href="assets/boluo-ui.css">
+<script defer src="assets/boluo-system.js"></script>
+</head><body id="boluo-app" class="bl-site bl-ui bl-dark bl-ui--future" data-bl-page="future" data-ui-page="future">
 
 <div class="nav">
   <b>博罗产业风洞</b>
@@ -76,15 +84,15 @@ table.sens td{padding:6px 8px;text-align:right;border-bottom:1px solid #152033;c
   <p class="sub">选模式、定种子、点按钮。同样的种子必定跑出同样的结果——这是可以复现的。</p>
 
   <!-- 先猜后揭 -->
-  <div style="margin:12px 0;padding:16px;background:linear-gradient(135deg,#1e293b,#0f172a);border:1px solid #fbbf24;border-radius:14px">
-    <div style="font-size:15px;font-weight:800;color:#fff;margin-bottom:4px">🎯 先别往下看——你觉得2030年博罗最可能落到多少？</div>
-    <div style="font-size:12.5px;color:#94a3b8;margin-bottom:12px">凭直觉选一个，再看模型跑出来的分布。</div>
-    <div style="display:flex;gap:8px">
-      <button onclick="guess(1)" style="flex:1;background:#f8717122;border:1px solid #f87171;color:#f87171;border-radius:10px;padding:10px 6px;cursor:pointer;font-size:13px;font-weight:700">1400亿以下</button>
-      <button onclick="guess(2)" style="flex:1;background:#fbbf2422;border:1px solid #fbbf24;color:#fbbf24;border-radius:10px;padding:10px 6px;cursor:pointer;font-size:13px;font-weight:700">1400-1600亿</button>
-      <button onclick="guess(3)" style="flex:1;background:#34d39922;border:1px solid #34d399;color:#34d399;border-radius:10px;padding:10px 6px;cursor:pointer;font-size:13px;font-weight:700">1600亿以上</button>
+  <div style="margin:12px 0;padding:16px;background:var(--ui-panel);border:1px solid var(--ui-line);border-radius:14px;">
+    <div style="font-size:15px;font-weight:800;color:var(--ui-text);margin-bottom:4px;">🎯 先别往下看——你觉得2030年博罗最可能落到多少？</div>
+    <div style="font-size:12.5px;color:var(--ui-muted);margin-bottom:12px;">凭直觉选一个，再看模型跑出来的分布。</div>
+    <div style="display:flex;gap:8px;">
+      <button onclick="guess(1)" style="flex:1;background:var(--ui-soft);border:1px solid var(--ui-line);color:var(--ui-red);border-radius:10px;padding:10px 6px;cursor:pointer;font-size:13px;font-weight:700;">1400亿以下</button>
+      <button onclick="guess(2)" style="flex:1;background:var(--ui-soft);border:1px solid var(--ui-line);color:var(--ui-gold);border-radius:10px;padding:10px 6px;cursor:pointer;font-size:13px;font-weight:700;">1400-1600亿</button>
+      <button onclick="guess(3)" style="flex:1;background:var(--ui-soft);border:1px solid var(--ui-line);color:var(--ui-green);border-radius:10px;padding:10px 6px;cursor:pointer;font-size:13px;font-weight:700;">1600亿以上</button>
     </div>
-    <div id="guessOut" style="margin-top:10px;font-size:12.5px;color:#cbd5e1"></div>
+    <div id="guessOut" style="margin-top:10px;font-size:12.5px;color:var(--ui-text);"></div>
   </div>
 
   <!-- 控制 -->
@@ -96,7 +104,7 @@ table.sens td{padding:6px 8px;text-align:right;border-bottom:1px solid #152033;c
         <option value="10000">完整模式 · 10000次</option>
         <option value="20000" selected>标准模式 · 20000次（与报告/风洞一致）</option>
       </select>
-      <span style="font-size:12px;color:#93a4bd">随机种子</span>
+      <span style="font-size:12px;color:var(--ui-muted);">随机种子</span>
       <input type="number" class="seed-in" id="seed" value="42">
       <button class="btn" id="bRun">🎲 开始模拟</button>
     </div>
@@ -110,29 +118,29 @@ table.sens td{padding:6px 8px;text-align:right;border-bottom:1px solid #152033;c
     </div>
 
     <!-- 概率 -->
-    <div class="card" style="text-align:center">
-      <div style="font-size:12.5px;color:#8fa3bf">达到1600亿参考目标的模拟比例</div>
+    <div class="card" style="text-align:center;">
+      <div style="font-size:12.5px;color:var(--ui-muted);">达到1600亿参考目标的模拟比例</div>
       <div class="prob" id="prob">—</div>
-      <div style="font-size:11.5px;color:#6b7d96">这不是"博罗有多少概率成功"，是"在当前假设下，一万次里有多少次过线"</div>
+      <div style="font-size:11.5px;color:var(--ui-muted);">这不是"博罗有多少概率成功"，是"在当前假设下，一万次里有多少次过线"</div>
     </div>
 
     <!-- 三档 -->
     <div class="card">
       <h2>三档结果：把一万次从小到大排队</h2>
       <div class="gauges">
-        <div class="gauge" style="border-color:#7f1d1d">
+        <div class="gauge" style="border-color:var(--ui-line);">
           <div class="l">第10百分位</div>
-          <div class="v" id="p10" style="color:#f87171">—</div>
+          <div class="v" id="p10" style="color:var(--ui-red);">—</div>
           <div class="d">只有10%比这更低</div>
         </div>
-        <div class="gauge" style="border-color:#713f12">
+        <div class="gauge" style="border-color:var(--ui-line);">
           <div class="l">中位数 P50</div>
-          <div class="v" id="p50" style="color:#fbbf24">—</div>
+          <div class="v" id="p50" style="color:var(--ui-gold);">—</div>
           <div class="d">一半在这上面，一半在下面</div>
         </div>
-        <div class="gauge" style="border-color:#14532d">
+        <div class="gauge" style="border-color:var(--ui-line);">
           <div class="l">第90百分位</div>
-          <div class="v" id="p90" style="color:#34d399">—</div>
+          <div class="v" id="p90" style="color:var(--ui-green);">—</div>
           <div class="d">只有10%比这更高</div>
         </div>
       </div>
@@ -175,19 +183,19 @@ table.sens td{padding:6px 8px;text-align:right;border-bottom:1px solid #152033;c
     </div>
 
     <!-- 参数敏感性 -->
-    <div class="card" style="border-color:#2b3a55">
+    <div class="card" style="border-color:var(--ui-line);">
       <h2>参数敏感性：每条路单独±20%，结果变多少</h2>
-      <div style="font-size:12.5px;color:#93a4bf;line-height:1.9;margin-bottom:10px">
+      <div style="font-size:12.5px;color:var(--ui-muted);line-height:1.9;margin-bottom:10px;">
         保持其他路不动，只把某条路的预期贡献调高或调低20%，用<b>同一个种子</b>重跑，差异纯粹来自这个参数。这跟上一页的"事件压测"是两本账，分开看。
       </div>
       <div class="ctrl">
         <button class="btn gh" id="bSens">⚡ 跑参数敏感性</button>
         <span class="status" id="sensStatus"></span>
       </div>
-      <div id="sensOut" style="display:none">
+      <div id="sensOut" style="display:none;">
         <div id="chSens" class="chart"></div>
         <table class="sens" id="sensTable"></table>
-        <div class="note" style="margin-top:12px"><span class="h warn-h" style="color:#fbbf24">怎么用这个结果</span>
+        <div class="note" style="margin-top:12px;"><span class="h warn-h" style="color:var(--ui-gold);">怎么用这个结果</span>
           蓝色=该路+20%后达标率的变化，红色=-20%后的变化。条越长=这条路越敏感。资源有限时先盯敏感的路——它动一点，达标率就动得多。但<b>"敏感"不等于"重要"</b>：敏感只说明模型里它和结果绑得紧，现实中先做哪条，还要看谁可控、成本低、见效快。
         </div>
       </div>
@@ -197,11 +205,11 @@ table.sens td{padding:6px 8px;text-align:right;border-bottom:1px solid #152033;c
     <div class="card">
       <h2>三个情景对应什么局面</h2>
       <div class="scen3">
-        <div class="s" style="border-color:#7f1d1d"><div class="l">较差 · 什么同时不顺</div><div class="v" id="sBad" style="color:#f87171">—</div></div>
-        <div class="s" style="border-color:#713f12"><div class="l">中位 · 正常走</div><div class="v" id="sMid" style="color:#fbbf24">—</div></div>
-        <div class="s" style="border-color:#14532d"><div class="l">较好 · 超预期</div><div class="v" id="sGood" style="color:#34d399">—</div></div>
+        <div class="s" style="border-color:var(--ui-line);"><div class="l">较差 · 什么同时不顺</div><div class="v" id="sBad" style="color:var(--ui-red);">—</div></div>
+        <div class="s" style="border-color:var(--ui-line);"><div class="l">中位 · 正常走</div><div class="v" id="sMid" style="color:var(--ui-gold);">—</div></div>
+        <div class="s" style="border-color:var(--ui-line);"><div class="l">较好 · 超预期</div><div class="v" id="sGood" style="color:var(--ui-green);">—</div></div>
       </div>
-      <div class="note" style="margin-top:10px">
+      <div class="note" style="margin-top:10px;">
         较差情景对应"投产延期+外溢放缓"一起发生；中位对应"按节奏走"；较好对应"招商超预期+高铁效应放大"。较好和较差之间的差距，差不多相当于博罗现在半年多的GDP——这个摆动幅度说明结果落在一个区间里，关键看几个节点守不守得住。
       </div>
     </div>
@@ -419,5 +427,4 @@ function guess(n){
   document.getElementById("guessOut").innerHTML="揭晓："+msgs[n]+"<br>下面这张分布，就是它跑了一万遍的结果。";
 }
 </script>
-<script defer src="assets/boluo-unified-nav.js"></script>
 </body></html>

@@ -60,7 +60,7 @@ if(brand){
  brand.querySelector('strong').textContent='博罗观察';
  brand.querySelector('small').textContent='先看见不一样的博罗';
 }
-const navLinks=[...nav.querySelectorAll('.blj-link')];
+const navLinks=pages.map(p=>nav.querySelector('.blj-link[href="'+p.url+'"]')).filter(Boolean);
 const compactNav=window.matchMedia('(max-width:800px)');
 function labelNav(){
  navLinks.forEach((link,i)=>{
@@ -349,8 +349,8 @@ if(journey==='basic'){
  if(window.echarts){
   for(let i=1;i<=7;i++){
    const host=document.getElementById('c'+i),chart=host&&window.echarts.getInstanceByDom(host);if(!chart)continue;
-   const opt=chart.getOption(),series=(opt.series||[]).map(s=>({label:{color:'#65778d',fontSize:12},...(i===1&&s.type==='line'?{areaStyle:{color:'#e9f1fa',opacity:.5}}:{})}));
-   chart.setOption({animation:!window.matchMedia('(prefers-reduced-motion:reduce)').matches,animationDuration:650,textStyle:{fontFamily:'-apple-system, BlinkMacSystemFont, PingFang SC, sans-serif',color:'#66788e'},series});
+   const opt=chart.getOption(),series=(opt.series||[]).map(s=>({label:{color:'#a0aec3',fontSize:12},...(i===1&&s.type==='line'?{areaStyle:{color:'#20354a',opacity:.5}}:{})}));
+   chart.setOption({animation:!window.matchMedia('(prefers-reduced-motion:reduce)').matches,animationDuration:650,textStyle:{fontFamily:'-apple-system, BlinkMacSystemFont, PingFang SC, sans-serif',color:'#a0aec3'},series});
    const resize=new ResizeObserver(()=>chart.resize());resize.observe(host);
   }
  }

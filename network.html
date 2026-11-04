@@ -5,68 +5,71 @@
 <script src="https://d3js.org/d3.v7.min.js"></script>
 <script src="model.js"></script>
 <style>
-*{box-sizing:border-box}
-body{margin:0;background:#080b12;color:#e6edf3;font:14px/1.65 -apple-system,"PingFang SC","Microsoft YaHei",sans-serif}
-.nav{position:sticky;top:0;z-index:50;display:flex;gap:5px;align-items:center;padding:9px 14px;background:rgba(8,11,18,.95);border-bottom:1px solid #1b2434;overflow-x:auto}
-.nav b{font-size:14px;margin-right:6px;flex:none}
-.nav a{background:#131c2b;color:#93a4bd;border:1px solid #22304a;padding:6px 12px;border-radius:20px;font-size:12.5px;text-decoration:none;white-space:nowrap;flex:none}
-.nav a.on{background:#15803d;border-color:#22c55e;color:#fff;font-weight:600}
-.wrap{max-width:900px;margin:auto;padding:20px 16px 60px}
-h1{font-size:22px;margin-bottom:6px}
-.sub{color:#8fa3bf;font-size:13px;margin-bottom:16px}
-.health{background:rgba(34,197,94,.1);border:1px solid rgba(34,197,94,.3);border-radius:8px;padding:10px 14px;margin-bottom:14px;font-size:13px;line-height:1.7}
-.controls{display:flex;gap:8px;margin-bottom:12px;flex-wrap:wrap;align-items:center}
-.controls span{font-size:12px;color:#8fa3bf}
-.fbtn{background:#131c2b;color:#93a4bd;border:1px solid #22304a;padding:6px 14px;border-radius:20px;font-size:12px;cursor:pointer}
-.fbtn.on{background:#15803d;border-color:#22c55e;color:#fff;font-weight:600}
-.evo-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:12px;margin-top:14px}
-.evo-card{background:#0e1523;border:1px solid #1c2739;border-radius:12px;padding:14px}
-.evo-title{font-size:13px;color:#cbd5e1;font-weight:600;margin-bottom:10px;display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:4px}
-.evo-up{font-size:11px;color:#4ade80;font-weight:700}
-.bar-row{display:grid;grid-template-columns:34px minmax(0,1fr) 56px;align-items:center;gap:8px;margin:7px 0}
-.bar-row .yr{font-size:11px;color:#64748b}
-.bar{height:16px;background:#0a0f1a;border-radius:4px;overflow:hidden}
-.bar i{display:block;height:100%;background:linear-gradient(90deg,#1d4ed8,#38bdf8);border-radius:4px;transition:width .6s}
-.bar-row b{text-align:right;font-size:11px;color:#cbd5e1}
-.bar-row.hi .bar i{background:linear-gradient(90deg,#15803d,#22c55e)}
-.evo-note{font-size:10.5px;color:#64748b;margin-top:8px;line-height:1.5}
-@media(max-width:560px){.evo-grid{grid-template-columns:1fr}}
-#chart{background:#0a0f1a;border:1px solid #1c2739;border-radius:14px;overflow:hidden;position:relative}
-#tooltip{position:absolute;display:none;background:#1a2332;border:1px solid #2b3a55;border-radius:8px;padding:12px;font-size:12px;color:#cbd5e1;pointer-events:none;z-index:10;max-width:260px;line-height:1.7}
-.legend{display:flex;gap:16px;margin-top:10px;font-size:11px;color:#8fa3bf;flex-wrap:wrap}
-.legend i{display:inline-block;width:10px;height:10px;border-radius:50%;margin-right:4px;vertical-align:middle}
-.stats{display:grid;grid-template-columns:1fr 1fr 1fr;gap:10px;margin:14px 0}
-.stat{background:#0e1523;border:1px solid #1c2739;border-radius:10px;padding:12px;text-align:center}
-.stat .l{font-size:11px;color:#64748b}
-.stat .v{font-size:18px;font-weight:800;margin-top:4px}
-.brief{background:rgba(167,139,250,.08);border:1px solid rgba(167,139,250,.2);border-radius:8px;padding:10px 14px;margin-top:14px;font-size:12px;color:#8fa3bf;line-height:1.8}
-.algo-note{font-size:11px;color:#6b7d96;line-height:1.8;margin-top:16px;padding-top:12px;border-top:1px solid #162032}
-.next{margin-top:18px}
-.next a{color:#4ade80;text-decoration:none;font-size:14px}
-.lab-panel{background:linear-gradient(135deg,#0f2e1a,#0e1523);border:1px solid #22c55e;border-radius:14px;padding:20px;margin:20px 0}
-.lab-panel h2{font-size:16px;margin-bottom:4px}
-.lab-panel .hint{font-size:12px;color:#94a3b8;margin-bottom:14px;line-height:1.6}
-.lpath{padding:10px 0;border-top:1px solid #162032}
-.lpath:first-of-type{border-top:none}
-.lpath .row{display:flex;justify-content:space-between;font-size:13px;margin-bottom:4px}
-.lpath input[type=range]{width:100%;accent-color:#22c55e}
-.lab-nums{display:grid;grid-template-columns:1fr 1fr 1fr;gap:10px;margin:14px 0}
-.lab-nums .n{text-align:center}
-.lab-nums .n .l{font-size:11px;color:#8fa3bf}
-.lab-nums .n .v{font-size:22px;font-weight:800}
-.lab-hit{font-size:14px;margin:10px 0}
-.lab-hit b{font-size:20px;color:#4ade80}
-.shock-bar{display:flex;gap:8px;margin:12px 0;flex-wrap:wrap;align-items:center}
-.shock-bar>span{font-size:12px;color:#8fa3bf}
-.sbtn{background:#2a1215;color:#fca5a5;border:1px solid #7f1d1d;padding:6px 14px;border-radius:20px;font-size:12px;cursor:pointer}
-.sbtn.on{background:#b91c1c;border-color:#ef4444;color:#fff;font-weight:600}
-#shockReset{background:#131c2b;color:#93a4bd;border:1px solid #22304a;padding:6px 12px;border-radius:20px;font-size:12px;cursor:pointer}
-#shockInfo{background:rgba(239,68,68,.08);border:1px solid rgba(239,68,68,.25);border-radius:10px;padding:12px 14px;font-size:12.5px;line-height:1.8;color:#cbd5e1;margin-bottom:12px;display:none}
-#shockInfo b.t{color:#f87171}
-#shockInfo .dim{color:#94a3b8}
-</style><link rel="stylesheet" href="assets/boluo-ui.css">
-<link rel="stylesheet" href="assets/boluo-unified-nav.css">
-</head><body class="bl-ui bl-dark bl-ui--network" data-bl-page="network">
+*{box-sizing:border-box;}
+body{margin:0;background:var(--ui-panel);color:var(--ui-text);font:14px/1.65 -apple-system,"PingFang SC","Microsoft YaHei",sans-serif;}
+.nav{position:sticky;top:0;z-index:50;display:flex;gap:5px;align-items:center;padding:9px 14px;background:var(--ui-panel);border-bottom:1px solid var(--ui-line);overflow-x:auto;}
+.nav b{font-size:14px;margin-right:6px;flex:none;}
+.nav a{background:var(--ui-panel);color:var(--ui-muted);border:1px solid var(--ui-line);padding:6px 12px;border-radius:20px;font-size:12.5px;text-decoration:none;white-space:nowrap;flex:none;}
+.nav a.on{background:var(--ui-panel);border-color:var(--ui-line);color:var(--ui-text);font-weight:600;}
+.wrap{max-width:900px;margin:auto;padding:20px 16px 60px;}
+h1{font-size:22px;margin-bottom:6px;}
+.sub{color:var(--ui-muted);font-size:13px;margin-bottom:16px;}
+.health{background:var(--ui-soft);border:1px solid var(--ui-line);border-radius:8px;padding:10px 14px;margin-bottom:14px;font-size:13px;line-height:1.7;}
+.controls{display:flex;gap:8px;margin-bottom:12px;flex-wrap:wrap;align-items:center;}
+.controls span{font-size:12px;color:var(--ui-muted);}
+.fbtn{background:var(--ui-panel);color:var(--ui-muted);border:1px solid var(--ui-line);padding:6px 14px;border-radius:20px;font-size:12px;cursor:pointer;}
+.fbtn.on{background:var(--ui-panel);border-color:var(--ui-line);color:var(--ui-text);font-weight:600;}
+.evo-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:12px;margin-top:14px;}
+.evo-card{background:var(--ui-panel);border:1px solid var(--ui-line);border-radius:12px;padding:14px;}
+.evo-title{font-size:13px;color:var(--ui-text);font-weight:600;margin-bottom:10px;display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:4px;}
+.evo-up{font-size:11px;color:var(--ui-green);font-weight:700;}
+.bar-row{display:grid;grid-template-columns:34px minmax(0,1fr) 56px;align-items:center;gap:8px;margin:7px 0;}
+.bar-row .yr{font-size:11px;color:var(--ui-muted);}
+.bar{height:16px;background:var(--ui-panel);border-radius:4px;overflow:hidden;}
+.bar i{display:block;height:100%;background:var(--ui-panel);border-radius:4px;transition:width .6s;}
+.bar-row b{text-align:right;font-size:11px;color:var(--ui-text);}
+.bar-row.hi .bar i{background:var(--ui-panel);}
+.evo-note{font-size:10.5px;color:var(--ui-muted);margin-top:8px;line-height:1.5;}
+@media (max-width:560px){
+.evo-grid{grid-template-columns:1fr;}
+}
+#chart{background:var(--ui-panel);border:1px solid var(--ui-line);border-radius:14px;overflow:hidden;position:relative;}
+#tooltip{position:absolute;display:none;background:var(--ui-panel);border:1px solid var(--ui-line);border-radius:8px;padding:12px;font-size:12px;color:var(--ui-text);pointer-events:none;z-index:10;max-width:260px;line-height:1.7;}
+.legend{display:flex;gap:16px;margin-top:10px;font-size:11px;color:var(--ui-muted);flex-wrap:wrap;}
+.legend i{display:inline-block;width:10px;height:10px;border-radius:50%;margin-right:4px;vertical-align:middle;}
+.stats{display:grid;grid-template-columns:1fr 1fr 1fr;gap:10px;margin:14px 0;}
+.stat{background:var(--ui-panel);border:1px solid var(--ui-line);border-radius:10px;padding:12px;text-align:center;}
+.stat .l{font-size:11px;color:var(--ui-muted);}
+.stat .v{font-size:18px;font-weight:800;margin-top:4px;}
+.brief{background:var(--ui-soft);border:1px solid var(--ui-line);border-radius:8px;padding:10px 14px;margin-top:14px;font-size:12px;color:var(--ui-muted);line-height:1.8;}
+.algo-note{font-size:11px;color:var(--ui-muted);line-height:1.8;margin-top:16px;padding-top:12px;border-top:1px solid var(--ui-line);}
+.next{margin-top:18px;}
+.next a{color:var(--ui-green);text-decoration:none;font-size:14px;}
+.lab-panel{background:var(--ui-panel);border:1px solid var(--ui-line);border-radius:14px;padding:20px;margin:20px 0;}
+.lab-panel h2{font-size:16px;margin-bottom:4px;}
+.lab-panel .hint{font-size:12px;color:var(--ui-muted);margin-bottom:14px;line-height:1.6;}
+.lpath{padding:10px 0;border-top:1px solid var(--ui-line);}
+.lpath:first-of-type{border-top:none;}
+.lpath .row{display:flex;justify-content:space-between;font-size:13px;margin-bottom:4px;}
+.lpath input[type=range]{width:100%;accent-color:var(--ui-green);}
+.lab-nums{display:grid;grid-template-columns:1fr 1fr 1fr;gap:10px;margin:14px 0;}
+.lab-nums .n{text-align:center;}
+.lab-nums .n .l{font-size:11px;color:var(--ui-muted);}
+.lab-nums .n .v{font-size:22px;font-weight:800;}
+.lab-hit{font-size:14px;margin:10px 0;}
+.lab-hit b{font-size:20px;color:var(--ui-green);}
+.shock-bar{display:flex;gap:8px;margin:12px 0;flex-wrap:wrap;align-items:center;}
+.shock-bar>span{font-size:12px;color:var(--ui-muted);}
+.sbtn{background:var(--ui-panel);color:var(--ui-red);border:1px solid var(--ui-line);padding:6px 14px;border-radius:20px;font-size:12px;cursor:pointer;}
+.sbtn.on{background:var(--ui-panel);border-color:var(--ui-line);color:var(--ui-text);font-weight:600;}
+#shockReset{background:var(--ui-panel);color:var(--ui-muted);border:1px solid var(--ui-line);padding:6px 12px;border-radius:20px;font-size:12px;cursor:pointer;}
+#shockInfo{background:var(--ui-soft);border:1px solid var(--ui-line);border-radius:10px;padding:12px 14px;font-size:12.5px;line-height:1.8;color:var(--ui-text);margin-bottom:12px;display:none;}
+#shockInfo b.t{color:var(--ui-red);}
+#shockInfo .dim{color:var(--ui-muted);}
+</style><link rel="stylesheet" href="assets/boluo-layout.css">
+<link rel="stylesheet" href="assets/boluo-ui.css">
+<script defer src="assets/boluo-system.js"></script>
+</head><body id="boluo-app" class="bl-site bl-ui bl-dark bl-ui--network" data-bl-page="network" data-ui-page="network">
 
 <div class="nav">
   <b>博罗产业风洞</b>
@@ -89,8 +92,8 @@ h1{font-size:22px;margin-bottom:6px}
   <p class="sub">27个节点·6层架构·30条关系。以下数据基于公开报告整理，不做诊断判断。</p>
 
   <div class="health">
-    <b style="color:#4ade80">📊 工业用电（2026年1-8月）</b><br>
-    <span style="color:#cbd5e1">60.04亿度，同比 <b>+11.5%</b> ｜ 规上工业增加值 +8.2%（1-7月）</span>
+    <b style="color:var(--ui-green);">📊 工业用电（2026年1-8月）</b><br>
+    <span style="color:var(--ui-text);">60.04亿度，同比 <b>+11.5%</b> ｜ 规上工业增加值 +8.2%（1-7月）</span>
   </div>
 
   <div class="controls">
@@ -99,7 +102,7 @@ h1{font-size:22px;margin-bottom:6px}
     <button class="fbtn" data-filter="supply">供货链</button>
     <button class="fbtn" data-filter="eco">山水农业</button>
     <button class="fbtn" data-filter="env">环保要素</button>
-    <span style="margin-left:auto;font-size:10px;color:#475569">👆 可以拖动圆点，点击看详情</span>
+    <span style="margin-left:auto;font-size:10px;color:var(--ui-muted);">👆 可以拖动圆点，点击看详情</span>
   </div>
 
   <div class="shock-bar">
@@ -115,138 +118,138 @@ h1{font-size:22px;margin-bottom:6px}
   <div id="chart">
     <div id="tooltip"></div>
   </div>
-  <div style="font-size:11px;color:#64748b;margin:6px 2px;line-height:1.6">
+  <div style="font-size:11px;color:var(--ui-muted);margin:6px 2px;line-height:1.6;">
     <b>供货链</b>：谁给谁供货、厂从哪搬来（蓝线）　｜　<b>山水农业</b>：罗浮山、东江怎么养人养特产（浅蓝线）　｜　<b>环保要素</b>：东江管着谁排污、谁和谁抢地抢电（红线/橙线）
   </div>
 
   <div class="legend">
-    <span><i style="background:#22c55e"></i>链主</span>
-    <span><i style="background:#06b6d4"></i>小巨人</span>
-    <span><i style="background:#64748b"></i>毛细血管</span>
-    <span><i style="background:#f59e0b"></i>老厂群落</span>
-    <span><i style="background:#84cc16"></i>农业康养</span>
-    <span><i style="background:#fbbf24"></i>国家地理标志</span>
-    <span><i style="background:#0ea5e9"></i>生态底座</span>
-    <span><i style="background:#a78bfa"></i>外部</span>
+    <span><i style="background:var(--ui-panel);"></i>链主</span>
+    <span><i style="background:var(--ui-panel);"></i>小巨人</span>
+    <span><i style="background:var(--ui-panel);"></i>毛细血管</span>
+    <span><i style="background:var(--ui-panel);"></i>老厂群落</span>
+    <span><i style="background:var(--ui-panel);"></i>农业康养</span>
+    <span><i style="background:var(--ui-panel);"></i>国家地理标志</span>
+    <span><i style="background:var(--ui-panel);"></i>生态底座</span>
+    <span><i style="background:var(--ui-panel);"></i>外部</span>
     <span>━ 实线：有公开依据</span><span>- - 虚线：合理推算</span><span>· · 点线：暂不确定</span>
   </div>
-  <div class="legend" style="margin-top:6px">
-    <span style="color:#38bdf8">━ 供货关系</span>
-    <span style="color:#ef4444">━ 环保管着</span>
-    <span style="color:#f59e0b">━ 抢地抢电</span>
-    <span style="color:#0ea5e9">━ 山水养人</span>
+  <div class="legend" style="margin-top:6px;">
+    <span style="color:var(--ui-blue);">━ 供货关系</span>
+    <span style="color:var(--ui-red);">━ 环保管着</span>
+    <span style="color:var(--ui-gold);">━ 抢地抢电</span>
+    <span style="color:var(--ui-blue);">━ 山水养人</span>
   </div>
 
-  <div class="stats" style="grid-template-columns:repeat(4,1fr)">
-    <div class="stat"><div class="l">连得最多的</div><div class="v" id="sHub" style="color:#4ade80;font-size:15px">–</div></div>
-    <div class="stat"><div class="l">图有多密</div><div class="v" id="sDensity" style="color:#fbbf24;font-size:15px">–</div></div>
-    <div class="stat"><div class="l">必经之路</div><div class="v" id="sExt" style="color:#a78bfa;font-size:15px">–</div></div>
-    <div class="stat"><div class="l">连接不同圈子的</div><div class="v" id="sHole" style="color:#ef4444;font-size:15px">–</div></div>
+  <div class="stats" style="grid-template-columns:repeat(4,1fr);">
+    <div class="stat"><div class="l">连得最多的</div><div class="v" id="sHub" style="color:var(--ui-green);font-size:15px;">–</div></div>
+    <div class="stat"><div class="l">图有多密</div><div class="v" id="sDensity" style="color:var(--ui-gold);font-size:15px;">–</div></div>
+    <div class="stat"><div class="l">必经之路</div><div class="v" id="sExt" style="color:var(--ui-blue);font-size:15px;">–</div></div>
+    <div class="stat"><div class="l">连接不同圈子的</div><div class="v" id="sHole" style="color:var(--ui-red);font-size:15px;">–</div></div>
   </div>
 
-  <h2 style="margin-top:34px">博罗家底图：有什么、多大、卖给谁、来了多少人</h2>
+  <h2 style="margin-top:34px;">博罗家底图：有什么、多大、卖给谁、来了多少人</h2>
   <p class="sub">中心是博罗，越往外越是"对外"。圆越大＝规模越大。数字均来自2025统计公报、政府工作报告、统计局月报。</p>
-  <div id="solarchart" style="position:relative">
-    <button id="solarToggle" style="position:absolute;top:8px;right:8px;z-index:8;background:rgba(21,128,61,.85);border:1px solid #22c55e;color:#fff;font-size:12px;border-radius:8px;padding:6px 12px;cursor:pointer">⏸ 暂停运转</button>
-    <div id="solarTip" style="position:absolute;display:none;background:rgba(13,20,33,.96);border:1px solid #334155;border-radius:10px;padding:10px 12px;font-size:11.5px;color:#cbd5e1;max-width:250px;z-index:9;line-height:1.6;box-shadow:0 8px 30px rgba(0,0,0,.5)"></div>
+  <div id="solarchart" style="position:relative;">
+    <button id="solarToggle" style="position:absolute;top:8px;right:8px;z-index:8;background:var(--ui-panel);border:1px solid var(--ui-line);color:var(--ui-text);font-size:12px;border-radius:8px;padding:6px 12px;cursor:pointer;">⏸ 暂停运转</button>
+    <div id="solarTip" style="position:absolute;display:none;background:var(--ui-panel);border:1px solid var(--ui-line);border-radius:10px;padding:10px 12px;font-size:11.5px;color:var(--ui-text);max-width:250px;z-index:9;line-height:1.6;box-shadow:none;"></div>
   </div>
-  <p class="sub" style="margin-top:2px">行星沿轨道缓慢公转（内圈快、外圈慢），像真实产业系统在运转；点任意节点会停住看详情，右上角可暂停。</p>
-  <div class="legend" style="margin-top:6px">
-    <span><i style="background:#fbbf24"></i>博罗（中心）</span>
-    <span><i style="background:#22c55e"></i>六大产业（大小=产值）</span>
-    <span><i style="background:#06b6d4"></i>手里的家底</span>
-    <span><i style="background:#a78bfa"></i>卖到哪·谁来</span>
+  <p class="sub" style="margin-top:2px;">行星沿轨道缓慢公转（内圈快、外圈慢），像真实产业系统在运转；点任意节点会停住看详情，右上角可暂停。</p>
+  <div class="legend" style="margin-top:6px;">
+    <span><i style="background:var(--ui-panel);"></i>博罗（中心）</span>
+    <span><i style="background:var(--ui-panel);"></i>六大产业（大小=产值）</span>
+    <span><i style="background:var(--ui-panel);"></i>手里的家底</span>
+    <span><i style="background:var(--ui-panel);"></i>卖到哪·谁来</span>
   </div>
 
-  <h2 style="margin-top:34px">三年怎么长过来的（2023→2025）</h2>
+  <h2 style="margin-top:34px;">三年怎么长过来的（2023→2025）</h2>
   <p class="sub">四条横条按各自最大值归一化，只比三年自己的变化。数字来自2023-2025年统计公报、科工信局总结。</p>
   <div class="evo-grid">
     <div class="evo-card">
       <div class="evo-title">GDP（亿元）<span class="evo-up">两年 +19.9%</span></div>
-      <div class="bar-row"><span class="yr">2023</span><div class="bar"><i style="width:83.4%"></i></div><b>838.9</b></div>
-      <div class="bar-row"><span class="yr">2024</span><div class="bar"><i style="width:94.7%"></i></div><b>952.2</b></div>
-      <div class="bar-row hi"><span class="yr">2025</span><div class="bar"><i style="width:100%"></i></div><b>1005.5</b></div>
+      <div class="bar-row"><span class="yr">2023</span><div class="bar"><i style="width:83.4%;"></i></div><b>838.9</b></div>
+      <div class="bar-row"><span class="yr">2024</span><div class="bar"><i style="width:94.7%;"></i></div><b>952.2</b></div>
+      <div class="bar-row hi"><span class="yr">2025</span><div class="bar"><i style="width:100%;"></i></div><b>1005.5</b></div>
       <div class="evo-note">2025年迈过千亿，成广东首个千亿县</div>
     </div>
     <div class="evo-card">
       <div class="evo-title">接待游客（万人次）<span class="evo-up">+18.0%</span></div>
-      <div class="bar-row"><span class="yr">2023</span><div class="bar"><i style="width:84.8%"></i></div><b>871.3</b></div>
-      <div class="bar-row"><span class="yr">2024</span><div class="bar"><i style="width:89.5%"></i></div><b>920.5</b></div>
-      <div class="bar-row hi"><span class="yr">2025</span><div class="bar"><i style="width:100%"></i></div><b>1028.1</b></div>
+      <div class="bar-row"><span class="yr">2023</span><div class="bar"><i style="width:84.8%;"></i></div><b>871.3</b></div>
+      <div class="bar-row"><span class="yr">2024</span><div class="bar"><i style="width:89.5%;"></i></div><b>920.5</b></div>
+      <div class="bar-row hi"><span class="yr">2025</span><div class="bar"><i style="width:100%;"></i></div><b>1028.1</b></div>
       <div class="evo-note">2025年首破千万人次</div>
     </div>
     <div class="evo-card">
       <div class="evo-title">旅游综合收入（亿元）<span class="evo-up">+25.0%</span></div>
-      <div class="bar-row"><span class="yr">2023</span><div class="bar"><i style="width:80%"></i></div><b>41.5</b></div>
-      <div class="bar-row"><span class="yr">2024</span><div class="bar"><i style="width:84%"></i></div><b>43.6</b></div>
-      <div class="bar-row hi"><span class="yr">2025</span><div class="bar"><i style="width:100%"></i></div><b>51.9</b></div>
+      <div class="bar-row"><span class="yr">2023</span><div class="bar"><i style="width:80%;"></i></div><b>41.5</b></div>
+      <div class="bar-row"><span class="yr">2024</span><div class="bar"><i style="width:84%;"></i></div><b>43.6</b></div>
+      <div class="bar-row hi"><span class="yr">2025</span><div class="bar"><i style="width:100%;"></i></div><b>51.9</b></div>
       <div class="evo-note">人均消费逐年走高</div>
     </div>
     <div class="evo-card">
       <div class="evo-title">外贸进出口（亿元）<span class="evo-up">+35.8%</span></div>
-      <div class="bar-row"><span class="yr">2023</span><div class="bar"><i style="width:73.6%"></i></div><b>294.5</b></div>
-      <div class="bar-row"><span class="yr">2024</span><div class="bar"><i style="width:79.3%"></i></div><b>约317</b></div>
-      <div class="bar-row hi"><span class="yr">2025</span><div class="bar"><i style="width:100%"></i></div><b>超400</b></div>
+      <div class="bar-row"><span class="yr">2023</span><div class="bar"><i style="width:73.6%;"></i></div><b>294.5</b></div>
+      <div class="bar-row"><span class="yr">2024</span><div class="bar"><i style="width:79.3%;"></i></div><b>约317</b></div>
+      <div class="bar-row hi"><span class="yr">2025</span><div class="bar"><i style="width:100%;"></i></div><b>超400</b></div>
       <div class="evo-note">2025年 +26.1%，增幅全市第二；2024年值由增速反推</div>
     </div>
   </div>
-  <div class="algo-note" style="margin-top:10px">
+  <div class="algo-note" style="margin-top:10px;">
     另外两组只给方向性变化、不做条图：2025年规上工业总产值突破<b>2000亿</b>、增加值+8.7%；规上工业企业从2024年1035家（民营）增至2025年1407家。高新技术企业由2024年末710家变为2025年末686家，存量有所下降，如实列出。
   </div>
 
   <div class="brief">
-    <b style="color:#a78bfa">周边城市连线的真实数据依据</b><br>
-    <div style="font-size:12px;color:#cbd5e1;line-height:1.9;margin-top:8px">
-      <b style="color:#a78bfa">东莞（最粗）</b>：石湾南隔东江与东莞石龙相望，是承接东莞外溢的第一线。模具企业天倬科技从东莞50亩扩到石湾150亩，制造效率提升20-30%；台铃、小刀等电动车厂从东莞方向落户石湾；园洲镇"十四五"承接优质项目84宗、达产年产值625亿元，以电子信息为主。<br><br>
-      <b style="color:#a78bfa">深圳（粗）</b>：欣旺达总部在深圳、锂威生产基地在园洲；"深博福田产业园"建在园洲，采用"福田总部+博罗生产基地"，已落户25宗项目、总投资约54亿元、投产后总产值超100亿元，含奇瑞系嘉奇新能源。<br><br>
-      <b style="color:#a78bfa">广州（中等）</b>：石湾地处广州、惠州、东莞三市交界，西北毗邻增城三江，承接部分外溢；罗浮山国药与广东省中医院合作红脚艾（合作规模未公开）。<br><br>
-      <b style="color:#a78bfa">惠城（中等）</b>：惠州市主城区，博罗为下辖县，行政关系明确；罗浮山游客的一部分从惠城方向来（客流量未公开）。
+    <b style="color:var(--ui-blue);">周边城市连线的真实数据依据</b><br>
+    <div style="font-size:12px;color:var(--ui-text);line-height:1.9;margin-top:8px;">
+      <b style="color:var(--ui-blue);">东莞（最粗）</b>：石湾南隔东江与东莞石龙相望，是承接东莞外溢的第一线。模具企业天倬科技从东莞50亩扩到石湾150亩，制造效率提升20-30%；台铃、小刀等电动车厂从东莞方向落户石湾；园洲镇"十四五"承接优质项目84宗、达产年产值625亿元，以电子信息为主。<br><br>
+      <b style="color:var(--ui-blue);">深圳（粗）</b>：欣旺达总部在深圳、锂威生产基地在园洲；"深博福田产业园"建在园洲，采用"福田总部+博罗生产基地"，已落户25宗项目、总投资约54亿元、投产后总产值超100亿元，含奇瑞系嘉奇新能源。<br><br>
+      <b style="color:var(--ui-blue);">广州（中等）</b>：石湾地处广州、惠州、东莞三市交界，西北毗邻增城三江，承接部分外溢；罗浮山国药与广东省中医院合作红脚艾（合作规模未公开）。<br><br>
+      <b style="color:var(--ui-blue);">惠城（中等）</b>：惠州市主城区，博罗为下辖县，行政关系明确；罗浮山游客的一部分从惠城方向来（客流量未公开）。
     </div>
   </div>
 
   <div class="brief">
-    <b style="color:#cbd5e1">线是怎么画的</b><br>
-    <div style="font-size:12px;color:#cbd5e1;line-height:1.9;margin-top:8px">
-      <b style="color:#4ade80">什么情况下连一条线：</b><br>
+    <b style="color:var(--ui-text);">线是怎么画的</b><br>
+    <div style="font-size:12px;color:var(--ui-text);line-height:1.9;margin-top:8px;">
+      <b style="color:var(--ui-green);">什么情况下连一条线：</b><br>
       两个主体之间有公开证据证明存在直接关系——供货、搬迁、取水、排污限制、行政隶属、游客往来。只有"都在博罗"不算。<br><br>
-      <b style="color:#f87171">什么情况下不连：</b><br>
+      <b style="color:var(--ui-red);">什么情况下不连：</b><br>
       没有任何公开证据、也没有行业常识能支撑的直接关系，不连。比如观音阁黑糖和欣旺达之间没有线——它们之间没有关系。<br><br>
-      <b style="color:#38bdf8">线粗代表什么：</b><br>
+      <b style="color:var(--ui-blue);">线粗代表什么：</b><br>
       <b>最粗（4-5）</b>：有明确的大量企业搬迁、投资或实物量。比如东莞→石湾模具（整个厂从东莞迁来）、东江→百岁山（374万吨取水）。<br>
       <b>中等（2-3）</b>：有明确关系或订单，但规模有限。比如模具厂→电动车厂（供货关系存在）。<br>
       <b>最细（1）</b>：有关系但规模很小，或只是同镇/同区域。<br><br>
-      <b style="color:#cbd5e1">实线、虚线、点线代表什么：</b><br>
+      <b style="color:var(--ui-text);">实线、虚线、点线代表什么：</b><br>
       <b>实线</b>：政府工作报告、统计局月报、工商注册等官方文件里直接写明的。<br>
       <b>虚线</b>：官方没有直接写，但根据行业常识（电镀是电子厂必经工序、铜杆是电池材料）推算的。<br>
       <b>点线</b>：有新闻报道提到合作，但合作规模和持续性不确定。<br><br>
-      <b style="color:#ef4444">红线</b>＝环保管着（东江限制排污）；<b style="color:#f59e0b">橙线</b>＝抢地抢电（大厂和老厂竞争资源）；<b style="color:#0ea5e9">浅蓝线</b>＝山水养人（罗浮山带动文旅农业）；<b style="color:#38bdf8">蓝线</b>＝供货关系。
+      <b style="color:var(--ui-red);">红线</b>＝环保管着（东江限制排污）；<b style="color:var(--ui-gold);">橙线</b>＝抢地抢电（大厂和老厂竞争资源）；<b style="color:var(--ui-blue);">浅蓝线</b>＝山水养人（罗浮山带动文旅农业）；<b style="color:var(--ui-blue);">蓝线</b>＝供货关系。
     </div>
   </div>
 
   <div class="brief">
-    <b style="color:#cbd5e1">图上每种颜色代表什么</b><br>
-    <table style="width:100%;border-collapse:collapse;font-size:12px;margin-top:8px;line-height:1.8">
-      <tr><td style="color:#0ea5e9;padding:2px 6px;white-space:nowrap">● 山和水</td><td style="color:#cbd5e1">东江、罗浮山。博罗所有工厂能做什么、不能做什么，都受这山这水管着。</td></tr>
-      <tr><td style="color:#22c55e;padding:2px 6px;white-space:nowrap">● 大厂</td><td style="color:#cbd5e1">欣旺达、华通、正威、嘉奇、江丰。政府报告里点名的、产值最大的几家，一个厂一个圈。</td></tr>
-      <tr><td style="color:#06b6d4;padding:2px 6px;white-space:nowrap">● 技术好的中小厂</td><td style="color:#cbd5e1">国家评了11家、省评了74家"专精特新"。家数太多画不下，打包成两个圈。</td></tr>
-      <tr><td style="color:#64748b;padding:2px 6px;white-space:nowrap">● 给大厂做配套的</td><td style="color:#cbd5e1">石湾做模具的、福田做电镀的、做电动车零件的。大厂要靠它们供货，打包成群落。</td></tr>
-      <tr><td style="color:#f59e0b;padding:2px 6px;white-space:nowrap">● 老厂</td><td style="color:#cbd5e1">龙溪、园洲一带开了很多年的五金厂、塑料厂、建材厂。用电大头，但占地多、交税少的要被改造。</td></tr>
-      <tr><td style="color:#84cc16;padding:2px 6px;white-space:nowrap">● 吃的和药</td><td style="color:#cbd5e1">百岁山矿泉水、罗浮山药厂、石坝三黄鸡。不是地理标志，但也是博罗的名片。</td></tr>
-      <tr><td style="color:#fbbf24;padding:2px 6px;white-space:nowrap">● 国家发了证的特产</td><td style="color:#cbd5e1">山茶、菜心、花生、黑糖、大米、荔枝。国家质检总局认定只有博罗这块地才能叫这个名字。</td></tr>
-      <tr><td style="color:#a78bfa;padding:2px 6px;white-space:nowrap">● 周边城市</td><td style="color:#cbd5e1">东莞、深圳、广州、惠城。博罗的工厂、项目、客人很多从这些地方来。</td></tr>
+    <b style="color:var(--ui-text);">图上每种颜色代表什么</b><br>
+    <table style="width:100%;border-collapse:collapse;font-size:12px;margin-top:8px;line-height:1.8;">
+      <tr><td style="color:var(--ui-blue);padding:2px 6px;white-space:nowrap;">● 山和水</td><td style="color:var(--ui-text);">东江、罗浮山。博罗所有工厂能做什么、不能做什么，都受这山这水管着。</td></tr>
+      <tr><td style="color:var(--ui-green);padding:2px 6px;white-space:nowrap;">● 大厂</td><td style="color:var(--ui-text);">欣旺达、华通、正威、嘉奇、江丰。政府报告里点名的、产值最大的几家，一个厂一个圈。</td></tr>
+      <tr><td style="color:var(--ui-blue);padding:2px 6px;white-space:nowrap;">● 技术好的中小厂</td><td style="color:var(--ui-text);">国家评了11家、省评了74家"专精特新"。家数太多画不下，打包成两个圈。</td></tr>
+      <tr><td style="color:var(--ui-muted);padding:2px 6px;white-space:nowrap;">● 给大厂做配套的</td><td style="color:var(--ui-text);">石湾做模具的、福田做电镀的、做电动车零件的。大厂要靠它们供货，打包成群落。</td></tr>
+      <tr><td style="color:var(--ui-gold);padding:2px 6px;white-space:nowrap;">● 老厂</td><td style="color:var(--ui-text);">龙溪、园洲一带开了很多年的五金厂、塑料厂、建材厂。用电大头，但占地多、交税少的要被改造。</td></tr>
+      <tr><td style="color:var(--ui-green);padding:2px 6px;white-space:nowrap;">● 吃的和药</td><td style="color:var(--ui-text);">百岁山矿泉水、罗浮山药厂、石坝三黄鸡。不是地理标志，但也是博罗的名片。</td></tr>
+      <tr><td style="color:var(--ui-gold);padding:2px 6px;white-space:nowrap;">● 国家发了证的特产</td><td style="color:var(--ui-text);">山茶、菜心、花生、黑糖、大米、荔枝。国家质检总局认定只有博罗这块地才能叫这个名字。</td></tr>
+      <tr><td style="color:var(--ui-blue);padding:2px 6px;white-space:nowrap;">● 周边城市</td><td style="color:var(--ui-text);">东莞、深圳、广州、惠城。博罗的工厂、项目、客人很多从这些地方来。</td></tr>
     </table>
   </div>
 
   <div class="brief">
-    <b style="color:#a78bfa">📐 招商基准与物流摩擦</b><br>
+    <b style="color:var(--ui-blue);">📐 招商基准与物流摩擦</b><br>
     准入门槛：投资强度≥450-600万/亩，亩均税收≥35-50万/亩 ｜ 博罗→东莞90km/货运2.6h ｜ 博罗→深圳87km/公路8-12h ｜ 专精特新：11家国家级+74家省级
   </div>
 
   <div class="algo-note">
-    <b style="color:#cbd5e1">数据分级与系统边界声明</b><br>
-    <span style="color:#4ade80">🟢 公开硬数据</span>：2026政府工作报告、统计局月报（工业用电60.04亿度+11.5%）、工信部小巨人名录（11家国家级+74家省级）、工商注册地——绝对事实。<br>
-    <span style="color:#fbbf24">🟡 算法推估关系</span>：产业链配套连边基于GB/T行业代码与省级投入产出表概率拟合，为合理假设。<br>
-    <span style="color:#f87171">🔴 内网待接入变量</span>：链主本地配套率%、各镇剩余工业用地亩数、企业真实亩均税收——需授权工信局/税务局/自然资源局网关。<br>
+    <b style="color:var(--ui-text);">数据分级与系统边界声明</b><br>
+    <span style="color:var(--ui-green);">🟢 公开硬数据</span>：2026政府工作报告、统计局月报（工业用电60.04亿度+11.5%）、工信部小巨人名录（11家国家级+74家省级）、工商注册地——绝对事实。<br>
+    <span style="color:var(--ui-gold);">🟡 算法推估关系</span>：产业链配套连边基于GB/T行业代码与省级投入产出表概率拟合，为合理假设。<br>
+    <span style="color:var(--ui-red);">🔴 内网待接入变量</span>：链主本地配套率%、各镇剩余工业用地亩数、企业真实亩均税收——需授权工信局/税务局/自然资源局网关。<br>
     当前为公开数据PoC演示版，不触碰企业敏感财务数据。内网数据接入后可升级为高精度决策版。
   </div>
 
@@ -793,5 +796,4 @@ document.querySelectorAll(".fbtn").forEach(btn=>{
   requestAnimationFrame(frame);
 })();
 </script>
-<script defer src="assets/boluo-unified-nav.js"></script>
 </body></html>

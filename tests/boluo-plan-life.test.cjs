@@ -33,7 +33,7 @@ test('six pages include shared design and a native, accessible next-step progres
  const pages=['index-legacy-2026-11-03.html','town.html','industry-changes.html','who.html','relation-compare.html','plan-with-me.html'];
  for(const page of pages){
   const html=read(page);
-  assert.match(html,/assets\/boluo-mh-six.css/,page);
+  assert.match(html,/assets\/boluo-ui.css/,page);
   assert.match(html,/class="[^"]*mh-six/,page);
   assert.match(html,/data-bl-journey=/,page);
  }
@@ -43,16 +43,17 @@ test('six pages include shared design and a native, accessible next-step progres
  assert.match(j,/nextAnchor\.href="choices\.html"/);
  assert.match(j,/dest="plan-with-me\.html\?from=comparison"/);
 });
-test('single shared style forbids cosmetic sci-fi effects but keeps readable graph semantics',()=>{
- const css=read('assets/boluo-mh-six.css');
- assert.match(css,/#f5f5f7/);
- assert.match(css,/#ffffff/);
- assert.match(css,/box-shadow:var\(--mh-shadow\)/);
- assert.match(css,/body\.mh-six\[data-bl-journey="changes"\] #ec-graph/);
- assert.match(css,/body\.mh-six\[data-bl-journey="comparison"\] #bc-after/);
- assert.doesNotMatch(css,/(?:linear|radial)-gradient\s*\(/);
- assert.doesNotMatch(css,/drop-shadow\(/);
- assert.doesNotMatch(css,/backdrop-filter\s*:/);
- const plan=read('assets/boluo-plan-life.css');
- assert.doesNotMatch(plan,/(?:linear|radial)-gradient\s*\(/);
+test('single visual system keeps contrast, graph semantics and reduced motion',()=>{
+ const css=read('assets/boluo-ui.css');
+ assert.match(css, /--ui-bg:#0e1420/);
+ assert.match(css, /--ui-text:#eef2fb/);
+ assert.match(css, /--ui-blue:#5ac8fa/);
+ assert.match(css, /prefers-reduced-motion:reduce/);
+ assert.match(css, /focus-visible/);
+ assert.match(css, /ec-graph-label/);
+ assert.doesNotMatch(css, /drop-shadow\(/);
+ for(const p of ['future-lab.html','future.html','report.html','experiments/holo-single/index.html','tea/index.html']){
+  assert.match(read(p), /assets\/boluo-system.js/);
+  assert.match(read(p), /assets\/boluo-ui.css/);
+ }
 });

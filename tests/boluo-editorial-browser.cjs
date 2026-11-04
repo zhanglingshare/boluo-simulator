@@ -20,13 +20,15 @@ async function run(){
     const page=await browser.newPage({viewport,deviceScaleFactor:1,isMobile:viewport.width<500,hasTouch:viewport.width<500});
     const errors=[];page.on('pageerror',e=>errors.push(e.message));
     await page.goto(BASE+entry.file,{waitUntil:'domcontentloaded',timeout:30000});
+  await page.locator('.bl-header').waitFor();
+  if(await page.locator('.bp-full-disclosure').count())await page.locator('.bp-full-disclosure > summary').click();
     await page.locator(entry.selector).first().waitFor({timeout:16000});
     const count=await page.locator(entry.selector).count();
     assert.ok(count>=entry.min,entry.code+': too few entries: '+count);
     const bg=await page.evaluate(()=>getComputedStyle(document.body).backgroundColor);
     const w=await page.evaluate(()=>document.documentElement.scrollWidth-window.innerWidth);
     assert.ok(w<=5,entry.code+': horizontal overflow '+w+'px at '+viewport.width);
-    assert.ok(/rgb\(24[0-9],|rgb\(25[0-5],/.test(bg),entry.code+': page lacks light editorial background '+bg);
+    assert.equal(bg,'rgb(14, 20, 32)',entry.code+': shared observatory background');
     assert.equal(await page.locator('#bl-journey-bar').count(),1,entry.code+' missing shared nav');
     if(entry.code==='01'){
      assert.equal(await page.locator('#baseHit').count(),0);

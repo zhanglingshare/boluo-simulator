@@ -8,6 +8,8 @@ const root=path.resolve(__dirname,'..','artifacts');
 fs.mkdirSync(root,{recursive:true});
 async function load(page,pathAndQuery){
  await page.goto(BASE+pathAndQuery,{waitUntil:'domcontentloaded',timeout:25000});
+  await page.locator('.bl-header').waitFor();
+  if(await page.locator('.bp-full-disclosure').count())await page.locator('.bp-full-disclosure > summary').click();
  await page.waitForFunction(()=>document.querySelector('#bc-event-id')?.textContent==='C004',{timeout:12000});
 }
 async function run(){
@@ -67,6 +69,8 @@ async function run(){
   const baseline=await browser.newPage({viewport:{width:1300,height:860}});
   baseline.on('pageerror',e=>pageErrors.push('baseline '+e.message));
   await baseline.goto(BASE+'who.html?from=changes&change=C004',{waitUntil:'domcontentloaded'});
+  await baseline.locator('.bl-header').waitFor();
+  if(await baseline.locator('.bp-full-disclosure').count())await baseline.locator('.bp-full-disclosure > summary').click();
   const href=await baseline.locator('#bl-journey-next').getAttribute('href');
   assert.ok(href.includes('relation-compare.html?from=basic&change=C004'),'04必须带着C004进入05');
   const direct=await baseline.locator('#bl-compare-next').getAttribute('href');

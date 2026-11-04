@@ -10,7 +10,7 @@ test('03 event observatory present, external script parses and 05 remains indepe
  const html=read('industry-changes.html'),js=read('assets/boluo-industry-changes.js');
  assert.match(html,/data-bl-journey="changes"/);
  assert.match(html,/assets\/boluo-journey\.js/);
- assert.match(html,/assets\/boluo-editorial\.css/);
+ assert.match(html,/assets\/boluo-ui\.css/);
  assert.match(html,/assets\/boluo-compare-model\.js/);
  assert.match(html,/assets\/boluo-industry-changes\.js/);
  assert.match(html,/id="ec-graph"/);

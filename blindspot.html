@@ -3,42 +3,58 @@
 <title>博罗产业风洞 · 忽略了什么</title>
 <script src="lib/echarts.min.js"></script>
 <style>
-*{box-sizing:border-box}
-body{margin:0;background:#080b12;color:#e6edf3;font:14px/1.6 -apple-system,"PingFang SC","Microsoft YaHei",sans-serif}
-.nav{position:sticky;top:0;z-index:50;display:flex;gap:5px;align-items:center;padding:9px 14px;background:rgba(8,11,18,.95);border-bottom:1px solid #1b2434;overflow-x:auto}
-.nav b{font-size:14px;margin-right:6px;flex:none}
-.nav a{background:#131c2b;color:#93a4bd;border:1px solid #22304a;padding:6px 12px;border-radius:20px;font-size:12.5px;text-decoration:none;white-space:nowrap;flex:none}
-.nav a.on{background:#15803d;border-color:#22c55e;color:#fff;font-weight:600}
-.wrap{max-width:920px;margin:auto;padding:16px}
-h1{font-size:20px;margin:0 0 2px}
-.sub{color:#8fa3bf;font-size:13px;margin:0 0 16px}
-.insight{background:#0e1523;border:1px solid #1c2739;border-radius:12px;padding:20px;margin-bottom:14px;border-left:3px solid #a78bfa}
-.insight .num{font-size:11px;color:#a78bfa;font-weight:700;letter-spacing:2px}
-.insight .t{font-size:16.5px;font-weight:700;margin:7px 0 9px}
-.insight .d{font-size:13px;color:#a9b6c9;line-height:1.95}
-.chart{width:100%;height:250px;margin:12px 0}
-.deep{background:#0a0f1a;border-radius:9px;padding:13px 15px;margin-top:11px;font-size:12.5px;line-height:1.95}
-.deep .lab{display:block;font-size:10.5px;font-weight:800;letter-spacing:1px;margin-bottom:5px}
-.deep.green{border-left:3px solid #22c55e}
-.deep.green .lab{color:#4ade80}
-.deep.amber{border-left:3px solid #fbbf24}
-.deep.amber .lab{color:#fbbf24}
-.deep.body{color:#c8d3e0}
-.deep b{color:#fbbf24}
-.next{text-align:center;margin-top:18px}
-.next a{background:#15803d;color:#fff;padding:10px 24px;border-radius:8px;text-decoration:none;font-weight:600;display:inline-block}
-.summary{background:linear-gradient(160deg,#0c1a2e,#0e1523);border:1px solid #1e3a5f;border-radius:14px;padding:26px;text-align:center;margin-bottom:14px}
-.summary .big{font-size:16px;line-height:2.2;color:#e6edf3}
-.summary .big b{color:#4ade80}
-@media(min-width:1024px){.wrap{max-width:1200px!important;padding:24px}}</style><link rel="stylesheet" href="assets/boluo-ui.css">
-<link rel="stylesheet" href="assets/boluo-tail-bridge.css">
-<link rel="stylesheet" href="assets/boluo-unified-nav.css">
-</head><body class="bl-ui bl-dark bl-tail bl-ui--blindspot" data-bl-page="blindspot">
+*{box-sizing:border-box;}
+body{margin:0;background:var(--ui-panel);color:var(--ui-text);font:14px/1.6 -apple-system,"PingFang SC","Microsoft YaHei",sans-serif;}
+.nav{position:sticky;top:0;z-index:50;display:flex;gap:5px;align-items:center;padding:9px 14px;background:var(--ui-panel);border-bottom:1px solid var(--ui-line);overflow-x:auto;}
+.nav b{font-size:14px;margin-right:6px;flex:none;}
+.nav a{background:var(--ui-panel);color:var(--ui-muted);border:1px solid var(--ui-line);padding:6px 12px;border-radius:20px;font-size:12.5px;text-decoration:none;white-space:nowrap;flex:none;}
+.nav a.on{background:var(--ui-panel);border-color:var(--ui-line);color:var(--ui-text);font-weight:600;}
+.wrap{max-width:920px;margin:auto;padding:16px;}
+h1{font-size:20px;margin:0 0 2px;}
+.sub{color:var(--ui-muted);font-size:13px;margin:0 0 16px;}
+.insight{background:var(--ui-panel);border:1px solid var(--ui-line);border-radius:12px;padding:20px;margin-bottom:14px;border-left:3px solid var(--ui-line);}
+.insight .num{font-size:11px;color:var(--ui-blue);font-weight:700;letter-spacing:2px;}
+.insight .t{font-size:16.5px;font-weight:700;margin:7px 0 9px;}
+.insight .d{font-size:13px;color:var(--ui-muted);line-height:1.95;}
+.chart{width:100%;height:250px;margin:12px 0;}
+.deep{background:var(--ui-panel);border-radius:9px;padding:13px 15px;margin-top:11px;font-size:12.5px;line-height:1.95;}
+.deep .lab{display:block;font-size:10.5px;font-weight:800;letter-spacing:1px;margin-bottom:5px;}
+.deep.green{border-left:3px solid var(--ui-line);}
+.deep.green .lab{color:var(--ui-green);}
+.deep.amber{border-left:3px solid var(--ui-line);}
+.deep.amber .lab{color:var(--ui-gold);}
+.deep.body{color:var(--ui-text);}
+.deep b{color:var(--ui-gold);}
+.next{text-align:center;margin-top:18px;}
+.next a{background:var(--ui-panel);color:var(--ui-text);padding:10px 24px;border-radius:8px;text-decoration:none;font-weight:600;display:inline-block;}
+.summary{background:var(--ui-panel);border:1px solid var(--ui-line);border-radius:14px;padding:26px;text-align:center;margin-bottom:14px;}
+.summary .big{font-size:16px;line-height:2.2;color:var(--ui-text);}
+.summary .big b{color:var(--ui-green);}
+@media (min-width:1024px){
+.wrap{max-width:1200px!important;padding:24px;}
+}
+</style><link rel="stylesheet" href="assets/boluo-layout.css">
+<link rel="stylesheet" href="assets/boluo-ui.css">
+<script defer src="assets/boluo-system.js"></script>
+</head><body id="boluo-app" class="bl-site bl-ui bl-dark bl-ui--blindspot" data-bl-page="blindspot" data-ui-page="blindspot">
 
-<div class="nav"><b>博罗 · 变化世界</b><a href="index-legacy-2026-11-03.html">01 今日博罗</a><a href="town.html">02 各镇</a><a href="industry-changes.html">03 产业变化</a><a href="who.html">04 基本面</a><a href="network.html">结构生长</a><a href="experiments/holo-single/index.html">关系世界</a><a href="future-lab.html">三维实验室</a><a href="relation-compare.html">05 关系前后</a><a href="plan-with-me.html">06 规划与你</a><a href="windtunnel.html">07 风洞测试</a><a href="blindspot.html" class="on" aria-current="page">08 可能忽略</a><a href="report.html">09 报告</a><a href="ending.html">10 结语</a></div>
+<div class="nav">
+  <b>博罗产业风洞</b>
+  <a href="index.html">今日博罗</a>
+  <a href="holo-home-v9.html">⚡ 变化现场</a>
+  <a href="experiments/holo-single/index.html">◉ 关系世界</a>
+  <a href="town.html">🏘️ 各镇吃喝玩乐</a>
+  <a href="network.html">② 产业网络</a>
+  <a href="who.html">③ 基本面</a>
+  <a href="choices.html">④ 五条路</a>
+  <a href="future.html">⑤ 未来</a>
+  <a href="windtunnel.html">⑥ 风洞测试</a>
+  <a href="blindspot.html" class="on">⑦ 忽略了什么</a>
+  <a href="report.html">⑧ 分析报告</a>
+  <a href="ending.html">⑨ 结语</a>
+</div>
 
 <div class="wrap">
-<section class="bl-tail-hero"><div><div class="bl-tail-overline">博罗 · 真实世界观察 / 08 可能忽略了什么</div><h1>最该留意的，<em>不一定跌得最凶。</em></h1><p>五个结构线索。先看关键反差和图表，想追问时再展开解释。</p><div class="bl-tail-quicklinks"><a href="#ch5">看工业与投资反差</a><a href="who.html">查看基本面</a></div></div><aside><span class="bl-tail-stat-label">本章重点</span><div class="bl-tail-stat">5<em>项发现</em></div><div class="bl-tail-stat-note">值得追问的线索，不是因果定论。</div></aside></section>
   <h1>我们可能忽略了什么</h1>
   <p class="sub">不是"博罗哪里不对"。是"博罗手上有什么牌，可能还没被充分看见"。</p>
 
@@ -47,9 +63,9 @@ h1{font-size:20px;margin:0 0 2px}
     <div class="t">博罗最大的底牌，不是千亿GDP，是它在大湾区里的"坐标"</div>
     <div class="d">广东首个千亿县是跑出来的结果。比这个结果更值钱的是它脚下的位置：西边园洲石湾贴着东莞，赣深高铁半小时到深圳，罗浮山每年上千万广深游客。</div>
     <div id="ch1" class="chart"></div>
-    <details class="bl-tail-evidence"><summary>为什么这项发现值得关注？</summary><div class="bl-tail-evidence-body"><div class="deep green"><span class="lab">为什么这张牌容易被忽略</span>
+    <div class="deep green"><span class="lab">为什么这张牌容易被忽略</span>
       <div class="body">大家评价一个县，习惯先看GDP排名、看有多少大项目。但"到东莞20分钟、到深圳30分钟"这种区位，不会出现在任何排名表里，它是<b>地图上才看得见的资产</b>。广东能同时挨着两个万亿级城市、还通高铁的县，屈指可数。这个位置不是博罗挣来的，是地理给的——但能不能用好，取决于博罗自己。</div>
-    </div></div></details>
+    </div>
   </div>
 
   <div class="insight">
@@ -57,9 +73,9 @@ h1{font-size:20px;margin:0 0 2px}
     <div class="t">罗浮山1028万游客，人均只留下约500块</div>
     <div class="d">游客数已经很可观，超过很多5A景区。其中不少人当天来回，住宿和夜间消费还有很大提升空间——假期过夜游客已在较快增长，是个好信号。</div>
     <div id="ch2" class="chart"></div>
-    <details class="bl-tail-evidence"><summary>为什么这项发现值得关注？</summary><div class="bl-tail-evidence-body"><div class="deep amber"><span class="lab">这笔账被低估在哪</span>
+    <div class="deep amber"><span class="lab">这笔账被低估在哪</span>
       <div class="body">按现在人均约500元算，旅游收入52亿。<b>同样是这1028万人，如果人均提到800元，收入就到82亿；如果有一成游客多住一晚，住宿餐饮还得另算</b>。也就是说，增长不一定靠"多拉游客"，把现有的人留住半天、多消费一笔，杠杆比想象中大。这正是"过夜经济"被反复强调的原因——它撬动的是已经进门的人。</div>
-    </div></div></details>
+    </div>
   </div>
 
   <div class="insight">
@@ -67,9 +83,9 @@ h1{font-size:20px;margin:0 0 2px}
     <div class="t">一产107亿：博罗藏在工业背后的战略底盘</div>
     <div class="d">2025年一产增速7.8%，比二产、三产都快。柏塘山茶是广东十大名茶，福田菜心是国家地理标志，罗浮山还有南药。</div>
     <div id="ch3" class="chart"></div>
-    <details class="bl-tail-evidence"><summary>为什么这项发现值得关注？</summary><div class="bl-tail-evidence-body"><div class="deep green"><span class="lab">为什么农业是博罗的战略底牌</span>
+    <div class="deep green"><span class="lab">为什么农业是博罗的战略底牌</span>
       <div class="body">农业从来不是"落后的尾巴"，而是国家战略的基石。粮食安全、菜篮子、乡村振兴、共同富裕，都落在这<b>107亿</b>上，连着博罗近<b>49万农村人口</b>的生计。一产占比10.7%，却跑出7.8%的最快增速，柏塘山茶、福田菜心、罗浮山南药既是农产品，也是国家地理标志和区域公用品牌——<b>它连着生态、文旅和几十万农户，是博罗不能丢、也不该丢的底盘</b>。把山茶、菜心卖出品牌溢价，是让农业强起来、农民富起来，也是为大湾区守住一份可靠的供给。</div>
-    </div></div></details>
+    </div>
   </div>
 
   <div class="insight">
@@ -77,9 +93,9 @@ h1{font-size:20px;margin:0 0 2px}
     <div class="t">博罗不需要成为第二个惠城，也不需要成为第二个东莞</div>
     <div class="d">惠城三产近七成是中心城区，东莞是世界级制造基地。博罗三产约35%、二产约55%，还带着一个完整的农业板块。</div>
     <div id="ch4" class="chart"></div>
-    <details class="bl-tail-evidence"><summary>为什么这项发现值得关注？</summary><div class="bl-tail-evidence-body"><div class="deep amber"><span class="lab">错位才是机会</span>
+    <div class="deep amber"><span class="lab">错位才是机会</span>
       <div class="body">拿博罗和惠城比服务业占比、和东莞比工业总量，都会得出"博罗还差得远"——但这种比较本身就错位了。<b>大湾区真正需要的不是每个城市都长成一个样，而是各占一个别人替代不了的位置</b>。惠城做市中心的商务和服务，东莞做整机制造成本优势，博罗正好可以做"挨着东莞的先进制造配套 + 罗浮山文旅康养 + 特色农业 + 通道节点"。分工不同，不是高低之分。</div>
-    </div></div></details>
+    </div>
   </div>
 
   <div class="insight">
@@ -87,9 +103,9 @@ h1{font-size:20px;margin:0 0 2px}
     <div class="t">固投在收缩、工业还在涨——这是"换挡节奏"，不是崩盘</div>
     <div class="d">2025年固投-18.8%，但规上工业增加值+8.7%。眼前的增长，主要靠前几年投下去的项目陆续投产、释放产能。</div>
     <div id="ch5" class="chart"></div>
-    <details class="bl-tail-evidence"><summary>为什么这项发现值得关注？</summary><div class="bl-tail-evidence-body"><div class="deep amber"><span class="lab">真正要盯的是什么</span>
+    <div class="deep amber"><span class="lab">真正要盯的是什么</span>
       <div class="body">这不是博罗独有的情况，几乎所有工业县在转型换挡期都会遇到：<b>老产能在贡献产值，新投资还在找方向，中间容易出现"青黄不接"的窗口</b>。好消息是2026年已签约4宗链主级项目、约80亿投资，关键变量不是"有没有项目"，而是"这些项目能不能按时投产、把下一档增长接上"。这也解释了为什么前面的模型里，投产节奏的敏感度排第一。</div>
-    </div></div></details>
+    </div>
   </div>
 
   <div class="summary">
@@ -104,11 +120,11 @@ h1{font-size:20px;margin:0 0 2px}
   </div>
 
   <!-- 博罗特色投票 -->
-  <div style="margin:12px 0;padding:14px;background:linear-gradient(135deg,#1a2332,#0f172a);border:1px solid #fbbf24;border-radius:14px">
-    <div style="font-size:15px;font-weight:800;color:#fff;margin-bottom:4px">🍵 你最希望把博罗哪样做成真正的大品牌？</div>
-    <div style="font-size:12.5px;color:#94a3b8;margin-bottom:10px">这些牌一直都在。哪张最该摆到桌面上？</div>
-    <div id="brandGrid" style="display:flex;gap:8px;flex-wrap:wrap"></div>
-    <div id="brandOut" style="margin-top:10px;font-size:12.5px;color:#cbd5e1;line-height:1.6"></div>
+  <div style="margin:12px 0;padding:14px;background:var(--ui-panel);border:1px solid var(--ui-line);border-radius:14px;">
+    <div style="font-size:15px;font-weight:800;color:var(--ui-text);margin-bottom:4px;">🍵 你最希望把博罗哪样做成真正的大品牌？</div>
+    <div style="font-size:12.5px;color:var(--ui-muted);margin-bottom:10px;">这些牌一直都在。哪张最该摆到桌面上？</div>
+    <div id="brandGrid" style="display:flex;gap:8px;flex-wrap:wrap;"></div>
+    <div id="brandOut" style="margin-top:10px;font-size:12.5px;color:var(--ui-text);line-height:1.6;"></div>
   </div>
 
   <div class="next"><a href="report.html">下一步：分析报告 →</a></div>
@@ -234,5 +250,4 @@ var _hmt = _hmt || [];
   };
 })();
 </script>
-<script defer src="assets/boluo-unified-nav.js"></script>
 </body></html>

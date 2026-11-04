@@ -7,7 +7,7 @@ const pages=['index-legacy-2026-11-03.html','town.html','holo-home-v9.html','who
 test('五页共同引用编辑式视觉体系，内联脚本可解析',()=>{
  for(const p of pages){
   const html=file(p);
-  assert.match(html,/assets\/boluo-editorial\.css/,p);
+  assert.match(html,/assets\/boluo-ui\.css/,p);
   assert.match(html,/data-bl-journey=/,p);
   for(const m of html.matchAll(/<script(?![^>]*\bsrc=)[^>]*>([\s\S]*?)<\/script>/g))
    assert.doesNotThrow(()=>new vm.Script(m[1]),p+' javascript');

@@ -21,17 +21,19 @@ async function run(){
    const page=await browser.newPage({viewport:{width:1440,height:900},acceptDownloads:true});
    page.on('pageerror',e=>exceptions.push(step+' desktop '+e.message));
    await page.goto(base+file,{waitUntil:'domcontentloaded'});
+  await page.locator('.bl-header').waitFor();
+  if(await page.locator('.bp-full-disclosure').count())await page.locator('.bp-full-disclosure > summary').click();
    await page.locator('.sn-search-open').waitFor({timeout:14000});
-   await page.locator('#bl-journey-bar').waitFor();
+   await page.locator('.bl-header').waitFor();
    assert.equal(await page.locator('.sn-search-open').count(),1,'shared native search, page '+step);
-   assert.equal(await page.evaluate(()=>getComputedStyle(document.body).backgroundColor),'rgb(245, 245, 247)');
-   assert.ok(await page.locator('link[href="assets/boluo-six-native.css"]').count()===1,'native stylesheet page '+step);
+   assert.equal(await page.evaluate(()=>getComputedStyle(document.body).backgroundColor),'rgb(14, 20, 32)');
+   assert.ok(await page.locator('link[href="assets/boluo-ui.css"]').count()===1,'native stylesheet page '+step);
    if(step==='03'){
     await page.locator('#ec-graph .ec-graph-node').first().waitFor({timeout:15000,state:'attached'});
     const col=await page.locator('.ec-graph-wrap').evaluate(el=>getComputedStyle(el).backgroundColor);
-    assert.equal(col,'rgb(17, 28, 40)','03 must have real matte dark evidence canvas');
+    assert.equal(col,'rgb(11, 18, 30)','03 must have real matte dark evidence canvas');
     const label=await page.locator('#ec-graph .ec-graph-label').first().evaluate(el=>getComputedStyle(el).fill);
-    assert.ok(['rgb(212, 226, 233)','rgb(255, 255, 255)'].includes(label),'03 labels must be bright on dark: '+label);
+    assert.ok(['rgb(238, 242, 251)'].includes(label),'03 labels must be bright on dark: '+label);
     const focus=page.locator('.sn-stage-tool');
     await focus.click();
     assert.equal(await page.locator('body').evaluate(el=>el.classList.contains('sn-graph-focus')),true);
@@ -44,9 +46,9 @@ async function run(){
     await page.locator('#bc-after .bc-node').first().waitFor({timeout:15000,state:'attached'});
     const fg=await page.locator('.bc-panel--after').evaluate(el=>getComputedStyle(el).backgroundColor);
     const bg=await page.locator('.bc-panel--before').evaluate(el=>getComputedStyle(el).backgroundColor);
-    assert.equal(fg,'rgb(25, 38, 51)','05 current panel matte dark');
-    assert.equal(bg,'rgb(255, 255, 255)','05 previous panel remains white');
-    assert.equal(await page.locator('#bc-after').evaluate(el=>getComputedStyle(el.parentElement).backgroundColor),'rgb(16, 28, 40)');
+    assert.equal(fg,'rgb(11, 18, 30)','05 current panel matte dark');
+    assert.equal(bg,'rgb(11, 18, 30)','05 previous panel uses the shared graph canvas');
+    assert.equal(await page.locator('#bc-after').evaluate(el=>getComputedStyle(el.parentElement).backgroundColor),'rgb(11, 18, 30)');
     await page.screenshot({path:path.join(dir,'05-dual-material-1440.png'),fullPage:true,animations:'disabled'});
    }
    if(step==='06'){
@@ -83,6 +85,8 @@ async function run(){
    const page=await browser.newPage({viewport:{width:390,height:844},isMobile:true,hasTouch:true});
    page.on('pageerror',e=>exceptions.push(step+' mobile '+e.message));
    await page.goto(base+file,{waitUntil:'domcontentloaded'});
+  await page.locator('.bl-header').waitFor();
+  if(await page.locator('.bp-full-disclosure').count())await page.locator('.bp-full-disclosure > summary').click();
    await page.locator('.sn-search-open').waitFor({timeout:12000});
    const ov=await page.evaluate(()=>document.documentElement.scrollWidth-window.innerWidth);
    assert.ok(ov<=4,step+' horizontal overflow: '+ov);

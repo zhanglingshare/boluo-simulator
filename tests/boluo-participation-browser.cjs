@@ -3,7 +3,7 @@ const assert=require('node:assert/strict');
 const fs=require('node:fs'),path=require('node:path');
 const base='http://127.0.0.1:8765/';
 const out=path.resolve(__dirname,'../artifacts/boluo-participation');fs.mkdirSync(out,{recursive:true});
-const scenes=[['today','index-legacy-2026-11-03.html',3],['town','town.html',16],['changes','industry-changes.html',3],['basic','who.html',3],['comparison','relation-compare.html',3],['planning','plan-with-me.html',6]];
+const scenes=[['today','index-legacy-2026-11-03.html',3],['town','town.html',2],['changes','industry-changes.html',3],['basic','who.html',3],['comparison','relation-compare.html',3],['planning','plan-with-me.html',6]];
 (async()=>{
  const browser=await chromium.launch({headless:true,args:['--no-sandbox']});const errors=[];
  try{
@@ -13,16 +13,16 @@ const scenes=[['today','index-legacy-2026-11-03.html',3],['town','town.html',16]
    await p.goto(base+file,{waitUntil:'domcontentloaded'});
    await p.locator('.bp-scene.is-ready .bp-choice').first().waitFor({timeout:15000});
    assert.equal(await p.locator('.bp-choice').count(),count,id+' real options');
-   assert.equal(await p.locator('.bp-reveal').isEnabled(),false,'no answer before a choice');
+   assert.equal(await p.locator('.bp-reveal').isVisible(),false,'visuals do not require answering a quiz');
    assert.equal(await p.locator('.bp-result').isVisible(),false,'no reveal before participation');
-   await p.locator('.bp-choice').first().click();await p.locator('.bp-reveal').click();
+   await p.locator('.bp-choice').nth(id==='comparison'?1:0).click();
    await p.locator('.bp-result').waitFor({state:'visible'});
    assert.equal(await p.locator('.bp-share').isVisible(),true,'result offers a reciprocal invitation');
    if(id==='comparison')assert.equal(await p.locator('.bp-closed-edge').count(),1,'only the recorded production-line relation is broken');
    if(id==='changes')assert.equal(await p.locator('#ec-detail-id').innerText(),'C006','scene and original graph select the same bridge event');
    await p.locator('.bp-share').click();await p.locator('.bp-sheet[open]').waitFor();
    const url=await p.locator('.bp-share-url').inputValue();const u=new URL(url);
-   assert.equal(u.searchParams.get('challenge'),'boluo-discover-v1-'+id);
+   assert.equal(u.searchParams.get('challenge'),'boluo-discover-v2-'+id);
    assert.ok(u.searchParams.get('pick'),'selected view is in the share link');
    if(width===390){await p.waitForFunction(()=>{const r=document.querySelector('.bp-sheet')?.getBoundingClientRect();return r&&Math.abs(r.y+r.height-innerHeight)<=4;},null,{timeout:2500});const box=await p.locator('.bp-sheet').boundingBox();assert.ok(Math.abs(box.y+box.height-844)<=4,'iOS sheet reaches bottom');assert.ok(box.width<=390,'mobile sheet stays in viewport');}
    await p.locator('.bp-sheet-done').click();await p.locator('.bp-sheet[open]').waitFor({state:'hidden'});
@@ -32,14 +32,14 @@ const scenes=[['today','index-legacy-2026-11-03.html',3],['town','town.html',16]
   }
   const context=await browser.newContext({viewport:{width:390,height:844},reducedMotion:'reduce'});
   const p=await context.newPage();
-  await p.goto(base+'index-legacy-2026-11-03.html?challenge=boluo-discover-v1-today&pick=running');
+  await p.goto(base+'index-legacy-2026-11-03.html?challenge=boluo-discover-v2-today&pick=candidates');
   await p.locator('.bp-choice').first().waitFor();
   assert.equal(await p.locator('.bp-friend').isVisible(),true);
   assert.equal(await p.locator('.bp-duel').isVisible(),false,'inviter choice not exposed in the page before recipient selects');
-  await p.locator('[data-pick="signed"]').click();await p.locator('.bp-reveal').click();
+  await p.locator('[data-pick="facts"]').click();
   await p.locator('.bp-duel b').waitFor({state:'visible'});
-  assert.match(await p.locator('.bp-duel').innerText(),/厂子已经开起来了/);
-  assert.match(await p.locator('.bp-duel').innerText(),/只确认了签约/);
+  assert.match(await p.locator('.bp-duel').innerText(),/打开候选联系/);
+  assert.match(await p.locator('.bp-duel').innerText(),/只看已证实/);
   await p.locator('.bp-menu-button').click();await p.locator('.bp-menu').waitFor({state:'visible'});await p.keyboard.press('Escape');
   assert.equal(await p.locator('.bp-menu').isVisible(),false);
   await context.close();

@@ -20,36 +20,13 @@ for (const f of htmlFiles) {
 }
 
 
-console.log('── 1b) 博罗非全息页面 UI 完整性 ──');
-const nonHoloPages = [
-  'index.html','role.html','who.html','choices.html','future.html',
-  'windtunnel.html','blindspot.html','report.html','ending.html',
-  'network.html','town.html'
-];
-const uiCssPath = path.join(root,'assets','boluo-ui.css');
-if (!fs.existsSync(uiCssPath)) bad('缺少共享非全息 UI 样式');
-else {
-  const style = fs.readFileSync(uiCssPath,'utf8');
-  for(const section of ['body.bl-dark','.bl-legacy','.bl-warm','.bl-paper','@media(max-width:560px)','prefers-reduced-motion']){
-    if(!style.includes(section)) bad('共享 UI 样式缺少设计分区：'+section);
-  }
-  ok('共享样式包含深色、故事版、暖色与纸张主题以及手机适配');
-}
-for(const page of nonHoloPages){
-  const pagePath=path.join(root,page);
-  if(!fs.existsSync(pagePath)){bad('缺少非全息页面 '+page);continue;}
-  const html=fs.readFileSync(pagePath,'utf8');
-  const cssHref=page.startsWith('v2/')?'../assets/boluo-ui.css':'assets/boluo-ui.css';
-  if(!html.includes('href="'+cssHref+'"'))bad(page+' 未引用共享 UI 样式');
-  if(!/<body[^>]*\bclass="bl-ui [^"]+"[^>]*>/i.test(html))bad(page+' 缺少 UI 页面级标识');
-  if(/user-scalable\s*=\s*no/i.test(html))bad(page+' 禁止用户缩放');
-}
-const holoPaths=['holo-home-v9.html','holo-home-v10.html','experiments/holo-single/index.html'];
-for(const page of holoPaths){
-  const fp=path.join(root,page);
-  if(fs.existsSync(fp)&&fs.readFileSync(fp,'utf8').includes('boluo-ui.css'))bad('非全息 UI 不得应用于全息页面 '+page);
-}
-ok('12 个非全息页面共享 UI 接入与全息隔离已检查');
+console.log('── 1b) 博罗全站 UI 完整性 ──');
+const uiPages=['future-lab.html','index-legacy-2026-11-03.html','role.html','who.html','choices.html','future.html','windtunnel.html','blindspot.html','report.html','ending.html','network.html','town.html','industry-changes.html','relation-compare.html','plan-with-me.html','intel-lab.html','holo-home-v9.html','experiments/holo-single/index.html','tea/index.html','tea/deck.html'];
+const style=fs.readFileSync(path.join(root,'assets/boluo-ui.css'),'utf8');
+for(const token of ['--ui-bg:#0e1420','--ui-text:#eef2fb','.bl-header','.bl-dock','@media(max-width:800px)','prefers-reduced-motion','focus-visible'])if(!style.includes(token))bad('统一样式缺少契约 '+token);
+for(const page of uiPages){const html=fs.readFileSync(path.join(root,page),'utf8');if(!html.includes('assets/boluo-ui.css'))bad(page+' 缺少统一样式');if(!html.includes('assets/boluo-system.js'))bad(page+' 缺少统一导航');if(!/<body[^>]*data-ui-page=/i.test(html))bad(page+' 缺少页面标识');if(/user-scalable\s*=\s*no/i.test(html))bad(page+' 禁止用户缩放');}
+const entry=fs.readFileSync(path.join(root,'index.html'),'utf8');if(!entry.includes("location.replace('index-legacy-2026-11-03.html'"))bad('入口没有进入六幕主线');
+ok('20个工作界面共用视觉规范，主入口重定向保留');
 
 console.log('── 2) 模型口径断言（SEED=42 N=10000，规划兑现基准路径；与页面口径同源）──');
 const HT = require(path.join(root, 'model.js'));

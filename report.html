@@ -6,126 +6,168 @@
 <script src="bl-viz/data.js"></script>
 <script src="bl-viz/report.js" defer></script>
 <style>
-*{box-sizing:border-box}
-body{margin:0;background:#080b12;color:#e6edf3;font:14px/1.7 -apple-system,"PingFang SC","Microsoft YaHei",sans-serif}
-.nav{position:sticky;top:0;z-index:50;display:flex;gap:5px;align-items:center;padding:9px 14px;background:rgba(8,11,18,.95);border-bottom:1px solid #1b2434;overflow-x:auto}
-.nav b{font-size:14px;margin-right:6px;flex:none}
-.nav a{background:#131c2b;color:#93a4bd;border:1px solid #22304a;padding:6px 12px;border-radius:20px;font-size:12.5px;text-decoration:none;white-space:nowrap;flex:none}
-.nav a.on{background:#15803d;border-color:#22c55e;color:#fff;font-weight:600}
-.wrap{max-width:880px;margin:auto;padding:18px}
-.cover{text-align:center;padding:42px 20px;background:linear-gradient(160deg,#082014,#0a0f1a);border:1px solid #1c2739;border-radius:16px;margin-bottom:16px}
-.cover .kick{font-size:12px;letter-spacing:3px;color:#4ade80;margin-bottom:12px}
-.cover h1{font-size:27px;lineHeight:1.4;margin:0 0 10px}
-.cover .meta{font-size:12.5px;color:#8fa3bf;margin-top:16px}
-.card{background:#0e1523;border:1px solid #1c2739;border-radius:12px;padding:18px;margin-bottom:14px}
-.card h2{font-size:16px;margin:0 0 12px;padding-bottom:8px;border-bottom:1px solid #1c2739;color:#4ade80}
-.card h3{font-size:13.5px;color:#4ade80;margin:18px 0 6px}
-.kpis{display:grid;grid-template-columns:repeat(4,1fr);gap:10px;margin:12px 0}
-@media(max-width:700px){.kpis{grid-template-columns:repeat(2,1fr)}}
-.kpi{background:#0a0f1a;border:1px solid #1c2739;border-radius:10px;padding:12px;text-align:center}
-.kpi .v{font-size:19px;font-weight:800;color:#fbbf24}
-.kpi .l{font-size:10.5px;color:#6b7d96;margin-top:3px}
-.lights{display:grid;grid-template-columns:repeat(2,1fr);gap:10px;margin:12px 0}
-@media(max-width:700px){.lights{grid-template-columns:1fr}}
-.light{border-radius:10px;padding:11px 12px;font-size:12px;border:1px solid}
-.light .dot{display:inline-block;width:9px;height:9px;border-radius:50%;margin-right:6px}
-.g{background:#0a1a12;border-color:#14532d}.g .dot{background:#22c55e}
-.y{background:#1a1808;border-color:#713f12}.y .dot{background:#eab308}
-.r{background:#1a0c0c;border-color:#7f1d1d}.r .dot{background:#ef4444}
-ol.find{margin:0;padding-left:20px}
-ol.find li{margin-bottom:10px;line-height:1.8;font-size:13px;color:#c8d3e0}
-.two{display:grid;grid-template-columns:1fr 1fr;gap:12px}
-@media(max-width:700px){.two{grid-template-columns:1fr}}
-.people{background:linear-gradient(160deg,#1a1408,#0e1523);border:1px solid #713f12}
-.people .q{font-size:13.5px;font-weight:700;color:#fbbf24;margin-bottom:6px}
-.people .a{font-size:12.3px;color:#cbd5e1;line-height:1.85}
-.action{display:flex;gap:12px;margin-bottom:10px;align-items:flex-start}
-.action .pri{flex:none;width:46px;height:46px;border-radius:10px;display:flex;align-items:center;justify-content:center;font-size:11px;font-weight:700;color:#fff}
-.action .body{flex:1}
-.action .body b{font-size:13.5px}
-.action .body p{font-size:12px;color:#9aa9bd;margin:3px 0 0;line-height:1.7}
-.src-list{font-size:12.5px;color:#cbd5e1;line-height:2}
-.grade{display:inline-block;width:22px;height:22px;line-height:22px;text-align:center;border-radius:50%;font-size:10px;font-weight:700;margin-right:6px;color:#fff}
-.bound{font-size:12.5px;line-height:1.95;color:#cbd5e1}
-.author{display:flex;gap:16px;align-items:flex-start;flex-wrap:wrap}
-.author .badge{width:84px;height:84px;border-radius:50%;background:linear-gradient(135deg,#15803d,#0e7490);display:flex;align-items:center;justify-content:center;font-size:24px;flex:none;color:#fff;font-weight:700}
-.author .roles{font-size:12.5px;line-height:2;color:#cbd5e1}
-.tagline{font-size:12px;color:#8fa3bf;font-style:italic;margin-top:8px}
-.disc{font-size:11.5px;color:#6b7d96;line-height:1.8;text-align:center}
-.btn{background:#15803d;color:#fff;border:0;padding:10px 22px;border-radius:8px;font-size:14px;font-weight:600;cursor:pointer;text-decoration:none;display:inline-block}
-.bigquote{font-size:15px;line-height:2;text-align:center;color:#e6edf3}
-.plain{margin-top:9px;background:#081a0e;border:1px solid #14532d;border-left:3px solid #22c55e;border-radius:8px;padding:10px 12px;font-size:12.3px;line-height:1.85;color:#cdeecf}
-.plain .lab{display:block;font-size:10.5px;font-weight:800;color:#4ade80;letter-spacing:1px;margin-bottom:3px}
-.chart{width:100%;height:230px}
-/* ===== 经济CT体检卡（2026） ===== */
-.ct-head{display:flex;justify-content:space-between;align-items:flex-end;flex-wrap:wrap;gap:8px}
-.ct-src{font-size:11px;color:#6b7d96}
-.ct-src b{color:#8fa3bf}
-.ct-summary{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin:14px 0}
-@media(max-width:700px){.ct-summary{grid-template-columns:1fr}}
-.ct-sum{border-radius:10px;padding:11px 14px;font-size:12.5px;border:1px solid;display:flex;align-items:center;gap:10px}
-.ct-sum .n{font-size:22px;font-weight:800;line-height:1}
-.ct-sum.g{background:#0a1a12;border-color:#14532d}.ct-sum.g .n{color:#22c55e}
-.ct-sum.y{background:#1a1808;border-color:#713f12}.ct-sum.y .n{color:#eab308}
-.ct-sum.r{background:#1a0c0c;border-color:#7f1d1d}.ct-sum.r .n{color:#ef4444}
-.ct-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:10px;margin:10px 0}
-@media(max-width:900px){.ct-grid{grid-template-columns:repeat(2,1fr)}}
-.ct-card{background:#0a0f1a;border:1px solid #1c2739;border-radius:11px;padding:12px 12px 10px;cursor:pointer;text-align:left;border-top:3px solid #334155;transition:transform .12s,border-color .12s}
-.ct-card:hover{transform:translateY(-2px)}
-.ct-card.good{border-top-color:#22c55e}.ct-card.warm{border-top-color:#eab308}.ct-card.risk{border-top-color:#ef4444}.ct-card.neutral{border-top-color:#64748b}
-.ct-card .k{font-size:11.5px;color:#93a4bd;margin-bottom:5px;min-height:30px}
-.ct-card .v{font-size:21px;font-weight:800;line-height:1.1}
-.ct-card.good .v{color:#22c55e}.ct-card.warm .v{color:#eab308}.ct-card.risk .v{color:#ef6b6b}.ct-card.neutral .v{color:#cbd5e1}
-.ct-card .d{font-size:10.5px;color:#6b7d96;margin-top:4px}
-.ct-card canvas{width:100%;height:30px;display:block;margin-top:6px}
-.ct-badge{display:inline-block;font-size:9.5px;padding:1px 6px;border-radius:8px;margin-top:5px;font-weight:600}
-.ct-badge.good{background:#0a1a12;color:#4ade80}.ct-badge.warm{background:#1a1808;color:#eab308}.ct-badge.risk{background:#1a0c0c;color:#f87171}
-.ct-detail{margin-top:12px;background:#0a0f1a;border:1px solid #1c2739;border-radius:9px;padding:11px 13px;font-size:12.5px;color:#c8d3e0;line-height:1.8;min-height:44px}
-.ct-detail a{color:#60a5fa;word-break:break-all}
-/* 剪刀差 */
-.scissors{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin:14px 0}
-@media(max-width:700px){.scissors{grid-template-columns:1fr}}
-.sci{border-radius:11px;padding:13px 15px;border:1px solid}
-.sci.up{background:linear-gradient(160deg,#0a1a12,#0a0f1a);border-color:#14532d}
-.sci.down{background:linear-gradient(160deg,#1a0c0c,#0a0f1a);border-color:#7f1d1d}
-.sci .t{font-size:12px;font-weight:700;margin-bottom:4px;display:flex;align-items:center;gap:6px}
-.sci.up .t{color:#4ade80}.sci.down .t{color:#f87171}
-.sci .big{font-size:26px;font-weight:800;line-height:1.2;margin:2px 0}
-.sci.up .big{color:#22c55e}.sci.down .big{color:#ef6b6b}
-.sci .s{font-size:11.5px;color:#9aa9bd;line-height:1.7}
-.sci canvas{width:100%;height:46px;margin-top:6px}
-@media(min-width:1024px){.wrap{max-width:1200px!important;padding:24px}}</style><link rel="stylesheet" href="assets/boluo-ui.css">
-<link rel="stylesheet" href="assets/boluo-tail-bridge.css">
-<link rel="stylesheet" href="assets/boluo-unified-nav.css">
-</head><body class="bl-ui bl-dark bl-tail bl-ui--report" data-bl-page="report">
+*{box-sizing:border-box;}
+body{margin:0;background:var(--ui-panel);color:var(--ui-text);font:14px/1.7 -apple-system,"PingFang SC","Microsoft YaHei",sans-serif;}
+.nav{position:sticky;top:0;z-index:50;display:flex;gap:5px;align-items:center;padding:9px 14px;background:var(--ui-panel);border-bottom:1px solid var(--ui-line);overflow-x:auto;}
+.nav b{font-size:14px;margin-right:6px;flex:none;}
+.nav a{background:var(--ui-panel);color:var(--ui-muted);border:1px solid var(--ui-line);padding:6px 12px;border-radius:20px;font-size:12.5px;text-decoration:none;white-space:nowrap;flex:none;}
+.nav a.on{background:var(--ui-panel);border-color:var(--ui-line);color:var(--ui-text);font-weight:600;}
+.wrap{max-width:880px;margin:auto;padding:18px;}
+.cover{text-align:center;padding:42px 20px;background:var(--ui-panel);border:1px solid var(--ui-line);border-radius:16px;margin-bottom:16px;}
+.cover .kick{font-size:12px;letter-spacing:3px;color:var(--ui-green);margin-bottom:12px;}
+.cover h1{font-size:27px;lineheight:1.4;margin:0 0 10px;}
+.cover .meta{font-size:12.5px;color:var(--ui-muted);margin-top:16px;}
+.card{background:var(--ui-panel);border:1px solid var(--ui-line);border-radius:12px;padding:18px;margin-bottom:14px;}
+.card h2{font-size:16px;margin:0 0 12px;padding-bottom:8px;border-bottom:1px solid var(--ui-line);color:var(--ui-green);}
+.card h3{font-size:13.5px;color:var(--ui-green);margin:18px 0 6px;}
+.kpis{display:grid;grid-template-columns:repeat(4,1fr);gap:10px;margin:12px 0;}
+@media (max-width:700px){
+.kpis{grid-template-columns:repeat(2,1fr);}
+}
+.kpi{background:var(--ui-panel);border:1px solid var(--ui-line);border-radius:10px;padding:12px;text-align:center;}
+.kpi .v{font-size:19px;font-weight:800;color:var(--ui-gold);}
+.kpi .l{font-size:10.5px;color:var(--ui-muted);margin-top:3px;}
+.lights{display:grid;grid-template-columns:repeat(2,1fr);gap:10px;margin:12px 0;}
+@media (max-width:700px){
+.lights{grid-template-columns:1fr;}
+}
+.light{border-radius:10px;padding:11px 12px;font-size:12px;border:1px solid;}
+.light .dot{display:inline-block;width:9px;height:9px;border-radius:50%;margin-right:6px;}
+.g{background:var(--ui-panel);border-color:var(--ui-line);}
+.g .dot{background:var(--ui-panel);}
+.y{background:var(--ui-panel);border-color:var(--ui-line);}
+.y .dot{background:var(--ui-panel);}
+.r{background:var(--ui-panel);border-color:var(--ui-line);}
+.r .dot{background:var(--ui-panel);}
+ol.find{margin:0;padding-left:20px;}
+ol.find li{margin-bottom:10px;line-height:1.8;font-size:13px;color:var(--ui-text);}
+.two{display:grid;grid-template-columns:1fr 1fr;gap:12px;}
+@media (max-width:700px){
+.two{grid-template-columns:1fr;}
+}
+.people{background:var(--ui-panel);border:1px solid var(--ui-line);}
+.people .q{font-size:13.5px;font-weight:700;color:var(--ui-gold);margin-bottom:6px;}
+.people .a{font-size:12.3px;color:var(--ui-text);line-height:1.85;}
+.action{display:flex;gap:12px;margin-bottom:10px;align-items:flex-start;}
+.action .pri{flex:none;width:46px;height:46px;border-radius:10px;display:flex;align-items:center;justify-content:center;font-size:11px;font-weight:700;color:var(--ui-text);}
+.action .body{flex:1;}
+.action .body b{font-size:13.5px;}
+.action .body p{font-size:12px;color:var(--ui-muted);margin:3px 0 0;line-height:1.7;}
+.src-list{font-size:12.5px;color:var(--ui-text);line-height:2;}
+.grade{display:inline-block;width:22px;height:22px;line-height:22px;text-align:center;border-radius:50%;font-size:10px;font-weight:700;margin-right:6px;color:var(--ui-text);}
+.bound{font-size:12.5px;line-height:1.95;color:var(--ui-text);}
+.author{display:flex;gap:16px;align-items:flex-start;flex-wrap:wrap;}
+.author .badge{width:84px;height:84px;border-radius:50%;background:var(--ui-panel);display:flex;align-items:center;justify-content:center;font-size:24px;flex:none;color:var(--ui-text);font-weight:700;}
+.author .roles{font-size:12.5px;line-height:2;color:var(--ui-text);}
+.tagline{font-size:12px;color:var(--ui-muted);font-style:italic;margin-top:8px;}
+.disc{font-size:11.5px;color:var(--ui-muted);line-height:1.8;text-align:center;}
+.btn{background:var(--ui-panel);color:var(--ui-text);border:0;padding:10px 22px;border-radius:8px;font-size:14px;font-weight:600;cursor:pointer;text-decoration:none;display:inline-block;}
+.bigquote{font-size:15px;line-height:2;text-align:center;color:var(--ui-text);}
+.plain{margin-top:9px;background:var(--ui-panel);border:1px solid var(--ui-line);border-left:3px solid var(--ui-line);border-radius:8px;padding:10px 12px;font-size:12.3px;line-height:1.85;color:var(--ui-text);}
+.plain .lab{display:block;font-size:10.5px;font-weight:800;color:var(--ui-green);letter-spacing:1px;margin-bottom:3px;}
+.chart{width:100%;height:230px;}
+.ct-head{display:flex;justify-content:space-between;align-items:flex-end;flex-wrap:wrap;gap:8px;}
+.ct-src{font-size:11px;color:var(--ui-muted);}
+.ct-src b{color:var(--ui-muted);}
+.ct-summary{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin:14px 0;}
+@media (max-width:700px){
+.ct-summary{grid-template-columns:1fr;}
+}
+.ct-sum{border-radius:10px;padding:11px 14px;font-size:12.5px;border:1px solid;display:flex;align-items:center;gap:10px;}
+.ct-sum .n{font-size:22px;font-weight:800;line-height:1;}
+.ct-sum.g{background:var(--ui-panel);border-color:var(--ui-line);}
+.ct-sum.g .n{color:var(--ui-green);}
+.ct-sum.y{background:var(--ui-panel);border-color:var(--ui-line);}
+.ct-sum.y .n{color:var(--ui-gold);}
+.ct-sum.r{background:var(--ui-panel);border-color:var(--ui-line);}
+.ct-sum.r .n{color:var(--ui-red);}
+.ct-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:10px;margin:10px 0;}
+@media (max-width:900px){
+.ct-grid{grid-template-columns:repeat(2,1fr);}
+}
+.ct-card{background:var(--ui-panel);border:1px solid var(--ui-line);border-radius:11px;padding:12px 12px 10px;cursor:pointer;text-align:left;border-top:3px solid var(--ui-line);transition:transform .12s,border-color .12s;}
+.ct-card:hover{transform:translateY(-2px);}
+.ct-card.good{border-top-color:var(--ui-line);}
+.ct-card.warm{border-top-color:var(--ui-line);}
+.ct-card.risk{border-top-color:var(--ui-line);}
+.ct-card.neutral{border-top-color:var(--ui-line);}
+.ct-card .k{font-size:11.5px;color:var(--ui-muted);margin-bottom:5px;min-height:30px;}
+.ct-card .v{font-size:21px;font-weight:800;line-height:1.1;}
+.ct-card.good .v{color:var(--ui-green);}
+.ct-card.warm .v{color:var(--ui-gold);}
+.ct-card.risk .v{color:var(--ui-red);}
+.ct-card.neutral .v{color:var(--ui-text);}
+.ct-card .d{font-size:10.5px;color:var(--ui-muted);margin-top:4px;}
+.ct-card canvas{width:100%;height:30px;display:block;margin-top:6px;}
+.ct-badge{display:inline-block;font-size:9.5px;padding:1px 6px;border-radius:8px;margin-top:5px;font-weight:600;}
+.ct-badge.good{background:var(--ui-panel);color:var(--ui-green);}
+.ct-badge.warm{background:var(--ui-panel);color:var(--ui-gold);}
+.ct-badge.risk{background:var(--ui-panel);color:var(--ui-red);}
+.ct-detail{margin-top:12px;background:var(--ui-panel);border:1px solid var(--ui-line);border-radius:9px;padding:11px 13px;font-size:12.5px;color:var(--ui-text);line-height:1.8;min-height:44px;}
+.ct-detail a{color:var(--ui-blue);word-break:break-all;}
+.scissors{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin:14px 0;}
+@media (max-width:700px){
+.scissors{grid-template-columns:1fr;}
+}
+.sci{border-radius:11px;padding:13px 15px;border:1px solid;}
+.sci.up{background:var(--ui-panel);border-color:var(--ui-line);}
+.sci.down{background:var(--ui-panel);border-color:var(--ui-line);}
+.sci .t{font-size:12px;font-weight:700;margin-bottom:4px;display:flex;align-items:center;gap:6px;}
+.sci.up .t{color:var(--ui-green);}
+.sci.down .t{color:var(--ui-red);}
+.sci .big{font-size:26px;font-weight:800;line-height:1.2;margin:2px 0;}
+.sci.up .big{color:var(--ui-green);}
+.sci.down .big{color:var(--ui-red);}
+.sci .s{font-size:11.5px;color:var(--ui-muted);line-height:1.7;}
+.sci canvas{width:100%;height:46px;margin-top:6px;}
+@media (min-width:1024px){
+.wrap{max-width:1200px!important;padding:24px;}
+}
+</style><link rel="stylesheet" href="assets/boluo-layout.css">
+<link rel="stylesheet" href="assets/boluo-ui.css">
+<script defer src="assets/boluo-system.js"></script>
+</head><body id="boluo-app" class="bl-site bl-ui bl-dark bl-ui--report" data-bl-page="report" data-ui-page="report">
 
-<div class="nav"><b>博罗 · 变化世界</b><a href="index-legacy-2026-11-03.html">01 今日博罗</a><a href="town.html">02 各镇</a><a href="industry-changes.html">03 产业变化</a><a href="who.html">04 基本面</a><a href="network.html">结构生长</a><a href="experiments/holo-single/index.html">关系世界</a><a href="future-lab.html">三维实验室</a><a href="relation-compare.html">05 关系前后</a><a href="plan-with-me.html">06 规划与你</a><a href="windtunnel.html">07 风洞测试</a><a href="blindspot.html">08 可能忽略</a><a href="report.html" class="on" aria-current="page">09 报告</a><a href="ending.html">10 结语</a></div>
+<div class="nav">
+  <b>博罗产业风洞</b>
+  <a href="index.html">今日博罗</a>
+  <a href="holo-home-v9.html">⚡ 变化现场</a>
+  <a href="experiments/holo-single/index.html">◉ 关系世界</a>
+  <a href="town.html">🏘️ 各镇吃喝玩乐</a>
+  <a href="network.html">② 产业网络</a>
+  <a href="who.html">③ 基本面</a>
+  <a href="choices.html">④ 五条路</a>
+  <a href="future.html">⑤ 未来</a>
+  <a href="windtunnel.html">⑥ 风洞测试</a>
+  <a href="blindspot.html">⑦ 忽略了什么</a>
+  <a href="report.html" class="on">⑧ 分析报告</a>
+  <a href="ending.html">⑨ 结语</a>
+</div>
 
 <div class="wrap">
-<section class="bl-tail-hero"><div><div class="bl-tail-overline">博罗 · 真实世界观察 / 09 分析报告</div><h1>关键结果在前，<em>依据随后展开。</em></h1><p>先看经济CT与模型结果。原始资料、口径、假设保留，按需核验。</p><div class="bl-tail-quicklinks"><a href="#ctCard">看经济CT</a><a href="who.html">查看基本面</a></div></div><aside><span class="bl-tail-stat-label">本章重点</span><div class="bl-tail-stat">≈595<em>亿元</em></div><div class="bl-tail-stat-note">1600亿参考目标与2025年1005.45亿的差额，不是预测。</div></aside></section>
 
   <!-- 封面 -->
-  <div class="cover" style="display:none">
+  <div class="cover">
     <div class="kick">区域产业决策风洞 · 第四类样本</div>
     <h1>博罗县产业决策<br>模拟推演分析报告</h1>
-    <div style="font-size:13px;color:#cbd5e1">——广东首个千亿县，在大湾区网络里的位置与可能（Demo版）</div>
-    <div class="meta">作者：<b style="color:#fbbf24">张凌 博士</b> &nbsp;|&nbsp; 2026年10月 · 广东惠州</div>
+    <div style="font-size:13px;color:var(--ui-text);">——广东首个千亿县，在大湾区网络里的位置与可能（Demo版）</div>
+    <div class="meta">作者：<b style="color:var(--ui-gold);">张凌 博士</b> &nbsp;|&nbsp; 2026年10月 · 广东惠州</div>
   </div>
 
   <!-- ===== 2026 经济CT：生产与投资的剪刀差 ===== -->
   <div class="card" id="ctCard">
     <div class="ct-head">
-      <h2 style="border:0;padding:0;margin:0">🩺 博罗经济CT（2026最新）：生产在回暖，投资却在失速</h2>
-      <details class="bl-tail-evidence"><summary>核对数据来源与更新口径</summary><div class="bl-tail-evidence-body"><div class="ct-src">数据更新：<b id="ctLatest"></b></div></div></details>
+      <h2 style="border:0;padding:0;margin:0;">🩺 博罗经济CT（2026最新）：生产在回暖，投资却在失速</h2>
+      <div class="ct-src">数据更新：<b id="ctLatest"></b></div>
     </div>
-    <div style="font-size:12.5px;color:#9aa9bd;margin:6px 0 2px">工厂还在开足马力（用电、工业增加值都在升），但新建项目的投资断崖式下滑——这正是决策最该盯的地方：今年的投资，是三五年后的产出。</div>
+    <div style="font-size:12.5px;color:var(--ui-muted);margin:6px 0 2px;">工厂还在开足马力（用电、工业增加值都在升），但新建项目的投资断崖式下滑——这正是决策最该盯的地方：今年的投资，是三五年后的产出。</div>
 
     <div class="scissors" id="scissors"></div>
-    <canvas id="scissorChart" style="width:100%;height:240px"></canvas>
+    <canvas id="scissorChart" style="width:100%;height:240px;"></canvas>
 
-    <h3 style="margin-top:18px">生产端（回升向好）</h3>
+    <h3 style="margin-top:18px;">生产端（回升向好）</h3>
     <div class="ct-grid" id="prodGrid"></div>
-    <h3 style="margin-top:6px">投资端（深度失速）</h3>
+    <h3 style="margin-top:6px;">投资端（深度失速）</h3>
     <div class="ct-grid" id="invGrid"></div>
     <div class="ct-detail" id="ctDetail">点击任意一张体检卡，核对官方口径与来源。</div>
   </div>
@@ -133,8 +175,8 @@ ol.find li{margin-bottom:10px;line-height:1.8;font-size:13px;color:#c8d3e0}
   <!-- ===== 2025 全年八项体检 ===== -->
   <div class="card" id="ct2025">
     <div class="ct-head">
-      <h2 style="border:0;padding:0;margin:0">📊 2025年八项体检：千亿县这一年</h2>
-      <details class="bl-tail-evidence"><summary>核对数据来源与更新口径</summary><div class="bl-tail-evidence-body"><div class="ct-src">数据源：<b>2025年统计公报</b></div></div></details>
+      <h2 style="border:0;padding:0;margin:0;">📊 2025年八项体检：千亿县这一年</h2>
+      <div class="ct-src">数据源：<b>2025年统计公报</b></div>
     </div>
     <div class="ct-summary" id="ct2025Summary"></div>
     <div class="ct-grid" id="ct2025Grid"></div>
@@ -142,43 +184,43 @@ ol.find li{margin-bottom:10px;line-height:1.8;font-size:13px;color:#c8d3e0}
   </div>
 
   <!-- 模型校准说明 -->
-  <div class="card" style="border-color:#b45309">
-    <h2 style="color:#fbbf24">⚖️ 模型口径：三本账，别混着算</h2>
-    <div style="overflow-x:auto">
-    <table style="width:100%;border-collapse:collapse;font-size:12.5px">
-      <tr style="border-bottom:1px solid #1c2739">
-        <th style="text-align:left;padding:8px;color:#94a3b8">口径</th>
-        <th style="text-align:center;padding:8px;color:#6b7d96">凑数版（已弃）</th>
-        <th style="text-align:center;padding:8px;color:#f87171">现状延续（对照）</th>
-        <th style="text-align:center;padding:8px;color:#4ade80">规划兑现（基准）</th>
+  <div class="card" style="border-color:var(--ui-line);">
+    <h2 style="color:var(--ui-gold);">⚖️ 模型口径：三本账，别混着算</h2>
+    <div style="overflow-x:auto;">
+    <table style="width:100%;border-collapse:collapse;font-size:12.5px;">
+      <tr style="border-bottom:1px solid var(--ui-line);">
+        <th style="text-align:left;padding:8px;color:var(--ui-muted);">口径</th>
+        <th style="text-align:center;padding:8px;color:var(--ui-muted);">凑数版（已弃）</th>
+        <th style="text-align:center;padding:8px;color:var(--ui-red);">现状延续（对照）</th>
+        <th style="text-align:center;padding:8px;color:var(--ui-green);">规划兑现（基准）</th>
       </tr>
-      <tr style="border-bottom:1px solid #162032">
-        <td style="padding:8px;color:#cbd5e1">五条路径 μ（五年累计，亿）</td>
-        <td style="text-align:center;padding:8px;color:#6b7d96">220/180/70/60/45</td>
-        <td style="text-align:center;padding:8px;color:#f87171">150/100/50/25/18</td>
-        <td style="text-align:center;padding:8px;color:#4ade80">250/150/110/55/30</td>
+      <tr style="border-bottom:1px solid var(--ui-line);">
+        <td style="padding:8px;color:var(--ui-text);">五条路径 μ（五年累计，亿）</td>
+        <td style="text-align:center;padding:8px;color:var(--ui-muted);">220/180/70/60/45</td>
+        <td style="text-align:center;padding:8px;color:var(--ui-red);">150/100/50/25/18</td>
+        <td style="text-align:center;padding:8px;color:var(--ui-green);">250/150/110/55/30</td>
       </tr>
-      <tr style="border-bottom:1px solid #162032">
-        <td style="padding:8px;color:#cbd5e1">2030 中位数 P50</td>
-        <td style="text-align:center;padding:8px;color:#6b7d96">1581 亿</td>
-        <td style="text-align:center;padding:8px;color:#f87171">约1350 亿</td>
-        <td style="text-align:center;padding:8px;color:#4ade80">约1601 亿</td>
+      <tr style="border-bottom:1px solid var(--ui-line);">
+        <td style="padding:8px;color:var(--ui-text);">2030 中位数 P50</td>
+        <td style="text-align:center;padding:8px;color:var(--ui-muted);">1581 亿</td>
+        <td style="text-align:center;padding:8px;color:var(--ui-red);">约1350 亿</td>
+        <td style="text-align:center;padding:8px;color:var(--ui-green);">约1601 亿</td>
       </tr>
-      <tr style="border-bottom:1px solid #162032">
-        <td style="padding:8px;color:#cbd5e1">到1600亿概率</td>
-        <td style="text-align:center;padding:8px;color:#6b7d96">41%</td>
-        <td style="text-align:center;padding:8px;color:#f87171">约0.1%</td>
-        <td style="text-align:center;padding:8px;color:#4ade80">约50%</td>
+      <tr style="border-bottom:1px solid var(--ui-line);">
+        <td style="padding:8px;color:var(--ui-text);">到1600亿概率</td>
+        <td style="text-align:center;padding:8px;color:var(--ui-muted);">41%</td>
+        <td style="text-align:center;padding:8px;color:var(--ui-red);">约0.1%</td>
+        <td style="text-align:center;padding:8px;color:var(--ui-green);">约50%</td>
       </tr>
       <tr>
-        <td style="padding:8px;color:#cbd5e1">参数依据</td>
-        <td style="text-align:center;padding:8px;color:#6b7d96">照1600反推</td>
-        <td style="text-align:center;padding:8px;color:#f87171">2025-26实际增速外推</td>
-        <td style="text-align:center;padding:8px;color:#4ade80">三大产业+园区目标（C级）</td>
+        <td style="padding:8px;color:var(--ui-text);">参数依据</td>
+        <td style="text-align:center;padding:8px;color:var(--ui-muted);">照1600反推</td>
+        <td style="text-align:center;padding:8px;color:var(--ui-red);">2025-26实际增速外推</td>
+        <td style="text-align:center;padding:8px;color:var(--ui-green);">三大产业+园区目标（C级）</td>
       </tr>
     </table>
     </div>
-    <div class="plain" style="margin-top:12px">
+    <div class="plain" style="margin-top:12px;">
       <span class="lab">为什么有三本账</span>
       ① <b>凑数版</b>是照着"2030到1600"反推每条路贡献多少，必然自证预言（假乐观），已弃用。<br>
       ② <b>现状延续</b>按2025-2026上半年实际增速外推（2026上半年GDP仅+3.0%、工业投资−51.3%）：不加码，2030年大约只有1350亿，几乎摸不到1600。<br>
@@ -188,20 +230,20 @@ ol.find li{margin-bottom:10px;line-height:1.8;font-size:13px;color:#c8d3e0}
   </div>
 
   <!-- 数据可信度速览 -->
-  <div style="margin:12px 0;padding:10px 14px;background:rgba(59,130,246,.08);border:1px solid rgba(59,130,246,.3);border-radius:10px;font-size:11.5px;color:#94a3b8;line-height:1.7">
-    📊 <b style="color:#cbd5e1">数据可信度：</b>
-    <span style="color:#4ade80">● A级（实测）</span> 统计公报/镇街公开数据 ｜
-    <span style="color:#60a5fa">● B级（推估）</span> 公开数据推算 ｜
-    <span style="color:#fbbf24">● C级（假设）</span> 模型参数校准 ｜
-    <span style="color:#f87171">● D级（缺数）</span> 无公开数据支撑
+  <div style="margin:12px 0;padding:10px 14px;background:var(--ui-soft);border:1px solid var(--ui-line);border-radius:10px;font-size:11.5px;color:var(--ui-muted);line-height:1.7;">
+    📊 <b style="color:var(--ui-text);">数据可信度：</b>
+    <span style="color:var(--ui-green);">● A级（实测）</span> 统计公报/镇街公开数据 ｜
+    <span style="color:var(--ui-blue);">● B级（推估）</span> 公开数据推算 ｜
+    <span style="color:var(--ui-gold);">● C级（假设）</span> 模型参数校准 ｜
+    <span style="color:var(--ui-red);">● D级（缺数）</span> 无公开数据支撑
     <br>模型固定随机种子42，跑4000次蒙特卡洛，结果可复现。
   </div>
 
   <!-- 一页看懂 -->
   <div class="card">
     <h2>一、一页看懂：现在什么状态</h2>
-    <div style="margin:0 0 10px;padding:9px 13px;background:rgba(239,107,107,.08);border:1px solid rgba(239,107,107,.3);border-radius:9px;font-size:12px;color:#f2b8b8;line-height:1.7">
-      📌 <b>2026年1-8月最新（剪刀差）：</b>规上工业增加值 <b style="color:#4ade80">+8.9%</b>、工业用电+11.5%，但固定资产投资 <b style="color:#f87171">−34.1%</b>、工业投资 <b style="color:#f87171">−46.7%</b>、基建−35.3%。<b>生产在回暖、投资在失速，后劲问题比眼前增速更关键。</b>
+    <div style="margin:0 0 10px;padding:9px 13px;background:var(--ui-soft);border:1px solid var(--ui-line);border-radius:9px;font-size:12px;color:var(--ui-red);line-height:1.7;">
+      📌 <b>2026年1-8月最新（剪刀差）：</b>规上工业增加值 <b style="color:var(--ui-green);">+8.9%</b>、工业用电+11.5%，但固定资产投资 <b style="color:var(--ui-red);">−34.1%</b>、工业投资 <b style="color:var(--ui-red);">−46.7%</b>、基建−35.3%。<b>生产在回暖、投资在失速，后劲问题比眼前增速更关键。</b>
     </div>
     <div class="lights">
       <div class="g"><span class="dot"></span>GDP过千亿：1005亿、+5.5%，广东首个千亿县</div>
@@ -213,7 +255,7 @@ ol.find li{margin-bottom:10px;line-height:1.8;font-size:13px;color:#c8d3e0}
       <div class="r"><span class="dot"></span>固投：2025年−18.8%，2026年1-8月−34.1%</div>
       <div class="r"><span class="dot"></span>工业投资腰斩：2026年1-8月−46.7%</div>
     </div>
-    <p style="font-size:13px;color:#cbd5e1;margin:8px 0 0">一句话：<b style="color:#fbbf24">眼前的工业还在高负荷运转、新产能在释放；但投资这台"播种机"在降速，今年少播的种，三五年后会反映到收成里。</b></p>
+    <p style="font-size:13px;color:var(--ui-text);margin:8px 0 0;">一句话：<b style="color:var(--ui-gold);">眼前的工业还在高负荷运转、新产能在释放；但投资这台"播种机"在降速，今年少播的种，三五年后会反映到收成里。</b></p>
   </div>
 
   <!-- 五条发现 -->
@@ -236,19 +278,19 @@ ol.find li{margin-bottom:10px;line-height:1.8;font-size:13px;color:#c8d3e0}
       <div class="kpi"><div class="v">549亿</div><div class="l">二产 · +6.9%</div></div>
       <div class="kpi"><div class="v">124万</div><div class="l">常住人口</div></div>
       <div class="kpi"><div class="v">686家</div><div class="l">高新技术企业</div></div>
-      <div class="kpi"><div class="v" style="color:#f87171">-18.8%</div><div class="l">固定资产投资</div></div>
+      <div class="kpi"><div class="v" style="color:var(--ui-red);">-18.8%</div><div class="l">固定资产投资</div></div>
       <div class="kpi"><div class="v">297亿</div><div class="l">社消零 · +3.9%</div></div>
       <div class="kpi"><div class="v">95.3亿</div><div class="l">一般公共预算</div></div>
       <div class="kpi"><div class="v">1028万</div><div class="l">年游客人次</div></div>
     </div>
     <div class="two">
       <div>
-        <h3 style="margin-top:6px">三次产业结构</h3>
+        <h3 style="margin-top:6px;">三次产业结构</h3>
         <div id="rStruct" class="chart"></div>
         <div class="plain"><span class="lab">人话版</span>博罗每赚100块，55块来自工厂，35块来自商场餐馆旅游，还有11块来自种地。和市中心城区比，博罗农业占比不低，但这正是它的特色——近49万农村人口、大湾区的菜篮子，都在这11块里。</div>
       </div>
       <div>
-        <h3 style="margin-top:6px">工业两大引擎增速</h3>
+        <h3 style="margin-top:6px;">工业两大引擎增速</h3>
         <div id="rInd" class="chart"></div>
         <div class="plain"><span class="lab">人话版</span>电子信息一年增长23%，是跑得最快的行业；电气机械增长13.7%。这两个行业加起来占了规上工业的三分之一还多，是博罗工业的两台主发动机，而且都和东莞深圳的产业链连着。</div>
       </div>
@@ -267,15 +309,15 @@ ol.find li{margin-bottom:10px;line-height:1.8;font-size:13px;color:#c8d3e0}
   </div>
 
   <!-- 决策者三件事 -->
-  <div class="card" style="border-color:#7f1d1d">
+  <div class="card" style="border-color:var(--ui-line);">
     <h2>五、决策者最该重视的三件事</h2>
     <h3>1. 两本账分开看：常规波动 vs 现实场景</h3>
-    <p style="font-size:12.5px;color:#cbd5e1;margin:0;line-height:1.85">常规敏感性里，投资、外需等参数扰动，投资与外需靠前；另一本是单独做的<b>受控场景压测</b>——把"关键项目投产延期""通道拥堵"这类现实里真可能发生的事单独压一遍，它们不在常规排序里，但一旦发生更直接。</p>
+    <p style="font-size:12.5px;color:var(--ui-text);margin:0;line-height:1.85;">常规敏感性里，投资、外需等参数扰动，投资与外需靠前；另一本是单独做的<b>受控场景压测</b>——把"关键项目投产延期""通道拥堵"这类现实里真可能发生的事单独压一遍，它们不在常规排序里，但一旦发生更直接。</p>
     <h3>2. 先做"影响大、自己可控"的事</h3>
     <div id="rMatrix" class="chart"></div>
     <div class="plain"><span class="lab">人话版</span>越靠右上角，越是"自己说了算、又管用"的事——盯投产节点、做园区配套、打通道，都在这一片；而外需、全球环境虽然热闹，钥匙不全在自己手里。先把自己能掌控的事办好，心里才踏实。</div>
     <h3>3. 时间窗口不等人</h3>
-    <p style="font-size:12.5px;color:#cbd5e1;margin:0">"再等等、稳一点"听起来轻，但在有明确投产节点的系统里，晚一点会明显拉低达标可能。<b style="color:#f87171">该上的项目、该通的路，窗口就这几年。</b></p>
+    <p style="font-size:12.5px;color:var(--ui-text);margin:0;">"再等等、稳一点"听起来轻，但在有明确投产节点的系统里，晚一点会明显拉低达标可能。<b style="color:var(--ui-red);">该上的项目、该通的路，窗口就这几年。</b></p>
   </div>
 
   <!-- 因素影响 -->
@@ -284,9 +326,9 @@ ol.find li{margin-bottom:10px;line-height:1.8;font-size:13px;color:#c8d3e0}
     <div id="rCoef" class="chart"></div>
     <div class="plain"><span class="lab">怎么看</span>这里展示共享模型中五条发展路径与模拟总产值的相关程度，标签和数值来自同一套模型路径定义。它描述的是<b>模型内部的联动</b>，不是现实世界已经证实的因果关系，也不能单独当作政策优先级排序。房地产投资等没有作为共享模型独立路径的指标，不混入这张系数图；它们应在相应的现实数据或压力情景中另行讨论。</div>
 
-    <div style="margin-top:14px;padding-top:12px;border-top:1px solid #1c2739">
-      <div style="font-size:13px;font-weight:700;color:#fbbf24;margin-bottom:8px">补充：参数敏感性分析（参数微分）</div>
-      <div class="plain" style="font-size:12.5px">
+    <div style="margin-top:14px;padding-top:12px;border-top:1px solid var(--ui-line);">
+      <div style="font-size:13px;font-weight:700;color:var(--ui-gold);margin-bottom:8px;">补充：参数敏感性分析（参数微分）</div>
+      <div class="plain" style="font-size:12.5px;">
         除了上面的相关系数，本项目还做了<b>参数敏感性分析</b>：保持其他四条路不变，只把某一条路的均值单独调高或调低 20%，用<b>同一个随机种子</b>重新跑蒙特卡洛（控制变量法），看达标概率和中位产值变多少。<br><br>
         结果提示：在模型内部，<b>双引擎·电子信息+新能源</b>这条路的参数最敏感——它上下动 20%，达标概率的摆动幅度最大；<b>一产·特色农业</b>最不敏感，±20% 对整体结果影响有限。三产文旅、工业底盘、融深通道居中。<br><br>
         <b>两本账，别混：</b>这里的参数敏感性是"参数微分"——回答"哪个参数最敏感"；⑥风洞页的受控场景是"事件注入"——回答"如果这件事发生会怎样"。前者是数学上的偏导，后者是现实中的情景，两把尺子两个问题，不放在同一个排序里比。<br><br>
@@ -297,7 +339,7 @@ ol.find li{margin-bottom:10px;line-height:1.8;font-size:13px;color:#c8d3e0}
 
   <!-- 老百姓 -->
   <div class="card people">
-    <h2 style="border-color:#713f12;color:#fbbf24">七、这和普通老百姓有什么关系</h2>
+    <h2 style="border-color:var(--ui-line);color:var(--ui-gold);">七、这和普通老百姓有什么关系</h2>
     <div class="two">
       <div><div class="q">在园洲石湾上班，机会会更多吗？</div><div class="a">西边挨着东莞，工厂和配套多，产业承接带来的岗位首先落在这一片，家门口的工作机会会跟着多。</div></div>
       <div><div class="q">柏塘种茶、福田种菜，能卖出更好价钱吗？</div><div class="a">山茶菜心是地理标志品牌，品牌化、电商卖全国，收购价和农户收入都有提升空间。</div></div>
@@ -309,25 +351,25 @@ ol.find li{margin-bottom:10px;line-height:1.8;font-size:13px;color:#c8d3e0}
   <!-- 行动建议 -->
   <div class="card">
     <h2>八、行动建议（按轻重缓急）</h2>
-    <div class="action"><div class="pri" style="background:#b91c1c">优先</div><div class="body"><b>盯紧新投产项目节点</b><p>把重大项目列清单、节点到人，尽量避免延期，换挡期增长底盘才稳。</p></div></div>
-    <div class="action"><div class="pri" style="background:#b91c1c">优先</div><div class="body"><b>接住东莞深圳外溢</b><p>做强园洲石湾承接平台和深莞共建园，把区位优势变成实实在在的项目和岗位。</p></div></div>
-    <div class="action"><div class="pri" style="background:#c2410c">重要</div><div class="body"><b>做强罗浮山过夜经济</b><p>补住宿、夜间消费和康养配套，让千万游客多留半天、多消费一笔。</p></div></div>
-    <div class="action"><div class="pri" style="background:#c2410c">重要</div><div class="body"><b>特色农业品牌化</b><p>把山茶、菜心、南药做成品牌、打通电商，带动近49万农村人口增收。</p></div></div>
-    <div class="action"><div class="pri" style="background:#15803d">持续</div><div class="body"><b>打通融深融莞通道</b><p>用好高铁、枢纽和过江通道，缩短通勤物流时间，放大通道效应。</p></div></div>
-    <p style="font-size:11px;color:#5b6b82;margin:10px 0 0">建议方向对应博罗"产业强县、文旅兴旺、乡村振兴、融深融莞"等官方战略表述，为模拟推演的优先级提示，非替代官方决策。</p>
+    <div class="action"><div class="pri" style="background:var(--ui-panel);">优先</div><div class="body"><b>盯紧新投产项目节点</b><p>把重大项目列清单、节点到人，尽量避免延期，换挡期增长底盘才稳。</p></div></div>
+    <div class="action"><div class="pri" style="background:var(--ui-panel);">优先</div><div class="body"><b>接住东莞深圳外溢</b><p>做强园洲石湾承接平台和深莞共建园，把区位优势变成实实在在的项目和岗位。</p></div></div>
+    <div class="action"><div class="pri" style="background:var(--ui-panel);">重要</div><div class="body"><b>做强罗浮山过夜经济</b><p>补住宿、夜间消费和康养配套，让千万游客多留半天、多消费一笔。</p></div></div>
+    <div class="action"><div class="pri" style="background:var(--ui-panel);">重要</div><div class="body"><b>特色农业品牌化</b><p>把山茶、菜心、南药做成品牌、打通电商，带动近49万农村人口增收。</p></div></div>
+    <div class="action"><div class="pri" style="background:var(--ui-panel);">持续</div><div class="body"><b>打通融深融莞通道</b><p>用好高铁、枢纽和过江通道，缩短通勤物流时间，放大通道效应。</p></div></div>
+    <p style="font-size:11px;color:var(--ui-muted);margin:10px 0 0;">建议方向对应博罗"产业强县、文旅兴旺、乡村振兴、融深融莞"等官方战略表述，为模拟推演的优先级提示，非替代官方决策。</p>
   </div>
 
   <!-- 数据来源 -->
   <div class="card">
     <h2>九、数据来源与分级</h2>
-    <details class="bl-tail-evidence"><summary>查看原始来源清单</summary><div class="bl-tail-evidence-body"><div class="src-list">
-      <div><span class="grade" style="background:#14532d">A</span><b>实测</b>：统计公报、政府工作报告中直接给出的数字</div>
-      <div><span class="grade" style="background:#1e40af">B</span><b>推估</b>：部分历史序列按公开增速回推</div>
-      <div><span class="grade" style="background:#713f12">C</span><b>代理</b>：镇街级联系与供给代理，非逐镇街实查</div>
-      <div><span class="grade" style="background:#7f1d1d">D</span><b>假设</b>：网络边权重、路径贡献、跨城通勤强度</div>
-    </div></div></details>
+    <div class="src-list">
+      <div><span class="grade" style="background:var(--ui-panel);">A</span><b>实测</b>：统计公报、政府工作报告中直接给出的数字</div>
+      <div><span class="grade" style="background:var(--ui-panel);">B</span><b>推估</b>：部分历史序列按公开增速回推</div>
+      <div><span class="grade" style="background:var(--ui-panel);">C</span><b>代理</b>：镇街级联系与供给代理，非逐镇街实查</div>
+      <div><span class="grade" style="background:var(--ui-panel);">D</span><b>假设</b>：网络边权重、路径贡献、跨城通勤强度</div>
+    </div>
     <h3>主要公开来源</h3>
-    <div style="font-size:12px;color:#cbd5e1;line-height:2">
+    <div style="font-size:12px;color:var(--ui-text);line-height:2;">
       · 博罗县人民政府门户网站及统计部门发布<br>
       · 《2025年博罗国民经济和社会发展统计公报》<br>
       · 博罗县政府工作报告、县委主要领导公开访谈<br>
@@ -353,8 +395,8 @@ ol.find li{margin-bottom:10px;line-height:1.8;font-size:13px;color:#c8d3e0}
     <h2>十一、作者介绍</h2>
     <div class="author">
       <div class="badge">张凌</div>
-      <div style="flex:1;min-width:240px">
-        <div style="font-size:16px;font-weight:700;color:#fbbf24">张凌 博士</div>
+      <div style="flex:1;min-width:240px;">
+        <div style="font-size:16px;font-weight:700;color:var(--ui-gold);">张凌 博士</div>
         <div class="roles">
           · 高校副教授<br>
           · 南粤优秀教师<br>
@@ -368,11 +410,11 @@ ol.find li{margin-bottom:10px;line-height:1.8;font-size:13px;color:#c8d3e0}
   </div>
 
   <div class="card">
-    <p class="bigquote" style="margin:4px 0">博罗的较量，不在补齐自己缺的，<br>而在看清<b style="color:#4ade80">自己在大湾区网络里，已经占着哪些位置、还能多占几个</b>。</p>
-    <p class="disc" style="margin-top:14px">本报告为Demo演示版本。数据以博罗县统计公报与官方发布为准；2030年1600亿等为参考外延目标，非现行刚性指标。模拟结果仅代表当前数据、参数与规则下的压力测试，不代表精确预测，亦不构成投资建议。</p>
+    <p class="bigquote" style="margin:4px 0;">博罗的较量，不在补齐自己缺的，<br>而在看清<b style="color:var(--ui-green);">自己在大湾区网络里，已经占着哪些位置、还能多占几个</b>。</p>
+    <p class="disc" style="margin-top:14px;">本报告为Demo演示版本。数据以博罗县统计公报与官方发布为准；2030年1600亿等为参考外延目标，非现行刚性指标。模拟结果仅代表当前数据、参数与规则下的压力测试，不代表精确预测，亦不构成投资建议。</p>
   </div>
 
-  <div style="text-align:center;margin:22px 0"><a class="btn" href="index.html">回到首页</a></div>
+  <div style="text-align:center;margin:22px 0;"><a class="btn" href="index.html">回到首页</a></div>
 </div>
 
 <script>
@@ -489,5 +531,4 @@ var _hmt = _hmt || [];
   s.parentNode.insertBefore(hm, s);
 })();
 </script>
-<script defer src="assets/boluo-unified-nav.js"></script>
 </body></html>

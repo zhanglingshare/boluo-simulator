@@ -17,6 +17,10 @@ on:
       - "network.html"
       - "town.html"
       - "assets/boluo-ui.css"
+      - "assets/boluo-layout.css"
+      - "assets/boluo-system.js"
+      - "assets/boluo-participation.js"
+      - "tests/boluo-system-browser.cjs"
       - "tests/boluo-ui-browser-check.cjs"
       - ".github/workflows/boluo-ui-browser-check.yml"
 
@@ -46,7 +50,9 @@ jobs:
           cat /tmp/boluo-ui-http.log
           exit 1
       - name: Check all 11 non-holographic pages at mobile and desktop widths
-        run: node tests/boluo-ui-browser-check.cjs
+        run: |
+          node tests/boluo-ui-browser-check.cjs
+          node tests/boluo-system-browser.cjs
       - name: Upload visual audit screenshots
         if: always()
         uses: actions/upload-artifact@v4

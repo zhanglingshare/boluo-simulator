@@ -58,6 +58,8 @@ async function run(){
   const topic=await browser.newPage({viewport:{width:1440,height:900}});
   topic.on('pageerror',e=>errors.push('topic '+e.message));
   await topic.goto(BASE+'industry-changes.html?from=today&topic='+encodeURIComponent('公开新闻观察'),{waitUntil:'domcontentloaded'});
+  await topic.locator('.bl-header').waitFor();
+  await topic.locator('.bp-full-disclosure > summary').click();
   await topic.locator('.ibi-trigger').click();
   assert.match(await topic.locator('.ibi-status').innerText(),/尚未绑定结构事件/,'default C004 must not be assumed as real causal link');
   await topic.locator('#ec-feed-list [data-event="C006"]').click({force:true});

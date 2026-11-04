@@ -5,7 +5,9 @@ on:
     paths:
       - 'plan-with-me.html'
       - 'assets/boluo-plan-life.*'
-      - 'assets/boluo-mh-six.css'
+      - 'assets/boluo-ui.css'
+      - 'assets/boluo-layout.css'
+      - 'assets/boluo-system.js'
       - 'assets/boluo-six-native.css'
       - 'assets/boluo-six-native.js'
       - 'assets/boluo-participation.*'
@@ -26,7 +28,9 @@ on:
     paths:
       - 'plan-with-me.html'
       - 'assets/boluo-plan-life.*'
-      - 'assets/boluo-mh-six.css'
+      - 'assets/boluo-ui.css'
+      - 'assets/boluo-layout.css'
+      - 'assets/boluo-system.js'
       - 'assets/boluo-six-native.css'
       - 'assets/boluo-six-native.js'
       - 'assets/boluo-participation.*'

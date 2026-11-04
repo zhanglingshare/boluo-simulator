@@ -3,47 +3,51 @@
 <title>04 · 博罗基本面｜真实数据与发展约束</title>
 <script src="lib/echarts.min.js"></script>
 <style>
-*{box-sizing:border-box}
-body{margin:0;background:#080b12;color:#e6edf3;font:14px/1.6 -apple-system,"PingFang SC","Microsoft YaHei",sans-serif}
-.nav{position:sticky;top:0;z-index:50;display:flex;gap:5px;align-items:center;padding:9px 14px;background:rgba(8,11,18,.95);border-bottom:1px solid #1b2434;overflow-x:auto}
-.nav b{font-size:14px;margin-right:6px;flex:none}
-.nav a{background:#131c2b;color:#93a4bd;border:1px solid #22304a;padding:6px 12px;border-radius:20px;font-size:12.5px;text-decoration:none;white-space:nowrap;flex:none}
-.nav a.on{background:#15803d;border-color:#22c55e;color:#fff;font-weight:600}
-.wrap{max-width:960px;margin:auto;padding:16px}
-h1{font-size:20px;margin:0 0 2px}
-.sub{color:#8fa3bf;font-size:13px;margin:0 0 16px}
-.kpis{display:grid;grid-template-columns:repeat(4,1fr);gap:10px;margin-bottom:16px}
-@media(max-width:700px){.kpis{grid-template-columns:repeat(2,1fr)}}
-.kpi{background:#0e1523;border:1px solid #1c2739;border-radius:10px;padding:14px;text-align:center}
-.kpi .v{font-size:22px;font-weight:800;color:#22c55e;font-variant-numeric:tabular-nums}
-.kpi .l{font-size:11px;color:#6b7280;margin-top:2px}
-.kpi .d{font-size:10.5px;color:#4ade80;margin-top:2px}
-.grid2{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-bottom:12px}
-@media(max-width:700px){.grid2{grid-template-columns:1fr}}
-.card{background:#0e1523;border:1px solid #1c2739;border-radius:12px;padding:16px}
-.card h2{font-size:14px;margin:0 0 8px;color:#cbd5e1}
-.chart{width:100%;height:280px}
-.plain{background:#0f1a0e;border:1px solid #1a3a1a;border-left:3px solid #22c55e;border-radius:8px;padding:10px 12px;font-size:12.5px;line-height:1.9;color:#c8e6c9;margin-top:10px}
-.plain .lab{display:block;font-size:10.5px;font-weight:800;color:#4ade80;letter-spacing:1px;margin-bottom:3px}
-.next{text-align:center;margin-top:18px}
-.next a{background:#15803d;color:#fff;padding:10px 24px;border-radius:8px;text-decoration:none;font-weight:600;display:inline-block}
-@media(min-width:1024px){.wrap{max-width:1200px!important;padding:24px}}</style><link rel="stylesheet" href="assets/boluo-ui.css">
-<link rel="stylesheet" href="assets/boluo-journey.css">
+*{box-sizing:border-box;}
+body{margin:0;background:var(--ui-panel);color:var(--ui-text);font:14px/1.6 -apple-system,"PingFang SC","Microsoft YaHei",sans-serif;}
+.nav{position:sticky;top:0;z-index:50;display:flex;gap:5px;align-items:center;padding:9px 14px;background:var(--ui-panel);border-bottom:1px solid var(--ui-line);overflow-x:auto;}
+.nav b{font-size:14px;margin-right:6px;flex:none;}
+.nav a{background:var(--ui-panel);color:var(--ui-muted);border:1px solid var(--ui-line);padding:6px 12px;border-radius:20px;font-size:12.5px;text-decoration:none;white-space:nowrap;flex:none;}
+.nav a.on{background:var(--ui-panel);border-color:var(--ui-line);color:var(--ui-text);font-weight:600;}
+.wrap{max-width:960px;margin:auto;padding:16px;}
+h1{font-size:20px;margin:0 0 2px;}
+.sub{color:var(--ui-muted);font-size:13px;margin:0 0 16px;}
+.kpis{display:grid;grid-template-columns:repeat(4,1fr);gap:10px;margin-bottom:16px;}
+@media (max-width:700px){
+.kpis{grid-template-columns:repeat(2,1fr);}
+}
+.kpi{background:var(--ui-panel);border:1px solid var(--ui-line);border-radius:10px;padding:14px;text-align:center;}
+.kpi .v{font-size:22px;font-weight:800;color:var(--ui-green);font-variant-numeric:tabular-nums;}
+.kpi .l{font-size:11px;color:var(--ui-muted);margin-top:2px;}
+.kpi .d{font-size:10.5px;color:var(--ui-green);margin-top:2px;}
+.grid2{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-bottom:12px;}
+@media (max-width:700px){
+.grid2{grid-template-columns:1fr;}
+}
+.card{background:var(--ui-panel);border:1px solid var(--ui-line);border-radius:12px;padding:16px;}
+.card h2{font-size:14px;margin:0 0 8px;color:var(--ui-text);}
+.chart{width:100%;height:280px;}
+.plain{background:var(--ui-panel);border:1px solid var(--ui-line);border-left:3px solid var(--ui-line);border-radius:8px;padding:10px 12px;font-size:12.5px;line-height:1.9;color:var(--ui-text);margin-top:10px;}
+.plain .lab{display:block;font-size:10.5px;font-weight:800;color:var(--ui-green);letter-spacing:1px;margin-bottom:3px;}
+.next{text-align:center;margin-top:18px;}
+.next a{background:var(--ui-panel);color:var(--ui-text);padding:10px 24px;border-radius:8px;text-decoration:none;font-weight:600;display:inline-block;}
+@media (min-width:1024px){
+.wrap{max-width:1200px!important;padding:24px;}
+}
+</style><link rel="stylesheet" href="assets/boluo-journey.css">
 <script defer src="assets/boluo-journey.js"></script>
-<link rel="stylesheet" href="assets/boluo-editorial.css">
-<link rel="stylesheet" href="assets/boluo-world-v3.css">
 <script defer src="assets/boluo-world-v3.js"></script>
 <link rel="stylesheet" href="assets/boluo-intel-bridge.css">
 <script defer src="assets/boluo-compare-model.js"></script>
 <script defer src="assets/boluo-intel-engine.js"></script>
 <script defer src="assets/boluo-intel-bridge.js"></script>
-<link rel="stylesheet" href="assets/boluo-mh-six.css">
-<link rel="stylesheet" href="assets/boluo-six-native.css">
 <script defer src="assets/boluo-six-native.js"></script>
-<link rel="stylesheet" href="assets/boluo-participation.css">
+<script defer src="bl-viz/data.js"></script>
 <script defer src="assets/boluo-participation.js"></script>
-<link rel="stylesheet" href="assets/boluo-unified-nav.css">
-</head><body class="bl-ui bl-dark bl-ui--who mh-six" data-bl-page="who" data-bl-journey="basic">
+<link rel="stylesheet" href="assets/boluo-layout.css">
+<link rel="stylesheet" href="assets/boluo-ui.css">
+<script defer src="assets/boluo-system.js"></script>
+</head><body id="boluo-app" class="bl-site bl-ui bl-dark bl-ui--who mh-six" data-bl-page="who" data-bl-journey="basic" data-ui-page="basic">
 
 <div class="nav">
   <b>博罗产业风洞</b>
@@ -77,12 +81,12 @@ h1{font-size:20px;margin:0 0 2px}
     <div class="card">
       <h2>📈 GDP怎么涨上来的</h2>
       <div id="c1" class="chart"></div>
-      <div class="plain" style="margin-top:8px"><span class="lab">人话</span>博罗用了多少年从几百亿冲到一千亿？这条线就是答案。2025年迈过千亿门槛。2024年值采用最终核实口径。</div>
+      <div class="plain" style="margin-top:8px;"><span class="lab">人话</span>博罗用了多少年从几百亿冲到一千亿？这条线就是答案。2025年迈过千亿门槛。2024年值采用最终核实口径。</div>
     </div>
     <div class="card">
       <h2>🥧 三次产业结构</h2>
       <div id="c2" class="chart"></div>
-      <div class="plain" style="margin-top:8px"><span class="lab">人话</span>工业占一半多，服务业占三成多，农业一成多。和惠城（三产69%）完全不同——博罗是工业县。</div>
+      <div class="plain" style="margin-top:8px;"><span class="lab">人话</span>工业占一半多，服务业占三成多，农业一成多。和惠城（三产69%）完全不同——博罗是工业县。</div>
     </div>
   </div>
 
@@ -90,12 +94,12 @@ h1{font-size:20px;margin:0 0 2px}
     <div class="card">
       <h2>规上工业：哪类行业在涨</h2>
       <div id="c3" class="chart"></div>
-      <div class="plain" style="margin-top:8px"><span class="lab">人话</span>电子设备制造增加值+23.0%，占规上工业增加值23.2%；电气机械+13.7%，占14.2%。两项占比合计37.4%，增速与占比不能混淆。</div>
+      <div class="plain" style="margin-top:8px;"><span class="lab">人话</span>电子设备制造增加值+23.0%，占规上工业增加值23.2%；电气机械+13.7%，占14.2%。两项占比合计37.4%，增速与占比不能混淆。</div>
     </div>
     <div class="card">
       <h2>工业基本盘：四个结构信号</h2>
       <div id="c4" class="chart"></div>
-      <div class="plain" style="margin-top:8px"><span class="lab">人话</span>这些指标分别反映工业所有制、企业规模、工业投资和创新主体。原镇街图混用了企业数和产值，已撤下，不再虚构统一排名。</div>
+      <div class="plain" style="margin-top:8px;"><span class="lab">人话</span>这些指标分别反映工业所有制、企业规模、工业投资和创新主体。原镇街图混用了企业数和产值，已撤下，不再虚构统一排名。</div>
     </div>
   </div>
 
@@ -103,24 +107,24 @@ h1{font-size:20px;margin:0 0 2px}
     <div class="card">
       <h2>✂️ 工业在涨，投资在跌</h2>
       <div id="c5" class="chart"></div>
-      <div class="plain" style="margin-top:8px"><span class="lab">人话</span>规上工业+8.7%，但固投-18.8%、房地产-47.6%。工业增长和投资下降同时出现；但不能据此认定增长全部来自旧产能，需要核验新增项目、产能利用率与订单变化。</div>
+      <div class="plain" style="margin-top:8px;"><span class="lab">人话</span>规上工业+8.7%，但固投-18.8%、房地产-47.6%。工业增长和投资下降同时出现；但不能据此认定增长全部来自旧产能，需要核验新增项目、产能利用率与订单变化。</div>
     </div>
     <div class="card">
       <h2>👥 人在哪</h2>
       <div id="c6" class="chart"></div>
-      <div class="plain" style="margin-top:8px"><span class="lab">人话</span>常住124万，城镇74.6万，农村49.3万。农村人口占四成——这是博罗和纯城区的区别。</div>
+      <div class="plain" style="margin-top:8px;"><span class="lab">人话</span>常住124万，城镇74.6万，农村49.3万。农村人口占四成——这是博罗和纯城区的区别。</div>
     </div>
   </div>
 
-  <div class="card" style="margin-bottom:12px">
+  <div class="card" style="margin-bottom:12px;">
     <h2>🎯 从1005亿到1600亿，差多少</h2>
-    <div id="c7" class="chart" style="height:260px"></div>
+    <div id="c7" class="chart" style="height:260px;"></div>
     <div class="plain">
       <span class="lab">人话</span>2025年GDP现价1005.45亿元，2030年1600亿元为规划目标。若只做名义量数学换算，五年复合增幅约9.7%／年，不能直接与按不变价计算的2025年实际增长5.5%比较。各年度点仅为等额插值示意，非官方逐年目标或预测。
     </div>
   </div>
 
-  <div class="next"><a id="bl-compare-next" href="relation-compare.html?from=basic">下一步：05 看关系加入前 VS 加入后 →</a><a class="ia-baseline-link" data-bl-intel-link href="intel-lab.html">查看当前事件的证据盲区 →</a><p style="font-size:11px;color:#93a4bd">继续对照同一事件的局部关系变化；原有的 <a href="choices.html" style="color:#93bdda">五条发展路径</a> 仍保留。</p></div>
+  <div class="next"><a id="bl-compare-next" href="relation-compare.html?from=basic">下一步：05 看关系加入前 VS 加入后 →</a><a class="ia-baseline-link" data-bl-intel-link href="intel-lab.html">查看当前事件的证据盲区 →</a><p style="font-size:11px;color:var(--ui-muted);">继续对照同一事件的局部关系变化；原有的 <a href="choices.html" style="color:var(--ui-blue);">五条发展路径</a> 仍保留。</p></div>
 </div>
 
 <script>
@@ -219,9 +223,9 @@ echarts.init(document.getElementById('c7')).setOption({
   <button onclick="sharePage()">🔁 转给朋友</button>
 </div>
 <style>
-.likebar{position:relative;bottom:auto;left:auto;transform:none;display:flex;justify-content:center;margin:20px 0;background:rgba(15,23,42,.96);border:1px solid #3b82f6;border-radius:24px;padding:9px 20px;display:flex;gap:22px;z-index:999;box-shadow:0 6px 24px rgba(0,0,0,.6)}
-.likebar button{background:none;border:none;color:#e2e8f0;font-size:14px;cursor:pointer}
-.likebar button:active{transform:scale(1.15)}
+.likebar{position:relative;bottom:auto;left:auto;transform:none;display:flex;justify-content:center;margin:20px 0;background:var(--ui-panel);border:1px solid var(--ui-line);border-radius:24px;padding:9px 20px;display:flex;gap:22px;z-index:999;box-shadow:none;}
+.likebar button{background:none;border:none;color:var(--ui-text);font-size:14px;cursor:pointer;}
+.likebar button:active{transform:scale(1.15);}
 </style>
 <script>
 (function(){
@@ -252,5 +256,4 @@ var _hmt = _hmt || [];
   s.parentNode.insertBefore(hm, s);
 })();
 </script>
-<script defer src="assets/boluo-unified-nav.js"></script>
 </body></html>

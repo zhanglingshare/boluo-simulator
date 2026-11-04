@@ -10,6 +10,8 @@ async function run(){
    const page=await browser.newPage({viewport:size,deviceScaleFactor:1,isMobile:size.width<500,hasTouch:size.width<500});
    page.on('pageerror',e=>errors.push(size.width+': '+e.message));
    await page.goto(base+'industry-changes.html?from=today&topic='+encodeURIComponent('公开资料观察'),{waitUntil:'domcontentloaded',timeout:30000});
+  await page.locator('.bl-header').waitFor();
+  if(await page.locator('.bp-full-disclosure').count())await page.locator('.bp-full-disclosure > summary').click();
    await page.waitForFunction(()=>document.querySelector('#ec-total')?.textContent==='12'&&document.querySelectorAll('#ec-graph [data-node]').length>=4,{timeout:18000});
    assert.equal(await page.locator('#ec-feed-list .ec-feed-item').count(),12);
    assert.match(await page.locator('#detailTitle').innerText(),/签约4宗/);

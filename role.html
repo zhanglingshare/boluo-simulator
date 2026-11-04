@@ -2,46 +2,50 @@
 <html lang="zh-CN"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
 <title>博罗产业风洞 · 你在网里哪个位置</title>
 <style>
-*{box-sizing:border-box;margin:0;padding:0}
-body{background:#080b12;color:#e6edf3;font:14px/1.6 -apple-system,"PingFang SC","Microsoft YaHei",sans-serif}
-.nav{position:sticky;top:0;z-index:50;display:flex;gap:5px;align-items:center;padding:9px 14px;background:rgba(8,11,18,.95);border-bottom:1px solid #1b2434;backdrop-filter:blur(8px);overflow-x:auto}
-.nav b{font-size:14px;margin-right:6px;flex:none}
-.nav a{background:#131c2b;color:#93a4bd;border:1px solid #22304a;padding:6px 12px;border-radius:20px;font-size:12.5px;text-decoration:none;white-space:nowrap;flex:none}
-.nav a.on{background:#15803d;border-color:#22c55e;color:#fff;font-weight:600}
-.wrap{max-width:1200px;margin:auto;padding:20px 16px}
-h1{font-size:22px;margin-bottom:4px}
-.sub{color:#8fa3bf;font-size:13px;margin-bottom:16px}
-.roles{display:grid;grid-template-columns:repeat(auto-fit,minmax(160px,1fr));gap:10px;margin-bottom:16px}
-.rc{background:#0e1523;border:1px solid #1c2739;border-radius:10px;padding:14px;cursor:pointer;text-align:center;transition:.2s}
-.rc:hover{border-color:#22c55e}
-.rc.on{border-color:#22c55e;background:#0f1f18;box-shadow:0 0 12px rgba(34,197,94,.15)}
-.rc .i{font-size:28px}
-.rc .t{font-size:14px;font-weight:700;margin-top:4px}
-.rc .s{font-size:11px;color:#7d8fa8;margin-top:2px}
-.grid2{display:grid;grid-template-columns:1.2fr 1fr;gap:14px}
-@media(max-width:800px){.grid2{grid-template-columns:1fr}}
-.card{background:#0e1523;border:1px solid #1c2739;border-radius:10px;padding:14px;margin-bottom:10px}
-.card b{font-size:13px;color:#cbd5e1}
-.mut{color:#64748b;font-size:12px}
-.worry{background:#1a1015;border-left:3px solid #f87171;padding:8px 10px;margin:6px 0;border-radius:4px;font-size:12.5px;color:#fca5a5}
-.chk{display:flex;gap:8px;align-items:flex-start;padding:8px;border:1px solid #1c2739;border-radius:6px;margin:6px 0;cursor:pointer;transition:.15s}
-.chk:hover{border-color:#22c55e}
-.chk.on{border-color:#22c55e;background:#0f1f18}
-.chk input{margin-top:3px}
-.chk .t{font-size:13px;font-weight:600;color:#e6edf3}
-.chk .d{font-size:12px;color:#8fa3bf;margin:2px 0}
-.chk .g{font-size:11px;color:#4ade80}
-.cmp{display:flex;justify-content:space-between;padding:4px 0;border-bottom:1px solid #1c2739;font-size:12.5px}
-.cmp .l{color:#8fa3bf}
-.cmp .r.cy{color:#fbbf24;font-weight:600}
-.met{display:flex;justify-content:space-between;align-items:center;padding:6px 0;border-bottom:1px solid #1c2739;font-size:12.5px}
-.met .n{color:#8fa3bf}
-.met .a{color:#94a3b8}
-.met .b{color:#4ade80;font-weight:700}
-svg{width:100%;height:auto;background:radial-gradient(ellipse at 50% 45%,#0a1626,#060910);border-radius:10px}
-.disc{margin-top:16px;font-size:11px;color:#5b6b8b;line-height:1.6;padding:10px;background:#0a0f1a;border-radius:8px}
-</style><link rel="stylesheet" href="assets/boluo-ui.css">
-</head><body class="bl-ui bl-dark bl-ui--role" data-bl-page="role">
+*{box-sizing:border-box;margin:0;padding:0;}
+body{background:var(--ui-panel);color:var(--ui-text);font:14px/1.6 -apple-system,"PingFang SC","Microsoft YaHei",sans-serif;}
+.nav{position:sticky;top:0;z-index:50;display:flex;gap:5px;align-items:center;padding:9px 14px;background:var(--ui-panel);border-bottom:1px solid var(--ui-line);backdrop-filter:none;overflow-x:auto;}
+.nav b{font-size:14px;margin-right:6px;flex:none;}
+.nav a{background:var(--ui-panel);color:var(--ui-muted);border:1px solid var(--ui-line);padding:6px 12px;border-radius:20px;font-size:12.5px;text-decoration:none;white-space:nowrap;flex:none;}
+.nav a.on{background:var(--ui-panel);border-color:var(--ui-line);color:var(--ui-text);font-weight:600;}
+.wrap{max-width:1200px;margin:auto;padding:20px 16px;}
+h1{font-size:22px;margin-bottom:4px;}
+.sub{color:var(--ui-muted);font-size:13px;margin-bottom:16px;}
+.roles{display:grid;grid-template-columns:repeat(auto-fit,minmax(160px,1fr));gap:10px;margin-bottom:16px;}
+.rc{background:var(--ui-panel);border:1px solid var(--ui-line);border-radius:10px;padding:14px;cursor:pointer;text-align:center;transition:.2s;}
+.rc:hover{border-color:var(--ui-line);}
+.rc.on{border-color:var(--ui-line);background:var(--ui-panel);box-shadow:none;}
+.rc .i{font-size:28px;}
+.rc .t{font-size:14px;font-weight:700;margin-top:4px;}
+.rc .s{font-size:11px;color:var(--ui-muted);margin-top:2px;}
+.grid2{display:grid;grid-template-columns:1.2fr 1fr;gap:14px;}
+@media (max-width:800px){
+.grid2{grid-template-columns:1fr;}
+}
+.card{background:var(--ui-panel);border:1px solid var(--ui-line);border-radius:10px;padding:14px;margin-bottom:10px;}
+.card b{font-size:13px;color:var(--ui-text);}
+.mut{color:var(--ui-muted);font-size:12px;}
+.worry{background:var(--ui-panel);border-left:3px solid var(--ui-line);padding:8px 10px;margin:6px 0;border-radius:4px;font-size:12.5px;color:var(--ui-red);}
+.chk{display:flex;gap:8px;align-items:flex-start;padding:8px;border:1px solid var(--ui-line);border-radius:6px;margin:6px 0;cursor:pointer;transition:.15s;}
+.chk:hover{border-color:var(--ui-line);}
+.chk.on{border-color:var(--ui-line);background:var(--ui-panel);}
+.chk input{margin-top:3px;}
+.chk .t{font-size:13px;font-weight:600;color:var(--ui-text);}
+.chk .d{font-size:12px;color:var(--ui-muted);margin:2px 0;}
+.chk .g{font-size:11px;color:var(--ui-green);}
+.cmp{display:flex;justify-content:space-between;padding:4px 0;border-bottom:1px solid var(--ui-line);font-size:12.5px;}
+.cmp .l{color:var(--ui-muted);}
+.cmp .r.cy{color:var(--ui-gold);font-weight:600;}
+.met{display:flex;justify-content:space-between;align-items:center;padding:6px 0;border-bottom:1px solid var(--ui-line);font-size:12.5px;}
+.met .n{color:var(--ui-muted);}
+.met .a{color:var(--ui-muted);}
+.met .b{color:var(--ui-green);font-weight:700;}
+svg{width:100%;height:auto;background:var(--ui-panel);border-radius:10px;}
+.disc{margin-top:16px;font-size:11px;color:var(--ui-muted);line-height:1.6;padding:10px;background:var(--ui-panel);border-radius:8px;}
+</style><link rel="stylesheet" href="assets/boluo-layout.css">
+<link rel="stylesheet" href="assets/boluo-ui.css">
+<script defer src="assets/boluo-system.js"></script>
+</head><body id="boluo-app" class="bl-site bl-ui bl-dark bl-ui--role" data-bl-page="role" data-ui-page="role">
 
 <div class="nav">
   <b>博罗产业风洞</b>
