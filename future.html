@@ -3,6 +3,7 @@
 <title>博罗产业风洞 · 未来</title>
 <script src="lib/echarts.min.js"></script>
 <script src="model.js"></script>
+<script src="bl-viz/data.js"></script>
 <style>
 *{box-sizing:border-box}
 body{margin:0;background:#080b12;color:#e6edf3;font:14px/1.6 -apple-system,"PingFang SC","Microsoft YaHei",sans-serif}
@@ -53,6 +54,7 @@ table.sens td{padding:6px 8px;text-align:right;border-bottom:1px solid #152033;c
 #out{display:none}
 @media(min-width:1024px){.wrap{max-width:1200px!important;padding:24px}}</style><link rel="stylesheet" href="assets/boluo-ui.css">
 <link rel="stylesheet" href="assets/boluo-unified-nav.css">
+<link rel="stylesheet" href="assets/boluo-core-kpi.css">
 </head><body class="bl-ui bl-dark bl-ui--future" data-bl-page="future">
 
 <div class="nav">
@@ -216,7 +218,10 @@ table.sens td{padding:6px 8px;text-align:right;border-bottom:1px solid #152033;c
 // 算法内核已抽到同目录 model.js（HT 对象），future / windtunnel / report 三页共用。
 // 这里保留两个薄包装，供敏感性分析调用，行为与 HT.run 一致。
 const BASE=HT.BASE, TARGET=HT.TARGET, GLOBAL_SD=HT.NOISE_SD;
-const PATHS=HT.DEFAULT_PATHS;
+const _queryScene=new URLSearchParams(location.search).get("scene");
+let _storedScene="";try{_storedScene=localStorage.getItem("bl_v1_2026_selected_scenario")||"";}catch(e){}
+const _sceneKey=BL_SCENES[_queryScene]?_queryScene:BL_SCENES[_storedScene]?_storedScene:"";
+const PATHS=_sceneKey?BL_SCENES[_sceneKey].adjust(JSON.parse(JSON.stringify(HT.DEFAULT_PATHS))):HT.DEFAULT_PATHS;
 const charts={};
 function initC(id){const c=echarts.init(document.getElementById(id));charts[id]=c;return c}
 initC('chHist');initC('chStack');initC('chTorn');initC('chCoef');initC('chSens');
@@ -411,13 +416,14 @@ var _hmt = _hmt || [];
 </script>
 <script>
 function guess(n){
-  const msgs={
-    1:"你偏谨慎。模型跑出来中位数约1580亿——比你猜的要乐观。",
-    2:"你猜在中间。模型中位数约1580亿，正好落在你这个区间。",
-    3:"你偏乐观。模型跑出来只有约41%的概率过1600亿——比你想的要难。"
-  };
-  document.getElementById("guessOut").innerHTML="揭晓："+msgs[n]+"<br>下面这张分布，就是它跑了一万遍的结果。";
+ const s=window.sensBase&&window.sensBase.s;
+ const out=document.getElementById("guessOut");
+ if(!s){out.textContent="请先运行模拟。";return;}
+ const median=Math.round(s.p50),hit=s.hit.toFixed(1),N=+document.getElementById("selN").value;
+ const label=n===1?"1400亿以下":n===2?"1400—1600亿":"1600亿以上";
+ out.textContent="你的判断："+label+"。本次 "+N.toLocaleString("zh-CN")+" 次模型运行的中位数为 "+median.toLocaleString("zh-CN")+" 亿元，达到1600亿的样本比例为 "+hit+"%。这是当前情景的计算结果，不是现实预测。";
 }
 </script>
 <script defer src="assets/boluo-unified-nav.js"></script>
+<script defer src="assets/boluo-scenario-memory.js"></script>
 </body></html>
