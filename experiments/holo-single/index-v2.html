@@ -98,9 +98,54 @@ html,body{
 <link rel="stylesheet" href="../../assets/boluo-unified-nav.css">
 </head>
 <body>
+<style>
+.unified-nav{
+  position: sticky; top:0; z-index:100;
+  display:flex; align-items:center; justify-content:space-between;
+  padding:14px 28px;
+  background: rgba(255,255,255,.82);
+  backdrop-filter: blur(24px) saturate(1.8);
+  border-bottom:1px solid #e2e8f0;
+}
+.nav-brand{ font-weight:800; font-size:16px; color:#1a2b45; letter-spacing:.5px; }
+.nav-links{ display:flex; gap:8px; align-items:center; }
+.nav-links a, .dropdown-btn{
+  padding:8px 14px; border-radius:10px; text-decoration:none;
+  color:#64748b; font-size:13px; font-weight:500;
+  background:transparent; border:0; cursor:pointer;
+}
+.nav-links a:hover, .dropdown-btn:hover{ background:rgba(241,245,249,.9); color:#1a2b45; }
+.nav-links a.active{ background:rgba(74,143,231,.1); color:#4a8fe7; font-weight:600; }
+.nav-dropdown{ position:relative; }
+.dropdown-menu{
+  position:absolute; top:calc(100% + 8px); right:0;
+  background:#fff; border:1px solid #e2e8f0; border-radius:12px;
+  box-shadow:0 12px 32px rgba(30,58,95,.12);
+  min-width:180px; padding:6px; display:none;
+}
+.nav-dropdown:hover .dropdown-menu{ display:block; }
+.dropdown-menu a{ display:block; padding:10px 12px; border-radius:8px; }
+@media(max-width:768px){ .nav-links{ display:none; } }
+</style>
+<div class="unified-nav">
+  <div class="nav-brand">博罗 · 决策风洞</div>
+  <div class="nav-links">
+    <a href="../../holo-home-v11.html">总览</a>
+    <div class="nav-dropdown">
+      <button class="dropdown-btn">关系世界 ▾</button>
+      <div class="dropdown-menu">
+        <a href="index-v2.html" class="active">全县关系总览</a>
+        <a href="index-v2.html?entity=bt">柏塘镇视角</a>
+        <a href="../../relation-compare-v2.html">前后对比</a>
+      </div>
+    </div>
+    <a href="../../windtunnel-v2.html">风洞测试</a>
+    <a href="../../report.html">决策报告</a>
+  </div>
+</div>
 <div id="app">
   <div class="backdrop-gradient"></div>
-  <header class="topbar glass">
+  <header class="topbar glass" style="display:none">
     <div class="brand" aria-label="博罗关系世界"><div class="brand-glyph" aria-hidden="true"><i></i><i></i><i></i></div><div><b>博罗<span>关系世界</span></b><small>STRUCTURE · CONNECTION · DECISION</small></div></div>
     <div class="mode-switch" role="tablist" aria-label="探索模式"><button data-mode="universe" class="mode-tab active" role="tab" aria-selected="true">五群全景</button><button data-mode="relations" class="mode-tab" role="tab" aria-selected="false">关系追踪</button><button data-mode="flows" class="mode-tab" role="tab" aria-selected="false">流动边界</button><button data-mode="scenario" class="mode-tab" role="tab" aria-selected="false">结构对照</button></div>
     <div class="top-actions"><div class="source-chip"><span class="pulse-dot" id="sourceDot"></span><span id="sourceChip">正在读取数据…</span></div><a class="ghost-link" href="../../index.html">返回观察台 ↗</a></div>
