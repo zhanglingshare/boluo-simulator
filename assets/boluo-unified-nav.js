@@ -163,6 +163,14 @@ document.addEventListener("bl:compare-selected",function(ev){
  if(typeof id==="string"&&/^C[0-9]{3}$/.test(id)){change=id;render();}
 });
 window.addEventListener("hashchange",render);
+/* Windtunnel updates localStorage on scenario selection; refresh nav URLs after it runs. */
+document.addEventListener("click",function(ev){
+ var b=ev.target.closest && ev.target.closest("#pressGrid [data-key]");
+ if(b&&["windtunnel-v2.html","windtunnel.html"].includes(page)){
+  var fresh=getScene();if(sceneLabels[fresh])render();
+ }
+});
+
 var height=function(){document.documentElement.style.setProperty("--bl-unav-h",shell.offsetHeight+"px");};
 height();
 if("ResizeObserver" in window)new ResizeObserver(height).observe(shell);
