@@ -7,7 +7,7 @@ if(!script||!script.src||!document.body)return;
 var base=new URL("../",script.src);
 var entries=[
  {id:"overview",num:"01",name:"总览",desc:"今天有什么变化、它牵动了谁",pages:[["总览·变化现场","holo-home-v11.html"],["今日博罗","index-legacy-2026-11-03.html"],["各镇好玩好吃","town.html"],["产业变化","industry-changes.html"]]},
- {id:"foundation",num:"02",name:"基本盘",desc:"看清家底，再看哪些联系真正成立",pages:[["博罗基本盘","who-v2.html"],["结构怎么长起来","network.html"],["五个世界","experiments/holo-single/index-v2.html"],["关系前后","relation-compare-v2.html"],["柏塘镇样板","tea/index.html"]]},
+ {id:"foundation",num:"02",name:"基本盘",desc:"看清家底，再看哪些联系真正成立",pages:[["博罗基本盘","who-v2.html"],["结构怎么长起来","network.html"],["五个世界","experiments/holo-single/index-v2.html"],["关系前后","relation-compare-v2.html"],["柏塘镇样板","tea/bridge.html"]]},
  {id:"future",num:"03",name:"未来",desc:"推演不同条件下的可能结果",pages:[["风洞测试","windtunnel-v2.html"],["2030未来","future.html"],["规划与你","plan-with-me.html"],["五条发展路","choices.html"]]},
  {id:"report",num:"04",name:"报告",desc:"把发现、盲点与依据放到一起",pages:[["可能忽略","blindspot.html"],["图文报告","report.html"]]},
  {id:"ending",num:"05",name:"结语",desc:"给桥，怎么走由你决定",pages:[["结语","ending.html"]]}
@@ -15,6 +15,7 @@ var entries=[
 var all={};entries.forEach(function(g){g.pages.forEach(function(p){all[p[1]]=g.id;});});
 all["windtunnel-nba-preview.html"]="future";
 all["future-lab.html"]="lab";
+all["tea/index.html"]="foundation";
 var aliases={
  "index.html":"overview","holo-home-v9.html":"overview",
  "who.html":"foundation","experiments/holo-single/index.html":"foundation",
