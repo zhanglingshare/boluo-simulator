@@ -74,11 +74,21 @@ function render(k){
  const diff=result.hit-baseline.hit,changeP50=result.p50-baseline.p50;
  const l=lineup(k);
  txt("nba-hit",nf(result.hit,1));txt("nba-p50",nf(result.p50));
+ const bar=(id,pct)=>{const box=$(id)?.parentElement;const line=box?.querySelector(".nba-meter i");if(line)line.style.setProperty("--w",Math.max(0,Math.min(100,pct))+"%");};
+ bar("nba-p50",result.p50/HT.TARGET*100);
+
  if(typeof BL_2026!=="undefined"){
     const get=(arr,label)=>arr.find(x=>x.k===label)?.v||"—";
     txt("nba-indinv",get(BL_2026.investment,"工业投资"));
     txt("nba-industry",get(BL_2026.production,"规上工业增加值"));
     txt("nba-invest",get(BL_2026.investment,"固定资产投资"));
+    const scaled=id=>{
+      const v=$(id)?.textContent||"0";
+      const rate=parseFloat(v.replace(/[−﹣]/g,"-").replace(/,/g,""))||0;
+      bar(id,Math.abs(rate)/50*100);
+    };
+    ["nba-indinv","nba-industry","nba-invest"].forEach(scaled);
+
     txt("nba-date",BL_2026.latestLabel);
     if($("nba-src"))$("nba-src").href=BL_2026.latestSource;
  }
