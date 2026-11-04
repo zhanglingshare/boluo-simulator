@@ -27,6 +27,13 @@ if(page==="index.html")page="holo-home-v11.html";
 var initial=all[page]||"find";
 var selected=initial==="lab"?"future":initial;
 var change=null;
+var sceneLabels={base:"规划兑现",investment:"工业投资低迷",property:"房地产探底",combined:"投资与地产叠加",trend:"现状延续",upside:"双引擎超预期"};
+function getScene(){
+ var query=new URLSearchParams(location.search).get("scene");
+ if(query && sceneLabels[query])return query;
+ try{var stored=localStorage.getItem("bl_v1_2026_selected_scenario");if(sceneLabels[stored])return stored;}catch(e){}
+ return "";
+}
 var targetByPage={
  "holo-home-v11.html":["who-v2.html","先看基本盘"],
  "index-legacy-2026-11-03.html":["who-v2.html","先看基本盘"],
@@ -57,6 +64,9 @@ function href(file,from){
  var c=getChange();
  if(c&&["who-v2.html","relation-compare-v2.html","plan-with-me.html"].indexOf(file)!==-1){
   target.searchParams.set("change",c);
+ }
+ if(["windtunnel-v2.html","future.html","report.html","ending.html","blindspot.html"].includes(file)){
+  var scene=getScene();if(scene)target.searchParams.set("scene",scene);
  }
  if(file==="industry-changes.html"&&["index-legacy-2026-11-03.html","town.html"].indexOf(from)!==-1){
   target.searchParams.set("from",from==="town.html"?"town":"today");
@@ -101,7 +111,21 @@ var second=el("div","bl-unav-sub");
 var stageDesc=el("div","bl-unav-desc");
 var opts=el("nav","bl-unav-choices");opts.setAttribute("aria-label","当前阶段的观察视角");
 var next=el("a","bl-unav-next");
-second.append(stageDesc,opts,next);shell.append(second);
+second.append(stageDesc,opts,next);
+var initialScene=getScene();
+if(initialScene&&["future.html","report.html","ending.html","blindspot.html","windtunnel-v2.html"].includes(page)){
+ var state=el("span","bl-unav-scene","已选压力："+sceneLabels[initialScene]);
+ state.title="当前压力情景来自风洞。其他页面的原有图表未必按该情景重算，需以原风洞结果为准。";
+ second.append(state);
+}
+shell.append(second);
+if(page==="holo-home-v11.html"){
+ var guide=el("div","bl-unav-guide");
+ guide.append(el("strong",null,"3步看懂博罗：先看家底 → 再推演未来 → 最后看结论"));
+ [["① 看基本盘","who-v2.html"],["② 跑一次风洞","windtunnel-v2.html"],["③ 看图文报告","report.html"]]
+ .forEach(function(item){var a=el("a",null,item[0]);a.href=href(item[1],page);guide.append(a);});
+ shell.append(guide);
+}
 document.body.insertBefore(shell,document.body.firstChild);
 document.body.classList.add("bl-unav-ready");
 document.body.setAttribute("data-bl-unav-page",["experiments/holo-single/index.html","experiments/holo-single/index-v2.html"].includes(page)?"holo":["holo-home-v9.html","holo-home-v11.html"].includes(page)?"atlas":page==="future-lab.html"?"lab":"standard");
