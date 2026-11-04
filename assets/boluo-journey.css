@@ -58,3 +58,9 @@ body[data-bl-journey="basic"]>.nav{display:none!important}
  #bl-journey-baseline h2{font-size:14px!important}
 }
 @media(prefers-reduced-motion:reduce){#bl-journey-bar .blj-link{transition:none}}
+
+/* Restored permanent links: the network growth view, evidence graph and separate 3D lab. */
+#bl-journey-bar .blj-extras{display:flex;align-items:center;gap:3px;flex:0 1 auto;min-width:0;border-left:1px solid #e0e8ef;padding-left:8px;overflow-x:auto;scrollbar-width:thin}
+#bl-journey-bar .blj-extras .blj-link{color:#42697b;font-size:10px;padding:7px 8px}
+@media(max-width:1350px){#bl-journey-bar .blj-extras{order:4;flex:1 1 100%;border-left:none;padding-left:0}}
+@media(max-width:560px){#bl-journey-bar .blj-extras{width:100%;order:4;flex:1 1 100%;white-space:nowrap}#bl-journey-bar .blj-extras .blj-link{font-size:11px}}
