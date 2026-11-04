@@ -133,6 +133,7 @@ window.initBoluoFirstHolo=function(app){
 })();
 
 </script>
+<link rel="stylesheet" href="assets/boluo-unified-nav.css">
 </head>
 <body class="bl-ui game-home">
 <header class="topbar"><a href="#webglDeck" class="brand"><div class="logo" aria-hidden="true"></div><div><strong>博罗<span>未来实验室</span></strong><small>HOLOGRAPHIC WIND LAB / 2030</small></div></a><nav class="topnav"><a href="#webglDeck">三维引擎</a><a href="#windLab">流动风洞</a><a href="#holoStage">全息关系</a><a href="#pulseLab">事件脉冲</a><a href="#commander">闯关游戏</a><a href="#dashboard">数据观察</a><a href="#records">事件资料</a><a href="#report">我的结局</a></nav><a href="index-legacy-2026-11-03.html" style="font-size:10px;font-weight:800;letter-spacing:.05em;border-radius:30px;padding:8px 14px;white-space:nowrap;background:linear-gradient(110deg,#63e7df,#a3fad6);color:#07202b">旧版·今日博罗 →</a><span class="mode">沉浸式游戏模拟 · 非现实预测</span></header>
@@ -309,4 +310,5 @@ function initRecords(){const distinct=(k)=>['全部',...new Set(records.map(r=>r
 window.__BOLUO_FULL_CHECK__=()=>({score:state.score,round:state.round,resolved:state.resolved.length,health:state.health,pulseTotal:$('pulseTotal').textContent,glStatus:$('glStatus').textContent,windStatus:$('windStatus').textContent,rows:$('recordsBody').children.length,holo:$('holoScanCount').textContent});
 initCommander();initRecords();updateCommon();initPulse();try{window.initBoluoFirstHolo({state,calcHealth,updateCommon,msg})}catch(e){$('glStatus').textContent='WEBGL ERROR';console.error(e)}try{initWind()}catch(e){$('windStatus').textContent='FLOW ERROR';console.error(e)}try{initHolo()}catch(e){$('holoStatus').textContent='HOLOGRAM ERROR';console.error(e)}
 })();
-</script></body></html>
+</script><script defer src="assets/boluo-unified-nav.js"></script>
+</body></html>
