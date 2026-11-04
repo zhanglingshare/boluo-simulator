@@ -8,3 +8,7 @@ params.json
 .DS_Store
 Thumbs.db
 *.log
+growth-v2.html
+# 页面自检截图与过程文件
+boluo-growth-page/_shots/
+
