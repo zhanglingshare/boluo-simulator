@@ -25,6 +25,7 @@ header.top{position:relative;z-index:4;min-height:72px;background:rgba(255,255,2
 @media(max-width:380px){.hero h1{font-size:26px}.metric .val{font-size:20px}.metric{padding:0 7px}.pane{padding:13px}.top-actions .text-link:nth-child(2){display:none}.rowfact{gap:5px}}
 @media(prefers-reduced-motion:reduce){*,*:before,*:after{animation-duration:.01ms!important;transition-duration:.01ms!important;scroll-behavior:auto!important}}
 </style>
+<link rel="stylesheet" href="charts-enhance.css" />
 </head>
 <body>
 <header class="top"><div class="top-inner">
@@ -114,5 +115,6 @@ $('questions').addEventListener('change',e=>{if(e.target.matches('input[type=che
 $('saveBtn').addEventListener('click',()=>{persist();showToast(state.questions.size||state.saved.size?'所选观察已保存到本机':'请先选择问题或追踪现象')});$('copyBtn').addEventListener('click',copySummary);$('drawerClose').addEventListener('click',closeEvidence);$('drawerScrim').addEventListener('click',closeEvidence);$('insightSource').addEventListener('click',()=>openEvidence('method'));document.addEventListener('keydown',e=>{if(e.key==='Escape')closeEvidence()});
 })();
 </script>
+<script defer src="charts-enhance.js"></script>
 </body>
 </html>
