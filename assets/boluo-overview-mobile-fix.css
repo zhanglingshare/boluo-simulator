@@ -61,3 +61,12 @@ body.boluo-overview .sidebar .side-nav{max-width:100%}
  body.boluo-overview #bl-unav .bl-unav-guide a{flex:0 0 auto!important;padding:8px 9px!important}
 }
 @media(prefers-reduced-motion:reduce){body.boluo-overview *{scroll-behavior:auto!important}}
+
+body.boluo-overview .bl-mobile-detail-jump{display:none}
+@media(max-width:800px){
+ body.boluo-overview .bl-mobile-detail-jump{display:inline-flex;position:absolute;z-index:6;right:12px;bottom:178px;
+ align-items:center;justify-content:center;padding:10px 13px;min-height:40px;border-radius:12px;
+ border:1px solid #8ce3d0;background:#123b48ee;color:#bffbea;text-decoration:none;
+ box-shadow:0 7px 23px #0003;font-size:11px;font-weight:800;letter-spacing:-.01em}
+ body.boluo-overview #changes-panel{scroll-margin-top:130px}
+}
