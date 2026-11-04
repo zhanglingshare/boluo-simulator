@@ -77,3 +77,19 @@ body.bl-unav-ready[data-bl-unav-page="holo"] #app{flex:1 1 auto;min-height:0;hei
  #bl-unav .bl-unav-next{max-width:150px;padding:8px 9px;font-size:10px}
 }
 @media(prefers-reduced-motion:reduce){#bl-unav *,#bl-unav *::before,#bl-unav *::after{animation:none!important;transition:none!important}}
+
+/* P0: suppress competing nav layers in v2; one active navigation surface. */
+body.bl-unav-ready .unified-nav,
+body.bl-unav-ready #bl-journey-bar,
+body.bl-unav-ready > .nav,
+body.bl-unav-ready .wrap > .nav{display:none!important}
+body.bl-unav-ready[data-bl-unav-page="holo"] .unified-nav{display:none!important}
+body.bl-unav-ready .bl-unav-next{box-shadow:none!important}
+/* The guide belongs to the five-page entry route and does not change the pages' own layouts. */
+#bl-unav .bl-unav-guide{display:flex;gap:9px;align-items:center;flex-wrap:wrap;padding:9px clamp(12px,2.1vw,32px);border-top:1px solid #e6edf2;background:#fff}
+#bl-unav .bl-unav-guide strong{color:#1e3949;font-size:12px;margin-right:7px}
+#bl-unav .bl-unav-guide a{font-size:12px;font-weight:730;border:1px solid #dbe6eb;padding:8px 12px;border-radius:8px;color:#225365;background:#f5f9fa}
+#bl-unav .bl-unav-guide a:hover{border-color:#67b8b4;background:#ecf8f6}
+#bl-unav .bl-unav-guide a:first-of-type{background:#dff8ef;border-color:#8acdb9;color:#1c665c}
+#bl-unav .bl-unav-scene{font-size:10px;white-space:nowrap;color:#477d80;display:inline-flex;align-items:center;gap:6px;padding:6px 10px;border-radius:7px;background:#e6f5f1;border:1px solid #c8e4df}
+@media(max-width:570px){#bl-unav .bl-unav-guide{padding:8px 9px;gap:6px}#bl-unav .bl-unav-guide strong{font-size:10px;flex:1 1 100%}#bl-unav .bl-unav-guide a{font-size:10px;padding:7px 9px}}
