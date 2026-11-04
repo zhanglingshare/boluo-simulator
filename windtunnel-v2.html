@@ -200,6 +200,198 @@ body{
 .bl-dark{ background: transparent !important; }
 .bl-glow{ filter: none !important; }
 .bl-header-bg{ background: transparent !important; }
+
+/* ========== 核心：NBA 2K属性卡级视觉冲击 + macOS材质升级 ========== */
+/* 1. 顶部总评：超大立体数字，像2K球员总评砸脸 */
+.bl-tail-stat{
+  font-size: 72px !important;
+  font-weight: 900 !important;
+  line-height: 1 !important;
+  background: linear-gradient(180deg, #2c5aa0 0%, #1a3a70 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  text-shadow: 0 8px 24px rgba(44,90,160,.18);
+  letter-spacing: -2px;
+}
+.bl-tail-stat em{
+  font-size: 24px !important;
+  font-weight: 700;
+  margin-left: 6px;
+  -webkit-text-fill-color: #4a8fe7;
+}
+.bl-tail-stat-label{
+  font-size: 11px !important;
+  color: #94a3b8 !important;
+  letter-spacing: 1.5px;
+  text-transform: uppercase;
+}
+
+/* 2. 属性条：NBA式有厚度的立体分段条，不是细细线 */
+.pbar{
+  padding: 12px 0;
+}
+.pbar .lab{
+  font-size: 12px !important;
+  font-weight: 600;
+  color: #475569 !important;
+  margin-bottom: 8px !important;
+}
+.pbar .track{
+  height: 14px !important;
+  background: #e8edf4 !important;
+  border-radius: 7px !important;
+  overflow: hidden;
+  box-shadow: inset 0 1px 3px rgba(30,58,95,.08);
+}
+.pbar .fill{
+  height: 100% !important;
+  border-radius: 7px !important;
+  background: linear-gradient(90deg, #4a8fe7, #60a5fa) !important;
+  box-shadow: 0 2px 8px rgba(74,143,231,.25);
+  position: relative;
+}
+.pbar .fill::after{
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 50%;
+  background: linear-gradient(180deg, rgba(255,255,255,.35), transparent);
+  border-radius: 7px 7px 0 0;
+}
+.pbar .fill[style*="#22c55e"]{
+  background: linear-gradient(90deg, #34d399, #10b981) !important;
+  box-shadow: 0 2px 8px rgba(16,185,129,.25);
+}
+.pbar .fill[style*="#3b82f6"]{
+  background: linear-gradient(90deg, #60a5fa, #3b82f6) !important;
+}
+.pbar .num{
+  font-size: 14px !important;
+  font-weight: 800 !important;
+  margin-top: 6px !important;
+}
+
+/* 3. 仪表盘数字：2K式大粗体属性值 */
+.gbox{
+  background: #fff !important;
+  border: 1px solid #e2e8f0 !important;
+  border-radius: 16px !important;
+  padding: 20px 12px !important;
+  box-shadow: 0 4px 16px rgba(30,58,95,.06);
+  text-align: center;
+}
+.gbox .v{
+  font-size: 36px !important;
+  font-weight: 900 !important;
+  line-height: 1;
+  letter-spacing: -1px;
+}
+.gbox .l{
+  font-size: 11px !important;
+  color: #94a3b8 !important;
+  margin-top: 8px !important;
+  font-weight: 600;
+}
+
+/* 4. 压力测试按钮：NBA式徽章卡片 */
+.press-card{
+  background: #fff !important;
+  border: 2px solid #e2e8f0 !important;
+  border-radius: 14px !important;
+  padding: 16px 14px !important;
+  transition: all .2s;
+  box-shadow: 0 2px 8px rgba(30,58,95,.04);
+}
+.press-card:hover{
+  transform: translateY(-2px);
+  box-shadow: 0 6px 20px rgba(30,58,95,.08);
+}
+.press-card.active{
+  border-color: #f59e5b !important;
+  background: linear-gradient(145deg, #fff, #fff7ed) !important;
+  box-shadow: 0 6px 20px rgba(245,158,11,.15);
+}
+.press-card .icon{
+  width: 40px !important;
+  height: 40px !important;
+  border-radius: 12px !important;
+  background: rgba(74,143,231,.1) !important;
+  display: grid;
+  place-items: center;
+  font-size: 18px;
+  margin-bottom: 10px;
+}
+.press-card .title{
+  font-weight: 800 !important;
+  color: var(--ink-primary) !important;
+  font-size: 14px;
+}
+.press-card .desc{
+  font-size: 11px !important;
+  color: var(--ink-secondary) !important;
+  margin-top: 4px;
+  line-height: 1.5;
+}
+
+/* 5. macOS级磨砂玻璃真实质感 */
+.card{
+  backdrop-filter: blur(24px) saturate(1.6) !important;
+  border: 1px solid rgba(226,232,240,.9) !important;
+  border-radius: 20px !important;
+  box-shadow: 0 12px 40px rgba(30,58,95,.06) !important;
+  margin-bottom: 20px !important;
+  padding: 24px !important;
+}
+.card h2{
+  font-weight: 800 !important;
+  font-size: 18px !important;
+  color: var(--ink-primary) !important;
+  margin-bottom: 16px !important;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+.card h2 .step{
+  width: 28px;
+  height: 28px;
+  border-radius: 10px;
+  background: linear-gradient(145deg, #4a8fe7, #3b82f6);
+  color: #fff;
+  display: grid;
+  place-items: center;
+  font-size: 13px;
+  font-weight: 800;
+}
+
+/* 6. 滑块：macOS原生样式 */
+input[type="range"]{
+  height: 6px !important;
+  border-radius: 3px;
+  background: #e2e8f0 !important;
+  outline: none;
+  -webkit-appearance: none;
+}
+input[type="range"]::-webkit-slider-thumb{
+  -webkit-appearance: none;
+  width: 20px;
+  height: 20px;
+  border-radius: 50%;
+  background: #fff;
+  border: 3px solid #4a8fe7;
+  box-shadow: 0 2px 8px rgba(74,143,231,.25);
+  cursor: pointer;
+}
+.slider-row label{
+  font-size: 13px !important;
+  font-weight: 600;
+  color: var(--ink-primary) !important;
+}
+.slider-row .val{
+  color: var(--accent-blue) !important;
+  font-weight: 700;
+}
 </style>
 <link rel="stylesheet" href="assets/boluo-ui.css">
 <link rel="stylesheet" href="assets/boluo-tail-bridge.css">
