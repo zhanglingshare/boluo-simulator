@@ -14,6 +14,7 @@ var entries=[
  {id:"reflect",num:"06",name:"复盘",desc:"可能忽略的、证据解释和最终思考",pages:[["可能忽略","blindspot.html"],["图文报告","report.html"],["结语","ending.html"]]}
 ];
 var all={};entries.forEach(function(g){g.pages.forEach(function(p){all[p[1]]=g.id;});});
+all["windtunnel-nba-preview.html"]="simulate";
 all["future-lab.html"]="lab";
 var rootPath=base.pathname;
 var page=decodeURI(location.pathname).replace(rootPath,"")||"index-legacy-2026-11-03.html";
@@ -34,6 +35,7 @@ var targetByPage={
  "choices.html":["future.html","看看2030的可能"],
  "future.html":["windtunnel.html","去风洞压测"],
  "windtunnel.html":["blindspot.html","看看忽略了什么"],
+ "windtunnel-nba-preview.html":["blindspot.html","看看忽略了什么"],
  "blindspot.html":["report.html","查看图文报告"],
  "report.html":["ending.html","进入结语"],
  "ending.html":["index-legacy-2026-11-03.html","从现实重新观察"],
@@ -111,7 +113,7 @@ function render(){
  opts.replaceChildren();
  group.pages.forEach(function(entry){
   var a=el("a","bl-unav-view",entry[0]);a.href=href(entry[1],page);
-  if(entry[1]===page){a.classList.add("current");a.setAttribute("aria-current","page");}
+  if(entry[1]===page || (page==="windtunnel-nba-preview.html" && entry[1]==="windtunnel.html")){a.classList.add("current");a.setAttribute("aria-current","page");}
   opts.append(a);
  });
  if(group.id==="structure"){
