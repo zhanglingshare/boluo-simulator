@@ -20,7 +20,7 @@ function el(tag,cls,text){
  if(text!=null)n.textContent=String(text);return n;
 }
 function pageUrl(code){
- return ({today:root,town:"town.html",changes:"industry-changes.html",basic:"who.html",comparison:"relation-compare.html",planning:"plan-with-me.html"})[code];
+ return ({today:root,town:"town.html",changes:"industry-changes.html",basic:"who.html",comparison:"relation-compare.html",planning:"plan-with-me.html",growth:"network.html"})[code];
 }
 var nav=document.createElement("nav");nav.id="bl-journey-bar";nav.setAttribute("aria-label","博罗真实世界感知顺序");
 var brand=el("a","blj-brand");brand.href=root;brand.append(el("strong",null,"博罗 · 真实世界观察"),el("small",null,"碎片感知 → 微观变化 → 宏观底盘 → 关系对比 → 规划与你"));
@@ -28,13 +28,17 @@ nav.append(brand);
 var links=el("div","blj-links");
 [
  ["01","today","今日博罗"],["02","town","各镇好玩好吃"],
- ["03","changes","产业变化"],["04","basic","博罗基本面"],["05","comparison","前后对比"],["06","planning","规划与你"]
+ ["03","changes","产业变化"],["04","basic","博罗基本面"],["·","growth","世界怎么长"],["05","comparison","前后对比"],["06","planning","规划与你"]
 ].forEach(function(t){
  var a=el("a","blj-link");a.href=pageUrl(t[1]);a.append(el("em",null,t[0]),document.createTextNode(t[2]));
  if(page===t[1])a.setAttribute("aria-current","page");
  links.appendChild(a);
 });
-nav.append(links);
+var extras=el("div","blj-extras");
+[["关系世界","experiments/holo-single/index.html"],["变化现场","holo-home-v9.html"],["三维实验室","future-lab.html"]].forEach(function(item){
+ var a=el("a","blj-link");a.href=item[1];a.textContent=item[0];extras.append(a);
+});
+nav.append(links,extras);
 // 在窄屏中让当前认知步骤可见，避免第05步被横向导航遮住。
 if(typeof requestAnimationFrame==='function')requestAnimationFrame(function(){
  var active=links.querySelector('[aria-current="page"]');
