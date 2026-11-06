@@ -512,3 +512,27 @@ dialog { border:1px solid #cee4fa;box-shadow:0 20px 60px #174d8840; }
   .world-hero h2.visual-case-title {font-size:16px;}
   .bh-map-header > span {font-size:9px;}
 }
+
+
+/* Keep the scene workbench single-column on tablet; base V11 switches at 900px. */
+@media (min-width:721px) and (max-width:1020px) {
+  .world-workspace { grid-template-columns:minmax(0,1fr); }
+  .story-rail { grid-column:1; }
+  .world-stage { grid-column:1; }
+  .insight-panel {
+    grid-column:1;
+    display:grid;
+    grid-template-columns:minmax(0,1fr) minmax(0,1fr);
+    gap:10px 22px;
+  }
+  .lens-tabs { grid-column:1/-1;max-width:320px; }
+  .insight-copy { grid-column:1;grid-row:2; }
+  .selection-panel { grid-column:2;grid-row:2;border-top:0; }
+  .gap-panel { grid-column:1;grid-row:3; }
+  .finding-actions { grid-column:2;grid-row:3; }
+}
+@media (max-width:720px) {
+  .insight-panel { display:flex;flex-direction:column; }
+  .insight-copy,.selection-panel,.gap-panel,.finding-actions { grid-column:auto;grid-row:auto; }
+  .coverage { flex-wrap:wrap; }
+}
