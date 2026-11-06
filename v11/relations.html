@@ -44,19 +44,19 @@
  <div class="bh-controlbar">
   <button id="bhPlay" class="bh-play" type="button" aria-pressed="false">▶ <span>播放六年变化</span></button>
   <div class="bh-yearbar" role="group" aria-label="选择博罗产业网络的年份">
-   <button class="bh-year" data-bh-year="2020" aria-current="true" aria-pressed="true" type="button">2020</button>
+   <button class="bh-year" data-bh-year="2020" aria-current="false" aria-pressed="false" type="button">2020</button>
    <button class="bh-year" data-bh-year="2021" aria-current="false" aria-pressed="false" type="button">2021</button>
    <button class="bh-year" data-bh-year="2022" aria-current="false" aria-pressed="false" type="button">2022</button>
    <button class="bh-year" data-bh-year="2023" aria-current="false" aria-pressed="false" type="button">2023</button>
    <button class="bh-year" data-bh-year="2024" aria-current="false" aria-pressed="false" type="button">2024</button>
    <button class="bh-year" data-bh-year="2025" aria-current="false" aria-pressed="false" type="button">2025</button>
-   <button class="bh-year" data-bh-year="2026" aria-current="false" aria-pressed="false" type="button">2026</button>
+   <button class="bh-year" data-bh-year="2026" aria-current="true" aria-pressed="true" type="button">2026</button>
   </div>
  </div>
  <div class="bh-storyline" aria-live="polite" aria-atomic="true">
-  <span class="bh-story-year" id="bhYearText">2020</span>
-  <div class="bh-story-text"><strong id="bhStoryTitle">把分散的工业，放进更大的产业平台</strong><span id="bhStorySub">产业园与重点项目布局形成新的连接。</span></div>
-  <div class="bh-storymetric"><b id="bhMetric">&gt;1000亿</b><small id="bhMetricLabel">2020年规上工业总产值</small></div>
+  <span class="bh-story-year" id="bhYearText">2026</span>
+  <div class="bh-story-text"><strong id="bhStoryTitle">下一道题：长得大，还是连得紧？</strong><span id="bhStorySub">追踪真实交易、研发与利润联系，才知道增长是否能传递。</span></div>
+  <div class="bh-storymetric"><b id="bhMetric">8个</b><small id="bhMetricLabel">截至2025年形成的百亿级产业集群</small></div>
  </div>
  <div class="bh-body">
   <div class="bh-map">
@@ -72,7 +72,7 @@
     </div>
    </div>
    <svg id="bhSvg" class="bh-svg" viewBox="0 0 1040 470" role="group" aria-label="逐年展开的博罗产业园区、企业和产业类别关系。点击或键盘回车查看主体依据。"></svg>
-   <div class="bh-map-foot"><span id="bhMapStatus">2020年 · 3个代表性节点</span><span><b>实线</b> 有项目或平台报道 · 虚线为产业归类</span></div>
+   <div class="bh-map-foot"><span id="bhMapStatus">2026年 · 代表性产业节点</span><span><b>实线</b> 有项目或平台报道 · 虚线为产业归类</span></div>
   </div>
   <aside class="bh-info" aria-label="关键节点解读">
    <span id="bhInfoKicker" class="bh-info-kicker">2020 / 此时的博罗</span>
@@ -86,7 +86,7 @@
  </div>
  <div class="bh-bottom">
   <details><summary>这张历史图的边界</summary><p>节点年份代表所选公开资料中有据可查的里程碑，不一定是企业创立时间。实线只代表报道明确的项目、平台或产业归属，虚线是行业归类；它们都不直接证明企业间采购关系，也不表示实际交易金额、产量或因果。2026年为已有资料的观察时点，不是对未知未来的预测。</p></details>
-  <span>点年份 · 点主体 · 再看原有专题关系图</span>
+  <button type="button" id="bhShare">分享当前年份与主体 ↗</button>
  </div>
 </section>
 
