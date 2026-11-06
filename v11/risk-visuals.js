@@ -66,7 +66,7 @@ function heat(){
    for(const col of H.cols){
     const n=H.compute(row,col);
     const label=active==="ring"?f(n/100,0):f(n,active==="innovation"?1:0);
-    const mode=(active==="electronic"||active==="projects")?(H.goal(n)?"pass":"fail"):active==="tea"?n>=60?"pass":n>=40?"mid":"fail":active==="ring"?n>=16000?"pass":n>=6500?"mid":"fail":n<=8?"pass":n<=14?"mid":"fail";
+    const mode=(active==="electronic"||active==="projects")?(H.goal(n)?"pass":"fail"):(active==="tea"?((n-23)/57):(active==="ring"?(n/44700):(1-bounded((n-5)/30,0,1))))>=.66?"highdata":(active==="tea"?((n-23)/57):(active==="ring"?(n/44700):(1-bounded((n-5)/30,0,1))))>=.33?"mediumdata":"lowdata";
     const selected=(active==="electronic"||active==="projects")&&Math.abs(v1-row)<1||active==="tea"&&v1===col&&v2===row||active==="ring"&&v1===col&&v2===row||active==="innovation"&&v1===col&&row===95;
     html+='<button class="rv-cell '+mode+(selected?' active':'')+'" data-r="'+row+'" data-c="'+col+'" title="'+esc(cellTitle(active,row,col,n))+'" aria-label="'+esc(cellTitle(active,row,col,n))+'">'+label+'</button>';
    }
@@ -74,8 +74,9 @@ function heat(){
  html+='</div>';
  $("rvHeat").innerHTML=html;
  $("rvHeat").querySelectorAll("[data-r]").forEach(btn=>btn.onclick=()=>H.click(+btn.dataset.r,+btn.dataset.c));
- const legend=active==="electronic"?"绿色：跨越1000亿参照线；红色：未跨":active==="projects"?"绿色：指数恢复至100；红色：未恢复":active==="innovation"?"绿色：条件下误差≤8个百分点；非绩效指标":"浅色：相对较低　深色：相对较高；不是达成风险评估";
+ const legend=active==="electronic"?"绿色：跨越1000亿参照线；红色：未跨":active==="projects"?"绿色：投资指数恢复至100；红色：未恢复":active==="innovation"?"深蓝代表更小的拟议抽样误差；没有合格阈值":"颜色仅用于区分条件场景的数值大小；不表示产业风险或达成度";
  $("rvHeatLegend").textContent=legend;
+$("rvLegend").innerHTML=(active==="electronic"||active==="projects")?'<span><i class="rv-key" style="background:#1e8f79"></i>跨越参照</span><span><i class="rv-key" style="background:#e4a081"></i>未跨参照</span>':'<span><i class="rv-key" style="background:#72bbdb"></i>相对高值</span><span><i class="rv-key" style="background:#eaf2fb"></i>相对低值</span><span>无实测目标</span>';
 }
 function chartLines(series,minOverride,target){
  const width=620,height=248,baseX=48,baseY=210,top=20,rt=570,labels=series[0].points.map(a=>a[0]);
