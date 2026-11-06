@@ -200,6 +200,24 @@ function factDialog(id){
  showDialog(f.name+' · '+f.number,'<p><strong>2026年前三季度 · 同比</strong></p><div class="fact-row">'+esc(f.detail)+'</div><p>来源：2026年11月5日公开报道引述博罗县统计局发布的经济运行数据。</p><p><a href="'+source+'" target="_blank" rel="noopener noreferrer">查看公开报道 ↗</a></p>');
 }
 all('[data-fact]').forEach(b=>b.addEventListener('click',()=>factDialog(b.dataset.fact)));
+
+const realCaseSource='https://epaper.nfnews.com/nfdaily/html/202609/22/content_10181994.html?origin=4';
+const caseDetails={
+ local:'汉德精密受访表示，本地配套采购从最初不足10%提升到报道时约40%。40%的分母为汉德配套采购，不是本地所有企业订单。',
+ hande:'汉德精密是园洲案例的中心企业。公开采访展示了本地配套采购与具体供应商订单关系，但不能代表博罗全部产业网络。',
+ supplier:'密特斯滤清器负责人称，约40%的业务来自汉德。40%的分母为密特斯自己的业务，与汉德本地采购约40%不是同一个分母，不能相加或相减。'
+};
+function caseDetail(key){
+ const msg=caseDetails[key]||caseDetails.hande;
+ showDialog('真实关系样本 · 2026年9月22日',
+ '<p>'+esc(msg)+'</p><div class="fact-row"><strong>关系记录≠经济因果</strong><p>订单、采购与岗位、利润、现金回笼是不同信息。该报道仅支持相应采访记录，不代表完整供应链。</p></div>'+
+ '<p><a href="'+realCaseSource+'" target="_blank" rel="noopener noreferrer">查看南方日报公开报道 ↗</a></p>'+
+ '<p><a href="./relations.html?case=hande&mode=trace&view=orders">返回第四页查看原始互动关系 ↗</a></p>');
+}
+$('evidenceCaseDetail').addEventListener('click',()=>caseDetail('hande'));
+$('caseEvidence').addEventListener('click',e=>{const n=e.target.closest('[data-case-evidence]');if(n)caseDetail(n.dataset.caseEvidence);});
+$('caseEvidence').addEventListener('keydown',e=>{if(e.key!=='Enter'&&e.key!==' ')return;const n=e.target.closest('[data-case-evidence]');if(!n)return;e.preventDefault();caseDetail(n.dataset.caseEvidence);});
+
 function handlePick(e){
  const n=e.target.closest('[data-node]');if(!n)return;
  state.focus=state.focus===n.dataset.node?'':n.dataset.node;stop();render();
