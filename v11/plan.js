@@ -175,7 +175,7 @@ function graphRender(){
  '<text y="-6">'+esc(state.region==='future'?'罗浮未来城':state.region==='urban'?'县域主城':'博东新城')+'</text><text class="p-sub" y="24">2030规划空间核心</text></g>';
  reg.nodes.forEach((n,i)=>{
    const p=pts[i],active=i<state.step,dim=state.focus&&state.focus!==n.id;
-   nodes+='<g class="p-node '+(state.focus===n.id?'active ':'')+(dim?'dimmed ':'')+(!active?'pending':'')+'" data-node="'+esc(n.id)+'" data-kind="'+(n.kind==='condition'?'condition':'planned')+'" tabindex="0" role="button" aria-label="'+esc(n.name)+'，'+esc(n.sub)+'" transform="translate('+p.x+','+p.y+')" style="animation-delay:'+(i*90)+'ms">'+
+   nodes+='<g class="p-node '+(state.focus===n.id?'active ':'')+(dim?'dimmed ':'')+(!active?'pending ':'')+(state.playing?(i===state.step-1?'newly-lit':'no-entry'):'')+'" data-node="'+esc(n.id)+'" data-kind="'+(n.kind==='condition'?'condition':'planned')+'" tabindex="0" role="button" aria-label="'+esc(n.name)+'，'+esc(n.sub)+'" transform="translate('+p.x+','+p.y+')" style="animation-delay:'+(i*90)+'ms">'+
    '<rect x="'+(-p.w/2)+'" y="'+(-p.h/2)+'" width="'+p.w+'" height="'+p.h+'" rx="14"/><text y="-5">'+esc(n.name)+'</text><text class="p-sub" y="18">'+esc(n.sub)+'</text></g>';
  });
  svg.innerHTML='<defs><filter id="pGlow"><feGaussianBlur stdDeviation="3"/></filter></defs>'+
