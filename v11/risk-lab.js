@@ -103,16 +103,16 @@ function calc(){
    data.badge=end>=1000?"下限情景可跨线":"下限情景未跨线";data.good=end>=1000;
    data.major=fmt(end,1);data.unit="亿元 · 2030条件值";data.detail="以2025年报道下限773.8亿元计算。实际基数高于下限，因此图中是保守情景值。";
    data.second=fmt(needed,2)+"%";data.secondDetail="从773.8亿元下限出发，五年复合增长跨越1000亿元的年均增速上界参考。";
-   data.chart=linePlot(["2025","2026","2027","2028","2029","2030"],values,600,1500,150,1000,"单位：亿元（假设增长）");
+   data.chart=linePlot(["2025","2026","2027","2028","2029","2030"],values,Math.min(600,150*Math.floor(Math.min(...values)/150)),150*Math.ceil(Math.max(1000,...values)/150),150,1000,"单位：亿元（假设增长）");
    data.foot="1000亿是千亿级产业规模参照线，不直接冒充规划中明确的2030考核指标。";
-   data.chain=["2025产业规模","产能及订单","年均增速假设","2030产业参照"];data.bars=[["3%情景",773.8*Math.pow(1.03,5)/10],["5%情景",773.8*Math.pow(1.05,5)/10],["8%情景",773.8*Math.pow(1.08,5)/10]];
+   data.chain=["2025产业规模","产能及订单","年均增速假设","2030产业参照"];data.bars=[["3%情景",773.8*Math.pow(1.03,5)],["5%情景",773.8*Math.pow(1.05,5)],["8%情景",773.8*Math.pow(1.08,5)]];
  }else if(id==="projects"){
    const values=[100,55.3,...Array.from({length:4},(_,i)=>55.3*Math.pow(1+primary/100,i+1))],end=values[5];
    const req=indexReturn();
    data.badge=end>=100?"同期指数恢复（假设）":"同期指数未恢复（假设）";data.good=end>=100;
    data.major=fmt(end,1);data.unit="2030年同季投资指数";data.detail="以2025年前三季度工业投资=100、2026年同比−44.7%计算为55.3。此后增速由用户设定。";
    data.second=fmt(req,1)+"%";data.secondDetail="如果2027—2030每年前三季度同口径投资持续增长，需要约此增速才回到2025同期水平。";
-   data.chart=linePlot(["2025","2026","2027","2028","2029","2030"],values,0,160,40,100,"2025同季投资=100");
+   data.chart=linePlot(["2025","2026","2027","2028","2029","2030"],values,0,Math.max(160,40*Math.ceil(Math.max(...values)/40)),40,100,"2025同季投资=100");
    data.foot="这只是投资恢复条件，不是产能增长模型或官方2030工业目标达成率。";
    data.chain=["当前生产增长","当期投资收缩","项目建设时滞","新增产能接续"];data.bars=[["2025同期",100],["2026同期",55.3],["2030情景",end]];
  }else if(id==="tea"){
