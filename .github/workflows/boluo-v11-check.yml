@@ -1,0 +1,35 @@
+name: V11 discovery and industry checks
+
+on:
+  push:
+    paths:
+      - 'v11/**'
+      - 'tests/boluo-v11-*.test.cjs'
+      - '.github/workflows/boluo-v11-check.yml'
+  pull_request:
+    paths:
+      - 'v11/**'
+      - 'tests/boluo-v11-*.test.cjs'
+      - '.github/workflows/boluo-v11-check.yml'
+
+permissions:
+  contents: read
+
+jobs:
+  v11-regression:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 18
+      - name: Controller syntax
+        run: |
+          node --check v11/discovery-data.js
+          node --check v11/discovery-core.js
+          node --check v11/discovery.js
+          node --check v11/discovery-bridge.js
+      - name: Initialization, scopes, handoffs and existing industry results
+        run: node --test tests/boluo-v11-discovery.test.cjs tests/boluo-v11-risk.test.cjs tests/boluo-plan-life.test.cjs
+      - name: Existing site journey
+        run: node tests/verify_journey.js
