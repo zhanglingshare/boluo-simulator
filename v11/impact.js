@@ -264,6 +264,21 @@ $('saveTrace').addEventListener('click',()=>{
  try{const k='boluo-impact-traces-v1',v=JSON.parse(localStorage.getItem(k)||'[]');localStorage.setItem(k,JSON.stringify([record,...(Array.isArray(v)?v:[])].slice(0,30)));notify('这条影响链已保存到本机，亦可分享链接');}
  catch{notify('无法使用本机存储，请使用分享链接保存');}
 });
+
+$('viewSaved').addEventListener('click',()=>{
+ let list=[];
+ try{const v=JSON.parse(localStorage.getItem('boluo-impact-traces-v1')||'[]');list=Array.isArray(v)?v.slice(0,30):[];}catch{}
+ if(!list.length){showDialog('本机影响链记录','<p>目前没有已保存的影响链。先选择场景、拖动传导步骤，再点击“保存这条影响链”。记录只保存在当前浏览器，不会上传到服务器。</p>');return;}
+ const rows=list.map((r,i)=>{
+  const scene=within(r.scene,Object.keys(scenes),'projects');
+  const step=Number.isFinite(+r.step)?Math.max(0,Math.min(4,Math.floor(+r.step))):0;
+  const lens=within(r.lens,['business','people','policy'],'business');
+  const buffer=within(r.buffer,['unknown','weak','strong'],'unknown');
+  const url=new URL(location.href);url.searchParams.set('scene',scene);url.searchParams.set('step',String(step));url.searchParams.set('lens',lens);url.searchParams.set('buffer',buffer);url.searchParams.delete('focus');url.hash='explore';
+  return '<div class="fact-row"><strong>0'+(i+1)+' · '+esc(scenes[scene].name||scene)+' · '+esc(String(step))+'/4层</strong><p>视角：'+esc(lens==='business'?'企业':lens==='people'?'普通人':'决策者')+' · 记录时间：'+esc(String(r.savedAt||'未记录').slice(0,16).replace('T',' '))+'</p><p><a href="'+esc(url.href)+'">打开保存的影响链 ↗</a></p></div>';
+ }).join('');
+ showDialog('我的影响链 · 本机保存','<p>共保存 '+list.length+' 条最近记录。链接仅包含公开的条件参数，不包含个人资料。</p>'+rows);
+});
 document.addEventListener('visibilitychange',()=>{if(document.hidden)stop();});window.addEventListener('pagehide',stop);window.addEventListener('resize',()=>{renderFact();renderScenario();},{passive:true});
 window.addEventListener('popstate',()=>{stop();const p=new URL(location.href).searchParams;state.scene=within(p.get('scene'),Object.keys(scenes),'projects');state.step=Math.min(4,Math.max(0,+p.get('step')||0));state.mode=within(p.get('mode'),['compare','trace'],'compare');state.focus=p.get('focus')||'';render();});
 render();
