@@ -92,9 +92,9 @@ test('saved findings deduplicate while unreviewed notes reject unsafe URLs and m
 
 test('controller destinations and every fixed DOM hook exist in the public page', () => {
   const html = fs.readFileSync(path.join(__dirname, '../v11/relations.html'), 'utf8');
-  const script = fs.readFileSync(path.join(__dirname, '../v11/relations.js'), 'utf8');
+  const script = fs.readFileSync(path.join(__dirname, '../v11/relations-stage.js'), 'utf8');
   const ids = new Set([...html.matchAll(/\bid="([^"]+)"/g)].map(m => m[1]));
-  const dynamic = new Set(['recordQuestion', 'evidenceForm', 'evidenceBody', 'evidenceURL', 'formError', 'exportRecords', 'shareURL']);
+  const dynamic = new Set(['recordQuestion', 'evidenceForm', 'evidenceBody', 'evidenceURL', 'formError', 'exportRecords', 'shareURL', 'copyShare', 'copyFeedback', 'subjectSearch', 'searchResults', 'sheetExpand', 'sheetEvidence']);
   for (const m of script.matchAll(/\$\('([^']+)'\)/g)) assert.ok(ids.has(m[1]) || dynamic.has(m[1]), m[1]);
   for (const m of html.matchAll(/(?:href|src)="(\.\/[^"?]+)(?:\?[^\"]*)?"/g)) assert.ok(fs.existsSync(path.resolve(__dirname, '../v11', m[1])), m[1]);
   assert.match(html, /aria-labelledby="dialogTitle"/);

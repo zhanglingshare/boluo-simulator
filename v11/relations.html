@@ -1,72 +1,52 @@
 <!doctype html>
 <html lang="zh-CN">
 <head>
-<meta charset="utf-8">
-<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-<meta name="theme-color" content="#f5f5f7">
-<meta name="description" content="从园洲真实报道出发，沿订单、工作与通勤的联系，看本地机会、企业依赖和尚未核实的条件。">
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover"><meta name="theme-color" content="#f5f5f7">
 <title>关系世界｜博罗决策风洞 V11</title>
-<link rel="stylesheet" href="./relations.css?v=20261107-relations2">
+<meta name="description" content="九个具体专题、一张可拖动和展开的关系画布。巡览订单、农户、学校、交通与产线变化，前后对照，沿着联系继续核实。">
+<link rel="stylesheet" href="./relations-stage.css?v=20261107-world3">
 </head>
 <body>
 <svg class="icon-library" aria-hidden="true" xmlns="http://www.w3.org/2000/svg"><defs>
 <symbol id="i-layers" viewBox="0 0 24 24"><path d="m12 3 10 5-10 5L2 8l10-5Zm-10 9 10 5 10-5M2 17l10 5 10-5"/></symbol>
+<symbol id="i-search" viewBox="0 0 24 24"><circle cx="10" cy="10" r="7"/><path d="m15 15 6 6"/></symbol>
 <symbol id="i-factory" viewBox="0 0 24 24"><path d="M3 21V10l6 3V8l6 4V3h4v18M3 21h18M7 17h1m4 0h1m4 0h1"/></symbol>
-<symbol id="i-filter" viewBox="0 0 24 24"><path d="M3 4h18l-7 8v8l-4-2v-6L3 4Z"/></symbol>
-<symbol id="i-briefcase" viewBox="0 0 24 24"><rect x="3" y="7" width="18" height="14" rx="2"/><path d="M8 7V3h8v4M3 12l9 4 9-4m-9 3v3"/></symbol>
-<symbol id="i-person" viewBox="0 0 24 24"><circle cx="12" cy="6" r="3"/><path d="M5 21v-5a7 7 0 0 1 14 0v5m-10 0v-6m6 6v-6"/></symbol>
+<symbol id="i-people" viewBox="0 0 24 24"><circle cx="9" cy="6" r="3"/><path d="M2 21v-6a7 7 0 0 1 14 0v6M17 3a3 3 0 0 1 0 6m2 3c3 1 3 4 3 9"/></symbol>
+<symbol id="i-leaf" viewBox="0 0 24 24"><path d="M4 21 17 8M4 16C1 5 12 2 21 3c1 10-3 18-13 16"/></symbol>
 <symbol id="i-bus" viewBox="0 0 24 24"><rect x="4" y="3" width="16" height="16" rx="3"/><path d="M4 11h16M7 19v3m10-3v3M8 15h1m6 0h1M9 6h6"/></symbol>
-<symbol id="i-bridge" viewBox="0 0 24 24"><path d="M2 18h20M6 21V5m12 16V5M2 15c4 0 6-8 10-11 4 3 6 11 10 11M9 8v10m6-10v10"/></symbol>
-<symbol id="i-pin" viewBox="0 0 24 24"><path d="M19 9c0 5-7 12-7 12S5 14 5 9a7 7 0 1 1 14 0Z"/><circle cx="12" cy="9" r="2"/></symbol>
-<symbol id="i-clock" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M12 6v6l4 3"/></symbol>
-<symbol id="i-calendar" viewBox="0 0 24 24"><rect x="3" y="5" width="18" height="16" rx="2"/><path d="M7 2v6m10-6v6M3 11h18m-13 5h1m6 0h1"/></symbol>
-<symbol id="i-arrow" viewBox="0 0 24 24"><path d="M4 12h16m-6-6 6 6-6 6"/></symbol>
-<symbol id="i-share" viewBox="0 0 24 24"><path d="M14 4v5C5 9 3 16 3 20c3-5 5-6 11-6v5l8-7.5L14 4Z"/></symbol>
 <symbol id="i-network" viewBox="0 0 24 24"><circle cx="12" cy="4" r="2.5"/><circle cx="4" cy="20" r="2.5"/><circle cx="20" cy="20" r="2.5"/><path d="m11 6-6 11m8-11 6 11M7 20h10"/></symbol>
+<symbol id="i-pin" viewBox="0 0 24 24"><path d="M19 9c0 5-7 12-7 12S5 14 5 9a7 7 0 1 1 14 0Z"/><circle cx="12" cy="9" r="2"/></symbol>
+<symbol id="i-share" viewBox="0 0 24 24"><path d="M14 4v5C5 9 3 16 3 20c3-5 5-6 11-6v5l8-7.5L14 4Z"/></symbol>
+<symbol id="i-clock" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M12 6v6l4 3"/></symbol>
+<symbol id="i-arrow" viewBox="0 0 24 24"><path d="M4 12h16m-6-6 6 6-6 6"/></symbol>
 </defs></svg>
 <a class="skip-link" href="#relationshipStage">跳到关系画布</a>
-<header class="site-header"><div class="header-inner">
- <a class="brand" href="./index.html"><span class="brand-mark"><svg aria-hidden="true"><use href="#i-layers"/></svg></span><span>博罗决策风洞</span><small>V11</small></a>
- <nav class="desktop-nav" aria-label="V11导航"><a href="./index.html">发现问题</a><a href="./reality.html">现实校准</a><a id="industryNav" href="./industry-base.html">产业底盘</a><a class="current" href="./relations.html" aria-current="page">关系世界</a></nav>
- <button class="saved-button" id="openSaved" type="button">我的发现 <b id="savedCount">0</b></button>
-</div></header>
-<main class="relations-wrap">
- <aside id="carryContext" class="carry-context" hidden><div><small>带着上一页的追问</small><p id="carryText"></p></div><span>先从园洲已收录的两份企业样本继续看</span></aside>
- <p id="sharedNote" class="shared-note" hidden>朋友分享了这段关系。你可以换个视角独立查看；本机记录不会随链接传递。</p>
- <section class="page-hero" aria-labelledby="pageTitle">
-  <div><p class="eyebrow">04 / 关系世界</p><h1 id="pageTitle">订单来了，谁接到了？</h1><p class="hero-subtitle" id="pageSubtitle">同一条链，看见机会，也看见依赖。</p></div>
-  <label class="case-picker"><svg aria-hidden="true"><use href="#i-pin"/></svg><span class="sr-only">切换已收录的企业案例</span><select id="caseSelect"><option value="hande">园洲 · 汉德配套</option><option value="jiangfeng">园洲 · 江丰订单</option></select><span aria-hidden="true">⌄</span></label>
- </section>
- <div class="view-bar"><div class="view-tabs" role="tablist" aria-label="切换关系视角"><button id="view-orders" type="button" role="tab" data-view="orders" aria-selected="true" aria-controls="relationshipStage">看订单</button><button id="view-jobs" type="button" role="tab" data-view="jobs" aria-selected="false" tabindex="-1" aria-controls="relationshipStage">看工作</button><button id="view-commute" type="button" role="tab" data-view="commute" aria-selected="false" tabindex="-1" aria-controls="relationshipStage">看通勤</button></div><span class="view-hint" id="viewHint">点主体、点连线，拆开看。</span></div>
- <section class="relationship-workspace" aria-label="关系探索工作台">
-  <div class="relationship-stage" id="relationshipStage" role="tabpanel" aria-labelledby="view-orders" tabindex="0">
-   <div class="stage-top"><span id="stageHeading">本地采购与客户依赖，分别看。</span><div class="legend"><span><i></i>已有报道</span><span><i class="dashed"></i>待核实</span><button type="button" id="openBoundary" aria-label="查看关系示意的来源与边界">关系示意 ⓘ</button></div></div>
-   <div class="stage-metrics" id="stageMetrics" aria-label="当前视角的记录与未知"></div>
-   <div class="graph-field" id="graphField"><div id="graphEdges" class="graph-edges" role="group" aria-label="可点击的关系连线"></div><div id="graphNodes" class="graph-nodes" aria-label="关系主体与待核实条件"></div></div>
-   <div class="snapshot-note" id="snapshotNote" role="status" aria-live="polite">报道时的关系快照；未知不当作零。</div>
-   <div class="stage-controls"><button class="play-button" type="button" id="playHistory" aria-pressed="false" aria-label="回放已报道的前后变化"><span aria-hidden="true">▶</span></button><div class="phase-controls" role="group" aria-label="切换已报道的历史快照"><button id="phaseBefore" data-phase="before" type="button" aria-pressed="false">最初</button><button id="phaseCurrent" class="selected" data-phase="current" type="button" aria-pressed="true">报道时</button></div><button class="reset-button" id="resetGraph" type="button" aria-label="重置当前案例的关系视角">↺</button><span id="stagePeriod">2026.09.22 · 企业采访</span></div>
-  </div>
-  <aside class="insight-panel" aria-label="处境、联系与下一步核实">
-   <div class="lens-tabs" role="group" aria-label="切换关注对象"><button data-lens="local" id="lensLocal" type="button" aria-pressed="false">看本地带动</button><button data-lens="company" id="lensCompany" type="button" class="selected" aria-pressed="true">看企业处境</button></div>
-   <div class="insight-copy"><span class="insight-eyebrow" id="insightEyebrow">同一条链 · 换个角度</span><h2 id="insightTitle">一个大客户，<br>也是一份依赖。</h2><p id="insightText">稳定订单带来机会，也要看清客户集中程度与替代条件。</p></div>
-   <div class="selected-detail" id="selectedDetail" hidden><div class="selected-detail-heading"><span id="selectedStatus"></span><button type="button" id="clearSelection" aria-label="收起选中联系详情">×</button></div><h3 id="selectedTitle"></h3><p id="selectedText"></p><button type="button" class="text-button" id="openSelectedEvidence">查看依据与边界 ↗</button></div>
-   <div class="bridge-card"><div class="bridge-heading"><svg aria-hidden="true"><use href="#i-bridge"/></svg><h3 id="bridgeTitle">这座桥，还差什么？</h3></div><div id="questionChips" class="question-chips"></div><p id="bridgeQuestion" class="bridge-question">本地有能力的配套，还有哪些条件没有接上？</p></div>
-   <div class="insight-actions"><button id="saveFinding" class="button primary" type="button"><svg aria-hidden="true"><use href="#i-share"/></svg><span id="saveLabel">带走这条发现</span></button><div class="secondary-actions"><button id="shareFinding" type="button">分享这段关系 ↗</button><button id="addEvidence" type="button">补充证据 ＋</button></div><p class="local-note" id="localNote">发现与补充记录保存在本机。</p></div>
-  </aside>
- </section>
- <section class="takeaway-bar" aria-label="带走一个新问题"><div><span class="takeaway-icon" aria-hidden="true">◎</span><strong id="takeaway">本地联系更深，也要看清彼此依赖。</strong></div><button id="openSources" type="button">来源与边界 <span aria-hidden="true">⌄</span></button></section>
- <section class="next-question"><div><small>继续核实</small><p id="nextQuestion">这份订单之外，还有哪些可核实的客户与合作条件？</p></div><div class="next-links"><a id="backIndustry" href="./industry-base.html">返回产业条件 →</a><a href="../experiments/holo-single/index-v2.html">打开完整关系图 ↗</a></div></section>
- <footer class="page-footer"><span>设计者：张凌 · 开放核对 · 两份企业报道样本不代表全县完整网络</span><button id="reduceMotion" type="button" aria-pressed="false">减少动态</button></footer>
+<header class="site-header"><div class="header-inner"><a class="brand" href="./index.html"><span class="brand-mark"><svg aria-hidden="true"><use href="#i-layers"/></svg></span><strong>博罗决策风洞</strong><small>V11</small></a><nav class="desktop-nav" aria-label="V11导航"><a href="./index.html">发现问题</a><a href="./reality.html">现实校准</a><a id="industryNav" href="./industry-base.html">产业底盘</a><a href="./relations.html" aria-current="page">关系世界</a></nav><div class="header-actions"><button id="openSearch" type="button" aria-label="查找主体或镇街"><svg aria-hidden="true"><use href="#i-search"/></svg><span>找主体</span><kbd>⌘K</kbd></button><button id="openSaved" type="button">我的发现 <b id="savedCount">0</b></button></div></div></header>
+<main class="world-wrap">
+<aside id="carryContext" class="carry-context" hidden><small>上一页带来的追问</small><p id="carryText"></p><span>专题样本与县域结论分别看。</span></aside>
+<p id="sharedNote" class="shared-note" hidden>这是朋友分享的关系画面。你可以独立切换、展开和核实；链接不携带本机补充记录。</p>
+<section class="world-hero"><div><p class="eyebrow">04 / 把变化放回关系里</p><h1 id="pageTitle">订单来了，谁接住了？</h1><p id="pageSubtitle">同一条链，看见机会，也看见依赖。</p></div><div class="coverage"><span><b id="topicCount">9</b>个具体专题</span><span><b id="baseNodeCount">—</b>个底座对象</span><span><b id="baseEdgeCount">—</b>条登记联系</span><button id="openBoundary" type="button" aria-label="查看资料范围与关系性质">资料范围 ⓘ</button></div></section>
+<div class="world-workspace">
+<aside class="story-rail" aria-label="选择一个具体专题"><div class="rail-heading"><strong>从你关心的事开始</strong><label><span class="sr-only">筛选专题类别</span><select id="topicGroup"><option value="all">全部专题</option><option value="industry">制造与接续</option><option value="regional">跨城连接</option><option value="people">学校与工作</option><option value="agriculture">农业与农户</option><option value="mobility">交通与文旅</option></select></label></div><div id="storyList" class="story-list"></div><button id="browseChanges" class="rail-more" type="button">展开存量变化 <span id="changeCount">0</span> →</button></aside>
+<section class="world-stage" id="relationshipStage" aria-label="可以拖动、展开、对照的关系画布" tabindex="0">
+<div class="stage-toolbar"><div class="mode-tabs" role="tablist" aria-label="关系图的观察方式"><button type="button" data-mode="trace" id="mode-trace" role="tab" aria-selected="true">关系展开</button><button type="button" data-mode="compare" id="mode-compare" role="tab" aria-selected="false" tabindex="-1">前后对照</button><button type="button" data-mode="atlas" id="mode-atlas" role="tab" aria-selected="false" tabindex="-1">全景联系</button></div><button id="playWorld" class="play-world" type="button" aria-pressed="false"><span aria-hidden="true">▶</span><b>开始巡览</b></button></div>
+<div id="worldFacts" class="world-facts" aria-label="当前专题的关键记录"></div>
+<div class="graph-topline"><div class="view-switch" role="group" aria-label="选择关心的方面"><span>看</span><button type="button" data-view="orders" aria-pressed="true">订单</button><button type="button" data-view="jobs" aria-pressed="false">工作</button><button type="button" data-view="commute" aria-pressed="false">通勤</button></div><span id="graphSummary">正在展开关系</span><label id="atlasGroupWrap" hidden><span class="sr-only">按关系对象类别查看全景</span><select id="atlasGroup"><option value="all">全部对象</option></select></label></div>
+<div class="play-narrator"><span id="motionDot" aria-hidden="true"></span><p id="playNarrator" role="status" aria-live="polite">先看采购，再看客户依赖。</p><span id="playStep">1 / 4</span></div>
+<div id="worldField" class="world-field"><svg id="worldSvg" class="world-svg" viewBox="0 0 1040 537" role="group" aria-label="可拖动的主体和可点击的联系"><g id="worldEdges"></g><g id="worldNodes"></g><g id="worldSignals" aria-hidden="true"></g></svg><div id="compareWorld" class="compare-world" hidden><div class="compare-mobile-switch" role="group" aria-label="切换对照快照"><button type="button" data-phase="before" aria-pressed="false">之前</button><button type="button" data-phase="current" aria-pressed="true">本次记录</button></div><div class="compare-grid"><figure data-pane="before"><figcaption><span>之前</span><strong id="compareBeforeTitle"></strong></figcaption><svg id="compareBefore" class="world-svg compare-svg" role="group" aria-label="前期记录的关系示意"></svg></figure><figure data-pane="current"><figcaption><span>本次</span><strong id="compareAfterTitle"></strong></figcaption><svg id="compareAfter" class="world-svg compare-svg" role="group" aria-label="本次记录的关系示意"></svg></figure></div></div><div id="worldTools" class="world-tools"><button id="zoomIn" type="button" aria-label="放大关系图">＋</button><button id="zoomOut" type="button" aria-label="缩小关系图">−</button><button id="fitGraph" type="button" aria-label="让当前关系图回到合适视野">⌖</button><button id="resetGraph" type="button" aria-label="收回展开的联系并还原布局">↺</button></div><span id="dragHint" class="drag-hint">拖动对象 · 拖动画布 · 点连线看依据</span></div>
+<div class="stage-bottom"><div class="step-control"><label for="worldScrub" class="sr-only">拖动展开顺序，0到3步</label><input id="worldScrub" type="range" min="0" max="3" step="1" value="0"><div id="stepButtons" class="step-buttons"></div></div><div class="graph-legend" aria-label="按联系性质筛选"><button type="button" data-kind="all" aria-pressed="true">全部</button><button type="button" data-kind="record" aria-pressed="false"><i></i>记录</button><button type="button" data-kind="inferred" aria-pressed="false"><i class="inferred"></i>推断</button><button type="button" data-kind="question" aria-pressed="false"><i class="question"></i>问号</button></div></div><div class="stage-source"><span id="stagePeriod"></span><span id="snapshotNote">展开顺序不是经营时间；引导标记不表示资金流量。</span></div>
+</section>
+<aside class="insight-panel" aria-label="不同处境与下一步核实"><div class="lens-tabs" role="group" aria-label="切换关注对象"><button data-lens="local" type="button" aria-pressed="false">看本地带动</button><button data-lens="company" type="button" aria-pressed="true">看我的处境</button></div><div class="insight-copy"><span id="insightKicker">同一条链 · 换个角度</span><h2 id="insightTitle">一个大客户，<br>也是一份依赖。</h2><p id="insightText"></p></div><div class="selection-panel" id="selectionPanel"><span id="selectedStatus"></span><h3 id="selectedTitle">从一个主体，再走一步</h3><p id="selectedText">点一个对象，看看它还有哪些联系。</p><button id="expandFocus" class="expand-focus" type="button" hidden>再展开一层 →</button><button id="openSelectedEvidence" class="text-button" type="button">看依据与边界 ↗</button></div><div class="gap-panel"><h3>这座桥，还差什么？</h3><div id="questionChips" class="question-chips"></div></div><div class="finding-actions"><button id="saveFinding" class="primary-button" type="button"><svg aria-hidden="true"><use href="#i-share"/></svg><span id="saveLabel">收下这段关系</span></button><div><button id="shareFinding" type="button">分享当前画面 ↗</button><button id="addEvidence" type="button">补充证据 ＋</button></div><small id="storageNote">发现与补充记录保存在本机，可导出。</small></div></aside>
+</div>
+<section class="world-lower" aria-label="继续沿关系探索"><article class="connection-card"><div class="section-heading"><h2>它还连着谁？</h2><span id="neighborCount"></span></div><div id="neighborList" class="neighbor-list"></div></article><article class="evidence-card"><div class="section-heading"><h2>这些联系，依据到哪？</h2><button id="openSources" type="button">查看来源 ↗</button></div><div id="evidenceChart" class="evidence-chart"></div><p>计数只描述当前画面，不是风险概率。</p></article><article class="question-card"><div class="section-heading"><h2>带走一个新问题</h2></div><p id="nextQuestion"></p><a id="backIndustry" href="./industry-base.html">回到产业条件 →</a><a href="../experiments/holo-single/index-v2.html">打开原完整关系图 ↗</a></article></section>
+<section class="scene-section" aria-labelledby="galleryTitle"><div class="section-heading"><div><p class="eyebrow">同一座博罗，不同人的处境</p><h2 id="galleryTitle">还有这些联系，值得拆开看。</h2></div><span>点任一专题，主画布一起变化</span></div><div id="sceneGallery" class="scene-gallery"></div></section>
+<details id="legacyChangeDetails" class="legacy-changes"><summary>再看存量变化索引 <span id="legacyCount">等待底座</span></summary><p class="archive-note">以下沿用既有登记，核对日期与范围分别保留；没有把旧目标当成今天的实际结果。</p><div id="legacyChanges" class="legacy-change-grid"></div></details>
+<footer class="page-footer"><span>设计者：张凌 · 公开资料中的对象与联系，不代表完整产业网络</span><button id="reduceMotion" type="button" aria-pressed="false">减少动态</button></footer>
 </main>
-<nav class="mobile-nav" aria-label="手机导航"><a href="./index.html"><svg aria-hidden="true"><use href="#i-layers"/></svg>发现</a><a href="./reality.html"><svg aria-hidden="true"><use href="#i-clock"/></svg>现实</a><a href="./industry-base.html"><svg aria-hidden="true"><use href="#i-factory"/></svg>产业</a><a href="./relations.html" aria-current="page"><svg aria-hidden="true"><use href="#i-network"/></svg>关系</a></nav>
-<dialog id="detailDialog" aria-labelledby="dialogTitle"><div class="dialog-header"><span id="dialogKicker"></span><button id="closeDialog" type="button" aria-label="关闭弹层">关闭 ×</button></div><div class="dialog-body" id="dialogBody"><h2 id="dialogTitle">关系详情</h2></div></dialog>
+<nav class="mobile-nav" aria-label="手机导航"><a href="./index.html"><svg aria-hidden="true"><use href="#i-search"/></svg>发现</a><a href="./reality.html"><svg aria-hidden="true"><use href="#i-clock"/></svg>现实</a><a href="./industry-base.html"><svg aria-hidden="true"><use href="#i-factory"/></svg>产业</a><a href="./relations.html" aria-current="page"><svg aria-hidden="true"><use href="#i-network"/></svg>关系</a></nav>
+<dialog id="detailDialog" aria-labelledby="dialogTitle"><div class="dialog-header"><span id="dialogKicker"></span><button type="button" id="closeDialog" aria-label="关闭弹层">关闭 ×</button></div><div class="dialog-body" id="dialogBody"><h2 id="dialogTitle">关系详情</h2></div></dialog>
 <div id="relationsToast" class="toast" role="status" aria-live="polite"></div>
-<noscript><p class="noscript">需要启用 JavaScript 进行视角切换。可直接<a href="https://epaper.nfnews.com/nfdaily/html/202609/22/content_10181994.html?origin=4">阅读南方日报原报道</a>。</p></noscript>
-<script defer src="./risk-motion.js?v=20261106-motion1"></script>
-<script defer src="./discovery-data.js?v=20261106-discovery1"></script>
-<script defer src="./discovery-core.js?v=20261107-relations1"></script>
-<script defer src="./relations-data.js?v=20261107-relations1"></script>
-<script defer src="./relations-core.js?v=20261107-relations1"></script>
-<script defer src="./relations.js?v=20261107-relations1"></script>
-</body>
-</html>
+<noscript><p>启用 JavaScript 后可巡览和拖动关系图。也可<a href="https://epaper.nfnews.com/nfdaily/html/202609/22/content_10181994.html?origin=4">直接阅读来源报道</a>。</p></noscript>
+<script defer src="./discovery-data.js?v=20261106-discovery1"></script><script defer src="./discovery-core.js?v=20261107-relations1"></script>
+<script defer src="./relations-world-data.js?v=20261107-world3"></script><script defer src="./relations-world-core.js?v=20261107-world3"></script><script defer src="./relations-world-layout.js?v=20261107-world3"></script><script defer src="./relations-stage.js?v=20261107-world3"></script>
+</body></html>

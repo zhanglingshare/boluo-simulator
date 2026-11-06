@@ -10,7 +10,7 @@
     if (isIndustry) {
       const id = window.RiskLab.getState().case;
       p.set('industryCase', id);
-      p.set('case', id === 'electronic' ? 'jiangfeng' : 'hande');
+      p.set('case', id === 'electronic' ? 'jiangfeng' : id === 'tea' ? 'tea' : id === 'ring' ? 'mobility' : 'hande');
       if (!carry) p.set('from', 'industry');
     }
     link.href = './relations.html' + (p.size ? '?' + p : '');
