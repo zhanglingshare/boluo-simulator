@@ -5,6 +5,7 @@
 <title>06 十五五规划｜1600亿元，靠谁接棒？— 博罗决策风洞 V11</title>
 <link rel="stylesheet" href="./impact.css?v=20261107-v1">
 <link rel="stylesheet" href="./plan.css?v=20261107-v1">
+<link rel="stylesheet" href="./plan-ux.css?v=20261107-v2">
 </head><body class="plan-page">
 <header class="site-header">
  <a class="brand" href="./index.html" aria-label="返回博罗V11首页">
@@ -21,7 +22,7 @@
   <div class="plan-hero-copy">
     <p class="micro">06 / STRATEGY DELIVERY OBSERVATORY · 2026—2030</p>
     <h1 id="planTitle">1600亿元的博罗，<em>靠谁接棒？</em></h1>
-    <p>一张目标，不等于一张兑现的成绩单。选择一条规划路径，看产业、空间、项目、人才与公共服务能否接得上。</p>
+    <p>目标已经写下。真正的难题：谁把规划变成产业、岗位与生活？</p>
     <div class="plan-status"><span class="p-dot"></span><strong>规划目标 × 可核实事实 × 待验证依赖</strong><span>公开资料截至 2026-11-07</span></div>
   </div>
   <div class="plan-hero-kpi">
@@ -30,6 +31,7 @@
     <div class="target-delta"><span>静态目标规模差额</span><b>594.55亿元</b><small>不等于模型预测的新增GDP</small></div>
   </div>
  </section>
+ <section class="plan-focus" aria-label="第六页核心判断"><span class="focus-label">真正要看</span><strong>项目落地 <em>≠</em> 形成真实贡献</strong><a href="#network">看看哪些环节还没接上 <span>↓</span></a></section>
  <section class="goals-panel" id="goals">
   <div class="panel-intro"><p class="micro">01 / THE TARGET IS NOT THE RESULT</p><h2>从千亿起点到2030，<em>差的是什么？</em></h2><p>指标可以切换，所有进度只比较相同统计口径的历史数值与规划目标。不是实时达标概率。</p></div>
   <div class="goal-switch" role="group" aria-label="切换十五五规划目标">
@@ -42,7 +44,7 @@
     <div class="goal-pair"><div><small>已披露历史起点</small><strong id="baseValue">1005.45亿元</strong><span id="baseYear">2025年GDP</span></div><div><small>2030年规划目标</small><strong id="goalValue">1600亿元</strong><span id="goalLimit">规划目标，并非实绩</span></div></div>
     <div class="goal-track" role="progressbar" aria-label="历史起点与规划目标比例" aria-valuemin="0" aria-valuemax="100" aria-valuenow="63" id="goalProgress"><div id="goalFill" class="goal-fill" style="width:62.84%"></div><span class="goal-spark"></span></div>
     <div class="goal-legend"><span id="goalShare">历史起点约占目标62.8%</span><strong id="goalGap">静态差额 594.55亿元</strong></div>
-    <p id="goalWarning" class="goal-warning">2025与2030为两个年份的GDP规模口径；此处没有把差额当作已经测算的实际增长贡献。</p>
+    <details class="note-fold"><summary>数据口径与限制 <span>＋</span></summary><p id="goalWarning" class="goal-warning">2025与2030为两个年份的GDP规模口径；此处没有把差额当作已经测算的实际增长贡献。</p></details>
   </div>
   <div class="mode-line"><span>换一种看法</span><button data-lens="scale" aria-pressed="true" type="button">看规模</button><button data-lens="quality" aria-pressed="false" type="button">看质量</button><strong id="qualityNote">规模是目标，兑现必须追踪实际贡献。</strong></div>
  </section>
@@ -55,14 +57,14 @@
  </div>
  <div class="network-layout">
   <div class="network-shell">
-   <div class="network-toolbar"><div><small>STRATEGIC RELATIONSHIP WORKBENCH</small><strong id="regionTitle">罗浮未来城 · 产业与城市功能一起生长</strong></div><button type="button" id="playNetwork" aria-pressed="false">▶ <span>播放依赖网络</span></button></div>
+   <div class="network-toolbar"><div><small>STRATEGIC RELATIONSHIP WORKBENCH</small><strong id="regionTitle">罗浮未来城 · 产业与城市功能一起生长</strong></div><button type="button" id="playNetwork" aria-pressed="false">▶ <span>播放</span></button></div>
    <svg id="planGraph" viewBox="0 0 920 490" role="group" aria-label="可交互的三区三核规划依赖网络；点击节点查看规划联系与待核实事项"></svg>
    <div class="network-footer"><span id="graphStatus">选择一个节点，查看规划主张与证据边界</span><button type="button" id="graphReset">↺ 重新聚焦</button><button type="button" id="reduceMotion" aria-pressed="false">减少动态</button></div>
   </div>
-  <aside class="region-inspector"><span class="micro">WHAT MUST CONNECT? / 关键依赖</span><div class="region-role" id="regionRole">产城人文旅融合未来城区</div><h3 id="regionHeadline">产业聚集之后，人能否真正住下来？</h3><p id="regionDescription">石湾、园洲、长宁与跨区域协作涉及产业、交通、住房、教育和公共服务。空间规划不等于每条联系都已经建成。</p>
+  <aside class="region-inspector"><span class="micro">关键依赖 · NEED TO CONNECT</span><div class="region-role" id="regionRole">产城人文旅融合未来城区</div><h3 id="regionHeadline">产业聚集之后，人能否真正住下来？</h3><details id="regionDetails" class="region-details"><summary>展开依据和解释 <span>＋</span></summary><div class="region-details-body"><p id="regionDescription">石湾、园洲、长宁与跨区域协作涉及产业、交通、住房、教育和公共服务。空间规划不等于每条联系都已经建成。</p>
    <div class="dependency-check"><span>最值得优先核对</span><strong id="regionQuestion">已有岗位能否与实际通勤、住房和公共服务形成配套？</strong></div>
    <div class="region-evidence"><div><span class="status-circle"></span><strong id="regionEvidenceTitle">规划方向已有公开资料</strong></div><p id="regionEvidenceText">具体项目与协同效果需逐项核实</p></div>
-   <button type="button" class="region-source" id="openRegionSource">看这条依据与边界 ↗</button>
+   <button type="button" class="region-source" id="openRegionSource">查看资料与边界 ↗</button></div></details>
   </aside>
  </div>
  <section class="paths-section" id="paths">
@@ -89,7 +91,7 @@
   <article class="calendar-panel"><div class="mini-head"><div><p class="micro">04 / PLAN VS EVIDENCE</p><h2>2026—2030：一条规划轨，一条事实轨</h2></div><span>不是线性预测</span></div>
    <div class="year-picker" role="group" aria-label="选择规划年份"><button data-year="2026" aria-pressed="true">2026</button><button data-year="2027" aria-pressed="false">2027</button><button data-year="2028" aria-pressed="false">2028</button><button data-year="2029" aria-pressed="false">2029</button><button data-year="2030" aria-pressed="false">2030</button></div>
    <div class="year-readout"><div><small>规划或年度安排</small><strong id="yearPlan">2026年增长预期目标：GDP +6.5%—7%</strong><span id="yearPlanDetail">2026年政府工作报告的年度预期目标</span></div><div><small>实际公开运行情况</small><strong id="yearFact">前三季度GDP同比 +4.1%</strong><span id="yearFactDetail">2026年1—9月累计数据，不是全年结果</span></div></div>
-   <p id="yearWarning" class="year-warning">年度计划与截至三季度的实际数据不可直接当作全年最终达成度。</p>
+   <details class="note-fold"><summary>比较口径 <span>＋</span></summary><p id="yearWarning" class="year-warning">年度计划与截至三季度的实际数据不可直接当作全年最终达成度。</p></details>
   </article>
   <article class="risk-panel"><div class="mini-head"><div><p class="micro">05 / THE MISSING CONNECTION</p><h2>2030最可能被忽略的，是连接</h2></div><span>不预判输赢</span></div>
    <div class="blindspot-choices" role="group" aria-label="选择优先核查的缺失联系">
@@ -97,7 +99,7 @@
     <button type="button" data-gap="supply" aria-pressed="false"><span>02</span>产业增长有没有传给本地配套？</button>
     <button type="button" data-gap="people" aria-pressed="false"><span>03</span>工作、居住与公共服务是否同步？</button>
    </div>
-   <div class="gap-readout"><strong id="gapTitle">一个项目从签约到实际产出，隔着几道门？</strong><p id="gapText">项目总量是起点，不是经济成果。把具体项目进度与企业产出分开核对，才能识别真正卡住的环节。</p><span id="gapEvidence">优先补充：项目级开工、投产、达产和产出数据</span></div>
+   <div class="gap-readout"><strong id="gapTitle">一个项目从签约到实际产出，隔着几道门？</strong><details class="gap-details"><summary>展开核验路径 <span>＋</span></summary><p id="gapText">项目总量是起点，不是经济成果。把具体项目进度与企业产出分开核对，才能识别真正卡住的环节。</p><span id="gapEvidence">优先补充：项目级开工、投产、达产和产出数据</span></details></div>
   </article>
  </section>
  <section class="plan-end"><div><p class="micro">NEXT / 07 WIND TUNNEL</p><h2>目标与路径已经看见，<em>下一步才是压力测试</em></h2><p>保存你关心的规划核心、兑现路径与未核实条件。第七页再在合理区间内讨论不同条件可能怎样改变结果。</p></div><div class="end-actions"><button id="copyPlan" type="button">分享当前战略观察 ↗</button><button id="savePlan" type="button">保存本机关注点</button><button id="viewSaved" type="button">查看已保存</button><a href="./impact.html">回到第五页 · 变化影响</a></div></section>
