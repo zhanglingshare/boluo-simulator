@@ -144,6 +144,30 @@ function calc(){
  }
  return data;
 }
+
+const townIndex=["罗阳街道","龙溪街道","石湾镇","园洲镇","杨村镇","公庄镇","湖镇镇","长宁镇","横河镇","龙华镇","柏塘镇","泰美镇","杨侨镇","麻陂镇","观音阁镇","石坝镇"];
+const inquiryTownFocus={
+ electronic:["罗阳街道","园洲镇","石湾镇","湖镇镇"],
+ projects:["罗阳街道","龙溪街道","石湾镇","园洲镇"],
+ tea:["柏塘镇"],
+ ring:["园洲镇","石湾镇","长宁镇","湖镇镇","横河镇"],
+ innovation:["罗阳街道","园洲镇"]
+};
+function renderSpatial(){
+ const focus=new Set(inquiryTownFocus[state.active]);
+ text("spatialFocus",byid[state.active]);
+ text("spatialTip","高亮"+focus.size+"个建议调查入口；没有高亮不代表没有产业。");
+ $("spatialNodes").innerHTML=townIndex.map((name,i)=>{
+  const a=(i*360/townIndex.length-90)*Math.PI/180;
+  const x=50+39*Math.cos(a),y=51+38*Math.sin(a);
+  return '<button class="spatial-node '+(focus.has(name)?"focus":"quiet")+'" type="button" data-spatial-town="'+escapeHTML(name)+'" style="left:'+x.toFixed(2)+'%;top:'+y.toFixed(2)+'%" title="将'+escapeHTML(name)+'加入调查清单">'+escapeHTML(name.replace("街道",""))+'</button>';
+ }).join("");
+ $("spatialNodes").querySelectorAll("[data-spatial-town]").forEach(btn=>btn.onclick=()=>{
+  const name=btn.dataset.spatialTown;
+  pick("镇街调查："+name+"｜围绕"+byid[state.active]+"，哪些企业、产品或项目联系有独立的公开证据？");
+ });
+}
+
 function render(){
  const c=current(),d=calc();
  text("mainTitle",c.title);text("mainDesc",c.sub);
@@ -165,6 +189,7 @@ function render(){
  $("sources").innerHTML=c.source.map(s=>'<a href="'+escapeHTML(s[1])+'" target="_blank" rel="noopener noreferrer">'+escapeHTML(s[0])+' ↗</a>').join('　');
  text("pickCounter",state.picked.size);
  text("chosen",state.picked.size?"已选 "+state.picked.size+" 条追问":"点一个问题，再继续探索");
+ renderSpatial();
 }
 function pick(q){state.picked.add(byid[state.active]+"｜"+q);text("pickCounter",state.picked.size);text("chosen","已选 "+state.picked.size+" 条追问");toast("已加入待研判清单");}
 function toast(msg){const t=$("toast");t.textContent=msg;t.classList.add("on");clearTimeout(window.__tt);window.__tt=setTimeout(()=>t.classList.remove("on"),2500);}
