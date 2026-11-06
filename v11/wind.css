@@ -158,3 +158,9 @@
 }
 @media(max-width:370px){.readout>strong{font-size:18px}.shock-grid strong{font-size:11px}}
 @media(prefers-reduced-motion:reduce){.wind-page *, .wind-page *::before,.wind-page *::after{animation:none!important;transition:none!important;scroll-behavior:auto!important}}
+
+
+/* Animate only freshly recomputed real values, not placeholder digits. */
+.readout.recomputed>strong{animation:windValue .55s cubic-bezier(.2,.75,.2,1) both}
+@keyframes windValue{from{opacity:.4;transform:translateY(9px);filter:blur(2px)}to{opacity:1;transform:translateY(0);filter:blur(0)}}
+@media(prefers-reduced-motion:reduce){.readout.recomputed>strong{animation:none!important}}
