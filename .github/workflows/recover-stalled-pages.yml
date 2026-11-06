@@ -1,0 +1,30 @@
+name: Recover stalled Pages deployment
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - '.github/workflows/recover-stalled-pages.yml'
+
+permissions:
+  pages: write
+
+jobs:
+  cancel-stale-publication:
+    runs-on: ubuntu-latest
+    timeout-minutes: 3
+    steps:
+      - uses: actions/github-script@v7
+        with:
+          script: |
+            const target = '1c6df8d3e88aefef3cb38c83484587d10b39ed6f';
+            const args = { ...context.repo, pages_deployment_id: target };
+            const before = await github.request('GET /repos/{owner}/{repo}/pages/deployments/{pages_deployment_id}', args);
+            core.info('Previous Pages status: ' + before.data.status);
+            if (before.data.status !== 'succeed') {
+              const result = await github.request('POST /repos/{owner}/{repo}/pages/deployments/{pages_deployment_id}/cancel', args);
+              core.info('Cancellation response: ' + result.status);
+              const after = await github.request('GET /repos/{owner}/{repo}/pages/deployments/{pages_deployment_id}', args);
+              core.info('Pages status after cancellation: ' + after.data.status);
+            }
+            core.info('Only the interrupted V11 typography publication was targeted.');
