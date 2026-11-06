@@ -122,3 +122,10 @@
 #stageWave .gate-halo{fill:none;stroke:#ffca74;stroke-width:3;stroke-opacity:.9;transform-box:fill-box;transform-origin:center;animation:gateHalo 1.8s ease-out infinite;filter:drop-shadow(0 0 5px #ffbf70)}
 @keyframes gateHalo{0%{opacity:0;transform:scale(.55)}35%{opacity:.95}100%{opacity:0;transform:scale(1.85)}}
 @media(prefers-reduced-motion:reduce){#stageWave .gate-flow,#stageWave .gate-halo{animation:none!important}}
+
+/* Actual staged reveal: future nodes fade until reached, instead of all shining before the wave arrives. */
+#planGraph .p-edge.waiting{stroke-opacity:.10!important;filter:none!important;animation:none!important}
+#planGraph .p-node.pending{opacity:.13!important;filter:saturate(.25)}
+#planGraph .p-node.pending rect{filter:none}
+#planGraph .p-node:not(.pending):not(.dimmed) rect{transition:stroke .18s,filter .18s}
+@media(prefers-reduced-motion:reduce){#planGraph .p-node.pending{opacity:.35!important}}
