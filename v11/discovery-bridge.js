@@ -38,6 +38,7 @@
     if (href === './index.html') link.href = C.link('index.html', context);
     if (href === './industry-base.html') link.href = C.link('industry-base.html', context);
     if (href === './reality.html') link.href = C.link('reality.html', context);
+    if (href === './relations.html') link.href = C.link('relations.html', context);
   });
   if (isIndustry && window.RiskLab) window.RiskLab.selectCase(selectedCase);
 })();

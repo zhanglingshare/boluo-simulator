@@ -105,6 +105,7 @@
   const value=snapshot();
   document.querySelectorAll('[data-next-reality]').forEach(a=>a.href=C.link('reality.html',value));
   document.querySelectorAll('[data-next-industry]').forEach(a=>a.href=C.link('industry-base.html',value));
+  document.querySelectorAll('[data-next-relations]').forEach(a=>a.href=C.link('relations.html',value));
  }
  function syncLocation(){
   // Share links contain only public scene/choice IDs. No personal data or stored history.

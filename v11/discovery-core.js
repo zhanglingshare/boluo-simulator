@@ -22,7 +22,7 @@
     return params.toString();
   }
   function link(page, value, shared = false) {
-    if (!['index.html', 'reality.html', 'industry-base.html'].includes(page)) throw new Error('Unsupported discovery destination');
+    if (!['index.html', 'reality.html', 'industry-base.html', 'relations.html'].includes(page)) throw new Error('Unsupported discovery destination');
     return './' + page + '?' + query(value, shared);
   }
   function question(value) {
