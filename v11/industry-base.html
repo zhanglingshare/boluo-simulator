@@ -14,6 +14,7 @@
 </style>
 <link rel="stylesheet" href="./charts.css">
 <link rel="stylesheet" href="./experience.css">
+<link rel="stylesheet" href="./scene-light.css">
 </head>
 <body>
 <header class="topbar"><a href="./index.html" class="brand"><span class="brandmark">◈</span>博罗决策风洞</a><nav class="toplinks" aria-label="V11页面导航"><a href="./index.html">01 问题发现</a><a href="./reality.html">02 预期与现实</a><a class="active" href="./industry-base.html" aria-current="page">03 产业底盘</a></nav><span class="page-chip">V11</span></header>
@@ -28,7 +29,7 @@
    <button type="button" data-exp-mode="mountains" aria-pressed="false">环两山和我有什么关系</button>
  </div>
  <div class="exp-workbench">
-  <div class="exp-question">
+  <div class="exp-question"
     <div class="exp-section-label">你的第一步 / 只做一个选择</div>
     <h2 class="exp-prompt" id="expPrompt">选一个你熟悉的镇街</h2>
     <div id="expTownPicker"><label for="expTownSelect" class="exp-sr-only">选择镇街</label><select class="exp-picker" id="expTownSelect"></select>
@@ -36,6 +37,30 @@
     <p class="exp-explainer" id="expChooseLabel">16个镇街都可以点。</p>
     <div class="exp-step-actions"><button class="exp-primary" type="button" id="expStart">往下探索 ↓</button><span class="exp-evidence-minor">不需要懂产业统计</span></div>
   </div>
+
+  <section class="exp-scene" id="expSpatial" aria-label="16镇街产业观察透镜，非真实行政区划地图">
+   <div class="exp-scene-ambient"></div>
+   <div class="exp-scene-top"><span class="exp-scene-kicker">产业观察透镜 / LIGHT LENS</span><span class="exp-scene-counter" id="expSceneFrameCount">16镇街 · 1个焦点</span></div>
+   <div class="exp-scene-viewport">
+    <div class="exp-scene-wave"></div><div class="exp-scene-wave second"></div>
+    <svg class="exp-orbit-svg" viewBox="0 0 1000 700" preserveAspectRatio="none" aria-hidden="true">
+     <defs><linearGradient id="expBeam" x1="0" x2="1" y1="0" y2="1"><stop offset="0" stop-color="#75c7f0"/><stop offset="1" stop-color="#1b83d2"/></linearGradient></defs>
+     <ellipse class="exp-orbit-ellipse strong" cx="500" cy="350" rx="415" ry="258"/>
+     <ellipse class="exp-orbit-ellipse" cx="500" cy="350" rx="330" ry="215"/>
+     <ellipse class="exp-orbit-ellipse" cx="500" cy="350" rx="265" ry="165"/>
+     <ellipse class="exp-orbit-ellipse" cx="500" cy="350" rx="198" ry="125"/>
+     <path class="exp-orbit-ellipse" d="M75 350 H925 M500 40 V660"/>
+     <g id="expConnections"></g>
+    </svg>
+    <div class="exp-node-ring" id="expOrbitNodes" role="group" aria-label="选择博罗16个镇街"></div>
+    <button type="button" class="exp-scene-core" id="expSceneCoreButton" aria-label="进入当前产业观察">
+      <small id="expSceneMode">选中镇街</small>
+      <strong id="expSceneCore">罗阳街道</strong>
+      <span id="expSceneCoreCaption">点击看已知与未知</span>
+    </button>
+   </div>
+   <div class="exp-scene-footer"><span>点亮一个你熟悉的地方</span><span id="expSceneFootnote">节点是概念索引，非真实地理位置</span></div>
+  </section>
   <div class="exp-reveal" id="expReveal" aria-live="polite">
     <div class="exp-section-label">你可能没注意到 / 公开信息观察</div>
     <div class="exp-reveal-title" id="expRevealTitle">你以为罗阳只有县城功能？这里也有制造业。</div>
@@ -212,5 +237,6 @@ setMode("town");renderQuestions();
 </script>
 <script defer src="./charts.js"></script>
 <script defer src="./experience.js"></script>
+<script defer src="./scene-light.js"></script>
 </body>
 </html>
