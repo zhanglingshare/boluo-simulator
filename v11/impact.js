@@ -112,10 +112,13 @@ function nodeCard(n,index,active=false,fact=false){
  '<text y="-4">'+esc(n.name)+'</text><text class="node-sub" y="18">'+esc(n.sub)+'</text></g>';
 }
 function renderFact(){
- const nodes=[{...facts[0],x:167,y:105},{...facts[1],x:430,y:105},{...facts[2],x:167,y:278},{...facts[3],x:430,y:278}].map(f=>({...f,name:f.label}));
- $('factNetwork').innerHTML='<text x="300" y="30" text-anchor="middle" font-size="13" font-weight="700" fill="#a7c8ec">四项独立统计指标 · 不能直接推算因果</text>'+
+ const mobile=matchMedia('(max-width:620px)').matches;
+ $('factNetwork').setAttribute('viewBox',mobile?'0 0 420 400':'0 0 600 384');
+ const coords=mobile?[[105,105],[315,105],[105,284],[315,284]]:[[167,105],[430,105],[167,278],[430,278]];
+ const nodes=facts.map((f,i)=>({...f,name:f.label,x:coords[i][0],y:coords[i][1]}));
+ $('factNetwork').innerHTML='<text x="'+(mobile?210:300)+'" y="30" text-anchor="middle" font-size="13" font-weight="700" fill="#a7c8ec">四项独立指标 · 无法直接推算因果</text>'+
  nodes.map((n,i)=>nodeCard(n,i,false,true)).join('')+
- '<text x="300" y="196" text-anchor="middle" font-weight="800" font-size="13" fill="#f3cc8d">≠ 不同口径不能相减，更不能变成实际损失</text>';
+ '<text x="'+(mobile?210:300)+'" y="196" text-anchor="middle" font-weight="800" font-size="'+(mobile?11:13)+'" fill="#f3cc8d">≠ 不能从宏观指标直接推算企业损失</text>';
 }
 function edgePath(a,b){
  const dx=b.x-a.x, dy=b.y-a.y;
@@ -124,8 +127,11 @@ function edgePath(a,b){
  return 'M'+sx+','+a.y+' C'+m+','+a.y+' '+m+','+b.y+' '+ex+','+b.y;
 }
 function renderScenario(){
- const scene=scenes[state.scene],nodes=scene.nodes;
- let lines='',nodesById=Object.fromEntries(nodes.map(n=>[n.id,n]));
+ const scene=scenes[state.scene],mobile=matchMedia('(max-width:620px)').matches;
+ const mobileXY=[[210,75],[100,209],[315,209],[100,390],[315,390]];
+ const nodes=mobile?scene.nodes.map((n,i)=>({...n,x:mobileXY[i][0],y:mobileXY[i][1]})):scene.nodes;
+ $('scenarioNetwork').setAttribute('viewBox',mobile?'0 0 420 490':'0 0 600 384');
+ let lines='';
  const chain=[[0,1],[1,2],[2,3],[3,4]];
  chain.forEach(([i,j],index)=>{
   const a=nodes[i],b=nodes[j],d=edgePath(a,b),lit=index<state.step;
@@ -136,7 +142,7 @@ function renderScenario(){
  });
  const rings=state.step>0?'<circle class="wave-ring" cx="'+nodes[0].x+'" cy="'+nodes[0].y+'" r="26"/><circle class="wave-ring second" cx="'+nodes[0].x+'" cy="'+nodes[0].y+'" r="36"/>':'';
  $('scenarioNetwork').classList.toggle('playing',state.playing&&!state.reduced);
- $('scenarioNetwork').innerHTML='<text x="300" y="29" text-anchor="middle" font-size="13" font-weight="700" fill="#b1d1f4">条件路径 · 不是已确认的采购或就业损失</text>'+
+ $('scenarioNetwork').innerHTML='<text x="'+(mobile?210:300)+'" y="29" text-anchor="middle" font-size="13" font-weight="700" fill="#b1d1f4">条件路径 · 非实测损失</text>'+
  '<g>'+lines+rings+'</g><g>'+nodes.map((n,i)=>nodeCard(n,i<=state.step)).join('')+'</g>';
  $('scenarioCaption').textContent=scene.steps[state.step];
 }
@@ -240,7 +246,7 @@ $('saveTrace').addEventListener('click',()=>{
  try{const k='boluo-impact-traces-v1',v=JSON.parse(localStorage.getItem(k)||'[]');localStorage.setItem(k,JSON.stringify([record,...(Array.isArray(v)?v:[])].slice(0,30)));notify('这条影响链已保存到本机，亦可分享链接');}
  catch{notify('无法使用本机存储，请使用分享链接保存');}
 });
-document.addEventListener('visibilitychange',()=>{if(document.hidden)stop();});window.addEventListener('pagehide',stop);
+document.addEventListener('visibilitychange',()=>{if(document.hidden)stop();});window.addEventListener('pagehide',stop);window.addEventListener('resize',()=>{renderFact();renderScenario();},{passive:true});
 window.addEventListener('popstate',()=>{stop();const p=new URL(location.href).searchParams;state.scene=within(p.get('scene'),Object.keys(scenes),'projects');state.step=Math.min(4,Math.max(0,+p.get('step')||0));state.mode=within(p.get('mode'),['compare','trace'],'compare');state.focus=p.get('focus')||'';render();});
 render();
 window.BoluoImpactUI={getState:()=>({...state}),getCase:()=>state.scene,getSteps:()=>scenes[state.scene].steps.slice()};
