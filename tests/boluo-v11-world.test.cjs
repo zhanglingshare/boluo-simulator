@@ -45,3 +45,10 @@ test('layouts keep subject cards separate at desktop, phone, comparison and expa
  }
  const v=W.visible(read('?case=hande&focus=yuanzhou&depth=2'),atlas);assert.ok(v.nodes.length<=20);assert.ok(v.nodes.some(n=>n.id==='jf'));
 });
+test('panorama metrics and next questions follow the visible graph and selected subject',()=>{
+ const copper=read('?case=hande&mode=atlas&edge=E017&candidates=1');assert.equal(W.contextFor(copper,atlas).id,'copper');
+ const raw=read('?case=hande&mode=atlas&focus=crs');assert.equal(W.contextFor(raw,atlas),null);
+ const visible=W.visible(copper,atlas),metrics=W.metricsFor(copper,atlas,visible);assert.equal(Number(metrics[0].value),visible.nodes.length);assert.equal(Number(metrics[1].value),visible.edges.length);assert.ok(metrics.every(m=>!m.value.includes('40')));
+ const filtered=read('?mode=atlas&group=agriculture&kind=record');const f=W.visible(filtered,atlas);assert.equal(Number(W.metricsFor(filtered,atlas,f)[1].value),f.edges.length);
+ assert.equal(W.metricsFor(read('?case=tea'),atlas)[0].value,'2500');
+});

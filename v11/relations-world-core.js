@@ -90,6 +90,18 @@
     if(phase==='before')return edge.before||'unreported';
     return edge.after==='closed'?'closed':edge.kind;
   }
+  function contextFor(state,atlas){
+    if(state.mode!=='atlas')return sceneFor(state,atlas);
+    const selected=state.edge?atlas.edges.get(state.edge):atlas.nodes.get(state.focus);
+    if(!selected)return null;
+    const ids=selected.a?[selected.a,selected.b]:[selected.id];
+    return D.scenes.find(s=>ids.includes(s.root))||D.scenes.find(s=>ids.some(id=>s.nodes.includes(id)))||null;
+  }
+  function metricsFor(state,atlas,view=visible(state,atlas)){
+    if(state.mode!=='atlas')return view.scene.metrics;
+    return [{label:'当前画面 · 对象',value:String(view.nodes.length),unit:'个',note:'随筛选与展开更新；不是全县主体总数'},
+      {label:'当前画面 · 联系',value:String(view.edges.length),unit:'条',note:'登记、推断和待核实分别查看'}];
+  }
   function normalizeRecord(input,atlas){
     if(!input||typeof input!=='object'||!D.scenes.some(s=>s.id===input.case))return null;
     const clean=read(new URLSearchParams({...input,candidates:input.candidates?'1':'0'}),atlas);
@@ -99,5 +111,5 @@
     return {...clean,...(body?{body,url,date:String(input.date||'').slice(0,10),status:'unreviewed'}:{})};
   }
   function parseRecords(raw,atlas){try{const a=JSON.parse(raw||'[]');return Array.isArray(a)?a.map(r=>normalizeRecord(r,atlas)).filter(Boolean).slice(0,50):[];}catch{return [];}}
-  return {data:D,groups,build,read,query,sceneFor,visible,status,neighbors,safeURL,parseRecords,normalizeRecord};
+  return {data:D,groups,build,read,query,sceneFor,visible,status,neighbors,contextFor,metricsFor,safeURL,parseRecords,normalizeRecord};
 });
