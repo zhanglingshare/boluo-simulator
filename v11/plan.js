@@ -340,6 +340,13 @@ function syncEvidenceDisclosure() {
 syncEvidenceDisclosure();
 if(typeof disclosureBreakpoint.addEventListener==='function')disclosureBreakpoint.addEventListener('change',syncEvidenceDisclosure);
 else if(typeof disclosureBreakpoint.addListener==='function')disclosureBreakpoint.addListener(syncEvidenceDisclosure);
+const goalsBreakpoint=matchMedia('(max-width:720px)');
+function syncGoalDisclosure(){
+ $('goalsDisclosure').open=!goalsBreakpoint.matches;
+}
+syncGoalDisclosure();
+if(typeof goalsBreakpoint.addEventListener==='function')goalsBreakpoint.addEventListener('change',syncGoalDisclosure);
+else if(typeof goalsBreakpoint.addListener==='function')goalsBreakpoint.addListener(syncGoalDisclosure);
 render();
 window.BoluoPlan={getState:()=>({...state}),getRegion:()=>state.region,regions:Object.keys(REGIONS)};
 })();
