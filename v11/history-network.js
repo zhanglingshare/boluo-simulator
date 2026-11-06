@@ -21,12 +21,12 @@
   const N = [
     {id:'core', name:'博罗产业',sub:'县域增长网络',year:2020,group:'core',x:506,y:249,w:164,mx:213,my:360,mw:154,title:'主角不是一家企业，是博罗的产业网络',detail:'把年份向前拨，产业园、项目、行业和生产基地逐步出现。图上的节点是代表性样本，并非全县企业清单。',question:'增长来自少数节点，还是能持续扩展的本地联系？',source:'industry25'},
     {id:'park',name:'智能装备产业园',sub:'2020平台布局',year:2020,group:'platform',x:284,y:160,w:176,mx:128,my:174,mw:154,title:'先建能够接住企业的平台',detail:'2020年引入重大项目并推进智能装备产业园，园区定位覆盖智能制造、新材料、新能源等。园区是产业承载平台，不等于所有园内企业互为供应商。',question:'园区能否从地理聚集走向实际协作？',source:'park'},
-    {id:'zhengwei',name:'正威项目',sub:'2020引进、动工',year:2020,group:'project',x:100,y:100,w:128,mx:84,my:69,mw:116,title:'2020：大项目落下第一根锚',detail:'惠州市商务局披露，2020年6月园区引进正威项目，10月动工，2021年一期建成投产。这里仅表示当时的项目进度，不代表2026年现状或承诺产能已实现。',question:'大项目后来保持了多少产能与本地采购？',source:'park'},
+    {id:'zhengwei',name:'正威项目',sub:'2020引进、动工',year:2020,group:'project',x:100,y:100,w:128,mx:70,my:69,mw:116,title:'2020：大项目落下第一根锚',detail:'惠州市商务局披露，2020年6月园区引进正威项目，10月动工，2021年一期建成投产。这里仅表示当时的项目进度，不代表2026年现状或承诺产能已实现。',question:'大项目后来保持了多少产能与本地采购？',source:'park'},
     {id:'yuanzhou',name:'园洲 · 石湾',sub:'园区空间承载',year:2021,group:'platform',x:265,y:338,w:139,mx:82,my:281,mw:132,title:'产业发展的空间开始集中',detail:'博罗智能装备产业园跨园洲和石湾。图示为园区地域与项目关系，不表示两镇之间存在特定交易流量。',question:'企业是邻居，还是有订单的合作伙伴？',source:'park'},
     {id:'sunwoda',name:'欣旺达',sub:'2021二期投产',year:2021,group:'energy',x:91,y:260,w:133,mx:326,my:172,mw:124,title:'2021：电池制造成为关键支点',detail:'县政府工作报告列明欣旺达二期竣工投产。2023年储能报道又披露欣旺达在园洲的制造布局。这里没有把相邻企业画成未经核实的直接采购关系。',question:'电芯、包装与系统集成分别有多少本地配套？',source:'storage'},
     {id:'xiaodao',name:'小刀电动车',sub:'2021一期投产',year:2021,group:'mobility',x:119,y:406,w:135,mx:84,my:478,mw:125,title:'2021：新增整车制造节点',detail:'公开报道称，小刀博罗基地2021年10月投产。它标志着本地整车制造能力的形成，但产能和带动效应应分别核实。',question:'整车走出博罗时，零部件有多少留在本地制造？',source:'mobility'},
     {id:'infra',name:'园区基础设施',sub:'2022六项建设',year:2022,group:'platform',x:442,y:82,w:140,mx:207,my:70,mw:136,title:'2022：看不见的基础设施，也在搭网络',detail:'2022年博罗产投推动园区道路、电力迁建、污水管网等6项基础设施建设工程。它们改善承载条件，不意味着单个企业的订单必然增长。',question:'土地、道路、电力和配套，哪项最影响下一批项目达产？',source:'infra'},
-    {id:'invest',name:'博罗产投',sub:'2023平台升级',year:2023,group:'platform',x:430,y:409,w:126,mx:325,my:69,mw:125,title:'2023：园区开发组织升级',detail:'2023年，博罗智能装备产业园开发有限公司升级为博罗县产业投资集团。主要关注园区基础设施和产业承载能力。',question:'项目入园之后，谁来协调长期的要素与设施？',source:'infra'},
+    {id:'invest',name:'博罗产投',sub:'2023平台升级',year:2023,group:'platform',x:578,y:409,w:126,mx:344,my:69,mw:125,title:'2023：园区开发组织升级',detail:'2023年，博罗智能装备产业园开发有限公司升级为博罗县产业投资集团。主要关注园区基础设施和产业承载能力。',question:'项目入园之后，谁来协调长期的要素与设施？',source:'infra'},
     {id:'energy',name:'新型储能',sub:'2023产业集聚',year:2023,group:'energy',x:689,y:124,w:124,mx:334,my:281,mw:123,title:'2023：储能不再只是单个工厂',detail:'2023年上半年，博罗新能源电池制造业规上企业22家，相关新型储能产业报道披露产值48.3亿元。这里是行业统计，不是欣旺达一家的产值。',question:'产业规模扩大后，电芯、储能系统、服务环节有多少在本地完成？',source:'storage'},
     {id:'mobility',name:'智能出行',sub:'整车集聚',year:2021,group:'mobility',x:757,y:344,w:122,mx:85,my:574,mw:118,title:'从一座整车厂，长出一条产业分支',detail:'博罗从2020年前后布局电动车产业；小刀、台铃、新日等整车项目陆续投产。产业分支的线是所属关系，不是企业间供货凭证。',question:'龙头在此生产，与供应商在此交易，是两回事。',source:'mobility'},
     {id:'tailing',name:'台铃',sub:'2023一期投产',year:2023,group:'mobility',x:911,y:411,w:110,mx:213,my:574,mw:110,title:'2023：台铃一期投产',detail:'台铃科技（广东）有限公司项目一期于2023年1月竣工投产。与小刀厂区邻近的公开报道，不应被解释为二者存在供应链交易。',question:'整车企业密集起来，配件厂是否同步受益？',source:'mobility'},
@@ -57,7 +57,7 @@
     2026:{title:'下一道题：长得大，还是连得紧？',sub:'2026年发布的回顾资料披露8个百亿级产业集群；真实供应、订单、利润与研发协同仍需核对。',value:'8个',label:'截至2025年形成的百亿级产业集群',source:'industry25'}
   };
   const u = new URL(location.href), requestedYear = Number(u.searchParams.get('history'));
-  let year = Number.isInteger(requestedYear) && requestedYear >= 2020 && requestedYear <= 2026 ? requestedYear : 2020;
+  let year = Number.isInteger(requestedYear) && requestedYear >= 2020 && requestedYear <= 2026 ? requestedYear : 2026;
   let focus = N.some(n=>n.id === u.searchParams.get('entity')) ? u.searchParams.get('entity') : '';
   let category = 'all', playing = false, timer = 0;
   const prefersReduced = window.matchMedia('(prefers-reduced-motion: reduce)');
@@ -129,6 +129,11 @@
   filterButtons.forEach(b=>b.addEventListener('click',()=>{category=b.dataset.bhFilter;render();}));
   $('bhSvg').addEventListener('click',e=>{const target=e.target.closest('[data-bh-id]');if(!target)return;focus=focus===target.dataset.bhId?'':target.dataset.bhId;render();});
   $('bhSvg').addEventListener('keydown',e=>{if(e.key!=='Enter'&&e.key!==' ')return;const target=e.target.closest('[data-bh-id]');if(!target)return;e.preventDefault();focus=focus===target.dataset.bhId?'':target.dataset.bhId;render();});
+  $('bhShare').addEventListener('click', async () => {
+    syncUrl();
+    try { await navigator.clipboard.writeText(location.href); $('bhShare').textContent='已复制当前年份链接'; }
+    catch { window.prompt('复制这一年的公开网络链接',location.href); }
+  });
   $('bhPlay').addEventListener('click',()=>{
     if(playing){stop();return;}
     if(year===2026)year=2020;else year=2020;
