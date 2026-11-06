@@ -308,6 +308,14 @@ $('savePlan').addEventListener('click',()=>{
  try{const key='boluo-v11-plan-snapshots',old=JSON.parse(localStorage.getItem(key)||'[]');localStorage.setItem(key,JSON.stringify([record,...(Array.isArray(old)?old:[])].slice(0,20)));toast('已保存关注点到本机；可继续分享链接');}
  catch{toast('本机存储不可用，请使用分享链接');}
 });
+$('enterWind').addEventListener('click',e=>{
+ const u=new URL('./wind.html',location.href);
+ u.searchParams.set('from','plan');
+ u.searchParams.set('route',state.route);
+ u.searchParams.set('region',state.region);
+ u.hash='results';
+ e.currentTarget.href=u.href;
+});
 $('viewSaved').addEventListener('click',()=>{
  let items=[];try{const data=JSON.parse(localStorage.getItem('boluo-v11-plan-snapshots')||'[]');items=Array.isArray(data)?data:[];}catch{}
  if(!items.length){dialog('我的规划关注点','<p>暂时没有保存记录。选择空间核心、目标、路径与年份后点击“保存本机关注点”。</p>');return;}
