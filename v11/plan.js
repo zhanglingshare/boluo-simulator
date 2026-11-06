@@ -164,9 +164,9 @@ function graphRender(){
  const pts=reg.nodes.map((n,i)=>point(n,i,mobile));
  let edges='<g aria-hidden="true">',nodes='';
  reg.nodes.forEach((n,i)=>{
-   const p=pts[i],active=i<state.step || !state.playing;
+   const p=pts[i],active=i<state.step;
    const dim=state.focus&&state.focus!==n.id;
-   const cls=(n.kind==='condition'?' conditional':'')+(active?' lit':'')+(dim?' dimmed':'');
+   const cls=(n.kind==='condition'?' conditional':'')+(active?' lit':' waiting')+(dim?' dimmed':'');
    edges+='<path class="p-edge'+cls+'" d="'+edgePath(center,p)+'"/>';
  });
  edges+='</g>';
@@ -174,8 +174,8 @@ function graphRender(){
  '<rect x="'+(-center.w/2)+'" y="'+(-center.h/2)+'" rx="22" width="'+center.w+'" height="'+center.h+'"/>'+
  '<text y="-6">'+esc(state.region==='future'?'罗浮未来城':state.region==='urban'?'县域主城':'博东新城')+'</text><text class="p-sub" y="24">2030规划空间核心</text></g>';
  reg.nodes.forEach((n,i)=>{
-   const p=pts[i],active=i<state.step || !state.playing,dim=state.focus&&state.focus!==n.id;
-   nodes+='<g class="p-node '+(state.focus===n.id?'active ':'')+(dim?'dimmed':'')+'" data-node="'+esc(n.id)+'" data-kind="'+(n.kind==='condition'?'condition':'planned')+'" tabindex="0" role="button" aria-label="'+esc(n.name)+'，'+esc(n.sub)+'" transform="translate('+p.x+','+p.y+')" style="animation-delay:'+(i*90)+'ms">'+
+   const p=pts[i],active=i<state.step,dim=state.focus&&state.focus!==n.id;
+   nodes+='<g class="p-node '+(state.focus===n.id?'active ':'')+(dim?'dimmed ':'')+(!active?'pending':'')+'" data-node="'+esc(n.id)+'" data-kind="'+(n.kind==='condition'?'condition':'planned')+'" tabindex="0" role="button" aria-label="'+esc(n.name)+'，'+esc(n.sub)+'" transform="translate('+p.x+','+p.y+')" style="animation-delay:'+(i*90)+'ms">'+
    '<rect x="'+(-p.w/2)+'" y="'+(-p.h/2)+'" width="'+p.w+'" height="'+p.h+'" rx="14"/><text y="-5">'+esc(n.name)+'</text><text class="p-sub" y="18">'+esc(n.sub)+'</text></g>';
  });
  svg.innerHTML='<defs><filter id="pGlow"><feGaussianBlur stdDeviation="3"/></filter></defs>'+
