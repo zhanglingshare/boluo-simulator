@@ -212,18 +212,20 @@ function stageRender(){
  }
  $('stageBadge').textContent=badge;$('stageTitle').textContent=title;$('stageText').textContent=content;
  all('[data-stage]').forEach(b=>b.setAttribute('aria-pressed',String(Number(b.dataset.stage)===state.stage)));
- const pos=[70,207,340,473,607],ys=78;
- const shine=pos[state.stage];
+ const smallStage=matchMedia('(max-width:720px)').matches;
+ $('stageWave').setAttribute('viewBox',smallStage?'0 0 420 142':'0 0 680 158');
+ const pos=smallStage?[46,128,210,292,374]:[70,207,340,473,607],ys=78;
+ const shine=pos[state.stage],start=pos[0],end=pos[4],mid=smallStage?210:340;
  let svg='<defs><linearGradient id="pipelineG"><stop stop-color="#6bb7ff"/><stop offset="1" stop-color="#6de4f1"/></linearGradient></defs>'+
- '<path d="M70 78H607" stroke="#4d79aa" stroke-width="9" stroke-linecap="round" fill="none"/>'+
- '<path d="M70 78H'+shine+'" stroke="url(#pipelineG)" stroke-width="9" stroke-linecap="round" fill="none" style="filter:drop-shadow(0 0 8px #57aef6)"/>'+ '<path class="gate-flow" d="M70 78H'+shine+'"/>'+ '<circle class="gate-halo" cx="'+shine+'" cy="78" r="32"/>';
+ '<path d="M'+start+' 78H'+end+'" stroke="#4d79aa" stroke-width="9" stroke-linecap="round" fill="none"/>'+
+ '<path d="M'+start+' 78H'+shine+'" stroke="url(#pipelineG)" stroke-width="9" stroke-linecap="round" fill="none" style="filter:drop-shadow(0 0 8px #57aef6)"/>'+ '<path class="gate-flow" d="M'+start+' 78H'+shine+'"/>'+ '<circle class="gate-halo" cx="'+shine+'" cy="78" r="32"/>';
  pos.forEach((x,i)=>{
   const active=i<=state.stage,selected=i===state.stage;
   svg+='<circle cx="'+x+'" cy="'+ys+'" r="'+(selected?26:21)+'" fill="'+(selected?'#d5f3ff':active?'#70b9ff':'#244d7a')+'" stroke="'+(selected?'#ffd58b':active?'#c0e4ff':'#678db6')+'" stroke-width="'+(selected?4:2)+'" style="'+(selected?'filter:drop-shadow(0 0 12px #67c8ff)':'')+'"/>'+
   '<text x="'+x+'" y="85" text-anchor="middle" font-size="15" font-weight="850" fill="'+(active?'#134779':'#b0c7df')+'">0'+(i+1)+'</text>';
  });
- svg+='<text x="340" y="32" text-anchor="middle" font-size="14" fill="#a4c9ed" font-weight="720">规划兑现是一个过程，不是单次签约</text>'+
- '<text x="340" y="135" text-anchor="middle" fill="#f7cd83" font-size="14" font-weight="830">当前关注：第'+(state.stage+1)+'道门 · '+(isNew?'历史记录与缺口分开':'逐项核验')+'</text>';
+ svg+='<text x="'+mid+'" y="32" text-anchor="middle" font-size="14" fill="#a4c9ed" font-weight="720">五道兑现门 · 每道都需要证据</text>'+
+ '<text x="'+mid+'" y="135" text-anchor="middle" fill="#f7cd83" font-size="14" font-weight="830">当前：第'+(state.stage+1)+'道门 · '+(isNew?'核查项目进度':'核查执行条件')+'</text>';
  $('stageWave').innerHTML=svg;
 }
 function yearRender(){
@@ -331,6 +333,13 @@ window.addEventListener('popstate',()=>{
  state.stage=Math.max(0,Math.min(4,Number(p.get('stage'))||0));state.year=pick(p.get('year'),Object.keys(YEAR),'2026');
  state.gap=pick(p.get('gap'),Object.keys(GAPS),'project');state.focus=REGIONS[state.region].nodes.some(n=>n.id===p.get('focus'))?p.get('focus'):'';render();
 });
+const disclosureBreakpoint=matchMedia('(max-width:980px)');
+function syncEvidenceDisclosure() {
+ $('regionDetails').open=!disclosureBreakpoint.matches;
+}
+syncEvidenceDisclosure();
+if(typeof disclosureBreakpoint.addEventListener==='function')disclosureBreakpoint.addEventListener('change',syncEvidenceDisclosure);
+else if(typeof disclosureBreakpoint.addListener==='function')disclosureBreakpoint.addListener(syncEvidenceDisclosure);
 render();
 window.BoluoPlan={getState:()=>({...state}),getRegion:()=>state.region,regions:Object.keys(REGIONS)};
 })();
