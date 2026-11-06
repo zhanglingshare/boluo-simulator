@@ -448,3 +448,67 @@ dialog { border:1px solid #cee4fa;box-shadow:0 20px 60px #174d8840; }
 @media(prefers-reduced-motion:reduce){
   .bh-history *,.world-stage *,.story-rail *,.insight-panel * { animation:none!important;transition:none!important; }
 }
+
+
+/* Explicit page title hierarchy: screenshot 03 has a big numbered page
+   header; the JS-updated case title becomes a subordinate live subtitle. */
+.world-hero h1.visual-page-title {
+  font-size:clamp(35px,3.6vw,54px);
+  color:#133968;
+  font-weight:880;
+  letter-spacing:-.055em;
+  white-space:normal;
+}
+.world-hero h2.visual-case-title {
+  margin:8px 0 0;
+  font-weight:790;
+  font-size:clamp(16px,1.45vw,21px);
+  line-height:1.35;
+  letter-spacing:-.025em;
+  color:#2878cf;
+}
+.world-hero .hero-copy > p:last-child { margin-top:6px; }
+
+/* The primary county-wide history chart inherits the light blue terrain
+   style from the 03 industrial base screenshot.  The smaller explanation
+   remains the dark 'core contrast' panel from the 02 screenshot. */
+.bh-map {
+  background:
+    radial-gradient(ellipse at 51% 42%,rgba(153,219,255,.62),transparent 65%),
+    linear-gradient(145deg,#f7fcff 0%,#e9f6ff 47%,#cee9ff 100%);
+  border:1px solid #b2dafb;
+  box-shadow:inset 0 1px #fff,inset 0 -16px 48px #9dccf52d,0 8px 23px #2b83c71f;
+}
+.bh-map:before {
+  background:
+    linear-gradient(180deg,#ffffffd1 0%,#ffffff05 69%),
+    url("./boluo-landscape.svg") center 52% / cover no-repeat;
+  opacity:.35;
+}
+.bh-map:after {
+  background-image:linear-gradient(#3c98e20b 1px,transparent 1px),linear-gradient(90deg,#3c98e20b 1px,transparent 1px);
+  background-size:29px 29px;
+}
+.bh-map-header > span { color:#4274a8;font-size:10px; }
+.bh-filters button {
+  border-color:#bedef9;color:#4376ac;
+  background:linear-gradient(180deg,#fff,#e9f5ff);
+}
+.bh-filters button:hover { color:#086bd5;border-color:#75bfff; }
+.bh-filters button[aria-pressed=true] { color:white;border-color:#167eea; }
+.bh-link { stroke:#388dea;stroke-opacity:.55;stroke-width:2.15; }
+.bh-link.bh-link-strong { stroke:#1578e6;stroke-opacity:.84;filter:drop-shadow(0 0 2px #3d9ffc88); }
+.bh-link.bh-lit { stroke:#ffae3b;filter:drop-shadow(0 0 5px #efa943b0); }
+.bh-node .bh-node-box { filter:drop-shadow(0 4px 6px #4b7da83a); }
+.bh-node[data-group=core] .bh-node-box { stroke:#198df3;filter:drop-shadow(0 0 13px #439eff95); }
+.bh-node.bh-selected .bh-node-box { stroke:#ffb442;filter:drop-shadow(0 0 13px #eeb656b0); }
+.bh-node:hover .bh-node-box { stroke:#197ff1;filter:drop-shadow(0 0 9px #197ff176); }
+.bh-breath { stroke:#f2a632; }
+.bh-map-foot { color:#527da6;background:linear-gradient(0deg,#e3f3ffb5,transparent); }
+.bh-map-foot b { color:#2f6fae; }
+.bh-unknown { fill:#bd6b0e;font-weight:800; }
+@media(max-width:720px) {
+  .world-hero h1.visual-page-title {font-size:clamp(29px,7.8vw,40px);}
+  .world-hero h2.visual-case-title {font-size:16px;}
+  .bh-map-header > span {font-size:9px;}
+}
