@@ -216,7 +216,7 @@ function stageRender(){
  const shine=pos[state.stage];
  let svg='<defs><linearGradient id="pipelineG"><stop stop-color="#6bb7ff"/><stop offset="1" stop-color="#6de4f1"/></linearGradient></defs>'+
  '<path d="M70 78H607" stroke="#4d79aa" stroke-width="9" stroke-linecap="round" fill="none"/>'+
- '<path d="M70 78H'+shine+'" stroke="url(#pipelineG)" stroke-width="9" stroke-linecap="round" fill="none" style="filter:drop-shadow(0 0 8px #57aef6);transition:all .5s"/>';
+ '<path d="M70 78H'+shine+'" stroke="url(#pipelineG)" stroke-width="9" stroke-linecap="round" fill="none" style="filter:drop-shadow(0 0 8px #57aef6)"/>'+ '<path class="gate-flow" d="M70 78H'+shine+'"/>'+ '<circle class="gate-halo" cx="'+shine+'" cy="78" r="32"/>';
  pos.forEach((x,i)=>{
   const active=i<=state.stage,selected=i===state.stage;
   svg+='<circle cx="'+x+'" cy="'+ys+'" r="'+(selected?26:21)+'" fill="'+(selected?'#d5f3ff':active?'#70b9ff':'#244d7a')+'" stroke="'+(selected?'#ffd58b':active?'#c0e4ff':'#678db6')+'" stroke-width="'+(selected?4:2)+'" style="'+(selected?'filter:drop-shadow(0 0 12px #67c8ff)':'')+'"/>'+
