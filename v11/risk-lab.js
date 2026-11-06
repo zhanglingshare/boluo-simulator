@@ -190,6 +190,7 @@ function render(){
  text("pickCounter",state.picked.size);
  text("chosen",state.picked.size?"已选 "+state.picked.size+" 条追问":"点一个问题，再继续探索");
  renderSpatial();
+ document.dispatchEvent(new CustomEvent("risk-lab:render",{detail:{case:state.active,values:[...state.values[state.active]]}}));
 }
 function pick(q){state.picked.add(byid[state.active]+"｜"+q);text("pickCounter",state.picked.size);text("chosen","已选 "+state.picked.size+" 条追问");toast("已加入待研判清单");}
 function toast(msg){const t=$("toast");t.textContent=msg;t.classList.add("on");clearTimeout(window.__tt);window.__tt=setTimeout(()=>t.classList.remove("on"),2500);}
