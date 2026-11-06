@@ -1,0 +1,110 @@
+<!doctype html>
+<html lang="zh-CN"><head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover"><meta name="theme-color" content="#eaf4ff">
+<meta name="description" content="博罗决策风洞 V11 第六页：十五五战略兑现观察台。对照2030目标、三区三核、产业与公共服务依赖及项目阶段，区分规划、历史事实与待核实联系。">
+<title>06 十五五规划｜1600亿元，靠谁接棒？— 博罗决策风洞 V11</title>
+<link rel="stylesheet" href="./impact.css?v=20261107-v1">
+<link rel="stylesheet" href="./plan.css?v=20261107-v1">
+</head><body class="plan-page">
+<header class="site-header">
+ <a class="brand" href="./index.html" aria-label="返回博罗V11首页">
+  <span class="brand-mark" aria-hidden="true"><svg viewBox="0 0 48 38"><path d="M3 28L16 8Q19 5 22 10L28 19 33 13Q36 9 39 14L46 27Q48 32 42 33H7Q1 33 3 28Z" fill="#dff8ff" stroke="#fff" stroke-width="1.8"/><path d="M10 29L20 19L28 26L35 20L43 29" stroke="#1396df" stroke-width="3" fill="none" stroke-linecap="round"/></svg></span>
+  <span class="brand-name"><strong>博罗决策风洞模拟器</strong><small>Boluo Decision Wind-Tunnel Simulator</small></span>
+ </a>
+ <nav class="desktop-nav" aria-label="V11页面导航">
+  <a href="./index.html">01 问题发现</a><a href="./reality.html">02 预期与现实</a><a href="./industry-base.html">03 产业底盘</a><a href="./relations.html">04 关系世界</a><a href="./impact.html">05 变化影响</a><a href="./plan.html" class="current" aria-current="page">06 十五五规划</a><span class="unready">07 风洞测试</span>
+ </nav>
+ <div class="header-tools"><button id="sharePage" type="button" title="分享当前规划观察" aria-label="分享当前观察"><svg viewBox="0 0 24 24"><path d="M14 4v5C6 9 4 15 3 20c3-4 6-6 11-6v5l8-7.5L14 4Z"/></svg><span>分享</span></button><a href="./impact.html" class="return-link">返回05</a></div>
+</header>
+<main class="wrap">
+ <section class="plan-hero" aria-labelledby="planTitle">
+  <div class="plan-hero-copy">
+    <p class="micro">06 / STRATEGY DELIVERY OBSERVATORY · 2026—2030</p>
+    <h1 id="planTitle">1600亿元的博罗，<em>靠谁接棒？</em></h1>
+    <p>一张目标，不等于一张兑现的成绩单。选择一条规划路径，看产业、空间、项目、人才与公共服务能否接得上。</p>
+    <div class="plan-status"><span class="p-dot"></span><strong>规划目标 × 可核实事实 × 待验证依赖</strong><span>公开资料截至 2026-11-07</span></div>
+  </div>
+  <div class="plan-hero-kpi">
+    <div><small>2025年实际GDP</small><strong>1005.45<em>亿</em></strong></div><span class="big-arrow" aria-hidden="true">→</span>
+    <div><small>2030年规划GDP目标</small><strong>1600<em>亿</em></strong></div>
+    <div class="target-delta"><span>静态目标规模差额</span><b>594.55亿元</b><small>不等于模型预测的新增GDP</small></div>
+  </div>
+ </section>
+ <section class="goals-panel" id="goals">
+  <div class="panel-intro"><p class="micro">01 / THE TARGET IS NOT THE RESULT</p><h2>从千亿起点到2030，<em>差的是什么？</em></h2><p>指标可以切换，所有进度只比较相同统计口径的历史数值与规划目标。不是实时达标概率。</p></div>
+  <div class="goal-switch" role="group" aria-label="切换十五五规划目标">
+    <button data-goal="gdp" type="button" aria-pressed="true"><small>地区生产总值</small><strong>1600亿元</strong></button>
+    <button data-goal="firms" type="button" aria-pressed="false"><small>规上工业企业</small><strong>突破2500家</strong></button>
+    <button data-goal="industry" type="button" aria-pressed="false"><small>规上工业总产值</small><strong>突破3600亿元</strong></button>
+    <button data-goal="innovation" type="button" aria-pressed="false"><small>高新技术企业</small><strong>突破900家</strong></button>
+  </div>
+  <div class="goal-visual">
+    <div class="goal-pair"><div><small>已披露历史起点</small><strong id="baseValue">1005.45亿元</strong><span id="baseYear">2025年GDP</span></div><div><small>2030年规划目标</small><strong id="goalValue">1600亿元</strong><span id="goalLimit">规划目标，并非实绩</span></div></div>
+    <div class="goal-track" role="progressbar" aria-label="历史起点与规划目标比例" aria-valuemin="0" aria-valuemax="100" aria-valuenow="63" id="goalProgress"><div id="goalFill" class="goal-fill" style="width:62.84%"></div><span class="goal-spark"></span></div>
+    <div class="goal-legend"><span id="goalShare">历史起点约占目标62.8%</span><strong id="goalGap">静态差额 594.55亿元</strong></div>
+    <p id="goalWarning" class="goal-warning">2025与2030为两个年份的GDP规模口径；此处没有把差额当作已经测算的实际增长贡献。</p>
+  </div>
+  <div class="mode-line"><span>换一种看法</span><button data-lens="scale" aria-pressed="true" type="button">看规模</button><button data-lens="quality" aria-pressed="false" type="button">看质量</button><strong id="qualityNote">规模是目标，兑现必须追踪实际贡献。</strong></div>
+ </section>
+ <aside id="carryFromImpact" class="carry-impact" hidden><span>来自第五页的变化</span><strong id="carryText"></strong><a id="carryBack" href="./impact.html">返回查看影响链 ↗</a></aside>
+ <section class="section-heading plan-section" id="network"><div><p class="micro">02 / THREE DISTRICTS · THREE NUCLEI</p><h2>2030不是一座城长大，<em>而是三个核心协同</em></h2><p>点击空间核心，看关联产业、公共服务与关键依赖如何一层层亮起。<b>虚线代表需要验证的机制，不是已形成的交易。</b></p></div><div class="status-legend"><span><i class="solid"></i>规划联系</span><span><i class="hypo"></i>依赖待核</span><span><i class="unknown"></i>事实缺口</span></div></section>
+ <div class="plan-tabs" role="group" aria-label="三区三核空间切换">
+  <button data-region="future" type="button" aria-pressed="true"><span class="tab-index">01</span><span><strong>罗浮未来城</strong><small>产城人文旅融合未来城区</small></span></button>
+  <button data-region="urban" type="button" aria-pressed="false"><span class="tab-index">02</span><span><strong>县域主城</strong><small>同城融湾先行区</small></span></button>
+  <button data-region="east" type="button" aria-pressed="false"><span class="tab-index">03</span><span><strong>博东新城</strong><small>城乡三产融合样板区</small></span></button>
+ </div>
+ <div class="network-layout">
+  <div class="network-shell">
+   <div class="network-toolbar"><div><small>STRATEGIC RELATIONSHIP WORKBENCH</small><strong id="regionTitle">罗浮未来城 · 产业与城市功能一起生长</strong></div><button type="button" id="playNetwork" aria-pressed="false">▶ <span>播放依赖网络</span></button></div>
+   <svg id="planGraph" viewBox="0 0 920 490" role="group" aria-label="可交互的三区三核规划依赖网络；点击节点查看规划联系与待核实事项"></svg>
+   <div class="network-footer"><span id="graphStatus">选择一个节点，查看规划主张与证据边界</span><button type="button" id="graphReset">↺ 重新聚焦</button><button type="button" id="reduceMotion" aria-pressed="false">减少动态</button></div>
+  </div>
+  <aside class="region-inspector"><span class="micro">WHAT MUST CONNECT? / 关键依赖</span><div class="region-role" id="regionRole">产城人文旅融合未来城区</div><h3 id="regionHeadline">产业聚集之后，人能否真正住下来？</h3><p id="regionDescription">石湾、园洲、长宁与跨区域协作涉及产业、交通、住房、教育和公共服务。空间规划不等于每条联系都已经建成。</p>
+   <div class="dependency-check"><span>最值得优先核对</span><strong id="regionQuestion">已有岗位能否与实际通勤、住房和公共服务形成配套？</strong></div>
+   <div class="region-evidence"><div><span class="status-circle"></span><strong id="regionEvidenceTitle">规划方向已有公开资料</strong></div><p id="regionEvidenceText">具体项目与协同效果需逐项核实</p></div>
+   <button type="button" class="region-source" id="openRegionSource">看这条依据与边界 ↗</button>
+  </aside>
+ </div>
+ <section class="paths-section" id="paths">
+  <div class="section-heading"><div><p class="micro">03 / FIVE DELIVERY ROUTES · 研究性归纳</p><h2>五条兑现路径，<em>每条都缺一块拼图</em></h2><p>这是研究层整理的五条观察路径，<b>不是官方将GDP差额划成的五项贡献额</b>。点击后改变下方项目阶段与优先核查点。</p></div></div>
+  <div class="route-grid" role="group" aria-label="选择兑现路径">
+   <button data-route="new" type="button" aria-pressed="true"><span class="route-icon">◫</span><span><strong>新项目兑现</strong><small>从落地到形成产出</small></span></button>
+   <button data-route="manufacturing" type="button" aria-pressed="false"><span class="route-icon">▥</span><span><strong>主导产业扩能</strong><small>电子、装备、新材料</small></span></button>
+   <button data-route="innovation" type="button" aria-pressed="false"><span class="route-icon">⌘</span><span><strong>创新与未来产业</strong><small>研发、人才、新技术</small></span></button>
+   <button data-route="services" type="button" aria-pressed="false"><span class="route-icon">◎</span><span><strong>生产性服务业</strong><small>设计、物流、服务</small></span></button>
+   <button data-route="connect" type="button" aria-pressed="false"><span class="route-icon">⥊</span><span><strong>融深融湾与城乡联动</strong><small>产业、交通、市场</small></span></button>
+  </div>
+  <div class="delivery-card"><div class="delivery-top"><div><p class="micro">DELIVERY LINE / 兑现过程</p><h3 id="routeTitle">项目引进后，真正形成产出了吗？</h3><p id="routeSubtitle">区分引进、开工、建成、投产与实际贡献；不把规划金额当作已经实现的GDP。</p></div><span class="delivery-live">五道门，逐层核查</span></div>
+   <div class="stage-steps" role="group" aria-label="项目兑现五阶段">
+    <button data-stage="0" aria-pressed="true" type="button"><span>01</span><strong>引进/纳入</strong><small>项目或任务列出</small></button>
+    <button data-stage="1" aria-pressed="false" type="button"><span>02</span><strong>开工</strong><small>状态独立核实</small></button>
+    <button data-stage="2" aria-pressed="false" type="button"><span>03</span><strong>建设完成</strong><small>验收与交付</small></button>
+    <button data-stage="3" aria-pressed="false" type="button"><span>04</span><strong>投产运营</strong><small>不等于达产</small></button>
+    <button data-stage="4" aria-pressed="false" type="button"><span>05</span><strong>实际贡献</strong><small>产出与收入证据</small></button>
+   </div>
+   <div class="stage-detail"><div class="stage-graphic"><svg id="stageWave" viewBox="0 0 680 158" role="img" aria-label="项目兑现各阶段的进度动画，仅为流程示意，不代表项目真实数量"></svg></div><div class="stage-caption"><span id="stageBadge">历史披露 · 累计项目</span><h4 id="stageTitle">十四五期间园区引进项目646宗</h4><p id="stageText">这是一项历史累计统计。不能与另外披露的投产458宗直接相减来认定未投产或失败项目。</p><button id="stageSource" type="button">核查口径与来源 ↗</button></div></div>
+  </div>
+ </section>
+ <section class="double-lower" id="calendar">
+  <article class="calendar-panel"><div class="mini-head"><div><p class="micro">04 / PLAN VS EVIDENCE</p><h2>2026—2030：一条规划轨，一条事实轨</h2></div><span>不是线性预测</span></div>
+   <div class="year-picker" role="group" aria-label="选择规划年份"><button data-year="2026" aria-pressed="true">2026</button><button data-year="2027" aria-pressed="false">2027</button><button data-year="2028" aria-pressed="false">2028</button><button data-year="2029" aria-pressed="false">2029</button><button data-year="2030" aria-pressed="false">2030</button></div>
+   <div class="year-readout"><div><small>规划或年度安排</small><strong id="yearPlan">2026年增长预期目标：GDP +6.5%—7%</strong><span id="yearPlanDetail">2026年政府工作报告的年度预期目标</span></div><div><small>实际公开运行情况</small><strong id="yearFact">前三季度GDP同比 +4.1%</strong><span id="yearFactDetail">2026年1—9月累计数据，不是全年结果</span></div></div>
+   <p id="yearWarning" class="year-warning">年度计划与截至三季度的实际数据不可直接当作全年最终达成度。</p>
+  </article>
+  <article class="risk-panel"><div class="mini-head"><div><p class="micro">05 / THE MISSING CONNECTION</p><h2>2030最可能被忽略的，是连接</h2></div><span>不预判输赢</span></div>
+   <div class="blindspot-choices" role="group" aria-label="选择优先核查的缺失联系">
+    <button type="button" data-gap="project" aria-pressed="true"><span>01</span>投产之前，项目是否真的持续推进？</button>
+    <button type="button" data-gap="supply" aria-pressed="false"><span>02</span>产业增长有没有传给本地配套？</button>
+    <button type="button" data-gap="people" aria-pressed="false"><span>03</span>工作、居住与公共服务是否同步？</button>
+   </div>
+   <div class="gap-readout"><strong id="gapTitle">一个项目从签约到实际产出，隔着几道门？</strong><p id="gapText">项目总量是起点，不是经济成果。把具体项目进度与企业产出分开核对，才能识别真正卡住的环节。</p><span id="gapEvidence">优先补充：项目级开工、投产、达产和产出数据</span></div>
+  </article>
+ </section>
+ <section class="plan-end"><div><p class="micro">NEXT / 07 WIND TUNNEL</p><h2>目标与路径已经看见，<em>下一步才是压力测试</em></h2><p>保存你关心的规划核心、兑现路径与未核实条件。第七页再在合理区间内讨论不同条件可能怎样改变结果。</p></div><div class="end-actions"><button id="copyPlan" type="button">分享当前战略观察 ↗</button><button id="savePlan" type="button">保存本机关注点</button><button id="viewSaved" type="button">查看已保存</button><a href="./impact.html">回到第五页 · 变化影响</a></div></section>
+ <footer class="footer"><span>博罗决策风洞 V11 · 06 十五五规划 · 规划目标不等于已兑现结果</span><button type="button" id="openMethod">资料与方法边界 ↗</button></footer>
+</main>
+<nav class="mobile-nav" aria-label="手机端V11导航"><a href="./index.html">01 发现</a><a href="./reality.html">02 现实</a><a href="./industry-base.html">03 底盘</a><a href="./relations.html">04 关系</a><a href="./impact.html">05 影响</a><a href="./plan.html" aria-current="page">06 规划</a></nav>
+<dialog id="detailDialog" aria-labelledby="dialogTitle"><div class="dialog-header"><strong id="dialogTitle">依据与边界</strong><button type="button" id="dialogClose">关闭 ×</button></div><div class="dialog-body" id="dialogBody"></div></dialog>
+<div id="toast" class="toast" role="status" aria-live="polite"></div>
+<noscript><p>本页的规划摘要与历史数字仍可阅读，启用JavaScript后可体验战略网络、兑现阶段、时间轴与分享。</p></noscript>
+<script defer src="./plan.js?v=20261107-v1"></script></body></html>
