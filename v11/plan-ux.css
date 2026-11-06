@@ -164,3 +164,9 @@
 @media (prefers-reduced-motion:reduce){
  .plan-focus *, .plan-focus *::after, .plan-focus *::before{animation:none!important;transition:none!important}
 }
+
+/* During staged playback, existing branches stay stable; only the arriving node glows. */
+#planGraph .p-node.no-entry{animation:none!important}
+#planGraph .p-node.newly-lit{animation:planArrive .42s ease-out both}
+#planGraph .p-node.newly-lit rect{stroke:#fbd18b;stroke-width:4;filter:drop-shadow(0 0 17px #ffd17cb0)}
+@media(prefers-reduced-motion:reduce){#planGraph .p-node.newly-lit{animation:none!important}}
