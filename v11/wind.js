@@ -193,6 +193,9 @@ function run(animate=false){
  if(!output)return;
  last=output;
  renderNumbers(output);
+ if(animate&&!state.reduced){
+  qa('.readout').forEach(node=>{node.classList.remove('recomputed');void node.offsetWidth;node.classList.add('recomputed');});
+ }
  chartRender(output,animate);
  renderChain();
  if(animate)progressChain();
