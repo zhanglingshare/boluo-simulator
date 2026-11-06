@@ -1,5 +1,7 @@
 (()=>{"use strict";
 const $=id=>document.getElementById(id);
+const motion=window.RiskMotion;
+const confidence=[80,85,90,95,99,99.5],zScores=[1.282,1.44,1.645,1.96,2.576,2.807];
 const ref={
  current:"https://fz0752.com/fontHtml/html/issue/000143025_1.html",
  electronic:"https://news.southcn.com/node_54a44f01a2/26ba1c8a43.shtml",
@@ -18,16 +20,18 @@ const cases={
  source:[["县域农文旅发展方向",ref.agri],["博罗规划部署",ref.plan]],known:[["研究对象","柏塘特色茶产业"],["发展方向","加工、品牌、渠道增值"]],missing:"茶青采收量、交易价格、加工成本与损耗、经营主体归属、终端渠道分成、规划中可比增值目标。",questions:["同样一斤春茶，加工与品牌能多留下多少价值？","茶农、加工厂和渠道谁承担了资金周转？","农产品加工率与本地增值率是否被混为一谈？"]},
  ring:{title:"环“两山”，游客来了，价值留下了吗？",sub:"游览量、过夜率和本地消费不能混为一谈。按每100名游客的假设场景检验不同转化条件。",status:"尚缺游客消费账本",label:"假设过夜游客比例",min:0,max:70,step:5,initial:15,secondary:{label:"假设消费由本地经营环节留存的比例",min:0,max:100,step:5,initial:40},
  source:[["县域环两山发展部署",ref.plan],["市十五五规划方向",ref.agri]],known:[["规划框架","环南昆山—罗浮山"],["观察视角","过夜、消费与本地留存"]],missing:"不同镇街的实际游客数、过夜比例、人均消费、外来经营主体和中间投入采购。",questions:["客流越多，为什么本地增加值未必同步增加？","游客过夜率和消费留存哪个更值得补数据？","环两山是否带动本地农产品加工与服务业？"]},
- innovation:{title:"652家数字化转型企业，效率提升了多少？",sub:"有实施数量，不等于有绩效成果。需要真正的转型前后对照；先计算抽样调查的统计精度边界。",status:"绩效转化未测定",label:"计划随机核验的转型企业数",min:20,max:250,step:10,initial:80,
+ innovation:{title:"652家数字化转型企业，效率提升了多少？",sub:"有实施数量，不等于有绩效成果。需要真正的转型前后对照；先计算抽样调查的统计精度边界。",status:"绩效转化未测定",label:"计划随机核验的转型企业数",min:20,max:250,step:10,initial:80,secondary:{label:"拟调查的置信水平",min:0,max:5,step:1,initial:3},
  source:[["2025统计公报背景",ref.history],["2026县域产业方向",ref.plan]],known:[["实施数字化转型","652家"],["全县规上工业企业","1,407家"]],missing:"每家企业转型前后产出、成本、设备、就业、行业、选择偏差及可比较的未转型企业样本。",questions:["实施数字化转型的企业，是否真的提升了生产率？","哪些企业有真实的转型前后对照？","创新成果能否形成可持续的本地产业能力？"]}
 };
-const state={active:"electronic",values:{electronic:[5],projects:[10],tea:[35,20],ring:[15,40],innovation:[80]},picked:new Set()};
+const state={active:"electronic",values:{electronic:[5],projects:[10],tea:[35,20],ring:[15,40],innovation:[80,3]},picked:new Set()};
+const presets={electronic:[0,5,10],projects:[0,10,25],tea:[0,35,100],ring:[0,15,50],innovation:[20,80,240]};
+let renderedCase="", pendingRender=0, playFrame=0, playing=false, statusTimer=0, returnFocus=null;
 const byid={electronic:"电子信息",projects:"工业接续",tea:"柏塘春茶",ring:"环两山",innovation:"创新"};
 const fmt=(n,d=1)=>Number(n).toLocaleString("zh-CN",{minimumFractionDigits:d,maximumFractionDigits:d});
 const escapeHTML=s=>String(s).replace(/[&<>"']/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]));
 function current(){return cases[state.active]}
 function val(i=0){return state.values[state.active][i]}
-function options(id){state.active=id;document.querySelectorAll("[data-case]").forEach(b=>{const active=b.dataset.case===id;b.classList.toggle("active",active);b.setAttribute("aria-pressed",String(active));});render()}
+function options(id){if(!cases[id])return;stopPlay();state.active=id;document.querySelectorAll("[data-case]").forEach(b=>{const active=b.dataset.case===id;b.classList.toggle("active",active);b.setAttribute("aria-pressed",String(active));});render();announce("已切换"+byid[id]+" · 改条件，看差别");}
 function text(id,s){$(id).textContent=s}
 function badge(s,good=false,missing=false){const t=$("riskBadge");t.className="status"+(good?" ok":missing?" missing":"");t.textContent=s}
 function unitNumber(n,unit){return fmt(n,1)+unit}
@@ -36,7 +40,9 @@ function setupInputs(){
  text("controlLabel",c.label);text("sliderValue",String(v)+(state.active==="innovation"?"家":"%"));
  const s=$("slider");s.min=c.min;s.max=c.max;s.step=c.step;s.value=v;s.setAttribute("aria-label",c.label);
  const s2=$("secondControl");s2.classList.toggle("invisible",!c.secondary);
- if(c.secondary){text("controlLabel2",c.secondary.label);const f=$("slider2");f.min=c.secondary.min;f.max=c.secondary.max;f.step=c.secondary.step;f.value=val(1);text("sliderValue2",val(1)+"%");}
+ if(c.secondary){text("controlLabel2",c.secondary.label);const f=$("slider2");f.min=c.secondary.min;f.max=c.secondary.max;f.step=c.secondary.step;f.value=val(1);f.setAttribute("aria-label",c.secondary.label);const label=(state.active==="innovation"?confidence[val(1)]:val(1))+"%";text("sliderValue2",label);f.setAttribute("aria-valuetext",label);}
+ s.style.setProperty("--range-fill",100*(v-c.min)/(c.max-c.min)+"%");
+ if(c.secondary)$("slider2").style.setProperty("--range-fill",100*(val(1)-c.secondary.min)/(c.secondary.max-c.secondary.min)+"%");
 }
 function chartAxis(min,max,step,threshold){
  let out="";
@@ -82,7 +88,7 @@ function chartTourist(overnight,retention,spend,local){
  out+='<text x="68" y="260">所示金额均为每100游客的情景量，不代表游客实测消费</text></svg>';
  return out;
 }
-function chartInnovation(n,moe){
+function chartInnovation(n,moe,level){
  const percent=100*652/1407;
  let out='<svg viewBox="0 0 780 270" role="img" aria-label="数字化转型覆盖比例和潜在抽样误差"><title>覆盖率基于公开统计，误差区间基于拟议抽样计划</title>';
  out+='<circle cx="170" cy="128" r="79" fill="none" stroke="#e5edf7" stroke-width="24"/>';
@@ -134,11 +140,11 @@ function calc(){
    data.chain=["游客到访","停留与过夜","消费发生地","本地经营留存"];data.bars=[["到访100人",100],["过夜人数",n],["留存份额",secondary]];
  }else{
    const n=primary,N=652;
-   const fpc=Math.sqrt((N-n)/(N-1)),moe=1.96*Math.sqrt(.25/n)*fpc*100;
+   const fpc=Math.sqrt((N-n)/(N-1)),moe=zScores[secondary]*Math.sqrt(.25/n)*fpc*100;
    data.badge="无绩效实测系数";data.missing=true;
    data.major=fmt(100*N/1407,1)+"%";data.unit="数字化转型实施覆盖比例";data.detail="652家实施数字化转型/1407家规上工业企业。该覆盖比例不是生产率提升比例。";
-   data.second="±"+fmt(moe,1)+"百分点";data.secondDetail="拟议抽样的最坏情形95%误差半宽，假定简单随机抽样，且未考虑非响应偏差。";
-   data.chart=chartInnovation(n,moe);
+   data.second="±"+fmt(moe,1)+"百分点";data.secondDetail="拟议抽样的最坏情形"+confidence[secondary]+"%误差半宽，假定简单随机抽样，且未考虑非响应偏差。";
+   data.chart=chartInnovation(n,moe,confidence[secondary]);
    data.foot="尚未实际抽取和调查企业；不应发布SEM路径系数或真实绩效达成率。";
    data.chain=["数字化实施","可比经营样本","效果识别","能力转化"];data.bars=[["实施转型",100*N/1407],["其他规上",100*(1-N/1407)],["拟抽样",100*n/N]];
  }
@@ -169,17 +175,18 @@ function renderSpatial(){
 }
 
 function render(){
- const c=current(),d=calc();
+ const c=current(),d=calc(),changed=renderedCase!==state.active;
  text("mainTitle",c.title);text("mainDesc",c.sub);
  badge(d.badge,d.good,d.missing);
  setupInputs();
- $("mainPlot").innerHTML=d.chart;
+ motion.html("mainPlot",d.chart,!changed);
  text("mainPlotNote",d.foot);
  text("primaryOutput",d.major);text("primaryUnit",d.unit);text("primaryDetail",d.detail);
  text("secondaryOutput",d.second);text("secondaryUnit",d.secondDetail);
- $("chain").innerHTML=d.chain.map((s,i)=>'<span>'+escapeHTML(s)+'</span>'+(i<d.chain.length-1?'<i>→</i>':"")).join("");
+ if(changed)$("chain").innerHTML=d.chain.map((s,i)=>'<span>'+escapeHTML(s)+'</span>'+(i<d.chain.length-1?'<i>→</i>':"")).join("");
  const mx=Math.max(...d.bars.map(x=>x[1]),1);
- $("scenarioBars").innerHTML=d.bars.map(x=>'<div class="barrow"><span>'+escapeHTML(x[0])+'</span><div class="bartrack"><i style="width:'+fmt(100*x[1]/mx,1)+'%"></i></div><strong>'+fmt(x[1],1)+'</strong></div>').join("");
+ motion.html("scenarioBars",d.bars.map(x=>'<div class="barrow"><span>'+escapeHTML(x[0])+'</span><div class="bartrack"><i style="width:'+(100*x[1]/mx).toFixed(3)+'%"></i></div><strong>'+fmt(x[1],1)+'</strong></div>').join(""),!changed);
+ if(changed){
  $("known").innerHTML=c.known.map(s=>'<div class="known"><span class="k">●</span><span><b>'+escapeHTML(s[0])+'</b><small>'+escapeHTML(s[1])+'</small></span></div>').join("");
  $("unknown").innerHTML='<div class="known"><span class="u">○</span><span><b>当前没有的关键数据</b><small>'+escapeHTML(c.missing)+'</small></span></div>';
  text("missingText",c.missing);
@@ -187,17 +194,77 @@ function render(){
  $("questionList").innerHTML=c.questions.map((s,i)=>'<button class="risk-point" type="button" data-question="'+i+'" title="保存这个疑问"><span></span><span><strong>'+escapeHTML(s)+'</strong><small>点击加入你的研判清单</small></span></button>').join("");
  document.querySelectorAll("[data-question]").forEach(b=>b.onclick=()=>pick(c.questions[Number(b.dataset.question)]));
  $("sources").innerHTML=c.source.map(s=>'<a href="'+escapeHTML(s[1])+'" target="_blank" rel="noopener noreferrer">'+escapeHTML(s[0])+' ↗</a>').join('　');
+ renderSpatial();
+ }
  text("pickCounter",state.picked.size);
  text("chosen",state.picked.size?"已选 "+state.picked.size+" 条追问":"点一个问题，再继续探索");
- renderSpatial();
- document.dispatchEvent(new CustomEvent("risk-lab:render",{detail:{case:state.active,values:[...state.values[state.active]]}}));
+ renderLive(changed);
+ renderedCase=state.active;
+ document.dispatchEvent(new CustomEvent("risk-lab:render",{detail:{case:state.active,values:[...state.values[state.active]],changed}}));
+}
+function metric(id,values){
+ const [a,b]=values;
+ if(id==="electronic")return {value:773.8*Math.pow(1+a/100,5),label:"2030条件产值",unit:"亿元",digits:1,foot:"以2025年报道下限为基数 · 按所选增速计算",kind:"公开基数 + 增长假设"};
+ if(id==="projects")return {value:55.3*Math.pow(1+a/100,4),label:"2030同季投资指数",unit:"指数",digits:1,foot:"2025同期＝100 · 计算投资恢复条件",kind:"公开降幅 + 恢复假设"};
+ if(id==="tea")return {value:23+32*a/100+25*b/100,label:"每100元销售额的本地增值",unit:"元",digits:1,foot:"种植23 + 加工32×留存比例 + 渠道25×留存比例",kind:"演示假设 · 非柏塘实测"};
+ if(id==="ring")return {value:((100-a)*90+a*600)*b/100,label:"每100游客的本地消费留存代理",unit:"元",digits:0,foot:"当日游90元、过夜600元为演示假设",kind:"演示假设 · 非游客实测"};
+ return {value:zScores[b]*Math.sqrt(.25/a)*Math.sqrt((652-a)/651)*100,label:"拟随机抽样的最大误差半宽",prefix:"±",unit:"个百分点",digits:1,foot:confidence[b]+"%置信水平 · 尚未调查，不是转型成效",kind:"拟调查设计 · 无绩效实测"};
+}
+function initialValues(id){const c=cases[id];return c.secondary?[c.initial,c.secondary.initial]:[c.initial];}
+function renderLive(changed){
+ const id=state.active,m=metric(id,state.values[id]),base=metric(id,initialValues(id)).value,delta=m.value-base;
+ text("liveLabel",m.label);text("livePrefix",m.prefix||"");text("liveUnit",m.unit);text("liveFoot",m.foot);text("labMode",m.kind);
+ // Different topics have different units; never animate a number across topic boundaries.
+ if(changed){text("liveOutput",fmt(m.value,m.digits));$("liveOutput").dataset.value=String(m.value);}
+ motion.number($("liveOutput"),m.value,m.digits,changed?0:240);
+ const suffix=id==="innovation"?"个百分点":m.unit;
+ text("liveDelta",Math.abs(delta)<.00001?"初始条件 · 试着改变下面的滑块":"比初始条件 "+(delta>=0?"+":"−")+fmt(Math.abs(delta),m.digits)+" "+suffix);
+ $("liveDelta").classList.toggle("is-changed",Math.abs(delta)>.00001);
+ const labels=id==="innovation"?["少量核验","初始样本","扩大样本"]:["较低条件","初始条件","较高条件"];
+ motion.html("scenarioPresets",presets[id].map((n,i)=>'<button type="button" data-live-preset="'+n+'" aria-pressed="'+(n===val())+'"><span>'+labels[i]+'</span><b>'+n+(id==="innovation"?"家":"%")+'</b></button>').join(""),false);
+ $("scenarioPresets").querySelectorAll("button").forEach(button=>button.onclick=()=>setValues([+button.dataset.livePreset],"quick"));
+ $("motionLab").dataset.case=id;
+}
+function announce(message){clearTimeout(statusTimer);statusTimer=setTimeout(()=>text("labStatus",message),140);}
+function queueRender(){if(!pendingRender)pendingRender=requestAnimationFrame(()=>{pendingRender=0;render();});}
+function setValues(values,source="user"){
+ if(source!=="play")stopPlay();
+ const c=current(),before=state.values[state.active].join();
+ values.forEach((n,i)=>{if(n===undefined)return;const p=i?c.secondary:c;if(!p)return;state.values[state.active][i]=Math.max(p.min,Math.min(p.max,+(p.min+Math.round((n-p.min)/p.step)*p.step).toFixed(5)));});
+ if(before!==state.values[state.active].join())queueRender();
+ if(source!=="play")announce("已联动更新 · "+(source==="heat"?"热力格条件":source==="sensitivity"?"单变量对照":c.label)+"已应用");
+}
+function playLabel(){
+ $("playScenario").innerHTML=playing?'<span aria-hidden="true">Ⅱ</span> 暂停变化':motion.reduced.matches?'逐步比较':'<span aria-hidden="true">▶</span> 播放变化';
+ $("playScenario").setAttribute("aria-pressed",String(playing));$("motionLab").classList.toggle("is-playing",playing);
+}
+function stopPlay(){cancelAnimationFrame(playFrame);playFrame=0;playing=false;playLabel();}
+function play(){
+ if(playing){stopPlay();announce("已暂停 · 保留当前条件，可继续手动调整");return;}
+ if(motion.reduced.matches){const list=presets[state.active],next=list.find(x=>x>val())??list[0];setValues([next],"step");return;}
+ playing=true;playLabel();text("labStatus","正在播放假设变化 · 可随时暂停或拖动滑块");
+ const id=state.active,keys=[val(),presets[id][0],presets[id][2],cases[id].initial],start=performance.now(),leg=1800;
+ const frame=now=>{
+  if(!playing||state.active!==id)return;
+  const elapsed=now-start,index=Math.min(2,Math.floor(elapsed/leg)),t=Math.min(1,(elapsed-index*leg)/leg),e=(1-Math.cos(Math.PI*t))/2;
+  setValues([keys[index]+(keys[index+1]-keys[index])*e],"play");
+  if(elapsed>=leg*3){stopPlay();announce("演示完成 · 已回到初始主条件，图表可继续点选");return;}
+  playFrame=requestAnimationFrame(frame);
+ };
+ playFrame=requestAnimationFrame(frame);
 }
 function pick(q){state.picked.add(byid[state.active]+"｜"+q);text("pickCounter",state.picked.size);text("chosen","已选 "+state.picked.size+" 条追问");toast("已加入待研判清单");}
 function toast(msg){const t=$("toast");t.textContent=msg;t.classList.add("on");clearTimeout(window.__tt);window.__tt=setTimeout(()=>t.classList.remove("on"),2500);}
 function showDrawer(){
+ returnFocus=document.activeElement;
  $("detailOverlay").classList.add("open");
+ document.querySelector("main").inert=true;document.querySelector("header").inert=true;
  $("drawerText").innerHTML='<article><h3>证据与情景分开</h3><p>2026年前三季度工业增加值+8.9%、工业投资−44.7%；2025电子信息产值超过773.8亿元；2025规上企业1407家。这些属于有公开报道支持的观测或统计口径。</p></article><article><h3>模型不能冒充实测</h3><p>电子信息使用有界基期的复合增长条件核算，工业投资使用同季指数恢复测试；农业和环“两山”使用价值链/地方留存条件核算；创新转化使用拟议抽样的最大误差分析。所有由用户设置的参数只是条件实验。</p></article><article><h3>国际模型借鉴</h3><p>研究路线参考区域投入产出与价值链核算、区域经济循环、动态适应政策路径、经济复杂性与产业相关性，以及真实数据具备后才可采用的 SNA / SEM 与企业冲击传播。未收集到企业交易边和合格样本时，不报告实测网络或路径系数。</p></article><article><h3>规划与统计口径</h3><p>千亿级电子信息是规模方向的参照，不宣称已核对为2030年具有量化约束的考核目标。没有正式数值目标与基期数据时，“目标达成率”显示为未可计算。</p><p><a href="'+ref.govt+'" target="_blank" rel="noopener noreferrer">博罗县十五五规划发布页</a></p><p><a href="'+ref.current+'" target="_blank" rel="noopener noreferrer">2026年前三季度统计报道</a></p></article>';
  $("closeDrawer").focus();
+}
+function closeDrawer(){
+ $("detailOverlay").classList.remove("open");document.querySelector("main").inert=false;document.querySelector("header").inert=false;
+ returnFocus?.focus();
 }
 function download(){
  if(!state.picked.size){toast("请先选择需要研判的问题");return;}
@@ -206,13 +273,36 @@ function download(){
  const url=URL.createObjectURL(blob),a=document.createElement("a");a.href=url;a.download="boluo-v11-industry-risk-questions.json";document.body.appendChild(a);a.click();a.remove();setTimeout(()=>URL.revokeObjectURL(url),0);toast("已导出观察清单");
 }
 $("tabs").querySelectorAll("[data-case]").forEach(b=>b.onclick=()=>options(b.dataset.case));
-$("slider").oninput=e=>{state.values[state.active][0]=+e.target.value;render()};
-$("slider2").oninput=e=>{state.values[state.active][1]=+e.target.value;render()};
+$("slider").oninput=e=>setValues([+e.target.value]);
+$("slider2").oninput=e=>setValues([undefined,+e.target.value]);
 document.querySelectorAll("[data-preset]").forEach(b=>b.onclick=()=>{state.values[state.active][0]=+b.dataset.preset;render()});
-$("methodBtn").onclick=showDrawer;$("closeDrawer").onclick=()=>$("detailOverlay").classList.remove("open");
-$("detailOverlay").onclick=e=>{if(e.target===$("detailOverlay"))$("detailOverlay").classList.remove("open");};
-document.addEventListener("keydown",e=>{if(e.key==="Escape")$("detailOverlay").classList.remove("open")});
+$("methodBtn").onclick=showDrawer;$("closeDrawer").onclick=closeDrawer;
+$("detailOverlay").onclick=e=>{if(e.target===$("detailOverlay"))closeDrawer();};
+document.addEventListener("keydown",e=>{
+ if(!$("detailOverlay").classList.contains("open"))return;
+ if(e.key==="Escape")closeDrawer();
+ if(e.key==="Tab"){
+  const list=[...$("detailOverlay").querySelectorAll('button,a[href]')],first=list[0],last=list[list.length-1];
+  if(e.shiftKey&&document.activeElement===first){e.preventDefault();last.focus();}
+  else if(!e.shiftKey&&document.activeElement===last){e.preventDefault();first.focus();}
+ }
+});
 $("saveQuestion").onclick=()=>pick(current().questions[0]);
 $("exportBtn").onclick=download;
-options("electronic");
+$("playScenario").onclick=play;
+$("resetScenario").onclick=()=>{stopPlay();state.values[state.active]=initialValues(state.active);render();announce("已恢复当前专题的初始条件");};
+function motionPreference(){
+ stopPlay();playLabel();$("reduceMotion").setAttribute("aria-pressed",String(motion.reduced.matches));
+ $("reduceMotion").disabled=motion.systemMotion.matches;
+ text("reduceMotion",motion.systemMotion.matches?"系统已减少动态":motion.reduced.matches?"恢复动态":"减少动态");
+}
+$("reduceMotion").onclick=()=>motion.setReduced(!motion.reduced.matches);
+motion.reduced.addEventListener("change",motionPreference);
+document.addEventListener("visibilitychange",()=>{if(document.hidden)stopPlay();});
+window.RiskLab={
+ getState:()=>({case:state.active,values:[...state.values[state.active]]}),
+ selectCase:options,setValues,metric,
+ confidence,zScores
+};
+options("electronic");motionPreference();
 })();

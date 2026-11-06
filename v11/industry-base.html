@@ -1,14 +1,14 @@
 <!doctype html>
-<html lang="zh-CN">
+<html lang="zh-CN" class="risk-document">
 <head>
 <meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <meta name="theme-color" content="#edf5ff">
 <meta name="description" content="博罗产业风险实验：从电子信息、工业接续、柏塘茶、环两山和创新转化出发，用公开数据与可调条件判断发展路径中的约束。">
 <title>V11 · 03 产业目标风险实验｜博罗决策风洞</title>
-<link rel="stylesheet" href="./risk-lab.css">
-<link rel="stylesheet" href="./risk-visuals.css">
+<link rel="stylesheet" href="./risk-lab.css?v=20261106-motion1">
+<link rel="stylesheet" href="./risk-visuals.css?v=20261106-motion1">
 </head>
-<body>
+<body class="interactive-lab">
 <header class="top">
  <a class="brand" href="./index.html"><span class="logo">◈</span><span>博罗决策风洞<small>BO LUO · DECISION WIND TUNNEL</small></span></a>
  <nav class="nav" aria-label="V11导航"><a href="./index.html">01 问题发现</a><a href="./reality.html">02 预期与现实</a><a class="active" href="./industry-base.html" aria-current="page">03 产业风险</a><a href="../experiments/holo-single/index-v2.html">04 现有关系世界</a></nav>
@@ -17,8 +17,8 @@
 <main class="wrap">
  <section class="hero" aria-label="产业发展约束">
   <div class="eyebrow">03 / THE INDUSTRY STRESS LAB</div>
-  <h1>博罗的产业，<em>哪一环可能卡住2030？</em></h1>
-  <p>不替产业打分。选一个具体环节，改变条件，看哪些发展路径需要更强的现实支撑。</p>
+  <h1>产业下一步，<em>卡在哪里？</em></h1>
+  <p>拖动一个条件，亲眼看见差别。</p>
   <div class="hero-tags"><span class="chip"><i class="dot"></i>公开事实</span><span class="chip">条件推演</span><span class="chip">缺失就留白</span><button type="button" id="methodBtn" class="source-button">依据与方法 ↗</button></div>
  </section>
  <section class="signal-strip" aria-label="可确认的产业观察数据">
@@ -34,16 +34,46 @@
 <button data-quick-case="ring" type="button">环“两山” <small>价值留存</small></button>
 <button data-quick-case="innovation" type="button">创新转化 <small>绩效识别</small></button>
 </nav>
+<section id="motionLab" class="lab-deck" aria-label="产业条件互动实验">
+ <div class="lab-topline"><div><span class="lab-step">01</span><strong>动手改一个条件</strong><span class="lab-mode" id="labMode">公开基数 + 条件假设</span></div><div class="lab-actions"><button type="button" id="playScenario" aria-pressed="false"><span aria-hidden="true">▶</span> 播放变化</button><button type="button" id="resetScenario" aria-label="恢复当前专题的初始条件">↺ 还原</button></div></div>
+ <div class="lab-stage">
+  <article class="lab-chart" aria-labelledby="rvCurveTitle">
+   <div class="lab-chart-heading"><div><div class="rv-overline" id="curveOverline">SAME START / DIFFERENT CONDITIONS</div><h2 id="rvCurveTitle">同一个行业，三条增长路径</h2></div><span class="lab-chart-hint" id="curveHint">点年份看数值</span></div>
+   <p id="rvCurveSub" class="rv-sub">同一基准，不同条件。</p>
+   <div id="rvCurves" class="rv-plot" aria-label="可交互的条件变化图"></div>
+   <div id="rvCurveLegend" class="rv-mini-legend"></div>
+   <output id="curveInspector" class="curve-inspector" aria-label="当前图表读数"></output>
+   <p id="rvCurveNote" class="lab-chart-note"></p>
+  </article>
+  <aside class="lab-controller" aria-label="试算条件与同步结果">
+   <div class="lab-result"><span id="liveLabel">2030条件产值</span><div class="live-number"><span id="livePrefix"></span><output id="liveOutput" aria-label="当前假设下的计算结果">987.6</output><span id="liveUnit">亿元</span></div><div id="liveDelta" class="live-delta">初始条件</div><p id="liveFoot">公开基数与增长假设相结合</p></div>
+    <div class="scenario">
+     <div class="scenario-title"><label id="controlLabel" for="slider">假设年均增长率</label><output id="sliderValue" for="slider">5%</output></div>
+     <input type="range" id="slider" min="-5" max="15" step=".5" value="5" aria-label="假设年均增长率">
+     <div class="range-ends"><span>更低</span><span>拖动滑块 · 图表一起变化</span><span>更高</span></div>
+     <div id="secondControl" class="invisible">
+      <div class="scenario-title" style="margin-top:15px"><label id="controlLabel2" for="slider2">第二项条件</label><output id="sliderValue2" for="slider2">20%</output></div>
+      <input type="range" id="slider2" min="0" max="100" step="5" value="20" aria-label="第二项情景条件">
+     </div>
+    </div>
+
+   <div id="scenarioPresets" class="lab-presets" role="group" aria-label="快速比较三种假设"></div>
+   <p class="lab-play-note" id="playNote">播放的是假设变化，不是实时监测。</p>
+  </aside>
+ </div>
+ <div class="lab-feedback"><span id="labStatus" role="status" aria-live="polite">已就绪 · 拖动滑块，或点“播放变化”</span><span class="lab-linked">曲线 · 热力格 · 差距 · 敏感性同步</span><button type="button" id="reduceMotion" aria-pressed="false">减少动态</button></div>
+</section>
 <section class="rv-showcase" id="riskVisuals" aria-label="多图联动产业约束可视化">
- <div class="rv-head"><div><div class="eyebrow">VISUAL EXPERIMENTS / 条件驱动 · 多图联动</div><h2>真正的差异，藏在这些图里</h2><p>点热力格、拖参数：所有图同步重算。现有公开数据与演示假设严格分开。</p></div><div class="rv-legend" id="rvLegend"><span><i class="rv-key" style="background:#1e8f79"></i>条件满足</span><span><i class="rv-key" style="background:#e4a081"></i>条件未满足</span><span><i class="rv-key" style="background:#a6b8ce"></i>尚无实测</span></div></div>
+ <div class="rv-head"><div><div class="eyebrow">KEEP EXPLORING / 在图上继续试</div><h2>点一个格子，换一个结果</h2><p>热力格改条件，敏感性条做单变量对照。</p></div><div class="rv-legend" id="rvLegend"><span><i class="rv-key" style="background:#1e8f79"></i>条件满足</span><span><i class="rv-key" style="background:#e4a081"></i>条件未满足</span><span><i class="rv-key" style="background:#a6b8ce"></i>尚无实测</span></div></div>
  <div class="rv-grid">
   <article class="rv-panel"><div class="rv-headline"><div><div class="rv-overline">01 / PARAMETER SURFACE</div><h3 id="rvHeatTitle">条件 × 年份</h3></div><span class="rv-stamp">点击格子试算</span></div><p class="rv-sub" id="rvHeatSub">选择条件，看参照线何时可能被跨越。</p><div class="rv-matrix"><div id="rvHeat" aria-label="可点击参数敏感性热力图"></div></div><div class="rv-matrix-foot"><span id="rvHeatLegend">颜色表示条件而非概率</span></div></article>
-  <article class="rv-panel"><div class="rv-headline"><div><div class="rv-overline">02 / THREE PATHS</div><h3 id="rvCurveTitle">三条条件路径</h3></div><span class="rv-stamp">联动</span></div><p class="rv-sub" id="rvCurveSub">同一基准，不同条件。</p><div id="rvCurves" class="rv-plot" aria-label="条件情景对比图"></div><div id="rvCurveLegend" class="rv-mini-legend"></div><div class="rv-note" id="rvCurveNote"></div></article>
+
   <article class="rv-panel"><div class="rv-headline"><div><div class="rv-overline">03 / CONSTRAINT GAUGE</div><h3 id="rvBulletTitle">目标条件与差距</h3></div><span class="rv-stamp">无伪概率</span></div><div id="rvBullet" aria-label="条件数值与阈值差距"></div><div class="rv-note" id="rvBulletNote"></div></article>
   <article class="rv-panel rv-wide"><div class="rv-headline"><div><div class="rv-overline">04 / ONE-VARIABLE TEST</div><h3 id="rvSensitivityTitle">变量改变，后果有多大？</h3></div><span class="rv-stamp">一次只改一个</span></div><p class="rv-sub" id="rvSensitivitySub">小扰动条件实验。</p><div id="rvSensitivity" class="rv-plot" aria-label="单变量敏感性龙卷风图"></div><div class="rv-note" id="rvSensitivityNote"></div></article>
   <article class="rv-panel"><div class="rv-headline"><div><div class="rv-overline">05 / EVIDENCE GAPS</div><h3>哪些是真数据，哪些还缺？</h3></div></div><p class="rv-sub">点专题切换；不是按产业发展优劣排名。</p><div class="rv-observe" id="rvEvidence" aria-label="五个产业专题证据准备度矩阵"></div><div class="rv-sector-legend"><span>● 公开统计</span><span>◐ 线索或参照</span><span>— 暂不可判定</span></div><div class="rv-note">数据口径：<b id="rvSource">公开资料与条件假设</b></div></article>
  </div>
 </section>
+ <details class="lab-details"><summary><span>完整推演、镇街线索与证据</span><small>展开查看与保存追问 <span aria-hidden="true">＋</span></small></summary>
  <div class="work">
   <aside class="panel sidebar" aria-label="研究选择">
    <div class="eyebrow">SELECT ONE / 只选一个</div><h3>你要检验什么？</h3>
@@ -62,17 +92,9 @@
      <div><div class="eyebrow">WHAT MUST BE TRUE / 目标约束实验</div><h2 id="mainTitle">电子信息，离千亿还有多远？</h2><p id="mainDesc">从公开行业规模出发，检验增长条件。</p></div>
      <span id="riskBadge" class="status">条件实验</span>
     </div>
-    <div class="chart-frame" id="mainPlot" aria-live="polite" aria-label="产业目标约束动态可视化"></div>
+    <div class="chart-frame" id="mainPlot" aria-label="产业目标约束动态可视化"></div>
+    <p id="mainPlotNote" class="rv-note"></p>
     <div class="chart-note"><span><strong>实线 / 有条件的计算</strong>　虚线 / 参照线</span><span>不是预测，不是实际达成概率</span></div>
-    <div class="scenario">
-     <div class="scenario-title"><label id="controlLabel" for="slider">假设年均增长率</label><output id="sliderValue" for="slider">5%</output></div>
-     <input type="range" id="slider" min="-5" max="15" step=".5" value="5" aria-label="假设年均增长率">
-     <div class="range-ends"><span>更严格的条件</span><span>拖动，观察结果变化</span><span>更宽松的条件</span></div>
-     <div id="secondControl" class="invisible">
-      <div class="scenario-title" style="margin-top:15px"><label id="controlLabel2" for="slider2">第二项条件</label><output id="sliderValue2" for="slider2">20%</output></div>
-      <input type="range" id="slider2" min="0" max="100" step="5" value="20" aria-label="第二项情景条件">
-     </div>
-    </div>
     <div class="result-strip">
      <div class="result-card"><span>当前条件下计算得到</span><b id="primaryOutput" class="kpi">—</b><span id="primaryUnit">条件值</span><p id="primaryDetail"></p></div>
      <div class="result-card"><span>最值得核对的另一项结果</span><b id="secondaryOutput" class="kpi warning">—</b><span>边界与必要条件</span><p id="secondaryUnit"></p></div>
@@ -114,6 +136,7 @@
    <button id="methodBtn2" class="source-button" style="margin-top:17px" onclick="document.getElementById('methodBtn').click()">查看数据与方法边界 ↗</button>
   </div>
  </section>
+ </details>
  <footer class="footer">
   <span>博罗 V11 · 03｜产业目标约束实验｜公开数据与用户假设分离，不替代政府统计或专业决策</span>
   <span><a href="./index.html">返回问题发现</a>　·　<a href="./reality.html">返回预期与现实</a>　·　<a href="https://www.boluo.gov.cn/zwgk/qt/gzjh/content/post_5842396.html" target="_blank" rel="noopener noreferrer">十五五规划发布</a></span>
@@ -121,7 +144,8 @@
 </main>
 <div id="detailOverlay" class="popover-cover" role="presentation"><aside role="dialog" aria-modal="true" aria-label="数据方法说明" class="drawer"><button id="closeDrawer" type="button">关闭 ×</button><div class="eyebrow" style="margin-top:39px">METHODS & EVIDENCE</div><h2>模型不是事实替身</h2><div id="drawerText"></div></aside></div>
 <div class="shade" id="toast" role="status"></div>
-<script defer src="./risk-lab.js"></script>
-<script defer src="./risk-visuals.js"></script>
+<script defer src="./risk-motion.js?v=20261106-motion1"></script>
+<script defer src="./risk-lab.js?v=20261106-motion1"></script>
+<script defer src="./risk-visuals.js?v=20261106-motion1"></script>
 </body>
 </html>
