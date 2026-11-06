@@ -186,3 +186,8 @@
  .goals-disclosure[open] .goal-fold-arrow{color:#5e8fb9}
  .goals-disclosure>.goals-panel{margin:0;border:0;border-top:1px solid #d9eafb;box-shadow:none;border-radius:0}
 }
+
+
+/* 06 → 07 is the primary handoff, not a tertiary utility link. */
+.plan-end .end-actions .wind-entry{display:flex;align-items:center;justify-content:center;flex:1 1 100%;order:-1;background:linear-gradient(125deg,#289aff,#0f69dd);color:#fff;font-size:12px;font-weight:870;border:1px solid #5daff7;box-shadow:0 6px 16px #1888ea47;padding:13px 16px}
+.plan-end .end-actions .wind-entry:hover{filter:brightness(1.08)}
