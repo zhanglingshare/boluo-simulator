@@ -61,7 +61,7 @@ function barPlot(parts,overall){
  let x=67;
  parts.forEach((p,i)=>{
   const width=600*(p[1]/total);
-  out+='<rect x="'+x+'" y="52" width="'+width+'" height="94" rx="8" fill="'+["#2180d7","#24b7aa","#987edc"][i]+'" stroke="#fff" stroke-width="3"/>';
+  out+='<rect x="'+x+'" y="52" width="'+width+'" height="94" rx="8" fill="'+["#2180d7","#24b7aa","#987edc","#9cb0c6"][i]+'" stroke="#fff" stroke-width="3"/>';
   out+='<text x="'+(x+width/2)+'" y="92" text-anchor="middle" style="fill:white;font-size:15px;font-weight:850">'+escapeHTML(p[0])+'</text><text x="'+(x+width/2)+'" y="118" text-anchor="middle" style="fill:#fff;font-size:15px;font-weight:900">'+fmt(p[1],1)+'</text>';
   x+=width;
  });
@@ -117,13 +117,13 @@ function calc(){
    data.chain=["当前生产增长","当期投资收缩","项目建设时滞","新增产能接续"];data.bars=[["2025同期",100],["2026同期",55.3],["2030情景",end]];
  }else if(id==="tea"){
    const p=primary/100,c=secondary/100;
-   const farm=23,process=32,channel=45,local=farm+process*p+channel*c;
+   const farm=23,process=32,channel=25,external=20,local=farm+process*p+channel*c;
    data.badge="只有情景结果";data.missing=true;
-   data.major=fmt(local,1)+"%";data.unit="每100元终端销售额的本地增值留存";data.detail="演示假设：原料环节增值23元、加工32元、渠道45元；产地环节全部本地，另两环节留存由你调整。";
+   data.major=fmt(local,1)+"%";data.unit="每100元终端销售额的本地增值留存";data.detail="演示假设：每100元销售额包含种植增值23元、加工32元、渠道25元及外部中间投入20元；各环节本地占比由你调整。";
    data.second=fmt(100-local,1)+"%";data.secondDetail="示例中未在本地经营主体形成的价值比例。实际占比必须用经营数据重估。";
-   data.chart=barPlot([["种植",23],["加工",32],["渠道",45]],local);
-   data.foot="23/32/45是说明核算机制的示范分解，不是柏塘实测、不是十五五目标达成度。";
-   data.chain=["茶青生产","收购加工","品牌渠道","本地价值留存"];data.bars=[["生产",23],["加工本地",32*p],["渠道本地",45*c]];
+   data.chart=barPlot([["种植增值",23],["加工增值",32],["渠道增值",25],["外部投入",20]],local);
+   data.foot="23/32/25/20是包含外部中间投入的示范核算结构，并非柏塘实际成本、交易额或十五五目标完成率。";
+   data.chain=["茶青生产","收购加工","品牌渠道","本地价值留存"];data.bars=[["生产本地",23],["加工本地",32*p],["渠道本地",25*c]];
  }else if(id==="ring"){
    const n=primary,retain=secondary/100,all=(100-n)*90+n*600,local=all*retain;
    data.badge="只有情景结果";data.missing=true;
