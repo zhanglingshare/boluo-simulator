@@ -6,6 +6,7 @@
 <meta name="description" content="博罗产业风险实验：从电子信息、工业接续、柏塘茶、环两山和创新转化出发，用公开数据与可调条件判断发展路径中的约束。">
 <title>V11 · 03 产业目标风险实验｜博罗决策风洞</title>
 <link rel="stylesheet" href="./risk-lab.css">
+<link rel="stylesheet" href="./risk-visuals.css">
 </head>
 <body>
 <header class="top">
@@ -75,7 +76,17 @@
    </section>
   </aside>
  </div>
- <section class="spatial panel" aria-label="16镇街产业问题观察索引">
+ <section class="rv-showcase" id="riskVisuals" aria-label="多图联动产业约束可视化">
+ <div class="rv-head"><div><div class="eyebrow">VISUAL EXPERIMENTS / 条件驱动 · 多图联动</div><h2>真正的差异，藏在这些图里</h2><p>点热力格、拖参数：所有图同步重算。现有公开数据与演示假设严格分开。</p></div><div class="rv-legend"><span><i class="rv-key" style="background:#1e8f79"></i>条件满足</span><span><i class="rv-key" style="background:#e4a081"></i>条件未满足</span><span><i class="rv-key" style="background:#a6b8ce"></i>尚无实测</span></div></div>
+ <div class="rv-grid">
+  <article class="rv-panel"><div class="rv-headline"><div><div class="rv-overline">01 / PARAMETER SURFACE</div><h3 id="rvHeatTitle">条件 × 年份</h3></div><span class="rv-stamp">点击格子试算</span></div><p class="rv-sub" id="rvHeatSub">选择条件，看参照线何时可能被跨越。</p><div class="rv-matrix"><div id="rvHeat" aria-label="可点击参数敏感性热力图"></div></div><div class="rv-matrix-foot"><span id="rvHeatLegend">颜色表示条件而非概率</span></div></article>
+  <article class="rv-panel"><div class="rv-headline"><div><div class="rv-overline">02 / THREE PATHS</div><h3 id="rvCurveTitle">三条条件路径</h3></div><span class="rv-stamp">联动</span></div><p class="rv-sub" id="rvCurveSub">同一基准，不同条件。</p><div id="rvCurves" class="rv-plot" aria-label="条件情景对比图"></div><div id="rvCurveLegend" class="rv-mini-legend"></div><div class="rv-note" id="rvCurveNote"></div></article>
+  <article class="rv-panel"><div class="rv-headline"><div><div class="rv-overline">03 / CONSTRAINT GAUGE</div><h3 id="rvBulletTitle">目标条件与差距</h3></div><span class="rv-stamp">无伪概率</span></div><div id="rvBullet" aria-label="条件数值与阈值差距"></div><div class="rv-note" id="rvBulletNote"></div></article>
+  <article class="rv-panel rv-wide"><div class="rv-headline"><div><div class="rv-overline">04 / ONE-VARIABLE TEST</div><h3 id="rvSensitivityTitle">变量改变，后果有多大？</h3></div><span class="rv-stamp">一次只改一个</span></div><p class="rv-sub" id="rvSensitivitySub">小扰动条件实验。</p><div id="rvSensitivity" class="rv-plot" aria-label="单变量敏感性龙卷风图"></div><div class="rv-note" id="rvSensitivityNote"></div></article>
+  <article class="rv-panel"><div class="rv-headline"><div><div class="rv-overline">05 / EVIDENCE GAPS</div><h3>哪些是真数据，哪些还缺？</h3></div></div><p class="rv-sub">点专题切换；不是按产业发展优劣排名。</p><div class="rv-observe" id="rvEvidence" aria-label="五个产业专题证据准备度矩阵"></div><div class="rv-sector-legend"><span>● 公开统计</span><span>◐ 线索或参照</span><span>— 暂不可判定</span></div><div class="rv-note">数据口径：<b id="rvSource">公开资料与条件假设</b></div></article>
+ </div>
+</section>
+<section class="spatial panel" aria-label="16镇街产业问题观察索引">
  <div class="spatial-intro"><div class="eyebrow">SPATIAL QUESTIONS / 16个镇街</div><h3>这条产业线索，还能往哪里找证据？</h3><p>点亮的是建议优先调查的镇街，不是产业强度或风险高低。</p><span id="spatialTip">点任意镇街，生成下一条核验问题。</span></div>
  <div class="spatial-world"><div class="spatial-wave"></div><div id="spatialNodes" class="spatial-nodes" role="group" aria-label="16镇街问题索引"></div><div class="spatial-heart"><small>正在研究</small><strong id="spatialFocus">电子信息</strong><span>条件 · 约束 · 追问</span></div></div>
 </section>
@@ -104,5 +115,6 @@
 <div id="detailOverlay" class="popover-cover" role="presentation"><aside role="dialog" aria-modal="true" aria-label="数据方法说明" class="drawer"><button id="closeDrawer" type="button">关闭 ×</button><div class="eyebrow" style="margin-top:39px">METHODS & EVIDENCE</div><h2>模型不是事实替身</h2><div id="drawerText"></div></aside></div>
 <div class="shade" id="toast" role="status"></div>
 <script defer src="./risk-lab.js"></script>
+<script defer src="./risk-visuals.js"></script>
 </body>
 </html>
