@@ -163,7 +163,7 @@ function init(){
  viewTree("industry");renderGrowth();renderTiers();renderTownMatrix();
  // Listen to town switching in the existing view without modifying its behavior.
  const originalSelect=typeof selectTown==="function"?selectTown:null;
- if(originalSelect){document.querySelectorAll("[data-mode],[data-town]").forEach(el=>el.addEventListener("click",()=>setTimeout(renderTownMatrix,0)));}
+ if(originalSelect){document.addEventListener("click",e=>{if(e.target.closest("[data-mode],[data-town],[data-map-town]"))requestAnimationFrame(renderTownMatrix)});}
  get("vizMatrixNotice").onclick=()=>{if(typeof drawer==="function")drawer("如何从缺失数据继续思考？",'<div class="source"><b>已知</b><p>先展示可核验的产值、企业、园区和产业项目。</p></div><div class="source"><b>未知</b><p>缺少同口径镇级数据时，让图表留白，不猜测排名和企业间交易额。</p></div><div class="source"><b>追问</b><p>点选一个镇街，再问：最关键的生产活动是什么？存在什么尚待验证的连接？用户可把问题加入待研判清单，而不是直接由系统替用户下结论。</p></div>');};
 }
 init();
