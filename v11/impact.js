@@ -259,6 +259,7 @@ async function share(){
  catch{showDialog('分享当前影响链','<p>分享内容只包含公开场景，不包含本机补充信息。</p><input id="shareFallback" readonly style="width:100%;padding:12px;border:1px solid #aacff2;border-radius:9px" value="'+esc(href)+'"><p>请长按复制以上链接。</p>');$('shareFallback').focus();$('shareFallback').select();}
 }
 $('shareBtn').addEventListener('click',share);$('copyTrace').addEventListener('click',share);
+$('planLink').addEventListener('click',e=>{const url=new URL('./plan.html',location.href);url.searchParams.set('from','impact');url.searchParams.set('scene',state.scene);e.currentTarget.href=url.href;});
 $('saveTrace').addEventListener('click',()=>{
  const record={scene:state.scene,step:state.step,lens:state.lens,buffer:state.buffer,source:'public-conditional',url:link(),savedAt:new Date().toISOString()};
  try{const k='boluo-impact-traces-v1',v=JSON.parse(localStorage.getItem(k)||'[]');localStorage.setItem(k,JSON.stringify([record,...(Array.isArray(v)?v:[])].slice(0,30)));notify('这条影响链已保存到本机，亦可分享链接');}
