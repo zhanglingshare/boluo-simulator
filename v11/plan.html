@@ -32,24 +32,8 @@
   </div>
  </section>
  <section class="plan-focus" aria-label="第六页核心判断"><span class="focus-label">真正要看</span><strong>项目落地 <em>≠</em> 形成真实贡献</strong><a href="#network">看看哪些环节还没接上 <span>↓</span></a></section>
- <section class="goals-panel" id="goals">
-  <div class="panel-intro"><p class="micro">01 / THE TARGET IS NOT THE RESULT</p><h2>从千亿起点到2030，<em>差的是什么？</em></h2><p>指标可以切换，所有进度只比较相同统计口径的历史数值与规划目标。不是实时达标概率。</p></div>
-  <div class="goal-switch" role="group" aria-label="切换十五五规划目标">
-    <button data-goal="gdp" type="button" aria-pressed="true"><small>地区生产总值</small><strong>1600亿元</strong></button>
-    <button data-goal="firms" type="button" aria-pressed="false"><small>规上工业企业</small><strong>突破2500家</strong></button>
-    <button data-goal="industry" type="button" aria-pressed="false"><small>规上工业总产值</small><strong>突破3600亿元</strong></button>
-    <button data-goal="innovation" type="button" aria-pressed="false"><small>高新技术企业</small><strong>突破900家</strong></button>
-  </div>
-  <div class="goal-visual">
-    <div class="goal-pair"><div><small>已披露历史起点</small><strong id="baseValue">1005.45亿元</strong><span id="baseYear">2025年GDP</span></div><div><small>2030年规划目标</small><strong id="goalValue">1600亿元</strong><span id="goalLimit">规划目标，并非实绩</span></div></div>
-    <div class="goal-track" role="progressbar" aria-label="历史起点与规划目标比例" aria-valuemin="0" aria-valuemax="100" aria-valuenow="63" id="goalProgress"><div id="goalFill" class="goal-fill" style="width:62.84%"></div><span class="goal-spark"></span></div>
-    <div class="goal-legend"><span id="goalShare">历史起点约占目标62.8%</span><strong id="goalGap">静态差额 594.55亿元</strong></div>
-    <details class="note-fold"><summary>数据口径与限制 <span>＋</span></summary><p id="goalWarning" class="goal-warning">2025与2030为两个年份的GDP规模口径；此处没有把差额当作已经测算的实际增长贡献。</p></details>
-  </div>
-  <div class="mode-line"><span>换一种看法</span><button data-lens="scale" aria-pressed="true" type="button">看规模</button><button data-lens="quality" aria-pressed="false" type="button">看质量</button><strong id="qualityNote">规模是目标，兑现必须追踪实际贡献。</strong></div>
- </section>
  <aside id="carryFromImpact" class="carry-impact" hidden><span>来自第五页的变化</span><strong id="carryText"></strong><a id="carryBack" href="./impact.html">返回查看影响链 ↗</a></aside>
- <section class="section-heading plan-section" id="network"><div><p class="micro">02 / THREE DISTRICTS · THREE NUCLEI</p><h2>2030不是一座城长大，<em>而是三个核心协同</em></h2><p>点击空间核心，看关联产业、公共服务与关键依赖如何一层层亮起。<b>虚线代表需要验证的机制，不是已形成的交易。</b></p></div><div class="status-legend"><span><i class="solid"></i>规划联系</span><span><i class="hypo"></i>依赖待核</span><span><i class="unknown"></i>事实缺口</span></div></section>
+ <section class="section-heading plan-section" id="network"><div><p class="micro">01 / THREE DISTRICTS · THREE NUCLEI</p><h2>2030不是一座城长大，<em>而是三个核心协同</em></h2><p>点击空间核心，看关联产业、公共服务与关键依赖如何一层层亮起。<b>虚线代表需要验证的机制，不是已形成的交易。</b></p></div><div class="status-legend"><span><i class="solid"></i>规划联系</span><span><i class="hypo"></i>依赖待核</span><span><i class="unknown"></i>事实缺口</span></div></section>
  <div class="plan-tabs" role="group" aria-label="三区三核空间切换">
   <button data-region="future" type="button" aria-pressed="true"><span class="tab-index">01</span><span><strong>罗浮未来城</strong><small>产城人文旅融合未来城区</small></span></button>
   <button data-region="urban" type="button" aria-pressed="false"><span class="tab-index">02</span><span><strong>县域主城</strong><small>同城融湾先行区</small></span></button>
@@ -67,6 +51,25 @@
    <button type="button" class="region-source" id="openRegionSource">查看资料与边界 ↗</button></div></details>
   </aside>
  </div>
+ <details id="goalsDisclosure" class="goals-disclosure" open><summary><span>其他2030目标</span><strong>2500家企业 · 3600亿元工业产值</strong><span class="goal-fold-arrow">展开 ›</span></summary>
+ <section class="goals-panel" id="goals">
+  <div class="panel-intro"><p class="micro">02 / THE TARGET IS NOT THE RESULT</p><h2>从千亿起点到2030，<em>差的是什么？</em></h2><p>指标可以切换，所有进度只比较相同统计口径的历史数值与规划目标。不是实时达标概率。</p></div>
+  <div class="goal-switch" role="group" aria-label="切换十五五规划目标">
+    <button data-goal="gdp" type="button" aria-pressed="true"><small>地区生产总值</small><strong>1600亿元</strong></button>
+    <button data-goal="firms" type="button" aria-pressed="false"><small>规上工业企业</small><strong>突破2500家</strong></button>
+    <button data-goal="industry" type="button" aria-pressed="false"><small>规上工业总产值</small><strong>突破3600亿元</strong></button>
+    <button data-goal="innovation" type="button" aria-pressed="false"><small>高新技术企业</small><strong>突破900家</strong></button>
+  </div>
+  <div class="goal-visual">
+    <div class="goal-pair"><div><small>已披露历史起点</small><strong id="baseValue">1005.45亿元</strong><span id="baseYear">2025年GDP</span></div><div><small>2030年规划目标</small><strong id="goalValue">1600亿元</strong><span id="goalLimit">规划目标，并非实绩</span></div></div>
+    <div class="goal-track" role="progressbar" aria-label="历史起点与规划目标比例" aria-valuemin="0" aria-valuemax="100" aria-valuenow="63" id="goalProgress"><div id="goalFill" class="goal-fill" style="width:62.84%"></div><span class="goal-spark"></span></div>
+    <div class="goal-legend"><span id="goalShare">历史起点约占目标62.8%</span><strong id="goalGap">静态差额 594.55亿元</strong></div>
+    <details class="note-fold"><summary>数据口径与限制 <span>＋</span></summary><p id="goalWarning" class="goal-warning">2025与2030为两个年份的GDP规模口径；此处没有把差额当作已经测算的实际增长贡献。</p></details>
+  </div>
+  <div class="mode-line"><span>换一种看法</span><button data-lens="scale" aria-pressed="true" type="button">看规模</button><button data-lens="quality" aria-pressed="false" type="button">看质量</button><strong id="qualityNote">规模是目标，兑现必须追踪实际贡献。</strong></div>
+ </section>
+
+ </details>
  <section class="paths-section" id="paths">
   <div class="section-heading"><div><p class="micro">03 / FIVE DELIVERY ROUTES · 研究性归纳</p><h2>五条兑现路径，<em>每条都缺一块拼图</em></h2><p>这是研究层整理的五条观察路径，<b>不是官方将GDP差额划成的五项贡献额</b>。点击后改变下方项目阶段与优先核查点。</p></div></div>
   <div class="route-grid" role="group" aria-label="选择兑现路径">
