@@ -119,7 +119,7 @@ if(REGIONS[state.region].nodes.some(n=>n.id===initialFocus))state.focus=initialF
 let timer=0,toastTimer=0,yearTimer=0;
 function stop(){
  if(timer)clearInterval(timer);timer=0;state.playing=false;
- $('playNetwork').setAttribute('aria-pressed','false');$('playNetwork').innerHTML='▶ <span>播放依赖网络</span>';
+ $('playNetwork').setAttribute('aria-pressed','false');$('playNetwork').innerHTML='▶ <span>播放</span>';
  $('planGraph').classList.remove('playing');
 }
 function toast(msg){const e=$('toast');e.textContent=msg;e.classList.add('on');clearTimeout(toastTimer);toastTimer=setTimeout(()=>e.classList.remove('on'),2700);}
@@ -142,8 +142,8 @@ function goalRender(){
 }
 function point(n,i,mobile){
  if(mobile){
-  const a=[[100,131],[319,131],[95,427],[324,427],[97,566],[322,566]];
-  return {x:a[i][0],y:a[i][1],w:155,h:63};
+  const a=[[102,65],[318,65],[102,284],[318,284],[102,371],[318,371]];
+  return {x:a[i][0],y:a[i][1],w:149,h:57};
  }
  const a=[[203,121],[710,120],[156,318],[761,318],[315,440],[621,440]];
  return {x:a[i][0],y:a[i][1],w:184,h:69};
@@ -158,9 +158,9 @@ function edgePath(a,b){
 }
 function graphRender(){
  const reg=REGIONS[state.region],svg=$('planGraph'),mobile=matchMedia('(max-width:720px)').matches;
- const w=mobile?420:920,h=mobile?665:505;
+ const w=mobile?420:920,h=mobile?420:505;
  svg.setAttribute('viewBox','0 0 '+w+' '+h);
- const center={x:w/2,y:mobile?290:250,w:mobile?218:235,h:mobile?86:99};
+ const center={x:w/2,y:mobile?190:250,w:mobile?194:235,h:mobile?81:99};
  const pts=reg.nodes.map((n,i)=>point(n,i,mobile));
  let edges='<g aria-hidden="true">',nodes='';
  reg.nodes.forEach((n,i)=>{
@@ -182,7 +182,7 @@ function graphRender(){
  '<g>'+edges+'</g><circle class="p-ring" cx="'+center.x+'" cy="'+center.y+'" r="72"/><g>'+nodes+'</g>';
  svg.classList.toggle('playing',state.playing&&!state.reduced);
  $('regionTitle').textContent=reg.title;
- $('graphStatus').textContent=state.playing?'逐层展开：'+state.step+' / 6个依赖节点':'六类代表性连接，亮线只指规划/分析关系，非真实交易';
+ $('graphStatus').textContent=state.playing?'正在展开 '+state.step+' / 6 条联系':'点一个节点，查看它依赖什么';
 }
 function inspectorRender(){
  const reg=REGIONS[state.region],n=reg.nodes.find(x=>x.id===state.focus);
@@ -258,7 +258,7 @@ $('playNetwork').addEventListener('click',()=>{
  if(state.playing){stop();$('graphStatus').textContent='动画已暂停，可直接点节点查看';return;}
  if(state.reduced){state.step=6;render();toast('已开启减少动态，直接展示六类依赖');return;}
  state.focus='';state.step=0;state.playing=true;render();
- $('playNetwork').setAttribute('aria-pressed','true');$('playNetwork').innerHTML='Ⅱ <span>暂停回放</span>';
+ $('playNetwork').setAttribute('aria-pressed','true');$('playNetwork').innerHTML='Ⅱ <span>暂停</span>';
  timer=setInterval(()=>{
    if(state.step>=6){stop();graphRender();return;}
    state.step++;graphRender();syncURL();
