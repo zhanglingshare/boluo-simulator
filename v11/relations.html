@@ -5,6 +5,7 @@
 <title>关系世界｜博罗决策风洞 V11</title>
 <meta name="description" content="九个具体专题、一张可拖动和展开的关系画布。巡览订单、农户、学校、交通与产线变化，前后对照，沿着联系继续核实。">
 <link rel="stylesheet" href="./relations-stage.css?v=20261107-world4">
+<link rel="stylesheet" href="./history-network.css?v=20261107-hist1">
 </head>
 <body>
 <svg class="icon-library" aria-hidden="true" xmlns="http://www.w3.org/2000/svg"><defs>
@@ -26,6 +27,69 @@
 <aside id="carryContext" class="carry-context" hidden><small>上一页带来的追问</small><p id="carryText"></p><span>专题样本与县域结论分别看。</span></aside>
 <p id="sharedNote" class="shared-note" hidden>这是朋友分享的关系画面。你可以独立切换、展开和核实；链接不携带本机补充记录。</p>
 <section class="world-hero"><div><p class="eyebrow">04 / 把变化放回关系里</p><h1 id="pageTitle">订单来了，谁接住了？</h1><p id="pageSubtitle">同一条链，看见机会，也看见依赖。</p></div><div class="coverage"><span><b id="topicCount">9</b>个具体专题</span><span><b id="baseNodeCount">—</b>个底座对象</span><span><b id="baseEdgeCount">—</b>条登记联系</span><button id="openBoundary" type="button" aria-label="查看资料范围与关系性质">资料范围 ⓘ</button></div></section>
+
+<section id="bhHistory" class="bh-history" aria-labelledby="bhHistoryTitle">
+ <div class="bh-head">
+  <div>
+   <p class="bh-kicker">THE MAKING OF BOLUO · 2020—2026</p>
+   <h2 id="bhHistoryTitle">博罗，<em>是怎样长起来的？</em></h2>
+   <p class="bh-intro">不是突然跨过千亿。点亮关键园区、项目和产业分支，看六年间一张网络怎样逐渐长出枝干。</p>
+  </div>
+  <div class="bh-topline" aria-label="历史规模对照，指标口径分别注明">
+   <div class="bh-stat"><b>1000亿+</b><span>2020年 · 规上工业总产值</span></div>
+   <div class="bh-stat"><b>1800亿+</b><span>2024年 · 规上工业总产值</span></div>
+   <div class="bh-stat"><b>1407家</b><span>2025年底 · 规上工业企业</span></div>
+  </div>
+ </div>
+ <div class="bh-controlbar">
+  <button id="bhPlay" class="bh-play" type="button" aria-pressed="false">▶ <span>播放六年变化</span></button>
+  <div class="bh-yearbar" role="group" aria-label="选择博罗产业网络的年份">
+   <button class="bh-year" data-bh-year="2020" aria-current="true" aria-pressed="true" type="button">2020</button>
+   <button class="bh-year" data-bh-year="2021" aria-current="false" aria-pressed="false" type="button">2021</button>
+   <button class="bh-year" data-bh-year="2022" aria-current="false" aria-pressed="false" type="button">2022</button>
+   <button class="bh-year" data-bh-year="2023" aria-current="false" aria-pressed="false" type="button">2023</button>
+   <button class="bh-year" data-bh-year="2024" aria-current="false" aria-pressed="false" type="button">2024</button>
+   <button class="bh-year" data-bh-year="2025" aria-current="false" aria-pressed="false" type="button">2025</button>
+   <button class="bh-year" data-bh-year="2026" aria-current="false" aria-pressed="false" type="button">2026</button>
+  </div>
+ </div>
+ <div class="bh-storyline" aria-live="polite" aria-atomic="true">
+  <span class="bh-story-year" id="bhYearText">2020</span>
+  <div class="bh-story-text"><strong id="bhStoryTitle">把分散的工业，放进更大的产业平台</strong><span id="bhStorySub">产业园与重点项目布局形成新的连接。</span></div>
+  <div class="bh-storymetric"><b id="bhMetric">&gt;1000亿</b><small id="bhMetricLabel">2020年规上工业总产值</small></div>
+ </div>
+ <div class="bh-body">
+  <div class="bh-map">
+   <div class="bh-map-header">
+    <span>代表性关键主体 · 不是完整供应链</span>
+    <div class="bh-filters" role="group" aria-label="突出产业分支">
+     <button type="button" data-bh-filter="all" aria-pressed="true">全网</button>
+     <button type="button" data-bh-filter="platform" aria-pressed="false">园区</button>
+     <button type="button" data-bh-filter="energy" aria-pressed="false">储能</button>
+     <button type="button" data-bh-filter="mobility" aria-pressed="false">出行</button>
+     <button type="button" data-bh-filter="electronic" aria-pressed="false">电子</button>
+     <button type="button" data-bh-filter="food" aria-pressed="false">食品</button>
+    </div>
+   </div>
+   <svg id="bhSvg" class="bh-svg" viewBox="0 0 1040 470" role="group" aria-label="逐年展开的博罗产业园区、企业和产业类别关系。点击或键盘回车查看主体依据。"></svg>
+   <div class="bh-map-foot"><span id="bhMapStatus">2020年 · 3个代表性节点</span><span><b>实线</b> 有项目或平台报道 · 虚线为产业归类</span></div>
+  </div>
+  <aside class="bh-info" aria-label="关键节点解读">
+   <span id="bhInfoKicker" class="bh-info-kicker">2020 / 此时的博罗</span>
+   <h3 id="bhInfoTitle">先有平台，才可能长出新的产业关系</h3>
+   <p id="bhInfoBody">点一颗节点，查看这一年的真实进展与需要继续核对的问题。</p>
+   <p id="bhQuestion" class="bh-question">下一条应该核查的关系是什么？</p>
+   <a id="bhSource" class="bh-source-link" href="https://news.southcn.com/node_54a44f01a2/26ba1c8a43.shtml" target="_blank" rel="noopener noreferrer">查看这条依据 ↗</a>
+   <span id="bhSourceName" class="bh-source-caption">公开报道中的代表性主体</span>
+   <div class="bh-info-bottom"><a href="#relationshipStage">进入关系世界 · 追踪一个真实专题 →</a></div>
+  </aside>
+ </div>
+ <div class="bh-bottom">
+  <details><summary>这张历史图的边界</summary><p>节点年份代表所选公开资料中有据可查的里程碑，不一定是企业创立时间。实线只代表报道明确的项目、平台或产业归属，虚线是行业归类；它们都不直接证明企业间采购关系，也不表示实际交易金额、产量或因果。2026年为已有资料的观察时点，不是对未知未来的预测。</p></details>
+  <span>点年份 · 点主体 · 再看原有专题关系图</span>
+ </div>
+</section>
+
 <div class="world-workspace">
 <aside class="story-rail" aria-label="选择一个具体专题"><div class="rail-heading"><strong>从你关心的事开始</strong><label><span class="sr-only">筛选专题类别</span><select id="topicGroup"><option value="all">全部专题</option><option value="industry">制造与接续</option><option value="regional">跨城连接</option><option value="people">学校与工作</option><option value="agriculture">农业与农户</option><option value="mobility">交通与文旅</option></select></label></div><div id="storyList" class="story-list"></div><button id="browseChanges" class="rail-more" type="button">展开存量变化 <span id="changeCount">0</span> →</button></aside>
 <section class="world-stage" id="relationshipStage" aria-label="可以拖动、展开、对照的关系画布" tabindex="0">
@@ -49,4 +113,5 @@
 <noscript><p>启用 JavaScript 后可巡览和拖动关系图。也可<a href="https://epaper.nfnews.com/nfdaily/html/202609/22/content_10181994.html?origin=4">直接阅读来源报道</a>。</p></noscript>
 <script defer src="./discovery-data.js?v=20261106-discovery1"></script><script defer src="./discovery-core.js?v=20261107-relations1"></script>
 <script defer src="./relations-world-data.js?v=20261107-world4"></script><script defer src="./relations-world-core.js?v=20261107-world4"></script><script defer src="./relations-world-layout.js?v=20261107-world4"></script><script defer src="./relations-stage.js?v=20261107-world4"></script>
+<script defer src="./history-network.js?v=20261107-hist1"></script>
 </body></html>
