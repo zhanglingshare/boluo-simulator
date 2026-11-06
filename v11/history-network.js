@@ -131,8 +131,9 @@
   $('bhSvg').addEventListener('keydown',e=>{if(e.key!=='Enter'&&e.key!==' ')return;const target=e.target.closest('[data-bh-id]');if(!target)return;e.preventDefault();focus=focus===target.dataset.bhId?'':target.dataset.bhId;render();});
   $('bhShare').addEventListener('click', async () => {
     syncUrl();
-    try { await navigator.clipboard.writeText(location.href); $('bhShare').textContent='已复制当前年份链接'; }
-    catch { window.prompt('复制这一年的公开网络链接',location.href); }
+    const shareUrl = new URL(location.href); shareUrl.hash = '#bhHistory';
+    try { await navigator.clipboard.writeText(shareUrl.href); $('bhShare').textContent='已复制当前年份链接'; }
+    catch { window.prompt('复制这一年的公开网络链接',shareUrl.href); }
   });
   $('bhPlay').addEventListener('click',()=>{
     if(playing){stop();return;}
