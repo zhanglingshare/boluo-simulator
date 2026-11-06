@@ -536,3 +536,13 @@ dialog { border:1px solid #cee4fa;box-shadow:0 20px 60px #174d8840; }
   .insight-copy,.selection-panel,.gap-panel,.finding-actions { grid-column:auto;grid-row:auto; }
   .coverage { flex-wrap:wrap; }
 }
+
+
+/* 04 → 05: visual hand-off, same glass/mountain system as V11. */
+.impact-handoff{display:flex;align-items:center;justify-content:space-between;gap:24px;margin:18px 0 13px;padding:23px 27px;background:linear-gradient(95deg,#f4fafff5 0%,#e4f4ffeb 54%,#d0ecff70 100%),url("./boluo-landscape.svg") center center / cover;border:1px solid #fff;border-radius:16px;box-shadow:0 8px 26px #2975c021,inset 0 1px white}
+.impact-handoff>div{flex:1;min-width:0}.impact-handoff>div>span{font-size:10px;letter-spacing:.12em;color:#3280c8;font-weight:840}
+.impact-handoff h2{font-size:clamp(22px,2vw,30px);font-weight:880;line-height:1.35;letter-spacing:-.04em;color:#174474;margin:8px 0}
+.impact-handoff p{font-size:11px;color:#648bab;line-height:1.75;margin:0}
+.impact-handoff>a{flex:none;display:flex;gap:11px;align-items:center;padding:13px 17px;border-radius:10px;color:#fff;font-size:12px;font-weight:800;background:linear-gradient(135deg,#2c96ff,#1269e6);box-shadow:0 5px 15px #2388f349}
+.impact-handoff>a:hover{filter:brightness(1.08)}.impact-handoff>a strong{font-size:19px}
+@media(max-width:720px){.impact-handoff{padding:17px;flex-direction:column;align-items:stretch;gap:15px;border-radius:12px}.impact-handoff h2{font-size:23px}.impact-handoff>a{justify-content:center}}
