@@ -14,7 +14,7 @@ let active="electronic",v1=5,v2=20;
 const f=(n,d=1)=>Number(n).toLocaleString("zh-CN",{minimumFractionDigits:d,maximumFractionDigits:d});
 const bounded=(n,a,b)=>Math.max(a,Math.min(b,n));
 const esc=s=>String(s).replace(/[&<>"']/g,x=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[x]));
-function reset(){active=c();v1=Number($("slider").value);v2=Number($("slider2").value);render()}
+function reset(){active=c();v1=Number($("slider").value);v2=Number($("slider2").value);document.querySelectorAll("[data-quick-case]").forEach(b=>{const on=b.dataset.quickCase===active;b.classList.toggle("active",on);b.setAttribute("aria-pressed",String(on))});render()}
 const value=(id,a,b)=>{
  if(id==="electronic")return models.electronic.base*Math.pow(1+a/100,b-2025);
  if(id==="projects")return b<=2025?100:models.projects.base*Math.pow(1+a/100,b-2026);
@@ -138,17 +138,17 @@ function bullet(){
  }else if(active==="tea"){
   top=100;goal=null;achieved=value(active,v1,v2);name="每100元销售额：本地增值条件值";desc="暂无统一可核实的柏塘茶产业2030本地增值目标。";mode="open";
  }else if(active==="ring"){
-  top=Math.max(22000,value(active,70,100));goal=null;achieved=value(active,v1,v2);name="每100位游客：本地消费留存代理";desc="暂无可比的官方2030本地消费留存目标；不能计算达成率。";mode="open";
+  top=(100-v1)*90+v1*600;goal=null;achieved=value(active,v1,v2);name="每100位游客：本地消费留存代理";desc="暂无可比的官方2030本地消费留存目标；不能计算达成率。";mode="open";
  }else{
   top=25;goal=null;achieved=value(active,v1);name="拟抽样调查：95%最大误差半宽";desc="这是研究设计精度，不是数字化转型的绩效或目标达成率。";mode="precision";
  }
  const pct=bounded(achieved/top*100,0,100);
  let html='<div class="rv-metric"><span>'+esc(name)+'</span><strong>'+f(achieved,active==="ring"?0:1)+(active==="electronic"?"亿元":active==="ring"?"元":active==="innovation"?"pp":active==="tea"?"元":"指数")+'</strong></div>';
- html+='<div class="rv-progress" style="margin:14px 0 7px"><i style="width:'+pct+'%;'+(mode==="open"?'background:#1db5a7':mode==="precision"?'background:#7f8fd3':'')+'"></i></div>';
+ html+='<div class="rv-progress" style="margin:14px 0 7px"><i style="width:'+pct+'%;'+(mode==="open"?'background:#1db5a7':mode==="precision"?'background:#7f8fd3':'')+'"></i>'+(mode==="target"?'<span class="rv-target-marker" style="left:'+f(100*goal/top,2)+'%" aria-hidden="true"></span>':'')+'</div>';
  html+='<div class="rv-toolbar"><b>'+esc(mode==="target"?"参照线："+f(goal,0):mode==="precision"?"数字越小，拟调查比例估计越精细":"只看条件分解，不显示官方目标率")+'</b><button id="rvMethodBtn" type="button">说明 ↗</button></div>';
  if(mode==="target"){
   const gap=achieved-goal;
-  html+='<div class="rv-summary"><div class="rv-metric"><span>相对参照线差额</span><strong style="font-size:21px;color:'+(gap<0?"#c96d57":"#1a927c")+'">'+(gap>=0?"+":"")+f(gap,1)+'</strong></div><div class="rv-metric"><span>参照线不是概率</span><strong style="font-size:20px">0%概率计算</strong></div></div>';
+  html+='<div class="rv-summary"><div class="rv-metric"><span>相对参照线差额</span><strong style="font-size:21px;color:'+(gap<0?"#c96d57":"#1a927c")+'">'+(gap>=0?"+":"")+f(gap,1)+'</strong></div><div class="rv-metric"><span>参照线不是概率</span><strong style="font-size:17px">未估计概率</strong></div></div>';
  }else if(mode==="precision"){
   html+='<div class="rv-alert">未取得企业经营绩效与对照组，SEM路径系数和转型成效均不可估计。</div>';
  }else{
@@ -216,6 +216,7 @@ function render(){
  heat();curve();bullet();sensitivity();
  $("rvSource").textContent=sourceLabels();
 }
+document.querySelectorAll("[data-quick-case]").forEach(b=>b.addEventListener("click",()=>document.querySelector('[data-case="'+b.dataset.quickCase+'"]')?.click()));
 document.addEventListener("risk-lab:render",reset);
 evidence();reset();
 })();
