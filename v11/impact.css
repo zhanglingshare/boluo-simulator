@@ -39,3 +39,6 @@
 @media(max-width:620px){.evidence-showcase{padding:13px 10px 12px;border-radius:13px}.case-head h2{font-size:21px}.case-head p{font-size:10px}.case-head a{font-size:10px;padding:9px 12px}.case-bottom{font-size:9px}.case-bottom button{margin-left:0}}
 
 .saved-action{display:block;width:100%;margin-top:8px;text-align:center;border:1px solid #c7e0f8;border-radius:9px;padding:10px 12px;background:linear-gradient(180deg,#fff,#edf7ff);font-size:11px;font-weight:770;color:#347bb8}.saved-action:hover{background:#ddecff;border-color:#8fc3fa}
+
+/* Hand off selected impact theme to the 06 strategy observatory. */
+.plan-next{display:inline-flex;align-items:center;justify-content:center;gap:12px;padding:13px 16px;border:1px solid #3997f3;border-radius:10px;background:linear-gradient(130deg,#258fff,#1265da);box-shadow:0 5px 15px #278bed3b;color:#fff!important;font-size:12px!important;font-weight:850!important}.plan-next strong{font-size:19px}.plan-next:hover{filter:brightness(1.08)}
