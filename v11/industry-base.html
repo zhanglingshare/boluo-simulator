@@ -13,10 +13,46 @@
 @media(prefers-reduced-motion:reduce){*,*:before,*:after{transition-duration:0.01ms!important;animation-duration:.01ms!important}}
 </style>
 <link rel="stylesheet" href="./charts.css">
+<link rel="stylesheet" href="./experience.css">
 </head>
 <body>
 <header class="topbar"><a href="./index.html" class="brand"><span class="brandmark">◈</span>博罗决策风洞</a><nav class="toplinks" aria-label="V11页面导航"><a href="./index.html">01 问题发现</a><a href="./reality.html">02 预期与现实</a><a class="active" href="./industry-base.html" aria-current="page">03 产业底盘</a></nav><span class="page-chip">V11</span></header>
 <div class="frame">
+<section class="exp-entry" id="expEntry" aria-label="30秒发现博罗">
+ <div class="exp-eyebrow"><span class="exp-count">V11 · 03</span><span id="expModeStep">先从你熟悉的地方开始</span></div>
+ <h1 class="exp-heading">你以为你<span style="white-space:nowrap">了解博罗？</span><br><em>选一个地方，看看另一面。</em></h1>
+ <p class="exp-lead">别先读报告。找一个你熟悉的镇街，看看公开资料里有哪些产业活动、哪些事情你可能忽略了。</p>
+ <div class="exp-modes" role="group" aria-label="选择观察问题">
+   <button type="button" class="active" data-exp-mode="town" aria-pressed="true">我熟悉的镇街</button>
+   <button type="button" data-exp-mode="economy" aria-pressed="false">1005亿元怎么构成</button>
+   <button type="button" data-exp-mode="mountains" aria-pressed="false">环两山和我有什么关系</button>
+ </div>
+ <div class="exp-workbench">
+  <div class="exp-question">
+    <div class="exp-section-label">你的第一步 / 只做一个选择</div>
+    <h2 class="exp-prompt" id="expPrompt">选一个你熟悉的镇街</h2>
+    <div id="expTownPicker"><label for="expTownSelect" class="exp-sr-only">选择镇街</label><select class="exp-picker" id="expTownSelect"></select>
+    <div class="exp-suggestions"><button type="button" data-exp-town="罗阳街道">罗阳，县城还有什么？</button><button type="button" data-exp-town="园洲镇">园洲，企业连成链了吗？</button><button type="button" data-exp-town="长宁镇">长宁，为何不能直接同比？</button></div></div>
+    <p class="exp-explainer" id="expChooseLabel">16个镇街都可以点。</p>
+    <div class="exp-step-actions"><button class="exp-primary" type="button" id="expStart">往下探索 ↓</button><span class="exp-evidence-minor">不需要懂产业统计</span></div>
+  </div>
+  <div class="exp-reveal" id="expReveal" aria-live="polite">
+    <div class="exp-section-label">你可能没注意到 / 公开信息观察</div>
+    <div class="exp-reveal-title" id="expRevealTitle">你以为罗阳只有县城功能？这里也有制造业。</div>
+    <div class="exp-reveal-sub" id="expRevealSub">县城不只有消费和服务，公开资料还存在制造业项目线索。</div>
+    <div class="exp-evidence-pills" id="expRevealPills"></div>
+    <div class="exp-reveal-stats" id="expRevealStats"></div>
+    <p class="exp-note" id="expRevealNote">哪些还不知道？</p>
+    <div class="exp-step-actions"><button class="exp-primary" type="button" id="expPrimary">拆开这个镇街看看 →</button><button class="exp-secondary" id="expShare" type="button">分享这条观察 ↗</button></div>
+  </div>
+ </div>
+ <div class="exp-summary"><strong>你带走什么？</strong> 一条反直觉的产业发现、一个可以核验的问题，而不是一份看完就忘的报告。</div>
+</section>
+<section class="exp-discovery-focus" aria-label="选择继续观察的方向">
+ <div><b>想知道依据？</b> <small>所有统计图、企业梯队、16镇街资料矩阵仍在下面。没有足够数据的地方保留空白。</small></div>
+ <div class="exp-tools"><button type="button" id="expEvidenceBtn" aria-expanded="false">打开全部数据图表 ↗</button><button type="button" onclick="document.getElementById('v11Explore').scrollIntoView({behavior:'smooth',block:'start'})">继续看镇街与规划 →</button></div>
+</section>
+
 <section class="hero"><span class="hero-meta">公开信息快照 · 2026-11-06</span><div class="kicker">V11 · PAGE 03 / REAL ASSETS & CAPABILITIES</div><h1>博罗<span>产业底盘</span></h1><p><b>千亿博罗，究竟有什么家底？</b>  从16个镇街出发，切换县域空间格局与环“两山”规划，拆开现实产业、公共数据与尚未看见的能力。</p><div class="hero-tags"><span>16个镇街同级观察</span><span>“三区三核”规划</span><span>环“两山”协同</span><span>公开依据 · 不完整≠不能思考</span></div></section>
 <section class="metric-row" aria-label="2025年真实统计指标"><div class="metric"><div class="kicker">2025 地区生产总值</div><b class="num">1005.45<span style="font-size:15px">亿</span></b><small>同比增长5.5% · 2025核算结果</small></div><div class="metric"><div class="kicker">2025 第二产业增加值</div><b class="num">549.01<span style="font-size:15px">亿</span></b><small>占GDP 54.6% · 非工业总产值</small></div><div class="metric"><div class="kicker">2025 规模以上工业企业</div><b class="num">1,407<span style="font-size:15px">家</span></b><small>全县汇总 · 不分摊到各镇</small></div><div class="metric"><div class="kicker">2030 发展目标参照</div><b class="num">1,600<span style="font-size:15px">亿</span></b><small>十五五目标 · 不是已经实现的产出</small></div></section>
 <section class="viz-board" id="v11VizBoard" aria-label="博罗产业统计可视化">
@@ -26,7 +62,7 @@
 <article class="viz-card"><div class="viz-top"><div><div class="viz-kicker">02 / COMPARISON</div><h3 id="vizGrowthLabel">工业行业增速对照</h3></div><div class="viz-toggle" role="group" aria-label="增长图切换"><button data-viz-growth="industry" class="active" aria-pressed="true">行业</button><button data-viz-growth="product" aria-pressed="false">产品</button></div></div><p class="viz-meta" id="vizGrowthMeta">两年同比增速对照</p><div class="viz-plot" id="vizGrowthPlot" aria-live="polite"></div><div class="viz-comment" id="vizGrowthInsight"></div><div class="viz-source-row"><span>增速不等于产业规模</span><a id="vizGrowthSource" href="#" target="_blank" rel="noopener noreferrer">统计公报 ↗</a></div></article>
 <article class="viz-card"><div class="viz-top"><div><div class="viz-kicker">03 / INDUSTRIAL FIRMS</div><h3>企业梯队</h3></div><button class="viz-more-btn" id="vizPyramidExplain" aria-label="解释企业梯队数量口径">口径 ⓘ</button></div><p class="viz-meta">2025年底 · 点击一层查看说明</p><div class="viz-scale-list" id="vizTierList"></div><div class="viz-comment" id="vizTierDetail">不同产值门槛之间存在包含关系。</div><div class="viz-scale-foot">为同时看清2家和1,407家，条形使用对数刻度；精确值以标注为准。四档不可相加。</div><div class="viz-source-row"><span>企业数量非增加值</span><a id="vizTierSource" href="#" target="_blank" rel="noopener noreferrer">政府工作报告报道 ↗</a></div></article>
 </div></section>
-<div class="grid-layout">
+<div class="grid-layout" id="v11Explore">
 <aside class="panel sidebar">
 <div class="kicker">01 / HOW TO EXPLORE</div><div class="side-label">观察方式</div><div class="segmented" id="modeSwitch"><button class="selected" data-mode="town">镇街</button><button data-mode="zone">功能区</button><button data-mode="ring">环两山</button></div>
 <div class="divider"></div><div class="side-label">16个镇街 · 2街道 / 14镇</div><input class="town-search" id="searchTown" type="search" aria-label="搜索镇街" placeholder="搜索镇街名称…">
@@ -175,5 +211,6 @@ $("copyQuestions").onclick=()=>{let a=[...state.picked];if(!a.length){toast("先
 setMode("town");renderQuestions();
 </script>
 <script defer src="./charts.js"></script>
+<script defer src="./experience.js"></script>
 </body>
 </html>
