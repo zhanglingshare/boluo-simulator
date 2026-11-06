@@ -1,0 +1,166 @@
+/* V11 page 06 · Mobile-first executive hierarchy.
+   Overrides plan.css. Compact canvas, short hero and details behind disclosures.
+   Leaves all datasets, evidence references and controls intact. */
+.plan-focus{display:flex;align-items:center;justify-content:space-between;gap:16px;padding:15px 20px;margin-top:11px;border:1px solid #81bef9;border-radius:13px;background:linear-gradient(105deg,#123a72 0%,#0a2a59 65%,#225890 100%);box-shadow:0 10px 23px #11518e31,inset 0 1px #c2e8ff56;color:#fff;overflow:hidden}
+.plan-focus .focus-label{color:#9ac8f8;font-size:10px;letter-spacing:.11em;font-weight:830;white-space:nowrap}
+.plan-focus strong{font-size:clamp(20px,1.85vw,29px);font-weight:900;letter-spacing:-.04em;line-height:1.25}
+.plan-focus em{font-style:normal;color:#ffbe69;font-size:1.14em;padding:0 4px;text-shadow:0 0 12px #ffbb684d}
+.plan-focus a{display:inline-flex;align-items:center;gap:8px;white-space:nowrap;border:1px solid #70b8fc;border-radius:9px;padding:10px 13px;color:white;background:#267cdf;font-weight:750;font-size:11px}
+.plan-focus a span{color:#93f1ff;font-size:18px;line-height:1}
+.plan-focus a:hover{background:#358dff}
+.note-fold{margin-top:9px;border-top:1px solid #dae8f7;padding-top:9px}
+.note-fold summary{display:flex;align-items:center;justify-content:space-between;gap:10px;cursor:pointer;list-style:none;color:#5982a8;font-size:10px;font-weight:750;max-width:240px}
+.note-fold summary::-webkit-details-marker{display:none}
+.note-fold summary span{color:#2680d7}
+.note-fold[open] summary span{transform:rotate(45deg)}
+.note-fold .goal-warning,.note-fold .year-warning{margin:8px 0 0;font-size:10px;color:#617e99;line-height:1.7}
+.region-details{margin-top:12px}
+.region-details>summary{display:none;list-style:none;cursor:pointer}
+.region-details-body>p{font-size:11px;color:#6d8bae;line-height:1.8;margin:0}
+.region-details-body .dependency-check{margin:17px 0}
+.region-details-body .region-source{width:100%;margin-top:13px}
+.gap-details summary{display:flex;gap:7px;align-items:center;justify-content:space-between;list-style:none;cursor:pointer;color:#b5d9ff;font-size:10px;font-weight:780;margin-top:8px}
+.gap-details summary::-webkit-details-marker,.region-details>summary::-webkit-details-marker{display:none}
+.gap-details[open] summary span,.region-details[open] summary span{transform:rotate(45deg)}
+.gap-details>p{margin:10px 0 8px}
+.gap-details>span{display:block;margin-bottom:0}
+.plan-page #planGraph .p-node{animation-name:planArrive;will-change:opacity}
+.plan-page #planGraph .p-node.pending{opacity:.23!important}
+.plan-page #planGraph .p-node.dimmed{opacity:.34}
+.plan-page #planGraph .p-node.active rect{filter:drop-shadow(0 0 13px #ffd183cb)}
+@media (max-width:980px){
+ .region-inspector{display:flex;flex-direction:column;gap:0}
+ .region-inspector .region-role,.region-inspector h3,.region-inspector .micro,.region-inspector .region-details{grid-area:auto}
+ .region-details>summary{display:flex;align-items:center;justify-content:space-between;padding:12px 13px;border:1px solid #bfdefb;background:linear-gradient(135deg,#ecf7ff,#dceeff);color:#166abb;font-weight:830;font-size:11px;border-radius:9px}
+ .region-details>summary span{font-size:17px;line-height:1}
+ .region-details-body{padding:12px 0 0}
+}
+@media (max-width:720px){
+ .plan-page .wrap{padding:9px 9px 92px}
+ .plan-page .site-header{padding:7px 11px}
+ .plan-hero{padding:18px 14px 15px;gap:10px;background-position:55% center}
+ .plan-hero:before{top:18px;left:8px;height:55px}
+ .plan-hero-copy{padding-left:7px}
+ .plan-hero .micro{font-size:9px;line-height:1.3;margin-bottom:7px}
+ .plan-hero h1{font-size:clamp(28px,7.9vw,36px);line-height:1.14;letter-spacing:-.06em}
+ .plan-hero-copy>p:not(.micro){font-size:10px;line-height:1.55;margin:8px 0}
+ .plan-hero .plan-status{display:none}
+ .plan-hero-kpi{margin-top:1px;padding:12px 12px 11px;gap:6px;border-radius:12px}
+ .plan-hero-kpi small{font-size:9px}
+ .plan-hero-kpi strong{font-size:clamp(26px,6.9vw,34px);margin-top:4px}
+ .plan-hero-kpi strong em{font-size:11px}
+ .plan-hero-kpi .big-arrow{font-size:21px}
+ .target-delta{padding:9px 11px;align-items:center;gap:7px}
+ .target-delta span{font-size:9px}
+ .target-delta b{font-size:20px}
+ .target-delta small{font-size:8px}
+ .plan-focus{padding:12px 13px;border-radius:11px;flex-wrap:wrap;gap:6px 10px;margin-top:8px;position:relative}
+ .plan-focus .focus-label{font-size:9px}
+ .plan-focus strong{order:2;flex:1 1 100%;font-size:clamp(20px,5.4vw,26px)}
+ .plan-focus a{order:3;padding:7px 9px;font-size:9px;background:#255d99;border-color:#357ab7}
+ .goals-panel{margin-top:8px;padding:13px 12px 11px;border-radius:12px}
+ .panel-intro{display:block}
+ .panel-intro .micro{display:none}
+ .panel-intro h2{font-size:21px}
+ .panel-intro>p:last-child{display:none}
+ .goal-switch{display:flex;grid-template-columns:none;overflow-x:auto;scrollbar-width:thin;scrollbar-color:#b1d2f3 transparent;gap:7px;margin:11px -3px 10px;padding:2px 3px 7px;scroll-snap-type:x proximity}
+ .goal-switch button{min-width:150px;flex:0 0 150px;gap:5px;min-height:62px;padding:10px 10px;scroll-snap-align:start;border-radius:10px}
+ .goal-switch small{font-size:9px}
+ .goal-switch strong{font-size:17px}
+ .goal-visual{padding:11px 12px 9px}
+ .goal-pair{gap:7px}
+ .goal-pair small{font-size:9px}
+ .goal-pair strong{font-size:clamp(17px,4.7vw,22px)}
+ .goal-pair span{font-size:8px}
+ .goal-track{height:14px;margin-top:10px}
+ .goal-legend{margin-top:7px}
+ .goal-legend strong{font-size:9px}
+ .mode-line{margin-top:10px;gap:6px}
+ .mode-line>span,.mode-line button{font-size:9px}
+ .mode-line strong{display:none}
+ .carry-impact{padding:10px 12px;font-size:10px}
+ .plan-section{margin-top:18px}
+ .plan-section .section-heading{margin:17px 2px 9px}
+ .plan-section .section-heading h2,.paths-section .section-heading h2{font-size:clamp(22px,5.8vw,27px);line-height:1.25}
+ .plan-section .section-heading p:last-child,.paths-section .section-heading p:last-child{display:none}
+ .plan-section .status-legend{font-size:9px;gap:8px}
+ .plan-tabs{margin:8px 0 8px;gap:6px}
+ .plan-tabs button{border-radius:10px;padding:8px 6px;gap:4px;align-items:center;text-align:center;min-height:57px;justify-content:center}
+ .plan-tabs .tab-index{display:none}
+ .plan-tabs strong{font-size:12px;white-space:nowrap}
+ .plan-tabs small{display:none}
+ .network-layout{gap:8px}
+ .network-shell{border-radius:13px}
+ .network-toolbar{display:grid;grid-template-columns:minmax(0,1fr) auto;align-items:center;gap:7px;padding:9px 10px;min-height:51px}
+ .network-toolbar>div{min-width:0}
+ .network-toolbar small{display:none}
+ .network-toolbar strong{font-size:12px;line-height:1.35;margin-top:0;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden}
+ .network-toolbar button{margin:0;padding:9px 10px;min-width:72px;border-radius:8px;font-size:11px}
+ #planGraph{display:block;min-height:0!important;width:100%;height:auto;max-height:none;overflow:hidden;aspect-ratio:1/1;touch-action:pan-y}
+ #planGraph .p-node text{font-size:14px}
+ #planGraph .p-node .p-sub{font-size:9px}
+ #planGraph .p-node[data-kind=core] text{font-size:19px}
+ #planGraph .p-node[data-kind=core] .p-sub{font-size:10px}
+ #planGraph .p-edge{stroke-width:2.2}
+ #planGraph .p-edge.lit{stroke-width:3.4}
+ .network-footer{display:flex;flex-wrap:nowrap;align-items:center;gap:5px;padding:8px 9px;min-height:40px}
+ .network-footer span{flex:1;min-width:0;font-size:9px;line-height:1.3}
+ .network-footer button{font-size:9px;padding:7px 6px;white-space:nowrap;border-radius:7px}
+ .region-inspector{padding:12px 13px;border-radius:11px}
+ .region-inspector>.micro{display:none}
+ .region-role{font-size:9px;padding:5px 8px;margin:0}
+ .region-inspector h3{font-size:clamp(20px,5.8vw,24px);margin:9px 0 3px;line-height:1.3}
+ .region-details{margin-top:8px}
+ .region-details>summary{padding:10px 11px}
+ .region-details-body .dependency-check{margin:11px 0}
+ .paths-section{margin-top:16px}
+ .paths-section>.section-heading{margin:9px 2px 11px}
+ .route-grid{display:flex;grid-template-columns:none;overflow-x:auto;scroll-snap-type:x proximity;gap:7px;padding:1px 2px 8px;scrollbar-width:thin;scrollbar-color:#a9d0f7 transparent;margin-bottom:7px}
+ .route-grid button{flex:0 0 171px;display:flex;flex-direction:row;align-items:center;min-height:68px;scroll-snap-align:start;padding:10px;border-radius:10px}
+ .route-grid strong{font-size:12px}
+ .route-grid small{display:none}
+ .route-icon{width:31px;height:31px;flex:none}
+ .delivery-card{padding:12px 10px;border-radius:12px}
+ .delivery-top h3{font-size:20px;line-height:1.3}
+ .delivery-top p:last-child{display:none}
+ .stage-steps{margin:12px 0 9px;gap:4px}
+ .stage-steps button{min-height:64px;gap:4px;padding:7px 4px}
+ .stage-steps button>span{font-size:9px}
+ .stage-steps strong{font-size:10px}
+ .stage-steps small{display:none}
+ .stage-detail{gap:8px}
+ #stageWave{min-height:0;height:auto;width:100%}
+ .stage-caption{padding:12px}
+ .stage-caption>span{font-size:9px}
+ .stage-caption h4{font-size:16px;line-height:1.3;margin:7px 0}
+ .stage-caption p{display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden;font-size:10px;margin:0 0 7px;line-height:1.6}
+ .stage-caption button{font-size:10px}
+ .double-lower{margin-top:10px}
+ .calendar-panel,.risk-panel{padding:12px;border-radius:12px}
+ .mini-head h2{font-size:19px}
+ .year-picker{margin:10px 0}
+ .year-picker button{padding:9px 4px}
+ .year-readout{gap:7px}
+ .year-readout>div{padding:11px}
+ .year-readout strong{font-size:16px}
+ .year-readout span{font-size:9px}
+ .blindspot-choices{margin:12px 0 9px;gap:6px}
+ .blindspot-choices button{padding:8px 9px;font-size:11px}
+ .gap-readout{padding:12px;min-height:0}
+ .gap-readout strong{font-size:14px}
+ .gap-details>p{font-size:10px;line-height:1.6}
+ .plan-end{margin-top:10px;padding:14px}
+ .plan-end h2{font-size:23px}
+ .plan-end p:last-child{font-size:10px}
+ .footer{font-size:9px}
+}
+@media (max-width:370px){
+ .network-toolbar strong{font-size:11px}
+ .plan-tabs strong{font-size:11px}
+ .network-footer span{font-size:8px}
+ .network-footer button{font-size:8px}
+ .goal-switch button{flex-basis:141px;min-width:141px}
+}
+@media (prefers-reduced-motion:reduce){
+ .plan-focus *, .plan-focus *::after, .plan-focus *::before{animation:none!important;transition:none!important}
+}
