@@ -18,3 +18,5 @@
 .rv-progress .rv-target-marker:before{content:"";position:absolute;top:-2px;left:-3px;border-top:5px solid #d56d58;border-left:4px solid transparent;border-right:4px solid transparent}
 @media(max-width:760px){.risk-quick-tabs{display:flex;gap:6px;overflow-x:auto;scroll-snap-type:x mandatory;scrollbar-width:none;margin:9px 0}.risk-quick-tabs button{flex:none;min-width:138px;scroll-snap-align:start;padding:11px}}
 @media(prefers-reduced-motion:reduce){.risk-quick-tabs button{transition:none}}
+
+.rv-cell.lowdata{background:#eaf2fb;color:#4f8baa}.rv-cell.mediumdata{background:#c4e7f7;color:#166897}.rv-cell.highdata{background:#70c3df;color:#104f72;border-color:#5eb7da}
