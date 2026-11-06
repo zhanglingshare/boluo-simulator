@@ -42,15 +42,15 @@ function heatDetails(){
  compute=(r,k)=>value(active,r,k);goal=x=>x>=100;click=r=>setSlider("slider",r);
  title="投资恢复，是时间问题还是增长条件问题？";sub="2025同期=100；2026同期=55.3。颜色只表示是否恢复参照水平。";
  }else if(active==="tea"){
- rows=[0,20,40,60,80,100];cols=[0,20,40,60,80,100];
- compute=(r,k)=>value(active,k,r);goal=x=>x>=60;click=(r,k)=>{setSlider("slider",k,false);setSlider("slider2",r)};
+ rows=[0,20,40,60,80,100];cols=[0,20,35,60,80,100];
+ compute=(r,k)=>value(active,k,r);goal=x=>x>=60;click=(r,k)=>{setSlider("slider",k);setSlider("slider2",r)};
  title="加工、渠道分别留在本地多少？";sub="横轴加工留存、纵轴渠道留存；数字为每100元销售额本地增值（假设）。";
  }else if(active==="ring"){
  rows=[0,20,40,60,80,100];cols=[0,15,30,45,60,70];
- compute=(r,k)=>value(active,k,r);goal=x=>x>=14000;click=(r,k)=>{setSlider("slider",k,false);setSlider("slider2",r)};
+ compute=(r,k)=>value(active,k,r);goal=x=>x>=14000;click=(r,k)=>{setSlider("slider",k);setSlider("slider2",r)};
  title="住下来 × 钱留下，哪个更关键？";sub="横轴每百名游客过夜人数，纵轴本地留存比例；格内为百游客本地消费代理（百元）。";
  }else{
- rows=[90,95,99,99.5,80,85];cols=[20,60,100,140,180,240];
+ rows=[80,85,90,95,99,99.5];cols=[20,60,80,120,180,240];
  const zVals={80:1.282,85:1.44,90:1.645,95:1.96,99:2.576,99.5:2.807};
  compute=(r,n)=>value(active,n)*zVals[r]/1.96;goal=x=>x<=8;click=(r,n)=>setSlider("slider",n);
  title="抽多少家，估计误差才能缩小？";sub="拟随机抽样，不是已测量绩效；纵轴置信水平，横轴样本量。";
