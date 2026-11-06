@@ -1,0 +1,53 @@
+<!doctype html>
+<html lang="zh-CN"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover"><meta name="theme-color" content="#eaf4ff">
+<meta name="description" content="博罗决策风洞 V11 第七页：以既有可复现模型为底座，体验2030目标的受控冲击、缓冲与前后结果区间，并核对结果的条件与不确定性。">
+<title>07 决策风洞｜哪一环最经不起变化？— 博罗 V11</title>
+<link rel="stylesheet" href="./impact.css?v=20261107-v1"><link rel="stylesheet" href="./wind.css?v=20261107-w1">
+<script src="../model.js"></script><script defer src="./wind.js?v=20261107-w1"></script></head>
+<body class="wind-page">
+<header class="site-header">
+<a class="brand" href="./index.html" aria-label="博罗决策风洞首页"><span class="brand-mark" aria-hidden="true"><svg viewBox="0 0 48 38"><path d="M3 28L16 8Q19 5 22 10L28 19 33 13Q36 9 39 14L46 27Q48 32 42 33H7Q1 33 3 28Z" fill="#dff8ff" stroke="#fff" stroke-width="1.8"/><path d="M10 29L20 19L28 26L35 20L43 29" stroke="#1396df" stroke-width="3" fill="none" stroke-linecap="round"/></svg></span><span class="brand-name"><strong>博罗决策风洞模拟器</strong><small>Boluo Decision Wind-Tunnel Simulator</small></span></a>
+<nav class="desktop-nav" aria-label="V11页面导航"><a href="./index.html">01 问题发现</a><a href="./reality.html">02 预期与现实</a><a href="./industry-base.html">03 产业底盘</a><a href="./relations.html">04 关系世界</a><a href="./impact.html">05 变化影响</a><a href="./plan.html">06 十五五规划</a><a href="./wind.html" class="current" aria-current="page">07 风洞测试</a></nav>
+<div class="header-tools"><button type="button" id="shareTop" title="分享此实验" aria-label="分享此实验"><svg viewBox="0 0 24 24"><path d="M14 4v5C6 9 4 15 3 20c3-4 6-6 11-6v5l8-7.5L14 4Z"/></svg><span>分享</span></button><a href="./plan.html" class="return-link">返回06</a></div>
+</header>
+<main class="wrap wind-wrap">
+<section class="wind-hero" aria-labelledby="windTitle"><div class="wind-hero-main"><p class="micro">07 / DECISION WIND TUNNEL · 2026—2030</p><h1 id="windTitle">2030年，<em>哪一环最经不起变化？</em></h1><p>先让一个条件发生变化，再看2030结果。还可以试一次缓冲，看哪条路可能接得上。</p><div class="wind-hero-badges"><span>2025基数 1005.45亿元</span><span>2030目标 1600亿元</span><span>可复现的条件实验</span></div></div><div class="wind-target"><small>2030规划目标</small><strong>1600<em>亿元</em></strong><span>不是实际预测值</span></div></section>
+<section class="scenario-block" aria-labelledby="chooseTitle">
+<div class="scenario-heading"><div><p class="micro">01 / TOUCH THE FUTURE</p><h2 id="chooseTitle">亲手改变一件事</h2></div><span class="scenario-hint">每次只改变一个主要压力条件</span></div>
+<div class="shock-grid" role="group" aria-label="选择一个压力情景">
+<button type="button" data-shock="delay" aria-pressed="true"><span class="shock-symbol">◴</span><strong>关键项目晚一年</strong><small>新产能接续</small></button>
+<button type="button" data-shock="invest" aria-pressed="false"><span class="shock-symbol">↘</span><strong>投资接续走弱</strong><small>后续建设投入</small></button>
+<button type="button" data-shock="orders" aria-pressed="false"><span class="shock-symbol">⌁</span><strong>本地订单外流</strong><small>链主与配套联系</small></button>
+<button type="button" data-shock="traffic" aria-pressed="false"><span class="shock-symbol">⇄</span><strong>通勤压力上升</strong><small>人才与服务承载</small></button>
+</div>
+<div class="experiment-settings"><div><span>压力档位</span><strong id="strengthLabel">中等压力</strong></div><input type="range" id="strength" min="0.6" max="1.4" step="0.2" value="1" aria-label="调整压力档位，范围为预设情景的60%到140%"><button type="button" id="runTest" class="run-cta"><span aria-hidden="true">▶</span> 开始一次实验</button></div>
+</section>
+<section class="results-shell" id="results" aria-labelledby="resultTitle">
+<div class="results-head"><div><span class="micro">02 / TWO POSSIBLE PATHS</span><h2 id="resultTitle">目标线不动，结果会怎样移动？</h2><p id="resultLead">两条条件分布，将由同一套模拟内核实际计算。</p></div><div class="result-actions"><button id="replay" type="button">↻ 重播变化</button><button id="reset" type="button">还原基准</button></div></div>
+<div id="modelFailure" class="model-failure" role="alert" hidden>模拟内核尚未加载，无法输出真实重跑的结果。请检查网络并重新打开。</div>
+<div class="readout-grid">
+<div class="readout"><span>冲击后 · 2030中位规模</span><strong id="afterMedian">—</strong><small>亿元 / 条件结果</small></div>
+<div class="readout emphasis"><span>相对基准的中位变化</span><strong id="medianDelta">—</strong><small>亿元 / 两情景同种子比较</small></div>
+<div class="readout"><span>达到1600亿的模拟占比</span><strong id="afterHit">—</strong><small id="hitDetail">不是经独立校准的成功概率</small></div>
+</div>
+<div class="dist-layout">
+ <div class="distribution"><div class="dist-top"><strong>2030 结果分布对照</strong><div class="dist-legend"><span><i class="base"></i>基准</span><span><i class="stress"></i>冲击</span><span id="bufferLegend" hidden><i class="buffer"></i>缓冲</span></div></div><svg id="distChart" viewBox="0 0 720 276" role="img" aria-label="基准、压力及缓冲三种条件下的2030GDP结果模拟分布与1600亿元目标线"></svg><div class="dist-bottom"><span id="rangeBase">基准区间：—</span><span id="rangeShock">压力区间：—</span><span id="rangeBuffer" hidden>缓冲区间：—</span></div></div>
+ <aside class="result-insight"><span class="insight-kicker">最重要的不是一个概率</span><strong id="resultInsight">一次变化，可能改变的不只是结果中位数。</strong><p id="resultExplain">结果由原有模型重跑；变量改变属于情景假设，并非事实结论。</p><div class="evidence-chip">结果口径 <b>模型情景 · 非实测预测</b></div><button id="whyButton" type="button">为什么会这样？ <span>↗</span></button></aside>
+</div>
+<div class="result-disclaimer"><span>!</span><p>这是受控情景压力测试。基准路径贡献按照既有2030目标假设设定，结果比例受这些假设影响；不得将其当作真实达标概率。</p></div>
+</section>
+<section class="transmission" aria-labelledby="transTitle"><div class="subhead"><div><p class="micro">03 / WHERE THE SHOCK TRAVELS</p><h2 id="transTitle">变化从哪里传过来？</h2></div><span>机制示意 · 非交易网络</span></div>
+<div class="chain-viewport"><div id="chainTrack" class="chain-track" role="group" aria-label="随场景变化的四段条件传导关系"><button type="button" data-link="0" class="chain-node active"><small>变化起点</small><strong id="chain0">关键项目延期</strong></button><span class="chain-beam" aria-hidden="true"></span><button type="button" data-link="1" class="chain-node"><small>第一层</small><strong id="chain1">新产线推迟</strong></button><span class="chain-beam" aria-hidden="true"></span><button type="button" data-link="2" class="chain-node"><small>第二层</small><strong id="chain2">本地配套订单</strong></button><span class="chain-beam" aria-hidden="true"></span><button type="button" data-link="3" class="chain-node"><small>后续结果</small><strong id="chain3">产业接续能力</strong></button></div></div>
+<div class="chain-answer"><span id="chainStepTag">正在查看 · 变化起点</span><strong id="chainQuestion">延迟发生在哪一类项目？</strong><p id="chainCaveat">节点是有条件的机制假设，不能凭连线推算某家企业的经营损失。</p></div></section>
+<section class="rescue" id="rescue" aria-labelledby="rescueTitle"><div class="rescue-main"><p class="micro">04 / TRY AN ALTERNATIVE</p><h2 id="rescueTitle">如果还有另一条路接棒呢？</h2><p>保持相同的压力条件，增加一个有限的缓冲假设，再计算一次。看看缓冲是否改变结果和结果区间。</p><label class="rescue-toggle"><input type="checkbox" id="bufferOn"><span class="toggle-track" aria-hidden="true"></span><span><strong id="bufferName">其他项目提前接棒</strong><small id="bufferDesc">部分弥补项目延期后的产出接续</small></span></label></div>
+<div class="rescue-outcome"><span>缓冲前后 · 模拟中位数</span><div><strong id="beforeBuffer">—</strong><span>→</span><strong id="afterBuffer">—</strong></div><p id="bufferTakeaway">启用左侧缓冲条件后，显示同一随机种子下的第三组结果。</p></div></section>
+<section class="share-panel"><div><p class="micro">05 / WHAT DID YOU DISCOVER?</p><h2>带走一个可以复现的发现</h2><p id="shareSummary">你改变了一项条件，观察到结果分布发生了怎样的变化？</p></div><div class="share-actions"><button type="button" id="copyLink">复制复现实验链接 ↗</button><button type="button" id="saveExp">保存本机实验</button><button type="button" id="savedList">我的实验记录</button></div></section>
+<details class="technical" id="method"><summary><span>资料、参数区间与模型边界</span><span>＋</span></summary><div class="technical-content"><p>使用仓库现有 <code>model.js</code> 的同一种子 Monte Carlo 内核，在受控条件下重跑基准、压力、缓冲情景；固定样本量与种子，使同一次比较可复现。情景变化仅是可调整的假设，不是从真实项目合同估计出的因果系数。</p>
+<p id="assumptionText">当前情景假设详见运行后展示。</p><p>没有观察数据支撑的网络线不标注交易额、概率或真实经济损失。基准情景路径贡献与2030目标对齐，因此展示的模拟达标占比尤其不应当作官方预测或经独立验证的成功概率。</p>
+<p><a href="https://github.com/zhanglingshare/boluo-simulator/blob/main/model.js" target="_blank" rel="noopener noreferrer">查看已有模拟内核</a> · <a href="../windtunnel-v2.html" target="_blank" rel="noopener noreferrer">原有独立风洞 V2（保留）</a> · <a href="./plan.html">返回十五五规划</a></p></div></details>
+<footer class="footer"><span>博罗 V11 · 07 决策风洞 · 单变量压力试验与缓冲对照</span><a href="./plan.html">回到06 规划兑现</a></footer>
+</main>
+<nav class="mobile-nav" aria-label="移动端导航"><a href="./index.html">01 发现</a><a href="./reality.html">02 现实</a><a href="./industry-base.html">03 底盘</a><a href="./relations.html">04 关系</a><a href="./impact.html">05 影响</a><a href="./plan.html">06 规划</a><a href="./wind.html" aria-current="page">07 风洞</a></nav>
+<dialog id="modal"><div class="dialog-header"><strong id="modalTitle">实验详情</strong><button type="button" id="modalClose">关闭 ×</button></div><div id="modalBody" class="dialog-body"></div></dialog><div id="toast" class="toast" role="status" aria-live="polite"></div>
+<noscript>需要启用JavaScript才能运行可复现的风洞实验。</noscript>
+</body></html>
