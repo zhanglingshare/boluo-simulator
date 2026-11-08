@@ -37,6 +37,10 @@
    <p class="wt-sub">模拟产业运行 · 压力测试选择 · 预判潜在缺口</p>
    <div class="wt-badges"><span>规上工业总产值 超 2000 亿</span><span>工业投资 −44.7%</span><span>19 个现场 · 11 个镇街</span></div>
   </div>
+ <div class="wt-signals" aria-label="近期公开信号">
+  <div class="ws-head"><span>近期信号 · 公开渠道</span><em id="wsUpd">正在读取…</em></div>
+  <div class="ws-lane"><div class="ws-run" id="wsRun"></div></div>
+ </div>
   <div class="wt-stage">
    <div class="wt-canvas-box">
     <canvas id="wtCanvas" aria-label="3D 风洞测试段：产业从投资端进入，经过测试段后输出结果"></canvas>
@@ -72,6 +76,48 @@ window.addEventListener('load',function(){
  var c=document.getElementById('wtCanvas');
  if(window.BoluoWind&&c)window.BoluoWind.mount(c);
 });
+</script>
+<script>
+(function(){
+ function boot(){
+  var run=document.getElementById('wsRun'); if(!run)return;
+  fetch('../hot.json?t='+Date.now()).then(function(r){return r.json();}).then(function(d){
+   var up=document.getElementById('wsUpd'); if(up)up.textContent=(d.updated||'').slice(0,10)+' · '+ (d.items||[]).length +' 条';
+   var cat={industry:'产业',city:'城市',fun:'好吃好玩',livelihood:'民生',tourism:'文旅',agriculture:'农业'};
+   var all=(d.items||[]).slice(0,12), h='';
+   all.concat(all).forEach(function(x){
+    h+='<a class="ws-chip" href="'+(x.url||'#')+'" target="_blank" rel="noopener">'+
+       '<i>'+(cat[x.cat]||'公开')+'</i>'+x.title+'<em>'+x.source+'</em></a>';
+   });
+   run.innerHTML=h;
+  }).catch(function(){
+   var up=document.getElementById('wsUpd');if(up)up.textContent='数据未接入';
+   run.innerHTML='<span class="ws-chip muted">近期信号暂时读不到，可直接看 08 忽略了什么</span>';
+  });
+ }
+ if(document.readyState==='complete')boot();else window.addEventListener('load',boot);
+})();
+</script>
+<script>
+(function(){
+ function boot(){
+  var run=document.getElementById('wsRun'); if(!run)return;
+  fetch('../hot.json?t='+Date.now()).then(function(r){return r.json();}).then(function(d){
+   var up=document.getElementById('wsUpd'); if(up)up.textContent=(d.updated||'').slice(0,10)+' · '+ (d.items||[]).length +' 条';
+   var cat={industry:'产业',city:'城市',fun:'好吃好玩',livelihood:'民生',tourism:'文旅',agriculture:'农业'};
+   var all=(d.items||[]).slice(0,12), h='';
+   all.concat(all).forEach(function(x){
+    h+='<a class="ws-chip" href="'+(x.url||'#')+'" target="_blank" rel="noopener">'+
+       '<i>'+(cat[x.cat]||'公开')+'</i>'+x.title+'<em>'+(x.source||'')+'</em></a>';
+   });
+   run.innerHTML=h;
+  }).catch(function(){
+   var up=document.getElementById('wsUpd');if(up)up.textContent='数据未接入';
+   run.innerHTML='<span class="ws-chip muted">近期信号暂时读不到</span>';
+  });
+ }
+ if(document.readyState==='complete')boot();else window.addEventListener('load',boot);
+})();
 </script>
 </body>
 </html>

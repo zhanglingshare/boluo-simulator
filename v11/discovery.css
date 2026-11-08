@@ -198,7 +198,7 @@ body[data-topic="factory"] .network-block{display:block}
 }
 
 .wt-canvas-box{position:relative;border-radius:12px;overflow:hidden}
-.wt-canvas-box canvas{display:block;width:100%;height:clamp(370px,52vw,620px)}
+.wt-canvas-box canvas{display:block;width:100%;height:clamp(340px,44vw,540px)}
 .wt-float.f2{left:10px;bottom:12px}
 .wt-note{right:11px;bottom:11px}
 
@@ -261,3 +261,18 @@ body[data-topic="factory"] .cliff-block{display:block}
  .holo-foot em{font-size:8.5px}
  #holoNet{overflow-x:auto;-webkit-overflow-scrolling:touch}
 }
+
+/* 近期信号带 */
+.wt-signals{background:#0a1219;border:1px solid rgba(127,212,255,.16);border-radius:12px;padding:9px 0 7px;margin:0 0 10px;overflow:hidden}
+.wt-signals .ws-head{display:flex;align-items:center;justify-content:space-between;padding:0 14px 8px;font-size:10px;letter-spacing:.1em;color:#7fa6c4;text-transform:uppercase}
+.wt-signals .ws-head em{font-style:normal;color:#a8c6dd;letter-spacing:0}
+.ws-lane{overflow:hidden;-webkit-mask-image:linear-gradient(90deg,transparent,#000 6%,#000 94%,transparent);mask-image:linear-gradient(90deg,transparent,#000 6%,#000 94%,transparent)}
+.ws-run{display:flex;gap:8px;width:max-content;animation:wsmove 46s linear infinite}
+.ws-run:hover{animation-play-state:paused}
+@keyframes wsmove{from{transform:translateX(0)}to{transform:translateX(-50%)}}
+.ws-chip{display:inline-flex;align-items:center;gap:7px;white-space:nowrap;font-size:11px;color:#d6e6f3;background:rgba(127,212,255,.06);border:1px solid rgba(127,212,255,.14);border-radius:999px;padding:6px 11px;text-decoration:none}
+.ws-chip i{font-style:normal;font-size:9px;color:#7fd4ff;border:1px solid rgba(127,212,255,.3);border-radius:4px;padding:1px 4px}
+.ws-chip em{font-style:normal;font-size:9.5px;color:#6f8aa0}
+.ws-chip.muted{color:#8aa3b8}
+@media(prefers-reduced-motion:reduce){.ws-run{animation:none}}
+@media(max-width:600px){.ws-chip{font-size:10.5px;padding:5px 9px}}
