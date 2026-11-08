@@ -12,8 +12,11 @@ on:
       - "v11/sem-*.md"
       - "v11/sem-*.csv"
       - "v11/insights.html"
+      - "v11/insight-*.js"
+      - "v11/insight-*.css"
       - "v11/wind.html"
       - "tests/boluo-v11-sem.test.cjs"
+      - "tests/boluo-v11-insight.test.cjs"
       - ".github/workflows/boluo-v11-sem.yml"
   pull_request:
     paths:
@@ -26,8 +29,11 @@ on:
       - "v11/sem-*.md"
       - "v11/sem-*.csv"
       - "v11/insights.html"
+      - "v11/insight-*.js"
+      - "v11/insight-*.css"
       - "v11/wind.html"
       - "tests/boluo-v11-sem.test.cjs"
+      - "tests/boluo-v11-insight.test.cjs"
       - ".github/workflows/boluo-v11-sem.yml"
 
 permissions:
@@ -43,4 +49,4 @@ jobs:
         with:
           node-version: "22"
       - name: Check teaching engine and navigation contracts
-        run: node --test tests/boluo-v11-sem.test.cjs
+        run: node --test tests/boluo-v11-sem.test.cjs tests/boluo-v11-insight.test.cjs
