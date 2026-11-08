@@ -1,5 +1,20 @@
 /* 首页深色风洞主视觉：canvas 伪 3D（透视投影 + 绕轴微旋） */
 (function () {
+  const COLOR = {
+    bad:   'rgba(255,150,128,ALPHA)',
+    good:  'rgba(170,236,255,ALPHA)',
+    money: 'rgba(255,214,130,ALPHA)'
+  };
+  const DEFAULT_WORDS = [
+    { v: '−44.7%',     t: '前三季工业投资', d: 'Q1–Q3', k: 'bad' },
+    { v: '2027 下半',  t: '缺口就到这几个月', d: '',     k: 'bad' },
+    { v: '6 个',       t: '湖镇项目未动工', d: '至今',   k: 'bad' },
+    { v: '100 亿',     t: '铜来顺明年目标', d: '10-13', k: 'money' },
+    { v: '超 2000 亿', t: '规上工业总产值', d: '2025',   k: 'good' },
+    { v: '19 个现场',  t: '今年落地的节点', d: '',       k: 'good' },
+    { v: '11 个镇街',  t: '挂在这张网上',   d: '',       k: 'good' },
+    { v: '+8.9%',      t: '规上增加值还在涨', d: 'Q1–Q3', k: 'good' }
+  ];
   'use strict';
   const CY = '#7fd4ff', CY2 = '#2ea8e6', DIM = 'rgba(127,212,255,.55)';
 
@@ -27,7 +42,22 @@
     return 0.6;
   }
 
-  function mount(canvas) {
+  function buildWords(list) {
+    const lane = [-.78, .74, -.44, .40, -.10, .62, -.66, .16];
+    const n = Math.min(list.length, 7);
+    return list.slice(0, n).map(function (x, i) {
+      return {
+        v: x.v, t: x.t || '', d: x.d || '',
+        c: COLOR[x.k] || COLOR.good,
+        row: i - (n - 1) / 2,
+        z: 1.0 - i * (0.62 / Math.max(1, n - 1)),
+        sp: 0.0046
+      };
+    });
+  }
+
+  function mount(canvas, items) {
+    if (items && items.length) words = buildWords(items);
     if (!canvas) return;
     const ctx = canvas.getContext('2d');
     const dpr = Math.min(window.devicePixelRatio || 1, 2);
@@ -165,16 +195,22 @@
       // 关键数字飞进洞口
       words.forEach(function (w) {
         const e = ell(w.z);
-        const sz = 10 + w.z * 24;
+        const sz = 10 + Math.min(w.z,1) * 22;
         let a = .96;
         if (w.z > .94) a = (1 - w.z) / .06;
         else if (w.z < .42) a = (w.z - .255) / .165;
         a = Math.max(0, Math.min(1, a));
-        ctx.font = '800 ' + sz.toFixed(1) + 'px "PingFang SC","Microsoft YaHei",sans-serif';
+        const cy = H * 0.44 + w.row * (H < 460 ? 34 : 42);
         ctx.textAlign = 'center'; ctx.textBaseline = 'middle';
-        ctx.shadowColor = 'rgba(10,30,48,.9)'; ctx.shadowBlur = 10;
+        ctx.shadowColor = 'rgba(5,14,22,.95)'; ctx.shadowBlur = 14;
+        ctx.font = '800 ' + sz.toFixed(1) + 'px "PingFang SC","Microsoft YaHei",sans-serif';
         ctx.fillStyle = w.c.replace('ALPHA', a.toFixed(2));
-        ctx.fillText(w.t, e.x, H * 0.455 + w.u * H * 0.135);
+        ctx.fillText(w.v, Math.max(W*0.08, Math.min(W*0.92, e.x)), cy);
+        if (w.t) {
+          ctx.font = '500 ' + (sz * 0.44).toFixed(1) + 'px "PingFang SC","Microsoft YaHei",sans-serif';
+          ctx.fillStyle = 'rgba(196,216,230,' + (a * 0.82).toFixed(2) + ')';
+          ctx.fillText(w.t, Math.max(W*0.08, Math.min(W*0.92, e.x)), cy + sz * 0.64);
+        }
         ctx.shadowBlur = 0;
       });
 
@@ -189,16 +225,7 @@
 
     resize();
     raf = requestAnimationFrame(frame);
-    const words = [
-      {t:'−44.7%',        c:'rgba(255,150,128,ALPHA)', u:-.78, z:.99, sp:.0062, lit:1},
-      {t:'2027 下半',      c:'rgba(240,248,255,ALPHA)', u:.74,  z:.91, sp:.0054, lit:1},
-      {t:'6 个没动工',      c:'rgba(255,150,128,ALPHA)', u:-.44, z:.83, sp:.0058, lit:1},
-      {t:'100 亿',         c:'rgba(255,214,130,ALPHA)', u:.40,  z:.76, sp:.0066, lit:1},
-      {t:'+8.9%',         c:'rgba(170,236,255,ALPHA)', u:-.10, z:.68, sp:.0052, lit:1},
-      {t:'超 2000 亿',      c:'rgba(240,248,255,ALPHA)', u:.16,  z:.60, sp:.0060, lit:1},
-      {t:'19 个现场',       c:'rgba(170,236,255,ALPHA)', u:-.66, z:.52, sp:.0056, lit:1},
-      {t:'11 个镇街',       c:'rgba(240,248,255,ALPHA)', u:.62,  z:.44, sp:.0064, lit:1}
-    ];
+    let words = buildWords(DEFAULT_WORDS);
     const ro = window.ResizeObserver ? new ResizeObserver(function () { resize(); }) : null;
     if (ro) ro.observe(canvas); else window.addEventListener('resize', resize);
     document.addEventListener('visibilitychange', function () {
