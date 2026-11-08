@@ -30,11 +30,20 @@
   const topics = {
     factory: {
       label: '工厂', icon: 'factory', title: ['工业在涨，投资在降。', '谁在接力？'],
-      period: '2026年前三季度 · 同比', lede: '产值是过去几年项目的回声，投资才是明年的伏笔。投资砍掉近四成半，变窄的不是今年，是明年。', chart: 'diverge', source: 'quarter', case: 'electronic',
+      period: '2026年前三季度 · 同比', lede: '今年的产出，靠的是 2021—2024 年投资高峰的结转。投资连着两年往下掉，2027 年下半年起，新投产的会少一截。',
+      cliff: { bars: [
+          { y: '2023', val: 240.31, txt: '240.31' },
+          { y: '2024', val: 266, txt: '266' },
+          { y: '2025', val: 230, txt: '超 230' },
+          { y: '2026', val: null, txt: '未公布', rate: '−44.7%' }
+        ], tail: '2027',
+        caption: '投资从 240 亿爬到 266 亿，2025 年往回退，2026 年连绝对额都不再公布。', foot: '钱流连着断两年，缺口落在 2027 年下半年。' }, chart: 'diverge', source: 'quarter', case: 'electronic',
       metrics: [
-        { label: '规上工业增加值', value: 8.9, unit: '%', prefix: '+', color: 'blue', digits: 1 },
-        { label: '工业投资', value: -44.7, unit: '%', color: 'coral', digits: 1 }
+        { label: '规上工业总产值（亿元）', text: '超 2000', sub: '2025 年度 · 约数', pill: '+8.7%', color: 'blue' },
+        { label: '规上工业增加值', text: '未公布', sub: '2024 年起只报增速', pill: '+8.9%', color: 'teal' },
+        { label: '工业投资（亿元）', text: '超 230', sub: '2025 年度 · 约数', pill: '−44.7%', color: 'coral' }
       ],
+      periodBar: '指标期次：2025 年为年度约数，2026 年为前三季度快报。绝对值与增速不同源，不可混读。',
       chartNote: '不能互抵。两个数说的是两件事。',
       defaultQuestion: '工业增长与投资收缩，下一步应该核对什么？',
       inquiries: [
@@ -91,17 +100,28 @@
     }
   };
   const events = [
-    { id: 'jiangfeng', topic: 'factory', town: '园洲镇', title: '园洲 · 江丰精密', subtitle: '订单约为上年同期3倍', big: '约3', unit: '倍', tag: '企业受访', date: '2026-09-22', dateLabel: '报道日期', visual: 'orders', source: 'yuanzhou', question: '哪些企业还在加设备？', detail: '报道记录了企业订单约为上年同期3倍及新增设备进厂。', boundary: '这是企业受访线索，不能替代全县订单或开工率统计。', next: '产能利用、实际产出与订单兑现。', inquiry: 'capacity' },
-    { id: 'hande', topic: 'projects', town: '园洲镇', title: '园洲 · 汉德精密', subtitle: '第三期项目 · 计划投资', big: '15', unit: '亿', tag: '建设跟踪', date: '2026-09-22', dateLabel: '现场报道', visual: 'stages', source: 'yuanzhou', question: '施工之后，下一步核对什么？', detail: '报道提到8月签约，并记录三期项目工地的施工场景。', boundary: '计划投资不是已完成投资；目前资料不足以认定投产或达产。', next: '后续试产、投产及实际产销记录。', inquiry: 'progress' },
-    { id: 'food', topic: 'food', town: null, title: '全县 · 吃饭和住下来', subtitle: '2026年前三季度 · 限上营业额', big: '+9.8', unit: '%', tag: '公开统计', date: '2026-11-05', dateLabel: '报道日期', visual: 'food', source: 'quarter', question: '餐饮回暖，住宿跟上了吗？', detail: '限上餐饮营业额增长9.8%，限上住宿营业额增长1.6%。', boundary: '不代表游客人数、过夜率，也不覆盖全部普通小店。', next: '客源、停留时长与不同经营主体的数据。', inquiry: 'overnight' },
-    { id: 'agriculture', topic: 'agriculture', town: null, title: '全县 · 农业经营', subtitle: '前三季度农林牧渔业总产值', big: '130.32', unit: '亿', tag: '公开统计', date: '2026-11-05', dateLabel: '报道日期', visual: 'agriculture', source: 'quarter', question: '产值在增长，增值留在哪？', detail: '农林牧渔业总产值增长6.9%，各分行业增幅不同。', boundary: '县域产值不等于单品增加值、利润或农户收入。', next: '单品加工、渠道和本地经营主体的账本。', inquiry: 'processing' },
-    { id: 'tea', topic: 'agriculture', town: '柏塘镇', title: '柏塘 · 新陂合作社', subtitle: '受访所述春茶干茶产量', big: '2,500', unit: '斤', tag: '春茶档案', date: '2026-04-07', dateLabel: '报道日期', visual: 'tea', source: 'tea', question: '春茶卖出后，成本和回款呢？', detail: '合作社负责人在4月报道中称，约2500斤春茶干茶当时已基本售完。', boundary: '仅为一家合作社的春茶记录，不是全镇产量、当前销量或利润。', next: '干茶成本、销售回款、农户结算与渠道分成。', inquiry: 'tea' },
-    { id: 'cement', topic: 'factory', town: '公庄镇', title: '公庄 · 一条熟料产线', subtitle: '关停拆除产线的日产能力', big: '2,500', unit: '吨', tag: '关停通告', date: '2026-02-11', dateLabel: '通告日期', visual: 'closure', source: 'cement', question: '产线退出，哪些变化要分开看？', detail: '通告确认一条日产2500吨熟料生产线关停，主体设备拆除。', boundary: '仅限这一条生产线，不能据此判定企业其他业务全部退出。', next: '受影响的具体业务与替代供给，分别核对。', inquiry: 'different' },
-    { id: 'procurement', topic: 'projects', town: '园洲镇', title: '园洲 · 汉德本地配套', subtitle: '受访所述本地配套采购比例', big: '约40', unit: '%', tag: '企业受访', date: '2026-09-22', dateLabel: '报道日期', visual: 'procurement', source: 'yuanzhou', question: '扩产之外，本地接到了多少？', detail: '企业受访口径称，本地配套采购比例从最初不足10%提升至约40%。', boundary: '前期值是小于10%的范围，不能当作精确10%；不外推至全县。', next: '供应商、实际采购金额和交易记录。', inquiry: 'local' },
-    { id: 'copper', topic: 'projects', town: null, title: '博罗园区 · 铜来顺', subtitle: '生产线点火已有报道', big: '10.13', unit: '点火', tag: '投产跟踪', date: '2026-10-16', dateLabel: '报道日期', visual: 'copper', source: 'copper', question: '点火之后，实际产出兑现了吗？', detail: '10月13日举行生产线点火仪式，相关报道已收录。', boundary: '点火不等于达产；2027年产值目标不是当前产值。', next: '实际产量、销售与持续生产情况。', inquiry: 'output' }
+    { id: 'hande', topic: 'projects', town: '园洲镇', title: '园洲 · 汉德精密', subtitle: '三期 · 签约落户', big: '15', unit: '亿', question: '签约之后，什么时候动土？', visual: 'stages', stage: 1, source: 'yuanzhou' },
+    { id: 'shenyuan', topic: 'factory', town: '龙溪街道', title: '龙溪 · 深远新能源', subtitle: '电动车基地 · 已投产', big: '60', unit: '万辆', question: '产能开了，订单跟上了吗？', visual: 'stages', stage: 3, source: 'quarter' },
+    { id: 'yetai', topic: 'factory', town: '长宁镇', title: '长宁 · 椰泰实业', subtitle: '第二基地 · 已投产', big: '8', unit: '条线', question: '八条无菌线，跑给谁？', visual: 'stages', stage: 3, source: 'quarter' },
+    { id: 'jintian', topic: 'factory', town: '龙溪街道', title: '龙溪 · 金田科技', subtitle: '半山基地 · 已投产', big: '4.5', unit: '亿', question: '整体搬迁搬走了什么？', visual: 'stages', stage: 3, source: 'quarter' },
+    { id: 'futian', topic: 'factory', town: '福田镇', title: '福田 · 深博福田产业园', subtitle: '标准厂房 · 已交付', big: '11.7', unit: '万㎡', question: '厂房交出去，谁进了机器？', visual: 'stages', stage: 3, source: 'quarter' },
+    { id: 'xincheng', topic: 'projects', town: '石湾镇', title: '石湾 · 欣城储能', subtitle: '200MW 储能电站 · 开工', big: '5', unit: '亿', question: '电站建在这，电卖给谁？', visual: 'stages', stage: 2, source: 'quarter' },
+    { id: 'jinliyuan', topic: 'projects', town: '杨侨镇', title: '杨侨 · 金利源', subtitle: '绝缘板铜排 · 开工', big: '2', unit: '亿', question: '两家铜材项目挤在一条线上。', visual: 'stages', stage: 2, source: 'quarter' },
+    { id: 'quanli', topic: 'projects', town: '石湾镇', title: '石湾 · 全德力', subtitle: '金属热处理 · 开工', big: '1.8', unit: '亿', question: '给谁做热处理？', visual: 'stages', stage: 2, source: 'quarter' },
+    { id: 'yixin', topic: 'projects', town: '石湾镇', title: '石湾 · 义新新材料', subtitle: '年产 1000 万件鞋材 · 开工', big: '2', unit: '亿', question: '鞋材跟着哪个鞋厂？', visual: 'stages', stage: 2, source: 'quarter' },
+    { id: 'jiayou', topic: 'projects', town: '泰美镇', title: '泰美 · 佳有机械', subtitle: '灌装设备 · 开工', big: '2', unit: '亿', question: '两家关联企业一起搬进来。', visual: 'stages', stage: 2, source: 'quarter' },
+    { id: 'xingrui', topic: 'projects', town: '杨侨镇', title: '杨侨 · 铣锐精密', subtitle: '新厂区 · 奠基', big: '8000', unit: '万', question: '奠基之后，多久出第一件？', visual: 'stages', stage: 2, source: 'quarter' },
+    { id: 'dongweifeng', topic: 'factory', town: '罗阳街道', title: '罗阳 · 东维丰', subtitle: '从东莞迁入 · 已满产', big: '16', unit: '条线', question: '从东莞搬来的，还搬得走吗？', visual: 'stages', stage: 3, source: 'quarter' },
+    { id: 'xianghao', topic: 'factory', town: '麻陂镇', title: '麻陂 · 祥浩实业', subtitle: '甜玉米加工 · 已投产', big: '6', unit: '条线', question: '玉米从哪块地里来？', visual: 'stages', stage: 3, source: 'quarter' },
+    { id: 'huzhen', topic: 'projects', town: '湖镇镇', title: '湖镇 · 六个项目', subtitle: '被点名催促 · 仍未动工', big: '6', unit: '个', question: '催促函发出去了，土动了没有？', visual: 'stalled', stage: 0, source: 'quarter' },
+    { id: 'cement', topic: 'factory', town: '公庄镇', title: '公庄 · 一条熟料产线', subtitle: '关停 · 主体设备拆除', big: '2500', unit: '吨/日', question: '拆掉的产能，去哪儿了？', visual: 'closure', source: 'cement' },
+    { id: 'copper', topic: 'factory', town: '石湾镇', title: '石湾 · 铜来顺', subtitle: '生产线点火 · 2027 年目标', big: '100', unit: '亿', question: '目标写在纸上，产量在地上。', visual: 'copper', source: 'copper' },
+    { id: 'food', topic: 'food', town: null, title: '全县 · 吃饭和住下来', subtitle: '前三季度 · 限上营业额', big: '+9.8', unit: '%', question: '餐饮回暖，住宿跟上了吗？', visual: 'food', source: 'quarter' },
+    { id: 'agriculture', topic: 'agriculture', town: null, title: '全县 · 农业经营', subtitle: '前三季度 · 农林牧渔业总产值', big: '130.32', unit: '亿', question: '六点九的增长，落在谁的地里？', visual: 'agriculture', source: 'quarter' },
+    { id: 'tea', topic: 'agriculture', town: '柏塘镇', title: '柏塘 · 新陂合作社', subtitle: '春茶干茶产量', big: '2,500', unit: '斤', question: '茶卖出去了，钱回来了吗？', visual: 'tea', source: 'tea' }
   ];
   return {
-    version: '20261106-discovery1', checkedAt: '2026-11-06', sources, topics, events,
+    version: '20261109-firstpage', checkedAt: '2026-11-09', sources, topics, events,
     towns: ['罗阳街道', '龙溪街道', '石湾镇', '园洲镇', '杨村镇', '公庄镇', '湖镇镇', '长宁镇', '横河镇', '龙华镇', '柏塘镇', '泰美镇', '杨侨镇', '麻陂镇', '观音阁镇', '石坝镇']
   };
 });

@@ -13,8 +13,11 @@
  const snapshot=()=>C.context(new URLSearchParams({topic:state.topic,inquiry:state.inquiry,town:state.town,event:state.related||''}));
  const topic=()=>D.topics[state.topic];
  function metricMarkup(metric){
-  const value=metric.text?escape(metric.text):(metric.value<0?'−':metric.prefix||'')+number(metric.value,metric.digits||0)+'<span>'+escape(metric.unit)+'</span>';
-  return '<button class="hero-metric" type="button" data-source="'+topic().source+'" aria-label="查看'+escape(metric.label)+'的资料口径"><span>'+escape(metric.label)+'</span><strong class="'+metric.color+(metric.text?' metric-word':'')+'">'+value+'</strong></button>';
+  const unit=metric.unit?'<span>'+escape(metric.unit)+'</span>':'';
+  const value=metric.text?escape(metric.text)+unit:(metric.value<0?'−':metric.prefix||'')+number(metric.value,metric.digits||0)+unit;
+  const pill=metric.pill?'<em class="metric-pill '+(/[−-]/.test(metric.pill)?'down':'up')+'">'+escape(metric.pill)+'</em>':'';
+  const sub=metric.sub?'<i class="metric-sub">'+escape(metric.sub)+'</i>':'';
+  return '<button class="hero-metric '+metric.color+'" type="button" data-source="'+topic().source+'" aria-label="查看'+escape(metric.label)+'的资料口径"><span><i class="metric-label">'+escape(metric.label)+'</i>'+pill+'</span><div class="metric-line"><strong class="'+metric.color+(metric.text?' metric-word':'')+'">'+value+'</strong></div>'+sub+'</button>';
  }
  function growRect(x,y,width,height,color,zero,negative=false){
   return '<rect class="animated-bar" data-full-width="'+width+'" data-zero="'+zero+'" data-negative="'+negative+'" x="'+x+'" y="'+y+'" width="'+width+'" height="'+height+'" rx="3" fill="'+color+'"/>';
@@ -111,12 +114,49 @@
   // Share links contain only public scene/choice IDs. No personal data or stored history.
   history.replaceState(null,'',C.link('index.html',snapshot()));
  }
+
+ function cliffChart(){
+  const mob=narrow.matches,info=topic().cliff;
+  if(!info)return '';
+  const w=1000,h=mob?600:392,base=h*.86,plot=h*.62,cap=280;
+  const slots=info.bars.length+1,cw=w/slots,barw=cw*(mob?.52:.46);
+  const bh=v=>v/cap*plot,fs=mob?26:16,vs=mob?30:20;
+  let s='<svg viewBox="0 0 '+w+' '+h+'" role="img" aria-label="博罗工业投资：2023年240亿、2024年266亿、2025年超230亿，2026年只公布下降44.7%">';
+  s+='<line x1="34" x2="'+(w-26)+'" y1="'+base+'" y2="'+base+'" stroke="#cfd8e3" stroke-width="1.5"/>';
+  info.bars.forEach((b,i)=>{
+    const x=cw*i+(cw-barw)/2,cx=cw*i+cw/2;
+    if(b.val){
+      const hh=bh(b.val),y=base-hh;
+      const col=i===2?'#8fa9d6':'#1369eb';
+      s+='<rect x="'+x+'" y="'+y+'" width="'+barw+'" height="'+hh+'" rx="'+(mob?10:6)+'" fill="'+col+'"/>';
+      s+='<text x="'+cx+'" y="'+(y-(mob?16:12))+'" text-anchor="middle" fill="#17212f" font-size="'+(mob?32:22)+'" font-weight="650">'+b.txt+'</text>';
+    }else{
+      const sh=bh(230);
+      s+='<rect x="'+x+'" y="'+(base-sh)+'" width="'+barw+'" height="'+sh+'" rx="'+(mob?10:6)+'" fill="none" stroke="#ed665e" stroke-width="'+(mob?4:2.5)+'" stroke-dasharray="'+(mob?'12 10':'8 8')+'"/>';
+      s+='<text x="'+cx+'" y="'+(base-sh-(mob?20:16))+'" text-anchor="middle" fill="#ed665e" font-size="'+(mob?34:24)+'" font-weight="700">'+b.rate+'</text>';
+      s+='<text x="'+cx+'" y="'+(base-sh-(mob?52:44))+'" text-anchor="middle" fill="#8a99ac" font-size="'+fs+'">绝对额未公布</text>';
+    }
+    s+='<text x="'+cx+'" y="'+(base+(mob?34:26))+'" text-anchor="middle" fill="#617187" font-size="'+fs+'" font-weight="'+(b.val?'500':'650')+'">'+b.y+'</text>';
+  });
+  const lx=cw*(slots-1)+cw/2,rh=mob?h*.24:h*.2;
+  s+='<circle cx="'+lx+'" cy="'+(base-rh)+'" r="'+(mob?30:23)+'" fill="#fff" stroke="#ed665e" stroke-width="'+(mob?3:2)+'" stroke-dasharray="'+(mob?'8 7':'6 6')+'"/>';
+  s+='<text x="'+lx+'" y="'+(base-rh+(mob?11:8))+'" text-anchor="middle" fill="#ed665e" font-size="'+(mob?30:22)+'" font-weight="700">?</text>';
+  s+='<text x="'+lx+'" y="'+(base+(mob?34:26))+'" text-anchor="middle" fill="#17212f" font-size="'+fs+'" font-weight="650">2027</text>';
+  s+='<text x="'+lx+'" y="'+(base-rh+(mob?50:40))+'" text-anchor="middle" fill="#8a99ac" font-size="'+fs+'">接什么？</text>';
+  return s+'</svg>';
+ }
+
  function renderHero(enter=false){
   const info=topic();
   $('topicTitle').innerHTML=info.title.map((line,i)=>'<'+(i?'strong':'span')+'>'+escape(line)+'</'+(i?'strong':'span')+'>').join('');
   text('periodText',info.period);text('topicLede',info.lede);text('chartNote',info.chartNote);
   $('heroVisual').dataset.currentTopic=state.topic;$('heroVisual').setAttribute('aria-labelledby','topic-'+state.topic);
   M.html('heroMetrics',info.metrics.map(metricMarkup).join(''),false);
+  document.body.dataset.topic=state.topic;
+  const cliffBlock=$('cliffBlock');
+  text('periodBar',info.periodBar||'');
+  if(info.cliff){cliffBlock.hidden=false;M.html('cliffChart',cliffChart(),false);text('cliffCaption',info.cliff.caption+' '+info.cliff.foot);}
+  else{cliffBlock.hidden=true;}
   M.html('mainChart',info.chart==='diverge'?compareChart():info.chart==='food'?compareChart(true):info.chart==='agriculture'?agricultureChart():stageChart(),false);
   document.querySelectorAll('.topic-tabs [data-topic]').forEach(button=>{const on=button.dataset.topic===state.topic;button.setAttribute('aria-selected',String(on));button.tabIndex=on?0:-1;});
   if(enter&&!M.reduced.matches){const hero=document.querySelector('.discovery-hero');hero.dataset.enter='false';requestAnimationFrame(()=>{hero.dataset.enter='true';});}

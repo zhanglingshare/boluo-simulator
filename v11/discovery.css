@@ -25,3 +25,92 @@
 
 /* V11 09: keep the full navigation reachable on narrow screens */
 @media(max-width:600px){.mobile-nav{justify-content:flex-start;overflow-x:auto;scrollbar-width:thin;gap:7px}.mobile-nav a{flex:0 0 auto;white-space:nowrap;min-width:49px;padding:4px 5px}}
+
+
+/* 第一页版式：三卡 + 断崖主视觉 */
+@media(min-width:851px){.discovery-hero{display:block}.hero-visual{margin-top:24px}.hero-copy h1{font-size:52px;line-height:1.14}}
+
+body[data-topic="factory"] #playCompare{display:none}
+body[data-topic="factory"] .hero-chart{display:none}
+body[data-topic="factory"] .cliff-block{display:block}
+.cliff-block{margin:14px 0 0;background:var(--white,#fff);border:1px solid #e4eaf2;border-radius:16px;padding:18px 22px 14px}
+.cliff-top{display:flex;align-items:baseline;justify-content:space-between;gap:14px}
+.cliff-top span{font-size:11px;letter-spacing:.08em;color:#8a99ac}
+.cliff-top b{font-size:27px;line-height:1;color:#1369eb;font-weight:650}
+.cliff-top b em{display:block;font-style:normal;font-size:10px;line-height:1.5;color:#617187;font-weight:500;letter-spacing:0;margin-top:5px;text-align:right}
+.cliff-chart{margin:2px 0 0}
+.cliff-chart svg{display:block;width:100%;height:auto}
+.cliff-caption{font-size:12px;line-height:1.75;color:#617187;margin:4px 0 0}
+@media(max-width:600px){
+ 
+ .hero-metric>strong{font-size:30px}
+ .hero-metric>span{font-size:9px}
+ .cliff-block{padding:14px 13px 11px;border-radius:12px;margin-top:11px}
+ .cliff-top b{font-size:20px}
+ .cliff-top b em{font-size:8px}
+ .cliff-caption{font-size:10px}
+}
+
+/* 三卡：资产化（惠城式） */
+.hero-metrics{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:10px;background:none;border:0;border-radius:0;padding:0;min-height:0}
+.hero-metric{position:relative;display:block;text-align:left;background:var(--white,#fff);border:1px solid #e4eaf2;border-radius:14px;padding:14px 15px 13px 21px;min-height:0;cursor:pointer}
+.hero-metric::before{content:'';position:absolute;left:0;top:14px;bottom:14px;width:4px;border-radius:0 4px 4px 0;background:var(--blue,#1369eb)}
+.hero-metric.coral::before{background:var(--coral,#ed665e)}
+.hero-metric.teal::before{background:var(--teal,#23a3a7)}
+.hero-metric>span{display:block;font-size:11px;color:#617187;margin:0 0 11px;letter-spacing:.02em;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.metric-line{display:flex;align-items:baseline;gap:9px;flex-wrap:wrap}
+.hero-metric>strong{font-size:35px;font-weight:650;line-height:1.02;letter-spacing:-.02em}
+.metric-word{font-size:25px !important}
+.metric-pill{font-style:normal;font-size:11px;font-weight:650;padding:3px 8px;border-radius:20px;white-space:nowrap}
+.metric-pill.up{color:#0b8a58;background:#e6f7ef}
+.metric-pill.down{color:#cf463c;background:#fdecea}
+.metric-sub{display:block;font-style:normal;font-size:10px;color:#9aa8b9;margin-top:9px;line-height:1.4}
+/* 期次条 */
+.period-bar{font-size:11px;line-height:1.65;color:#617187;background:#fff;border:1px solid #e4eaf2;border-radius:10px;padding:9px 14px;margin:9px 0 0}
+/* READOUT */
+.readout{margin:26px 0 0}
+.readout-label{display:flex;align-items:center;gap:9px;font-size:10px;letter-spacing:.16em;color:#8a99ac;margin:0 0 6px}
+.readout-label::before{content:'';width:20px;height:1px;background:#c3cfdd}
+.readout ol{list-style:none;margin:0;padding:0}
+.readout li{display:grid;grid-template-columns:40px minmax(0,1fr);gap:4px;padding:15px 0;border-top:1px solid #e6ebf2}
+.readout em{font-style:normal;font-size:12px;font-weight:650;color:#a3b0c0;padding-top:2px}
+.readout a{display:block;text-decoration:none;color:inherit}
+.readout b{display:block;font-size:20px;line-height:1.35;font-weight:650}
+.readout small{display:block;font-size:11px;line-height:1.65;color:#617187;margin-top:5px}
+.readout i{display:inline-block;font-style:normal;font-size:11px;font-weight:650;color:var(--blue,#1369eb);margin-top:8px}
+@media(max-width:600px){
+ .hero-metrics{gap:6px}
+ .hero-metric{padding:11px 9px 10px 14px;border-radius:11px}
+ .hero-metric::before{top:11px;bottom:11px;width:3px}
+ .hero-metric>span{font-size:9px;margin-bottom:9px}
+ .hero-metric>strong{font-size:23px}
+ .metric-word{font-size:16px !important}
+ .metric-pill{font-size:8px;padding:2px 5px}
+ .metric-sub{font-size:8px;margin-top:7px}
+ .period-bar{font-size:9.5px;padding:8px 11px;line-height:1.6}
+ .readout{margin-top:18px}
+ .readout li{padding:12px 0;grid-template-columns:32px minmax(0,1fr)}
+ .readout b{font-size:16px}
+ .readout small{font-size:10px}
+}
+
+/* 三卡细节修正 */
+.hero-metric>span{display:flex;align-items:center;justify-content:space-between;gap:7px;margin-bottom:10px}
+.hero-metric>span .metric-pill{margin:0}
+.hero-metric>strong{font-size:41px}
+@media(max-width:600px){
+ .hero-metrics{display:flex;overflow-x:auto;gap:8px;grid-template-columns:none;padding:0 0 4px;-webkit-overflow-scrolling:touch;scrollbar-width:none}
+ .hero-metrics::-webkit-scrollbar{display:none}
+ .hero-metric{flex:0 0 146px;padding:10px 10px 9px 14px}
+ .hero-metric>strong{font-size:22px}
+ .hero-metric>span{font-size:9px;margin-bottom:7px}
+ .topic-tabs{order:1}.hero-actions{order:2}.play-caption{order:3}.hero-visual{order:4}
+}
+
+.metric-label{font-style:normal;flex:1 1 auto;min-width:0;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.hero-metric>span .metric-pill{flex:0 0 auto}
+@media(max-width:600px){
+ .hero-metric{flex:0 0 156px}
+ .metric-label{font-size:9px}
+ .metric-pill{font-size:8px;padding:2px 5px}
+}
