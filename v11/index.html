@@ -53,63 +53,25 @@
    </div>
   </div>
  </section>
-  <section class="discovery-hero" aria-labelledby="topicTitle">
-  <div class="hero-copy">
-   <div class="eyebrow">01 / 发现博罗的变化</div>
-   <h1 id="topicTitle"><span>工业在涨，投资在降。</span><strong>谁在接力？</strong></h1>
-   <p class="topic-period"><span id="periodText">2026年前三季度 · 同比</span><em id="topicLede" class="topic-lede">产值是过去几年项目的回声，投资才是明年的伏笔。投资砍掉近四成半，变窄的不是今年，是明年。</em></p>
-   <div class="topic-tabs" role="tablist" aria-label="切换发现主题">
-    <button id="topic-factory" data-topic="factory" role="tab" aria-selected="true" aria-controls="heroVisual" tabindex="0" type="button"><svg aria-hidden="true"><use href="#icon-factory"/></svg>工厂</button>
-    <button id="topic-projects" data-topic="projects" role="tab" aria-selected="false" aria-controls="heroVisual" tabindex="-1" type="button"><svg aria-hidden="true"><use href="#icon-layers"/></svg>项目</button>
-    <button id="topic-food" data-topic="food" role="tab" aria-selected="false" aria-controls="heroVisual" tabindex="-1" type="button"><svg aria-hidden="true"><use href="#icon-food"/></svg>吃住</button>
-    <button id="topic-agriculture" data-topic="agriculture" role="tab" aria-selected="false" aria-controls="heroVisual" tabindex="-1" type="button"><svg aria-hidden="true"><use href="#icon-leaf"/></svg>农业</button>
-   </div>
-   <div class="hero-actions"><button class="button primary" type="button" id="playCompare" aria-pressed="false"><span aria-hidden="true">▶</span> 播放对比</button><button class="button" type="button" id="nextTopic"><span aria-hidden="true">↻</span> 换个问题</button></div>
-   <p class="play-caption" id="playCaption" role="status" aria-live="polite">图上看得见方向，现场看得见谁在扛。</p>
-  </div>
-  <div class="hero-visual" id="heroVisual" role="tabpanel" aria-labelledby="topic-factory">
-   <div class="hero-metrics" id="heroMetrics" aria-live="polite" aria-atomic="true">
-    <button class="hero-metric" type="button" data-source="quarter"><span>规上工业增加值</span><strong class="blue">+8.9<span>%</span></strong></button>
-    <button class="hero-metric" type="button" data-source="quarter"><span>工业投资</span><strong class="coral">−44.7<span>%</span></strong></button>
-   </div>
-   <p class="period-bar" id="periodBar"></p>
-   
-   <section class="cliff-block" id="cliffBlock" hidden aria-labelledby="cliffLabel">
-    <div class="cliff-top"><span id="cliffLabel">工业投资 · 年度额（亿元）</span><b id="cliffHead">+8.9%<em>同期的规上工业增加值 +8.9%</em></b></div>
-    <div class="cliff-chart" id="cliffChart"></div>
-    <p class="cliff-caption" id="cliffCaption"></p>
-   </section>
-   
-   <figure class="hero-chart"><div id="mainChart" aria-label="主题数据对比图"></div><figcaption><span id="chartNote">不同指标分别看，不能互抵。两个数说的是两件事。</span><button id="sourceButton" type="button">数字的边界 ↗</button></figcaption></figure>
-  </div>
- </section>
- <section class="inquiry-section" aria-label="选一条最想验证的解释">
-  <div class="inquiry-strip"><h2>三种解释，哪一种更站得住？</h2><div id="inquiryButtons" class="inquiry-buttons" role="group" aria-label="选择关注点"></div><label class="mobile-inquiry" for="inquirySelect"><span>先挑一个，看有没有线索撑着</span><select id="inquirySelect"><option value="">先看一条变化</option></select></label><button id="continueClues" class="clue-button" type="button">继续找线索 <span aria-hidden="true">→</span></button></div>
-  <div class="inquiry-response" id="inquiryResponse" hidden><div><span class="response-label">相关线索</span><p id="inquiryClue"></p></div><div><span class="response-label muted">还要核对</span><p id="inquiryGap"></p></div><div class="response-actions"><button id="openClue" type="button">打开这条现场 ↗</button><button id="saveInquiry" type="button">收下这条追问 ＋</button></div></div>
- </section>
- <section class="event-section" id="eventsSection" aria-labelledby="eventsHeading">
-  <div class="section-heading"><div><h2 id="eventsHeading">变化现场</h2><span>一条线拆了，一条线点了火，一条线还停在工地</span></div><small id="eventCoverage">资料核对至 2026.11.06</small></div>
-  <div class="event-toolbar"><nav class="event-filters" aria-label="筛选变化现场"><button type="button" class="active" data-event-topic="all" aria-pressed="true">全部</button><button type="button" data-event-topic="factory" aria-pressed="false">工厂</button><button type="button" data-event-topic="projects" aria-pressed="false">项目</button><button type="button" data-event-topic="food" aria-pressed="false">吃住</button><button type="button" data-event-topic="agriculture" aria-pressed="false">农业</button></nav><button id="clearTownFilter" class="town-filter-chip" type="button" hidden></button><span id="eventCount" class="event-count"></span></div>
-  <div id="eventGrid" class="event-grid"></div>
-  <div id="emptyState" class="empty-state" hidden><strong id="emptyTitle"></strong><p id="emptyDetail"></p><button id="resetFilters" class="button" type="button">查看全县已收录资料 →</button></div>
-  <button id="moreEvents" class="more-events" type="button">展开今年的更多变化 <span aria-hidden="true">＋</span></button>
- </section>
- <section class="explore-bar" aria-label="按镇街探索并带着追问继续">
-  <div class="town-explorer"><div class="explore-title"><h2>变化发生在哪里？</h2><span>按镇街看，哪儿在动</span></div><div id="townButtons" class="town-buttons" role="group" aria-label="16个镇街筛选"></div><p id="townCoverage" class="town-coverage">本页收录的线索，不是全县完整清单。</p></div>
-  <div class="carry-question"><h2>下一步该盯什么</h2><p id="carryQuestion">工业增长了，下一批新项目能不能接上？</p><div class="carry-actions"><a id="nextReality" data-next-reality class="button primary" href="./reality.html">看看预期与现实 <span aria-hidden="true">→</span></a><button id="shareDiscovery" class="button" type="button">分享这条判断 ↗</button></div><button id="reviewQuestions" class="text-button" type="button">我关注的变化</button></div>
- </section>
  <p class="page-limits">本页只回答一件事：博罗这一年在动什么。数字能说明方向，不能说明原因；能说明县里，不能说明每个镇、每家企业。要拿去做决策，先核对发布机构的原始口径。</p>
  <footer class="discovery-footer"><span>博罗决策风洞 · <a href="./about.html" style="text-decoration:underline;text-underline-offset:3px">项目介绍 ↗</a> </span><button id="discoveryReduce" type="button" aria-pressed="false">减少动态</button></footer>
+<details class="src-note">
+ <summary>数据来源 · 点开看</summary>
+ <p>三张指标卡与「超 2000 / 未公布 / 超 230」取自博罗县统计公报与南方+、惠州日报公开报道；2025 年为年度约数，2026 年为前三季度快报。</p>
+ <p>风洞三问只做压力测试方向，不替代统计口径；19 个现场按签约、开工、投产、关停四档标注，湖镇六个项目至今未动工。</p>
+</details>
 </main>
 <nav class="mobile-nav" aria-label="手机导航"><a class="current" aria-current="page" href="./index.html"><svg aria-hidden="true"><use href="#icon-search"/></svg>发现</a><a data-next-reality href="./reality.html"><svg aria-hidden="true"><use href="#icon-chart"/></svg>现实</a><a data-next-industry href="./industry-base.html"><svg aria-hidden="true"><use href="#icon-layers"/></svg>产业</a><a data-next-relations href="./relations.html"><svg aria-hidden="true"><use href="#icon-network"/></svg>关系</a><a href="./impact.html"><svg aria-hidden="true"><use href="#icon-network"/></svg>影响</a><a href="./plan.html"><svg aria-hidden="true"><use href="#icon-layers"/></svg>规划</a><a href="./wind.html"><svg aria-hidden="true"><use href="#icon-chart"/></svg>风洞</a><a href="./insights.html">08 忽略</a><a href="./challenge.html">09 判断</a><a href="./region.html">10 区域</a></nav>
 <dialog id="detailDialog" class="detail-dialog" aria-labelledby="dialogTitle"><div class="dialog-header"><span id="dialogKicker"></span><button type="button" id="closeDialog" aria-label="关闭详情">关闭 ×</button></div><div id="dialogBody" class="dialog-body"><h2 id="dialogTitle">变化详情</h2></div></dialog>
 <div class="discovery-toast" id="discoveryToast" role="status" aria-live="polite"></div>
 <noscript><p class="noscript-note">请启用 JavaScript 查看主题切换和事件详情。也可直接<a href="./reality.html">查看预期与现实</a>。</p></noscript>
 <script defer src="./risk-motion.js?v=20261106-motion1"></script>
-<script defer src="./discovery-data.js?v=20261106-discovery1"></script>
-<script defer src="./discovery-core.js?v=20261107-relations1"></script>
 <script defer src="./discovery-wind.js?v=20261109-wt1"></script>
-<script defer src="./discovery-net.js?v=20261109-net1"></script>
-<script defer src="./discovery.js?v=20261107-relations1"></script>
+<script>
+window.addEventListener('load',function(){
+ var c=document.getElementById('wtCanvas');
+ if(window.BoluoWind&&c)window.BoluoWind.mount(c);
+});
+</script>
 </body>
 </html>
