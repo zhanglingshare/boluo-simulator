@@ -1,5 +1,5 @@
 /* V11 visual stages: observation charts and theory-example interactions.
-   No fitted SmartPLS coefficients and no economic-loss conversion. */
+   No fitted 结构 coefficients and no economic-loss conversion. */
 (() => {
 "use strict";
 const m=window.BoluoSemDemo;
@@ -33,7 +33,7 @@ function initSeven(){
  }
  nodes.forEach(b=>b.addEventListener("click",()=>focusNode(b.dataset.semFocus)));
  function render(){
- const out=m.calculate({investmentIndex:Number(investment.value),network:Number(network.value)});
+ const out=m.calculate({investmentIndex:Number(investment.value),network:Number(network.value),coefficients:window.BoluoPathLab?.getCoefficients?.()});
  put("vizScenarioIndex",out.investmentIndex.toFixed(1));
  put("vizDirect",mark(out.direct));
  put("vizIndirect",mark(out.indirect));
