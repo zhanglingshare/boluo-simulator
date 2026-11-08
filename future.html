@@ -98,7 +98,7 @@ table.sens td{padding:6px 8px;text-align:right;border-bottom:1px solid #152033;c
         <option value="10000">完整模式 · 10000次</option>
         <option value="20000" selected>标准模式 · 20000次（与报告/风洞一致）</option>
       </select>
-      <span style="font-size:12px;color:#93a4bd">随机种子</span>
+      <span style="font-size:12px;color:#93a4bd">实验编号</span>
       <input type="number" class="seed-in" id="seed" value="42">
       <button class="btn" id="bRun">🎲 开始模拟</button>
     </div>
@@ -107,7 +107,7 @@ table.sens td{padding:6px 8px;text-align:right;border-bottom:1px solid #152033;c
   <div id="out">
     <!-- 参数透明面板 -->
     <div class="card">
-      <h2>这次模拟用了什么参数（全部公开，可复现）</h2>
+      <h2>这次结果受哪些条件影响？</h2>
       <div class="param-panel" id="paramPanel"></div>
     </div>
 
@@ -167,7 +167,7 @@ table.sens td{padding:6px 8px;text-align:right;border-bottom:1px solid #152033;c
       </div>
     </div>
 
-    <!-- 路径系数 -->
+    <!-- 结果关联程度 -->
     <div class="card">
       <h2>哪条路和最终结果"绑得最紧"</h2>
       <div id="chCoef" class="chart"></div>
@@ -247,7 +247,7 @@ function run(){
 
   // 参数面板
   document.getElementById('paramPanel').innerHTML=`
-    <div class="row"><span class="k">随机种子</span><span class="v2">${seed}</span><span style="color:#5b6b82">（同种子必同结果）</span></div>
+    <div class="row"><span class="k">实验编号</span><span class="v2">${seed}</span><span style="color:#5b6b82">（用于重新查看同一实验）</span></div>
     <div class="row"><span class="k">模拟次数</span><span class="v2">${N.toLocaleString()}次</span></div>
     <div class="row"><span class="k">起点（实测）</span><span class="v2">${BASE}亿</span><span style="color:#5b6b82">2025年GDP</span></div>
     <div class="row"><span class="k">参考目标</span><span class="v2">${TARGET}亿</span><span style="color:#5b6b82">2026政府工作报告"力争2030"目标</span></div>
@@ -309,7 +309,7 @@ function run(){
     ]
   });
 
-  // 路径系数（直接读 model 输出的 coefs）
+  // 结果关联程度（直接读 model 输出的 coefs）
   const cOrder=coefs.map((v,i)=>({v,p:PATHS[i]})).sort((a,b)=>b.v-a.v);
   charts.chCoef.setOption({
     backgroundColor:'transparent',
