@@ -66,14 +66,14 @@
 <div class="viz-bar-row total"><label>总响应</label><div class="viz-bar-axis"><i class="viz-bar-fill" id="vizBarTotal"></i></div><output id="vizTotal">—</output></div>
 <div class="viz-bar-foot"><span>负向结构响应 ←</span><span>→ 正向结构响应</span></div>
 </div>
-<p class="viz-stage-hint">上方两个同比值为公开观察。路径响应及直接/间接系数是 SmartPLS 方法教学中的示例假设，绝不是已经估计的博罗实证系数或GDP变化。下方仍可独立运行原有2030蒙特卡洛情景。</p>
+<p class="viz-stage-hint">上方两个同比值为公开观察。路径响应及直接/间接系数是 结构关系中的示例假设，绝不是已经估计的博罗实证系数或GDP变化。下方仍可独立运行原有2030结果分布情景。</p>
 </div>
 <div class="sem-observation"><span>2026前三季度 · 同比</span><strong class="neg">工业投资 −44.7%</strong><strong>规上工业增加值 +8.9%</strong><a href="https://www.fz0752.com/fontHtml/html/issue/000143025_1.html" target="_blank" rel="noopener noreferrer">核对公开报道 ↗</a></div>
 <div class="sem-layout"><div class="sem-control-panel">
 <label for="semInvestment"><span>假设工业投资指数恢复至 <strong id="semInvestValue">75.0</strong></span><input type="range" id="semInvestment" min="40" max="110" step=".1" value="75" aria-describedby="semInvestHint"><small id="semInvestHint">观察锚点为55.3（2025年同期=100）；你调整的是假设，不是预测。</small></label>
 <label for="semNetwork"><span>假设本地网络缓冲能力 <strong id="semNetworkValue">50</strong></span><input type="range" id="semNetwork" min="20" max="80" step="5" value="50" aria-describedby="semNetworkHint"><small id="semNetworkHint">20—80只是教学刻度，没有公开数据支持真实网络得分。</small></label>
 <button type="button" class="sem-reset" id="semReset">回到公开观察起点</button>
-</div><div class="sem-readout"><small>无量纲结构响应 · 相对观察锚点</small><strong id="semTotal" aria-live="polite">—</strong><span>不是GDP亿元 / 不是工业增速百分点 / 非SmartPLS拟合值</span>
+</div><div class="sem-readout"><small>无量纲结构响应 · 相对观察锚点</small><strong id="semTotal" aria-live="polite">—</strong><span>不是GDP亿元 / 不是工业增速百分点 / 非现实测算结果</span>
 <div class="sem-bar"><span>直接</span><div class="sem-track"><i class="sem-fill" id="semDirectBar"></i></div><b id="semDirect">—</b></div>
 <div class="sem-bar"><span>经中介</span><div class="sem-track"><i class="sem-fill" id="semIndirectBar"></i></div><b id="semIndirect">—</b></div>
 </div></div>
@@ -84,7 +84,7 @@
 </div>
 <p class="sem-note" id="semInterpret">改变一个条件，观察直接路径与间接路径怎样变化。</p>
 <div class="sem-actions"><p>真正要补的不是“一个万能系数”，而是项目进度、产能利用、本地配套与订单样本。</p><a id="semToEight" href="./insights.html">进入08 · 看看可能忽略了什么 →</a></div>
-<details class="sem-details"><summary>展开：SmartPLS是怎样检验这些路径的？</summary><p>本图只演示 X→M→Y、中介效应和 Z 调节作用的计算思路。演示系数 X→M=0.45、M→Y=0.55、X→Y=0.10、调节参数=0.25，均为教学假设，不是统计估计。真实 PLS-SEM 需要单位级样本，随后开展测量质量检查、Bootstrap、中介与调节检验及预测验证。<a href="./sem-method-kit.md" target="_blank" rel="noopener noreferrer">公开方法与变量模板 ↗</a></p></details>
+<details class="sem-details"><summary>展开：如何解读这些路径，并用新证据验证？</summary><p>本图只演示 X→M→Y、中介效应和 Z 调节作用的计算思路。演示系数 X→M=0.45、M→Y=0.55、X→Y=0.10、调节参数=0.25，均为教学假设，不是统计估计。真正验证关系需要单位级样本，随后开展测量质量检查、抽样检验、中介与调节检验及预测验证。</p></details>
 </section>
 <section class="scenario-block" aria-labelledby="chooseTitle">
 <div class="scenario-heading"><div><p class="micro">01 / TOUCH THE FUTURE</p><h2 id="chooseTitle">亲手改变一件事</h2></div><span class="scenario-hint">每次只改变一个主要压力条件</span></div>
