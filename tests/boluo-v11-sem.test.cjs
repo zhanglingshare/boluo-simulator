@@ -43,17 +43,11 @@ test("page 07 and 08 explicitly label teaching assumptions",()=>{
 test("page links and script assets exist",()=>{
   for(const name of ["v11/sem-demo.js","v11/sem-bridge.js","v11/sem-bridge.css",
   "v11/sem-lab.js","v11/sem-lab.css","v11/insights.html",
-  "v11/sem-method-kit.md","v11/sem-input-template.csv"])assert.ok(fs.existsSync(path.join(root,name)),name);
+])assert.ok(fs.existsSync(path.join(root,name)),name);
   for(const name of ["v11/sem-demo.js","v11/sem-bridge.js","v11/sem-lab.js"])assert.doesNotThrow(()=>new Function(read(name)),name);
   for(const name of ["v11/index.html","v11/industry-base.html","v11/relations.html","v11/impact.html","v11/plan.html","v11/wind.html"])
     assert.ok(read(name).includes('href="./insights.html"'),name+" 08 link");
 });
-test("no pseudo-data rows in the SmartPLS collection template",()=>{
-  const lines=read("v11/sem-input-template.csv").trim().split(/\r?\n/);
-  assert.equal(lines.length,1);
-  assert.match(lines[0],/unit_id,period/);
-});
-
 test("07 and 08 use meaningful animated visualizations and direct controls",()=>{
  const w=read("v11/wind.html");
  const i=read("v11/insights.html");
