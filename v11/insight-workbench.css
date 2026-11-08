@@ -150,3 +150,6 @@
  .iq-heat-cell{min-height:46px}
  .iq-page .mobile-nav a[aria-current="page"]{color:#106fc5;font-weight:900;background:#d7ecff;border-radius:7px}
 }
+
+/* 09 · decision challenge handoff */
+.iq-to-challenge{display:inline-flex;align-items:center;justify-content:center;min-height:44px;padding:13px 17px;border-radius:10px;border:1px solid #1f98a0;background:#103e55;color:#b3f8ed;text-decoration:none;font-size:12px;font-weight:850;text-align:center}.iq-to-challenge:hover{background:#205b70;color:#fff}
