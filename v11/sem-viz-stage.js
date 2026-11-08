@@ -65,6 +65,7 @@ function initEight(){
  const scene=$("blindspotScene");
  if(!scene||!window.BoluoInsights)return;
  const dots=$("blindspotOrbit");
+ let severed=false;
  const coords=[
  [160,86],[500,55],[840,86],[190,344],[810,344]
  ];
@@ -87,8 +88,9 @@ function initEight(){
  const target=m.targets[s.target]||m.targets.growth;
  const selected=target.factors.find(x=>x.id===s.factor)||target.factors[0];
  put("blindspotCenterTitle",target.title);
- put("blindspotTarget",target.question);
- put("blindspotWhy",selected.why);
+ put("blindspotTarget",severed?"刚才这条假设连线被你断开：若该机制并不存在，仅凭现有公开数据，不能用它解释“"+target.title+"”。":"当前目标："+target.question);
+ put("blindspotWhy",severed?"联系一旦不成立，原来的解释就失去这条依据。先核对： "+selected.why:selected.why);
+ scene.setAttribute("data-cut",String(severed));
  put("blindspotMissing",selected.missing);
  dots.replaceChildren();
  target.factors.forEach((f,i)=>{
@@ -101,16 +103,23 @@ function initEight(){
  b.append(no,title);
  b.addEventListener("click",()=>{
  const targetBtn=$("mapDots")?.querySelector('[data-factor="'+f.id+'"]');
- if(targetBtn){targetBtn.click();render();}
+ if(targetBtn){severed=false;targetBtn.click();render();}
  });
  dots.append(b);
  });
- scene.querySelectorAll("[data-vis-edge]").forEach((p,i)=>p.classList.toggle("is-active",target.factors[i]?.id===selected.id));
+ scene.querySelectorAll("[data-vis-edge]").forEach((p,i)=>{
+   const isSelected=target.factors[i]?.id===selected.id;
+   p.classList.toggle("is-active",isSelected&&!severed);
+   p.classList.toggle("is-cut",isSelected&&severed);
+ });
+ const toggle=$("blindspotToggle");
+ if(toggle){toggle.textContent=severed?"重新连接这条假设":"断开这条假设连线";toggle.setAttribute("aria-pressed",String(severed));}
  }
  makeEdges();
- document.querySelectorAll("[data-target]").forEach(b=>b.addEventListener("click",()=>render()));
- $("mapDots")?.addEventListener("click",()=>render());
- window.addEventListener("popstate",()=>render());
+ document.querySelectorAll("[data-target]").forEach(b=>b.addEventListener("click",()=>{severed=false;render();}));
+ $("mapDots")?.addEventListener("click",()=>{severed=false;render();});
+ window.addEventListener("popstate",()=>{severed=false;render();});
+ $("blindspotToggle")?.addEventListener("click",()=>{severed=!severed;render();});
  $("blindspotNext")?.addEventListener("click",()=>{
  const s=window.BoluoInsights.getState();
  const t=m.targets[s.target]||m.targets.growth;
@@ -119,7 +128,7 @@ function initEight(){
  const next=sorted[(i+1)%sorted.length]||sorted[0];
  const btn=$("mapDots")?.querySelector('[data-factor="'+next.id+'"]');
  if(btn)btn.click();
- render();
+ severed=false;render();
  });
  render();
  window.BoluoStageEight={render};
