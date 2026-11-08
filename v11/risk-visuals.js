@@ -33,13 +33,13 @@ const value=(id,a,b)=>{
  if(id==="innovation"){let z=lab.zScores[b??v2],N=652,n=a;return 100*z*Math.sqrt(.25/n)*Math.sqrt((N-n)/(N-1))}
  return 0;
 };
-function sourceLabels(){return {electronic:"2025年产值报道下限 + 用户假设",projects:"2025同期指数100；2026=55.3",tea:"每100元销售额的假设分解",ring:"每100位游客的消费假设",innovation:"652家总体中的拟议随机抽样"}[active]}
+function sourceLabels(){return {electronic:"2025年产值报道下限 + 用户假设",projects:"2025同期指数100；2026=55.3",tea:"每100元销售额的假设分解",ring:"每100位游客的消费假设",innovation:"652家总体中的待核验企业记录"}[active]}
 function cellTitle(id,a,b,num){
  if(id==="electronic")return "年均增长 "+a+"%；"+b+"年下限情景产值 "+f(num,1)+"亿元";
  if(id==="projects")return "增长 "+a+"%；"+b+"年同季投资指数 "+f(num,1);
  if(id==="tea")return "加工本地留存 "+b+"%，渠道本地留存 "+a+"%；销售额中本地增值 "+f(num,1)+"%";
  if(id==="ring")return "过夜游客 "+b+"人/100人，本地留存 "+a+"%；本地消费代理 "+f(num,0)+"元";
- return "拟调查"+b+"家，"+a+"%置信水平假设的最大误差半宽 "+f(num,1)+"个百分点";
+ return "拟核验"+b+"家，"+a+"%条件下可能的样本差异 "+f(num,1)+"个百分点";
 }
 function heatDetails(){
  let rows=[],cols=[],compute,goal,click,title,sub;
@@ -216,7 +216,7 @@ function bullet(){
  const pct=bounded(achieved/top*100,0,100);
  let html='<div class="rv-metric"><span>'+esc(name)+'</span><strong>'+f(achieved,active==="ring"?0:1)+(active==="electronic"?"亿元":active==="ring"?"元":active==="innovation"?"pp":active==="tea"?"元":"指数")+'</strong></div>';
  html+='<div class="rv-progress" style="margin:14px 0 7px"><i style="width:'+pct+'%;'+(mode==="open"?'background:#1db5a7':mode==="precision"?'background:#7f8fd3':'')+'"></i>'+(mode==="target"?'<span class="rv-target-marker" style="left:'+f(100*goal/top,2)+'%" aria-hidden="true"></span>':'')+'</div>';
- html+='<div class="rv-toolbar"><b>'+esc(mode==="target"?"参照线："+f(goal,0):mode==="precision"?"数字越小，拟调查比例估计越精细":"只看条件分解，不显示官方目标率")+'</b><button id="rvMethodBtn" type="button">说明 ↗</button></div>';
+ html+='<div class="rv-toolbar"><b>'+esc(mode==="target"?"参照线："+f(goal,0):mode==="precision"?"数字越小，拟核验比例估计越精细":"只看条件分解，不显示官方目标率")+'</b><button id="rvMethodBtn" type="button">说明 ↗</button></div>';
  if(mode==="target"){
   const gap=achieved-goal;
   html+='<div class="rv-summary"><div class="rv-metric"><span>相对参照线差额</span><strong style="font-size:21px;color:'+(gap<0?"#c96d57":"#1a927c")+'">'+(gap>=0?"+":"")+f(gap,1)+'</strong></div><div class="rv-metric"><span>参照线不是概率</span><strong style="font-size:17px">未估计概率</strong></div></div>';
@@ -251,7 +251,7 @@ function sensitivity(){
  const shifts=active==="electronic"?[1,-1,3,-3]:active==="projects"?[5,-5,10,-10]:active==="innovation"?[50,-50,100,-100]:[10,-10,10,-10];
  sensitivityItems=items.map((item,i)=>({label:item[0],values:(active==="tea"||active==="ring")&&i>1?[undefined,v2+shifts[i]]:[v1+shifts[i]]}));
  const max=Math.max(...items.map(x=>Math.abs(x[1])),1),x0=443,scale=156/max;
- let svg='<svg viewBox="0 0 740 250" role="group" aria-label="点击一条敏感性条，应用那个条件"><title>有界情景敏感性，不是回归系数</title><line x1="'+x0+'" y1="9" x2="'+x0+'" y2="217" class="rv-zero"/>';
+ let svg='<svg viewBox="0 0 740 250" role="group" aria-label="点击一条敏感性条，应用那个条件"><title>改变条件后的变化，不是现实成效</title><line x1="'+x0+'" y1="9" x2="'+x0+'" y2="217" class="rv-zero"/>';
  items.forEach((p,i)=>{
   const y=33+i*50,n=p[1],w=Math.abs(n)*scale;
   svg+='<g class="sensitivity-row" role="button" tabindex="0" data-change="'+i+'" aria-label="应用'+esc(p[0])+'"><rect class="sensitivity-hit" x="0" y="'+(y-23)+'" width="735" height="46" rx="8" fill="transparent"/><text x="233" y="'+(y+5)+'" text-anchor="end">'+esc(p[0])+'</text><rect class="sensitivity-bar" x="'+(n<0?x0-w:x0)+'" y="'+(y-12)+'" width="'+Math.max(w,1)+'" height="25" rx="5" fill="'+(n<0?'#b0bbc9':'#3a8ed6')+'"/><text x="'+(n<0?x0-w-9:x0+w+9)+'" y="'+(y+5)+'" text-anchor="'+(n<0?'end':'start')+'" class="rv-emph">'+(n>=0?'+':'')+f(n,1)+'</text></g>';
