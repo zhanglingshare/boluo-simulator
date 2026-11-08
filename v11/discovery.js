@@ -216,6 +216,7 @@
   document.body.dataset.topic=state.topic;
   const cliffBlock=$('cliffBlock');
   text('periodBar',info.periodBar||'');
+  if(window.BoluoWind&&$('wtCanvas'))window.BoluoWind.mount($('wtCanvas'));
   if(info.cliff){cliffBlock.hidden=false;M.html('cliffChart',cliffChart(),false);text('cliffCaption',info.cliff.caption+' '+info.cliff.foot);}
   else{cliffBlock.hidden=true;}
   const netBlock=$('networkBlock');

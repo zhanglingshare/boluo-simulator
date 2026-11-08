@@ -63,16 +63,13 @@
     }
 
     let W = 0, H = 0, mob = false;
+    const view = { s: 1, x: 0, y: 0 };
     function resize() {
       const rect = host.getBoundingClientRect();
       W = Math.max(rect.width, 280);
       mob = W < 560;
-      H = mob ? Math.round(Math.min(W * 1.26, 470)) : 470;
-      if (mob) {
-        const keep = G.allProjects.slice().sort(function(a,b){return weight(b.ev)-weight(a.ev);}).slice(0,9);
-        G.projects = keep.slice();
-        G.towns.forEach(function(t){ if(!keep.some(function(p){return p.town===t.town;})) t.drop=true; else t.drop=false; });
-      } else { G.projects = G.allProjects.slice(); G.towns.forEach(function(t){t.drop=false;}); }
+      H = mob ? Math.round(W * 1.62) : 500;
+      G.projects = G.allProjects.slice(); G.towns.forEach(function(t){t.drop=false;});
       canvas.width = W * dpr; canvas.height = H * dpr;
       canvas.style.height = H + 'px';
       ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
@@ -135,6 +132,7 @@
       const bg = ctx.createRadialGradient(W / 2, H * .46, 10, W / 2, H * .46, Math.max(W, H) * .72);
       bg.addColorStop(0, '#fbfcfe'); bg.addColorStop(1, '#f2f6fb');
       ctx.fillStyle = bg; ctx.fillRect(0, 0, W, H);
+      ctx.save(); ctx.translate(view.x, view.y); ctx.scale(view.s, view.s);
       ctx.strokeStyle = 'rgba(150,170,195,.13)'; ctx.lineWidth = 1;
       const g = mob ? 28 : 34;
       for (let x = 0; x < W; x += g) { ctx.beginPath(); ctx.moveTo(x, 0); ctx.lineTo(x, H); ctx.stroke(); }
@@ -191,18 +189,21 @@
           ctx.fillStyle = n.color; ctx.beginPath(); ctx.arc(n.x, n.y, r, 0, 7); ctx.fill();
           ctx.fillStyle = 'rgba(255,255,255,.55)'; ctx.beginPath(); ctx.arc(n.x - r * .28, n.y - r * .32, r * .34, 0, 7); ctx.fill();
         }
-        let side = n.x > W / 2 ? 1 : -1;
-        if (side < 0 && n.x < 86) side = 1;
-        if (side > 0 && n.x > W - 86) side = -1;
-        const tx = n.x + side * (r + 7);
+        const ax = n.x - W / 2, ay = n.y - H * 0.49;
+        const ang = Math.atan2(ay, ax);
+        const side = Math.cos(ang) >= 0 ? 1 : -1;
+        const tx = n.x + Math.cos(ang) * (r + 9);
         ctx.textAlign = side > 0 ? 'left' : 'right';
         ctx.textBaseline = 'middle';
+        const ty = n.y + Math.sin(ang) * (r + 9);
+        ctx.textBaseline = 'middle';
         ctx.fillStyle = '#1b2636'; ctx.font = '700 ' + (mob ? 11 : 11.5) + 'px ' + FONT;
-        ctx.fillText(n.label, tx, n.y - 1);
+        ctx.fillText(n.label, tx, ty - 6);
         ctx.fillStyle = '#8a99ac'; ctx.font = '400 ' + (mob ? 9 : 9.5) + 'px ' + FONT;
-        ctx.fillText(n.sub.length > 7 ? n.sub.slice(0, 7) + '…' : n.sub, tx, n.y + 12);
+        ctx.fillText(n.sub.length > 7 ? n.sub.slice(0, 7) + '…' : n.sub, tx, ty + 6);
       });
 
+      ctx.restore();
       // 图例
       const lgd = [['签约', '#d9862f'], ['开工', '#1e9aa0'], ['投产', '#1369eb'], ['关停', '#e2544a']];
       let lx = 12;
@@ -214,23 +215,37 @@
       });
     }
 
-    let drag = null;
-    canvas.addEventListener('pointerdown', function (e) {
+    let drag = null, panning = null;
+    function toWorld(e) {
       const rect = canvas.getBoundingClientRect();
-      const mx = e.clientX - rect.left, my = e.clientY - rect.top;
-      let best = null, bd = 26;
-      nodes.forEach(function (n) { const d = Math.hypot(n.x - mx, n.y - my); if (d < Math.max(bd, n.r + 8)) { best = n; } });
-      if (best) { drag = best; canvas.setPointerCapture(e.pointerId); }
+      return { wx: (e.clientX - rect.left - view.x) / view.s, wy: (e.clientY - rect.top - view.y) / view.s };
+    }
+    canvas.addEventListener('pointerdown', function (e) {
+      const p = toWorld(e);
+      let best = null, bd = 0;
+      nodes.forEach(function (n) { const d = Math.hypot(n.x - p.wx, n.y - p.wy); if (d < n.r + 10 && d > bd) { best = n; bd = d; } });
+      if (best) drag = best; else panning = { x: e.clientX - view.x, y: e.clientY - view.y };
+      canvas.setPointerCapture(e.pointerId);
     });
     canvas.addEventListener('pointermove', function (e) {
-      if (!drag) return;
-      const rect = canvas.getBoundingClientRect();
-      drag.x = Math.max(24, Math.min(W - 24, e.clientX - rect.left));
-      drag.y = Math.max(26, Math.min(H - 30, e.clientY - rect.top));
-      draw();
+      if (drag) {
+        const p = toWorld(e);
+        drag.x = p.wx; drag.y = p.wy; draw();
+      } else if (panning) {
+        view.x = e.clientX - panning.x; view.y = e.clientY - panning.y; draw();
+      }
     });
-    canvas.addEventListener('pointerup', function () { drag = null; });
-    canvas.addEventListener('pointercancel', function () { drag = null; });
+    canvas.addEventListener('pointerup', function () { drag = null; panning = null; });
+    canvas.addEventListener('pointercancel', function () { drag = null; panning = null; });
+    canvas.addEventListener('wheel', function (e) {
+      e.preventDefault();
+      const rect = canvas.getBoundingClientRect();
+      const sx = e.clientX - rect.left, sy = e.clientY - rect.top;
+      const ns = Math.max(.55, Math.min(2.6, view.s * (1 - e.deltaY * .0012)));
+      view.x = sx - (sx - view.x) * (ns / view.s);
+      view.y = sy - (sy - view.y) * (ns / view.s);
+      view.s = ns; draw();
+    }, { passive: false });
 
     resize();
     if (window.ResizeObserver) { const ro = new ResizeObserver(function () { resize(); }); ro.observe(host); }

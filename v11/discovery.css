@@ -153,3 +153,51 @@ body[data-topic="factory"] .network-block{display:block}
 .net-svg{display:block;width:100%;height:auto;min-width:100%}
 @media(max-width:600px){
 }
+
+/* ===== 深色风洞首屏 ===== */
+.wt-hero{position:relative;margin:0 -18px 18px;padding:22px 18px 16px;background:#04080f;border-radius:0 0 18px 18px;overflow:hidden}
+.wt-hero::before{content:"";position:absolute;inset:0;background:radial-gradient(120% 80% at 44% 40%,rgba(18,42,70,.55),transparent 70%);pointer-events:none}
+.wt-top{position:relative;z-index:2}
+.wt-kick{font-size:9.5px;letter-spacing:.14em;color:rgba(127,212,255,.5);font-weight:600;margin:0 0 8px}
+.wt-top h2{font-size:30px;line-height:1.12;color:#eff7ff;font-weight:700;margin:0 0 8px;letter-spacing:-.01em}
+.wt-top h2 em{font-style:normal;color:#7fd4ff}
+.wt-sub{font-size:11.5px;color:rgba(190,215,235,.62);margin:0 0 12px;line-height:1.6}
+.wt-badges{display:flex;flex-wrap:wrap;gap:6px}
+.wt-badges span{font-size:9.5px;color:rgba(190,225,245,.78);border:1px solid rgba(127,212,255,.18);background:rgba(16,34,54,.55);border-radius:999px;padding:3px 9px;letter-spacing:.02em}
+.wt-stage{position:relative;margin-top:10px;border-radius:12px;overflow:hidden}
+.wt-stage canvas{display:block;width:100%;height:clamp(240px,42vw,420px)}
+.wt-float{position:absolute;z-index:3;display:flex;flex-direction:column;gap:1px;padding:5px 9px;border-radius:8px;background:rgba(8,18,30,.62);border:1px solid rgba(127,212,255,.16);backdrop-filter:blur(4px)}
+.wt-float b{font-size:15px;font-weight:700;color:#bfe6ff;letter-spacing:.01em;line-height:1.2}
+.wt-float i{font-style:normal;font-size:8.5px;color:rgba(170,205,225,.6);letter-spacing:.02em}
+.wt-float.f1{left:10px;top:12px}
+.wt-float.f2{left:10px;bottom:42px}
+.wt-float.f2 b{color:#ff8f85}
+.wt-note{position:absolute;right:11px;bottom:10px;font-size:8.5px;color:rgba(170,205,225,.45);letter-spacing:.03em;z-index:3}
+.wt-readout{position:relative;z-index:3;margin-top:10px;padding:13px 12px 10px;border:1px solid rgba(127,212,255,.14);border-radius:10px;background:rgba(6,13,24,.55)}
+.wt-readout .cn{position:absolute;width:12px;height:12px;border:1px solid rgba(214,178,110,.75)}
+.wt-readout .tl{left:-1px;top:-1px;border-right:0;border-bottom:0}
+.wt-readout .tr{right:-1px;top:-1px;border-left:0;border-bottom:0}
+.wt-readout .bl{left:-1px;bottom:-1px;border-right:0;border-top:0}
+.wt-readout .br{right:-1px;bottom:-1px;border-left:0;border-top:0}
+.wt-lab{font-size:9px;letter-spacing:.16em;color:rgba(150,190,215,.7);margin:0 0 9px;font-weight:600}
+.wt-line{display:flex;align-items:baseline;gap:7px;flex-wrap:wrap;padding:7px 0;border-bottom:1px solid rgba(127,212,255,.07);text-decoration:none}
+.wt-line:last-child{border-bottom:0;padding-bottom:0}
+.wt-line .no{font-size:10px;color:rgba(150,190,215,.55);letter-spacing:.06em}
+.wt-line em{font-style:normal;font-size:14px;font-weight:700;color:#e8f4ff}
+.wt-line em.hi{color:#f3c67a}
+.wt-line i{font-style:normal;font-size:9.5px;color:#7fd4ff;margin-left:auto}
+@media(max-width:600px){
+ .wt-hero{margin:0 -13px 14px;padding:16px 13px 12px;border-radius:0 0 14px 14px}
+ .wt-top h2{font-size:22px}
+ .wt-sub{font-size:10.5px}
+ .wt-badges span{font-size:8.5px;padding:3px 7px}
+ .wt-stage canvas{height:clamp(200px,58vw,300px)}
+ .wt-float b{font-size:13px}
+ .wt-float.f2{bottom:34px}
+ .wt-line em{font-size:12.5px}
+}
+
+.wt-canvas-box{position:relative;border-radius:12px;overflow:hidden}
+.wt-canvas-box canvas{display:block;width:100%;height:clamp(240px,40vw,400px)}
+.wt-float.f2{left:10px;bottom:12px}
+.wt-note{right:11px;bottom:11px}

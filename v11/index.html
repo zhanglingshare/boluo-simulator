@@ -30,7 +30,30 @@
 </header>
 <main class="discovery-wrap">
  <p id="inviteNote" class="invite-note" hidden></p>
- <section class="discovery-hero" aria-labelledby="topicTitle">
+<section class="wt-hero" aria-labelledby="wtTitle">
+  <div class="wt-top">
+   <p class="wt-kick">产业决策模拟器 · BOLUO 2026</p>
+   <h2 id="wtTitle">博罗这笔账，<em>先过风洞</em></h2>
+   <p class="wt-sub">模拟产业运行 · 压力测试选择 · 预判潜在缺口</p>
+   <div class="wt-badges"><span>规上工业总产值 超 2000 亿</span><span>工业投资 −44.7%</span><span>19 个现场 · 11 个镇街</span></div>
+  </div>
+  <div class="wt-stage">
+   <div class="wt-canvas-box">
+    <canvas id="wtCanvas" aria-label="3D 风洞测试段：产业从投资端进入，经过测试段后输出结果"></canvas>
+    <span class="wt-float f1"><b>超 2000</b><i>亿元 · 规上工业总产值</i></span>
+    <span class="wt-float f2"><b>−44.7%</b><i>工业投资 · 前三季</i></span>
+    <span class="wt-note">3D 测试段 · 钱从这里进，产出从这里出</span>
+   </div>
+   <div class="wt-readout">
+    <span class="cn tl"></span><span class="cn tr"></span><span class="cn bl"></span><span class="cn br"></span>
+    <p class="wt-lab">风洞输出 · READOUT</p>
+    <a class="wt-line" href="./reality.html"><span class="no">01 &gt;</span> 钱，<em>为什么还在涨？</em><i>进洞求解 →</i></a>
+    <a class="wt-line" href="./plan.html"><span class="no">02 &gt;</span> 哪一年，<em>会接不上？</em><i>进洞求解 →</i></a>
+    <a class="wt-line" href="./region.html"><span class="no">03 &gt;</span> 哪个镇，<em>先动？</em><i>进洞求解 →</i></a>
+   </div>
+  </div>
+ </section>
+  <section class="discovery-hero" aria-labelledby="topicTitle">
   <div class="hero-copy">
    <div class="eyebrow">01 / 发现博罗的变化</div>
    <h1 id="topicTitle"><span>工业在涨，投资在降。</span><strong>谁在接力？</strong></h1>
@@ -97,6 +120,7 @@
 <script defer src="./risk-motion.js?v=20261106-motion1"></script>
 <script defer src="./discovery-data.js?v=20261106-discovery1"></script>
 <script defer src="./discovery-core.js?v=20261107-relations1"></script>
+<script defer src="./discovery-wind.js?v=20261109-wt1"></script>
 <script defer src="./discovery-net.js?v=20261109-net1"></script>
 <script defer src="./discovery.js?v=20261107-relations1"></script>
 </body>
