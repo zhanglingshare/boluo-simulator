@@ -196,7 +196,7 @@ function windURL(){
 function render(sync=true){
  const factor=actualSelected(),result=measure();
  controls();drawNodes(result);drawRanking(result);drawHeat(result);compare(result);textReadout(result);
- $("iqToWind").href=windURL();
+ $("iqToWind").href=windURL(); const challenge=new URL("./challenge.html",location.href);const current=nextURL();for(const k of ["focus","factor","sv","cut","shock","strength","buffer","active","bs","bv","bp0","bp1","bp2","bp3","bp4","n","line","view"]){if(current.searchParams.has(k))challenge.searchParams.set(k,current.searchParams.get(k));} $("iqToChallenge").href=challenge.href;
  if(sync){try{const u=nextURL();history.replaceState(null,"",u.pathname+u.search+u.hash);}catch{}}
  return result;
 }
