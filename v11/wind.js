@@ -258,7 +258,7 @@ async function share(){
 $('copyLink').addEventListener('click',share);$('shareTop').addEventListener('click',share);
 $('saveExp').addEventListener('click',()=>{
  if(!last)return;
- const record={shock:state.shock,strength:state.strength,buffer:state.buffer,active:state.active,median:last.stress.p50,baseline:last.base.p50,savedAt:new Date().toISOString()};
+ const record={shock:state.shock,strength:state.strength,buffer:state.buffer,active:state.active,median:last.stress.p50,baseline:last.base.p50,baselineParams:window.BoluoExperimentBaseline?.getParams?.()||null,distribution:window.BoluoDistribution?.getState?.()||null,savedAt:new Date().toISOString()};
  try{
  const key='boluo-v11-wind-experiments',stored=JSON.parse(localStorage.getItem(key)||'[]');
  localStorage.setItem(key,JSON.stringify([record,...(Array.isArray(stored)?stored:[])].slice(0,25)));
@@ -271,7 +271,19 @@ $('savedList').addEventListener('click',()=>{
  const markup=data.slice(0,25).map((d,i)=>{
   const shock=allowable(d.shock,Object.keys(MODELS),'delay');
   const strength=Number.isFinite(+d.strength)?clamp(+d.strength,.6,1.4):1;
-  const u=new URL(location.href);u.searchParams.set('shock',shock);u.searchParams.set('strength',String(strength));u.searchParams.set('buffer',d.buffer?'1':'0');u.searchParams.set('active',d.active===false?'0':'1');u.hash='results';
+  const u=new URL(location.href);u.searchParams.set('shock',shock);u.searchParams.set('strength',String(strength));u.searchParams.set('buffer',d.buffer?'1':'0');u.searchParams.set('active',d.active===false?'0':'1');
+  if(d.baselineParams){
+    const p=d.baselineParams;
+    if(Number.isFinite(+p.baseScale))u.searchParams.set('bs',String(p.baseScale));
+    if(Number.isFinite(+p.volScale))u.searchParams.set('bv',String(p.volScale));
+    if([2000,5000,10000].includes(+p.count))u.searchParams.set('n',String(p.count));
+    if(Array.isArray(p.paths))p.paths.slice(0,5).forEach((v,j)=>{if(Number.isFinite(+v))u.searchParams.set('bp'+j,String(v));});
+  }
+  if(d.distribution){
+    if(Number.isFinite(+d.distribution.threshold))u.searchParams.set('line',String(d.distribution.threshold));
+    if(['density','hist','cdf'].includes(d.distribution.view))u.searchParams.set('view',d.distribution.view);
+  }
+  u.hash='results';
   return '<div class="fact-row"><strong>'+String(i+1).padStart(2,'0')+' · '+esc(MODELS[shock].label)+'</strong><p>档位 '+esc(String(strength))+' / 缓冲 '+(d.buffer?'开':'关')+' / 模型中位 '+esc(fmt(Number(d.median)))+'亿元</p><a href="'+esc(u.href)+'">恢复此实验 ↗</a></div>';
  }).join('');
  modal('我的风洞记录 · 仅本机','<p>记录存放在当前浏览器。分享链接只有公开模型参数。</p>'+markup);
