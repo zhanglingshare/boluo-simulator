@@ -1,6 +1,6 @@
 (()=>{
 "use strict";
-const data=window.BoluoSemDemo,core=window.BoluoInsightEngine;
+const data=window.BoluoPublicTopics,core=window.BoluoInsightEngine;
 if(!data||!core){const e=document.getElementById("iqGoalPrompt");if(e)e.textContent="情景引擎未加载，请刷新页面";return;}
 const $=id=>document.getElementById(id);
 const targetNames=Object.keys(data.targets);
