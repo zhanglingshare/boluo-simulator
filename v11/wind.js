@@ -205,7 +205,7 @@ function run(animate=false){
   qa('.readout').forEach(node=>{node.classList.remove('recomputed');void node.offsetWidth;node.classList.add('recomputed');});
  }
  chartRender(output,animate);
- window.dispatchEvent(new CustomEvent('boluo:wind-run',{detail:{results:output,shock:state.shock,strength:state.strength,active:state.active,buffer:state.buffer}}));
+ window.dispatchEvent(new CustomEvent('boluo:wind-run',{detail:{results:output,shock:state.shock,strength:state.strength,active:state.active,buffer:state.buffer,animate}}));
  renderChain();
  if(animate)progressChain();
  syncURL();
