@@ -1,0 +1,61 @@
+"use strict";
+const {chromium}=require("playwright"),assert=require("node:assert/strict"),fs=require("node:fs"),path=require("node:path");
+const out=path.resolve(__dirname,"../artifacts/v11-challenge");fs.mkdirSync(out,{recursive:true});
+(async()=>{
+ const browser=await chromium.launch({headless:true,args:["--no-sandbox"]});
+ try{
+  for(const width of [1440,390]){
+   const isMobile=width===390;
+   const ctx=await browser.newContext({viewport:{width,height:isMobile?844:900},isMobile,hasTouch:isMobile,acceptDownloads:true,deviceScaleFactor:1});
+   const page=await ctx.newPage(),errors=[];
+   page.on("pageerror",e=>errors.push(e.message));
+   const res=await page.goto("http://127.0.0.1:8765/v11/challenge.html",{waitUntil:"load"});
+   assert.equal(res.status(),200);
+   await page.locator("#rivalChoices button").first().waitFor();
+   assert.equal(await page.locator("#rivalChoices button").count(),3);
+   await page.locator('[data-claim="orders"]').click();
+   assert.match(await page.locator("#worldATitle").innerText(),/本地订单/);
+   await page.locator('[data-rival="1"]').click();
+   assert.match(await page.locator("#worldBTitle").innerText(),/时间差/);
+   await page.locator("#evidenceOptions button").nth(1).click();
+   assert.match(await page.locator("#cardEvidence").innerText(),/客户结构/);
+   await page.locator('[data-proof="alternative"]').click();
+   assert.match(await page.locator("#cardVerdict").innerText(),/重新检查/);
+   await page.locator("#myNote").fill("尚需核验订单来源及签约之后的交付情况。");
+   assert.match(await page.locator("#cardNote").innerText(),/订单来源/);
+   const query=new URL(page.url()).searchParams;assert.equal(query.get("claim"),"orders");assert.equal(query.get("rival"),"1");assert.equal(query.get("proof"),"alternative");
+   await page.locator("#saveChallenge").click();
+   await page.locator('[data-claim="project"]').click();
+   await page.locator("#restoreChallenge").click();
+   assert.match(await page.locator("#cardClaim").innerText(),/本地配套/);
+   const downloadPromise=page.waitForEvent("download",{timeout:15000});
+   await page.locator("#downloadCard").click();
+   const download=await downloadPromise;
+   assert.match(download.suggestedFilename(),/\.png$/i);
+   const overflow=await page.evaluate(()=>Math.max(0,document.documentElement.scrollWidth-innerWidth));
+   assert.ok(overflow<=25,"09 page overflow "+width+" "+overflow);
+   await page.evaluate(()=>scrollTo(0,0));
+   await page.screenshot({path:path.join(out,"challenge-"+width+".png"),fullPage:true,animations:"disabled"});
+   assert.deepEqual(errors,[],"09 uncaught page errors: "+errors.join(" | "));
+   console.log("PASS page 09 "+width+"px; export="+download.suggestedFilename()+" overflow="+overflow);
+   await ctx.close();
+  }
+  const ctx=await browser.newContext({viewport:{width:1280,height:800},acceptDownloads:true}),page=await ctx.newPage();
+  await page.goto("http://127.0.0.1:8765/v11/wind.html?shock=orders&strength=1",{waitUntil:"domcontentloaded"});
+  await page.locator("#goDecisionChallenge").waitFor({state:"attached",timeout:18000});
+  await page.waitForFunction(()=>document.querySelector("#afterMedian")?.textContent!=="—",{timeout:18000});
+  await page.locator("#goDecisionChallenge").click();
+  await page.locator("#snapshot").waitFor({state:"visible",timeout:10000});
+  assert.match(await page.locator("#stressNumbers").innerText(),/亿元/);
+  assert.match(await page.locator("#handoffTitle").innerText(),/第七页/);
+  console.log("PASS 07 -> 09 retains condition-linked, read-only 07 result snapshot");
+  await page.goto("http://127.0.0.1:8765/v11/insights.html?focus=retention&factor=network&shock=orders",{waitUntil:"domcontentloaded"});
+  await page.locator("#iqToChallenge").waitFor({state:"attached",timeout:12000});
+  await page.waitForFunction(()=>document.querySelector("#iqToChallenge")?.href.includes("factor=network"),{timeout:12000});
+  await page.locator("#iqToChallenge").click();
+  assert.match(await page.locator("#handoffTitle").innerText(),/第八页/);
+  assert.match(await page.locator("#incomingMissing").innerText(),/采购/);
+  console.log("PASS 08 -> 09 carries selected link and missing evidence");
+  await ctx.close();
+ }finally{await browser.close();}
+})().catch(e=>{console.error(e);process.exit(1)});
