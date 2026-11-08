@@ -9,3 +9,6 @@
 .graph-edges>svg{display:block;width:100%;height:100%;overflow:visible}
 
 .graph-field.is-narrow .edge-label{font-size:9px}
+
+/* V11 09: horizontally scrollable mobile page list */
+@media(max-width:900px){.mobile-nav{justify-content:flex-start;overflow-x:auto;scrollbar-width:thin}.mobile-nav a{flex:0 0 auto;white-space:nowrap;min-width:58px}}
