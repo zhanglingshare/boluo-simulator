@@ -42,10 +42,15 @@ function initSeven(){
  put("vizPathM",mark(out.mediator));
  put("vizPathY",out.moderated.toFixed(2));
  setChartBar("vizBarDirect",out.direct);setChartBar("vizBarIndirect",out.indirect);setChartBar("vizBarTotal",out.total);
+ st.dataset.direction=out.total<0?"negative":out.total>0?"positive":"neutral";
+ st.classList.remove("is-recomputing");
+ void st.offsetWidth;
+ st.classList.add("is-recomputing");
  st.querySelectorAll("[data-viz-preset]").forEach(b=>b.setAttribute("aria-pressed",String(Math.abs(out.investmentIndex-Number(b.dataset.vizPreset))<.15)));
  }
  investment.addEventListener("input",render);
  network.addEventListener("input",render);
+ $("semReset")?.addEventListener("click",render);
  st.querySelectorAll("[data-viz-preset]").forEach(b=>b.addEventListener("click",()=>{
   investment.value=b.dataset.vizPreset;
   if(b.dataset.networkPreset)network.value=b.dataset.networkPreset;
