@@ -21,7 +21,7 @@
   <div class="eyebrow">03 / THE INDUSTRY STRESS LAB</div>
   <h1>产业下一步，<em>卡在哪里？</em></h1>
   <p>拖动一个条件，亲眼看见差别。</p>
-  <div class="hero-tags"><span class="chip"><i class="dot"></i>公开事实</span><span class="chip">条件推演</span><span class="chip">缺失就留白</span><button type="button" id="methodBtn" class="source-button">依据与方法 ↗</button></div>
+  <div class="hero-tags"><span class="chip"><i class="dot"></i>公开事实</span><span class="chip">条件推演</span><span class="chip">缺失就留白</span><button type="button" id="methodBtn" class="source-button">查看资料范围 ↗</button></div>
  </section>
  <section class="signal-strip" aria-label="可确认的产业观察数据">
   <div class="signal"><span class="eyebrow">规上工业增加值 · 2026年前三季度</span><strong class="kpi">+8.9%</strong><small>实际同比增速</small></div>
@@ -66,25 +66,25 @@
  <div class="lab-feedback"><span id="labStatus" role="status" aria-live="polite">已就绪 · 拖动滑块，或点“播放变化”</span><span class="lab-linked">曲线 · 热力格 · 差距 · 敏感性同步</span><button type="button" id="reduceMotion" aria-pressed="false">减少动态</button></div>
 </section>
 <section class="rv-showcase" id="riskVisuals" aria-label="多图联动产业约束可视化">
- <div class="rv-head"><div><div class="eyebrow">KEEP EXPLORING / 在图上继续试</div><h2>点一个格子，换一个结果</h2><p>热力格改条件，敏感性条做单变量对照。</p></div><div class="rv-legend" id="rvLegend"><span><i class="rv-key" style="background:#1e8f79"></i>条件满足</span><span><i class="rv-key" style="background:#e4a081"></i>条件未满足</span><span><i class="rv-key" style="background:#a6b8ce"></i>尚无实测</span></div></div>
+ <div class="rv-head"><div><div class="eyebrow">KEEP EXPLORING / 在图上继续试</div><h2>点一个格子，换一个结果</h2><p>点热力格换条件，再看看哪项结果变化最大。</p></div><div class="rv-legend" id="rvLegend"><span><i class="rv-key" style="background:#1e8f79"></i>条件满足</span><span><i class="rv-key" style="background:#e4a081"></i>条件未满足</span><span><i class="rv-key" style="background:#a6b8ce"></i>尚无实测</span></div></div>
  <div class="rv-grid">
-  <article class="rv-panel"><div class="rv-headline"><div><div class="rv-overline">01 / PARAMETER SURFACE</div><h3 id="rvHeatTitle">条件 × 年份</h3></div><span class="rv-stamp">点击格子试算</span></div><p class="rv-sub" id="rvHeatSub">选择条件，看参照线何时可能被跨越。</p><div class="rv-matrix"><div id="rvHeat" aria-label="可点击参数敏感性热力图"></div></div><div class="rv-matrix-foot"><span id="rvHeatLegend">颜色表示条件而非概率</span></div></article>
+  <article class="rv-panel"><div class="rv-headline"><div><div class="rv-overline">01 / 条件对照</div><h3 id="rvHeatTitle">条件 × 年份</h3></div><span class="rv-stamp">点击格子试算</span></div><p class="rv-sub" id="rvHeatSub">选择条件，看参照线何时可能被跨越。</p><div class="rv-matrix"><div id="rvHeat" aria-label="可点击参数敏感性热力图"></div></div><div class="rv-matrix-foot"><span id="rvHeatLegend">颜色表示条件而非概率</span></div></article>
 
   <article class="rv-panel"><div class="rv-headline"><div><div class="rv-overline">03 / CONSTRAINT GAUGE</div><h3 id="rvBulletTitle">目标条件与差距</h3></div><span class="rv-stamp">无伪概率</span></div><div id="rvBullet" aria-label="条件数值与阈值差距"></div><div class="rv-note" id="rvBulletNote"></div></article>
-  <article class="rv-panel rv-wide"><div class="rv-headline"><div><div class="rv-overline">04 / ONE-VARIABLE TEST</div><h3 id="rvSensitivityTitle">变量改变，后果有多大？</h3></div><span class="rv-stamp">一次只改一个</span></div><p class="rv-sub" id="rvSensitivitySub">小扰动条件实验。</p><div id="rvSensitivity" class="rv-plot" aria-label="单变量敏感性龙卷风图"></div><div class="rv-note" id="rvSensitivityNote"></div></article>
+  <article class="rv-panel rv-wide"><div class="rv-headline"><div><div class="rv-overline">04 / 结果会怎样变</div><h3 id="rvSensitivityTitle">改变一个条件，差别有多大？</h3></div><span class="rv-stamp">一次只改一个</span></div><p class="rv-sub" id="rvSensitivitySub">小扰动条件实验。</p><div id="rvSensitivity" class="rv-plot" aria-label="单变量敏感性龙卷风图"></div><div class="rv-note" id="rvSensitivityNote"></div></article>
   <article class="rv-panel"><div class="rv-headline"><div><div class="rv-overline">05 / EVIDENCE GAPS</div><h3>哪些是真数据，哪些还缺？</h3></div></div><p class="rv-sub">点专题切换；不是按产业发展优劣排名。</p><div class="rv-observe" id="rvEvidence" aria-label="五个产业专题证据准备度矩阵"></div><div class="rv-sector-legend"><span>● 公开统计</span><span>◐ 线索或参照</span><span>— 暂不可判定</span></div><div class="rv-note">数据口径：<b id="rvSource">公开资料与条件假设</b></div></article>
  </div>
 </section>
  <details class="lab-details"><summary><span>完整推演、镇街线索与证据</span><small>展开查看与保存追问 <span aria-hidden="true">＋</span></small></summary>
  <div class="work">
   <aside class="panel sidebar" aria-label="研究选择">
-   <div class="eyebrow">SELECT ONE / 只选一个</div><h3>你要检验什么？</h3>
+   <div class="eyebrow">SELECT ONE / 只选一个</div><h3>你想从哪里看起？</h3>
    <div class="tabs" id="tabs" role="group" aria-label="五种产业风险实验">
-    <button class="tab active" data-case="electronic" type="button" aria-pressed="true"><span class="tab-icon">▦</span><span><b>电子信息冲千亿</b><small>增长条件 · 可量化</small></span></button>
-    <button class="tab" data-case="projects" type="button" aria-pressed="false"><span class="tab-icon">◩</span><span><b>工业项目接续</b><small>投资恢复 · 可量化</small></span></button>
+    <button class="tab active" data-case="electronic" type="button" aria-pressed="true"><span class="tab-icon">▦</span><span><b>电子信息冲千亿</b><small>增长条件 · 可对照</small></span></button>
+    <button class="tab" data-case="projects" type="button" aria-pressed="false"><span class="tab-icon">◩</span><span><b>工业项目接续</b><small>投资恢复 · 可对照</small></span></button>
     <button class="tab" data-case="tea" type="button" aria-pressed="false"><span class="tab-icon">♧</span><span><b>柏塘春茶增值</b><small>钱留哪 · 条件模拟</small></span></button>
     <button class="tab" data-case="ring" type="button" aria-pressed="false"><span class="tab-icon">⌁</span><span><b>环两山价值转化</b><small>游客消费 · 条件模拟</small></span></button>
-    <button class="tab" data-case="innovation" type="button" aria-pressed="false"><span class="tab-icon">✧</span><span><b>创新能否转化</b><small>绩效识别 · 需抽样</small></span></button>
+    <button class="tab" data-case="innovation" type="button" aria-pressed="false"><span class="tab-icon">✧</span><span><b>创新能否转化</b><small>真实成效 · 待核验</small></span></button>
    </div>
    <div class="scope" aria-label="相关观察空间"><span class="eyebrow" style="width:100%">TOWNS / 观察入口</span><button class="on" type="button" onclick="document.querySelector('[data-case=electronic]').click()">全县工业</button><button type="button" onclick="document.querySelector('[data-case=tea]').click()">柏塘</button><button type="button" onclick="document.querySelector('[data-case=ring]').click()">环两山</button></div>
   </aside>
@@ -132,10 +132,10 @@
    <div class="eyebrow" style="margin-top:17px">NOT YET OBSERVED</div><h3>还没有的</h3><div id="unknown"></div>
   </div>
   <div class="panel">
-   <div class="eyebrow">03 / EVIDENCE & MODELS</div><h3>你看见的，是什么？</h3>
+   <div class="eyebrow">03 / FACTS & GAPS</div><h3>你看见的，是什么？</h3>
    <p class="tiny dim" id="modelHint" style="line-height:1.8"></p>
    <div id="sources" style="margin-top:15px;line-height:2;color:#2377bf;font-size:11px"></div>
-   <button id="methodBtn2" class="source-button" style="margin-top:17px" onclick="document.getElementById('methodBtn').click()">查看数据与方法边界 ↗</button>
+   <button id="methodBtn2" class="source-button" style="margin-top:17px" onclick="document.getElementById('methodBtn').click()">查看资料与限制 ↗</button>
   </div>
  </section>
  </details>
@@ -144,7 +144,7 @@
   <span><a href="./index.html">返回问题发现</a>　·　<a href="./reality.html">返回预期与现实</a>　·　<a href="https://www.boluo.gov.cn/zwgk/qt/gzjh/content/post_5842396.html" target="_blank" rel="noopener noreferrer">十五五规划发布</a></span>
  </footer>
 </main>
-<div id="detailOverlay" class="popover-cover" role="presentation"><aside role="dialog" aria-modal="true" aria-label="数据方法说明" class="drawer"><button id="closeDrawer" type="button">关闭 ×</button><div class="eyebrow" style="margin-top:39px">METHODS & EVIDENCE</div><h2>模型不是事实替身</h2><div id="drawerText"></div></aside></div>
+<div id="detailOverlay" class="popover-cover" role="presentation"><aside role="dialog" aria-modal="true" aria-label="资料与使用限制" class="drawer"><button id="closeDrawer" type="button">关闭 ×</button><div class="eyebrow" style="margin-top:39px">SOURCES & LIMITS</div><h2>这些数字，能说明什么？</h2><div id="drawerText"></div></aside></div>
 <div class="shade" id="toast" role="status"></div>
 <script defer src="./risk-motion.js?v=20261106-motion1"></script>
 <script defer src="./risk-lab.js?v=20261106-motion1"></script>
