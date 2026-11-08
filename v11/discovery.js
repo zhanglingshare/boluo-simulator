@@ -220,11 +220,11 @@
   if(info.cliff){cliffBlock.hidden=false;M.html('cliffChart',cliffChart(),false);text('cliffCaption',info.cliff.caption+' '+info.cliff.foot);}
   else{cliffBlock.hidden=true;}
   const netBlock=$('networkBlock');
-  if(state.topic==='factory'){netBlock.hidden=false;
+  if(netBlock&&state.topic==='factory'){netBlock.hidden=false;
     const host=$('networkChart');host.innerHTML='';
     if(window.BoluoNet)window.BoluoNet.mount(host,D.events.filter(e=>e.town));
     drawTimeline();}
-  else{netBlock.hidden=true;}
+  else if(netBlock){netBlock.hidden=true;}
   M.html('mainChart',info.chart==='diverge'?compareChart():info.chart==='food'?compareChart(true):info.chart==='agriculture'?agricultureChart():stageChart(),false);
   document.querySelectorAll('.topic-tabs [data-topic]').forEach(button=>{const on=button.dataset.topic===state.topic;button.setAttribute('aria-selected',String(on));button.tabIndex=on?0:-1;});
   if(enter&&!M.reduced.matches){const hero=document.querySelector('.discovery-hero');hero.dataset.enter='false';requestAnimationFrame(()=>{hero.dataset.enter='true';});}

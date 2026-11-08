@@ -120,8 +120,8 @@
           n.fx += (cx0 - n.x) * 0.0018; n.fy += (cy0 - n.y) * 0.0018;
           n.x += Math.max(-14, Math.min(14, n.fx)) * 0.9;
           n.y += Math.max(-14, Math.min(14, n.fy)) * 0.9;
-          n.x = Math.max(28, Math.min(W - 28, n.x));
-          n.y = Math.max(30, Math.min(H - 34, n.y));
+          n.x = Math.max(64, Math.min(W - 64, n.x));
+          n.y = Math.max(34, Math.min(H - 40, n.y));
         });
       }
     }

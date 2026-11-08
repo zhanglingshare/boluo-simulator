@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<title>看见博罗 · 全息关系版 | 博罗决策风洞</title>
+<meta name="description" content="博罗今年落地的工业现场：镇街挂项目，签约、开工、投产、关停一眼看见。">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<script src="../assets/boluo-access.js?v=20261108-inline2" data-bl-access="inline"></script>
+<link rel="stylesheet" href="./discovery.css?v=20261109-holo1">
+</head>
+<body class="holo-page">
+<header class="holo-top">
+ <a class="holo-brand" href="./index.html">博罗决策风洞<span>BOLUO WIND TUNNEL</span></a>
+ <nav><a href="./index.html">01 风洞</a><a href="./holo.html" class="on">全息关系</a><a href="./relations.html">04 关系世界</a></nav>
+</header>
+<main class="discovery-wrap">
+<section class="holo-block" id="holoBlock" aria-labelledby="holoTitle">
+ <div class="holo-head">
+  <div><p class="holo-kick">HOLOGRAPHIC RELATIONS · 2026</p><h2 id="holoTitle">看见博罗 · <em>全息关系版</em></h2><p class="holo-sub">谁在谁的边上，谁先断，看得见。每个圆点是一个今年真落地的现场。</p></div>
+  <div class="holo-stamp">关系不是名单，是连线</div>
+ </div>
+ <div class="holo-metrics" id="holoMetrics"></div>
+ <p class="holo-period">指标期次：2025 年为年度约数，2026 年为前三季度快报。绝对值与增速不同源，不可混读。</p>
+ <div class="holo-note">按镇街挂项目 · 圆点越大越接近投产 · 可拖动重排、滚轮缩放</div>
+ <div id="holoNet"></div>
+ <div class="holo-timeline" id="holoTimeline"></div>
+ <p class="holo-tail">读法：从中心“博罗”往外，一圈是一个镇街；镇街外面的圆点，是挂在这个镇上的项目。线的颜色就是它现在走到哪一步——橙签约、青开工、蓝投产、红关停或停摆。</p>
+</section>
+
+<p class="holo-back"><a href="./relations.html">← 回到 04 关系世界（六年变化与网络）</a><a href="./index.html">回 01 风洞首页 →</a></p>
+</main>
+<script defer src="./discovery-data.js?v=20261106-discovery1"></script>
+<script defer src="./discovery-net.js?v=20261109-net1"></script>
+<script>
+window.addEventListener('load',function(){
+ var D=window.BoluoDiscoveryData; if(!D||!D.events)return;
+ var ev=D.events.filter(function(e){return e.town;});
+ var ms=[['规上工业总产值（亿元）','超 2000','+8.7%','2025 年度 · 约数'],
+         ['规上工业增加值','未公布','+8.9%','2024 年起只报增速'],
+         ['工业投资（亿元）','超 230','−44.7%','2025 年度 · 约数']];
+ var h='';
+ ms.forEach(function(m,i){
+  h+='<article class="holo-card c'+i+'"><span>'+m[0]+'</span><b>'+m[1]+'</b>'+
+     '<div class="holo-foot"><em>'+m[3]+'</em><i>'+m[2]+'</i></div></article>';
+ });
+ var box=document.getElementById('holoMetrics'); if(box)box.innerHTML=h;
+ if(window.BoluoNet)window.BoluoNet.mount(document.getElementById('holoNet'),ev);
+ var col=function(e){return (e.visual==='closure'||e.visual==='stalled')?'#e2544a':e.stage===3?'#1369eb':e.stage===2?'#1e9aa0':'#d9862f';};
+ var tl='<div class="tl-head"><span>今年落地的现场 · 1—11 月</span><em>只收录会改变产能的节点 · 签约≠投产</em></div><div class="tl-row">';
+ for(var m=1;m<=11;m++){
+  var items=ev.filter(function(e){return e.month===m;});
+  tl+='<div class="tl-col"><div class="tl-dots">';
+  if(items.length){items.slice(0,4).forEach(function(e){tl+='<i style="background:'+col(e)+'"></i>';});
+   if(items.length>4)tl+='<b>+'+(items.length-4)+'</b>';}
+  else tl+='<i class="tl-empty"></i>';
+  tl+='</div><span>'+('0'+m).slice(-2)+'</span></div>';
+ }
+ tl+='</div><p class="tl-note">另：湖镇六个项目被点名催促，至今未动工。</p>';
+ var tb=document.getElementById('holoTimeline'); if(tb)tb.innerHTML=tl;
+});
+</script>
+</body>
+</html>
