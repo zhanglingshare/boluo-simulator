@@ -1,5 +1,5 @@
-/* Public experience entrance. Credentials are deliberately displayed to visitors.
-   This is a static-site experience gate, not a private-data authentication service. */
+/* Optional public demo account. Every page remains fully available to guests.
+   Credentials are displayed; this is not private-data authentication. */
 (function () {
   "use strict";
 
@@ -73,17 +73,9 @@
       }
     }
 
-    function loginUrl(raw, signedOut) {
-      var url = new URL(entrance.href);
-      url.searchParams.set("next", nextUrl(raw));
-      if (signedOut) url.searchParams.set("logout", "1");
-      return url.href;
-    }
-
     return {
       account: account, password: password, home: home.href,
-      nextUrl: nextUrl, session: session, login: login,
-      logout: logout, loginUrl: loginUrl
+      nextUrl: nextUrl, session: session, login: login, logout: logout
     };
   }
 
@@ -99,16 +91,13 @@
     baseUrl: new URL("../", script.src).href, storage: storage
   });
   window.BoluoAccess = access;
-  var isLogin = script.getAttribute("data-bl-access") === "login";
-
-  function guard() {
-    if (access.session()) {
-      document.documentElement.removeAttribute("data-boluo-entry");
-      return true;
-    }
-    document.documentElement.setAttribute("data-boluo-entry", "locked");
-    window.location.replace(access.loginUrl(window.location.href));
-    return false;
+  // Old saved entrance links go straight back to public content.
+  if (script.getAttribute("data-bl-access") === "legacy") {
+    var params = new URL(window.location.href).searchParams;
+    var target = new URL(access.nextUrl(params.get("next")));
+    if (!params.get("next")) target.hash = "boluo-account";
+    window.location.replace(target.href);
+    return;
   }
 
   function ready(fn) {
@@ -119,77 +108,112 @@
     }
   }
 
-  function accountControl() {
-    if (document.querySelector(".bl-access-control")) return;
+  ready(function () {
+    var main = document.querySelector("main");
+    if (!main) return;
+    var isHome = window.location.pathname === new URL(access.home).pathname;
+    var panel = document.createElement("section");
+    panel.id = "boluo-account";
+    panel.className = "bl-account-panel";
+    panel.setAttribute("aria-labelledby", "blAccountTitle");
+    panel.hidden = !isHome && window.location.hash !== "#boluo-account";
+    panel.innerHTML = [
+      '<div class="bl-account-heading"><h2 id="blAccountTitle">用户登录</h2>',
+      '<p>未登录也可完整浏览</p></div>',
+      '<form class="bl-account-form" id="blLoginForm" autocomplete="off">',
+      '<div class="bl-account-field"><label for="blAccount">账号</label><input id="blAccount" type="text" value="boluo" required maxlength="64" autocapitalize="off" spellcheck="false" autocomplete="off" aria-describedby="blAccountHint blLoginError"></div>',
+      '<div class="bl-account-field"><label for="blPassword">密码</label><span class="bl-account-password"><input id="blPassword" type="password" placeholder="输入密码" required maxlength="64" inputmode="numeric" autocomplete="off" aria-describedby="blAccountHint blLoginError">',
+      '<button id="blPasswordToggle" class="bl-account-reveal" type="button" aria-label="显示密码" aria-pressed="false">显示</button></span></div>',
+      '<button class="bl-account-submit" type="submit">登录</button></form>',
+      '<div class="bl-account-help" id="blAccountHelp"><p id="blAccountHint">体验账号 <code>boluo</code> · 密码 <code>123456</code></p>',
+      '<button id="blFillCredentials" type="button">一键填入</button></div>',
+      '<div class="bl-account-signed" id="blAccountSigned" hidden><span>已登录 <strong>boluo</strong></span><button id="blPanelLogout" type="button">退出登录</button></div>',
+      '<p class="bl-account-message" id="blLoginError" role="status" aria-live="polite"></p>'
+    ].join("");
+    main.insertBefore(panel, main.firstChild);
+
+    var form = panel.querySelector("form");
+    var name = panel.querySelector("#blAccount");
+    var code = panel.querySelector("#blPassword");
+    var message = panel.querySelector("#blLoginError");
+    var help = panel.querySelector("#blAccountHelp");
+    var signed = panel.querySelector("#blAccountSigned");
+    var show = panel.querySelector("#blPasswordToggle");
+    var control = null;
+    var identity = null;
+    var accountButton = null;
     var host = document.querySelector("header .header-actions, header .header-tools") ||
       document.querySelector("header .header-inner, header .sitebar-in") ||
       document.querySelector("header.top, header.site-header");
-    if (!host) return;
-    host.classList.add("bl-access-host");
-    host.closest("header").classList.add("bl-access-header");
-    var control = document.createElement("div");
-    control.className = "bl-access-control";
-    var identity = document.createElement("span");
-    identity.className = "bl-access-identity";
-    identity.textContent = access.account;
-    var button = document.createElement("button");
-    button.type = "button";
-    button.className = "bl-access-logout";
-    button.textContent = "退出";
-    button.setAttribute("aria-label", "退出体验账号 boluo");
-    button.addEventListener("click", function () {
-      if (access.logout()) {
-        window.location.assign(access.loginUrl(window.location.href, true));
-      } else {
-        button.textContent = "退出失败";
-        button.setAttribute("aria-label", "暂时无法退出，请刷新后重试");
-      }
-    });
-    control.append(identity, button);
-    host.appendChild(control);
-  }
-
-  if (!isLogin) {
-    window.addEventListener("pageshow", function () { guard(); });
-    if (guard()) ready(accountControl);
-    return;
-  }
-
-  ready(function () {
-    var form = document.getElementById("blLoginForm");
-    var name = document.getElementById("blAccount");
-    var code = document.getElementById("blPassword");
-    var submit = document.getElementById("blLoginSubmit");
-    var error = document.getElementById("blLoginError");
-    var show = document.getElementById("blPasswordToggle");
-    var params = new URL(window.location.href).searchParams;
-    var next = access.nextUrl(params.get("next"));
-    var names = {
-      "index.html": "问题发现", "reality.html": "预期与现实",
-      "industry-base.html": "产业底盘", "relations.html": "关系世界",
-      "impact.html": "变化影响", "plan.html": "十五五规划", "wind.html": "风洞测试"
-    };
-    var page = new URL(next).pathname.split("/").pop();
-    document.getElementById("blReturnNote").textContent =
-      "进入后前往：" + (names[page] || "刚才的页面");
-    submit.disabled = false;
-    if (access.session()) {
-      window.location.replace(next);
-      return;
+    if (host) {
+      host.classList.add("bl-access-host");
+      host.closest("header").classList.add("bl-access-header");
+      control = document.createElement("div");
+      control.className = "bl-access-control";
+      identity = document.createElement("span");
+      identity.className = "bl-access-identity";
+      accountButton = document.createElement("button");
+      accountButton.type = "button";
+      accountButton.className = "bl-access-button";
+      accountButton.setAttribute("aria-controls", panel.id);
+      control.append(identity, accountButton);
+      host.appendChild(control);
+      accountButton.addEventListener("click", function () {
+        if (access.session()) {
+          signOut();
+        } else {
+          panel.hidden = false;
+          accountButton.setAttribute("aria-expanded", "true");
+          panel.scrollIntoView({ block: "start", behavior: "auto" });
+          name.focus({ preventScroll: true });
+        }
+      });
     }
 
-    function clearError() {
-      error.textContent = "";
+    function render() {
+      var loggedIn = !!access.session();
+      form.hidden = loggedIn;
+      help.hidden = loggedIn;
+      signed.hidden = !loggedIn;
+      if (accountButton) {
+        identity.textContent = loggedIn ? access.account : "";
+        identity.hidden = !loggedIn;
+        accountButton.textContent = loggedIn ? "退出" : "登录";
+        accountButton.setAttribute("aria-label", loggedIn ? "退出体验账号 boluo" : "打开用户登录");
+        if (loggedIn) accountButton.removeAttribute("aria-expanded");
+        else accountButton.setAttribute("aria-expanded", String(!panel.hidden));
+      }
+    }
+    function clearMessage() {
+      message.textContent = "";
+      message.removeAttribute("data-error");
       name.removeAttribute("aria-invalid");
       code.removeAttribute("aria-invalid");
     }
-    name.addEventListener("input", clearError);
-    code.addEventListener("input", clearError);
-    document.getElementById("blFillCredentials").addEventListener("click", function () {
+    function signOut() {
+      clearMessage();
+      if (access.logout()) {
+        code.value = "";
+        code.type = "password";
+        show.textContent = "显示";
+        show.setAttribute("aria-label", "显示密码");
+        show.setAttribute("aria-pressed", "false");
+        message.textContent = "已退出，仍可继续使用全部内容。";
+        render();
+        if (accountButton) accountButton.focus({ preventScroll: true });
+      } else {
+        message.textContent = "暂时无法退出，请刷新后重试。页面仍可完整使用。";
+        message.setAttribute("data-error", "true");
+      }
+    }
+    panel.querySelector("#blPanelLogout").addEventListener("click", signOut);
+    name.addEventListener("input", clearMessage);
+    code.addEventListener("input", clearMessage);
+    panel.querySelector("#blFillCredentials").addEventListener("click", function () {
       name.value = access.account;
       code.value = access.password;
-      clearError();
-      submit.focus();
+      clearMessage();
+      form.querySelector('[type="submit"]').focus();
     });
     show.addEventListener("click", function () {
       var visible = code.type === "password";
@@ -200,13 +224,14 @@
     });
     form.addEventListener("submit", function (event) {
       event.preventDefault();
-      clearError();
+      clearMessage();
       var result = access.login(name.value, code.value);
       if (!result.ok) {
+        message.setAttribute("data-error", "true");
         if (result.reason === "storage") {
-          error.textContent = "浏览器暂时无法保存登录状态。请允许此站点使用本地存储后重试。";
+          message.textContent = "暂时无法保存登录状态，仍可完整使用页面。";
         } else {
-          error.textContent = "账号或密码不正确，请使用下方的公开体验账号。";
+          message.textContent = "账号或密码不正确，请使用公开体验账号。";
           name.setAttribute("aria-invalid", "true");
           code.setAttribute("aria-invalid", "true");
           code.focus();
@@ -214,9 +239,15 @@
         }
         return;
       }
-      submit.disabled = true;
-      submit.textContent = "正在进入…";
-      window.location.replace(next);
+      code.value = "";
+      render();
+      message.textContent = "登录成功，继续浏览当前页面。";
+      if (accountButton) accountButton.focus({ preventScroll: true });
     });
+    // Login and logout change only account state, never navigation or page content.
+    render();
+    window.addEventListener("pageshow", render);
+    window.addEventListener("focus", render);
+    if (window.location.hash === "#boluo-account") panel.scrollIntoView({ block: "start" });
   });
 })();

@@ -24,13 +24,10 @@ test('public account accepts the provided password, keeps passwords out of stora
   assert.equal(s.access.session(),null);
 });
 
-test('return links preserve page, event, query and hash through login and logout',()=>{
+test('legacy return targets preserve the original page, event, query and hash',()=>{
   const s=setup();
   const target='https://zhanglingshare.github.io/boluo-simulator/v11/relations.html?change=C004&from=reality#network';
-  const entry=new URL(s.access.loginUrl(target,true));
-  assert.equal(entry.searchParams.get('next'),target);
-  assert.equal(entry.searchParams.get('logout'),'1');
-  assert.equal(s.access.nextUrl(entry.searchParams.get('next')),target);
+  assert.equal(s.access.nextUrl(target),target);
   assert.equal(s.access.nextUrl('v11/wind.html?seed=42#experiment'),
     'https://zhanglingshare.github.io/boluo-simulator/v11/wind.html?seed=42#experiment');
 });
@@ -67,4 +64,39 @@ test('unavailable storage reports failure instead of producing a redirect loop',
   assert.deepEqual(access.login('boluo','123456'),{ok:false,reason:'storage'});
   assert.equal(access.logout(),false);
   assert.equal(access.nextUrl('//example.org/'),access.home);
+});
+
+const fs=require('node:fs');
+const vm=require('node:vm');
+const source=fs.readFileSync(require.resolve('../assets/boluo-access.js'),'utf8');
+
+function loadPage(mode,url,storage) {
+  const navigations=[];
+  const pending=[];
+  const root={setAttribute(){assert.fail('Public content must never be locked');}};
+  const document={
+    currentScript:{src:'https://zhanglingshare.github.io/boluo-simulator/assets/boluo-access.js',getAttribute:()=>mode},
+    readyState:'loading',documentElement:root,
+    addEventListener:(name,fn)=>pending.push({name,fn})
+  };
+  const location={href:url,replace:next=>navigations.push(next)};
+  vm.runInNewContext(source,{URL,Date,document,window:{sessionStorage:storage,location}});
+  return {navigations,pending};
+}
+
+test('guest pages never redirect or hide content, even when storage is unavailable',()=>{
+  for(const storage of [setup().storage,{getItem(){throw Error('blocked');}}]) {
+    const page=loadPage('inline','https://zhanglingshare.github.io/boluo-simulator/v11/relations.html?case=hande#network',storage);
+    assert.deepEqual(page.navigations,[]);
+    assert.equal(page.pending.length,1);
+    assert.equal(page.pending[0].name,'DOMContentLoaded');
+  }
+});
+
+test('old login links open public content and preserve safe deep links without authenticating',()=>{
+  const target='https://zhanglingshare.github.io/boluo-simulator/v11/relations.html?change=C004#network';
+  const old='https://zhanglingshare.github.io/boluo-simulator/login.html?next='+encodeURIComponent(target);
+  assert.deepEqual(loadPage('legacy',old,setup().storage).navigations,[target]);
+  assert.deepEqual(loadPage('legacy','https://zhanglingshare.github.io/boluo-simulator/login.html',setup().storage).navigations,
+    ['https://zhanglingshare.github.io/boluo-simulator/v11/index.html#boluo-account']);
 });
