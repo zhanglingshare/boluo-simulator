@@ -1,116 +1,46 @@
 "use strict";
-const test=require("node:test");
-const assert=require("node:assert/strict");
-const fs=require("node:fs");
-const vm=require("node:vm");
-const path=require("node:path");
-const root=path.resolve(__dirname,"..");
-const read=name=>fs.readFileSync(path.join(root,name),"utf8");
-const window={};
-vm.runInNewContext(read("v11/sem-demo.js"),{window});
-const engine=window.BoluoSemDemo;
-test("SEM teaching engine is deterministic and anchored to public 2026 observation",()=>{
-  assert.equal(engine.anchors.investmentIndex,55.3);
-  assert.equal(engine.anchors.productionIndex,108.9);
-  const base=engine.calculate({investmentIndex:55.3,network:50});
-  assert.equal(base.total,0);
-  assert.equal(base.direct,0);
-  assert.equal(base.indirect,0);
-  const a=engine.calculate({investmentIndex:100,network:50});
-  const b=engine.calculate({investmentIndex:100,network:80});
-  assert.ok(a.total>0);
-  assert.ok(a.indirect>0);
-  assert.ok(b.indirect>a.indirect,"illustrative moderator must change indirect path");
-  assert.ok(Math.abs(a.total-(a.direct+a.indirect))<1e-12);
+const test=require("node:test"),assert=require("node:assert/strict"),fs=require("node:fs"),path=require("node:path");
+const root=path.resolve(__dirname,".."),read=p=>fs.readFileSync(path.join(root,p),"utf8");
+test("07 presents real-world conditions rather than coefficient formulas",()=>{
+ const html=read("v11/wind.html");
+ for(const id of ["baseScale","baseVol","basePathControls","baseCount","baseRun","detailChart","quantileRows","detailThreshold","conditionBoard","conditionDelta","conditionToEight"])
+  assert.ok(html.includes('id="'+id+'"'),id);
+ for(const name of ["delay","orders","traffic"])assert.ok(html.includes('data-shock="'+name+'"'),name);
+ assert.doesNotMatch(html,/SmartPLS|PLS-SEM|\bSEM\b|蒙特卡洛|Monte Carlo|中介、调节|路径系数|系数工作台|sem-demo\.js|path-lab\.js|sem-bridge\.js|sem-viz-stage\.js/);
+ assert.match(html,/不是已经发生的未来/);
 });
-test("out of range inputs are bounded",()=>{
-  const r=engine.calculate({investmentIndex:9000,network:-50});
-  assert.equal(r.investmentIndex,110);
-  assert.equal(r.network,20);
-  assert.ok(Number.isFinite(r.total));
+test("07 retains responsive, event-driven distributions and navigation",()=>{
+ const html=read("v11/wind.html");
+ for(const p of ["v11/wind.js","v11/wind-experiments.js","v11/condition-bridge.js","v11/wind-exp.css"])
+  assert.ok(fs.existsSync(path.join(root,p)),p);
+ for(const p of ["v11/wind.js","v11/wind-experiments.js","v11/condition-bridge.js"]){
+  const src=read(p);assert.doesNotThrow(()=>new Function(src),p);
+ }
+ assert.match(read("v11/wind.js"),/boluo:wind-run/);
+ assert.match(read("v11/wind.js"),/BoluoExperimentBaseline/);
+ assert.match(read("v11/condition-bridge.js"),/BoluoWind/);
+ assert.match(read("v11/condition-bridge.js"),/getDistributions/);
+ assert.match(read("v11/wind-experiments.js"),/data-dist-view/);
+ assert.match(read("v11/wind-experiments.js"),/quantileRows/);
+ assert.match(html,/id="conditionToEight"/);
 });
-test("page 07 and 08 explicitly label teaching assumptions",()=>{
-  const wind=read("v11/wind.html");
-  const insights=read("v11/insights.html");
-  assert.match(wind,/id="semInvestment"/);
-  assert.match(wind,/id="semToEight"/);
-  assert.match(wind,/不是GDP亿元/);
-  assert.match(insights,/全部数值为可调假设/);
-  assert.match(insights,/不是事实估计/);
-  assert.match(insights,/id="iqNetworkNodes"/);
-  assert.doesNotMatch(insights,/smartpls|sem-input-template\\.csv/i);
+test("08 loads public questions separately from path coefficient demonstration",()=>{
+ const html=read("v11/insights.html");
+ assert.match(html,/insight-topics\.js/);
+ assert.doesNotMatch(html,/sem-demo\.js/);
+ assert.match(html,/id="iqNetworkNodes"/);
+ assert.match(html,/id="iqHeatGrid"/);
+ assert.match(html,/id="iqSever"/);
+ assert.match(html,/切断联系只表示暂不采用这条解释/);
+ const topics=read("v11/insight-topics.js");
+ assert.doesNotMatch(topics,/xToM|mToY|moderation|calculate\(/);
+ assert.doesNotThrow(()=>new Function(topics));
 });
-test("page links and script assets exist",()=>{
-  for(const name of ["v11/sem-demo.js","v11/sem-bridge.js","v11/sem-bridge.css",
-  "v11/sem-lab.js","v11/sem-lab.css","v11/insights.html",
-])assert.ok(fs.existsSync(path.join(root,name)),name);
-  for(const name of ["v11/sem-demo.js","v11/sem-bridge.js","v11/sem-lab.js"])assert.doesNotThrow(()=>new Function(read(name)),name);
-  for(const name of ["v11/index.html","v11/industry-base.html","v11/relations.html","v11/impact.html","v11/plan.html","v11/wind.html"])
-    assert.ok(read(name).includes('href="./insights.html"'),name+" 08 link");
-});
-test("07 and 08 use meaningful animated visualizations and direct controls",()=>{
- const w=read("v11/wind.html");
- const i=read("v11/insights.html");
- const css=read("v11/sem-viz-stage.css");
- const js=read("v11/sem-viz-stage.js");
- assert.match(w,/id="semVisualStage"/);
- assert.match(w,/id="vizBarDirect"/);
- assert.match(w,/id="vizBarIndirect"/);
- assert.match(w,/id="vizBarTotal"/);
- assert.match(w,/data-viz-preset="100"/);
- assert.match(w,/id="vizFocusBody"/);
- assert.match(i,/id="iqNetwork"/);
- assert.match(i,/id="iqHeatGrid"/);
- assert.match(i,/id="iqSever"/);
- assert.match(i,/id="iqSeverity"/);
- assert.match(i,/id="iqComparisons"/);
- assert.match(i,/id="iqToWind"/);
- assert.match(css,/@media\(max-width:760px\)/);
- assert.match(css,/prefers-reduced-motion:reduce/);
- assert.match(css,/vizWire/);
- assert.match(js,/m.calculate/);
- assert.match(js,/\.dispatchEvent\(new Event\("input"/);
- assert.match(js,/BoluoStageSeven/);
- assert.doesNotThrow(()=>new Function(js));
-});
-test("illustrative effect decomposition may reverse, but does not become GDP",()=>{
- const weak=engine.calculate({investmentIndex:45,network:30});
- const stronger=engine.calculate({investmentIndex:100,network:80});
- assert.ok(weak.total<0);
- assert.ok(stronger.total>0);
- assert.ok(Math.abs(stronger.total-(stronger.direct+stronger.indirect))<1e-12);
- const w=read("v11/wind.html");
- const i=read("v11/insights.html");
- assert.match(w,/不是结构模型的因果证据/);
- assert.match(w,/绝不是已经估计的博罗实证系数或GDP变化/);
- assert.match(i,/切断联系只表示暂不采用这条解释/);
-});
-
-test("07 baseline sliders, detailed distribution and editable causal strengths are wired to real recomputation",()=>{
-  const html=read("v11/wind.html");
-  const wind=read("v11/wind.js");
-  const exp=read("v11/wind-experiments.js");
-  const paths=read("v11/path-lab.js");
-  for(const id of ["baseScale","baseVol","basePathControls","baseCount","baseRun","detailChart","quantileRows","detailThreshold","pathGraph","coefAInput","coefBInput","coefCInput","coefZInput"]) assert.ok(html.includes('id="'+id+'"'),id);
-  for(const name of ["v11/wind-experiments.js","v11/path-lab.js","v11/wind-exp.css"]) assert.ok(fs.existsSync(path.join(root,name)),name);
-  for(const source of [exp,paths,wind])assert.doesNotThrow(()=>new Function(source));
-  assert.match(wind,/BoluoExperimentBaseline\?\.getParams/);
-  assert.match(wind,/boluo:wind-run/);
-  assert.match(exp,/window\.BoluoDistribution/);
-  assert.match(exp,/getDistributions/);
-  assert.match(exp,/data-dist-view/);
-  assert.match(paths,/BoluoPathLab/);
-  const alt=engine.calculate({investmentIndex:100,network:65,coefficients:{xToM:.8,mToY:.7,xToY:.05,moderation:.1}});
-  const orig=engine.calculate({investmentIndex:100,network:65});
-  assert.notEqual(alt.total,orig.total);
-  assert.ok(Math.abs(alt.total-alt.direct-alt.indirect)<1e-12);
-});
-test("public UI does not reveal software or algorithm names",()=>{
-  for(const name of ["v11/wind.html","v11/insights.html"]){
-    const html=read(name);
-    assert.doesNotMatch(html,/SmartPLS|PLS-SEM|IPMA|蒙特卡洛|Bootstrap/);
-  }
-  const wind=read("v11/wind.html");
-  assert.match(wind,/教学假设/);
-  assert.match(wind,/2025年GDP实际基数固定/);
+test("only public facts and results are described in current pages",()=>{
+ for(const path of ["v11/wind.html","v11/insights.html"]){
+  const html=read(path);
+  assert.doesNotMatch(html,/SmartPLS|PLS-SEM|\bIPMA\b|蒙特卡洛|Monte Carlo|Bootstrap/);
+ }
+ assert.match(read("v11/wind.html"),/2025年GDP实际基数固定/);
+ assert.match(read("v11/insights.html"),/不是GDP损失/);
 });
