@@ -148,7 +148,11 @@
       halo.addColorStop(0, 'rgba(160,225,255,.5)'); halo.addColorStop(1, 'rgba(160,225,255,0)');
       ctx.fillStyle = halo; ctx.beginPath(); ctx.arc(th.x, th.y, 26, 0, 7); ctx.fill();
 
-      // 粒子
+      // 粒子与文字同速向前，文字到喉部被吸入
+      words.forEach(function (w) {
+        w.z -= w.sp;
+        if (w.z < .252) { w.z = 1.02; w.u = (Math.random() * 2 - 1) * .62; }
+      });
       parts.forEach(function (p) {
         p.z += p.sp * 0.016;
         if (p.z > 1) p.z = 0;
@@ -156,6 +160,22 @@
         const px = e.x + p.u * e.rx * 1.05, py = e.y + p.v * e.ry * 1.05;
         ctx.fillStyle = 'rgba(160,225,255,' + (.12 + p.z * .55) + ')';
         ctx.beginPath(); ctx.arc(px, py, 1.3 + p.z * 1.2, 0, 7); ctx.fill();
+      });
+
+      // 关键数字飞进洞口
+      words.forEach(function (w) {
+        const e = ell(w.z);
+        const sz = 10 + w.z * 24;
+        let a = .96;
+        if (w.z > .94) a = (1 - w.z) / .06;
+        else if (w.z < .42) a = (w.z - .255) / .165;
+        a = Math.max(0, Math.min(1, a));
+        ctx.font = '800 ' + sz.toFixed(1) + 'px "PingFang SC","Microsoft YaHei",sans-serif';
+        ctx.textAlign = 'center'; ctx.textBaseline = 'middle';
+        ctx.shadowColor = 'rgba(10,30,48,.9)'; ctx.shadowBlur = 10;
+        ctx.fillStyle = w.c.replace('ALPHA', a.toFixed(2));
+        ctx.fillText(w.t, e.x, H * 0.455 + w.u * H * 0.135);
+        ctx.shadowBlur = 0;
       });
 
       // 出口辉光
@@ -169,6 +189,16 @@
 
     resize();
     raf = requestAnimationFrame(frame);
+    const words = [
+      {t:'−44.7%',        c:'rgba(255,150,128,ALPHA)', u:-.78, z:.99, sp:.0062, lit:1},
+      {t:'2027 下半',      c:'rgba(240,248,255,ALPHA)', u:.74,  z:.91, sp:.0054, lit:1},
+      {t:'6 个没动工',      c:'rgba(255,150,128,ALPHA)', u:-.44, z:.83, sp:.0058, lit:1},
+      {t:'100 亿',         c:'rgba(255,214,130,ALPHA)', u:.40,  z:.76, sp:.0066, lit:1},
+      {t:'+8.9%',         c:'rgba(170,236,255,ALPHA)', u:-.10, z:.68, sp:.0052, lit:1},
+      {t:'超 2000 亿',      c:'rgba(240,248,255,ALPHA)', u:.16,  z:.60, sp:.0060, lit:1},
+      {t:'19 个现场',       c:'rgba(170,236,255,ALPHA)', u:-.66, z:.52, sp:.0056, lit:1},
+      {t:'11 个镇街',       c:'rgba(240,248,255,ALPHA)', u:.62,  z:.44, sp:.0064, lit:1}
+    ];
     const ro = window.ResizeObserver ? new ResizeObserver(function () { resize(); }) : null;
     if (ro) ro.observe(canvas); else window.addEventListener('resize', resize);
     document.addEventListener('visibilitychange', function () {
