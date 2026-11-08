@@ -154,7 +154,7 @@ function renderInspector(){
  $('inspectorText').textContent=node?node.detail:fact?fact.detail:state.step?'被点亮的是需要核实的可能路径，不是已经识别的经济因果。':sc.intro;
  $('inspectorQuestion').textContent=node?node.ask:fact?'这项统计信号与哪些真实主体和关系有关？':sc.questions[state.lens];
  $('chainStart').textContent=sc.origin;$('chainMiddle').textContent=sc.mid;$('chainEnd').textContent=sc.unknown;
- $('bufferResult').textContent=state.buffer==='unknown'?'目前没有完整公开数据确认替代客户、供应商及调整时间。':
+ $('bufferResult').textContent=state.buffer==='unknown'?'目前没有完整资料确认替代客户、供应商及调整时间。':
  state.buffer==='weak'?'条件假设：替代渠道不足，这条路径更需要核查；并非已测算出损失。':
  '条件假设：有可用的替代客户或渠道，部分影响可能被缓冲；需真实交易记录确认。';
 }
@@ -278,7 +278,7 @@ $('viewSaved').addEventListener('click',()=>{
   const url=new URL(location.href);url.searchParams.set('scene',scene);url.searchParams.set('step',String(step));url.searchParams.set('lens',lens);url.searchParams.set('buffer',buffer);url.searchParams.delete('focus');url.hash='explore';
   return '<div class="fact-row"><strong>0'+(i+1)+' · '+esc(scenes[scene].name||scene)+' · '+esc(String(step))+'/4层</strong><p>视角：'+esc(lens==='business'?'企业':lens==='people'?'普通人':'决策者')+' · 记录时间：'+esc(String(r.savedAt||'未记录').slice(0,16).replace('T',' '))+'</p><p><a href="'+esc(url.href)+'">打开保存的影响链 ↗</a></p></div>';
  }).join('');
- showDialog('我的影响链 · 本机保存','<p>共保存 '+list.length+' 条最近记录。链接仅包含公开的条件参数，不包含个人资料。</p>'+rows);
+ showDialog('我的影响链 · 本机保存','<p>共保存 '+list.length+' 条最近记录。链接只带当前的条件设定，不包含个人资料。</p>'+rows);
 });
 document.addEventListener('visibilitychange',()=>{if(document.hidden)stop();});window.addEventListener('pagehide',stop);window.addEventListener('resize',()=>{renderFact();renderScenario();},{passive:true});
 window.addEventListener('popstate',()=>{stop();const p=new URL(location.href).searchParams;state.scene=within(p.get('scene'),Object.keys(scenes),'projects');state.step=Math.min(4,Math.max(0,+p.get('step')||0));state.mode=within(p.get('mode'),['compare','trace'],'compare');state.focus=p.get('focus')||'';render();});

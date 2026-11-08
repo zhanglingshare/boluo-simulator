@@ -14,7 +14,7 @@
   const delta=r.stress.p50-r.base.p50;
   const fmt=v=>Math.round(Math.abs(v)).toLocaleString("zh-CN");
   $("conditionDelta").textContent=(delta>0?"+":delta<0?"−":"") + fmt(delta) +"亿元";
-  $("conditionRange").textContent="当前区间 P10—P90："+fmt(r.stress.p10)+"—"+fmt(r.stress.p90)+"亿元";
+  $("conditionRange").textContent="当前区间下限—上限："+fmt(r.stress.p10)+"—"+fmt(r.stress.p90)+"亿元";
   $("conditionQuestion").textContent=notes[st.shock]||"核验相关实际条件，再比较结果。";
   const dest=new URL("./insights.html",location.href);
   const u=new URL(location.href);

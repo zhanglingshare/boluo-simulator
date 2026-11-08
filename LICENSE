@@ -1,21 +1,42 @@
-MIT License
+版权所有 © 2026 张凌（Zhang Ling）。保留所有权利。
+Copyright (c) 2026 Zhang Ling. All rights reserved.
 
-Copyright (c) 2026 Zhang Ling
+本仓库及其线上站点（以下合称"本项目"）包含的文字、图表、数据整理成果、
+界面设计、结构安排与判断表述，均为作者原创成果。
 
-Permission is hereby granted, free of charge, to any person obtaining a copy
-of this software and associated documentation files (the "Software"), to deal
-in the Software without restriction, including without limitation the rights
-to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
-copies of the Software, and to permit persons to whom the Software is
-furnished to do so, subject to the following conditions:
+一、允许的使用
 
-The above copyright notice and this permission notice shall be included in all
-copies or substantial portions of the Software.
+1. 个人浏览、阅读与体验本项目的公开页面；
+2. 通过链接分享本项目的公开页面地址；
+3. 在评论、教学、研究或新闻报道中引用少量内容，须注明作者与来源链接，
+   且引用部分不得构成对本项目实质内容的替代。
 
-THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
-IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
-FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
-AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
-LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
-OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
-SOFTWARE.
+二、未经作者书面许可，禁止
+
+1. 复制、转载、镜像、批量下载或以任何方式整体再现本项目的页面、图表与文字；
+2. 将本项目的全部或实质部分用于商业用途，包括但不限于销售、收费服务、
+   商业展示、投标材料与付费咨询交付；
+3. 修改、改编、演绎本项目的结构、表述与视觉设计后再行发布；
+4. 将本项目的全部或实质部分用于训练人工智能模型、构建数据集或作为
+   自动化生成系统的输入；
+5. 移除、遮盖或篡改作者署名、来源标注与版权声明。
+
+三、关于代码文件
+
+本项目中的脚本文件（.js）仅为保障公开页面正常运行而提供，供阅读与学习参考，
+不构成任何形式的使用许可。不得复制、修改、再分发或用于商业用途。
+
+四、关于数据与来源
+
+本项目所引用的公开统计、政府文件与媒体报道，其权利归原发布机构所有。
+本项目对上述公开材料的整理、关联与呈现方式受本声明保护。
+
+五、免责
+
+本项目按"现状"提供，不构成投资建议、官方决策依据或对任何结果的承诺。
+使用者需自行判断其适用性并承担相应风险。
+
+六、授权申请
+
+如需转载、合作、商业使用或获取完整推演材料，请联系：
+68588368@qq.com

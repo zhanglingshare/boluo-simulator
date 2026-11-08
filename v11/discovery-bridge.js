@@ -21,7 +21,7 @@
   if (context.town) note.textContent += ' 镇街筛选不改变下方资料的统计范围。';
   copy.append(kicker, question, note);
   const actions = document.createElement('div'); actions.className = 'discovery-carry-actions';
-  const next = document.createElement('a'); next.href = C.link(isIndustry ? 'reality.html' : 'industry-base.html', context); next.textContent = isIndustry ? '返回现实校准' : '查看相关条件实验 →';
+  const next = document.createElement('a'); next.href = C.link(isIndustry ? 'reality.html' : 'industry-base.html', context); next.textContent = isIndustry ? '返回现实对照' : '查看相关条件实验 →';
   const home = document.createElement('a'); home.href = C.link('index.html', context); home.textContent = '返回发现';
   const close = document.createElement('button'); close.type = 'button'; close.textContent = '收起 ×'; close.setAttribute('aria-label', '收起发现页追问');
   close.onclick = () => {

@@ -153,7 +153,7 @@
   N('gongzhuang','公庄镇','regional','cement','该生产线所在地，不意味着公庄全部建材业务退出。');
   Q('glc-other','企业其他业务','industry','原通告未说明其他业务的变化，不能一并判定退出。');
   Q('glc-people','人员与配套影响','people','具体岗位、配套和承接安排需要另外核实。');
-  const cEdges=[E('glc-ownership','glc','glc-line','所属产线','cement','企业与该条产线的对应。',{before:'record'}),E('clinker-output','glc-line','clinker','该线生产','cement','只断开这条产线的生产联系，保留企业主体。',{before:'record',after:'closed'}),E('glc-removal','glc-line','glc-equipment','设备拆除','cement','退出事实，不是模型假设。'),E('glc-location','gongzhuang','glc','属地记录','cement','生产线所在地区。',{before:'record'}),E('glc-business','glc','glc-other','其他业务？',null,'不能把整家公司从图上删掉。'),E('glc-effects','glc-line','glc-people','影响待查',null,'通告没有给出岗位或配套损失。')];
+  const cEdges=[E('glc-ownership','glc','glc-line','所属产线','cement','企业与该条产线的对应。',{before:'record'}),E('clinker-output','glc-line','clinker','该线生产','cement','只断开这条产线的生产联系，保留企业主体。',{before:'record',after:'closed'}),E('glc-removal','glc-line','glc-equipment','设备拆除','cement','退出事实，不是推演假设。'),E('glc-location','gongzhuang','glc','属地记录','cement','生产线所在地区。',{before:'record'}),E('glc-business','glc','glc-other','其他业务？',null,'不能把整家公司从图上删掉。'),E('glc-effects','glc-line','glc-people','影响待查',null,'通告没有给出岗位或配套损失。')];
   scene('cement','产线与退出','industry','退出一条线，不能删掉整家公司。','cement','glc-line',['glc-line','glc','clinker','glc-equipment','gongzhuang','glc-other','glc-people'],cEdges,
     [M('关停产线原规模','2500','吨/日','熟料线 · 不是全厂规模','2500吨/日',2500),M('明确退出范围','1','条产线','其他业务未说明','该线在产',1)],
     [step('先看主体和产线','企业与具体产线分开。',['glc-line','glc','gongzhuang']),step('看这一条联系','退出涉及的是该线生产联系。',['clinker']),step('明确退出事实','设备拆除有通告依据。',['glc-equipment']),step('保留未知','其他业务、人员和配套影响继续核实。',['glc-other','glc-people'])],

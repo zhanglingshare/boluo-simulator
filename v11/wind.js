@@ -93,12 +93,12 @@ function renderNumbers(r){
  $('afterMedian').textContent=fmt(s.p50);
  $('medianDelta').textContent=signed(s.p50-b.p50);
  $('afterHit').textContent=pct(s.hit);
- $('hitDetail').textContent='基准 '+pct(b.hit)+' · 仅模型内占比';
- $('rangeBase').textContent='基准 P10—P90：'+fmt(b.p10)+'—'+fmt(b.p90);
- $('rangeShock').textContent='压力 P10—P90：'+fmt(s.p10)+'—'+fmt(s.p90);
+ $('hitDetail').textContent='基准 '+pct(b.hit)+' · 仅当前设定下的占比';
+ $('rangeBase').textContent='基准区间：'+fmt(b.p10)+'—'+fmt(b.p90);
+ $('rangeShock').textContent='压力区间：'+fmt(s.p10)+'—'+fmt(s.p90);
  $('rangeBuffer').hidden=!r.buffer;
  $('bufferLegend').hidden=!r.buffer;
- if(r.buffer)$('rangeBuffer').textContent='缓冲 P10—P90：'+fmt(r.buffer.p10)+'—'+fmt(r.buffer.p90);
+ if(r.buffer)$('rangeBuffer').textContent='缓冲区间：'+fmt(r.buffer.p10)+'—'+fmt(r.buffer.p90);
  $('beforeBuffer').textContent=fmt(s.p50);
  $('afterBuffer').textContent=r.buffer?fmt(r.buffer.p50):'—';
  const delta=s.p50-b.p50, spread=s.p90-s.p10,baseSpread=b.p90-b.p10;
@@ -108,11 +108,11 @@ function renderNumbers(r){
  Math.abs(delta)>30?'目标可能不变，但结果的分布已经明显移动。':
  '一处变化，不一定产生巨大的总量变化。';
  $('resultExplain').textContent=!state.active?'基准情景没有施加额外压力。这并不意味着现实世界没有风险。':
- '本次中位数相对基准'+signed(delta)+'亿元；P10—P90区间宽度'+(spread>=baseSpread?'扩大约':'缩小约')+fmt(Math.abs(spread-baseSpread))+'亿元。均为条件设定下的模拟结果。';
- $('bufferTakeaway').textContent=r.buffer?'缓冲假设下，中位数相对未缓冲变化 '+signed(r.buffer.p50-s.p50)+' 亿元。它不是已实施政策的效果评估。':'开启一种缓冲条件后，展示同一种子下的第三组模拟结果。';
- $('shareSummary').textContent=state.active?'选择“'+meta.label+'”，压力档位'+tickLabels()+'，模型中位数由'+fmt(b.p50)+'变为'+fmt(s.p50)+'亿元。'+(r.buffer?'增加缓冲后为'+fmt(r.buffer.p50)+'亿元。':'')+'这是可复现实验，不是事实预测。':'当前是原有基准模型，尚未加入额外变化。';
+ '本次中位数相对基准'+signed(delta)+'亿元；结果区间宽度'+(spread>=baseSpread?'扩大约':'缩小约')+fmt(Math.abs(spread-baseSpread))+'亿元。均为条件设定下的结果。';
+ $('bufferTakeaway').textContent=r.buffer?'缓冲假设下，中位数相对未缓冲变化 '+signed(r.buffer.p50-s.p50)+' 亿元。它不是已实施政策的效果评估。':'开启一种缓冲条件后，展示同一组条件下的第三组结果。';
+ $('shareSummary').textContent=state.active?'选择“'+meta.label+'”，压力档位'+tickLabels()+'，结果中位数由'+fmt(b.p50)+'变为'+fmt(s.p50)+'亿元。'+(r.buffer?'增加缓冲后为'+fmt(r.buffer.p50)+'亿元。':'')+'这是条件对照，不是事实预测。':'当前是基准情景，尚未加入额外变化。';
  const impacts=meta.effect.map((v,i)=>v===0?null:HT.DEFAULT_PATHS[i].name+'：均值'+signed(v*state.strength)+'亿元').filter(Boolean).join('；');
- $('assumptionText').textContent='当前场景“'+meta.label+'”使用受控 C 级机制假设：'+(impacts||'没有额外均值调整')+'。同时对指定路径增加有限标准差以模拟不确定性。缓冲仅部分恢复该调整幅度；这些系数尚未通过项目级独立数据识别，不能当作已证实的GDP因果效应。';
+ $('assumptionText').textContent='当前场景“'+meta.label+'”按一组设定调整相关路径的预期：'+(impacts||'没有额外调整')+'。同时让这些路径的结果有一定浮动。缓冲只抵消其中一部分；这些设定尚未经过项目层面的独立核对，不能当作已确认的GDP因果变化。';
 }
 function pathFor(points){
  if(!points.length)return '';
@@ -172,7 +172,7 @@ function chartRender(results,animate=false){
  const chart=$('distChart');chart.setAttribute('viewBox','0 0 '+W+' '+H);
  chart.innerHTML=svg;chart.classList.remove('wave');
  if(animate&&!state.reduced){void chart.getBoundingClientRect().width;chart.classList.add('wave');}
- chart.setAttribute('aria-label','相同随机种子下模拟GDP分布：基准中位'+fmt(results.base.p50)+'亿元，冲击中位'+fmt(results.stress.p50)+'亿元'+(results.buffer?'，缓冲中位'+fmt(results.buffer.p50)+'亿元':'')+'。目标线为1600亿元。');
+ chart.setAttribute('aria-label','同一组设定下的结果分布：基准中位'+fmt(results.base.p50)+'亿元，冲击中位'+fmt(results.stress.p50)+'亿元'+(results.buffer?'，缓冲中位'+fmt(results.buffer.p50)+'亿元':'')+'。目标线为1600亿元。');
 }
 function renderChain(){
  const m=MODELS[state.shock];
@@ -244,8 +244,8 @@ $('modal').addEventListener('click',e=>{if(e.target===$('modal'))$('modal').clos
 $('whyButton').addEventListener('click',()=>{
  if(!last)return;
  const m=MODELS[state.shock];
- const rows=HT.DEFAULT_PATHS.map((p,i)=>m.effect[i]===0&&m.spread[i]===0?'':'<div class="fact-row"><strong>'+esc(p.name)+'</strong><p>本次设定：五年累计路径贡献的假设均值调整 '+esc(signed(m.effect[i]*state.strength))+' 亿元，标准差增加 '+esc(fmt(m.spread[i]*state.strength))+' 亿元；这些数字不是直接观测。</p></div>').join('');
- modal('情景是怎样改变结果的？','<p><strong>'+esc(m.label)+'</strong> 不是一个被实证估计的单一因果系数。此页用同一粒随机种子，在既有模型上有限度调整路径贡献的均值和离散程度，比较结果分布。</p>'+rows+'<p>目前既有基准路径贡献之和被设定得与2030目标规模差额接近，模型给出的达标占比并非独立验证的真实概率。请重点比较情景之间的方向、条件和不确定性，而非单个百分数。</p>');
+ const rows=HT.DEFAULT_PATHS.map((p,i)=>m.effect[i]===0&&m.spread[i]===0?'':'<div class="fact-row"><strong>'+esc(p.name)+'</strong><p>本次设定：把这条路径的五年预期调整 '+esc(signed(m.effect[i]*state.strength))+' 亿元，波动范围同时放宽约 '+esc(fmt(m.spread[i]*state.strength))+' 亿元；这些数字是设定，不是观测。</p></div>').join('');
+ modal('情景是怎样改变结果的？','<p><strong>'+esc(m.label)+'</strong> 不是单一确定的因果关系。此页在同一套设定下有限度调整这条路径的预期与波动，比较结果分布。</p>'+rows+'<p>目前既有基准路径贡献之和被设定得与2030目标规模差额接近，这里的达标占比只反映当前设定，不是独立验证的真实概率。请重点比较情景之间的方向、条件和不确定性，而非单个百分数。</p>');
 });
 function link(){
  syncURL();const u=new URL(location.href);u.hash='results';return u.href;
@@ -284,9 +284,9 @@ $('savedList').addEventListener('click',()=>{
     if(['density','hist','cdf'].includes(d.distribution.view))u.searchParams.set('view',d.distribution.view);
   }
   u.hash='results';
-  return '<div class="fact-row"><strong>'+String(i+1).padStart(2,'0')+' · '+esc(MODELS[shock].label)+'</strong><p>档位 '+esc(String(strength))+' / 缓冲 '+(d.buffer?'开':'关')+' / 模型中位 '+esc(fmt(Number(d.median)))+'亿元</p><a href="'+esc(u.href)+'">恢复此实验 ↗</a></div>';
+  return '<div class="fact-row"><strong>'+String(i+1).padStart(2,'0')+' · '+esc(MODELS[shock].label)+'</strong><p>档位 '+esc(String(strength))+' / 缓冲 '+(d.buffer?'开':'关')+' / 结果中位 '+esc(fmt(Number(d.median)))+'亿元</p><a href="'+esc(u.href)+'">恢复此实验 ↗</a></div>';
  }).join('');
- modal('我的风洞记录 · 仅本机','<p>记录存放在当前浏览器。分享链接只有公开模型参数。</p>'+markup);
+ modal('我的风洞记录 · 仅本机','<p>记录存放在当前浏览器。分享链接只带当前的情景设定。</p>'+markup);
 });
 document.addEventListener('visibilitychange',()=>{if(document.hidden)clearInterval(animTimer);});
 window.addEventListener('pagehide',()=>clearInterval(animTimer));

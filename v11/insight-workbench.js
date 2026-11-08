@@ -258,7 +258,7 @@ if(seedParams.get("shock")){
  const shock=seedParams.get("shock");
  if(names[shock]){
   $("iqArrival").hidden=false;
-  $("iqArrival").textContent="已带入第七页的研究问题："+names[shock]+"。你在第七页设置的基准和参数将保留在返回链接中；本页的相对指数不会冒充实际GDP变化。";
+  $("iqArrival").textContent="已带入第七页的研究问题："+names[shock]+"。你在第七页设置的基准和条件会保留在返回链接中；本页的相对指数不会冒充实际GDP变化。";
  }
 }
 window.addEventListener("popstate",()=>{

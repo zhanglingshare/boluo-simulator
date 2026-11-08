@@ -136,7 +136,7 @@ function calc(){
    data.major=fmt(local,0)+"元";data.unit="每100位游客的本地消费留存代理";data.detail="假设当日游每人消费90元、过夜每人600元，按你设定的过夜率与本地留存比例计算。";
    data.second=fmt(all,0)+"元";data.secondDetail="同一100游客假设产生的总消费；不是实际营业额、税收或地区增加值。";
    data.chart=chartTourist(n,secondary,all,local);
-   data.foot="消费金额、过夜率及留存份额均为可替换的演示参数。正式核算需游客调查与经营主体数据。";
+   data.foot="消费金额、过夜率及留存份额均为可替换的演示设定。正式核算需游客调查与经营主体数据。";
    data.chain=["游客到访","停留与过夜","消费发生地","本地经营留存"];data.bars=[["到访100人",100],["过夜人数",n],["留存份额",secondary]];
  }else{
    const n=primary,N=652;

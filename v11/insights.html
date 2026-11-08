@@ -40,7 +40,7 @@
 <div class="iq-live-feedback"><div><span>当前选中</span><strong id="iqActiveName">项目接续</strong></div><div><span>对目标的假设贡献</span><strong id="iqActiveScore">—</strong></div><div><span>排查顺序（情景）</span><strong id="iqActiveRank">—</strong></div></div>
 <div class="iq-stage-explain"><strong id="iqStageHeadline">不一定是最大的一环，却可能是最难替代的一环。</strong><p id="iqStageExplain">点击节点或拖动右侧条件，观察结果怎样重新排列。</p></div>
 </div>
-<aside class="iq-controls" aria-label="结构压力测试参数">
+<aside class="iq-controls" aria-label="结构压力测试条件">
 <div class="iq-controls-head"><span>EDIT THE CONDITIONS</span><h3>调整一条联系</h3><p id="iqFocusDescription">每次只针对选中环节修改假设，其他环节保持原条件。</p></div>
 <label class="iq-slider" for="iqSeverity"><span>整体冲击强度 <strong id="iqSeverityValue">70</strong></span><input id="iqSeverity" type="range" min="10" max="100" step="5" value="70"><small>冲击越强，所有候选联系的情景响应越明显</small></label>
 <label class="iq-slider" for="iqImportance"><span>选中联系的可能波及范围 <strong id="iqImportanceValue">84</strong></span><input id="iqImportance" type="range" min="5" max="100" step="1" value="84"><small>当前为演示条件，可自行调整，不代表现实测量</small></label>
@@ -48,7 +48,7 @@
 <label class="iq-slider" for="iqSubstitute"><span>替代 / 缓冲能力 <strong id="iqSubstituteValue">35</strong></span><input id="iqSubstitute" type="range" min="0" max="100" step="5" value="35"><small>如果一条关系受冲击，有没有其他路径可以接上？</small></label>
 <div class="iq-experiment-buttons"><button id="iqSever" type="button" aria-pressed="false"><span aria-hidden="true">⤫</span> 假设这条联系不存在</button><button id="iqRun" type="button" class="primary"><span aria-hidden="true">▶</span> 运行结构压力实验</button></div>
 <button id="iqReset" type="button" class="iq-reset">恢复这组目标的初始条件</button>
-<div class="iq-control-disclaimer">读数为相对情景指标（0—100），不是GDP损失、企业风险概率或已识别的因果系数。切断联系只表示暂不采用这条解释，不代表现实风险自动消失。</div>
+<div class="iq-control-disclaimer">读数为相对情景指标（0—100），不是GDP损失、企业风险概率或已经确认的因果结论。切断联系只表示暂不采用这条解释，不代表现实风险自动消失。</div>
 </aside>
 </div>
 </section>
@@ -57,7 +57,7 @@
 <div class="iq-deck-grid">
 <article class="iq-chart iq-ranking"><div class="iq-chart-title"><h3>谁值得优先核验？</h3><p>五个候选环节 · 按当前情景暴露量排序，点行可选中</p></div><div id="iqRankingBars" class="iq-rank-bars" role="group" aria-label="可点击的候选联系对照排名"></div><div class="iq-chart-note">排名会随重要性、表现、替代条件和冲击强度重新计算；不是政府政策排序。</div></article>
 <article class="iq-chart iq-heat"><div class="iq-chart-title"><h3>最敏感的条件组合</h3><p>当前选中联系：冲击 × 替代能力 · 点格子直接施压</p></div><div class="iq-heat-axes"><span>冲击加强 ↓</span><span>替代能力增强 →</span></div><div class="iq-heat-grid" id="iqHeatGrid" role="group" aria-label="可以点击的冲击与替代能力组合网格"></div><div class="iq-heat-foot"><span>较低的情景暴露量</span><span>较高的情景暴露量</span></div></article>
-<article class="iq-chart iq-counterfactual"><div class="iq-chart-title"><h3>断开以后，解释改变了多少？</h3><p>比较未设置缓冲、加入缓冲与删除该解释路径</p></div><div id="iqComparisons" class="iq-compare-bars"></div><div class="iq-chart-note">“删除路径”是反事实归因测试，柱子变短不代表真实经济改善。</div></article>
+<article class="iq-chart iq-counterfactual"><div class="iq-chart-title"><h3>断开以后，解释改变了多少？</h3><p>比较未设置缓冲、加入缓冲与删除该解释路径</p></div><div id="iqComparisons" class="iq-compare-bars"></div><div class="iq-chart-note">“删除路径”只用来检验这套解释是否还站得住，柱子变短不代表真实经济改善。</div></article>
 </div>
 </section>
 <section class="iq-investigation" aria-labelledby="iqInvestigationTitle"><div class="iq-investigation-head"><div><p class="micro">THE MISSING EVIDENCE</p><h2 id="iqInvestigationTitle">你现在最该查的，<em>不是更多总量数据。</em></h2></div><span>先拆关系，再补证据</span></div><div class="iq-investigation-grid"><div><span>为什么怀疑这一环？</span><strong id="iqWhy">—</strong></div><div><span>哪份资料可能改变判断？</span><strong id="iqMissing">—</strong></div></div><details class="iq-limits"><summary>这次体验怎样计算？哪些结论不能下？</summary><p>这是一套以公开统计线索为起点的结构假设体验。比较图上的相对指数由重要性、运行表现、冲击强度、替代能力共同计算；这些输入是供用户质疑、调整的假设，不是对真实企业的测量或对产业网络关系的估计。</p><p>公开观察是2026年前三季度规上工业增加值与工业投资分别同比变化；两者统计口径不同，不能直接解释因果。断开一条候选联系，只从当前解释结构中排除该联系，不表示真实经济损失被消除。真实验证需要项目、企业和交易级材料。</p></details></section>

@@ -206,8 +206,8 @@ function render(all){
  body.replaceChildren();
  rows.forEach(s=>{
   const tr=document.createElement("tr");
-  const vals=[s.name,s.stat.p5,s.stat.p10,s.stat.p25,s.stat.p50,s.stat.p75,s.stat.p90,s.stat.p95,s.stat.mean,s.stat.sd];
-  vals.forEach((v,i)=>{const td=document.createElement("td");td.textContent=i===0?v:format(v);if(i===4)td.className="median";if(i===0)td.style.color=s.color;tr.append(td);});
+  const vals=[s.name,s.stat.p10,s.stat.p50,s.stat.p90];
+  vals.forEach((v,i)=>{const td=document.createElement("td");td.textContent=i===0?v:format(v);if(i===2)td.className="median";if(i===0)td.style.color=s.color;tr.append(td);});
   body.append(tr);
  });
  const tails=$("detailTails");tails.replaceChildren();
@@ -218,8 +218,8 @@ function render(all){
   b.append(span,strong);tails.append(b);
  });
  const delta=rows[1].stat.p50-rows[0].stat.p50;
- $("detailObservation").textContent="当前基准P10—P90："+format(rows[0].stat.p10)+"—"+format(rows[0].stat.p90)+"亿；压力相对基准的P50移动 "+(delta>0?"+":"")+format(delta)+"亿。";
- const inspector=$("detailCrossLabel");inspector.textContent=state.view==="cdf"?"移动位置，查看累计不超过某个值的模型内占比":"移动位置，查看三种条件落在位置右侧的模型内占比";
+ $("detailObservation").textContent="当前基准区间："+format(rows[0].stat.p10)+"—"+format(rows[0].stat.p90)+"亿；压力相对基准的P50移动 "+(delta>0?"+":"")+format(delta)+"亿。";
+ const inspector=$("detailCrossLabel");inspector.textContent=state.view==="cdf"?"移动位置，查看累计不超过某个值的占比":"移动位置，查看三种条件落在该位置右侧的占比";
  $("detailCrossValue").textContent="—";
  chart.onpointermove=ev=>{
    const rect=chart.getBoundingClientRect();const rel=clamp((ev.clientX-rect.left)/rect.width,0,1);
