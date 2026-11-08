@@ -36,3 +36,10 @@
  .path-lab-picture svg{width:670px;max-width:none;min-height:300px}
  .path-lab-picture:after{content:"← 左右拖动查看完整路径与系数 →";display:block;text-align:center;font-size:10px;color:#9ac4dd;padding:5px 0}
 }
+
+/* Motion is attached to an actual completed recalculation. */
+.distribution-workbench.is-running .sim-curve{stroke-dasharray:1700;stroke-dashoffset:1700;animation:detailTrace .9s cubic-bezier(.2,.75,.2,1) forwards}
+@keyframes detailTrace{to{stroke-dashoffset:0}}
+.detail-legend{display:flex;gap:16px;flex-wrap:wrap;margin-top:11px;font-size:11px;font-weight:800;color:#bcdcef}
+.detail-legend span{display:inline-flex;align-items:center;gap:7px}.detail-legend i{display:inline-block;width:20px;height:4px;border-radius:3px;background:var(--k)}
+@media(prefers-reduced-motion:reduce){.distribution-workbench.is-running .sim-curve{animation:none!important;stroke-dasharray:none!important}}
