@@ -1,95 +1,70 @@
 <!doctype html>
 <html lang="zh-CN"><head>
-<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
-<meta name="theme-color" content="#f5f7fa">
-<meta name="description" content="博罗决策风洞V11第八页：用公开数据锚点、结构关系中介与调节思想、重要性—表现比较式互动地图寻找结构盲点；所有示例系数和评分均非实证估计。">
-<title>08 忽略了什么｜看见增长背后的盲点 · 博罗 V11</title>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="theme-color" content="#edf5fc">
+<meta name="description" content="博罗决策风洞第八页：从公开变化信号出发，亲手改变关系强度、表现和替代条件，观察结构假设怎样改变，并寻找最值得补的证据。">
+<title>08 忽略了什么｜结构透视实验室 · 博罗 V11</title>
 <link rel="stylesheet" href="../assets/boluo-access.css?v=20261108-inline2">
 <link rel="stylesheet" href="./impact.css?v=20261107-v1">
-<link rel="stylesheet" href="./sem-lab.css?v=20261108-a"><link rel="stylesheet" href="./sem-viz-stage.css?v=20261108-v3">
+<link rel="stylesheet" href="./insight-workbench.css?v=20261108-i2">
 <script src="../assets/boluo-access.js?v=20261108-inline2" data-bl-access="inline"></script>
 <script defer src="./sem-demo.js?v=20261108-a"></script>
-<script defer src="./sem-lab.js?v=20261108-a"></script><script defer src="./sem-viz-stage.js?v=20261108-v3"></script>
-</head><body class="insights-page">
+<script defer src="./insight-engine.js?v=20261108-i2"></script>
+<script defer src="./insight-workbench.js?v=20261108-i2"></script>
+</head>
+<body class="iq-page">
 <header class="site-header">
-<a class="brand" href="./index.html"><span class="brand-mark" aria-hidden="true"><svg viewBox="0 0 48 38"><path d="M3 28L16 8Q19 5 22 10L28 19 33 13Q36 9 39 14L46 27Q48 32 42 33H7Q1 33 3 28Z" fill="#dff8ff" stroke="#fff" stroke-width="1.8"/><path d="M10 29L20 19L28 26L35 20L43 29" stroke="#1396df" stroke-width="3" fill="none" stroke-linecap="round"/></svg></span><span class="brand-name"><strong>博罗决策风洞模拟器</strong><small>Boluo Decision Wind-Tunnel Simulator</small></span></a>
-<nav class="desktop-nav" aria-label="V11页面导航"><a href="./index.html">01 发现</a><a href="./reality.html">02 现实</a><a href="./industry-base.html">03 底盘</a><a href="./relations.html">04 关系</a><a href="./impact.html">05 影响</a><a href="./plan.html">06 规划</a><a href="./wind.html">07 风洞</a><a href="./insights.html" class="current" aria-current="page">08 忽略了什么</a></nav>
-<div class="header-tools"><button type="button" id="shareInsight" aria-label="复制本页带有选择状态的链接">分享发现</button><a href="./wind.html" class="return-link">返回07</a></div>
+<a class="brand" href="./index.html" aria-label="返回博罗决策风洞首页"><span class="brand-mark" aria-hidden="true"><svg viewBox="0 0 48 38"><path d="M3 28L16 8Q19 5 22 10L28 19 33 13Q36 9 39 14L46 27Q48 32 42 33H7Q1 33 3 28Z" fill="#dff8ff" stroke="#fff" stroke-width="1.8"/><path d="M10 29L20 19L28 26L35 20L43 29" stroke="#1396df" stroke-width="3" fill="none" stroke-linecap="round"/></svg></span><span class="brand-name"><strong>博罗决策风洞模拟器</strong><small>Boluo Decision Wind-Tunnel Simulator</small></span></a>
+<nav class="desktop-nav" aria-label="V11页面导航"><a href="./index.html">01 发现</a><a href="./reality.html">02 现实</a><a href="./industry-base.html">03 底盘</a><a href="./relations.html">04 关系</a><a href="./impact.html">05 影响</a><a href="./plan.html">06 规划</a><a href="./wind.html">07 风洞</a><a href="./insights.html" aria-current="page" class="current">08 忽略了什么</a></nav>
+<div class="header-tools"><button id="iqShareTop" type="button" title="分享当前实验">分享实验</button><a href="./wind.html" class="return-link">返回07</a></div>
 </header>
-<main class="wrap insight-wrap">
-<section class="insight-hero"><div><p class="micro">08 / WHAT ARE WE MISSING? · REALITY × HYPOTHESIS</p><h1>最危险的，<em>可能不是跌得最凶的。</em></h1><p>你在第七页改变了条件。现在换个角度：最值得补的数据，可能藏在一个不显眼的连接里。</p><div class="hero-chips"><span>公开数据锚定</span><span>重要性 × 表现</span><span>中介 / 调节启发</span></div></div>
-<div class="hero-evidence"><small>2026前三季度 · 公开观察</small><div><b class="plus">+8.9%<small>规上工业增加值</small></b><b class="minus">−44.7%<small>工业投资</small></b></div><a href="https://www.fz0752.com/fontHtml/html/issue/000143025_1.html" target="_blank" rel="noopener noreferrer">查看原始公开报道 ↗</a></div></section>
-<section class="insight-signals" aria-labelledby="insightSignalsTitle">
-<span class="viz-overline">REAL DATA / 两个公开观察窗口</span>
-<h2 id="insightSignalsTitle">一边仍在增长，<em>另一边明显收缩。</em></h2>
-<div class="insight-signal-grid">
-<div class="insight-signal down"><span class="signal-title">工业投资 · 2026年前三季度</span><div class="signal-kpi">−44.7%</div><div class="v-index-track"><i class="v-index-fill" style="width:46.0833%"></i></div><div class="signal-foot">上年同期=100 → 本期指数55.3</div></div>
-<div class="insight-signal is-up"><span class="signal-title">规上工业增加值 · 2026年前三季度</span><div class="signal-kpi">+8.9%</div><div class="v-index-track"><i class="v-index-fill" style="width:90.75%"></i></div><div class="signal-foot">上年同期=100 → 本期指数108.9</div></div>
-</div>
-<div class="signal-narrative"><strong>反差是真实的。原因，尚不能这样下结论。</strong><span>可能隔着产能兑现、订单、配套和时间差。下面点击一条候选联系，看缺少什么证据才能验证。</span></div>
-<div class="signal-source">同比分别以各自上年同期为100；不能把指数差额当成经济损失或直接因果。</div>
+<main class="wrap iq-wrap">
+<section class="iq-opening" aria-labelledby="iqTitle">
+<div class="iq-opening-copy"><p class="micro">08 / STRUCTURE UNDER PRESSURE</p><h1 id="iqTitle">增长还在继续，<em>下一处断点在哪？</em></h1><p>不急着认定原因。挑一条可能被忽略的联系，亲手改变它，看整个判断如何改写。</p><div class="iq-opening-steps"><span>① 找联系</span><span>② 施加变化</span><span>③ 看结构重排</span><span>④ 带问题重跑</span></div></div>
+<div class="iq-evidence-strip" aria-label="2026年前三季度博罗公开统计反差"><div><small>规上工业增加值 · 同比</small><strong class="up">+8.9%</strong></div><div><small>工业投资 · 同比</small><strong class="down">−44.7%</strong></div><a href="https://www.fz0752.com/fontHtml/html/issue/000143025_1.html" target="_blank" rel="noopener noreferrer">公开统计线索 ↗</a></div>
 </section>
-<div id="arrivalNote" class="arrival-note" role="status" hidden></div>
-<section class="target-panel" aria-labelledby="targetHeading">
-<div class="section-head"><div><p class="micro">01 / CHANGE THE QUESTION</p><h2 id="targetHeading">换一个目标，<em>盲点就会变</em></h2></div><span class="demo-pill">方法演示 · 非实测系数</span></div>
-<div class="target-tabs" role="group" aria-label="选择要解释的目标">
-<button type="button" data-target="growth" aria-pressed="true">产业接续</button>
-<button type="button" data-target="retention" aria-pressed="false">本地留存</button>
-<button type="button" data-target="resilience" aria-pressed="false">产业韧性</button>
+<div id="iqArrival" class="iq-arrival" role="status" hidden></div>
+<section class="iq-console" id="iqLab" aria-labelledby="iqLabTitle">
+<div class="iq-console-top"><div><p class="micro">LIVE EXPERIMENT / 互动结构透视</p><h2 id="iqLabTitle">断开一环，<em>解释还站得住吗？</em></h2></div><span class="iq-tag">全部数值为可调假设 · 不是事实估计</span></div>
+<div class="iq-goalbar" role="group" aria-label="选择你想了解的结果"><button type="button" data-iq-target="growth" aria-pressed="true">产业接续</button><button type="button" data-iq-target="retention" aria-pressed="false">本地留存</button><button type="button" data-iq-target="resilience" aria-pressed="false">产业韧性</button><span id="iqGoalPrompt">下一轮增长靠什么接上？</span></div>
+<div class="iq-cockpit">
+<div class="iq-scope">
+<div class="iq-scope-heading"><span><i class="iq-live-dot"></i>STRUCTURE / 五条待核实的联系</span><button type="button" id="iqCycle">换一条线索 ↻</button></div>
+<div class="iq-network" id="iqNetwork">
+<svg class="iq-network-lines" id="iqNetworkLines" viewBox="0 0 1000 500" preserveAspectRatio="none" aria-hidden="true"></svg>
+<div class="iq-network-center" aria-live="polite"><small>当前目标 · 情景解释指数</small><strong id="iqHubValue">—</strong><span id="iqHubLabel">产业接续</span><em id="iqHubChange">相对基准：—</em></div>
+<div class="iq-network-nodes" id="iqNetworkNodes" role="group" aria-label="点击五个候选环节，查看假设和证据缺口"></div>
+<div class="iq-network-hud iq-hud-left"><span>关系观测</span><b id="iqNodeIndex">01 / 05</b></div>
+<div class="iq-network-hud iq-hud-right"><span>当前状态</span><b id="iqLinkStatus">假设连通</b></div>
 </div>
-<div class="target-message"><strong id="targetQuestion">工业继续增长，下一棒究竟卡在哪里？</strong><span id="targetInsight">观察与推断之间，还差哪些真实连接？</span></div>
-</section>
-<section class="blindspot-network" aria-labelledby="blindspotNetTitle">
-<div class="viz-stage-intro"><div><span class="viz-overline">STRUCTURAL X-RAY / INTERACTIVE NETWORK</span><h2 id="blindspotNetTitle">最大的数字，<em>未必是最关键的一环。</em></h2></div><span class="viz-dash-tag">点选主体 · 连线与证据同步变化</span></div>
-<div class="blindspot-scene" id="blindspotScene">
-<svg class="blindspot-svg" id="blindspotSvg" viewBox="0 0 1000 430" preserveAspectRatio="none" aria-hidden="true"></svg>
-<div class="blindspot-center"><small>你在追问的目标</small><strong id="blindspotCenterTitle">产业接续</strong><span>假设联系 · 不是实测交易</span></div>
-<div id="blindspotOrbit"></div>
+<div class="iq-live-feedback"><div><span>当前选中</span><strong id="iqActiveName">项目接续</strong></div><div><span>对目标的假设贡献</span><strong id="iqActiveScore">—</strong></div><div><span>排查顺序（情景）</span><strong id="iqActiveRank">—</strong></div></div>
+<div class="iq-stage-explain"><strong id="iqStageHeadline">不一定是最大的一环，却可能是最难替代的一环。</strong><p id="iqStageExplain">点击节点或拖动右侧条件，观察结果怎样重新排列。</p></div>
 </div>
-<div class="blindspot-panel" aria-live="polite">
-<div class="blindspot-why"><span>为什么值得检查这条关系？</span><strong id="blindspotWhy">点击外围节点揭开疑问</strong></div>
-<div class="blindspot-evidence"><span>实际缺少的关键证据</span><strong id="blindspotMissing">等待选择</strong></div>
-</div>
-<div class="blindspot-theatre-footer"><p id="blindspotTarget">每一次切换都是改变观察目标；连线表达待检验的候选机制，不能代表已证实的经济传导关系。</p><div class="blindspot-stage-actions"><button type="button" id="blindspotToggle" aria-pressed="false">断开这条假设连线</button><button type="button" id="blindspotNext">换一条线索看看 ↻</button></div></div>
-</section>
-<section class="matrix-shell" aria-labelledby="matrixHeading">
-<div class="section-head"><div><p class="micro">02 / IMPORTANCE × PERFORMANCE</p><h2 id="matrixHeading">重要，但还没接好？<em>点一个圆。</em></h2></div><span class="demo-pill">所有圆点位置均为教学假设</span></div>
-<div class="matrix-grid">
-<div class="matrix-panel">
-<div class="matrix-meta"><span>纵轴 · 表现示例指数 ↑</span><span>右下 · 高重要 / 低表现</span></div>
-<div class="matrix-stage"><div class="plot-grid" id="mapPlot" role="group" aria-label="重要性表现二维情景地图；点击圆点打开对应的结构盲点">
-<span class="quad-text quad-tl">低重要<br>高表现</span><span class="quad-text quad-tr">高重要<br>高表现</span><span class="quad-text quad-bl">低重要<br>低表现</span><span class="quad-text quad-br">高重要<br>低表现</span>
-<div id="mapDots"></div>
-</div></div>
-<div class="matrix-x"><span>低</span><strong>横轴 · 重要性示例指数 →</strong><span>高</span></div>
-<div class="matrix-legend"><span><i class="dot teal"></i>一般关注</span><span><i class="dot amber"></i>值得核验</span><span><i class="dot blue"></i>当前选中</span></div>
-</div>
-<aside class="inspector" aria-live="polite">
-<p class="micro">03 / WHY THIS POINT?</p><span id="focusKind" class="focus-tag">投资与项目</span><h3 id="focusName">项目接续</h3>
-<div class="focus-stats"><div><small>重要性 · 教学数值</small><strong id="focusImportance">—</strong></div><div><small>表现 · 教学数值</small><strong id="focusPerformance">—</strong></div></div>
-<p id="focusWhy">为什么这一环值得补证据？</p>
-<div class="missing-proof"><small>真正需要补的资料</small><strong id="focusMissing">—</strong></div>
-<div class="inspector-actions"><a id="testAgain" href="./wind.html">带这个问题回风洞 ↗</a><button id="copyQuestion" type="button">复制核验问题</button></div>
+<aside class="iq-controls" aria-label="结构压力测试参数">
+<div class="iq-controls-head"><span>EDIT THE CONDITIONS</span><h3>调整一条联系</h3><p id="iqFocusDescription">每次只针对选中环节修改假设，其他环节保持原条件。</p></div>
+<label class="iq-slider" for="iqSeverity"><span>整体冲击强度 <strong id="iqSeverityValue">70</strong></span><input id="iqSeverity" type="range" min="10" max="100" step="5" value="70"><small>冲击越强，所有候选联系的情景响应越明显</small></label>
+<label class="iq-slider" for="iqImportance"><span>选中联系的假设重要性 <strong id="iqImportanceValue">84</strong></span><input id="iqImportance" type="range" min="5" max="100" step="1" value="84"><small>此值来自教学起始设定，可自行质疑和修改</small></label>
+<label class="iq-slider" for="iqPerformance"><span>选中环节的运行表现 <strong id="iqPerformanceValue">32</strong></span><input id="iqPerformance" type="range" min="0" max="100" step="1" value="32"><small>数值越高，假设中的脆弱缺口越小</small></label>
+<label class="iq-slider" for="iqSubstitute"><span>替代 / 缓冲能力 <strong id="iqSubstituteValue">35</strong></span><input id="iqSubstitute" type="range" min="0" max="100" step="5" value="35"><small>如果一条关系受冲击，有没有其他路径可以接上？</small></label>
+<div class="iq-experiment-buttons"><button id="iqSever" type="button" aria-pressed="false"><span aria-hidden="true">⤫</span> 假设这条联系不存在</button><button id="iqRun" type="button" class="primary"><span aria-hidden="true">▶</span> 运行结构压力实验</button></div>
+<button id="iqReset" type="button" class="iq-reset">恢复这组目标的初始条件</button>
+<div class="iq-control-disclaimer">读数为相对解释指数（0—100），不是GDP损失、企业风险概率或已识别的因果系数。切断联系只表示暂不采用这条解释，不代表现实风险自动消失。</div>
 </aside>
 </div>
-<p class="method-line">读图提示：右下角代表“假设重要、但表现较弱”，不是已经证实的政策优先次序。示例分数不是从公开统计推算出来的；真实 重要性—表现比较 必须使用合格的 结构关系 估计结果及原始量表范围。</p>
 </section>
-<section class="path-lesson" aria-labelledby="pathTitle">
-<div class="section-head"><div><p class="micro">04 / WHAT CHANGES THE ANSWER?</p><h2 id="pathTitle">同一个增长，<em>为什么会走两条路？</em></h2></div><span class="demo-pill">中介与调节 · 结构示意</span></div>
-<div class="flow-steps" id="pathLesson">
-<div class="flow-item"><span>01 观察</span><strong>投资缩减</strong><small>公开数据可直接核对</small></div><div class="flow-arrow" aria-hidden="true">→</div>
-<div class="flow-item flow-middle"><span>02 中介</span><strong>产能兑现</strong><small>投产进度需要补样本</small></div><div class="flow-arrow" aria-hidden="true">→</div>
-<div class="flow-item"><span>03 结果</span><strong>增长接续</strong><small>不能把连线当作已证因果</small></div></div>
-<div class="moderator"><span>还可能改变关系强弱的条件</span><strong>本地配套能力 / 人才通勤 / 订单替代能力</strong><p>这些是待检验的调节条件；并没有用公开数据估出路径显著性。</p></div>
-<details class="method-detail"><summary>展开：真正拿到数据，怎样用 结构研究 验证？ <span>＋</span></summary>
-<div><p>按单位与时点采集可比数据，先确定反映性或形成性测量，评估共线性与测量质量，再估计结构路径、中介和调节，使用 重抽样 区间与样本外预测核验。只有结果合格才能计算实证 重要性—表现比较。</p>
-<p>结构研究 软件没有运行在这个网页上。这里演示的是路径模型、重要性—表现比较 和缺失证据的解读方法，不展示虚构的 β、R²、p 值、显著性或置信区间。</p>
-</div></details>
+<section class="iq-feedback-deck" aria-labelledby="iqDeckTitle">
+<div class="iq-deck-head"><div><p class="micro">STRUCTURAL REORDER / 实验后果</p><h2 id="iqDeckTitle">改变一条假设，<em>哪些判断翻转？</em></h2></div><span id="iqChangeCounter">等待你的第一次操作</span></div>
+<div class="iq-deck-grid">
+<article class="iq-chart iq-ranking"><div class="iq-chart-title"><h3>谁值得优先核验？</h3><p>五个候选环节 · 按当前情景暴露量排序，点行可选中</p></div><div id="iqRankingBars" class="iq-rank-bars" role="group" aria-label="可点击的候选联系对照排名"></div><div class="iq-chart-note">排名会随重要性、表现、替代条件和冲击强度重新计算；不是政府政策排序。</div></article>
+<article class="iq-chart iq-heat"><div class="iq-chart-title"><h3>最敏感的条件组合</h3><p>当前选中联系：冲击 × 替代能力 · 点格子直接施压</p></div><div class="iq-heat-axes"><span>冲击加强 ↓</span><span>替代能力增强 →</span></div><div class="iq-heat-grid" id="iqHeatGrid" role="group" aria-label="可以点击的冲击与替代能力组合网格"></div><div class="iq-heat-foot"><span>较低的情景暴露量</span><span>较高的情景暴露量</span></div></article>
+<article class="iq-chart iq-counterfactual"><div class="iq-chart-title"><h3>断开以后，解释改变了多少？</h3><p>比较未设置缓冲、加入缓冲与删除该解释路径</p></div><div id="iqComparisons" class="iq-compare-bars"></div><div class="iq-chart-note">“删除路径”是反事实归因测试，柱子变短不代表真实经济改善。</div></article>
+</div>
 </section>
-<section class="exit-panel"><div><p class="micro">YOUR NEXT QUESTION</p><h2>带走的，不应该只是一个结论。</h2><p id="takeaway">带走一个值得核对的问题，再用新证据重新运行风洞。</p></div><a href="./wind.html" id="endReturn">回第七页重跑 →</a></section>
-<footer class="footer"><span>博罗 V11 · 08 忽略了什么 · 公开锚点 ≠ 假设评分 ≠ 结构研究 实证结论</span><a href="./index.html">返回首页</a></footer>
+<section class="iq-investigation" aria-labelledby="iqInvestigationTitle"><div class="iq-investigation-head"><div><p class="micro">THE MISSING EVIDENCE</p><h2 id="iqInvestigationTitle">你现在最该查的，<em>不是更多总量数据。</em></h2></div><span>先拆关系，再补证据</span></div><div class="iq-investigation-grid"><div><span>为什么怀疑这一环？</span><strong id="iqWhy">—</strong></div><div><span>哪份资料可能改变判断？</span><strong id="iqMissing">—</strong></div></div><details class="iq-limits"><summary>这次体验怎样计算？哪些结论不能下？</summary><p>这是一套以公开统计线索为起点的结构假设体验。比较图上的相对指数由重要性、运行表现、冲击强度、替代能力共同计算；这些输入是供用户质疑、调整的假设，不是对真实企业的测量或对产业网络关系的估计。</p><p>公开观察是2026年前三季度规上工业增加值与工业投资分别同比变化；两者统计口径不同，不能直接解释因果。断开一条候选联系，只从当前解释结构中排除该联系，不表示真实经济损失被消除。真实验证需要项目、企业和交易级材料。</p></details></section>
+<section class="iq-exit"><div><p class="micro">ONE QUESTION TO TAKE AWAY</p><h2>带着一个可以核验的问题，<em>回风洞再吹一次。</em></h2><p id="iqExitSummary">哪一种缺失证据，最可能改变你对博罗的判断？</p></div><div class="iq-exit-actions"><a id="iqToWind" href="./wind.html">带这个环节去第七页 →</a><button id="iqCopy" type="button">复制核验问题</button></div></section>
+<footer class="footer"><span>博罗 V11 · 08 结构透视 · 已知事实 / 情景假设 / 待核验联系严格区分</span><a href="./wind.html">07 压力实验</a></footer>
 </main>
 <nav class="mobile-nav" aria-label="移动端页面导航"><a href="./index.html">01 发现</a><a href="./reality.html">02 现实</a><a href="./industry-base.html">03 底盘</a><a href="./relations.html">04 关系</a><a href="./impact.html">05 影响</a><a href="./plan.html">06 规划</a><a href="./wind.html">07 风洞</a><a href="./insights.html" aria-current="page">08 忽略</a></nav>
-<div id="insightToast" class="insight-toast" role="status" aria-live="polite"></div>
-<noscript>请开启 JavaScript，以切换目标、浏览结构盲点和重跑情景。公开数据锚点及方法说明不依赖脚本。</noscript>
+<div id="iqToast" class="iq-toast" role="status" aria-live="polite"></div>
+<noscript><p class="iq-noscript">启用 JavaScript 后，才可以调整条件、进行结构情景实验和打开核验路径。</p></noscript>
 </body></html>
