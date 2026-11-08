@@ -95,7 +95,7 @@ input[type=range]{width:100%;accent-color:#22c55e;height:4px}
   <!-- 现实压力测试（受控场景压测，2026真实数据） -->
   <div class="card" id="pressCard" style="border-color:#713f12">
     <h2 style="color:#fbbf24">⚠️ 现实压力测试：先选一个"如果"，看1600亿还够不够得着</h2>
-    <details class="bl-tail-evidence"><summary>查看压力测试的模型口径</summary><div class="bl-tail-evidence-body"><p class="press-intro">下面每个情景都用<b>同一个模型内核、同一粒种子（42）</b>真实重跑2万次，差异只来自注入的事件——不是凭感觉打分。情景默认站在<b>规划兑现基准</b>（中位约1601亿、达标率约50%），再看压力一来会怎样。</p></div></details>
+    <details class="bl-tail-evidence"><summary>查看压力测试的模型口径</summary><div class="bl-tail-evidence-body"><p class="press-intro">每次切换一种现实条件，比较模型内的结果分布变化。情景默认站在<b>规划兑现基准</b>（中位约1601亿、达标率约50%），再看压力一来会怎样。</p></div></details>
     <div class="press-grid" id="pressGrid"></div>
     <div class="press-result">
       <div class="press-panel">
@@ -222,7 +222,7 @@ input[type=range]{width:100%;accent-color:#22c55e;height:4px}
       页面顶部的压力测试把这一幕喂给了模型：<b>如果工业投资腰斩延续，规划兑现路径的达标率会从约50%直接跌到约6.6%，中位GDP少约139亿；若再叠加房地产探底，达标率只剩约2%。</b>而"双引擎超预期"（电子信息、储能、新能源提前放量）能把达标率抬到约71%。<b>这不是博罗独有问题——所有工业县换挡期都会遇到；区别在于博罗手里还有东莞外溢、罗浮山、特色农业三张牌，关键是让在建项目按时投产、把工业投资这台播种机重新点起来。</b>
     </div>
     <details class="bl-tail-evidence"><summary>为什么图表这样变化？</summary><div class="bl-tail-evidence-body"><div class="plain" style="margin-top:14px"><span class="lab">边界声明</span>
-      顶部"现实压力测试"是用同一模型内核、同一粒种子（42）、2万次蒙特卡洛的真实重跑，路径参数与现实苗头的对应关系在数据层 bl-viz/data.js 公开；下方滑块是参数敏感性实验。全部是假设情景下的结构模拟，不是预测，更不是投资建议。你觉得哪个参数不对，可以自己改——这正是风洞的意义。
+      顶部和下方展示不同条件下的情景变化。全部是假设情景下的结构模拟，不是预测，更不是投资建议。你觉得哪个参数不对，可以自己改——这正是风洞的意义。
     </div></div></details>
   </div>
 
