@@ -20,7 +20,7 @@ const cases={
  source:[["县域农文旅发展方向",ref.agri],["博罗规划部署",ref.plan]],known:[["研究对象","柏塘特色茶产业"],["发展方向","加工、品牌、渠道增值"]],missing:"茶青采收量、交易价格、加工成本与损耗、经营主体归属、终端渠道分成、规划中可比增值目标。",questions:["同样一斤春茶，加工与品牌能多留下多少价值？","茶农、加工厂和渠道谁承担了资金周转？","农产品加工率与本地增值率是否被混为一谈？"]},
  ring:{title:"环“两山”，游客来了，价值留下了吗？",sub:"游览量、过夜率和本地消费不能混为一谈。按每100名游客的假设场景检验不同转化条件。",status:"尚缺游客消费账本",label:"假设过夜游客比例",min:0,max:70,step:5,initial:15,secondary:{label:"假设消费由本地经营环节留存的比例",min:0,max:100,step:5,initial:40},
  source:[["县域环两山发展部署",ref.plan],["市十五五规划方向",ref.agri]],known:[["规划框架","环南昆山—罗浮山"],["观察视角","过夜、消费与本地留存"]],missing:"不同镇街的实际游客数、过夜比例、人均消费、外来经营主体和中间投入采购。",questions:["客流越多，为什么本地增加值未必同步增加？","游客过夜率和消费留存哪个更值得补数据？","环两山是否带动本地农产品加工与服务业？"]},
- innovation:{title:"652家数字化转型企业，效率提升了多少？",sub:"有实施数量，不等于有绩效成果。需要真正的转型前后对照；先计算抽样调查的统计精度边界。",status:"绩效转化未测定",label:"计划随机核验的转型企业数",min:20,max:250,step:10,initial:80,secondary:{label:"拟调查的置信水平",min:0,max:5,step:1,initial:3},
+ innovation:{title:"652家数字化转型企业，效率提升了多少？",sub:"有实施数量，不等于有绩效成果。需要真正的转型前后对照；真实经营效果仍要通过实际企业数据核实。",status:"绩效转化未测定",label:"计划随机核验的转型企业数",min:20,max:250,step:10,initial:80,secondary:{label:"对调查可靠性的要求",min:0,max:5,step:1,initial:3},
  source:[["2025统计公报背景",ref.history],["2026县域产业方向",ref.plan]],known:[["实施数字化转型","652家"],["全县规上工业企业","1,407家"]],missing:"每家企业转型前后产出、成本、设备、就业、行业、选择偏差及可比较的未转型企业样本。",questions:["实施数字化转型的企业，是否真的提升了生产率？","哪些企业有真实的转型前后对照？","创新成果能否形成可持续的本地产业能力？"]}
 };
 const state={active:"electronic",values:{electronic:[5],projects:[10],tea:[35,20],ring:[15,40],innovation:[80,3]},picked:new Set()};
@@ -94,8 +94,8 @@ function chartInnovation(n,moe,level){
  out+='<circle cx="170" cy="128" r="79" fill="none" stroke="#e5edf7" stroke-width="24"/>';
  out+='<circle cx="170" cy="128" r="79" fill="none" stroke="#2686df" stroke-width="24" stroke-linecap="round" stroke-dasharray="'+(496.4*percent/100)+' 496.4" transform="rotate(-90 170 128)"/>';
  out+='<text x="170" y="129" text-anchor="middle" style="font-size:39px;fill:#136cb9;font-weight:920">'+fmt(percent,1)+'%</text><text x="170" y="154" text-anchor="middle">实施覆盖比例</text>';
- out+='<text x="320" y="78" class="major">抽样计划 '+n+'家</text><rect x="320" y="94" width="370" height="25" rx="8" fill="#e8f0f9"/><rect x="320" y="94" width="'+(370*n/250)+'" height="25" rx="8" fill="#49a3e0"/>';
- out+='<text x="320" y="167" class="major">比例型结果的最大误差半宽 ±'+fmt(moe,1)+'个百分点</text><text x="320" y="195">前提：在652家总体内简单随机抽样；尚未进行调查</text>';
+ out+='<text x="320" y="78" class="major">待核验企业 '+n+'家</text><rect x="320" y="94" width="370" height="25" rx="8" fill="#e8f0f9"/><rect x="320" y="94" width="'+(370*n/250)+'" height="25" rx="8" fill="#49a3e0"/>';
+ out+='<text x="320" y="167" class="major">比例型结果的最大样本结果可能存在差异 ±'+fmt(moe,1)+'个百分点</text><text x="320" y="195">前提：在652家总体内尚未取得完整企业调查记录</text>';
  out+='<text x="320" y="219">不存在已实测的“数字化绩效达成率”</text></svg>';
  return out;
 }
@@ -191,7 +191,7 @@ function render(){
  $("unknown").innerHTML='<div class="known"><span class="u">○</span><span><b>当前没有的关键数据</b><small>'+escapeHTML(c.missing)+'</small></span></div>';
  text("missingText",c.missing);
  text("modelHint",d.foot);
- $("questionList").innerHTML=c.questions.map((s,i)=>'<button class="risk-point" type="button" data-question="'+i+'" title="保存这个疑问"><span></span><span><strong>'+escapeHTML(s)+'</strong><small>点击加入你的研判清单</small></span></button>').join("");
+ $("questionList").innerHTML=c.questions.map((s,i)=>'<button class="risk-point" type="button" data-question="'+i+'" title="保存这个疑问"><span></span><span><strong>'+escapeHTML(s)+'</strong><small>保存这个问题</small></span></button>').join("");
  document.querySelectorAll("[data-question]").forEach(b=>b.onclick=()=>pick(c.questions[Number(b.dataset.question)]));
  $("sources").innerHTML=c.source.map(s=>'<a href="'+escapeHTML(s[1])+'" target="_blank" rel="noopener noreferrer">'+escapeHTML(s[0])+' ↗</a>').join('　');
  renderSpatial();
@@ -259,7 +259,7 @@ function showDrawer(){
  returnFocus=document.activeElement;
  $("detailOverlay").classList.add("open");
  document.querySelector("main").inert=true;document.querySelector("header").inert=true;
- $("drawerText").innerHTML='<article><h3>证据与情景分开</h3><p>2026年前三季度工业增加值+8.9%、工业投资−44.7%；2025电子信息产值超过773.8亿元；2025规上企业1407家。这些属于有公开报道支持的观测或统计口径。</p></article><article><h3>模型不能冒充实测</h3><p>电子信息使用有界基期的复合增长条件核算，工业投资使用同季指数恢复测试；农业和环“两山”使用价值链/地方留存条件核算；创新转化使用拟议抽样的最大误差分析。所有由用户设置的参数只是条件实验。</p></article><article><h3>当前证据能支持什么</h3><p>公开线索可以帮助发现值得核实的产业联系，但缺少企业交易记录或可比调查时，不能宣称已确定因果影响或收益。</p></article><article><h3>规划与统计口径</h3><p>千亿级电子信息是规模方向的参照，不宣称已核对为2030年具有量化约束的考核目标。没有正式数值目标与基期数据时，“目标达成率”显示为未可计算。</p><p><a href="'+ref.govt+'" target="_blank" rel="noopener noreferrer">博罗县十五五规划发布页</a></p><p><a href="'+ref.current+'" target="_blank" rel="noopener noreferrer">2026年前三季度统计报道</a></p></article>';
+ $("drawerText").innerHTML='<article><h3>哪些是已公布的数字？</h3><p>2026年前三季度规上工业增加值+8.9%、工业投资−44.7%；2025电子信息行业公开报道规模超过773.8亿元，规上工业企业1407家。各自时期与统计口径不同。</p></article><article><h3>调整条件，不代表现实已经改变</h3><p>这里展示的是给定条件下的对照值。项目是否如期投产、茶叶价值留在哪里、游客是否过夜、数字化是否真正提升经营表现，仍需要更具体的实际记录。</p></article><article><h3>哪些结果不能直接下结论？</h3><p>目前缺少完整的企业交易、产能兑现和经营对照资料。页面上的情景数值不等于已经发生的企业收益、GDP增量或真实达标概率。</p></article><article><h3>公开资料</h3><p>千亿级产业规模是公开发展的参照方向，不冒充已经逐项确认的2030考核指标。</p><p><a href="'+ref.govt+'" target="_blank" rel="noopener noreferrer">政府公开规划线索 ↗</a></p><p><a href="'+ref.current+'" target="_blank" rel="noopener noreferrer">2026年前三季度统计资料 ↗</a></p></article>'; 
  $("closeDrawer").focus();
 }
 function closeDrawer(){
