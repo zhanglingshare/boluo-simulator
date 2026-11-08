@@ -5,15 +5,15 @@
 <link rel="stylesheet" href="../assets/boluo-access.css?v=20261108-inline2">
 <script src="../assets/boluo-access.js?v=20261108-inline2" data-bl-access="inline"></script><meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <meta name="theme-color" content="#edf5ff">
-<meta name="description" content="博罗产业风险实验：从电子信息、工业接续、柏塘茶、环两山和创新转化出发，用公开数据与可调条件判断发展路径中的约束。">
-<title>V11 · 03 产业目标风险实验｜博罗决策风洞</title>
+<meta name="description" content="博罗产业变化观察：从电子信息、工业接续、柏塘茶、环两山和创新转化出发，用公开数据与可调条件判断发展路径中的约束。">
+<title>V11 · 03 产业变化观察｜博罗决策风洞</title>
 <link rel="stylesheet" href="./risk-lab.css?v=20261106-motion1">
 <link rel="stylesheet" href="./risk-visuals.css?v=20261106-motion1">
 </head>
 <body class="interactive-lab">
 <header class="top">
  <a class="brand" href="./index.html"><span class="logo">◈</span><span>博罗决策风洞<small>BO LUO · DECISION WIND TUNNEL</small></span></a>
- <nav class="nav" aria-label="V11导航"><a href="./index.html">01 问题发现</a><a href="./reality.html">02 预期与现实</a><a class="active" href="./industry-base.html" aria-current="page">03 产业风险</a><a data-next-relations href="./relations.html">04 关系世界</a><a href="./impact.html">05 变化影响</a><a href="./plan.html">06 十五五规划</a><a href="./wind.html">07 风洞测试</a><a href="./insights.html">08 忽略了什么</a></nav>
+ <nav class="nav" aria-label="V11导航"><a href="./index.html">01 问题发现</a><a href="./reality.html">02 预期与现实</a><a class="active" href="./industry-base.html" aria-current="page">03 产业观察</a><a data-next-relations href="./relations.html">04 关系世界</a><a href="./impact.html">05 变化影响</a><a href="./plan.html">06 十五五规划</a><a href="./wind.html">07 风洞测试</a><a href="./insights.html">08 忽略了什么</a></nav>
  <span class="version">V11</span>
 </header>
 <main class="wrap">
@@ -34,7 +34,7 @@
 <button data-quick-case="projects" type="button">工业接续 <small>项目投资</small></button>
 <button data-quick-case="tea" type="button">柏塘春茶 <small>加工增值</small></button>
 <button data-quick-case="ring" type="button">环“两山” <small>价值留存</small></button>
-<button data-quick-case="innovation" type="button">创新转化 <small>绩效识别</small></button>
+<button data-quick-case="innovation" type="button">创新转化 <small>成效待核</small></button>
 </nav>
 <section id="motionLab" class="lab-deck" aria-label="产业条件互动实验">
  <div class="lab-topline"><div><span class="lab-step">01</span><strong>动手改一个条件</strong><span class="lab-mode" id="labMode">公开基数 + 条件假设</span></div><div class="lab-actions"><button type="button" id="playScenario" aria-pressed="false"><span aria-hidden="true">▶</span> 播放变化</button><button type="button" id="resetScenario" aria-label="恢复当前专题的初始条件">↺ 还原</button></div></div>
@@ -63,23 +63,23 @@
    <p class="lab-play-note" id="playNote">播放的是假设变化，不是实时监测。</p>
   </aside>
  </div>
- <div class="lab-feedback"><span id="labStatus" role="status" aria-live="polite">已就绪 · 拖动滑块，或点“播放变化”</span><span class="lab-linked">曲线 · 热力格 · 差距 · 敏感性同步</span><button type="button" id="reduceMotion" aria-pressed="false">减少动态</button></div>
+ <div class="lab-feedback"><span id="labStatus" role="status" aria-live="polite">已就绪 · 拖动滑块，或点“播放变化”</span><span class="lab-linked">曲线 · 热力格 · 差距 · 结果同步</span><button type="button" id="reduceMotion" aria-pressed="false">减少动态</button></div>
 </section>
 <section class="rv-showcase" id="riskVisuals" aria-label="多图联动产业约束可视化">
  <div class="rv-head"><div><div class="eyebrow">KEEP EXPLORING / 在图上继续试</div><h2>点一个格子，换一个结果</h2><p>点热力格换条件，再看看哪项结果变化最大。</p></div><div class="rv-legend" id="rvLegend"><span><i class="rv-key" style="background:#1e8f79"></i>条件满足</span><span><i class="rv-key" style="background:#e4a081"></i>条件未满足</span><span><i class="rv-key" style="background:#a6b8ce"></i>尚无实测</span></div></div>
  <div class="rv-grid">
-  <article class="rv-panel"><div class="rv-headline"><div><div class="rv-overline">01 / 条件对照</div><h3 id="rvHeatTitle">条件 × 年份</h3></div><span class="rv-stamp">点击格子试算</span></div><p class="rv-sub" id="rvHeatSub">选择条件，看参照线何时可能被跨越。</p><div class="rv-matrix"><div id="rvHeat" aria-label="可点击参数敏感性热力图"></div></div><div class="rv-matrix-foot"><span id="rvHeatLegend">颜色表示条件而非概率</span></div></article>
+  <article class="rv-panel"><div class="rv-headline"><div><div class="rv-overline">01 / 条件对照</div><h3 id="rvHeatTitle">条件和年份</h3></div><span class="rv-stamp">点击格子试算</span></div><p class="rv-sub" id="rvHeatSub">选择条件，看参照线何时可能被跨越。</p><div class="rv-matrix"><div id="rvHeat" aria-label="可点击参数敏感性热力图"></div></div><div class="rv-matrix-foot"><span id="rvHeatLegend">颜色表示条件而非概率</span></div></article>
 
-  <article class="rv-panel"><div class="rv-headline"><div><div class="rv-overline">03 / CONSTRAINT GAUGE</div><h3 id="rvBulletTitle">目标条件与差距</h3></div><span class="rv-stamp">无伪概率</span></div><div id="rvBullet" aria-label="条件数值与阈值差距"></div><div class="rv-note" id="rvBulletNote"></div></article>
-  <article class="rv-panel rv-wide"><div class="rv-headline"><div><div class="rv-overline">04 / 结果会怎样变</div><h3 id="rvSensitivityTitle">改变一个条件，差别有多大？</h3></div><span class="rv-stamp">一次只改一个</span></div><p class="rv-sub" id="rvSensitivitySub">小扰动条件实验。</p><div id="rvSensitivity" class="rv-plot" aria-label="单变量敏感性龙卷风图"></div><div class="rv-note" id="rvSensitivityNote"></div></article>
+  <article class="rv-panel"><div class="rv-headline"><div><div class="rv-overline">03 / CONSTRAINT GAUGE</div><h3 id="rvBulletTitle">目标条件与差距</h3></div><span class="rv-stamp">不是现实概率</span></div><div id="rvBullet" aria-label="条件数值与阈值差距"></div><div class="rv-note" id="rvBulletNote"></div></article>
+  <article class="rv-panel rv-wide"><div class="rv-headline"><div><div class="rv-overline">04 / 结果会怎样变</div><h3 id="rvSensitivityTitle">改变一个条件，差别有多大？</h3></div><span class="rv-stamp">一次只改一个</span></div><p class="rv-sub" id="rvSensitivitySub">试着小幅调整条件，看看变化。</p><div id="rvSensitivity" class="rv-plot" aria-label="单变量敏感性龙卷风图"></div><div class="rv-note" id="rvSensitivityNote"></div></article>
   <article class="rv-panel"><div class="rv-headline"><div><div class="rv-overline">05 / EVIDENCE GAPS</div><h3>哪些是真数据，哪些还缺？</h3></div></div><p class="rv-sub">点专题切换；不是按产业发展优劣排名。</p><div class="rv-observe" id="rvEvidence" aria-label="五个产业专题证据准备度矩阵"></div><div class="rv-sector-legend"><span>● 公开统计</span><span>◐ 线索或参照</span><span>— 暂不可判定</span></div><div class="rv-note">数据口径：<b id="rvSource">公开资料与条件假设</b></div></article>
  </div>
 </section>
- <details class="lab-details"><summary><span>完整推演、镇街线索与证据</span><small>展开查看与保存追问 <span aria-hidden="true">＋</span></small></summary>
+ <details class="lab-details"><summary><span>更多结果、镇街变化与资料</span><small>展开查看与保存追问 <span aria-hidden="true">＋</span></small></summary>
  <div class="work">
   <aside class="panel sidebar" aria-label="研究选择">
    <div class="eyebrow">SELECT ONE / 只选一个</div><h3>你想从哪里看起？</h3>
-   <div class="tabs" id="tabs" role="group" aria-label="五种产业风险实验">
+   <div class="tabs" id="tabs" role="group" aria-label="五种产业变化观察">
     <button class="tab active" data-case="electronic" type="button" aria-pressed="true"><span class="tab-icon">▦</span><span><b>电子信息冲千亿</b><small>增长条件 · 可对照</small></span></button>
     <button class="tab" data-case="projects" type="button" aria-pressed="false"><span class="tab-icon">◩</span><span><b>工业项目接续</b><small>投资恢复 · 可对照</small></span></button>
     <button class="tab" data-case="tea" type="button" aria-pressed="false"><span class="tab-icon">♧</span><span><b>柏塘春茶增值</b><small>钱留哪 · 条件模拟</small></span></button>
@@ -91,7 +91,7 @@
   <section class="center" aria-label="互动模型">
    <div class="panel main-card">
     <div class="main-head">
-     <div><div class="eyebrow">WHAT MUST BE TRUE / 目标约束实验</div><h2 id="mainTitle">电子信息，离千亿还有多远？</h2><p id="mainDesc">从公开行业规模出发，检验增长条件。</p></div>
+     <div><div class="eyebrow">WHAT MUST BE TRUE / 换个条件看结果</div><h2 id="mainTitle">电子信息，离千亿还有多远？</h2><p id="mainDesc">从公开行业规模出发，检验增长条件。</p></div>
      <span id="riskBadge" class="status">条件实验</span>
     </div>
     <div class="chart-frame" id="mainPlot" aria-label="产业目标约束动态可视化"></div>
@@ -105,14 +105,14 @@
   </section>
   <aside class="right" aria-label="核心风险和研判">
    <section class="panel">
-    <div class="eyebrow">NOT THE SCORE / 最该追问</div><h3>哪一环可能出问题？</h3><div id="questionList"></div>
+    <div class="eyebrow">NEXT QUESTION / 继续追问</div><h3>哪一环可能出问题？</h3><div id="questionList"></div>
     <div class="bold-unknown" id="missingText">缺乏项目兑现与企业交易数据，不发布虚构风险概率。</div>
     <button id="saveQuestion" type="button" class="next">收下这条追问 +</button>
    </section>
    <section class="panel">
-    <div class="eyebrow">PASS TO THE NEXT LENS</div><h3>你不是来读报告的</h3>
+    <div class="eyebrow">PASS TO THE NEXT LENS</div><h3>从这条线索继续往下看</h3>
     <p class="tiny dim" id="chosen" style="line-height:1.6">点一个问题，再继续探索</p>
-    <button id="exportBtn" type="button" class="next second">导出待研判清单（<span id="pickCounter">0</span>） ↗</button>
+    <button id="exportBtn" type="button" class="next second">保存我关注的问题（<span id="pickCounter">0</span>） ↗</button>
     <a data-next-relations href="./relations.html" class="next" style="text-decoration:none">看看变化牵动谁 →</a>
    </section>
   </aside>
@@ -140,7 +140,7 @@
  </section>
  </details>
  <footer class="footer">
-  <span>博罗 V11 · 03｜产业目标约束实验｜公开数据与用户假设分离，不替代政府统计或专业决策</span>
+  <span>博罗 V11 · 03｜产业换个条件看结果｜公开数据与用户假设分离，不替代政府统计或专业决策</span>
   <span><a href="./index.html">返回问题发现</a>　·　<a href="./reality.html">返回预期与现实</a>　·　<a href="https://www.boluo.gov.cn/zwgk/qt/gzjh/content/post_5842396.html" target="_blank" rel="noopener noreferrer">十五五规划发布</a></span>
  </footer>
 </main>
