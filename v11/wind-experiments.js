@@ -83,6 +83,7 @@ document.querySelectorAll("[data-dist-view]").forEach(b=>b.addEventListener("cli
 }));
 function stopSampleReplay(showFinal=false){
  clearTimeout(playTimer);playTimer=0;
+ if($("detailReplay"))$("detailReplay").textContent="播放抽样累积 ↻";
  if(showFinal&&fullLatest){render(fullLatest);setSampleStatus(fullLatest.base.rawResults.length,fullLatest.base.rawResults.length);}
 }
 function setSampleStatus(k,N){
