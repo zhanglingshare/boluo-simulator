@@ -33,7 +33,7 @@
   return svg+'</svg>';
  }
  function stageChart(){
-  const w=narrow.matches?470:660,xs=[37,w*.35,w*.65,w-36],labels=['8月签约','施工有报道','投产待核验','达产待核验'];
+  const w=narrow.matches?470:660,xs=[37,w*.35,w*.65,w-36],labels=['签约','开工','投产','达产'];
   let svg='<svg class="data-svg" viewBox="0 0 '+w+' 180" role="group" aria-label="项目报道阶段，不是实际投资完成率"><line x1="'+xs[0]+'" x2="'+xs[1]+'" y1="53" y2="53" stroke="#1369eb" stroke-width="2"/><line x1="'+xs[1]+'" x2="'+xs[3]+'" y1="53" y2="53" stroke="#b8c8da" stroke-width="2" stroke-dasharray="5 6"/>';
   xs.forEach((x,i)=>{svg+='<g class="chart-hit stage-hit" role="button" tabindex="0" data-stage="'+i+'" aria-label="查看'+labels[i]+'的核验范围"><rect class="hit-back" x="'+Math.max(0,x-48)+'" y="20" width="96" height="108" rx="7" fill="transparent"/><circle data-stage-index="'+i+'" cx="'+x+'" cy="53" r="9" fill="'+(i<2?'#1369eb':'#fff')+'" stroke="'+(i<2?'#1369eb':'#a9b9cc')+'" stroke-width="2"/><text x="'+x+'" y="91" text-anchor="middle" class="plot-label" style="font-size:'+(narrow.matches?'13':'14')+'px">'+labels[i]+'</text><text x="'+x+'" y="116" text-anchor="middle" class="plot-tick">'+['2026年8月','2026年9月报道','后续进展待查','实际产销待查'][i]+'</text></g>';});
   return svg+'</svg>';
@@ -51,7 +51,7 @@
   }else if(type==='food'){
    [['限上餐饮',9.8,'#247be6'],['限上住宿',1.6,'#24b2b1']].forEach((r,i)=>{const y=7+i*29,width=r[1]*21;s+='<text x="0" y="'+(y+13)+'">'+r[0]+'</text><rect x="88" y="'+y+'" width="'+width+'" height="19" rx="3" fill="'+r[2]+'"/><text x="'+(96+width)+'" y="'+(y+14)+'" class="mini-value">+'+r[1]+'%</text>';});
   }else if(type==='stages'||type==='closure'||type==='tea'||type==='copper'){
-   const labels=type==='stages'?['已报道签约','施工有报道','投产待核验']:type==='closure'?['产线关停','设备拆除','其他业务待查']:type==='tea'?['产量有记录','成本待补','回款待补']:['点火有报道','产销待跟踪','达产待核验'];
+   const labels=type==='stages'?['已签约','已开工','待投产']:type==='closure'?['产线关停','设备拆除','其他业务待查']:type==='tea'?['产量有记录','成本待补','回款待补']:['点火有报道','产销待跟踪','达产待核验'];
    const known=type==='stages'||type==='closure'?2:1,color=type==='closure'?'#ca7c74':'#287fe8';
    s+='<line x1="27" x2="328" y1="18" y2="18" stroke="#cdd8e6" stroke-width="1.5" stroke-dasharray="4 4"/>';
    if(known>1)s+='<line x1="27" x2="177" y1="18" y2="18" stroke="'+color+'" stroke-width="2"/>';
@@ -66,10 +66,10 @@
  }
  function eventValue(item){
   const special=item.id==='food';
-  return '<div class="event-value-row"><strong class="event-number'+(item.id==='copper'?' text-big':'')+'">'+escape(item.big)+'<span>'+escape(item.unit)+'</span></strong><div class="event-measure">'+escape(item.subtitle)+'<span class="event-tag">'+escape(item.tag)+'</span></div></div><div class="event-mini">'+mini(item.visual)+'</div>';
+  return '<div class="event-value-row"><strong class="event-number'+(item.id==='copper'?' text-big':'')+'">'+escape(item.big)+'<span>'+escape(item.unit)+'</span></strong><div class="event-measure">'+escape(item.subtitle)+'</div></div><div class="event-mini">'+mini(item.visual)+'</div>';
  }
  function eventCard(item){
-  return '<article class="event-card'+(state.related===item.id?' is-related':'')+'" data-event-id="'+item.id+'"><button class="event-card-open" type="button" data-open-event="'+item.id+'" aria-label="查看'+escape(item.title)+'的详情"><div class="event-card-top"><h3>'+icon(D.topics[item.topic].icon)+escape(item.title)+'</h3><span class="card-arrow" aria-hidden="true">›</span></div><div class="card-date"><time datetime="'+item.date+'">'+item.date+'</time><span>'+item.dateLabel+'</span></div><div class="event-card-content">'+eventValue(item)+'</div><div class="event-question"><span>'+escape(item.question)+'</span>'+icon('arrow')+'</div></button></article>';
+  return '<article class="event-card'+(state.related===item.id?' is-related':'')+'" data-event-id="'+item.id+'"><button class="event-card-open" type="button" data-open-event="'+item.id+'" aria-label="查看'+escape(item.title)+'的详情"><div class="event-card-top"><h3>'+icon(D.topics[item.topic].icon)+escape(item.title)+'</h3><span class="card-arrow" aria-hidden="true">›</span></div><div class="event-card-content">'+eventValue(item)+'</div><div class="event-question"><span>'+escape(item.question)+'</span>'+icon('arrow')+'</div></button></article>';
  }
  function renderEvents(){
   const items=C.filter({topic:state.feedTopic,town:state.town}),shown=state.expanded?items:items.slice(0,3);
@@ -85,21 +85,21 @@
   $('moreEvents').innerHTML=state.expanded?'收起其他变化 <span aria-hidden="true">−</span>':'再看 '+remaining+' 条今年的变化 <span aria-hidden="true">＋</span>';
   document.querySelectorAll('[data-event-topic]').forEach(button=>{const on=button.dataset.eventTopic===state.feedTopic;button.classList.toggle('active',on);button.setAttribute('aria-pressed',String(on));});
   $('clearTownFilter').hidden=!state.town;text('clearTownFilter',state.town+' ×');
-  text('eventCount','本次筛选 '+items.length+' 条 / 本页 '+D.events.length+' 条');
+  text('eventCount','已核对 '+items.length+' 条（全站 '+D.events.length+' 条）');
   document.querySelectorAll('[data-town]').forEach(button=>button.setAttribute('aria-pressed',String(button.dataset.town===state.town)));
-  text('townCoverage',state.town?'正在看'+state.town+'；筛选范围限于本页收录，不是完整镇级画像。':'本页收录的线索，不是全县完整清单。');
+  text('townCoverage',state.town?'正在看'+state.town+'；这里只列已核对的记录。':'这里只列已核对的记录。');
   $('eventGrid').querySelectorAll('[data-open-event]').forEach(button=>button.onclick=()=>openEvent(button.dataset.openEvent));
  }
  function renderInquiry(){
   const info=topic(),selected=info.inquiries.find(q=>q.id===state.inquiry);
   M.html('inquiryButtons',info.inquiries.map(q=>'<button type="button" data-inquiry="'+q.id+'" aria-pressed="'+(state.inquiry===q.id)+'">'+escape(q.label)+'</button>').join(''),false);
   $('inquiryButtons').querySelectorAll('[data-inquiry]').forEach(button=>button.onclick=()=>chooseInquiry(button.dataset.inquiry));
-  M.html('inquirySelect','<option value="">先选一条追问</option>'+info.inquiries.map(q=>'<option value="'+q.id+'">'+escape(q.label)+'</option>').join(''),false);
+  M.html('inquirySelect','<option value="">先选一条解释</option>'+info.inquiries.map(q=>'<option value="'+q.id+'">'+escape(q.label)+'</option>').join(''),false);
   $('inquirySelect').value=state.inquiry;
   $('inquiryResponse').hidden=!selected;
   if(selected){text('inquiryClue',selected.clue);text('inquiryGap',selected.gap);$('openClue').onclick=()=>openEvent(selected.event);}
   text('carryQuestion',C.question(snapshot()));
-  text('continueClues',selected?'打开相关现场 →':'继续找线索 →');
+  text('continueClues',selected?'看这条的现场 →':'继续找线索 →');
  }
  function updateLinks(){
   const value=snapshot();
@@ -114,7 +114,7 @@
  function renderHero(enter=false){
   const info=topic();
   $('topicTitle').innerHTML=info.title.map((line,i)=>'<'+(i?'strong':'span')+'>'+escape(line)+'</'+(i?'strong':'span')+'>').join('');
-  text('topicPeriod',info.period);text('chartNote',info.chartNote);
+  text('periodText',info.period);text('topicLede',info.lede);text('chartNote',info.chartNote);
   $('heroVisual').dataset.currentTopic=state.topic;$('heroVisual').setAttribute('aria-labelledby','topic-'+state.topic);
   M.html('heroMetrics',info.metrics.map(metricMarkup).join(''),false);
   M.html('mainChart',info.chart==='diverge'?compareChart():info.chart==='food'?compareChart(true):info.chart==='agriculture'?agricultureChart():stageChart(),false);
@@ -130,7 +130,7 @@
  function chooseTopic(id){
   if(!D.topics[id])return;
   stopPlay(true);state.topic=id;state.inquiry='';state.related='';state.feedTopic=id;state.expanded=false;
-  text('playCaption','点图形看数字，点现场看进展。');render(true);
+  text('playCaption','图上看得见方向，现场看得见谁在扛。');render(true);
  }
  function chooseInquiry(id){
   const inquiry=topic().inquiries.find(q=>q.id===id);state.inquiry=inquiry?.id||'';state.related=inquiry?.event||'';
@@ -225,7 +225,7 @@
   const content='博罗哪里正在变？\n'+C.question(context)+'\n'+url;
   try{await navigator.clipboard.writeText(content);toast('发现链接已复制。对方可独立选择关注点。');}
   catch{
-   openDialog('分享这个发现','只包含公开场景与选择','<p class="dialog-lead">复制下面的链接，对方可独立选择关注点。</p><p class="dialog-lead" style="overflow-wrap:anywhere;user-select:all">'+escape(url)+'</p>');
+   openDialog('分享这条判断','只包含公开场景与选择','<p class="dialog-lead">复制下面的链接，对方可独立选择关注点。</p><p class="dialog-lead" style="overflow-wrap:anywhere;user-select:all">'+escape(url)+'</p>');
   }
  }
  function setTown(name){state.town=state.town===name?'':name;state.expanded=true;if(state.town&&C.eventById(state.related)?.town!==state.town){state.related='';state.inquiry='';renderInquiry();}renderEvents();updateLinks();syncLocation();text('townCoverage',state.town?'已筛选'+state.town+'。向上查看本页收录的相关现场。':'本页收录的线索，不是全县完整清单。');}
@@ -263,6 +263,6 @@
  narrow.addEventListener('change',()=>{stopPlay(true);renderHero(false);});
  document.addEventListener('visibilitychange',()=>{if(document.hidden)stopPlay();});
  if(state.invitation){$('inviteNote').hidden=false;text('inviteNote','这个发现关注：'+C.question(state.invitation)+' 你也可以先独立选择自己的关注点。');}
- text('eventCoverage','资料核对至 '+D.checkedAt.replaceAll('-','.'));
+ text('eventCoverage','资料核对至本期');
  render(true);motionPreference();
 })();

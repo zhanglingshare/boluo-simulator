@@ -30,12 +30,12 @@
   const topics = {
     factory: {
       label: '工厂', icon: 'factory', title: ['工业在涨，投资在降。', '谁在接力？'],
-      period: '2026年前三季度 · 同比', chart: 'diverge', source: 'quarter', case: 'electronic',
+      period: '2026年前三季度 · 同比', lede: '产值是过去几年项目的回声，投资才是明年的伏笔。投资砍掉近四成半，变窄的不是今年，是明年。', chart: 'diverge', source: 'quarter', case: 'electronic',
       metrics: [
         { label: '规上工业增加值', value: 8.9, unit: '%', prefix: '+', color: 'blue', digits: 1 },
         { label: '工业投资', value: -44.7, unit: '%', color: 'coral', digits: 1 }
       ],
-      chartNote: '不同指标分别看，不能直接相减。',
+      chartNote: '不能互抵。两个数说的是两件事。',
       defaultQuestion: '工业增长与投资收缩，下一步应该核对什么？',
       inquiries: [
         { id: 'capacity', label: '原有产能在释放', question: '现有产能、订单和产出，哪些能证明增长来自哪里？', clue: '江丰精密有订单和新增设备的受访线索。', gap: '一家公司不能代表全县；产能利用和产出贡献仍需核对。', event: 'jiangfeng' },
@@ -45,7 +45,7 @@
     },
     projects: {
       label: '项目', icon: 'layers', title: ['签约之后，', '走到哪一步了？'],
-      period: '汉德精密三期 · 2026年9月现场报道', chart: 'stages', source: 'yuanzhou', case: 'projects',
+      period: '汉德精密三期 · 2026年9月现场报道', lede: '签约是纸上的钱，施工是地上的钱，投产才是账上的钱。这条线还停在地上。', chart: 'stages', source: 'yuanzhou', case: 'projects',
       metrics: [
         { label: '汉德三期 · 计划投资', value: 15, unit: '亿元', color: 'blue', digits: 0 },
         { label: '已报道的进展', text: '施工现场', color: 'ink' }
@@ -60,7 +60,7 @@
     },
     food: {
       label: '吃住', icon: 'food', title: ['餐饮回暖，', '住宿跟上了吗？'],
-      period: '2026年前三季度 · 限上营业额同比', chart: 'food', source: 'quarter', case: 'ring',
+      period: '2026年前三季度 · 限上营业额同比', lede: '吃饭的人回来了，住店的人没回来。过路的钱留下了，过夜的钱没留下。', chart: 'food', source: 'quarter', case: 'ring',
       metrics: [
         { label: '限上餐饮营业额', value: 9.8, unit: '%', prefix: '+', color: 'blue', digits: 1 },
         { label: '限上住宿营业额', value: 1.6, unit: '%', prefix: '+', color: 'teal', digits: 1 }
@@ -75,7 +75,7 @@
     },
     agriculture: {
       label: '农业', icon: 'leaf', title: ['农业在增长，', '增值留在哪？'],
-      period: '2026年前三季度 · 农林牧渔业', chart: 'agriculture', source: 'quarter', case: 'tea',
+      period: '2026年前三季度 · 农林牧渔业', lede: '六点九的增长里，林业跑得最快。同样叫涨，落在不同的地里。', chart: 'agriculture', source: 'quarter', case: 'tea',
       metrics: [
         { label: '农林牧渔业总产值', value: 130.32, unit: '亿元', color: 'blue', digits: 2 },
         { label: '总产值同比增长', value: 6.9, unit: '%', prefix: '+', color: 'teal', digits: 1 }
