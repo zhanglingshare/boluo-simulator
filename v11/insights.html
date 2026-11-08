@@ -6,10 +6,10 @@
 <title>08 忽略了什么｜看见增长背后的盲点 · 博罗 V11</title>
 <link rel="stylesheet" href="../assets/boluo-access.css?v=20261108-inline2">
 <link rel="stylesheet" href="./impact.css?v=20261107-v1">
-<link rel="stylesheet" href="./sem-lab.css?v=20261108-a">
+<link rel="stylesheet" href="./sem-lab.css?v=20261108-a"><link rel="stylesheet" href="./sem-viz-stage.css?v=20261108-v2">
 <script src="../assets/boluo-access.js?v=20261108-inline2" data-bl-access="inline"></script>
 <script defer src="./sem-demo.js?v=20261108-a"></script>
-<script defer src="./sem-lab.js?v=20261108-a"></script>
+<script defer src="./sem-lab.js?v=20261108-a"></script><script defer src="./sem-viz-stage.js?v=20261108-v2"></script>
 </head><body class="insights-page">
 <header class="site-header">
 <a class="brand" href="./index.html"><span class="brand-mark" aria-hidden="true"><svg viewBox="0 0 48 38"><path d="M3 28L16 8Q19 5 22 10L28 19 33 13Q36 9 39 14L46 27Q48 32 42 33H7Q1 33 3 28Z" fill="#dff8ff" stroke="#fff" stroke-width="1.8"/><path d="M10 29L20 19L28 26L35 20L43 29" stroke="#1396df" stroke-width="3" fill="none" stroke-linecap="round"/></svg></span><span class="brand-name"><strong>博罗决策风洞模拟器</strong><small>Boluo Decision Wind-Tunnel Simulator</small></span></a>
@@ -19,6 +19,16 @@
 <main class="wrap insight-wrap">
 <section class="insight-hero"><div><p class="micro">08 / WHAT ARE WE MISSING? · REALITY × HYPOTHESIS</p><h1>最危险的，<em>可能不是跌得最凶的。</em></h1><p>你在第七页改变了条件。现在换个角度：最值得补的数据，可能藏在一个不显眼的连接里。</p><div class="hero-chips"><span>公开数据锚定</span><span>重要性 × 表现</span><span>中介 / 调节启发</span></div></div>
 <div class="hero-evidence"><small>2026前三季度 · 公开观察</small><div><b class="plus">+8.9%<small>规上工业增加值</small></b><b class="minus">−44.7%<small>工业投资</small></b></div><a href="https://www.fz0752.com/fontHtml/html/issue/000143025_1.html" target="_blank" rel="noopener noreferrer">查看原始公开报道 ↗</a></div></section>
+<section class="insight-signals" aria-labelledby="insightSignalsTitle">
+<span class="viz-overline">REAL DATA / 两个公开观察窗口</span>
+<h2 id="insightSignalsTitle">一边仍在增长，<em>另一边明显收缩。</em></h2>
+<div class="insight-signal-grid">
+<div class="insight-signal down"><span class="signal-title">工业投资 · 2026年前三季度</span><div class="signal-kpi">−44.7%</div><div class="v-index-track"><i class="v-index-fill" style="width:46.0833%"></i></div><div class="signal-foot">上年同期=100 → 本期指数55.3</div></div>
+<div class="insight-signal is-up"><span class="signal-title">规上工业增加值 · 2026年前三季度</span><div class="signal-kpi">+8.9%</div><div class="v-index-track"><i class="v-index-fill" style="width:90.75%"></i></div><div class="signal-foot">上年同期=100 → 本期指数108.9</div></div>
+</div>
+<div class="signal-narrative"><strong>反差是真实的。原因，尚不能这样下结论。</strong><span>可能隔着产能兑现、订单、配套和时间差。下面点击一条候选联系，看缺少什么证据才能验证。</span></div>
+<div class="signal-source">同比分别以各自上年同期为100；不能把指数差额当成经济损失或直接因果。</div>
+</section>
 <div id="arrivalNote" class="arrival-note" role="status" hidden></div>
 <section class="target-panel" aria-labelledby="targetHeading">
 <div class="section-head"><div><p class="micro">01 / CHANGE THE QUESTION</p><h2 id="targetHeading">换一个目标，<em>盲点就会变</em></h2></div><span class="demo-pill">方法演示 · 非实测系数</span></div>
@@ -28,6 +38,19 @@
 <button type="button" data-target="resilience" aria-pressed="false">产业韧性</button>
 </div>
 <div class="target-message"><strong id="targetQuestion">工业继续增长，下一棒究竟卡在哪里？</strong><span id="targetInsight">观察与推断之间，还差哪些真实连接？</span></div>
+</section>
+<section class="blindspot-network" aria-labelledby="blindspotNetTitle">
+<div class="viz-stage-intro"><div><span class="viz-overline">STRUCTURAL X-RAY / INTERACTIVE NETWORK</span><h2 id="blindspotNetTitle">最大的数字，<em>未必是最关键的一环。</em></h2></div><span class="viz-dash-tag">点选主体 · 连线与证据同步变化</span></div>
+<div class="blindspot-scene" id="blindspotScene">
+<svg class="blindspot-svg" id="blindspotSvg" viewBox="0 0 1000 430" preserveAspectRatio="none" aria-hidden="true"></svg>
+<div class="blindspot-center"><small>你在追问的目标</small><strong id="blindspotCenterTitle">产业接续</strong><span>假设联系 · 不是实测交易</span></div>
+<div id="blindspotOrbit"></div>
+</div>
+<div class="blindspot-panel" aria-live="polite">
+<div class="blindspot-why"><span>为什么值得检查这条关系？</span><strong id="blindspotWhy">点击外围节点揭开疑问</strong></div>
+<div class="blindspot-evidence"><span>实际缺少的关键证据</span><strong id="blindspotMissing">等待选择</strong></div>
+</div>
+<div class="blindspot-theatre-footer"><p id="blindspotTarget">每一次切换都是改变观察目标；连线表达待检验的候选机制，不能代表已证实的经济传导关系。</p><button type="button" id="blindspotNext">换一条线索看看 ↻</button></div>
 </section>
 <section class="matrix-shell" aria-labelledby="matrixHeading">
 <div class="section-head"><div><p class="micro">02 / IMPORTANCE × PERFORMANCE</p><h2 id="matrixHeading">重要，但还没接好？<em>点一个圆。</em></h2></div><span class="demo-pill">所有圆点位置均为教学假设</span></div>
