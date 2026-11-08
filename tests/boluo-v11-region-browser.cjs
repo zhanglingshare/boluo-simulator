@@ -16,7 +16,7 @@ const out=path.resolve(__dirname,"../artifacts/v11-region");fs.mkdirSync(out,{re
    assert.match(await page.locator("#compareValue").innerText(),/43\.6/);
    await page.locator('[data-layer="people"]').click();
    assert.match(await page.locator("#networkCaption").innerText(),/人才与通勤/);
-   assert.match(await page.locator("#graphNodes").innerText(),/通勤通道/);
+   assert.match(await page.locator("#graphNodes").textContent(),/通勤通道/);
    await page.locator('[data-filter="plan"]').click();
    const edgeCount=await page.locator("#graphEdges .graph-edge:not(.dim)").count();
    assert.ok(edgeCount>0 && edgeCount<6,"plan filtered edges count "+edgeCount);
@@ -44,7 +44,7 @@ const out=path.resolve(__dirname,"../artifacts/v11-region");fs.mkdirSync(out,{re
   const context=await browser.newContext({viewport:{width:1280,height:800}});
   const page=await context.newPage();
   await page.goto("http://127.0.0.1:8765/v11/challenge.html",{waitUntil:"domcontentloaded"});
-  const next=page.locator('a[href="./region.html"]').last();await next.click();
+  const next=page.locator('.result-follow a[href="./region.html"]');await next.click();
   assert.match(await page.locator("h1").first().innerText(),/博罗都要有/);
   const back=page.locator("#questionToNine");await page.locator('#questionPicker [data-topic="people"]').click();
   assert.match(await back.getAttribute("href"),/claim=people/);
