@@ -8,7 +8,7 @@ if(!input||!network)return;
 const fmt=n=>(n>0?"+":"")+n.toFixed(2);
 function draw(){
 const x=Number(input.value),z=Number(network.value);
-const out=m.calculate({investmentIndex:x,network:z});
+const out=m.calculate({investmentIndex:x,network:z,coefficients:window.BoluoPathLab?.getCoefficients?.()});
 $("semInvestValue").textContent=x.toFixed(1);
 $("semNetworkValue").textContent=String(z);
 $("semDirect").textContent=fmt(out.direct);
