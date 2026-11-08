@@ -39,6 +39,14 @@ fs.mkdirSync(dir,{recursive:true});
    const wind=await page.locator("#iqToWind").getAttribute("href");
    assert.ok(wind.includes("bs=1.15"),"preserves original baseline from page 7");
    assert.ok(wind.includes("shock="),"sends a relevant wind scenario");
+   if(isMobile){
+    const nav=await page.evaluate(()=>{
+     const el=document.querySelector(".mobile-nav"),current=el.querySelector('[aria-current="page"]');
+     const n=el.getBoundingClientRect(),r=current.getBoundingClientRect();
+     return {left:r.left,right:r.right,min:n.left,max:n.right,scroll:el.scrollLeft};
+    });
+    assert.ok(nav.right<=nav.max+2 && nav.left>=nav.min-2,"current 08 mobile navigation item must remain fully visible");
+   }
    const overflow=await page.evaluate(()=>document.documentElement.scrollWidth-innerWidth);
    assert.ok(overflow<12,`page not wider than mobile viewport: overflow ${overflow}`);
    await page.evaluate(()=>window.scrollTo({top:0,behavior:"instant"}));
