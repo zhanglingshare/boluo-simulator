@@ -4,8 +4,8 @@
 <script src="../assets/boluo-access.js?v=20261108-inline2" data-bl-access="inline"></script><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover"><meta name="theme-color" content="#eaf4ff">
 <meta name="description" content="博罗决策风洞 V11 第七页：以既有可复现模型为底座，体验2030目标的受控冲击、缓冲与前后结果区间，并核对结果的条件与不确定性。">
 <title>07 决策风洞｜哪一环最经不起变化？— 博罗 V11</title>
-<link rel="stylesheet" href="./impact.css?v=20261107-v1"><link rel="stylesheet" href="./wind.css?v=20261107-w2"><link rel="stylesheet" href="./sem-bridge.css?v=20261108-a"><link rel="stylesheet" href="./sem-viz-stage.css?v=20261108-v3"><link rel="stylesheet" href="./wind-exp.css?v=20261108-b1">
-<script src="../model.js"></script><script defer src="./wind-experiments.js?v=20261108-b1"></script><script defer src="./wind.js?v=20261108-b1"></script><script defer src="./sem-demo.js?v=20261108-a"></script><script defer src="./path-lab.js?v=20261108-b1"></script><script defer src="./sem-bridge.js?v=20261108-b1"></script><script defer src="./sem-viz-stage.js?v=20261108-v3"></script></head>
+<link rel="stylesheet" href="./impact.css?v=20261107-v1"><link rel="stylesheet" href="./wind.css?v=20261107-w2"><link rel="stylesheet" href="./wind-exp.css?v=20261108-b1">
+<script src="../model.js"></script><script defer src="./wind-experiments.js?v=20261108-b1"></script><script defer src="./wind.js?v=20261108-b1"></script><script defer src="./condition-bridge.js?v=20261109-p1"></script></head>
 <body class="wind-page">
 <header class="site-header">
 <a class="brand" href="./index.html" aria-label="博罗决策风洞首页"><span class="brand-mark" aria-hidden="true"><svg viewBox="0 0 48 38"><path d="M3 28L16 8Q19 5 22 10L28 19 33 13Q36 9 39 14L46 27Q48 32 42 33H7Q1 33 3 28Z" fill="#dff8ff" stroke="#fff" stroke-width="1.8"/><path d="M10 29L20 19L28 26L35 20L43 29" stroke="#1396df" stroke-width="3" fill="none" stroke-linecap="round"/></svg></span><span class="brand-name"><strong>博罗决策风洞模拟器</strong><small>Boluo Decision Wind-Tunnel Simulator</small></span></a>
@@ -54,77 +54,14 @@
 </div>
 <div class="result-disclaimer"><span>!</span><p>这是受控情景压力测试。基准路径贡献按照既有2030目标假设设定，结果比例受这些假设影响；不得将其当作真实达标概率。</p></div>
 </section>
-<section class="sem-bridge" id="semBridge" aria-labelledby="semTitle">
-<div class="sem-head"><div><p class="micro">PUBLIC SIGNAL × STRUCTURAL THINKING / 2026—2030</p><h2 id="semTitle">投资下降，<em>真的会立刻影响增长？</em></h2><p>先看一个公开反差，再用中介、调节的思想拆开它。拖动的是教学假设，不会偷偷改动上方2030 GDP模拟。</p></div><span class="sem-tag">公开统计锚点 × 结构方法演示</span></div>
-<div class="sem-viz-stage" id="semVisualStage">
-<div class="viz-stage-intro"><div><span class="viz-overline">2026 · REAL SIGNALS / PUBLIC DATA</span><h3>同一个博罗，<em>两条完全不同的曲线。</em></h3></div><span class="viz-dash-tag">各自上年同期 = 100</span></div>
-<div class="viz-observed-grid" aria-label="两项公开指标各自与其上年同期比较">
-<div class="viz-observed is-down"><span class="v-index-label">工业投资 · 同比</span><strong class="v-index-kpi">−44.7%</strong><span class="v-index-caption">2026年前三季度 · 投资指数 55.3</span><div class="v-index-track"><i class="v-index-fill" style="width:46.0833%"></i></div><div class="v-index-foot">基期 100 → 当前 55.3</div></div>
-<div class="viz-observed is-up"><span class="v-index-label">规上工业增加值 · 同比</span><strong class="v-index-kpi">+8.9%</strong><span class="v-index-caption">2026年前三季度 · 增加值指数 108.9</span><div class="v-index-track"><i class="v-index-fill" style="width:90.75%"></i></div><div class="v-index-foot">基期 100 → 当前 108.9</div></div>
+<section class="condition-board" id="conditionBoard" aria-labelledby="conditionBoardTitle">
+<div class="condition-board-head"><div><p class="micro">AFTER THE EXPERIMENT / 继续排查</p><h2 id="conditionBoardTitle">结果变了，<em>谁可能先感受到？</em></h2><p>换一种现实压力，重新计算上方分布。下面只是需要核实的联系，不是已发生的经济损失。</p></div><div class="condition-score"><small>当前情景 · 中位数对照</small><strong id="conditionDelta">—</strong><span id="conditionRange">等待计算</span></div></div>
+<div class="condition-choices" role="group" aria-label="切换现实变化并重算结果">
+<button type="button" data-shock="delay"><span>01 · 项目进度</span><strong>晚一年投产，谁来接棒？</strong><small>项目 → 产线 → 供应关系</small></button>
+<button type="button" data-shock="orders"><span>02 · 本地订单</span><strong>订单转移，谁先受影响？</strong><small>企业 → 配套 → 替代客户</small></button>
+<button type="button" data-shock="traffic"><span>03 · 通勤与人才</span><strong>通勤变难，哪一环吃紧？</strong><small>人员 → 服务 → 产业协作</small></button>
 </div>
-<p class="viz-observed-note">两张指数尺分别以各自上年同期为100；可对比方向，不可把两个指数相减当作经济损失。公开数据不是结构模型的因果证据。</p>
-<div class="viz-stage-divider"><span>一个可能被忽略的中间环节：从投入到产出，需要时间</span></div>
-<div class="path-lab-board" id="pathLabBoard" aria-label="可调系数的结构传导路径图">
-<div class="path-lab-heading"><div><span class="viz-overline">LIVE STRUCTURAL PATHS / 系数随你的设定变化</span><h3>哪条联系更有力量？<em>拖动参数，让路径自己说话。</em></h3></div><span>所有数值均为情景设定，未经样本估计</span></div>
-<div class="path-lab-grid">
-<div class="path-lab-picture">
-<svg id="pathGraph" viewBox="0 0 920 450" role="img" aria-label="投资项目、产能兑现、增长接续之间三条可调整强度的路径与一条网络调节作用">
-<defs><marker id="pathArrow" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0 0L10 5L0 10Z" fill="#79e2ec"/></marker></defs>
-<path id="edgeA" class="path-edge" d="M262 183 L417 183" marker-end="url(#pathArrow)"/>
-<path id="edgeB" class="path-edge" d="M583 183 L739 183" marker-end="url(#pathArrow)"/>
-<path id="edgeC" class="path-edge path-direct" d="M183 224 Q505 405 815 224" marker-end="url(#pathArrow)"/>
-<path id="edgeZ" class="path-edge path-mod" d="M500 77 L655 154" marker-end="url(#pathArrow)"/>
-<g class="path-node"><rect x="40" y="135" width="222" height="96" rx="15"/><text x="151" y="166">X · 投资与项目</text><text x="151" y="198" class="path-node-note">公开指标启发 · 非直接因果</text></g>
-<g class="path-node"><rect x="417" y="135" width="166" height="96" rx="15"/><text x="500" y="166">M · 产能兑现</text><text x="500" y="198" class="path-node-note">潜在中介</text></g>
-<g class="path-node"><rect x="739" y="135" width="155" height="96" rx="15"/><text x="816" y="166">Y · 增长接续</text><text x="816" y="198" class="path-node-note">目标变量</text></g>
-<g class="path-node path-node-z"><rect x="391" y="18" width="218" height="59" rx="13"/><text x="500" y="52">Z · 本地网络条件</text></g>
-<text id="coefA" class="coef-label" x="339" y="165">0.45</text><text id="coefB" class="coef-label" x="664" y="165">0.55</text><text id="coefC" class="coef-label" x="503" y="370">0.10</text><text id="coefZ" class="coef-label" x="645" y="93">0.25</text>
-<text x="503" y="398" class="graph-foot">直接路径 · 不是已证实的博罗因果系数</text>
-</svg>
-<div class="path-effect-strip"><span>直接响应 <b id="pathDirect">—</b></span><span>间接响应 <b id="pathIndirect">—</b></span><span>总响应 <b id="pathTotal">—</b></span></div>
-</div>
-<div class="path-lab-sliders">
-<label>项目 → 产能 <strong id="coefAVal">0.45</strong><input type="range" id="coefAInput" min="-.2" max=".85" step=".05" value=".45"></label>
-<label>产能 → 增长 <strong id="coefBVal">0.55</strong><input type="range" id="coefBInput" min="-.2" max=".85" step=".05" value=".55"></label>
-<label>项目 → 增长（直接） <strong id="coefCVal">0.10</strong><input type="range" id="coefCInput" min="-.3" max=".65" step=".05" value=".10"></label>
-<label>网络对中介路径的调节 <strong id="coefZVal">0.25</strong><input type="range" id="coefZInput" min="-.5" max=".5" step=".05" value=".25"></label>
-<button type="button" id="pathPresetA">让间接路径更强</button><button type="button" id="pathPresetB">假设直接路径更强</button><button type="button" id="pathReset">恢复初始结构</button>
-<p>你改变的是理论联系的强弱。它们有方向、有符号，但**没有被公开宏观数据识别为经验路径系数**。</p>
-</div></div>
-</div>
-<div class="viz-causal-grid" role="group" aria-label="点击X、M、Y探索待检验的理论机制">
-<button class="viz-causal-button node-x" type="button" data-sem-focus="x" aria-pressed="false"><span class="node-count">X / INPUT</span><strong>投资与项目</strong><small>假设输入指数 <b id="vizScenarioIndex">75.0</b></small></button>
-<button class="viz-causal-button node-m" type="button" data-sem-focus="m" aria-pressed="true"><span class="node-count">M / MEDIATOR</span><strong>产能兑现</strong><small>中介响应 <b id="vizPathM">—</b></small></button>
-<button class="viz-causal-button node-y" type="button" data-sem-focus="y" aria-pressed="false"><span class="node-count">Y / OUTPUT</span><strong>增长接续</strong><small>调整后路径 <b id="vizPathY">—</b></small></button>
-</div>
-<div class="viz-focus-explain" aria-live="polite"><strong id="vizFocusTitle">M · 产能兑现</strong><p id="vizFocusBody">从投资到投产存在设备安装、试产和达产时间差，需要项目样本验证。</p></div>
-<div class="viz-preset-row"><span>一键改变条件</span><button type="button" data-viz-preset="55.3" data-network-preset="50">回到公开锚点</button><button type="button" data-viz-preset="75" data-network-preset="50">部分恢复</button><button type="button" data-viz-preset="100" data-network-preset="70">恢复至基期</button></div>
-<div class="viz-bar-stage" aria-label="直接、中介和总响应的左右分布图">
-<div class="viz-bar-head"><strong>路径响应即时分解</strong><span>中线 = 0 · 左负 / 右正</span></div>
-<div class="viz-bar-row"><label>直接</label><div class="viz-bar-axis"><i class="viz-bar-fill" id="vizBarDirect"></i></div><output id="vizDirect">—</output></div>
-<div class="viz-bar-row"><label>经中介</label><div class="viz-bar-axis"><i class="viz-bar-fill" id="vizBarIndirect"></i></div><output id="vizIndirect">—</output></div>
-<div class="viz-bar-row total"><label>总响应</label><div class="viz-bar-axis"><i class="viz-bar-fill" id="vizBarTotal"></i></div><output id="vizTotal">—</output></div>
-<div class="viz-bar-foot"><span>负向结构响应 ←</span><span>→ 正向结构响应</span></div>
-</div>
-<p class="viz-stage-hint">上方两个同比值为公开观察。路径响应及直接/间接系数是 结构关系中的示例假设，绝不是已经估计的博罗实证系数或GDP变化。下方仍可独立运行原有2030结果分布情景。</p>
-</div>
-<div class="sem-observation"><span>2026前三季度 · 同比</span><strong class="neg">工业投资 −44.7%</strong><strong>规上工业增加值 +8.9%</strong><a href="https://www.fz0752.com/fontHtml/html/issue/000143025_1.html" target="_blank" rel="noopener noreferrer">核对公开报道 ↗</a></div>
-<div class="sem-layout"><div class="sem-control-panel">
-<label for="semInvestment"><span>假设工业投资指数恢复至 <strong id="semInvestValue">75.0</strong></span><input type="range" id="semInvestment" min="40" max="110" step=".1" value="75" aria-describedby="semInvestHint"><small id="semInvestHint">观察锚点为55.3（2025年同期=100）；你调整的是假设，不是预测。</small></label>
-<label for="semNetwork"><span>假设本地网络缓冲能力 <strong id="semNetworkValue">50</strong></span><input type="range" id="semNetwork" min="20" max="80" step="5" value="50" aria-describedby="semNetworkHint"><small id="semNetworkHint">20—80只是教学刻度，没有公开数据支持真实网络得分。</small></label>
-<button type="button" class="sem-reset" id="semReset">回到公开观察起点</button>
-</div><div class="sem-readout"><small>无量纲结构响应 · 相对观察锚点</small><strong id="semTotal" aria-live="polite">—</strong><span>不是GDP亿元 / 不是工业增速百分点 / 非现实测算结果</span>
-<div class="sem-bar"><span>直接</span><div class="sem-track"><i class="sem-fill" id="semDirectBar"></i></div><b id="semDirect">—</b></div>
-<div class="sem-bar"><span>经中介</span><div class="sem-track"><i class="sem-fill" id="semIndirectBar"></i></div><b id="semIndirect">—</b></div>
-</div></div>
-<div class="sem-flow" aria-label="理论路径：投资与项目接续，经由产能兑现，连接到增长接续">
-<div><small>X · 输入条件</small><strong>项目接续</strong><span>由投资变化启发</span></div><i aria-hidden="true">→</i>
-<div><small>M · 中介</small><strong>产能兑现</strong><span>结构响应 <b id="semMediator">—</b></span></div><i aria-hidden="true">→</i>
-<div><small>Y · 结果</small><strong>增长接续</strong><span>经网络调节后 <b id="semPathAdjusted">—</b></span></div>
-</div>
-<p class="sem-note" id="semInterpret">改变一个条件，观察直接路径与间接路径怎样变化。</p>
-<div class="sem-actions"><p>真正要补的不是“一个万能系数”，而是项目进度、产能利用、本地配套与订单样本。</p><a id="semToEight" href="./insights.html">进入08 · 看看可能忽略了什么 →</a></div>
-<details class="sem-details"><summary>展开：如何解读这些路径，并用新证据验证？</summary><p>本图只演示 X→M→Y、中介效应和 Z 调节作用的计算思路。演示系数 X→M=0.45、M→Y=0.55、X→Y=0.10、调节参数=0.25，均为教学假设，不是统计估计。真正验证关系需要单位级样本，随后开展测量质量检查、抽样检验、中介与调节检验及预测验证。</p></details>
+<div class="condition-board-foot"><span id="conditionQuestion" aria-live="polite">请选择一种变化，观察结果分布如何移动。</span><a id="conditionToEight" href="./insights.html">进一步排查被忽略的联系 →</a></div>
 </section>
 <section class="transmission" aria-labelledby="transTitle"><div class="subhead"><div><p class="micro">03 / WHERE THE SHOCK TRAVELS</p><h2 id="transTitle">变化从哪里传过来？</h2></div><span>机制示意 · 非交易网络</span></div>
 <div class="chain-viewport"><div id="chainTrack" class="chain-track" role="group" aria-label="随场景变化的四段条件传导关系"><button type="button" data-link="0" class="chain-node active"><small>变化起点</small><strong id="chain0">关键项目延期</strong></button><span class="chain-beam" aria-hidden="true"></span><button type="button" data-link="1" class="chain-node"><small>第一层</small><strong id="chain1">新产线推迟</strong></button><span class="chain-beam" aria-hidden="true"></span><button type="button" data-link="2" class="chain-node"><small>第二层</small><strong id="chain2">本地配套订单</strong></button><span class="chain-beam" aria-hidden="true"></span><button type="button" data-link="3" class="chain-node"><small>后续结果</small><strong id="chain3">产业接续能力</strong></button></div></div>
@@ -132,10 +69,12 @@
 <section class="rescue" id="rescue" aria-labelledby="rescueTitle"><div class="rescue-main"><p class="micro">04 / TRY AN ALTERNATIVE</p><h2 id="rescueTitle">如果还有另一条路接棒呢？</h2><p>保持相同的压力条件，增加一个有限的缓冲假设，再计算一次。看看缓冲是否改变结果和结果区间。</p><label class="rescue-toggle"><input type="checkbox" id="bufferOn"><span class="toggle-track" aria-hidden="true"></span><span><strong id="bufferName">其他项目提前接棒</strong><small id="bufferDesc">部分弥补项目延期后的产出接续</small></span></label></div>
 <div class="rescue-outcome"><span>缓冲前后 · 模拟中位数</span><div><strong id="beforeBuffer">—</strong><span>→</span><strong id="afterBuffer">—</strong></div><p id="bufferTakeaway">启用左侧缓冲条件后，显示同一随机种子下的第三组结果。</p></div></section>
 <section class="share-panel"><div><p class="micro">05 / WHAT DID YOU DISCOVER?</p><h2>带走一个可以复现的发现</h2><p id="shareSummary">你改变了一项条件，观察到结果分布发生了怎样的变化？</p></div><div class="share-actions"><button type="button" id="copyLink">复制复现实验链接 ↗</button><button type="button" id="saveExp">保存本机实验</button><button type="button" id="savedList">我的实验记录</button></div></section>
-<details class="technical" id="method"><summary><span>资料、参数区间与模型边界</span><span>＋</span></summary><div class="technical-content"><p>使用仓库现有 <code>model.js</code> 的同一种子 Monte Carlo 内核，在受控条件下重跑基准、压力、缓冲情景；固定样本量与种子，使同一次比较可复现。情景变化仅是可调整的假设，不是从真实项目合同估计出的因果系数。</p>
-<p id="assumptionText">当前情景假设详见运行后展示。</p><p>没有观察数据支撑的网络线不标注交易额、概率或真实经济损失。基准情景路径贡献与2030目标对齐，因此展示的模拟达标占比尤其不应当作官方预测或经独立验证的成功概率。</p>
-<p><a href="https://github.com/zhanglingshare/boluo-simulator/blob/main/model.js" target="_blank" rel="noopener noreferrer">查看已有模拟内核</a> · <a href="../windtunnel-v2.html" target="_blank" rel="noopener noreferrer">原有独立风洞 V2（保留）</a> · <a href="./plan.html">返回十五五规划</a></p></div></details>
-<footer class="footer"><span>博罗 V11 · 07 决策风洞 · 受控压力实验与路径方法演示</span><a href="./insights.html">进入08 · 忽略了什么</a></footer>
+<details class="technical" id="method"><summary><span>结果为什么会变化？还有哪些不确定？</span><span>＋</span></summary><div class="technical-content">
+<p>上方结果是用户选择条件下的情景计算，不是已经发生的未来，也不是由企业合同直接估计出来的经济损失。</p>
+<p id="assumptionText">本次对照仅使用所选条件。规划兑现与实际经济运行之间仍有需要核验的项目进度、订单、产能和服务证据。</p>
+<p>2025年1005.45亿元为历史基数，2030年1600亿元为规划目标；情景结果受设定影响，不能直接称为现实达标概率。<a href="./plan.html">查看规划与现实边界 ↗</a></p>
+</div></details>
+<footer class="footer"><span>博罗 V11 · 07 决策风洞 · 现实条件实验与结果比较</span><a href="./insights.html">进入08 · 忽略了什么</a></footer>
 </main>
 <nav class="mobile-nav" aria-label="移动端导航"><a href="./index.html">01 发现</a><a href="./reality.html">02 现实</a><a href="./industry-base.html">03 底盘</a><a href="./relations.html">04 关系</a><a href="./impact.html">05 影响</a><a href="./plan.html">06 规划</a><a href="./wind.html" aria-current="page">07 风洞</a><a href="./insights.html">08 忽略</a></nav>
 <dialog id="modal"><div class="dialog-header"><strong id="modalTitle">实验详情</strong><button type="button" id="modalClose">关闭 ×</button></div><div id="modalBody" class="dialog-body"></div></dialog><div id="toast" class="toast" role="status" aria-live="polite"></div>
