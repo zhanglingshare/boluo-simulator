@@ -38,7 +38,7 @@ test("page 07 and 08 explicitly label teaching assumptions",()=>{
   assert.match(insights,/所有圆点位置均为教学假设/);
   assert.match(insights,/非实测系数/);
   assert.match(insights,/id="mapDots"/);
-  assert.match(insights,/sem-input-template.csv/);
+  assert.doesNotMatch(insights,/smartpls|sem-input-template\\.csv/i);
 });
 test("page links and script assets exist",()=>{
   for(const name of ["v11/sem-demo.js","v11/sem-bridge.js","v11/sem-bridge.css",
@@ -92,4 +92,33 @@ test("illustrative effect decomposition may reverse, but does not become GDP",()
  assert.match(w,/不是结构模型的因果证据/);
  assert.match(w,/绝不是已经估计的博罗实证系数或GDP变化/);
  assert.match(i,/连线表达待检验的候选机制/);
+});
+
+test("07 baseline sliders, detailed distribution and editable causal strengths are wired to real recomputation",()=>{
+  const html=read("v11/wind.html");
+  const wind=read("v11/wind.js");
+  const exp=read("v11/wind-experiments.js");
+  const paths=read("v11/path-lab.js");
+  for(const id of ["baseScale","baseVol","basePathControls","baseCount","baseRun","detailChart","quantileRows","detailThreshold","pathGraph","coefAInput","coefBInput","coefCInput","coefZInput"]) assert.ok(html.includes('id="'+id+'"'),id);
+  for(const name of ["v11/wind-experiments.js","v11/path-lab.js","v11/wind-exp.css"]) assert.ok(fs.existsSync(path.join(root,name)),name);
+  for(const source of [exp,paths,wind])assert.doesNotThrow(()=>new Function(source));
+  assert.match(wind,/BoluoExperimentBaseline\?\.getParams/);
+  assert.match(wind,/boluo:wind-run/);
+  assert.match(exp,/window\.BoluoDistribution/);
+  assert.match(exp,/getDistributions/);
+  assert.match(exp,/data-dist-view/);
+  assert.match(paths,/BoluoPathLab/);
+  const alt=engine.calculate({investmentIndex:100,network:65,coefficients:{xToM:.8,mToY:.7,xToY:.05,moderation:.1}});
+  const orig=engine.calculate({investmentIndex:100,network:65});
+  assert.notEqual(alt.total,orig.total);
+  assert.ok(Math.abs(alt.total-alt.direct-alt.indirect)<1e-12);
+});
+test("public UI does not reveal software or algorithm names",()=>{
+  for(const name of ["v11/wind.html","v11/insights.html"]){
+    const html=read(name);
+    assert.doesNotMatch(html,/SmartPLS|PLS-SEM|IPMA|蒙特卡洛|Bootstrap/);
+  }
+  const wind=read("v11/wind.html");
+  assert.match(wind,/教学假设/);
+  assert.match(wind,/2025年GDP实际基数固定/);
 });
