@@ -1,44 +1,24 @@
-# 博罗 01–06 页面设计与数据工程契约
+# Public contribution guide — Boluo V11
 
-本文件约束 **`index-legacy-2026-11-03.html`、`town.html`、`industry-changes.html`、`who.html`、`relation-compare.html`、`plan-with-me.html`** 及它们的前端组件。新增页面与改版须保持这六页的统一视觉和认知顺序。此规范不是苹果或华为的官方设计体系，也不暗示团队关联。
+This is the public website repository. **Do not put private research notes, internal scoring formulas, unpublished parameter matrices, provider credentials, or restricted source records here.**
 
-## 视觉纪律（必须）
+Scope: only `zhanglingshare/boluo-simulator`. Do not modify separate Huicheng, Zhongkai, Huidong or other repositories.
 
-- 整体浅色画布 `#f5f5f7`，信息承载卡片纯白 `#ffffff`，主墨色 `#1d1d1f`，次级文字 `#86868b`，发丝边线 `rgba(0,0,0,.06)`。
-- 字体 `-apple-system, BlinkMacSystemFont, "SF Pro Display", "PingFang SC", sans-serif`；核心数字 `"SF Pro Text", "JetBrains Mono", Menlo, monospace`，单位与口径另以普通字体标识。
-- 卡片可用 20px 圆角、按钮 10px 圆角；基准内间距 24px，复杂内容 32px；避免堆叠大圆角和无限卡片流。
-- 阴影只能是微弱的物理分离：`0 4px 24px rgba(0,0,0,.04), 0 1px 2px rgba(0,0,0,.02)`，hover 位移最多 `translateY(-2px)`，过渡 `.3s cubic-bezier(.25,.1,.25,1)`。
-- 禁止高饱和渐变、外发光、`drop-shadow` 发光、无意义 `backdrop-filter`、无目的粒子、自动闪烁与跳动。**用户明确指定第03产业变化、第05前后对比的关系网络采用哑光深色画布**（03中间关系窗；05当前状态画布，加入前仍为浅色），其他页面和检查器维持浅色；深色文字对比度、证据等级线型必须单独验收。
-- **不得为了纯白而牺牲网络判读**：关系图应保留清楚的实体标签、区分已核实/间接推断/候选假设的线型、显著状态变化；动画只服务于用户点击、事件变动或运行回放。
-- 390px 手机、键盘焦点、`prefers-reduced-motion` 是必须验证的交付条件，不能只给 desktop 效果图。
+## Page responsibilities
 
-## 事实与推演纪律（必须）
+01 discovery, 02 descriptive reality, 03 industry questions, 04 observed relationships, 05 before/after comparison, 06 plans, 07 interactive conditional outcomes, 08 overlooked connections. 09–11 are planned.
 
-- 每页的关系变化、目标、数字、证据只来自可追溯文件。存量 GDP 与规划目标必须区分口径、时间和证据类型；规划目标不能自动换算为个人收入、岗位、学位或通勤收益。
-- “观测事实 / 间接推断 / 待验证机制 / 玩家施压条件”必须在数据与画面上区分。真实关联不等于经济因果，虚线不能作为真实交易。
-- 缺数据时公开盲区与下一条需补证据，不填造完整网络；压力条件只影响声明的假设链，不伪造损失金额、具体概率或完成率。
-- `plan-with-me.html` 目标依据截至 2026-11-03 可核验的公开政府索引及媒体报道，**尚未全文逐条核对正式规划纲要**；任何后续正式计划条款更新须另行核源后改动数据。
-- 不修改惠城、仲恺、惠东等独立项目；未经单独验证，不改博罗 `model.js`、原 A/B/C 关系记录、原有 Holo 模型和数据抓取程序。
+For each UI change: preserve existing page behavior, navigation, semantics, 1440px desktop and 390px mobile compatibility. Interactions must affect actual visible output and respect reduced motion.
 
-## 认知接力与验收
+## Public facts and scenarios
 
-导航顺序必须保留：**01 今日博罗 → 02 各镇观察 → 03 产业变化 → 04 基本面 → 05 关系前后 → 06 规划与你 → 原版路径/未来/风洞**。
+Every published observation has a period and verifiable origin. Economic aggregates and company estimates must not be mixed. Contract signing is not production, geographic proximity is not a supplier agreement, and user-defined scenarios are not observed data.
 
-先运行：
-```bash
-node --test tests/boluo-plan-life.test.cjs
-node tests/verify_journey.js
-```
-浏览器验收需覆盖 1440 与 390 宽度，Cmd/Ctrl+K 真实页和事件检索、03专注模式、03/05深色网络标签可读、六页共用样式、原有交互未退化、05→06 事件 `Cxxx` 无损传递，以及 06 改身份/改方向/施压时的实际状态变化。CI：`.github/workflows/boluo-mh-six-check.yml`。其中 `assets/boluo-six-native.js/css` 是六页公共控件与局部深色关系画布的实现；任何修改不得使 UI 网络计数与真实入库关系数矛盾。
+Public outputs may show data versions and applicable limitations. Detailed internal modeling implementations are outside the public release scope.
 
-**核心准则：外观克制，信息运动；动画应揭示现实中的差异，不制造虚假的确定性。**
+## Release hygiene
 
-
-## 01–06 首屏参与定位（2026-11-04 用户修正）
-
-- 前六页负责现实反差、认知冲击与参与，为后面的决策模拟铺垫。首屏不安排选政策、调经济参数或比较决策方案。
-- `assets/boluo-participation.js/css` 为六页参与层：独立选择 → 资料揭晓 → 邀请朋友独立选择 → 显示双方第一反应。原有完整内容仍可继续阅读。
-- 苹果交互借鉴落实到文字层级、贴近触发控件的菜单、模态焦点管理、手机底部弹层、短而可中断的状态动画；不是只换圆角和底色。
-- 分享链接只携带场景与选择；进度是当前设备记录。没有全站投票后台，不得显示伪造的参与人数、百分比、排名或“多数人猜错”。
-- 03桥梁图为阶段示意，未通车、施工管控和实测通勤分开；05只断开C008明确关停的产线关系，保留主体；06只揭示目标到生活的条件，决策模拟在后续风洞。
-- 新交互验收：`tests/boluo-participation-browser.cjs`，覆盖六页1440/390、邀请者/接收者独立选择、弹层焦点与关闭、减少动态效果、真实事件联动。
+- Never publish keys, internal scoring code, private data or sensitive review notes.
+- Separate updated data from application code and review them independently.
+- Validate assets, test user flows and confirm GitHub Pages build before release.
+- Do not rewrite Git history, change visibility or change the license as part of a routine content update.
