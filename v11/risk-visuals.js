@@ -84,7 +84,7 @@ function heat(){
  html+='</div>';
  motion.html("rvHeat",html,false);
 
- const legend=active==="electronic"?"绿色：跨越1000亿参照线；红色：未跨":active==="projects"?"绿色：投资指数恢复至100；红色：未恢复":active==="innovation"?"深蓝代表更小的拟议抽样误差；没有合格阈值":"颜色仅用于区分条件场景的数值大小；不表示产业风险或达成度";
+ const legend=active==="electronic"?"绿色：跨越1000亿参照线；红色：未跨":active==="projects"?"绿色：投资指数恢复至100；红色：未恢复":active==="innovation"?"深蓝代表核验完成得更多；不设合格阈值":"颜色仅用于区分条件场景的数值大小；不表示产业风险或达成度";
  $("rvHeatLegend").textContent=legend;
 $("rvLegend").innerHTML=(active==="electronic"||active==="projects")?'<span><i class="rv-key" style="background:#1e8f79"></i>跨越参照</span><span><i class="rv-key" style="background:#e4a081"></i>未跨参照</span>':'<span><i class="rv-key" style="background:#72bbdb"></i>相对高值</span><span><i class="rv-key" style="background:#eaf2fb"></i>相对低值</span><span>无实测目标</span>';
 }
@@ -245,8 +245,8 @@ function sensitivity(){
   base=value(active,v1,v2);unit="元/100游客";label="本地消费代理变化量";
   items=[["过夜率+10个百分点",value(active,bounded(v1+10,0,70),v2)-base],["过夜率−10个百分点",value(active,bounded(v1-10,0,70),v2)-base],["本地留存+10个百分点",value(active,v1,bounded(v2+10,0,100))-base],["本地留存−10个百分点",value(active,v1,bounded(v2-10,0,100))-base]];
  }else{
-  base=value(active,v1);unit="pp";label="最大误差半宽的变化量";
-  items=[["再调查+50家",value(active,bounded(v1+50,20,250))-base],["减少调查50家",value(active,bounded(v1-50,20,250))-base],["再调查+100家",value(active,bounded(v1+100,20,250))-base],["减少调查100家",value(active,bounded(v1-100,20,250))-base]];
+  base=value(active,v1,v2);unit="家";label="已核验家数的变化量";
+  items=[["核验范围+50家",value(active,bounded(v1+50,20,250),v2)-base],["核验范围-50家",value(active,bounded(v1-50,20,250),v2)-base],["核验范围+100家",value(active,bounded(v1+100,20,250),v2)-base],["核验范围-100家",value(active,bounded(v1-100,20,250),v2)-base]];
  }
  const shifts=active==="electronic"?[1,-1,3,-3]:active==="projects"?[5,-5,10,-10]:active==="innovation"?[50,-50,100,-100]:[10,-10,10,-10];
  sensitivityItems=items.map((item,i)=>({label:item[0],values:(active==="tea"||active==="ring")&&i>1?[undefined,v2+shifts[i]]:[v1+shifts[i]]}));

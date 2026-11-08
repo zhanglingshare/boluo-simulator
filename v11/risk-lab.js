@@ -90,12 +90,12 @@ function chartTourist(overnight,retention,spend,local){
 }
 function chartInnovation(n,moe,level){
  const percent=100*652/1407;
- let out='<svg viewBox="0 0 780 270" role="img" aria-label="数字化转型覆盖比例和潜在抽样误差"><title>覆盖率基于公开统计，误差区间基于拟议抽样计划</title>';
+ let out='<svg viewBox="0 0 780 270" role="img" aria-label="数字化转型覆盖比例与企业核验进度"><title>覆盖率来自公开统计，进度按已核验记录计算</title>';
  out+='<circle cx="170" cy="128" r="79" fill="none" stroke="#e5edf7" stroke-width="24"/>';
  out+='<circle cx="170" cy="128" r="79" fill="none" stroke="#2686df" stroke-width="24" stroke-linecap="round" stroke-dasharray="'+(496.4*percent/100)+' 496.4" transform="rotate(-90 170 128)"/>';
  out+='<text x="170" y="129" text-anchor="middle" style="font-size:39px;fill:#136cb9;font-weight:920">'+fmt(percent,1)+'%</text><text x="170" y="154" text-anchor="middle">实施覆盖比例</text>';
  out+='<text x="320" y="78" class="major">待核验企业 '+n+'家</text><rect x="320" y="94" width="370" height="25" rx="8" fill="#e8f0f9"/><rect x="320" y="94" width="'+(370*n/250)+'" height="25" rx="8" fill="#49a3e0"/>';
- out+='<text x="320" y="167" class="major">比例型结果的最大样本结果可能存在差异 ±'+fmt(moe,1)+'个百分点</text><text x="320" y="195">前提：在652家总体内尚未取得完整企业调查记录</text>';
+ out+='<text x="320" y="167" class="major">已登记 '+n+' 家，只有完成核验的记录才进入统计</text><text x="320" y="195">前提：在652家总体内尚未取得完整企业调查记录</text>';
  out+='<text x="320" y="219">不存在已实测的“数字化绩效达成率”</text></svg>';
  return out;
 }
@@ -143,10 +143,10 @@ function calc(){
    const fpc=Math.sqrt((N-n)/(N-1)),moe=zScores[secondary]*Math.sqrt(.25/n)*fpc*100;
    data.badge="无绩效实测系数";data.missing=true;
    data.major=fmt(100*N/1407,1)+"%";data.unit="数字化转型实施覆盖比例";data.detail="652家实施数字化转型/1407家规上工业企业。该覆盖比例不是生产率提升比例。";
-   data.second="±"+fmt(moe,1)+"百分点";data.secondDetail="拟议抽样的最坏情形"+confidence[secondary]+"%误差半宽，假定简单随机抽样，且未考虑非响应偏差。";
+   data.second=n+" 家";data.secondDetail="已登记 652 家中，这里看的是其中 "+n+" 家的核验进度；未核验的记录仍标为待核实。";
    data.chart=chartInnovation(n,moe,confidence[secondary]);
    data.foot="目前没有企业经营绩效和可比调查样本，不能计算真实转型效果。";
-   data.chain=["数字化实施","可比经营样本","效果识别","能力转化"];data.bars=[["实施转型",100*N/1407],["其他规上",100*(1-N/1407)],["拟抽样",100*n/N]];
+   data.chain=["数字化实施","可比经营样本","效果识别","能力转化"];data.bars=[["实施转型",100*N/1407],["其他规上",100*(1-N/1407)],["已核验",100*n/N]];
  }
  return data;
 }
@@ -208,7 +208,7 @@ function metric(id,values){
  if(id==="projects")return {value:55.3*Math.pow(1+a/100,4),label:"2030同季投资指数",unit:"指数",digits:1,foot:"2025同期＝100 · 计算投资恢复条件",kind:"公开降幅 + 恢复假设"};
  if(id==="tea")return {value:23+32*a/100+25*b/100,label:"每100元销售额的本地增值",unit:"元",digits:1,foot:"种植23 + 加工32×留存比例 + 渠道25×留存比例",kind:"演示假设 · 非柏塘实测"};
  if(id==="ring")return {value:((100-a)*90+a*600)*b/100,label:"每100游客的本地消费留存代理",unit:"元",digits:0,foot:"当日游90元、过夜600元为演示假设",kind:"演示假设 · 非游客实测"};
- return {value:zScores[b]*Math.sqrt(.25/a)*Math.sqrt((652-a)/651)*100,label:"拟随机抽样的最大误差半宽",prefix:"±",unit:"个百分点",digits:1,foot:confidence[b]+"%置信水平 · 尚未调查，不是转型成效",kind:"拟调查设计 · 无绩效实测"};
+ return {value:a*(b/100),label:"已登记企业中完成核验的家数",unit:"家",digits:0,foot:"登记 "+a+" 家 · 核验比例 "+b+"% · 尚未完成调查，不是转型成效",kind:"拟调查设计 · 无绩效实测"};
 }
 function initialValues(id){const c=cases[id];return c.secondary?[c.initial,c.secondary.initial]:[c.initial];}
 function renderLive(changed){
