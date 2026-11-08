@@ -1,6 +1,5 @@
-/* V11 / SmartPLS-inspired teaching layer.
-   NOT a SmartPLS estimation. No company-level sample or fitted path coefficients.
-   Keep public observations separate from illustrative structural assumptions. */
+/* V11 / public-observation anchored structural scenario.
+   No unit-level sample or empirically fitted causal coefficients. */
 (() => {
   "use strict";
   const anchors = Object.freeze({
@@ -23,11 +22,18 @@
     /* A unit is the full gap between the observed industrial-investment index (55.3)
        and the prior-year index (100). This only establishes an illustrative reference. */
     const x = (investmentIndex - anchors.investmentIndex) / (100 - anchors.investmentIndex);
-    const mediator = coefficients.xToM * x;
-    const moderated = coefficients.mToY + coefficients.moderation * ((network-50)/50);
-    const direct = coefficients.xToY * x;
+    const user=input.coefficients||{};
+    const values={
+      xToM:clamp(user.xToM??coefficients.xToM,-.2,.85),
+      mToY:clamp(user.mToY??coefficients.mToY,-.2,.85),
+      xToY:clamp(user.xToY??coefficients.xToY,-.3,.65),
+      moderation:clamp(user.moderation??coefficients.moderation,-.5,.5)
+    };
+    const mediator = values.xToM * x;
+    const moderated = values.mToY + values.moderation * ((network-50)/50);
+    const direct = values.xToY * x;
     const indirect = mediator * moderated;
-    return {investmentIndex,network,x,mediator,moderated,direct,indirect,total:direct+indirect};
+    return {investmentIndex,network,x,mediator,moderated,direct,indirect,total:direct+indirect,values};
   }
   const targets = {
     growth:{
