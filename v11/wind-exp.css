@@ -27,3 +27,12 @@
 @media(max-width:1000px){.workbench-main,.path-lab-grid{grid-template-columns:1fr}.workbench-readout{display:grid;grid-template-columns:repeat(3,1fr);align-items:center;gap:12px}.workbench-readout .stat-label,.workbench-readout>p,.workbench-readout button{grid-column:1/4}.workbench-readout .threshold-control{grid-column:1/2}.workbench-readout .detail-tails{grid-column:2/4}}
 @media(max-width:690px){.baseline-console{padding:17px 13px}.baseline-top{display:block}.console-stamp{display:inline-block;margin-top:12px}.baseline-controls,.baseline-paths{grid-template-columns:1fr}.baseline-controls label{padding:13px}.baseline-controls strong{font-size:24px}.baseline-buttons{width:100%}.baseline-buttons #baseRun{flex:1}.distribution-workbench{padding:13px 10px;margin:10px 9px}.workbench-head{display:block}.workbench-views{margin-top:11px;justify-content:space-between}.workbench-views button{padding:10px 7px;flex:1}.workbench-main{gap:8px}.workbench-plot{padding:5px}.workbench-readout{grid-template-columns:1fr 1fr;padding:13px}.workbench-readout .stat-label,.workbench-readout>p,.workbench-readout button{grid-column:1/3}.workbench-readout .threshold-control{grid-column:1/2}.workbench-readout .detail-tails{grid-column:2/3}.workbench-inspector{display:block}.workbench-inspector strong{margin-top:5px;display:block}.quantile-heading{display:block}.quantile-heading span{display:block;margin-top:4px}.dist-layout .result-insight{display:flex;flex-direction:column;align-items:stretch}.dist-layout .result-insight button{min-width:0}.path-lab-board{padding:14px 10px}.path-lab-heading{display:block}.path-lab-grid{gap:9px}.path-lab-picture svg{min-height:190px}.path-lab-sliders{padding:12px}.path-effect-strip b{font-size:15px}}
 @media(prefers-reduced-motion:reduce){.path-edge{animation:none!important}.path-lab-sliders *,.path-edge{transition:none!important}}
+
+/* Compact screen: readable charts via deliberate sideways exploration, not microscopic downscaling. */
+@media(max-width:690px){
+ .workbench-plot{overflow-x:auto;overscroll-behavior-x:contain;scrollbar-width:thin}
+ .workbench-plot #detailChart{min-width:660px;width:660px;max-width:none}
+ .path-lab-picture{overflow-x:auto;overscroll-behavior-x:contain;scrollbar-width:thin}
+ .path-lab-picture svg{width:670px;max-width:none;min-height:300px}
+ .path-lab-picture:after{content:"← 左右拖动查看完整路径与系数 →";display:block;text-align:center;font-size:10px;color:#9ac4dd;padding:5px 0}
+}
