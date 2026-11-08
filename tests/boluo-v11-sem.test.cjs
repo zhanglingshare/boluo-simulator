@@ -69,6 +69,9 @@ test("07 and 08 use meaningful animated visualizations and direct controls",()=>
  assert.match(i,/id="blindspotOrbit"/);
  assert.match(i,/id="blindspotSvg"/);
  assert.match(i,/id="blindspotNext"/);
+ assert.match(i,/id="blindspotToggle"/);
+ assert.match(js,/classList\.toggle\("is-cut"/);
+ assert.match(js,/severed=!severed/);
  assert.match(i,/两个公开观察窗口/);
  assert.match(css,/@media\(max-width:760px\)/);
  assert.match(css,/prefers-reduced-motion:reduce/);
