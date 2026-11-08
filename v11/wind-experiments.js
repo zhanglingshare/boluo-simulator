@@ -125,7 +125,11 @@ function render(all){
  rows.forEach(s=>{s.density=smooth(s.bin);});
  const maxi=Math.max(.0001,...rows.flatMap(s=>s.density));
  let svg='<defs><clipPath id="distClip2"><rect x="'+L+'" y="'+T+'" width="'+plotW+'" height="'+plotH+'"/></clipPath></defs>';
- for(let j=0;j<5;j++){const y=T+j*plotH/4;svg+='<line x1="'+L+'" y1="'+y+'" x2="'+(W-R)+'" y2="'+y+'" stroke="#3c617f" opacity=".45"/>';}
+ for(let j=0;j<5;j++){
+  const y=T+j*plotH/4;
+  svg+='<line x1="'+L+'" y1="'+y+'" x2="'+(W-R)+'" y2="'+y+'" stroke="#3c617f" opacity=".45"/>';
+  if(state.view==="cdf")svg+='<text x="'+(L-10)+'" y="'+(y+4)+'" text-anchor="end" fill="#8daec7" font-size="11">'+(100-25*j)+'%</text>';
+ }
  for(let i=0;i<=5;i++){
   const x=low+(high-low)*i/5;
   svg+='<line x1="'+sx(x)+'" y1="'+T+'" x2="'+sx(x)+'" y2="'+(H-B)+'" stroke="#355a75" opacity=".4"/><text x="'+sx(x)+'" y="'+(H-14)+'" fill="#a7c6df" text-anchor="middle" font-size="12">'+format(x)+'</text>';
@@ -148,10 +152,12 @@ function render(all){
    });
    const d=curve(points),last=points[points.length-1];
    if(state.view==="density")svg+='<path d="'+d+'L'+last[0].toFixed(1)+' '+(H-B)+'L'+points[0][0].toFixed(1)+' '+(H-B)+'Z" fill="'+s.color+'" fill-opacity=".09"/>';
-   svg+='<path d="'+d+'" fill="none" stroke="'+s.color+'" stroke-width="3.5" stroke-linecap="round" stroke-linejoin="round"/>';
+   svg+='<path class="sim-curve" d="'+d+'" fill="none" stroke="'+s.color+'" stroke-width="3.5" stroke-linecap="round" stroke-linejoin="round"/>';
   });
  }
  rows.forEach(s=>{
+  const left=sx(s.stat.p10),right=sx(s.stat.p90),y=H-B-10;
+  svg+='<rect x="'+left.toFixed(1)+'" y="'+(y-3)+'" width="'+(right-left).toFixed(1)+'" height="6" rx="3" fill="'+s.color+'" opacity=".75"/>';
   const x=sx(s.stat.p50);
   svg+='<line x1="'+x.toFixed(1)+'" y1="'+(T+8)+'" x2="'+x.toFixed(1)+'" y2="'+(H-B)+'" stroke="'+s.color+'" stroke-width="1.5" stroke-dasharray="3 6" opacity=".85"/>';
  });
@@ -191,7 +197,7 @@ function render(all){
  };
  chart.onpointerleave=()=>{const n=chart.querySelector("#detailCursor");if(n)n.style.display="none";};
 }
-window.addEventListener("boluo:wind-run",e=>render(e.detail.results));
+window.addEventListener("boluo:wind-run",e=>{render(e.detail.results);const box=$("distributionWork");if(box&&e.detail.animate){box.classList.remove("is-running");void box.offsetWidth;box.classList.add("is-running");}});
 window.BoluoDistribution={getState:()=>({...state,paths:[...state.paths]}),render:()=>{const r=window.BoluoWind?.getDistributions();if(r)render(r);}};
 labels();
 })();
