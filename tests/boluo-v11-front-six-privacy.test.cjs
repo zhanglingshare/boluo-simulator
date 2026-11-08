@@ -12,7 +12,7 @@ test("public pages 01-06 offer an experience rather than a guide to private meth
 });
 test("01 discovery keeps questions and actual data scope without exposing how to prioritize them",()=>{
  const html=read("v11/index.html");
- assert.match(html,/哪条变化，最值得你继续看/);
+ assert.match(html,/这些变化，哪条和你有关/);
  assert.match(html,/id="inquiryButtons"/);
  assert.doesNotMatch(html,/你想先核对哪一种解释/);
 });
