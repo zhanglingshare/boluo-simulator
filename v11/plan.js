@@ -208,7 +208,7 @@ function stageRender(){
    const labels=['路径纳入规划','落实关键要素','项目与能力建设','进入实际运营','产生可核实贡献'];
    title=labels[state.stage]+'：'+(state.stage===4?r.question:r.title);
    const m=['具体任务与主体需要明确，规划文本不能替代责任分解。','资金、用地、人才、交通和服务等条件是否已落实？','建设或组织工作有没有可核实的具体阶段记录？','已经运营或生产并不意味着产生稳定收益。','最终要追踪产出、就业、利润、研发或本地收入，并留意反向作用。'];
-   content=m[state.stage]+' 本路径属于研究性归纳，没有给各阶段编造项目数量。';
+   content=m[state.stage]+' 当前只显示可核实的项目阶段，没有凭空填入未知数量。';
  }
  $('stageBadge').textContent=badge;$('stageTitle').textContent=title;$('stageText').textContent=content;
  all('[data-stage]').forEach(b=>b.setAttribute('aria-pressed',String(Number(b.dataset.stage)===state.stage)));
