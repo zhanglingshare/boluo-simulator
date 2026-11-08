@@ -1,0 +1,54 @@
+name: V11 Page 10 · Regional Connections
+
+on:
+  push:
+    paths:
+      - "v11/region.html"
+      - "v11/region.css"
+      - "v11/region.js"
+      - "v11/challenge.html"
+      - "tests/boluo-v11-region*.cjs"
+      - ".github/workflows/boluo-v11-region.yml"
+  pull_request:
+    paths:
+      - "v11/region.html"
+      - "v11/region.css"
+      - "v11/region.js"
+      - "v11/challenge.html"
+      - "tests/boluo-v11-region*.cjs"
+      - ".github/workflows/boluo-v11-region.yml"
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  page-ten:
+    runs-on: ubuntu-latest
+    timeout-minutes: 18
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: "22"
+      - name: Validate public claims and source code
+        run: |
+          node --check v11/region.js
+          node --test tests/boluo-v11-region.test.cjs
+      - name: Install Chromium
+        run: |
+          npm install --no-save playwright
+          npx playwright install --with-deps chromium
+      - name: Run desktop, mobile and 09 to 10 handoff
+        run: |
+          python3 -m http.server 8765 --bind 127.0.0.1 >/tmp/boluo-v11-region.log 2>&1 &
+          sleep 2
+          node tests/boluo-v11-region-browser.cjs
+      - name: Save screenshot artifacts
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: boluo-v11-page10-desktop-mobile
+          path: artifacts/v11-region/*.png
+          if-no-files-found: ignore
+          retention-days: 4
