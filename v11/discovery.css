@@ -114,3 +114,42 @@ body[data-topic="factory"] .cliff-block{display:block}
  .metric-label{font-size:9px}
  .metric-pill{font-size:8px;padding:2px 5px}
 }
+
+/* 关系网络主视觉 */
+body[data-topic="factory"] .cliff-block{display:none}
+body[data-topic="factory"] .network-block{display:block}
+.network-block{margin:12px 0 0;background:var(--white,#fff);border:1px solid #e4eaf2;border-radius:16px;padding:16px 18px 12px}
+.net-head{display:flex;align-items:baseline;justify-content:space-between;gap:12px;flex-wrap:wrap}
+.net-head span{font-size:12px;font-weight:650;color:#17212f;letter-spacing:.02em}
+.net-head em{font-style:normal;font-size:10px;color:#8a99ac}
+.net-legend{display:flex;align-items:center;gap:14px;flex-wrap:wrap;font-size:10px;color:#617187;margin:10px 0 0}
+.net-legend i{display:inline-block;width:7px;height:7px;border-radius:50%;margin-right:4px;vertical-align:middle}
+.net-legend .lg{width:8px;height:8px;margin:0 3px 0 8px}
+.net-legend .lg.a{background:#e8912f}.net-legend .lg.b{background:#23a3a7}.net-legend .lg.c{background:#1369eb}.net-legend .lg.d{background:#ed665e}
+.network-block #networkChart{margin:2px 0 0}
+.net-svg{display:block;width:100%;height:auto}
+.tl-head{display:flex;align-items:baseline;justify-content:space-between;gap:10px;border-top:1px solid #eef2f7;padding-top:12px;margin-top:4px;flex-wrap:wrap}
+.tl-head span{font-size:11px;font-weight:650;color:#17212f}
+.tl-head em{font-style:normal;font-size:9.5px;color:#8a99ac}
+.tl-row{display:flex;justify-content:space-between;align-items:flex-start;gap:4px;margin-top:9px}
+.tl-col{display:flex;flex-direction:column;align-items:center;gap:5px;min-width:0;flex:1}
+.tl-dots{display:flex;flex-direction:column;align-items:center;gap:3px;min-height:30px}
+.tl-dots i{display:block;width:9px;height:9px;border-radius:50%}
+.tl-dots i.tl-empty{background:#e6ecf3}
+.tl-dots b{font-size:8px;color:#8a99ac;font-weight:600}
+.tl-col span{font-size:9px;color:#9aa8b9}
+.tl-note{font-size:9.5px;color:#cf463c;margin:9px 0 0;line-height:1.5}
+@media(max-width:600px){
+ .network-block{padding:13px 11px 10px;border-radius:12px}
+ .net-head span{font-size:11px}
+ .net-head em{font-size:9px}
+ .net-legend{gap:8px;font-size:9px;margin-top:8px}
+ .tl-row{gap:1px}
+ .tl-dots i{width:7px;height:7px}
+ .tl-col span{font-size:8px}
+}
+
+.net-scroll{overflow-x:auto;-webkit-overflow-scrolling:touch;scrollbar-width:thin}
+.net-svg{display:block;width:100%;height:auto;min-width:100%}
+@media(max-width:600px){
+}

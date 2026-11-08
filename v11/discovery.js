@@ -146,6 +146,67 @@
   return s+'</svg>';
  }
 
+
+ function networkChart(){
+  const mob=narrow.matches,evs=D.events.filter(e=>e.town&&e.month!==undefined);
+  const W=1000,H=mob?1150:860,cx=500,cy=mob?600:400,R1=mob?250:228,R2=mob?424:398;
+  const towns=[...new Set(evs.map(e=>e.town))],nT=towns.length,sA=-Math.PI/2;
+  const col=e=>(e.visual==='closure'||e.visual==='stalled')?'#ed665e':e.stage===3?'#1369eb':e.stage===2?'#23a3a7':'#e8912f';
+  const tp={};towns.forEach((n,i)=>{const a=sA+i/nT*Math.PI*2;tp[n]={x:cx+Math.cos(a)*R1,y:cy+Math.sin(a)*R1,a};});
+  evs.forEach(e=>{const t=tp[e.town],sib=evs.filter(x=>x.town===e.town),i=sib.indexOf(e);
+    const a=t.a+(i-(sib.length-1)/2)*0.17;e._x=cx+Math.cos(a)*R2;e._y=cy+Math.sin(a)*R2;});
+  const fs=mob?30:20,sf=mob?26:16,tr=mob?40:30;
+  let s='<div class="net-scroll"><svg viewBox="0 0 '+W+' '+H+'" class="net-svg" role="img" aria-label="博罗今年落地的工业现场：镇街与项目的关系">';
+  // 外圈装饰
+  s+='<circle cx="'+cx+'" cy="'+cy+'" r="'+R1+'" fill="none" stroke="#e4eaf2" stroke-width="'+(mob?2:1.5)+'"/>';
+  s+='<circle cx="'+cx+'" cy="'+cy+'" r="'+R2+'" fill="none" stroke="#eef2f7" stroke-width="1"/>';
+  // 中心到镇
+  towns.forEach(n=>{const t=tp[n];s+='<line x1="'+cx+'" y1="'+cy+'" x2="'+t.x+'" y2="'+t.y+'" stroke="#d7e2ef" stroke-width="'+(mob?4:2.5)+'"/>';});
+  // 镇到项目
+  evs.forEach(e=>{const t=tp[e.town];
+    s+='<line x1="'+t.x+'" y1="'+t.y+'" x2="'+e._x+'" y2="'+e._y+'" stroke="'+col(e)+'" stroke-width="'+(mob?4:2.5)+'" opacity=".5"'+(e.visual==='stalled'?' stroke-dasharray="'+(mob?'14 10':'9 7')+'"':'')+'/>';});
+  // 项目节点
+  evs.forEach(e=>{
+    const r=(e.visual==='stalled'||e.visual==='closure')?tr*.8:(e.stage===3?tr*1.18:e.stage===2?tr:tr*.88);
+    s+='<circle cx="'+e._x+'" cy="'+e._y+'" r="'+(r*1.85)+'" fill="'+col(e)+'" opacity=".10"/>';
+    s+='<circle cx="'+e._x+'" cy="'+e._y+'" r="'+r+'" fill="'+(e.visual==='stalled'?'#fff':col(e))+'" stroke="'+col(e)+'" stroke-width="'+(mob?3:2)+'"'+(e.visual==='stalled'?' stroke-dasharray="'+(mob?'12 9':'8 6')+'"':'')+'/>';
+    const lx=e._x+(e._x>cx?r+14:-r-14),an=e._x>cx?'start':'end';
+    s+='<text x="'+lx+'" y="'+(e._y+(mob?6:4))+'" text-anchor="'+an+'" fill="#17212f" font-size="'+fs+'" font-weight="650" stroke="#fff" stroke-width="'+(mob?6:4)+'" paint-order="stroke">'+escape(e.big)+escape(e.unit)+'</text>';
+    if(e.stage===3)s+='<text x="'+lx+'" y="'+(e._y+(mob?34:24))+'" text-anchor="'+an+'" fill="#1369eb" font-size="'+sf+'" font-weight="600">投产</text>';
+  });
+  // 镇节点
+  towns.forEach(n=>{const t=tp[n];
+    s+='<circle cx="'+t.x+'" cy="'+t.y+'" r="'+(mob?17:12)+'" fill="#fff" stroke="#9db3cc" stroke-width="'+(mob?3:2)+'"/>';
+    s+='<circle cx="'+t.x+'" cy="'+t.y+'" r="'+(mob?7:5)+'" fill="#587091"/>';
+    const dx=(cx-t.x),dy=(cy-t.y),d=Math.hypot(dx,dy)||1,tx=t.x+dx/d*(mob?44:32),ty=t.y+dy/d*(mob?44:32);
+    s+='<text x="'+tx+'" y="'+(ty+(mob?9:6))+'" text-anchor="middle" fill="#617187" font-size="'+(mob?24:17)+'" stroke="#fff" stroke-width="'+(mob?5:3)+'" paint-order="stroke">'+escape(n.replace(/镇|街道/,''))+'</text>';});
+  // 中心
+  s+='<circle cx="'+cx+'" cy="'+cy+'" r="'+(mob?62:46)+'" fill="#17212f"/>';
+  s+='<circle cx="'+cx+'" cy="'+cy+'" r="'+(mob?52:38)+'" fill="#22324a"/>';
+  s+='<text x="'+cx+'" y="'+(cy+(mob?12:9))+'" text-anchor="middle" fill="#fff" font-size="'+(mob?40:28)+'" font-weight="700">博罗</text>';
+  return s+'</svg>';
+ }
+
+
+ function drawTimeline(){
+  const evs=D.events.filter(e=>e.month&&e.month>0);
+  const col=e=>(e.visual==='closure'||e.visual==='stalled')?'#ed665e':e.stage===3?'#1369eb':e.stage===2?'#23a3a7':'#e8912f';
+  let out='<div class="tl-head"><span>今年落地的现场 · 1—11 月</span><em>只收录会改变产能的节点 · 签约≠投产</em></div><div class="tl-row">';
+  for(let m=1;m<=11;m++){
+    const items=evs.filter(e=>e.month===m);
+    out+='<div class="tl-col"><div class="tl-dots">';
+    if(items.length){
+      items.slice(0,4).forEach(e=>{out+='<i style="background:'+col(e)+'"></i>';});
+      if(items.length>4)out+='<b>+'+(items.length-4)+'</b>';
+    }else out+='<i class="tl-empty"></i>';
+    out+='</div><span>'+String(m).padStart(2,'0')+'</span></div>';
+  }
+  const hz=D.events.find(e=>e.id==='huzhen');
+  out+='</div>';
+  if(hz)out+='<p class="tl-note">另：湖镇六个项目被点名催促，至今未动工。</p>';
+  M.html('netTimeline',out,false);
+ }
+
  function renderHero(enter=false){
   const info=topic();
   $('topicTitle').innerHTML=info.title.map((line,i)=>'<'+(i?'strong':'span')+'>'+escape(line)+'</'+(i?'strong':'span')+'>').join('');
@@ -157,6 +218,12 @@
   text('periodBar',info.periodBar||'');
   if(info.cliff){cliffBlock.hidden=false;M.html('cliffChart',cliffChart(),false);text('cliffCaption',info.cliff.caption+' '+info.cliff.foot);}
   else{cliffBlock.hidden=true;}
+  const netBlock=$('networkBlock');
+  if(state.topic==='factory'){netBlock.hidden=false;
+    const host=$('networkChart');host.innerHTML='';
+    if(window.BoluoNet)window.BoluoNet.mount(host,D.events.filter(e=>e.town));
+    drawTimeline();}
+  else{netBlock.hidden=true;}
   M.html('mainChart',info.chart==='diverge'?compareChart():info.chart==='food'?compareChart(true):info.chart==='agriculture'?agricultureChart():stageChart(),false);
   document.querySelectorAll('.topic-tabs [data-topic]').forEach(button=>{const on=button.dataset.topic===state.topic;button.setAttribute('aria-selected',String(on));button.tabIndex=on?0:-1;});
   if(enter&&!M.reduced.matches){const hero=document.querySelector('.discovery-hero');hero.dataset.enter='false';requestAnimationFrame(()=>{hero.dataset.enter='true';});}

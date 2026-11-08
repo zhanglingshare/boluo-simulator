@@ -50,6 +50,12 @@
     <button class="hero-metric" type="button" data-source="quarter"><span>工业投资</span><strong class="coral">−44.7<span>%</span></strong></button>
    </div>
    <p class="period-bar" id="periodBar"></p>
+   <section class="network-block" id="networkBlock" hidden aria-labelledby="netLabel">
+    <div class="net-head"><span id="netLabel">博罗 · 今年落地的工业现场</span><em>按镇街挂项目 · 圆点越大越接近投产</em></div>
+    <div class="net-legend"><i class="lg a"></i>签约<i class="lg b"></i>开工<i class="lg c"></i>投产<i class="lg d"></i>关停 / 停摆</div>
+    <div id="networkChart"></div>
+    <div class="net-timeline" id="netTimeline"></div>
+   </section>
    <section class="cliff-block" id="cliffBlock" hidden aria-labelledby="cliffLabel">
     <div class="cliff-top"><span id="cliffLabel">工业投资 · 年度额（亿元）</span><b id="cliffHead">+8.9%<em>同期的规上工业增加值 +8.9%</em></b></div>
     <div class="cliff-chart" id="cliffChart"></div>
@@ -91,6 +97,7 @@
 <script defer src="./risk-motion.js?v=20261106-motion1"></script>
 <script defer src="./discovery-data.js?v=20261106-discovery1"></script>
 <script defer src="./discovery-core.js?v=20261107-relations1"></script>
+<script defer src="./discovery-net.js?v=20261109-net1"></script>
 <script defer src="./discovery.js?v=20261107-relations1"></script>
 </body>
 </html>
