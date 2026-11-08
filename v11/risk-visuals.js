@@ -221,7 +221,7 @@ function bullet(){
   const gap=achieved-goal;
   html+='<div class="rv-summary"><div class="rv-metric"><span>相对参照线差额</span><strong style="font-size:21px;color:'+(gap<0?"#c96d57":"#1a927c")+'">'+(gap>=0?"+":"")+f(gap,1)+'</strong></div><div class="rv-metric"><span>参照线不是概率</span><strong style="font-size:17px">未估计概率</strong></div></div>';
  }else if(mode==="precision"){
-  html+='<div class="rv-alert">未取得企业经营绩效与对照组，SEM路径系数和转型成效均不可估计。</div>';
+  html+='<div class="rv-alert">未取得可比的企业经营数据，当前不能核算真实转型成效。</div>';
  }else{
   html+='<div class="rv-alert">情景参数可探索机制，但不得转述为博罗实际达成率或真实收益。</div>';
  }
@@ -264,7 +264,7 @@ function sensitivity(){
   const apply=()=>lab.setValues(sensitivityItems[+node.dataset.change].values,'sensitivity');
   node.onclick=apply;node.onkeydown=e=>{if(e.key==='Enter'||e.key===' '){e.preventDefault();apply();}};
  });
- $("rvSensitivityNote").textContent="一次只改一个变量，其他条件不变；变化量不是政策效果或因果系数。";
+ $("rvSensitivityNote").textContent="每次改变一项情景条件；变化幅度不代表已证实的政策效果。";
 }
 
 const readiness=[
