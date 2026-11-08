@@ -30,7 +30,7 @@ const value=(id,a,b)=>{
  if(id==="projects")return b<=2025?100:models.projects.base*Math.pow(1+a/100,b-2026);
  if(id==="tea")return 23+32*a/100+25*b/100;
  if(id==="ring")return ((100-a)*90+a*600)*b/100;
- if(id==="innovation"){let z=lab.zScores[b??v2],N=652,n=a;return 100*z*Math.sqrt(.25/n)*Math.sqrt((N-n)/(N-1))}
+ if(id==="innovation")return a*(b/100)
  return 0;
 };
 function sourceLabels(){return {electronic:"2025年产值报道下限 + 用户假设",projects:"2025同期指数100；2026=55.3",tea:"每100元销售额的假设分解",ring:"每100位游客的消费假设",innovation:"652家总体中的待核验企业记录"}[active]}
@@ -60,10 +60,10 @@ function heatDetails(){
  compute=(r,k)=>value(active,k,r);goal=x=>x>=14000;click=(r,k)=>lab.setValues([k,r],"heat");
  title="住下来 × 钱留下，哪个更关键？";sub="横轴每百名游客过夜人数，纵轴本地留存比例；格内为百游客本地消费代理（百元）。";
  }else{
- rows=[80,85,90,95,99,99.5];cols=[20,60,80,120,180,240];
+ rows=[20,40,60,80,100];cols=[20,60,120,240,360,480];
 
- compute=(r,n)=>value(active,n,lab.confidence.indexOf(r));goal=x=>x<=8;click=(r,n)=>lab.setValues([n,lab.confidence.indexOf(r)],"heat");
- title="抽多少家，估计误差才能缩小？";sub="拟随机抽样，不是已测量绩效；纵轴置信水平，横轴样本量。";
+ compute=(r,n)=>value(active,n,r);goal=x=>x>=300;click=(r,n)=>lab.setValues([n,r],"heat");
+ title="核验到哪一步，才敢说看清楚了？";sub="横轴为已经登记的企业数，纵轴为其中完成核验的比例；格子是已核验家数。";
  }
  return {rows,cols,compute,goal,click,title,sub};
 }
@@ -76,8 +76,8 @@ function heat(){
    for(const col of H.cols){
     const n=H.compute(row,col);
     const label=active==="ring"?f(n/100,0):f(n,active==="innovation"?1:0);
-    const mode=(active==="electronic"||active==="projects")?(H.goal(n)?"pass":"fail"):(active==="tea"?((n-23)/57):(active==="ring"?(n/44700):(1-bounded((n-5)/30,0,1))))>=.66?"highdata":(active==="tea"?((n-23)/57):(active==="ring"?(n/44700):(1-bounded((n-5)/30,0,1))))>=.33?"mediumdata":"lowdata";
-    const selected=(active==="electronic"||active==="projects")&&v1===row&&col===(inspected??2030)||active==="tea"&&v1===col&&v2===row||active==="ring"&&v1===col&&v2===row||active==="innovation"&&v1===col&&row===lab.confidence[v2];
+    const mode=(active==="electronic"||active==="projects")?(H.goal(n)?"pass":"fail"):(active==="tea"?((n-23)/57):(active==="ring"?(n/44700):(active==="innovation"?(n/652):(1-bounded((n-5)/30,0,1)))))>=.66?"highdata":(active==="tea"?((n-23)/57):(active==="ring"?(n/44700):(active==="innovation"?(n/652):(1-bounded((n-5)/30,0,1)))))>=.33?"mediumdata":"lowdata";
+    const selected=(active==="electronic"||active==="projects")&&v1===row&&col===(inspected??2030)||active==="tea"&&v1===col&&v2===row||active==="ring"&&v1===col&&v2===row||active==="innovation"&&v1===col&&v2===row;
     html+='<button class="rv-cell '+mode+(selected?' active':'')+'" aria-pressed="'+selected+'" data-r="'+row+'" data-c="'+col+'" title="'+esc(cellTitle(active,row,col,n))+'" aria-label="'+esc(cellTitle(active,row,col,n))+'">'+label+'</button>';
    }
  }
@@ -180,12 +180,12 @@ function curve(){
   motion.html('curveInspector','<strong>演示假设</strong><span>改变右侧两个比例，看价值流怎么分。</span>',false);
  }else{
   const confs=[v2===0?1:0,v2,v2===5?3:5],ns=[20,60,80,120,180,240,250];
-  series=confs.map(ci=>({name:lab.confidence[ci]+'%置信',points:ns.map(n=>[n,value('innovation',n,ci)])}));
-  title='查更多企业，估计能精细多少？';sub='652家是拟抽样总体；曲线比较置信水平，尚无转型绩效调查。';
+  series=confs.map(ci=>({name:'核验至 '+lab.confidence[ci]+'%',points:ns.map(n=>[n,value('innovation',n,ci)])}));
+  title='登记越多企业，能核清多少？';sub='横轴为已登记企业数，曲线是不同核验比例下的已核验家数；转型绩效调查尚未完成。';
   if(inspected===null)inspected=v1;
-  unit='误差半宽 · 百分点';html=chartLines(series,0,null,unit,true);
-  note='简单随机抽样、最坏情形比例p＝0.5，含有限总体修正；未计非响应偏差。';
-  $('curveHint').textContent='点样本量 · 直接切换调查规模';
+  unit='已核验 · 家';html=chartLines(series,0,null,unit,true);
+  note='按已登记企业数折算核验进度；未完成的记录仍标记为待核实。';
+  $('curveHint').textContent='点企业数 · 切换登记规模';
  }
  if(series)$('rvCurveLegend').innerHTML=series.map((s,i)=>'<span><i style="background:'+['#8ba5b8','#1675d1','#9578c9'][i]+'"></i>'+esc(s.name)+'</span>').join('');
  $('rvCurveTitle').textContent=title;$('rvCurveSub').textContent=sub;$('rvCurveNote').textContent=note;
@@ -211,12 +211,12 @@ function bullet(){
  }else if(active==="ring"){
   top=(100-v1)*90+v1*600;goal=null;achieved=value(active,v1,v2);name="每100位游客：本地消费留存代理";desc="暂无可比的官方2030本地消费留存目标；不能计算达成率。";mode="open";
  }else{
-  top=25;goal=null;achieved=value(active,v1);name="拟抽样调查："+lab.confidence[v2]+"%最大误差半宽";desc="这是研究设计精度，不是数字化转型的绩效或目标达成率。";mode="precision";
+  top=652;goal=null;achieved=value(active,v1,v2);name="已核验企业数（登记 "+v1+" 家，核验 "+lab.confidence[v2]+"%）";desc="这是资料核验进度，不是数字化转型的绩效或目标达成率。";mode="precision";
  }
  const pct=bounded(achieved/top*100,0,100);
- let html='<div class="rv-metric"><span>'+esc(name)+'</span><strong>'+f(achieved,active==="ring"?0:1)+(active==="electronic"?"亿元":active==="ring"?"元":active==="innovation"?"pp":active==="tea"?"元":"指数")+'</strong></div>';
+ let html='<div class="rv-metric"><span>'+esc(name)+'</span><strong>'+f(achieved,active==="ring"?0:1)+(active==="electronic"?"亿元":active==="ring"?"元":active==="innovation"?"家":active==="tea"?"元":"指数")+'</strong></div>';
  html+='<div class="rv-progress" style="margin:14px 0 7px"><i style="width:'+pct+'%;'+(mode==="open"?'background:#1db5a7':mode==="precision"?'background:#7f8fd3':'')+'"></i>'+(mode==="target"?'<span class="rv-target-marker" style="left:'+f(100*goal/top,2)+'%" aria-hidden="true"></span>':'')+'</div>';
- html+='<div class="rv-toolbar"><b>'+esc(mode==="target"?"参照线："+f(goal,0):mode==="precision"?"数字越小，拟核验比例估计越精细":"只看条件分解，不显示官方目标率")+'</b><button id="rvMethodBtn" type="button">说明 ↗</button></div>';
+ html+='<div class="rv-toolbar"><b>'+esc(mode==="target"?"参照线："+f(goal,0):mode==="precision"?"核验家数越多，看清楚的越多":"只看条件分解，不显示官方目标率")+'</b><button id="rvMethodBtn" type="button">说明 ↗</button></div>';
  if(mode==="target"){
   const gap=achieved-goal;
   html+='<div class="rv-summary"><div class="rv-metric"><span>相对参照线差额</span><strong style="font-size:21px;color:'+(gap<0?"#c96d57":"#1a927c")+'">'+(gap>=0?"+":"")+f(gap,1)+'</strong></div><div class="rv-metric"><span>参照线不是概率</span><strong style="font-size:17px">未估计概率</strong></div></div>';
