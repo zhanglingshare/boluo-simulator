@@ -33,6 +33,6 @@ test("page 10 integrates all nine pages, and does not point to a nonexistent 11t
  const pages=["index","reality","industry-base","relations","impact","plan","wind","insights","challenge"];
  for(const p of pages)assert.match(read("v11/"+p+".html"),/href="\.\/region\.html"/,p+" link to 10");
  const h=read("v11/region.html");
- for(const page of pages)assert.match(h,new RegExp('href="\\\\./'+page.replace(".","\\.")+'\\.html"'),page+" from 10");
+ for(const page of pages)assert.ok(h.includes('href="./'+page+'.html"'),page+" from 10");
  assert.doesNotMatch(h,/href=["'][^"']*(future-lab|page11|11\.html)/);
 });
