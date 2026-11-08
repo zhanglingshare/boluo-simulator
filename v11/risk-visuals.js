@@ -223,7 +223,7 @@ function bullet(){
  }else if(mode==="precision"){
   html+='<div class="rv-alert">未取得可比的企业经营数据，当前不能核算真实转型成效。</div>';
  }else{
-  html+='<div class="rv-alert">情景参数可探索机制，但不得转述为博罗实际达成率或真实收益。</div>';
+  html+='<div class="rv-alert">这些是假设条件下的结果，不能当作博罗已经实现的收益。</div>';
  }
  $("rvBulletTitle").textContent=(active==="electronic"||active==="projects")?"距离参照线，还差多少？":"这个结果，能解释到哪一步？";
  motion.html("rvBullet",html,!topicChanged);
