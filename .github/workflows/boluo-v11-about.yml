@@ -1,0 +1,46 @@
+name: V11 Project Introduction · Public Copy and Browser
+on:
+  push:
+    paths:
+      - "v11/about.html"
+      - "v11/about.css"
+      - "v11/index.html"
+      - "tests/boluo-v11-about*.cjs"
+      - ".github/workflows/boluo-v11-about.yml"
+  pull_request:
+    paths:
+      - "v11/about.html"
+      - "v11/about.css"
+      - "v11/index.html"
+      - "tests/boluo-v11-about*.cjs"
+      - ".github/workflows/boluo-v11-about.yml"
+permissions:
+  contents: read
+jobs:
+  about:
+    runs-on: ubuntu-latest
+    timeout-minutes: 12
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: "22"
+      - name: Verify public introduction wording
+        run: node --test tests/boluo-v11-about.test.cjs
+      - name: Install browser
+        run: |
+          npm install --no-save playwright
+          npx playwright install --with-deps chromium
+      - name: Serve and verify 1440 / 390
+        run: |
+          python3 -m http.server 8765 --bind 127.0.0.1 >/tmp/boluo-v11-about.log 2>&1 &
+          sleep 2
+          node tests/boluo-v11-about-browser.cjs
+      - name: Save screenshots
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: boluo-v11-introduction-desktop-mobile
+          path: artifacts/v11-about/*.png
+          if-no-files-found: ignore
+          retention-days: 3
