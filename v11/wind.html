@@ -4,12 +4,12 @@
 <script src="../assets/boluo-access.js?v=20261108-inline2" data-bl-access="inline"></script><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover"><meta name="theme-color" content="#eaf4ff">
 <meta name="description" content="博罗决策风洞 V11 第七页：以既有可复现模型为底座，体验2030目标的受控冲击、缓冲与前后结果区间，并核对结果的条件与不确定性。">
 <title>07 决策风洞｜哪一环最经不起变化？— 博罗 V11</title>
-<link rel="stylesheet" href="./impact.css?v=20261107-v1"><link rel="stylesheet" href="./wind.css?v=20261107-w2">
-<script src="../model.js"></script><script defer src="./wind.js?v=20261107-w2"></script></head>
+<link rel="stylesheet" href="./impact.css?v=20261107-v1"><link rel="stylesheet" href="./wind.css?v=20261107-w2"><link rel="stylesheet" href="./sem-bridge.css?v=20261108-a">
+<script src="../model.js"></script><script defer src="./wind.js?v=20261107-w2"></script><script defer src="./sem-demo.js?v=20261108-a"></script><script defer src="./sem-bridge.js?v=20261108-a"></script></head>
 <body class="wind-page">
 <header class="site-header">
 <a class="brand" href="./index.html" aria-label="博罗决策风洞首页"><span class="brand-mark" aria-hidden="true"><svg viewBox="0 0 48 38"><path d="M3 28L16 8Q19 5 22 10L28 19 33 13Q36 9 39 14L46 27Q48 32 42 33H7Q1 33 3 28Z" fill="#dff8ff" stroke="#fff" stroke-width="1.8"/><path d="M10 29L20 19L28 26L35 20L43 29" stroke="#1396df" stroke-width="3" fill="none" stroke-linecap="round"/></svg></span><span class="brand-name"><strong>博罗决策风洞模拟器</strong><small>Boluo Decision Wind-Tunnel Simulator</small></span></a>
-<nav class="desktop-nav" aria-label="V11页面导航"><a href="./index.html">01 问题发现</a><a href="./reality.html">02 预期与现实</a><a href="./industry-base.html">03 产业底盘</a><a href="./relations.html">04 关系世界</a><a href="./impact.html">05 变化影响</a><a href="./plan.html">06 十五五规划</a><a href="./wind.html" class="current" aria-current="page">07 风洞测试</a></nav>
+<nav class="desktop-nav" aria-label="V11页面导航"><a href="./index.html">01 问题发现</a><a href="./reality.html">02 预期与现实</a><a href="./industry-base.html">03 产业底盘</a><a href="./relations.html">04 关系世界</a><a href="./impact.html">05 变化影响</a><a href="./plan.html">06 十五五规划</a><a href="./wind.html" class="current" aria-current="page">07 风洞测试</a><a href="./insights.html">08 忽略了什么</a></nav>
 <div class="header-tools"><button type="button" id="shareTop" title="分享此实验" aria-label="分享此实验"><svg viewBox="0 0 24 24"><path d="M14 4v5C6 9 4 15 3 20c3-4 6-6 11-6v5l8-7.5L14 4Z"/></svg><span>分享</span></button><a href="./plan.html" class="return-link">返回06</a></div>
 </header>
 <main class="wrap wind-wrap">
@@ -41,15 +41,35 @@
 <section class="transmission" aria-labelledby="transTitle"><div class="subhead"><div><p class="micro">03 / WHERE THE SHOCK TRAVELS</p><h2 id="transTitle">变化从哪里传过来？</h2></div><span>机制示意 · 非交易网络</span></div>
 <div class="chain-viewport"><div id="chainTrack" class="chain-track" role="group" aria-label="随场景变化的四段条件传导关系"><button type="button" data-link="0" class="chain-node active"><small>变化起点</small><strong id="chain0">关键项目延期</strong></button><span class="chain-beam" aria-hidden="true"></span><button type="button" data-link="1" class="chain-node"><small>第一层</small><strong id="chain1">新产线推迟</strong></button><span class="chain-beam" aria-hidden="true"></span><button type="button" data-link="2" class="chain-node"><small>第二层</small><strong id="chain2">本地配套订单</strong></button><span class="chain-beam" aria-hidden="true"></span><button type="button" data-link="3" class="chain-node"><small>后续结果</small><strong id="chain3">产业接续能力</strong></button></div></div>
 <div class="chain-answer"><span id="chainStepTag">正在查看 · 变化起点</span><strong id="chainQuestion">延迟发生在哪一类项目？</strong><p id="chainCaveat">节点是有条件的机制假设，不能凭连线推算某家企业的经营损失。</p></div></section>
+<section class="sem-bridge" id="semBridge" aria-labelledby="semTitle">
+<div class="sem-head"><div><p class="micro">04 / ONE STRUCTURAL QUESTION · PLS-SEM THINKING</p><h2 id="semTitle">投资下降，<em>真的会立刻影响增长？</em></h2><p>先看一个公开反差，再用中介、调节的思想拆开它。拖动的是教学假设，不会偷偷改动上方2030 GDP模拟。</p></div><span class="sem-tag">公开统计锚点 × 结构方法演示</span></div>
+<div class="sem-observation"><span>2026前三季度 · 同比</span><strong class="neg">工业投资 −44.7%</strong><strong>规上工业增加值 +8.9%</strong><a href="https://www.fz0752.com/fontHtml/html/issue/000143025_1.html" target="_blank" rel="noopener noreferrer">核对公开报道 ↗</a></div>
+<div class="sem-layout"><div class="sem-control-panel">
+<label for="semInvestment"><span>假设工业投资指数恢复至 <strong id="semInvestValue">75.0</strong></span><input type="range" id="semInvestment" min="40" max="110" step=".1" value="75" aria-describedby="semInvestHint"><small id="semInvestHint">观察锚点为55.3（2025年同期=100）；你调整的是假设，不是预测。</small></label>
+<label for="semNetwork"><span>假设本地网络缓冲能力 <strong id="semNetworkValue">50</strong></span><input type="range" id="semNetwork" min="20" max="80" step="5" value="50" aria-describedby="semNetworkHint"><small id="semNetworkHint">20—80只是教学刻度，没有公开数据支持真实网络得分。</small></label>
+<button type="button" class="sem-reset" id="semReset">回到公开观察起点</button>
+</div><div class="sem-readout"><small>无量纲结构响应 · 相对观察锚点</small><strong id="semTotal" aria-live="polite">—</strong><span>不是GDP亿元 / 不是工业增速百分点 / 非SmartPLS拟合值</span>
+<div class="sem-bar"><span>直接</span><div class="sem-track"><i class="sem-fill" id="semDirectBar"></i></div><b id="semDirect">—</b></div>
+<div class="sem-bar"><span>经中介</span><div class="sem-track"><i class="sem-fill" id="semIndirectBar"></i></div><b id="semIndirect">—</b></div>
+</div></div>
+<div class="sem-flow" aria-label="理论路径：投资与项目接续，经由产能兑现，连接到增长接续">
+<div><small>X · 输入条件</small><strong>项目接续</strong><span>由投资变化启发</span></div><i aria-hidden="true">→</i>
+<div><small>M · 中介</small><strong>产能兑现</strong><span>结构响应 <b id="semMediator">—</b></span></div><i aria-hidden="true">→</i>
+<div><small>Y · 结果</small><strong>增长接续</strong><span>经网络调节后 <b id="semPathAdjusted">—</b></span></div>
+</div>
+<p class="sem-note" id="semInterpret">改变一个条件，观察直接路径与间接路径怎样变化。</p>
+<div class="sem-actions"><p>真正要补的不是“一个万能系数”，而是项目进度、产能利用、本地配套与订单样本。</p><a id="semToEight" href="./insights.html">进入08 · 看看可能忽略了什么 →</a></div>
+<details class="sem-details"><summary>展开：SmartPLS是怎样检验这些路径的？</summary><p>本图只演示 X→M→Y、中介效应和 Z 调节作用的计算思路。演示系数 X→M=0.45、M→Y=0.55、X→Y=0.10、调节参数=0.25，均为教学假设，不是统计估计。真实 PLS-SEM 需要单位级样本，随后开展测量质量检查、Bootstrap、中介与调节检验及预测验证。<a href="./sem-method-kit.md" target="_blank" rel="noopener noreferrer">公开方法与变量模板 ↗</a></p></details>
+</section>
 <section class="rescue" id="rescue" aria-labelledby="rescueTitle"><div class="rescue-main"><p class="micro">04 / TRY AN ALTERNATIVE</p><h2 id="rescueTitle">如果还有另一条路接棒呢？</h2><p>保持相同的压力条件，增加一个有限的缓冲假设，再计算一次。看看缓冲是否改变结果和结果区间。</p><label class="rescue-toggle"><input type="checkbox" id="bufferOn"><span class="toggle-track" aria-hidden="true"></span><span><strong id="bufferName">其他项目提前接棒</strong><small id="bufferDesc">部分弥补项目延期后的产出接续</small></span></label></div>
 <div class="rescue-outcome"><span>缓冲前后 · 模拟中位数</span><div><strong id="beforeBuffer">—</strong><span>→</span><strong id="afterBuffer">—</strong></div><p id="bufferTakeaway">启用左侧缓冲条件后，显示同一随机种子下的第三组结果。</p></div></section>
 <section class="share-panel"><div><p class="micro">05 / WHAT DID YOU DISCOVER?</p><h2>带走一个可以复现的发现</h2><p id="shareSummary">你改变了一项条件，观察到结果分布发生了怎样的变化？</p></div><div class="share-actions"><button type="button" id="copyLink">复制复现实验链接 ↗</button><button type="button" id="saveExp">保存本机实验</button><button type="button" id="savedList">我的实验记录</button></div></section>
 <details class="technical" id="method"><summary><span>资料、参数区间与模型边界</span><span>＋</span></summary><div class="technical-content"><p>使用仓库现有 <code>model.js</code> 的同一种子 Monte Carlo 内核，在受控条件下重跑基准、压力、缓冲情景；固定样本量与种子，使同一次比较可复现。情景变化仅是可调整的假设，不是从真实项目合同估计出的因果系数。</p>
 <p id="assumptionText">当前情景假设详见运行后展示。</p><p>没有观察数据支撑的网络线不标注交易额、概率或真实经济损失。基准情景路径贡献与2030目标对齐，因此展示的模拟达标占比尤其不应当作官方预测或经独立验证的成功概率。</p>
 <p><a href="https://github.com/zhanglingshare/boluo-simulator/blob/main/model.js" target="_blank" rel="noopener noreferrer">查看已有模拟内核</a> · <a href="../windtunnel-v2.html" target="_blank" rel="noopener noreferrer">原有独立风洞 V2（保留）</a> · <a href="./plan.html">返回十五五规划</a></p></div></details>
-<footer class="footer"><span>博罗 V11 · 07 决策风洞 · 单变量压力试验与缓冲对照</span><a href="./plan.html">回到06 规划兑现</a></footer>
+<footer class="footer"><span>博罗 V11 · 07 决策风洞 · 受控压力实验与路径方法演示</span><a href="./insights.html">进入08 · 忽略了什么</a></footer>
 </main>
-<nav class="mobile-nav" aria-label="移动端导航"><a href="./index.html">01 发现</a><a href="./reality.html">02 现实</a><a href="./industry-base.html">03 底盘</a><a href="./relations.html">04 关系</a><a href="./impact.html">05 影响</a><a href="./plan.html">06 规划</a><a href="./wind.html" aria-current="page">07 风洞</a></nav>
+<nav class="mobile-nav" aria-label="移动端导航"><a href="./index.html">01 发现</a><a href="./reality.html">02 现实</a><a href="./industry-base.html">03 底盘</a><a href="./relations.html">04 关系</a><a href="./impact.html">05 影响</a><a href="./plan.html">06 规划</a><a href="./wind.html" aria-current="page">07 风洞</a><a href="./insights.html">08 忽略</a></nav>
 <dialog id="modal"><div class="dialog-header"><strong id="modalTitle">实验详情</strong><button type="button" id="modalClose">关闭 ×</button></div><div id="modalBody" class="dialog-body"></div></dialog><div id="toast" class="toast" role="status" aria-live="polite"></div>
 <noscript>需要启用JavaScript才能运行可复现的风洞实验。</noscript>
 </body></html>
