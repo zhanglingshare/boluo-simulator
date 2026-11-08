@@ -28,6 +28,9 @@ u.searchParams.set("shock",point.link);
 u.searchParams.set("strength",params.get("strength")||"1");
 u.searchParams.set("buffer",params.get("buffer")==="1"?"1":"0");
 u.searchParams.set("active","1");
+for(const key of ["bs","bv","n","line","view","bp0","bp1","bp2","bp3","bp4"]){
+ if(params.has(key))u.searchParams.set(key,params.get(key));
+}
 u.hash="results";
 return u.href;
 }
