@@ -245,7 +245,7 @@ $('whyButton').addEventListener('click',()=>{
  if(!last)return;
  const m=MODELS[state.shock];
  const rows=HT.DEFAULT_PATHS.map((p,i)=>m.effect[i]===0&&m.spread[i]===0?'':'<div class="fact-row"><strong>'+esc(p.name)+'</strong><p>本次设定：五年累计路径贡献的假设均值调整 '+esc(signed(m.effect[i]*state.strength))+' 亿元，标准差增加 '+esc(fmt(m.spread[i]*state.strength))+' 亿元；这些数字不是直接观测。</p></div>').join('');
- modal('情景是怎样改变结果的？','<p><strong>'+esc(m.label)+'</strong> 不是一个被实证估计的单一因果系数。此页用同一粒随机种子，在既有模型上有限度调整路径贡献的均值和离散程度，比较结果分布。</p>'+rows+'<p>目前既有基准路径贡献之和被设定得与2030目标规模差额接近，模型给出的达标占比并非独立验证的真实概率。请重点比较情景之间的方向、条件和不确定性，而非单个百分数。</p><p><a href="../windtunnel-v2.html" target="_blank" rel="noopener noreferrer">检查历史风洞 V2 ↗</a></p>');
+ modal('情景是怎样改变结果的？','<p><strong>'+esc(m.label)+'</strong> 不是一个被实证估计的单一因果系数。此页用同一粒随机种子，在既有模型上有限度调整路径贡献的均值和离散程度，比较结果分布。</p>'+rows+'<p>目前既有基准路径贡献之和被设定得与2030目标规模差额接近，模型给出的达标占比并非独立验证的真实概率。请重点比较情景之间的方向、条件和不确定性，而非单个百分数。</p>');
 });
 function link(){
  syncURL();const u=new URL(location.href);u.hash='results';return u.href;
