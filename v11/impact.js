@@ -209,9 +209,8 @@ const caseDetails={
 };
 function caseDetail(key){
  const msg=caseDetails[key]||caseDetails.hande;
- showDialog('真实关系样本 · 2026年9月22日',
+ showDialog('真实关系样本',
  '<p>'+esc(msg)+'</p><div class="fact-row"><strong>关系记录≠经济因果</strong><p>订单、采购与岗位、利润、现金回笼是不同信息。该报道仅支持相应采访记录，不代表完整供应链。</p></div>'+
- '<p><a href="'+realCaseSource+'" target="_blank" rel="noopener noreferrer">查看南方日报公开报道 ↗</a></p>'+
  '<p><a href="./relations.html?case=hande&mode=trace&view=orders">返回第四页查看原始互动关系 ↗</a></p>');
 }
 $('evidenceCaseDetail').addEventListener('click',()=>caseDetail('hande'));

@@ -83,12 +83,12 @@ document.querySelectorAll("[data-dist-view]").forEach(b=>b.addEventListener("cli
 }));
 function stopSampleReplay(showFinal=false){
  clearTimeout(playTimer);playTimer=0;
- if($("detailReplay"))$("detailReplay").textContent="播放抽样累积 ↻";
+ if($("detailReplay"))$("detailReplay").textContent="播放累积 ↻";
  if(showFinal&&fullLatest){render(fullLatest);setSampleStatus(fullLatest.base.rawResults.length,fullLatest.base.rawResults.length);}
 }
 function setSampleStatus(k,N){
  const p=$("samplingProgress"),bar=$("samplingBar");
- if(p)p.textContent=k>=N?"已完成 "+format(N)+" 次":format(k)+" / "+format(N)+" 次";
+ if(p)p.textContent=k>=N?"已收敛":format(Math.round(100*k/N))+"%";
  if(bar)bar.style.width=(Math.min(100,k/N*100)).toFixed(1)+"%";
 }
 function prefixOutcome(s,k){
@@ -108,12 +108,12 @@ function playSampleReplay(){
   const partial={base:prefixOutcome(fullLatest.base,k),stress:prefixOutcome(fullLatest.stress,k),buffer:fullLatest.buffer?prefixOutcome(fullLatest.buffer,k):null};
   render(partial);setSampleStatus(k,N);
   if(index<steps.length)playTimer=setTimeout(next,170);
-  else{$("detailReplay").textContent="播放抽样累积 ↻";playTimer=0;}
+  else{$("detailReplay").textContent="播放累积 ↻";playTimer=0;}
  };
  next();
 }
 $("detailReplay")?.addEventListener("click",()=>{
- if(playTimer){stopSampleReplay(true);$("detailReplay").textContent="播放抽样累积 ↻";}
+ if(playTimer){stopSampleReplay(true);$("detailReplay").textContent="播放累积 ↻";}
  else playSampleReplay();
 });
 function quant(arr,q){return HT.quantile(arr,q);}

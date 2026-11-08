@@ -13,7 +13,7 @@
 <div class="header-tools"><button type="button" id="shareTop" title="分享此实验" aria-label="分享此实验"><svg viewBox="0 0 24 24"><path d="M14 4v5C6 9 4 15 3 20c3-4 6-6 11-6v5l8-7.5L14 4Z"/></svg><span>分享</span></button><a href="./plan.html" class="return-link">返回06</a></div>
 </header>
 <main class="wrap wind-wrap">
-<section class="wind-hero" aria-labelledby="windTitle"><div class="wind-hero-main"><p class="micro">07 / DECISION WIND TUNNEL · 2026—2030</p><h1 id="windTitle">2030年，<em>哪一环最经不起变化？</em></h1><p>先让一个条件发生变化，再看2030结果。还可以试一次缓冲，看哪条路可能接得上。</p><div class="wind-hero-badges"><span>2025基数 1005.45亿元</span><span>2030目标 1600亿元</span><span>可复现的条件实验</span></div></div><div class="wind-target"><small>2030规划目标</small><strong>1600<em>亿元</em></strong><span>不是实际预测值</span></div></section>
+<section class="wind-hero" aria-labelledby="windTitle"><div class="wind-hero-main"><p class="micro">07 / DECISION WIND TUNNEL · 2026—2030</p><h1 id="windTitle">2030年，<em>哪一环最经不起变化？</em></h1><p>先让一个条件发生变化，再看2030结果。还可以试一次缓冲，看哪条路可能接得上。</p><div class="wind-hero-badges"><span>2025基数 1005.45亿元</span><span>2030目标 1600亿元</span><span>条件对照实验</span></div></div><div class="wind-target"><small>2030规划目标</small><strong>1600<em>亿元</em></strong><span>不是实际预测值</span></div></section>
 <section class="baseline-console" id="baselineConsole" aria-labelledby="baselineTitle">
 <div class="baseline-top"><div><p class="micro">SET BASELINE / 然后施加压力</p><h2 id="baselineTitle">基准不是锁死的。<em>你来设定下一轮的兑现能力。</em></h2><p>2025年GDP实际基数固定为1005.45亿元。下方只改变2026—2030年新增贡献的情景假设，不改写真实历史。</p></div><span class="console-stamp">基准 → 压力 → 缓冲 · 同一组条件</span></div>
 <div class="baseline-controls">
@@ -21,7 +21,7 @@
 <label><span>不确定性 · 波动强度 <strong id="baseVolValue">1.00 倍</strong></span><input type="range" id="baseVol" min=".6" max="1.6" step=".1" value="1"><small>同时调整各路径分散度与外部波动，观察尾部风险如何扩张。</small></label>
 </div>
 <details class="baseline-more"><summary>深入调整：五条增长路径的假设贡献 <span>展开精细控制 +</span></summary><div id="basePathControls" class="baseline-paths"></div><p>各路径的贡献来自这套情景的设定，不是逐企业测量得到的GDP贡献；可根据新证据修订，不冒充真实数字。</p></details>
-<div class="baseline-bottom"><div class="baseline-cues"><span><b>1005.45亿</b> 2025实际基数 · 锁定</span><span><b>1600亿</b> 2030规划目标 · 锁定</span></div><div class="baseline-buttons"><label for="baseCount">运行轨迹 <select id="baseCount"><option value="2000">2,000次</option><option value="5000" selected>5,000次</option><option value="10000">10,000次</option></select></label><button type="button" id="baseReset">恢复默认基准</button><button type="button" id="baseRun">运行这组基准 →</button></div></div>
+<div class="baseline-bottom"><div class="baseline-cues"><span><b>1005.45亿</b> 2025实际基数 · 锁定</span><span><b>1600亿</b> 2030规划目标 · 锁定</span></div><div class="baseline-buttons"><label for="baseCount">轨迹精度 <select id="baseCount"><option value="2000">标准</option><option value="5000" selected>精细</option><option value="10000">最精细</option></select></label><button type="button" id="baseReset">恢复默认基准</button><button type="button" id="baseRun">运行这组基准 →</button></div></div>
 </section>
 <section class="scenario-block" aria-labelledby="chooseTitle">
 <div class="scenario-heading"><div><p class="micro">01 / TOUCH THE FUTURE</p><h2 id="chooseTitle">亲手改变一件事</h2></div><span class="scenario-hint">每次只改变一个主要压力条件</span></div>
@@ -38,13 +38,13 @@
 <div id="modelFailure" class="model-failure" role="alert" hidden>模拟内核尚未加载，无法输出真实重跑的结果。请检查网络并重新打开。</div>
 <div class="readout-grid">
 <div class="readout"><span>冲击后 · 2030中位规模</span><strong id="afterMedian">—</strong><small>亿元 / 条件结果</small></div>
-<div class="readout emphasis"><span>相对基准的中位变化</span><strong id="medianDelta">—</strong><small>亿元 / 两情景同种子比较</small></div>
+<div class="readout emphasis"><span>相对基准的中位变化</span><strong id="medianDelta">—</strong><small>亿元 / 两情景同一组条件</small></div>
 <div class="readout"><span>达到1600亿的模拟占比</span><strong id="afterHit">—</strong><small id="hitDetail">不是经过独立检验的成功概率</small></div>
 </div>
 <section class="distribution-workbench" id="distributionWork" aria-label="条件情景下的详细结果分布">
 <div class="workbench-head"><div><small>OUTCOME DISTRIBUTION / 实时重算</small><h3>看整片分布，<em>不只看一个中位数。</em></h3></div><div class="workbench-views" role="group" aria-label="选择分布可视化"><button type="button" data-dist-view="density" aria-pressed="true">概率密度</button><button type="button" data-dist-view="hist" aria-pressed="false">样本直方</button><button type="button" data-dist-view="cdf" aria-pressed="false">累计曲线</button></div></div>
 <div class="detail-legend"><span><i style="--k:#7bd9ff"></i>基准</span><span><i style="--k:#ffbd82"></i>施加压力</span><span><i style="--k:#69ebcf"></i>缓冲方案（启用后）</span><span>区间色带 · 虚线为中位</span></div><div class="workbench-main"><div class="workbench-plot"><svg id="detailChart" viewBox="0 0 960 370" preserveAspectRatio="xMidYMid meet" role="img" aria-label="基准、压力、缓冲三种情景的可交互概率分布，带分位数、目标线与鼠标探查"></svg><div class="workbench-inspector"><span id="detailCrossLabel">移动鼠标或手指，探查任意结果位置</span><strong id="detailCrossValue">—</strong></div></div>
-<aside class="workbench-readout"><div class="stat-label">当前比较参照线（亿元）</div><div class="threshold-control"><strong id="detailThresholdValue">1600</strong><input type="range" id="detailThreshold" min="1250" max="1850" step="10" value="1600" aria-label="改变结果比较参照线"></div><p>虚线 1600亿是规划目标；移动参照线仅改变比较位置，不改变真实目标或模拟数据。</p><div id="detailTails" class="detail-tails" aria-live="polite"></div><div class="sampling-status"><div class="sampling-top"><span>抽样累积演化</span><strong id="samplingProgress">已完成</strong></div><div class="sampling-track"><i id="samplingBar" style="width:100%"></i></div></div><button type="button" id="detailReplay">播放抽样累积 ↻</button></aside></div>
+<aside class="workbench-readout"><div class="stat-label">当前比较参照线（亿元）</div><div class="threshold-control"><strong id="detailThresholdValue">1600</strong><input type="range" id="detailThreshold" min="1250" max="1850" step="10" value="1600" aria-label="改变结果比较参照线"></div><p>虚线 1600亿是规划目标；移动参照线仅改变比较位置，不改变真实目标或模拟数据。</p><div id="detailTails" class="detail-tails" aria-live="polite"></div><div class="sampling-status"><div class="sampling-top"><span>结果逐步累积</span><strong id="samplingProgress">已完成</strong></div><div class="sampling-track"><i id="samplingBar" style="width:100%"></i></div></div><button type="button" id="detailReplay">播放抽样累积 ↻</button></aside></div>
 <div class="quantile-heading"><strong>三档结果 · 偏低 / 中位 / 偏高</strong><span>同一组条件 · 区间只是条件结果，不是现实达标预测</span></div><div class="quantile-scroll"><table class="quantile-table" id="quantileTable"><thead><tr><th>情景</th><th>偏低</th><th>中位</th><th>偏高</th></tr></thead><tbody id="quantileRows"></tbody></table></div>
 <div class="distribution-footer"><span id="detailObservation">正在读取计算输出。</span><span>结果：亿元 · 条件模拟 | 未做独立预测验证</span></div>
 </section>
@@ -68,7 +68,7 @@
 <div class="chain-answer"><span id="chainStepTag">正在查看 · 变化起点</span><strong id="chainQuestion">延迟发生在哪一类项目？</strong><p id="chainCaveat">节点是有条件的机制假设，不能凭连线推算某家企业的经营损失。</p></div></section>
 <section class="rescue" id="rescue" aria-labelledby="rescueTitle"><div class="rescue-main"><p class="micro">04 / TRY AN ALTERNATIVE</p><h2 id="rescueTitle">如果还有另一条路接棒呢？</h2><p>保持相同的压力条件，增加一个有限的缓冲假设，再计算一次。看看缓冲是否改变结果和结果区间。</p><label class="rescue-toggle"><input type="checkbox" id="bufferOn"><span class="toggle-track" aria-hidden="true"></span><span><strong id="bufferName">其他项目提前接棒</strong><small id="bufferDesc">部分弥补项目延期后的产出接续</small></span></label></div>
 <div class="rescue-outcome"><span>缓冲前后 · 模拟中位数</span><div><strong id="beforeBuffer">—</strong><span>→</span><strong id="afterBuffer">—</strong></div><p id="bufferTakeaway">启用左侧缓冲条件后，显示同一随机种子下的第三组结果。</p></div></section>
-<section class="share-panel"><div><p class="micro">05 / WHAT DID YOU DISCOVER?</p><h2>带走一个可以复现的发现</h2><p id="shareSummary">你改变了一项条件，观察到结果分布发生了怎样的变化？</p></div><div class="share-actions"><button type="button" id="copyLink">复制复现实验链接 ↗</button><button type="button" id="saveExp">保存本机实验</button><button type="button" id="savedList">我的实验记录</button><a id="goDecisionChallenge" class="to-challenge" href="./challenge.html">09 · 挑战刚才的判断 →</a></div></section>
+<section class="share-panel"><div><p class="micro">05 / WHAT DID YOU DISCOVER?</p><h2>带走一个能继续追问的发现</h2><p id="shareSummary">你改变了一项条件，观察到结果分布发生了怎样的变化？</p></div><div class="share-actions"><button type="button" id="copyLink">复制复现实验链接 ↗</button><button type="button" id="saveExp">保存本机实验</button><button type="button" id="savedList">我的实验记录</button><a id="goDecisionChallenge" class="to-challenge" href="./challenge.html">09 · 挑战刚才的判断 →</a></div></section>
 <details class="technical" id="method"><summary><span>结果为什么会变化？还有哪些不确定？</span><span>＋</span></summary><div class="technical-content">
 <p>上方结果是用户选择条件下的情景计算，不是已经发生的未来，也不是由企业合同直接估计出来的经济损失。</p>
 <p id="assumptionText">本次对照仅使用所选条件。规划兑现与实际经济运行之间仍有需要核验的项目进度、订单、产能和服务证据。</p>
@@ -78,5 +78,5 @@
 </main>
 <nav class="mobile-nav" aria-label="移动端导航"><a href="./index.html">01 发现</a><a href="./reality.html">02 现实</a><a href="./industry-base.html">03 底盘</a><a href="./relations.html">04 关系</a><a href="./impact.html">05 影响</a><a href="./plan.html">06 规划</a><a href="./wind.html" aria-current="page">07 风洞</a><a href="./insights.html">08 忽略</a><a href="./challenge.html">09 判断</a></nav>
 <dialog id="modal"><div class="dialog-header"><strong id="modalTitle">实验详情</strong><button type="button" id="modalClose">关闭 ×</button></div><div id="modalBody" class="dialog-body"></div></dialog><div id="toast" class="toast" role="status" aria-live="polite"></div>
-<noscript>需要启用JavaScript才能运行可复现的风洞实验。</noscript>
+<noscript>需要启用JavaScript才能运行风洞实验。</noscript>
 </body></html>

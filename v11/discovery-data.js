@@ -7,35 +7,23 @@
   'use strict';
   const sources = {
     quarter: {
-      title: '博罗前三季度经济运行情况报道', publisher: '南方+报道／惠民之家转载',
-      url: 'https://www.fz0752.com/fontHtml/html/issue/000143025_1.html',
-      published: '2026-11-05', level: 'B', kind: '媒体转述公开统计',
+      publisher: '南方+报道／惠民之家转载', kind: '公开统计的媒体转述',
       note: '2026年前三季度，县域统计。不同指标各保留原口径；不据此认定某镇、某企业的经营情况。'
     },
     yuanzhou: {
-      title: '从“工业大镇”迈向“科创新城”', publisher: '南方日报',
-      url: 'https://epaper.nfnews.com/nfdaily/html/202609/22/content_10181994.html?origin=4',
-      published: '2026-09-22', level: 'B', kind: '记者现场报道及企业受访',
+      publisher: '南方日报', kind: '现场报道与企业受访',
       note: '企业订单、本地采购比例为受访口径；计划投资不等于已完成投资，施工现场报道不等于投产。'
     },
     tea: {
-      title: '采茶品茗＋非遗体验，惠州清明假期茶旅太会玩了', publisher: '惠州农业农村南方号／惠州日报',
-      url: 'https://static.nfnews.com/content/202604/07/c12314159.html?enterColumnId=16',
-      published: '2026-04-07', level: 'B', kind: '合作社负责人受访',
+      publisher: '惠州农业农村南方号／惠州日报', kind: '合作社负责人受访',
       note: '春茶档案，统计对象仅为新陂生态茶园专业合作社。干茶与鲜叶口径分开，不外推全镇收益。'
     },
     cement: {
-      title: '固力水泥博罗分公司熟料生产线关停拆除通告', publisher: '广东省工业和信息化厅',
-      url: 'https://gdii.gd.gov.cn/gkmlpt/content/4/4857/mpost_4857293.html',
-      mirror: 'https://www.bizlaba.com/post/14583.html',
-      published: '2026-02-11', level: 'A', kind: '部门通告，转载交叉核对',
+      publisher: '广东省工业和信息化厅', kind: '部门通告与转载对照',
       note: '仅指公庄镇一条日产2500吨熟料生产线关停及主体设备拆除，不表示企业全部业务退出。'
     },
     copper: {
-      title: '铜来顺新材料生产线点火仪式报道', publisher: '博罗县政府索引／园区世界报道',
-      url: 'https://www.boluo.gov.cn/zwgk/zwdt/tpxw/content/post_5872750.html',
-      mirror: 'https://www.parkworld.net/Post/8df2b6324300e89',
-      published: '2026-10-16', level: 'B', kind: '政府索引与媒体报道交叉核对',
+      publisher: '博罗县政府索引／园区世界报道', kind: '政府索引与媒体报道对照',
       note: '10月13日生产线点火。2027年产值目标不是已实现产值，实际产销数据仍待跟踪。'
     }
   };

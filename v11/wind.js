@@ -111,7 +111,7 @@ function renderNumbers(r){
  '本次中位数相对基准'+signed(delta)+'亿元；结果区间宽度'+(spread>=baseSpread?'扩大约':'缩小约')+fmt(Math.abs(spread-baseSpread))+'亿元。均为条件设定下的结果。';
  $('bufferTakeaway').textContent=r.buffer?'缓冲假设下，中位数相对未缓冲变化 '+signed(r.buffer.p50-s.p50)+' 亿元。它不是已实施政策的效果评估。':'开启一种缓冲条件后，展示同一组条件下的第三组结果。';
  $('shareSummary').textContent=state.active?'选择“'+meta.label+'”，压力档位'+tickLabels()+'，结果中位数由'+fmt(b.p50)+'变为'+fmt(s.p50)+'亿元。'+(r.buffer?'增加缓冲后为'+fmt(r.buffer.p50)+'亿元。':'')+'这是条件对照，不是事实预测。':'当前是基准情景，尚未加入额外变化。';
- const impacts=meta.effect.map((v,i)=>v===0?null:HT.DEFAULT_PATHS[i].name+'：均值'+signed(v*state.strength)+'亿元').filter(Boolean).join('；');
+ const impacts=meta.effect.map((v,i)=>v===0?null:HT.DEFAULT_PATHS[i].name+'：预期'+signed(v*state.strength)+'亿元').filter(Boolean).join('；');
  $('assumptionText').textContent='当前场景“'+meta.label+'”按一组设定调整相关路径的预期：'+(impacts||'没有额外调整')+'。同时让这些路径的结果有一定浮动。缓冲只抵消其中一部分；这些设定尚未经过项目层面的独立核对，不能当作已确认的GDP因果变化。';
 }
 function pathFor(points){
@@ -253,7 +253,7 @@ function link(){
 async function share(){
  const url=link();
  try{if(!navigator.clipboard?.writeText)throw Error('clipboard unsupported');await navigator.clipboard.writeText(url);toast('已复制复现实验链接');}
- catch{modal('复制复现实验链接','<p>以下链接包含冲击、压力档位与缓冲开关，不包含个人资料。</p><input id="shareFallback" readonly style="width:100%;padding:11px;border:1px solid #bfddf8;border-radius:8px" value="'+esc(url)+'"><p>如无法自动复制，请长按选中。</p>');$('shareFallback').focus();$('shareFallback').select();}
+ catch{modal('复制条件对照链接','<p>以下链接包含冲击、压力档位与缓冲开关，不包含个人资料。</p><input id="shareFallback" readonly style="width:100%;padding:11px;border:1px solid #bfddf8;border-radius:8px" value="'+esc(url)+'"><p>如无法自动复制，请长按选中。</p>');$('shareFallback').focus();$('shareFallback').select();}
 }
 $('copyLink').addEventListener('click',share);$('shareTop').addEventListener('click',share);
 $('saveExp').addEventListener('click',()=>{

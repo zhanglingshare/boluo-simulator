@@ -33,7 +33,7 @@ const value=(id,a,b)=>{
  if(id==="innovation")return a*(b/100)
  return 0;
 };
-function sourceLabels(){return {electronic:"2025年产值报道下限 + 用户假设",projects:"2025同期指数100；2026=55.3",tea:"每100元销售额的假设分解",ring:"每100位游客的消费假设",innovation:"652家总体中的待核验企业记录"}[active]}
+function sourceLabels(){return {electronic:"2025年基数 + 条件假设",projects:"2025同期指数100；2026=55.3",tea:"每100元销售额的假设分解",ring:"每100位游客的消费假设",innovation:"652家总体中的待核验企业记录"}[active]}
 function cellTitle(id,a,b,num){
  if(id==="electronic")return "年均增长 "+a+"%；"+b+"年下限情景产值 "+f(num,1)+"亿元";
  if(id==="projects")return "增长 "+a+"%；"+b+"年同季投资指数 "+f(num,1);

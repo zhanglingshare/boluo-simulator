@@ -130,7 +130,7 @@
  function chooseTopic(id){
   if(!D.topics[id])return;
   stopPlay(true);state.topic=id;state.inquiry='';state.related='';state.feedTopic=id;state.expanded=false;
-  text('playCaption','点图形看口径，点现场看进展。');render(true);
+  text('playCaption','点图形看数字，点现场看进展。');render(true);
  }
  function chooseInquiry(id){
   const inquiry=topic().inquiries.find(q=>q.id===id);state.inquiry=inquiry?.id||'';state.related=inquiry?.event||'';
@@ -191,7 +191,7 @@
  }
  function sourceMarkup(id){
   const s=D.sources[id];
-  return '<details class="source-details"><summary>资料与口径 · '+escape(s.kind)+'</summary><p>'+escape(s.publisher)+' · '+s.published+' · '+s.level+'级</p><p>'+escape(s.note)+'</p><a href="'+escape(s.url)+'" target="_blank" rel="noopener noreferrer">打开资料原页 ↗</a>'+(s.mirror?'<a href="'+escape(s.mirror)+'" target="_blank" rel="noopener noreferrer">查看可读转载 ↗</a>':'')+'</details>';
+  return '<details class="source-details"><summary>资料与口径 · '+escape(s.kind)+'</summary><p>渠道：'+escape(s.publisher)+'</p><p>'+escape(s.note)+'</p><p>完整来源清单（含日期与版本）可向作者索取。</p></details>';
  }
  function openDialog(title,kicker,body,context=null){
   stopPlay();if(!$('detailDialog').open)restoreFocus=document.activeElement;dialogContext=context;
