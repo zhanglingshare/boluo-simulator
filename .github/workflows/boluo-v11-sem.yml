@@ -4,7 +4,11 @@ on:
   push:
     paths:
       - "v11/sem-*.js"
+      - "v11/wind-experiments.js"
+      - "v11/wind.js"
+      - "v11/path-lab.js"
       - "v11/sem-*.css"
+      - "v11/wind-exp.css"
       - "v11/sem-*.md"
       - "v11/sem-*.csv"
       - "v11/insights.html"
@@ -14,7 +18,11 @@ on:
   pull_request:
     paths:
       - "v11/sem-*.js"
+      - "v11/wind-experiments.js"
+      - "v11/wind.js"
+      - "v11/path-lab.js"
       - "v11/sem-*.css"
+      - "v11/wind-exp.css"
       - "v11/sem-*.md"
       - "v11/sem-*.csv"
       - "v11/insights.html"
