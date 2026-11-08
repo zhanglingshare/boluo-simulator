@@ -35,7 +35,6 @@ function initSeven(){
  function render(){
  const out=m.calculate({investmentIndex:Number(investment.value),network:Number(network.value)});
  put("vizScenarioIndex",out.investmentIndex.toFixed(1));
- put("vizScenarioNetwork",String(out.network));
  put("vizDirect",mark(out.direct));
  put("vizIndirect",mark(out.indirect));
  put("vizTotal",mark(out.total));
