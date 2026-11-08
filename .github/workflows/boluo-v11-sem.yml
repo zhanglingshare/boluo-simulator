@@ -1,4 +1,4 @@
-name: V11 SmartPLS Teaching Demo Checks
+name: V11 Structural Interaction Checks
 
 on:
   push:
