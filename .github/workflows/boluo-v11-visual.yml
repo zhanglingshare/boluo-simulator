@@ -1,12 +1,16 @@
-name: V11 Page 08 Browser Interaction
+name: V11 Pages 07 and 08 Browser Interaction
 
 on:
   push:
     paths:
       - "v11/insights.html"
+      - "v11/wind.html"
+      - "v11/wind-exp.css"
+      - "v11/condition-bridge.js"
       - "v11/insight-*.js"
       - "v11/insight-*.css"
       - "tests/boluo-v11-insight-browser.cjs"
+      - "tests/boluo-v11-wind-browser.cjs"
       - ".github/workflows/boluo-v11-visual.yml"
   workflow_dispatch:
 
@@ -31,11 +35,14 @@ jobs:
           python3 -m http.server 8765 --bind 127.0.0.1 > /tmp/boluo-v11-server.log 2>&1 &
           sleep 2
           node tests/boluo-v11-insight-browser.cjs
+          node tests/boluo-v11-wind-browser.cjs
       - name: Save 1440 and 390 screenshots
         if: always()
         uses: actions/upload-artifact@v4
         with:
-          name: boluo-v11-page08-screenshots
-          path: artifacts/v11-insight/*.png
+          name: boluo-v11-public-screenshots
+          path: |
+            artifacts/v11-insight/*.png
+            artifacts/v11-public/*.png
           if-no-files-found: ignore
           retention-days: 3
