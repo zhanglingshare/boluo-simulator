@@ -275,31 +275,8 @@
   ],
   "score_meta": {
     "name": "结构重要性 · 待观察价值",
-    "method": "影响范围（牵动主体/联系数、涉及节点网络度）+ 节点类型权重 + 事件结构方向 + 近30天新近度，后台统一计算",
-    "weights": {
-      "node_type": {
-        "anchor": 5,
-        "champion": 4,
-        "legacy": 3,
-        "new": 3,
-        "cluster": 2,
-        "agriculture": 2,
-        "eco": 2,
-        "energy": 2,
-        "external": 1
-      },
-      "direction": {
-        "exit": 15,
-        "new_entity": 2,
-        "new_edge": 2,
-        "strengthen": 1,
-        "weaken": 1
-      },
-      "range": "主体数×2 + 联系数×2 + 节点度之和×0.35",
-      "recent_bonus": "近30天事件 +1"
-    },
     "disclaimer": "结构排序仅反映网络结构层面的重要性与待观察价值，不等于现实经济影响；C级待验证边、签约待落地项目不视为已发生事实",
-    "generated_by": "scripts/compute-structure-score.js",
-    "generated_at": "2026-11-03 02:54"
+    "generated_at": "2026-11-03 02:54",
+    "public_note": "仅作公开变化的观察顺序；评分实现与内部计算过程不随公开数据发布。"
   }
 }
