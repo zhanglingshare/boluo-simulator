@@ -1,0 +1,51 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="theme-color" content="#f5f5f7">
+<meta name="description" content="博罗决策风洞公开体验入口。体验账号 boluo，密码 123456。">
+<title>进入博罗｜博罗决策风洞</title>
+<link rel="stylesheet" href="./assets/boluo-access.css?v=20261108-entry1">
+<script defer src="./assets/boluo-access.js?v=20261108-entry1" data-bl-access="login"></script>
+</head>
+<body class="bl-login-page">
+<div class="bl-entry-shell">
+  <header class="bl-entry-brand">
+    <span class="bl-entry-mark" aria-hidden="true"><svg viewBox="0 0 28 28"><path d="m3 18 7-10 5 7 4-5 6 8M3 22h22M8 18l4-5 5 5"/></svg></span>
+    <span>博罗决策风洞</span><span class="bl-entry-edition">V11</span>
+  </header>
+  <main class="bl-entry-grid">
+    <section class="bl-entry-story" aria-labelledby="blEntryTitle">
+      <p class="bl-entry-kicker">从一条真实线索开始</p>
+      <h1 id="blEntryTitle">看清博罗，<br><span>再多想一步。</span></h1>
+      <p class="bl-entry-lead">看见变化，追踪连接，亲手推演。</p>
+      <img class="bl-entry-landscape" src="./v11/boluo-landscape.svg" alt="" aria-hidden="true">
+      <ol class="bl-entry-route" aria-label="七个观察窗口"><li>发现</li><li>现实</li><li>产业</li><li>关系</li><li>影响</li><li>规划</li><li>风洞</li></ol>
+    </section>
+    <section class="bl-login-card" aria-labelledby="blLoginTitle">
+      <p class="bl-login-caption">公开体验入口</p>
+      <h2 id="blLoginTitle">进入博罗</h2>
+      <p class="bl-login-return" id="blReturnNote">进入后前往：问题发现</p>
+      <form id="blLoginForm" autocomplete="off">
+        <label class="bl-login-field" for="blAccount">账号</label>
+        <input class="bl-login-input" id="blAccount" type="text" value="boluo" required maxlength="64" autocapitalize="off" spellcheck="false" autocomplete="off" aria-describedby="blLoginError">
+        <label class="bl-login-field" for="blPassword">密码</label>
+        <div class="bl-password-wrap">
+          <input class="bl-login-input" id="blPassword" type="password" placeholder="输入公开体验密码" required maxlength="64" inputmode="numeric" autocomplete="off" aria-describedby="blLoginError">
+          <button class="bl-password-toggle" id="blPasswordToggle" type="button" aria-label="显示密码" aria-pressed="false">显示</button>
+        </div>
+        <p class="bl-login-error" id="blLoginError" role="alert" aria-live="polite"></p>
+        <button class="bl-login-submit" id="blLoginSubmit" type="submit" disabled>进入博罗 →</button>
+      </form>
+      <div class="bl-public-account">
+        <div><p class="bl-public-account-title">公开体验账号</p><div class="bl-public-credentials"><span>账号 <code>boluo</code></span><span>密码 <code>123456</code></span></div></div>
+        <button class="bl-fill-credentials" id="blFillCredentials" type="button">一键填入</button>
+      </div>
+      <noscript><p class="bl-login-noscript">请启用 JavaScript 后使用体验入口。</p></noscript>
+    </section>
+  </main>
+  <footer class="bl-entry-footer"><span>张凌 · 区域决策风洞</span><span>从公开事实出发，给判断多一个角度。</span></footer>
+</div>
+</body>
+</html>

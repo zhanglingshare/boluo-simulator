@@ -1,0 +1,58 @@
+html[data-boluo-entry="locked"] body{visibility:hidden!important}
+:root .bl-access-control{display:inline-flex;align-items:center;gap:9px;flex:0 0 auto;margin-left:8px;font-family:-apple-system,BlinkMacSystemFont,"PingFang SC",sans-serif}
+:root .bl-access-control .bl-access-identity{font-size:11px;color:#687787;letter-spacing:.01em}
+:root .bl-access-control .bl-access-logout{display:inline-flex;align-items:center;justify-content:center;min-width:44px;min-height:44px;padding:8px 10px;border:1px solid #dce4ec;border-radius:10px;background:#fff;color:#425b73;font:600 11px/1.2 -apple-system,BlinkMacSystemFont,"PingFang SC",sans-serif;cursor:pointer;white-space:nowrap;box-shadow:none}
+:root .bl-access-control .bl-access-logout:hover{background:#f2f6fb}
+:root .bl-access-control .bl-access-logout:focus-visible{outline:3px solid #7eb2f4;outline-offset:3px}
+body.bl-login-page{--bl-ink:#1d1d1f;--bl-muted:#6b7886;--bl-blue:#126ad4;box-sizing:border-box;margin:0;min-width:320px;min-height:100vh;min-height:100svh;background:#f5f5f7;color:var(--bl-ink);font:15px/1.6 -apple-system,BlinkMacSystemFont,"SF Pro Display","PingFang SC",sans-serif;-webkit-font-smoothing:antialiased}
+.bl-login-page *{box-sizing:border-box}
+.bl-login-page button,.bl-login-page input{font:inherit}
+.bl-login-page button{cursor:pointer}
+.bl-login-page button:focus-visible,.bl-login-page a:focus-visible{outline:3px solid #8bb7ef;outline-offset:4px}
+.bl-login-page button:disabled{cursor:wait;opacity:.65}
+.bl-entry-shell{width:min(1120px,100%);min-height:100vh;min-height:100svh;margin:auto;padding:38px 40px 24px;display:flex;flex-direction:column}
+.bl-entry-brand{display:inline-flex;align-items:center;gap:12px;align-self:flex-start;font-size:17px;font-weight:750;letter-spacing:-.025em}
+.bl-entry-mark{display:grid;place-items:center;width:38px;height:38px;border:1px solid #d6e4f3;border-radius:11px;background:#eaf2fc;color:#1766b6}
+.bl-entry-mark svg{width:25px;height:25px;fill:none;stroke:currentColor;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round}
+.bl-entry-edition{font:600 10px/1.4 Menlo,monospace;color:#74869b;border-left:1px solid #d5dce4;padding-left:12px;letter-spacing:.08em}
+.bl-entry-grid{display:grid;grid-template-columns:minmax(0,1fr) 386px;gap:76px;align-items:center;flex:1;padding:62px 0 52px}
+.bl-entry-story{min-width:0}
+.bl-entry-kicker{margin:0 0 16px;font-size:11px;letter-spacing:.12em;color:#657d95;font-weight:650}
+.bl-entry-story h1{font-size:clamp(34px,4.7vw,58px);line-height:1.18;letter-spacing:-.055em;font-weight:800;margin:0}
+.bl-entry-story h1 span{color:#226cbd}
+.bl-entry-lead{font-size:15px;line-height:1.8;color:#64758a;margin:22px 0 0}
+.bl-entry-landscape{display:block;width:100%;height:168px;object-fit:cover;object-position:center;margin:31px 0 0;border-radius:16px;background:#edf3f9}
+.bl-entry-route{display:flex;align-items:center;gap:11px;flex-wrap:wrap;margin:21px 0 0;padding:0;list-style:none;font-size:11px;color:#64758a}
+.bl-entry-route li{display:flex;align-items:center;gap:11px}
+.bl-entry-route li+li:before{content:"/";color:#b6c1cd}
+.bl-entry-route li:last-child{color:#2469b5;font-weight:650}
+.bl-login-card{padding:32px;background:#fff;border:1px solid rgba(0,0,0,.06);border-radius:20px;box-shadow:0 4px 24px rgba(0,0,0,.04),0 1px 2px rgba(0,0,0,.02)}
+.bl-login-caption{display:flex;align-items:center;gap:7px;margin:0 0 12px;color:#697e94;font-size:11px}
+.bl-login-caption:before{content:"";width:6px;height:6px;border-radius:50%;background:#5c95c6}
+.bl-login-card h2{font-size:28px;font-weight:750;letter-spacing:-.04em;line-height:1.25;margin:0 0 9px}
+.bl-login-return{margin:0 0 26px;font-size:12px;color:#748192}
+.bl-login-field{display:block;font-size:12px;font-weight:650;color:#45556a;margin:18px 0 7px}
+.bl-login-page .bl-login-input{display:block;width:100%;height:49px;padding:0 13px;border:1px solid #d6dee7;border-radius:10px;background:#fcfdff;color:#25374d;font-size:16px;outline:none;transition:border-color .18s,box-shadow .18s}
+.bl-login-page .bl-login-input:focus{border-color:#387fd2;box-shadow:0 0 0 3px #126ad414}
+.bl-login-page .bl-login-input[aria-invalid="true"]{border-color:#b75151}
+.bl-password-wrap{position:relative}
+.bl-password-wrap .bl-login-input{padding-right:64px}
+.bl-password-toggle{position:absolute;right:3px;top:3px;height:43px;min-width:54px;padding:0 9px;border:0;border-radius:8px;background:transparent;color:#526c88;font-size:11px!important}
+.bl-password-toggle:hover{background:#edf3fa}
+.bl-login-error{min-height:36px;margin:9px 0 5px;color:#a13d3d;font-size:11px;line-height:1.6}
+.bl-login-submit{width:100%;min-height:49px;border:1px solid #126ad4;border-radius:10px;background:#126ad4;color:#fff;font-size:14px!important;font-weight:650!important;transition:background .18s}
+.bl-login-submit:hover{background:#0d5ebf}
+.bl-public-account{display:flex;align-items:center;justify-content:space-between;gap:12px;margin-top:24px;padding:16px 0 0;border-top:1px solid #edf0f4}
+.bl-public-account-title{font-size:10px;color:#7a8898;margin:0 0 6px}
+.bl-public-credentials{display:flex;gap:12px;color:#65768a;font-size:11px;flex-wrap:wrap}
+.bl-public-credentials code{font:600 12px/1.6 "SF Pro Text",Menlo,monospace;color:#304d6b;user-select:all}
+.bl-fill-credentials{flex:none;padding:9px 0 9px 6px;min-height:44px;border:0;border-radius:7px;background:transparent;color:#1767bd;font-size:11px!important;font-weight:650!important}
+.bl-fill-credentials:hover{text-decoration:underline;text-underline-offset:4px}
+.bl-login-noscript{font-size:12px;color:#a13d3d;line-height:1.7}
+.bl-entry-footer{display:flex;align-items:center;justify-content:space-between;gap:15px;font-size:10px;color:#85909e}
+@media(max-width:1000px){.bl-entry-grid{gap:36px;grid-template-columns:minmax(0,1fr) 350px}.bl-entry-shell{padding:28px}.bl-entry-story h1{font-size:43px}.bl-login-card{padding:28px}.bl-entry-landscape{height:145px}}
+@media(max-width:760px){.bl-entry-shell{padding:22px 20px 20px}.bl-entry-brand{font-size:15px;gap:9px}.bl-entry-mark{width:33px;height:33px;border-radius:9px}.bl-entry-edition{font-size:9px;padding-left:9px}.bl-entry-grid{display:flex;flex-direction:column;align-items:stretch;gap:27px;padding:37px 0 32px}.bl-entry-story h1{font-size:34px;line-height:1.22}.bl-entry-story h1 br{display:initial}.bl-entry-kicker{font-size:9px;margin-bottom:11px}.bl-entry-lead{font-size:12px;margin-top:12px}.bl-entry-landscape,.bl-entry-route{display:none}.bl-login-card{padding:26px 24px}.bl-login-card h2{font-size:25px}.bl-login-return{margin-bottom:22px}.bl-entry-footer{font-size:9px;gap:8px;flex-wrap:wrap}.bl-public-credentials{gap:10px}}
+@media(max-width:700px){:root .bl-access-control{gap:0;margin-left:3px}:root .bl-access-control .bl-access-identity{display:none}:root .bl-access-control .bl-access-logout{padding:8px;min-width:44px}}
+@media(prefers-reduced-motion:reduce){.bl-login-page *{transition:none!important;scroll-behavior:auto!important}}
+
+@media(max-width:700px){header.sitebar.bl-access-header{height:auto;min-height:52px}header .sitebar-in.bl-access-host{height:auto;min-height:52px;flex-wrap:wrap;gap:6px;padding:5px 12px}header .sitebar-in.bl-access-host .bl-access-control{margin-left:auto}header .sitebar-in.bl-access-host .topnav{order:2;flex:1 1 100%;min-width:0;overflow-x:auto;justify-content:flex-start;padding-bottom:5px}header .sitebar-in.bl-access-host .topnav a{flex:none}}
