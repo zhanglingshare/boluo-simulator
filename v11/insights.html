@@ -25,7 +25,7 @@
 </section>
 <div id="iqArrival" class="iq-arrival" role="status" hidden></div>
 <section class="iq-console" id="iqLab" aria-labelledby="iqLabTitle">
-<div class="iq-console-top"><div><p class="micro">LIVE EXPERIMENT / 互动结构透视</p><h2 id="iqLabTitle">断开一环，<em>解释还站得住吗？</em></h2></div><span class="iq-tag">全部数值为可调假设 · 不是事实估计</span></div>
+<div class="iq-console-top"><div><p class="micro">LIVE EXPERIMENT / 互动结构透视</p><h2 id="iqLabTitle">断开一环，<em>解释还站得住吗？</em></h2></div><span class="iq-tag">全部数值为可调假设 · 不是实际经济测算</span></div>
 <div class="iq-goalbar" role="group" aria-label="选择你想了解的结果"><button type="button" data-iq-target="growth" aria-pressed="true">产业接续</button><button type="button" data-iq-target="retention" aria-pressed="false">本地留存</button><button type="button" data-iq-target="resilience" aria-pressed="false">产业韧性</button><span id="iqGoalPrompt">下一轮增长靠什么接上？</span></div>
 <div class="iq-cockpit">
 <div class="iq-scope">
@@ -43,12 +43,12 @@
 <aside class="iq-controls" aria-label="结构压力测试参数">
 <div class="iq-controls-head"><span>EDIT THE CONDITIONS</span><h3>调整一条联系</h3><p id="iqFocusDescription">每次只针对选中环节修改假设，其他环节保持原条件。</p></div>
 <label class="iq-slider" for="iqSeverity"><span>整体冲击强度 <strong id="iqSeverityValue">70</strong></span><input id="iqSeverity" type="range" min="10" max="100" step="5" value="70"><small>冲击越强，所有候选联系的情景响应越明显</small></label>
-<label class="iq-slider" for="iqImportance"><span>选中联系的假设重要性 <strong id="iqImportanceValue">84</strong></span><input id="iqImportance" type="range" min="5" max="100" step="1" value="84"><small>此值来自教学起始设定，可自行质疑和修改</small></label>
-<label class="iq-slider" for="iqPerformance"><span>选中环节的运行表现 <strong id="iqPerformanceValue">32</strong></span><input id="iqPerformance" type="range" min="0" max="100" step="1" value="32"><small>数值越高，假设中的脆弱缺口越小</small></label>
+<label class="iq-slider" for="iqImportance"><span>选中联系的可能波及范围 <strong id="iqImportanceValue">84</strong></span><input id="iqImportance" type="range" min="5" max="100" step="1" value="84"><small>当前为演示条件，可自行调整，不代表现实测量</small></label>
+<label class="iq-slider" for="iqPerformance"><span>选中环节的承接条件 <strong id="iqPerformanceValue">32</strong></span><input id="iqPerformance" type="range" min="0" max="100" step="1" value="32"><small>改变这项条件，查看其他联系是否受到影响</small></label>
 <label class="iq-slider" for="iqSubstitute"><span>替代 / 缓冲能力 <strong id="iqSubstituteValue">35</strong></span><input id="iqSubstitute" type="range" min="0" max="100" step="5" value="35"><small>如果一条关系受冲击，有没有其他路径可以接上？</small></label>
 <div class="iq-experiment-buttons"><button id="iqSever" type="button" aria-pressed="false"><span aria-hidden="true">⤫</span> 假设这条联系不存在</button><button id="iqRun" type="button" class="primary"><span aria-hidden="true">▶</span> 运行结构压力实验</button></div>
 <button id="iqReset" type="button" class="iq-reset">恢复这组目标的初始条件</button>
-<div class="iq-control-disclaimer">读数为相对解释指数（0—100），不是GDP损失、企业风险概率或已识别的因果系数。切断联系只表示暂不采用这条解释，不代表现实风险自动消失。</div>
+<div class="iq-control-disclaimer">读数为相对情景指标（0—100），不是GDP损失、企业风险概率或已识别的因果系数。切断联系只表示暂不采用这条解释，不代表现实风险自动消失。</div>
 </aside>
 </div>
 </section>
