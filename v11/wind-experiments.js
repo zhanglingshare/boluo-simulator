@@ -11,7 +11,7 @@ const state={
  threshold:clamp(qs.get("line")??1600,1250,1850),
  view:["density","hist","cdf"].includes(qs.get("view"))?qs.get("view"):"density"
 };
-let latest=null,range=null,job=0;
+let latest=null,fullLatest=null,range=null,job=0,playTimer=0;
 const format=n=>Number(n).toLocaleString("zh-CN",{maximumFractionDigits:0});
 const colors=["#7bd9ff","#ffbd82","#69ebcf"];
 const configs=[["基准","base"],["施压","stress"],["缓冲","buffer"]];
@@ -81,7 +81,40 @@ $("detailThreshold")?.addEventListener("input",e=>{
 document.querySelectorAll("[data-dist-view]").forEach(b=>b.addEventListener("click",()=>{
  state.view=b.dataset.distView;labels();syncURL();if(latest)render(latest);
 }));
-$("detailReplay")?.addEventListener("click",()=>rerun(true));
+function stopSampleReplay(showFinal=false){
+ clearTimeout(playTimer);playTimer=0;
+ if(showFinal&&fullLatest){render(fullLatest);setSampleStatus(fullLatest.base.rawResults.length,fullLatest.base.rawResults.length);}
+}
+function setSampleStatus(k,N){
+ const p=$("samplingProgress"),bar=$("samplingBar");
+ if(p)p.textContent=k>=N?"已完成 "+format(N)+" 次":format(k)+" / "+format(N)+" 次";
+ if(bar)bar.style.width=(Math.min(100,k/N*100)).toFixed(1)+"%";
+}
+function prefixOutcome(s,k){
+ const raw=s.rawResults.slice(0,k),sorted=[...raw].sort((a,b)=>a-b);
+ return {rawResults:raw,results:sorted,p10:HT.quantile(sorted,.10),p50:HT.quantile(sorted,.50),p90:HT.quantile(sorted,.90),hit:100*raw.filter(x=>x>=HT.TARGET).length/raw.length};
+}
+function playSampleReplay(){
+ if(!fullLatest)return;
+ stopSampleReplay(false);
+ const N=fullLatest.base.rawResults.length;
+ const increments=[150,350,750,1400,2600,4000,N].map(k=>Math.min(k,N));
+ const steps=[...new Set(increments)].filter(k=>k>=20);
+ let index=0;
+ $("detailReplay").textContent="正在演化 · 点击恢复结果";
+ const next=()=>{
+  const k=steps[index++];
+  const partial={base:prefixOutcome(fullLatest.base,k),stress:prefixOutcome(fullLatest.stress,k),buffer:fullLatest.buffer?prefixOutcome(fullLatest.buffer,k):null};
+  render(partial);setSampleStatus(k,N);
+  if(index<steps.length)playTimer=setTimeout(next,170);
+  else{$("detailReplay").textContent="播放抽样累积 ↻";playTimer=0;}
+ };
+ next();
+}
+$("detailReplay")?.addEventListener("click",()=>{
+ if(playTimer){stopSampleReplay(true);$("detailReplay").textContent="播放抽样累积 ↻";}
+ else playSampleReplay();
+});
 function quant(arr,q){return HT.quantile(arr,q);}
 function moments(s){
  const raw=s.rawResults,mean=raw.reduce((a,v)=>a+v,0)/raw.length;
@@ -197,7 +230,7 @@ function render(all){
  };
  chart.onpointerleave=()=>{const n=chart.querySelector("#detailCursor");if(n)n.style.display="none";};
 }
-window.addEventListener("boluo:wind-run",e=>{render(e.detail.results);const box=$("distributionWork");if(box&&e.detail.animate){box.classList.remove("is-running");void box.offsetWidth;box.classList.add("is-running");}});
+window.addEventListener("boluo:wind-run",e=>{stopSampleReplay(false);fullLatest=e.detail.results;render(fullLatest);setSampleStatus(fullLatest.base.rawResults.length,fullLatest.base.rawResults.length);const box=$("distributionWork");if(box&&e.detail.animate){box.classList.remove("is-running");void box.offsetWidth;box.classList.add("is-running");}});
 window.BoluoDistribution={getState:()=>({...state,paths:[...state.paths]}),render:()=>{const r=window.BoluoWind?.getDistributions();if(r)render(r);}};
 labels();
 })();
