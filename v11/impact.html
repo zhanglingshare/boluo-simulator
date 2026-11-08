@@ -23,8 +23,8 @@
 </header>
 <main class="wrap">
  <section class="hero" aria-labelledby="pageTitle">
-  <div class="hero-title"><p class="micro">05 / IMPACT TRANSMISSION LAB · 影响传导实验室</p><h1 id="pageTitle">工业在涨，投资在降。<em>下一棒，谁来接？</em></h1><p class="sub">不预设输赢。点一次变化，看看它可能沿着哪些联系传递，又在哪里被缓冲。</p></div>
-  <div class="hero-identity"><span class="live-dot"></span><span>公开事实 + 机制假设</span><strong>2026 前三季度</strong></div>
+  <div class="hero-title"><p class="micro">05 / BEFORE & AFTER · 变化前后</p><h1 id="pageTitle">工业在涨，投资在降。<em>下一棒，谁来接？</em></h1><p class="sub">不预设输赢。点一次变化，看看它可能沿着哪些联系传递，又在哪里被缓冲。</p></div>
+  <div class="hero-identity"><span class="live-dot"></span><span>公开变化 / 尚待核实</span><strong>2026 前三季度</strong></div>
  </section>
  <section class="fact-strip" aria-label="已核实的博罗经济指标，2026年前三季度">
   <button class="fact-tile" type="button" data-fact="industry"><span class="fact-icon">◈</span><span class="fact-label">规上工业增加值 · 同比</span><strong class="cold">+8.9<small>%</small></strong><span class="fact-caption">当前产出仍增长</span></button>
@@ -36,7 +36,7 @@
   <span class="takeaway-icon">!</span><strong>工业增加值与工业投资是不同统计对象，不能直接相减，更不能把投资下降直接换算成岗位损失。</strong>
   <button type="button" id="openEvidence">查看数据口径 ↗</button>
  </section>
- <section class="section-heading" id="explore"><div><p class="micro">01 / TWO WORLDS, ONE REALITY</p><h2>同一条变化，<em>两张网络一起动</em></h2><p>左边是可以确认的观察事实；右边是假设成立后值得核验的传导路径。<b>虚线不代表已发生的交易。</b></p></div><div class="status-legend"><span><i class="solid"></i>观察锚点</span><span><i class="hypo"></i>条件推演</span><span><i class="unknown"></i>未核实</span></div></section>
+ <section class="section-heading" id="explore"><div><p class="micro">01 / TWO WORLDS, ONE REALITY</p><h2>同一条变化，<em>两张网络一起动</em></h2><p>左边是可以确认的观察事实；右边是假设成立后值得核验的传导路径。<b>虚线不代表已发生的交易。</b></p></div><div class="status-legend"><span><i class="solid"></i>观察锚点</span><span><i class="hypo"></i>如果发生</span><span><i class="unknown"></i>未核实</span></div></section>
  <section class="scenario-strip" role="group" aria-label="选择变化场景">
   <button type="button" data-case="projects" aria-pressed="true"><span class="scenario-number">01</span><strong>项目接续</strong><small>投资收缩后，下一棒在哪里？</small></button>
   <button type="button" data-case="orders" aria-pressed="false"><span class="scenario-number">02</span><strong>本地订单</strong><small>增长是否传给配套企业？</small></button>
@@ -44,7 +44,7 @@
  </section>
  <section class="impact-workspace">
   <div class="stage-shell">
-   <div class="stage-toolbar"><div><span class="stage-kicker">CONNECTION IMPACT STUDIO</span><strong id="stageTitle">项目接续：谁可能最先感到变化？</strong></div><div class="mode-switch" role="group" aria-label="观察模式"><button data-mode="compare" type="button" aria-pressed="true">双图对照</button><button data-mode="trace" type="button" aria-pressed="false">传导聚焦</button></div></div>
+   <div class="stage-toolbar"><div><span class="stage-kicker">BEFORE & AFTER / 双图看变化</span><strong id="stageTitle">项目接续：谁可能最先感到变化？</strong></div><div class="mode-switch" role="group" aria-label="观察模式"><button data-mode="compare" type="button" aria-pressed="true">双图对照</button><button data-mode="trace" type="button" aria-pressed="false">顺着变化看</button></div></div>
    <div class="stage-duo" id="stageDuo">
     <div class="graph-panel"><div class="graph-label"><span class="graph-index">A</span><span><strong>事实窗口</strong><small>只记录公开统计信号</small></span><span class="tag observed">可观察</span></div><svg id="factNetwork" class="network-svg" viewBox="0 0 600 384" role="group" aria-label="当前已公布的宏观指标锚点。点击节点查看口径。"></svg><div class="graph-caption" id="factCaption">统计指标并不自动证明企业间存在交易关系。</div></div>
     <div class="graph-panel scenario-panel"><div class="graph-label"><span class="graph-index contrast">B</span><span><strong>条件传导窗口</strong><small>逐步显示可能的路径，不是实测损失</small></span><span class="tag simulated">假设</span></div><svg id="scenarioNetwork" class="network-svg" viewBox="0 0 600 384" role="group" aria-label="可交互的假设传导网络，动态连线并聚焦可能受影响的节点。"></svg><div class="graph-caption" id="scenarioCaption">先点击播放冲击波，看信号沿哪些环节传播。</div></div>
@@ -62,7 +62,7 @@
    <p id="inspectorText">当前已有产能仍可能支撑工业增长。投资变化与下一轮产能形成之间是否存在时间差，需要继续核实项目进度。</p>
    <div class="question-prompt"><span>真正值得追问</span><strong id="inspectorQuestion">哪些在建项目的设备采购或投产进度发生变化？</strong></div>
    <div class="inspector-switch" role="group" aria-label="调整观察角度"><span>换一个视角</span><div><button type="button" data-lens="business" aria-pressed="true">企业</button><button type="button" data-lens="people" aria-pressed="false">普通人</button><button type="button" data-lens="policy" aria-pressed="false">决策者</button></div></div>
-   <div class="buffer-box"><span class="buffer-title">如果存在替代路径……</span><p>让传导从另一条路径通过。这里只演示机制差异，不输出未经校准的损失概率。</p><div class="buffer-options" role="group" aria-label="可能存在的缓冲"><button data-buffer="unknown" type="button" aria-pressed="true">尚不清楚</button><button data-buffer="weak" type="button" aria-pressed="false">替代不足</button><button data-buffer="strong" type="button" aria-pressed="false">能够替代</button></div><p class="buffer-result" id="bufferResult">当前不能确认本地企业是否拥有替代订单或供应渠道。</p></div>
+   <div class="buffer-box"><span class="buffer-title">如果存在替代路径……</span><p>让传导从另一条路径通过。这里只比较不同假设下的联系，不代表已发生的损失。</p><div class="buffer-options" role="group" aria-label="可能存在的缓冲"><button data-buffer="unknown" type="button" aria-pressed="true">尚不清楚</button><button data-buffer="weak" type="button" aria-pressed="false">替代不足</button><button data-buffer="strong" type="button" aria-pressed="false">能够替代</button></div><p class="buffer-result" id="bufferResult">当前不能确认本地企业是否拥有替代订单或供应渠道。</p></div>
    <button id="saveTrace" class="primary-action" type="button">保存这条影响链 <span>↗</span></button><button id="viewSaved" class="saved-action" type="button">查看本机已保存的影响链 →</button><p class="inspector-foot">不是风险评分；本页不把条件假设写成已发生事实。</p>
   </aside>
  </section>
@@ -111,7 +111,7 @@
   <div class="question-chain"><div><small>起点</small><strong id="chainStart">工业投资同比 −44.7%</strong></div><span class="chain-arrow">➜</span><div><small>可能的传导</small><strong id="chainMiddle">项目接续 → 设备采购 → 本地配套</strong></div><span class="chain-arrow">➜</span><div><small>最重要的未知</small><strong id="chainEnd">哪些项目进度真正改变？</strong></div></div>
   <div class="bottom-actions"><button type="button" id="copyTrace" class="primary-action">复制这张影响链的链接 ↗</button><a href="./relations.html">返回第四页 · 核查实体关系</a><a id="planLink" class="plan-next" href="./plan.html?from=impact&scene=projects">进入第六页 · 看十五五如何接棒 <strong>→</strong></a></div>
  </section>
- <footer class="footer"><span>博罗决策风洞 V11 · 05 变化影响 · 用公开事实提出更好的问题</span><button id="sourceFoot" type="button">依据、方法边界与资料范围 ↗</button></footer>
+ <footer class="footer"><span>博罗决策风洞 V11 · 05 变化影响 · 用公开事实提出更好的问题</span><button id="sourceFoot" type="button">公开资料与使用限制 ↗</button></footer>
 </main>
 <nav class="mobile-nav" aria-label="手机端主导航"><a href="./index.html">01 发现</a><a href="./reality.html">02 现实</a><a href="./industry-base.html">03 底盘</a><a href="./relations.html">04 关系</a><a href="./impact.html" aria-current="page">05 影响</a><a href="./plan.html">06 规划</a><a href="./wind.html">07 风洞</a><a href="./insights.html">08 忽略</a></nav>
 <dialog id="detailDialog" aria-labelledby="dialogTitle"><div class="dialog-header"><strong id="dialogTitle">资料与边界</strong><button type="button" id="dialogClose">关闭 ×</button></div><div class="dialog-body" id="dialogBody"></div></dialog>
