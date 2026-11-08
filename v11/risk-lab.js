@@ -145,7 +145,7 @@ function calc(){
    data.major=fmt(100*N/1407,1)+"%";data.unit="数字化转型实施覆盖比例";data.detail="652家实施数字化转型/1407家规上工业企业。该覆盖比例不是生产率提升比例。";
    data.second="±"+fmt(moe,1)+"百分点";data.secondDetail="拟议抽样的最坏情形"+confidence[secondary]+"%误差半宽，假定简单随机抽样，且未考虑非响应偏差。";
    data.chart=chartInnovation(n,moe,confidence[secondary]);
-   data.foot="尚未实际抽取和调查企业；不应发布SEM路径系数或真实绩效达成率。";
+   data.foot="目前没有企业经营绩效和可比调查样本，不能计算真实转型效果。";
    data.chain=["数字化实施","可比经营样本","效果识别","能力转化"];data.bars=[["实施转型",100*N/1407],["其他规上",100*(1-N/1407)],["拟抽样",100*n/N]];
  }
  return data;
@@ -259,7 +259,7 @@ function showDrawer(){
  returnFocus=document.activeElement;
  $("detailOverlay").classList.add("open");
  document.querySelector("main").inert=true;document.querySelector("header").inert=true;
- $("drawerText").innerHTML='<article><h3>证据与情景分开</h3><p>2026年前三季度工业增加值+8.9%、工业投资−44.7%；2025电子信息产值超过773.8亿元；2025规上企业1407家。这些属于有公开报道支持的观测或统计口径。</p></article><article><h3>模型不能冒充实测</h3><p>电子信息使用有界基期的复合增长条件核算，工业投资使用同季指数恢复测试；农业和环“两山”使用价值链/地方留存条件核算；创新转化使用拟议抽样的最大误差分析。所有由用户设置的参数只是条件实验。</p></article><article><h3>国际模型借鉴</h3><p>研究路线参考区域投入产出与价值链核算、区域经济循环、动态适应政策路径、经济复杂性与产业相关性，以及真实数据具备后才可采用的 SNA / SEM 与企业冲击传播。未收集到企业交易边和合格样本时，不报告实测网络或路径系数。</p></article><article><h3>规划与统计口径</h3><p>千亿级电子信息是规模方向的参照，不宣称已核对为2030年具有量化约束的考核目标。没有正式数值目标与基期数据时，“目标达成率”显示为未可计算。</p><p><a href="'+ref.govt+'" target="_blank" rel="noopener noreferrer">博罗县十五五规划发布页</a></p><p><a href="'+ref.current+'" target="_blank" rel="noopener noreferrer">2026年前三季度统计报道</a></p></article>';
+ $("drawerText").innerHTML='<article><h3>证据与情景分开</h3><p>2026年前三季度工业增加值+8.9%、工业投资−44.7%；2025电子信息产值超过773.8亿元；2025规上企业1407家。这些属于有公开报道支持的观测或统计口径。</p></article><article><h3>模型不能冒充实测</h3><p>电子信息使用有界基期的复合增长条件核算，工业投资使用同季指数恢复测试；农业和环“两山”使用价值链/地方留存条件核算；创新转化使用拟议抽样的最大误差分析。所有由用户设置的参数只是条件实验。</p></article><article><h3>当前证据能支持什么</h3><p>公开线索可以帮助发现值得核实的产业联系，但缺少企业交易记录或可比调查时，不能宣称已确定因果影响或收益。</p></article><article><h3>规划与统计口径</h3><p>千亿级电子信息是规模方向的参照，不宣称已核对为2030年具有量化约束的考核目标。没有正式数值目标与基期数据时，“目标达成率”显示为未可计算。</p><p><a href="'+ref.govt+'" target="_blank" rel="noopener noreferrer">博罗县十五五规划发布页</a></p><p><a href="'+ref.current+'" target="_blank" rel="noopener noreferrer">2026年前三季度统计报道</a></p></article>';
  $("closeDrawer").focus();
 }
 function closeDrawer(){
