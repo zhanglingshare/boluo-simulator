@@ -75,8 +75,9 @@
   $('detailDialog').addEventListener('click', event => { if (event.target === $('detailDialog')) { const r = event.target.getBoundingClientRect(); if (event.clientX < r.left || event.clientX > r.right || event.clientY < r.top || event.clientY > r.bottom) closeDialog(); } });
   const block = (label, text) => '<div class="detail-block"><span>' + esc(label) + '</span><p>' + esc(text) + '</p></div>';
   function sourceHTML() {
-    const s = C.data.source;
-    return '<div class="detail-block"><span>' + esc(s.publisher + ' · ' + s.date + ' · B级报道线索') + '</span><p><a href="' + esc(s.url) + '" target="_blank" rel="noopener noreferrer">' + esc(s.title) + ' ↗</a></p><small>' + esc(s.nature) + '</small></div>';
+    const s = C.data.source || {};
+    const name = s.publisher || '公开报道';
+    return '<div class="detail-block"><span>' + esc(name + ' · 公开报道线索') + '</span><p>这条联系来自公开报道；完整来源清单（含日期与版本）可向作者索取。</p></div>';
   }
   function openBoundary() {
     showDialog('公开资料 / 来源与边界', '连线说了什么？',

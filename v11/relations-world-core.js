@@ -17,17 +17,16 @@
     for(const n of D.nodes){const previous=nodes.get(n.id);nodes.set(n.id,{...previous,...n,source:[...new Set([...(n.source||[]),...(previous?.source||[])])],originalGrade:previous?.originalGrade});}
     nodes.set('yuanzhou',{id:'yuanzhou',name:'园洲镇',short:'园洲镇',group:'regional',kind:'record',source:['yuanzhou'],reviewed:true,detail:'汉德、密特斯和江丰的属地记录。共同属地不代表彼此有交易。'});
     nodes.set('baitang',{id:'baitang',name:'柏塘镇',short:'柏塘镇',group:'regional',kind:'record',source:['tea'],reviewed:true,detail:'新陂合作社所在地，不能把一个合作社的经营账外推全镇。'});
-    const rawKinds={A:'registry',B:'inferred',C:'question'};
     const labels={supply_chain:'配套线索',regional:'跨城联系',commute:'往来线索',transport:'交通登记',eco_constraint:'生态约束',resource_competition:'资源关联',tourism_consumption:'文旅联系',investment:'退出记录'};
     for(const e of graph.edges||[]){
       if(!nodes.has(e.source_node_id)||!nodes.has(e.target_node_id))continue;
-      let kind=rawKinds[e.evidence_grade]||'question',label=labels[e.relation_type]||'登记联系',detail=e.relation_description;
+      let kind='registry',label=labels[e.relation_type]||'登记联系',detail=e.relation_description;
       if(['E010','E017','E023','E042'].includes(e.edge_id)){
         kind='inferred';label=e.edge_id==='E017'?'同产业线索':e.edge_id==='E023'?'电网侧能力':e.edge_id==='E042'?'同镇产品':'行业配套推断';
         detail+='；本页不据此认定两家主体存在具体采购合同或直接供电交易。';
       }
       if(e.edge_id==='E045'){label='整治登记';detail+='；不能据此认定整个群落所有企业停产。';}
-      edges.set(e.edge_id,{id:e.edge_id,a:e.source_node_id,b:e.target_node_id,label,kind,detail,source:[...(e.source_ids||[])],before:'unreported',after:kind,reviewed:false,originalGrade:e.evidence_grade,verified:e.last_verified_at,contextOnly:e.edge_id==='E044',boundary:e.counter_evidence||'既有登记未经本轮逐条复核；关联、同业或区位不自动等于交易和经济因果。'});
+      edges.set(e.edge_id,{id:e.edge_id,a:e.source_node_id,b:e.target_node_id,label,kind,detail,source:[...(e.source_ids||[])],before:'unreported',after:kind,reviewed:false,contextOnly:e.edge_id==='E044',boundary:e.counter_evidence||'既有登记未经本轮逐条复核；关联、同业或区位不自动等于交易和经济因果。'});
     }
     for(const e of D.edges)edges.set(e.id,{...e});
     const locality=[

@@ -5,15 +5,7 @@
   else root.BoluoWorldData = data;
 })(typeof window !== 'undefined' ? window : this, function() {
   'use strict';
-  const sources = {
-    yuanzhou: { title:'从“工业大镇”迈向“科创新城”', publisher:'南方日报', date:'2026-09-22', grade:'B', url:'https://epaper.nfnews.com/nfdaily/html/202609/22/content_10181994.html?origin=4', scope:'企业受访和现场报道，不能外推全县或自动换算岗位。' },
-    park: { title:'生产异地化 待遇同城化', publisher:'南方日报', date:'2026-07-03', grade:'B', url:'https://epaper.nfnews.com/nfdaily/html/202607/03/content_10174732.html', scope:'园区开园、企业入驻和合作签约的报道；入驻不等于各企业均已达产。' },
-    tea: { title:'采茶品茗＋非遗体验，惠州清明假期茶旅太会玩了', publisher:'惠州农业农村／惠州日报', date:'2026-04-07', grade:'B', url:'https://static.nfnews.com/content/202604/07/c12314159.html?enterColumnId=16', scope:'新陂合作社负责人受访；干茶与鲜叶、就业存量与新增招聘分别看。' },
-    litchi: { title:'博罗举办荔枝高质量发展技术培训班', publisher:'广东省农业科学院／罗浮新闻', date:'2026-04-27', grade:'A', url:'https://www.gdaas.cn/nkyjczx/mtjj/content/post_1325356.html', scope:'一次培训的参与记录；没有据此计算农户增产或增收。' },
-    mobility: { title:'博罗蝉联“年度最具投资潜力目的地”', publisher:'南方日报', date:'2026-05-19', grade:'B', url:'https://epaper.nfnews.com/nfdaily/html/202605/19/content_10170680.html', scope:'5月专线试运行档案，报道明确试运行至6月上旬；不能视为今天仍有同一班次。' },
-    cement: { title:'固力水泥博罗分公司熟料生产线关停拆除通告', publisher:'广东省工业和信息化厅', date:'2026-02 通告', grade:'A', url:'https://gdii.gd.gov.cn/gkmlpt/content/4/4857/mpost_4857293.html', mirror:'https://www.bizlaba.com/post/14583.html', scope:'仅一条日产2500吨熟料生产线及其设备；不表示整家公司退出。' },
-    copper: { title:'铜来顺新材料生产线点火仪式报道', publisher:'博罗县政府索引／园区世界报道', date:'2026-10-16', grade:'B', url:'https://www.boluo.gov.cn/zwgk/zwdt/tpxw/content/post_5872750.html', mirror:'https://www.parkworld.net/Post/8df2b6324300e89', scope:'10月13日点火；2027年目标不能当作当前实际产值。' }
-  };
+  const sources = {};
   const nodes=[], edges=[], scenes=[];
   const nodeMap=new Map(), edgeMap=new Map();
   function N(id,name,group,source,detail,kind='record',short='') {
