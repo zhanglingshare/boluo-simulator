@@ -5,11 +5,11 @@
 <meta name="description" content="博罗决策风洞 V11 第七页：以既有可复现模型为底座，体验2030目标的受控冲击、缓冲与前后结果区间，并核对结果的条件与不确定性。">
 <title>07 决策风洞｜哪一环最经不起变化？— 博罗 V11</title>
 <link rel="stylesheet" href="./impact.css?v=20261107-v1"><link rel="stylesheet" href="./wind.css?v=20261107-w2"><link rel="stylesheet" href="./wind-exp.css?v=20261108-b1">
-<script src="../model.js"></script><script defer src="./wind-experiments.js?v=20261108-b1"></script><script defer src="./wind.js?v=20261108-b1"></script><script defer src="./condition-bridge.js?v=20261109-p1"></script></head>
+<script src="../model.js"></script><script defer src="./wind-experiments.js?v=20261108-b1"></script><script defer src="./wind.js?v=20261108-b1"></script><script defer src="./challenge-link.js?v=20261109-p1"></script><script defer src="./condition-bridge.js?v=20261109-p1"></script></head>
 <body class="wind-page">
 <header class="site-header">
 <a class="brand" href="./index.html" aria-label="博罗决策风洞首页"><span class="brand-mark" aria-hidden="true"><svg viewBox="0 0 48 38"><path d="M3 28L16 8Q19 5 22 10L28 19 33 13Q36 9 39 14L46 27Q48 32 42 33H7Q1 33 3 28Z" fill="#dff8ff" stroke="#fff" stroke-width="1.8"/><path d="M10 29L20 19L28 26L35 20L43 29" stroke="#1396df" stroke-width="3" fill="none" stroke-linecap="round"/></svg></span><span class="brand-name"><strong>博罗决策风洞模拟器</strong><small>Boluo Decision Wind-Tunnel Simulator</small></span></a>
-<nav class="desktop-nav" aria-label="V11页面导航"><a href="./index.html">01 问题发现</a><a href="./reality.html">02 预期与现实</a><a href="./industry-base.html">03 产业底盘</a><a href="./relations.html">04 关系世界</a><a href="./impact.html">05 变化影响</a><a href="./plan.html">06 十五五规划</a><a href="./wind.html" class="current" aria-current="page">07 风洞测试</a><a href="./insights.html">08 忽略了什么</a></nav>
+<nav class="desktop-nav" aria-label="V11页面导航"><a href="./index.html">01 问题发现</a><a href="./reality.html">02 预期与现实</a><a href="./industry-base.html">03 产业底盘</a><a href="./relations.html">04 关系世界</a><a href="./impact.html">05 变化影响</a><a href="./plan.html">06 十五五规划</a><a href="./wind.html" class="current" aria-current="page">07 风洞测试</a><a href="./insights.html">08 忽略了什么</a><a href="./challenge.html">09 判断</a></nav>
 <div class="header-tools"><button type="button" id="shareTop" title="分享此实验" aria-label="分享此实验"><svg viewBox="0 0 24 24"><path d="M14 4v5C6 9 4 15 3 20c3-4 6-6 11-6v5l8-7.5L14 4Z"/></svg><span>分享</span></button><a href="./plan.html" class="return-link">返回06</a></div>
 </header>
 <main class="wrap wind-wrap">
@@ -68,7 +68,7 @@
 <div class="chain-answer"><span id="chainStepTag">正在查看 · 变化起点</span><strong id="chainQuestion">延迟发生在哪一类项目？</strong><p id="chainCaveat">节点是有条件的机制假设，不能凭连线推算某家企业的经营损失。</p></div></section>
 <section class="rescue" id="rescue" aria-labelledby="rescueTitle"><div class="rescue-main"><p class="micro">04 / TRY AN ALTERNATIVE</p><h2 id="rescueTitle">如果还有另一条路接棒呢？</h2><p>保持相同的压力条件，增加一个有限的缓冲假设，再计算一次。看看缓冲是否改变结果和结果区间。</p><label class="rescue-toggle"><input type="checkbox" id="bufferOn"><span class="toggle-track" aria-hidden="true"></span><span><strong id="bufferName">其他项目提前接棒</strong><small id="bufferDesc">部分弥补项目延期后的产出接续</small></span></label></div>
 <div class="rescue-outcome"><span>缓冲前后 · 模拟中位数</span><div><strong id="beforeBuffer">—</strong><span>→</span><strong id="afterBuffer">—</strong></div><p id="bufferTakeaway">启用左侧缓冲条件后，显示同一随机种子下的第三组结果。</p></div></section>
-<section class="share-panel"><div><p class="micro">05 / WHAT DID YOU DISCOVER?</p><h2>带走一个可以复现的发现</h2><p id="shareSummary">你改变了一项条件，观察到结果分布发生了怎样的变化？</p></div><div class="share-actions"><button type="button" id="copyLink">复制复现实验链接 ↗</button><button type="button" id="saveExp">保存本机实验</button><button type="button" id="savedList">我的实验记录</button></div></section>
+<section class="share-panel"><div><p class="micro">05 / WHAT DID YOU DISCOVER?</p><h2>带走一个可以复现的发现</h2><p id="shareSummary">你改变了一项条件，观察到结果分布发生了怎样的变化？</p></div><div class="share-actions"><button type="button" id="copyLink">复制复现实验链接 ↗</button><button type="button" id="saveExp">保存本机实验</button><button type="button" id="savedList">我的实验记录</button><a id="goDecisionChallenge" class="to-challenge" href="./challenge.html">09 · 挑战刚才的判断 →</a></div></section>
 <details class="technical" id="method"><summary><span>结果为什么会变化？还有哪些不确定？</span><span>＋</span></summary><div class="technical-content">
 <p>上方结果是用户选择条件下的情景计算，不是已经发生的未来，也不是由企业合同直接估计出来的经济损失。</p>
 <p id="assumptionText">本次对照仅使用所选条件。规划兑现与实际经济运行之间仍有需要核验的项目进度、订单、产能和服务证据。</p>
@@ -76,7 +76,7 @@
 </div></details>
 <footer class="footer"><span>博罗 V11 · 07 决策风洞 · 现实条件实验与结果比较</span><a href="./insights.html">进入08 · 忽略了什么</a></footer>
 </main>
-<nav class="mobile-nav" aria-label="移动端导航"><a href="./index.html">01 发现</a><a href="./reality.html">02 现实</a><a href="./industry-base.html">03 底盘</a><a href="./relations.html">04 关系</a><a href="./impact.html">05 影响</a><a href="./plan.html">06 规划</a><a href="./wind.html" aria-current="page">07 风洞</a><a href="./insights.html">08 忽略</a></nav>
+<nav class="mobile-nav" aria-label="移动端导航"><a href="./index.html">01 发现</a><a href="./reality.html">02 现实</a><a href="./industry-base.html">03 底盘</a><a href="./relations.html">04 关系</a><a href="./impact.html">05 影响</a><a href="./plan.html">06 规划</a><a href="./wind.html" aria-current="page">07 风洞</a><a href="./insights.html">08 忽略</a><a href="./challenge.html">09 判断</a></nav>
 <dialog id="modal"><div class="dialog-header"><strong id="modalTitle">实验详情</strong><button type="button" id="modalClose">关闭 ×</button></div><div id="modalBody" class="dialog-body"></div></dialog><div id="toast" class="toast" role="status" aria-live="polite"></div>
 <noscript>需要启用JavaScript才能运行可复现的风洞实验。</noscript>
 </body></html>
