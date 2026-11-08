@@ -41,6 +41,8 @@ fs.mkdirSync(dir,{recursive:true});
    assert.ok(wind.includes("shock="),"sends a relevant wind scenario");
    const overflow=await page.evaluate(()=>document.documentElement.scrollWidth-innerWidth);
    assert.ok(overflow<12,`page not wider than mobile viewport: overflow ${overflow}`);
+   await page.evaluate(()=>window.scrollTo({top:0,behavior:"instant"}));
+   await page.waitForTimeout(120);
    await page.screenshot({path:path.join(dir,isMobile?"mobile-390.png":"desktop-1440.png"),fullPage:true});
    assert.deepEqual(errors,[],"page has no uncaught script errors");
    await context.close();
