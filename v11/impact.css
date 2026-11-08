@@ -42,3 +42,6 @@
 
 /* Hand off selected impact theme to the 06 strategy observatory. */
 .plan-next{display:inline-flex;align-items:center;justify-content:center;gap:12px;padding:13px 16px;border:1px solid #3997f3;border-radius:10px;background:linear-gradient(130deg,#258fff,#1265da);box-shadow:0 5px 15px #278bed3b;color:#fff!important;font-size:12px!important;font-weight:850!important}.plan-next strong{font-size:19px}.plan-next:hover{filter:brightness(1.08)}
+
+/* V11 09: preserve nine-page navigation without shrinking touch targets */
+@media(max-width:900px){.mobile-nav{justify-content:flex-start;overflow-x:auto;scrollbar-width:thin}.mobile-nav a{flex:0 0 auto;white-space:nowrap;min-width:49px;padding:7px 6px}}
