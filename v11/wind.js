@@ -47,8 +47,8 @@ const signed=n=>Number.isFinite(n)?(n>0?'+':'')+fmt(n):'—';
 const pct=n=>Number.isFinite(n)?n.toFixed(1)+'%':'—';
 function goodModel(){return typeof HT!=='undefined'&&HT&&typeof HT.run==='function'&&Array.isArray(HT.DEFAULT_PATHS);}
 function copyPaths(paths){return paths.map(p=>({...p}));}
-function testPaths(meta,strength,buffer) {
- const r=copyPaths(HT.DEFAULT_PATHS);
+function testPaths(meta,strength,buffer,baselinePaths) {
+ const r=copyPaths(baselinePaths);
  for(let i=0;i<r.length;i++){
    const change=meta.effect[i]*strength;
    const rescue=buffer ? -change*.55 : 0;
@@ -60,10 +60,18 @@ function testPaths(meta,strength,buffer) {
 }
 function runThree(){
  if(!goodModel())return null;
- const m=MODELS[state.shock],args={base:HT.BASE,target:HT.TARGET,noise:HT.NOISE_SD};
- const reference=HT.run(state.seed,state.count,copyPaths(HT.DEFAULT_PATHS),args);
- const stressed=state.active?HT.run(state.seed,state.count,testPaths(m,state.strength,false),args):reference;
- const recovered=state.buffer&&state.active?HT.run(state.seed,state.count,testPaths(m,state.strength,true),args):null;
+ const m=MODELS[state.shock];
+ const p=window.BoluoExperimentBaseline?.getParams?.()||{};
+ const scale=clamp(Number(p.baseScale??1),.6,1.4), volatility=clamp(Number(p.volScale??1),.5,1.8);
+ const pathFactors=Array.isArray(p.paths)?p.paths:HT.DEFAULT_PATHS.map(()=>1);
+ const baselinePaths=HT.DEFAULT_PATHS.map((item,i)=>({
+  ...item,mu:item.mu*scale*clamp(Number(pathFactors[i]??1),.5,1.5),sd:item.sd*volatility
+ }));
+ const count=clamp(Number(p.count??state.count),2000,12000);
+ const args={base:HT.BASE,target:HT.TARGET,noise:HT.NOISE_SD*volatility};
+ const reference=HT.run(state.seed,count,copyPaths(baselinePaths),args);
+ const stressed=state.active?HT.run(state.seed,count,testPaths(m,state.strength,false,baselinePaths),args):reference;
+ const recovered=state.buffer&&state.active?HT.run(state.seed,count,testPaths(m,state.strength,true,baselinePaths),args):null;
  return {base:reference,stress:stressed,buffer:recovered};
 }
 function tickLabels(){
@@ -197,6 +205,7 @@ function run(animate=false){
   qa('.readout').forEach(node=>{node.classList.remove('recomputed');void node.offsetWidth;node.classList.add('recomputed');});
  }
  chartRender(output,animate);
+ window.dispatchEvent(new CustomEvent('boluo:wind-run',{detail:{results:output,shock:state.shock,strength:state.strength,active:state.active,buffer:state.buffer}}));
  renderChain();
  if(animate)progressChain();
  syncURL();
@@ -224,7 +233,7 @@ $('strength').addEventListener('input',e=>modify({strength:clamp(Math.round(Numb
 $('strength').addEventListener('change',()=>run(true));
 $('runTest').addEventListener('click',()=>modify({active:true,focused:0},true));
 $('replay').addEventListener('click',()=>{state.focused=0;run(true);});
-$('reset').addEventListener('click',()=>modify({active:false,buffer:false,focused:0},true));
+$('reset').addEventListener('click',()=>{window.BoluoExperimentBaseline?.reset?.();modify({active:false,buffer:false,focused:0},true);});
 $('bufferOn').addEventListener('change',e=>modify({buffer:Boolean(e.target.checked),active:true},true));
 qa('[data-link]').forEach(b=>b.addEventListener('click',()=>{clearInterval(animTimer);animTimer=0;state.focused=Number(b.dataset.link);$('chainTrack').classList.remove('running');renderChain();}));
 function modal(title,body){
@@ -286,5 +295,5 @@ if(!goodModel()){
 }else{
  run(false);
 }
-window.BoluoWind={getState:()=>({...state}),rerun:()=>run(false),getResults:()=>last&&({base:{p10:last.base.p10,p50:last.base.p50,p90:last.base.p90,hit:last.base.hit},stress:{p10:last.stress.p10,p50:last.stress.p50,p90:last.stress.p90,hit:last.stress.hit},buffer:last.buffer&&({p10:last.buffer.p10,p50:last.buffer.p50,p90:last.buffer.p90,hit:last.buffer.hit})})};
+window.BoluoWind={getState:()=>({...state}),rerun:(animate=false)=>run(animate),getDistributions:()=>last,getResults:()=>last&&({base:{p10:last.base.p10,p50:last.base.p50,p90:last.base.p90,hit:last.base.hit},stress:{p10:last.stress.p10,p50:last.stress.p50,p90:last.stress.p90,hit:last.stress.hit},buffer:last.buffer&&({p10:last.buffer.p10,p50:last.buffer.p50,p90:last.buffer.p90,hit:last.buffer.hit})})};
 })();
