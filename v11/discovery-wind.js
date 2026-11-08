@@ -195,12 +195,12 @@
       // 关键数字飞进洞口
       words.forEach(function (w) {
         const e = ell(w.z);
-        const sz = 10 + Math.min(w.z,1) * 22;
+        const sz = (H < 460 ? 8 : 10) + Math.min(w.z,1) * (H < 460 ? 15 : 22);
         let a = .96;
         if (w.z > .94) a = (1 - w.z) / .06;
         else if (w.z < .42) a = (w.z - .255) / .165;
         a = Math.max(0, Math.min(1, a));
-        const cy = H * 0.44 + w.row * (H < 460 ? 34 : 42);
+        const cy = H * 0.44 + w.row * (H < 460 ? 30 : 42);
         ctx.textAlign = 'center'; ctx.textBaseline = 'middle';
         ctx.shadowColor = 'rgba(5,14,22,.95)'; ctx.shadowBlur = 14;
         ctx.font = '800 ' + sz.toFixed(1) + 'px "PingFang SC","Microsoft YaHei",sans-serif';

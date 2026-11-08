@@ -37,6 +37,12 @@
   </div>
  </div>
   <div class="wt-stage">
+  <div class="wt-flow" aria-hidden="true">
+   <p class="wt-flow-tag">信息流 · 每天换</p>
+   <div class="wt-lane"><div class="wt-lane-in"><span class="c">规上产值 超 2000 亿</span><span class="c">规上增加值 +8.9%</span><span class="cr">工业投资 −44.7%</span><span class="cm">铜来顺 100 亿 目标</span><span class="c">祥浩 6 条线 投产</span><span class="c">欣旺达 200MW 并网</span><span class="cm">翔洋 1.85 万㎡ 回租</span></div></div>
+   <div class="wt-lane"><div class="wt-lane-in"><span class="cr">湖镇 6 个 未动工</span><span class="cr">公庄水泥 2500 吨/日 关停</span><span class="c">福田 11.7 万㎡ 投产</span><span class="cm">园洲 15 亿 签约</span><span class="c">龙溪 60 万辆 投产</span><span class="cr">1-9 月 固投 再降</span></div></div>
+   <div class="wt-lane"><div class="wt-lane-in"><span class="c">柏塘秋茶 正采</span><span class="c">杨村皇帝柑 开摘</span><span class="c">横河糯米薯 采收</span><span class="cm">石湾 5 亿 开工</span><span class="cm">泰美 2 亿 开工</span><span class="c">长宁 8 条线 投产</span><span class="c">农业 130.32 亿</span><span class="c">食品加工 +9.8%</span></div></div>
+  </div>
    <div class="wt-canvas-box">
     <canvas id="wtCanvas" aria-label="3D 风洞测试段：产业从投资端进入，经过测试段后输出结果"></canvas>
     <span class="wt-note">3D 测试段 · 钱从这里进，产出从这里出</span>
@@ -50,6 +56,7 @@
    </div>
   </div>
  </section>
+ <div class="wt-mflow" aria-hidden="true"><div class="wt-mflow-in"><span>规上产值 超 2000 亿</span><span>规上增加值 +8.9%</span><span class="r">工业投资 −44.7%</span><span class="m">铜来顺 100 亿</span><span>祥浩 6 条线</span><span>欣旺达 200MW</span><span class="m">翔洋 1.85 万㎡</span><span class="r">湖镇 6 个 未动工</span><span>杨村皇帝柑 开摘</span><span>柏塘秋茶 正采</span></div></div>
  <p class="page-limits">本页只回答一件事：博罗这一年在动什么。数字能说明方向，不能说明原因；能说明县里，不能说明每个镇、每家企业。要拿去做决策，先核对发布机构的原始口径。</p>
  <footer class="discovery-footer"><span>博罗决策风洞 · <a href="./about.html" style="text-decoration:underline;text-underline-offset:3px">项目介绍 ↗</a> </span><button id="discoveryReduce" type="button" aria-pressed="false">减少动态</button></footer>
 <details class="src-note">
@@ -68,6 +75,7 @@
 window.addEventListener('load',function(){
  var c=document.getElementById('wtCanvas');
  if(!window.BoluoWind||!c)return;
+ [].forEach.call(document.querySelectorAll('.wt-lane-in,.wt-mflow-in'),function(el){el.innerHTML+=el.innerHTML;});
  fetch('./key-signals.json?t='+Date.now()).then(function(r){return r.json();})
   .then(function(d){window.BoluoWind.mount(c,d.items);})
   .catch(function(){window.BoluoWind.mount(c,null);});

@@ -22,7 +22,18 @@
  <div class="holo-metrics" id="holoMetrics"></div>
  <p class="holo-period">指标期次：2025 年为年度约数，2026 年为前三季度快报。绝对值与增速不同源，不可混读。</p>
  <div class="holo-note">按镇街挂项目 · 圆点越大越接近投产 · 可拖动重排、滚轮缩放</div>
+ <div class="holo-tools">
+  <div class="holo-filter" id="holoFilter">
+   <button type="button" class="on" data-st="null">全部</button>
+   <button type="button" data-st="1"><i class="sw s1"></i>签约</button>
+   <button type="button" data-st="2"><i class="sw s2"></i>开工</button>
+   <button type="button" data-st="3"><i class="sw s3"></i>投产</button>
+   <button type="button" data-st="0"><i class="sw s4"></i>关停停摆</button>
+  </div>
+  <div class="holo-intel"><span class="pd"></span><b id="holoPulse">今天在聊什么</b></div>
+ </div>
  <div id="holoNet"></div>
+ <div class="holo-detail" id="holoDetail" hidden></div>
  <div class="holo-timeline" id="holoTimeline"></div>
  <p class="holo-tail">读法：从中心“博罗”往外，一圈是一个镇街；镇街外面的圆点，是挂在这个镇上的项目。线的颜色就是它现在走到哪一步——橙签约、青开工、蓝投产、红关停或停摆。</p>
 </section>
@@ -44,7 +55,33 @@ window.addEventListener('load',function(){
      '<div class="holo-foot"><em>'+m[3]+'</em><i>'+m[2]+'</i></div></article>';
  });
  var box=document.getElementById('holoMetrics'); if(box)box.innerHTML=h;
- if(window.BoluoNet)window.BoluoNet.mount(document.getElementById('holoNet'),ev);
+ var netCtl=null;
+ if(window.BoluoNet)netCtl=window.BoluoNet.mount(document.getElementById('holoNet'),ev,{
+   onSelect:function(n){
+     var box=document.getElementById('holoDetail'); if(!box)return;
+     if(!n||n.kind!=='proj'||!n.ev){ box.hidden=true; return; }
+     var e=n.ev, st=e.visual==='stalled'||e.visual==='closure'?'关停 / 停摆':e.stage===3?'投产':e.stage===2?'开工':'签约';
+     var url=(window.BoluoDiscoveryData&&window.BoluoDiscoveryData.links&&window.BoluoDiscoveryData.links[e.id])||'';
+     box.innerHTML='<div class="hd-top"><span class="hd-st">'+st+'</span><em>'+e.town+' · '+(e.month||0)+' 月</em><button type="button" class="hd-x" aria-label="关闭">×</button></div>'+
+       '<h4>'+e.title+'</h4>'+
+       '<div class="hd-kpi"><b>'+e.big+'</b><span>'+e.unit+'</span></div>'+
+       '<p class="hd-why">'+(e.why||e.fate||'')+'</p>'+
+       (url?'<a class="hd-src" href="'+url+'" target="_blank" rel="noopener">查看公开来源 →</a>':'<span class="hd-src off">来源：博罗县政府公开信息</span>');
+     box.hidden=false;
+     var x=box.querySelector('.hd-x'); if(x)x.addEventListener('click',function(){box.hidden=true;});
+   }
+ });
+ fetch('../life.json?t='+Date.now()).then(function(r){return r.json();}).then(function(d){
+   var p=(d.pulse||[])[0]; var el=document.getElementById('holoPulse');
+   if(p&&el){el.textContent=p;}
+ }).catch(function(){});
+ var ft=document.getElementById('holoFilter');
+ if(ft)ft.addEventListener('click',function(ev2){
+   var b=ev2.target.closest('button'); if(!b)return;
+   [].forEach.call(ft.querySelectorAll('button'),function(x){x.classList.toggle('on',x===b);});
+   var v=b.getAttribute('data-st'); v=(v==='null')?null:Number(v);
+   if(netCtl&&netCtl.setFilter)netCtl.setFilter(v);
+ });
  var col=function(e){return (e.visual==='closure'||e.visual==='stalled')?'#e2544a':e.stage===3?'#1369eb':e.stage===2?'#1e9aa0':'#d9862f';};
  var tl='<div class="tl-head"><span>今年落地的现场 · 1—11 月</span><em>只收录会改变产能的节点 · 签约≠投产</em></div><div class="tl-row">';
  for(var m=1;m<=11;m++){

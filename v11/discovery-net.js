@@ -29,7 +29,7 @@
   }
 
   function weight(e){return (parseFloat(String(e.big).replace(/[^0-9.]/g,''))||0)*(e.unit==='亿'?100:e.unit==='万㎡'?10:1);}
-  function mount(host, events) {
+  function mount(host, events, opts) {
     if (!host) return;
     host.innerHTML = '';
     const canvas = document.createElement('canvas');
@@ -180,6 +180,12 @@
         const r = n.r;
         const glow = ctx.createRadialGradient(n.x, n.y, r * .6, n.x, n.y, r * 2.6);
         glow.addColorStop(0, n.color + '44'); glow.addColorStop(1, n.color + '00');
+        const miss = filterStage !== null && n.ev && (n.ev.stage !== filterStage);
+        ctx.globalAlpha = miss ? .16 : 1;
+        if (n.id === selId) {
+          ctx.strokeStyle = 'rgba(217,134,47,.95)'; ctx.lineWidth = 2;
+          ctx.beginPath(); ctx.arc(n.x, n.y, r + 7, 0, 7); ctx.stroke();
+        }
         ctx.fillStyle = glow; ctx.beginPath(); ctx.arc(n.x, n.y, r * 2.6, 0, 7); ctx.fill();
         if (n.stalled) {
           ctx.fillStyle = 'rgba(255,255,255,.9)'; ctx.beginPath(); ctx.arc(n.x, n.y, r, 0, 7); ctx.fill();
@@ -210,12 +216,15 @@
       ctx.textBaseline = 'middle'; ctx.font = '500 9.5px ' + FONT;
       lgd.forEach(function (it) {
         ctx.fillStyle = it[1]; ctx.beginPath(); ctx.arc(lx + 4, H - 14, 3.6, 0, 7); ctx.fill();
+        ctx.globalAlpha = 1;
         ctx.fillStyle = '#8a99ac'; ctx.textAlign = 'left'; ctx.fillText(it[0], lx + 11, H - 13.5);
         lx += 46;
       });
     }
 
-    let drag = null, panning = null;
+    const onSelect = opts && opts.onSelect;
+    let filterStage = null;
+    let drag = null, panning = null, downAt = null, selId = null;
     function toWorld(e) {
       const rect = canvas.getBoundingClientRect();
       return { wx: (e.clientX - rect.left - view.x) / view.s, wy: (e.clientY - rect.top - view.y) / view.s };
@@ -224,7 +233,7 @@
       const p = toWorld(e);
       let best = null, bd = 0;
       nodes.forEach(function (n) { const d = Math.hypot(n.x - p.wx, n.y - p.wy); if (d < n.r + 10 && d > bd) { best = n; bd = d; } });
-      if (best) drag = best; else panning = { x: e.clientX - view.x, y: e.clientY - view.y };
+      if (best) { drag = best; } else panning = { x: e.clientX - view.x, y: e.clientY - view.y };
       canvas.setPointerCapture(e.pointerId);
     });
     canvas.addEventListener('pointermove', function (e) {
@@ -235,7 +244,15 @@
         view.x = e.clientX - panning.x; view.y = e.clientY - panning.y; draw();
       }
     });
-    canvas.addEventListener('pointerup', function () { drag = null; panning = null; });
+    canvas.addEventListener('pointerdown', function (e) { downAt = { x: e.clientX, y: e.clientY }; }, true);
+    canvas.addEventListener('pointerup', function (e) {
+      const moved = downAt && Math.hypot(e.clientX - downAt.x, e.clientY - downAt.y) > 4;
+      const p = toWorld(e);
+      let best = null, bd = 0;
+      nodes.forEach(function (n) { const d = Math.hypot(n.x - p.wx, n.y - p.wy); if (d < n.r + 12 && d > bd) { best = n; bd = d; } });
+      if (best && !moved) { selId = best.id; draw(); if (typeof onSelect === 'function') onSelect(best); }
+      drag = null; panning = null;
+    });
     canvas.addEventListener('pointercancel', function () { drag = null; panning = null; });
     canvas.addEventListener('wheel', function (e) {
       e.preventDefault();
@@ -250,6 +267,7 @@
     resize();
     if (window.ResizeObserver) { const ro = new ResizeObserver(function () { resize(); }); ro.observe(host); }
     else window.addEventListener('resize', resize);
+    return { setFilter: function (v) { filterStage = v; draw(); } };
   }
 
   window.BoluoNet = { mount: mount };
