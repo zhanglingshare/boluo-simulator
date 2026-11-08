@@ -246,9 +246,9 @@ $('resetShock').addEventListener('click',()=>change({step:0,focus:'',buffer:'unk
 $('reduceMotion').addEventListener('click',()=>{stop();state.reduced=!state.reduced;render();});
 function openEvidence(){
  const rows=facts.map(f=>'<div class="fact-row"><strong>'+esc(f.name)+'　'+esc(f.number)+'</strong><p>'+esc(f.detail)+'</p></div>').join('');
- showDialog('公开依据与方法边界','<p>这里的公开观察全部为2026年前三季度博罗县域同比数据，统计对象不同，不能相减。</p>'+rows+
- '<h3>条件传导与实测事实的界线</h3><p>右侧网络为需要核验的传导机制；虚线不代表已经发生的企业采购、因果关系或就业损失。节点大小、线宽与动画速度没有经济计量含义。没有可核验交易资料，不提供虚假的风险概率。</p>'+
- '<h3>下一步补什么证据</h3><p>项目真实开工与投产进度、采购合同与供应地区、替代客户、招聘与工资等。证据可逐层升级，不将未经核实的机制直接写成实测联系。</p>'+
+ showDialog('公开资料与结果边界','<p>这里的公开观察全部为2026年前三季度博罗县域同比数据，统计对象不同，不能相减。</p>'+rows+
+ '<h3>哪些联系还没有证实？</h3><p>右侧网络展示需要进一步核实的可能联系；虚线不代表已经发生的企业采购、因果关系或就业损失。节点大小、线宽与动画速度没有经济计量含义。没有可核验交易资料，不提供虚假的风险概率。</p>'+
+ '<h3>下一步补什么证据</h3><p>项目真实开工与投产进度、采购合同与供应地区、替代客户、招聘与工资等。尚未核实的联系不能作为真实交易或就业损失发布。</p>'+
  '<h3>公开资料</h3><p><a href="'+source+'" target="_blank" rel="noopener noreferrer">南方+记者廖钰娴，2026年11月5日报道（公开转载）↗</a></p>');
 }
 $('openEvidence').addEventListener('click',openEvidence);$('sourceFoot').addEventListener('click',openEvidence);
