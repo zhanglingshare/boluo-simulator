@@ -47,7 +47,7 @@
    <div class="stage-toolbar"><div><span class="stage-kicker">BEFORE & AFTER / 双图看变化</span><strong id="stageTitle">项目接续：谁可能最先感到变化？</strong></div><div class="mode-switch" role="group" aria-label="观察模式"><button data-mode="compare" type="button" aria-pressed="true">双图对照</button><button data-mode="trace" type="button" aria-pressed="false">顺着变化看</button></div></div>
    <div class="stage-duo" id="stageDuo">
     <div class="graph-panel"><div class="graph-label"><span class="graph-index">A</span><span><strong>事实窗口</strong><small>只记录公开统计信号</small></span><span class="tag observed">可观察</span></div><svg id="factNetwork" class="network-svg" viewBox="0 0 600 384" role="group" aria-label="当前已公布的宏观指标锚点。点击节点查看口径。"></svg><div class="graph-caption" id="factCaption">统计指标并不自动证明企业间存在交易关系。</div></div>
-    <div class="graph-panel scenario-panel"><div class="graph-label"><span class="graph-index contrast">B</span><span><strong>条件传导窗口</strong><small>逐步显示可能的路径，不是实测损失</small></span><span class="tag simulated">假设</span></div><svg id="scenarioNetwork" class="network-svg" viewBox="0 0 600 384" role="group" aria-label="可交互的假设传导网络，动态连线并聚焦可能受影响的节点。"></svg><div class="graph-caption" id="scenarioCaption">先点击播放冲击波，看信号沿哪些环节传播。</div></div>
+    <div class="graph-panel scenario-panel"><div class="graph-label"><span class="graph-index contrast">B</span><span><strong>可能的变化</strong><small>逐步查看可能受到影响的联系，不是已发生的损失</small></span><span class="tag simulated">假设</span></div><svg id="scenarioNetwork" class="network-svg" viewBox="0 0 600 384" role="group" aria-label="可交互的假设传导网络，动态连线并聚焦可能受影响的节点。"></svg><div class="graph-caption" id="scenarioCaption">先点击播放冲击波，看信号沿哪些环节传播。</div></div>
    </div>
    <div class="stage-bottom">
     <button id="playShock" type="button" class="play-shock" aria-pressed="false"><span id="playIcon">▶</span><strong id="playLabel">播放冲击波</strong></button>
@@ -63,7 +63,7 @@
    <div class="question-prompt"><span>真正值得追问</span><strong id="inspectorQuestion">哪些在建项目的设备采购或投产进度发生变化？</strong></div>
    <div class="inspector-switch" role="group" aria-label="调整观察角度"><span>换一个视角</span><div><button type="button" data-lens="business" aria-pressed="true">企业</button><button type="button" data-lens="people" aria-pressed="false">普通人</button><button type="button" data-lens="policy" aria-pressed="false">决策者</button></div></div>
    <div class="buffer-box"><span class="buffer-title">如果存在替代路径……</span><p>让传导从另一条路径通过。这里只比较不同假设下的联系，不代表已发生的损失。</p><div class="buffer-options" role="group" aria-label="可能存在的缓冲"><button data-buffer="unknown" type="button" aria-pressed="true">尚不清楚</button><button data-buffer="weak" type="button" aria-pressed="false">替代不足</button><button data-buffer="strong" type="button" aria-pressed="false">能够替代</button></div><p class="buffer-result" id="bufferResult">当前不能确认本地企业是否拥有替代订单或供应渠道。</p></div>
-   <button id="saveTrace" class="primary-action" type="button">保存这条影响链 <span>↗</span></button><button id="viewSaved" class="saved-action" type="button">查看本机已保存的影响链 →</button><p class="inspector-foot">不是风险评分；本页不把条件假设写成已发生事实。</p>
+   <button id="saveTrace" class="primary-action" type="button">保存这条影响链 <span>↗</span></button><button id="viewSaved" class="saved-action" type="button">查看本机已保存的影响链 →</button><p class="inspector-foot">这里展示的是需要核实的可能联系，不代表已经发生的损失。</p>
   </aside>
  </section>
  
@@ -92,8 +92,8 @@
   </div>
  </section>
 <section class="two-cols">
-  <article class="glass-panel" aria-labelledby="matrixTitle"><div class="panel-head"><div><p class="micro">03 / EXPOSURE × BUFFER</p><h2 id="matrixTitle">最重要的，可能不是最大企业</h2></div><span class="panel-badge">逻辑矩阵 · 非企业评分</span></div><p class="panel-sub">风险不只看关联有多大，还要看能不能替代。点击象限，查看下一步最值得确认的资料。</p>
-   <div class="matrix-wrap"><div class="matrix-label vertical">依赖暴露程度 ↑</div><div class="matrix" role="group" aria-label="暴露与替代能力的定性分析矩阵">
+  <article class="glass-panel" aria-labelledby="matrixTitle"><div class="panel-head"><div><p class="micro">03 / CONNECTIONS & ALTERNATIVES</p><h2 id="matrixTitle">最重要的，可能不是最大企业</h2></div><span class="panel-badge">联系对照 · 不是企业评级</span></div><p class="panel-sub">风险不只看关联有多大，还要看能不能替代。点击象限，查看下一步最值得确认的资料。</p>
+   <div class="matrix-wrap"><div class="matrix-label vertical">依赖程度 ↑</div><div class="matrix" role="group" aria-label="暴露与替代能力的定性分析矩阵">
     <button type="button" data-quadrant="fragile"><span class="corner">需要优先核验</span><strong>高暴露 × 弱替代</strong><small>可能的脆弱环节</small><i class="matrix-dot danger-dot"></i></button>
     <button type="button" data-quadrant="buffered"><span class="corner">仍需观察</span><strong>高暴露 × 强替代</strong><small>存在调整空间</small><i class="matrix-dot blue-dot"></i></button>
     <button type="button" data-quadrant="limited"><span class="corner">不必夸大</span><strong>低暴露 × 弱替代</strong><small>影响可能局限</small><i class="matrix-dot amber-dot"></i></button>
@@ -107,7 +107,7 @@
   </article>
  </section>
  <section class="bottom-dock">
-  <div class="bottom-head"><span class="micro">05 / TAKE IT WITH YOU</span><h2>把一个疑问变成可以核实的影响链</h2><p>朋友看同一条变化，可以切换企业、家庭和决策视角；你们看到的是同一组公开事实。</p></div>
+  <div class="bottom-head"><span class="micro">05 / TAKE IT WITH YOU</span><h2>沿着变化，再看可能受影响的人</h2><p>朋友看同一条变化，可以切换企业、家庭和决策视角；你们看到的是同一组公开事实。</p></div>
   <div class="question-chain"><div><small>起点</small><strong id="chainStart">工业投资同比 −44.7%</strong></div><span class="chain-arrow">➜</span><div><small>可能的传导</small><strong id="chainMiddle">项目接续 → 设备采购 → 本地配套</strong></div><span class="chain-arrow">➜</span><div><small>最重要的未知</small><strong id="chainEnd">哪些项目进度真正改变？</strong></div></div>
   <div class="bottom-actions"><button type="button" id="copyTrace" class="primary-action">复制这张影响链的链接 ↗</button><a href="./relations.html">返回第四页 · 核查实体关系</a><a id="planLink" class="plan-next" href="./plan.html?from=impact&scene=projects">进入第六页 · 看十五五如何接棒 <strong>→</strong></a></div>
  </section>
