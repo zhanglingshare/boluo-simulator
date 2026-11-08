@@ -1,0 +1,41 @@
+name: V11 Page 08 Browser Interaction
+
+on:
+  push:
+    paths:
+      - "v11/insights.html"
+      - "v11/insight-*.js"
+      - "v11/insight-*.css"
+      - "tests/boluo-v11-insight-browser.cjs"
+      - ".github/workflows/boluo-v11-visual.yml"
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  browser:
+    runs-on: ubuntu-latest
+    timeout-minutes: 12
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: "22"
+      - name: Install browser runner
+        run: |
+          npm install --no-save playwright
+          npx playwright install --with-deps chromium
+      - name: Run local site and inspect visual interactions
+        run: |
+          python3 -m http.server 8765 --bind 127.0.0.1 > /tmp/boluo-v11-server.log 2>&1 &
+          sleep 2
+          node tests/boluo-v11-insight-browser.cjs
+      - name: Save 1440 and 390 screenshots
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: boluo-v11-page08-screenshots
+          path: artifacts/v11-insight/*.png
+          if-no-files-found: ignore
+          retention-days: 3
