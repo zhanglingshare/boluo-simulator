@@ -63,7 +63,7 @@ function linePlot(labels,values,min,max,step,threshold,unit){
 }
 function barPlot(parts,overall){
  const total=parts.reduce((a,b)=>a+b[1],0);
- let out='<svg viewBox="0 0 780 270" role="img" aria-label="条件下各环节价值留存图"><title>自定参数的环节分解示意，不是柏塘实测</title>';
+ let out='<svg viewBox="0 0 780 270" role="img" aria-label="条件下各环节价值留存图"><title>调整条件后的环节对照，不是柏塘实测</title>';
  let x=67;
  parts.forEach((p,i)=>{
   const width=600*(p[1]/total);
@@ -119,7 +119,7 @@ function calc(){
    data.major=fmt(end,1);data.unit="2030年同季投资指数";data.detail="以2025年前三季度工业投资=100、2026年同比−44.7%计算为55.3。此后增速由用户设定。";
    data.second=fmt(req,1)+"%";data.secondDetail="如果2027—2030每年前三季度同口径投资持续增长，需要约此增速才回到2025同期水平。";
    data.chart=linePlot(["2025","2026","2027","2028","2029","2030"],values,0,Math.max(160,40*Math.ceil(Math.max(...values)/40)),40,100,"2025同季投资=100");
-   data.foot="这只是投资恢复条件，不是产能增长模型或官方2030工业目标达成率。";
+   data.foot="这是一组假设条件下的变化，不是官方2030年实际完成结果。";
    data.chain=["当前生产增长","当期投资收缩","项目建设时滞","新增产能接续"];data.bars=[["2025同期",100],["2026同期",55.3],["2030情景",end]];
  }else if(id==="tea"){
    const p=primary/100,c=secondary/100;
@@ -253,7 +253,7 @@ function play(){
  };
  playFrame=requestAnimationFrame(frame);
 }
-function pick(q){state.picked.add(byid[state.active]+"｜"+q);text("pickCounter",state.picked.size);text("chosen","已选 "+state.picked.size+" 条追问");toast("已加入待研判清单");}
+function pick(q){state.picked.add(byid[state.active]+"｜"+q);text("pickCounter",state.picked.size);text("chosen","已选 "+state.picked.size+" 条追问");toast("已加入我的关注");}
 function toast(msg){const t=$("toast");t.textContent=msg;t.classList.add("on");clearTimeout(window.__tt);window.__tt=setTimeout(()=>t.classList.remove("on"),2500);}
 function showDrawer(){
  returnFocus=document.activeElement;
@@ -267,8 +267,8 @@ function closeDrawer(){
  returnFocus?.focus();
 }
 function download(){
- if(!state.picked.size){toast("请先选择需要研判的问题");return;}
- const result={project:"博罗决策风洞 V11",page:"03产业目标约束实验",created_at:new Date().toISOString(),items:[...state.picked],scenarios:state.values,notes:"公开事实与情景假设严格分开；条件实验不是政策目标达成率或预测"};
+ if(!state.picked.size){toast("请先选择想继续关注的问题");return;}
+ const result={project:"博罗决策风洞 V11",page:"03产业变化观察",created_at:new Date().toISOString(),items:[...state.picked],scenarios:state.values,notes:"公开事实与情景假设严格分开；条件实验不是政策目标达成率或预测"};
  const blob=new Blob([JSON.stringify(result,null,2)],{type:"application/json;charset=utf-8"});
  const url=URL.createObjectURL(blob),a=document.createElement("a");a.href=url;a.download="boluo-v11-industry-risk-questions.json";document.body.appendChild(a);a.click();a.remove();setTimeout(()=>URL.revokeObjectURL(url),0);toast("已导出观察清单");
 }
