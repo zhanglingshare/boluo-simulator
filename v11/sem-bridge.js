@@ -27,7 +27,7 @@ $("semInterpret").textContent=(Math.abs(delta)<.2?
 " 在本组教学假设下，中介响应为"+fmt(out.indirect)+"、直接响应为"+fmt(out.direct)+"。这些是无量纲结构响应，不是GDP亿元，也不是实证效应。";
 const u=new URL("./insights.html",location.href);
 const qs=new URL(location.href).searchParams;
-["shock","strength","buffer","active"].forEach(key=>{if(qs.has(key))u.searchParams.set(key,qs.get(key));});
+["shock","strength","buffer","active","bs","bv","n","line","view","bp0","bp1","bp2","bp3","bp4"].forEach(key=>{if(qs.has(key))u.searchParams.set(key,qs.get(key));});
 const suggested={delay:"project",invest:"project",orders:"network",traffic:"people"};
 const shock=qs.get("shock");
 u.searchParams.set("focus",shock==="orders"?"retention":shock==="traffic"?"resilience":"growth");
