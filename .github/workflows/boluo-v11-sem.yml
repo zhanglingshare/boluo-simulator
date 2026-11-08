@@ -1,4 +1,4 @@
-name: V11 Structural Interaction Checks
+name: V11 Public Interaction and Disclosure Checks
 
 on:
   push:
@@ -17,6 +17,12 @@ on:
       - "v11/wind.html"
       - "tests/boluo-v11-sem.test.cjs"
       - "tests/boluo-v11-insight.test.cjs"
+      - "tests/boluo-public-surface.test.cjs"
+      - "docs/**"
+      - "data/relationship-changes-v1.json"
+      - "experiments/holo-single/data/atlas.json"
+      - "README.md"
+      - "AGENTS.md"
       - ".github/workflows/boluo-v11-sem.yml"
   pull_request:
     paths:
@@ -34,6 +40,12 @@ on:
       - "v11/wind.html"
       - "tests/boluo-v11-sem.test.cjs"
       - "tests/boluo-v11-insight.test.cjs"
+      - "tests/boluo-public-surface.test.cjs"
+      - "docs/**"
+      - "data/relationship-changes-v1.json"
+      - "experiments/holo-single/data/atlas.json"
+      - "README.md"
+      - "AGENTS.md"
       - ".github/workflows/boluo-v11-sem.yml"
 
 permissions:
@@ -49,4 +61,4 @@ jobs:
         with:
           node-version: "22"
       - name: Check teaching engine and navigation contracts
-        run: node --test tests/boluo-v11-sem.test.cjs tests/boluo-v11-insight.test.cjs
+        run: node --test tests/boluo-v11-sem.test.cjs tests/boluo-v11-insight.test.cjs tests/boluo-public-surface.test.cjs
