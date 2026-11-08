@@ -3,10 +3,10 @@ const test=require("node:test"),assert=require("node:assert/strict"),fs=require(
 const root=path.resolve(__dirname,"..");
 const read=p=>fs.readFileSync(path.join(root,p),"utf8");
 const window={};
-vm.runInNewContext(read("v11/sem-demo.js"),{window});
+vm.runInNewContext(read("v11/insight-topics.js"),{window});
 vm.runInNewContext(read("v11/insight-engine.js"),{window});
 const engine=window.BoluoInsightEngine;
-const targets=window.BoluoSemDemo.targets;
+const targets=window.BoluoPublicTopics.targets;
 test("three target layers expose five real question slots (not fake observations)",()=>{
  for(const name of ["growth","retention","resilience"]){
   const factors=engine.create(targets[name]);
