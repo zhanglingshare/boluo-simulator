@@ -145,7 +145,8 @@ function renderGraph(){
  all("[data-layer]").forEach(b=>{const active=b.dataset.layer===state.layer;b.classList.toggle("active",active);b.setAttribute("aria-pressed",String(active))});
  all("[data-filter]").forEach(b=>{const active=b.dataset.filter===state.filter;b.classList.toggle("active",active);b.setAttribute("aria-pressed",String(active))});
 }
-all("[data-layer]").forEach(b=>b.addEventListener("click",()=>{state.layer=b.dataset.layer;state.focus={kind:"node",id:"boluo"};state.filter="all";renderGraph();renderDetail();sync()}));
+function centerNetwork(){const box=$("graphScroll");if(box&&box.scrollWidth>box.clientWidth)box.scrollLeft=(box.scrollWidth-box.clientWidth)/2;}
+all("[data-layer]").forEach(b=>b.addEventListener("click",()=>{state.layer=b.dataset.layer;state.focus={kind:"node",id:"boluo"};state.filter="all";renderGraph();renderDetail();centerNetwork();sync()}));
 all("[data-filter]").forEach(b=>b.addEventListener("click",()=>{state.filter=b.dataset.filter;renderGraph()}));
 $("playNetwork").addEventListener("click",()=>{state.paused=!state.paused;renderGraph()});
 function renderTrade(){
@@ -194,5 +195,5 @@ function exportImage(){
 }
 $("downloadQuestion").addEventListener("click",exportImage);
 if(!q.has("topic")){try{const s=JSON.parse(localStorage.getItem("boluo-v11-region-focus")||"null");if(s&&TRADE[s.topic])state.topic=s.topic}catch(_){}}
-renderCompare();renderGraph();renderDetail();renderTrade();renderQuestion();
+renderCompare();renderGraph();renderDetail();centerNetwork();renderTrade();renderQuestion();
 })();
