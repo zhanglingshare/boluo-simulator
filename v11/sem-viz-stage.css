@@ -121,3 +121,13 @@
 .viz-observed.is-down .v-index-fill,.insight-signal.down .v-index-fill{background:linear-gradient(90deg,#98583b,#ffae6a)}
 @keyframes vizNodeArrival{0%{filter:brightness(.6);transform:translateY(8px)}100%{filter:brightness(1);transform:translateY(0)}}
 @media(prefers-reduced-motion:reduce){.sem-viz-stage.is-recomputing .viz-causal-button{animation:none!important}}
+
+/* 08: reversible hypothesis-breaking experiment */
+.blindspot-stage-actions{display:flex;align-items:center;gap:9px;flex-wrap:wrap}
+.blindspot-theatre-footer .blindspot-stage-actions button:first-child{background:transparent;color:#ffbd8d;border:1px solid #a66e51}
+.blindspot-theatre-footer .blindspot-stage-actions button:first-child[aria-pressed=true]{background:#874322;color:#fff;border-color:#e39e70}
+.blindspot-svg .link.is-cut{stroke:#ffad72;stroke-dasharray:1 12;stroke-width:4;opacity:.9;animation:vizLinkDisconnect .38s ease-out both}
+.blindspot-scene[data-cut=true] .blindspot-center{border-color:#ffad72;background:linear-gradient(145deg,#7b3c2a,#392e3c);box-shadow:0 0 0 7px #ec89442a,0 12px 26px #041d36b0}
+@keyframes vizLinkDisconnect{0%{stroke-dasharray:9 3;opacity:1}100%{stroke-dasharray:1 12;opacity:.9}}
+@media(max-width:760px){.blindspot-stage-actions{display:grid;grid-template-columns:1fr 1fr;width:100%;gap:7px}.blindspot-theatre-footer .blindspot-stage-actions button{width:100%;padding:12px 5px;font-size:11px}}
+@media(prefers-reduced-motion:reduce){.blindspot-svg .link.is-cut{animation:none!important}}
