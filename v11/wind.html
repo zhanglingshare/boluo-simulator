@@ -14,6 +14,46 @@
 </header>
 <main class="wrap wind-wrap">
 <section class="wind-hero" aria-labelledby="windTitle"><div class="wind-hero-main"><p class="micro">07 / DECISION WIND TUNNEL · 2026—2030</p><h1 id="windTitle">2030年，<em>哪一环最经不起变化？</em></h1><p>先让一个条件发生变化，再看2030结果。还可以试一次缓冲，看哪条路可能接得上。</p><div class="wind-hero-badges"><span>2025基数 1005.45亿元</span><span>2030目标 1600亿元</span><span>可复现的条件实验</span></div></div><div class="wind-target"><small>2030规划目标</small><strong>1600<em>亿元</em></strong><span>不是实际预测值</span></div></section>
+<section class="baseline-console" id="baselineConsole" aria-labelledby="baselineTitle">
+<div class="baseline-top"><div><p class="micro">SET BASELINE / 然后施加压力</p><h2 id="baselineTitle">基准不是锁死的。<em>你来设定下一轮的兑现能力。</em></h2><p>2025年GDP实际基数固定为1005.45亿元。下方只改变2026—2030年新增贡献的情景假设，不改写真实历史。</p></div><span class="console-stamp">基准 → 压力 → 缓冲 · 同种子重跑</span></div>
+<div class="baseline-controls">
+<label><span>五年新增贡献 · 基准兑现强度 <strong id="baseScaleValue">100%</strong></span><input type="range" id="baseScale" min=".65" max="1.35" step=".05" value="1"><small>缩小或放大未来五条路径的假设贡献；不是把2025年GDP乘一个比例。</small></label>
+<label><span>不确定性 · 波动强度 <strong id="baseVolValue">1.00 倍</strong></span><input type="range" id="baseVol" min=".6" max="1.6" step=".1" value="1"><small>同时调整各路径分散度与外部波动，观察尾部风险如何扩张。</small></label>
+</div>
+<details class="baseline-more"><summary>深入调整：五条增长路径的假设贡献 <span>展开精细控制 +</span></summary><div id="basePathControls" class="baseline-paths"></div><p>各路径的贡献参数是原风洞的情景设定，不是逐企业测量得到的GDP贡献；可根据新证据修订，不允许冒充真实系数。</p></details>
+<div class="baseline-bottom"><div class="baseline-cues"><span><b>1005.45亿</b> 2025实际基数 · 锁定</span><span><b>1600亿</b> 2030规划目标 · 锁定</span></div><div class="baseline-buttons"><label for="baseCount">运行轨迹 <select id="baseCount"><option value="2000">2,000次</option><option value="5000" selected>5,000次</option><option value="10000">10,000次</option></select></label><button type="button" id="baseReset">恢复默认基准</button><button type="button" id="baseRun">运行这组基准 →</button></div></div>
+</section>
+<section class="scenario-block" aria-labelledby="chooseTitle">
+<div class="scenario-heading"><div><p class="micro">01 / TOUCH THE FUTURE</p><h2 id="chooseTitle">亲手改变一件事</h2></div><span class="scenario-hint">每次只改变一个主要压力条件</span></div>
+<div class="shock-grid" role="group" aria-label="选择一个压力情景">
+<button type="button" data-shock="delay" aria-pressed="true"><span class="shock-symbol">◴</span><strong>关键项目晚一年</strong><small>新产能接续</small></button>
+<button type="button" data-shock="invest" aria-pressed="false"><span class="shock-symbol">↘</span><strong>投资接续走弱</strong><small>后续建设投入</small></button>
+<button type="button" data-shock="orders" aria-pressed="false"><span class="shock-symbol">⌁</span><strong>本地订单外流</strong><small>链主与配套联系</small></button>
+<button type="button" data-shock="traffic" aria-pressed="false"><span class="shock-symbol">⇄</span><strong>通勤压力上升</strong><small>人才与服务承载</small></button>
+</div>
+<div class="experiment-settings"><div><span>压力档位</span><strong id="strengthLabel">中等压力</strong></div><input type="range" id="strength" min="0.6" max="1.4" step="0.2" value="1" aria-label="调整压力档位，范围为预设情景的60%到140%"><button type="button" id="runTest" class="run-cta"><span aria-hidden="true">▶</span> 开始一次实验</button></div>
+</section>
+<section class="results-shell" id="results" aria-labelledby="resultTitle">
+<div class="results-head"><div><span class="micro">02 / TWO POSSIBLE PATHS</span><h2 id="resultTitle">目标线不动，结果会怎样移动？</h2><p id="resultLead">两条条件分布，将由同一套模拟内核实际计算。</p></div><div class="result-actions"><button id="replay" type="button">↻ 重播变化</button><button id="reset" type="button">还原基准</button></div></div>
+<div id="modelFailure" class="model-failure" role="alert" hidden>模拟内核尚未加载，无法输出真实重跑的结果。请检查网络并重新打开。</div>
+<div class="readout-grid">
+<div class="readout"><span>冲击后 · 2030中位规模</span><strong id="afterMedian">—</strong><small>亿元 / 条件结果</small></div>
+<div class="readout emphasis"><span>相对基准的中位变化</span><strong id="medianDelta">—</strong><small>亿元 / 两情景同种子比较</small></div>
+<div class="readout"><span>达到1600亿的模拟占比</span><strong id="afterHit">—</strong><small id="hitDetail">不是经独立校准的成功概率</small></div>
+</div>
+<section class="distribution-workbench" id="distributionWork" aria-label="条件情景下的详细结果分布">
+<div class="workbench-head"><div><small>OUTCOME DISTRIBUTION / 实时重算</small><h3>看整片分布，<em>不只看一个中位数。</em></h3></div><div class="workbench-views" role="group" aria-label="选择分布可视化"><button type="button" data-dist-view="density" aria-pressed="true">概率密度</button><button type="button" data-dist-view="hist" aria-pressed="false">样本直方</button><button type="button" data-dist-view="cdf" aria-pressed="false">累计曲线</button></div></div>
+<div class="workbench-main"><div class="workbench-plot"><svg id="detailChart" viewBox="0 0 960 370" preserveAspectRatio="xMidYMid meet" role="img" aria-label="基准、压力、缓冲三种情景的可交互概率分布，带分位数、目标线与鼠标探查"></svg><div class="workbench-inspector"><span id="detailCrossLabel">移动鼠标或手指，探查任意结果位置</span><strong id="detailCrossValue">—</strong></div></div>
+<aside class="workbench-readout"><div class="stat-label">当前比较参照线（亿元）</div><div class="threshold-control"><strong id="detailThresholdValue">1600</strong><input type="range" id="detailThreshold" min="1250" max="1850" step="10" value="1600" aria-label="改变结果比较参照线"></div><p>虚线 1600亿是规划目标；移动参照线仅改变比较位置，不改变真实目标或模拟数据。</p><div id="detailTails" class="detail-tails" aria-live="polite"></div><button type="button" id="detailReplay">重播同一组情景 ↻</button></aside></div>
+<div class="quantile-heading"><strong>从左尾到右尾 · 七个关键分位</strong><span>同一随机种子 · 分位是条件结果，不是现实达标预测</span></div><div class="quantile-scroll"><table class="quantile-table" id="quantileTable"><thead><tr><th>情景</th><th>P5</th><th>P10</th><th>P25</th><th>P50</th><th>P75</th><th>P90</th><th>P95</th><th>均值</th><th>标准差</th></tr></thead><tbody id="quantileRows"></tbody></table></div>
+<div class="distribution-footer"><span id="detailObservation">正在读取计算输出。</span><span>结果：亿元 · 条件模拟 | 未做独立预测验证</span></div>
+</section>
+<div class="dist-layout">
+ <div class="distribution"><div class="dist-top"><strong>2030 结果分布对照</strong><div class="dist-legend"><span><i class="base"></i>基准</span><span><i class="stress"></i>冲击</span><span id="bufferLegend" hidden><i class="buffer"></i>缓冲</span></div></div><svg id="distChart" viewBox="0 0 720 276" role="img" aria-label="基准、压力及缓冲三种条件下的2030GDP结果模拟分布与1600亿元目标线"></svg><div class="dist-bottom"><span id="rangeBase">基准区间：—</span><span id="rangeShock">压力区间：—</span><span id="rangeBuffer" hidden>缓冲区间：—</span></div></div>
+ <aside class="result-insight"><span class="insight-kicker">最重要的不是一个概率</span><strong id="resultInsight">一次变化，可能改变的不只是结果中位数。</strong><p id="resultExplain">结果由原有模型重跑；变量改变属于情景假设，并非事实结论。</p><div class="evidence-chip">结果口径 <b>模型情景 · 非实测预测</b></div><button id="whyButton" type="button">为什么会这样？ <span>↗</span></button></aside>
+</div>
+<div class="result-disclaimer"><span>!</span><p>这是受控情景压力测试。基准路径贡献按照既有2030目标假设设定，结果比例受这些假设影响；不得将其当作真实达标概率。</p></div>
+</section>
 <section class="sem-bridge" id="semBridge" aria-labelledby="semTitle">
 <div class="sem-head"><div><p class="micro">PUBLIC SIGNAL × STRUCTURAL THINKING / 2026—2030</p><h2 id="semTitle">投资下降，<em>真的会立刻影响增长？</em></h2><p>先看一个公开反差，再用中介、调节的思想拆开它。拖动的是教学假设，不会偷偷改动上方2030 GDP模拟。</p></div><span class="sem-tag">公开统计锚点 × 结构方法演示</span></div>
 <div class="sem-viz-stage" id="semVisualStage">
@@ -85,46 +125,6 @@
 <p class="sem-note" id="semInterpret">改变一个条件，观察直接路径与间接路径怎样变化。</p>
 <div class="sem-actions"><p>真正要补的不是“一个万能系数”，而是项目进度、产能利用、本地配套与订单样本。</p><a id="semToEight" href="./insights.html">进入08 · 看看可能忽略了什么 →</a></div>
 <details class="sem-details"><summary>展开：如何解读这些路径，并用新证据验证？</summary><p>本图只演示 X→M→Y、中介效应和 Z 调节作用的计算思路。演示系数 X→M=0.45、M→Y=0.55、X→Y=0.10、调节参数=0.25，均为教学假设，不是统计估计。真正验证关系需要单位级样本，随后开展测量质量检查、抽样检验、中介与调节检验及预测验证。</p></details>
-</section>
-<section class="scenario-block" aria-labelledby="chooseTitle">
-<div class="scenario-heading"><div><p class="micro">01 / TOUCH THE FUTURE</p><h2 id="chooseTitle">亲手改变一件事</h2></div><span class="scenario-hint">每次只改变一个主要压力条件</span></div>
-<div class="shock-grid" role="group" aria-label="选择一个压力情景">
-<button type="button" data-shock="delay" aria-pressed="true"><span class="shock-symbol">◴</span><strong>关键项目晚一年</strong><small>新产能接续</small></button>
-<button type="button" data-shock="invest" aria-pressed="false"><span class="shock-symbol">↘</span><strong>投资接续走弱</strong><small>后续建设投入</small></button>
-<button type="button" data-shock="orders" aria-pressed="false"><span class="shock-symbol">⌁</span><strong>本地订单外流</strong><small>链主与配套联系</small></button>
-<button type="button" data-shock="traffic" aria-pressed="false"><span class="shock-symbol">⇄</span><strong>通勤压力上升</strong><small>人才与服务承载</small></button>
-</div>
-<div class="experiment-settings"><div><span>压力档位</span><strong id="strengthLabel">中等压力</strong></div><input type="range" id="strength" min="0.6" max="1.4" step="0.2" value="1" aria-label="调整压力档位，范围为预设情景的60%到140%"><button type="button" id="runTest" class="run-cta"><span aria-hidden="true">▶</span> 开始一次实验</button></div>
-</section>
-<section class="baseline-console" id="baselineConsole" aria-labelledby="baselineTitle">
-<div class="baseline-top"><div><p class="micro">SET BASELINE / 然后施加压力</p><h2 id="baselineTitle">基准不是锁死的。<em>你来设定下一轮的兑现能力。</em></h2><p>2025年GDP实际基数固定为1005.45亿元。下方只改变2026—2030年新增贡献的情景假设，不改写真实历史。</p></div><span class="console-stamp">基准 → 压力 → 缓冲 · 同种子重跑</span></div>
-<div class="baseline-controls">
-<label><span>五年新增贡献 · 基准兑现强度 <strong id="baseScaleValue">100%</strong></span><input type="range" id="baseScale" min=".65" max="1.35" step=".05" value="1"><small>缩小或放大未来五条路径的假设贡献；不是把2025年GDP乘一个比例。</small></label>
-<label><span>不确定性 · 波动强度 <strong id="baseVolValue">1.00 倍</strong></span><input type="range" id="baseVol" min=".6" max="1.6" step=".1" value="1"><small>同时调整各路径分散度与外部波动，观察尾部风险如何扩张。</small></label>
-</div>
-<details class="baseline-more"><summary>深入调整：五条增长路径的假设贡献 <span>展开精细控制 +</span></summary><div id="basePathControls" class="baseline-paths"></div><p>各路径的贡献参数是原风洞的情景设定，不是逐企业测量得到的GDP贡献；可根据新证据修订，不允许冒充真实系数。</p></details>
-<div class="baseline-bottom"><div class="baseline-cues"><span><b>1005.45亿</b> 2025实际基数 · 锁定</span><span><b>1600亿</b> 2030规划目标 · 锁定</span></div><div class="baseline-buttons"><label for="baseCount">运行轨迹 <select id="baseCount"><option value="2000">2,000次</option><option value="5000" selected>5,000次</option><option value="10000">10,000次</option></select></label><button type="button" id="baseReset">恢复默认基准</button><button type="button" id="baseRun">运行这组基准 →</button></div></div>
-</section>
-<section class="results-shell" id="results" aria-labelledby="resultTitle">
-<div class="results-head"><div><span class="micro">02 / TWO POSSIBLE PATHS</span><h2 id="resultTitle">目标线不动，结果会怎样移动？</h2><p id="resultLead">两条条件分布，将由同一套模拟内核实际计算。</p></div><div class="result-actions"><button id="replay" type="button">↻ 重播变化</button><button id="reset" type="button">还原基准</button></div></div>
-<div id="modelFailure" class="model-failure" role="alert" hidden>模拟内核尚未加载，无法输出真实重跑的结果。请检查网络并重新打开。</div>
-<div class="readout-grid">
-<div class="readout"><span>冲击后 · 2030中位规模</span><strong id="afterMedian">—</strong><small>亿元 / 条件结果</small></div>
-<div class="readout emphasis"><span>相对基准的中位变化</span><strong id="medianDelta">—</strong><small>亿元 / 两情景同种子比较</small></div>
-<div class="readout"><span>达到1600亿的模拟占比</span><strong id="afterHit">—</strong><small id="hitDetail">不是经独立校准的成功概率</small></div>
-</div>
-<section class="distribution-workbench" id="distributionWork" aria-label="条件情景下的详细结果分布">
-<div class="workbench-head"><div><small>OUTCOME DISTRIBUTION / 实时重算</small><h3>看整片分布，<em>不只看一个中位数。</em></h3></div><div class="workbench-views" role="group" aria-label="选择分布可视化"><button type="button" data-dist-view="density" aria-pressed="true">概率密度</button><button type="button" data-dist-view="hist" aria-pressed="false">样本直方</button><button type="button" data-dist-view="cdf" aria-pressed="false">累计曲线</button></div></div>
-<div class="workbench-main"><div class="workbench-plot"><svg id="detailChart" viewBox="0 0 960 370" preserveAspectRatio="xMidYMid meet" role="img" aria-label="基准、压力、缓冲三种情景的可交互概率分布，带分位数、目标线与鼠标探查"></svg><div class="workbench-inspector"><span id="detailCrossLabel">移动鼠标或手指，探查任意结果位置</span><strong id="detailCrossValue">—</strong></div></div>
-<aside class="workbench-readout"><div class="stat-label">当前比较参照线（亿元）</div><div class="threshold-control"><strong id="detailThresholdValue">1600</strong><input type="range" id="detailThreshold" min="1250" max="1850" step="10" value="1600" aria-label="改变结果比较参照线"></div><p>虚线 1600亿是规划目标；移动参照线仅改变比较位置，不改变真实目标或模拟数据。</p><div id="detailTails" class="detail-tails" aria-live="polite"></div><button type="button" id="detailReplay">重播同一组情景 ↻</button></aside></div>
-<div class="quantile-heading"><strong>从左尾到右尾 · 七个关键分位</strong><span>同一随机种子 · 分位是条件结果，不是现实达标预测</span></div><div class="quantile-scroll"><table class="quantile-table" id="quantileTable"><thead><tr><th>情景</th><th>P5</th><th>P10</th><th>P25</th><th>P50</th><th>P75</th><th>P90</th><th>P95</th><th>均值</th><th>标准差</th></tr></thead><tbody id="quantileRows"></tbody></table></div>
-<div class="distribution-footer"><span id="detailObservation">正在读取计算输出。</span><span>结果：亿元 · 条件模拟 | 未做独立预测验证</span></div>
-</section>
-<div class="dist-layout">
- <div class="distribution"><div class="dist-top"><strong>2030 结果分布对照</strong><div class="dist-legend"><span><i class="base"></i>基准</span><span><i class="stress"></i>冲击</span><span id="bufferLegend" hidden><i class="buffer"></i>缓冲</span></div></div><svg id="distChart" viewBox="0 0 720 276" role="img" aria-label="基准、压力及缓冲三种条件下的2030GDP结果模拟分布与1600亿元目标线"></svg><div class="dist-bottom"><span id="rangeBase">基准区间：—</span><span id="rangeShock">压力区间：—</span><span id="rangeBuffer" hidden>缓冲区间：—</span></div></div>
- <aside class="result-insight"><span class="insight-kicker">最重要的不是一个概率</span><strong id="resultInsight">一次变化，可能改变的不只是结果中位数。</strong><p id="resultExplain">结果由原有模型重跑；变量改变属于情景假设，并非事实结论。</p><div class="evidence-chip">结果口径 <b>模型情景 · 非实测预测</b></div><button id="whyButton" type="button">为什么会这样？ <span>↗</span></button></aside>
-</div>
-<div class="result-disclaimer"><span>!</span><p>这是受控情景压力测试。基准路径贡献按照既有2030目标假设设定，结果比例受这些假设影响；不得将其当作真实达标概率。</p></div>
 </section>
 <section class="transmission" aria-labelledby="transTitle"><div class="subhead"><div><p class="micro">03 / WHERE THE SHOCK TRAVELS</p><h2 id="transTitle">变化从哪里传过来？</h2></div><span>机制示意 · 非交易网络</span></div>
 <div class="chain-viewport"><div id="chainTrack" class="chain-track" role="group" aria-label="随场景变化的四段条件传导关系"><button type="button" data-link="0" class="chain-node active"><small>变化起点</small><strong id="chain0">关键项目延期</strong></button><span class="chain-beam" aria-hidden="true"></span><button type="button" data-link="1" class="chain-node"><small>第一层</small><strong id="chain1">新产线推迟</strong></button><span class="chain-beam" aria-hidden="true"></span><button type="button" data-link="2" class="chain-node"><small>第二层</small><strong id="chain2">本地配套订单</strong></button><span class="chain-beam" aria-hidden="true"></span><button type="button" data-link="3" class="chain-node"><small>后续结果</small><strong id="chain3">产业接续能力</strong></button></div></div>
