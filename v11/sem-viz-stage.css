@@ -105,3 +105,19 @@
 @media(max-width:1050px){.blindspot-scene{min-height:465px}.blindspot-orbit{max-width:143px;min-width:115px}}
 @media(max-width:760px){.sem-viz-stage,.insight-signals,.blindspot-network{padding:19px 14px;border-radius:15px}.viz-stage-intro{flex-wrap:wrap}.viz-dash-tag{font-size:9px}.viz-observed-grid,.insight-signal-grid{gap:7px}.viz-observed,.insight-signal{padding:13px 11px}.viz-observed .v-index-kpi,.insight-signal .signal-kpi{font-size:clamp(31px,9vw,49px)}.viz-observed .v-index-caption{font-size:9px}.v-index-track:after{font-size:8px}.viz-causal-grid{gap:5px}.viz-causal-button{padding:11px 6px;min-height:100px;border-radius:10px}.viz-causal-button strong{font-size:13px}.viz-causal-button small{font-size:9px}.viz-causal-button .node-count{font-size:9px}.viz-route-metrics{gap:7px}.viz-route-value{padding:11px 9px;flex-direction:column;align-items:flex-start}.viz-route-value strong{font-size:20px}.viz-focus-explain{display:block}.viz-focus-explain p{margin-top:5px}.viz-bar-stage{padding:14px 10px}.viz-bar-row{grid-template-columns:50px 1fr 53px;gap:7px}.viz-bar-row output{font-size:12px}.viz-preset-row button{flex:1;padding:10px 6px}.insight-signals .signal-narrative{align-items:flex-start;flex-direction:column}.blindspot-scene{min-height:480px}.blindspot-center{width:140px;min-height:100px;padding:10px 8px}.blindspot-center strong{font-size:16px}.blindspot-orbit{min-width:95px;max-width:119px;padding:8px 6px;min-height:63px}.blindspot-orbit strong{font-size:11px}.blindspot-orbit small{font-size:9px}.blindspot-orbit[data-i="0"]{left:20%;top:18%}.blindspot-orbit[data-i="1"]{left:50%;top:7%}.blindspot-orbit[data-i="2"]{left:80%;top:18%}.blindspot-orbit[data-i="3"]{left:21%;top:83%}.blindspot-orbit[data-i="4"]{left:79%;top:83%}.blindspot-panel{grid-template-columns:1fr;gap:8px}.blindspot-why,.blindspot-evidence{padding:13px}.blindspot-theatre-footer{align-items:stretch;flex-direction:column}.blindspot-theatre-footer button{width:100%}}
 @media(prefers-reduced-motion:reduce){.v-index-fill,.blindspot-svg .link.is-active{animation:none!important}.viz-bar-axis .viz-bar-fill,.blindspot-orbit,.viz-causal-button{transition:none!important}}
+
+/* Visual hierarchy: show the real-signal instruments once, not twice. */
+.sem-bridge .sem-observation,.sem-bridge .sem-flow{display:none}
+.insights-page .insight-hero{grid-template-columns:minmax(0,1fr);min-height:180px}
+.insights-page .insight-hero .hero-evidence{display:none}
+.insights-page .insight-hero h1{max-width:1180px}
+.insights-page .insight-hero p:not(.micro){max-width:900px}
+/* Recomputed causal journey, one burst per real interaction, not ambient decoration. */
+.sem-viz-stage.is-recomputing .viz-causal-button{animation:vizNodeArrival .48s ease-out both}
+.sem-viz-stage.is-recomputing .viz-causal-button.node-m{animation-delay:.11s}
+.sem-viz-stage.is-recomputing .viz-causal-button.node-y{animation-delay:.22s}
+.sem-viz-stage[data-direction=negative] .viz-causal-grid:before{background:linear-gradient(90deg,#e28e61,#ffbc83,#fa8b65)}
+.sem-viz-stage[data-direction=positive] .viz-causal-grid:before{background:linear-gradient(90deg,#55d5d0,#6ce7c5,#5ce3dc)}
+.viz-observed.is-down .v-index-fill,.insight-signal.down .v-index-fill{background:linear-gradient(90deg,#98583b,#ffae6a)}
+@keyframes vizNodeArrival{0%{filter:brightness(.6);transform:translateY(8px)}100%{filter:brightness(1);transform:translateY(0)}}
+@media(prefers-reduced-motion:reduce){.sem-viz-stage.is-recomputing .viz-causal-button{animation:none!important}}
