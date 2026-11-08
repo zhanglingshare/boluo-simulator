@@ -280,11 +280,11 @@ function refs(){
 $('openRegionSource').addEventListener('click',()=>{
  const s=SOURCES[REGIONS[state.region].source],r=REGIONS[state.region];
  dialog('三区三核 · '+r.role,'<p>'+esc(r.description)+'</p><h3>已公开的规划安排</h3><p>'+esc(r.evidence)+'</p>'+
- '<p><a href="'+s.url+'" target="_blank" rel="noopener noreferrer">'+esc(s.title)+'（'+esc(s.date)+'） ↗</a></p><h3>这张图不能证明什么？</h3><p>空间功能规划不等于企业已形成交易，交通、学校和医疗联系仍需要实测可达性与项目进展核实；连线不代表权重或因果强度。</p>');
+ '<p><a href="'+s.url+'" target="_blank" rel="noopener noreferrer">'+esc(s.title)+'（'+esc(s.date)+'） ↗</a></p><h3>这张图不能证明什么？</h3><p>空间功能规划不等于企业已形成交易，交通、学校和医疗联系仍需要实测可达性与项目进展核实；连线不代表已证实的交易或经济影响。</p>');
 });
 $('stageSource').addEventListener('click',()=>{
  const s=STAGES[state.stage],ref=SOURCES[s.source];
- dialog('项目兑现阶段 · 口径核查','<p>'+esc(s.text)+'</p><p>五道门只是核验流程，不是模型自动生成的项目数量，也不构成项目转化率。</p>'+
+ dialog('项目兑现阶段 · 口径核查','<p>'+esc(s.text)+'</p><p>项目阶段应当逐项核实，不能用不同批次的历史总量计算实际转化率。</p>'+
  '<p><a href="'+ref.url+'" target="_blank" rel="noopener noreferrer">'+esc(ref.title)+' ↗</a></p>');
 });
 $('openMethod').addEventListener('click',()=>{
