@@ -1,0 +1,50 @@
+name: V11 Pages 01-06 Public Experience and Privacy Checks
+
+on:
+  push:
+    paths:
+      - "v11/index.html"
+      - "v11/reality.html"
+      - "v11/industry-base.html"
+      - "v11/relations.html"
+      - "v11/impact.html"
+      - "v11/plan.html"
+      - "v11/risk-lab.js"
+      - "v11/risk-visuals.js"
+      - "v11/impact.js"
+      - "v11/plan.js"
+      - "tests/boluo-v11-front-six-*"
+      - ".github/workflows/boluo-v11-front-six-privacy.yml"
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  front-six:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: "22"
+      - name: Check public language and JS syntax
+        run: node --test tests/boluo-v11-front-six-privacy.test.cjs
+      - name: Install browser runner
+        run: |
+          npm install --no-save playwright
+          npx playwright install --with-deps chromium
+      - name: Test desktop and mobile pages
+        run: |
+          python3 -m http.server 8765 --bind 127.0.0.1 >/tmp/boluo-front-six-http.log 2>&1 &
+          sleep 2
+          node tests/boluo-v11-front-six-browser.cjs
+      - name: Upload 12 page screenshots
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: boluo-v11-front-six-privacy-screenshots
+          path: artifacts/v11-front-six/*.png
+          if-no-files-found: ignore
+          retention-days: 3
