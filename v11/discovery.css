@@ -22,3 +22,6 @@
 @media(prefers-reduced-motion:reduce){*,*:before,*:after{animation:none!important;transition:none!important;scroll-behavior:auto!important}}
 #eventsSection{scroll-margin-top:86px}
 @media(max-width:600px){.discovery-hero{gap:10px}#mainChart{height:128px}.inquiry-section{margin-bottom:17px}.inquiry-strip{padding:10px;gap:6px}.inquiry-strip h2{margin-bottom:0}}
+
+/* V11 09: keep the full navigation reachable on narrow screens */
+@media(max-width:600px){.mobile-nav{justify-content:flex-start;overflow-x:auto;scrollbar-width:thin;gap:7px}.mobile-nav a{flex:0 0 auto;white-space:nowrap;min-width:49px;padding:4px 5px}}
