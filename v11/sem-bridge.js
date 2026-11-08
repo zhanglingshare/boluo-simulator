@@ -36,6 +36,7 @@ $("semToEight").href=u.href;
 }
 input.addEventListener("input",draw);network.addEventListener("input",draw);
 $("semReset").addEventListener("click",()=>{input.value=String(m.anchors.investmentIndex);network.value="50";draw();});
+$("semToEight").addEventListener("click",draw);
 $("semToEight").addEventListener("pointerenter",draw);
 $("semToEight").addEventListener("focus",draw);
 draw();
