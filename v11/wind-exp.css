@@ -43,3 +43,10 @@
 .detail-legend{display:flex;gap:16px;flex-wrap:wrap;margin-top:11px;font-size:11px;font-weight:800;color:#bcdcef}
 .detail-legend span{display:inline-flex;align-items:center;gap:7px}.detail-legend i{display:inline-block;width:20px;height:4px;border-radius:3px;background:var(--k)}
 @media(prefers-reduced-motion:reduce){.distribution-workbench.is-running .sim-curve{animation:none!important;stroke-dasharray:none!important}}
+
+.sampling-status{border:1px solid #386581;border-radius:10px;background:#092840;padding:11px 12px;margin-top:14px}
+.sampling-top{display:flex;align-items:center;justify-content:space-between;gap:7px;font-size:10px;color:#98c5e1;margin-bottom:8px}
+.sampling-top strong{color:#b7f2e5;font-variant-numeric:tabular-nums;font-size:11px}
+.sampling-track{width:100%;height:8px;background:#174663;border-radius:9px;overflow:hidden}
+.sampling-track i{display:block;height:100%;border-radius:9px;background:linear-gradient(90deg,#1c92d5,#85ebd0);transition:width .16s linear}
+@media(prefers-reduced-motion:reduce){.sampling-track i{transition:none!important}}
