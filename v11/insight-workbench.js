@@ -280,6 +280,15 @@ window.addEventListener("popstate",()=>{
  }
  render(false);
 });
+function revealCurrentMobileNav(){
+ const nav=document.querySelector?.(".mobile-nav");
+ const current=nav?.querySelector?.('[aria-current="page"]');
+ if(!nav||!current||!nav.clientWidth)return;
+ const wanted=current.offsetLeft+current.offsetWidth-nav.clientWidth+12;
+ if(wanted>0)nav.scrollLeft=Math.min(nav.scrollWidth-nav.clientWidth,Math.max(0,wanted));
+}
+window.addEventListener("resize",revealCurrentMobileNav);
+setTimeout(revealCurrentMobileNav,0);
 window.BoluoInsightsV2={getState:()=>({
  target:state.target,factor:active().id,severity:state.severity,cut:state.cut,touched:state.touched,parameters:source().map(f=>({id:f.id,importance:f.importance,performance:f.performance,substitute:f.substitute}))
 }),compute:()=>measure(),windUrl:windURL,select:selectFactor};
