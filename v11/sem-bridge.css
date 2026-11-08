@@ -1,0 +1,39 @@
+/* 07 SmartPLS-inspired bridge: separate from the GDP Monte Carlo engine. */
+.sem-bridge{margin-top:13px;padding:26px 27px;background:#fff;border:1px solid #fff;border-radius:19px;box-shadow:var(--shadow);color:#173d62}
+.sem-head{display:flex;align-items:flex-start;justify-content:space-between;gap:18px;margin-bottom:19px}
+.sem-head h2{font-weight:900;letter-spacing:-.045em;line-height:1.16;font-size:clamp(23px,2.6vw,37px);margin:0}
+.sem-head h2 em{color:#167ad9;font-style:normal}
+.sem-head p:not(.micro){font-size:12px;color:#6785a4;max-width:690px;line-height:1.75;margin:8px 0 0}
+.sem-tag{flex:none;color:#2677bb;background:#edf7ff;border:1px solid #d4e9f9;border-radius:26px;padding:9px 11px;font-size:10px;font-weight:800}
+.sem-observation{display:flex;flex-wrap:wrap;gap:12px;border-radius:12px;border:1px solid #d8e9f9;background:#eff8ff;padding:12px 15px;margin-bottom:16px;align-items:center}
+.sem-observation>span{color:#6382a2;font-size:11px;font-weight:750}
+.sem-observation strong{color:#0c796b;font-size:17px;letter-spacing:-.03em}
+.sem-observation strong.neg{color:#c96848}
+.sem-observation a{text-decoration:underline;font-size:11px;color:#2271b6;margin-left:auto}
+.sem-layout{display:grid;grid-template-columns:minmax(0,1.1fr) minmax(300px,.9fr);gap:16px}
+.sem-control-panel{border:1px solid #d6e7f7;border-radius:15px;padding:21px;background:#f4f9ff}
+.sem-control-panel label{display:block;margin-bottom:15px}
+.sem-control-panel label>span{display:flex;justify-content:space-between;gap:15px;font-size:12px;color:#496f90;font-weight:800;margin-bottom:10px}
+.sem-control-panel label strong{font-size:23px;line-height:1;font-variant-numeric:tabular-nums;color:#126fcb}
+.sem-control-panel input[type=range]{width:100%;accent-color:#1f86e9}
+.sem-control-panel label small{font-size:10px;color:#7b97b0;margin-top:8px;display:block;line-height:1.5}
+.sem-control-panel .sem-reset{background:white;color:#176aaf;border:1px solid #b9d8f2;padding:10px 12px;border-radius:9px;font-weight:800;font-size:11px}
+.sem-readout{background:#e8f3ff;border:1px solid #cce2f5;padding:18px 19px;border-radius:13px;display:grid;gap:12px}
+.sem-readout>small{font-size:11px;color:#577f9d;font-weight:850}.sem-readout>strong{font-size:clamp(29px,4.4vw,60px);color:#124a82;letter-spacing:-.06em;line-height:1;font-variant-numeric:tabular-nums}
+.sem-readout>span{font-size:10px;color:#6386a4}
+.sem-bar{display:grid;grid-template-columns:55px 1fr 55px;gap:9px;align-items:center;font-size:11px;color:#526f8b}
+.sem-bar b{font-size:12px;text-align:right;color:#176eb7;font-variant-numeric:tabular-nums}.sem-track{height:9px;background:#d1e1f0;border-radius:10px;overflow:hidden}.sem-fill{width:0;height:100%;display:block;background:#287fd6;border-radius:10px;transition:width .35s ease}.sem-fill[data-sign=neg]{background:#cc7e4d}
+.sem-flow{display:grid;grid-template-columns:minmax(0,1fr) 30px minmax(0,1fr) 30px minmax(0,1fr);gap:6px;align-items:center;margin-top:16px}
+.sem-flow>div{min-width:0;background:#f2f8ff;border:1px solid #cfdfef;border-radius:12px;padding:18px 12px;display:grid;gap:6px;text-align:center}
+.sem-flow small{font-size:10px;color:#6890b4}.sem-flow strong{font-size:16px;color:#195d9c}.sem-flow span{font-size:10px;color:#6686a2}.sem-flow>i{font-style:normal;color:#2c8ccf;font-size:25px;text-align:center}
+.sem-note{border-left:4px solid #65b0ef;background:#f5faff;border-radius:9px;padding:13px 15px;font-size:12px;line-height:1.8;color:#4d7498;margin:16px 0}
+.sem-actions{display:flex;align-items:center;justify-content:space-between;gap:14px;flex-wrap:wrap}
+.sem-actions a{display:inline-block;background:#126fd3;color:#fff;border-radius:12px;padding:14px 18px;font-weight:840;font-size:13px;text-align:center}
+.sem-actions p{font-size:11px;color:#7895ae;margin:0;line-height:1.6}
+.sem-details{margin-top:14px;border-top:1px solid #e3edf5;padding-top:11px}
+.sem-details summary{color:#3275ac;font-weight:770;font-size:11px;cursor:pointer}
+.sem-details p{color:#6685a1;line-height:1.75;font-size:11px;max-width:1000px}
+.sem-details a{color:#1869bc;text-decoration:underline}
+@media(max-width:930px){.sem-layout{grid-template-columns:1fr}}
+@media(max-width:640px){.sem-bridge{padding:18px 14px}.sem-head{flex-direction:column;gap:8px}.sem-observation a{margin:0}.sem-layout{gap:10px}.sem-control-panel{padding:15px}.sem-readout{padding:15px}.sem-readout>strong{font-size:38px}.sem-flow{grid-template-columns:1fr 18px 1fr 18px 1fr;gap:3px}.sem-flow>div{padding:10px 3px}.sem-flow strong{font-size:12px}.sem-flow small,.sem-flow span{font-size:9px}.sem-flow>i{font-size:15px}.sem-actions a{width:100%}}
+@media(prefers-reduced-motion:reduce){.sem-fill{transition:none}}
