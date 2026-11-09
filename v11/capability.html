@@ -2,43 +2,186 @@
 <html lang="zh-CN">
 <head>
 <meta charset="utf-8">
-<title>能力图谱 · 博罗新视角</title>
-<meta name="description" content="交互式雷达蛛网图：先猜哪类能力现场最多，再点轴探查现场与相邻方向；多边形轮廓=现场数，不做排名、不预测，缺证据处标注待补。">
+<title>能力与复杂度 · 博罗新视角</title>
+<meta name="description" content="能力与复杂度：精致雷达图呈现六类可复用能力的现场分布，直接标注、克制配色；先猜后揭，点击下钻现场，不做排名与预测。">
 <meta name="viewport" content="width=device-width,initial-scale=1">
 <script src="../assets/boluo-access.js?v=20261108-inline2" data-bl-access="inline"></script>
-<link rel="stylesheet" href="./lens.css?v=20261110-lens">
+<style>
+:root{
+  --bg:#f6f8fa; --surface:#ffffff; --border:#e3e7ed; --border-strong:#d4dae3;
+  --ink:#13202f; --t2:#56657a; --t3:#93a0b2;
+  --accent:#1f5fbf; --accent-deep:#17468f; --accent-soft:#eef3fc;
+  --teal:#0e8a82; --red:#cc4d45; --amber:#a8742a;
+  --r:12px;
+  --shadow:0 1px 2px rgba(16,24,40,.04);
+}
+*{box-sizing:border-box}
+html,body{margin:0}
+body{
+  background:var(--bg); color:var(--ink);
+  font-family:-apple-system,BlinkMacSystemFont,"SF Pro Text","PingFang SC","Hiragino Sans GB","Microsoft Yahei",sans-serif;
+  -webkit-font-smoothing:antialiased; text-rendering:optimizeLegibility;
+  font-size:14px; line-height:1.6;
+}
+a{color:inherit;text-decoration:none}
+button{font:inherit;cursor:pointer;-webkit-tap-highlight-color:transparent;background:none;border:0}
+.num{font-variant-numeric:tabular-nums}
+
+/* ---- 顶栏 ---- */
+.topbar{
+  position:sticky;top:0;z-index:30;background:#ffffff;
+  border-bottom:1px solid var(--border);padding:0;
+}
+.topbar-in{max-width:1120px;margin:0 auto;padding:12px 24px;display:flex;align-items:center;gap:20px}
+.brand{font-size:13.5px;font-weight:800;letter-spacing:-.01em;display:flex;flex-direction:column;line-height:1.2}
+.brand small{font-size:9px;color:var(--t3);font-weight:600;letter-spacing:.08em;margin-top:2px}
+.nav{display:flex;gap:2px;margin-left:auto;flex-wrap:wrap}
+.nav a{font-size:12px;color:var(--t2);padding:7px 11px;border-radius:8px;font-weight:600;white-space:nowrap}
+.nav a:hover{background:var(--accent-soft);color:var(--accent)}
+.nav a.cur{color:var(--accent);background:var(--accent-soft);font-weight:700}
+
+/* ---- 容器 ---- */
+.wrap{max-width:1120px;margin:0 auto;padding:0 24px 72px}
+.kick{font-size:10px;letter-spacing:.2em;font-weight:800;color:var(--accent);margin:40px 0 12px}
+h1{font-size:clamp(26px,3.6vw,36px);font-weight:800;letter-spacing:-.035em;line-height:1.18;margin:0 0 14px}
+.lede{font-size:15px;line-height:1.75;color:var(--t2);max-width:640px;margin:0}
+.meta{font-size:11px;color:var(--t3);margin-top:14px}
+
+/* ---- 两栏 ---- */
+.layout{display:grid;grid-template-columns:minmax(0,5fr) minmax(0,7fr);gap:28px;margin-top:36px;align-items:start}
+.panel{background:var(--surface);border:1px solid var(--border);border-radius:var(--r);box-shadow:var(--shadow)}
+.panel-pad{padding:20px}
+.panel-title{font-size:12px;font-weight:700;color:var(--ink);margin:0 0 4px}
+.panel-sub{font-size:11px;color:var(--t3);margin:0 0 16px}
+
+/* ---- 总览数字 ---- */
+.overview{display:grid;grid-template-columns:1fr 1fr;gap:0;margin-bottom:20px}
+.ov{padding:18px 20px}
+.ov:first-child{border-right:1px solid var(--border)}
+.ov span{display:block;font-size:10.5px;color:var(--t3);margin-bottom:8px;font-weight:600}
+.ov b{font-size:30px;font-weight:800;letter-spacing:-.03em;display:block;line-height:1}
+.ov small{font-size:12px;color:var(--t3);font-weight:600;margin-left:3px}
+
+/* ---- 能力行 ---- */
+.cap-list{display:flex;flex-direction:column}
+.cap-row{
+  width:100%;text-align:left;padding:13px 20px;display:flex;flex-direction:column;gap:9px;
+  border-top:1px solid var(--border);position:relative;
+}
+.cap-row:first-child{border-top:0}
+.cap-row:hover{background:#fafbfd}
+.cap-row.active{background:var(--accent-soft)}
+.cap-row.active::before{content:"";position:absolute;left:0;top:0;bottom:0;width:2.5px;background:var(--accent)}
+.cap-line{display:flex;align-items:baseline;gap:10px}
+.cap-name{font-size:13.5px;font-weight:700;color:var(--ink)}
+.cap-row.active .cap-name{color:var(--accent)}
+.cap-count{margin-left:auto;font-size:13px;font-weight:700;color:var(--t2)}
+.cap-en{font-size:9px;color:var(--t3);letter-spacing:.1em;font-weight:700}
+.mini{height:4px;border-radius:4px;background:#eceff4;overflow:hidden}
+.mini i{display:block;height:100%;background:var(--accent);border-radius:4px;transition:width .7s cubic-bezier(.22,1,.36,1)}
+.cap-hint{font-size:10.5px;color:var(--t3);padding:14px 20px;border-top:1px solid var(--border)}
+
+/* ---- 揭晓按钮 ---- */
+.act-row{padding:16px 20px;border-top:1px solid var(--border);display:flex;gap:10px;flex-wrap:wrap}
+.btn{
+  border:1px solid var(--border-strong);background:#fff;color:var(--ink);border-radius:8px;
+  padding:9px 16px;font-size:12.5px;font-weight:700;transition:all .18s ease;
+}
+.btn:hover{border-color:var(--accent);color:var(--accent)}
+.btn.primary{background:var(--accent);border-color:var(--accent);color:#fff}
+.btn.primary:hover{background:var(--accent-deep);border-color:var(--accent-deep);color:#fff}
+
+/* ---- 雷达 ---- */
+.chart-panel{padding:20px 20px 12px}
+.chart-frame{width:100%;max-width:480px;margin:0 auto}
+.chart-frame svg{width:100%;height:auto;display:block}
+.legend{display:flex;gap:18px;flex-wrap:wrap;font-size:10.5px;color:var(--t2);margin-top:8px;justify-content:center}
+.legend i{width:10px;height:10px;border-radius:3px;margin-right:6px;display:inline-block;vertical-align:middle}
+
+/* ---- 明细 ---- */
+.detail{margin-top:20px}
+.detail h3{font-size:14px;font-weight:800;margin:0 0 2px}
+.detail .den{font-size:9px;letter-spacing:.12em;color:var(--t3);font-weight:700;margin:0 0 14px}
+.chips{display:flex;flex-wrap:wrap;gap:7px}
+.chip{
+  display:inline-flex;align-items:center;gap:6px;font-size:11px;color:var(--t2);
+  background:#f6f8fb;border:1px solid var(--border);border-radius:8px;padding:6px 10px;font-weight:600;
+}
+.chip i{width:7px;height:7px;border-radius:50%;flex:none}
+.chip i.live{background:var(--teal)}.chip i.wip{background:var(--accent)}.chip i.out{background:var(--red)}.chip i.stat{background:var(--t3)}
+.gap{
+  margin-top:14px;border:1px dashed #d8c39a;border-radius:10px;padding:12px 14px;
+  font-size:11px;color:var(--amber);line-height:1.65;background:#fdfaf3;
+}
+.placeholder{font-size:12px;color:var(--t3);padding:8px 0}
+
+/* ---- 脚注 ---- */
+.foot{margin-top:40px;padding-top:20px;border-top:1px solid var(--border);font-size:10.5px;color:var(--t3);line-height:1.9}
+.foot b{color:var(--t2)}
+
+@media(max-width:920px){
+  .layout{grid-template-columns:1fr;gap:20px}
+  .topbar-in{padding:11px 16px;gap:12px}
+  .wrap{padding:0 16px 60px}
+  .nav{overflow-x:auto;flex-wrap:nowrap;width:100%}
+}
+</style>
 </head>
-<body class="lens-body">
-<header class="lens-top">
- <a class="lens-brand" href="./lens.html">博罗 · 新视角<small>用能力与结构看现场，不做排名</small></a>
- <nav class="lens-pager" id="lensPager"></nav>
+<body>
+<header class="topbar">
+ <div class="topbar-in">
+  <a class="brand" href="./lens.html">博罗 · 新视角<small>用能力与结构看现场，不做排名</small></a>
+  <nav class="nav" id="nav"></nav>
+ </div>
 </header>
 
-<main class="lens-wrap">
- <p class="lens-kick">CAPABILITY MAP · 能力与复杂度</p>
- <h1 class="lens-h1">博罗攒下了哪些能力，<br>这些能力还能组合出什么？</h1>
- <p class="lens-lede">长期增长靠可复用生产能力的积累与组合，而非单个产业规模。先猜、再点节点探查，最后揭晓。</p>
- <p class="lens-meta" id="lensMeta"></p>
+<main class="wrap">
+ <p class="kick">CAPABILITY &amp; COMPLEXITY · 能力与复杂度</p>
+ <h1>长期增长，取决于攒下了哪些可复用能力</h1>
+ <p class="lede">Hidalgo 与 Hausmann 的研究表明，长期增长不是单个产业的规模，而是本地可复用能力的积累与重新组合。下面把博罗的现场按六类能力归并，先猜、再揭、最后点进每一类看真实现场。</p>
+ <p class="meta num" id="meta"></p>
 
- <div class="viz-guess">
-  先猜一下：<b>哪一类能力挂的现场最多？</b>（点一个你的判断，再去图上验证）
-  <div class="row" id="guessRow"></div>
-  <div class="hint" id="guessHint"></div>
- </div>
+ <div class="layout">
+  <!-- 左栏 -->
+  <div>
+   <section class="panel overview">
+    <div class="ov"><span>可复用能力类别</span><b class="num" id="ovCaps">6<small>类</small></b></div>
+    <div class="ov"><span>已归并现场</span><b class="num" id="ovSites">–<small>个</small></b></div>
+   </section>
 
- <div class="viz-card">
-  <svg class="viz-svg" viewBox="0 0 360 360" id="capSvg" role="img" aria-label="博罗能力雷达图"></svg>
-  <div class="viz-legend">
-   <span><i style="background:#1369eb"></i>能力轮廓（顶点=现场数）</span>
-   <span><i style="background:#cdd7e3"></i>网格档位</span>
+   <section class="panel">
+    <p class="panel-title" id="listTitle">先猜：哪一类能力挂的现场最多？</p>
+    <p class="panel-sub" id="listSub">点一行选你的判断，再点揭晓。揭晓前不显示数量。</p>
+    <div class="cap-list" id="capList"></div>
+    <div class="cap-hint" id="capHint">雷达顶点到中心的距离 = 该类能力的现场数量，不代表产值或重要性。</div>
+    <div class="act-row">
+     <button class="btn primary" id="revealBtn">揭晓答案</button>
+     <button class="btn" id="resetBtn" style="display:none">重新猜</button>
+    </div>
+   </section>
+  </div>
+
+  <!-- 右栏 -->
+  <div>
+   <section class="panel chart-panel">
+    <div class="chart-frame">
+     <svg viewBox="0 0 480 440" id="radar" role="img" aria-label="博罗六类能力雷达图"></svg>
+    </div>
+    <div class="legend">
+     <span><i style="background:#1f5fbf"></i>能力轮廓（半径=现场数）</span>
+     <span><i style="background:#e3e7ed;border:1px solid #d4dae3"></i>网格刻度</span>
+    </div>
+   </section>
+
+   <section class="panel detail panel-pad" id="detail">
+    <span class="placeholder">点左侧能力行或雷达轴，查看这一类包含的真实现场。</span>
+   </section>
   </div>
  </div>
 
- <div class="viz-detail" id="capDetail"></div>
-
- <div class="lens-foot">
-  <b>口径说明：</b>能力类别依据现场工艺与产品归纳，属分析判断；雷达顶点到中心的距离对应现场数量，不代表产值或重要性。状态分「已投产 / 在途 / 退出」，不合并。<br>
-  <b>数据缺口：</b>「能相邻长出什么」需设备通用度、专利、技能同源等公开证据，当前标注待补，交火山引擎采集，不做推断。
+ <div class="foot">
+  <b>口径说明：</b>能力类别依据现场工艺与产品归纳，属分析判断；雷达半径对应现场数量，不代表产值或重要性；现场状态分「已投产 / 在途 / 退出」，不合并。<br>
+  <b>数据缺口：</b>「能相邻长出什么」需设备通用度、专利、技能同源等公开证据，当前留白带待补，不做推断。
  </div>
 </main>
 
@@ -46,104 +189,144 @@
 <script>
 (function(){
  const D=window.BoluoDiscoveryData;
- if(!D){document.getElementById('capDetail').innerHTML='数据未加载';return;}
+ if(!D){document.getElementById('detail').innerHTML='<span class="placeholder">数据未加载。</span>';return;}
  const evMap={};D.events.forEach(function(e){evMap[e.id]=e;});
 
  const CAPS=[
-  {key:'copper',name:'铜箔与电池材料',short:'铜箔电池',en:'COPPER & BATTERY',color:'#1369eb',ids:['copper','shenyuan','jiage','xincheng','jinliyuan'],
-   gap:'待补：铜箔规格与电池结构的技术同源证据、可相邻的结构件与回收材料方向。'},
-  {key:'precision',name:'精密机械与材料',short:'精密机械',en:'PRECISION',color:'#1369eb',ids:['qicaihong','hande','xingrui','sanren','quanli','jiayou','longxi','yixin','jintian','xunling','cement'],
-   gap:'待补：设备加工精度与通用覆盖范围、可相邻的精密结构件方向。'},
-  {key:'food',name:'食品与无菌灌装',short:'食品灌装',en:'FOOD & FILLING',color:'#23a3a7',ids:['yetai','dongweifeng','xianghao'],
-   gap:'待补：无菌线可灌装品类、包装材料同源与可相邻食品方向。'},
-  {key:'platform',name:'园区平台与招商',short:'园区平台',en:'PLATFORM',color:'#1369eb',ids:['futian','luofufuture','sign4','huzhen'],
-   gap:'待补：厂房适配行业、签约项目实际入园与开工率。'},
-  {key:'tour',name:'户外运动与文旅',short:'户外文旅',en:'TOUR & SPORTS',color:'#23a3a7',ids:['henghe','mofang','minsu','road218','fubo','tianhong','taimeig','dongshan','luofushanju','litian'],
-   gap:'待补：运营主体与客流技能、可相邻的康养/研学方向。'},
-  {key:'agri',name:'农业种植与初加工',short:'农业加工',en:'AGRICULTURE',color:'#9aa8b9',ids:['tea'],
-   gap:'待补：可加工农产品清单、合作社与农户带动能力；现有口径仅新陂合作社。'}
+  {key:'copper',name:'铜箔与电池材料',en:'COPPER & BATTERY',ids:['copper','shenyuan','jiage','xincheng','jinliyuan'],
+   gap:'铜箔规格与电池结构的技术同源证据、可相邻的结构件与回收材料方向，待公开数据补齐。'},
+  {key:'precision',name:'精密机械与材料',en:'PRECISION',ids:['qicaihong','hande','xingrui','sanren','quanli','jiayou','longxi','yixin','jintian','xunling','cement'],
+   gap:'设备加工精度与通用覆盖范围、可相邻的精密结构件方向，待公开数据补齐。'},
+  {key:'food',name:'食品与无菌灌装',en:'FOOD & FILLING',ids:['yetai','dongweifeng','xianghao'],
+   gap:'无菌线可灌装品类、包装材料同源与可相邻食品方向，待公开数据补齐。'},
+  {key:'platform',name:'园区平台与招商',en:'PLATFORM',ids:['futian','luofufuture','sign4','huzhen'],
+   gap:'厂房适配行业、签约项目实际入园与开工率，待公开数据补齐。'},
+  {key:'tour',name:'户外运动与文旅',en:'TOUR & SPORTS',ids:['henghe','mofang','minsu','road218','fubo','tianhong','taimeig','dongshan','luofushanju','litian'],
+   gap:'运营主体与客流技能、可相邻的康养/研学方向，待公开数据补齐。'},
+  {key:'agri',name:'农业种植与初加工',en:'AGRICULTURE',ids:['tea'],
+   gap:'可加工农产品清单、合作社与农户带动能力待补；现有口径仅新陂合作社。'}
  ];
  CAPS.forEach(function(c){c.count=c.ids.filter(function(id){return evMap[id];}).length;});
+ const totalSites=CAPS.reduce(function(s,c){return s+c.count;},0);
+ const maxCount=Math.max.apply(null,CAPS.map(function(c){return c.count;}));
 
  const PAGES=[['lens.html','入口'],['capability.html','能力'],['value-chain.html','环节'],['resilience.html','韧性'],['foundational.html','基础'],['connections.html','连接']];
- document.getElementById('lensPager').innerHTML=PAGES.map(function(p){
+ document.getElementById('nav').innerHTML=PAGES.map(function(p){
   return '<a href="'+p[0]+'"'+(p[0]==='capability.html'?' class="cur"':'')+'>'+p[1]+'</a>';}).join('');
- document.getElementById('lensMeta').textContent='数据版本 '+D.version+' · 核对于 '+D.checkedAt;
+ document.getElementById('meta').textContent='数据版本 '+D.version+' · 核对于 '+D.checkedAt;
+ document.getElementById('ovSites').innerHTML=totalSites+'<small>个</small>';
 
  let picked=null,active=null,revealed=false;
- const CX=180,CY=180,R=110;
- const maxCount=Math.max.apply(null,CAPS.map(function(c){return c.count;}));
- function axisPos(i){const ang=(-90+i*60)*Math.PI/180;return {x:CX+R*Math.cos(ang),y:CY+R*Math.sin(ang),ang:ang};}
- function pointPos(c,i){const ang=(-90+i*60)*Math.PI/180;const r=R*(c.count/maxCount);
-  return {x:CX+r*Math.cos(ang),y:CY+r*Math.sin(ang)};}
 
- function drawSvg(){
+ /* 雷达几何 */
+ const CX=240,CY=222,R=148,RINGS=5;
+ function ang(i){return (-90+60*i)*Math.PI/180;}
+ function pos(i,rad){const a=ang(i);return {x:CX+rad*Math.cos(a),y:CY+rad*Math.sin(a),a:a};}
+ function anchor(i){const a=ang(i);if(Math.abs(Math.cos(a))<.05)return 'middle';return Math.cos(a)>0?'start':'end';}
+ function drawRadar(){
   let s='';
-  for(let k=1;k<=4;k++){
-   s+='<circle cx="'+CX+'" cy="'+CY+'" r="'+(R*k/4)+'" fill="none" stroke="#e3e9f0" stroke-width="1"/>';
+  for(let k=1;k<=RINGS;k++){
+   const rr=R*k/RINGS;
+   const pts=CAPS.map(function(c,i){const p=pos(i,rr);return p.x+','+p.y;}).join(' ');
+   s+='<polygon points="'+pts+'" fill="none" stroke="#e7ebf0" stroke-width="1"/>';
   }
   CAPS.forEach(function(c,i){
-   const p=axisPos(i);
-   s+='<line x1="'+CX+'" y1="'+CY+'" x2="'+p.x+'" y2="'+p.y+'" stroke="#d4dce6" stroke-width="1"/>';
+   const p=pos(i,R);
+   s+='<line x1="'+CX+'" y1="'+CY+'" x2="'+p.x+'" y2="'+p.y+'" stroke="#e7ebf0" stroke-width="1"/>';
   });
   if(revealed){
-   const pts=CAPS.map(function(c,i){const p=pointPos(c,i);return p.x+','+p.y;}).join(' ');
-   s+='<polygon points="'+pts+'" fill="rgba(19,105,235,.18)" stroke="#1369eb" stroke-width="2.2"/>';
+   const d='M'+CAPS.map(function(c,i){const p=pos(i,R*c.count/maxCount);return p.x+','+p.y;}).join('L')+'Z';
+   s+='<path id="dataPath" d="'+d+'" fill="rgba(31,95,191,.13)" stroke="#1f5fbf" stroke-width="2" stroke-linejoin="round"/>';
+   CAPS.forEach(function(c,i){
+    const p=pos(i,R*c.count/maxCount);
+    const isActive=active===c.key;
+    s+='<circle class="pt" data-key="'+c.key+'" cx="'+p.x+'" cy="'+p.y+'" r="'+(isActive?6:4.5)+'" fill="'+(isActive?'#1f5fbf':'#fff')+'" stroke="#1f5fbf" stroke-width="2"/>';
+   });
   }
   CAPS.forEach(function(c,i){
-   const ap=axisPos(i);
-   const dim=(active&&active!==c.key)?'opacity:.35':'';
-   s+='<g class="viz-node" data-key="'+c.key+'" style="'+dim+'">';
-   if(revealed){
-    const pp=pointPos(c,i);
-    s+='<circle cx="'+pp.x+'" cy="'+pp.y+'" r="'+(active===c.key?7:5)+'" fill="'+(active===c.key?'#17212f':'#1369eb')+'" stroke="#fff" stroke-width="1.5"/>';
-   }
-   const cos=Math.cos(ap.ang);
-   const lx=CX+(R+22)*cos,ly=CY+(R+22)*Math.sin(ap.ang);
-   const anchor=cos>0.3?'start':(cos<-0.3?'end':'middle');
-   s+='<text class="viz-nlabel" x="'+lx+'" y="'+ly+'" text-anchor="'+anchor+'" dominant-baseline="central" style="font-size:10.5px">'+c.short+'</text>';
-   s+='<circle cx="'+lx+'" cy="'+ly+'" r="16" fill="transparent"/>';
-   s+='</g>';
+   const lp=pos(i,R+26),ac=anchor(i);
+   const dim=(active&&active!==c.key)?'opacity:.4':'';
+   s+='<g class="axis" data-key="'+c.key+'" style="'+dim+'">'
+    +'<text x="'+lp.x+'" y="'+lp.y+'" text-anchor="'+ac+'" style="font-size:12.5px;font-weight:700;fill:'+(active===c.key?'#1f5fbf':'#1f2d3d')+'">'+c.name+'</text>'
+    +(revealed?'<text x="'+lp.x+'" y="'+(lp.y+14)+'" text-anchor="'+ac+'" style="font-size:11px;font-weight:700;fill:#93a0b2">'+c.count+' 个现场</text>':'')
+    +'<circle cx="'+lp.x+'" cy="'+lp.y+'" r="16" fill="transparent"/></g>';
   });
-  document.getElementById('capSvg').innerHTML=s;
-  Array.prototype.forEach.call(document.querySelectorAll('.viz-node'),function(g){
-   g.addEventListener('click',function(){select(g.getAttribute('data-key'));});
+  s+='<circle cx="'+CX+'" cy="'+CY+'" r="3" fill="#c6ceda"/>';
+  document.getElementById('radar').innerHTML=s;
+  if(revealed){
+   const path=document.getElementById('dataPath');
+   const len=path.getTotalLength();
+   path.style.strokeDasharray=len;path.style.strokeDashoffset=len;
+   path.getBoundingClientRect();
+   path.style.transition='stroke-dashoffset .9s cubic-bezier(.22,1,.36,1)';
+   path.style.strokeDashoffset=0;
+  }
+  Array.prototype.forEach.call(document.querySelectorAll('.axis,.pt'),function(el){
+   el.addEventListener('click',function(){setActive(el.getAttribute('data-key'));});
+  });
+ }
+
+ /* 左栏列表 */
+ function drawList(){
+  document.getElementById('listTitle').textContent=revealed?'六类能力与现场数量':'先猜：哪一类能力挂的现场最多？';
+  document.getElementById('listSub').textContent=revealed?'点击一行查看这一类的真实现场。':'点一行选你的判断，再点揭晓。揭晓前不显示数量。';
+  document.getElementById('capList').innerHTML=CAPS.map(function(c){
+   const isActive=active===c.key;
+   return '<button class="cap-row'+(isActive?' active':'')+'" data-key="'+c.key+'">'
+    +'<span class="cap-line"><span class="cap-name">'+c.name+'</span><span class="cap-en">'+c.en+'</span>'
+    +(revealed?'<span class="cap-count num">'+c.count+'</span>':'')+'</span>'
+    +(revealed?'<span class="mini"><i style="width:'+(c.count/maxCount*100)+'%"></i></span>':'')
+    +'</button>';
+  }).join('');
+  Array.prototype.forEach.call(document.querySelectorAll('.cap-row'),function(el){
+   el.addEventListener('click',function(){
+    const key=el.getAttribute('data-key');
+    if(!revealed){picked=key;}
+    setActive(key);
+   });
   });
  }
 
  function chip(id){
   const e=evMap[id];if(!e)return '';
-  const num=e.big?(' · '+e.big+(e.unit||'')):'';
-  return '<span class="lens-chip"><i class="st '+e.state+'"></i>'+(e.town||'全县')+num+'</span>';
+  return '<span class="chip"><i class="'+e.state+'"></i>'+(e.town||'全县')+(e.big?' · '+e.big+(e.unit||''):'')+'</span>';
  }
- function drawDetail(){
-  const c=CAPS.find(function(x){return x.key===active;});
-  if(!c){document.getElementById('capDetail').innerHTML='<p style="margin:0;font-size:12px;color:#8495a8">点上方按钮或图中节点，开始探查。</p>';return;}
-  document.getElementById('capDetail').innerHTML='<h4>'+c.name+' · '+c.count+' 个现场</h4><p class="cap-en">'+c.en+'</p>'
-   +'<div class="lens-chips" style="margin-bottom:11px">'+c.ids.map(chip).join('')+'</div>'
-   +'<div class="lens-gap"><b>相邻方向 · </b>'+c.gap+'</div>';
+ function setActive(key){
+  active=key;
+  const c=CAPS.filter(function(x){return x.key===key;})[0];
+  document.getElementById('detail').innerHTML='<h3>'+c.name+' · <span class="num">'+c.count+'</span> 个现场</h3>'
+   +'<p class="den">'+c.en+'</p>'
+   +'<div class="chips">'+c.ids.map(chip).join('')+'</div>'
+   +'<div class="gap"><b>相邻方向 · </b>'+c.gap+'</div>';
+  drawRadar();drawList();
  }
- function drawGuess(){
-  document.getElementById('guessRow').innerHTML=CAPS.map(function(c){
-   return '<button data-key="'+c.key+'"'+(picked===c.key?' class="picked"':'')+'>'+c.name+'</button>';}).join('')
-   +'<button id="revealBtn" style="background:#17212f;color:#fff;border-color:#17212f">'+(revealed?'重新猜':'揭晓答案')+'</button>';
-  Array.prototype.forEach.call(document.querySelectorAll('#guessRow button[data-key]'),function(b){
-   b.addEventListener('click',function(){if(revealed)reset();picked=b.getAttribute('data-key');select(picked);});
-  });
-  document.getElementById('revealBtn').addEventListener('click',function(){revealed?reset():reveal();});
- }
- function select(key){active=key;drawSvg();drawDetail();drawGuess();}
  function reveal(){
   revealed=true;
   const top=CAPS.slice().sort(function(a,b){return b.count-a.count;})[0];
   const ok=picked===top.key;
-  document.getElementById('guessHint').innerHTML='实际最多的是<b>'+top.name+'</b>（'+top.count+' 个现场）。'
-   +(picked?(ok?'你猜对了。':'你猜的是「'+CAPS.find(function(c){return c.key===picked;}).name+'」，差一点。'):'你还没猜，先选一个。');
-  drawSvg();drawGuess();
+  let msg='';
+  if(!picked){msg='实际最多的是「'+top.name+'」（'+top.count+' 个现场），你还没选。';}
+  else if(ok){msg='实际最多的是「'+top.name+'」（'+top.count+' 个现场），你猜对了。';}
+  else{const pc=CAPS.filter(function(c){return c.key===picked;})[0];msg='实际最多的是「'+top.name+'」（'+top.count+' 个现场）；你猜的「'+pc.name+'」有 '+pc.count+' 个，差一点。';}
+  document.getElementById('capHint').textContent=msg;
+  document.getElementById('revealBtn').style.display='none';
+  document.getElementById('resetBtn').style.display='inline-block';
+  if(!active)active=top.key;
+  drawRadar();drawList();
+  if(active)setActive(active);
  }
- function reset(){revealed=false;picked=null;document.getElementById('guessHint').textContent='';drawSvg();drawGuess();}
+ function reset(){
+  revealed=false;picked=null;active=null;
+  document.getElementById('capHint').textContent='雷达顶点到中心的距离 = 该类能力的现场数量，不代表产值或重要性。';
+  document.getElementById('revealBtn').style.display='inline-block';
+  document.getElementById('resetBtn').style.display='none';
+  document.getElementById('detail').innerHTML='<span class="placeholder">点左侧能力行或雷达轴，查看这一类包含的真实现场。</span>';
+  drawRadar();drawList();
+ }
+ document.getElementById('revealBtn').addEventListener('click',reveal);
+ document.getElementById('resetBtn').addEventListener('click',reset);
 
- drawGuess();drawSvg();drawDetail();
+ drawRadar();drawList();
 })();
 </script>
 </body>
