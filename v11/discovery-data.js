@@ -160,8 +160,20 @@
     { id: 'agriculture', topic: 'agriculture', town: null, title: '全县 · 农业经营', subtitle: '前三季度 · 农林牧渔业总产值', big: '130.32', unit: '亿', question: '六点九的增长，落在谁的地里？', visual: 'agriculture', rel: 'agri', state: 'stat', source: 'quarter' },
     { id: 'tea', topic: 'agriculture', town: '柏塘镇', title: '柏塘 · 新陂合作社', subtitle: '春茶干茶产量', big: '2,500', unit: '斤', question: '茶卖出去了，钱回来了吗？', visual: 'tea', rel: 'agri', state: 'stat', source: 'tea' }
   ];
+  /* —— 流向：新投产的现场沿产业链、园区、公路流向谁 ——
+     只写在公开信息里能对上主体的方向，线上数字取各自主口径；
+     chain 类是同一条产业链上的上下游，公开通稿没有披露具体供货关系。 */
+  const flows = [
+    { from: 'copper', to: 'shenyuan', label: '铜箔 → 电池', val: '100 亿', basis: 'chain',
+      note: '铜箔是电池集流体的原料，同一条产业链上的上下游；公开报道未披露两家之间的供货关系。' },
+
+
+
+    { from: 'road218', to: 'henghe', label: '公路 → 流量', val: '218 公里', basis: 'road',
+      note: '环罗浮山 218 公里公路把沿线驿站、户外运动小镇串起来，公路通车在前、人流在后。' }
+  ];
   return {
-    version: '20261109-structure', checkedAt: '2026-11-09', sources, topics, events,
+    version: '20261109-structure', checkedAt: '2026-11-09', sources, topics, events, flows,
     towns: ['罗阳街道', '龙溪街道', '石湾镇', '园洲镇', '杨村镇', '公庄镇', '湖镇镇', '长宁镇', '横河镇', '龙华镇', '柏塘镇', '泰美镇', '杨侨镇', '麻陂镇', '观音阁镇', '石坝镇']
   };
 });

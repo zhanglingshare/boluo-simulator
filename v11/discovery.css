@@ -412,7 +412,7 @@ body.wt-page .holo-tools,html .holo-tools{display:flex;align-items:center;justif
 .holo-center{display:flex;flex-direction:column;gap:10px;min-width:0}
 .holo-center .holo-metrics{grid-template-columns:repeat(3,minmax(0,1fr))}
 .holo-stage{position:relative;background:#fff;border:1px solid #e4eaf2;border-radius:14px;overflow:hidden}
-#holoNet{width:100%;height:548px;display:block}
+#holoNet{width:100%;height:620px;display:block}
 .holo-detail{max-width:560px}
 .holo-note{margin:0;font-size:10px;color:#9aa8b9}
 
@@ -449,7 +449,7 @@ body.wt-page .holo-tools,html .holo-tools{display:flex;align-items:center;justif
 
 @media (max-width:1240px){
  .holo-work{grid-template-columns:216px minmax(0,1fr) 280px;gap:11px;padding:12px 14px 0}
- #holoNet{height:520px}
+ #holoNet{height:580px}
 }
 @media (max-width:900px){
  .holo-page .holo-top{position:static;flex-wrap:wrap;gap:8px}
@@ -464,7 +464,7 @@ body.wt-page .holo-tools,html .holo-tools{display:flex;align-items:center;justif
  .holo-left .holo-layer button.on{border-color:#1369eb}
  .holo-right{display:block;margin-top:12px}
  .holo-right .holo-panel{margin-bottom:10px}
- #holoNet{height:430px}
+ #holoNet{height:480px}
  .holo-detail{margin:12px 0 0}
  .holo-tl .tl-row{grid-template-columns:repeat(11,minmax(0,1fr));gap:3px}
  .holo-footwrap{padding:0 12px 30px}
@@ -476,7 +476,7 @@ body.wt-page .holo-tools,html .holo-tools{display:flex;align-items:center;justif
  .holo-center .holo-metrics .holo-card{min-width:0}
  .holo-center .holo-metrics .holo-card:first-child{grid-column:1 / -1}
  .holo-card b{font-size:20px}
- #holoNet{height:560px}
+ #holoNet{height:700px}
 }
 .holo-intel .holo-pt{white-space:nowrap;flex:0 0 auto;margin-bottom:8px}
 .holo-intel b{display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden;white-space:normal;line-height:1.55;font-size:12.5px}

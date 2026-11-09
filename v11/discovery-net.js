@@ -16,6 +16,15 @@
     return '投产';
   }
 
+  /* 中间层的五个关系类目，和图左侧的图层按钮一一对应 */
+  const CATS = [
+    { key: 'supply', label: '供应链配套', short: '供应链', color: '#2563eb' },
+    { key: 'invest', label: '投资建设', short: '投资', color: '#0e9ba5' },
+    { key: 'coop', label: '区域协作', short: '协作', color: '#7c3aed' },
+    { key: 'road', label: '交通物流', short: '交通', color: '#dc2626' },
+    { key: 'tour', label: '消费文旅', short: '文旅', color: '#d97706' }
+  ];
+
   function build(events) {
     const towns = [];
     const projects = [];
@@ -57,22 +66,39 @@
     function rebuild() {
       nodes.length = 0; links.length = 0;
       nodes.push(core);
+      /* 第二层：五个关系类目 */
+      const cats = [];
+      const catOf = {};
+      CATS.forEach(function (c) {
+        const n = { id: 'c_' + c.key, kind: 'cat', key: c.key, label: c.label, short: c.short, color: c.color, r: 13, x: 0, y: 0, vx: 0, vy: 0, count: 0, spawn: 1 };
+        cats.push(n); catOf[c.key] = n; nodes.push(n);
+        links.push({ a: core, b: n, kind: 'cat', color: c.color, state: 'live' });
+      });
+      G.cats = cats;
+      /* 第三层：具体现场，挂在各自的关系类目下 */
       G.projects.forEach(function (p) {
         const n = Object.assign({}, p, { vx: 0, vy: 0, x: 0, y: 0, r: p.state === 'live' ? 12.5 : (p.state === 'out' ? 8.5 : 7), pin: false, spawn: 1 });
         nodes.push(n);
-        links.push({ a: core, b: n, kind: 'proj', far: !p.town, color: p.color, tag: p.val, stageName: p.stageName, state: p.state });
+        const c = catOf[(p.ev && p.ev.rel) || 'invest'] || catOf.invest;
+        c.count += 1;
+        links.push({ a: c, b: n, kind: 'proj', color: p.color, tag: p.val, stageName: p.stageName, state: p.state });
       });
-      /* 同镇之间的淡线：只说明这些现场在同一个镇，不是业务往来 */
-      const byTown = {};
-      nodes.forEach(function (n) {
-        if (n.kind === 'proj' && n.town) { (byTown[n.town] = byTown[n.town] || []).push(n); }
-      });
-      Object.keys(byTown).forEach(function (k) {
-        const list = byTown[k];
-        for (let i = 0; i < list.length; i++) {
-          for (let j = i + 1; j < list.length; j++) links.push({ a: list[i], b: list[j], kind: 'sib' });
-        }
-      });
+      /* 流向：已经进去的现场沿着产业链、园区、公路流向谁 */
+      if (opts && opts.flows && opts.flows.length) {
+        const byId = {};
+        nodes.forEach(function (n) { if (n.kind === 'proj' && n.ev) byId[n.ev.id] = n; });
+        const pairs = [];
+        opts.flows.forEach(function (f) {
+          const a = byId[f.from], b = byId[f.to];
+          if (a && b) {
+            pairs.push([a.id, b.id]);
+            links.push({ a: a, b: b, kind: 'flow', flow: f, color: a.color, label: f.label, val: f.val, basis: f.basis, ti: pairs.length });
+            /* 数字写在“被带动的那个点”下面：读者一眼看到谁给它送了量 */
+            b.inflow = { from: a.name, fromVal: a.val, val: f.val, label: f.label, color: a.color };
+          }
+        });
+        G.flowPairs = pairs;
+      }
     }
 
     let W = 0, H = 0, mob = false;
@@ -94,45 +120,50 @@
       canvas.__nodes = nodes;
     }
 
-    /* 静态环布：同一个镇的项目占一个扇区，一内一外错开，再做轻避让。
-       图上不出现镇——镇只决定谁挨着谁，不落成节点。 */
+    /* 三层布局：中心博罗 → 关系类目 → 具体现场。
+       同一类目下的现场落在同一扇区，线短、数字才看得清。 */
     function seed() {
       const cx = W / 2, cy = H * 0.50;
+      const cats = G.cats || [];
       const projs = nodes.filter(function (n) { return n.kind === 'proj'; });
-      const order = [], byTown = {};
+      const byCat = {};
       projs.forEach(function (p) {
-        const k = p.town || '_';
-        if (!byTown[k]) { byTown[k] = []; order.push(k); }
-        byTown[k].push(p);
+        const k = (p.ev && p.ev.rel) || 'invest';
+        (byCat[k] = byCat[k] || []).push(p);
       });
-      const rx = W * (mob ? 0.325 : 0.365), ry = H * (mob ? 0.43 : 0.40);
-      let totalW = 0;
-      order.forEach(function (k) { totalW += 1 + 0.55 * (byTown[k].length - 1); });
+      const RX = mob ? W * 0.405 : Math.min(W, H) * 0.435;
+      const RY = mob ? H * 0.345 : Math.min(W, H) * 0.400;
+      const CRX = mob ? W * 0.185 : Math.min(W, H) * 0.185;
+      const CRY = mob ? H * 0.150 : Math.min(W, H) * 0.172;
+      const groups = cats.map(function (c) { return { cat: c, list: byCat[c.key] || [] }; })
+        .filter(function (g) { return g.list.length > 0; });
+      const total = groups.reduce(function (s, g) { return s + 1 + 0.42 * (g.list.length - 1); }, 0) || 1;
       let acc = -Math.PI / 2 - Math.PI * 2 * 0.5;
-      order.forEach(function (k) {
-        const sib = byTown[k], n = sib.length;
-        const span = Math.PI * 2 * (1 + 0.55 * (n - 1)) / totalW;
-        const base = acc + span * 0.5;
-        const gap = Math.min(mob ? 0.52 : 0.42, (span / Math.max(n, 1)) * (mob ? 1.15 : 0.92));
-        sib.forEach(function (p, j) {
-          const a = base + (j - (n - 1) / 2) * gap;
-          const k2 = (n > 2 && j % 2 === 1) ? 1.07 : 0.92;
-          p.labUp = n > 1 && j % 2 === 1;
-          p.x = cx + Math.cos(a) * rx * k2;
-          p.y = cy + Math.sin(a) * ry * k2;
+      groups.forEach(function (g) {
+        const n = g.list.length;
+        const span = Math.PI * 2 * (1 + 0.42 * (n - 1)) / total;
+        const mid = acc + span * 0.5;
+        g.cat.x = cx + Math.cos(mid) * CRX;
+        g.cat.y = cy + Math.sin(mid) * CRY;
+        const gap = Math.min(span / Math.max(n, 1), mob ? 0.55 : 0.46);
+        g.list.forEach(function (p, j) {
+          const a = mid + (j - (n - 1) / 2) * gap;
+          const k2 = (n > 2 && j % 2 === 1) ? 1.055 : 0.945;
+          p.x = cx + Math.cos(a) * RX * k2;
+          p.y = cy + Math.sin(a) * RY * k2;
         });
         acc += span;
       });
       core.x = cx; core.y = cy;
       nodes.forEach(function (n) { n.vx = 0; n.vy = 0; });
-      /* 轻避让，只防标签压住 */
-      for (let it = 0; it < 80; it++) {
+      /* 轻避让：只防标签互相压住 */
+      for (let it = 0; it < 60; it++) {
         for (let i = 0; i < projs.length; i++) {
           for (let j = i + 1; j < projs.length; j++) {
             const a = projs[i], b = projs[j];
             const dx = b.x - a.x, dy = b.y - a.y;
             const d = Math.sqrt(dx * dx + dy * dy) || 1;
-            const need = Math.max(a.r, b.r) * 3.05;
+            const need = Math.max(a.r, b.r) * 3.0;
             if (d < need) {
               const push = (need - d) / 2, ux = dx / d, uy = dy / d;
               a.x -= ux * push; a.y -= uy * push;
@@ -141,8 +172,12 @@
           }
         }
         projs.forEach(function (n) {
-          n.x = Math.max(n.r + 26, Math.min(W - n.r - 26, n.x));
-          n.y = Math.max(n.r + 26, Math.min(H - n.r - 34, n.y));
+          n.x = Math.max(n.r + 34, Math.min(W - n.r - 34, n.x));
+          n.y = Math.max(n.r + 26, Math.min(H - n.r - 36, n.y));
+        });
+        cats.forEach(function (c) {
+          c.x = Math.max(26, Math.min(W - 26, c.x));
+          c.y = Math.max(22, Math.min(H - 22, c.y));
         });
       }
     }
@@ -225,11 +260,71 @@
       for (let y = 0; y < H; y += g) { ctx.beginPath(); ctx.moveTo(0, y); ctx.lineTo(W, y); ctx.stroke(); }
 
       const t = performance.now();
+      const placed = [];
+      /* 先把外圈每个现场的标签位置估出来，流向的数字要避开它们 */
+      nodes.forEach(function (nd) {
+        if (nd.kind !== 'proj' || !nd.ev) return;
+        const vx = nd.x - W / 2, vy = nd.y - H * 0.50, dd = Math.hypot(vx, vy) || 1;
+        const dx0 = vx / dd, dy0 = vy / dd, rr = mob ? 11 : 13.5;
+        const lx = dx0 > 0.35 ? nd.x + rr + 34 : (dx0 < -0.35 ? nd.x - rr - 34 : nd.x);
+        const ly = nd.y + (dy0 >= 0 ? rr + 13 : -(rr + 13));
+        placed.push({ x: lx, y: ly });
+      });
+      /* 每条“类目—现场”关系线上的数字，也要算进去 */
+      links.forEach(function (l2) {
+        if (l2.kind !== 'proj' || !l2.a || !l2.b) return;
+        if ((l2.state || 'live') !== 'live') return;
+        placed.push({ x: (l2.a.x + l2.b.x) / 2, y: (l2.a.y + l2.b.y) / 2 });
+      });
 
       links.forEach(function (l, li) {
         const a = l.a, b = l.b;
         if (!a || !b) return;
         const dim = isDim(a) || isDim(b);
+        if (l.kind === 'flow') {
+          const fsel = !!(selId && (a.id === selId || b.id === selId));
+          const mx = (a.x + b.x) / 2, my = (a.y + b.y) / 2;
+          const cx0 = W / 2, cy0 = H * 0.50;
+          const nx = -(b.y - a.y), ny = (b.x - a.x), nl = Math.sqrt(nx * nx + ny * ny) || 1;
+          const off = Math.min(96, Math.max(46, Math.hypot(b.x - a.x, b.y - a.y) * 0.30));
+          const s1 = Math.hypot(mx + nx / nl * off - cx0, my + ny / nl * off - cy0);
+          const s2 = Math.hypot(mx - nx / nl * off - cx0, my - ny / nl * off - cy0);
+          const sg = s1 > s2 ? 1 : -1;
+          let px = mx + nx / nl * off * sg, py = my + ny / nl * off * sg;
+          const pdx = mob ? 26 : 72;
+          px = Math.max(pdx, Math.min(W - pdx, px));
+          py = Math.max(mob ? 40 : 60, Math.min(H - (mob ? 30 : 46), py));
+          if (mob) {
+            /* 竖着的一条链，往旁边鼓出去，别从中间的圆点上穿过 */
+            if (Math.abs(b.x - a.x) < 60) px = Math.min(W - 26, Math.max(a.x, b.x) + 92);
+          }
+          const pt = function (t) {
+            const u = 1 - t;
+            return { x: u * u * a.x + 2 * u * t * px + t * t * b.x, y: u * u * a.y + 2 * u * t * py + t * t * b.y };
+          };
+          ctx.save();
+          ctx.globalAlpha = dim ? .1 : 1;
+          ctx.strokeStyle = l.color;
+          ctx.lineWidth = fsel ? 3 : 2.2;
+          ctx.beginPath();
+          ctx.moveTo(a.x, a.y);
+          ctx.quadraticCurveTo(px, py, b.x, b.y);
+          ctx.stroke();
+          /* 箭头 */
+          const q1 = pt(0.90), q2 = pt(1);
+          const ang = Math.atan2(q2.y - q1.y, q2.x - q1.x);
+          const ar = 7;
+          ctx.beginPath();
+          ctx.moveTo(q2.x - Math.cos(ang) * ar * 0.6, q2.y - Math.sin(ang) * ar * 0.6);
+          ctx.lineTo(q2.x - Math.cos(ang - 0.42) * ar, q2.y - Math.sin(ang - 0.42) * ar);
+          ctx.lineTo(q2.x - Math.cos(ang + 0.42) * ar, q2.y - Math.sin(ang + 0.42) * ar);
+          ctx.closePath();
+          ctx.fillStyle = l.color;
+          ctx.fill();
+          /* 数字不挂在线上：挂到被带动的那个节点下面，既不打架也读得懂 */
+          ctx.restore();
+          return;
+        }
         if (l.kind === 'sib') {
           ctx.save();
           ctx.globalAlpha = dim ? .06 : .30;
@@ -245,12 +340,12 @@
         const st = l.state || 'live';
         const ctl = bez(a, b, 0);
         ctx.save();
-        ctx.globalAlpha = dim ? .08 : (onSel ? 1 : (l.kind === 'town' ? 1 : (st === 'live' ? .7 : .42)));
+        ctx.globalAlpha = l.kind === 'cat' ? .95 : (dim ? .08 : (onSel ? 1 : (l.kind === 'town' ? 1 : (st === 'live' ? .7 : .42))));
         ctx.beginPath();
         ctx.moveTo(a.x, a.y);
         ctx.quadraticCurveTo(ctl.x, ctl.y, b.x, b.y);
         ctx.strokeStyle = l.kind === 'town' ? 'rgba(120,145,175,.34)' : l.color;
-        ctx.lineWidth = l.kind === 'town' ? 1.2 : (onSel ? 2.6 : (st === 'live' ? 1.8 : 1.2));
+        ctx.lineWidth = l.kind === 'cat' ? 2.8 : (l.kind === 'town' ? 1.2 : (onSel ? 2.6 : (st === 'live' ? 1.8 : 1.2)));
         if (l.kind === 'proj' && st === 'out') ctx.setLineDash([3, 3]);
         else if (l.kind === 'proj' && st === 'wip') ctx.setLineDash([4, 4]);
         ctx.stroke();
@@ -270,24 +365,42 @@
               ctx.restore();
             }
           }
-          if (LIVE && !mob && st === 'live') {
-            const p = bez(a, b, 0.55);
+          /* 线上挂字：数字大字，阶段小字。手机上只留数字。 */
+          if (LIVE && !mob && st === 'live' && l.tag) {
+            const p = bez(a, b, 0.60);
             const dx = b.x - a.x, dy = b.y - a.y, dl = Math.hypot(dx, dy) || 1;
-            const ox = -dy / dl * 9, oy = dx / dl * 9;
+            const ox = -dy / dl * 7, oy = dx / dl * 7;
             ctx.save();
-            ctx.globalAlpha = dim ? .08 : .95;
-            ctx.font = '600 9px ' + FONT;
-            const tw = ctx.measureText(l.stageName).width;
+            ctx.globalAlpha = dim ? .06 : .96;
             ctx.textAlign = 'center'; ctx.textBaseline = 'middle';
-            ctx.fillStyle = 'rgba(255,255,255,.94)';
-            ctx.beginPath();
-            if (ctx.roundRect) ctx.roundRect(p.x + ox - tw / 2 - 5, p.y + oy - 7.5, tw + 10, 15, 7.5);
-            else ctx.rect(p.x + ox - tw / 2 - 5, p.y + oy - 7.5, tw + 10, 15);
-            ctx.fill();
-            ctx.strokeStyle = l.color + '33'; ctx.lineWidth = 1;
-            ctx.stroke();
-            ctx.fillStyle = l.color;
-            ctx.fillText(l.stageName, p.x + ox, p.y + oy);
+            if (mob) {
+              ctx.font = '800 9.5px ' + FONT;
+              const bw = ctx.measureText(l.tag).width + 9, bh = 15;
+              ctx.fillStyle = 'rgba(255,255,255,.95)';
+              ctx.beginPath();
+              if (ctx.roundRect) ctx.roundRect(p.x + ox - bw / 2, p.y + oy - bh / 2, bw, bh, 7.5);
+              else ctx.rect(p.x + ox - bw / 2, p.y + oy - bh / 2, bw, bh);
+              ctx.fill();
+              ctx.strokeStyle = l.color + '33'; ctx.lineWidth = 1; ctx.stroke();
+              ctx.fillStyle = l.color;
+              ctx.fillText(l.tag, p.x + ox, p.y + oy);
+            } else {
+              ctx.font = '800 12px ' + FONT;
+              const wv = ctx.measureText(l.tag).width;
+              ctx.font = '600 9px ' + FONT;
+              const ws = ctx.measureText(l.stageName).width;
+              const bw = Math.max(wv, ws) + 12, bh = 28;
+              ctx.fillStyle = 'rgba(255,255,255,.96)';
+              ctx.beginPath();
+              if (ctx.roundRect) ctx.roundRect(p.x + ox - bw / 2, p.y + oy - bh / 2, bw, bh, 8);
+              else ctx.rect(p.x + ox - bw / 2, p.y + oy - bh / 2, bw, bh);
+              ctx.fill();
+              ctx.strokeStyle = l.color + '44'; ctx.lineWidth = 1; ctx.stroke();
+              ctx.font = '800 12px ' + FONT; ctx.fillStyle = l.color;
+              ctx.fillText(l.tag, p.x + ox, p.y + oy - 5.5);
+              ctx.font = '600 9px ' + FONT; ctx.fillStyle = '#8296ab';
+              ctx.fillText(l.stageName, p.x + ox, p.y + oy + 7);
+            }
             ctx.restore();
           }
         }
@@ -304,6 +417,29 @@
           ctx.fillStyle = '#2b3d57'; ctx.beginPath(); ctx.arc(n.x, n.y, 20, 0, 7); ctx.fill();
           ctx.fillStyle = '#fff'; ctx.font = '700 15px ' + FONT; ctx.textAlign = 'center'; ctx.textBaseline = 'middle';
           ctx.fillText('博罗', n.x, n.y + .5);
+          return;
+        }
+        if (n.kind === 'cat') {
+          ctx.save();
+          ctx.globalAlpha = 1;
+          ctx.fillStyle = '#fff';
+          ctx.beginPath(); ctx.arc(n.x, n.y, n.r, 0, 7); ctx.fill();
+          ctx.strokeStyle = n.color; ctx.lineWidth = 2;
+          ctx.beginPath(); ctx.arc(n.x, n.y, n.r, 0, 7); ctx.stroke();
+          ctx.fillStyle = n.color;
+          ctx.beginPath(); ctx.arc(n.x, n.y, 4.2, 0, 7); ctx.fill();
+          const txt = (mob ? n.short : n.label) + '  ' + n.count;
+          ctx.font = '700 ' + (mob ? 9.5 : 10.5) + 'px ' + FONT;
+          const tw = ctx.measureText(txt).width;
+          ctx.fillStyle = 'rgba(255,255,255,.97)';
+          ctx.beginPath();
+          if (ctx.roundRect) ctx.roundRect(n.x - tw / 2 - 6, n.y + n.r + 3, tw + 12, 15, 7.5);
+          else ctx.rect(n.x - tw / 2 - 6, n.y + n.r + 3, tw + 12, 15);
+          ctx.fill();
+          ctx.strokeStyle = n.color + '44'; ctx.lineWidth = 1; ctx.stroke();
+          ctx.fillStyle = n.color; ctx.textAlign = 'center'; ctx.textBaseline = 'middle';
+          ctx.fillText(txt, n.x, n.y + n.r + 10.5);
+          ctx.restore();
           return;
         }
         if (n.kind === 'town') {
@@ -355,15 +491,12 @@
         ctx.save();
         ctx.globalAlpha = dim ? .14 : 1;
         ctx.textAlign = 'center'; ctx.textBaseline = 'top';
-        const cut = mob ? 5 : 8;
+        const cut = mob ? 7 : 8;
         const nm = n.name.length > cut ? n.name.slice(0, cut) + '…' : n.name;
         const wip = (n.state || 'live') === 'wip';
         const outn = (n.state || 'live') === 'out';
         ctx.font = '600 ' + (mob ? 9 : 10.5) + 'px ' + FONT;
-        const mw = Math.max(ctx.measureText(nm).width, (function () {
-          ctx.save(); ctx.font = '700 ' + (mob ? 8.5 : 9.5) + 'px ' + FONT;
-          const w2 = wip ? ctx.measureText('在途').width : ctx.measureText(n.val).width; ctx.restore(); return w2;
-        })());
+        const mw = ctx.measureText(nm).width;
         /* 标签一律沿径向朝外，不往中心方向压别的点 */
         const ctr = { x: W / 2, y: H * 0.50 };
         const ang = Math.atan2(n.y - ctr.y, n.x - ctr.x);
@@ -371,19 +504,50 @@
         let lx = n.x + dx0 * (r + 11);
         let ly = n.y + dy0 * (r + 11);
         ctx.textAlign = dx0 > 0.35 ? 'left' : (dx0 < -0.35 ? 'right' : 'center');
-        if (ctx.textAlign === 'left') lx = Math.max(6, Math.min(W - 6 - mw, lx));
-        else if (ctx.textAlign === 'right') lx = Math.max(6 + mw, Math.min(W - 6, lx));
-        else lx = Math.max(6 + mw / 2, Math.min(W - 6 - mw / 2, lx));
         ctx.textBaseline = 'middle';
-        const below = dy0 >= 0;
+        let below = dy0 >= 0;
+        /* 贴边放不下时，退回节点正下方居中，避免文字压回圆点 */
+        if (ctx.textAlign === 'left' && lx + mw > W - 8) {
+          ctx.textAlign = 'center'; lx = Math.max(8 + mw / 2, Math.min(W - 8 - mw / 2, n.x)); ly = n.y + r + 13; below = true;
+        } else if (ctx.textAlign === 'right' && lx - mw < 8) {
+          ctx.textAlign = 'center'; lx = Math.max(8 + mw / 2, Math.min(W - 8 - mw / 2, n.x)); ly = n.y + r + 13; below = true;
+        } else if (ctx.textAlign === 'center' && (lx - mw / 2 < 8 || lx + mw / 2 > W - 8)) {
+          lx = Math.max(8 + mw / 2, Math.min(W - 8 - mw / 2, n.x));
+        }
         const y1 = mob ? ly : (below ? ly + 6 : ly - 6);
         const y2 = below ? y1 + 12 : y1 - 12;
-        ctx.fillStyle = outn ? '#6f7d8f' : (wip ? '#93a3b5' : '#1e2b3a');
+        ctx.fillStyle = outn ? '#6f7d8f' : '#1e2b3a';
         ctx.fillText(nm, lx, y1);
-        if (!mob) {
+        /* 名字下面只留一个「新」：这两个月才进网的现场。数字都挂在线上。 */
+        if (mob) {
+          const da = String(n.val).replace(/[^0-9.]/g, '');
+          const showVal = !(da && n.name.indexOf(da) >= 0);
+          if (showVal) {
+            ctx.save();
+            ctx.font = '700 9px ' + FONT;
+            ctx.fillStyle = n.color;
+            ctx.fillText(n.val, lx, y2);
+            ctx.restore();
+          }
+        }
+        /* 有上游给它送量的，名字下面直接写“← 100 亿”，一眼看出谁被带动 */
+        if (!mob && n.inflow && !outn) {
+          ctx.save();
+          ctx.font = '700 10px ' + FONT;
+          ctx.fillStyle = n.inflow.color;
+          ctx.fillText('← ' + n.inflow.val, lx, y2);
+          ctx.restore();
+        }
+        if (!mob && n.ev && !outn && n.ev.month >= 10) {
+          ctx.save();
           ctx.font = '700 9.5px ' + FONT;
-          ctx.fillStyle = wip ? '#b3c0cf' : n.color;
-          ctx.fillText(wip ? '在途' : n.val, lx, y2);
+          const wl = ctx.measureText(nm).width;
+          const nx0 = ctx.textAlign === 'left' ? lx : (ctx.textAlign === 'right' ? lx - wl - 18 : lx - wl / 2 - 13);
+          ctx.fillStyle = '#1f9d63';
+          ctx.beginPath(); ctx.arc(nx0 + 3, y2, 2.6, 0, 7); ctx.fill();
+          ctx.textAlign = 'left'; ctx.textBaseline = 'middle';
+          ctx.fillText('新', nx0 + 8, y2);
+          ctx.restore();
         }
         ctx.restore();
       });

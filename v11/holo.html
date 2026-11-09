@@ -30,7 +30,7 @@
   </div>
   <div class="holo-panel">
    <p class="holo-pt"><i></i>读法</p>
-   <p class="holo-read">每个实心圆点都是一个已经投产、开园、通车、开业的现场——只有这些才改变了关系结构。签约和在建不进这张图——它们还在门外排队，改变不了关系结构。</p>
+   <p class="holo-read">圆心是博罗，中间一圈是五条关系，最外一圈才是具体现场。每个实心圆点都是一个已经投产、开园、通车、开业的现场，线上的数字是这条关系带过去的量。绿点是这两个月才进网的。签约和在建不进这张图——它们还在门外排队。</p>
    <p class="holo-tip">点住圆点拖动 · 空白处平移 · 滚轮缩放 · 点圆点看这个现场</p>
   </div>
  </aside>
@@ -42,7 +42,7 @@
    <div id="holoNet"></div>
   </div>
   <div class="holo-detail" id="holoDetail" hidden></div>
-  <p class="holo-note">按镇街挂项目 · 点住圆点可以拖开看 · 连线上的数字是这条关系带过去的量 · 点右栏任一条，画布会把它点亮</p>
+  <p class="holo-note">圆心是博罗 · 中圈是五条关系 · 外圈是具体现场 · 线上的数字是这条关系带过去的量 · 箭头指向可能流向谁，箭头带过去的量写在被指向的那个点下面 · 点右栏任一条，画布会把它点亮</p>
  </section>
 
  <aside class="holo-right holo-side">
@@ -126,6 +126,7 @@ window.addEventListener('load',function(){
 
  if(window.BoluoNet)netCtl=window.BoluoNet.mount(document.getElementById('holoNet'),ev,{
    live:true,
+   flows:D.flows,
    onSelect:function(n,pos){ if(n&&n.kind==='proj'&&n.ev)showDetail(n.ev,pos); },
    onBlank:function(){ var b=document.getElementById('holoDetail'); if(b)b.hidden=true; }
  });
