@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<title>连接质量 · 博罗新视角</title>
+<meta name="description" content="呈现博罗可核验的流向、跨城共建与交通连接，区分已证实与未披露的关系；连接的开放性与制度证据缺数据处待补。">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<script src="../assets/boluo-access.js?v=20261108-inline2" data-bl-access="inline"></script>
+<link rel="stylesheet" href="./lens.css?v=20261110-lens">
+</head>
+<body class="lens-body">
+<header class="lens-top">
+ <a class="lens-brand" href="./lens.html">博罗 · 新视角<small>用能力与结构看现场，不做排名</small></a>
+ <nav class="lens-pager" id="lensPager"></nav>
+</header>
+
+<main class="lens-wrap">
+ <p class="lens-kick">CONNECTIVITY · 连接质量</p>
+ <h1 class="lens-h1">决定结果的，<br>是连接的质量而非硬件</h1>
+ <p class="lens-lede">开放的网络、跨城的要素流动与有能力的中介，比单纯的硬件投入更决定长期结果。本页只呈现公开信息里能对上主体的连接，未披露的关系不替它连线。</p>
+ <p class="lens-meta" id="lensMeta"></p>
+
+ <div class="conn-block">
+  <h3>可核验的流向</h3>
+  <p class="sub">只写能对上主体的方向；未披露具体供货关系的单独标注</p>
+  <div id="flowList"></div>
+ </div>
+
+ <div class="conn-block">
+  <h3>跨城共建与迁入</h3>
+  <p class="sub">公开报道中明确含共建、迁入关系的现场</p>
+  <div class="lens-chips" id="crossChips"></div>
+ </div>
+
+ <div class="conn-block">
+  <h3>交通连接</h3>
+  <p class="sub">高速与铁路多在在建，通车 / 开工 / 征地不合并</p>
+  <div class="lens-chips" id="roadChips"></div>
+ </div>
+
+ <div class="lens-gap" style="margin-bottom:14px"><b>数据缺口 · </b>跨城合同实际数量与方向、本地配套交易关系、人才与技术跨城流动、园区平台的中介作用，均无公开数据，交火山引擎采集；不把同产业链默认等同于存在供货。</div>
+
+ <div class="lens-foot">
+  <b>口径说明：</b>流向的 basis 区分「产业链上下游」与「公路连接」；chain 类仅表示处于同一产业链，公开通稿未披露具体供货。签约、开工、征地、通车是不同进度。<br>
+  <b>边界：</b>连接的开放性、制度与信任等隐性因素当前无公开证据，不做评分。
+ </div>
+</main>
+
+<script src="./discovery-data.js?v=20261109-struct"></script>
+<script>
+(function(){
+ const D=window.BoluoDiscoveryData;
+ if(!D){document.getElementById('flowList').innerHTML='数据未加载';return;}
+ const evMap={};D.events.forEach(function(e){evMap[e.id]=e;});
+ const shortName=function(id){const e=evMap[id];if(!e)return id;const parts=e.title.split('·');return parts.length>1?parts.pop().trim():e.title;};
+ const basisText={chain:'产业链上下游',road:'公路连接'};
+
+ const PAGES=[['lens.html','入口'],['capability.html','能力'],['value-chain.html','环节'],['resilience.html','韧性'],['foundational.html','基础'],['connections.html','连接']];
+ document.getElementById('lensPager').innerHTML=PAGES.map(function(p){
+  return '<a href="'+p[0]+'"'+(p[0]==='connections.html'?' class="cur"':'')+'>'+p[1]+'</a>';}).join('');
+ document.getElementById('lensMeta').textContent='数据版本 '+D.version+' · 核对于 '+D.checkedAt;
+
+ document.getElementById('flowList').innerHTML=D.flows.map(function(f){
+  return '<div class="conn-flow"><span class="conn-node">'+shortName(f.from)+'</span>'
+   +'<span class="conn-arrow">→</span><span class="conn-node">'+shortName(f.to)+'</span>'
+   +'<div class="conn-info"><b>'+f.label+' <span class="conn-val" style="display:inline">'+f.val+'</span></b>'
+   +'<span>'+f.note+'</span></div><span class="conn-basis">'+(basisText[f.basis]||f.basis)+'</span></div>';
+ }).join('');
+
+ const cross=[
+  ['futian','深博福田产业园 · 深圳博罗共建'],
+  ['fubo','福博艺术中心 · 深博共建'],
+  ['dongweifeng','东维丰 · 从东莞迁入']
+ ];
+ document.getElementById('crossChips').innerHTML=cross.map(function(c){
+  const e=evMap[c[0]];
+  return '<span class="lens-chip"><i class="st '+(e?e.state:'stat')+'"></i>'+c[1]+'</span>';}).join('');
+
+ const roads=['huixia','huizhao','jiguang','shilong'];
+ document.getElementById('roadChips').innerHTML=roads.map(function(id){
+  const e=evMap[id];if(!e)return '';
+  return '<span class="lens-chip"><i class="st '+e.state+'"></i>'+shortName(id)+' · '+e.subtitle+'</span>';}).join('');
+})();
+</script>
+</body>
+</html>

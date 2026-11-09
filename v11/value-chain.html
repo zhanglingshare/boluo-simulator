@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<title>产业链环节 · 博罗新视角</title>
+<meta name="description" content="按原料、加工、配套、出货四个环节呈现博罗的现场与卡点，不做增长预测；本地配套仅一家受访口径，不外推。">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<script src="../assets/boluo-access.js?v=20261108-inline2" data-bl-access="inline"></script>
+<link rel="stylesheet" href="./lens.css?v=20261110-lens">
+</head>
+<body class="lens-body">
+<header class="lens-top">
+ <a class="lens-brand" href="./lens.html">博罗 · 新视角<small>用能力与结构看现场，不做排名</small></a>
+ <nav class="lens-pager" id="lensPager"></nav>
+</header>
+
+<main class="lens-wrap">
+ <p class="lens-kick">VALUE CHAIN · 产业链环节</p>
+ <h1 class="lens-h1">从原料到出货，<br>博罗卡在哪一段？</h1>
+ <p class="lens-lede">把现场放回产业链的四个环节，看每个环节有多少已投产、多少还在途、哪里已经退出。本页只摆事实与卡点，不画增长路径、不设预测。</p>
+ <p class="lens-meta" id="lensMeta"></p>
+
+ <div class="chain-flow" id="chainFlow"></div>
+
+ <div class="lens-foot">
+  <b>口径说明：</b>环节依据现场在产业链中的位置划分，属分析判断；状态分「已投产 / 在途 / 退出」，不合并。本地配套采购比例仅汉德精密一家受访口径，不外推全县。<br>
+  <b>数据缺口：</b>各环节本地企业数、本地配套率、外购比例、增加值与客户集中度均无公开数据，统一标注待补，交火山引擎采集。服务类现场（文旅、农业）见「基础经济」与「连接质量」页。
+ </div>
+</main>
+
+<script src="./discovery-data.js?v=20261109-struct"></script>
+<script>
+(function(){
+ const D=window.BoluoDiscoveryData;
+ if(!D){document.getElementById('chainFlow').innerHTML='<div class="lens-gap">数据未加载</div>';return;}
+ const evMap={};D.events.forEach(function(e){evMap[e.id]=e;});
+
+ const STAGES=[
+  {no:'1',name:'原料 · 材料供应',ids:['copper','jinliyuan','cement'],
+   gap:'本地材料多为目标或在途：铜箔 2027 产值目标不是已实现、实际产销待跟踪；一条熟料产线已关停拆除。'},
+  {no:'2',name:'加工 · 制造与组装',ids:['shenyuan','xincheng','qicaihong','sanren','longxi','jintian','hande','xingrui','quanli','jiayou','xunling','yetai','dongweifeng','yixin','xianghao'],
+   gap:'现场最集中，但大量在途未投产；本地配套采购仅汉德一家受访口径，不能外推其他企业。'},
+  {no:'3',name:'配套 · 回收与平台',ids:['jiage','futian','luofufuture','sign4','huzhen'],
+   gap:'回收、标准厂房与平台刚起步；签约项目入园率与落地待跟踪，湖镇六个项目仍未动工。'},
+  {no:'4',name:'出货 · 物流与渠道',ids:['huixia','huizhao','jiguang','shilong','tianhong','taimeig','road218'],
+   gap:'高速与铁路多在在建（石龙铁路站施工至 2028）；客户集中度、物流方式与出货方向无公开数据。'}
+ ];
+ const PAGES=[['lens.html','入口'],['capability.html','能力'],['value-chain.html','环节'],['resilience.html','韧性'],['foundational.html','基础'],['connections.html','连接']];
+ document.getElementById('lensPager').innerHTML=PAGES.map(function(p){
+  return '<a href="'+p[0]+'"'+(p[0]==='value-chain.html'?' class="cur"':'')+'>'+p[1]+'</a>';}).join('');
+ document.getElementById('lensMeta').textContent='数据版本 '+D.version+' · 核对于 '+D.checkedAt;
+
+ function chip(id){
+  const e=evMap[id];if(!e)return '';
+  const place=e.town||'全县';
+  const num=e.big?(' · '+e.big+(e.unit||'')):'';
+  return '<span class="lens-chip"><i class="st '+e.state+'"></i>'+place+num+'</span>';
+ }
+ let html='';
+ STAGES.forEach(function(s,i){
+  const valid=s.ids.filter(function(id){return evMap[id];});
+  html+='<div class="chain-stage"><div class="chain-no"><i>'+s.no+'</i><h3>'+s.name+'</h3>'
+   +'<span class="n">'+valid.length+' 个现场</span></div>'
+   +'<div class="lens-chips">'+valid.map(chip).join('')+'</div>'
+   +'<div class="lens-gap"><b>卡点 · </b>'+s.gap+'</div></div>';
+  if(i<STAGES.length-1)html+='<div class="chain-arrow">↓</div>';
+ });
+ document.getElementById('chainFlow').innerHTML=html;
+})();
+</script>
+</body>
+</html>

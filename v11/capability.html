@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<title>能力图谱 · 博罗新视角</title>
+<meta name="description" content="从博罗今年的真实现场归纳可复用的生产能力，不做行业排名；能力能相邻长出什么，缺公开证据处标注待补。">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<script src="../assets/boluo-access.js?v=20261108-inline2" data-bl-access="inline"></script>
+<link rel="stylesheet" href="./lens.css?v=20261110-lens">
+</head>
+<body class="lens-body">
+<header class="lens-top">
+ <a class="lens-brand" href="./lens.html">博罗 · 新视角<small>用能力与结构看现场，不做排名</small></a>
+ <nav class="lens-pager" id="lensPager"></nav>
+</header>
+
+<main class="lens-wrap">
+ <p class="lens-kick">CAPABILITY MAP · 能力与复杂度</p>
+ <h1 class="lens-h1">博罗攒下了哪些能力，<br>这些能力还能组合出什么？</h1>
+ <p class="lens-lede">长期增长不靠单个产业的规模，而靠可复用生产能力的积累与组合。本页只从今年有公开记录的现场归纳能力，每个能力挂得上具体现场；不设评分、不排名次。</p>
+ <p class="lens-meta" id="lensMeta"></p>
+
+ <div class="lens-summary" id="lensSummary"></div>
+ <div class="lens-grid" id="capGrid"></div>
+
+ <div class="lens-foot">
+  <b>口径说明：</b>能力类别依据 <code>discovery-data.js</code> 中现场的工艺与产品归纳，属分析判断；每个现场的状态分「已投产 / 在途（签约·开工·在建·封顶）/ 退出 / 统计」，不合并。受访口径、目标值、规划表述均未当作已实现事实。<br>
+  <b>数据缺口：</b>「能相邻长出什么」需要设备通用度、专利、招聘技能同源等公开证据，当前不具备，统一标注待补，交火山引擎采集，不做主观推断。
+ </div>
+</main>
+
+<script src="./discovery-data.js?v=20261109-struct"></script>
+<script>
+(function(){
+ const D = window.BoluoDiscoveryData;
+ if(!D){document.getElementById('capGrid').innerHTML='<div class="lens-gap">数据未加载</div>';return;}
+ const evMap = {};
+ D.events.forEach(function(e){evMap[e.id]=e;});
+ const stateLabel = {live:'已投产',wip:'在途',out:'退出',stat:'统计'};
+
+ /* 能力归类（分析判断）→ 现场 id；道路类现场在「连接质量」页呈现 */
+ const CAPS = [
+  {key:'copper',name:'铜箔与电池材料',sub:'从铜箔、电芯到电池回收的一条材料链',ids:['copper','shenyuan','jiage','xincheng','jinliyuan'],
+   gap:'待补：铜箔规格与电池结构的技术同源证据、可相邻的结构件与回收材料方向，需公开来源。'},
+  {key:'precision',name:'精密机械与材料加工',sub:'电子、机械、热处理与轻工配套的加工能力',ids:['qicaihong','hande','xingrui','sanren','quanli','jiayou','longxi','yixin','jintian','xunling','cement'],
+   gap:'待补：设备加工精度与通用覆盖范围、可相邻的精密结构件方向，需设备/专利/招聘技能证据。'},
+  {key:'food',name:'食品与无菌灌装',sub:'无菌灌装线与农产品加工落地',ids:['yetai','dongweifeng','xianghao'],
+   gap:'待补：无菌线可灌装品类、包装材料同源与可相邻食品方向，需公开证据。'},
+  {key:'platform',name:'园区平台与招商',sub:'标准厂房、未来城与集中签约的落地',ids:['futian','luofufuture','sign4','huzhen'],
+   gap:'待补：厂房适配行业、签约项目实际入园与开工率，需后续独立记录。'},
+  {key:'tour',name:'户外运动与文旅服务',sub:'公路、营地、民宿与县域商业的服务能力',ids:['henghe','mofang','minsu','road218','fubo','tianhong','taimeig','dongshan','luofushanju','litian'],
+   gap:'待补：运营主体与客流技能、可相邻的康养/研学方向，需公开证据。'},
+  {key:'agri',name:'农业种植与初加工',sub:'当前仅一个合作社的春茶口径',ids:['tea'],
+   gap:'待补：可加工农产品清单、合作社与农户带动能力；现有口径仅新陂合作社，不外推。'}
+ ];
+
+ const PAGES=[['lens.html','入口'],['capability.html','能力'],['value-chain.html','环节'],['resilience.html','韧性'],['foundational.html','基础'],['connections.html','连接']];
+ document.getElementById('lensPager').innerHTML=PAGES.map(function(p){
+  return '<a href="'+p[0]+'"'+(p[0]==='capability.html'?' class="cur"':'')+'>'+p[1]+'</a>';
+ }).join('');
+
+ let liveN=0,wipN=0,outN=0;
+ CAPS.forEach(function(c){c.ids.forEach(function(id){const e=evMap[id];if(e){if(e.state==='live')liveN++;else if(e.state==='wip')wipN++;else if(e.state==='out')outN++;}});});
+ document.getElementById('lensMeta').textContent='数据版本 '+D.version+' · 核对于 '+D.checkedAt;
+ document.getElementById('lensSummary').innerHTML=[
+  ['归纳能力类别',CAPS.length,''],
+  ['已投产现场',liveN,'live'],
+  ['在途项目',wipN,'wip'],
+  ['退出/停滞',outN,'out']
+ ].map(function(s){
+  return '<div class="lens-stat"><span>'+(s[2]?'<i class="dot st '+s[2]+'"></i>':'')+s[0]+'</span><b>'+s[1]+'</b></div>';
+ }).join('');
+
+ function chip(id){
+  const e=evMap[id];if(!e)return '';
+  const place=e.town||'全县';
+  const num=e.big?(' · '+e.big+(e.unit||'')):'';
+  return '<span class="lens-chip"><i class="st '+e.state+'"></i>'+place+num+'</span>';
+ }
+ document.getElementById('capGrid').innerHTML=CAPS.map(function(c){
+  const valid=c.ids.filter(function(id){return evMap[id];});
+  return '<article class="lens-card"><div class="lens-card-head"><h3>'+c.name+'</h3>'
+   +'<span class="lens-count">'+valid.length+' 个现场</span></div>'
+   +'<p class="lens-card-sub">'+c.sub+'</p>'
+   +'<div class="lens-chips">'+valid.map(chip).join('')+'</div>'
+   +'<div class="lens-gap"><b>相邻方向 · </b>'+c.gap+'</div></article>';
+ }).join('');
+})();
+</script>
+</body>
+</html>

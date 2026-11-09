@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<title>博罗 · 新视角</title>
+<meta name="description" content="用能力与复杂度、产业链环节、区域韧性、基础经济、连接质量五个新视角重新看博罗；旧页面保持不动，本套为新增独立页面。">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<script src="../assets/boluo-access.js?v=20261108-inline2" data-bl-access="inline"></script>
+<link rel="stylesheet" href="./lens.css?v=20261110-lens">
+</head>
+<body class="lens-body">
+<header class="lens-top">
+ <a class="lens-brand" href="./lens.html">博罗 · 新视角<small>用能力与结构看现场，不做排名</small></a>
+ <nav class="lens-pager" id="lensPager"></nav>
+</header>
+
+<main class="lens-wrap">
+ <p class="lens-kick">NEW LENS · 五个转向</p>
+ <h1 class="lens-h1">换一套顶级视角，<br>重新看博罗</h1>
+ <p class="lens-lede">这套页面不做行业排名、不预测未来、不替政府选赢家，而是从<b>能力与复杂度、产业链环节、区域韧性、基础经济、连接质量</b>五个维度，呈现博罗的真实结构。所有数字来自公开信息，缺数据处留白标注待补。</p>
+ <p class="lens-meta" id="lensMeta"></p>
+
+ <div class="entry-grid" id="entryGrid"></div>
+
+ <div class="lens-foot">
+  <b>与旧站的关系：</b>原有 10 页导航与全息关系页全部保留、未做任何改动；本套为新增的独立页面，可从上方导航互相跳转。<br>
+  <b>数据边界：</b>这些框架是解释框架而非预测引擎；凡需要设备通用度、技能同源、跨城合同等公开证据而当前缺失的内容，统一标注待补，交火山引擎采集，不做推断或假精确。
+ </div>
+</main>
+
+<script src="./discovery-data.js?v=20261109-struct"></script>
+<script>
+(function(){
+ const D=window.BoluoDiscoveryData;
+ if(!D){document.getElementById('entryGrid').innerHTML='数据未加载';return;}
+ const PAGES=[['lens.html','入口'],['capability.html','能力'],['value-chain.html','环节'],['resilience.html','韧性'],['foundational.html','基础'],['connections.html','连接']];
+ document.getElementById('lensPager').innerHTML=PAGES.map(function(p){
+  return '<a href="'+p[0]+'"'+(p[0]==='lens.html'?' class="cur"':'')+'>'+p[1]+'</a>';}).join('');
+ document.getElementById('lensMeta').textContent='数据版本 '+D.version+' · 核对于 '+D.checkedAt;
+
+ const ENTRIES=[
+  ['capability.html','01','能力图谱','从今年现场归纳可复用能力，不排名、不评分。','6 类能力'],
+  ['value-chain.html','02','产业链环节','原料、加工、配套、出货四环节与卡点。','4 个环节'],
+  ['resilience.html','03','区域韧性','抵抗、恢复、适应、更新，含投资断崖与滞后。','4 项能力'],
+  ['foundational.html','04','基础经济','农业、吃住等维系日常的底盘，连着农户。','130.32 亿元'],
+  ['connections.html','05','连接质量','可核验流向、跨城共建与交通连接。','2 条流向']
+ ];
+ document.getElementById('entryGrid').innerHTML=ENTRIES.map(function(e){
+  return '<a class="entry-card" href="'+e[0]+'"><span class="entry-no">'+e[1]+'</span>'
+   +'<div class="entry-body"><h3>'+e[2]+'</h3><p>'+e[3]+'</p></div>'
+   +'<span class="entry-kpi">'+e[4]+'</span><span class="entry-go">›</span></a>';}).join('');
+})();
+</script>
+</body>
+</html>

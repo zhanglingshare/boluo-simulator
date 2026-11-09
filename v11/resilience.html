@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<title>区域韧性 · 博罗新视角</title>
+<meta name="description" content="用抵抗力、恢复力、适应力、更新力看博罗的结构，呈现投资断崖与2027滞后缺口；不做预测、不打韧性评分。">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<script src="../assets/boluo-access.js?v=20261108-inline2" data-bl-access="inline"></script>
+<link rel="stylesheet" href="./lens.css?v=20261110-lens">
+</head>
+<body class="lens-body">
+<header class="lens-top">
+ <a class="lens-brand" href="./lens.html">博罗 · 新视角<small>用能力与结构看现场，不做排名</small></a>
+ <nav class="lens-pager" id="lensPager"></nav>
+</header>
+
+<main class="lens-wrap">
+ <p class="lens-kick">RESILIENCE · 区域韧性</p>
+ <h1 class="lens-h1">同一个冲击，<br>为什么不同结构结局不同？</h1>
+ <p class="lens-lede">韧性不是预测下一次冲击，而是看清结构如何承受、恢复、适应与更新。本页用现有公开数据呈现四个维度，不打综合韧性评分；缺数据的维度直接标注待补。</p>
+ <p class="lens-meta" id="lensMeta"></p>
+
+ <div class="res-grid" id="resGrid"></div>
+
+ <div class="res-cliff">
+  <h3>工业投资断崖</h3>
+  <p class="sub">单位：亿元 · 2025 为约数，2026 年绝对额未公布</p>
+  <div id="cliffBars"></div>
+ </div>
+ <div class="res-lag" id="lagBox"></div>
+
+ <div class="lens-foot">
+  <b>口径说明：</b>韧性四维度为分析框架，不输出评分或排名。产出与投资不同源、不可互抵；目标值、受访口径未当作已实现事实。<br>
+  <b>数据缺口：</b>历史冲击的恢复时间序列、就业与岗位结构、企业新设/注销存续率、财政支撑能力均无公开数据，交火山引擎采集；不据此预测 2030 年结果。
+ </div>
+</main>
+
+<script src="./discovery-data.js?v=20261109-struct"></script>
+<script>
+(function(){
+ const D=window.BoluoDiscoveryData;
+ if(!D){document.getElementById('resGrid').innerHTML='<div class="lens-gap">数据未加载</div>';return;}
+ const liveN=D.events.filter(function(e){return e.state==='live';}).length;
+ const outN=D.events.filter(function(e){return e.state==='out';}).length;
+
+ const ABILITY=[
+  {name:'抵抗力',en:'RESISTANCE',body:[
+   '<p><span class="k">产出端仍在增长：</span>规上工业增加值增速 +8.9%、总产值超 2000 亿元（约数）。</p>',
+   '<p><span class="warn">投资端已收缩：</span>工业投资 −44.7%，今年绝对额未公布。当前产出主要靠 2021—2024 投资高峰的结转产能。</p>']},
+  {name:'恢复力',en:'RECOVERY',body:[
+   '<p>缺少历史冲击的恢复时间序列，无法判断本地恢复快慢，也不能假设冲击一过即弹回。</p>',
+   '<p><span class="warn">待补：</span>多年度恢复轨迹与滞后效应证据。</p>']},
+  {name:'适应力',en:'ADAPTABILITY',body:[
+   '<p><span class="k">'+liveN+' 个已投产现场</span>覆盖铜箔电池、AI 服务器、无菌灌装、户外文旅等新方向，结构在拓宽。</p>',
+   '<p>新方向的实际产销与订单仍待跟踪，点火与目标不等于兑现。</p>']},
+  {name:'更新力',en:'RENEWAL',body:[
+   '<p><span class="warn">'+outN+' 处退出/停滞：</span>公庄一条熟料线关停拆除、湖镇六个项目未动工。</p>',
+   '<p>新现场同步投产，企业新设/注销与就业结构数据待补。</p>']}
+ ];
+ const PAGES=[['lens.html','入口'],['capability.html','能力'],['value-chain.html','环节'],['resilience.html','韧性'],['foundational.html','基础'],['connections.html','连接']];
+ document.getElementById('lensPager').innerHTML=PAGES.map(function(p){
+  return '<a href="'+p[0]+'"'+(p[0]==='resilience.html'?' class="cur"':'')+'>'+p[1]+'</a>';}).join('');
+ document.getElementById('lensMeta').textContent='数据版本 '+D.version+' · 核对于 '+D.checkedAt;
+ document.getElementById('resGrid').innerHTML=ABILITY.map(function(a){
+  return '<article class="res-card"><h3>'+a.name+'</h3><p class="res-en">'+a.en+'</p>'+a.body.join('')+'</article>';}).join('');
+
+ const bars=D.topics.factory.cliff.bars;
+ const maxV=Math.max.apply(null,bars.map(function(b){return b.val||0;}));
+ document.getElementById('cliffBars').innerHTML=bars.map(function(b){
+  if(b.val===null){
+   return '<div class="res-bar-row"><span class="res-year">'+b.y+'</span><span class="res-none">'+b.txt+' · '+b.rate+'</span></div>';
+  }
+  const w=Math.round(b.val/maxV*100);
+  return '<div class="res-bar-row"><span class="res-year">'+b.y+'</span><div class="res-track">'
+   +'<div class="res-fill" style="width:'+w+'%"><span>'+b.txt+'</span></div></div></div>';
+ }).join('');
+ document.getElementById('lagBox').innerHTML='<b>滞后缺口 · </b>'+D.topics.factory.cliff.foot+'（投资通常领先产出约 2—3 年，当期投资收缩会在数年后才体现到产出。）';
+})();
+</script>
+</body>
+</html>
