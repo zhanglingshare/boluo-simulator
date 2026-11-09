@@ -198,15 +198,21 @@
         const ax = n.x - W / 2, ay = n.y - H * 0.49;
         const ang = Math.atan2(ay, ax);
         const side = Math.cos(ang) >= 0 ? 1 : -1;
-        const tx = n.x + Math.cos(ang) * (r + 9);
+        const tx0 = n.x + Math.cos(ang) * (r + 9);
         ctx.textAlign = side > 0 ? 'left' : 'right';
         ctx.textBaseline = 'middle';
         const ty = n.y + Math.sin(ang) * (r + 9);
-        ctx.textBaseline = 'middle';
+        const lb = n.label, sb = n.sub.length > 7 ? n.sub.slice(0, 7) + '…' : n.sub;
+        ctx.font = '700 ' + (mob ? 11 : 11.5) + 'px ' + FONT;
+        const w1 = ctx.measureText(lb).width;
+        ctx.font = '400 ' + (mob ? 9 : 9.5) + 'px ' + FONT;
+        const w2 = ctx.measureText(sb).width;
+        const mw = Math.max(w1, w2) + 4;
+        const tx = side > 0 ? Math.min(tx0, W - 8 - mw) : Math.max(tx0, 8 + mw);
         ctx.fillStyle = '#1b2636'; ctx.font = '700 ' + (mob ? 11 : 11.5) + 'px ' + FONT;
-        ctx.fillText(n.label, tx, ty - 6);
+        ctx.fillText(lb, tx, ty - 6);
         ctx.fillStyle = '#8a99ac'; ctx.font = '400 ' + (mob ? 9 : 9.5) + 'px ' + FONT;
-        ctx.fillText(n.sub.length > 7 ? n.sub.slice(0, 7) + '…' : n.sub, tx, ty + 6);
+        ctx.fillText(sb, tx, ty + 6);
       });
 
       ctx.restore();
@@ -267,7 +273,11 @@
     resize();
     if (window.ResizeObserver) { const ro = new ResizeObserver(function () { resize(); }); ro.observe(host); }
     else window.addEventListener('resize', resize);
-    return { setFilter: function (v) { filterStage = v; draw(); } };
+    return {
+      setFilter: function (v) { filterStage = v; draw(); },
+      select: function (id) { selId = id; draw(); },
+      clear: function () { selId = null; draw(); }
+    };
   }
 
   window.BoluoNet = { mount: mount };
