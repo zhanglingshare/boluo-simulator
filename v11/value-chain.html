@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8">
 <title>产业链环节 · 博罗新视角</title>
-<meta name="description" content="按原料、加工、配套、出货四个环节呈现博罗的现场与卡点，不做增长预测；本地配套仅一家受访口径，不外推。">
+<meta name="description" content="交互式流程图：沿原料、加工、配套、出货四环节探查现场与卡点；先猜后揭，不做预测，缺证据处标注待补。">
 <meta name="viewport" content="width=device-width,initial-scale=1">
 <script src="../assets/boluo-access.js?v=20261108-inline2" data-bl-access="inline"></script>
 <link rel="stylesheet" href="./lens.css?v=20261110-lens">
@@ -16,15 +16,30 @@
 
 <main class="lens-wrap">
  <p class="lens-kick">VALUE CHAIN · 产业链环节</p>
- <h1 class="lens-h1">从原料到出货，<br>博罗卡在哪一段？</h1>
- <p class="lens-lede">把现场放回产业链的四个环节，看每个环节有多少已投产、多少还在途、哪里已经退出。本页只摆事实与卡点，不画增长路径、不设预测。</p>
+ <h1 class="lens-h1">从原料到出货，<br>现场卡在哪一段？</h1>
+ <p class="lens-lede">沿链条看环节厚薄，而不是只看终端规模。先猜、再点环节探查，最后揭晓。</p>
  <p class="lens-meta" id="lensMeta"></p>
 
- <div class="chain-flow" id="chainFlow"></div>
+ <div class="viz-guess">
+  先猜一下：<b>哪个环节的现场最多？</b>
+  <div class="row" id="guessRow"></div>
+  <div class="hint" id="guessHint"></div>
+ </div>
+
+ <div class="viz-card">
+  <svg class="viz-svg" viewBox="0 0 360 340" id="chainSvg" role="img" aria-label="产业链环节流程图"></svg>
+  <div class="viz-legend">
+   <span><i style="background:#23a3a7"></i>已投产</span>
+   <span><i style="background:#1369eb"></i>在途</span>
+   <span><i style="background:#ed665e"></i>退出/卡点</span>
+  </div>
+ </div>
+
+ <div class="viz-detail" id="chainDetail"></div>
 
  <div class="lens-foot">
-  <b>口径说明：</b>环节依据现场在产业链中的位置划分，属分析判断；状态分「已投产 / 在途 / 退出」，不合并。本地配套采购比例仅汉德精密一家受访口径，不外推全县。<br>
-  <b>数据缺口：</b>各环节本地企业数、本地配套率、外购比例、增加值与客户集中度均无公开数据，统一标注待补，交火山引擎采集。服务类现场（文旅、农业）见「基础经济」与「连接质量」页。
+  <b>口径说明：</b>环节归类依据现场工艺与产品角色，属分析判断；节点大小对应现场数量。在途只表示在建，不代表已形成产能。<br>
+  <b>数据缺口：</b>本地配套实际交易、出货环节的物流与订单数据未公开，标注待补，交火山引擎采集。
  </div>
 </main>
 
@@ -32,40 +47,82 @@
 <script>
 (function(){
  const D=window.BoluoDiscoveryData;
- if(!D){document.getElementById('chainFlow').innerHTML='<div class="lens-gap">数据未加载</div>';return;}
+ if(!D){document.getElementById('chainDetail').innerHTML='数据未加载';return;}
  const evMap={};D.events.forEach(function(e){evMap[e.id]=e;});
 
  const STAGES=[
-  {no:'1',name:'原料 · 材料供应',ids:['copper','jinliyuan','cement'],
-   gap:'本地材料多为目标或在途：铜箔 2027 产值目标不是已实现、实际产销待跟踪；一条熟料产线已关停拆除。'},
-  {no:'2',name:'加工 · 制造与组装',ids:['shenyuan','xincheng','qicaihong','sanren','longxi','jintian','hande','xingrui','quanli','jiayou','xunling','yetai','dongweifeng','yixin','xianghao'],
-   gap:'现场最集中，但大量在途未投产；本地配套采购仅汉德一家受访口径，不能外推其他企业。'},
-  {no:'3',name:'配套 · 回收与平台',ids:['jiage','futian','luofufuture','sign4','huzhen'],
-   gap:'回收、标准厂房与平台刚起步；签约项目入园率与落地待跟踪，湖镇六个项目仍未动工。'},
-  {no:'4',name:'出货 · 物流与渠道',ids:['huixia','huizhao','jiguang','shilong','tianhong','taimeig','road218'],
-   gap:'高速与铁路多在在建（石龙铁路站施工至 2028）；客户集中度、物流方式与出货方向无公开数据。'}
+  {key:'raw',name:'原料',en:'RAW MATERIAL',ids:['copper','tea','cement'],
+   note:'原料端同时有点火、单口径与关停，结构并不单一。'},
+  {key:'processing',name:'加工',en:'PROCESSING',ids:['shenyuan','yetai','jintian','dongweifeng','xianghao','qicaihong','hande','xincheng','jinliyuan','quanli','yixin','jiayou','xingrui','sanren','longxi'],
+   note:'加工环节最厚，但多数在途，且含一条已关停熟料线。'},
+  {key:'support',name:'配套',en:'SUPPORT',ids:['futian','jiage','xunling','luofufuture','sign4'],
+   note:'配套含园区平台与回收、液冷，本地配套交易关系未披露。'},
+  {key:'delivery',name:'出货',en:'DELIVERY',ids:['mofang','henghe','tianhong','taimeig','minsu','road218','fubo'],
+   note:'出货与流量环节多为文旅现场，道路与商业配套多在在建。'}
  ];
+ STAGES.forEach(function(s){s.count=s.ids.filter(function(id){return evMap[id];}).length;});
+
  const PAGES=[['lens.html','入口'],['capability.html','能力'],['value-chain.html','环节'],['resilience.html','韧性'],['foundational.html','基础'],['connections.html','连接']];
  document.getElementById('lensPager').innerHTML=PAGES.map(function(p){
   return '<a href="'+p[0]+'"'+(p[0]==='value-chain.html'?' class="cur"':'')+'>'+p[1]+'</a>';}).join('');
  document.getElementById('lensMeta').textContent='数据版本 '+D.version+' · 核对于 '+D.checkedAt;
 
+ let picked=null,active=null,revealed=false;
+ const CX=145,YS=[48,128,208,288];
+ function rrOf(s){return 14+s.count*1.3;}
+
+ function drawSvg(){
+  let s='<defs><marker id="arr" markerWidth="8" markerHeight="8" refX="6" refY="4" orient="auto"><path d="M0,0 L8,4 L0,8 Z" fill="#9fb0c3"/></marker></defs>';
+  STAGES.forEach(function(st,i){
+   const y=YS[i],rr=rrOf(st);
+   const dim=(active&&active!==st.key)?'opacity:.35':'';
+   s+='<g style="'+dim+'">';
+   if(i<STAGES.length-1){const ny=YS[i+1],nr=rrOf(STAGES[i+1]);
+    s+='<line x1="'+CX+'" y1="'+(y+rr)+'" x2="'+CX+'" y2="'+(ny-nr-4)+'" stroke="#9fb0c3" stroke-width="1.6" marker-end="url(#arr)"/>';}
+   const hasOut=st.ids.some(function(id){return evMap[id]&&evMap[id].state==='out';});
+   const color=hasOut?'#ed665e':'#1369eb';
+   s+='<g class="viz-node" data-key="'+st.key+'"><circle cx="'+CX+'" cy="'+y+'" r="'+rr+'" fill="'+color+'" stroke="'+(active===st.key?'#17212f':'#fff')+'" stroke-width="'+(active===st.key?3:2)+'"/>';
+   if(revealed)s+='<text class="viz-count" x="'+CX+'" y="'+y+'">'+st.count+'</text>';
+   s+='<text class="viz-nlabel" x="'+(CX-rr-12)+'" y="'+y+'" text-anchor="end">'+st.name+'</text>';
+   if(hasOut)s+='<text class="viz-nlabel" x="'+(CX+rr+12)+'" y="'+y+'" text-anchor="start" style="fill:#ed665e">含退出</text>';
+   s+='</g></g>';
+  });
+  document.getElementById('chainSvg').innerHTML=s;
+  Array.prototype.forEach.call(document.querySelectorAll('.viz-node'),function(g){
+   g.addEventListener('click',function(){select(g.getAttribute('data-key'));});});
+ }
  function chip(id){
   const e=evMap[id];if(!e)return '';
-  const place=e.town||'全县';
   const num=e.big?(' · '+e.big+(e.unit||'')):'';
-  return '<span class="lens-chip"><i class="st '+e.state+'"></i>'+place+num+'</span>';
+  return '<span class="lens-chip"><i class="st '+e.state+'"></i>'+(e.town||'全县')+num+'</span>';
  }
- let html='';
- STAGES.forEach(function(s,i){
-  const valid=s.ids.filter(function(id){return evMap[id];});
-  html+='<div class="chain-stage"><div class="chain-no"><i>'+s.no+'</i><h3>'+s.name+'</h3>'
-   +'<span class="n">'+valid.length+' 个现场</span></div>'
-   +'<div class="lens-chips">'+valid.map(chip).join('')+'</div>'
-   +'<div class="lens-gap"><b>卡点 · </b>'+s.gap+'</div></div>';
-  if(i<STAGES.length-1)html+='<div class="chain-arrow">↓</div>';
- });
- document.getElementById('chainFlow').innerHTML=html;
+ function drawDetail(){
+  const st=STAGES.find(function(x){return x.key===active;});
+  if(!st){document.getElementById('chainDetail').innerHTML='<p style="margin:0;font-size:12px;color:#8495a8">点上方按钮或图中环节，开始探查。</p>';return;}
+  document.getElementById('chainDetail').innerHTML='<h4>'+st.name+'环节 · '+st.count+' 个现场</h4><p class="cap-en">'+st.en+'</p>'
+   +'<div class="lens-chips" style="margin-bottom:11px">'+st.ids.map(chip).join('')+'</div>'
+   +'<p style="margin:0;font-size:11.5px;color:#5f738b;line-height:1.6">'+st.note+'</p>';
+ }
+ function drawGuess(){
+  document.getElementById('guessRow').innerHTML=STAGES.map(function(st){
+   return '<button data-key="'+st.key+'"'+(picked===st.key?' class="picked"':'')+'>'+st.name+'</button>';}).join('')
+   +'<button id="revealBtn" style="background:#17212f;color:#fff;border-color:#17212f">'+(revealed?'重新猜':'揭晓答案')+'</button>';
+  Array.prototype.forEach.call(document.querySelectorAll('#guessRow button[data-key]'),function(b){
+   b.addEventListener('click',function(){if(revealed)reset();picked=b.getAttribute('data-key');select(picked);});});
+  document.getElementById('revealBtn').addEventListener('click',function(){revealed?reset():reveal();});
+ }
+ function select(key){active=key;drawSvg();drawDetail();drawGuess();}
+ function reveal(){
+  revealed=true;
+  const top=STAGES.slice().sort(function(a,b){return b.count-a.count;})[0];
+  const ok=picked===top.key;
+  document.getElementById('guessHint').innerHTML='实际最多的是<b>'+top.name+'</b>环节（'+top.count+' 个现场）。'
+   +(picked?(ok?'你猜对了。':'你猜的是「'+STAGES.find(function(s){return s.key===picked;}).name+'」，差一点。'):'你还没猜，先选一个。');
+  drawSvg();drawGuess();
+ }
+ function reset(){revealed=false;picked=null;document.getElementById('guessHint').textContent='';drawSvg();drawGuess();}
+
+ drawGuess();drawSvg();drawDetail();
 })();
 </script>
 </body>
