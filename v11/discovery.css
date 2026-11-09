@@ -356,7 +356,7 @@ body.wt-page .holo-tools,html .holo-tools{display:flex;align-items:center;justif
 .holo-filter .sw{width:7px;height:7px;border-radius:50%;display:inline-block}
 .holo-filter .s1{background:#d9862f}.holo-filter .s2{background:#1e9aa0}
 .holo-filter .s3{background:#1369eb}.holo-filter .s4{background:#e2544a}
-.holo-intel{display:inline-flex;align-items:center;gap:8px;font-size:12.5px;color:#4a5c70;background:#fff;border:1px solid #e7edf4;border-radius:999px;padding:6px 14px;max-width:100%}
+.holo-intel{display:inline-flex;flex-wrap:wrap;align-items:center;gap:8px;font-size:12.5px;color:#4a5c70;background:#fff;border:1px solid #e7edf4;border-radius:14px;padding:6px 14px;max-width:100%}
 .holo-intel .pd{width:7px;height:7px;border-radius:50%;background:#e2544a;box-shadow:0 0 0 4px rgba(226,84,74,.14);animation:holop 1.8s infinite}
 .holo-intel b{font-weight:600;color:#17212f;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;max-width:60vw}
 @keyframes holop{0%,100%{opacity:1}50%{opacity:.35}}
@@ -399,7 +399,7 @@ body.wt-page .holo-tools,html .holo-tools{display:flex;align-items:center;justif
 .holo-layer .sw.s5{background:#2563eb}
 .holo-layer .sw.s6{background:#7c3aed}
 .holo-layer .sw.s7{background:#dc2626}
-.holo-at{display:block;margin-top:5px;font-size:10.5px;color:#9aa8b8;font-weight:400}
+.holo-at{flex:0 0 100%;width:100%;margin-top:2px;font-size:10.5px;color:#9aa8b8;font-weight:400;white-space:nowrap}
 .holo-wip{margin:10px 0 0;font-size:11px;line-height:1.65;color:#8a99ab;border-top:1px dashed #e6edf5;padding-top:8px}
 .holo-read{font-size:11px;line-height:1.85;color:#617187;margin:0}
 .holo-tip{font-size:10px;color:#9aa8b9;margin:8px 0 0;padding-top:8px;border-top:1px dashed #edf1f6}
