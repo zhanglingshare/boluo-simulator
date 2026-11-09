@@ -472,3 +472,5 @@ body.wt-page .holo-tools,html .holo-tools{display:flex;align-items:center;justif
  .holo-card b{font-size:20px}
  #holoNet{height:480px}
 }
+.holo-intel .holo-pt{white-space:nowrap;flex:0 0 auto;margin-bottom:8px}
+.holo-intel b{display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden;white-space:normal;line-height:1.55;font-size:12.5px}
