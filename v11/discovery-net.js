@@ -579,6 +579,24 @@
       });
       return best;
     }
+    /* 触摸：拖动节点时阻止页面滚动抢走手势（否则手机上手势被判为滚动，节点拖不动） */
+    canvas.addEventListener('touchstart', function (e) {
+      var t = e.touches && e.touches[0]; if (!t) return;
+      var p = toWorld(t); var n = hit(p);
+      if (n) { drag = n; n.pin = true; moved = false; if (e.cancelable) e.preventDefault(); }
+    }, { passive: false });
+    canvas.addEventListener('touchmove', function (e) {
+      if (!drag) return;
+      var t = e.touches && e.touches[0]; if (!t) return;
+      var p = toWorld(t);
+      drag.x = Math.max(24, Math.min(W - 24, p.wx));
+      drag.y = Math.max(24, Math.min(H - 30, p.wy));
+      moved = true;
+      if (e.cancelable) e.preventDefault();
+    }, { passive: false });
+    canvas.addEventListener('touchend', function () {
+      if (drag) { canvas.style.cursor = ''; drag = null; if (typeof render === 'function') render(); }
+    }, { passive: true });
     canvas.addEventListener('pointerdown', function (e) {
       const p = toWorld(e);
       const n = hit(p);
@@ -618,7 +636,9 @@
       drag = null; panning = null; moved = false;
       canvas.style.cursor = 'grab';
     });
-    canvas.addEventListener('pointercancel', function () {
+    canvas.addEventListener('pointercancel', function (e) {
+      /* 触摸产生的取消交给 touch 处理器继续拖拽，不在这里清状态 */
+      if (e && e.pointerType === 'touch') return;
       if (drag) drag.pin = false;
       drag = null; panning = null; moved = false;
     });
