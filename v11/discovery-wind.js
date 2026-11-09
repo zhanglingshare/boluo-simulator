@@ -57,8 +57,9 @@
   }
 
   function mount(canvas, items) {
-    if (items && items.length) words = buildWords(items);
     if (!canvas) return;
+    if (canvas.__wtRaf) { cancelAnimationFrame(canvas.__wtRaf); canvas.__wtRaf = 0; }
+    const words = buildWords((items && items.length) ? items : DEFAULT_WORDS);
     const ctx = canvas.getContext('2d');
     const dpr = Math.min(window.devicePixelRatio || 1, 2);
     let W = 0, H = 0, raf = 0, t0 = performance.now();
@@ -221,16 +222,17 @@
       ctx.fillStyle = glow; ctx.beginPath(); ctx.arc(out.x, out.y, out.rx * 1.5, 0, 7); ctx.fill();
 
       raf = requestAnimationFrame(frame);
+      canvas.__wtRaf = raf;
     }
 
     resize();
     raf = requestAnimationFrame(frame);
-    let words = buildWords(DEFAULT_WORDS);
+    canvas.__wtRaf = raf;
     const ro = window.ResizeObserver ? new ResizeObserver(function () { resize(); }) : null;
     if (ro) ro.observe(canvas); else window.addEventListener('resize', resize);
     document.addEventListener('visibilitychange', function () {
-      if (document.hidden) { cancelAnimationFrame(raf); }
-      else { t0 = performance.now() - 1; raf = requestAnimationFrame(frame); }
+      if (document.hidden) { cancelAnimationFrame(canvas.__wtRaf || raf); canvas.__wtRaf = 0; }
+      else if (!canvas.__wtRaf) { t0 = performance.now() - 1; raf = requestAnimationFrame(frame); canvas.__wtRaf = raf; }
     });
   }
 
