@@ -57,17 +57,10 @@
     function rebuild() {
       nodes.length = 0; links.length = 0;
       nodes.push(core);
-      G.towns.forEach(function (t) {
-        if (t.drop) return;
-        const tn = Object.assign({}, t, { vx: 0, vy: 0, r: 6.5, pin: false, spawn: 1 });
-        nodes.push(tn);
-        links.push({ a: core, b: tn, kind: 'town' });
-      });
       G.projects.forEach(function (p) {
         const n = Object.assign({}, p, { vx: 0, vy: 0, x: 0, y: 0, r: p.state === 'live' ? 12.5 : (p.state === 'out' ? 8.5 : 7), pin: false, spawn: 1 });
         nodes.push(n);
-        const t = p.town ? nodes.find(function (x) { return x.id === 't_' + p.town; }) : null;
-        links.push({ a: t || core, b: n, kind: 'proj', far: !p.town, color: p.color, tag: p.val, stageName: p.stageName, state: p.state });
+        links.push({ a: core, b: n, kind: 'proj', far: !p.town, color: p.color, tag: p.val, stageName: p.stageName, state: p.state });
       });
     }
 
@@ -85,34 +78,62 @@
       canvas.width = W * dpr; canvas.height = H * dpr;
       canvas.style.height = H + 'px';
       ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
-      rebuild(); seed(); warm(300);
+      rebuild(); seed();
       draw();
       canvas.__nodes = nodes;
     }
 
-    /* 起始摆放：一环镇街、外一环项目，然后交给力场收敛 */
+    /* 静态环布：同一个镇的项目占一个扇区，一内一外错开，再做轻避让。
+       图上不出现镇——镇只决定谁挨着谁，不落成节点。 */
     function seed() {
-      const cx = W / 2, cy = H * 0.47;
-      const towns = nodes.filter(function (n) { return n.kind === 'town'; });
-      towns.forEach(function (t, i) {
-        const a = -Math.PI / 2 + i / towns.length * Math.PI * 2;
-        t.x = cx + Math.cos(a) * R1; t.y = cy + Math.sin(a) * R1;
-        const sib = nodes.filter(function (n) { return n.kind === 'proj' && n.town === t.town; });
-        sib.forEach(function (p, j) {
-          const pa = a + (j - (sib.length - 1) / 2) * 0.26;
-          p.x = cx + Math.cos(pa) * R1 * 1.45;
-          p.y = cy + Math.sin(pa) * R1 * 1.45;
-        });
+      const cx = W / 2, cy = H * 0.50;
+      const projs = nodes.filter(function (n) { return n.kind === 'proj'; });
+      const order = [], byTown = {};
+      projs.forEach(function (p) {
+        const k = p.town || '_';
+        if (!byTown[k]) { byTown[k] = []; order.push(k); }
+        byTown[k].push(p);
       });
-      // 没有镇街可挂的全县条目，单独铺在环外
-      const orphan = nodes.filter(function (n) { return n.kind === 'proj' && !n.town; });
-      orphan.forEach(function (p, i) {
-        const a = Math.PI * 0.35 + i * 0.55;
-        p.x = cx + Math.cos(a) * R1 * 1.2;
-        p.y = cy + Math.sin(a) * R1 * 1.2;
+      const rx = W * (mob ? 0.325 : 0.365), ry = H * (mob ? 0.43 : 0.40);
+      let totalW = 0;
+      order.forEach(function (k) { totalW += 1 + 0.55 * (byTown[k].length - 1); });
+      let acc = -Math.PI / 2 - Math.PI * 2 * 0.5;
+      order.forEach(function (k) {
+        const sib = byTown[k], n = sib.length;
+        const span = Math.PI * 2 * (1 + 0.55 * (n - 1)) / totalW;
+        const base = acc + span * 0.5;
+        const gap = Math.min(mob ? 0.52 : 0.42, (span / Math.max(n, 1)) * (mob ? 1.15 : 0.92));
+        sib.forEach(function (p, j) {
+          const a = base + (j - (n - 1) / 2) * gap;
+          const k2 = (n > 2 && j % 2 === 1) ? 1.07 : 0.92;
+          p.labUp = n > 1 && j % 2 === 1;
+          p.x = cx + Math.cos(a) * rx * k2;
+          p.y = cy + Math.sin(a) * ry * k2;
+        });
+        acc += span;
       });
       core.x = cx; core.y = cy;
       nodes.forEach(function (n) { n.vx = 0; n.vy = 0; });
+      /* 轻避让，只防标签压住 */
+      for (let it = 0; it < 80; it++) {
+        for (let i = 0; i < projs.length; i++) {
+          for (let j = i + 1; j < projs.length; j++) {
+            const a = projs[i], b = projs[j];
+            const dx = b.x - a.x, dy = b.y - a.y;
+            const d = Math.sqrt(dx * dx + dy * dy) || 1;
+            const need = Math.max(a.r, b.r) * 3.05;
+            if (d < need) {
+              const push = (need - d) / 2, ux = dx / d, uy = dy / d;
+              a.x -= ux * push; a.y -= uy * push;
+              b.x += ux * push; b.y += uy * push;
+            }
+          }
+        }
+        projs.forEach(function (n) {
+          n.x = Math.max(n.r + 26, Math.min(W - n.r - 26, n.x));
+          n.y = Math.max(n.r + 26, Math.min(H - n.r - 34, n.y));
+        });
+      }
     }
 
     function simulate() {
@@ -227,7 +248,7 @@
               ctx.restore();
             }
           }
-          if (LIVE && !mob && st === 'live') {
+          if (LIVE && !mob && st === 'live' && l.stageName !== '投产') {
             const p = bez(a, b, 0.55);
             const dx = b.x - a.x, dy = b.y - a.y, dl = Math.hypot(dx, dy) || 1;
             const ox = -dy / dl * 9, oy = dx / dl * 9;
@@ -321,12 +342,27 @@
           ctx.save(); ctx.font = '700 ' + (mob ? 8.5 : 9.5) + 'px ' + FONT;
           const w2 = wip ? ctx.measureText('在途').width : ctx.measureText(n.val).width; ctx.restore(); return w2;
         })());
-        const tx = Math.max(6 + mw / 2, Math.min(W - 6 - mw / 2, n.x));
+        /* 标签一律沿径向朝外，不往中心方向压别的点 */
+        const ctr = { x: W / 2, y: H * 0.50 };
+        const ang = Math.atan2(n.y - ctr.y, n.x - ctr.x);
+        const dx0 = Math.cos(ang), dy0 = Math.sin(ang);
+        let lx = n.x + dx0 * (r + 11);
+        let ly = n.y + dy0 * (r + 11);
+        ctx.textAlign = dx0 > 0.35 ? 'left' : (dx0 < -0.35 ? 'right' : 'center');
+        if (ctx.textAlign === 'left') lx = Math.max(6, Math.min(W - 6 - mw, lx));
+        else if (ctx.textAlign === 'right') lx = Math.max(6 + mw, Math.min(W - 6, lx));
+        else lx = Math.max(6 + mw / 2, Math.min(W - 6 - mw / 2, lx));
+        ctx.textBaseline = 'middle';
+        const below = dy0 >= 0;
+        const y1 = mob ? ly : (below ? ly + 6 : ly - 6);
+        const y2 = below ? y1 + 12 : y1 - 12;
         ctx.fillStyle = outn ? '#6f7d8f' : (wip ? '#93a3b5' : '#1e2b3a');
-        ctx.fillText(nm, tx, n.y + r + 4);
-        ctx.font = '700 ' + (mob ? 8.5 : 9.5) + 'px ' + FONT;
-        ctx.fillStyle = wip ? '#b3c0cf' : n.color;
-        ctx.fillText(wip ? '在途' : n.val, tx, n.y + r + (mob ? 14 : 16));
+        ctx.fillText(nm, lx, y1);
+        if (!mob) {
+          ctx.font = '700 9.5px ' + FONT;
+          ctx.fillStyle = wip ? '#b3c0cf' : n.color;
+          ctx.fillText(wip ? '在途' : n.val, lx, y2);
+        }
         ctx.restore();
       });
 
@@ -338,7 +374,6 @@
       if (document.hidden) { raf = requestAnimationFrame(loop); return; }
       if (ts - lastT < 30) { raf = requestAnimationFrame(loop); return; }
       lastT = ts;
-      simulate();
       draw();
       raf = requestAnimationFrame(loop);
     }
