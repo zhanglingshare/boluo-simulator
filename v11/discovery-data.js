@@ -25,6 +25,18 @@
     copper: {
       publisher: '博罗县政府索引／园区世界报道', kind: '政府索引与媒体报道对照',
       note: '10月13日生产线点火。2027年产值目标不是已实现产值，实际产销数据仍待跟踪。'
+    },
+    sign4: {
+      publisher: '博罗县政府／惠州市政府通稿', kind: '政府发布',
+      note: '8月3日集中签约4宗、总投资80亿元、预计年产值203亿元。签约不是投产，落地仍待跟踪。'
+    },
+    road: {
+      publisher: '博罗县政府／惠州市公共资源交易中心', kind: '政府公告与招标文件',
+      note: '惠霞、惠肇、济广、石龙站均为在建或征地阶段；通车、开工、征地是三种不同的进度，不合并。'
+    },
+    tour: {
+      publisher: '博罗县文广旅体局／惠州市政府', kind: '政府发布与媒体转述',
+      note: '开业、启用、入驻是已发生的经营事实；签约引进与规划表述单独标注，不当作已落地。'
     }
   };
   const topics = {
@@ -100,28 +112,56 @@
     }
   };
   const events = [
-    { id: 'hande', month: 8, topic: 'projects', town: '园洲镇', title: '园洲 · 汉德精密', subtitle: '三期 · 签约落户', big: '15', unit: '亿', question: '签约之后，什么时候动土？', visual: 'stages', stage: 1, rel: 'invest', source: 'yuanzhou' },
-    { id: 'shenyuan', month: 6, topic: 'factory', town: '龙溪街道', title: '龙溪 · 深远新能源', subtitle: '电动车基地 · 已投产', big: '60', unit: '万辆', question: '产能开了，订单跟上了吗？', visual: 'stages', stage: 3, rel: 'supply', source: 'quarter' },
-    { id: 'yetai', month: 6, topic: 'factory', town: '长宁镇', title: '长宁 · 椰泰实业', subtitle: '第二基地 · 已投产', big: '8', unit: '条线', question: '八条无菌线，跑给谁？', visual: 'stages', stage: 3, rel: 'supply', source: 'quarter' },
-    { id: 'jintian', month: 1, topic: 'factory', town: '龙溪街道', title: '龙溪 · 金田科技', subtitle: '半山基地 · 已投产', big: '4.5', unit: '亿', question: '整体搬迁搬走了什么？', visual: 'stages', stage: 3, rel: 'supply', source: 'quarter' },
-    { id: 'futian', month: 6, topic: 'factory', town: '福田镇', title: '福田 · 深博福田产业园', subtitle: '标准厂房 · 已交付', big: '11.7', unit: '万㎡', question: '厂房交出去，谁进了机器？', visual: 'stages', stage: 3, rel: 'coop', source: 'quarter' },
-    { id: 'xincheng', month: 1, topic: 'projects', town: '石湾镇', title: '石湾 · 欣城储能', subtitle: '200MW 储能电站 · 开工', big: '5', unit: '亿', question: '电站建在这，电卖给谁？', visual: 'stages', stage: 2, rel: 'invest', source: 'quarter' },
-    { id: 'jinliyuan', month: 5, topic: 'projects', town: '杨侨镇', title: '杨侨 · 金利源', subtitle: '绝缘板铜排 · 开工', big: '2', unit: '亿', question: '两家铜材项目挤在一条线上。', visual: 'stages', stage: 2, rel: 'invest', source: 'quarter' },
-    { id: 'quanli', month: 5, topic: 'projects', town: '石湾镇', title: '石湾 · 全德力', subtitle: '金属热处理 · 开工', big: '1.8', unit: '亿', question: '给谁做热处理？', visual: 'stages', stage: 2, rel: 'invest', source: 'quarter' },
-    { id: 'yixin', month: 7, topic: 'projects', town: '石湾镇', title: '石湾 · 义新新材料', subtitle: '年产 1000 万件鞋材 · 开工', big: '2', unit: '亿', question: '鞋材跟着哪个鞋厂？', visual: 'stages', stage: 2, rel: 'invest', source: 'quarter' },
-    { id: 'jiayou', month: 9, topic: 'projects', town: '泰美镇', title: '泰美 · 佳有机械', subtitle: '灌装设备 · 开工', big: '2', unit: '亿', question: '两家关联企业一起搬进来。', visual: 'stages', stage: 2, rel: 'invest', source: 'quarter' },
-    { id: 'xingrui', month: 6, topic: 'projects', town: '杨侨镇', title: '杨侨 · 铣锐精密', subtitle: '新厂区 · 奠基', big: '8000', unit: '万', question: '奠基之后，多久出第一件？', visual: 'stages', stage: 2, rel: 'invest', source: 'quarter' },
-    { id: 'dongweifeng', month: 4, topic: 'factory', town: '罗阳街道', title: '罗阳 · 东维丰', subtitle: '从东莞迁入 · 已满产', big: '16', unit: '条线', question: '从东莞搬来的，还搬得走吗？', visual: 'stages', stage: 3, rel: 'supply', source: 'quarter' },
-    { id: 'xianghao', month: 10, topic: 'factory', town: '麻陂镇', title: '麻陂 · 祥浩实业', subtitle: '甜玉米加工 · 已投产', big: '6', unit: '条线', question: '玉米从哪块地里来？', visual: 'stages', stage: 3, rel: 'supply', source: 'quarter' },
-    { id: 'huzhen', month: 0, topic: 'projects', town: '湖镇镇', title: '湖镇 · 六个项目', subtitle: '被点名催促 · 仍未动工', big: '6', unit: '个', question: '催促函发出去了，土动了没有？', visual: 'stalled', stage: 0, rel: 'invest', source: 'quarter' },
-    { id: 'cement', month: 2, topic: 'factory', town: '公庄镇', title: '公庄 · 一条熟料产线', subtitle: '关停 · 主体设备拆除', big: '2500', unit: '吨/日', question: '拆掉的产能，去哪儿了？', visual: 'closure', rel: 'invest', source: 'cement' },
-    { id: 'copper', month: 10, topic: 'factory', town: '石湾镇', title: '石湾 · 铜来顺', subtitle: '生产线点火 · 2027 年目标', big: '100', unit: '亿', question: '目标写在纸上，产量在地上。', visual: 'copper', rel: 'supply', source: 'copper' },
-    { id: 'food', topic: 'food', town: null, title: '全县 · 吃饭和住下来', subtitle: '前三季度 · 限上营业额', big: '+9.8', unit: '%', question: '餐饮回暖，住宿跟上了吗？', visual: 'food', rel: 'agri', source: 'quarter' },
-    { id: 'agriculture', topic: 'agriculture', town: null, title: '全县 · 农业经营', subtitle: '前三季度 · 农林牧渔业总产值', big: '130.32', unit: '亿', question: '六点九的增长，落在谁的地里？', visual: 'agriculture', rel: 'agri', source: 'quarter' },
-    { id: 'tea', topic: 'agriculture', town: '柏塘镇', title: '柏塘 · 新陂合作社', subtitle: '春茶干茶产量', big: '2,500', unit: '斤', question: '茶卖出去了，钱回来了吗？', visual: 'tea', rel: 'agri', source: 'tea' }
+    /* —— 已进网：投产／点火／开园／通车／开业，真正改变了关系结构 —— */
+    { id: 'shenyuan', month: 6, topic: 'factory', town: '龙溪街道', title: '龙溪 · 深远新能源', subtitle: '电动车基地 · 已投产', big: '60', unit: '万辆', question: '产能开了，订单跟上了吗？', visual: 'stages', stage: 3, rel: 'supply', state: 'live', source: 'quarter' },
+    { id: 'yetai', month: 6, topic: 'factory', town: '长宁镇', title: '长宁 · 椰泰实业', subtitle: '第二基地 · 已投产', big: '8', unit: '条线', question: '八条无菌线，跑给谁？', visual: 'stages', stage: 3, rel: 'supply', state: 'live', source: 'quarter' },
+    { id: 'jintian', month: 1, topic: 'factory', town: '龙溪街道', title: '龙溪 · 金田科技', subtitle: '半山基地 · 已投产', big: '4.5', unit: '亿', question: '整体搬迁搬走了什么？', visual: 'stages', stage: 3, rel: 'supply', state: 'live', source: 'quarter' },
+    { id: 'dongweifeng', month: 4, topic: 'factory', town: '罗阳街道', title: '罗阳 · 东维丰', subtitle: '从东莞迁入 · 已满产', big: '16', unit: '条线', question: '从东莞搬来的，还搬得走吗？', visual: 'stages', stage: 3, rel: 'supply', state: 'live', source: 'quarter' },
+    { id: 'xianghao', month: 10, topic: 'factory', town: '麻陂镇', title: '麻陂 · 祥浩实业', subtitle: '甜玉米加工 · 已投产', big: '6', unit: '条线', question: '玉米从哪块地里来？', visual: 'stages', stage: 3, rel: 'supply', state: 'live', source: 'quarter' },
+    { id: 'copper', month: 10, topic: 'factory', town: '石湾镇', title: '石湾 · 铜来顺', subtitle: '生产线点火 · 2027 年目标', big: '100', unit: '亿', question: '目标写在纸上，产量在地上。', visual: 'copper', stage: 3, rel: 'supply', state: 'live', source: 'copper' },
+    { id: 'futian', month: 6, topic: 'factory', town: '福田镇', title: '福田 · 深博福田产业园', subtitle: '标准厂房 · 已开园', big: '11.7', unit: '万㎡', question: '厂房交出去，谁进了机器？', visual: 'stages', stage: 3, rel: 'coop', state: 'live', source: 'quarter' },
+    { id: 'jiage', month: 6, topic: 'factory', town: '福田镇', title: '福田 · 嘉奇能源', subtitle: '动力电池回收 · 已建成投产', big: '1', unit: '家', question: '电池拆回来，铜和锂去哪？', visual: 'stages', stage: 3, rel: 'coop', state: 'live', source: 'tour' },
+    { id: 'qicaihong', month: 6, topic: 'factory', town: '罗阳街道', title: '罗阳 · 七彩虹 AI', subtitle: '一期 · 已投产', big: '1', unit: '期', question: 'AI 服务器，谁在本地配套？', visual: 'stages', stage: 3, rel: 'invest', state: 'live', source: 'quarter' },
+    { id: 'mofang', month: 2, topic: 'food', town: '横河镇', title: '横河 · 磨房运动中心', subtitle: '户外营地 · 已启用', big: '1', unit: '座', question: '营地开了，谁来住？', visual: 'food', stage: 3, rel: 'tour', state: 'live', source: 'tour' },
+    { id: 'henghe', month: 8, topic: 'food', town: '横河镇', title: '横河 · 户外运动小镇', subtitle: '省级荣誉 · 39 项运动', big: '4000', unit: '亩', question: '一个山区镇，靠运动吃饭？', visual: 'food', stage: 3, rel: 'tour', state: 'live', source: 'tour' },
+    { id: 'tianhong', month: 9, topic: 'food', town: '罗阳街道', title: '罗阳 · 天虹购物中心', subtitle: '县域商业 · 已开业', big: '1', unit: '座', question: '县城的人，钱留在县里吗？', visual: 'food', stage: 3, rel: 'tour', state: 'live', source: 'tour' },
+    { id: 'taimeig', month: 10, topic: 'food', town: '泰美镇', title: '泰美 · 乡村振兴馆', subtitle: '高速服务区 · 已开业', big: '1', unit: '处', question: '过路的人，会不会买一袋米？', visual: 'food', stage: 3, rel: 'tour', state: 'live', source: 'tour' },
+    { id: 'minsu', month: 7, topic: 'food', town: '横河镇', title: '横河 · 港式民宿集群', subtitle: '头部品牌 · 已入驻', big: '1', unit: '批', question: '住下来的人，多留了几晚？', visual: 'food', stage: 3, rel: 'tour', state: 'live', source: 'tour' },
+    { id: 'road218', month: 5, topic: 'food', town: '横河镇', title: '横河 · 218 最美公路', subtitle: '16 驿站 · 已通车', big: '218', unit: '公里', question: '路通了，沿线镇接住了吗？', visual: 'stages', stage: 3, rel: 'road', state: 'live', source: 'tour' },
+    { id: 'fubo', month: 1, topic: 'factory', town: '长宁镇', title: '长宁 · 福博艺术中心', subtitle: '深博共建 · 已投用', big: '1', unit: '座', question: '深圳的钱，长宁用得上吗？', visual: 'stages', stage: 3, rel: 'coop', state: 'live', source: 'tour' },
+
+    /* —— 在途：签约／开工／在建，还在门外排队，不算结构 —— */
+    { id: 'hande', month: 8, topic: 'projects', town: '园洲镇', title: '园洲 · 汉德精密', subtitle: '三期 · 签约落户', big: '15', unit: '亿', question: '签约之后，什么时候动土？', visual: 'stages', stage: 1, rel: 'invest', state: 'wip', source: 'yuanzhou' },
+    { id: 'sign4', month: 8, topic: 'projects', town: null, title: '全县 · 8月3日一次签4宗', subtitle: '总投资 80 亿 · 预计年产值 203 亿', big: '80', unit: '亿', question: '四宗都签了，哪一宗先动土？', visual: 'stages', stage: 1, rel: 'invest', state: 'wip', source: 'sign4' },
+    { id: 'xincheng', month: 1, topic: 'projects', town: '石湾镇', title: '石湾 · 欣城储能', subtitle: '200MW 储能电站 · 开工', big: '5', unit: '亿', question: '电站建在这，电卖给谁？', visual: 'stages', stage: 2, rel: 'invest', state: 'wip', source: 'quarter' },
+    { id: 'jinliyuan', month: 5, topic: 'projects', town: '杨侨镇', title: '杨侨 · 金利源', subtitle: '绝缘板铜排 · 开工', big: '2', unit: '亿', question: '两家铜材项目挤在一条线上。', visual: 'stages', stage: 2, rel: 'invest', state: 'wip', source: 'quarter' },
+    { id: 'quanli', month: 5, topic: 'projects', town: '石湾镇', title: '石湾 · 全德力', subtitle: '金属热处理 · 开工', big: '1.8', unit: '亿', question: '给谁做热处理？', visual: 'stages', stage: 2, rel: 'invest', state: 'wip', source: 'quarter' },
+    { id: 'yixin', month: 7, topic: 'projects', town: '石湾镇', title: '石湾 · 义新新材料', subtitle: '年产 1000 万件鞋材 · 开工', big: '2', unit: '亿', question: '鞋材跟着哪个鞋厂？', visual: 'stages', stage: 2, rel: 'invest', state: 'wip', source: 'quarter' },
+    { id: 'jiayou', month: 9, topic: 'projects', town: '泰美镇', title: '泰美 · 佳有机械', subtitle: '灌装设备 · 开工', big: '2', unit: '亿', question: '两家关联企业一起搬进来。', visual: 'stages', stage: 2, rel: 'invest', state: 'wip', source: 'quarter' },
+    { id: 'xingrui', month: 6, topic: 'projects', town: '杨侨镇', title: '杨侨 · 铣锐精密', subtitle: '新厂区 · 奠基', big: '8000', unit: '万', question: '奠基之后，多久出第一件？', visual: 'stages', stage: 2, rel: 'invest', state: 'wip', source: 'quarter' },
+    { id: 'sanren', month: 9, topic: 'projects', town: '罗阳街道', title: '罗阳 · 三仁电子', subtitle: '3 宗 · 已封顶待投产', big: '3', unit: '宗', question: '封了顶，什么时候进设备？', visual: 'stages', stage: 2, rel: 'invest', state: 'wip', source: 'quarter' },
+    { id: 'longxi', month: 8, topic: 'projects', town: '龙溪街道', title: '龙溪 · 电子集聚区', subtitle: '15 宗 · 全部动工', big: '15', unit: '宗', question: '一个街道，吃得下十五宗？', visual: 'stages', stage: 2, rel: 'invest', state: 'wip', source: 'quarter' },
+    { id: 'xunling', month: 12, topic: 'projects', town: '福田镇', title: '福田 · 讯凌新科技', subtitle: '液冷部件 · 年底投产', big: '1', unit: '家', question: '年底能不能真点火？', visual: 'stages', stage: 2, rel: 'coop', state: 'wip', source: 'tour' },
+    { id: 'luofufuture', month: 9, topic: 'projects', town: '长宁镇', title: '长宁 · 罗浮未来城', subtitle: '谋划 29 宗 · 超 123 亿', big: '123', unit: '亿', question: '规划里的钱，什么时候落地？', visual: 'stages', stage: 1, rel: 'coop', state: 'wip', source: 'sign4' },
+    { id: 'dongshan', month: 8, topic: 'food', town: '罗阳街道', title: '罗阳 · 东山玖号广场', subtitle: '基本完工 · 待开业', big: '1', unit: '座', question: '完工和开业，差多久？', visual: 'food', stage: 2, rel: 'tour', state: 'wip', source: 'tour' },
+    { id: 'luofushanju', month: 6, topic: 'food', town: '长宁镇', title: '长宁 · 罗浮山居', subtitle: '狮峰片区 · 改造中', big: '1', unit: '片', question: '改造完了，客单价能上去吗？', visual: 'food', stage: 2, rel: 'tour', state: 'wip', source: 'tour' },
+    { id: 'litian', month: 6, topic: 'food', town: '长宁镇', title: '长宁 · 力天梦幻城', subtitle: '签约引进 · 未开工', big: '1', unit: '项', question: '签了不等于建了。', visual: 'food', stage: 1, rel: 'tour', state: 'wip', source: 'tour' },
+    { id: 'huixia', month: 7, topic: 'factory', town: null, title: '全县 · 惠霞高速博罗段', subtitle: '进度超八成 · 年内通车', big: '80', unit: '%', question: '八成了，剩下两成卡在哪？', visual: 'stages', stage: 2, rel: 'road', state: 'wip', source: 'road' },
+    { id: 'huizhao', month: 10, topic: 'factory', town: '石湾镇', title: '石湾 · 惠肇高速共线段', subtitle: '2.62km · 已开工', big: '1.09', unit: '亿', question: '两公里，接的是哪条路？', visual: 'stages', stage: 2, rel: 'road', state: 'wip', source: 'road' },
+    { id: 'jiguang', month: 10, topic: 'factory', town: null, title: '全县 · 济广高速改扩建', subtitle: '征收土地 112 公顷', big: '112', unit: '公顷', question: '征地之后，多久能通车？', visual: 'stages', stage: 2, rel: 'road', state: 'wip', source: 'road' },
+    { id: 'shilong', month: 3, topic: 'factory', town: '石湾镇', title: '石湾 · 石龙铁路站配套', subtitle: '5.6km · 施工至 2028', big: '7.02', unit: '亿', question: '集装箱站通了，货源在哪？', visual: 'stages', stage: 2, rel: 'road', state: 'wip', source: 'road' },
+
+    /* —— 退出：停摆／关停，节点从网络里消失 —— */
+    { id: 'huzhen', month: 0, topic: 'projects', town: '湖镇镇', title: '湖镇 · 六个项目', subtitle: '被点名催促 · 仍未动工', big: '6', unit: '个', question: '催促函发出去了，土动了没有？', visual: 'stalled', stage: 0, rel: 'invest', state: 'out', source: 'quarter' },
+    { id: 'cement', month: 2, topic: 'factory', town: '公庄镇', title: '公庄 · 一条熟料产线', subtitle: '关停 · 主体设备拆除', big: '2500', unit: '吨/日', question: '拆掉的产能，去哪儿了？', visual: 'closure', stage: 0, rel: 'invest', state: 'out', source: 'cement' },
+
+    /* —— 统计：县域口径，不建节点，只供首页与详情引用 —— */
+    { id: 'food', topic: 'food', town: null, title: '全县 · 吃饭和住下来', subtitle: '前三季度 · 限上营业额', big: '+9.8', unit: '%', question: '餐饮回暖，住宿跟上了吗？', visual: 'food', rel: 'tour', state: 'stat', source: 'quarter' },
+    { id: 'agriculture', topic: 'agriculture', town: null, title: '全县 · 农业经营', subtitle: '前三季度 · 农林牧渔业总产值', big: '130.32', unit: '亿', question: '六点九的增长，落在谁的地里？', visual: 'agriculture', rel: 'agri', state: 'stat', source: 'quarter' },
+    { id: 'tea', topic: 'agriculture', town: '柏塘镇', title: '柏塘 · 新陂合作社', subtitle: '春茶干茶产量', big: '2,500', unit: '斤', question: '茶卖出去了，钱回来了吗？', visual: 'tea', rel: 'agri', state: 'stat', source: 'tea' }
   ];
   return {
-    version: '20261109-firstpage', checkedAt: '2026-11-09', sources, topics, events,
+    version: '20261109-structure', checkedAt: '2026-11-09', sources, topics, events,
     towns: ['罗阳街道', '龙溪街道', '石湾镇', '园洲镇', '杨村镇', '公庄镇', '湖镇镇', '长宁镇', '横河镇', '龙华镇', '柏塘镇', '泰美镇', '杨侨镇', '麻陂镇', '观音阁镇', '石坝镇']
   };
 });

@@ -3,14 +3,17 @@
   'use strict';
   const FONT = '"PingFang SC","Hiragino Sans GB","Microsoft YaHei",sans-serif';
 
-  const RELC = { supply: '#2563eb', invest: '#0e9ba5', coop: '#7c3aed', agri: '#d97706' };
+  const RELC = { supply: '#2563eb', invest: '#0e9ba5', coop: '#7c3aed', road: '#dc2626', tour: '#d97706', agri: '#d97706' };
   function colorOf(e) { return RELC[e.rel] || '#0e9ba5'; }
   function shortTown(n) { return String(n || '').replace(/街道|镇/g, ''); }
   function stageNameOf(e) {
-    if (e.visual === 'closure' || e.visual === 'stalled') return '关停 / 停摆';
+    if (e.state === 'out') return '停摆 / 关停';
+    if (e.state === 'wip') return e.stage === 2 ? '开工' : '签约';
     if (e.visual === 'copper') return '点火';
-    if (e.visual === 'food' || e.visual === 'agriculture' || e.visual === 'tea') return '统计';
-    return e.stage === 3 ? '投产' : (e.stage === 2 ? '开工' : '签约');
+    if (e.rel === 'coop') return '开园';
+    if (e.rel === 'road') return '通车';
+    if (e.rel === 'tour') return '开业';
+    return '投产';
   }
 
   function build(events) {
@@ -18,13 +21,16 @@
     const projects = [];
     const seen = {};
     events.forEach(function (e) {
+      if (e.state === 'stat' || e.state === 'wip') return;
       if (e.town && !seen[e.town]) { seen[e.town] = { id: 't_' + e.town, kind: 'town', label: shortTown(e.town), town: e.town, w: 0 }; towns.push(seen[e.town]); }
       if (e.town) seen[e.town].w += 1;
       projects.push({
         id: 'p_' + e.id, kind: 'proj', ev: e, town: e.town,
         val: e.big + e.unit,
         name: e.title.replace(/^[^·]*·\s*/, ''),
-        color: colorOf(e), stalled: e.visual === 'stalled' || e.visual === 'closure',
+        color: e.state === 'out' ? '#e2544a' : (e.state === 'wip' ? '#9fb0c4' : colorOf(e)),
+        state: e.state || 'live',
+        stalled: e.state === 'out',
         stageName: stageNameOf(e)
       });
     });
@@ -58,10 +64,10 @@
         links.push({ a: core, b: tn, kind: 'town' });
       });
       G.projects.forEach(function (p) {
-        const n = Object.assign({}, p, { vx: 0, vy: 0, x: 0, y: 0, r: p.stalled ? 8.5 : (p.ev.stage === 3 ? 13 : (p.ev.stage === 2 ? 10 : 8.5)), pin: false, spawn: 1 });
+        const n = Object.assign({}, p, { vx: 0, vy: 0, x: 0, y: 0, r: p.state === 'live' ? 12.5 : (p.state === 'out' ? 8.5 : 7), pin: false, spawn: 1 });
         nodes.push(n);
         const t = p.town ? nodes.find(function (x) { return x.id === 't_' + p.town; }) : null;
-        links.push({ a: t || core, b: n, kind: 'proj', far: !p.town, color: p.stalled ? '#e2544a' : p.color, tag: p.val, stageName: p.stageName });
+        links.push({ a: t || core, b: n, kind: 'proj', far: !p.town, color: p.color, tag: p.val, stageName: p.stageName, state: p.state });
       });
     }
 
@@ -133,7 +139,7 @@
         if (!a || !b) return;
         const dx = b.x - a.x, dy = b.y - a.y;
         const d = Math.sqrt(dx * dx + dy * dy) || 1;
-        const target = l.kind === 'town' ? R1 : (l.far ? R1 * 1.28 : R1 * 0.56);
+        const target = l.kind === 'town' ? R1 : (l.far ? R1 * 1.34 : (l.state === 'wip' ? R1 * 0.95 : R1 * 0.56));
         const f = (d - target) * SPRING;
         const fx = f * dx / d, fy = f * dy / d;
         a.fx += fx; a.fy += fy;
@@ -193,22 +199,24 @@
         if (!a || !b) return;
         const dim = isDim(a) || isDim(b);
         const onSel = !!(selId && (a.id === selId || b.id === selId));
+        const st = l.state || 'live';
         const ctl = bez(a, b, 0);
         ctx.save();
-        ctx.globalAlpha = dim ? .1 : (onSel ? 1 : (l.kind === 'town' ? 1 : .68));
+        ctx.globalAlpha = dim ? .08 : (onSel ? 1 : (l.kind === 'town' ? 1 : (st === 'live' ? .7 : .42)));
         ctx.beginPath();
         ctx.moveTo(a.x, a.y);
         ctx.quadraticCurveTo(ctl.x, ctl.y, b.x, b.y);
         ctx.strokeStyle = l.kind === 'town' ? 'rgba(120,145,175,.34)' : l.color;
-        ctx.lineWidth = l.kind === 'town' ? 1.2 : (onSel ? 2.6 : 1.7);
-        if (l.kind === 'proj' && l.b.stalled) ctx.setLineDash([5, 4]);
+        ctx.lineWidth = l.kind === 'town' ? 1.2 : (onSel ? 2.6 : (st === 'live' ? 1.8 : 1.2));
+        if (l.kind === 'proj' && st === 'out') ctx.setLineDash([3, 3]);
+        else if (l.kind === 'proj' && st === 'wip') ctx.setLineDash([4, 4]);
         ctx.stroke();
         ctx.setLineDash([]);
         ctx.restore();
 
         if (l.kind === 'proj') {
-          if (LIVE) {
-            const speed = l.b.stalled ? 5200 : 3000;
+          if (LIVE && st === 'live') {
+            const speed = 3000;
             for (let k = 0; k < 2; k++) {
               const ph = ((t / speed) + li * 0.16 + k * 0.5) % 1;
               const p = bez(a, b, ph);
@@ -219,7 +227,7 @@
               ctx.restore();
             }
           }
-          if (LIVE && !mob && l.stageName) {
+          if (LIVE && !mob && st === 'live') {
             const p = bez(a, b, 0.55);
             const dx = b.x - a.x, dy = b.y - a.y, dl = Math.hypot(dx, dy) || 1;
             const ox = -dy / dl * 9, oy = dx / dl * 9;
@@ -272,24 +280,33 @@
           ctx.restore();
           return;
         }
+        const st = n.state || 'live';
         const r = n.r * (mob ? 0.84 : 1) * (hot ? 1.14 : 1);
         ctx.save();
-        ctx.globalAlpha = dim ? .16 : 1;
+        ctx.globalAlpha = dim ? .14 : (st === 'live' ? 1 : .78);
         if (hot) {
           ctx.strokeStyle = 'rgba(217,134,47,.85)'; ctx.lineWidth = 2;
           ctx.beginPath(); ctx.arc(n.x, n.y, r + 5, 0, 7); ctx.stroke();
         }
-        const gcol = n.stalled ? '#e2544a' : n.color;
-        const glow = ctx.createRadialGradient(n.x, n.y, r * .7, n.x, n.y, r * 2.8);
-        glow.addColorStop(0, gcol + '3a'); glow.addColorStop(1, gcol + '00');
-        ctx.fillStyle = glow; ctx.beginPath(); ctx.arc(n.x, n.y, r * 2.8, 0, 7); ctx.fill();
+        const rc = st === 'out' ? '#6f7d8f' : n.color;
+        if (st === 'live') {
+          const glow = ctx.createRadialGradient(n.x, n.y, r * .7, n.x, n.y, r * 2.6);
+          glow.addColorStop(0, rc + '38'); glow.addColorStop(1, rc + '00');
+          ctx.fillStyle = glow; ctx.beginPath(); ctx.arc(n.x, n.y, r * 2.6, 0, 7); ctx.fill();
+        }
         ctx.fillStyle = '#fff'; ctx.beginPath(); ctx.arc(n.x, n.y, r, 0, 7); ctx.fill();
-        const rc = n.stalled ? '#e2544a' : n.color;
-        ctx.strokeStyle = rc; ctx.lineWidth = n.stalled ? 1.5 : 2.1;
-        if (n.stalled) ctx.setLineDash([4, 3]);
+        ctx.strokeStyle = rc; ctx.lineWidth = st === 'live' ? 2.2 : 1.3;
+        if (st !== 'live') ctx.setLineDash([2.6, 2.2]);
         ctx.beginPath(); ctx.arc(n.x, n.y, r, 0, 7); ctx.stroke();
         ctx.setLineDash([]);
-        ctx.fillStyle = rc; ctx.beginPath(); ctx.arc(n.x, n.y, Math.max(2.4, r * .3), 0, 7); ctx.fill();
+        if (st === 'live') {
+          ctx.fillStyle = rc; ctx.beginPath(); ctx.arc(n.x, n.y, Math.max(2.6, r * .3), 0, 7); ctx.fill();
+        }
+        if (st === 'out') {
+          ctx.strokeStyle = '#e2544a'; ctx.lineWidth = 1.3;
+          ctx.beginPath(); ctx.moveTo(n.x - 3.2, n.y - 3.2); ctx.lineTo(n.x + 3.2, n.y + 3.2);
+          ctx.moveTo(n.x + 3.2, n.y - 3.2); ctx.lineTo(n.x - 3.2, n.y + 3.2); ctx.stroke();
+        }
         ctx.restore();
 
         ctx.save();
@@ -297,17 +314,19 @@
         ctx.textAlign = 'center'; ctx.textBaseline = 'top';
         const cut = mob ? 5 : 8;
         const nm = n.name.length > cut ? n.name.slice(0, cut) + '…' : n.name;
+        const wip = (n.state || 'live') === 'wip';
+        const outn = (n.state || 'live') === 'out';
         ctx.font = '600 ' + (mob ? 9 : 10.5) + 'px ' + FONT;
         const mw = Math.max(ctx.measureText(nm).width, (function () {
           ctx.save(); ctx.font = '700 ' + (mob ? 8.5 : 9.5) + 'px ' + FONT;
-          const w2 = ctx.measureText(n.val).width; ctx.restore(); return w2;
+          const w2 = wip ? ctx.measureText('在途').width : ctx.measureText(n.val).width; ctx.restore(); return w2;
         })());
         const tx = Math.max(6 + mw / 2, Math.min(W - 6 - mw / 2, n.x));
-        ctx.fillStyle = '#1e2b3a';
+        ctx.fillStyle = outn ? '#6f7d8f' : (wip ? '#93a3b5' : '#1e2b3a');
         ctx.fillText(nm, tx, n.y + r + 4);
         ctx.font = '700 ' + (mob ? 8.5 : 9.5) + 'px ' + FONT;
-        ctx.fillStyle = n.color;
-        ctx.fillText(n.val, tx, n.y + r + (mob ? 15 : 17));
+        ctx.fillStyle = wip ? '#b3c0cf' : n.color;
+        ctx.fillText(wip ? '在途' : n.val, tx, n.y + r + (mob ? 14 : 16));
         ctx.restore();
       });
 

@@ -398,6 +398,8 @@ body.wt-page .holo-tools,html .holo-tools{display:flex;align-items:center;justif
 .holo-layer .sw.s4{background:#d97706}
 .holo-layer .sw.s5{background:#2563eb}
 .holo-layer .sw.s6{background:#7c3aed}
+.holo-layer .sw.s7{background:#dc2626}
+.holo-wip{margin:10px 0 0;font-size:11px;line-height:1.65;color:#8a99ab;border-top:1px dashed #e6edf5;padding-top:8px}
 .holo-read{font-size:11px;line-height:1.85;color:#617187;margin:0}
 .holo-tip{font-size:10px;color:#9aa8b9;margin:8px 0 0;padding-top:8px;border-top:1px dashed #edf1f6}
 .holo-switch{display:flex;align-items:center;justify-content:space-between;gap:10px;font-size:11px;color:#3c4b5e;padding:5px 0}
@@ -468,9 +470,10 @@ body.wt-page .holo-tools,html .holo-tools{display:flex;align-items:center;justif
  .holo-back,.holo-tail{padding:0 12px}
 }
 @media (max-width:900px){
- .holo-center .holo-metrics{display:flex;gap:8px;overflow-x:auto;padding-bottom:4px;scrollbar-width:none}
+ .holo-center .holo-metrics{display:grid;grid-template-columns:1fr 1fr;gap:8px}
  .holo-center .holo-metrics::-webkit-scrollbar{display:none}
- .holo-center .holo-metrics .holo-card{flex:0 0 66%;min-width:0}
+ .holo-center .holo-metrics .holo-card{min-width:0}
+ .holo-center .holo-metrics .holo-card:first-child{grid-column:1 / -1}
  .holo-card b{font-size:20px}
  #holoNet{height:560px}
 }

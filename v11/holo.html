@@ -3,10 +3,10 @@
 <head>
 <meta charset="utf-8">
 <title>看见博罗 · 全息关系版 | 博罗决策风洞</title>
-<meta name="description" content="博罗今年落地的工业现场：镇街挂项目，签约、开工、投产、关停一眼看见。">
+<meta name="description" content="博罗今年真正改变了关系结构的现场：镇街挂项目，投产、开园、通车、开业、停业一眼看见；签约与在建另标为在途。">
 <meta name="viewport" content="width=device-width,initial-scale=1">
 <script src="../assets/boluo-access.js?v=20261108-inline2" data-bl-access="inline"></script>
-<link rel="stylesheet" href="./discovery.css?v=20261109-holo3">
+<link rel="stylesheet" href="./discovery.css?v=20261109-struct">
 </head>
 <body class="holo-page">
 <header class="holo-top">
@@ -24,12 +24,13 @@
     <button type="button" data-rel="supply"><i class="sw s5"></i>供应链配套</button>
     <button type="button" data-rel="invest"><i class="sw s2"></i>投资建设</button>
     <button type="button" data-rel="coop"><i class="sw s6"></i>区域协作</button>
-    <button type="button" data-rel="agri"><i class="sw s4"></i>农业与消费</button>
+    <button type="button" data-rel="road"><i class="sw s7"></i>交通物流</button>
+    <button type="button" data-rel="tour"><i class="sw s4"></i>消费文旅</button>
    </div>
   </div>
   <div class="holo-panel">
    <p class="holo-pt"><i></i>读法</p>
-   <p class="holo-read">中间的小圈是镇街，鼠标移上去才显示名字；外侧的大圆点是挂在这个镇上的项目。颜色是这条关系属于哪一类，线上标的是它走到哪一步。</p>
+   <p class="holo-read">中间的小圈是镇街，鼠标移上去才显示名字；外侧的实心圆点是已经投产、开园、通车、开业的现场——只有这些才改变了关系结构。签约和在建不进这张图——它们还在门外排队，改变不了关系结构。</p>
    <p class="holo-tip">点住圆点拖动 · 空白处平移 · 滚轮缩放 · 点圆点看这个现场</p>
   </div>
  </aside>
@@ -50,8 +51,9 @@
    <b id="holoPulse">正在拉取…</b>
   </div>
   <div class="holo-panel">
-   <p class="holo-pt"><i></i>今年重大变化</p>
+   <p class="holo-pt"><i></i>今年真正进了网的</p>
    <div class="holo-list" id="holoList"><p class="holo-empty">正在加载…</p></div>
+   <p class="holo-wip" id="holoWip"></p>
   </div>
  </aside>
 </main>
@@ -60,20 +62,20 @@
  <div class="holo-tl" id="holoTimeline"></div>
 </section>
 <p class="holo-back"><a href="./relations.html">← 回到 04 关系世界（六年变化与网络）</a><a href="./index.html">回 01 风洞首页 →</a></p>
-<p class="holo-tail">读法：圆点是一个真实落地的现场，不是规划；线从镇街连到项目，颜色就是它走到的那一步——橙签约、青开工、蓝投产、红关停或停摆。签约不等于投产，投产才改产能。</p>
+<p class="holo-tail">口径：只收录会改变网络结构的节点——投产、开园、通车、开业、停业。签约与在建一律标为「在途」，用灰虚线画在门外，不画流向、不计入结构。颜色是这条关系属于哪一类：蓝供应链配套、青投资建设、紫区域协作、红交通物流、橙消费文旅。</p>
 
-<script defer src="./discovery-data.js?v=20261106-discovery1"></script>
-<script defer src="./discovery-net.js?v=20261109-net5"></script>
+<script defer src="./discovery-data.js?v=20261109-structure"></script>
+<script defer src="./discovery-net.js?v=20261109-net6"></script>
 <script>
 window.addEventListener('load',function(){
  var D=window.BoluoDiscoveryData; if(!D||!D.events)return;
- var ev=D.events.slice();
+ var ev=D.events.filter(function(e){return e.state!=='stat';});
  var netCtl=null;
 
  // 指标
  var ms=[['规上工业总产值（亿元）','超 2000','+8.7%','2025 年度 · 约数'],
-         ['规上工业增加值','未公布','+8.9%','2024 年起只报增速'],
-         ['工业投资（亿元）','超 230','−44.7%','2025 年度 · 约数']];
+         ['工业投资（亿元）','超 230','−44.7%','2025 年度 · 约数'],
+         ['今年真正投产','7 家','+1 点火','截至 11 月 · 公开报道']];
  var mh='';
  ms.forEach(function(m,i){
   mh+='<article class="holo-card c'+i+'"><span>'+m[0]+'</span><b>'+m[1]+'</b>'+
@@ -82,9 +84,17 @@ window.addEventListener('load',function(){
  var mb=document.getElementById('holoMetrics'); if(mb)mb.innerHTML=mh;
 
  var col=function(e){return RELC[e.rel]||'#0e9ba5';};
- var stName=function(e){if(e.visual==='closure'||e.visual==='stalled')return '关停 / 停摆';if(e.visual==='copper')return '点火';if(e.visual==='food'||e.visual==='agriculture'||e.visual==='tea')return '统计';return e.stage===3?'投产':e.stage===2?'开工':'签约';};
- var RELC={supply:'#2563eb',invest:'#0e9ba5',coop:'#7c3aed',agri:'#d97706'};
- var RELN={supply:'供应链配套',invest:'投资建设',coop:'区域协作',agri:'农业与消费'};
+ var stName=function(e){
+   if(e.state==='out')return '停摆 / 关停';
+   if(e.state==='wip')return e.stage===2?'在途 · 开工':'在途 · 签约';
+   if(e.visual==='copper')return '点火';
+   if(e.rel==='coop')return '开园';
+   if(e.rel==='tour')return '开业 / 启用';
+   if(e.rel==='road')return '通车';
+   return '投产';
+ };
+ var RELC={supply:'#2563eb',invest:'#0e9ba5',coop:'#7c3aed',road:'#dc2626',tour:'#d97706'};
+ var RELN={supply:'供应链配套',invest:'投资建设',coop:'区域协作',road:'交通物流',tour:'消费文旅'};
 
  function placeDetail(nx,ny){
    var box=document.getElementById('holoDetail');
@@ -136,8 +146,7 @@ window.addEventListener('load',function(){
  }).catch(function(){ var el=document.getElementById('holoPulse'); if(el)el.textContent='今天没有新的公开讨论'; });
 
  // 右栏：今年重大变化（投产优先、再看月份）
- var weight=function(e){return (e.visual==='closure'||e.visual==='stalled')?0:(e.stage===3?3:e.stage===2?2:1);};
- var pick=ev.slice().sort(function(a,b){return (weight(b)-weight(a))||((b.month||0)-(a.month||0));}).slice(0,6);
+ var pick=ev.filter(function(e){return e.state==='live';}).sort(function(a,b){return (b.month||0)-(a.month||0);}).slice(0,7);
  var listBox=document.getElementById('holoList');
  function renderList(kw){
    if(!listBox)return;
@@ -181,16 +190,22 @@ window.addEventListener('load',function(){
  }
 
  // 时间线
- var tl='<div class="tl-head"><span>今年落地的现场 · 1—11 月</span><em>只收录会改变产能的节点 · 签约≠投产</em></div><div class="tl-row">';
+ var wb=document.getElementById('holoWip');
+ if(wb){
+  var wipL=ev.filter(function(e){return e.state==='wip';});
+  wb.innerHTML='门外排队 '+wipL.length+' 条（签约、开工、在建，不进图）：'+
+   wipL.slice(0,4).map(function(e){return e.title.replace(/^[^·]*·\s*/,'');}).join('、')+' 等。';
+ }
+ var tl='<div class="tl-head"><span>今年进了网的现场 · 1—11 月</span><em>实心＝已进网 · 红＝退出 · 签约与在建不入图</em></div><div class="tl-row">';
  for(var m=1;m<=11;m++){
-  var items=ev.filter(function(e){return e.month===m;});
+  var items=ev.filter(function(e){return e.month===m&&(e.state==='live'||e.state==='out');});
   tl+='<div class="tl-col"><div class="tl-dots">';
   if(items.length){items.slice(0,4).forEach(function(e){tl+='<i style="background:'+col(e)+'"></i>';});
    if(items.length>4)tl+='<b>+'+(items.length-4)+'</b>';}
   else tl+='<i class="tl-empty"></i>';
   tl+='</div><span>'+('0'+m).slice(-2)+'</span></div>';
  }
- tl+='</div><p class="tl-note">另：湖镇六个项目被点名催促，至今未动工。</p>';
+ tl+='</div><p class="tl-note">另有 '+ev.filter(function(e){return e.state==="wip";}).length+' 条在途（签约、开工、在建），不画进网络。</p>';
  var tb=document.getElementById('holoTimeline'); if(tb)tb.innerHTML=tl;
 });
 </script>
