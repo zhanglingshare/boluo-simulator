@@ -399,6 +399,7 @@ body.wt-page .holo-tools,html .holo-tools{display:flex;align-items:center;justif
 .holo-layer .sw.s5{background:#2563eb}
 .holo-layer .sw.s6{background:#7c3aed}
 .holo-layer .sw.s7{background:#dc2626}
+.holo-at{display:block;margin-top:5px;font-size:10.5px;color:#9aa8b8;font-weight:400}
 .holo-wip{margin:10px 0 0;font-size:11px;line-height:1.65;color:#8a99ab;border-top:1px dashed #e6edf5;padding-top:8px}
 .holo-read{font-size:11px;line-height:1.85;color:#617187;margin:0}
 .holo-tip{font-size:10px;color:#9aa8b9;margin:8px 0 0;padding-top:8px;border-top:1px dashed #edf1f6}

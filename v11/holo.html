@@ -47,8 +47,8 @@
 
  <aside class="holo-right holo-side">
   <div class="holo-panel holo-intel">
-   <p class="holo-pt"><span class="pd"></span>今天在聊什么</p>
-   <b id="holoPulse">正在拉取…</b>
+   <p class="holo-pt"><span class="pd"></span>最近在聊什么</p>
+   <b id="holoPulse">正在拉取…</b><span class="holo-at" id="holoPulseAt"></span>
   </div>
   <div class="holo-panel">
    <p class="holo-pt"><i></i>今年真正进了网的</p>
@@ -142,7 +142,9 @@ window.addEventListener('load',function(){
  // 情报头
  fetch('../life.json?t='+Date.now()).then(function(r){return r.json();}).then(function(d){
    var p=(d.pulse||[])[0]; var el=document.getElementById('holoPulse');
+   var at=document.getElementById('holoPulseAt');
    if(p&&el)el.textContent=p;
+   if(at&&d.updated){var ud=String(d.updated).slice(0,10).split('-');at.textContent=ud[1]+' 月 '+ud[2]+' 日数据';}
  }).catch(function(){ var el=document.getElementById('holoPulse'); if(el)el.textContent='今天没有新的公开讨论'; });
 
  // 右栏：今年重大变化（投产优先、再看月份）

@@ -148,7 +148,7 @@
 
 
  function networkChart(){
-  const mob=narrow.matches,evs=D.events.filter(e=>e.town&&e.month!==undefined);
+  const mob=narrow.matches,evs=D.events.filter(e=>e.town&&e.month!==undefined&&(e.state==='live'||e.state==='out'));
   const W=1000,H=mob?1150:860,cx=500,cy=mob?600:400,R1=mob?250:228,R2=mob?424:398;
   const towns=[...new Set(evs.map(e=>e.town))],nT=towns.length,sA=-Math.PI/2;
   const col=e=>(e.visual==='closure'||e.visual==='stalled')?'#ed665e':e.stage===3?'#1369eb':e.stage===2?'#23a3a7':'#e8912f';
@@ -156,7 +156,7 @@
   evs.forEach(e=>{const t=tp[e.town],sib=evs.filter(x=>x.town===e.town),i=sib.indexOf(e);
     const a=t.a+(i-(sib.length-1)/2)*0.17;e._x=cx+Math.cos(a)*R2;e._y=cy+Math.sin(a)*R2;});
   const fs=mob?30:20,sf=mob?26:16,tr=mob?40:30;
-  let s='<div class="net-scroll"><svg viewBox="0 0 '+W+' '+H+'" class="net-svg" role="img" aria-label="博罗今年落地的工业现场：镇街与项目的关系">';
+  let s='<div class="net-scroll"><svg viewBox="0 0 '+W+' '+H+'" class="net-svg" role="img" aria-label="博罗今年真正进了网的关系：镇街与已投产、已开园、已通车、已停业的现场">';
   // 外圈装饰
   s+='<circle cx="'+cx+'" cy="'+cy+'" r="'+R1+'" fill="none" stroke="#e4eaf2" stroke-width="'+(mob?2:1.5)+'"/>';
   s+='<circle cx="'+cx+'" cy="'+cy+'" r="'+R2+'" fill="none" stroke="#eef2f7" stroke-width="1"/>';
@@ -189,7 +189,7 @@
 
 
  function drawTimeline(){
-  const evs=D.events.filter(e=>e.month&&e.month>0);
+  const evs=D.events.filter(e=>e.month&&e.month>0&&(e.state==='live'||e.state==='out'));
   const col=e=>(e.visual==='closure'||e.visual==='stalled')?'#ed665e':e.stage===3?'#1369eb':e.stage===2?'#23a3a7':'#e8912f';
   let out='<div class="tl-head"><span>今年落地的现场 · 1—11 月</span><em>只收录会改变产能的节点 · 签约≠投产</em></div><div class="tl-row">';
   for(let m=1;m<=11;m++){
@@ -201,9 +201,9 @@
     }else out+='<i class="tl-empty"></i>';
     out+='</div><span>'+String(m).padStart(2,'0')+'</span></div>';
   }
-  const hz=D.events.find(e=>e.id==='huzhen');
+  const wipN=D.events.filter(e=>e.state==='wip').length;
   out+='</div>';
-  if(hz)out+='<p class="tl-note">另：湖镇六个项目被点名催促，至今未动工。</p>';
+  if(wipN)out+='<p class="tl-note">另有 '+wipN+' 条在途（签约、开工、在建），不画进这张图。</p>';
   M.html('netTimeline',out,false);
  }
 
