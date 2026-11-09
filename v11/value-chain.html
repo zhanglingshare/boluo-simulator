@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8">
 <title>产业链环节 · 博罗新视角</title>
-<meta name="description" content="交互式流程图：沿原料、加工、配套、出货四环节探查现场与卡点；先猜后揭，不做预测，缺证据处标注待补。">
+<meta name="description" content="交互式水平管道带：沿原料、加工、配套、出货四环节探查现场与卡点，管道粗细=现场数；先猜后揭，不做预测，缺证据处标注待补。">
 <meta name="viewport" content="width=device-width,initial-scale=1">
 <script src="../assets/boluo-access.js?v=20261108-inline2" data-bl-access="inline"></script>
 <link rel="stylesheet" href="./lens.css?v=20261110-lens">
@@ -27,18 +27,17 @@
  </div>
 
  <div class="viz-card">
-  <svg class="viz-svg" viewBox="0 0 360 340" id="chainSvg" role="img" aria-label="产业链环节流程图"></svg>
+  <svg class="viz-svg" viewBox="0 0 360 300" id="chainSvg" role="img" aria-label="产业链水平管道带"></svg>
   <div class="viz-legend">
-   <span><i style="background:#23a3a7"></i>已投产</span>
-   <span><i style="background:#1369eb"></i>在途</span>
-   <span><i style="background:#ed665e"></i>退出/卡点</span>
+   <span><i style="background:#1369eb"></i>管道带（粗细=现场数）</span>
+   <span><i style="background:#ed665e"></i>含退出/卡点</span>
   </div>
  </div>
 
  <div class="viz-detail" id="chainDetail"></div>
 
  <div class="lens-foot">
-  <b>口径说明：</b>环节归类依据现场工艺与产品角色，属分析判断；节点大小对应现场数量。在途只表示在建，不代表已形成产能。<br>
+  <b>口径说明：</b>环节归类依据现场工艺与产品角色，属分析判断；水平管道带的粗细对应现场数量。在途只表示在建，不代表已形成产能。<br>
   <b>数据缺口：</b>本地配套实际交易、出货环节的物流与订单数据未公开，标注待补，交火山引擎采集。
  </div>
 </main>
@@ -68,24 +67,27 @@
  document.getElementById('lensMeta').textContent='数据版本 '+D.version+' · 核对于 '+D.checkedAt;
 
  let picked=null,active=null,revealed=false;
- const CX=145,YS=[48,128,208,288];
- function rrOf(s){return 14+s.count*1.3;}
+ const XS=[45,135,225,315],MIDY=165,BANDW=62;
+ const maxCount=Math.max.apply(null,STAGES.map(function(s){return s.count;}));
+ function hOf(s){return revealed?(24+(s.count/maxCount)*96):26;}
 
  function drawSvg(){
   let s='<defs><marker id="arr" markerWidth="8" markerHeight="8" refX="6" refY="4" orient="auto"><path d="M0,0 L8,4 L0,8 Z" fill="#9fb0c3"/></marker></defs>';
+  for(let i=0;i<STAGES.length-1;i++){
+   const ax=XS[i]+BANDW/2+6;
+   s+='<line x1="'+ax+'" y1="'+MIDY+'" x2="'+(ax+18)+'" y2="'+MIDY+'" stroke="#9fb0c3" stroke-width="1.8" marker-end="url(#arr)"/>';
+  }
   STAGES.forEach(function(st,i){
-   const y=YS[i],rr=rrOf(st);
-   const dim=(active&&active!==st.key)?'opacity:.35':'';
-   s+='<g style="'+dim+'">';
-   if(i<STAGES.length-1){const ny=YS[i+1],nr=rrOf(STAGES[i+1]);
-    s+='<line x1="'+CX+'" y1="'+(y+rr)+'" x2="'+CX+'" y2="'+(ny-nr-4)+'" stroke="#9fb0c3" stroke-width="1.6" marker-end="url(#arr)"/>';}
+   const x=XS[i],h=hOf(st),y=MIDY-h/2;
    const hasOut=st.ids.some(function(id){return evMap[id]&&evMap[id].state==='out';});
    const color=hasOut?'#ed665e':'#1369eb';
-   s+='<g class="viz-node" data-key="'+st.key+'"><circle cx="'+CX+'" cy="'+y+'" r="'+rr+'" fill="'+color+'" stroke="'+(active===st.key?'#17212f':'#fff')+'" stroke-width="'+(active===st.key?3:2)+'"/>';
-   if(revealed)s+='<text class="viz-count" x="'+CX+'" y="'+y+'">'+st.count+'</text>';
-   s+='<text class="viz-nlabel" x="'+(CX-rr-12)+'" y="'+y+'" text-anchor="end">'+st.name+'</text>';
-   if(hasOut)s+='<text class="viz-nlabel" x="'+(CX+rr+12)+'" y="'+y+'" text-anchor="start" style="fill:#ed665e">含退出</text>';
-   s+='</g></g>';
+   const dim=(active&&active!==st.key)?'opacity:.35':'';
+   s+='<g class="viz-node" data-key="'+st.key+'" style="'+dim+'">'
+    +'<rect x="'+(x-BANDW/2)+'" y="'+y+'" width="'+BANDW+'" height="'+h+'" rx="10" fill="'+color+'" stroke="'+(active===st.key?'#17212f':'#fff')+'" stroke-width="'+(active===st.key?3:2)+'"/>';
+   if(revealed)s+='<text class="viz-count" x="'+x+'" y="'+MIDY+'" style="font-size:13px">'+st.count+'</text>';
+   s+='<text class="viz-nlabel" x="'+x+'" y="58" text-anchor="middle" style="font-size:13px;fill:#46586e">'+st.name+'</text>';
+   if(hasOut)s+='<text class="viz-nlabel" x="'+x+'" y="'+(MIDY+h/2+18)+'" text-anchor="middle" style="font-size:10px;fill:#ed665e">含退出</text>';
+   s+='</g>';
   });
   document.getElementById('chainSvg').innerHTML=s;
   Array.prototype.forEach.call(document.querySelectorAll('.viz-node'),function(g){

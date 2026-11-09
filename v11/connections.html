@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8">
 <title>连接质量 · 博罗新视角</title>
-<meta name="description" content="交互式网络关系图：图层开关区分可核验流向、跨城共建与在建交通；先猜后揭，未披露关系用虚线，缺证据处待补。">
+<meta name="description" content="交互式弧图：节点排在一条轴线上，关系用弧线连接，图层开关区分可核验流向、跨城与交通；实线为可核验，虚线为未披露或在建，缺证据处待补。">
 <meta name="viewport" content="width=device-width,initial-scale=1">
 <script src="../assets/boluo-access.js?v=20261108-inline2" data-bl-access="inline"></script>
 <link rel="stylesheet" href="./lens.css?v=20261110-lens">
@@ -17,7 +17,7 @@
 <main class="lens-wrap">
  <p class="lens-kick">CONNECTIVITY · 连接质量</p>
  <h1 class="lens-h1">连接的质量，<br>比硬件更决定结果</h1>
- <p class="lens-lede">先猜可核验流向有几条，再用图层开关区分流向、跨城与交通；实线为可核验关系，虚线为未披露或在建。</p>
+ <p class="lens-lede">先猜可核验流向有几条，再用图层开关区分流向、跨城与交通；实弧为可核验关系，虚弧为未披露或在建。</p>
  <p class="lens-meta" id="lensMeta"></p>
 
  <div class="viz-guess">
@@ -30,15 +30,15 @@
  </div>
 
  <div class="viz-card">
-  <div class="row" id="layerToggles" style="margin-bottom:6px"></div>
-  <svg class="viz-svg" viewBox="0 0 360 420" id="netSvg" role="img" aria-label="连接质量网络图"></svg>
+  <div class="row" id="layerToggles" style="margin-bottom:4px"></div>
+  <svg class="viz-svg" viewBox="0 0 360 320" id="arcSvg" role="img" aria-label="连接质量弧图"></svg>
   <div class="viz-legend">
-   <span><i style="background:#1369eb"></i>可核验流向</span>
-   <span><i style="background:#b6c2d0"></i>跨城/在建（虚线）</span>
+   <span><i style="background:#1369eb"></i>可核验流向（实弧）</span>
+   <span><i style="background:#b6c2d0"></i>跨城/在建（虚弧）</span>
   </div>
  </div>
 
- <div class="viz-detail" id="netDetail"></div>
+ <div class="viz-detail" id="arcDetail"></div>
 
  <div class="lens-foot">
   <b>口径说明：</b>chain 类仅表示同一产业链，公开通稿未披露具体供货关系；跨城与交通多为在建，签约/开工/征地/通车不合并。<br>
@@ -50,46 +50,42 @@
 <script>
 (function(){
  const D=window.BoluoDiscoveryData;
- if(!D){document.getElementById('netDetail').innerHTML='数据未加载';return;}
- const evMap={};D.events.forEach(function(e){evMap[e.id]=e;});
+ if(!D){document.getElementById('arcDetail').innerHTML='数据未加载';return;}
 
  const NODES=[
-  {id:'center',name:'博罗',group:'center',x:180,y:210},
-  {id:'copper',name:'铜来顺',group:'flow',x:105,y:72,info:'铜箔点火，100 亿为目标值。'},
-  {id:'shenyuan',name:'深远新能源',group:'flow',x:255,y:72,info:'电动车基地，已投产。'},
-  {id:'road218',name:'218公路',group:'flow',x:105,y:148,info:'218 公里公路，沿线 16 驿站。'},
-  {id:'henghe',name:'户外小镇',group:'flow',x:255,y:148,info:'户外运动小镇，39 项运动。'},
-  {id:'sz',name:'深圳',group:'cross',x:50,y:210,info:'深博福田产业园、福博艺术中心为共建。'},
-  {id:'dg',name:'东莞',group:'cross',x:310,y:210,info:'东维丰从东莞迁入。'},
-  {id:'huixia',name:'惠霞高速',group:'road',x:90,y:300,info:'进度超八成，年内通车。'},
-  {id:'jiguang',name:'济广高速',group:'road',x:270,y:300,info:'改扩建，征收土地 112 公顷。'},
-  {id:'huizhao',name:'惠肇高速',group:'road',x:180,y:348,info:'共线段 2.62km，已开工。'},
-  {id:'shilong',name:'石龙铁路',group:'road',x:180,y:392,info:'配套 5.6km，施工至 2028。'}
+  {id:'center',short:'博罗',group:'center',x:16,info:'本地枢纽，跨城与交通连接均指向它。'},
+  {id:'copper',short:'铜来顺',group:'flow',x:42,info:'铜箔点火，100 亿为目标值。'},
+  {id:'shenyuan',short:'深远',group:'flow',x:68,info:'电动车基地，已投产。'},
+  {id:'road218',short:'218公路',group:'flow',x:94,info:'218 公里公路，沿线 16 驿站。'},
+  {id:'henghe',short:'户外',group:'flow',x:120,info:'户外运动小镇，39 项运动。'},
+  {id:'sz',short:'深圳',group:'cross',x:158,info:'深博福田产业园、福博艺术中心为共建。'},
+  {id:'dg',short:'东莞',group:'cross',x:184,info:'东维丰从东莞迁入。'},
+  {id:'huixia',short:'惠霞',group:'road',x:222,info:'进度超八成，年内通车。'},
+  {id:'jiguang',short:'济广',group:'road',x:248,info:'改扩建，征收土地 112 公顷。'},
+  {id:'huizhao',short:'惠肇',group:'road',x:274,info:'共线段 2.62km，已开工。'},
+  {id:'shilong',short:'石龙',group:'road',x:300,info:'配套 5.6km，施工至 2028。'}
  ];
- const LINKS=[
-  {from:'copper',to:'shenyuan',group:'flow',dash:false,color:'#1369eb',label:'铜箔→电池 · 未披露供货'},
-  {from:'road218',to:'henghe',group:'flow',dash:false,color:'#23a3a7',label:'公路→流量'},
-  {from:'center',to:'copper',group:'flow',dash:true,color:'#9fb0c3'},
-  {from:'center',to:'shenyuan',group:'flow',dash:true,color:'#9fb0c3'},
-  {from:'center',to:'road218',group:'flow',dash:true,color:'#9fb0c3'},
-  {from:'center',to:'henghe',group:'flow',dash:true,color:'#9fb0c3'},
-  {from:'center',to:'sz',group:'cross',dash:true,color:'#b6c2d0'},
-  {from:'center',to:'dg',group:'cross',dash:true,color:'#b6c2d0'},
-  {from:'center',to:'huixia',group:'road',dash:true,color:'#b6c2d0'},
-  {from:'center',to:'jiguang',group:'road',dash:true,color:'#b6c2d0'},
-  {from:'center',to:'huizhao',group:'road',dash:true,color:'#b6c2d0'},
-  {from:'center',to:'shilong',group:'road',dash:true,color:'#b6c2d0'}
+ const ARCS=[
+  {from:'copper',to:'shenyuan',group:'flow',solid:true,color:'#1369eb',label:'铜箔→电池 · 未披露供货'},
+  {from:'road218',to:'henghe',group:'flow',solid:true,color:'#23a3a7',label:'公路→流量'},
+  {from:'center',to:'copper',group:'flow'},{from:'center',to:'shenyuan',group:'flow'},
+  {from:'center',to:'road218',group:'flow'},{from:'center',to:'henghe',group:'flow'},
+  {from:'center',to:'sz',group:'cross'},{from:'center',to:'dg',group:'cross'},
+  {from:'center',to:'huixia',group:'road'},{from:'center',to:'jiguang',group:'road'},
+  {from:'center',to:'huizhao',group:'road'},{from:'center',to:'shilong',group:'road'}
  ];
  const nodeMap={};NODES.forEach(function(n){nodeMap[n.id]=n;});
  const LAYERS=[['flow','可核验流向'],['cross','跨城共建'],['road','交通连接']];
  const visible={flow:true,cross:true,road:true,center:true};
+ const AY=235;
 
  const PAGES=[['lens.html','入口'],['capability.html','能力'],['value-chain.html','环节'],['resilience.html','韧性'],['foundational.html','基础'],['connections.html','连接']];
  document.getElementById('lensPager').innerHTML=PAGES.map(function(p){
   return '<a href="'+p[0]+'"'+(p[0]==='connections.html'?' class="cur"':'')+'>'+p[1]+'</a>';}).join('');
  document.getElementById('lensMeta').textContent='数据版本 '+D.version+' · 核对于 '+D.checkedAt;
 
- let active=null;
+ let active=null,revealed=false;
+ function arcPath(a,b,h){const mid=(a.x+b.x)/2;return 'M'+a.x+','+AY+' Q'+mid+','+(AY-h)+' '+b.x+','+AY;}
  function drawToggles(){
   document.getElementById('layerToggles').innerHTML=LAYERS.map(function(l){
    return '<button data-g="'+l[0]+'" style="'+(visible[l[0]]?'background:#1369eb;color:#fff;border-color:#1369eb':'background:#fff')+'">'+l[1]+'</button>';}).join('');
@@ -98,40 +94,53 @@
  }
  function drawSvg(){
   let s='';
-  LINKS.forEach(function(l){
-   if(!visible[l.group])return;
-   const a=nodeMap[l.from],b=nodeMap[l.to];
-   s+='<line x1="'+a.x+'" y1="'+a.y+'" x2="'+b.x+'" y2="'+b.y+'" stroke="'+l.color+'" stroke-width="'+(l.dash?1.4:2.4)+'"'+(l.dash?' stroke-dasharray="5 5"':'')+'/>';
-  });
+  if(revealed){
+   ARCS.forEach(function(arc){
+    if(!visible[arc.group])return;
+    const a=nodeMap[arc.from],b=nodeMap[arc.to];
+    const related=!active||arc.from===active||arc.to===active;
+    if(arc.solid){
+     const h=60;
+     s+='<path d="'+arcPath(a,b,h)+'" fill="none" stroke="'+arc.color+'" stroke-width="2.3" opacity="'+(related?1:.15)+'"/>';
+    }else{
+     const dist=Math.abs(a.x-b.x),h=30+dist*0.32;
+     s+='<path d="'+arcPath(a,b,h)+'" fill="none" stroke="#aebbcb" stroke-width="1.4" stroke-dasharray="5 5" opacity="'+(related?.6:.1)+'"/>';
+    }
+   });
+  }
+  s+='<line x1="10" y1="'+AY+'" x2="308" y2="'+AY+'" stroke="#cfd8e3" stroke-width="1.4"/>';
   NODES.forEach(function(n){
    if(n.group!=='center'&&!visible[n.group])return;
-   const r=n.group==='center'?16:13;
+   const related=!active||n.id===active;
    const fill=n.group==='center'?'#17212f':(n.group==='flow'?'#1369eb':(n.group==='cross'?'#8495a8':'#5b93f0'));
-   const dim=(active&&active!==n.id)?'opacity:.4':'';
-   s+='<g style="'+dim+'"><g class="viz-node" data-id="'+n.id+'"><circle cx="'+n.x+'" cy="'+n.y+'" r="'+r+'" fill="'+fill+'" stroke="'+(active===n.id?'#17212f':'#fff')+'" stroke-width="2"/>'
-    +'<text class="viz-count" x="'+n.x+'" y="'+(n.y+r+13)+'" style="font-size:10px;fill:#46586e">'+n.name+'</text></g></g>';
+   s+='<g class="viz-node" data-id="'+n.id+'" opacity="'+(related?1:.35)+'">'
+    +'<circle cx="'+n.x+'" cy="'+AY+'" r="'+(active===n.id?9:7)+'" fill="'+fill+'" stroke="'+(active===n.id?'#17212f':'#fff')+'" stroke-width="2"/>'
+    +'<text transform="rotate(-38 '+n.x+' '+(AY+12)+')" x="'+n.x+'" y="'+(AY+12)+'" text-anchor="end" style="font-size:9px;fill:#46586e;font-weight:700">'+n.short+'</text>'
+    +'<circle cx="'+n.x+'" cy="'+AY+'" r="14" fill="transparent"/></g>';
   });
-  document.getElementById('netSvg').innerHTML=s;
+  document.getElementById('arcSvg').innerHTML=s;
   Array.prototype.forEach.call(document.querySelectorAll('.viz-node'),function(g){
    g.addEventListener('click',function(){active=g.getAttribute('data-id');drawSvg();drawDetail();});});
  }
  function drawDetail(){
   const n=nodeMap[active];
-  if(!n){document.getElementById('netDetail').innerHTML='<p style="margin:0;font-size:12px;color:#8495a8">点节点看连接关系。</p>';return;}
-  const links=LINKS.filter(function(l){return l.from===n.id||l.to===n.id;});
-  document.getElementById('netDetail').innerHTML='<h4>'+n.name+'</h4>'
-   +'<p style="margin:0 0 9px;font-size:11.5px;color:#56697f;line-height:1.6">'+(n.info||'')+'</p>'
-   +(links.length?'<div class="lens-chips">'+links.map(function(l){return '<span class="lens-chip">'+(l.label||nodeMap[l.from].name+' — '+nodeMap[l.to].name)+'</span>';}).join('')+'</div>':'');
+  if(!n){document.getElementById('arcDetail').innerHTML='<p style="margin:0;font-size:12px;color:#8495a8">点节点看连接关系。</p>';return;}
+  const arcs=ARCS.filter(function(a){return a.from===n.id||a.to===n.id;});
+  document.getElementById('arcDetail').innerHTML='<h4>'+n.short+'</h4>'
+   +'<p style="margin:0 0 9px;font-size:11.5px;color:#56697f;line-height:1.6">'+n.info+'</p>'
+   +(arcs.length?'<div class="lens-chips">'+arcs.map(function(a){return '<span class="lens-chip">'+(a.label||nodeMap[a.from].short+' — '+nodeMap[a.to].short)+'</span>';}).join('')+'</div>':'');
  }
  document.querySelectorAll('#guessRow button[data-n]').forEach(function(b){
   b.addEventListener('click',function(){
    document.querySelectorAll('#guessRow button[data-n]').forEach(function(x){x.classList.remove('picked');});
    b.classList.add('picked');});});
  document.getElementById('revealBtn').addEventListener('click',function(){
+  revealed=true;
   const pickedBtn=document.querySelector('#guessRow button.picked');
   const pickedN=pickedBtn?pickedBtn.getAttribute('data-n'):null;
   document.getElementById('guessHint').innerHTML='可核验流向为 <b>2 条</b>（铜箔→电池、公路→流量）。'
-   +(pickedN==='2'?'你猜对了。':(pickedN?'你选了 '+pickedN+' 条，差一点。':'你还没选。'));});
+   +(pickedN==='2'?'你猜对了。':(pickedN?'你选了 '+pickedN+' 条，差一点。':'你还没选。'));
+  drawSvg();});
 
  drawToggles();drawSvg();drawDetail();
 })();

@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8">
 <title>能力图谱 · 博罗新视角</title>
-<meta name="description" content="交互式放射图：先猜哪类能力现场最多，再点击节点探查现场与相邻方向；不做排名、不预测，缺证据处标注待补。">
+<meta name="description" content="交互式雷达蛛网图：先猜哪类能力现场最多，再点轴探查现场与相邻方向；多边形轮廓=现场数，不做排名、不预测，缺证据处标注待补。">
 <meta name="viewport" content="width=device-width,initial-scale=1">
 <script src="../assets/boluo-access.js?v=20261108-inline2" data-bl-access="inline"></script>
 <link rel="stylesheet" href="./lens.css?v=20261110-lens">
@@ -27,18 +27,17 @@
  </div>
 
  <div class="viz-card">
-  <svg class="viz-svg" viewBox="0 0 360 380" id="capSvg" role="img" aria-label="博罗能力放射图"></svg>
+  <svg class="viz-svg" viewBox="0 0 360 360" id="capSvg" role="img" aria-label="博罗能力雷达图"></svg>
   <div class="viz-legend">
-   <span><i style="background:#23a3a7"></i>已投产为主</span>
-   <span><i style="background:#1369eb"></i>在途/在建为主</span>
-   <span><i style="background:#9aa8b9"></i>单口径</span>
+   <span><i style="background:#1369eb"></i>能力轮廓（顶点=现场数）</span>
+   <span><i style="background:#cdd7e3"></i>网格档位</span>
   </div>
  </div>
 
  <div class="viz-detail" id="capDetail"></div>
 
  <div class="lens-foot">
-  <b>口径说明：</b>能力类别依据现场工艺与产品归纳，属分析判断；节点大小对应现场数量，不代表产值或重要性。状态分「已投产 / 在途 / 退出」，不合并。<br>
+  <b>口径说明：</b>能力类别依据现场工艺与产品归纳，属分析判断；雷达顶点到中心的距离对应现场数量，不代表产值或重要性。状态分「已投产 / 在途 / 退出」，不合并。<br>
   <b>数据缺口：</b>「能相邻长出什么」需设备通用度、专利、技能同源等公开证据，当前标注待补，交火山引擎采集，不做推断。
  </div>
 </main>
@@ -72,26 +71,40 @@
  document.getElementById('lensMeta').textContent='数据版本 '+D.version+' · 核对于 '+D.checkedAt;
 
  let picked=null,active=null,revealed=false;
- const CX=180,CY=175,R=95;
- function pos(i){const ang=(-90+i*60)*Math.PI/180;return {x:CX+R*Math.cos(ang),y:CY+R*Math.sin(ang),ang:ang};}
+ const CX=180,CY=180,R=110;
+ const maxCount=Math.max.apply(null,CAPS.map(function(c){return c.count;}));
+ function axisPos(i){const ang=(-90+i*60)*Math.PI/180;return {x:CX+R*Math.cos(ang),y:CY+R*Math.sin(ang),ang:ang};}
+ function pointPos(c,i){const ang=(-90+i*60)*Math.PI/180;const r=R*(c.count/maxCount);
+  return {x:CX+r*Math.cos(ang),y:CY+r*Math.sin(ang)};}
 
  function drawSvg(){
   let s='';
+  for(let k=1;k<=4;k++){
+   s+='<circle cx="'+CX+'" cy="'+CY+'" r="'+(R*k/4)+'" fill="none" stroke="#e3e9f0" stroke-width="1"/>';
+  }
   CAPS.forEach(function(c,i){
-   const p=pos(i);
-   const dim=(active&&active!==c.key)?'opacity:.35':'';
-   s+='<g style="'+dim+'"><line x1="'+CX+'" y1="'+CY+'" x2="'+p.x+'" y2="'+p.y+'" stroke="'+(active===c.key?'#17212f':'#d4dce6')+'" stroke-width="'+(active===c.key?2.2:1.2)+'"/>';
-   const rr=14+c.count*1.3;
-   s+='<g class="viz-node" data-key="'+c.key+'"><circle cx="'+p.x+'" cy="'+p.y+'" r="'+rr+'" fill="'+c.color+'" stroke="'+(active===c.key?'#17212f':'#fff')+'" stroke-width="'+(active===c.key?3:2)+'"/>';
-   if(revealed)s+='<text class="viz-count" x="'+p.x+'" y="'+p.y+'">'+c.count+'</text>';
-   const cos=Math.cos(p.ang);
-   let lx,ly,anchor;
-   if(cos>0.35){lx=p.x+rr+8;ly=p.y;anchor='start';}
-   else if(cos<-0.35){lx=p.x-rr-8;ly=p.y;anchor='end';}
-   else{lx=p.x;ly=p.y+(p.ang<0?-(rr+10):(rr+10));anchor='middle';}
-   s+='<text class="viz-nlabel" x="'+lx+'" y="'+ly+'" text-anchor="'+anchor+'" dominant-baseline="central">'+c.short+'</text></g></g>';
+   const p=axisPos(i);
+   s+='<line x1="'+CX+'" y1="'+CY+'" x2="'+p.x+'" y2="'+p.y+'" stroke="#d4dce6" stroke-width="1"/>';
   });
-  s+='<circle cx="'+CX+'" cy="'+CY+'" r="17" fill="#17212f"/><text x="'+CX+'" y="'+CY+'" style="fill:#fff;font-size:10px;font-weight:800;text-anchor:middle;dominant-baseline:central">博罗</text>';
+  if(revealed){
+   const pts=CAPS.map(function(c,i){const p=pointPos(c,i);return p.x+','+p.y;}).join(' ');
+   s+='<polygon points="'+pts+'" fill="rgba(19,105,235,.18)" stroke="#1369eb" stroke-width="2.2"/>';
+  }
+  CAPS.forEach(function(c,i){
+   const ap=axisPos(i);
+   const dim=(active&&active!==c.key)?'opacity:.35':'';
+   s+='<g class="viz-node" data-key="'+c.key+'" style="'+dim+'">';
+   if(revealed){
+    const pp=pointPos(c,i);
+    s+='<circle cx="'+pp.x+'" cy="'+pp.y+'" r="'+(active===c.key?7:5)+'" fill="'+(active===c.key?'#17212f':'#1369eb')+'" stroke="#fff" stroke-width="1.5"/>';
+   }
+   const cos=Math.cos(ap.ang);
+   const lx=CX+(R+22)*cos,ly=CY+(R+22)*Math.sin(ap.ang);
+   const anchor=cos>0.3?'start':(cos<-0.3?'end':'middle');
+   s+='<text class="viz-nlabel" x="'+lx+'" y="'+ly+'" text-anchor="'+anchor+'" dominant-baseline="central" style="font-size:10.5px">'+c.short+'</text>';
+   s+='<circle cx="'+lx+'" cy="'+ly+'" r="16" fill="transparent"/>';
+   s+='</g>';
+  });
   document.getElementById('capSvg').innerHTML=s;
   Array.prototype.forEach.call(document.querySelectorAll('.viz-node'),function(g){
    g.addEventListener('click',function(){select(g.getAttribute('data-key'));});

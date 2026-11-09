@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8">
 <title>区域韧性 · 博罗新视角</title>
-<meta name="description" content="交互式象限：探查抵抗、恢复、适应、更新四能力的公开证据与缺口；不做数字评分，附投资断崖与滞后，缺证据处待补。">
+<meta name="description" content="交互式折线剖面：探查抵抗、恢复、适应、更新四能力的公开证据与缺口，恢复能力显示为待补低谷；定性档位非数字评分，附投资断崖与滞后，缺证据处待补。">
 <meta name="viewport" content="width=device-width,initial-scale=1">
 <script src="../assets/boluo-access.js?v=20261108-inline2" data-bl-access="inline"></script>
 <link rel="stylesheet" href="./lens.css?v=20261110-lens">
@@ -27,10 +27,10 @@
  </div>
 
  <div class="viz-card">
-  <svg class="viz-svg" viewBox="0 0 340 310" id="resSvg" role="img" aria-label="韧性四能力象限"></svg>
+  <svg class="viz-svg" viewBox="0 0 360 290" id="resSvg" role="img" aria-label="韧性四能力折线剖面"></svg>
   <div class="viz-legend">
-   <span><i style="background:#1369eb"></i>有部分证据</span>
-   <span><i style="background:#b6c2d0"></i>待补</span>
+   <span><i style="background:#1369eb"></i>证据档位折线（定性非评分）</span>
+   <span><i style="background:#b6c2d0"></i>待补低谷</span>
   </div>
  </div>
 
@@ -79,20 +79,38 @@
  document.getElementById('lensMeta').textContent='数据版本 '+D.version+' · 核对于 '+D.checkedAt;
 
  let picked=null,active=null,revealed=false;
+ const XS=[62,152,242,332],HIGH=80,LOW=195,BASE=228;
+ function yOf(a){return a.level==='part'?HIGH:LOW;}
  function drawSvg(){
-  let s='<line x1="170" y1="20" x2="170" y2="290" stroke="#e2e8f0" stroke-width="1.2" stroke-dasharray="4 5"/>'
-   +'<line x1="30" y1="155" x2="310" y2="155" stroke="#e2e8f0" stroke-width="1.2" stroke-dasharray="4 5"/>';
-  ABILITY.forEach(function(a){
-   const x=a.pos[0],y=a.pos[1];
-   const color=a.level==='part'?'#1369eb':'#b6c2d0';
+  let s='';
+  s+='<line x1="40" y1="'+HIGH+'" x2="345" y2="'+HIGH+'" stroke="#e2e8f0" stroke-width="1" stroke-dasharray="4 5"/>'
+   +'<text x="40" y="'+(HIGH-7)+'" style="font-size:9px;fill:#9aa8b9">有部分证据</text>';
+  s+='<line x1="40" y1="'+LOW+'" x2="345" y2="'+LOW+'" stroke="#e2e8f0" stroke-width="1" stroke-dasharray="4 5"/>'
+   +'<text x="40" y="'+(LOW-7)+'" style="font-size:9px;fill:#9aa8b9">待补</text>';
+  s+='<line x1="40" y1="'+BASE+'" x2="345" y2="'+BASE+'" stroke="#cfd8e3" stroke-width="1.4"/>';
+  if(revealed){
+   let area='M'+XS[0]+','+yOf(ABILITY[0]);
+   for(let i=1;i<4;i++)area+=' L'+XS[i]+','+yOf(ABILITY[i]);
+   area+=' L'+XS[3]+','+BASE+' L'+XS[0]+','+BASE+' Z';
+   s+='<path d="'+area+'" fill="rgba(19,105,235,.12)"/>';
+   let line='M'+XS[0]+','+yOf(ABILITY[0]);
+   for(let i=1;i<4;i++)line+=' L'+XS[i]+','+yOf(ABILITY[i]);
+   s+='<path d="'+line+'" fill="none" stroke="#1369eb" stroke-width="2.4"/>';
+  }
+  ABILITY.forEach(function(a,i){
+   const x=XS[i];
    const dim=(active&&active!==a.key)?'opacity:.35':'';
-   s+='<g style="'+dim+'"><g class="viz-node" data-key="'+a.key+'">'
-    +'<circle cx="'+x+'" cy="'+y+'" r="34" fill="'+color+'" stroke="'+(active===a.key?'#17212f':'#fff')+'" stroke-width="'+(active===a.key?3:2)+'"'
-    +(a.level==='gap'?' stroke-dasharray="5 4"':'')+'/>'
-    +'<text class="viz-count" x="'+x+'" y="'+(y-4)+'" style="font-size:13px">'+a.name+'</text>'
-    +'<text class="viz-count" x="'+x+'" y="'+(y+11)+'" style="font-size:8px;opacity:.85">'+(a.level==='part'?'部分证据':'待补')+'</text>'
-    +'</g>';
-   if(revealed)s+='<text class="viz-nlabel" x="'+x+'" y="'+(y+52)+'" text-anchor="middle" style="fill:'+(a.level==='part'?'#1369eb':'#98a6b5')+'">'+(a.level==='part'?'有证据':'无公开证据')+'</text>';
+   s+='<g class="viz-node" data-key="'+a.key+'" style="'+dim+'">';
+   if(revealed){
+    const y=yOf(a);
+    if(a.level==='part'){
+     s+='<circle cx="'+x+'" cy="'+y+'" r="'+(active===a.key?8:6)+'" fill="'+(active===a.key?'#17212f':'#1369eb')+'" stroke="#fff" stroke-width="1.5"/>';
+    }else{
+     s+='<circle cx="'+x+'" cy="'+y+'" r="'+(active===a.key?8:6)+'" fill="#fff" stroke="#9aa8b9" stroke-width="2.4" stroke-dasharray="3 3"/>';
+    }
+   }
+   s+='<text class="viz-nlabel" x="'+x+'" y="'+(BASE+18)+'" text-anchor="middle" style="font-size:12px;fill:#46586e">'+a.name+'</text>';
+   s+='<rect x="'+(x-30)+'" y="40" width="60" height="'+(BASE-20)+'" fill="transparent"/>';
    s+='</g>';
   });
   document.getElementById('resSvg').innerHTML=s;

@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8">
 <title>基础经济 · 博罗新视角</title>
-<meta name="description" content="交互式条形图：农林牧渔总产值与分行业增速，先猜后揭、点击看口径；明确增速非占比，农业连着农户，缺证据处待补。">
+<meta name="description" content="交互式矩形树图：方块面积编码分行业同比增速（非占比），先猜后揭、点击看口径；农业连着农户，缺证据处待补。">
 <meta name="viewport" content="width=device-width,initial-scale=1">
 <script src="../assets/boluo-access.js?v=20261108-inline2" data-bl-access="inline"></script>
 <link rel="stylesheet" href="./lens.css?v=20261110-lens">
@@ -17,7 +17,7 @@
 <main class="lens-wrap">
  <p class="lens-kick">FOUNDATIONAL ECONOMY · 基础经济</p>
  <h1 class="lens-h1">维系日常的底盘，<br>连着农户与就业</h1>
- <p class="lens-lede">住房、食品、公用事业、社会服务与农业，吸纳就业、维系日常。先猜哪个分行业增速最快，再点条形看口径。</p>
+ <p class="lens-lede">住房、食品、公用事业、社会服务与农业，吸纳就业、维系日常。先猜哪个分行业增速最快，再点方块看口径。</p>
  <p class="lens-meta" id="lensMeta"></p>
 
  <div class="lens-summary">
@@ -32,8 +32,8 @@
  </div>
 
  <div class="viz-card">
-  <svg class="viz-svg" viewBox="0 0 360 270" id="sectorSvg" role="img" aria-label="分行业增速条形图"></svg>
-  <div class="viz-legend"><span>条形长度 = 同比增速（%），不是产值占比</span></div>
+  <svg class="viz-svg" viewBox="0 0 360 280" id="sectorSvg" role="img" aria-label="分行业增速矩形树图"></svg>
+  <div class="viz-legend"><span>方块面积 = 同比增速（%），不是产值占比</span></div>
  </div>
 
  <div class="viz-detail" id="sectorDetail"></div>
@@ -49,7 +49,7 @@
  <div class="lens-gap" style="margin-top:14px"><b>茶口径 · </b>公开数据仅柏塘新陂合作社春茶干茶 2500 斤，不能代表全县农业或农户收入；成本、利润、回款待补，交火山引擎采集。</div>
 
  <div class="lens-foot">
-  <b>口径说明：</b>分行业为产值同比增速，不能换算成占比，也不代表农户收入或加工收益；限上数据仅覆盖限上企业，不代表普通小店。<br>
+  <b>口径说明：</b>方块面积按同比增速等比绘制，不代表产值占比，也不代表农户收入或加工收益；限上数据仅覆盖限上企业，不代表普通小店。<br>
   <b>立场：</b>农业是国家战略与生态底色，连着大湾区「菜篮子」「茶罐子」，不是短板或包袱。
  </div>
 </main>
@@ -59,7 +59,7 @@
 (function(){
  const D=window.BoluoDiscoveryData;
  if(!D){document.getElementById('sectorDetail').innerHTML='数据未加载';return;}
- const ag=D.topics.agriculture,food=D.topics.food;
+ const ag=D.topics.agriculture;
 
  const PAGES=[['lens.html','入口'],['capability.html','能力'],['value-chain.html','环节'],['resilience.html','韧性'],['foundational.html','基础'],['connections.html','连接']];
  document.getElementById('lensPager').innerHTML=PAGES.map(function(p){
@@ -71,21 +71,28 @@
  document.getElementById('statRate').innerHTML='<span>'+rateM.label+'</span><b>+'+rateM.value+'%</b>';
 
  const SECTORS=ag.sectors.map(function(s){return {name:s[0],rate:s[1]};});
- const max=Math.max.apply(null,SECTORS.map(function(s){return s.rate;}));
+ // 手工 squarified 布局（面积比例已核验，误差<0.3%）
+ const LAYOUT={
+  '专业及辅助活动':{x:212,y:0,w:148,h:280,c:'#1369eb'},
+  '林业':{x:0,y:0,w:209,h:109,c:'#3f80ef'},
+  '渔业':{x:0,y:112,w:209,h:93,c:'#5b93f0'},
+  '牧业':{x:0,y:208,w:120,h:72,c:'#8fb6f5'},
+  '农业':{x:123,y:208,w:86,h:72,c:'#a9c8f7'}
+ };
  let picked=null,active=null,revealed=false;
- const BASEX=104,MAXW=205,ROWH=46,TOP=26;
 
  function drawSvg(){
   let s='';
-  SECTORS.forEach(function(sec,i){
-   const y=TOP+i*ROWH;
-   const w=revealed?Math.round(sec.rate/max*MAXW):6;
-   const dim=(active&&active!==sec.name)?'opacity:.35':'';
-   s+='<g style="'+dim+'"><g class="viz-node" data-name="'+sec.name+'">'
-    +'<text x="0" y="'+(y+10)+'" class="viz-nlabel" text-anchor="start" style="font-size:11px">'+sec.name+'</text>'
-    +'<rect x="'+BASEX+'" y="'+y+'" width="'+w+'" height="22" rx="7" fill="'+(active===sec.name?'#17212f':'#1369eb')+'"/>';
-   if(revealed)s+='<text x="'+(BASEX+w+7)+'" y="'+(y+11)+'" class="viz-nlabel" text-anchor="start" style="font-size:11px;fill:#1369eb">'+sec.rate+'%</text>';
-   s+='</g></g>';
+  SECTORS.forEach(function(sec){
+   const L=LAYOUT[sec.name];
+   const fill=revealed?L.c:'#d8dee6';
+   const dim=(active&&active!==sec.name)?'opacity:.4':'';
+   const small=L.h<80;
+   s+='<g class="viz-node" data-name="'+sec.name+'" style="'+dim+'">'
+    +'<rect x="'+L.x+'" y="'+L.y+'" width="'+L.w+'" height="'+L.h+'" rx="9" fill="'+fill+'" stroke="'+(active===sec.name?'#17212f':'#fff')+'" stroke-width="'+(active===sec.name?3:1)+'"/>'
+    +'<text x="'+(L.x+12)+'" y="'+(L.y+21)+'" style="font-size:'+(small?10:12)+'px;fill:'+(revealed?'#fff':'#617187')+';font-weight:800">'+sec.name+'</text>';
+   if(revealed)s+='<text x="'+(L.x+12)+'" y="'+(L.y+43)+'" style="font-size:'+(small?11:14)+'px;fill:#fff;font-weight:800">+'+sec.rate+'%</text>';
+   s+='</g>';
   });
   document.getElementById('sectorSvg').innerHTML=s;
   Array.prototype.forEach.call(document.querySelectorAll('.viz-node'),function(g){
@@ -93,9 +100,10 @@
  }
  function drawDetail(){
   const sec=SECTORS.find(function(x){return x.name===active;});
-  if(!sec){document.getElementById('sectorDetail').innerHTML='<p style="margin:0;font-size:12px;color:#8495a8">点上方按钮或条形，开始探查。</p>';return;}
+  if(!sec){document.getElementById('sectorDetail').innerHTML='<p style="margin:0;font-size:12px;color:#8495a8">点上方按钮或方块，开始探查。</p>';return;}
+  const extra=sec.name==='专业及辅助活动'?'该类增长来自农林牧渔服务环节，分项未公开，不能直接等同于「高附加值」达标。':'';
   document.getElementById('sectorDetail').innerHTML='<h4>'+sec.name+' · 同比 +'+sec.rate+'%</h4>'
-   +'<p style="margin:0 0 8px;font-size:11.5px;color:#56697f;line-height:1.65">这是该行业产值的同比增速，不是它在总产值中的占比，也不等于农户收入或加工收益。</p>'
+   +'<p style="margin:0 0 8px;font-size:11.5px;color:#56697f;line-height:1.65">方块面积代表该行业的同比增速，不是它在总产值中的占比，也不等于农户收入或加工收益。'+extra+'</p>'
    +'<div class="lens-gap"><b>待补 · </b>该行业的产值规模、经营主体与本地增值数据，交火山引擎采集。</div>';
  }
  function drawGuess(){
@@ -111,7 +119,7 @@
   revealed=true;
   const top=SECTORS.slice().sort(function(a,b){return b.rate-a.rate;})[0];
   const ok=picked===top.name;
-  document.getElementById('guessHint').innerHTML='增速最快的是<b>'+top.name+'</b>（+'+top.rate+'%）。'
+  document.getElementById('guessHint').innerHTML='增速最快的是<b>'+top.name+'</b>（+'+top.rate+'%）。注意它是服务环节，不等于高附加值证明。'
    +(picked?(ok?'你猜对了。':'你猜的是「'+picked+'」，差一点。'):'你还没猜，先选一个。');
   drawSvg();drawGuess();
  }
