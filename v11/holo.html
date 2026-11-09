@@ -39,8 +39,8 @@
   <p class="holo-period">指标期次：2025 年为年度约数，2026 年为前三季度快报。绝对值与增速不同源，不可混读。</p>
   <div class="holo-stage">
    <div id="holoNet"></div>
-   <div class="holo-detail" id="holoDetail" hidden></div>
   </div>
+  <div class="holo-detail" id="holoDetail" hidden></div>
   <p class="holo-note">按镇街挂项目 · 点住圆点可以拖开看 · 连线上的数字是这条关系带过去的量 · 点右栏任一条，画布会把它点亮</p>
  </section>
 
@@ -63,7 +63,7 @@
 <p class="holo-tail">读法：圆点是一个真实落地的现场，不是规划；线从镇街连到项目，颜色就是它走到的那一步——橙签约、青开工、蓝投产、红关停或停摆。签约不等于投产，投产才改产能。</p>
 
 <script defer src="./discovery-data.js?v=20261106-discovery1"></script>
-<script defer src="./discovery-net.js?v=20261109-net4"></script>
+<script defer src="./discovery-net.js?v=20261109-net5"></script>
 <script>
 window.addEventListener('load',function(){
  var D=window.BoluoDiscoveryData; if(!D||!D.events)return;
@@ -84,7 +84,19 @@ window.addEventListener('load',function(){
  var col=function(e){return (e.visual==='closure'||e.visual==='stalled')?'#e2544a':e.stage===3?'#1369eb':e.stage===2?'#1e9aa0':'#d9862f';};
  var stName=function(e){return (e.visual==='closure'||e.visual==='stalled')?'关停 / 停摆':e.stage===3?'投产':e.stage===2?'开工':'签约';};
 
- function showDetail(e){
+ function placeDetail(nx,ny){
+   var box=document.getElementById('holoDetail');
+   if(!box||box.hidden===false&&window.innerWidth<900)return;
+   if(!nx)return;
+   var st=document.querySelector('.holo-stage');
+   if(!st)return;
+   var sw=st.clientWidth||800, sh=st.clientHeight||548, bw=308, bh=150;
+   var left = nx > sw/2 ? nx-bw-26 : nx+26;
+   left = Math.max(10, Math.min(sw-bw-10, left));
+   var top = Math.max(10, Math.min(sh-bh-10, ny-bh/2));
+   box.style.left=left+'px'; box.style.top=top+'px'; box.style.bottom='auto';
+ }
+ function showDetail(e,pos){
    var box=document.getElementById('holoDetail'); if(!box||!e)return;
    var url=(window.BoluoDiscoveryData.links&&window.BoluoDiscoveryData.links[e.id])||'';
    box.innerHTML='<div class="hd-top"><span class="hd-st">'+stName(e)+'</span><em>'+e.town+' · '+(e.month||0)+' 月</em>'+
@@ -102,7 +114,8 @@ window.addEventListener('load',function(){
 
  if(window.BoluoNet)netCtl=window.BoluoNet.mount(document.getElementById('holoNet'),ev,{
    live:true,
-   onSelect:function(n){ if(n&&n.kind==='proj'&&n.ev)showDetail(n.ev); }
+   onSelect:function(n,pos){ if(n&&n.kind==='proj'&&n.ev)showDetail(n.ev,pos); },
+   onBlank:function(){ var b=document.getElementById('holoDetail'); if(b)b.hidden=true; }
  });
 
  // 左栏筛选
