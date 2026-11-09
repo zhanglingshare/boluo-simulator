@@ -290,11 +290,16 @@
         const cut = mob ? 5 : 8;
         const nm = n.name.length > cut ? n.name.slice(0, cut) + '…' : n.name;
         ctx.font = '600 ' + (mob ? 9 : 10.5) + 'px ' + FONT;
+        const mw = Math.max(ctx.measureText(nm).width, (function () {
+          ctx.save(); ctx.font = '700 ' + (mob ? 8.5 : 9.5) + 'px ' + FONT;
+          const w2 = ctx.measureText(n.val).width; ctx.restore(); return w2;
+        })());
+        const tx = Math.max(6 + mw / 2, Math.min(W - 6 - mw / 2, n.x));
         ctx.fillStyle = '#1e2b3a';
-        ctx.fillText(nm, n.x, n.y + r + 4);
+        ctx.fillText(nm, tx, n.y + r + 4);
         ctx.font = '700 ' + (mob ? 8.5 : 9.5) + 'px ' + FONT;
         ctx.fillStyle = n.color;
-        ctx.fillText(n.val, n.x, n.y + r + (mob ? 15 : 17));
+        ctx.fillText(n.val, tx, n.y + r + (mob ? 15 : 17));
         ctx.restore();
       });
 
