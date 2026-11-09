@@ -20,16 +20,16 @@
   <div class="holo-panel">
    <p class="holo-pt"><i></i>关系图层</p>
    <div class="holo-layer" id="holoFilter">
-    <button type="button" class="on" data-st="null"><i class="sw s0"></i>全部关系</button>
-    <button type="button" data-st="1"><i class="sw s1"></i>签约</button>
-    <button type="button" data-st="2"><i class="sw s2"></i>开工</button>
-    <button type="button" data-st="3"><i class="sw s3"></i>投产</button>
-    <button type="button" data-st="0"><i class="sw s4"></i>关停停摆</button>
+    <button type="button" class="on" data-rel="null"><i class="sw s0"></i>全部关系</button>
+    <button type="button" data-rel="supply"><i class="sw s5"></i>供应链配套</button>
+    <button type="button" data-rel="invest"><i class="sw s2"></i>投资建设</button>
+    <button type="button" data-rel="coop"><i class="sw s6"></i>区域协作</button>
+    <button type="button" data-rel="agri"><i class="sw s4"></i>农业与消费</button>
    </div>
   </div>
   <div class="holo-panel">
    <p class="holo-pt"><i></i>读法</p>
-   <p class="holo-read">中间的小圈是镇街，鼠标移上去才显示名字；外侧的大圆点是挂在这个镇上的项目。线的颜色就是它现在走到哪一步。</p>
+   <p class="holo-read">中间的小圈是镇街，鼠标移上去才显示名字；外侧的大圆点是挂在这个镇上的项目。颜色是这条关系属于哪一类，线上标的是它走到哪一步。</p>
    <p class="holo-tip">点住圆点拖动 · 空白处平移 · 滚轮缩放 · 点圆点看这个现场</p>
   </div>
  </aside>
@@ -67,7 +67,7 @@
 <script>
 window.addEventListener('load',function(){
  var D=window.BoluoDiscoveryData; if(!D||!D.events)return;
- var ev=D.events.filter(function(e){return e.town;});
+ var ev=D.events.slice();
  var netCtl=null;
 
  // 指标
@@ -81,8 +81,10 @@ window.addEventListener('load',function(){
  });
  var mb=document.getElementById('holoMetrics'); if(mb)mb.innerHTML=mh;
 
- var col=function(e){return (e.visual==='closure'||e.visual==='stalled')?'#e2544a':e.stage===3?'#1369eb':e.stage===2?'#1e9aa0':'#d9862f';};
- var stName=function(e){return (e.visual==='closure'||e.visual==='stalled')?'关停 / 停摆':e.stage===3?'投产':e.stage===2?'开工':'签约';};
+ var col=function(e){return RELC[e.rel]||'#0e9ba5';};
+ var stName=function(e){if(e.visual==='closure'||e.visual==='stalled')return '关停 / 停摆';if(e.visual==='copper')return '点火';if(e.visual==='food'||e.visual==='agriculture'||e.visual==='tea')return '统计';return e.stage===3?'投产':e.stage===2?'开工':'签约';};
+ var RELC={supply:'#2563eb',invest:'#0e9ba5',coop:'#7c3aed',agri:'#d97706'};
+ var RELN={supply:'供应链配套',invest:'投资建设',coop:'区域协作',agri:'农业与消费'};
 
  function placeDetail(nx,ny){
    var box=document.getElementById('holoDetail');
@@ -123,7 +125,7 @@ window.addEventListener('load',function(){
  if(ft)ft.addEventListener('click',function(ev2){
    var b=ev2.target.closest('button'); if(!b)return;
    [].forEach.call(ft.querySelectorAll('button'),function(x){x.classList.toggle('on',x===b);});
-   var v=b.getAttribute('data-st'); v=(v==='null')?null:Number(v);
+   var v=b.getAttribute('data-rel'); v=(v==='null')?null:v;
    if(netCtl&&netCtl.setFilter)netCtl.setFilter(v);
  });
 
@@ -148,7 +150,7 @@ window.addEventListener('load',function(){
    arr.forEach(function(e){
      h+='<button type="button" data-id="'+e.id+'">'+
         '<i class="dot" style="background:'+col(e)+'"></i>'+
-        '<span class="tx"><b>'+e.title+'</b><span>'+e.town+' · '+(e.month||0)+' 月 · '+stName(e)+'</span></span>'+
+        '<span class="tx"><b>'+e.title+'</b><span>'+(e.town||'全县')+(e.month?' · '+e.month+' 月':'')+' · '+(RELN[e.rel]||'')+' · '+stName(e)+'</span></span>'+
         '<i class="num">'+e.big+e.unit+'</i></button>';
    });
    listBox.innerHTML=h;

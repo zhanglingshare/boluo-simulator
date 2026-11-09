@@ -3,15 +3,13 @@
   'use strict';
   const FONT = '"PingFang SC","Hiragino Sans GB","Microsoft YaHei",sans-serif';
 
-  function colorOf(e) {
-    if (e.visual === 'closure' || e.visual === 'stalled') return '#e2544a';
-    if (e.stage === 3) return '#1369eb';
-    if (e.stage === 2) return '#1e9aa0';
-    return '#d9862f';
-  }
+  const RELC = { supply: '#2563eb', invest: '#0e9ba5', coop: '#7c3aed', agri: '#d97706' };
+  function colorOf(e) { return RELC[e.rel] || '#0e9ba5'; }
   function shortTown(n) { return String(n || '').replace(/街道|镇/g, ''); }
   function stageNameOf(e) {
     if (e.visual === 'closure' || e.visual === 'stalled') return '关停 / 停摆';
+    if (e.visual === 'copper') return '点火';
+    if (e.visual === 'food' || e.visual === 'agriculture' || e.visual === 'tea') return '统计';
     return e.stage === 3 ? '投产' : (e.stage === 2 ? '开工' : '签约');
   }
 
@@ -20,9 +18,8 @@
     const projects = [];
     const seen = {};
     events.forEach(function (e) {
-      if (!e.town) return;
-      if (!seen[e.town]) { seen[e.town] = { id: 't_' + e.town, kind: 'town', label: shortTown(e.town), town: e.town, w: 0 }; towns.push(seen[e.town]); }
-      seen[e.town].w += 1;
+      if (e.town && !seen[e.town]) { seen[e.town] = { id: 't_' + e.town, kind: 'town', label: shortTown(e.town), town: e.town, w: 0 }; towns.push(seen[e.town]); }
+      if (e.town) seen[e.town].w += 1;
       projects.push({
         id: 'p_' + e.id, kind: 'proj', ev: e, town: e.town,
         val: e.big + e.unit,
@@ -61,10 +58,10 @@
         links.push({ a: core, b: tn, kind: 'town' });
       });
       G.projects.forEach(function (p) {
-        const n = Object.assign({}, p, { vx: 0, vy: 0, r: p.stalled ? 8.5 : (p.ev.stage === 3 ? 13 : p.ev.stage === 2 ? 10 : 8.5), pin: false, spawn: 1 });
+        const n = Object.assign({}, p, { vx: 0, vy: 0, x: 0, y: 0, r: p.stalled ? 8.5 : (p.ev.stage === 3 ? 13 : (p.ev.stage === 2 ? 10 : 8.5)), pin: false, spawn: 1 });
         nodes.push(n);
-        const t = nodes.find(function (x) { return x.id === 't_' + p.town; });
-        links.push({ a: t || core, b: n, kind: 'proj', color: p.color, tag: p.val, stageName: p.stageName });
+        const t = p.town ? nodes.find(function (x) { return x.id === 't_' + p.town; }) : null;
+        links.push({ a: t || core, b: n, kind: 'proj', far: !p.town, color: p.stalled ? '#e2544a' : p.color, tag: p.val, stageName: p.stageName });
       });
     }
 
@@ -101,6 +98,13 @@
           p.y = cy + Math.sin(pa) * R1 * 1.45;
         });
       });
+      // 没有镇街可挂的全县条目，单独铺在环外
+      const orphan = nodes.filter(function (n) { return n.kind === 'proj' && !n.town; });
+      orphan.forEach(function (p, i) {
+        const a = Math.PI * 0.35 + i * 0.55;
+        p.x = cx + Math.cos(a) * R1 * 1.2;
+        p.y = cy + Math.sin(a) * R1 * 1.2;
+      });
       core.x = cx; core.y = cy;
       nodes.forEach(function (n) { n.vx = 0; n.vy = 0; });
     }
@@ -129,7 +133,7 @@
         if (!a || !b) return;
         const dx = b.x - a.x, dy = b.y - a.y;
         const d = Math.sqrt(dx * dx + dy * dy) || 1;
-        const target = l.kind === 'town' ? R1 : R1 * 0.56;
+        const target = l.kind === 'town' ? R1 : (l.far ? R1 * 1.28 : R1 * 0.56);
         const f = (d - target) * SPRING;
         const fx = f * dx / d, fy = f * dy / d;
         a.fx += fx; a.fy += fy;
@@ -158,7 +162,7 @@
       return { x: u * u * a.x + 2 * u * t * cxp + t * t * b.x, y: u * u * a.y + 2 * u * t * cyp + t * t * b.y };
     }
 
-    let hoverId = null, selId = null, filterStage = null;
+    let hoverId = null, selId = null, filterType = null;
     function focusId() { return selId; }
     function nearMap() {
       const id = focusId();
@@ -168,7 +172,7 @@
       return m;
     }
     function isDim(n) {
-      return filterStage !== null && n.ev && n.ev.stage !== filterStage;
+      return filterType !== null && n.ev && n.ev.rel !== filterType;
     }
 
     function draw() {
@@ -275,15 +279,17 @@
           ctx.strokeStyle = 'rgba(217,134,47,.85)'; ctx.lineWidth = 2;
           ctx.beginPath(); ctx.arc(n.x, n.y, r + 5, 0, 7); ctx.stroke();
         }
+        const gcol = n.stalled ? '#e2544a' : n.color;
         const glow = ctx.createRadialGradient(n.x, n.y, r * .7, n.x, n.y, r * 2.8);
-        glow.addColorStop(0, n.color + '3a'); glow.addColorStop(1, n.color + '00');
+        glow.addColorStop(0, gcol + '3a'); glow.addColorStop(1, gcol + '00');
         ctx.fillStyle = glow; ctx.beginPath(); ctx.arc(n.x, n.y, r * 2.8, 0, 7); ctx.fill();
         ctx.fillStyle = '#fff'; ctx.beginPath(); ctx.arc(n.x, n.y, r, 0, 7); ctx.fill();
-        ctx.strokeStyle = n.color; ctx.lineWidth = n.stalled ? 1.5 : 2.1;
+        const rc = n.stalled ? '#e2544a' : n.color;
+        ctx.strokeStyle = rc; ctx.lineWidth = n.stalled ? 1.5 : 2.1;
         if (n.stalled) ctx.setLineDash([4, 3]);
         ctx.beginPath(); ctx.arc(n.x, n.y, r, 0, 7); ctx.stroke();
         ctx.setLineDash([]);
-        ctx.fillStyle = n.color; ctx.beginPath(); ctx.arc(n.x, n.y, Math.max(2.4, r * .3), 0, 7); ctx.fill();
+        ctx.fillStyle = rc; ctx.beginPath(); ctx.arc(n.x, n.y, Math.max(2.4, r * .3), 0, 7); ctx.fill();
         ctx.restore();
 
         ctx.save();
@@ -394,7 +400,7 @@
     else window.addEventListener('resize', resize);
     if (LIVE) start();
     return {
-      setFilter: function (v) { filterStage = v; draw(); },
+      setFilter: function (v) { filterType = v; draw(); },
       select: function (id) { selId = id; draw(); },
       clear: function () { selId = null; draw(); }
     };
