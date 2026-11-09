@@ -62,6 +62,17 @@
         nodes.push(n);
         links.push({ a: core, b: n, kind: 'proj', far: !p.town, color: p.color, tag: p.val, stageName: p.stageName, state: p.state });
       });
+      /* 同镇之间的淡线：只说明这些现场在同一个镇，不是业务往来 */
+      const byTown = {};
+      nodes.forEach(function (n) {
+        if (n.kind === 'proj' && n.town) { (byTown[n.town] = byTown[n.town] || []).push(n); }
+      });
+      Object.keys(byTown).forEach(function (k) {
+        const list = byTown[k];
+        for (let i = 0; i < list.length; i++) {
+          for (let j = i + 1; j < list.length; j++) links.push({ a: list[i], b: list[j], kind: 'sib' });
+        }
+      });
     }
 
     let W = 0, H = 0, mob = false;
@@ -219,6 +230,17 @@
         const a = l.a, b = l.b;
         if (!a || !b) return;
         const dim = isDim(a) || isDim(b);
+        if (l.kind === 'sib') {
+          ctx.save();
+          ctx.globalAlpha = dim ? .06 : .30;
+          ctx.strokeStyle = '#8ba0b8';
+          ctx.lineWidth = 1.1;
+          ctx.setLineDash([2, 3]);
+          ctx.beginPath(); ctx.moveTo(a.x, a.y); ctx.lineTo(b.x, b.y); ctx.stroke();
+          ctx.setLineDash([]);
+          ctx.restore();
+          return;
+        }
         const onSel = !!(selId && (a.id === selId || b.id === selId));
         const st = l.state || 'live';
         const ctl = bez(a, b, 0);
@@ -248,7 +270,7 @@
               ctx.restore();
             }
           }
-          if (LIVE && !mob && st === 'live' && l.stageName !== '投产') {
+          if (LIVE && !mob && st === 'live') {
             const p = bez(a, b, 0.55);
             const dx = b.x - a.x, dy = b.y - a.y, dl = Math.hypot(dx, dy) || 1;
             const ox = -dy / dl * 9, oy = dx / dl * 9;
