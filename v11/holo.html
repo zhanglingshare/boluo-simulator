@@ -30,7 +30,7 @@
   <div class="holo-panel">
    <p class="holo-pt"><i></i>读法</p>
    <p class="holo-read">从中心“博罗”往外，一圈是一个镇街；镇街外面的圆点，是挂在这个镇上的项目。线的颜色就是它现在走到哪一步。</p>
-   <p class="holo-tip">拖拽空白处平移 · 滚轮缩放 · 点圆点看这个现场</p>
+   <p class="holo-tip">点住圆点拖动 · 空白处平移 · 滚轮缩放 · 点圆点看这个现场</p>
   </div>
  </aside>
 
@@ -41,7 +41,7 @@
    <div id="holoNet"></div>
    <div class="holo-detail" id="holoDetail" hidden></div>
   </div>
-  <p class="holo-note">按镇街挂项目 · 圆点越大越接近投产 · 点右栏任一条，画布会把它点亮</p>
+  <p class="holo-note">按镇街挂项目 · 点住圆点可以拖开看 · 连线上的数字是这条关系带过去的量 · 点右栏任一条，画布会把它点亮</p>
  </section>
 
  <aside class="holo-right holo-side">
@@ -63,7 +63,7 @@
 <p class="holo-tail">读法：圆点是一个真实落地的现场，不是规划；线从镇街连到项目，颜色就是它走到的那一步——橙签约、青开工、蓝投产、红关停或停摆。签约不等于投产，投产才改产能。</p>
 
 <script defer src="./discovery-data.js?v=20261106-discovery1"></script>
-<script defer src="./discovery-net.js?v=20261109-net2"></script>
+<script defer src="./discovery-net.js?v=20261109-net4"></script>
 <script>
 window.addEventListener('load',function(){
  var D=window.BoluoDiscoveryData; if(!D||!D.events)return;
@@ -101,6 +101,7 @@ window.addEventListener('load',function(){
  }
 
  if(window.BoluoNet)netCtl=window.BoluoNet.mount(document.getElementById('holoNet'),ev,{
+   live:true,
    onSelect:function(n){ if(n&&n.kind==='proj'&&n.ev)showDetail(n.ev); }
  });
 
