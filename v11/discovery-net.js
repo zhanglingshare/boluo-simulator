@@ -260,9 +260,11 @@
           ctx.beginPath(); ctx.arc(n.x, n.y, rr, 0, 7); ctx.stroke();
           ctx.fillStyle = '#fff'; ctx.beginPath(); ctx.arc(n.x, n.y, rr, 0, 7); ctx.fill();
           ctx.fillStyle = 'rgba(110,135,165,.9)'; ctx.beginPath(); ctx.arc(n.x, n.y, 2.6, 0, 7); ctx.fill();
-          ctx.fillStyle = '#7b8ca3'; ctx.font = (mob ? 600 : 500) + ' ' + (mob ? 10 : 10.5) + 'px ' + FONT;
-          ctx.textAlign = 'center'; ctx.textBaseline = 'top';
-          ctx.fillText(n.w > 1 ? n.label + n.w : n.label, n.x, n.y + 9);
+          if (hot) {
+            ctx.fillStyle = '#5d6f82'; ctx.font = '600 ' + (mob ? 9.5 : 10) + 'px ' + FONT;
+            ctx.textAlign = 'center'; ctx.textBaseline = 'top';
+            ctx.fillText(n.label, n.x, n.y + 9);
+          }
           ctx.restore();
           return;
         }
