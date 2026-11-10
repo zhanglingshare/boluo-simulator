@@ -268,3 +268,16 @@
 .plan-page .region-evidence p{color:#7b9491}
 .plan-page .region-source{background:linear-gradient(110deg,#248e82,#166d77);border-color:#2b9e8c;box-shadow:none}
 .plan-page .region-details>summary{background:#edf8f3;border-color:#cce8dd;color:#287f73}
+
+
+.plan-page .supporting-observations{margin-top:13px;border:1px solid #d9e7e8;border-radius:13px;background:rgba(255,255,255,.72);overflow:hidden}
+.plan-page .supporting-observations>summary{display:flex;align-items:center;gap:12px;padding:13px 16px;cursor:pointer;list-style:none;color:#52737d;font-size:11px;font-weight:800}
+.plan-page .supporting-observations>summary::-webkit-details-marker{display:none}
+.plan-page .supporting-observations>summary strong{margin-left:auto;color:#81979d;font-size:10px;font-weight:650}
+.plan-page .supporting-observations>summary i{font-style:normal;color:#258f83;font-size:18px;transition:transform .2s}
+.plan-page .supporting-observations[open]>summary i{transform:rotate(45deg)}
+.plan-page .supporting-observations>.double-lower{padding:0 13px 13px;margin-top:0}
+@media(max-width:720px){
+ .plan-page .supporting-observations>summary{padding:11px 12px;font-size:10px}
+ .plan-page .supporting-observations>summary strong{font-size:9px}
+}
