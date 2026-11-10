@@ -7,6 +7,7 @@
 <meta name="description" content="博罗决策风洞 V11 第三页：从经济总量、历史年轮、三次产业结构、2030规划目标和六类支撑条件，看清博罗的经济基本盘。">
 <title>03 基本盘｜博罗的家底，能支撑多大的下一程？｜博罗决策风洞 V11</title>
 <link rel="stylesheet" href="./base-target-v2.css?v=20261110-structure3">
+<link rel="stylesheet" href="./base-target-compare.css?v=20261110-cmp1">
 </head>
 <body class="base-page">
 <header class="site-header">
@@ -48,7 +49,7 @@
   <div class="intro-copy">
    <div class="eyebrow"><i></i> 03 / ECONOMIC BASE · 基本盘</div>
    <h1>博罗的家底，<em>能支撑多大的下一程？</em></h1>
-   <p>先看清已经拥有的，再看清目标差在哪里。这里呈现经济规模、产业结构和支撑条件，不把规划目标包装成预测结果。</p>
+   <details class="intro-expand"><summary>这一页看什么？</summary><p>先看清已经拥有的，再看清目标差在哪里。这里呈现经济规模、产业结构和支撑条件，不把规划目标包装成预测结果。</p></details>
   </div>
   <div class="intro-actions"><button class="ghost-button" id="evidenceBtn" type="button">证据与口径 ↗</button></div>
  </section>
@@ -72,6 +73,36 @@
    <div class="kpi-foot">两端现价规模增幅约59.1% · 隐含名义复合变化率约9.74%</div>
   </article>
  </section>
+
+
+ <section class="compare-deck" aria-label="三个直观对比实验">
+  <article class="cmp-panel" aria-label="现实和目标规模对照">
+   <span class="cmp-eyebrow">A / TARGET GAP · 规模差额桥</span>
+   <h2 class="cmp-title">千亿现实，离1600亿还有多远？</h2>
+   <div class="cmp-bridge-text"><div><strong>1005.45</strong><small>2025年 · 亿元</small></div><div><strong>1600</strong><small>2030年目标 · 亿元</small></div></div>
+   <div class="cmp-track" role="img" aria-label="2025年GDP为2030年目标规模的62.84%，差额594.55亿元"><span class="actual"></span><span class="gap"></span></div>
+   <div class="cmp-bridge-bottom"><span>2025规模为目标的62.8%</span><strong>+594.55亿</strong></div>
+   <div class="cmp-foot">两端现价规模对照，不是预测概率或目标完成率。</div>
+  </article>
+  <article class="cmp-panel" aria-label="两个年份的经济规模对照">
+   <span class="cmp-eyebrow">B / THEN VS NOW · 年轮哑铃对照</span>
+   <div class="cmp-compare-controls"><h2 class="cmp-title">从哪一年，长到今天？</h2><label class="vs"><span>基准 </span><select id="baseCompareYear" aria-label="选择比较基准年份"><option value="2020">2020</option><option value="2021">2021</option><option value="2022">2022</option><option value="2023">2023</option><option value="2024">2024</option><option value="2025">2025</option></select></label></div>
+   <div id="compareYearSvg" aria-live="polite"></div>
+   <div class="cmp-change"><strong id="compareYearChange">+386.41亿元</strong><span id="compareYearDelta">+62.4% · 现价规模变化</span></div>
+   <div class="cmp-foot">对照年为 <b id="currentCompareYear">2025</b>，可拖动下方年轮同步变化。</div>
+  </article>
+  <article class="cmp-panel" aria-label="产业体量和增速的交叉比较">
+   <span class="cmp-eyebrow">C / SIZE VS SPEED · 产业错位观察</span>
+   <h2 class="cmp-title">体量最大，增长也最快吗？</h2>
+   <div class="cmp-view-switch" role="group" aria-label="选择产业对照图形">
+    <button type="button" data-compare-mode="scatter" aria-pressed="true" class="active">体量 × 速度</button>
+    <button type="button" data-compare-mode="rank" aria-pressed="false">排名错位</button>
+   </div>
+   <div id="compareSectorSvg" aria-live="polite"></div>
+   <div class="cmp-scatter-info"><span><i style="background:#d8ad72"></i>第一产业</span><span><i style="background:#4bbde7"></i>第二产业</span><span><i style="background:#50d5b1"></i>第三产业</span></div>
+  </article>
+ </section>
+ <p class="compare-note">对照图只比较同一指标的规模或排名。产业体量为2025年现价增加值，增速为不变价实际增速，两种口径不能直接相乘推算贡献。</p>
 
  <section class="core-grid" aria-label="博罗经济结构总览">
   <section class="panel tree-panel" aria-label="互动经济树">
@@ -115,18 +146,16 @@
     <div class="brief-gap"><strong>+594.55亿</strong><span>规模差额<br>不是预测缺口</span></div>
     <div class="target-options" id="targetOptions" aria-label="选择目标指标"></div>
    </section>
-   <section class="inspector-panel">
-    <div class="panel-label"><span>正在观察什么？</span><span class="question">?</span></div>
-    <div id="inspector" aria-live="polite"><div class="inspector-type">当前观察 · 2025年</div><h3 class="inspector-title">1005.45亿元</h3><div class="inspector-body">点选产业、目标或根系，追问规模背后的支撑条件。</div></div>
-   </section>
+   <section class="inspector-panel"><details class="inspector-fold" id="inspectorFold">
+    <summary>选中节点后，展开具体依据</summary>
+    <div id="inspector" aria-live="polite"></div>
+   </details></section>
   </aside>
  </section>
 
  <section class="section-block" aria-label="博罗经济历史趋势">
   <div class="block-head">
-   <div><span class="block-index">02 / ECONOMIC TIMELINE</span><h2>六年，博罗的经济规模怎样长起来？</h2><p>拖动时间轴或点击曲线节点。历史序列展示年度现价GDP，不把名义规模变化误读为实际增速。</p></div>
-   <div class="block-note">2024年采用最终核实值970.87亿元；952.24亿元为早期初步核算值。</div>
-  </div>
+   <div><span class="block-index">02 / ECONOMIC TIMELINE</span><h2>六年，博罗的经济规模怎样长起来？</h2><p>拖动时间轴或点击曲线节点。历史序列展示年度现价GDP，不把名义规模变化误读为实际增速。</p></div><details class="explain-toggle"><summary>读图说明</summary><div>拖动时间轴或点击曲线节点。历史序列展示年度现价GDP，不把名义规模变化误读为实际增速。　2024年采用最终核实值970.87亿元；952.24亿元为早期初步核算值。</div></details></div>
   <div class="history-layout">
    <div class="history-visual">
     <svg class="history-svg" id="historySvg" viewBox="0 0 860 245" role="img" aria-label="2020至2025年博罗GDP历史趋势"></svg>
@@ -146,9 +175,7 @@
 
  <section class="section-block" aria-label="三次产业结构">
   <div class="block-head">
-   <div><span class="block-index">03 / INDUSTRIAL STRUCTURE</span><h2>博罗的经济，主要由哪几根枝条支撑？</h2><p>点击产业卡片，经济树、结构图和右侧解读同步高亮。结构与增速并排看，避免只看一个数字。</p></div>
-   <div class="block-note">2025年增加值现价规模 · 增速按不变价计算</div>
-  </div>
+   <div><span class="block-index">03 / INDUSTRIAL STRUCTURE</span><h2>博罗的经济，主要由哪几根枝条支撑？</h2><p>点击产业卡片，经济树、结构图和右侧解读同步高亮。结构与增速并排看，避免只看一个数字。</p></div><details class="explain-toggle"><summary>读图说明</summary><div>点击产业卡片，经济树、结构图和右侧解读同步高亮。结构与增速并排看，避免只看一个数字。　2025年增加值现价规模 · 增速按不变价计算</div></details></div>
   <div class="structure-layout">
    <div class="donut-card">
     <div class="mini-title"><span>三次产业结构</span><small>占GDP比重</small></div>
@@ -173,19 +200,15 @@
 
  <section class="section-block" aria-label="2030年规划目标">
   <div class="block-head">
-   <div><span class="block-index">04 / 2030 TARGETS</span><h2>四项目标，现实基准分别在哪里？</h2><p>点击目标查看差距和需要补充的证据。没有可比基准的指标，明确留白，不制造完成率。</p></div>
-   <div class="block-note">规划目标 ≠ 已实现结果 ≠ 模型预测</div>
-  </div>
+   <div><span class="block-index">04 / 2030 TARGETS</span><h2>四项目标，现实基准分别在哪里？</h2><p>点击目标查看差距和需要补充的证据。没有可比基准的指标，明确留白，不制造完成率。</p></div><details class="explain-toggle"><summary>读图说明</summary><div>点击目标查看差距和需要补充的证据。没有可比基准的指标，明确留白，不制造完成率。　规划目标 ≠ 已实现结果 ≠ 模型预测</div></details></div>
   <div class="goals-grid" id="goalGrid"></div>
  </section>
 
  <section class="section-block" aria-label="六大支撑条件与证据缺口">
   <div class="block-head">
-   <div><span class="block-index">05 / STRUCTURAL SUPPORT</span><h2>这棵树的根，哪些已经看见？哪些还需要证据？</h2><p>这里不是一张虚构的关系网络，而是一张研究入口地图。点击每一类支撑条件，查看已知事实与待核问题。</p></div>
-   <div class="block-note">不把研究主题画成已证实的交易、资金或因果关系</div>
-  </div>
+   <div><span class="block-index">05 / STRUCTURAL SUPPORT</span><h2>这棵树的根，哪些已经看见？哪些还需要证据？</h2><p>这里不是一张虚构的关系网络，而是一张研究入口地图。点击每一类支撑条件，查看已知事实与待核问题。</p></div><details class="explain-toggle"><summary>读图说明</summary><div>这里不是一张虚构的关系网络，而是一张研究入口地图。点击每一类支撑条件，查看已知事实与待核问题。　不把研究主题画成已证实的交易、资金或因果关系</div></details></div>
   <div class="evidence-grid" id="evidenceGrid"></div>
-  <div class="evidence-detail" id="evidenceDetail"></div>
+  <details class="evidence-drawer" id="evidenceDrawer"><summary>查看选中根系的证据与疑问</summary><div class="evidence-detail" id="evidenceDetail"></div></details>
  </section>
 
  <footer class="footer">
@@ -223,6 +246,7 @@
   </div>
  </div>
 </dialog>
-<script src="./base-target-v2.js?v=20261110-structure3" defer></script>
+<script src="./base-target-v2.js?v=20261110-structure4" defer></script>
+<script src="./base-target-compare.js?v=20261110-cmp1" defer></script>
 </body>
 </html>
