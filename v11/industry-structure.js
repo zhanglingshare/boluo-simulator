@@ -2,18 +2,18 @@
 'use strict';
 const $=id=>document.getElementById(id);
 const sectors=[
- {id:'electronics',name:'计算机、通信及其他电子设备制造业',short:'电子信息',s24:20.2,g24:10.4,s25:23.2,g25:23.0,question:'增长很快，但需要继续核对订单集中度、关键零部件本地配套率、产能利用率和出口市场变化。',summary:'权重和增速同时上升，是当前最显眼的增长支柱。份额提高不等于利润率、本地采购或企业抗风险能力同步提高。'},
- {id:'electrical',name:'电气机械和器材制造业',short:'电气机械',s24:14.0,g24:5.6,s25:14.2,g25:13.7,question:'需要拆开看电机、电气设备、储能相关产品等细分行业，核对新增产出来自存量企业扩产还是新项目。',summary:'行业权重基本稳定，增速明显加快。下一步要辨别增长来源和细分产品结构。'},
- {id:'rubber',name:'橡胶和塑料制品业',short:'橡胶塑料',s24:10.5,g24:13.2,s25:9.6,g25:-4.2,question:'需要核对产品价格、订单、原料成本、产能利用率和企业退出情况，不能仅凭一个行业增速判断长期趋势。',summary:'行业份额和增速同时回落，是当前结构中值得追问的反向信号。'},
+ {id:'electronics',name:'计算机、通信及其他电子设备制造业',short:'电子信息',s24:20.2,g24:10.4,s25:23.2,g25:23.0,physical:['电子元件产量 +5.0%','印制电路板产量 -0.1%'],question:'增长很快，但需要继续核对订单集中度、关键零部件本地配套率、产能利用率和出口市场变化。',summary:'权重和增速同时上升，是当前最显眼的增长支柱。份额提高不等于利润率、本地采购或企业抗风险能力同步提高。'},
+ {id:'electrical',name:'电气机械和器材制造业',short:'电气机械',s24:14.0,g24:5.6,s25:14.2,g25:13.7,physical:['锂离子电池产量 -4.3%'],question:'需要拆开看电机、电气设备、储能相关产品等细分行业，核对新增产出来自存量企业扩产还是新项目。',summary:'行业权重基本稳定，增速明显加快。下一步要辨别增长来源和细分产品结构。'},
+ {id:'rubber',name:'橡胶和塑料制品业',short:'橡胶塑料',s24:10.5,g24:13.2,s25:9.6,g25:-4.2,physical:['塑料制品产量 +7.9%'],question:'需要核对产品价格、订单、原料成本、产能利用率和企业退出情况，不能仅凭一个行业增速判断长期趋势。',summary:'行业份额和增速同时回落，是当前结构中值得追问的反向信号。'},
  {id:'metal',name:'金属制品业',short:'金属制品',s24:8.2,g24:11.5,s25:8.2,g25:11.1,question:'需要识别其服务于哪些本地制造行业，哪些采购是真实发生的本地供货。',summary:'份额稳定、增速保持两位数。关键不只是规模，而是与装备、电子、新能源等产业的真实连接。'},
  {id:'power',name:'电力、热力生产和供应业',short:'电力热力',s24:6.3,g24:10.4,s25:6.2,g25:14.0,question:'需要分清电力供应增长与制造业用能需求、能源价格及新增供给之间的关系。',summary:'行业增速加快，但行业增加值占比变化不大。它是产业运行的支撑条件，不宜直接等同于制造业升级。'},
  {id:'other',name:'其他行业合计',short:'其他行业',s24:40.8,g24:null,s25:38.6,g25:null,question:'目前没有在本页逐项列出其行业增速。需要进一步拆分，避免把“其他”当成一个同质产业。',summary:'其他行业合计仍占38.6%，这块内部结构较大，公开摘要未提供可比的单项增速。'}
 ];
 const peers=[
- {id:'boluo',name:'博罗',gdp:952.24,growth:4.0,primary:11.0,secondary:53.9,tertiary:35.1,secondGrowth:6.9,role:'本县基准',note:'2024年统计公报初步核算口径。工业投资增长10.5%，规上工业增加值增长7.9%。'},
- {id:'huidong',name:'惠东',gdp:828.51,growth:3.5,primary:11.8,secondary:35.1,tertiary:53.1,secondGrowth:7.6,role:'同市结构对照',note:'同属惠州、同一县域发展赛道，但第三产业占比更高。2024年规上工业增加值增长5.0%，工业投资下降9.6%。'},
- {id:'sihui',name:'四会',gdp:818.40,growth:1.8,primary:9.3,secondary:51.8,tertiary:38.9,secondGrowth:-0.2,role:'制造业对照',note:'2024年第二产业占比超过一半，但第二产业增加值同比下降0.2%。说明产业权重高不自动等于当年增长快。'},
- {id:'heshan',name:'鹤山',gdp:530.71,growth:5.1,primary:7.0,secondary:54.8,tertiary:38.2,secondGrowth:8.1,role:'制造业对照',note:'2024年第二产业占比54.8%，规上工业增加值增长8.2%，工业投资增长6.5%。'}
+ {id:'boluo',name:'博罗',rank:1,gdp:952.24,growth:4.0,primary:11.0,secondary:53.9,tertiary:35.1,secondGrowth:6.9,role:'本县基准',note:'2024年统计公报初步核算口径。工业投资增长10.5%，规上工业增加值增长7.9%。'},
+ {id:'huidong',name:'惠东',rank:4,gdp:828.51,growth:3.5,primary:11.8,secondary:35.1,tertiary:53.1,secondGrowth:7.6,role:'同市结构对照',note:'同属惠州、同一县域发展赛道，但第三产业占比更高。2024年规上工业增加值增长5.0%，工业投资下降9.6%。'},
+ {id:'sihui',name:'四会',rank:2,gdp:818.40,growth:1.8,primary:9.3,secondary:51.8,tertiary:38.9,secondGrowth:-0.2,role:'制造业对照',note:'2024年第二产业占比超过一半，但第二产业增加值同比下降0.2%。说明产业权重高不自动等于当年增长快。'},
+ {id:'heshan',name:'鹤山',rank:8,gdp:530.71,growth:5.1,primary:7.0,secondary:54.8,tertiary:38.2,secondGrowth:8.1,role:'制造业对照',note:'2024年第二产业占比54.8%，规上工业增加值增长8.2%，工业投资增长6.5%。'}
 ];
 let selectedSector='electronics',selectedPeer='boluo';
 const pct=n=>(n>0?'+':'')+n.toFixed(1)+'%';
@@ -64,6 +64,7 @@ function renderSectorDetail(){
  '<div class="detail-stat"><strong>'+rate+'</strong><span>2025年增加值同比</span></div>'+
  '<div class="detail-stat"><strong>'+pp(delta)+'</strong><span>占比较2024年变化</span></div>'+
  '<div class="detail-stat"><strong>'+(s.g24==null?'—':change)+'</strong><span>增速较2024年变化</span></div></div>'+
+ (s.physical?'<div class="detail-question physical-check"><b>产品产量交叉核验：</b>'+s.physical.join(' · ')+'。产品产量与行业增加值不是同一指标，不能直接相减，但值得拆开看产品结构。</div>':'')+
  '<div class="detail-question"><b>值得继续核实：</b>'+s.question+'</div>'+
  '<div class="mini-chips"><span>2024占比 '+s.s24.toFixed(1)+'%</span><span>2024增速 '+(s.g24==null?'未披露':pct(s.g24))+'</span><span>2025占比 '+s.s25.toFixed(1)+'%</span></div>';
  document.querySelectorAll('[data-sector]').forEach(b=>{b.classList.toggle('active',b.dataset.sector===selectedSector);b.setAttribute('aria-pressed',String(b.dataset.sector===selectedSector))});
@@ -96,7 +97,7 @@ function renderScatter(){
 }
 function renderPeerDetail(){
  const p=peers.find(x=>x.id===selectedPeer)||peers[0];
- $('peerSelected').innerHTML='<strong>'+p.name+' · '+p.role+'</strong><br>2024 GDP '+p.gdp.toFixed(2)+'亿元，实际增长 '+pct(p.growth)+'；第二产业占比 '+p.secondary.toFixed(1)+'%，第二产业增加值增长 '+pct(p.secondGrowth)+'。<br>'+p.note;
+ $('peerSelected').innerHTML='<strong>'+p.name+' · '+p.role+' · 2026综合发展力第'+p.rank+'位</strong><br>2024 GDP '+p.gdp.toFixed(2)+'亿元，实际增长 '+pct(p.growth)+'；第二产业占比 '+p.secondary.toFixed(1)+'%，第二产业增加值增长 '+pct(p.secondGrowth)+'。<br>'+p.note;
  renderPeerBars();renderScatter();
 }
 function renderInvestment(){
