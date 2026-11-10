@@ -209,5 +209,28 @@ function getStory() {
  }
  }
 }
-getStory();foldedText();
+function recedeRepeatedOriginals(){
+ const choices={
+  "03":{selector:".hero-kpis",label:"展开原版三项指标与完整口径",promote:false},
+  "04":{selector:".hero",label:"展开原版产业结构首页与规划数字",promote:true},
+  "06":{selector:".target-dashboard",label:"展开原版目标底数及四项目标指标",promote:false},
+  "10":{selector:".hero",label:"展开原版区域介绍与三地比较入口",promote:true},
+  "11":{selector:".hero",label:"展开原版研究档案首页与完成仪表",promote:true}
+ };
+ const item=choices[page];if(!item)return;
+ const target=q(item.selector,main);if(!target)return;
+ if(item.promote)target.parentElement.insertBefore(stage,target);
+ const before=mk("button","v11-original-toggle","＋ "+item.label);
+ const targetId=target.id||(target.id="v11-original-"+page);
+ before.type="button";before.setAttribute("aria-controls",targetId);before.setAttribute("aria-expanded","false");
+ target.parentElement.insertBefore(before,target);
+ target.classList.add("v11-original-collapsed");
+ before.addEventListener("click",()=>{
+  const expanded=target.classList.toggle("v11-original-collapsed")===false;
+  before.setAttribute("aria-expanded",String(expanded));
+  before.textContent=(expanded?"－ 收起原版内容":"＋ "+item.label);
+  if(expanded)requestAnimationFrame(()=>target.scrollIntoView({behavior:reduced?"auto":"smooth",block:"start"}));
+ });
+}
+getStory();recedeRepeatedOriginals();foldedText();
 })();
