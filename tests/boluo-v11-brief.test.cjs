@@ -19,7 +19,7 @@ const fixture={
 };
 test("empty browser produces seven honest uncompleted stages and no fabricated experiment",()=>{
  const d=D.load(storage(),storage());
- assert.equal(d.completed,0);assert.equal(d.total,7);assert.equal(d.wind,null);assert.equal(d.region,null);
+ assert.equal(d.completed,0);assert.equal(d.total,7);assert.equal(d.wind,null);assert.equal(d.region.pressure.score,73);assert.equal(d.region.pressure.adjusted,true);
  assert.match(D.textSummary(d),/尚无已保存的条件实验/);
  assert.match(D.textSummary(d),/未保存不代表没有访问/);
 });
