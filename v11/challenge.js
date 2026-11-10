@@ -158,7 +158,7 @@ function showSnapshot(){
 function render(doSync){
  renderChoices();narrate();if(doSync)sync();
 }
-document.querySelectorAll("[data-claim]").forEach(b=>b.addEventListener("click",()=>{state.claim=b.dataset.claim;state.rival=0;state.evidence=0;state.proof="unknown";render(true);document.querySelector(".arena-section").scrollIntoView({behavior:window.matchMedia("(prefers-reduced-motion:reduce)").matches?"auto":"smooth",block:"start"})}));
+document.querySelectorAll("[data-claim]").forEach(b=>b.addEventListener("click",()=>{state.claim=b.dataset.claim;state.rival=0;state.evidence=0;state.proof="unknown";state.falsifier="";state.threshold="";state.horizon="未设定";state.confidence=50;$("falsifier").value="";$("falsifierThreshold").value="";$("falsifierHorizon").value="未设定";$("confidence").value=50;render(true);document.querySelector(".arena-section").scrollIntoView({behavior:window.matchMedia("(prefers-reduced-motion:reduce)").matches?"auto":"smooth",block:"start"})}));
 document.querySelectorAll("[data-proof]").forEach(b=>b.addEventListener("click",()=>{state.proof=b.dataset.proof;render(true)}));
 $("myNote").addEventListener("input",e=>{state.note=e.target.value.slice(0,120);$("noteCount").textContent=state.note.length+" / 120";narrate()});
 $("falsifier").addEventListener("input",e=>{state.falsifier=e.target.value.slice(0,180);narrate()});
