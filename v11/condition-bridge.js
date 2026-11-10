@@ -18,7 +18,7 @@
   $("conditionQuestion").textContent=notes[st.shock]||"核验相关实际条件，再比较结果。";
   const dest=new URL("./insights.html",location.href);
   const u=new URL(location.href);
-  for(const k of ["bs","bv","n","line","view","bp0","bp1","bp2","bp3","bp4"])if(u.searchParams.has(k))dest.searchParams.set(k,u.searchParams.get(k));
+  for(const k of ["bs","bv","n","line","view","bp0","bp1","bp2","bp3","bp4","paths","route","scope"])if(u.searchParams.has(k))dest.searchParams.set(k,u.searchParams.get(k));
   dest.searchParams.set("shock",st.shock);
   dest.searchParams.set("severity",String(Math.round(st.strength*70)));
   $("conditionToEight").href=dest.href;
