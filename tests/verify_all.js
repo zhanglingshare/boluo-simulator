@@ -9,7 +9,10 @@ const syntaxFiles=[
  "v11/brief.js",
  "v11/region.js",
  "v11/region-lab.js",
- "v11/challenge.js"
+ "v11/challenge.js",
+ "v11/future-core.js",
+ "v11/future.js",
+ "v11/visual-story.js"
 ];
 function run(args,label){
  const r=spawnSync(process.execPath,args,{cwd:root,stdio:"inherit",encoding:"utf8"});
