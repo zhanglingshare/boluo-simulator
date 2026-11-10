@@ -209,7 +209,7 @@
         const valueWidth = ctx.measureText(w.v).width;
         ctx.font = '650 ' + labelSize + 'px "PingFang SC","Microsoft YaHei",sans-serif';
         const labelWidth = ctx.measureText(w.t || '').width;
-        const boxW = Math.min(W * .72, Math.max(valueWidth, labelWidth) + 30);
+        const boxW = Math.min(W * .54, Math.max(valueWidth, labelWidth) + 30);
         const boxH = compact ? 54 : 64;
         const cx = Math.max(boxW / 2 + 6, Math.min(W - boxW / 2 - 6, e.x));
         const top = Math.max(7, Math.min(H - boxH - 7, cy - boxH / 2));
