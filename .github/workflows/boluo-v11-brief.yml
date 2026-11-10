@@ -1,0 +1,60 @@
+name: V11 Page 11 · Personal Research Dossier
+
+on:
+  push:
+    paths:
+      - "v11/brief.html"
+      - "v11/brief.css"
+      - "v11/brief.js"
+      - "v11/brief-data.js"
+      - "v11/region-lab.js"
+      - "tests/boluo-v11-brief*.cjs"
+      - "tests/boluo-v11-brief*.test.cjs"
+      - ".github/workflows/boluo-v11-brief.yml"
+  pull_request:
+    paths:
+      - "v11/brief.html"
+      - "v11/brief.css"
+      - "v11/brief.js"
+      - "v11/brief-data.js"
+      - "v11/region-lab.js"
+      - "tests/boluo-v11-brief*.cjs"
+      - "tests/boluo-v11-brief*.test.cjs"
+      - ".github/workflows/boluo-v11-brief.yml"
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  dossier:
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: "22"
+      - name: Validate adapter, controllers and record boundaries
+        run: |
+          node --check v11/brief-data.js
+          node --check v11/brief.js
+          node --check v11/region-lab.js
+          node --test tests/boluo-v11-brief.test.cjs
+      - name: Install Chromium
+        run: |
+          npm install --no-save playwright
+          npx playwright install --with-deps chromium
+      - name: Run desktop, mobile, empty-state and export checks
+        run: |
+          python3 -m http.server 8765 --bind 127.0.0.1 >/tmp/boluo-v11-brief.log 2>&1 &
+          sleep 2
+          node tests/boluo-v11-brief-browser.cjs
+      - name: Save research dossier screenshots
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: boluo-v11-page11-dossier-desktop-mobile
+          path: artifacts/v11-brief/*.png
+          if-no-files-found: ignore
+          retention-days: 5
