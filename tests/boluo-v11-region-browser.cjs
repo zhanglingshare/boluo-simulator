@@ -32,6 +32,16 @@ const out=path.resolve(__dirname,"../artifacts/v11-region");fs.mkdirSync(out,{re
    const url=new URL(page.url());assert.equal(url.searchParams.get("topic"),"cooperation");
    await page.locator("#saveQuestion").click();
    const stored=await page.evaluate(()=>localStorage.getItem("boluo-v11-region-focus"));assert.match(stored,/cooperation/);
+   await page.locator('[data-value-flow="agriculture"]').click();
+   await page.locator('#valueFlowTrack button').nth(4).click();
+   assert.match(await page.locator("#valueStageName").innerText(),/农户回款/);
+   await page.locator('[data-pressure-layer="rural"]').click();
+   await page.locator("#pressureDependency").fill("90");await page.locator("#pressureShock").fill("90");await page.locator("#pressureSubstitute").fill("10");
+   const exposure=Number(await page.locator("#pressureScore").innerText());assert.ok(exposure>60);
+   await page.locator('[data-role="resilient"]').click();assert.match(await page.locator("#roleTitle").innerText(),/多元备份/);
+   await page.locator("#saveQuestion").click();
+   const savedLab=JSON.parse(await page.evaluate(()=>localStorage.getItem("boluo-v11-region-focus")));
+   assert.equal(savedLab.role,"resilient");assert.equal(savedLab.flow,"agriculture");assert.equal(savedLab.pressure.score,exposure);
    const dlPromise=page.waitForEvent("download",{timeout:15000});
    await page.locator("#downloadQuestion").click();const dl=await dlPromise;assert.match(dl.suggestedFilename(),/\.png$/);
    const overflow=await page.evaluate(()=>Math.max(0,document.documentElement.scrollWidth-innerWidth));assert.ok(overflow<=25,"viewport overflow "+width+": "+overflow);
