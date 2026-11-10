@@ -69,7 +69,7 @@ state.evidence=Math.min(2,Math.max(0,Number.parseInt(q.get("evidence")||"0",10)|
 state.proof=allow(q.get("proof"),["unknown","current","alternative"],"unknown");
 const BL={unknown:["关键证据尚未到位","目前证据不足，还不能排除其他解释。继续核实比立即下结论更有价值。"],current:["原判断暂时获得支持","这是你对现有资料的判断，而不是平台自动核验的事实。新的可靠证据仍可能推翻它。"],alternative:["原判断值得重新检查","你认为新证据更符合另一种解释。现在要重新审视条件与结论，不能直接视作真实经济效应。"]};
 const el=(tag,cls,text)=>{const n=document.createElement(tag);if(cls)n.className=cls;if(text!==undefined)n.textContent=text;return n;};
-function validUrl(k){const u=new URL(location.href);const next=new URL("./"+k+".html",u);const passthrough=["shock","strength","buffer","active","bs","bv","n","line","view","bp0","bp1","bp2","bp3","bp4","focus","factor","sv","cut"];passthrough.forEach(key=>{if(u.searchParams.has(key))next.searchParams.set(key,u.searchParams.get(key))});return next;}
+function validUrl(k){const u=new URL(location.href);const next=new URL("./"+k+".html",u);const passthrough=["shock","strength","buffer","active","bs","bv","n","line","view","bp0","bp1","bp2","bp3","bp4","focus","factor","sv","cut","blind","missing"];passthrough.forEach(key=>{if(u.searchParams.has(key))next.searchParams.set(key,u.searchParams.get(key))});return next;}
 function currentLink(){const u=validUrl("challenge");u.searchParams.set("claim",state.claim);u.searchParams.set("rival",String(state.rival));u.searchParams.set("evidence",String(state.evidence));u.searchParams.set("proof",state.proof);u.hash="myCard";return u;}
 function sync(){try{history.replaceState(null,"",currentLink().pathname+currentLink().search+location.hash)}catch(e){}}
 function narrate(){
@@ -98,9 +98,20 @@ function renderChoices(){
 }
 function incoming(){
  const focus=q.get("focus"),factor=q.get("factor"),record=topics&&topics[focus]&&topics[focus].factors.find(f=>f.id===factor);
- if(record){$("incomingMissing").textContent=record.name+" · "+record.missing;$("handoffTitle").textContent="已接入第八页的关注联系："+record.name;$("handoffDesc").textContent="先前的关系实验只是条件对照；这里继续挑战它的解释。";}
- else if(q.get("shock")&&shocks[q.get("shock")]){$("handoffTitle").textContent="已接入第七页的压力条件";$("handoffDesc").textContent="保留压力类型及公开条件。请判断还有哪些可能的解释。";}
- else{$("incomingMissing").textContent=CONFIG[state.claim].fallbackMissing}
+ const customMissing=(q.get("missing")||"").slice(0,240),blind=(q.get("blind")||"").slice(0,80);
+ if(customMissing){
+  $("incomingMissing").textContent=customMissing;
+  $("handoffTitle").textContent="已接入第八页的待核验线索";
+  $("handoffDesc").textContent="这是一项尚待证据检验的研究问题，不是已证实的因果关系。请提出最强反对解释。";
+ }else if(record){
+  $("incomingMissing").textContent=record.name+" · "+record.missing;
+  $("handoffTitle").textContent="已接入第八页的关注联系："+record.name;
+  $("handoffDesc").textContent="先前的关系实验只是条件对照；这里继续挑战它的解释。";
+ }else if(q.get("shock")&&shocks[q.get("shock")]){
+  $("handoffTitle").textContent="已接入第七页的压力条件";
+  $("handoffDesc").textContent="保留压力类型及公开条件。请判断还有哪些可能的解释。";
+ }else{$("incomingMissing").textContent=CONFIG[state.claim].fallbackMissing}
+ if(blind&&customMissing)$("handoffDesc").textContent+=" 关注编号："+blind+"。";
  $("openPast").href=validUrl(q.get("focus")?"insights":"wind").href;
  $("backToWind").href=validUrl("wind").href;
  $("backToInsights").href=validUrl("insights").href;
