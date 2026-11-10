@@ -42,7 +42,7 @@ function renderRole(){
  all("[data-role]").forEach(b=>{const on=b.dataset.role===state.role;b.classList.toggle("active",on);b.setAttribute("aria-pressed",String(on))});
 }
 all("[data-role]").forEach(b=>b.addEventListener("click",()=>{state.role=b.dataset.role;renderRole();sync()}));
-$("roleToQuestion").addEventListener("click",()=>{const topic=state.role==="local"?"factories":"cooperation";const u=new URL(location.href);u.searchParams.set("topic",topic);history.replaceState(null,"",u.pathname+u.search+"#finalQuestion")});
+$("roleToQuestion").addEventListener("click",()=>{const topic=state.role==="local"?"factories":"cooperation",target=document.querySelector('#questionPicker [data-topic="'+topic+'"]');if(target)target.click()});
 $("saveQuestion").addEventListener("click",()=>{try{const raw=JSON.parse(localStorage.getItem("boluo-v11-region-focus")||"{}");localStorage.setItem("boluo-v11-region-focus",JSON.stringify({...raw,role:state.role,flow:state.flow,flowStage:state.stage,pressureLayer:state.layer,pressure:{...state.p,score:score(state.p)}}))}catch(e){}});
 renderFlow();renderPressure();renderRole();
 window.BoluoRegionLab={score:()=>score(state.p),state:()=>JSON.parse(JSON.stringify(state))};
