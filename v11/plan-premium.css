@@ -340,6 +340,9 @@
  .plan-page .plan-focus{padding:7px 9px}.plan-page .plan-focus strong{font-size:11px}.plan-page .plan-focus a{font-size:8px}.plan-page .paths-section{margin-top:14px}.plan-page .paths-section>.section-heading h2{font-size:23px}.plan-page .paths-section>.section-heading p:last-child{font-size:9px}
  .plan-page .route-choice-group{padding:8px}.plan-page .route-grid button{min-height:54px}.plan-page .path-studio{padding:10px 8px;border-radius:13px}.plan-page .path-studio-head h3{font-size:21px}.plan-page .path-studio-head p:last-child{font-size:9px}.path-map-actions{gap:4px}.path-map-actions button{padding:7px 8px;font-size:8px}
  #pathGraph{min-width:940px}.plan-page .path-inspector{padding:11px}.plan-page .path-inspector h4{font-size:20px}.synergy-head{align-items:flex-start;flex-direction:column;gap:4px}.synergy-matrix{grid-template-columns:65px repeat(5,minmax(0,1fr));grid-template-rows:20px repeat(5,29px);gap:3px}.synergy-axis-label{font-size:7px;letter-spacing:-.04em}.synergy-row-label{font-size:8px}.synergy-cell{min-height:26px}.synergy-detail{font-size:8px}
+ .plan-page .path-map-scroll{overflow-x:hidden}
+ #pathGraph{min-width:0;width:100%}
+
 }
 @media(max-width:370px){.metric-ring{flex-basis:46px;width:46px;height:46px}.metric-copy>strong{font-size:9px}.output-pair strong{font-size:11px}.synergy-matrix{grid-template-columns:58px repeat(5,minmax(0,1fr))}}
 @media(prefers-reduced-motion:reduce){.plan-page .plan-hero,.flow-live-dot,#pathGraph .path-edge,#pathGraph .path-node,#pathGraph .path-node-halo,.output-track i{animation:none!important}.hero-gap-track i,.metric-ring .ring-value,.metric-bar i{transition:none!important}}
