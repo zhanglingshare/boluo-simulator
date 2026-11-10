@@ -42,7 +42,8 @@ const PAIRS=[
  {ids:['innovation','services'],title:'创新生产率 × 专业服务',question:'研发、中试、检测和工业软件能否形成持续的本地服务交易？',evidence:'技术服务合同、中试检测订单、软件服务采购与成果转化记录。',boundary:'科研合作或技术平台存在，不代表商业化服务已经发生。'}
 ];
 const VALID=Object.keys(PATHS),qs=new URL(location.href).searchParams;
-const fromRoute=VALID.includes(qs.get('route'))?qs.get('route'):'new';
+const impactRoute=qs.get('from')==='impact'?({projects:'new',orders:'manufacturing',livelihood:'connect'}[qs.get('scene')]||'new'):'new';
+const fromRoute=VALID.includes(qs.get('route'))?qs.get('route'):impactRoute;
 const fromQuery=(qs.get('paths')||'').split(',').filter(x=>VALID.includes(x)).slice(0,3);
 const state={selected:fromQuery.length?fromQuery:[fromRoute],primary:fromRoute,node:''};
 if(!state.selected.includes(state.primary))state.primary=state.selected[0];
