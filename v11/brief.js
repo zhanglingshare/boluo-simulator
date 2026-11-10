@@ -22,7 +22,7 @@ function progress(){
  $("savedCount").textContent=data.completed;$("completionFill").style.width=Math.round(data.completed/data.total*100)+"%";
  $("completionSegments").replaceChildren(...data.steps.map(s=>el("i",s.exists?"active":"")));
  $("completionStatus").textContent=data.completed?"已收录 "+data.completed+" 项记录":"未建立个人记录";
- const description=data.completed===0?"你还没有在当前浏览器保存过任何一次探索；下面不会编造实验数值。":data.completed===data.total?"已保存所有七个可保存环节的选择。请继续检查数据口径和缺失证据。":"已保存 "+data.completed+" 项，另有 "+(data.total-data.completed)+" 项尚缺记录；这不等于你没有浏览过相应页面。";
+ const description=data.completed===0?"你还没有在当前浏览器保存过任何一次探索；下面不会编造实验数值。":data.completed===data.total?"已保存所有八个可保存环节的选择。请继续检查数据口径和缺失证据。":"已保存 "+data.completed+" 项，另有 "+(data.total-data.completed)+" 项尚缺记录；这不等于你没有浏览过相应页面。";
  $("completionAdvice").textContent=description;$("recordStamp").textContent="本机保存 · 非服务器档案";
 }
 function journey(){
@@ -136,8 +136,29 @@ function renderRegionAudit(){
  out.append(pair("待补证据",r.evidence,true));
  out.append(link(r.pressure?"按保存条件重开第10页":"回到第10页补充条件",buildRegionReplay(r)));
 }
+function buildFutureReplay(f){
+ const u=new URL("./future.html",location.href);
+ for(const k of ["scene","link","mode","intensity","year"])u.searchParams.set(k,String(f[k]));
+ u.hash="lab";return u.href;
+}
+function renderFutureAudit(){
+ const out=$("futureAudit"),f=data.future;out.replaceChildren();status($("futureAuditStatus"),!!f);
+ if(!f){out.append(empty("没有主动保存未来方案。访问第12页或调整过参数，都不等于已经完成保存。","future.html","去第12页试着重构一条联系"));return;}
+ const modes={strengthen:"加强",weaken:"削弱",cut:"断开",add:"新增"};
+ const names={manufacturing:"工业本地配套",agriculture:"柏塘农品价值链",commuting:"通勤与就业"};
+ out.append(pairs([
+  ["观察场景",names[f.scene]],["改造关系",f.summary],["改变方式",modes[f.mode]],
+  ["调整强度",f.intensity+"%"],["观察年份",String(f.year)],["本地可达",f.baseline.local+" → "+f.future.local],
+  ["连接指数",f.baseline.connection+" → "+f.future.connection],["替代韧性",f.baseline.resilience+" → "+f.future.resilience],
+  ["保存时间",labelDate(f.savedAt)]
+ ]));
+ out.append(pair("证据缺口",f.evidenceGap,true));
+ out.append(el("p","audit-note","所有结构指数均为受控条件演示，不是现实经济收益、GDP增长或已识别因果效应。"));
+ out.append(link("按保存条件重新打开双世界",buildFutureReplay(f)));
+}
 function evidenceTasks(){
  const tasks=[];
+ if(data.future)tasks.push({title:"验证第12页新建的结构连接是否现实可行",detail:data.future.evidenceGap+"。请核实真实合作、成本与替代路径，不能把演示指数当成实际贡献。",href:"future.html",label:"回到未来实验"});
  if(data.insight)tasks.push({title:data.insight.question||("核实："+data.insight.name),detail:"缺少材料："+(data.insight.missing||"尚未填写")+"。先取得可追溯的合同、统计或调查记录。",href:"insights.html",label:"回到第08页"});
  if(data.challenge){
   tasks.push({title:data.challenge.falsifier?"观察反证条件是否出现":"为当前判断写下一条可推翻它的条件",detail:"待检验证据："+data.challenge.evidenceTitle+"；阈值："+(data.challenge.threshold||"尚未设定")+"；期限："+data.challenge.horizon+"。",href:"challenge.html",label:"回到第09页"});
@@ -151,10 +172,10 @@ function evidenceTasks(){
 }
 function renderLedger(){
  $("ledgerSaved").textContent=data.completed;
- $("ledgerExperiments").textContent=data.windSaved?"1":"0";
+ $("ledgerExperiments").textContent=(Number(data.windSaved)+Number(Boolean(data.future))).toString();
  $("ledgerFalsifiers").textContent=data.challenge&&data.challenge.falsifier? "1":"0";
  const tasks=evidenceTasks();$("ledgerOpen").textContent=tasks.length;
- renderWindAudit();renderChallengeAudit();renderRegionAudit();
+ renderWindAudit();renderChallengeAudit();renderRegionAudit();renderFutureAudit();
  const out=$("evidenceQueue");out.replaceChildren();
  tasks.forEach((t,i)=>{const row=el("div","evidence-task"),n=el("span","",String(i+1).padStart(2,"0")),body=el("div","");body.append(el("strong","",t.title),el("p","",t.detail));const a=el("a","",t.label+" ↗");a.href=t.href;row.append(n,body,a);out.append(row);});
  $("reportStamp").textContent="本机档案读取于 "+new Date().toLocaleString("zh-CN",{hour12:false});
@@ -168,10 +189,10 @@ function optional(){
  if(!box.childElementCount)box.append(el("div","optional-record empty","尚未保存前面的变化、影响和规划记录。需要时可以返回相应页面选择并保存。"));
 }
 function conclusion(){
- const i=data.insight,ch=data.challenge,r=data.region,p=data.plan;
- $("finalQuestion").textContent=r?r.question:i?(i.question||"这条联系的真实证据在哪里？"):ch?(ch.falsifier||"什么事实能推翻我关于博罗的判断？"):p?"规划路径兑现中，哪个项目节点值得优先核实？":"哪个环节最值得下一步核实？";
+ const i=data.insight,ch=data.challenge,r=data.region,p=data.plan,f=data.future;
+ $("finalQuestion").textContent=r?r.question:i?(i.question||"这条联系的真实证据在哪里？"):ch?(ch.falsifier||"什么事实能推翻我关于博罗的判断？"):p?"规划路径兑现中，哪个项目节点值得优先核实？":f?"哪一条假设关系需要最先取得真实证据？":"哪个环节最值得下一步核实？";
  $("finalKnown").textContent="2025年博罗GDP现价1005.45亿元；2026年前三季度规上工业增加值同比+8.9%，工业投资同比−44.7%（不同口径，不据此推断因果）。";
- $("finalMissing").textContent=r?r.evidence:i?(i.missing||"这条联系仍需外部资料核实"):ch?ch.evidenceTitle:"请从第八或第十页选择一条有意义的待核实联系。";
+ $("finalMissing").textContent=r?r.evidence:i?(i.missing||"这条联系仍需外部资料核实"):ch?ch.evidenceTitle:f?f.evidenceGap:"请从第八、第十或第十二页选择一条待核实联系。";
  $("finalRevision").textContent=ch?(ch.falsifier||("需要出现能检验“"+ch.rivalTitle+"”的可靠证据"))+"；阈值："+(ch.threshold||"未设定")+"；期限："+ch.horizon:r?"取得可以证实或否定相关区域联系的合同、调查或项目资料": "新增具有可比口径、可交叉核验的企业、项目或交易资料";
 }
 function render(){data=read();progress();journey();range();findings();optional();renderLedger();conclusion();}
@@ -180,8 +201,8 @@ function exportRecord(){
   provenance:"Current browser's explicit saved selections. Temporary computations are separately marked and are not counted as completed research.",
   readme:"Facts, scenarios, personal judgments and unknowns are separate. No missing values are imputed. This export contains no private statistical engine or undisclosed model implementation. User-entered notes may be present; inspect before sharing.",
   publicFacts:{year2025_GDP_current_billion:1005.45,industrialValueAdded_2026Q1Q3_yoyPercent:8.9,industrialInvestment_2026Q1Q3_yoyPercent:-44.7,planning2030GDP:1600},
-  audit:{savedSteps:data.completed,totalSteps:data.total,windIsSaved:data.windSaved,challengeHasFalsifier:Boolean(data.challenge&&data.challenge.falsifier),regionPressureSaved:Boolean(data.region&&data.region.pressure)},
-  record:data,originalPages:["01/index.html","05/impact.html","06/plan.html","07/wind.html","08/insights.html","09/challenge.html","10/region.html","11/brief.html"]};
+  audit:{savedSteps:data.completed,totalSteps:data.total,windIsSaved:data.windSaved,challengeHasFalsifier:Boolean(data.challenge&&data.challenge.falsifier),regionPressureSaved:Boolean(data.region&&data.region.pressure),futureExperimentSaved:Boolean(data.future)},
+  record:data,originalPages:["01/index.html","05/impact.html","06/plan.html","07/wind.html","08/insights.html","09/challenge.html","10/region.html","11/brief.html","12/future.html"]};
  const file=new Blob([JSON.stringify(payload,null,2)],{type:"application/json;charset=utf-8"}),url=URL.createObjectURL(file),a=document.createElement("a");a.href=url;a.download="博罗V11-个人研究档案-2.0.json";document.body.append(a);a.click();a.remove();setTimeout(()=>URL.revokeObjectURL(url),1200);toast("已导出研究档案 JSON。文件可能包含你的个人备注，分享前请先检查。");
 }
 async function copy(){
