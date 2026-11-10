@@ -28,6 +28,10 @@ const fs=require('node:fs');
  await page.locator('#iqCustomAdd').click();
  assert.match(await page.locator('#iqVariableStatus').innerText(),/用户自定义/,'custom variable is clearly marked unverified');
  assert.match(await page.locator('#iqVariableMechanism').innerText(),/尚未定义/,'custom variable does not fabricate a causal relationship');
+ await page.locator('#iqRelationTarget').selectOption('customer');
+ await page.locator('#iqRelationAdd').click();
+ assert.ok(await page.locator('#iqVariableNodes .iq-variable-node').count()>0,'user-proposed candidate relation is drawn without causal direction');
+ assert.match(await page.locator('#iqVariableStatus').innerText(),/候选联系待核验/,'user-proposed relation remains explicitly unverified');
 
  await page.locator('[data-hypothesis="mix"]').click();
  assert.match(await page.locator('#iqHypothesisTitle').innerText(),/行业与项目结构/,'competing explanation selection updates');
