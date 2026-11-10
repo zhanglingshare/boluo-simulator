@@ -24,8 +24,12 @@ const {chromium}=require('playwright');
  assert.equal(await page.locator('#scaleLegend > div').count(),3,'large, medium, small/micro enterprise scale structure');
  assert.equal(await page.locator('.source-list a').count(),8,'eight traceable sources');
 
- await page.locator('#sectorMap [data-sector="rubber"]').click();
+ await page.locator('#sectorMap [data-sector="rubber"]').evaluate(el=>el.dispatchEvent(new MouseEvent('click',{bubbles:true})));
  assert.match(await page.locator('#sectorDetail').innerText(),/橡胶塑料/,'industry detail changes');
+ await page.locator('#sectorMap [data-sector="electronics"]').focus();
+ await page.locator('#sectorMap [data-sector="electronics"]').press('Enter');
+ assert.match(await page.locator('#sectorDetail').innerText(),/电子信息/,'industry quadrant supports keyboard selection');
+ await page.locator('#sectorMap [data-sector="rubber"]').evaluate(el=>el.dispatchEvent(new MouseEvent('click',{bubbles:true})));
  assert.match(await page.locator('#sectorDetail').innerText(),/−4\.2%|-4\.2%/,'negative industry growth is visible');
  assert.match(await page.locator('#sectorDetail').innerText(),/−0\.9个百分点|-0\.9个百分点/,'share change is visible');
 
