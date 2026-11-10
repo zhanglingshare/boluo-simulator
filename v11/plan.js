@@ -334,7 +334,7 @@ $('viewSaved').addEventListener('click',()=>{
  if(!items.length){dialog('我的规划关注点','<p>暂时没有保存记录。选择空间核心、目标、路径与年份后点击“保存本机关注点”。</p>');return;}
  const content=items.slice(0,20).map((r,i)=>{
   const region=pick(r.region,Object.keys(REGIONS),'future'),route=pick(r.route,Object.keys(ROUTES),'new'),year=pick(String(r.year),Object.keys(YEAR),'2026');
-  const u=new URL(location.href);u.searchParams.set('region',region);u.searchParams.set('route',route);u.searchParams.set('paths',Array.isArray(r.paths)?r.paths.filter(x=>validRouteIds.includes(x)).slice(0,3).join(','):route);u.searchParams.set('year',year);u.searchParams.delete('focus');u.hash='network';
+  const u=new URL(location.href);u.searchParams.set('region',region);u.searchParams.set('route',route);u.searchParams.set('paths',Array.isArray(r.paths)?r.paths.filter(x=>Object.prototype.hasOwnProperty.call(ROUTES,x)).slice(0,3).join(','):route);u.searchParams.set('year',year);u.searchParams.delete('focus');u.hash='network';
   return '<div class="fact-row"><strong>0'+(i+1)+' · '+esc(REGIONS[region].role)+' · '+esc(year)+'</strong><p>'+esc(ROUTES[route].title)+'</p><a href="'+esc(u.href)+'">恢复这条观察 ↗</a></div>';
  }).join('');
  dialog('我的规划关注点 · 本机保存','<p>最近保存的'+items.length+'条记录，数据只在当前浏览器中。</p>'+content);
