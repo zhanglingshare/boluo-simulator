@@ -72,7 +72,7 @@ function renderSectorDetail(){
  $('sectorDetail').innerHTML='<span class="detail-kicker">SELECTED INDUSTRY / 选中行业</span>'+
  '<h3>'+s.short+'</h3><p>'+s.summary+'</p>'+
  '<div class="detail-stat-grid"><div class="detail-stat"><strong>'+share.toFixed(1)+'%</strong><span>'+selectedYear+'年占规上工业增加值比重</span></div>' +
- '<div class="detail-stat"><strong>'+rate+'</strong><span>2025年增加值同比</span></div>'+
+ '<div class="detail-stat"><strong>'+rate+'</strong><span>'+selectedYear+'年增加值同比</span></div>'+
  '<div class="detail-stat"><strong>'+pp(delta)+'</strong><span>占比较2024年变化</span></div>'+
  '<div class="detail-stat"><strong>'+(s.g24==null?'—':change)+'</strong><span>增速较2024年变化</span></div></div>'+
  (s.physical?'<div class="detail-question physical-check"><b>产品产量交叉核验：</b>'+s.physical.join(' · ')+'。产品产量与行业增加值不是同一指标，不能直接相减，但值得拆开看产品结构。</div>':'')+
