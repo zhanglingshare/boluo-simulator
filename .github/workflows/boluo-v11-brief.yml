@@ -7,6 +7,7 @@ on:
       - "v11/brief.css"
       - "v11/brief.js"
       - "v11/brief-data.js"
+      - "v11/future-core.js"
       - "v11/region-lab.js"
       - "tests/boluo-v11-brief*.cjs"
       - "tests/boluo-v11-brief*.test.cjs"
@@ -37,6 +38,7 @@ jobs:
           node-version: "22"
       - name: Validate adapter, controllers and record boundaries
         run: |
+          node --check v11/future-core.js
           node --check v11/brief-data.js
           node --check v11/brief.js
           node --check v11/region-lab.js
