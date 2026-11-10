@@ -336,6 +336,8 @@ body{background:radial-gradient(ellipse at 78% 4%,rgba(177,211,218,.38),transpar
 .peer-stack span{transition:filter .2s}
 .peer-stack:hover span,.peer-stack.active span{filter:brightness(1.12)}
 .scatter-dot{filter:drop-shadow(0 3px 5px rgba(17,48,65,.12));transform-box:fill-box;transform-origin:center;animation:pointArrival .65s cubic-bezier(.2,.7,.2,1) both}.scatter-dot.linked-hover{stroke:#172f3f;stroke-width:3;filter:drop-shadow(0 0 8px rgba(33,142,128,.48))}
+.scatter-wrap [data-peer].linked-hover .scatter-dot{stroke:#172f3f;stroke-width:3;filter:drop-shadow(0 0 8px rgba(33,142,128,.48))}
+.scatter-wrap [data-peer].linked-hover .scatter-label{fill:#1c746b;font-weight:950}
 .scatter-dot.active{filter:drop-shadow(0 0 8px rgba(33,142,128,.42))}
 .peer-selected{background:linear-gradient(110deg,#f0f7f6,#fff);border-color:#d5e7e2}
 .signal-card{transition:transform .22s,border-color .22s,box-shadow .22s}
