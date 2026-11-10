@@ -4,10 +4,12 @@
 const core=window.BoluoDiscoveryCore;
 const $=function(id){return document.getElementById(id);};
 if(!core||!$("iqSignals"))return;
-const state={signal:core.signals[0].id,variable:"project",custom:[],hypothesis:core.hypotheses[0].id,dependence:75,shock:70,substitute:35,watch:[],proof:{},customCount:0};
+const state={signal:core.signals[0].id,variable:"project",custom:[],edges:[],hypothesis:core.hypotheses[0].id,dependence:75,shock:70,substitute:35,watch:[],proof:{},customCount:0};
 const key="boluo-v11-evidence-watchlist";
 try{const saved=JSON.parse(localStorage.getItem(key)||"[]");if(Array.isArray(saved))state.watch=saved.filter(x=>typeof x==="string");}catch(e){}
 try{const proof=JSON.parse(localStorage.getItem(key+"-proof")||"{}");if(proof&&typeof proof==="object")state.proof=proof;}catch(e){}
+try{const custom=JSON.parse(localStorage.getItem(key+"-custom")||"[]");if(Array.isArray(custom)){state.custom=custom.filter(function(v){return v&&typeof v.id==="string"&&typeof v.name==="string";}).slice(0,5).map(function(v){return {id:v.id,name:v.name.slice(0,32),group:"用户补充",factor:"network",why:"这是用户提出的新变量，尚未被公开证据或模型验证。",mechanism:"尚未定义。请先确认它与哪些现有变量存在可观察的联系，不预设因果方向。",question:"用什么指标、样本和时间范围观察这个变量？",evidence:"需要补充数据持有者、原始记录和可复核口径。",relations:[],custom:true};});state.customCount=state.custom.length;}}catch(e){}
+try{const edges=JSON.parse(localStorage.getItem(key+"-edges")||"[]");if(Array.isArray(edges))state.edges=edges.filter(function(e){return e&&typeof e.from==="string"&&typeof e.to==="string"&&e.from!==e.to;}).slice(0,30);}catch(e){}
 function el(tag,cls,txt){const n=document.createElement(tag);if(cls)n.className=cls;if(txt!==undefined)n.textContent=txt;return n;}
 function toast(txt){const n=$("iqToast");if(!n)return;n.textContent=txt;n.classList.add("on");clearTimeout(toast.t);toast.t=setTimeout(function(){n.classList.remove("on");},2600);}
 function allVariables(){return core.variables.concat(state.custom);}
@@ -49,8 +51,8 @@ function renderSignalDetail(){
  $("iqSignalType").textContent=s.kind==="observed"?"公开统计信号":"研究问题 · 尚待证据";
 }
 function variableRelations(v){
- const ids=(v.relations||[]).slice(0,6);
- return ids.map(function(id){return allVariables().find(function(x){return x.id===id;});}).filter(Boolean);
+ const ids=(v.relations||[]).concat(state.edges.filter(function(e){return e.from===v.id||e.to===v.id;}).map(function(e){return e.from===v.id?e.to:e.from;}));
+ return Array.from(new Set(ids)).slice(0,6).map(function(id){return allVariables().find(function(x){return x.id===id;});}).filter(Boolean);
 }
 function renderVariables(){
  const list=$("iqVariableList");list.replaceChildren();
@@ -62,6 +64,8 @@ function renderVariables(){
   b.addEventListener("click",function(){state.variable=v.id;renderVariables();renderVariableDetail();});
   list.append(b);
  });
+ const relationSelect=$("iqRelationTarget");relationSelect.replaceChildren();
+ allVariables().filter(function(x){return x.id!==state.variable;}).forEach(function(x){const option=document.createElement("option");option.value=x.id;option.textContent=x.name;relationSelect.append(option);});
  const v=currentVariable(),neighbors=variableRelations(v),center=$("iqVariableNodes"),svg=$("iqVariableLines");
  center.replaceChildren();svg.replaceChildren();
  const ns="http://www.w3.org/2000/svg";
@@ -83,7 +87,8 @@ function renderVariableDetail(){
  $("iqVariableMechanism").textContent=v.mechanism||"尚未建立关系假设。需要补充定义、方向和证据后再纳入实验。";
  $("iqVariableQuestion").textContent=v.question||"这项变量如何被观测？";
  $("iqVariableEvidence").textContent=v.evidence||"请补充可核验的数据来源。";
- $("iqVariableStatus").textContent=v.custom?"用户自定义 · 尚未建立关系":"候选变量 · 待验证关系";
+ const hasRelations=variableRelations(v).length>0;
+ $("iqVariableStatus").textContent=v.custom?(hasRelations?"用户自定义 · 候选联系待核验":"用户自定义 · 尚未建立关系"):"候选变量 · 待验证关系";
 }
 function addCustomVariable(){
  const input=$("iqCustomVariable"),name=(input.value||"").trim().slice(0,32);
@@ -93,6 +98,7 @@ function addCustomVariable(){
  state.customCount++;
  const id="custom-"+state.customCount;
  state.custom.push({id:id,name:name,group:"用户补充",factor:"network",why:"这是用户提出的新变量。它可能重要，但目前尚未被公开证据或模型验证。",mechanism:"尚未定义。请先确认它与哪些现有变量存在可观察的联系，不预设因果方向。",question:"用什么指标、样本和时间范围观察这个变量？",evidence:"需要用户补充数据持有者、原始记录和可复核口径。",relations:[],custom:true});
+ try{localStorage.setItem(key+"-custom",JSON.stringify(state.custom.map(function(v){return {id:v.id,name:v.name};})));}catch(e){}
  state.variable=id;input.value="";renderVariables();toast("已加入候选变量，尚未自动建立因果关系");
 }
 function renderHypotheses(){
@@ -168,6 +174,15 @@ function fallbackCopy(text){const t=el("textarea","");t.value=text;document.body
 function bind(){
  $("iqCustomAdd").addEventListener("click",addCustomVariable);
  $("iqCustomVariable").addEventListener("keydown",function(e){if(e.key==="Enter"){e.preventDefault();addCustomVariable();}});
+ $("iqRelationAdd").addEventListener("click",function(){
+  const from=state.variable,to=$("iqRelationTarget").value;
+  if(!to||from===to){toast("请选择两个不同的变量");return;}
+  const exists=state.edges.some(function(e){return (e.from===from&&e.to===to)||(e.from===to&&e.to===from);});
+  if(exists){toast("这条候选联系已经存在");return;}
+  state.edges.push({from:from,to:to});
+  try{localStorage.setItem(key+"-edges",JSON.stringify(state.edges));}catch(e){}
+  renderVariables();toast("候选联系已加入网络，仍待证据核验");
+ });
  [["iqBreakDependence","dependence"],["iqBreakShock","shock"],["iqBreakSubstitute","substitute"]].forEach(function(pair){
   $(pair[0]).addEventListener("input",function(e){state[pair[1]]=core.clamp(e.target.value,0,100);renderBreakpoint();});
  });
