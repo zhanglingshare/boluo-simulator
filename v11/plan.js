@@ -74,11 +74,11 @@ const REGIONS={
  ]}
 };
 const ROUTES={
- new:{title:'项目引进后，真正形成产出了吗？',subtitle:'签约、开工、建成、投产、形成产出逐层核实；规划金额不能当作实际GDP。',region:'future',question:'缺的是项目真实进度，还是投产后的订单和产出？'},
- manufacturing:{title:'主导产业扩能，配套企业能否一起成长？',subtitle:'三大主导产业的企业扩张不等于本地配套自动增长，应跟踪采购、产能与利润。',region:'urban',question:'产业规模增长，有多少来自新增产能与本地采购？'},
- innovation:{title:'科技与未来产业，如何跨过成果转化？',subtitle:'研发投入、技术验证、产业化、规模化经营是不同阶段。',region:'future',question:'研发活动能否持续形成可验证的产品、订单与价值？'},
- services:{title:'生产性服务业，能否成为制造升级的“第二引擎”？',subtitle:'设计、测试、物流、软件与专业服务应逐项确认需求与交易。',region:'urban',question:'企业需要的服务，能否被本地供应并形成实际收益？'},
- connect:{title:'跨城合作与城乡融合，怎样走向真实收益？',subtitle:'区域合作、城镇建设、农产品流通和居民受益需要不同的落实证据。',region:'east',question:'跨区域市场与城乡经济联系，真正落在哪些订单和服务上？'}
+ new:{title:'新项目兑现',subtitle:'项目主体 → 建设条件 → 投产运营 → 实际贡献；每一阶段都要有独立证据。',region:'future',question:'项目是否从签约真正走到了持续生产与新增产出？'},
+ manufacturing:{title:'存量企业扩能',subtitle:'既有企业 → 技改扩产 → 本地供应与订单 → 产出、利润和岗位。',region:'urban',question:'企业扩产是否带动产能利用、本地采购和真实利润？'},
+ services:{title:'本地价值链延伸',subtitle:'制造需求 → 设计、检测、物流等服务 → 本地交易 → 价值留存。',region:'urban',question:'本地企业是否真正承接了制造业需要的服务与订单？'},
+ innovation:{title:'创新与生产率',subtitle:'研发与人才 → 技术验证 → 生产应用 → 效率、新产品与收入。',region:'future',question:'研发和技术投入是否跨过验证环节，转化为生产率与新产品？'},
+ connect:{title:'外部连接与城市承载',subtitle:'外部市场与资源 → 交通、渠道、人才 → 区域协作 → 本地承接。',region:'east',question:'外部资源进入后，本地企业、就业和公共服务能否接得住？'}
 };
 const STAGES=[
  {badge:'历史累计项目 · 引进',title:'十四五时期园区引进项目646宗',text:'政府工作报告历史回顾披露“园区引进项目646宗”。它是五年内的累计项目记录，不意味着其中646个在2026年都处于同一建设阶段。',source:'review'},
@@ -283,6 +283,17 @@ $('openRegionSource').addEventListener('click',()=>{
  '<p><a href="'+s.url+'" target="_blank" rel="noopener noreferrer">'+esc(s.title)+'（'+esc(s.date)+'） ↗</a></p><h3>这张图不能证明什么？</h3><p>空间功能规划不等于企业已形成交易，交通、学校和医疗联系仍需要实测可达性与项目进展核实；连线不代表已证实的交易或经济影响。</p>');
 });
 $('stageSource').addEventListener('click',()=>{
+ if(state.route!=='new'){
+  const questions={
+   manufacturing:'优先核验企业扩产、技改前后产能利用、采购订单和利润变化。',
+   services:'优先核验制造企业服务采购、合同、发票、回款与服务商交付能力。',
+   innovation:'优先核验研发投入、技术验证、中试、生产应用和效率变化。',
+   connect:'优先核验跨区域订单、物流时效、人才流动和本地承接情况.'
+  };
+  const r=ROUTES[state.route];
+  dialog('路径兑现阶段 · 证据边界','<p>'+esc(r.title)+'：'+esc(r.question)+'</p><h3>优先核验</h3><p>'+esc(questions[state.route])+'</p><h3>推断边界</h3><p>本页展示的是机制路径，不代表这些交易或结果已在博罗发生。项目、订单、产能、收入和增加值必须按各自统计口径独立核实。</p>');
+  return;
+ }
  const s=STAGES[state.stage],ref=SOURCES[s.source];
  dialog('项目兑现阶段 · 口径核查','<p>'+esc(s.text)+'</p><p>项目阶段应当逐项核实，不能用不同批次的历史总量计算实际转化率。</p>'+
  '<p><a href="'+ref.url+'" target="_blank" rel="noopener noreferrer">'+esc(ref.title)+' ↗</a></p>');
