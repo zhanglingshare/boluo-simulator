@@ -104,3 +104,8 @@
 .intro-expand>summary:before{content:"＋ ";margin-right:4px}
 .intro-expand[open]>summary:before{content:"－ "}
 .intro-expand>p{max-width:690px;padding:6px 1px;margin:0;color:#aac4d2;font-size:11px;line-height:1.6}
+
+.goal-compare-rail{position:relative;overflow:hidden;height:9px;border:1px dashed #c8b07d75;border-radius:99px;background:repeating-linear-gradient(-45deg,#cfa45b18 0 5px,#cfa45b08 5px 10px);margin:11px 0 3px}
+.goal-compare-rail>i{display:block;height:100%;border-radius:99px;background:linear-gradient(90deg,#2687a9,#76d8c0);box-shadow:0 0 11px #76d8c033}
+.goal-unknown-track{display:flex;align-items:center;justify-content:space-between;gap:5px;margin-top:10px;padding:7px;border:1px dashed #caa66d5c;border-radius:7px;color:#b2a07d;background:repeating-linear-gradient(-45deg,#f2c56b0a 0 6px,#f2c56b02 6px 12px);font-size:9px}
+.goal-unknown-track>b{color:#e3c38d;font-size:9px;font-weight:750}
