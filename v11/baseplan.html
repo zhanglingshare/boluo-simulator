@@ -1,0 +1,361 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<title>03 基本盘与十五五目标 · 家底有多厚，五年要推到哪｜博罗决策风洞 V11</title>
+<meta name="description" content="博罗基本盘与十五五目标：2025 年 GDP 1005.45 亿元、规上工业企业 1407 家、高新技术企业 710 家；2030 年目标 1600 亿元、2500 家、3600 亿元、900 家。含所需年均增速与开局年位置。">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="theme-color" content="#050b16">
+<style>
+:root{
+  --bg0:#050b16; --bg1:#081424; --bg2:#0b1a33;
+  --panel:linear-gradient(180deg,rgba(24,40,68,.62),rgba(11,22,42,.55));
+  --panel-border:rgba(104,158,228,.16);
+  --cyan:#3fc0ff; --cyan-bright:#86d8ff; --blue:#2f9bff; --orange:#ff8a3d; --teal:#2ad0c4; --gold:#d8b57c;
+  --ink:#f3f8ff; --t2:#a9bed8; --t3:#6c809c;
+  --r:14px;
+}
+*{box-sizing:border-box}
+html,body{margin:0}
+body{
+  color:var(--ink);
+  font-family:-apple-system,BlinkMacSystemFont,"SF Pro Text","PingFang SC","Hiragino Sans GB","Microsoft Yahei",sans-serif;
+  -webkit-font-smoothing:antialiased;font-size:14px;line-height:1.6;
+  background:
+   radial-gradient(1100px 600px at 78% -14%, rgba(47,155,255,.2), transparent 62%),
+   radial-gradient(900px 520px at -8% 22%, rgba(63,192,255,.1), transparent 55%),
+   radial-gradient(760px 460px at 50% 118%, rgba(47,155,255,.09), transparent 60%),
+   linear-gradient(180deg,var(--bg0) 0%,var(--bg1) 54%,var(--bg2) 100%);
+  min-height:100vh;position:relative;
+}
+body::before{
+  content:"";position:absolute;inset:0;pointer-events:none;z-index:0;
+  background-image:linear-gradient(rgba(120,165,225,.05) 1px,transparent 1px),linear-gradient(90deg,rgba(120,165,225,.05) 1px,transparent 1px);
+  background-size:44px 44px;
+  mask-image:radial-gradient(ellipse 90% 70% at 50% 0%,#000 40%,transparent 100%);
+  -webkit-mask-image:radial-gradient(ellipse 90% 70% at 50% 0%,#000 40%,transparent 100%);
+}
+a{color:inherit;text-decoration:none}
+button{font:inherit;cursor:pointer;-webkit-tap-highlight-color:transparent;background:none;border:0;color:inherit}
+
+.topbar{position:sticky;top:0;z-index:30;background:#060d16;border-bottom:1px solid var(--panel-border)}
+.topbar-in{max-width:1120px;margin:0 auto;padding:12px 24px;display:flex;align-items:center;gap:18px}
+.brand{font-size:13.5px;font-weight:800;display:flex;flex-direction:column;line-height:1.2;white-space:nowrap}
+.brand small{font-size:9px;color:var(--t3);font-weight:600;letter-spacing:.06em;margin-top:2px}
+.nav{display:flex;gap:2px;margin-left:auto;flex-wrap:wrap}
+.nav a{font-size:12px;color:var(--t2);padding:7px 10px;border-radius:8px;font-weight:600;white-space:nowrap}
+.nav a:hover{background:rgba(63,192,255,.12);color:var(--cyan)}
+.nav a.cur{color:var(--cyan);background:rgba(63,192,255,.14);box-shadow:inset 0 0 0 1px rgba(63,192,255,.25)}
+
+.wrap{position:relative;z-index:1;max-width:1120px;margin:0 auto;padding:0 24px 72px}
+.kick{font-size:10px;letter-spacing:.2em;font-weight:800;color:var(--cyan);margin:34px 0 12px;text-shadow:0 0 20px rgba(63,192,255,.5)}
+h1{font-size:clamp(25px,3.4vw,37px);font-weight:850;letter-spacing:-.035em;line-height:1.18;margin:0 0 14px;text-shadow:0 0 28px rgba(63,192,255,.28)}
+h1 em{font-style:normal;background:linear-gradient(180deg,#a9e6ff,#3fc0ff);-webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent}
+.lede{font-size:14.5px;line-height:1.78;color:var(--t2);max-width:700px;margin:0}
+.meta{font-size:11px;color:var(--t3);margin-top:12px}
+
+.bh{display:flex;align-items:baseline;gap:10px;flex-wrap:wrap;margin:30px 0 11px}
+.bh i{font-style:normal;font-size:9.5px;font-weight:800;letter-spacing:.14em;color:var(--cyan);padding:2px 7px;border:1px solid rgba(63,192,255,.35);border-radius:4px}
+.bh h2{margin:0;font-size:15px;font-weight:850;letter-spacing:-.01em}
+.bh span{font-size:11px;color:var(--t3)}
+
+/* 家底 + 目标：同列上下对照 */
+.base{border:1px solid var(--panel-border);border-radius:var(--r);background:var(--panel);padding:16px 16px 12px;box-shadow:inset 0 1px 0 rgba(255,255,255,.06),0 14px 34px rgba(0,0,0,.35)}
+.cols{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:10px}
+.col{border:1px solid rgba(104,158,228,.14);border-radius:11px;padding:12px 12px 10px;background:rgba(255,255,255,.02);position:relative;overflow:hidden}
+.col .lb{font-size:10px;font-weight:800;color:var(--t3);letter-spacing:.02em;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.col .bs{font-size:24px;font-weight:850;letter-spacing:-.03em;margin:6px 0 2px;color:#fff;font-variant-numeric:tabular-nums;line-height:1.1}
+.col .bs u{font-size:11px;font-weight:700;color:var(--t2);text-decoration:none;margin-left:3px}
+.col .yr{font-size:9.5px;color:var(--t3);line-height:1.5}
+.col.tgt{border-color:rgba(63,192,255,.35);background:linear-gradient(180deg,rgba(63,192,255,.1),rgba(63,192,255,.02))}
+.col.tgt .bs{color:var(--cyan-bright);text-shadow:0 0 18px rgba(63,192,255,.45)}
+.col.tgt .lb{color:var(--cyan)}
+
+.bridge{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:10px;margin:9px 0;align-items:center}
+.br{position:relative;height:30px;display:flex;align-items:center;justify-content:center}
+.br::before{content:"";position:absolute;left:50%;top:0;bottom:0;width:1px;background:linear-gradient(180deg,rgba(63,192,255,.12),rgba(63,192,255,.6),rgba(63,192,255,.12))}
+.br span{position:relative;font-size:9.5px;font-weight:800;color:#bfe1fa;background:#0a1627;padding:2px 7px;border-radius:20px;border:1px solid rgba(63,192,255,.32);white-space:nowrap}
+
+.mview{display:none;flex-direction:column;gap:9px}
+.mv{border:1px solid rgba(63,192,255,.24);border-radius:11px;padding:11px 13px;background:rgba(63,192,255,.05)}
+.mv .n{font-size:10.5px;font-weight:800;color:var(--t2)}
+.mv .v{display:flex;align-items:baseline;gap:7px;flex-wrap:wrap;margin-top:5px}
+.mv .v b{font-size:19px;font-weight:850;letter-spacing:-.02em;font-variant-numeric:tabular-nums}
+.mv .v b.start{color:#fff}
+.mv .v b.end{color:var(--cyan-bright);text-shadow:0 0 14px rgba(63,192,255,.4)}
+.mv .v i{font-style:normal;font-size:11px;color:var(--cyan);font-weight:800}
+.mv .g{font-size:10px;color:var(--gold);margin-top:4px;line-height:1.55}
+.strip{font-size:10.5px;color:var(--t3);line-height:1.7;margin:12px 0 0;padding-top:10px;border-top:1px dashed rgba(104,158,228,.18)}
+.strip b{color:var(--gold);font-weight:800}
+.gapbar{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:10px;margin-top:4px}
+.gb{font-size:10px;color:var(--t3);line-height:1.5}
+.gb b{color:var(--gold);font-weight:800}
+
+/* 斜坡图 */
+.ramp{border:1px solid var(--panel-border);border-radius:var(--r);background:var(--panel);padding:16px 14px 8px;box-shadow:inset 0 1px 0 rgba(255,255,255,.06),0 14px 34px rgba(0,0,0,.34)}
+.ramp-head{display:flex;align-items:baseline;justify-content:space-between;gap:12px;padding:0 6px 2px;flex-wrap:wrap}
+.ramp-head h2{margin:0;font-size:13.5px;font-weight:800}
+.ramp-head span{font-size:10.5px;color:var(--t3)}
+.ramp svg{width:100%;height:auto;display:block}
+.rleg{display:flex;gap:14px;flex-wrap:wrap;font-size:10.5px;color:var(--t2);padding:4px 6px 8px}
+.rleg i{display:inline-block;vertical-align:middle;margin-right:5px}
+.rleg .l1{width:14px;height:3px;border-radius:2px;background:#3fc0ff;box-shadow:0 0 8px rgba(63,192,255,.8)}
+.rleg .l2{width:14px;height:0;border-top:2px dashed #ff8a3d}
+.rleg .l3{width:10px;height:10px;background:rgba(255,138,61,.18);border:1px solid rgba(255,138,61,.5);border-radius:2px}
+
+/* 要跑多快 */
+.grid2{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:16px;align-items:start}
+.speeds{border:1px solid var(--panel-border);border-radius:var(--r);background:var(--panel);padding:15px 16px}
+.sp{display:flex;align-items:baseline;gap:10px;padding:10px 0;border-bottom:1px solid rgba(104,158,228,.1);flex-wrap:wrap}
+.sp:last-child{border-bottom:0;padding-bottom:2px}
+.sp .nm{font-size:11.5px;font-weight:800;color:var(--t2);min-width:96px}
+.sp .big{font-size:20px;font-weight:850;color:var(--cyan-bright);font-variant-numeric:tabular-nums;letter-spacing:-.02em}
+.sp .big u{font-size:10.5px;color:var(--t3);text-decoration:none;margin-left:2px}
+.sp .nt{font-size:10.5px;color:var(--t3);line-height:1.55;flex:1 1 150px}
+
+/* 开局年 */
+.now{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:11px}
+.ncard{border:1px solid var(--panel-border);border-radius:11px;padding:13px 15px;background:var(--panel)}
+.ncard .t{font-size:11px;font-weight:800;color:var(--t3)}
+.ncard .row{display:flex;align-items:baseline;gap:8px;margin:7px 0 4px;flex-wrap:wrap}
+.ncard .row b{font-size:19px;font-weight:850;letter-spacing:-.02em}
+.ncard .row s{text-decoration:none;font-size:11px;color:var(--t3);font-weight:700}
+.ncard small{font-size:10.5px;color:var(--t2);line-height:1.6}
+
+/* 交棒 */
+.relay{margin-top:22px;border:1px solid rgba(63,192,255,.28);border-radius:var(--r);background:linear-gradient(135deg,rgba(47,155,255,.12),rgba(11,22,42,.5));padding:18px 20px;display:flex;align-items:center;gap:16px;flex-wrap:wrap}
+.relay p{margin:0;font-size:12.5px;line-height:1.7;color:var(--t2);flex:1 1 240px}
+.relay p b{color:#fff}
+.btn{display:inline-flex;align-items:center;gap:8px;padding:11px 18px;border-radius:10px;font-size:12.5px;font-weight:800;background:linear-gradient(135deg,var(--blue),#1d6fe0);color:#fff;box-shadow:0 10px 26px -8px rgba(47,155,255,.75)}
+.btn.ghost{background:rgba(255,255,255,.04);border:1px solid rgba(104,158,228,.25);color:var(--ink);box-shadow:none}
+
+.foot{margin-top:28px;padding-top:18px;border-top:1px solid var(--panel-border);font-size:10.5px;color:var(--t3);line-height:1.9}
+.foot b{color:var(--t2)}
+.foot a{color:var(--cyan)}
+
+@media(max-width:960px){
+ .cols,.gapbar{grid-template-columns:repeat(2,minmax(0,1fr))}
+ .bridge{display:none}
+ .cols,.gapbar{display:none}
+ .mview{display:flex}
+ .grid2{grid-template-columns:1fr}
+ .now{grid-template-columns:1fr}
+ .topbar-in{padding:11px 16px;gap:10px}
+ .wrap{padding:0 16px 60px}
+ .nav{overflow-x:auto;flex-wrap:nowrap;width:100%}
+}
+</style>
+</head>
+<body>
+<header class="topbar">
+ <div class="topbar-in">
+  <a class="brand" href="./index.html">博罗决策风洞<small>V11 · 基本盘与十五五目标</small></a>
+  <nav class="nav" aria-label="V11导航">
+   <a href="./index.html">01 全息风洞</a>
+   <a href="./holo.html">02 全息关系</a>
+   <a href="./baseplan.html" class="cur" aria-current="page">03 基本盘</a>
+   <a href="./industry-chain.html">04 产业底盘</a>
+   <a href="./relations.html">05 关系</a>
+   <a href="./impact.html">06 影响</a>
+   <a href="./wind.html">07 风洞</a>
+  </nav>
+ </div>
+</header>
+
+<main class="wrap">
+ <p class="kick">03 / 基本盘与十五五目标</p>
+ <h1>家底有多厚，<br><em>五年</em>要推到哪？</h1>
+ <p class="lede">这一页只做一件事：把 2025 年的收盘数和 2030 年的目标放在同一列上，让“还差多少、要跑多快”一眼看得见。后面 04 那 37 个现场，都是要往这条线上填的东西。</p>
+ <p class="meta num" id="meta"></p>
+
+ <!-- 一、家底 vs 目标 -->
+ <div class="bh"><i>01</i><h2>2025 收盘 · 2030 目标</h2><span>同一列上下对照，不折成“完成度”</span></div>
+ <section class="base" aria-label="家底与目标对照">
+  <div class="cols" id="baseRow"></div>
+  <div class="bridge" id="bridgeRow"></div>
+  <div class="cols" id="goalRow"></div>
+  <div class="gapbar" id="gapRow"></div>
+  <div class="mview" id="mView"></div>
+  <p class="strip">底盘补充：农林牧渔总产值 <b>130.32 亿元</b>；三次产业增加值结构 <b>9.4 / 55.9 / 34.7</b>（2026 一季度口径，非全年）；2026 一季度 GDP 同比 +4.0%。</p>
+ </section>
+
+ <!-- 二、五年斜坡 -->
+ <div class="bh"><i>02</i><h2>五年要跑多快</h2><span>由目标反算所需年均增速，再和现在的速度放一起</span></div>
+ <div class="grid2">
+  <section class="ramp" aria-label="GDP 五年斜坡">
+   <div class="ramp-head"><h2>GDP：必需线 vs 惯性线</h2><span>单位：亿元</span></div>
+   <svg id="rampSvg" viewBox="0 0 560 340" role="img" aria-label="GDP 从 2025 至 2030 的两条路径"></svg>
+   <div class="rleg">
+    <span><i class="l1"></i>必需线 · 由 1600 亿反算，年均约 9.7%</span>
+    <span><i class="l2"></i>惯性示意 · 把 2026 前三季 4.1% 平推</span>
+    <span><i class="l3"></i>敞口 · 两线在 2030 的差</span>
+   </div>
+  </section>
+  <section class="speeds" aria-label="要跑多快">
+   <div id="speedList"></div>
+   <p class="meta" style="margin-top:10px">百分比为几何增速，由“基数→目标”反算；净增数为算术差。都不是官方分解，也不代表达标概率。</p>
+  </section>
+ </div>
+
+ <!-- 三、开局年位置 -->
+ <div class="bh"><i>03</i><h2>开局年现在在哪</h2><span>2026 年目标 vs 已公布的实际</span></div>
+ <div class="now" id="nowRow"></div>
+
+ <!-- 四、交棒 -->
+ <div class="relay">
+  <p><b>这一页给的是标尺，不是答案。</b>1600 亿要落到谁身上、594.55 亿的差额从哪来，得看具体项目。04 那页把 37 个公开现场按进度摆开：在产 16、在建 15、签约 4、退出 2。</p>
+  <a class="btn" href="./industry-chain.html">去看那 37 个现场 →</a>
+  <a class="btn ghost" href="./plan.html">进十五五观察台</a>
+ </div>
+
+ <div class="foot">
+  <b>口径与来源：</b>2025 年 GDP 1005.45 亿元、规上工业企业 1407 家、高新技术企业 710 家、规上工业总产值“预计突破 2000 亿元”，均来自公开报道口径（
+  <a href="https://epaper.nfnews.com/nfdaily/html/202601/27/content_10161535.html" target="_blank" rel="noopener noreferrer">十五五主要目标与 2025 年基数 · 2026-01-27</a>）；2030 年 1600 亿元、2500 家、3600 亿元、900 家为规划目标。“预计突破 2000 亿元”不是精确终值，因此工业总产值不折算百分比。<br>
+  <b>年度目标与实际：</b>2026 年 GDP 增长预期 6.5%—7%、规上工业增加值目标 ≥9.0%（
+  <a href="https://epaper.nfnews.com/nfdaily/html/202602/06/content_10162500.html" target="_blank" rel="noopener noreferrer">2026 年政府工作报告主要目标</a>）；2026 年前三季度 GDP 同比 +4.1%、规上工业增加值 +8.9%、工业投资 −44.7%。一季度口径为 GDP +4.0%、规上工业 +3.5%，与累计口径并列时不作相减。<br>
+  <b>这不是什么：</b>规划目标是应当努力达到的状态，不是已实现成果；惯性线只是把当期增速平推的示意，不是预测；两线之间的敞口只说明“速度差”，不构成达标概率。<br>
+  <b>与其它页的分工：</b>本页只放家底与目标；分年份、分路径的分解与情景在十五五观察台；目标落到项目与环节，在 04 产业底盘与接续。
+ </div>
+</main>
+
+<script>
+(function(){
+ 'use strict';
+ var BASE={gdp:1005.45,indOut:2000,firms:1407,hq:710,agri:130.32};
+ var GOAL={gdp:1600,indOut:3600,firms:2500,hq:900};
+ var NOWT={gdp:[6.5,7.0],ind:[9.0,9.0]};
+ var ACT={gdpQ3:4.1,indQ3:8.9,invQ3:-44.7,gdpQ1:4.0,indQ1:3.5};
+
+ function cagr(a,b,y){return Math.pow(b/a,1/y)-1;}
+
+ var ROWS=[
+  {lb:'地区生产总值',base:'1005.45',bu:'亿元',by:'2025 年，已公布',goal:'1600',gu:'亿元',gy:'2030 规划目标',
+   gap:'静态差额 <b>594.55 亿元</b>，平均每年要多增 118.9 亿元'},
+  {lb:'规上工业总产值',base:'超 2000',bu:'亿元',by:'2025 年，预计口径',goal:'3600',gu:'亿元',gy:'2030 规划目标',
+   gap:'基数仍是“预计”，<b>不折算百分比</b>'},
+  {lb:'规上工业企业',base:'1407',bu:'家',by:'2025 年末存量',goal:'2500',gu:'家',gy:'2030 目标（突破）',
+   gap:'需净增 <b>1093 家</b>，年均 219 家'},
+  {lb:'高新技术企业',base:'710',bu:'家',by:'2025 年存量',goal:'900',gu:'家',gy:'2030 目标（突破）',
+   gap:'需净增 <b>190 家</b>，年均 38 家'}
+ ];
+
+ function drawBase(){
+  document.getElementById('baseRow').innerHTML=ROWS.map(function(r){
+   return '<div class="col"><p class="lb">'+r.lb+'</p><p class="bs">'+r.base+'<u>'+r.bu+'</u></p><p class="yr">'+r.by+'</p></div>';
+  }).join('');
+  document.getElementById('bridgeRow').innerHTML=ROWS.map(function(){
+   return '<div class="br"><span>五年</span></div>';
+  }).join('');
+  document.getElementById('goalRow').innerHTML=ROWS.map(function(r){
+   return '<div class="col tgt"><p class="lb">'+r.lb+'</p><p class="bs">'+r.goal+'<u>'+r.gu+'</u></p><p class="yr">'+r.gy+'</p></div>';
+  }).join('');
+  document.getElementById('gapRow').innerHTML=ROWS.map(function(r){
+   return '<div class="gb">'+r.gap+'</div>';
+  }).join('');
+  document.getElementById('mView').innerHTML=ROWS.map(function(r){
+   return '<div class="mv"><p class="n">'+r.lb+'</p>'
+    +'<p class="v"><b class="start">'+r.base+'</b><s style="text-decoration:none;font-size:10px;color:#6c809c">'+r.bu+'</s>'
+    +'<i>→</i><b class="end">'+r.goal+'</b><s style="text-decoration:none;font-size:10px;color:#6c809c">'+r.gu+'</s></p>'
+    +'<p class="g">'+r.gap+'</p></div>';
+  }).join('');
+ }
+
+ function drawSpeeds(){
+  var g=cagr(BASE.gdp,GOAL.gdp,5)*100;
+  var i=cagr(BASE.indOut,GOAL.indOut,5)*100;
+  var items=[
+   {nm:'GDP',big:g.toFixed(1),u:'%/年',nt:'把 1005.45 亿推到 1600 亿，五年几何均值。现在是 4.1%（前三季累计）。'},
+   {nm:'规上工业总产值',big:i.toFixed(1),u:'%/年',nt:'从“超 2000 亿”推到 3600 亿；基数口径未终值，只作方向参照。'},
+   {nm:'规上工业企业',big:'+219',u:'家/年',nt:'每年净增 219 家，五年净增 1093 家。含升规、退规、迁移，不是只需新注册。'},
+   {nm:'高新技术企业',big:'+38',u:'家/年',nt:'五年净增 190 家。高企与规上企业口径不同，不可相加。'}
+  ];
+  document.getElementById('speedList').innerHTML=items.map(function(x){
+   return '<div class="sp"><span class="nm">'+x.nm+'</span><span class="big">'+x.big+'<u>'+x.u+'</u></span><span class="nt">'+x.nt+'</span></div>';
+  }).join('');
+ }
+
+ function drawRamp(){
+  var W=560,H=340,L=64,R=500,T=52,B=272;
+  var g=cagr(BASE.gdp,GOAL.gdp,5);
+  var ymin=900,ymax=1700;
+  function X(t){return L+(R-L)*t/5;}
+  function Y(v){return B-(v-ymin)/(ymax-ymin)*(B-T);}
+  var need=[],iner=[];
+  for(var t=0;t<=5;t++){
+   need.push({t:t,v:BASE.gdp*Math.pow(1+g,t)});
+   iner.push({t:t,v:BASE.gdp*Math.pow(1+ACT.gdpQ3/100,t)});
+  }
+  var out='';
+  // 网格与年份
+  for(var t2=0;t2<=5;t2++){
+   var x=X(t2);
+   out+='<line x1="'+x+'" y1="'+T+'" x2="'+x+'" y2="'+B+'" stroke="rgba(104,158,228,'+(t2===1?'.28':'.1')+')" stroke-width="1"'+(t2===1?' stroke-dasharray="4 4"':'')+'/>';
+   out+='<text x="'+x+'" y="'+(B+22)+'" text-anchor="middle" style="font-size:'+(t2===0||t2===5?11.5:10)+'px;font-weight:'+(t2===0||t2===5?850:700)+';fill:'+(t2===0||t2===5?'#dbe8f8':'#6c809c')+'">'+(2025+t2)+(t2===0?' 收盘':'')+'</text>';
+  }
+  out+='<text x="'+X(1)+'" y="'+(T-12)+'" text-anchor="middle" style="font-size:9.5px;font-weight:800;fill:#8fb6dd;letter-spacing:.06em">开局年</text>';
+  // 敞口面积
+  var poly='';
+  for(var k=0;k<need.length;k++)poly+=X(need[k].t)+','+Y(need[k].v)+' ';
+  for(var k2=iner.length-1;k2>=0;k2--)poly+=X(iner[k2].t)+','+Y(iner[k2].v)+' ';
+  out+='<polygon points="'+poly+'" fill="rgba(255,138,61,.13)" stroke="rgba(255,138,61,.25)" stroke-width="1"/>';
+
+  // 必需线
+  var p1='';
+  need.forEach(function(d,i){p1+=(i?' L':'M')+X(d.t)+' '+Y(d.v);});
+  out+='<path d="'+p1+'" fill="none" stroke="#3fc0ff" stroke-width="3"/>';
+  // 惯性线
+  var p2='';
+  iner.forEach(function(d,i){p2+=(i?' L':'M')+X(d.t)+' '+Y(d.v);});
+  out+='<path d="'+p2+'" fill="none" stroke="#ff8a3d" stroke-width="2.2" stroke-dasharray="8 6"/>';
+
+  // 起点
+  out+='<circle cx="'+X(0)+'" cy="'+Y(BASE.gdp)+'" r="6" fill="#86d8ff"/>';
+  out+='<text x="'+(X(0)+9)+'" y="'+(Y(BASE.gdp)-10)+'" style="font-size:11px;font-weight:850;fill:#86d8ff">1005.45</text>';
+
+  // 终点：目标
+  out+='<rect x="'+(X(5)-5)+'" y="'+(Y(GOAL.gdp)-5)+'" width="10" height="10" rx="2" fill="#3fc0ff" stroke="#dff4ff" stroke-width="1.4"/>';
+  out+='<text x="'+(X(5)-10)+'" y="'+(Y(GOAL.gdp)-14)+'" text-anchor="end" style="font-size:12.5px;font-weight:850;fill:#86d8ff">1600（目标）</text>';
+
+  // 终点：惯性
+  out+='<circle cx="'+X(5)+'" cy="'+Y(iner[5].v)+'" r="5" fill="#ff8a3d"/>';
+  out+='<text x="'+(X(5)-10)+'" y="'+(Y(iner[5].v)+18)+'" text-anchor="end" style="font-size:11.5px;font-weight:850;fill:#ff8a3d">≈'+Math.round(iner[5].v)+'（示意）</text>';
+
+  // 敞口标注
+  var gx=X(4.55),gy=(Y(iner[5].v)+Y(GOAL.gdp))/2;
+  out+='<line x1="'+(X(5)-16)+'" y1="'+Y(iner[5].v)+'" x2="'+(X(5)-16)+'" y2="'+Y(GOAL.gdp)+'" stroke="rgba(255,138,61,.75)" stroke-width="1.4"/>';
+  out+='<text x="'+(X(5)-22)+'" y="'+(gy+4)+'" text-anchor="end" style="font-size:11px;font-weight:850;fill:#ffd8b5">敞口约 '+Math.round(GOAL.gdp-iner[5].v)+' 亿</text>';
+
+  // y 轴刻度
+  [900,1100,1300,1500,1700].forEach(function(v){
+   out+='<text x="'+(L-10)+'" y="'+(Y(v)+4)+'" text-anchor="end" style="font-size:9.5px;font-weight:700;fill:#5f7692">'+v+'</text>';
+   out+='<line x1="'+(L-6)+'" y1="'+Y(v)+'" x2="'+R+'" y2="'+Y(v)+'" stroke="rgba(104,158,228,.07)" stroke-width="1"/>';
+  });
+
+  document.getElementById('rampSvg').innerHTML=out;
+  document.getElementById('meta').textContent='基数 2025 年 · 目标 2030 年 · 所需年均增速由本页按几何均值计算，不是官方口径';
+ }
+
+ function drawNow(){
+  var cards=[
+   {t:'GDP 增长 · 2026 年度目标 6.5%—7%',
+    v1:'6.5%—7%',s1:'年度目标',v2:'+4.1%',s2:'前三季累计',
+    note:'年度目标是全年口径，累计增速是阶段口径。两者并列看位置，算不出“落后几个点”。'},
+   {t:'规上工业增加值 · 2026 年度目标 ≥9.0%',
+    v1:'≥9.0%',s1:'年度目标',v2:'+8.9%',s2:'前三季累计',
+    note:'累计几乎贴着目标线；但一季度只有 +3.5%，季度与累计不是同一把尺子。'},
+   {t:'工业投资 · 无年度增速目标',
+    v1:'−44.7%',s1:'前三季累计',v2:'—',s2:'1—5 月缺值',
+    note:'降幅连续处于四成以上。投资是下一轮产能的先行量，这一项没有目标线可比。'}
+  ];
+  document.getElementById('nowRow').innerHTML=cards.map(function(c){
+   return '<div class="ncard"><p class="t">'+c.t+'</p>'
+    +'<div class="row"><b style="color:#fff">'+c.v1+'</b><s>'+c.s1+'</s><b style="color:'+(c.v2==='—'?'#6c809c':(c.v2.indexOf('-')===0?'#ff8a3d':'#86d8ff'))+'">'+c.v2+'</b><s>'+c.s2+'</s></div>'
+    +'<small>'+c.note+'</small></div>';
+  }).join('');
+ }
+
+ drawBase();drawSpeeds();drawRamp();drawNow();
+})();
+</script>
+</body>
+</html>
