@@ -1,0 +1,65 @@
+name: V11 · All pages visual storytelling regression
+
+on:
+  push:
+    paths:
+      - "v11/visual-story.*"
+      - "v11/base-target.html"
+      - "v11/industry-chain.html"
+      - "v11/impact.html"
+      - "v11/plan.html"
+      - "v11/wind.html"
+      - "v11/insights.html"
+      - "v11/challenge.html"
+      - "v11/region.html"
+      - "v11/brief.html"
+      - "v11/future.html"
+      - "tests/boluo-v11-visual-story*.cjs"
+      - ".github/workflows/boluo-v11-visual-story.yml"
+  pull_request:
+    paths:
+      - "v11/visual-story.*"
+      - "v11/base-target.html"
+      - "v11/industry-chain.html"
+      - "v11/impact.html"
+      - "v11/plan.html"
+      - "v11/wind.html"
+      - "v11/insights.html"
+      - "v11/challenge.html"
+      - "v11/region.html"
+      - "v11/brief.html"
+      - "v11/future.html"
+      - "tests/boluo-v11-visual-story*.cjs"
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  visual-story:
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: "22"
+      - name: Validate all ten additive page guides
+        run: |
+          node --check v11/visual-story.js
+          node --test tests/boluo-v11-visual-story.test.cjs
+      - name: Install Chromium
+        run: |
+          npm install --no-save playwright
+          npx playwright install --with-deps chromium
+      - name: Run desktop and mobile real-browser visual regression
+        run: |
+          python3 -m http.server 8765 --bind 127.0.0.1 >/tmp/boluo-v11-visual-story.log 2>&1 &
+          sleep 2
+          node tests/boluo-v11-visual-story-browser.cjs
+      - name: Save all 20 visual-stage screenshots
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: boluo-v11-visual-guide-desktop-mobile
+          path: artifacts/v11-visual-story/*.png
+          if-no-files-found: ignore
+          retention-days: 7
