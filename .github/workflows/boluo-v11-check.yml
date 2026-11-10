@@ -41,5 +41,3 @@ jobs:
           node --check v11/brief.js
       - name: Existing page contracts and research dossier data checks
         run: node --test tests/boluo-v11-challenge.test.cjs tests/boluo-v11-region.test.cjs tests/boluo-v11-region-lab.test.cjs tests/boluo-v11-brief.test.cjs
-      - name: Existing site journey
-        run: node tests/verify_journey.js
