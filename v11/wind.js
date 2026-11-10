@@ -235,15 +235,17 @@ function chartRender(results,animate=false){
 }
 function renderChain(){
  const m=MODELS[state.shock];
- for(let i=0;i<4;i++){$('chain'+i).textContent=m.nodes[i];}
+ for(let i=0;i<4;i++){const el=$('chain'+i);if(el)el.textContent=m.nodes[i];}
  qa('[data-link]').forEach((b,i)=>b.classList.toggle('active',i===state.focused));
- $('chainStepTag').textContent=['变化起点','第一层传导','第二层传导','可能的2030结果'][state.focused];
- $('chainQuestion').textContent=m.questions[state.focused];
- $('chainCaveat').textContent='这是一条可能的机制路径。'+m.unknown;
+ const tag=$('chainStepTag'),q=$('chainQuestion'),cv=$('chainCaveat');
+ if(tag)tag.textContent=['变化起点','第一层传导','第二层传导','可能的2030结果'][state.focused];
+ if(q)q.textContent=m.questions[state.focused];
+ if(cv)cv.textContent='这是一条可能的机制路径。'+m.unknown;
 }
 function progressChain(){
  clearInterval(animTimer);
  const group=$('chainTrack');
+ if(!group)return;
  if(state.reduced){state.focused=3;renderChain();return;}
  state.focused=0;group.classList.add('running');renderChain();
  let step=0;
@@ -303,7 +305,7 @@ $('runTest').addEventListener('click',()=>modify({active:true,focused:0},true));
 $('replay').addEventListener('click',()=>{state.focused=0;run(true);});
 $('reset').addEventListener('click',()=>{window.BoluoExperimentBaseline?.reset?.();modify({active:false,buffer:false,focused:0},true);});
 $('bufferOn').addEventListener('change',e=>modify({buffer:Boolean(e.target.checked),active:true},true));
-qa('[data-link]').forEach(b=>b.addEventListener('click',()=>{clearInterval(animTimer);animTimer=0;state.focused=Number(b.dataset.link);$('chainTrack').classList.remove('running');renderChain();}));
+qa('[data-link]').forEach(b=>b.addEventListener('click',()=>{clearInterval(animTimer);animTimer=0;state.focused=Number(b.dataset.link);const g=$('chainTrack');if(g)g.classList.remove('running');renderChain();}));
 function modal(title,body){
  $('modalTitle').textContent=title;$('modalBody').innerHTML=body;if(!$('modal').open)$('modal').showModal();
 }

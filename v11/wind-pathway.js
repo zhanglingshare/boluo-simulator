@@ -271,8 +271,13 @@
     if (!box || !state.data) return;
     const f = state.focus;
     const d = state.data, rows = d.stress.rows;
+    const meta = (state.data.sets && state.data.sets.meta) || {};
+    const qs = Array.isArray(meta.questions) ? meta.questions : [];
+    const check = qs[2] || qs[1] || '';
     if (!f) {
-      box.innerHTML = '<span class="k">怎么读这张图</span><strong>线越粗，这一环对结果的作用越强；橙红往下压，蓝青往上托。</strong><p>点任意一条线或一个环节，看它在这一轮里通过哪几段链条，最后落到哪个结果上。</p>';
+      box.innerHTML = '<span class="k">怎么读这张图</span><strong>线越粗，这一环对结果的作用越强；橙红往下压，蓝青往上托。</strong>' +
+        '<p>点任意一条线或一个环节，看它在这一轮里通过哪几段链条，最后落到哪个结果上。</p>' +
+        (check ? '<p class="wkp-check">这条传导链现在最该核的是「' + check.replace(/？$/,'') + '」</p>' : '');
       return;
     }
     let title = '', chain = [], explain = '';

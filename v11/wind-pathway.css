@@ -45,6 +45,7 @@
 .wkp-legend{display:flex;gap:14px;flex-wrap:wrap;margin-top:11px;padding-top:10px;border-top:1px dashed #cfe3f7;font-size:10.5px;color:#7694ae}
 .wkp-legend i{display:inline-block;width:26px;height:3px;border-radius:3px;vertical-align:middle;margin-right:5px}
 .wkp-legend .pos{background:#1396df}.wkp-legend .neg{background:#f2704a}.wkp-legend .weak{background:#b4c9dc}
+.wkp-card p.wkp-check{margin:6px 0 0;color:#b3572f;font-weight:800;font-size:11.5px}
 .wkp-card{margin-top:11px;border-radius:12px;border:1px solid #cfe3f7;background:#ffffffdb;padding:12px 14px;min-height:64px}
 .wkp-card span.k{font:800 10px/1 inherit;letter-spacing:.06em;color:#0a72df}
 .wkp-card strong{display:block;margin-top:5px;font-size:13.5px;color:#173e70;line-height:1.5}
@@ -99,3 +100,22 @@
  .wkp-mobile-hint{display:block}
 }
 .wkp-mobile-hint{display:none;margin:6px 2px 0;font-size:10.5px;color:#7d97b0}
+
+/* 传导链并入路径图段：紧凑版 */
+/* 已弃用：传导链改为并入解释卡，不再单独成块 */
+.wkp-chain-off{margin-top:13px;padding-top:12px;border-top:1px dashed #cfe3f7}
+.wkp-chain-title{margin:0 0 9px;font:800 10px/1 inherit;letter-spacing:.09em;color:#7d97b0}
+.wkp-chain .chain-viewport{padding:9px 8px;border-radius:10px;background:linear-gradient(105deg,#f4faff,#eaf4ff)}
+.wkp-chain .chain-node{min-height:42px;padding:6px 6px;gap:2px}
+.wkp-chain .chain-node small{font-size:9px;font-weight:800}
+.wkp-chain .chain-node strong{font-size:11px;font-weight:840;line-height:1.25}
+.wkp-chain .chain-answer{margin-top:8px;padding:6px 10px;border-left-width:3px;display:flex;align-items:baseline;gap:10px;flex-wrap:wrap}
+.wkp-chain .chain-answer span{font-size:9.5px}
+.wkp-chain .chain-answer strong{font-size:11.5px}
+.wkp-chain .chain-answer p{margin:0}
+.wkp-chain .chain-answer p{font-size:9.5px;line-height:1.55}
+@media(max-width:760px){
+ .wkp-chain .chain-node{min-height:48px;padding:6px 4px}
+ .wkp-chain .chain-node strong{font-size:10px}
+ .wkp-chain .chain-answer strong{font-size:10.5px}
+}
