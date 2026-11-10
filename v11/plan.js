@@ -352,7 +352,7 @@ if(typeof disclosureBreakpoint.addEventListener==='function')disclosureBreakpoin
 else if(typeof disclosureBreakpoint.addListener==='function')disclosureBreakpoint.addListener(syncEvidenceDisclosure);
 const goalsBreakpoint=matchMedia('(max-width:720px)');
 function syncGoalDisclosure(){
- $('goalsDisclosure').open=!goalsBreakpoint.matches;
+ $('goalsDisclosure').open=false;
 }
 syncGoalDisclosure();
 if(typeof goalsBreakpoint.addEventListener==='function')goalsBreakpoint.addEventListener('change',syncGoalDisclosure);
