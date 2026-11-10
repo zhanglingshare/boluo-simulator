@@ -19,7 +19,7 @@ const fixture={
 };
 test("empty browser produces seven honest uncompleted stages and no fabricated experiment",()=>{
  const d=D.load(storage(),storage());
- assert.equal(d.completed,0);assert.equal(d.total,7);assert.equal(d.wind,null);assert.equal(d.region.pressure.score,73);assert.equal(d.region.pressure.adjusted,true);
+ assert.equal(d.completed,0);assert.equal(d.total,7);assert.equal(d.wind,null);assert.equal(d.region,null);
  assert.match(D.textSummary(d),/尚无已保存的条件实验/);
  assert.match(D.textSummary(d),/未保存不代表没有访问/);
 });
@@ -48,7 +48,7 @@ test("untrusted and out-of-range scenario parameters are bounded or omitted",()=
  assert.equal(d.wind.strength,1.4);
  assert.deepEqual(d.wind.baselineParams,{baseScale:1.4,volScale:.5,count:2000,paths:[1.5,.5,1]});
  assert.equal(d.wind.distribution,null);
- assert.equal(d.region,null);
+ assert.equal(d.region.pressure.score,73);assert.equal(d.region.pressure.adjusted,true);
 });
 test("page 11 exposes a research trace, evidence backlog, replay and export controls",()=>{
  const h=read("v11/brief.html"),js=read("v11/brief.js"),css=read("v11/brief.css");
