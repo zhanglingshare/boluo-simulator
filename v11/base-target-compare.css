@@ -93,3 +93,14 @@
 @media(max-width:620px){.hero-kpis{margin-bottom:8px}.page-intro h1{font-size:26px}.compare-deck{grid-template-columns:1fr;gap:8px;margin-bottom:8px}.compare-deck .cmp-panel:last-child{grid-column:auto}.cmp-panel{padding:13px}.cmp-panel svg{max-height:230px}.cmp-panel:first-child{padding:14px}.cmp-title{font-size:14px}.cmp-bridge-text strong{font-size:22px}.cmp-track{height:20px;margin-top:12px}.cmp-scatter{max-width:390px;margin:auto}.section-block{padding:12px}.block-head{align-items:start;gap:8px}.block-head h2{font-size:16px}.explain-toggle{max-width:105px}.explain-toggle>summary{padding:7px 8px;font-size:9px}.history-layout{grid-template-columns:1fr}.structure-layout{grid-template-columns:1fr}.growth-card{grid-column:auto}.growth-bars{grid-template-columns:1fr}.tree-panel{min-height:0}.tree-stage{height:420px}.tree-legend{max-width:47%}.target-brief{padding:14px}.goals-grid,.evidence-grid{grid-template-columns:1fr 1fr}.evidence-card{min-height:90px}.evidence-card strong{font-size:11px}.evidence-detail{grid-template-columns:1fr}}
 @media(max-width:380px){.compare-deck{grid-template-columns:1fr}.kpi-card{padding:12px}.goals-grid,.evidence-grid{grid-template-columns:1fr}.tree-stage{height:385px}}
 @media(prefers-reduced-motion:reduce){.cmp-scatter circle.datapoint{transition:none}}
+
+.cmp-view-switch{display:inline-flex;gap:3px;padding:3px;border:1px solid #47809255;border-radius:8px;background:#061a2b;margin-bottom:4px}
+.cmp-view-switch button{padding:6px 10px;border:0;border-radius:6px;background:transparent;color:#8daebf;font-size:10px;font-weight:750;transition:.18s}
+.cmp-view-switch button.active{background:#177064;color:#e7fff4;box-shadow:0 0 10px #2bbaa133}
+.cmp-view-switch button:hover{color:#eaffff}
+.intro-expand{display:inline-block;margin-top:6px}
+.intro-expand>summary{list-style:none;cursor:pointer;display:inline-flex;padding:5px 9px;border:1px solid #538b9d55;border-radius:7px;color:#93c8d4;font-size:10px}
+.intro-expand>summary::-webkit-details-marker{display:none}
+.intro-expand>summary:before{content:"＋ ";margin-right:4px}
+.intro-expand[open]>summary:before{content:"－ "}
+.intro-expand>p{max-width:690px;padding:6px 1px;margin:0;color:#aac4d2;font-size:11px;line-height:1.6}
