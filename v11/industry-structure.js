@@ -75,7 +75,7 @@ function renderSectorDetail(){
  '<div class="detail-stat"><strong>'+rate+'</strong><span>'+selectedYear+'年增加值同比</span></div>'+
  '<div class="detail-stat"><strong>'+pp(delta)+'</strong><span>占比较2024年变化</span></div>'+
  '<div class="detail-stat"><strong>'+(s.g24==null?'—':change)+'</strong><span>增速较2024年变化</span></div></div>'+
- (s.physical?'<div class="detail-question physical-check"><b>产品产量交叉核验：</b>'+s.physical.join(' · ')+'。产品产量与行业增加值不是同一指标，不能直接相减，但值得拆开看产品结构。</div>':'')+
+ (s.physical&&selectedYear===2025?'<div class="detail-question physical-check"><b>产品产量交叉核验：</b>'+s.physical.join(' · ')+'。产品产量与行业增加值不是同一指标，不能直接相减，但值得拆开看产品结构。</div>':'')+
  '<div class="detail-question"><b>值得继续核实：</b>'+s.question+'</div>'+
  '<div class="mini-chips"><span>2024占比 '+s.s24.toFixed(1)+'%</span><span>2024增速 '+(s.g24==null?'未披露':pct(s.g24))+'</span><span>2025占比 '+s.s25.toFixed(1)+'%</span></div>';
  document.querySelectorAll('[data-sector]').forEach(b=>{b.classList.toggle('active',b.dataset.sector===selectedSector);b.setAttribute('aria-pressed',String(b.dataset.sector===selectedSector))});
