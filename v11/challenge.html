@@ -7,10 +7,10 @@
 <meta name="description" content="博罗决策风洞第九页：把你的判断放到反对意见面前，寻找可能改变判断的证据，生成可分享的判断卡。">
 <title>09 我的决策实验｜你的判断，经得起反驳吗？— 博罗 V11</title>
 <link rel="stylesheet" href="../assets/boluo-access.css?v=20261108-inline2">
-<link rel="stylesheet" href="./challenge.css?v=20261109-p1">
+<link rel="stylesheet" href="./challenge.css?v=20261111-redteam2">
 <script src="../assets/boluo-access.js?v=20261108-inline2" data-bl-access="inline"></script>
 <script defer src="./insight-topics.js?v=20261109-p1"></script>
-<script defer src="./challenge.js?v=20261109-p1"></script>
+<script defer src="./challenge.js?v=20261111-redteam2"></script>
 </head>
 <body class="challenge-page">
 <a class="skip" href="#challengeMain">跳到判断挑战</a>
@@ -47,6 +47,7 @@
    <button type="button" class="claim selected" data-claim="project" aria-pressed="true"><small>01 / 项目接续</small><strong>投资下降，下一棒可能接不上。</strong><span>谁来补上下一批产能？</span><i aria-hidden="true">↗</i></button>
    <button type="button" class="claim" data-claim="orders" aria-pressed="false"><small>02 / 本地订单</small><strong>工业增长，未必让本地配套受益。</strong><span>订单最终落在谁手上？</span><i aria-hidden="true">↗</i></button>
    <button type="button" class="claim" data-claim="people" aria-pressed="false"><small>03 / 就业与生活</small><strong>数字增长，未必同步改善居民获得。</strong><span>增长何时传到人身上？</span><i aria-hidden="true">↗</i></button>
+   <button type="button" class="claim" data-claim="agri" aria-pressed="false"><small>04 / 农业价值链</small><strong>农产品卖出去了，价值未必留在本地。</strong><span>加工、渠道与回款，哪一环决定收益？</span><i aria-hidden="true">↗</i></button>
   </div>
  </section>
  <section class="arena-section" aria-labelledby="arenaTitle">
@@ -76,13 +77,23 @@
    <div class="evidence-panel"><div class="panel-head"><span>最值得补的证据</span><small>选一个关键点</small></div><div id="evidenceOptions" class="proof-grid" role="group" aria-label="选择可能改变判断的证据"></div><div class="missing-box"><span aria-hidden="true">◈</span><div><small>从第八页带来的关注联系</small><strong id="incomingMissing">如有上一页关注对象，将在这里显示待核实的材料。</strong></div></div></div>
    <div class="evidence-panel verdict-panel"><div class="panel-head"><span>这份证据，目前支持谁？</span><small>用户自评 · 非自动核验</small></div><div class="evidence-status" role="group" aria-label="选择你对证据状态的判断"><button type="button" data-proof="unknown" class="active" aria-pressed="true">还不知道<span>不强行下结论</span></button><button type="button" data-proof="current" aria-pressed="false">更支持原判断<span>仍可被新证据推翻</span></button><button type="button" data-proof="alternative" aria-pressed="false">更支持反对意见<span>需要重新审视结论</span></button></div><div class="verdict-output" aria-live="polite"><small>你当前的判断状态</small><strong id="verdictTitle">关键证据尚未到位</strong><p id="verdictBody">在证据缺失时，不需要装作已经知道答案。</p></div></div>
   </div>
+  <section class="falsify-section" id="falsify" aria-labelledby="falsifyTitle">
+   <div class="falsify-head"><div><p class="eyebrow teal">04 / FALSIFICATION · 反证条件</p><h2 id="falsifyTitle">什么出现时，<em>你愿意改变判断？</em></h2><p>把“我可能错了”写成可以观察、可以核对的条件。阈值由你提出，不代表现实已达到。</p></div><span class="section-step">04 <i>/</i> 05</span></div>
+   <div class="falsify-grid">
+    <label class="falsify-field"><span>能推翻或明显削弱原判断的事实</span><textarea id="falsifier" maxlength="180" rows="3" placeholder="例如：重点项目按期完成设备安装并连续两个季度形成可核实产出。"></textarea><small>写清楚什么事实会让你改变想法，不要只写“情况好转”。</small></label>
+    <label class="falsify-field"><span>观察阈值或判定标准</span><input id="falsifierThreshold" maxlength="100" type="text" placeholder="例如：至少3个项目进入稳定生产"></label>
+    <label class="falsify-field"><span>观察期限</span><select id="falsifierHorizon"><option value="未设定">暂未设定</option><option value="未来一个季度">未来一个季度</option><option value="未来半年">未来半年</option><option value="未来一年">未来一年</option><option value="下一轮统计发布">下一轮统计发布</option><option value="项目下一关键节点">项目下一关键节点</option></select></label>
+    <label class="falsify-confidence"><span>我现在有多确信？ <strong id="confidenceValue">50 / 100</strong></span><input id="confidence" type="range" min="0" max="100" step="5" value="50"><small>这是你的主观确信程度，不是模型概率，也不是判断正确率。</small><div class="confidence-scale"><span>仍有很多疑问</span><span>非常确信</span></div></label>
+   </div>
+   <div class="falsify-output"><span>你的反证规则</span><strong id="falsifierPreview">尚未写下可以推翻原判断的具体条件。</strong><small id="falsifierMeta">阈值：未设定 · 期限：未设定</small></div>
+  </section>
   <div class="personal-note"><label for="myNote">还有什么细节可能改变你的判断？<small>可选 · 最多120字 · 不自动上传</small></label><textarea id="myNote" maxlength="120" rows="2" placeholder="例如：如果关键项目的设备安装与投产进度正常，我就要重新考虑原来的担忧。"></textarea><span id="noteCount">0 / 120</span></div>
  </section>
  <section class="card-section" id="myCard" aria-labelledby="cardTitle">
   <div class="container">
-   <div class="section-head"><div><p class="eyebrow teal">04 / MAKE YOUR JUDGMENT REVISABLE</p><h2 id="cardTitle">把一场争论，<strong>变成可以复核的判断。</strong></h2><p>你的卡片记录的是“目前怎么想、什么可能改变它”，而不是让别人相信一个预测。</p></div><span class="section-step">04 <i>/</i> 04</span></div>
+   <div class="section-head"><div><p class="eyebrow teal">05 / MAKE YOUR JUDGMENT REVISABLE</p><h2 id="cardTitle">把一场争论，<strong>变成可以复核的判断。</strong></h2><p>你的卡片记录的是“目前怎么想、什么可能改变它”，而不是让别人相信一个预测。</p></div><span class="section-step">05 <i>/</i> 05</span></div>
    <div class="result-layout">
-    <div class="result-card" id="resultCard"><div class="result-top"><span>博罗 · 我的判断卡</span><span>09 · DECISION CHALLENGE</span></div><p class="result-label">我目前的判断</p><h3 id="cardClaim">投资下降，下一棒可能接不上。</h3><div class="card-divider"></div><div class="card-row"><span>最强的反对意见</span><strong id="cardRival">现有产能可能继续支撑增长。</strong></div><div class="card-row"><span>什么证据能让我重新判断</span><strong id="cardEvidence">项目投产的实际进度</strong></div><div class="card-status"><span>判断状态</span><strong id="cardVerdict">关键证据尚未到位</strong></div><p class="card-note" id="cardNote" hidden></p><div class="card-bottom"><span>公开事实 ≠ 条件推演 ≠ 真实因果</span><span id="cardStamp">本机判断 · 非实测结论</span></div></div>
+    <div class="result-card" id="resultCard"><div class="result-top"><span>博罗 · 我的判断卡</span><span>09 · DECISION CHALLENGE</span></div><p class="result-label">我目前的判断</p><h3 id="cardClaim">投资下降，下一棒可能接不上。</h3><div class="card-divider"></div><div class="card-row"><span>最强的反对意见</span><strong id="cardRival">现有产能可能继续支撑增长。</strong></div><div class="card-row"><span>什么证据能让我重新判断</span><strong id="cardEvidence">项目投产的实际进度</strong></div><div class="card-status"><span>判断状态</span><strong id="cardVerdict">关键证据尚未到位</strong></div><div class="card-falsifier"><span>什么会让我改变判断</span><strong id="cardFalsifier">尚未设定反证条件</strong><small id="cardFalsifierMeta">阈值：未设定 · 期限：未设定 · 主观确信：50/100</small></div><p class="card-note" id="cardNote" hidden></p><div class="card-bottom"><span>公开事实 ≠ 条件推演 ≠ 真实因果</span><span id="cardStamp">本机判断 · 非实测结论</span></div></div>
     <div class="result-actions"><span class="ribbon">带走的不是答案，而是一个更清楚的问题</span><h3>有人不同意你？<br><em>让他提出证据。</em></h3><p>把这张卡分享给朋友。他看到的是你的观点和要核实的资料，可以从同样的条件继续挑战。</p><button type="button" class="action-primary" id="downloadCard">下载判断卡图片 <span aria-hidden="true">↗</span></button><button type="button" class="action-secondary" id="copyChallenge">复制挑战文字与链接</button><button type="button" class="action-secondary" id="saveChallenge">保存到本机</button><button type="button" class="action-secondary" id="restoreChallenge">恢复最近一次</button><div class="result-follow"><a id="backToWind" href="./wind.html">第07页 · 回去再试一次 ↗</a><a id="backToInsights" href="./insights.html">第08页 · 再检查一条联系 ↗</a><a href="./region.html">第10页 · 博罗在大湾区的位置 →</a></div><p class="privacy">分享链接只记录选中的公开条件，不包含你输入的个人备注。本机保存不会上传到网站服务器。</p></div>
    </div>
   </div>
