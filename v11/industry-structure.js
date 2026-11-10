@@ -15,7 +15,7 @@ const peers=[
  {id:'sihui',name:'四会',rank:2,gdp:818.40,growth:1.8,primary:9.3,secondary:51.8,tertiary:38.9,secondGrowth:-0.2,role:'制造业对照',note:'2024年第二产业占比超过一半，但第二产业增加值同比下降0.2%。说明产业权重高不自动等于当年增长快。'},
  {id:'heshan',name:'鹤山',rank:8,gdp:530.71,growth:5.1,primary:7.0,secondary:54.8,tertiary:38.2,secondGrowth:8.1,role:'制造业对照',note:'2024年第二产业占比54.8%，规上工业增加值增长8.2%，工业投资增长6.5%。'}
 ];
-let selectedSector='electronics',selectedPeer='boluo';
+let selectedSector='electronics',selectedPeer='boluo',selectedYear=2025,sectorThreshold=10;
 const pct=n=>(n>0?'+':'')+n.toFixed(1)+'%';
 const pp=n=>(n>0?'+':'')+n.toFixed(1)+'个百分点';
 function renderSectorList(){
@@ -32,35 +32,46 @@ function renderSectorList(){
 }
 function renderSectorMap(){
  const host=$('sectorMap');if(!host)return;
- const W=700,H=292,L=58,R=24,T=28,B=42,iw=W-L-R,ih=H-T-B;
+ const W=760,H=330,L=66,R=28,T=30,B=48,iw=W-L-R,ih=H-T-B;
  const x=v=>L+(v/26)*iw,y=v=>T+((26-v)/34)*ih;
  const xt=[0,5,10,15,20,25],yt=[-5,0,10,20,25];
- let svg='<svg viewBox="0 0 '+W+' '+H+'" role="img" aria-label="2025年行业增加值占比与增速象限图">';
- yt.forEach(t=>{svg+='<line class="quad-line" x1="'+L+'" y1="'+y(t)+'" x2="'+(W-R)+'" y2="'+y(t)+'"/><text class="quad-label" x="'+(L-10)+'" y="'+(y(t)+3)+'" text-anchor="end">'+t+'%</text>'});
- xt.forEach(t=>{svg+='<line class="quad-line" x1="'+x(t)+'" y1="'+T+'" x2="'+x(t)+'" y2="'+(H-B)+'"/><text class="quad-label" x="'+x(t)+'" y="'+(H-19)+'" text-anchor="middle">'+t+'%</text>'});
+ const getShare=z=>selectedYear===2024?z.s24:z.s25;
+ const getGrowth=z=>selectedYear===2024?z.g24:z.g25;
+ let svg='<svg viewBox="0 0 '+W+' '+H+'" role="img" aria-label="'+selectedYear+'年行业增加值占比与增速象限图">';
+ svg+='<defs><linearGradient id="sectorGlow" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#70e0c4" stop-opacity=".2"/><stop offset="1" stop-color="#70e0c4" stop-opacity="0"/></linearGradient><filter id="sectorBlur"><feGaussianBlur stdDeviation="7"/></filter></defs>';
+ svg+='<rect x="'+L+'" y="'+T+'" width="'+iw+'" height="'+ih+'" fill="url(#sectorGlow)" opacity=".18"/>';
+ svg+='<rect x="'+x(sectorThreshold)+'" y="'+T+'" width="'+(W-R-x(sectorThreshold))+'" height="'+ih+'" fill="#64d7bc" fill-opacity=".035"/>';
+ yt.forEach(t=>{svg+='<line class="quad-line" x1="'+L+'" y1="'+y(t)+'" x2="'+(W-R)+'" y2="'+y(t)+'"/><text class="quad-label" x="'+(L-12)+'" y="'+(y(t)+4)+'" text-anchor="end">'+t+'%</text>'});
+ xt.forEach(t=>{svg+='<line class="quad-line" x1="'+x(t)+'" y1="'+T+'" x2="'+x(t)+'" y2="'+(H-B)+'"/><text class="quad-label" x="'+x(t)+'" y="'+(H-22)+'" text-anchor="middle">'+t+'%</text>'});
  svg+='<line class="quad-axis" x1="'+L+'" y1="'+(H-B)+'" x2="'+(W-R)+'" y2="'+(H-B)+'"/><line class="quad-axis" x1="'+L+'" y1="'+T+'" x2="'+L+'" y2="'+(H-B)+'"/>';
- svg+='<line class="quad-axis" x1="'+x(10)+'" y1="'+T+'" x2="'+x(10)+'" y2="'+(H-B)+'" stroke-dasharray="5 5"/>';
- svg+='<text class="quad-label" x="'+(L+iw/2)+'" y="'+(H-4)+'" text-anchor="middle">行业占规上工业增加值比重 →</text>';
- svg+='<text class="quad-label" transform="translate(13 '+(T+ih/2)+') rotate(-90)" text-anchor="middle">行业增加值同比增速 →</text>';
- svg+='<text class="quad-label" x="'+(x(10)-8)+'" y="'+(T+10)+'" text-anchor="end">权重参考线 10%</text>';
- const positions={electronics:[18,-15,'start'],electrical:[17,-14,'start'],rubber:[16,22,'start'],metal:[-12,23,'end'],power:[-10,-16,'end']};
- const colors={electronics:'#238d81',electrical:'#4c8db5',rubber:'#bd6655',metal:'#6d9c79',power:'#a18d5e'};
- sectors.filter(z=>z.g25!=null).forEach(z=>{
-  const cx=x(z.s25),cy=y(z.g25),rad=7+Math.sqrt(z.s25)*1.8,active=z.id===selectedSector;
+ svg+='<line class="quad-threshold" x1="'+x(sectorThreshold)+'" y1="'+T+'" x2="'+x(sectorThreshold)+'" y2="'+(H-B)+'"/>';
+ svg+='<text class="quad-threshold-label" x="'+(x(sectorThreshold)+5)+'" y="'+(T+12)+'">观察线 '+sectorThreshold+'%</text>';
+ svg+='<text class="quad-label axis-title" x="'+(L+iw/2)+'" y="'+(H-5)+'" text-anchor="middle">行业占规上工业增加值比重 →</text>';
+ svg+='<text class="quad-label axis-title" transform="translate(14 '+(T+ih/2)+') rotate(-90)" text-anchor="middle">行业增加值同比增速 →</text>';
+ const positions={electronics:[18,-18,'start'],electrical:[17,-16,'start'],rubber:[18,24,'start'],metal:[-13,25,'end'],power:[-12,-17,'end']};
+ const colors={electronics:'#70e0c4',electrical:'#73b6e9',rubber:'#ff8b79',metal:'#a4d58e',power:'#e0bd79'};
+ sectors.filter(z=>getGrowth(z)!=null).forEach((z,i)=>{
+  const share=getShare(z),growth=getGrowth(z),cx=x(share),cy=y(growth),rad=8+Math.sqrt(share)*2,active=z.id===selectedSector,above=share>=sectorThreshold;
   const [dx,dy,anchor]=positions[z.id];
-  svg+='<g data-sector="'+z.id+'" role="button" tabindex="0" aria-label="选择'+z.short+'：占比'+z.s25+'%，增速'+pct(z.g25)+'">'+
-   '<circle class="quad-dot '+(active?'active':'')+'" cx="'+cx+'" cy="'+cy+'" r="'+rad+'" fill="'+colors[z.id]+'" fill-opacity=".9"/>'+
-   '<text class="quad-name" x="'+(cx+dx)+'" y="'+(cy+dy)+'" text-anchor="'+anchor+'">'+z.short+'</text></g>';
+  svg+='<g class="sector-point '+(active?'active ':'')+(above?'above-threshold':'below-threshold')+'" data-sector="'+z.id+'" role="button" tabindex="0" aria-label="选择'+z.short+'：'+selectedYear+'年占比'+share+'%，增速'+pct(growth)+'">';
+  svg+='<circle class="quad-halo" cx="'+cx+'" cy="'+cy+'" r="'+(rad+9)+'" fill="'+colors[z.id]+'" opacity="'+(active?'.2':'.09')+'"/>';
+  svg+='<circle class="quad-dot" cx="'+cx+'" cy="'+cy+'" r="'+rad+'" fill="'+colors[z.id]+'"/>';
+  svg+='<text class="quad-name" x="'+(cx+dx)+'" y="'+(cy+dy)+'" text-anchor="'+anchor+'">'+z.short+'</text></g>';
  });
- svg+='</svg>';
+ svg+='</svg><div class="viz-tooltip" id="sectorTooltip" role="status" aria-live="polite"></div>';
  host.innerHTML=svg;
+ const count=sectors.filter(z=>getGrowth(z)!=null&&getShare(z)>=sectorThreshold).length;
+ $('sectorThresholdValue').textContent=sectorThreshold+'%';
+ $('sectorThresholdResult').textContent=count;
+ $('sectorMapState').textContent=selectedYear+'年结构切片 · '+count+'个行业高于观察线';
+ document.querySelectorAll('[data-year]').forEach(b=>{const active=Number(b.dataset.year)===selectedYear;b.classList.toggle('active',active);b.setAttribute('aria-pressed',String(active))});
 }
 function renderSectorDetail(){
  const s=sectors.find(x=>x.id===selectedSector)||sectors[0];
- const delta=s.s25-s.s24,rate=s.g25==null?'未披露':pct(s.g25),change=s.g24==null?'未披露':pp(s.g25-s.g24);
+ const share=selectedYear===2024?s.s24:s.s25,growth=selectedYear===2024?s.g24:s.g25,delta=s.s25-s.s24,rate=growth==null?'未披露':pct(growth),change=s.g24==null?'未披露':pp(s.g25-s.g24);
  $('sectorDetail').innerHTML='<span class="detail-kicker">SELECTED INDUSTRY / 选中行业</span>'+
  '<h3>'+s.short+'</h3><p>'+s.summary+'</p>'+
- '<div class="detail-stat-grid"><div class="detail-stat"><strong>'+s.s25.toFixed(1)+'%</strong><span>2025年占规上工业增加值比重</span></div>'+
+ '<div class="detail-stat-grid"><div class="detail-stat"><strong>'+share.toFixed(1)+'%</strong><span>'+selectedYear+'年占规上工业增加值比重</span></div>' +
  '<div class="detail-stat"><strong>'+rate+'</strong><span>2025年增加值同比</span></div>'+
  '<div class="detail-stat"><strong>'+pp(delta)+'</strong><span>占比较2024年变化</span></div>'+
  '<div class="detail-stat"><strong>'+(s.g24==null?'—':change)+'</strong><span>增速较2024年变化</span></div></div>'+
@@ -125,16 +136,50 @@ function render(){
  renderSectorList();renderSectorMap();renderSectorDetail();renderPeerDetail();renderInvestment();renderScale();renderSlider();
 }
 document.addEventListener('click',e=>{
- const s=e.target.closest('[data-sector]');if(s){selectedSector=s.dataset.sector;renderSectorList();renderSectorDetail();return}
+ const y=e.target.closest('[data-year]');if(y){selectedYear=Number(y.dataset.year);renderSectorMap();renderSectorDetail();return}
+ const s=e.target.closest('[data-sector]');if(s){selectedSector=s.dataset.sector;renderSectorList();renderSectorMap();renderSectorDetail();return}
  const p=e.target.closest('[data-peer]');if(p){selectedPeer=p.dataset.peer;renderPeerDetail();return}
 });
 document.addEventListener('keydown',e=>{
  if(e.key!=='Enter'&&e.key!==' ')return;
  const sector=e.target.closest('#sectorMap [data-sector]');
- if(sector){e.preventDefault();selectedSector=sector.dataset.sector;renderSectorList();renderSectorDetail();return}
+ if(sector){e.preventDefault();selectedSector=sector.dataset.sector;renderSectorList();renderSectorMap();renderSectorDetail();return}
  const peer=e.target.closest('#peerScatter [data-peer]');
  if(peer){e.preventDefault();selectedPeer=peer.dataset.peer;renderPeerDetail()}
 });
+$('sectorThreshold').addEventListener('input',e=>{sectorThreshold=Number(e.target.value);renderSectorMap()});
 $('netAdds').addEventListener('input',renderSlider);
+const map=$('sectorMap');
+map.addEventListener('pointermove',e=>{
+ const point=e.target.closest('[data-sector]');
+ const tip=$('sectorTooltip');
+ if(!point||!tip){if(tip)tip.classList.remove('show');return}
+ const z=sectors.find(x=>x.id===point.dataset.sector);if(!z)return;
+ const share=selectedYear===2024?z.s24:z.s25,growth=selectedYear===2024?z.g24:z.g25;
+ tip.innerHTML='<b>'+z.short+'</b><span>'+selectedYear+'年占比 <strong>'+share.toFixed(1)+'%</strong></span><span>增加值增速 <strong>'+pct(growth)+'</strong></span><small>点击查看结构详情</small>';
+ const rect=map.getBoundingClientRect(),left=Math.min(Math.max(8,e.clientX-rect.left+14),rect.width-180),top=Math.max(8,e.clientY-rect.top-18);
+ tip.style.left=left+'px';tip.style.top=top+'px';tip.classList.add('show');
+});
+map.addEventListener('pointerleave',()=>{$('sectorTooltip').classList.remove('show')});
+document.addEventListener('pointerover',e=>{
+ const el=e.target.closest('[data-sector]');if(!el)return;
+ document.querySelectorAll('[data-sector="'+el.dataset.sector+'"]').forEach(n=>n.classList.add('linked-hover'));
+});
+document.addEventListener('pointerout',e=>{
+ const el=e.target.closest('[data-sector]');if(!el)return;
+ if(e.relatedTarget&&e.relatedTarget.closest('[data-sector="'+el.dataset.sector+'"]'))return;
+ document.querySelectorAll('[data-sector="'+el.dataset.sector+'"]').forEach(n=>n.classList.remove('linked-hover'));
+});
+const progress=$('readingProgress');
+let ticking=false;
+const updateProgress=()=>{const max=document.documentElement.scrollHeight-window.innerHeight;progress.style.width=(max>0?window.scrollY/max*100:0)+'%';ticking=false};
+window.addEventListener('scroll',()=>{if(!ticking){requestAnimationFrame(updateProgress);ticking=true}},{passive:true});
+updateProgress();
+if('IntersectionObserver'in window){
+ const observer=new IntersectionObserver(entries=>entries.forEach(entry=>{if(entry.isIntersecting){entry.target.classList.add('is-visible');observer.unobserve(entry.target)}}),{threshold:.08});
+ document.querySelectorAll('.reveal').forEach(el=>observer.observe(el));
+ const sectionObserver=new IntersectionObserver(entries=>entries.forEach(entry=>{if(entry.isIntersecting){document.querySelectorAll('.insight-rail a').forEach(a=>a.classList.toggle('active',a.getAttribute('href')==='#'+entry.target.id))}}),{rootMargin:'-20% 0px -65% 0px'});
+ document.querySelectorAll('.section[id]').forEach(el=>sectionObserver.observe(el));
+}else{document.querySelectorAll('.reveal').forEach(el=>el.classList.add('is-visible'))}
 render();
 })();
