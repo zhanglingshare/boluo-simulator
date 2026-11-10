@@ -103,30 +103,58 @@ function synergy(){
  }
 }
 function graph(){
- const svg=$('pathGraph'),xs=[150,410,670,930],w=184,h=174+(state.selected.length-1)*154;
+ const svg=$('pathGraph'),mobile=window.matchMedia&&window.matchMedia('(max-width:720px)').matches;
  let out='<defs><linearGradient id="pathLine" x1="0" x2="1"><stop stop-color="#38c9b4"/><stop offset=".52" stop-color="#65c4ee"/><stop offset="1" stop-color="#f0bd72"/></linearGradient><filter id="pathGlow" x="-80%" y="-80%" width="260%" height="260%"><feGaussianBlur stdDeviation="3" result="blur"/><feMerge><feMergeNode in="blur"/><feMergeNode in="SourceGraphic"/></feMerge></filter></defs>';
- state.selected.forEach((id,row)=>{
-  const path=PATHS[id],y=132+row*154,primary=id===state.primary;
-  out+='<g class="path-row-label '+(primary?'is-primary':'')+'"><text x="22" y="'+(y-63)+'">'+String(row+1).padStart(2,'0')+' / '+(path.kind==='direct'?'直接贡献':'放大条件')+'</text><text x="22" y="'+(y-43)+'">'+SHORT[id]+'</text></g>';
-  for(let i=0;i<3;i++){
-   const x1=xs[i]+w/2-1,x2=xs[i+1]-w/2+1,edgeId='path-flow-'+row+'-'+i;
-   const d='M'+x1+' '+y+' C'+(x1+32)+' '+(y-27)+' '+(x2-32)+' '+(y+27)+' '+x2+' '+y;
-   out+='<path id="'+edgeId+'" class="path-edge '+(primary?'is-primary':'')+'" d="'+d+'"/>'+
-    '<circle class="flow-particle '+(primary?'is-primary':'')+'" r="'+(primary?5:3.5)+'"><animateMotion dur="'+(2.4+i*.32)+'s" begin="'+(row*.18+i*.2)+'s" repeatCount="indefinite"><mpath href="#'+edgeId+'"/></animateMotion></circle>';
-  }
-  path.nodes.forEach((n,i)=>{
-   const active=state.node===id+':'+i,colors=['#167f83','#276d91','#9a7040','#247d69'];
-   out+='<g class="path-node '+(active?'is-focused':'')+' '+(primary?'is-primary':'')+'" data-path-node="'+id+':'+i+'" tabindex="0" role="button" aria-label="'+n.title+'，待核验。'+n.question+'" transform="translate('+xs[i]+','+y+')">'+
-    '<circle class="path-node-halo" r="52"/>'+
-    '<rect x="'+(-w/2)+'" y="-42" width="'+w+'" height="84" rx="14" fill="'+colors[i]+'"/>'+
-    '<circle class="path-node-index-bg" cx="'+(-w/2+19)+'" cy="-20" r="11"/>'+
-    '<text class="path-node-index" x="'+(-w/2+19)+'" y="-16" text-anchor="middle">'+String(i+1).padStart(2,'0')+'</text>'+
-    '<text class="path-node-title" x="0" y="-5" text-anchor="middle">'+n.title+'</text>'+
-    '<text class="path-node-sub" x="0" y="15" text-anchor="middle">'+n.sub+'</text>'+
-    '<text class="path-node-status" x="0" y="31" text-anchor="middle">● 待核验</text></g>';
+ if(mobile){
+  const width=420,nodeW=322,rowHeight=405,height=state.selected.length*rowHeight+24,x=210;
+  state.selected.forEach((id,row)=>{
+   const path=PATHS[id],base=row*rowHeight,primary=id===state.primary;
+   out+='<g class="path-row-label '+(primary?'is-primary':'')+'"><text x="18" y="'+(base+20)+'">'+String(row+1).padStart(2,'0')+' / '+(path.kind==='direct'?'直接贡献':'放大条件')+'</text><text x="18" y="'+(base+39)+'">'+SHORT[id]+'</text></g>';
+   const ys=[base+83,base+171,base+259,base+347];
+   for(let i=0;i<3;i++){
+    const edgeId='path-flow-m-'+row+'-'+i,d='M'+x+' '+(ys[i]+33)+' C'+(x+22)+' '+(ys[i]+48)+' '+(x-22)+' '+(ys[i+1]-48)+' '+x+' '+(ys[i+1]-33);
+    out+='<path id="'+edgeId+'" class="path-edge '+(primary?'is-primary':'')+'" d="'+d+'"/>'+
+     '<circle class="flow-particle '+(primary?'is-primary':'')+'" r="'+(primary?4.5:3.5)+'"><animateMotion dur="'+(2.3+i*.3)+'s" begin="'+(row*.17+i*.2)+'s" repeatCount="indefinite"><mpath href="#'+edgeId+'"/></animateMotion></circle>';
+   }
+   path.nodes.forEach((n,i)=>{
+    const active=state.node===id+':'+i,colors=['#167f83','#276d91','#9a7040','#247d69'];
+    out+='<g class="path-node '+(active?'is-focused':'')+' '+(primary?'is-primary':'')+'" data-path-node="'+id+':'+i+'" tabindex="0" role="button" aria-label="'+n.title+'，待核验。'+n.question+'" transform="translate('+x+','+ys[i]+')">'+
+     '<circle class="path-node-halo" r="51"/>'+
+     '<rect x="'+(-nodeW/2)+'" y="-32" width="'+nodeW+'" height="64" rx="12" fill="'+colors[i]+'"/>'+
+     '<circle class="path-node-index-bg" cx="'+(-nodeW/2+19)+'" cy="-15" r="10"/>'+
+     '<text class="path-node-index" x="'+(-nodeW/2+19)+'" y="-12" text-anchor="middle">'+String(i+1).padStart(2,'0')+'</text>'+
+     '<text class="path-node-title" x="0" y="-5" text-anchor="middle">'+n.title+'</text>'+
+     '<text class="path-node-sub" x="0" y="12" text-anchor="middle">'+n.sub+'</text>'+
+     '<text class="path-node-status" x="0" y="25" text-anchor="middle">● 待核验</text></g>';
+   });
   });
- });
- svg.setAttribute('viewBox','0 0 1080 '+h);svg.innerHTML=out;
+  svg.setAttribute('viewBox','0 0 '+width+' '+height);
+ }else{
+  const xs=[150,410,670,930],w=184,h=174+(state.selected.length-1)*154;
+  state.selected.forEach((id,row)=>{
+   const path=PATHS[id],y=132+row*154,primary=id===state.primary;
+   out+='<g class="path-row-label '+(primary?'is-primary':'')+'"><text x="22" y="'+(y-63)+'">'+String(row+1).padStart(2,'0')+' / '+(path.kind==='direct'?'直接贡献':'放大条件')+'</text><text x="22" y="'+(y-43)+'">'+SHORT[id]+'</text></g>';
+   for(let i=0;i<3;i++){
+    const x1=xs[i]+w/2-1,x2=xs[i+1]-w/2+1,edgeId='path-flow-'+row+'-'+i;
+    const d='M'+x1+' '+y+' C'+(x1+32)+' '+(y-27)+' '+(x2-32)+' '+(y+27)+' '+x2+' '+y;
+    out+='<path id="'+edgeId+'" class="path-edge '+(primary?'is-primary':'')+'" d="'+d+'"/>'+
+     '<circle class="flow-particle '+(primary?'is-primary':'')+'" r="'+(primary?5:3.5)+'"><animateMotion dur="'+(2.4+i*.32)+'s" begin="'+(row*.18+i*.2)+'s" repeatCount="indefinite"><mpath href="#'+edgeId+'"/></animateMotion></circle>';
+   }
+   path.nodes.forEach((n,i)=>{
+    const active=state.node===id+':'+i,colors=['#167f83','#276d91','#9a7040','#247d69'];
+    out+='<g class="path-node '+(active?'is-focused':'')+' '+(primary?'is-primary':'')+'" data-path-node="'+id+':'+i+'" tabindex="0" role="button" aria-label="'+n.title+'，待核验。'+n.question+'" transform="translate('+xs[i]+','+y+')">'+
+     '<circle class="path-node-halo" r="52"/>'+
+     '<rect x="'+(-w/2)+'" y="-42" width="'+w+'" height="84" rx="14" fill="'+colors[i]+'"/>'+
+     '<circle class="path-node-index-bg" cx="'+(-w/2+19)+'" cy="-20" r="11"/>'+
+     '<text class="path-node-index" x="'+(-w/2+19)+'" y="-16" text-anchor="middle">'+String(i+1).padStart(2,'0')+'</text>'+
+     '<text class="path-node-title" x="0" y="-5" text-anchor="middle">'+n.title+'</text>'+
+     '<text class="path-node-sub" x="0" y="15" text-anchor="middle">'+n.sub+'</text>'+
+     '<text class="path-node-status" x="0" y="31" text-anchor="middle">● 待核验</text></g>';
+   });
+  });
+  svg.setAttribute('viewBox','0 0 1080 '+h);
+ }
+ svg.innerHTML=out;
 }
 function targetVisuals(){
  const reduce=window.matchMedia&&window.matchMedia('(prefers-reduced-motion: reduce)').matches;
