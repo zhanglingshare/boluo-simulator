@@ -304,7 +304,7 @@ async function share(){
 }
 $('sharePage').addEventListener('click',share);$('copyPlan').addEventListener('click',share);
 $('savePlan').addEventListener('click',()=>{
- const record={region:state.region,route:state.route,lens:state.goalMode,goal:state.goal,stage:state.stage,year:state.year,gap:state.gap,savedAt:new Date().toISOString()};
+ const record={region:state.region,route:state.route,paths:window.BoluoPathLab?.getSelected?.()||[state.route],lens:state.goalMode,goal:state.goal,stage:state.stage,year:state.year,gap:state.gap,savedAt:new Date().toISOString()};
  try{const key='boluo-v11-plan-snapshots',old=JSON.parse(localStorage.getItem(key)||'[]');localStorage.setItem(key,JSON.stringify([record,...(Array.isArray(old)?old:[])].slice(0,20)));toast('已保存关注点到本机；可继续分享链接');}
  catch{toast('本机存储不可用，请使用分享链接');}
 });
@@ -313,6 +313,8 @@ $('enterWind').addEventListener('click',e=>{
  u.searchParams.set('from','plan');
  u.searchParams.set('route',state.route);
  u.searchParams.set('region',state.region);
+ const selected=window.BoluoPathLab?.getSelected?.()||[state.route];
+ u.searchParams.set('paths',selected.join(','));
  u.hash='results';
  e.currentTarget.href=u.href;
 });
@@ -321,7 +323,7 @@ $('viewSaved').addEventListener('click',()=>{
  if(!items.length){dialog('我的规划关注点','<p>暂时没有保存记录。选择空间核心、目标、路径与年份后点击“保存本机关注点”。</p>');return;}
  const content=items.slice(0,20).map((r,i)=>{
   const region=pick(r.region,Object.keys(REGIONS),'future'),route=pick(r.route,Object.keys(ROUTES),'new'),year=pick(String(r.year),Object.keys(YEAR),'2026');
-  const u=new URL(location.href);u.searchParams.set('region',region);u.searchParams.set('route',route);u.searchParams.set('year',year);u.searchParams.delete('focus');u.hash='network';
+  const u=new URL(location.href);u.searchParams.set('region',region);u.searchParams.set('route',route);u.searchParams.set('paths',Array.isArray(r.paths)?r.paths.filter(x=>validRouteIds.includes(x)).slice(0,3).join(','):route);u.searchParams.set('year',year);u.searchParams.delete('focus');u.hash='network';
   return '<div class="fact-row"><strong>0'+(i+1)+' · '+esc(REGIONS[region].role)+' · '+esc(year)+'</strong><p>'+esc(ROUTES[route].title)+'</p><a href="'+esc(u.href)+'">恢复这条观察 ↗</a></div>';
  }).join('');
  dialog('我的规划关注点 · 本机保存','<p>最近保存的'+items.length+'条记录，数据只在当前浏览器中。</p>'+content);
@@ -356,5 +358,13 @@ syncGoalDisclosure();
 if(typeof goalsBreakpoint.addEventListener==='function')goalsBreakpoint.addEventListener('change',syncGoalDisclosure);
 else if(typeof goalsBreakpoint.addListener==='function')goalsBreakpoint.addListener(syncGoalDisclosure);
 render();
-window.BoluoPlan={getState:()=>({...state}),getRegion:()=>state.region,regions:Object.keys(REGIONS)};
+window.BoluoPlan={
+ getState:()=>({...state}),
+ getRegion:()=>state.region,
+ regions:Object.keys(REGIONS),
+ setRoute:id=>{
+  if(!ROUTES[id])return false;
+  stop();state.route=id;state.region=ROUTES[id].region;state.focus='';state.stage=0;state.step=6;render();return true;
+ }
+};
 })();
