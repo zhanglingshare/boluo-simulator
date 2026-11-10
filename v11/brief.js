@@ -90,7 +90,7 @@ function findings(){
  status($("challengeStatus"),!!ch);
  if(ch){$("challengeTitle").textContent=ch.title;$("challengeDescription").textContent="已记录一次竞争解释选择与证据判断。"+(ch.note?"本机备注："+ch.note:"用户自评并非平台核实。");$("challengeProof").textContent=D.PROOF[ch.proof];}else{$("challengeTitle").textContent="你的判断被反驳过吗？";$("challengeDescription").textContent="第九页的竞争解释只是待验证的另一种可能。请先明确保存自己的判断。";$("challengeProof").textContent="尚未选择";}
  status($("regionStatus"),!!r);
- if(r){$("regionTitle").textContent=r.question;$("regionDescription").textContent="你的区域观察："+r.title+"。外部协作不是必然好或坏，需要真实合同与成本收益。";$("regionMissing").textContent=r.evidence;}else{$("regionTitle").textContent="博罗在区域中应该如何连接？";$("regionDescription").textContent="区域合作并不代表具体企业交易。进入第十页保存一个真正关心的问题。";$("regionMissing").textContent="尚未选择";}
+ if(r){$("regionTitle").textContent=r.question;$("regionDescription").textContent="你的区域观察："+r.title+"。外部协作不是必然好或坏，需要真实合同与成本收益。"+(r.role?" 研究角色："+r.role+"。":"")+(r.flow?" 价值链视角："+r.flow+"。":"")+(r.exposure!==null?" 情景结构暴露指数："+r.exposure+"/100（演示条件，非经济损失）。":"");$("regionMissing").textContent=r.evidence;}else{$("regionTitle").textContent="博罗在区域中应该如何连接？";$("regionDescription").textContent="区域合作并不代表具体企业交易。进入第十页保存一个真正关心的问题。";$("regionMissing").textContent="尚未选择";}
 }
 function optional(){
  const box=$("optionalList");box.replaceChildren();
