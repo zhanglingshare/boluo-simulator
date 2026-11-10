@@ -9,6 +9,8 @@ test("page 10 exists, covers data, region graph, tradeoffs and a user question",
  assert.match(h,/2025 · 第二产业占GDP比重/);
  assert.match(h,/54\.6/);assert.match(h,/56\.1/);
  assert.match(h,/暂无|待核实|不能|不预设/);
+ assert.doesNotMatch(h,/0[1-4] <small>\/ 04<\/small>/);
+ assert.match(h,/07 \/ TAKE ONE QUESTION AWAY/);
 });
 test("comparison uses actual 2025 official series with correct footnotes and no fake scoring",()=>{
  const h=read("v11/region.html"),js=read("v11/region.js");
