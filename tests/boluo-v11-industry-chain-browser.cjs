@@ -35,7 +35,7 @@ const {chromium}=require('playwright');
 
  await page.locator('[data-peer="huidong"]').click();
  assert.match(await page.locator('#peerSelected').innerText(),/惠东/,'peer selection updates details');
- await page.locator('#peerScatter [data-peer="sihui"]').click();
+ await page.locator('#peerScatter .scatter-dot').nth(2).click();
  assert.match(await page.locator('#peerSelected').innerText(),/四会/,'scatter point updates peer details');
  assert.deepEqual(errors,[],'no desktop runtime errors');
  await page.screenshot({path:'artifacts/industry-structure-desktop.png',fullPage:true});
