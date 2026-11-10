@@ -23,10 +23,21 @@ const out=path.resolve(__dirname,"../artifacts/v11-challenge");fs.mkdirSync(out,
    assert.match(await page.locator("#cardVerdict").innerText(),/重新检查/);
    await page.locator("#myNote").fill("尚需核验订单来源及签约之后的交付情况。");
    assert.match(await page.locator("#cardNote").innerText(),/订单来源/);
+   await page.locator("#falsifier").fill("连续两个季度的本地采购额均未下降。");
+   await page.locator("#falsifierThreshold").fill("连续两个季度");
+   await page.locator("#falsifierHorizon").selectOption("未来半年");
+   await page.locator("#confidence").evaluate(el=>{el.value="85";el.dispatchEvent(new Event("input",{bubbles:true}))});
+   assert.match(await page.locator("#falsifierPreview").innerText(),/本地采购额/);
+   assert.equal(await page.locator("#confidenceValue").innerText(),"85 / 100");
+   assert.match(await page.locator("#cardFalsifier").innerText(),/本地采购额/);
    const query=new URL(page.url()).searchParams;assert.equal(query.get("claim"),"orders");assert.equal(query.get("rival"),"1");assert.equal(query.get("proof"),"alternative");
    await page.locator("#saveChallenge").click();
+   await page.locator('[data-claim="agri"]').click();
+   assert.match(await page.locator("#cardClaim").innerText(),/农产品卖出去了/);
+   assert.equal(await page.locator("#evidenceOptions button").count(),3);
    await page.locator('[data-claim="project"]').click();
    await page.locator("#restoreChallenge").click();
+   assert.match(await page.locator("#falsifier").inputValue(),/本地采购额/);
    assert.match(await page.locator("#cardClaim").innerText(),/本地配套/);
    const downloadPromise=page.waitForEvent("download",{timeout:15000});
    await page.locator("#downloadCard").click();
@@ -55,7 +66,9 @@ const out=path.resolve(__dirname,"../artifacts/v11-challenge");fs.mkdirSync(out,
   await page.locator("#iqToChallenge").click();
   assert.match(await page.locator("#handoffTitle").innerText(),/第八页/);
   assert.match(await page.locator("#incomingMissing").innerText(),/采购/);
-  console.log("PASS 08 -> 09 carries selected link and missing evidence");
+  assert.match(await page.locator("#incomingMissing").innerText(),/本地采购深度/);
+  assert.ok(new URL(page.url()).searchParams.get("h08"),"08 -> 09 carries a competing explanation");
+  console.log("PASS 08 -> 09 carries selected variable, signal, hypothesis and missing evidence");
   await ctx.close();
  }finally{await browser.close();}
 })().catch(e=>{console.error(e);process.exit(1)});
