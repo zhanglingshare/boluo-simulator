@@ -16,7 +16,7 @@ const {chromium}=require('playwright');
  assert.equal(await page.locator('.v11-nav-groups a[href="./wind.html"]').count(),1,'07 is reachable');
  assert.equal(await page.locator('.target-metric').count(),4,'four key targets are shown as compact data visualizations');
  assert.equal(await page.locator('[data-ring]').count(),3,'only comparable historical baselines receive ratio gauges');
- assert.match(await page.locator('.target-dashboard-note').innerText(),/不是未来完成率/,'baseline ratios are not mislabeled as achievement rates');
+ assert.match(await page.locator('.target-dashboard-note').innerText(),/不代表未来完成率/,'baseline ratios are not mislabeled as achievement rates');
  assert.match(await page.locator('.hero-gap-number').innerText(),/594.55/,'the static GDP scale gap is visually foregrounded');
  assert.match(await page.locator('.output-note').innerText(),/不伪造精确进度/,'estimated industrial-output baseline is not given a false ratio');
  await page.waitForTimeout(120);
