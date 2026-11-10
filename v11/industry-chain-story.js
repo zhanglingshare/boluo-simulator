@@ -1,7 +1,8 @@
 (function(){
 'use strict';
 const D=window.BoluoDiscoveryData,API=window.BoluoIndustryChain;
-if(!D||!API||!document.getElementById('handoffRunway'))return;
+if(!D||!API)return;
+buildStoryShell();
 const $=id=>document.getElementById(id);
 const esc=x=>String(x==null?'':x).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
 const events=D.events.filter(e=>e.state!=='stat'),byId=new Map(D.events.map(e=>[e.id,e]));
@@ -168,5 +169,59 @@ document.addEventListener('click',e=>{
  const gap=e.target.closest('[data-story-gap]');if(gap){activeGap=Number(gap.dataset.storyGap);renderGaps();return}
 });
 window.addEventListener('boluo:industry-state',e=>{if(e.detail?.active!==selectionKey){selectionKey=e.detail.active;selectedId=e.detail.detId||null;activeStep=null;activeGap=0}else if(e.detail?.detId){selectedId=e.detail.detId}render()});
+
+function buildStoryShell(){
+ const anchor=document.getElementById('sec-relay');
+ if(!anchor || document.getElementById('handoffRunway'))return;
+ const holder=document.createElement('div');holder.className='industry-story';
+ holder.innerHTML=
+ '<section class="story-section" aria-label="项目接棒跑道" id="storyRunwaySection">'+
+  '<header><div><span class="story-eyebrow">01 / THE HANDOFF RUNWAY</span><h2>37条公开现场，谁已接棒？谁还在途中？</h2></div><span class="story-title-tag">一个节点＝一条公开记录</span></header>'+
+  '<div class="story-keynums" aria-label="公开现场状态汇总">'+
+   '<div class="on"><strong id="runwayLive">16</strong><span>已投产</span></div><div class="building"><strong id="runwayInFlight">19</strong><span>在建＋签约</span></div>'+
+   '<div class="signed"><strong id="runwayTotal">37</strong><span>全部现场</span></div><div class="risk"><strong id="runwayOut">2</strong><span>退出／受阻</span></div></div>'+
+  '<div class="story-toolbar" role="group" aria-label="筛选跑道上的现场">'+
+   '<button data-run-filter="all" class="is-current" aria-pressed="true" type="button">全部公开记录</button>'+
+   '<button data-run-filter="sector" aria-pressed="false" type="button">当前产业</button>'+
+   '<button data-run-filter="shared" aria-pressed="false" type="button">平台与通道</button></div>'+
+  '<div class="runway" id="handoffRunway" aria-live="polite"></div>'+
+  '<div class="runway-footer"><span id="runFilterNote">37条公开记录可点击，集合项目仍算一条记录</span><a class="story-caption" href="#valueCreation">↓ 打开行业价值链</a></div>'+
+  '<div class="story-highlight"><strong>!</strong><span>19条仍在途中，不等于19个新增产出。签约、开工、投产、达产必须区分。</span></div>'+
+ '</section>'+
+ '<section class="story-section" id="valueCreation" aria-label="行业专属价值形成断面">'+
+  '<header><div><span class="story-eyebrow">02 / INDUSTRY VALUE JOURNEYS</span><h2>产业不同，价值形成的路径也不同</h2></div><span class="story-title-tag">六类行业 · 不强行同构</span></header>'+
+  '<nav class="value-tabs" id="storySectorTabs" aria-label="切换产业价值形成过程"></nav>'+
+  '<div class="value-head"><div><h3 id="valueStoryTitle" style="font-size:17px;letter-spacing:-.035em;margin:14px 0 3px">产业价值形成过程</h3><p class="value-sub" id="valueStorySub"></p></div></div>'+
+  '<div class="value-rail" id="industryValueRail" aria-live="polite"></div>'+
+  '<div class="value-annotation"><strong id="valueFocusTitle">选择一个环节</strong><small id="valueFocusNote">点击环节或公开记录，查看这个环节最缺什么证据</small></div>'+
+  '<div class="episode" id="storyEpisode" aria-live="polite"></div>'+
+  '<div class="story-note">虚线只表示价值创造的分析顺序，不是企业间的真实交易。柏塘2500斤干茶是合作社加工产出统计，不计作项目。</div>'+
+ '</section>'+
+ '<section class="story-section" id="timeEvidence" aria-label="变化时间胶片">'+
+  '<header><div><span class="story-eyebrow">03 / TIME FILM</span><h2>哪些信号集中出现？哪些进展还要等下次核验？</h2></div><span class="story-title-tag">月份线索 ≠ 工期</span></header>'+
+  '<div class="story-toolbar" role="group" aria-label="时间胶片筛选"><button data-story-timeline="all" aria-pressed="true" class="is-current" type="button">所有公开记录</button><button data-story-timeline="current" aria-pressed="false" type="button">当前产业</button></div>'+
+  '<div class="story-timeline-wrap"><div class="story-timeline" id="storyTimeline" aria-label="记录对应月份与状态分布"></div></div>'+
+  '<div class="timeline-foot"><span>每个圆点是一条公开记录；点击查看。颜色表示已披露的当前状态，不是历史状态轨迹。</span><span>12月计划与未定日期单列。记录所标月份未必是事件实际发生日。</span></div>'+
+ '</section>'+
+ '<section class="story-section" id="evidenceGaps" aria-label="产业接续证据缺口">'+
+  '<header><div><span class="story-eyebrow">04 / MISSING CONNECTIONS</span><h2>真正可能改变判断的，是哪条证据还没有？</h2></div><span class="story-title-tag">跟随产业切换</span></header>'+
+  '<div class="gap-map" id="storyGaps"></div>'+
+  '<div class="gap-focus"><strong id="gapFocusLabel">订单</strong><span id="gapFocusBody">点击缺口，查看需要核实的证据。</span></div>'+
+  '<div class="story-link"><a href="./holo.html">← 返回02核对关系</a><a href="./wind.html">进入压力测试 ↗</a></div>'+
+ '</section>';
+ anchor.before(holder);
+ const next=anchor.parentNode.querySelector('.layout');
+ const firstFold=anchor.parentNode.querySelector('details.lower-fold');
+ if(next && firstFold){
+  const wrapper=document.createElement('details');wrapper.className='story-fold';wrapper.id='legacyChainAudit';
+  const summary=document.createElement('summary');summary.textContent='辅助核对：展开原有四环节矩阵、状态比较与专题现场';
+  const body=document.createElement('div');body.className='story-fold-body';
+  wrapper.append(summary,body);
+  anchor.before(wrapper);
+  let node=anchor;
+  while(node && node!==firstFold){const nextNode=node.nextSibling;body.append(node);node=nextNode}
+ }
+}
+
 render();
 })();
