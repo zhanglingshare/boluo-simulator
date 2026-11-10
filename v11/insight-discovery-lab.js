@@ -33,6 +33,12 @@ function factorUrl(factor,focus,missing,blind,evidenceName){
  if(links.length)u.searchParams.set("edge08",links.join(","));
  return u.href;
 }
+function refreshEvidenceHandoffs(){
+ const cards=$("iqEvidenceCards");if(cards)cards.querySelectorAll(".iq-evidence-card").forEach(function(card,i){
+  const item=core.evidence[i],link=card.querySelector(".iq-evidence-challenge");
+  if(item&&link)link.href=factorUrl(item.factor,item.focus,item.question,item.id,item.name);
+ });
+}
 function renderSignals(){
  const wrap=$("iqSignalGrid");wrap.replaceChildren();
  core.signals.forEach(function(s){
@@ -59,7 +65,7 @@ function renderSignalDetail(){
  $("iqSignalEvidence").textContent=s.evidence;
  const src=$("iqSignalSource");src.hidden=!s.source;if(s.source)src.href=s.source;
  $("iqSignalSource").textContent=s.source?"查看原有公开统计来源 ↗":"这是待核验问题，不对应一项已确认统计";
- $("iqSignalType").textContent=s.kind==="observed"?"公开统计信号":"研究问题 · 尚待证据";
+ $("iqSignalType").textContent=s.kind==="observed"?"公开统计信号":"研究问题 · 尚待证据";refreshEvidenceHandoffs();
 }
 function variableRelations(v){
  const ids=(v.relations||[]).concat(state.edges.filter(function(e){return e.from===v.id||e.to===v.id;}).map(function(e){return e.from===v.id?e.to:e.from;}));
@@ -90,7 +96,7 @@ function renderVariables(){
  });
  if(!neighbors.length){const note=el("p","iq-variable-empty","这是新加入的变量。系统不会擅自替它建立因果关系，请先补充可核验的连接证据。");center.append(note);}
  $("iqVariableCount").textContent=String(allVariables().length)+" 个候选变量 · 关系均为待检验假设";
- renderVariableDetail();
+ renderVariableDetail();refreshEvidenceHandoffs();
 }
 function renderVariableDetail(){
  const v=currentVariable();
@@ -139,7 +145,7 @@ function renderHypothesisDetail(){
   row.append(group);e.append(row);
  });
  const count=h.evidence.filter(function(t,i){return state.proof[h.id+"-"+i]&&state.proof[h.id+"-"+i]!=="unknown";}).length;
- $("iqHypothesisStatus").textContent=count?("你已标记 "+count+" 项证据状态 · 用户自评，非平台核验"):"尚未标记证据状态 · 不能据此判断哪种解释胜出";
+ $("iqHypothesisStatus").textContent=count?("你已标记 "+count+" 项证据状态 · 用户自评，非平台核验"):"尚未标记证据状态 · 不能据此判断哪种解释胜出";refreshEvidenceHandoffs();
 }
 function renderBreakpoint(){
  const dep=state.dependence,shock=state.shock,sub=state.substitute;
@@ -173,7 +179,7 @@ function renderEvidence(){
   challenge.addEventListener("click",function(event){event.preventDefault();location.href=factorUrl(item.factor,item.focus,item.question,item.id,item.name);});
   actions.append(save,challenge);card.append(actions);wrap.append(card);
  });
- $("iqWatchCount").textContent=String(state.watch.length)+" 项已加入本机关注清单";
+ $("iqWatchCount").textContent=String(state.watch.length)+" 项已加入本机关注清单";refreshEvidenceHandoffs();
 }
 function persistWatch(){try{localStorage.setItem(key,JSON.stringify(state.watch));toast("关注清单已保存在本机");}catch(e){toast("浏览器未允许本机保存");}}
 function exportWatch(){
