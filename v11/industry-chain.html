@@ -116,7 +116,7 @@
     <div class="viz-toolbar">
      <div class="viz-control"><span class="viz-control-label">时间切片</span><div class="viz-year-toggle" role="group" aria-label="切换行业年份"><button type="button" data-year="2024">2024年</button><button type="button" data-year="2025" class="active" aria-pressed="true">2025年</button></div></div>
      <div class="viz-control threshold-control"><label class="viz-control-label" for="sectorThreshold">行业权重观察线 <output id="sectorThresholdValue">10%</output></label><input id="sectorThreshold" type="range" min="5" max="20" step="1" value="10" aria-label="调整行业权重观察线"></div>
-     <div class="viz-control viz-count"><strong id="sectorThresholdResult">2</strong><span>个行业高于观察线</span><small>观察门槛由你设定，不是官方标准</small></div>
+     <div class="viz-control viz-count"><strong id="sectorThresholdResult">2</strong><span>个行业高于观察线</span><small id="sectorMapState">2025年结构切片 · 2个行业高于观察线</small></div>
     </div>
     <div id="sectorMap" class="sector-map" aria-label="行业权重与增长象限图"><div class="viz-tooltip" id="sectorTooltip" role="status" aria-live="polite"></div></div>
     <div class="sector-map-note"><span><i class="legend-bubble"></i>气泡大小＝行业权重</span><span>横轴＝行业占比 · 纵轴＝行业增加值增速</span><span>其他行业38.6%未纳入气泡，因缺少单项增速</span></div>
