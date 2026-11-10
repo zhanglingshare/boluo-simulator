@@ -56,20 +56,37 @@ const CONFIG={
    {id:"income",name:"可比工资和就业数据",hint:"同口径、同期间、可追溯"}
   ],
   fallbackMissing:"企业实际岗位、居民收入与通勤样本"
+ },
+ agri:{
+  position:"农产品卖出去了，价值未必留在本地。",
+  aTitle:"销售规模不等于本地增值",
+  aIntro:"产量、销售额、加工量、渠道利润和农户结算是不同口径，需要逐环节核对。",
+  aNodes:["采收","加工","结算"],aQuestion:"本地加工、品牌和渠道收益分别留在哪里？",
+  rivals:[
+   {title:"本地加工可能正在提高价值留存。",summary:"加工量、损耗、出厂价和农户收购价可能显示本地增值环节正在形成。",nodes:["原料","加工","增值"],question:"本地加工量和单位增值是否持续提高？"},
+   {title:"渠道与账期可能吞噬现金流。",summary:"销售额不等于现金到账，渠道账期、加工垫资和农户结算可能存在错位。",nodes:["发货","账期","回款"],question:"货款实际何时到账，谁在承担垫资？"},
+   {title:"产品结构与季节性可能改变表面表现。",summary:"不同等级、采收窗口和销售渠道的价格差异，可能使总量掩盖收益分化。",nodes:["等级","季节","售价"],question:"不同等级产品的价格、损耗和收益如何分布？"}
+  ],
+  proof:[
+   {id:"processing",name:"本地加工量与加工损耗",hint:"原料量、成品量、等级与损耗"},
+   {id:"settlement",name:"渠道合同、账期与农户结算",hint:"合同账期、实际回款、垫资和结算日期"},
+   {id:"margin",name:"分环节价格与收益记录",hint:"收购价、出厂价、渠道价及各环节成本"}
+  ],
+  fallbackMissing:"本地加工量、渠道合同账期、加工厂垫资和农户实际结算记录"
  }
 };
 const storageKey="boluo-v11-challenge-last";
 const snapshotKey="boluo-v11-challenge-07";
 const allow=(value,choices,fallback)=>choices.includes(value)?value:fallback;
-const claimFromFactor={project:"project",capacity:"project",network:"orders",services:"orders",agri:"orders",people:"people"};
+const claimFromFactor={project:"project",capacity:"project",network:"orders",services:"orders",agri:"agri",people:"people"};
 const initialClaim=allow(q.get("claim"),Object.keys(CONFIG),claimFromFactor[q.get("factor")]||shocks[q.get("shock")]||"project");
-const state={claim:initialClaim,rival:0,evidence:0,proof:"unknown",note:""};
+const state={claim:initialClaim,rival:0,evidence:0,proof:"unknown",note:"",falsifier:"",threshold:"",horizon:"未设定",confidence:50};
 state.rival=Math.min(2,Math.max(0,Number.parseInt(q.get("rival")||"0",10)||0));
 state.evidence=Math.min(2,Math.max(0,Number.parseInt(q.get("evidence")||"0",10)||0));
 state.proof=allow(q.get("proof"),["unknown","current","alternative"],"unknown");
 const BL={unknown:["关键证据尚未到位","目前证据不足，还不能排除其他解释。继续核实比立即下结论更有价值。"],current:["原判断暂时获得支持","这是你对现有资料的判断，而不是平台自动核验的事实。新的可靠证据仍可能推翻它。"],alternative:["原判断值得重新检查","你认为新证据更符合另一种解释。现在要重新审视条件与结论，不能直接视作真实经济效应。"]};
 const el=(tag,cls,text)=>{const n=document.createElement(tag);if(cls)n.className=cls;if(text!==undefined)n.textContent=text;return n;};
-function validUrl(k){const u=new URL(location.href);const next=new URL("./"+k+".html",u);const passthrough=["shock","strength","buffer","active","bs","bv","n","line","view","bp0","bp1","bp2","bp3","bp4","focus","factor","sv","cut","blind","missing"];passthrough.forEach(key=>{if(u.searchParams.has(key))next.searchParams.set(key,u.searchParams.get(key))});return next;}
+function validUrl(k){const u=new URL(location.href);const next=new URL("./"+k+".html",u);const passthrough=["shock","strength","buffer","active","bs","bv","n","line","view","bp0","bp1","bp2","bp3","bp4","focus","factor","sv","cut","blind","missing","v08","vname","s08","sname","h08","hname","e08","ename","equestion","edge08"];passthrough.forEach(key=>{if(u.searchParams.has(key))next.searchParams.set(key,u.searchParams.get(key))});return next;}
 function currentLink(){const u=validUrl("challenge");u.searchParams.set("claim",state.claim);u.searchParams.set("rival",String(state.rival));u.searchParams.set("evidence",String(state.evidence));u.searchParams.set("proof",state.proof);u.hash="myCard";return u;}
 function sync(){try{history.replaceState(null,"",currentLink().pathname+currentLink().search+location.hash)}catch(e){}}
 function narrate(){
@@ -80,6 +97,11 @@ function narrate(){
  rival.nodes.forEach((t,i)=>$("bNode"+(i+1)).textContent=t);
  $("verdictTitle").textContent=verdict[0];$("verdictBody").textContent=verdict[1];
  $("cardClaim").textContent=config.position;$("cardRival").textContent=rival.title;$("cardEvidence").textContent=proof.name;$("cardVerdict").textContent=verdict[0];
+ $("cardFalsifier").textContent=state.falsifier||"尚未设定反证条件";
+ $("cardFalsifierMeta").textContent="阈值："+(state.threshold||"未设定")+" · 期限："+state.horizon+" · 主观确信："+state.confidence+"/100";
+ $("falsifierPreview").textContent=state.falsifier||"尚未写下可以推翻原判断的具体条件。";
+ $("falsifierMeta").textContent="阈值："+(state.threshold||"未设定")+" · 期限："+state.horizon;
+ $("confidenceValue").textContent=state.confidence+" / 100";
  $("cardNote").textContent=state.note;$("cardNote").hidden=!state.note;
  $("cardStamp").textContent=state.proof==="unknown"?"待核实 · 不代表真实结论":"用户自评 · 非平台核验";
  $("arenaMode").textContent="当前比较："+config.aNodes[0]+" vs "+rival.nodes[0]+" · 示意关系";
@@ -99,10 +121,11 @@ function renderChoices(){
 function incoming(){
  const focus=q.get("focus"),factor=q.get("factor"),record=topics&&topics[focus]&&topics[focus].factors.find(f=>f.id===factor);
  const customMissing=(q.get("missing")||"").slice(0,240),blind=(q.get("blind")||"").slice(0,80);
+ const variableName=(q.get("vname")||"").slice(0,80),signalName=(q.get("sname")||"").slice(0,100),hypothesisName=(q.get("hname")||"").slice(0,100),evidenceName=(q.get("ename")||"").slice(0,100),evidenceQuestion=(q.get("equestion")||"").slice(0,240);
  if(customMissing){
-  $("incomingMissing").textContent=customMissing;
-  $("handoffTitle").textContent="已接入第八页的待核验线索";
-  $("handoffDesc").textContent="这是一项尚待证据检验的研究问题，不是已证实的因果关系。请提出最强反对解释。";
+  $("incomingMissing").textContent=[variableName?"变量："+variableName:"",signalName?"信号："+signalName:"",hypothesisName?"原解释："+hypothesisName:"",evidenceName?"待核验证据："+evidenceName:"",customMissing?"具体问题："+customMissing:""].filter(Boolean).join(" ｜ ");
+  $("handoffTitle").textContent="已接入第八页的完整研究线索";
+  $("handoffDesc").textContent="从第八页带入变量、信号、解释和证据问题。现在要做的不是重复探索，而是寻找能推翻原解释的反证。"+(evidenceQuestion?" 待核验问题："+evidenceQuestion:"");
  }else if(record){
   $("incomingMissing").textContent=record.name+" · "+record.missing;
   $("handoffTitle").textContent="已接入第八页的关注联系："+record.name;
@@ -138,17 +161,21 @@ function render(doSync){
 document.querySelectorAll("[data-claim]").forEach(b=>b.addEventListener("click",()=>{state.claim=b.dataset.claim;state.rival=0;state.evidence=0;state.proof="unknown";render(true);document.querySelector(".arena-section").scrollIntoView({behavior:window.matchMedia("(prefers-reduced-motion:reduce)").matches?"auto":"smooth",block:"start"})}));
 document.querySelectorAll("[data-proof]").forEach(b=>b.addEventListener("click",()=>{state.proof=b.dataset.proof;render(true)}));
 $("myNote").addEventListener("input",e=>{state.note=e.target.value.slice(0,120);$("noteCount").textContent=state.note.length+" / 120";narrate()});
+$("falsifier").addEventListener("input",e=>{state.falsifier=e.target.value.slice(0,180);narrate()});
+$("falsifierThreshold").addEventListener("input",e=>{state.threshold=e.target.value.slice(0,100);narrate()});
+$("falsifierHorizon").addEventListener("change",e=>{state.horizon=e.target.value;narrate()});
+$("confidence").addEventListener("input",e=>{state.confidence=Math.max(0,Math.min(100,Number(e.target.value)||0));narrate()});
 let toastTimer=0;function toast(msg){const t=$("toast");t.textContent=msg;t.classList.add("visible");clearTimeout(toastTimer);toastTimer=setTimeout(()=>t.classList.remove("visible"),3200)}
 function judgmentText(){
- const c=CONFIG[state.claim],r=c.rivals[state.rival],ev=c.proof[state.evidence];return "博罗 · 我的判断挑战\n我目前认为："+c.position+"\n另一种可能："+r.title+"\n会改变我判断的证据："+ev.name+"\n证据状态（个人判断）："+BL[state.proof][0]+(state.note?"\n我的补充："+state.note:"")+"\n\n公开事实与情景判断不能混同。一起挑战这项判断：\n"+currentLink().href;
+ const c=CONFIG[state.claim],r=c.rivals[state.rival],ev=c.proof[state.evidence];return "博罗 · 我的判断挑战\n我目前认为："+c.position+"\n另一种可能："+r.title+"\n会改变我判断的证据："+ev.name+"\n证据状态（个人判断）："+BL[state.proof][0]+"\\n反证条件："+(state.falsifier||"尚未设定")+"\\n观察阈值："+(state.threshold||"未设定")+"\\n观察期限："+state.horizon+"\\n主观确信程度："+state.confidence+"/100"+(state.note?"\n我的补充："+state.note:"")+"\n\n公开事实与情景判断不能混同。一起挑战这项判断：\n"+currentLink().href;
 }
 async function copyText(value){
  try{if(!navigator.clipboard||!navigator.clipboard.writeText)throw Error("unsupported");await navigator.clipboard.writeText(value);toast("已复制判断与复核链接");return}
  catch(e){const input=el("textarea");input.value=value;input.style.cssText="position:fixed;opacity:0;left:-9999px";document.body.append(input);input.select();const ok=document.execCommand("copy");input.remove();toast(ok?"已复制判断与复核链接":"复制受限，请尝试浏览器分享功能")}
 }
 $("copyChallenge").addEventListener("click",()=>copyText(judgmentText()));
-$("saveChallenge").addEventListener("click",()=>{const record={v:1,claim:state.claim,rival:state.rival,evidence:state.evidence,proof:state.proof,note:state.note,url:currentLink().href,at:new Date().toISOString()};try{localStorage.setItem(storageKey,JSON.stringify(record));toast("判断已保存到当前浏览器")}catch(e){toast("本机保存受限，请复制分享文字")}});
-$("restoreChallenge").addEventListener("click",()=>{let s;try{s=JSON.parse(localStorage.getItem(storageKey)||"null")}catch(e){}if(!s||!CONFIG[s.claim]){toast("还没有本机保存的判断");return}state.claim=s.claim;state.rival=Math.min(2,Math.max(0,Number(s.rival)||0));state.evidence=Math.min(2,Math.max(0,Number(s.evidence)||0));state.proof=allow(s.proof,["unknown","current","alternative"],"unknown");state.note=String(s.note||"").slice(0,120);$("myNote").value=state.note;$("noteCount").textContent=state.note.length+" / 120";render(true);toast("已恢复本机判断")});
+$("saveChallenge").addEventListener("click",()=>{const record={v:2,claim:state.claim,rival:state.rival,evidence:state.evidence,proof:state.proof,note:state.note,falsifier:state.falsifier,threshold:state.threshold,horizon:state.horizon,confidence:state.confidence,url:currentLink().href,at:new Date().toISOString()};try{localStorage.setItem(storageKey,JSON.stringify(record));toast("判断已保存到当前浏览器")}catch(e){toast("本机保存受限，请复制分享文字")}});
+$("restoreChallenge").addEventListener("click",()=>{let s;try{s=JSON.parse(localStorage.getItem(storageKey)||"null")}catch(e){}if(!s||!CONFIG[s.claim]){toast("还没有本机保存的判断");return}state.claim=s.claim;state.rival=Math.min(2,Math.max(0,Number(s.rival)||0));state.evidence=Math.min(2,Math.max(0,Number(s.evidence)||0));state.proof=allow(s.proof,["unknown","current","alternative"],"unknown");state.note=String(s.note||"").slice(0,120);state.falsifier=String(s.falsifier||"").slice(0,180);state.threshold=String(s.threshold||"").slice(0,100);state.horizon=allow(s.horizon,["未设定","未来一个季度","未来半年","未来一年","下一轮统计发布","项目下一关键节点"],"未设定");state.confidence=Math.max(0,Math.min(100,Number(s.confidence??50)||0));$("myNote").value=state.note;$("noteCount").textContent=state.note.length+" / 120";$("falsifier").value=state.falsifier;$("falsifierThreshold").value=state.threshold;$("falsifierHorizon").value=state.horizon;$("confidence").value=state.confidence;render(true);toast("已恢复本机判断")});
 const cvs=$("exportCanvas"),ctx=cvs.getContext("2d");
 function blockText(text,x,y,maxW,lineH,maxLines,font,color){
  ctx.font=font;ctx.fillStyle=color;const chars=Array.from(String(text));let line="",lines=0;
@@ -164,7 +191,7 @@ function makeImage(){
  ctx.fillStyle="#8ddedc";ctx.font="700 27px sans-serif";ctx.fillText("BO LUO  /  09  ·  DECISION CHALLENGE",66,110);
  ctx.font="800 66px sans-serif";ctx.fillStyle="#fff";ctx.fillText("你的判断，经得起反驳吗？",66,218);
  ctx.font="500 29px sans-serif";ctx.fillStyle="#a2c9d2";ctx.fillText("一场可以被证据推翻的判断挑战",66,275);
- rounded(55,337,970,708,28,"#f3f8f8");
+ rounded(55,337,970,820,28,"#f3f8f8");
  let y=406;ctx.font="700 25px sans-serif";ctx.fillStyle="#2e7881";ctx.fillText("我目前的判断",92,y);
  y=blockText(c.position,92,y+70,870,63,2,"800 46px sans-serif","#153b4b")+38;
  ctx.strokeStyle="#d2e3e5";ctx.lineWidth=2;ctx.beginPath();ctx.moveTo(92,y);ctx.lineTo(985,y);ctx.stroke();y+=58;
@@ -174,7 +201,10 @@ function makeImage(){
  y=blockText(ev.name,92,y,870,42,2,"700 31px sans-serif","#234250")+34;
  rounded(90,y,880,77,16,state.proof==="unknown"?"#e8eff0":state.proof==="current"?"#d5f1e8":"#ffe8dc");
  ctx.font="800 30px sans-serif";ctx.fillStyle="#184d59";ctx.fillText(BL[state.proof][0],115,y+49);
- let footY=1092;
+ y+=125;ctx.font="700 24px sans-serif";ctx.fillStyle="#267181";ctx.fillText("什么会让我改变判断？",92,y);
+ y=blockText(state.falsifier||"尚未设定反证条件",92,y+43,870,34,2,"700 25px sans-serif","#234250")+22;
+ ctx.font="500 21px sans-serif";ctx.fillStyle="#527987";ctx.fillText("阈值："+(state.threshold||"未设定")+"  ·  期限："+state.horizon+"  ·  主观确信："+state.confidence+"/100",92,y);
+ let footY=1190;
  if(state.note){ctx.font="500 24px sans-serif";ctx.fillStyle="#d0e3e5";footY=blockText("我的补充："+state.note,68,1094,945,35,3,"500 23px sans-serif","#cee3e6")+25}
  ctx.strokeStyle="#539a9f";ctx.beginPath();ctx.moveTo(65,Math.max(1178,footY));ctx.lineTo(1010,Math.max(1178,footY));ctx.stroke();
  ctx.font="500 25px sans-serif";ctx.fillStyle="#a8d5d3";ctx.fillText("事实 ≠ 条件情景 ≠ 真实因果",68,1235);
