@@ -3,7 +3,7 @@ const test=require("node:test"),assert=require("node:assert/strict"),fs=require(
 const root=path.resolve(__dirname,".."),read=p=>fs.readFileSync(path.join(root,p),"utf8");
 test("page 10 exists, covers data, region graph, tradeoffs and a user question",()=>{
  const h=read("v11/region.html");
- for(const id of ["regionRows","compareValue","regionalGraph","graphNodes","graphEdges","graphParticles","focusName","focusMissing","tradeoffCards","tradeoffEvidence","questionPicker","chosenQuestion","downloadQuestion","shareCanvas"])assert.match(h,new RegExp('id="'+id+'"'));
+ for(const id of ["regionRows","compareValue","regionalGraph","graphNodes","graphEdges","graphParticles","focusName","focusMissing","tradeoffCards","tradeoffEvidence","questionPicker","chosenQuestion","downloadQuestion","shareCanvas","valueFlowTrack","valueStageEvidence","pressureDependency","pressureShock","pressureSubstitute","pressureScore","pressureComparisons","roleOptions","roleEvidence"])assert.match(h,new RegExp('id="'+id+'"'));
  for(const layer of ["industry","people","services","rural"])assert.match(h,new RegExp('data-layer="'+layer+'"'));
  for(const key of ["all","fact","plan","question"])assert.match(h,new RegExp('data-filter="'+key+'"'));
  assert.match(h,/2025 · 第二产业占GDP比重/);
@@ -19,6 +19,8 @@ test("comparison uses actual 2025 official series with correct footnotes and no 
  assert.match(h,/www\.hcq\.gov\.cn/);
  assert.match(h,/maptable\.com\/tjgb/);
  assert.match(h,/不是竞争力评分/);
+ assert.match(h,/非实测金额/);
+ assert.match(h,/不是经济损失测算/);
 });
 test("no unverified economic network is presented as observed commerce",()=>{
  const h=read("v11/region.html"),js=read("v11/region.js");
