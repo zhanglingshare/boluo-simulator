@@ -45,8 +45,8 @@ const origin="http://127.0.0.1:8765/v11/";
    await page.reload({waitUntil:"networkidle"});
    assert.match(await page.locator("#worldBTitle").innerText(),/新增/);
    assert.equal(await page.locator("#yearValue").innerText(),"2030");
-   const overflow=await page.evaluate(()=>document.documentElement.scrollWidth-window.innerWidth);
-   assert.ok(overflow<=2,"page12 "+width+"px overflow="+overflow);
+   const layout=await page.evaluate(()=>({overflow:document.documentElement.scrollWidth-window.innerWidth,offenders:[...document.querySelectorAll("*")].map(e=>({name:e.tagName,className:typeof e.className==="string"?e.className.slice(0,70):"",right:e.getBoundingClientRect().right})).filter(e=>e.right>innerWidth+3).slice(0,8)}));
+   assert.ok(layout.overflow<=2,"page12 "+width+"px layout="+JSON.stringify(layout));
    if(!mobile){
     const event=page.waitForEvent("download");await page.locator("#exportFuture").click();
     const file=await event,raw=JSON.parse(fs.readFileSync(await file.path(),"utf8"));
