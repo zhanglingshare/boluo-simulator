@@ -42,6 +42,7 @@
   </nav>
  </div>
 </header>
+<div class="reading-progress" aria-hidden="true"><span id="readingProgress"></span></div>
 
 <main class="page">
  <section class="hero reveal">
@@ -59,6 +60,12 @@
    <div class="hero-target-foot"><span>现有规模约为目标的62.8%</span><span>不是达标概率</span></div>
   </div>
  </section>
+ <nav class="insight-rail" aria-label="本页结构导航">
+  <a href="#target-structure"><i>01</i><span>目标压力</span></a>
+  <a href="#industrial-portfolio"><i>02</i><span>产业组合</span></a>
+  <a href="#peer-benchmark"><i>03</i><span>同类对标</span></a>
+  <a href="#structural-constraints"><i>04</i><span>结构盲点</span></a>
+ </nav>
 
  <section class="section reveal" id="target-structure">
   <div class="section-head">
@@ -106,8 +113,13 @@
    <article class="chart-panel">
     <h3>行业权重 × 增长速度</h3>
     <p class="hint">气泡位置看行业权重与增长，下面再看2024到2025的份额变化。点击气泡或行业行，查看它的结构变化。</p>
-    <div id="sectorMap" class="sector-map" aria-label="行业权重与增长象限图"></div>
-    <div class="sector-map-note"><span>气泡大小＝行业权重</span><span>右侧另列“其他行业”38.6%，其单项增速未披露</span></div>
+    <div class="viz-toolbar">
+     <div class="viz-control"><span class="viz-control-label">时间切片</span><div class="viz-year-toggle" role="group" aria-label="切换行业年份"><button type="button" data-year="2024">2024年</button><button type="button" data-year="2025" class="active" aria-pressed="true">2025年</button></div></div>
+     <div class="viz-control threshold-control"><label class="viz-control-label" for="sectorThreshold">行业权重观察线 <output id="sectorThresholdValue">10%</output></label><input id="sectorThreshold" type="range" min="5" max="20" step="1" value="10" aria-label="调整行业权重观察线"></div>
+     <div class="viz-control viz-count"><strong id="sectorThresholdResult">2</strong><span>个行业高于观察线</span><small>观察门槛由你设定，不是官方标准</small></div>
+    </div>
+    <div id="sectorMap" class="sector-map" aria-label="行业权重与增长象限图"><div class="viz-tooltip" id="sectorTooltip" role="status" aria-live="polite"></div></div>
+    <div class="sector-map-note"><span><i class="legend-bubble"></i>气泡大小＝行业权重</span><span>横轴＝行业占比 · 纵轴＝行业增加值增速</span><span>其他行业38.6%未纳入气泡，因缺少单项增速</span></div>
     <div class="sector-list" id="sectorList" aria-label="行业占比与增速对比"></div>
     <div class="sector-legend"><span><i></i>2024年占比</span><span><i class="current"></i>2025年占比</span><span>右侧为2025年增加值增速</span></div>
     <div class="concentration-row">
