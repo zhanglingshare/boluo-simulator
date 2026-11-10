@@ -34,22 +34,48 @@ const MODELS={
   unknown:'需要实测通勤时间、招聘与岗位变化，而不是用交通拥堵直接估计GDP。'
  }
 };
+const PATHWAY_BRIDGE={
+ new:{label:'新项目兑现',channels:[0]},
+ manufacturing:{label:'存量企业扩能',channels:[1]},
+ services:{label:'本地价值链延伸',channels:[2]},
+ innovation:{label:'创新与生产率',channels:[0,1]},
+ connect:{label:'外部连接与城市承载',channels:[3]}
+};
 const qs=new URL(location.href).searchParams;
 const allowable=(x,vals,f)=>vals.includes(x)?x:f;
 const shockFromRoute={new:'delay',manufacturing:'orders',innovation:'invest',services:'orders',connect:'traffic'};
-const first=allowable(qs.get('shock'),Object.keys(MODELS),allowable(shockFromRoute[qs.get('route')],Object.keys(MODELS),'delay'));
+const routeParam=allowable(qs.get('route'),Object.keys(PATHWAY_BRIDGE),'new');
+const selectedPaths=[...new Set((qs.get('paths')||'').split(',').filter(x=>Object.prototype.hasOwnProperty.call(PATHWAY_BRIDGE,x)))].slice(0,3);
+const primaryRoute=selectedPaths.includes(routeParam)?routeParam:(selectedPaths[0]||routeParam);
+const initialScope=selectedPaths.length?(qs.get('scope')==='all'?'all':'selected'):'all';
+const first=allowable(qs.get('shock'),Object.keys(MODELS),allowable(shockFromRoute[primaryRoute],Object.keys(MODELS),'delay'));
 const inputStrength=Number(qs.get('strength'));
 const initialStrength=Number.isFinite(inputStrength)&&inputStrength>=.6&&inputStrength<=1.4?Math.round(inputStrength*5)/5:1;
-const state={shock:first,strength:initialStrength,buffer:qs.get('buffer')==='1',active:qs.get('active')!=='0',focused:0,running:false,seed:42,count:3200,reduced:matchMedia('(prefers-reduced-motion: reduce)').matches};
+const state={shock:first,strength:initialStrength,buffer:qs.get('buffer')==='1',active:qs.get('active')!=='0',focused:0,running:false,seed:42,count:3200,paths:selectedPaths,primary:primaryRoute,scope:initialScope,reduced:matchMedia('(prefers-reduced-motion: reduce)').matches};
 let last=null,animTimer=0,toastTimer=0;
 const fmt=n=>Number.isFinite(n)?Math.round(n).toLocaleString('zh-CN'):'—';
 const signed=n=>Number.isFinite(n)?(n>0?'+':'')+fmt(n):'—';
 const pct=n=>Number.isFinite(n)?n.toFixed(1)+'%':'—';
 function goodModel(){return typeof HT!=='undefined'&&HT&&typeof HT.run==='function'&&Array.isArray(HT.DEFAULT_PATHS);}
 function copyPaths(paths){return paths.map(p=>({...p}));}
-function testPaths(meta,strength,buffer,baselinePaths) {
+function selectedChannels(){
+ const set=new Set();
+ state.paths.forEach(id=>(PATHWAY_BRIDGE[id]?.channels||[]).forEach(i=>set.add(i)));
+ return set;
+}
+function affectedChannels(meta){
+ return meta.effect.map((v,i)=>v!==0||(meta.spread[i]||0)!==0?i:-1).filter(i=>i>=0);
+}
+function appliedChannels(meta){
+ const affected=affectedChannels(meta);
+ if(!state.paths.length||state.scope!=='selected')return affected;
+ const selected=selectedChannels();
+ return affected.filter(i=>selected.has(i));
+}
+function testPaths(meta,strength,buffer,baselinePaths,channelSet) {
  const r=copyPaths(baselinePaths);
  for(let i=0;i<r.length;i++){
+   if(channelSet&&!channelSet.has(i))continue;
    const change=meta.effect[i]*strength;
    const rescue=buffer ? -change*.55 : 0;
    r[i].mu=Math.max(0,r[i].mu+change+rescue);
@@ -57,6 +83,28 @@ function testPaths(meta,strength,buffer,baselinePaths) {
    r[i].sd=Math.max(0,r[i].sd+uncertainty);
  }
  return r;
+}
+function renderPathHandoff(meta){
+ const box=$('pathHandoff');if(!box)return;
+ if(!state.paths.length){box.hidden=true;return;}
+ box.hidden=false;
+ const selected=selectedChannels(),affected=affectedChannels(meta),applied=appliedChannels(meta);
+ $('pathHandoffCount').textContent=state.paths.length+' / 3 条';
+ $('pathHandoffPaths').innerHTML=state.paths.map(id=>{
+  const item=PATHWAY_BRIDGE[id],channels=item.channels.map(i=>HT.DEFAULT_PATHS[i]?.name||('增长通道 '+(i+1))).join(' + ');
+  return '<article class="path-handoff-chip"><strong>'+item.label+'</strong><small>关联：'+channels+'</small></article>';
+ }).join('');
+ let note='';
+ if(state.scope==='all'){
+  note='全县总体压力模式：沿用原有全通道冲击口径。第六页组合仍保留在实验上下文中，但不限制受影响通道。';
+ }else if(!applied.length){
+  note='本轮冲击与这组路径在现有量化通道中没有直接映射。数值结果保持基准；间接影响保留为待核验线索，不擅自换算成GDP损失。';
+ }else{
+  const omitted=affected.length-applied.length;
+  note='当前冲击涉及 '+affected.length+' 个增长通道，组合命中 '+applied.length+' 个'+(omitted?'；另有 '+omitted+' 个通道保持基准':'，已覆盖本轮全部直接相关通道')+'。未纳入的间接影响不自动归因。';
+ }
+ $('pathExposureStatus').textContent=note;
+ qa('[data-scope]').forEach(b=>b.setAttribute('aria-pressed',String(b.dataset.scope===state.scope)));
 }
 function runThree(){
  if(!goodModel())return null;
@@ -69,10 +117,11 @@ function runThree(){
  }));
  const count=clamp(Number(p.count??state.count),2000,12000);
  const args={base:HT.BASE,target:HT.TARGET,noise:HT.NOISE_SD*volatility};
+ const channelSet=state.paths.length&&state.scope==='selected'?selectedChannels():null;
  const reference=HT.run(state.seed,count,copyPaths(baselinePaths),args);
- const stressed=state.active?HT.run(state.seed,count,testPaths(m,state.strength,false,baselinePaths),args):reference;
- const recovered=state.buffer&&state.active?HT.run(state.seed,count,testPaths(m,state.strength,true,baselinePaths),args):null;
- return {base:reference,stress:stressed,buffer:recovered};
+ const stressed=state.active?HT.run(state.seed,count,testPaths(m,state.strength,false,baselinePaths,channelSet),args):reference;
+ const recovered=state.buffer&&state.active?HT.run(state.seed,count,testPaths(m,state.strength,true,baselinePaths,channelSet),args):null;
+ return {base:reference,stress:stressed,buffer:recovered,scope:state.scope,paths:state.paths.slice(),primary:state.primary,affectedChannels:affectedChannels(m),appliedChannels:appliedChannels(m)};
 }
 function tickLabels(){
  const v=state.strength;
@@ -86,10 +135,13 @@ function renderControls(){
  const m=MODELS[state.shock];
  $('bufferName').textContent=m.buffer;
  $('bufferDesc').textContent=m.bufferDetail;
- $('resultLead').textContent=state.active?m.label+' · 与未施加冲击的基准情景并排对照。':'当前为基准条件。点击“开始一次实验”查看所选冲击。';
+ $('resultLead').textContent=state.active?(state.paths.length?(state.scope==='selected'?'按第六页路径组合检验：':'全县总体压力检验：')+m.label+' · 与同一组未施压基准对照。':m.label+' · 与未施加冲击的基准情景并排对照。'):'当前为基准条件。点击“开始一次实验”查看所选冲击。';
+ renderPathHandoff(m);
 }
 function renderNumbers(r){
- const s=r.stress,b=r.base;
+ const s=r.stress,b=r.base,m=MODELS[state.shock];
+ const affected=affectedChannels(m),applied=appliedChannels(m);
+ const noDirectMatch=state.active&&state.paths.length>0&&state.scope==='selected'&&affected.length>0&&applied.length===0;
  $('afterMedian').textContent=fmt(s.p50);
  $('medianDelta').textContent=signed(s.p50-b.p50);
  $('afterHit').textContent=pct(s.hit);
@@ -101,18 +153,23 @@ function renderNumbers(r){
  if(r.buffer)$('rangeBuffer').textContent='缓冲区间：'+fmt(r.buffer.p10)+'—'+fmt(r.buffer.p90);
  $('beforeBuffer').textContent=fmt(s.p50);
  $('afterBuffer').textContent=r.buffer?fmt(r.buffer.p50):'—';
- const delta=s.p50-b.p50, spread=s.p90-s.p10,baseSpread=b.p90-b.p10;
- const meta=MODELS[state.shock];
+ const delta=s.p50-b.p50,spread=s.p90-s.p10,baseSpread=b.p90-b.p10;
  $('resultInsight').textContent=!state.active?'没有添加冲击，就不应该凭空产生损失。':
+ noDirectMatch?'这组路径与当前冲击，暂时没有直接量化连接。':
  r.buffer?'缓冲有用吗？比较的是三组条件结果。':
  Math.abs(delta)>30?'目标可能不变，但结果的分布已经明显移动。':
  '一处变化，不一定产生巨大的总量变化。';
  $('resultExplain').textContent=!state.active?'基准情景没有施加额外压力。这并不意味着现实世界没有风险。':
+ noDirectMatch?'本轮所选路径没有命中当前冲击已量化的增长通道，因此压力分布与基准重合。可能存在的间接传导留待证据核验，不把空白伪装成损失。':
  '本次中位数相对基准'+signed(delta)+'亿元；结果区间宽度'+(spread>=baseSpread?'扩大约':'缩小约')+fmt(Math.abs(spread-baseSpread))+'亿元。均为条件设定下的结果。';
- $('bufferTakeaway').textContent=r.buffer?'缓冲假设下，中位数相对未缓冲变化 '+signed(r.buffer.p50-s.p50)+' 亿元。它不是已实施政策的效果评估。':'开启一种缓冲条件后，展示同一组条件下的第三组结果。';
- $('shareSummary').textContent=state.active?'选择“'+meta.label+'”，压力档位'+tickLabels()+'，结果中位数由'+fmt(b.p50)+'变为'+fmt(s.p50)+'亿元。'+(r.buffer?'增加缓冲后为'+fmt(r.buffer.p50)+'亿元。':'')+'这是条件对照，不是事实预测。':'当前是基准情景，尚未加入额外变化。';
- const impacts=meta.effect.map((v,i)=>v===0?null:HT.DEFAULT_PATHS[i].name+'：预期'+signed(v*state.strength)+'亿元').filter(Boolean).join('；');
- $('assumptionText').textContent='当前场景“'+meta.label+'”按一组设定调整相关路径的预期：'+(impacts||'没有额外调整')+'。同时让这些路径的结果有一定浮动。缓冲只抵消其中一部分；这些设定尚未经过项目层面的独立核对，不能当作已确认的GDP因果变化。';
+ $('bufferTakeaway').textContent=r.buffer?(noDirectMatch?'当前没有直接量化的受压通道，因此缓冲假设也不会制造额外收益。':'缓冲假设下，中位数相对未缓冲变化 '+signed(r.buffer.p50-s.p50)+' 亿元。它不是已实施政策的效果评估。'):'开启一种缓冲条件后，展示同一组条件下的第三组结果。';
+ const routeNames=state.paths.map(id=>PATHWAY_BRIDGE[id]?.label).filter(Boolean).join('、');
+ const scopeText=state.paths.length?(state.scope==='selected'?'按路径组合':'按全县总体')+'（'+routeNames+'）':'全县总体';
+ $('shareSummary').textContent=state.active?'本次范围：'+scopeText+'；冲击“'+m.label+'”，压力档位'+tickLabels()+'，结果中位数由'+fmt(b.p50)+'变为'+fmt(s.p50)+'亿元。'+(r.buffer?'增加缓冲后为'+fmt(r.buffer.p50)+'亿元。':'')+'这是条件对照，不是事实预测。':'当前是基准情景，尚未加入额外变化。';
+ const impacts=applied.map(i=>HT.DEFAULT_PATHS[i].name+'：预期'+signed(m.effect[i]*state.strength)+'亿元').join('；');
+ const omitted=affected.filter(i=>!applied.includes(i)).map(i=>HT.DEFAULT_PATHS[i].name).join('、');
+ const scopeNote=state.paths.length&&state.scope==='selected'?'本轮按第六页路径组合限定直接受压范围。':'本轮按全县总体范围施压。';
+ $('assumptionText').textContent='当前场景“'+m.label+'”按一组设定调整相关路径的预期：'+(impacts||'当前没有直接命中的量化通道')+'。'+(omitted?'未纳入本轮量化冲击的通道：'+omitted+'，保持原基准。':'')+scopeNote+'同时让受影响路径的结果有一定浮动。缓冲只抵消其中一部分；这些设定尚未经过项目层面的独立核对，不能当作已确认的GDP因果变化。';
 }
 function pathFor(points){
  if(!points.length)return '';
@@ -205,7 +262,7 @@ function run(animate=false){
   qa('.readout').forEach(node=>{node.classList.remove('recomputed');void node.offsetWidth;node.classList.add('recomputed');});
  }
  chartRender(output,animate);
- window.dispatchEvent(new CustomEvent('boluo:wind-run',{detail:{results:output,shock:state.shock,strength:state.strength,active:state.active,buffer:state.buffer,animate}}));
+ window.dispatchEvent(new CustomEvent('boluo:wind-run',{detail:{results:output,shock:state.shock,strength:state.strength,active:state.active,buffer:state.buffer,paths:state.paths.slice(),primary:state.primary,scope:state.scope,appliedChannels:appliedChannels(MODELS[state.shock]),animate}}));
  renderChain();
  if(animate)progressChain();
  syncURL();
@@ -217,6 +274,14 @@ function syncURL(){
   u.searchParams.set('strength',String(state.strength));
   u.searchParams.set('buffer',state.buffer?'1':'0');
   u.searchParams.set('active',state.active?'1':'0');
+  if(state.paths.length){
+   u.searchParams.set('paths',state.paths.join(','));
+   u.searchParams.set('route',state.primary);
+   u.searchParams.set('scope',state.scope);
+  }else{
+   u.searchParams.delete('paths');u.searchParams.delete('scope');
+   if(qs.has('route'))u.searchParams.set('route',state.primary);
+  }
   history.replaceState(null,'',u.pathname+u.search+u.hash);
  }catch{}
 }
@@ -228,6 +293,7 @@ function modify(updates,animate=true) {
  Object.assign(state,updates);clearInterval(animTimer);animTimer=0;
  run(animate);
 }
+qa('[data-scope]').forEach(b=>b.addEventListener('click',()=>{if(b.dataset.scope!==state.scope)modify({scope:b.dataset.scope,active:true,focused:0},true);}));
 qa('[data-shock]').forEach(b=>b.addEventListener('click',()=>modify({shock:b.dataset.shock,active:true,focused:0},true)));
 $('strength').addEventListener('input',e=>modify({strength:clamp(Math.round(Number(e.target.value)*5)/5,.6,1.4),active:true},false));
 $('strength').addEventListener('change',()=>run(true));
@@ -243,9 +309,11 @@ $('modalClose').addEventListener('click',()=>$('modal').close());
 $('modal').addEventListener('click',e=>{if(e.target===$('modal'))$('modal').close();});
 $('whyButton').addEventListener('click',()=>{
  if(!last)return;
- const m=MODELS[state.shock];
- const rows=HT.DEFAULT_PATHS.map((p,i)=>m.effect[i]===0&&m.spread[i]===0?'':'<div class="fact-row"><strong>'+esc(p.name)+'</strong><p>本次设定：把这条路径的五年预期调整 '+esc(signed(m.effect[i]*state.strength))+' 亿元，波动范围同时放宽约 '+esc(fmt(m.spread[i]*state.strength))+' 亿元；这些数字是设定，不是观测。</p></div>').join('');
- modal('情景是怎样改变结果的？','<p><strong>'+esc(m.label)+'</strong> 不是单一确定的因果关系。此页在同一套设定下有限度调整这条路径的预期与波动，比较结果分布。</p>'+rows+'<p>目前既有基准路径贡献之和被设定得与2030目标规模差额接近，这里的达标占比只反映当前设定，不是独立验证的真实概率。请重点比较情景之间的方向、条件和不确定性，而非单个百分数。</p>');
+ const m=MODELS[state.shock],applied=appliedChannels(m),affected=affectedChannels(m);
+ const rows=applied.map(i=>{const p=HT.DEFAULT_PATHS[i];return '<div class="fact-row"><strong>'+esc(p.name)+'</strong><p>本次设定：把这条路径的五年预期调整 '+esc(signed(m.effect[i]*state.strength))+' 亿元，波动范围同时放宽约 '+esc(fmt(m.spread[i]*state.strength))+' 亿元；这些数字是设定，不是观测。</p></div>';}).join('');
+ const omitted=affected.filter(i=>!applied.includes(i)).map(i=>HT.DEFAULT_PATHS[i].name).join('、');
+ const scope=state.paths.length&&state.scope==='selected'?'本次仅对第六页组合映射到的增长通道施压。':'本次按全县总体范围施压。';
+ modal('情景是怎样改变结果的？','<p><strong>'+esc(m.label)+'</strong> 不是单一确定的因果关系。'+scope+'</p>'+(rows||'<p>当前所选路径与这类冲击没有直接量化映射，因此不改变对应增长通道的预期或波动。</p>')+(omitted?'<p>未纳入本轮量化冲击的通道：'+esc(omitted)+'。它们保持基准，不代表现实中绝对不受影响。</p>':'')+'<p>目前既有基准路径贡献之和被设定得与2030目标规模差额接近，这里的达标占比只反映当前设定，不是独立验证的真实概率。请重点比较情景之间的方向、条件和不确定性，而非单个百分数。</p>');
 });
 function link(){
  syncURL();const u=new URL(location.href);u.hash='results';return u.href;
@@ -258,7 +326,7 @@ async function share(){
 $('copyLink').addEventListener('click',share);$('shareTop').addEventListener('click',share);
 $('saveExp').addEventListener('click',()=>{
  if(!last)return;
- const record={shock:state.shock,strength:state.strength,buffer:state.buffer,active:state.active,median:last.stress.p50,baseline:last.base.p50,baselineParams:window.BoluoExperimentBaseline?.getParams?.()||null,distribution:window.BoluoDistribution?.getState?.()||null,savedAt:new Date().toISOString()};
+ const record={shock:state.shock,strength:state.strength,buffer:state.buffer,active:state.active,paths:state.paths.slice(),primary:state.primary,scope:state.scope,median:last.stress.p50,baseline:last.base.p50,baselineParams:window.BoluoExperimentBaseline?.getParams?.()||null,distribution:window.BoluoDistribution?.getState?.()||null,savedAt:new Date().toISOString()};
  try{
  const key='boluo-v11-wind-experiments',stored=JSON.parse(localStorage.getItem(key)||'[]');
  localStorage.setItem(key,JSON.stringify([record,...(Array.isArray(stored)?stored:[])].slice(0,25)));
@@ -272,6 +340,10 @@ $('savedList').addEventListener('click',()=>{
   const shock=allowable(d.shock,Object.keys(MODELS),'delay');
   const strength=Number.isFinite(+d.strength)?clamp(+d.strength,.6,1.4):1;
   const u=new URL(location.href);u.searchParams.set('shock',shock);u.searchParams.set('strength',String(strength));u.searchParams.set('buffer',d.buffer?'1':'0');u.searchParams.set('active',d.active===false?'0':'1');
+  if(Array.isArray(d.paths)&&d.paths.length){
+   const restored=d.paths.filter(x=>Object.prototype.hasOwnProperty.call(PATHWAY_BRIDGE,x)).slice(0,3);
+   if(restored.length){u.searchParams.set('paths',restored.join(','));u.searchParams.set('route',allowable(d.primary,restored,restored[0]));u.searchParams.set('scope',d.scope==='all'?'all':'selected');}
+  }
   if(d.baselineParams){
     const p=d.baselineParams;
     if(Number.isFinite(+p.baseScale))u.searchParams.set('bs',String(p.baseScale));
@@ -293,7 +365,11 @@ window.addEventListener('pagehide',()=>clearInterval(animTimer));
 window.addEventListener('resize',()=>{if(last)chartRender(last,false);},{passive:true});
 window.addEventListener('popstate',()=>{
  const q=new URL(location.href).searchParams;
- state.shock=allowable(q.get('shock'),Object.keys(MODELS),'delay');
+ state.paths=[...new Set((q.get('paths')||'').split(',').filter(x=>Object.prototype.hasOwnProperty.call(PATHWAY_BRIDGE,x)))].slice(0,3);
+ const route=allowable(q.get('route'),Object.keys(PATHWAY_BRIDGE),'new');
+ state.primary=state.paths.includes(route)?route:(state.paths[0]||route);
+ state.scope=state.paths.length?(q.get('scope')==='all'?'all':'selected'):'all';
+ state.shock=allowable(q.get('shock'),Object.keys(MODELS),allowable(shockFromRoute[state.primary],Object.keys(MODELS),'delay'));
  const num=Number(q.get('strength'));state.strength=Number.isFinite(num)&&num>=.6&&num<=1.4?Math.round(num*5)/5:1;
  state.buffer=q.get('buffer')==='1';state.active=q.get('active')!=='0';state.focused=0;
  run(false);
@@ -307,5 +383,5 @@ if(!goodModel()){
 }else{
  run(false);
 }
-window.BoluoWind={getState:()=>({...state}),rerun:(animate=false)=>run(animate),getDistributions:()=>last,getResults:()=>last&&({base:{p10:last.base.p10,p50:last.base.p50,p90:last.base.p90,hit:last.base.hit},stress:{p10:last.stress.p10,p50:last.stress.p50,p90:last.stress.p90,hit:last.stress.hit},buffer:last.buffer&&({p10:last.buffer.p10,p50:last.buffer.p50,p90:last.buffer.p90,hit:last.buffer.hit})})};
+window.BoluoWind={getState:()=>({...state,paths:state.paths.slice()}),rerun:(animate=false)=>run(animate),getDistributions:()=>last,getResults:()=>last&&({base:{p10:last.base.p10,p50:last.base.p50,p90:last.base.p90,hit:last.base.hit},stress:{p10:last.stress.p10,p50:last.stress.p50,p90:last.stress.p90,hit:last.stress.hit},buffer:last.buffer&&({p10:last.buffer.p10,p50:last.buffer.p50,p90:last.buffer.p90,hit:last.buffer.hit}),scope:state.scope,paths:state.paths.slice(),appliedChannels:appliedChannels(MODELS[state.shock])})};
 })();
