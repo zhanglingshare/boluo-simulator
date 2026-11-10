@@ -117,6 +117,11 @@ h1 em{font-style:normal;background:linear-gradient(180deg,#a9e6ff,#3fc0ff);-webk
 
 /* ===== 三次产业入口 ===== */
 .entry3{margin-top:6px}
+.lay4{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:10px}
+.ly{border:1px solid rgba(104,158,228,.2);border-radius:10px;padding:11px 13px;background:rgba(8,20,36,.5)}
+.ly b{display:block;font-size:12px;font-weight:850;color:#eaf4ff;margin-bottom:5px}
+.ly i{display:block;font-size:9.5px;font-weight:800;color:#3fc0ff;letter-spacing:.08em;margin-bottom:3px}
+@media(max-width:820px){.lay4{grid-template-columns:repeat(2,minmax(0,1fr))}}
 .erow{display:grid;grid-template-columns:88px minmax(0,1fr) auto;align-items:center;gap:12px;padding:12px 0;border-bottom:1px solid rgba(104,158,228,.1)}
 .erow:last-child{border-bottom:0}
 .erow .gn{font-size:11px;font-weight:800;color:var(--t3);line-height:1.3}
@@ -254,29 +259,24 @@ h1 em{font-style:normal;background:linear-gradient(180deg,#a9e6ff,#3fc0ff);-webk
 <main class="wrap">
  <p class="kick">04 / 产业底盘与接续</p>
  <h1>博罗靠什么撑着，<br><em>下一棒</em>接得上吗？</h1>
- <p class="lede">上一页给了 1600 亿的标尺；这一页看增速差多少、去年到今年在变好还是变差；再看 37 个现场谁在产、谁在建、谁还停在纸上。这一页只做三件事：摆位置、数现场、指出缺哪条证据。</p>
+ <p class="lede">宏观的总量、结构、目标门槛在 03。这一页只回答一件事：<b>哪条链在替博罗接下一棒，哪一环可能断</b>。手上是 37 个公开现场和四条链的公开依据，不是全县产业网络的全样本。</p>
  <p class="meta num" id="meta"></p>
 
- <!-- ========== 一、目标 vs 现实 + 同期 ========== -->
- <div class="bh"><i>01</i><h2>目标和现实差多少</h2><span>年度目标只作位置参照，不计算完成差额</span></div>
- <section class="band" aria-label="目标与现实对照">
-  <div class="gtwo">
-   <div id="bullets"></div>
-   <div class="sync" aria-label="去年同季与今年">
-    <p class="hd">相同季度，去年与今年 · 2025 Q1 → 2026 Q1</p>
-    <svg id="syncSvg" viewBox="0 0 300 150"></svg>
-    <div class="tag">
-     <span><i style="background:#86d8ff"></i>GDP 增长</span>
-     <span><i style="background:#2ad0c4"></i>规上工业增加值</span>
-    </div>
-    <p class="caliber">两期同比增速可以相减成“增速变化”，但<b>不代表总量下降</b>。工业增速从 13.0% 掉到 3.5%，是全页最陡的一条线。</p>
-   </div>
+ <!-- ========== 〇、四个层次 ========== -->
+ <div class="bh"><i>00</i><h2>这一页能说明什么，不能说明什么</h2><span>四个层次分开看，项目数量不等于 GDP 贡献</span></div>
+ <section class="band" aria-label="四个层次">
+  <div class="lay4">
+   <div class="ly"><i>L1</i><b>产业规模</b><span>全县产值与增加值在 03；这里只给链条上的已知量</span></div>
+   <div class="ly"><i>L2</i><b>主体关系</b><span>谁给谁供原料、谁做加工、谁在外围配套</span></div>
+   <div class="ly"><i>L3</i><b>项目进度</b><span>37 个现场四档：在产 16 / 在建 15 / 签约 4 / 退出 2</span></div>
+   <div class="ly"><i>L4</i><b>产出转化</b><span>开工 ≠ 投产 ≠ 达产，本页只标到前三档</span></div>
   </div>
+  <p class="caliber">项目数量是<b>公开可见的样本数</b>，不是全县项目总数，也不能按“平均一个项目多少产值”倒推 3600 亿。要推产量，必须另有达产产值与产能口径。</p>
  </section>
 
- <!-- ========== 二、下一棒：现场四档 ========== -->
- <div class="bh"><i>02</i><h2>下一棒有没有在修</h2><span>37 个公开现场，按项目进度分四档</span></div>
- <section class="band spine" aria-label="产业现场接续">
+ <!-- ========== 一、下一棒：现场四档 ========== -->
+ <div class="bh"><i>01</i><h2>下一棒有没有在修</h2><span>37 个公开现场，按项目进度分四档</span></div>
+ <section class="band spine" id="sec-relay" aria-label="产业现场接续">
   <div class="bar" id="bar"></div>
   <div class="ticks" id="ticks"></div>
   <p class="say"><b>下一棒的钱在变少：</b>19 个现场还在建或还在纸上，一个都还没形成产出；同期工业投资 −44.7%。</p>
@@ -287,14 +287,7 @@ h1 em{font-style:normal;background:linear-gradient(180deg,#a9e6ff,#3fc0ff);-webk
   </div>
  </section>
 
- <!-- ========== 三、产业底盘 ========== -->
- <div class="bh"><i>03</i><h2>从哪个产业看起</h2><span>三次产业增加值与占比，按 2026 一季度</span></div>
- <section class="band" aria-label="三次产业与产业入口">
-  <div class="entry3" id="entry3"></div>
-  <p class="caliber">产值口径另算：规上工业总产值 <b>超 2000 亿</b>、农林牧渔总产值 <b>130.32 亿</b>；这两个是产值，<b>不是增加值</b>，不能和上面的 20.46 / 121.40 / 75.46 亿直接比大小。</p>
- </section>
-
- <div class="viewbar" role="tablist" aria-label="换一种切法">
+ <div class="viewbar" role="tablist" aria-label="换一种切法" id="sec-split">
   <span>换一种切法</span>
   <button class="vbtn on" data-view="chain">链条位置 · 原料→加工→配套→出货</button>
   <button class="vbtn" data-view="build">项目接续 · 在产→在建→签约→退出</button>
@@ -331,16 +324,16 @@ h1 em{font-style:normal;background:linear-gradient(180deg,#a9e6ff,#3fc0ff);-webk
   </section>
  </div>
 
- <!-- ========== 四、三个可查问题 ========== -->
- <div class="bh"><i>04</i><h2>把“下一棒”拆成三个能查的问题</h2><span>每个都写清：手上有什么、还缺什么、下一步查哪条</span></div>
+ <!-- ========== 二、三个可查问题 ========== -->
+ <div class="bh"><i>02</i><h2>把“下一棒”拆成三个能查的问题</h2><span>每个都写清：手上有什么、还缺什么、下一步查哪条</span></div>
  <div class="q3-grid" id="q3Grid"></div>
 
- <!-- ========== 五、缺值与边界 ========== -->
- <div class="bh"><i>05</i><h2>还有哪些不知道</h2><span>缺就不补，不推测</span></div>
+ <!-- ========== 三、缺值与边界 ========== -->
+ <div class="bh" id="sec-gap"><i>03</i><h2>还有哪些不知道</h2><span>缺就不补，不推测</span></div>
  <div class="gaps" id="gaps"></div>
 
- <!-- ========== 六、平台与通道 ========== -->
- <div class="bh"><i>06</i><h2>四条链之外：平台与通道</h2><span>八个现场同时给几条链供地、供厂房、供路上通道</span></div>
+ <!-- ========== 四、平台与通道 ========== -->
+ <div class="bh" id="sec-plat"><i>04</i><h2>四条链之外：平台与通道</h2><span>八个现场同时给几条链供地、供厂房、供路上通道</span></div>
  <div class="plat-grid" id="platGrid"></div>
 
  <div class="foot">
@@ -359,74 +352,6 @@ h1 em{font-style:normal;background:linear-gradient(180deg,#a9e6ff,#3fc0ff);-webk
  if(!D||!D.events){document.getElementById('meta').textContent='数据未加载，请刷新后重试。';return;}
  D.events.forEach(function(e){evMap[e.id]=e;});
  document.getElementById('meta').textContent='现场数据 '+D.version+' · 核对于 '+D.checkedAt+' · 记录 '+D.events.length+' 条（37 项目现场 + 3 统计口径）';
-
- /* ================= 目标 vs 现实 ================= */
- var ROWS=[
-  {nm:'GDP 增长', nt:'2026 年度目标 6.5%—7.0%', dom:[0,8],
-   target:{from:6.5,to:7.0,text:'6.5%—7.0%'},
-   marks:[{v:4.0,lab:'一季度 +4.0%',cls:''}],
-   vals:'<b>6.5%—7.0%</b><span>目标</span><b>+4.0%</b><span>一季度</span>',
-   foot:'年度目标是全年口径，一季度是阶段口径，<b>不能算出“完成度”</b>，这里只摆位置。'},
-  {nm:'规上工业增加值', nt:'2026 年度目标 ≥9.0%', dom:[0,16],
-   target:{from:9.0,to:9.0},
-   marks:[{v:3.5,lab:'一季度 +3.5%',cls:''},{v:8.9,lab:'前三季 +8.9%',cls:'o'}],
-   vals:'<b>≥9.0%</b><span>目标</span><b>+3.5%</b><span>一季度</span><b>+8.9%</b><span>前三季</span>',
-   foot:'一季度只有 3.5%；累计到前三季 8.9%，<b>回到目标线附近</b>。两个窗口并列摆着，不代表全年已完成。'},
-  {nm:'工业投资', nt:'无年度目标，看方向 · 轴 0 到 −50%', dom:[-50,0], axis:true,
-   target:null,
-   marks:[{v:-42.4,lab:'1—4 月 −42.4%',cls:'o'},{v:-44.7,lab:'前三季 −44.7%',cls:'o'}],
-   vals:'<b class="neg">−42.4%</b><span>1—4 月</span><b class="neg">−44.7%</b><span>前三季</span><b>缺</b><span>1—5 月</span>',
-   foot:'1—5 月工业投资<b>缺值，不补曲线</b>；另两个窗口都在四成以上降幅，方向没有变。'}
- ];
- function pct(v,d){return (v-d[0])/(d[1]-d[0])*100;}
- function drawBullets(){
-  document.getElementById('bullets').innerHTML=ROWS.map(function(r){
-   var zone='';
-   if(r.target){
-    var a=pct(r.target.from,r.dom);
-    zone=(r.target.to===r.target.from)
-     ?'<span class="tline" style="left:'+a+'%"></span>'
-     :'<span class="zone" style="left:'+a+'%;width:'+(pct(r.target.to,r.dom)-a)+'%"></span>'
-      +'<span class="tlab" style="left:'+(a+(pct(r.target.to,r.dom)-a)/2)+'%">目标区</span>';
-   }
-   var axis=r.axis?('<span class="tline" style="left:100%;opacity:.5"></span>'
-     +'<span class="mklab" style="left:100%;top:-3px;transform:translateX(-100%);color:#5f7692">0</span>'):'';
-   var marks=r.marks.map(function(m,i){
-    var x=pct(m.v,r.dom), top=(i===0?-2:25);
-    return '<span class="mk '+(m.cls||'')+'" style="left:'+x+'%"></span>'
-     +'<span class="mklab '+(m.cls||'')+'" style="left:'+x+'%;top:'+top+'px">'+m.lab+'</span>';
-   }).join('');
-   return '<div class="brow"><div class="top"><span class="nm">'+r.nm+'</span><span class="nt">'+r.nt+'</span>'
-    +'<span class="vals">'+r.vals+'</span></div>'
-    +'<div class="blt"><span class="trk"></span>'+zone+axis+marks+'</div>'
-    +'<p class="foot">'+r.foot+'</p></div>';
-  }).join('');
- }
-
- /* ================= 同期斜率 ================= */
- function drawSync(){
-  var W=300,H=150,padT=22,padB=26,x1=86,x2=214;
-  var dom=[0,14];
-  function y(v){return padT+(H-padT-padB)*(1-(v-dom[0])/(dom[1]-dom[0]));}
-  var series=[
-   {nm:'GDP 增长',a:6.0,b:4.0,c:'#86d8ff',dy:-7},
-   {nm:'规上工业增加值',a:13.0,b:3.5,c:'#2ad0c4',dy:15}
-  ];
-  var out='';
-  out+='<line x1="30" y1="'+y(0)+'" x2="280" y2="'+y(0)+'" stroke="rgba(104,158,228,.25)" stroke-width="1"/>';
-  out+='<text x="86" y="14" text-anchor="middle" style="font-size:10px;font-weight:800;fill:#8fb6dd">2025 Q1</text>';
-  out+='<text x="214" y="14" text-anchor="middle" style="font-size:10px;font-weight:800;fill:#8fb6dd">2026 Q1</text>';
-  series.forEach(function(s){
-   var ya=y(s.a), yb=y(s.b);
-   out+='<line x1="'+x1+'" y1="'+ya+'" x2="'+x2+'" y2="'+yb+'" stroke="'+s.c+'" stroke-width="2.4" opacity=".85"/>';
-   out+='<circle cx="'+x1+'" cy="'+ya+'" r="4.6" fill="'+s.c+'" opacity=".55"/>';
-   out+='<circle cx="'+x2+'" cy="'+yb+'" r="5.4" fill="'+s.c+'"/>';
-   out+='<text x="'+(x1-9)+'" y="'+(ya+4)+'" text-anchor="end" style="font-size:10px;font-weight:800;fill:'+s.c+'">'+s.a.toFixed(1)+'%</text>';
-   out+='<text x="'+(x1-9)+'" y="'+(ya-9)+'" text-anchor="end" style="font-size:9px;font-weight:700;fill:#5f7692">'+s.nm+'</text>';
-   out+='<text x="'+(x2+9)+'" y="'+(yb+s.dy)+'" style="font-size:11px;font-weight:850;fill:'+s.c+'">'+s.b.toFixed(1)+'%</text>';
-  });
-  document.getElementById('syncSvg').innerHTML=out;
- }
 
  /* ================= 数据与产业 ================= */
  var BUCKETS=[
@@ -485,11 +410,6 @@ h1 em{font-style:normal;background:linear-gradient(180deg,#a9e6ff,#3fc0ff);-webk
    next:'县域茶企或合作社的加工与收购数据。',
    q:'茶卖出去了，钱回来了吗？'}
  ];
- var GRPS={
-  1:{nm:'第一产业',sub:'农业与初加工',val:'20.46',unit:'亿',share:'9.4',yoy:'+6.2'},
-  2:{nm:'第二产业',sub:'制造与建设',val:'121.40',unit:'亿',share:'55.9',yoy:'+4.2'},
-  3:{nm:'第三产业',sub:'服务与文旅',val:'75.46',unit:'亿',share:'34.7',yoy:'+3.0'}
- };
  var PLAT=['futian','luofufuture','sign4','huzhen'];
  var ROADS=['huixia','huizhao','jiguang','shilong'];
 
@@ -522,23 +442,6 @@ h1 em{font-style:normal;background:linear-gradient(180deg,#a9e6ff,#3fc0ff);-webk
   document.getElementById('ticks').innerHTML=BUCKETS.map(function(b){
    return '<div class="tick '+b.cls+'"><b>'+cnt[b.key]+'</b>'+b.name+' · '+Math.round(cnt[b.key]/n*1000)/10+'%</div>';
   }).join('');
- }
-
- function drawEntry(){
-  document.getElementById('entry3').innerHTML=[1,2,3].map(function(g){
-   var G=GRPS[g], items=SECS.filter(function(s){return s.grp===g;});
-   return '<div class="erow"><div class="gn">'+G.nm+'<b>'+G.sub+'</b></div>'
-    +'<div class="num3"><b>'+G.val+'</b>'+G.unit+'<span>占比 '+G.share+'%</span><span class="up">同比 '+G.yoy+'%</span></div>'
-    +'<div class="secwrap">'+items.map(function(s){
-     return '<button class="sec'+(s.key===active?' on':'')+'" data-key="'+s.key+'">'+s.short+'<i>'+s.total+'</i></button>';
-    }).join('')+'</div></div>';
-  }).join('');
-  Array.prototype.forEach.call(document.querySelectorAll('#entry3 .sec'),function(b){
-   b.addEventListener('click',function(){
-    active=b.getAttribute('data-key');activeStage=null;activeBucket=null;detId=null;
-    drawEntry();drawChart();drawSide();drawDet();
-   });
-  });
  }
 
  function drawLegend(){
@@ -775,7 +678,7 @@ h1 em{font-style:normal;background:linear-gradient(180deg,#a9e6ff,#3fc0ff);-webk
   });
  });
 
- drawBullets();drawSync();drawSpine();drawEntry();drawChart();drawSide();drawDet();drawQ3();drawGaps();drawPlat();
+ drawSpine();drawChart();drawSide();drawDet();drawQ3();drawGaps();drawPlat();
 })();
 </script>
 </body>
