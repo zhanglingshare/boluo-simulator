@@ -91,7 +91,7 @@ function renderRunway(){
  document.querySelectorAll('[data-run-filter]').forEach(b=>{const on=b.dataset.runFilter===runFilter;b.classList.toggle('is-current',on);b.setAttribute('aria-pressed',String(on))});
  host.innerHTML=status.map(x=>{
   const list=sample.filter(e=>kind(e)===x.k);
-  const cards=list.map(e=>'<button type="button" class="runway-node '+(selectedId===e.id?'is-active':'')+'" data-story-id="'+esc(e.id)+'" title="'+esc(e.title)+'"><strong>'+esc(displayTitle(e))+'</strong><span><i>'+esc(labelMonth(e))+'</i><b class="stage">'+(extras.has(e.id)?'平台/通道':(belong.get(e.id)?'产业现场':'其他'))+'</b></span></button>').join('');
+  const cards=list.map(e=>'<button type="button" class="runway-node '+(selectedId===e.id?'is-active':'')+'" data-story-id="'+esc(e.id)+'" title="'+esc(e.title)+'"><strong>'+esc(e.title)+'</strong><span><i>'+esc(labelMonth(e))+'</i><b class="stage">'+(extras.has(e.id)?'平台/通道':(belong.get(e.id)?'产业现场':'其他'))+'</b></span></button>').join('');
   return '<div class="runway-lane"><div class="runway-label '+x.k+'"><strong>'+x.label+'</strong><b>'+list.length+'</b><span>'+x.note+'</span></div><div class="runway-records">'+(cards||'<span class="runway-missing">这一筛选范围暂无对应记录</span>')+'</div></div>';
  }).join('');
  $('runFilterNote').textContent=runFilter==='all'?'37条公开记录已列出；每个卡片是一条记录，聚合项目仍按一条显示':runFilter==='sector'?'仅筛选当前产业已归类的公开记录，不能当作全县产业全样本':'公共平台与交通通道独立列示，不强行归入单一产业链';
@@ -111,7 +111,7 @@ function renderValue(){
   const records=p.ids.map(id=>byId.get(id)).filter(Boolean);
   const statCount=records.filter(e=>e.state==='stat').length,siteCount=records.length-statCount;
   const isActive=p.key===activeStep;
-  const nodes=records.map(e=>'<button class="phase-site '+(e.state==='stat'?'stat':'')+(selectedId===e.id?' active':'')+'" type="button" data-story-id="'+esc(e.id)+'"><span class="name">'+esc(displayTitle(e))+'</span><span class="tag">'+(e.state==='stat'?'统计':'现场')+'</span></button>').join('');
+  const nodes=records.map(e=>'<button class="phase-site '+(e.state==='stat'?'stat':'')+(selectedId===e.id?' active':'')+'" type="button" data-story-id="'+esc(e.id)+'"><span class="name">'+esc(e.title)+'</span><span class="tag">'+(e.state==='stat'?'统计':'现场')+'</span></button>').join('');
   return '<div class="value-phase '+(isActive?'active':'')+'">'+
    '<button class="phase-top" type="button" data-story-step="'+esc(p.key)+'" aria-pressed="'+isActive+'"><span class="step">环节 0'+(i+1)+'</span><strong>'+esc(p.title)+'</strong><small>'+esc(p.hint)+'</small><span class="counters"><b>'+siteCount+'</b><span>公开现场'+(statCount?' · '+statCount+'条统计':'')+'</span></span></button>'+
    '<div class="phase-sites">'+(nodes||'<div class="phase-empty">暂无可核实的主体现场<br>不等于现实中不存在</div>')+'</div></div>';
