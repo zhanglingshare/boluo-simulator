@@ -4,7 +4,8 @@
 const core=window.BoluoDiscoveryCore;
 const $=function(id){return document.getElementById(id);};
 if(!core||!$("iqSignals"))return;
-const state={signal:core.signals[0].id,signalTouched:false,variable:"project",variableTouched:false,custom:[],edges:[],hypothesis:core.hypotheses[0].id,hypothesisTouched:false,dependence:75,shock:70,substitute:35,watch:[],proof:{},customCount:0};
+const initialFactor=new URL(location.href).searchParams.get("factor")||"project";
+const state={signal:(core.signals.find(function(x){return x.factor===initialFactor;})||core.signals[0]).id,signalTouched:false,variable:(core.variables.find(function(x){return x.factor===initialFactor;})||core.variables[0]).id,variableTouched:false,custom:[],edges:[],hypothesis:(core.hypotheses.find(function(x){return x.factor===initialFactor;})||core.hypotheses[0]).id,hypothesisTouched:false,dependence:75,shock:70,substitute:35,watch:[],proof:{},customCount:0};
 const key="boluo-v11-evidence-watchlist";
 try{const saved=JSON.parse(localStorage.getItem(key)||"[]");if(Array.isArray(saved))state.watch=saved.filter(x=>typeof x==="string");}catch(e){}
 try{const proof=JSON.parse(localStorage.getItem(key+"-proof")||"{}");if(proof&&typeof proof==="object")state.proof=proof;}catch(e){}
@@ -200,6 +201,11 @@ function bind(){
  $("iqBreakReset").addEventListener("click",function(){state.dependence=75;state.shock=70;state.substitute=35;$("iqBreakDependence").value=75;$("iqBreakShock").value=70;$("iqBreakSubstitute").value=35;renderBreakpoint();});
  $("iqExportWatch").addEventListener("click",exportWatch);
  $("iqSaveAllWatch").addEventListener("click",persistWatch);
+ const cta=$("iqToChallenge");
+ if(cta)cta.addEventListener("click",function(){
+  const v=currentVariable(),evidenceItem=core.evidence.find(function(e){return e.variable===v.name;})||core.evidence.find(function(e){return e.factor===v.factor;});
+  if(evidenceItem)cta.href=factorUrl(v.factor,evidenceItem.focus,v.question,evidenceItem.id,evidenceItem.name);
+ });
 }
 function init(){
  renderSignals();renderSignalDetail();renderVariables();renderHypotheses();renderHypothesisDetail();renderBreakpoint();renderEvidence();bind();
