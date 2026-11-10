@@ -125,6 +125,32 @@ button,a,input,summary{font:inherit}button{color:inherit;cursor:pointer}a{color:
 .concentration strong{display:block;font-size:23px;line-height:1;font-weight:900;letter-spacing:-.055em;color:#274a5b}
 .concentration span{display:block;margin-top:5px;font-size:9px;color:#7f909d}
 .concentration small{display:block;margin-top:4px;font-size:8px;color:#a1adb6}
+.cluster-strip{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:8px;margin-top:10px}
+.cluster-strip>div{padding:11px 12px;border:1px solid #e4eaee;border-radius:9px;background:#f9fbfc;display:flex;flex-direction:column;gap:4px}
+.cluster-strip strong{font-size:21px;line-height:1;font-weight:900;letter-spacing:-.05em;color:#28586a}
+.cluster-strip span{font-size:9px;color:#5e7382;font-weight:800;line-height:1.4}
+.cluster-strip small{font-size:8px;color:#9aa7b0;line-height:1.4}
+.target-caveat{padding:9px 11px;border-left:3px solid #c49a57;border-radius:0 7px 7px 0;background:#fff9ef;color:#826d4b}
+.target-caveat b{color:#9d7033}
+.county-signature-wrap{margin-top:15px;padding:15px;border:1px solid #e4eaee;border-radius:13px;background:#f8fafb}
+.county-signature-head{display:flex;justify-content:space-between;align-items:center;gap:10px;margin-bottom:11px}
+.county-signature-head strong{font-size:13px;font-weight:900;color:#2d475a}
+.county-signature-head span{font-size:9px;color:#9aa6af}
+.county-signatures{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:9px}
+.county-signature{min-width:0;padding:13px;border:1px solid #e1e8ec;border-radius:10px;background:#fff;display:flex;flex-direction:column;gap:8px}
+.county-signature.boluo{border-top:3px solid #238d81}
+.county-signature.huidong{border-top:3px solid #c19a5c}
+.county-signature.sihui{border-top:3px solid #638bb3}
+.county-signature.heshan{border-top:3px solid #6b9a78}
+.county-signature-top{display:flex;justify-content:space-between;gap:6px;align-items:center}
+.county-signature-top span{font-size:8px;color:#9aa6af;font-weight:900;letter-spacing:.08em}
+.county-signature-top b{font-size:8px;color:#60798a;background:#f2f6f8;padding:5px 6px;border-radius:5px}
+.county-signature h3{margin:0;min-height:34px;font-size:12px;line-height:1.45;color:#344e61;font-weight:900}
+.county-signature-metric{font-size:28px;line-height:1;font-weight:950;letter-spacing:-.06em;color:#236e69;font-variant-numeric:tabular-nums}
+.county-signature-metric small{margin-left:4px;font-size:9px;letter-spacing:0;color:#84949f;font-weight:700}
+.county-signature p{margin:0;min-height:56px;color:#718491;font-size:9px;line-height:1.65}
+.county-tags{display:flex;gap:5px;flex-wrap:wrap;margin-top:auto}
+.county-tags span{padding:4px 6px;border:1px solid #e5ebef;border-radius:5px;background:#fbfcfd;color:#758998;font-size:8px;font-weight:750}
 .structure-bottom{display:grid;grid-template-columns:1fr 1fr;gap:13px;margin-top:14px}
 .stackbar{display:flex;height:20px;overflow:hidden;border-radius:5px;background:#edf1f3;margin:11px 0 8px}
 .stackbar span{display:block;height:100%;transition:width .3s}
@@ -197,6 +223,6 @@ button,a,input,summary{font:inherit}button{color:inherit;cursor:pointer}a{color:
 @media(max-width:950px){.site-header{height:56px}.header-inner{padding:0 14px}.v11-nav-groups{display:none}.mobile-nav{position:fixed;left:0;right:0;bottom:0;z-index:160;display:grid;grid-template-columns:repeat(5,minmax(0,1fr));align-items:stretch;min-height:62px;padding:6px 8px max(7px,env(safe-area-inset-bottom));box-sizing:content-box;background:rgba(5,13,23,.96);border-top:1px solid rgba(127,212,255,.18);box-shadow:0 -8px 28px rgba(0,0,0,.24);backdrop-filter:blur(18px)}
 .mobile-nav a{display:flex;flex-direction:column;align-items:center;justify-content:center;gap:4px;min-width:0;min-height:48px;border:0;border-radius:9px;background:transparent;color:#829bad;text-decoration:none;font-size:10px;font-weight:650}
 .mobile-nav a span{font-size:9px;line-height:1;font-weight:850;letter-spacing:.08em;color:#68869b}.mobile-nav a b{font-size:10px;font-weight:700;white-space:nowrap}.mobile-nav a.active{color:#e8f8ff;background:rgba(66,157,205,.13)}.mobile-nav a.active span{color:#7fd4ff}
-.hero{grid-template-columns:1fr;gap:15px;padding:22px}.hero-target{max-width:none}.target-grid{grid-template-columns:1fr 1fr}.chart-layout{grid-template-columns:1fr}.peer-grid{grid-template-columns:1fr 1fr}.signal-grid{grid-template-columns:repeat(2,minmax(0,1fr))}.gap-grid{grid-template-columns:1fr 1fr}}
-@media(max-width:640px){.page{padding:13px 12px 100px}.hero{padding:18px;border-radius:15px}.hero h1{font-size:27px}.hero p{font-size:11px}.hero-target strong{font-size:46px}.section{padding:14px;margin-top:12px;border-radius:13px}.section-head{margin-bottom:12px}.section h2{font-size:18px}.section-lede{font-size:10px}.section-tag{font-size:8px;padding:6px 7px}.target-grid{grid-template-columns:1fr;gap:8px}.target-card{padding:13px}.target-numbers strong{font-size:29px}.chart-panel{padding:11px}.sector-row{grid-template-columns:minmax(94px,1.05fr) minmax(65px,1fr) 48px 55px;gap:6px;padding:7px 5px}.sector-name{font-size:9px}.sector-name small{font-size:7px}.sector-share,.sector-growth{font-size:9px}.concentration-row{gap:6px}.concentration{padding:9px}.concentration strong{font-size:19px}.concentration span{font-size:8px}.structure-bottom{grid-template-columns:1fr}.peer-grid{grid-template-columns:1fr}.peer-row{grid-template-columns:66px minmax(0,1fr);gap:7px}.peer-name{font-size:9px}.peer-stack{height:25px}.peer-stack span{font-size:7px}.scatter-wrap svg{min-height:205px}.signal-grid{grid-template-columns:1fr}.gap-grid{grid-template-columns:1fr 1fr;gap:7px}.gap-card{padding:10px}.gap-card strong{font-size:10px}.gap-card p{font-size:8px}.source-list{grid-template-columns:1fr}.bottom-nav{flex-direction:column;align-items:stretch}.bottom-nav a{text-align:center}.section-head{gap:8px}.section-tag{max-width:110px;text-align:center}}
+.hero{grid-template-columns:1fr;gap:15px;padding:22px}.hero-target{max-width:none}.target-grid{grid-template-columns:1fr 1fr}.chart-layout{grid-template-columns:1fr}.peer-grid{grid-template-columns:1fr 1fr}.signal-grid{grid-template-columns:repeat(2,minmax(0,1fr))}.cluster-strip{grid-template-columns:repeat(2,minmax(0,1fr))}.county-signatures{grid-template-columns:repeat(2,minmax(0,1fr))}.gap-grid{grid-template-columns:1fr 1fr}}
+@media(max-width:640px){.page{padding:13px 12px 100px}.hero{padding:18px;border-radius:15px}.hero h1{font-size:27px}.hero p{font-size:11px}.hero-target strong{font-size:46px}.section{padding:14px;margin-top:12px;border-radius:13px}.section-head{margin-bottom:12px}.section h2{font-size:18px}.section-lede{font-size:10px}.section-tag{font-size:8px;padding:6px 7px}.target-grid{grid-template-columns:1fr;gap:8px}.cluster-strip{grid-template-columns:repeat(2,minmax(0,1fr));gap:6px}.cluster-strip>div{padding:9px}.county-signatures{grid-template-columns:1fr 1fr;gap:6px}.county-signature{padding:10px}.county-signature h3{font-size:10px}.county-signature p{min-height:64px;font-size:8px}.county-signature-metric{font-size:24px}.county-signature-head{align-items:flex-start;flex-direction:column;gap:4px}.target-card{padding:13px}.target-numbers strong{font-size:29px}.chart-panel{padding:11px}.sector-row{grid-template-columns:minmax(94px,1.05fr) minmax(65px,1fr) 48px 55px;gap:6px;padding:7px 5px}.sector-name{font-size:9px}.sector-name small{font-size:7px}.sector-share,.sector-growth{font-size:9px}.concentration-row{gap:6px}.concentration{padding:9px}.concentration strong{font-size:19px}.concentration span{font-size:8px}.structure-bottom{grid-template-columns:1fr}.peer-grid{grid-template-columns:1fr}.peer-row{grid-template-columns:66px minmax(0,1fr);gap:7px}.peer-name{font-size:9px}.peer-stack{height:25px}.peer-stack span{font-size:7px}.scatter-wrap svg{min-height:205px}.signal-grid{grid-template-columns:1fr}.gap-grid{grid-template-columns:1fr 1fr;gap:7px}.gap-card{padding:10px}.gap-card strong{font-size:10px}.gap-card p{font-size:8px}.source-list{grid-template-columns:1fr}.bottom-nav{flex-direction:column;align-items:stretch}.bottom-nav a{text-align:center}.section-head{gap:8px}.section-tag{max-width:110px;text-align:center}}
 @media(prefers-reduced-motion:reduce){*,*:before,*:after{scroll-behavior:auto!important;animation:none!important;transition:none!important}}
