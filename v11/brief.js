@@ -102,7 +102,6 @@ function renderWindAudit(){
   ["保存时间",labelDate(w.date)]
  ];
  out.append(pairs(rows));
- if(w.baselineParams&&w.baselineParams.paths)out.append(el("div","audit-tags", " "));
  if(w.baselineParams&&w.baselineParams.paths){const box=el("div","audit-tags");w.baselineParams.paths.forEach((v,i)=>box.append(tag("通道"+(i+1)+" × "+v.toFixed(2))));out.append(box);}
  if(data.windRange){const c=data.windRange;out.append(el("div","audit-tags"));const box=el("div","audit-tags");box.append(tag("基准P10 "+number(c.base.p10)),tag("基准P50 "+number(c.base.p50)),tag("基准P90 "+number(c.base.p90)),tag("压力P10 "+number(c.stress.p10)),tag("压力P50 "+number(c.stress.p50)),tag("压力P90 "+number(c.stress.p90),true));out.append(box);}
  else out.append(el("p","audit-note","当前本机保存了中位数和条件；没有找到与该次实验匹配的完整区间快照，因此不补造P10—P90。"));
@@ -112,7 +111,7 @@ function renderChallengeAudit(){
  const out=$("challengeAudit"),ch=data.challenge;out.replaceChildren();status($("challengeAuditStatus"),!!ch);
  if(!ch){out.append(empty("尚未保存自己的判断、竞争解释或反证条件。","challenge.html","去第09页写下判断"));return;}
  out.append(pairs([["原判断",ch.title],["竞争解释",ch.rivalTitle],["待检验证据",ch.evidenceTitle],["当前自评",ch.proofLabel],["反证条件",ch.falsifier||"尚未填写",!ch.falsifier],["观察阈值",ch.threshold||"尚未设定",!ch.threshold],["观察期限",ch.horizon],["保存时间",labelDate(ch.date)]]));
- const confidence=el("div","audit-confidence");confidence.append(el("div","audit-pair", " "));const head=el("div","audit-pair");head.append(el("span","","主观确信"),el("strong","",ch.confidence+"/100"));confidence.append(head);const meter=el("div","audit-meter"),fill=el("i");fill.style.width=ch.confidence+"%";meter.append(fill);confidence.append(meter);out.append(confidence);
+ const confidence=el("div","audit-confidence");confidence.append(pair("主观确信",ch.confidence+"/100"));const meter=el("div","audit-meter"),fill=el("i");fill.style.width=ch.confidence+"%";meter.append(fill);confidence.append(meter);out.append(confidence);
  if(ch.note)out.append(el("p","audit-note","个人备注："+ch.note));
  out.append(el("p","audit-note","确信度是填写者的主观刻度，不是统计置信度；当前证据状态也是个人自评。"));
  out.append(link("回到第09页修改或复核","challenge.html"));
