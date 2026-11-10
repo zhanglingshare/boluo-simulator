@@ -28,7 +28,10 @@ function renderSignals(){
   b.append(el("span","iq-signal-kicker",s.label));
   b.append(el("strong","iq-signal-title",s.title));
   const pair=el("span","iq-signal-pair");
-  pair.append(el("b","",s.valueA),el("small","",s.nameA),el("i","", "↔"),el("b","",s.valueB),el("small","",s.nameB));
+  const left=el("span","iq-signal-metric"),right=el("span","iq-signal-metric");
+  left.append(el("b","",s.valueA),el("small","",s.nameA));
+  right.append(el("b","",s.valueB),el("small","",s.nameB));
+  pair.append(left,el("i","", "↔"),right);
   b.append(pair,el("small","iq-signal-period",s.period));
   b.setAttribute("aria-pressed",String(s.id===state.signal));
   b.addEventListener("click",function(){state.signal=s.id;renderSignals();renderSignalDetail();});
@@ -103,6 +106,7 @@ function renderHypotheses(){
 }
 function renderHypothesisDetail(){
  const h=selectedHypothesis();
+ $("iqHypothesisTitle").textContent=h.title+"：如何验证？";
  $("iqHypothesisSummary").textContent=h.summary;
  const p=$("iqPredictions");p.replaceChildren();h.predictions.forEach(function(t){p.append(el("li","",t));});
  const e=$("iqDiscriminatingEvidence");e.replaceChildren();h.evidence.forEach(function(t,i){
