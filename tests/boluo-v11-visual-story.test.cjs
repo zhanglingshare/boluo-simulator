@@ -18,8 +18,8 @@ const anchors={
 test("03—12 V11 pages include a single additive visual-story enhancement",()=>{
  for(const [i,p] of pages.entries()){
   const s=read("v11/"+p+".html");
-  assert.match(s,/visual-story\.css\?v=20261111-v1/,p+" missing shared design");
-  assert.match(s,/visual-story\.js\?v=20261111-v1/,p+" missing behavior");
+  assert.match(s,/visual-story\.css\?v=20261111-v2/,p+" missing shared design");
+  assert.match(s,/visual-story\.js\?v=20261111-v2/,p+" missing behavior");
   assert.equal((s.match(/visual-story\.js/g)||[]).length,1,p+" duplicated enhancement");
   for(const a of anchors[p])assert.ok(s.includes('id="'+a+'"'),p+" lost original "+a);
   assert.match(s,/<main\b/,p+" main removed");
