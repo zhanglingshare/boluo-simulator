@@ -3,7 +3,7 @@
 "use strict";
 const core=window.BoluoDiscoveryCore;
 const $=function(id){return document.getElementById(id);};
-if(!core||!$("iqDiscoveryLab"))return;
+if(!core||!$("iqSignals"))return;
 const state={signal:core.signals[0].id,variable:"project",custom:[],hypothesis:core.hypotheses[0].id,dependence:75,shock:70,substitute:35,watch:[],proof:{},customCount:0};
 const key="boluo-v11-evidence-watchlist";
 try{const saved=JSON.parse(localStorage.getItem(key)||"[]");if(Array.isArray(saved))state.watch=saved.filter(x=>typeof x==="string");}catch(e){}
