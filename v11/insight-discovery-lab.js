@@ -134,7 +134,7 @@ function renderBreakpoint(){
  grid.forEach(function(row){
   const line=el("div","iq-break-row");line.append(el("span","",String(row[0].shock)));
   row.forEach(function(c){
-   const b=el("button","iq-break-cell");b.type="button";b.textContent=c.value.toFixed(0);b.style.setProperty("--heat",String(c.value/max));b.setAttribute("aria-label","冲击"+c.shock+"，替代能力"+c.substitute+"，相对暴露指数"+c.value);
+   const b=el("button","iq-break-cell");b.type="button";b.textContent=c.value.toFixed(0);b.style.background="hsl("+(190-c.value*1.45)+" 64% "+(95-c.value*.35)+"%)";b.setAttribute("aria-label","冲击"+c.shock+"，替代能力"+c.substitute+"，相对暴露指数"+c.value);
    b.setAttribute("aria-pressed",String(c.shock===shock&&c.substitute===sub));
    b.addEventListener("click",function(){state.shock=c.shock;state.substitute=c.substitute;$("iqBreakShock").value=state.shock;$("iqBreakSubstitute").value=state.substitute;renderBreakpoint();});
    line.append(b);
