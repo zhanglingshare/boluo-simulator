@@ -38,6 +38,7 @@ const out=path.resolve(__dirname,"../artifacts/v11-region");fs.mkdirSync(out,{re
    await page.locator('[data-pressure-layer="rural"]').click();
    await page.locator("#pressureDependency").fill("90");await page.locator("#pressureShock").fill("90");await page.locator("#pressureSubstitute").fill("10");
    const exposure=Number(await page.locator("#pressureScore").innerText());assert.ok(exposure>60);
+   const scenarioUrl=new URL(page.url());assert.equal(scenarioUrl.searchParams.get("dep"),"90");assert.equal(scenarioUrl.searchParams.get("shock"),"90");assert.equal(scenarioUrl.searchParams.get("sub"),"10");
    await page.locator('[data-role="resilient"]').click();assert.match(await page.locator("#roleTitle").innerText(),/多元备份/);
    await page.locator("#saveQuestion").click();
    const savedLab=JSON.parse(await page.evaluate(()=>localStorage.getItem("boluo-v11-region-focus")));
