@@ -7,6 +7,8 @@ on:
       - "v11/industry-chain.html"
       - "v11/industry-chain-ux.css"
       - "v11/industry-chain-ux.js"
+      - "v11/industry-chain-story.css"
+      - "v11/industry-chain-story.js"
       - "v11/discovery-data.js"
       - "tests/boluo-v11-industry-chain-browser.cjs"
       - ".github/workflows/boluo-v11-industry-chain-browser.yml"
