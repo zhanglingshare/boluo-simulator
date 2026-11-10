@@ -1,0 +1,95 @@
+
+/* 03 / Comparison-led visual system · 2026-11-10 */
+.page-intro{margin-bottom:12px}
+.page-intro h1{font-size:clamp(28px,2.65vw,37px);margin:7px 0 4px}
+.page-intro .intro-copy>p{display:none}
+.hero-kpis{margin-bottom:10px}
+.kpi-card{padding:14px 18px 13px}
+.kpi-value strong{font-size:clamp(30px,3vw,41px)}
+.kpi-foot{font-size:9px}
+.compare-deck{display:grid;grid-template-columns:1.05fr .95fr 1.05fr;gap:12px;margin-bottom:15px;align-items:stretch}
+.cmp-panel{min-width:0;position:relative;overflow:hidden;border:1px solid rgba(112,178,203,.23);border-radius:16px;padding:17px;background:linear-gradient(145deg,#112c40 0%,#081c2d 90%);box-shadow:inset 0 1px rgba(255,255,255,.04),0 10px 26px rgba(0,0,0,.15)}
+.cmp-panel:before{content:"";position:absolute;right:-74px;top:-91px;width:190px;height:190px;pointer-events:none;background:radial-gradient(circle,rgba(100,215,234,.14),transparent 70%)}
+.cmp-panel:first-child{background:linear-gradient(130deg,#143f47,#0c2438 80%);border-color:rgba(72,218,189,.29)}
+.cmp-eyebrow{color:#78a8c0;font-size:9px;font-weight:850;letter-spacing:.13em}
+.cmp-title{margin:6px 0 9px;font-size:16px;font-weight:850;letter-spacing:-.025em}
+.cmp-panel svg{width:100%;height:auto;display:block;overflow:visible}
+.cmp-bridge-text{display:flex;justify-content:space-between;align-items:baseline;gap:8px}
+.cmp-bridge-text strong{color:#9bf4da;font-size:24px;letter-spacing:-.05em;font-weight:900}
+.cmp-bridge-text strong:last-child{color:#ffd68c}
+.cmp-bridge-text small{display:block;color:#8daebf;font-size:9px;margin-top:3px;white-space:nowrap}
+.cmp-track{margin:16px 0 8px;display:flex;width:100%;height:23px;gap:3px;border-radius:7px;overflow:hidden;border:1px solid rgba(130,205,213,.2);background:#051b2a}
+.cmp-track .actual{width:62.84%;background:linear-gradient(90deg,#147d8a,#5de6be);position:relative}
+.cmp-track .gap{flex:1;background:repeating-linear-gradient(-45deg,rgba(230,175,105,.34) 0 6px,rgba(230,175,105,.13) 6px 12px);border-left:1px dashed #f5c683}
+.cmp-bridge-bottom{display:flex;justify-content:space-between;align-items:center;gap:7px;color:#bdcfd5;font-size:10px}
+.cmp-bridge-bottom strong{color:#ffcb8c;font-size:20px;font-variant-numeric:tabular-nums}
+.cmp-foot{margin-top:8px;color:#748d9f;font-size:9px;line-height:1.5}
+.cmp-compare-controls{display:flex;justify-content:space-between;align-items:center;gap:10px}
+.cmp-compare-controls select{min-width:90px;color:#b4ecf0;border:1px solid rgba(100,181,201,.35);background:#0a2c3d;border-radius:7px;font-size:11px;padding:6px 9px}
+.cmp-compare-controls .vs{color:#6b95ac;font-size:10px}
+.cmp-change{display:flex;align-items:baseline;justify-content:space-between;margin-top:4px;gap:8px}
+.cmp-change strong{color:#85e9ce;font-size:23px;font-weight:900;font-variant-numeric:tabular-nums}
+.cmp-change span{color:#9db5c2;font-size:10px}
+.cmp-scatter-info{display:flex;flex-wrap:wrap;gap:8px 10px;justify-content:center;margin-top:-5px}
+.cmp-scatter-info span{display:inline-flex;align-items:center;gap:4px;color:#a8c3ce;font-size:9px}
+.cmp-scatter-info i{width:7px;height:7px;display:inline-block;border-radius:50%}
+.cmp-scatter circle.datapoint{cursor:pointer;transition:r .18s,stroke-width .18s;filter:drop-shadow(0 0 6px rgba(87,220,195,.24))}
+.cmp-scatter circle.datapoint:hover,.cmp-scatter circle.datapoint.active{stroke:#fff;stroke-width:3}
+.cmp-scatter text{font-family:Inter,"PingFang SC",sans-serif}
+.cmp-value{font-variant-numeric:tabular-nums}
+.compare-note{margin:0 0 15px;font-size:9px;color:#7393a3;line-height:1.55}
+.block-head{position:relative;align-items:center;margin-bottom:11px}
+.block-head h2{font-size:19px}
+.block-head>div:first-child>p{display:none}
+.block-note{display:none}
+.explain-toggle{margin-left:auto;align-self:center;flex:0 0 auto;max-width:min(410px,40%);border:1px solid rgba(111,173,197,.2);border-radius:8px;background:rgba(7,27,42,.8);padding:0}
+.explain-toggle>summary{list-style:none;padding:7px 10px;color:#89bac9;cursor:pointer;font-size:10px;font-weight:750}
+.explain-toggle>summary::-webkit-details-marker{display:none}
+.explain-toggle>summary:before{content:"⊕  "}
+.explain-toggle[open]>summary:before{content:"⊖  "}
+.explain-toggle>div{padding:0 10px 10px;color:#b3ced8;font-size:10px;line-height:1.65}
+.section-block{padding:18px 19px;margin-top:13px}
+.history-visual{border-color:rgba(89,153,188,.2)}
+.history-layout{grid-template-columns:minmax(0,1.8fr) minmax(210px,.52fr)}
+.history-detail{padding:14px}
+.history-detail p{font-size:10px;line-height:1.55}
+.donut-wrap{min-height:170px}
+.donut-svg{width:min(100%,190px)}
+.structure-layout{grid-template-columns:minmax(190px,.6fr) minmax(0,1.3fr) minmax(220px,.8fr)}
+.growth-bars{gap:13px}
+.growth-callout{margin-top:11px;padding:9px;font-size:9px}
+.evidence-card{min-height:100px;padding:13px}
+.evidence-card p{display:none}
+.evidence-card strong{margin-top:11px}
+.evidence-status{font-size:8px;letter-spacing:-.01em}
+.evidence-detail{display:none}
+.evidence-drawer{border:1px solid rgba(88,175,175,.28);border-radius:11px;background:#0b2936;margin-top:9px;overflow:hidden}
+.evidence-drawer>summary{list-style:none;cursor:pointer;padding:11px 14px;display:flex;justify-content:space-between;color:#a0e6d9;font-size:10px;font-weight:800}
+.evidence-drawer>summary::-webkit-details-marker{display:none}
+.evidence-drawer>summary:after{content:"＋"}
+.evidence-drawer[open]>summary:after{content:"－"}
+.evidence-drawer[open] .evidence-detail{display:grid;margin:0;border:0;background:transparent;border-radius:0}
+.inspector-panel{min-height:0;padding:0;flex:0 0 auto;overflow:hidden}
+.inspector-fold{display:block}
+.inspector-fold>summary{list-style:none;cursor:pointer;padding:14px 17px;display:flex;align-items:center;gap:9px;justify-content:space-between;font-size:11px;color:#acd5dd;font-weight:800}
+.inspector-fold>summary::-webkit-details-marker{display:none}
+.inspector-fold>summary:after{content:"＋";color:#6dd9c4;font-size:16px}
+.inspector-fold[open]>summary:after{content:"－"}
+.inspector-fold[open] #inspector{padding:0 17px 16px;border-top:1px solid rgba(110,176,191,.17)}
+.tree-panel{min-height:675px}
+.tree-stage{height:525px}
+.tree-head .section-sub{display:none}
+.tree-legend{bottom:12px}
+.tree-side{gap:10px}
+.target-brief{padding:16px}
+.target-options{margin-top:9px}
+.goal-card .goal-base{min-height:0}
+.goal-card{padding:14px}
+.goal-card .goal-caveat{font-size:9px}
+.goals-grid{gap:10px}
+.evidence-grid{grid-template-columns:repeat(3,minmax(0,1fr))}
+@media(max-width:1180px){.compare-deck{grid-template-columns:1fr 1fr}.compare-deck .cmp-panel:last-child{grid-column:1/-1}.cmp-panel:last-child svg{max-height:210px}.structure-layout{grid-template-columns:200px minmax(0,1fr)}.growth-card{grid-column:1/-1}.growth-bars{grid-template-columns:repeat(3,minmax(0,1fr))}}
+@media(max-width:900px){.compare-deck{grid-template-columns:1fr 1fr}.compare-deck .cmp-panel:last-child{grid-column:1/-1}.tree-panel{min-height:640px}.tree-stage{height:500px}}
+@media(max-width:620px){.hero-kpis{margin-bottom:8px}.page-intro h1{font-size:26px}.compare-deck{grid-template-columns:1fr;gap:8px;margin-bottom:8px}.compare-deck .cmp-panel:last-child{grid-column:auto}.cmp-panel{padding:13px}.cmp-panel svg{max-height:230px}.cmp-panel:first-child{padding:14px}.cmp-title{font-size:14px}.cmp-bridge-text strong{font-size:22px}.cmp-track{height:20px;margin-top:12px}.cmp-scatter{max-width:390px;margin:auto}.section-block{padding:12px}.block-head{align-items:start;gap:8px}.block-head h2{font-size:16px}.explain-toggle{max-width:105px}.explain-toggle>summary{padding:7px 8px;font-size:9px}.history-layout{grid-template-columns:1fr}.structure-layout{grid-template-columns:1fr}.growth-card{grid-column:auto}.growth-bars{grid-template-columns:1fr}.tree-panel{min-height:0}.tree-stage{height:420px}.tree-legend{max-width:47%}.target-brief{padding:14px}.goals-grid,.evidence-grid{grid-template-columns:1fr 1fr}.evidence-card{min-height:90px}.evidence-card strong{font-size:11px}.evidence-detail{grid-template-columns:1fr}}
+@media(max-width:380px){.compare-deck{grid-template-columns:1fr}.kpi-card{padding:12px}.goals-grid,.evidence-grid{grid-template-columns:1fr}.tree-stage{height:385px}}
+@media(prefers-reduced-motion:reduce){.cmp-scatter circle.datapoint{transition:none}}
