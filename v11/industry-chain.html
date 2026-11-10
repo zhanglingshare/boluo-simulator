@@ -1,0 +1,517 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<title>03 产业环节 · 一条链上，哪一段是空的｜博罗决策风洞 V11</title>
+<meta name="description" content="深色霓虹科技风的产业环节解剖台：六个产业放在同一张四段链上，厚度=公开现场数，空段=没有公开主体。点产业整屏聚焦，点环节亮起主体与证据，最薄一环可带进风洞。">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="theme-color" content="#050b16">
+<script src="../assets/boluo-access.js?v=20261108-inline2" data-bl-access="inline"></script>
+<style>
+:root{
+  --bg0:#050b16; --bg1:#081424; --bg2:#0b1a33;
+  --panel:linear-gradient(180deg,rgba(24,40,68,.62),rgba(11,22,42,.55));
+  --panel-border:rgba(104,158,228,.16);
+  --cyan:#3fc0ff; --cyan-bright:#86d8ff; --blue:#2f9bff; --orange:#ff8a3d;
+  --ink:#f3f8ff; --t2:#a9bed8; --t3:#6c809c;
+  --glow:0 0 22px rgba(63,192,255,.4);
+  --r:14px;
+}
+*{box-sizing:border-box}
+html,body{margin:0}
+body{
+  color:var(--ink);
+  font-family:-apple-system,BlinkMacSystemFont,"SF Pro Text","PingFang SC","Hiragino Sans GB","Microsoft Yahei",sans-serif;
+  -webkit-font-smoothing:antialiased;text-rendering:optimizeLegibility;font-size:14px;line-height:1.6;
+  background:
+   radial-gradient(1200px 620px at 82% -12%, rgba(47,155,255,.18), transparent 60%),
+   radial-gradient(900px 520px at -10% 18%, rgba(63,192,255,.1), transparent 55%),
+   radial-gradient(800px 500px at 50% 120%, rgba(47,155,255,.1), transparent 60%),
+   linear-gradient(180deg,var(--bg0) 0%,var(--bg1) 52%,var(--bg2) 100%);
+  min-height:100vh;position:relative;
+}
+body::before{
+  content:"";position:absolute;inset:0;pointer-events:none;z-index:0;
+  background-image:
+   linear-gradient(rgba(120,165,225,.05) 1px,transparent 1px),
+   linear-gradient(90deg,rgba(120,165,225,.05) 1px,transparent 1px);
+  background-size:44px 44px;
+  mask-image:radial-gradient(ellipse 90% 70% at 50% 0%,#000 40%,transparent 100%);
+  -webkit-mask-image:radial-gradient(ellipse 90% 70% at 50% 0%,#000 40%,transparent 100%);
+}
+a{color:inherit;text-decoration:none}
+button{font:inherit;cursor:pointer;-webkit-tap-highlight-color:transparent;background:none;border:0;color:inherit}
+.num{font-variant-numeric:tabular-nums}
+
+.topbar{position:sticky;top:0;z-index:30;background:#060d16;border-bottom:1px solid var(--panel-border)}
+.topbar-in{max-width:1120px;margin:0 auto;padding:12px 24px;display:flex;align-items:center;gap:18px}
+.brand{font-size:13.5px;font-weight:800;display:flex;flex-direction:column;line-height:1.2;white-space:nowrap}
+.brand small{font-size:9px;color:var(--t3);font-weight:600;letter-spacing:.06em;margin-top:2px}
+.nav{display:flex;gap:2px;margin-left:auto;flex-wrap:wrap}
+.nav a{font-size:12px;color:var(--t2);padding:7px 10px;border-radius:8px;font-weight:600;white-space:nowrap}
+.nav a:hover{background:rgba(63,192,255,.12);color:var(--cyan)}
+.nav a.cur{color:var(--cyan);background:rgba(63,192,255,.14);box-shadow:inset 0 0 0 1px rgba(63,192,255,.25)}
+
+.wrap{position:relative;z-index:1;max-width:1120px;margin:0 auto;padding:0 24px 72px}
+.kick{font-size:10px;letter-spacing:.2em;font-weight:800;color:var(--cyan);margin:36px 0 12px;text-shadow:var(--glow)}
+h1{font-size:clamp(25px,3.4vw,36px);font-weight:850;letter-spacing:-.035em;line-height:1.2;margin:0 0 14px;text-shadow:0 0 28px rgba(63,192,255,.3)}
+.lede{font-size:14.5px;line-height:1.78;color:var(--t2);max-width:680px;margin:0}
+.meta{font-size:11px;color:var(--t3);margin-top:12px}
+
+.kpis{display:grid;grid-template-columns:repeat(4,1fr);gap:12px;margin-top:26px}
+.kpi{background:var(--panel);border:1px solid var(--panel-border);border-radius:12px;padding:14px 16px;box-shadow:inset 0 1px 0 rgba(255,255,255,.05)}
+.kpi span{display:block;font-size:10px;color:var(--t3);font-weight:600;margin-bottom:7px;letter-spacing:.02em}
+.kpi b{font-size:26px;font-weight:850;letter-spacing:-.03em;line-height:1;color:#fff;text-shadow:var(--glow)}
+.kpi b.warn{color:var(--orange);text-shadow:0 0 22px rgba(255,138,61,.45)}
+.kpi small{font-size:11.5px;color:var(--t3);font-weight:600;margin-left:3px}
+.tension{margin-top:12px;font-size:12.5px;color:var(--t2);padding:11px 14px;border-left:2px solid var(--orange);background:rgba(255,138,61,.06);border-radius:0 8px 8px 0}
+.tension b{color:var(--orange)}
+
+.guess{margin-top:26px;background:var(--panel);border:1px solid var(--panel-border);border-radius:var(--r);padding:16px 18px}
+.guess p{margin:0 0 11px;font-size:12.5px;color:var(--ink);font-weight:700}
+.guess .row{display:flex;flex-wrap:wrap;gap:7px}
+.guess button{border:1px solid rgba(104,158,228,.22);background:rgba(255,255,255,.03);border-radius:8px;padding:7px 12px;font-size:11.5px;font-weight:700;color:var(--t2)}
+.guess button.on{border-color:var(--cyan);color:var(--cyan-bright);background:rgba(63,192,255,.12);box-shadow:var(--glow)}
+.guess .hint{margin:11px 0 0;font-size:11.5px;color:var(--t3);line-height:1.6;min-height:18px}
+.guess .hint b{color:var(--cyan-bright)}
+
+.secs{display:flex;gap:8px;flex-wrap:wrap;margin:24px 0 0}
+.sec{position:relative;display:flex;align-items:center;gap:9px;padding:10px 14px;border-radius:10px;border:1px solid rgba(104,158,228,.18);background:rgba(255,255,255,.03);font-size:12.5px;font-weight:700;color:var(--t2);transition:all .18s ease}
+.sec:hover{border-color:rgba(63,192,255,.5);color:var(--cyan-bright)}
+.sec.on{border-color:var(--cyan);background:rgba(63,192,255,.13);color:#fff;box-shadow:var(--glow)}
+.sec i{font-style:normal;font-size:10px;color:var(--t3);font-weight:700;letter-spacing:.06em}
+
+.layout{display:grid;grid-template-columns:minmax(0,7fr) minmax(0,5fr);gap:22px;margin-top:18px;align-items:start}
+.panel{background:var(--panel);border:1px solid var(--panel-border);border-radius:var(--r);box-shadow:inset 0 1px 0 rgba(255,255,255,.06),0 14px 34px rgba(0,0,0,.38);backdrop-filter:blur(10px);-webkit-backdrop-filter:blur(10px)}
+.chart{padding:16px 14px 10px;position:relative;overflow:hidden}
+.chart-head{display:flex;align-items:baseline;justify-content:space-between;gap:12px;padding:0 6px 6px}
+.chart-head h2{margin:0;font-size:13.5px;font-weight:800}
+.chart-head span{font-size:10.5px;color:var(--t3);font-weight:600}
+.chart svg{width:100%;height:auto;display:block}
+.legend{display:flex;gap:14px;flex-wrap:wrap;justify-content:center;font-size:10.5px;color:var(--t2);padding:4px 0 6px}
+.legend i{width:9px;height:9px;border-radius:2px;display:inline-block;vertical-align:middle;margin-right:5px}
+.legend .lg-live{background:#3fc0ff;box-shadow:0 0 8px rgba(63,192,255,.8)}
+.legend .lg-wip{background:rgba(63,192,255,.25);border:1px dashed rgba(134,216,255,.8)}
+.legend .lg-out{background:var(--orange);box-shadow:0 0 8px rgba(255,138,61,.75)}
+.legend .lg-none{background:transparent;border:1px dashed rgba(216,195,154,.7)}
+
+.side{padding:18px}
+.side h3{margin:0 0 2px;font-size:15px;font-weight:850}
+.side .en{font-size:9.5px;letter-spacing:.12em;color:var(--t3);font-weight:700;margin:0 0 12px}
+.read{font-size:12.5px;line-height:1.75;color:var(--t2);margin:0 0 13px}
+.read b{color:var(--cyan-bright)}
+.kv{display:flex;flex-direction:column;gap:9px;margin-bottom:14px}
+.kv div{display:flex;gap:9px;font-size:11.5px;line-height:1.6}
+.kv em{font-style:normal;flex:none;width:64px;color:var(--t3);font-weight:700}
+.kv span{color:var(--t2)}
+.gapbox{border:1px dashed rgba(216,195,154,.55);background:rgba(253,250,243,.04);border-radius:10px;padding:11px 13px;font-size:11px;color:#d8b57c;line-height:1.65;margin-bottom:14px}
+.acts{display:flex;gap:8px;flex-wrap:wrap}
+.btn{border:1px solid rgba(104,158,228,.25);background:rgba(255,255,255,.04);color:var(--ink);border-radius:9px;padding:9px 14px;font-size:12px;font-weight:700}
+.btn:hover{border-color:var(--cyan);color:var(--cyan)}
+.btn.primary{background:linear-gradient(135deg,var(--blue),#1d6fe0);border-color:transparent;color:#fff;box-shadow:0 8px 22px -6px rgba(47,155,255,.7)}
+
+.det{grid-column:1/-1;padding:0 18px 16px;border-top:1px solid rgba(104,158,228,.12);margin-top:2px}
+.det .dh{display:flex;align-items:baseline;gap:9px;padding:14px 0 6px;flex-wrap:wrap}
+.det .dh h4{margin:0;font-size:13px;font-weight:800}
+.det .tag{font-size:10px;font-weight:800;padding:2px 7px;border-radius:5px;letter-spacing:.04em}
+.det .tag.live{color:#7ff0e4;background:rgba(42,208,196,.12);box-shadow:inset 0 0 0 1px rgba(42,208,196,.35)}
+.det .tag.wip{color:var(--cyan-bright);background:rgba(63,192,255,.12);box-shadow:inset 0 0 0 1px rgba(63,192,255,.35)}
+.det .tag.out{color:var(--orange);background:rgba(255,138,61,.12);box-shadow:inset 0 0 0 1px rgba(255,138,61,.4)}
+.det .q{margin:0;font-size:11.5px;color:var(--t2);line-height:1.7}
+.det .towers{display:flex;gap:6px;flex-wrap:wrap;margin-top:10px}
+.det .tw{font-size:11px;color:var(--t) ;background:rgba(255,255,255,.04);border:1px solid rgba(104,158,228,.16);border-radius:7px;padding:5px 9px;font-weight:600;color:var(--t2)}
+
+.plat{margin-top:22px}
+.plat-head{display:flex;align-items:baseline;gap:10px;flex-wrap:wrap;margin:0 0 10px}
+.plat-head h2{margin:0;font-size:14px;font-weight:800}
+.plat-head span{font-size:11px;color:var(--t3)}
+.plat-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:10px}
+.pcard{background:var(--panel);border:1px solid var(--panel-border);border-radius:11px;padding:12px 13px}
+.pcard .top{display:flex;align-items:center;gap:7px;font-size:10px;font-weight:700;color:var(--t3)}
+.pcard .dot{width:7px;height:7px;border-radius:50%;flex:none}
+.pcard .dot.live{background:#2ad0c4;box-shadow:0 0 8px #2ad0c4}
+.pcard .dot.wip{background:var(--cyan);box-shadow:0 0 8px var(--cyan)}
+.pcard .dot.out{background:var(--orange);box-shadow:0 0 8px var(--orange)}
+.pcard b{display:block;font-size:17px;font-weight:850;margin:7px 0 3px;letter-spacing:-.02em;color:#fff}
+.pcard small{font-size:11px;color:var(--t2);line-height:1.55}
+
+.foot{margin-top:34px;padding-top:18px;border-top:1px solid var(--panel-border);font-size:10.5px;color:var(--t3);line-height:1.9}
+.foot b{color:var(--t2)}
+
+@media(max-width:960px){
+ .kpis{grid-template-columns:1fr 1fr}
+ .layout{grid-template-columns:1fr}
+ .plat-grid{grid-template-columns:1fr 1fr}
+ .topbar-in{padding:11px 16px;gap:10px}
+ .wrap{padding:0 16px 60px}
+ .nav{overflow-x:auto;flex-wrap:nowrap;width:100%}
+}
+@media(max-width:520px){
+ .plat-grid{grid-template-columns:1fr}
+ .kpi b{font-size:22px}
+}
+</style>
+</head>
+<body>
+<header class="topbar">
+ <div class="topbar-in">
+  <a class="brand" href="./index.html">博罗决策风洞<small>V11 · 产业环节解剖</small></a>
+  <nav class="nav" aria-label="V11导航">
+   <a href="./index.html">01 风洞</a>
+   <a href="./holo.html">02 全息关系</a>
+   <a href="./industry-chain.html" class="cur" aria-current="page">03 产业环节</a>
+   <a href="./relations.html">04 关系</a>
+   <a href="./impact.html">05 影响</a>
+   <a href="./wind.html">07 风洞</a>
+  </nav>
+ </div>
+</header>
+
+<main class="wrap">
+ <p class="kick">VALUE CHAIN · 产业环节解剖</p>
+ <h1>一条链上，<br>哪一段是空的？</h1>
+ <p class="lede">01 看时间与压力，02 看谁连着谁。这一页把产业拆开：六个产业放在同一张四段链上——原料、加工、配套、出货。方块厚度就是公开现场数，空段是没有公开主体，不代表不存在。</p>
+ <p class="meta num" id="meta"></p>
+
+ <div class="kpis">
+  <div class="kpi"><span>规上工业总产值 · 2026</span><b class="num">超 2000<small>亿</small></b></div>
+  <div class="kpi"><span>规上工业增加值 · 前三季</span><b class="num">+8.9<small>%</small></b></div>
+  <div class="kpi"><span>工业投资 · 前三季</span><b class="num warn">−44.7<small>%</small></b></div>
+  <div class="kpi"><span>农林牧渔总产值 · 公开口径</span><b class="num">130.32<small>亿</small></b></div>
+ </div>
+ <p class="tension"><b>三件事可以同时成立：</b>产值在涨、投资在降、就业没有公布。这一页不排序、不加总，只把每个产业的链条摊开，看它缺的是哪一段。</p>
+
+ <section class="guess" aria-label="先猜">
+  <p>先猜一个：六个产业里，哪个产业的现场<b>全部挤在末端</b>，前面三段是空的？</p>
+  <div class="row" id="guessRow"></div>
+  <p class="hint" id="guessHint"></p>
+ </section>
+
+ <div class="secs" id="secs" role="tablist" aria-label="选择产业"></div>
+
+ <div class="layout">
+  <section class="panel chart" aria-label="产业环节剖面">
+   <div class="chart-head"><h2 id="chartTitle">铜箔与电池材料 · 四段链</h2><span>点方块看现场 · 点段名看这一段</span></div>
+   <svg id="chainSvg" viewBox="0 0 560 400" role="img" aria-label="产业环节剖面：四段链上堆叠的现场方块"></svg>
+   <div class="legend">
+    <span><i class="lg-live"></i>已投产</span>
+    <span><i class="lg-wip"></i>在途（签约/在建）</span>
+    <span><i class="lg-out"></i>退出或受阻</span>
+    <span><i class="lg-none"></i>无公开现场</span>
+   </div>
+  </section>
+
+  <aside class="panel side" aria-label="这一条链怎么读">
+   <h3 id="sideName">铜箔与电池材料</h3>
+   <p class="en" id="sideEn">COPPER → CELL</p>
+   <p class="read" id="sideRead"></p>
+   <div class="kv">
+    <div><em>撑住的</em><span id="sideCap"></span></div>
+    <div><em>缺的条件</em><span id="sideGap"></span></div>
+   </div>
+   <div class="gapbox" id="sideGapBox"></div>
+   <div class="acts">
+    <button class="btn primary" id="toWind">把最薄的一环带进风洞</button>
+    <button class="btn" id="toHolo">看它牵着谁</button>
+   </div>
+  </aside>
+
+  <section class="panel det" aria-label="现场详情">
+   <div class="dh"><h4 id="detTitle">点一个方块</h4><span class="tag live" id="detTag" style="display:none"></span></div>
+   <p class="q" id="detQ">图上每个方块是一个公开现场。点一下，看它属于哪一段、卡在哪句话上。</p>
+   <div class="towers" id="detList"></div>
+  </section>
+ </div>
+
+ <section class="plat" aria-label="跨产业的平台层">
+  <div class="plat-head"><h2>四条链之外的平台层</h2><span>这四个现场不属于某一条链，它们同时给几条链供地、供水、供电、供厂房。</span></div>
+  <div class="plat-grid" id="platGrid"></div>
+ </section>
+
+ <div class="foot">
+  <b>口径说明：</b>环节归类依据现场的产品角色与工艺位置，属分析判断，不等于统计分类；方块为一个公开现场，厚度即数量，不做产值加权。在途只表示签约或在建，不代表已形成产能。<br>
+  <b>数据缺口：</b>本地配套的实际交易关系、各环节的对外客户与物流数据均未公开，标为「缺的条件」，交公开渠道补齐后再判断。<br>
+  <b>这一页回答什么：</b>博罗现在靠哪几段在运转、哪一段没有主体。具体影响谁、条件变了会怎样，留给 05 影响与 07 风洞。
+ </div>
+</main>
+
+<script src="./discovery-data.js?v=20261109-struct"></script>
+<script>
+(function(){
+ 'use strict';
+ var D=window.BoluoDiscoveryData;
+ var evMap={};
+ if(D&&D.events){D.events.forEach(function(e){evMap[e.id]=e;});}
+ var metaEl=document.getElementById('meta');
+ if(!D||!evMap){metaEl.textContent='数据未加载，请刷新后重试。';return;}
+ metaEl.textContent='数据版本 '+D.version+' · 核对于 '+D.checkedAt+' · 现场 '+Object.keys(evMap).length+' 条';
+
+ var SECS=[
+  {key:'copper',name:'铜箔与电池材料',en:'COPPER → CELL',short:'铜箔电池',
+   raw:['copper'],processing:['shenyuan','xincheng','jinliyuan'],support:['jiage'],delivery:[],
+   read:'原料端<b>刚点火</b>，中段三家在建或投产，末端<b>没有公开现场</b>。',
+   cap:'铜杆—铜箔加工、储能集成',
+   gap:'电芯与模组的对外客户、废料回收闭环',
+   gapbox:'三家加工现场都没有披露「电芯卖给谁」。嘉奇能源只暴露 1 家，回收是否闭环没有公开证据。'},
+  {key:'precision',name:'精密机械与电子',en:'PRECISION & ELECTRONICS',short:'精密机械',
+   raw:[],processing:['hande','qicaihong','xingrui','sanren','quanli','yixin','jiayou','longxi','jintian'],support:['xunling'],delivery:[],
+   read:'九个现场<b>全在中段</b>，两头都空：本地做加工，材料与客户都在外面。',
+   cap:'精密结构件、精密模具、电子组装',
+   gap:'上游材料来源、下游客户集中度',
+   gapbox:'签约与在建占多数（汉德 15 亿、义新 2 亿、佳有 2 亿等），但没有任何一条公开过「材料从哪进、成品卖给谁」。'},
+  {key:'food',name:'食品与无菌灌装',en:'FOOD & FILLING',short:'食品灌装',
+   raw:[],processing:['yetai','dongweifeng','xianghao'],support:[],delivery:[],
+   read:'三条线都在中段：<b>前端本地农产品供应、后端渠道都没披露</b>。',
+   cap:'无菌灌装、甜玉米加工',
+   gap:'原料来自哪些镇、产品销往哪里',
+   gapbox:'椰泰 8 条线、东维丰 16 条线、祥浩 6 条线都是加工能力；它们的原料是不是本地农产品，没有公开证据，所以这里不放任何「就地取材」的说法。'},
+  {key:'build',name:'建材 · 水泥',en:'CEMENT',short:'建材水泥',
+   raw:['cement'],processing:[],support:[],delivery:[],
+   read:'整条链只剩原料端<b>一条已关停产线</b>，这是一个退出样本。',
+   cap:'（该产线已退出）',
+   gap:'关停后的产能与人员去向',
+   gapbox:'公庄熟料线 2500 吨/日 已关停、主体设备拆除。关掉的产能去哪了、人往哪去了，两条都没有公开数据。'},
+  {key:'tour',name:'文旅与户外运动',en:'TOUR & OUTDOOR',short:'文旅户外',
+   raw:[],processing:[],support:[],delivery:['mofang','henghe','minsu','road218','fubo','tianhong','taimeig','dongshan','luofushanju','litian'],
+   read:'十个现场<b>全在末端</b>。游客花出去的钱，落在哪一环没有证据。',
+   cap:'户外赛事运营、民宿与商业配套',
+   gap:'过夜率、客单价、本地采购占比',
+   gapbox:'现场能证明「有人来、有地方住、有路可走」，但证明不了「钱留在本地哪一环」。这是全页最需要补数据的一条链。'},
+  {key:'agri',name:'农业种植与初加工',en:'AGRICULTURE',short:'农业初加工',
+   raw:['tea'],processing:[],support:[],delivery:[],
+   read:'只有原料端<b>一个合作社样本</b>，加工与渠道缺证据。',
+   cap:'茶叶种植与初制',
+   gap:'合作社带动数据、加工环节主体',
+   gapbox:'柏塘新陂合作社春茶干茶 2500 斤，是唯一可核的农业现场。全县农业总产值 130.32 亿、食品加工 +9.8% 是另外两个口径，不能直接接到这条链上。'}
+ ];
+ var PLAT=['futian','luofufuture','sign4','huzhen'];
+
+ SECS.forEach(function(s){
+  s.raw=s.raw.filter(function(id){return evMap[id];});
+  s.processing=s.processing.filter(function(id){return evMap[id];});
+  s.support=s.support.filter(function(id){return evMap[id];});
+  s.delivery=s.delivery.filter(function(id){return evMap[id];});
+  s.total=s.raw.length+s.processing.length+s.support.length+s.delivery.length;
+  s.stages=[{key:'raw',name:'原料',en:'RAW',ids:s.raw},{key:'processing',name:'加工',en:'PROCESS',ids:s.processing},{key:'support',name:'配套',en:'SUPPORT',ids:s.support},{key:'delivery',name:'出货',en:'DELIVERY',ids:s.delivery}];
+ });
+
+ var active=SECS[0].key,activeStage=null,detId=null,picked=null,revealed=false;
+ var SVGNS='http://www.w3.org/2000/svg';
+
+ function cur(){return SECS.filter(function(s){return s.key===active;})[0];}
+ function thinStage(s){
+  var best=s.stages[0],i;
+  for(i=1;i<s.stages.length;i++){
+   if(s.stages[i].ids.length<best.ids.length)best=s.stages[i];
+  }
+  return best;
+ }
+ function stateRank(st){return st==='out'?0:st==='wip'?1:2;}
+
+ /* ---------- 产业选择 ---------- */
+ function drawSecs(){
+  var box=document.getElementById('secs');
+  box.innerHTML=SECS.map(function(s){
+   return '<button class="sec'+(s.key===active?' on':'')+'" data-key="'+s.key+'" role="tab" aria-selected="'+(s.key===active)+'">'
+    +s.short+'<i>'+s.total+' 现场</i></button>';
+  }).join('');
+  Array.prototype.forEach.call(box.querySelectorAll('.sec'),function(b){
+   b.addEventListener('click',function(){
+    active=b.getAttribute('data-key');activeStage=null;detId=null;
+    drawSecs();drawChart();drawSide();drawDet();
+   });
+  });
+ }
+
+ /* ---------- 主图：四段链 + 堆叠方块 ---------- */
+ function drawChart(){
+  var s=cur();
+  document.getElementById('chartTitle').textContent=s.name+' · 四段链';
+  var svg=document.getElementById('chainSvg');
+  var W=560,H=400,base=318,top=140;
+  var xs=[86,214,342,470];
+  var bw=64,gap=5;
+  var maxN=1;s.stages.forEach(function(st){maxN=Math.max(maxN,st.ids.length);});
+  /* 现场少时方块放大、现场多时切薄：厚度仍由方块数量表达，同时保证单块可读 */
+  var TARGET=165;
+  var bh=Math.round((TARGET-(maxN-1)*gap)/maxN);
+  bh=Math.max(12,Math.min(36,bh));
+  if(maxN*bh+(maxN-1)*gap>base-8-top){
+   bh=Math.max(10,Math.floor((base-8-top-(maxN-1)*gap)/maxN));
+  }
+  var stackH=Math.max(maxN*bh+(maxN-1)*gap,10);
+  var refH=Math.max(stackH,64);
+  var out='';
+
+  out+='<defs>'
+   +'<filter id="g1" x="-40%" y="-40%" width="180%" height="180%"><feGaussianBlur stdDeviation="3" result="b"/><feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge></filter>'
+   +'<linearGradient id="blockOn" x1="0" y1="0" x2="1" y2="1"><stop offset="0%" stop-color="#8fdcff"/><stop offset="55%" stop-color="#3fc0ff"/><stop offset="100%" stop-color="#1a6fc4"/></linearGradient>'
+   +'<linearGradient id="blockOff" x1="0" y1="0" x2="1" y2="1"><stop offset="0%" stop-color="#ffb37a"/><stop offset="100%" stop-color="#e05f18"/></linearGradient>'
+   +'<linearGradient id="beam" x1="0" y1="0" x2="0" y2="1"><stop offset="0%" stop-color="rgba(63,192,255,.22)"/><stop offset="100%" stop-color="rgba(63,192,255,0)"/></linearGradient>'
+   +'</defs>';
+
+  /* 纵向光柱 */
+  xs.forEach(function(x){
+   out+='<rect x="'+(x-bw/2-8)+'" y="86" width="'+(bw+16)+'" height="'+(base-86)+'" fill="url(#beam)" opacity=".55"/>';
+  });
+  /* 基线 */
+  out+='<line x1="26" y1="'+(base+2)+'" x2="534" y2="'+(base+2)+'" stroke="rgba(63,192,255,.45)" stroke-width="1.4" filter="url(#g1)"/>';
+
+  s.stages.forEach(function(st,i){
+   var x=xs[i],n=st.ids.length;
+   var isStage=(activeStage===st.key);
+   var stageDim=(activeStage&&activeStage!==st.key);
+   out+='<g opacity="'+(stageDim?'.42':'1')+'">';
+   out+='<text x="'+x+'" y="62" text-anchor="middle" style="font-size:13px;font-weight:800;fill:'+(isStage?'#86d8ff':'#dbe8f8')+'">'+st.name+'</text>';
+   out+='<text x="'+x+'" y="76" text-anchor="middle" style="font-size:9px;letter-spacing:.1em;font-weight:700;fill:#6c809c">'+st.en+'</text>';
+   out+='<text x="'+x+'" y="'+(base+20)+'" text-anchor="middle" style="font-size:11px;font-weight:800;fill:'+(n?'#86d8ff':'#d8b57c')+'">'+(n?n+' 个现场':'无公开现场')+'</text>';
+
+   if(!n){
+    out+='<rect x="'+(x-bw/2)+'" y="'+(base-8-refH)+'" width="'+bw+'" height="'+refH+'" rx="8" fill="none" stroke="rgba(216,195,154,.45)" stroke-width="1.2" stroke-dasharray="6 5"/>'
+     +'<text x="'+x+'" y="'+(base-8-refH/2)+'" text-anchor="middle" style="font-size:10px;font-weight:700;fill:#d8b57c">空段</text>';
+   }else{
+    var track=base-8;
+    st.ids.slice().sort(function(a,b){return stateRank(evMap[b].state)-stateRank(evMap[a].state);}).forEach(function(id,j){
+     var e=evMap[id];
+     var y=track-(j+1)*bh-j*gap;
+     var isOut=e.state==='out',isWip=e.state==='wip';
+     var fill=isOut?'url(#blockOff)':isWip?'rgba(63,192,255,.22)':'url(#blockOn)';
+     var stroke=isOut?'rgba(255,138,61,.9)':isWip?'rgba(134,216,255,.85)':'rgba(134,216,255,.55)';
+     var dash=isWip?' stroke-dasharray="5 4"':'';
+     var dim=(detId&&detId!==id)?' opacity=".35"':'';
+     out+='<g class="blk" data-id="'+id+'" data-stage="'+st.key+'"'+dim+' style="cursor:pointer">'
+      +'<rect x="'+(x-bw/2)+'" y="'+y+'" width="'+bw+'" height="'+bh+'" rx="4" fill="'+fill+'" stroke="'+stroke+'" stroke-width="1.2"'+dash+'/>';
+     if(bh>=12){
+      out+='<text x="'+x+'" y="'+(y+bh/2+4)+'" text-anchor="middle" style="font-size:9.5px;font-weight:700;fill:'+(isWip?'#bfe9ff':'#04212f')+'">'+e.town.replace(/街道|镇/,'')+(isOut?' 停':'')+'</text>';
+     }
+     out+='</g>';
+    });
+   }
+   /* 段名可点 */
+   out+='<g class="stg" data-stage="'+st.key+'" style="cursor:pointer"><rect x="'+(x-34)+'" y="46" width="68" height="34" fill="transparent"/></g>';
+   out+='</g>';
+  });
+
+  /* 段间箭头 */
+  for(var i=0;i<3;i++){
+   var ax=xs[i]+bw/2+4;
+   out+='<path d="M'+ax+' '+(base-18)+' l14 8 l-14 8 z" fill="rgba(134,216,255,.5)"/>';
+  }
+
+  svg.innerHTML=out;
+  Array.prototype.forEach.call(svg.querySelectorAll('.blk'),function(g){
+   g.addEventListener('click',function(){detId=g.getAttribute('data-id');activeStage=g.getAttribute('data-stage');drawChart();drawDet();});
+  });
+  Array.prototype.forEach.call(svg.querySelectorAll('.stg'),function(g){
+   g.addEventListener('click',function(){
+    var k=g.getAttribute('data-stage');
+    activeStage=(activeStage===k?null:k);detId=null;drawChart();drawDet();});
+  });
+ }
+
+ /* ---------- 右栏 ---------- */
+ function drawSide(){
+  var s=cur();
+  document.getElementById('sideName').textContent=s.name;
+  document.getElementById('sideEn').textContent=s.en;
+  document.getElementById('sideRead').innerHTML=s.read;
+  document.getElementById('sideCap').textContent=s.cap;
+  document.getElementById('sideGap').textContent=s.gap;
+  document.getElementById('sideGapBox').innerHTML='<b>缺什么：</b>'+s.gapbox;
+ }
+
+ /* ---------- 详情 ---------- */
+ var STATE_TXT={live:'已投产',wip:'在途',out:'退出或受阻',stat:'统计口径'};
+ function drawDet(){
+  var t=document.getElementById('detTitle'),tag=document.getElementById('detTag'),q=document.getElementById('detQ'),list=document.getElementById('detList');
+  var s=cur();
+  if(detId&&evMap[detId]){
+   var e=evMap[detId];
+   t.textContent=e.title+(e.big?' · '+e.big+(e.unit||''):'');
+   tag.style.display='inline-block';tag.className='tag '+e.state;tag.textContent=STATE_TXT[e.state]||e.state;
+   q.textContent=(e.subtitle?e.subtitle+'。':'')+(e.question||'');
+   list.innerHTML='';
+   var stg=s.stages.filter(function(x){return x.ids.indexOf(detId)>=0;})[0];
+   var spans=['所在段：'+(stg?stg.name:'—')];
+   if(e.month)spans.push('月份：'+(e.month===0?'未定':e.month+' 月'));
+   spans.push('镇街：'+(e.town||'全县'));
+   list.innerHTML=spans.map(function(x){return '<span class="tw">'+x+'</span>';}).join('');
+   return;
+  }
+  tag.style.display='none';
+  if(activeStage){
+   var st=s.stages.filter(function(x){return x.key===activeStage;})[0];
+   t.textContent=st.name+' · '+st.ids.length+' 个现场';
+   q.textContent=st.ids.length?'这一段的现场如下。点任意一个方块看它卡在哪句话上。':'这一段没有公开现场——不是不存在，是没有公开主体。';
+   list.innerHTML=st.ids.map(function(id){var e=evMap[id];return '<button class="tw" data-id="'+id+'">'+e.title.replace(/^.*?· /,'')+' · '+(e.big||'')+(e.unit||'')+'</button>';}).join('')||'<span class="tw">空段</span>';
+  }else{
+   t.textContent=s.name+' · 全部 '+s.total+' 个现场';
+   q.textContent='按段列出来。点任意一个，看它属于哪一段、卡在哪句话上。';
+   list.innerHTML=s.stages.map(function(st){
+    if(!st.ids.length)return '';
+    var h='<span class="tw" style="border-color:rgba(63,192,255,.35);color:#86d8ff">'+st.name+'</span>';
+    return h+st.ids.map(function(id){
+     var e=evMap[id];
+     return '<button class="tw" data-id="'+id+'">'+e.title.replace(/^.*?· /,'')+' · '+(e.big||'')+(e.unit||'')+'</button>';
+    }).join('');
+   }).join('');
+   if(!s.total)list.innerHTML='<span class="tw">这一版没有归入现场</span>';
+  }
+  Array.prototype.forEach.call(list.querySelectorAll('[data-id]'),function(b){
+   b.addEventListener('click',function(){detId=b.getAttribute('data-id');drawChart();drawDet();});
+  });
+ }
+
+ /* ---------- 平台层 ---------- */
+ function drawPlat(){
+  document.getElementById('platGrid').innerHTML=PLAT.map(function(id){
+   var e=evMap[id];if(!e)return '';
+   return '<article class="pcard"><span class="top"><i class="dot '+e.state+'"></i>'+(e.town||'全县')+' · '+STATE_TXT[e.state]+'</span>'
+    +'<b>'+(e.big||'')+(e.unit||'')+'</b><small>'+e.title.replace(/^.*?· /,'')+(e.subtitle?' · '+e.subtitle:'')+'</small></article>';
+  }).join('');
+ }
+
+ /* ---------- 先猜 ---------- */
+ function drawGuess(){
+  var row=document.getElementById('guessRow');
+  row.innerHTML=SECS.map(function(s){
+   return '<button data-key="'+s.key+'"'+(picked===s.key?' class="on"':'')+'>'+s.short+'</button>';
+  }).join('')
+   +'<button data-key="__reveal" style="border-color:rgba(63,192,255,.4);color:#86d8ff">'+(revealed?'重新猜':'揭晓')+'</button>';
+  Array.prototype.forEach.call(row.querySelectorAll('button'),function(b){
+   b.addEventListener('click',function(){
+    var k=b.getAttribute('data-key');
+    if(k==='__reveal'){revealed?reset():reveal();return;}
+    if(revealed)reset();
+    picked=k;drawGuess();
+   });
+  });
+ }
+ function reveal(){
+  revealed=true;
+  var answer=SECS.filter(function(s){return s.total>0&&s.delivery.length===s.total;})[0];
+  var hint=document.getElementById('guessHint');
+  if(!answer){hint.textContent='这一版数据里没有这样的产业。';drawGuess();return;}
+  var line='<b>'+answer.name+'</b>：'+answer.total+' 个现场全在出货段，前面三段是空的。这就是「有人来，但钱留在哪一环没有证据」。';
+  if(picked===answer.key)line+='你猜对了。';
+  else if(picked)line+='你猜的是「'+SECS.filter(function(s){return s.key===picked;})[0].short+'」。';
+  else line+='你还没猜，先选一个。';
+  hint.innerHTML=line;drawGuess();
+ }
+ function reset(){revealed=false;picked=null;document.getElementById('guessHint').textContent='';drawGuess();}
+
+ /* ---------- 行动 ---------- */
+ document.getElementById('toWind').addEventListener('click',function(){
+  var s=cur(),th=thinStage(s);
+  location.href='./wind.html?from=industry&sector='+s.key+'&thin='+th.key;
+ });
+ document.getElementById('toHolo').addEventListener('click',function(){
+  var s=cur();
+  location.href='./holo.html?sector='+s.key;
+ });
+
+ drawSecs();drawChart();drawSide();drawDet();drawPlat();drawGuess();
+})();
+</script>
+</body>
+</html>
