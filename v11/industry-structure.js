@@ -128,7 +128,11 @@ document.addEventListener('click',e=>{
  const p=e.target.closest('[data-peer]');if(p){selectedPeer=p.dataset.peer;renderPeerDetail();return}
 });
 document.addEventListener('keydown',e=>{
- if((e.key==='Enter'||e.key===' ')&&e.target.matches('.scatter-dot')){e.preventDefault();selectedPeer=e.target.parentNode.dataset.peer;renderPeerDetail()}
+ if(e.key!=='Enter'&&e.key!==' ')return;
+ const sector=e.target.closest('#sectorMap [data-sector]');
+ if(sector){e.preventDefault();selectedSector=sector.dataset.sector;renderSectorList();renderSectorDetail();return}
+ const peer=e.target.closest('#peerScatter [data-peer]');
+ if(peer){e.preventDefault();selectedPeer=peer.dataset.peer;renderPeerDetail()}
 });
 $('netAdds').addEventListener('input',renderSlider);
 render();
