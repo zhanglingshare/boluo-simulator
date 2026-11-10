@@ -17,15 +17,15 @@ const fixture={
  [D.KEYS.challenge]:{v:2,claim:"orders",rival:2,evidence:0,proof:"alternative",note:"核实供应商清单",falsifier:"本地采购份额连续两个季度上升",threshold:"本地采购占比高于60%",horizon:"未来半年",confidence:72,at:stamp},
  [D.KEYS.region]:{topic:"cooperation",layer:"people",date:stamp,role:"resilient",flow:"agriculture",flowStage:4,pressure:{dependency:90,shock:90,substitute:10,score:999,touched:true}}
 };
-test("empty browser produces seven honest uncompleted stages and no fabricated experiment",()=>{
+test("empty browser produces eight honest uncompleted stages and no fabricated experiment",()=>{
  const d=D.load(storage(),storage());
- assert.equal(d.completed,0);assert.equal(d.total,7);assert.equal(d.wind,null);assert.equal(d.region,null);
+ assert.equal(d.completed,0);assert.equal(d.total,8);assert.equal(d.wind,null);assert.equal(d.region,null);
  assert.match(D.textSummary(d),/尚无已保存的条件实验/);
  assert.match(D.textSummary(d),/未保存不代表没有访问/);
 });
 test("research dossier retains bounded replay parameters and user-entered falsifiers",()=>{
  const d=D.load(storage(fixture),storage({[D.KEYS.windTemporary]:{shock:"orders",strength:1.2,buffer:true,base:{p10:1400,p50:1580,p90:1700},stress:{p10:1300,p50:1510,p90:1650},savedAt:stamp}}));
- assert.equal(d.completed,7);assert.equal(d.windSaved,true);
+ assert.equal(d.completed,7);assert.equal(d.total,8);assert.equal(d.future,null);assert.equal(d.windSaved,true);
  assert.equal(d.wind.scope,"仅所选路径");
  assert.deepEqual(d.wind.pathLabels,["存量企业扩能","本地价值链延伸"]);
  assert.equal(d.wind.baselineParams.count,5000);
@@ -52,11 +52,25 @@ test("untrusted and out-of-range scenario parameters are bounded or omitted",()=
 });
 test("page 11 exposes a research trace, evidence backlog, replay and export controls",()=>{
  const h=read("v11/brief.html"),js=read("v11/brief.js"),css=read("v11/brief.css");
- for(const id of ["researchLedger","ledgerSaved","ledgerExperiments","ledgerFalsifiers","ledgerOpen","windAudit","challengeAudit","regionAudit","evidenceQueue","reportStamp"])assert.match(h,new RegExp('id="'+id+'"'));
+ for(const id of ["researchLedger","ledgerSaved","ledgerExperiments","ledgerFalsifiers","ledgerOpen","windAudit","challengeAudit","regionAudit","futureAudit","evidenceQueue","reportStamp"])assert.match(h,new RegExp('id="'+id+'"'));
  assert.match(h,/保存为 PDF/);assert.match(h,/可核对的记录 JSON/);
  assert.match(js,/buildWindReplay/);assert.match(js,/buildRegionReplay/);assert.match(js,/renderLedger/);assert.match(js,/boluo-v11-research-dossier/);
  assert.match(css,/\.ledger-grid/);assert.match(css,/\.evidence-queue/);assert.match(css,/@media print/);
  assert.doesNotThrow(()=>new Function(js));
+});
+test("page 12 saved counterfactual is added as a separate eighth research record",()=>{
+ const C=require("../v11/future-core.js");
+ const snapshot=C.snapshot({scene:"agriculture",link:"a-new",mode:"add",intensity:85,year:2030});
+ const d=D.load(storage({...fixture,[D.KEYS.future]:[snapshot]}),storage());
+ assert.equal(d.completed,8);assert.equal(d.total,8);
+ assert.equal(d.future.scene,"agriculture");
+ assert.equal(d.future.link,"a-new");
+ assert.match(D.textSummary(d),/未来结构实验/);
+ assert.match(D.textSummary(d),/尚需证据/);
+ const forged={...snapshot,year:2099};
+ const invalid=D.load(storage({...fixture,[D.KEYS.future]:[forged]}),storage());
+ assert.equal(invalid.completed,7);
+ assert.equal(invalid.future,null);
 });
 test("page 10 replay link parser restores all three slider values and selected flow stage",()=>{
  const js=read("v11/region-lab.js");
