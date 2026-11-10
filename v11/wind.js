@@ -385,5 +385,6 @@ if(!goodModel()){
 }else{
  run(false);
 }
+window.BoluoWindCore={MODELS,PATHWAY_BRIDGE,testPaths,copyPaths,selectedChannels,affectedChannels,appliedChannels};
 window.BoluoWind={getState:()=>({...state,paths:state.paths.slice()}),rerun:(animate=false)=>run(animate),getDistributions:()=>last,getResults:()=>last&&({base:{p10:last.base.p10,p50:last.base.p50,p90:last.base.p90,hit:last.base.hit},stress:{p10:last.stress.p10,p50:last.stress.p50,p90:last.stress.p90,hit:last.stress.hit},buffer:last.buffer&&({p10:last.buffer.p10,p50:last.buffer.p50,p90:last.buffer.p90,hit:last.buffer.hit}),scope:state.scope,paths:state.paths.slice(),appliedChannels:appliedChannels(MODELS[state.shock])})};
 })();

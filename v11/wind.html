@@ -4,8 +4,8 @@
 <script src="../assets/boluo-access.js?v=20261108-inline2" data-bl-access="inline"></script><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover"><meta name="theme-color" content="#eaf4ff">
 <meta name="description" content="博罗决策风洞 V11 第七页：以既有推演底座为基础，体验2030目标的受控冲击、缓冲与前后结果区间，并核对结果的条件与不确定性。">
 <title>07 决策风洞｜哪一环最经不起变化？— 博罗 V11</title>
-<link rel="stylesheet" href="./impact.css?v=20261107-v1"><link rel="stylesheet" href="./wind.css?v=20261107-w2"><link rel="stylesheet" href="./wind-exp.css?v=20261110-pathbridge1">
-<script src="../model.js"></script><script defer src="./wind-experiments.js?v=20261108-b1"></script><script defer src="./wind.js?v=20261110-pathbridge2"></script><script defer src="./challenge-link.js?v=20261110-pathbridge1"></script><script defer src="./condition-bridge.js?v=20261110-pathbridge1"></script></head>
+<link rel="stylesheet" href="./impact.css?v=20261107-v1"><link rel="stylesheet" href="./wind.css?v=20261107-w2"><link rel="stylesheet" href="./wind-exp.css?v=20261110-pathbridge1"><link rel="stylesheet" href="./wind-pathway.css?v=20261111-wkp2">
+<script src="../model.js"></script><script defer src="./wind-experiments.js?v=20261108-b1"></script><script defer src="./wind.js?v=20261110-pathbridge2"></script><script defer src="./challenge-link.js?v=20261110-pathbridge1"></script><script defer src="./condition-bridge.js?v=20261110-pathbridge1"></script><script defer src="./wind-pathway.js?v=20261111-wkp2"></script></head>
 <body class="wind-page">
 <header class="site-header">
 <a class="brand" href="./index.html" aria-label="博罗决策风洞首页"><span class="brand-mark" aria-hidden="true"><svg viewBox="0 0 48 38"><path d="M3 28L16 8Q19 5 22 10L28 19 33 13Q36 9 39 14L46 27Q48 32 42 33H7Q1 33 3 28Z" fill="#dff8ff" stroke="#fff" stroke-width="1.8"/><path d="M10 29L20 19L28 26L35 20L43 29" stroke="#1396df" stroke-width="3" fill="none" stroke-linecap="round"/></svg></span><span class="brand-name"><strong>博罗决策风洞模拟器</strong><small>Boluo Decision Wind-Tunnel Simulator</small></span></a>
@@ -48,8 +48,48 @@
 </div>
 <div class="experiment-settings"><div><span>压力档位</span><strong id="strengthLabel">中等压力</strong></div><input type="range" id="strength" min="0.6" max="1.4" step="0.2" value="1" aria-label="调整压力档位，范围为预设情景的60%到140%"><button type="button" id="runTest" class="run-cta"><span aria-hidden="true">▶</span> 开始一次实验</button></div>
 </section>
+<section class="wkp" aria-labelledby="wkpTitle">
+<div class="wkp-head">
+ <div><p class="micro">02 / WHERE THE PRESSURE LANDS</p>
+  <h2 id="wkpTitle">这轮变化，<em>最先压到哪里？</em></h2>
+  <p>不是所有冲击都会直接压到总量。真正关键的是它通过哪几段链传过去：线越粗，这一环越吃力。</p></div>
+ <div class="wkp-tools"><span class="wkp-seg" role="group" aria-label="查看哪一种结构">
+  <button type="button" data-wkp-view="origin" aria-pressed="false">看原始结构</button>
+  <button type="button" data-wkp-view="stress" aria-pressed="true">看受压后</button>
+  <button type="button" data-wkp-view="buffer" aria-pressed="false">看缓冲后</button></span></div>
+</div>
+<div class="wkp-map"><div class="wkp-mobile-hint">左右滑动，看完整传导链</div>
+<div class="wkp-scroll"><div class="wkp-canvas" id="wkpCanvas">
+ <svg class="wkp-svg" id="wkpSvg" aria-hidden="true"></svg>
+ <div class="wkp-col c1"><p class="wkp-col-label">触发 · 先动的那一下</p><div class="col-inner" id="wkpTrig"></div></div>
+ <div class="wkp-col c2"><p class="wkp-col-label">中间环节 · 力在这里拐弯</p><div class="col-inner" id="wkpMid"></div></div>
+ <div class="wkp-col c3"><p class="wkp-col-label">结果 · 2030</p><div class="col-inner" id="wkpOut"></div></div>
+</div></div></div>
+<div class="wkp-legend"><span><i class="pos"></i>蓝青：往上托</span><span><i class="neg"></i>橙红：往下压</span><span><i class="weak"></i>灰：作用很弱</span><span>粗细 = 作用强弱 · 光点 = 正在传导</span></div>
+<div class="wkp-card" id="wkpCard"><span class="k">怎么读这张图</span><strong>线越粗，这一环对结果的作用越强。</strong><p>点任意一条线或一个环节，看它在这一轮里通过哪几段链条，最后落到哪个结果上。</p></div>
+<p class="kwr-note">这张图是情景设定下的传导结构，不是拟合出来的因果数字；它回答「先压到哪」，不回答「哪家企业亏多少」。</p>
+</section>
+<section class="kwr" aria-labelledby="kwrTitle">
+<div class="kwr-head">
+ <div><p class="micro">03 / WHO MATTERS MOST</p>
+  <h2 id="kwrTitle">这一轮里，<em>谁最关键？</em></h2>
+  <p>看总量，不如先看谁在拖、谁在撑、谁最值得盯。排序会跟着上面的冲击和缓冲一起变。</p></div>
+ <div class="kwr-switch">
+  <span class="wkp-seg" role="group" aria-label="排序维度">
+   <button type="button" data-kwr-dim="direct" aria-pressed="false">直接影响</button>
+   <button type="button" data-kwr-dim="total" aria-pressed="true">总影响</button>
+   <button type="button" data-kwr-dim="sens" aria-pressed="false">不确定敏感度</button></span>
+  <span class="wkp-seg" role="group" aria-label="对照状态">
+   <button type="button" data-kwr-view="baseline" aria-pressed="false">基准</button>
+   <button type="button" data-kwr-view="stress" aria-pressed="true">受压</button>
+   <button type="button" data-kwr-view="buffer" aria-pressed="false">缓冲后</button></span>
+ </div>
+</div>
+<div class="kwr-list" id="kwrList"></div>
+<p class="kwr-note" id="kwrNote"></p>
+</section>
 <section class="results-shell" id="results" aria-labelledby="resultTitle">
-<div class="results-head"><div><span class="micro">02 / TWO POSSIBLE PATHS</span><h2 id="resultTitle">目标线不动，结果会怎样移动？</h2><p id="resultLead">两条条件分布，将由同一套模拟内核实际计算。</p></div><div class="result-actions"><button id="replay" type="button">↻ 重播变化</button><button id="reset" type="button">还原基准</button></div></div>
+<div class="results-head"><div><span class="micro">04 / TWO POSSIBLE PATHS</span><h2 id="resultTitle">目标线不动，结果会怎样移动？</h2><p id="resultLead">两条条件分布，将由同一套模拟内核实际计算。</p></div><div class="result-actions"><button id="replay" type="button">↻ 重播变化</button><button id="reset" type="button">还原基准</button></div></div>
 <div id="modelFailure" class="model-failure" role="alert" hidden>模拟内核尚未加载，无法输出真实重跑的结果。请检查网络并重新打开。</div>
 <div class="readout-grid">
 <div class="readout"><span>冲击后 · 2030中位规模</span><strong id="afterMedian">—</strong><small>亿元 / 条件结果</small></div>
@@ -78,16 +118,17 @@
 </div>
 <div class="condition-board-foot"><span id="conditionQuestion" aria-live="polite">请选择一种变化，观察结果分布如何移动。</span><a id="conditionToEight" href="./insights.html">进一步排查被忽略的联系 →</a></div>
 </section>
-<section class="transmission" aria-labelledby="transTitle"><div class="subhead"><div><p class="micro">03 / WHERE THE SHOCK TRAVELS</p><h2 id="transTitle">变化从哪里传过来？</h2></div><span>机制示意 · 非交易网络</span></div>
+<section class="transmission" aria-labelledby="transTitle"><div class="subhead"><div><p class="micro">05 / WHERE THE SHOCK TRAVELS</p><h2 id="transTitle">变化从哪里传过来？</h2></div><span>机制示意 · 非交易网络</span></div>
 <div class="chain-viewport"><div id="chainTrack" class="chain-track" role="group" aria-label="随场景变化的四段条件传导关系"><button type="button" data-link="0" class="chain-node active"><small>变化起点</small><strong id="chain0">关键项目延期</strong></button><span class="chain-beam" aria-hidden="true"></span><button type="button" data-link="1" class="chain-node"><small>第一层</small><strong id="chain1">新产线推迟</strong></button><span class="chain-beam" aria-hidden="true"></span><button type="button" data-link="2" class="chain-node"><small>第二层</small><strong id="chain2">本地配套订单</strong></button><span class="chain-beam" aria-hidden="true"></span><button type="button" data-link="3" class="chain-node"><small>后续结果</small><strong id="chain3">产业接续能力</strong></button></div></div>
 <div class="chain-answer"><span id="chainStepTag">正在查看 · 变化起点</span><strong id="chainQuestion">延迟发生在哪一类项目？</strong><p id="chainCaveat">节点是有条件的机制假设，不能凭连线推算某家企业的经营损失。</p></div></section>
-<section class="rescue" id="rescue" aria-labelledby="rescueTitle"><div class="rescue-main"><p class="micro">04 / TRY AN ALTERNATIVE</p><h2 id="rescueTitle">如果还有另一条路接棒呢？</h2><p>保持相同的压力条件，增加一个有限的缓冲假设，再计算一次。看看缓冲是否改变结果和结果区间。</p><label class="rescue-toggle"><input type="checkbox" id="bufferOn"><span class="toggle-track" aria-hidden="true"></span><span><strong id="bufferName">其他项目提前接棒</strong><small id="bufferDesc">部分弥补项目延期后的产出接续</small></span></label></div>
+<section class="rescue" id="rescue" aria-labelledby="rescueTitle"><div class="rescue-main"><p class="micro">06 / TRY AN ALTERNATIVE</p><h2 id="rescueTitle">如果还有另一条路接棒呢？</h2><p>保持相同的压力条件，增加一个有限的缓冲假设，再计算一次。看看缓冲是否改变结果和结果区间。</p><label class="rescue-toggle"><input type="checkbox" id="bufferOn"><span class="toggle-track" aria-hidden="true"></span><span><strong id="bufferName">其他项目提前接棒</strong><small id="bufferDesc">部分弥补项目延期后的产出接续</small></span></label></div>
 <div class="rescue-outcome"><span>缓冲前后 · 模拟中位数</span><div><strong id="beforeBuffer">—</strong><span>→</span><strong id="afterBuffer">—</strong></div><p id="bufferTakeaway">启用左侧缓冲条件后，显示同一随机种子下的第三组结果。</p></div></section>
-<section class="share-panel"><div><p class="micro">05 / WHAT DID YOU DISCOVER?</p><h2>带走一个能继续追问的发现</h2><p id="shareSummary">你改变了一项条件，观察到结果分布发生了怎样的变化？</p></div><div class="share-actions"><button type="button" id="copyLink">复制复现实验链接 ↗</button><button type="button" id="saveExp">保存本机实验</button><button type="button" id="savedList">我的实验记录</button><a id="goDecisionChallenge" class="to-challenge" href="./challenge.html">09 · 挑战刚才的判断 →</a></div></section>
+<section class="share-panel"><div><p class="micro">07 / WHAT DID YOU DISCOVER?</p><h2>带走一个能继续追问的发现</h2><p id="shareSummary">你改变了一项条件，观察到结果分布发生了怎样的变化？</p></div><div class="share-actions"><button type="button" id="copyLink">复制复现实验链接 ↗</button><button type="button" id="saveExp">保存本机实验</button><button type="button" id="savedList">我的实验记录</button><a id="goDecisionChallenge" class="to-challenge" href="./challenge.html">09 · 挑战刚才的判断 →</a></div></section>
 <details class="technical" id="method"><summary><span>结果为什么会变化？还有哪些不确定？</span><span>＋</span></summary><div class="technical-content">
 <p>上方结果是用户选择条件下的情景计算，不是已经发生的未来，也不是由企业合同直接估计出来的经济损失。</p>
 <p id="assumptionText">本次对照仅使用所选条件。规划兑现与实际经济运行之间仍有需要核验的项目进度、订单、产能和服务证据。</p>
 <p>2025年1005.45亿元为历史基数，2030年1600亿元为规划目标；情景结果受设定影响，不能直接称为现实达标概率。<a href="./plan.html">查看规划与现实边界 ↗</a></p>
+<p>「关键作用路径图」里的线粗，是按本次情景实际重算得到的传导强度：先看冲击落在哪一条通道，再看这条通道在总量与达标里的占比；「影响权重排序」里的差值，是把该通道的贡献砍到八成后重跑同一组随机种子的结果。两者都是情景设定下的相对大小，不是统计拟合出来的系数，也不代表任何一家企业的实际损失。</p>
 </div></details>
 <footer class="footer"><span>博罗 V11 · 07 决策风洞 · 现实条件实验与结果比较</span><a href="./insights.html">进入08 · 忽略了什么</a></footer>
 </main>
