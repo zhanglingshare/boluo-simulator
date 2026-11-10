@@ -625,3 +625,111 @@ body.wt-page .wt-mflow-in span{
   body.wt-page .wt-action b{font-size:15px}
   body.wt-page .wt-mflow-in{font-size:12px}
 }
+
+
+/* ===== V11 · 首页导航重构：按认知路径分组，而非堆叠页面链接 ===== */
+body.wt-page .site-header{height:68px;background:rgba(5,13,23,.94);border-bottom:1px solid rgba(127,212,255,.16);box-shadow:0 8px 28px rgba(0,0,0,.16);backdrop-filter:blur(18px) saturate(145%)}
+body.wt-page .header-inner{max-width:1600px;padding:0 clamp(16px,2.5vw,34px);gap:clamp(12px,2vw,26px)}
+body.wt-page .brand{font-size:17px;color:#eff7ff;gap:9px}
+body.wt-page .brand-icon{width:34px;height:34px;border-radius:10px;background:linear-gradient(145deg,#164568,#0b263e);border:1px solid rgba(127,212,255,.28)}
+body.wt-page .edition{background:rgba(127,212,255,.11);color:#9edcff;border:1px solid rgba(127,212,255,.19);border-radius:6px}
+.v11-nav-groups{display:flex;align-items:center;justify-content:center;gap:4px;flex:1;min-width:0;margin:auto}
+.v11-nav-group{position:relative;flex:0 0 auto}
+.v11-nav-group>summary,.v11-nav-direct{
+ list-style:none;cursor:pointer;display:flex;align-items:center;gap:7px;
+ min-height:40px;padding:0 11px;border:1px solid transparent;border-radius:9px;
+ color:#b4c8d8;font-size:12px;font-weight:700;text-decoration:none;white-space:nowrap;
+ transition:background .18s,border-color .18s,color .18s
+}
+.v11-nav-group>summary::-webkit-details-marker{display:none}
+.v11-nav-group>summary:hover,.v11-nav-group[open]>summary,.v11-nav-direct:hover{
+ color:#eff9ff;background:rgba(127,212,255,.09);border-color:rgba(127,212,255,.17)
+}
+.v11-nav-group.is-current>summary{color:#e8f7ff;background:rgba(55,151,205,.13);border-color:rgba(127,212,255,.25)}
+.v11-nav-range{font-size:9px;line-height:1;font-weight:850;letter-spacing:.04em;color:#6f93ac}
+.v11-nav-group.is-current .v11-nav-range,.v11-nav-direct .v11-nav-range{color:#7fd4ff}
+.v11-nav-group>summary b,.v11-nav-direct b{font-size:12px;font-weight:700}
+.v11-nav-group>summary svg{width:10px;height:10px;fill:none;stroke:#7896ab;stroke-width:1.5;transition:transform .18s}
+.v11-nav-group[open]>summary svg{transform:rotate(180deg)}
+.v11-nav-menu{
+ position:absolute;top:calc(100% + 11px);left:50%;transform:translateX(-50%);
+ width:248px;padding:8px;border:1px solid rgba(127,212,255,.18);border-radius:13px;
+ background:rgba(7,19,31,.98);box-shadow:0 18px 48px rgba(0,0,0,.4);
+ backdrop-filter:blur(18px);z-index:130;animation:v11-nav-in .16s ease-out
+}
+.v11-nav-menu:before{content:"";position:absolute;left:0;right:0;top:-12px;height:12px}
+.v11-nav-menu a{
+ display:grid;grid-template-columns:30px minmax(0,1fr) auto;align-items:center;gap:9px;
+ min-height:43px;padding:0 9px;border-radius:8px;color:#b8cddd;text-decoration:none;
+ font-size:12px;font-weight:650;transition:background .16s,color .16s
+}
+.v11-nav-menu a:hover{background:rgba(127,212,255,.09);color:#f2faff}
+.v11-nav-menu a.is-current{background:linear-gradient(90deg,rgba(36,129,181,.22),rgba(36,129,181,.07));color:#eaf8ff}
+.v11-nav-menu a>i{font-style:normal;font-size:10px;font-weight:850;color:#6f94ad}
+.v11-nav-menu a.is-current>i{color:#7fd4ff}
+.v11-nav-menu a>small{font-size:9px;color:#6f8ca1}
+.v11-nav-menu a.is-current>small{color:#83d6ff}
+@keyframes v11-nav-in{from{opacity:0;transform:translate(-50%,-5px)}to{opacity:1;transform:translate(-50%,0)}}
+body.wt-page .question-count{
+ display:inline-flex;align-items:center;gap:7px;min-height:34px;padding:0 11px;
+ border:1px solid rgba(127,212,255,.2);border-radius:8px;background:rgba(127,212,255,.08);
+ color:#c5e4f5;font-size:10px;font-weight:700
+}
+body.wt-page .question-count b{color:#7fd4ff}
+@media(max-width:1250px) and (min-width:901px){
+ body.wt-page .header-inner{gap:10px;padding:0 14px}
+ body.wt-page .brand{font-size:15px}
+ .v11-nav-group>summary,.v11-nav-direct{gap:5px;padding:0 8px}
+ .v11-nav-group>summary b,.v11-nav-direct b{font-size:11px}
+}
+@media(max-width:900px){
+ body.wt-page .site-header{height:56px}
+ body.wt-page .header-inner{padding:0 14px;gap:10px}
+ body.wt-page .brand{font-size:15px}
+ body.wt-page .brand-icon{width:29px;height:29px}
+ .v11-nav-groups{display:none}
+ body.wt-page .question-count{min-height:31px;padding:0 8px;font-size:9px}
+ body.wt-page .mobile-nav.v11-mobile-nav{
+  position:fixed;left:0;right:0;bottom:0;z-index:160;
+  display:grid;grid-template-columns:repeat(5,minmax(0,1fr));align-items:stretch;
+  min-height:64px;padding:6px 8px max(7px,env(safe-area-inset-bottom));
+  box-sizing:content-box;background:rgba(5,13,23,.96);
+  border-top:1px solid rgba(127,212,255,.18);box-shadow:0 -8px 28px rgba(0,0,0,.24);
+  backdrop-filter:blur(18px)
+ }
+ .v11-mobile-nav>a,.v11-mobile-more>summary{
+  display:flex;flex-direction:column;align-items:center;justify-content:center;gap:4px;
+  min-width:0;min-height:48px;border:0;border-radius:9px;background:transparent;
+  color:#829bad;text-decoration:none;font-size:10px;font-weight:650;cursor:pointer;list-style:none
+ }
+ .v11-mobile-more>summary::-webkit-details-marker{display:none}
+ .v11-mobile-nav>a>span,.v11-mobile-more>summary>span{
+  font-size:9px;line-height:1;font-weight:850;letter-spacing:.08em;color:#68869b
+ }
+ .v11-mobile-nav>a>b,.v11-mobile-more>summary>b{font-size:10px;font-weight:700;white-space:nowrap}
+ .v11-mobile-nav>a.is-current{color:#e8f8ff;background:rgba(66,157,205,.13)}
+ .v11-mobile-nav>a.is-current>span{color:#7fd4ff}
+ .v11-mobile-more{position:relative;min-width:0}
+ .v11-mobile-more>summary{height:100%}
+ .v11-mobile-panel{
+  position:absolute;right:0;bottom:calc(100% + 11px);
+  display:grid;grid-template-columns:1fr 1fr;gap:12px;
+  width:min(92vw,440px);max-height:min(72vh,620px);overflow:auto;
+  padding:14px;border:1px solid rgba(127,212,255,.2);border-radius:15px;
+  background:rgba(6,18,30,.98);box-shadow:0 18px 48px rgba(0,0,0,.48);backdrop-filter:blur(20px)
+ }
+ .v11-mobile-panel section{min-width:0}
+ .v11-mobile-panel h3{margin:0 0 7px;padding:0 4px 7px;border-bottom:1px solid rgba(127,212,255,.13);font-size:10px;color:#7fd4ff}
+ .v11-mobile-panel a{
+  display:flex;align-items:center;gap:7px;min-height:34px;padding:0 5px;
+  border-radius:7px;color:#bfd2df;text-decoration:none;font-size:11px
+ }
+ .v11-mobile-panel a:hover,.v11-mobile-panel a[aria-current="page"]{background:rgba(68,157,205,.16);color:#effaff}
+ .v11-mobile-panel a i{width:23px;flex:0 0 23px;color:#6e8da4;font-size:9px;font-style:normal;font-weight:850}
+ body.wt-page{padding-bottom:76px}
+}
+@media(max-width:420px){
+ body.wt-page .brand{font-size:13px}
+ body.wt-page .brand-icon{width:27px;height:27px}
+ .v11-mobile-panel{gap:8px;padding:11px}
+}
