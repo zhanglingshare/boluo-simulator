@@ -4,7 +4,7 @@
 const core=window.BoluoDiscoveryCore;
 const $=function(id){return document.getElementById(id);};
 if(!core||!$("iqSignals"))return;
-const state={signal:core.signals[0].id,variable:"project",custom:[],edges:[],hypothesis:core.hypotheses[0].id,dependence:75,shock:70,substitute:35,watch:[],proof:{},customCount:0};
+const state={signal:core.signals[0].id,signalTouched:false,variable:"project",variableTouched:false,custom:[],edges:[],hypothesis:core.hypotheses[0].id,hypothesisTouched:false,dependence:75,shock:70,substitute:35,watch:[],proof:{},customCount:0};
 const key="boluo-v11-evidence-watchlist";
 try{const saved=JSON.parse(localStorage.getItem(key)||"[]");if(Array.isArray(saved))state.watch=saved.filter(x=>typeof x==="string");}catch(e){}
 try{const proof=JSON.parse(localStorage.getItem(key+"-proof")||"{}");if(proof&&typeof proof==="object")state.proof=proof;}catch(e){}
@@ -18,12 +18,14 @@ function selectedSignal(){return core.signals.find(function(s){return s.id===sta
 function selectedHypothesis(){return core.hypotheses.find(function(h){return h.id===state.hypothesis;})||core.hypotheses[0];}
 function factorUrl(factor,focus,missing,blind,evidenceName){
  const u=new URL("./challenge.html",location.href);
- const variable=currentVariable(),signal=selectedSignal(),hypothesis=selectedHypothesis();
+ const activeVariable=currentVariable(),variable=state.variableTouched?activeVariable:(activeVariable.factor===factor?activeVariable:allVariables().find(function(v){return v.factor===factor;})||activeVariable);
+ const activeSignal=selectedSignal(),signal=state.signalTouched?activeSignal:(activeSignal.factor===factor?activeSignal:core.signals.find(function(s){return s.factor===factor;})||activeSignal);
+ const activeHypothesis=selectedHypothesis(),hypothesis=state.hypothesisTouched?activeHypothesis:(activeHypothesis.factor===factor?activeHypothesis:core.hypotheses.find(function(x){return x.factor===factor;})||null);
  u.searchParams.set("focus",focus||"growth");u.searchParams.set("factor",factor||"network");
  u.searchParams.set("blind",blind||"");u.searchParams.set("missing",missing||"");
  u.searchParams.set("v08",variable.id);u.searchParams.set("vname",variable.name);
  u.searchParams.set("s08",signal.id);u.searchParams.set("sname",signal.title);
- u.searchParams.set("h08",hypothesis.id);u.searchParams.set("hname",hypothesis.title);
+ if(hypothesis){u.searchParams.set("h08",hypothesis.id);u.searchParams.set("hname",hypothesis.title);}else{u.searchParams.delete("h08");u.searchParams.delete("hname");}
  u.searchParams.set("e08",blind||"");u.searchParams.set("ename",evidenceName||"");
  u.searchParams.set("equestion",missing||"");
  const links=state.edges.filter(function(e){return e.from===variable.id||e.to===variable.id;}).map(function(e){return e.from===variable.id?e.to:e.from;});
@@ -44,7 +46,7 @@ function renderSignals(){
   pair.append(left,el("i","", "↔"),right);
   b.append(pair,el("small","iq-signal-period",s.period));
   b.setAttribute("aria-pressed",String(s.id===state.signal));
-  b.addEventListener("click",function(){state.signal=s.id;renderSignals();renderSignalDetail();});
+  b.addEventListener("click",function(){state.signal=s.id;state.signalTouched=true;renderSignals();renderSignalDetail();});
   wrap.append(b);
  });
 }
@@ -69,7 +71,7 @@ function renderVariables(){
   b.type="button";b.dataset.variable=v.id;b.setAttribute("aria-pressed",String(v.id===state.variable));
   b.append(el("small","",v.group||"用户补充"),el("strong","",v.name));
   if(v.custom)b.append(el("em","","自定义 · 待验证"));
-  b.addEventListener("click",function(){state.variable=v.id;renderVariables();renderVariableDetail();});
+  b.addEventListener("click",function(){state.variable=v.id;state.variableTouched=true;renderVariables();renderVariableDetail();});
   list.append(b);
  });
  const relationSelect=$("iqRelationTarget");relationSelect.replaceChildren();
@@ -107,14 +109,14 @@ function addCustomVariable(){
  const id="custom-"+state.customCount;
  state.custom.push({id:id,name:name,group:"用户补充",factor:"network",why:"这是用户提出的新变量。它可能重要，但目前尚未被公开证据或模型验证。",mechanism:"尚未定义。请先确认它与哪些现有变量存在可观察的联系，不预设因果方向。",question:"用什么指标、样本和时间范围观察这个变量？",evidence:"需要用户补充数据持有者、原始记录和可复核口径。",relations:[],custom:true});
  try{localStorage.setItem(key+"-custom",JSON.stringify(state.custom.map(function(v){return {id:v.id,name:v.name};})));}catch(e){}
- state.variable=id;input.value="";renderVariables();toast("已加入候选变量，尚未自动建立因果关系");
+ state.variable=id;state.variableTouched=true;input.value="";renderVariables();toast("已加入候选变量，尚未自动建立因果关系");
 }
 function renderHypotheses(){
  const wrap=$("iqHypothesisChoices");wrap.replaceChildren();
  core.hypotheses.forEach(function(h){
   const b=el("button","iq-hypothesis"+(h.id===state.hypothesis?" active":""));b.type="button";b.dataset.hypothesis=h.id;b.setAttribute("aria-pressed",String(h.id===state.hypothesis));
   b.append(el("small","","解释 "+String(core.hypotheses.indexOf(h)+1).padStart(2,"0")),el("strong","",h.title),el("span","",h.summary));
-  b.addEventListener("click",function(){state.hypothesis=h.id;renderHypotheses();renderHypothesisDetail();});
+  b.addEventListener("click",function(){state.hypothesis=h.id;state.hypothesisTouched=true;renderHypotheses();renderHypothesisDetail();});
   wrap.append(b);
  });
 }
