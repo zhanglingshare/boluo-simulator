@@ -53,7 +53,7 @@ const {chromium}=require('playwright');
  assert.ok(overflow<=2,'mobile horizontal overflow: '+overflow);
  assert.equal(await page.locator('.mobile-nav a').count(),5,'mobile main navigation has five items');
  assert.equal(await page.locator('#peerBars .peer-row').count(),4,'mobile peer chart remains available');
- await page.locator('[data-sector="electronics"]').click();
+ await page.locator('#sectorList [data-sector="electronics"]').click();
  assert.match(await page.locator('#sectorDetail').innerText(),/电子信息/,'mobile industry interaction');
  assert.deepEqual(errors,[],'no mobile runtime errors');
  await page.screenshot({path:'artifacts/industry-structure-mobile.png',fullPage:true});
