@@ -76,7 +76,7 @@
    <article class="target-card output">
     <div class="target-label"><span>规上工业总产值</span><span>不显示虚假完成率</span></div>
     <div class="target-numbers"><strong>突破2000亿</strong><b>→ 突破3600亿</b></div>
-    <div class="target-meter"><span style="width:56%;background:repeating-linear-gradient(90deg,#6286aa 0 8px,#d5e1e8 8px 13px)"></span></div>
+    <div class="target-meter unknown"><span></span></div>
     <div class="target-detail"><span>2025年公开报道为预计突破2000亿</span><b>精确基数待核</b></div>
     <div class="target-foot">总产值不等于GDP增加值。现有基数是“突破2000亿”的约数，不能据此算精确完成率。</div>
    </article>
@@ -104,7 +104,9 @@
   <div class="chart-layout">
    <article class="chart-panel">
     <h3>行业权重 × 增长速度</h3>
-    <p class="hint">同一行业同时看“占多大”与“长多快”，避免只看增速，也避免只看体量。</p>
+    <p class="hint">气泡位置看行业权重与增长，下面再看2024到2025的份额变化。点击气泡或行业行，查看它的结构变化。</p>
+    <div id="sectorMap" class="sector-map" aria-label="行业权重与增长象限图"></div>
+    <div class="sector-map-note"><span>气泡大小＝行业权重</span><span>右侧另列“其他行业”38.6%，其单项增速未披露</span></div>
     <div class="sector-list" id="sectorList" aria-label="行业占比与增速对比"></div>
     <div class="sector-legend"><span><i></i>2024年占比</span><span><i class="current"></i>2025年占比</span><span>右侧为2025年增加值增速</span></div>
     <div class="concentration-row">
