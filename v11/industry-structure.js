@@ -101,7 +101,7 @@ function renderScatter(){
   const cx=x(p.secondary),cy=y(p.growth),rad=8+Math.sqrt(p.gdp/952.24)*8,active=p.id===selectedPeer;
   const dx=p.id==='heshan'?10:p.id==='sihui'?10:p.id==='huidong'?10:-10,anchor=p.id==='boluo'?'end':'start';
   const dy=p.id==='heshan'?-13:p.id==='sihui'?19:p.id==='huidong'?18:-13;
-  svg+='<g data-peer="'+p.id+'" role="button" tabindex="0" aria-label="选择'+p.name+'"><circle class="scatter-dot '+(active?'active':'')+'" cx="'+cx+'" cy="'+cy+'" r="'+rad+'" fill="'+(p.id==='boluo'?'#1d8c80':p.id==='huidong'?'#c39a5b':p.id==='sihui'?'#668cb2':'#5c9b78')+'" fill-opacity=".86" stroke="'+(active?'#172f3f':'#fff')+'" stroke-width="'+(active?3:2)+'"/><text class="scatter-label" x="'+(cx+dx)+'" y="'+(cy+dy)+'" text-anchor="'+anchor+'">'+p.name+'</text></g>';
+  svg+='<g data-peer="'+p.id+'" role="button" tabindex="0" aria-label="选择'+p.name+'"><title>'+p.name+' · 第二产业占比 '+p.secondary.toFixed(1)+'% · GDP增速 '+pct(p.growth)+'</title><circle class="scatter-dot '+(active?'active':'')+'" cx="'+cx+'" cy="'+cy+'" r="'+rad+'" fill="'+(p.id==='boluo'?'#1d8c80':p.id==='huidong'?'#c39a5b':p.id==='sihui'?'#668cb2':'#5c9b78')+'" fill-opacity=".86" stroke="'+(active?'#172f3f':'#fff')+'" stroke-width="'+(active?3:2)+'"/><text class="scatter-label" x="'+(cx+dx)+'" y="'+(cy+dy)+'" text-anchor="'+anchor+'">'+p.name+'</text></g>';
  });
  svg+='</svg>';
  $('peerScatter').innerHTML=svg;
@@ -169,6 +169,15 @@ document.addEventListener('pointerout',e=>{
  const el=e.target.closest('[data-sector]');if(!el)return;
  if(e.relatedTarget&&e.relatedTarget.closest('[data-sector="'+el.dataset.sector+'"]'))return;
  document.querySelectorAll('[data-sector="'+el.dataset.sector+'"]').forEach(n=>n.classList.remove('linked-hover'));
+});
+document.addEventListener('pointerover',e=>{
+ const el=e.target.closest('[data-peer]');if(!el)return;
+ document.querySelectorAll('[data-peer="'+el.dataset.peer+'"]').forEach(n=>n.classList.add('linked-hover'));
+});
+document.addEventListener('pointerout',e=>{
+ const el=e.target.closest('[data-peer]');if(!el)return;
+ if(e.relatedTarget&&e.relatedTarget.closest('[data-peer="'+el.dataset.peer+'"]'))return;
+ document.querySelectorAll('[data-peer="'+el.dataset.peer+'"]').forEach(n=>n.classList.remove('linked-hover'));
 });
 const progress=$('readingProgress');
 let ticking=false;
