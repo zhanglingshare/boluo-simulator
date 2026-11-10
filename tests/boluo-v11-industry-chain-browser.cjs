@@ -24,15 +24,20 @@ const {chromium}=require('playwright');
  assert.equal(await page.locator('#scaleLegend > div').count(),3,'large, medium, small/micro enterprise scale structure');
  assert.equal(await page.locator('.source-list a').count(),10,'ten traceable sources');
  assert.equal(await page.locator('#structural-constraints .signal-card').count(),4,'four structural signal cards');
+ assert.match(await page.locator('#structural-constraints').innerText(),/70%/,'industrial GDP contribution signal');
+ assert.match(await page.locator('#structural-constraints').innerText(),/181\.2亿/,'producer-services 2025 baseline');
+ assert.match(await page.locator('#peerSelected').innerText(),/第1位/,'2026 peer rank is shown separately from 2024 statistics');
 
  await page.locator('#sectorMap [data-sector="rubber"]').evaluate(el=>el.dispatchEvent(new MouseEvent('click',{bubbles:true})));
  assert.match(await page.locator('#sectorDetail').innerText(),/橡胶塑料/,'industry detail changes');
  await page.locator('#sectorMap [data-sector="electronics"]').focus();
  await page.locator('#sectorMap [data-sector="electronics"]').press('Enter');
  assert.match(await page.locator('#sectorDetail').innerText(),/电子信息/,'industry quadrant supports keyboard selection');
+ assert.match(await page.locator('#sectorDetail').innerText(),/印制电路板产量 -0\.1%/,'product quantity cross-check appears for electronics');
  await page.locator('#sectorMap [data-sector="rubber"]').evaluate(el=>el.dispatchEvent(new MouseEvent('click',{bubbles:true})));
  assert.match(await page.locator('#sectorDetail').innerText(),/−4\.2%|-4\.2%/,'negative industry growth is visible');
  assert.match(await page.locator('#sectorDetail').innerText(),/−0\.9个百分点|-0\.9个百分点/,'share change is visible');
+ assert.match(await page.locator('#sectorDetail').innerText(),/塑料制品产量 \+7\.9%/,'product quantity cross-check appears for rubber/plastics');
 
  await page.locator('#netAdds').evaluate(el=>{el.value='200';el.dispatchEvent(new Event('input',{bubbles:true}))});
  assert.equal(await page.locator('#netAddsTotal').innerText(),'2,407家','enterprise target arithmetic');
