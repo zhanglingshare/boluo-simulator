@@ -105,6 +105,8 @@ function renderPathHandoff(meta){
  }
  $('pathExposureStatus').textContent=note;
  qa('[data-scope]').forEach(b=>b.setAttribute('aria-pressed',String(b.dataset.scope===state.scope)));
+ const back=$('returnPlan');
+ if(back){const u=new URL('./plan.html',location.href);u.searchParams.set('paths',state.paths.join(','));u.searchParams.set('route',state.primary);back.href=u.href;}
 }
 function runThree(){
  if(!goodModel())return null;
