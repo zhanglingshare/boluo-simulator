@@ -16,13 +16,15 @@ const {chromium}=require('playwright');
  assert.match(await page.locator('h1').innerText(),/产业结构/,'04 is the structure benchmark page');
  assert.equal(await page.locator('.target-card').count(),3,'three distinct official target metrics');
  assert.equal(await page.locator('#sectorList .sector-row').count(),6,'five major industries plus other industries');
+ assert.equal(await page.locator('#sectorMap .quad-dot').count(),5,'five industries with disclosed comparable growth rates');
+ assert.equal(await page.locator('.target-card.output .target-meter.unknown').count(),1,'industrial output has no fabricated completion meter');
  assert.equal(await page.locator('#peerBars .peer-row').count(),4,'four county benchmark samples');
  assert.equal(await page.locator('#peerScatter .scatter-dot').count(),4,'four county dots');
  assert.equal(await page.locator('#investmentBars .dual-row').count(),4,'output and investment trends across two years');
  assert.equal(await page.locator('#scaleLegend > div').count(),3,'large, medium, small/micro enterprise scale structure');
  assert.equal(await page.locator('.source-list a').count(),8,'eight traceable sources');
 
- await page.locator('[data-sector="rubber"]').click();
+ await page.locator('#sectorMap [data-sector="rubber"]').click();
  assert.match(await page.locator('#sectorDetail').innerText(),/橡胶塑料/,'industry detail changes');
  assert.match(await page.locator('#sectorDetail').innerText(),/−4\.2%|-4\.2%/,'negative industry growth is visible');
  assert.match(await page.locator('#sectorDetail').innerText(),/−0\.9个百分点|-0\.9个百分点/,'share change is visible');
@@ -33,7 +35,7 @@ const {chromium}=require('playwright');
  await page.locator('#netAdds').evaluate(el=>{el.value='220';el.dispatchEvent(new Event('input',{bubbles:true}))});
  assert.equal(await page.locator('#netAddsTotal').innerText(),'2,507家','slider restores');
 
- await page.locator('[data-peer="huidong"]').click();
+ await page.locator('#peerBars [data-peer="huidong"]').click();
  assert.match(await page.locator('#peerSelected').innerText(),/惠东/,'peer selection updates details');
  await page.locator('#peerScatter .scatter-dot').nth(2).click();
  assert.match(await page.locator('#peerSelected').innerText(),/四会/,'scatter point updates peer details');
