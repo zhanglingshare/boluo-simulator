@@ -89,7 +89,7 @@ const {chromium}=require('playwright');
  const incoming=await browser.newPage({viewport:{width:1280,height:900}});
  await incoming.goto('http://127.0.0.1:8765/v11/plan.html?from=impact&scene=orders',{waitUntil:'networkidle'});
  assert.equal(await incoming.locator('[data-path="manufacturing"]').getAttribute('aria-pressed'),'true','05 order-change handoff selects the manufacturing route');
- assert.match(await incoming.locator('#pathBuildStatus').innerText(),/存量企业扩能/,'incoming fifth-page context is preserved');
+ assert.match(await incoming.locator('#pathBuildStatus').innerText(),/存量扩能/,'incoming fifth-page context is preserved');
  await incoming.close();
 
  await page.setViewportSize({width:390,height:844});
