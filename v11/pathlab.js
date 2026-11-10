@@ -104,55 +104,62 @@ function synergy(){
 }
 function graph(){
  const svg=$('pathGraph'),mobile=window.matchMedia&&window.matchMedia('(max-width:720px)').matches;
- let out='<defs><linearGradient id="pathLine" x1="0" x2="1"><stop stop-color="#38c9b4"/><stop offset=".52" stop-color="#65c4ee"/><stop offset="1" stop-color="#f0bd72"/></linearGradient><filter id="pathGlow" x="-80%" y="-80%" width="260%" height="260%"><feGaussianBlur stdDeviation="3" result="blur"/><feMerge><feMergeNode in="blur"/><feMergeNode in="SourceGraphic"/></feMerge></filter></defs>';
+ let out='<defs>'+
+  '<linearGradient id="pathLine" x1="0" y1="0" x2="1" y2="0"><stop stop-color="#39d4b2"/><stop offset=".48" stop-color="#65c8ee"/><stop offset="1" stop-color="#f4c77e"/></linearGradient>'+
+  '<filter id="pathGlow" x="-100%" y="-100%" width="300%" height="300%"><feGaussianBlur stdDeviation="3.5" result="blur"/><feMerge><feMergeNode in="blur"/><feMergeNode in="SourceGraphic"/></feMerge></filter>'+
+  '<radialGradient id="nodeAura"><stop stop-color="#7de9c8" stop-opacity=".3"/><stop offset="1" stop-color="#7de9c8" stop-opacity="0"/></radialGradient>'+
+  '</defs>';
+ const colors=['#167f83','#276d91','#9a7040','#247d69'];
  if(mobile){
-  const width=420,nodeW=322,rowHeight=405,height=state.selected.length*rowHeight+24,x=210;
+  const width=420,nodeW=340,rowHeight=400,height=state.selected.length*rowHeight+20,x=210;
   state.selected.forEach((id,row)=>{
    const path=PATHS[id],base=row*rowHeight,primary=id===state.primary;
-   out+='<g class="path-row-label '+(primary?'is-primary':'')+'"><text x="18" y="'+(base+20)+'">'+String(row+1).padStart(2,'0')+' / '+(path.kind==='direct'?'直接贡献':'放大条件')+'</text><text x="18" y="'+(base+39)+'">'+SHORT[id]+'</text></g>';
-   const ys=[base+83,base+171,base+259,base+347];
+   out+='<g class="path-row-label '+(primary?'is-primary':'')+'"><text x="18" y="'+(base+18)+'">'+String(row+1).padStart(2,'0')+' / '+(path.kind==='direct'?'直接贡献':'放大条件')+'</text><text x="18" y="'+(base+39)+'">'+SHORT[id]+'</text></g>';
+   const ys=[base+82,base+170,base+258,base+346];
    for(let i=0;i<3;i++){
-    const edgeId='path-flow-m-'+row+'-'+i,d='M'+x+' '+(ys[i]+33)+' C'+(x+22)+' '+(ys[i]+48)+' '+(x-22)+' '+(ys[i+1]-48)+' '+x+' '+(ys[i+1]-33);
+    const edgeId='path-flow-m-'+row+'-'+i,d='M'+x+' '+(ys[i]+35)+' C'+(x+26)+' '+(ys[i]+49)+' '+(x-26)+' '+(ys[i+1]-49)+' '+x+' '+(ys[i+1]-35);
     out+='<path id="'+edgeId+'" class="path-edge '+(primary?'is-primary':'')+'" d="'+d+'"/>'+
-     '<circle class="flow-particle '+(primary?'is-primary':'')+'" r="'+(primary?4.5:3.5)+'"><animateMotion dur="'+(2.3+i*.3)+'s" begin="'+(row*.17+i*.2)+'s" repeatCount="indefinite"><mpath href="#'+edgeId+'"/></animateMotion></circle>';
+     '<circle class="flow-particle '+(primary?'is-primary':'')+'" r="'+(primary?5:3.5)+'"><animateMotion dur="'+(2.15+i*.28)+'s" begin="'+(row*.14+i*.16)+'s" repeatCount="indefinite"><mpath href="#'+edgeId+'"/></animateMotion></circle>'+
+     '<circle class="flow-particle secondary '+(primary?'is-primary':'')+'" r="2.6"><animateMotion dur="'+(2.15+i*.28)+'s" begin="'+(1.05+row*.14+i*.16)+'s" repeatCount="indefinite"><mpath href="#'+edgeId+'"/></animateMotion></circle>';
    }
    path.nodes.forEach((n,i)=>{
-    const active=state.node===id+':'+i,colors=['#167f83','#276d91','#9a7040','#247d69'];
+    const active=state.node===id+':'+i;
     out+='<g class="path-node '+(active?'is-focused':'')+' '+(primary?'is-primary':'')+'" data-path-node="'+id+':'+i+'" tabindex="0" role="button" aria-label="'+n.title+'，待核验。'+n.question+'" transform="translate('+x+','+ys[i]+')">'+
-     '<circle class="path-node-halo" r="51"/>'+
-     '<rect x="'+(-nodeW/2)+'" y="-32" width="'+nodeW+'" height="64" rx="12" fill="'+colors[i]+'"/>'+
-     '<circle class="path-node-index-bg" cx="'+(-nodeW/2+19)+'" cy="-15" r="10"/>'+
-     '<text class="path-node-index" x="'+(-nodeW/2+19)+'" y="-12" text-anchor="middle">'+String(i+1).padStart(2,'0')+'</text>'+
-     '<text class="path-node-title" x="0" y="-5" text-anchor="middle">'+n.title+'</text>'+
+     '<circle class="path-node-aura" r="66" fill="url(#nodeAura)"/><circle class="path-node-halo" r="53"/>'+
+     '<rect x="'+(-nodeW/2)+'" y="-34" width="'+nodeW+'" height="68" rx="13" fill="'+colors[i]+'"/>'+
+     '<circle class="path-node-index-bg" cx="'+(-nodeW/2+20)+'" cy="-17" r="11"/>'+
+     '<text class="path-node-index" x="'+(-nodeW/2+20)+'" y="-14" text-anchor="middle">'+String(i+1).padStart(2,'0')+'</text>'+
+     '<text class="path-node-title" x="0" y="-6" text-anchor="middle">'+n.title+'</text>'+
      '<text class="path-node-sub" x="0" y="12" text-anchor="middle">'+n.sub+'</text>'+
-     '<text class="path-node-status" x="0" y="25" text-anchor="middle">● 待核验</text></g>';
+     '<text class="path-node-status" x="0" y="26" text-anchor="middle">● 待核验</text></g>';
    });
   });
   svg.setAttribute('viewBox','0 0 '+width+' '+height);
  }else{
-  const xs=[150,410,670,930],w=184,h=174+(state.selected.length-1)*154;
+  const width=1200,h=250+(state.selected.length-1)*150,xs=[145,455,765,1075],w=220;
   state.selected.forEach((id,row)=>{
-   const path=PATHS[id],y=132+row*154,primary=id===state.primary;
-   out+='<g class="path-row-label '+(primary?'is-primary':'')+'"><text x="22" y="'+(y-63)+'">'+String(row+1).padStart(2,'0')+' / '+(path.kind==='direct'?'直接贡献':'放大条件')+'</text><text x="22" y="'+(y-43)+'">'+SHORT[id]+'</text></g>';
+   const path=PATHS[id],y=120+row*150,primary=id===state.primary;
+   out+='<g class="path-row-label '+(primary?'is-primary':'')+'"><text x="22" y="'+(y-57)+'">'+String(row+1).padStart(2,'0')+' / '+(path.kind==='direct'?'直接贡献':'放大条件')+'</text><text x="22" y="'+(y-36)+'">'+SHORT[id]+'</text></g>';
    for(let i=0;i<3;i++){
-    const x1=xs[i]+w/2-1,x2=xs[i+1]-w/2+1,edgeId='path-flow-'+row+'-'+i;
-    const d='M'+x1+' '+y+' C'+(x1+32)+' '+(y-27)+' '+(x2-32)+' '+(y+27)+' '+x2+' '+y;
+    const x1=xs[i]+w/2-2,x2=xs[i+1]-w/2+2,edgeId='path-flow-'+row+'-'+i;
+    const d='M'+x1+' '+y+' C'+(x1+58)+' '+(y-34)+' '+(x2-58)+' '+(y+34)+' '+x2+' '+y;
     out+='<path id="'+edgeId+'" class="path-edge '+(primary?'is-primary':'')+'" d="'+d+'"/>'+
-     '<circle class="flow-particle '+(primary?'is-primary':'')+'" r="'+(primary?5:3.5)+'"><animateMotion dur="'+(2.4+i*.32)+'s" begin="'+(row*.18+i*.2)+'s" repeatCount="indefinite"><mpath href="#'+edgeId+'"/></animateMotion></circle>';
+     '<circle class="flow-particle '+(primary?'is-primary':'')+'" r="'+(primary?5.5:4)+'"><animateMotion dur="'+(2.35+i*.3)+'s" begin="'+(row*.16+i*.18)+'s" repeatCount="indefinite"><mpath href="#'+edgeId+'"/></animateMotion></circle>'+
+     '<circle class="flow-particle secondary '+(primary?'is-primary':'')+'" r="2.8"><animateMotion dur="'+(2.35+i*.3)+'s" begin="'+(1.12+row*.16+i*.18)+'s" repeatCount="indefinite"><mpath href="#'+edgeId+'"/></animateMotion></circle>';
    }
    path.nodes.forEach((n,i)=>{
-    const active=state.node===id+':'+i,colors=['#167f83','#276d91','#9a7040','#247d69'];
+    const active=state.node===id+':'+i;
     out+='<g class="path-node '+(active?'is-focused':'')+' '+(primary?'is-primary':'')+'" data-path-node="'+id+':'+i+'" tabindex="0" role="button" aria-label="'+n.title+'，待核验。'+n.question+'" transform="translate('+xs[i]+','+y+')">'+
-     '<circle class="path-node-halo" r="52"/>'+
-     '<rect x="'+(-w/2)+'" y="-42" width="'+w+'" height="84" rx="14" fill="'+colors[i]+'"/>'+
-     '<circle class="path-node-index-bg" cx="'+(-w/2+19)+'" cy="-20" r="11"/>'+
-     '<text class="path-node-index" x="'+(-w/2+19)+'" y="-16" text-anchor="middle">'+String(i+1).padStart(2,'0')+'</text>'+
-     '<text class="path-node-title" x="0" y="-5" text-anchor="middle">'+n.title+'</text>'+
+     '<circle class="path-node-aura" r="70" fill="url(#nodeAura)"/><circle class="path-node-halo" r="55"/>'+
+     '<rect x="'+(-w/2)+'" y="-44" width="'+w+'" height="88" rx="15" fill="'+colors[i]+'"/>'+
+     '<circle class="path-node-index-bg" cx="'+(-w/2+21)+'" cy="-21" r="12"/>'+
+     '<text class="path-node-index" x="'+(-w/2+21)+'" y="-17" text-anchor="middle">'+String(i+1).padStart(2,'0')+'</text>'+
+     '<text class="path-node-title" x="0" y="-6" text-anchor="middle">'+n.title+'</text>'+
      '<text class="path-node-sub" x="0" y="15" text-anchor="middle">'+n.sub+'</text>'+
      '<text class="path-node-status" x="0" y="31" text-anchor="middle">● 待核验</text></g>';
    });
   });
-  svg.setAttribute('viewBox','0 0 1080 '+h);
+  svg.setAttribute('viewBox','0 0 '+width+' '+h);
  }
  svg.innerHTML=out;
 }
@@ -196,6 +203,23 @@ function updateWindLink(){
 }
 function render(){
  document.querySelectorAll('[data-path]').forEach(b=>{
+  const on=state.selected.includes(b.dataset.path);
+  b.setAttribute('aria-pressed',String(on));b.classList.toggle('is-selected',on);
+ });
+ $('pathCount').textContent=state.selected.length+' / 3';
+ $('pathBuildStatus').textContent='已选 '+state.selected.length+' 条 · '+state.selected.map(id=>SHORT[id]).join(' + ')+' · 所有连线均为待验证机制假设。';
+ const direct=state.selected.filter(id=>PATHS[id].kind==='direct').length;
+ const enablers=state.selected.length-direct;
+ const pairs=PAIRS.filter(p=>p.ids.every(id=>state.selected.includes(id))).length;
+ const slots=Array.from({length:3},(_,i)=>'<i class="'+(i<state.selected.length?'on':'')+'"></i>').join('');
+ const pairDots=Array.from({length:5},(_,i)=>'<i class="'+(i<pairs?'on':'')+'"></i>').join('');
+ $('pathTelemetry').innerHTML=
+  '<article class="telemetry-card"><div class="telemetry-card-head"><small>路径组合</small><span>01</span></div><strong>'+state.selected.length+'<i> / 3</i></strong><div class="telemetry-slots">'+slots+'</div><p>'+direct+'个直接渠道 · '+enablers+'个放大条件</p></article>'+
+  '<article class="telemetry-card"><div class="telemetry-card-head"><small>机制环节</small><span>02</span></div><strong>'+(state.selected.length*4)+'<i> 个节点</i></strong><div class="telemetry-nodebar">'+Array.from({length:state.selected.length*4},()=>'<i></i>').join('')+'</div><p>每条路径4个环节，均需逐项核验</p></article>'+
+  '<article class="telemetry-card"><div class="telemetry-card-head"><small>潜在互补</small><span>03</span></div><strong>'+pairs+'<i> / 5</i></strong><div class="telemetry-pairs">'+pairDots+'</div><p>已定义的可检验关系，不是统计系数</p></article>';
+ graph();inspector();synergy();updateWindLink();
+}
+document.querySelectorAll('[data-path]').forEach(b=>{
   const on=state.selected.includes(b.dataset.path);
   b.setAttribute('aria-pressed',String(on));b.classList.toggle('is-selected',on);
  });
