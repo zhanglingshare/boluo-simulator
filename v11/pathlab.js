@@ -124,11 +124,11 @@ document.querySelectorAll('[data-path]').forEach(b=>b.addEventListener('click',(
  state.node=state.primary+':0';syncURL();render();
 }));
 $('pathGraph').addEventListener('click',e=>{
- const n=e.target.closest('[data-path-node]');if(!n)return;state.node=n.dataset.pathNode;inspector();graph();
+ const n=e.target.closest('[data-path-node]');if(!n)return;state.node=n.dataset.pathNode;graph();inspector();
 });
 $('pathGraph').addEventListener('keydown',e=>{
  if(!['Enter',' '].includes(e.key))return;const n=e.target.closest('[data-path-node]');if(!n)return;
- e.preventDefault();state.node=n.dataset.pathNode;inspector();graph();
+ e.preventDefault();state.node=n.dataset.pathNode;graph();inspector();
 });
 $('pathReset').addEventListener('click',()=>{
  state.selected=[state.primary];state.node=state.primary+':0';syncURL();render();toast('已重置为当前主路径。');
