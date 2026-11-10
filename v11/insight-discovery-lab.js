@@ -16,10 +16,18 @@ function allVariables(){return core.variables.concat(state.custom);}
 function currentVariable(){return allVariables().find(function(v){return v.id===state.variable;})||core.variables[0];}
 function selectedSignal(){return core.signals.find(function(s){return s.id===state.signal;})||core.signals[0];}
 function selectedHypothesis(){return core.hypotheses.find(function(h){return h.id===state.hypothesis;})||core.hypotheses[0];}
-function factorUrl(factor,focus,missing,blind){
+function factorUrl(factor,focus,missing,blind,evidenceName){
  const u=new URL("./challenge.html",location.href);
+ const variable=currentVariable(),signal=selectedSignal(),hypothesis=selectedHypothesis();
  u.searchParams.set("focus",focus||"growth");u.searchParams.set("factor",factor||"network");
  u.searchParams.set("blind",blind||"");u.searchParams.set("missing",missing||"");
+ u.searchParams.set("v08",variable.id);u.searchParams.set("vname",variable.name);
+ u.searchParams.set("s08",signal.id);u.searchParams.set("sname",signal.title);
+ u.searchParams.set("h08",hypothesis.id);u.searchParams.set("hname",hypothesis.title);
+ u.searchParams.set("e08",blind||"");u.searchParams.set("ename",evidenceName||"");
+ u.searchParams.set("equestion",missing||"");
+ const links=state.edges.filter(function(e){return e.from===variable.id||e.to===variable.id;}).map(function(e){return e.from===variable.id?e.to:e.from;});
+ if(links.length)u.searchParams.set("edge08",links.join(","));
  return u.href;
 }
 function renderSignals(){
@@ -158,7 +166,7 @@ function renderEvidence(){
   const actions=el("div","iq-evidence-actions");
   const save=el("button","iq-evidence-save",state.watch.includes(item.id)?"移出关注清单":"加入关注清单");save.type="button";save.setAttribute("aria-pressed",String(state.watch.includes(item.id)));
   save.addEventListener("click",function(){if(state.watch.includes(item.id))state.watch=state.watch.filter(function(x){return x!==item.id;});else state.watch.push(item.id);persistWatch();renderEvidence();});
-  const challenge=el("a","iq-evidence-challenge","带入09判断挑战 ↗");challenge.href=factorUrl(item.factor,item.focus,item.question,item.id);
+  const challenge=el("a","iq-evidence-challenge","带入09判断挑战 ↗");challenge.href=factorUrl(item.factor,item.focus,item.question,item.id,item.name);
   actions.append(save,challenge);card.append(actions);wrap.append(card);
  });
  $("iqWatchCount").textContent=String(state.watch.length)+" 项已加入本机关注清单";
