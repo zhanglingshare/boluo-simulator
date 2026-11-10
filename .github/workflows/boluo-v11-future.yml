@@ -11,6 +11,7 @@ on:
       - "v11/brief.js"
       - "v11/brief-data.js"
       - "tests/boluo-v11-future*.cjs"
+      - "tests/boluo-v11-brief.test.cjs"
       - ".github/workflows/boluo-v11-future.yml"
   pull_request:
     paths:
@@ -22,6 +23,7 @@ on:
       - "v11/brief.js"
       - "v11/brief-data.js"
       - "tests/boluo-v11-future*.cjs"
+      - "tests/boluo-v11-brief.test.cjs"
       - ".github/workflows/boluo-v11-future.yml"
   workflow_dispatch:
 permissions:
