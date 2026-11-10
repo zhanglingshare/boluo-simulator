@@ -44,7 +44,7 @@ const {chromium}=require('playwright');
  assert.equal(await page.locator('[data-path][aria-pressed="true"]').count(),2,'route deselection updates the set');
 
  await page.locator('[data-stage="4"]').click();
- assert.match(await page.locator('#stageTitle').innerText(),/实际贡献/,'delivery gates still follow primary route');
+ assert.match(await page.locator('#stageTitle').innerText(),/产生可核实贡献/,'delivery gates still follow primary route');
  await page.locator('#stageSource').click();
  assert.equal(await page.locator('#detailDialog').evaluate(el=>el.open),true,'route-specific evidence boundary opens');
  assert.match(await page.locator('#dialogBody').innerText(),/推断边界/,'dialog does not pretend a measured result');
