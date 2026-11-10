@@ -224,3 +224,47 @@
 }
 @media(max-width:380px){.plan-page .mobile-nav a b{font-size:8px}.path-studio-head{align-items:flex-start}.path-counter{padding:6px}.target-glance article strong{font-size:18px}}
 @media(prefers-reduced-motion:reduce){.path-edge,.plan-page .plan-status .p-dot,.plan-page .plan-hero-kpi .big-arrow{animation:none!important;transition:none!important}}
+
+
+/* The folded three-core context uses the same teal instrument language when opened. */
+.plan-page .plan-tabs button{background:linear-gradient(145deg,#fff,#f1f8f6);border-color:#d8e7e4;box-shadow:0 5px 14px rgba(23,70,74,.04)}
+.plan-page .plan-tabs button[aria-pressed=true]{background:linear-gradient(125deg,#1b8e82,#155c68);border-color:#2b9c8d;box-shadow:0 7px 18px rgba(23,117,104,.2)}
+.plan-page .plan-tabs .tab-index{background:#e2f2ed;color:#278e7e}
+.plan-page .plan-tabs button[aria-pressed=true] .tab-index{background:rgba(255,255,255,.2);color:#d8fff1}
+.plan-page .plan-tabs strong{color:#285660}.plan-page .plan-tabs small{color:#839a9d}
+.plan-page .plan-tabs button[aria-pressed=true] :is(strong,small){color:#f2fffa}
+.plan-page .network-shell{border:1px solid rgba(105,195,177,.3);border-radius:16px;background:linear-gradient(135deg,#09202e,#0b2a37 60%,#0b1c2c);box-shadow:0 18px 46px rgba(10,37,50,.18),inset 0 1px rgba(255,255,255,.08)}
+.plan-page .network-toolbar{background:linear-gradient(110deg,#0c303c,#0b2331);border-bottom:1px solid rgba(120,211,196,.19)}
+.plan-page .network-toolbar small{color:#80cfc0}.plan-page .network-toolbar strong{color:#f2fbfa}
+.plan-page .network-toolbar button{background:linear-gradient(110deg,#248e82,#166d77);border-color:#3b9e91}
+.plan-page #planGraph{background-image:linear-gradient(rgba(138,215,206,.06) 1px,transparent 1px),linear-gradient(90deg,rgba(138,215,206,.06) 1px,transparent 1px);background-size:32px 32px}
+.plan-page #planGraph .p-edge{stroke:#75cfc0;stroke-opacity:.55}
+.plan-page #planGraph .p-edge.conditional{stroke:#e7b977;stroke-dasharray:8 9;stroke-opacity:.58}
+.plan-page #planGraph .p-edge.lit{stroke:#b2f0dd;filter:drop-shadow(0 0 7px rgba(98,222,192,.55))}
+.plan-page #planGraph .p-edge.lit.conditional{stroke:#f4cb8c;filter:drop-shadow(0 0 7px rgba(230,180,106,.5))}
+.plan-page #planGraph .p-node rect{fill:#173d49;stroke:#5f9f9c}
+.plan-page #planGraph .p-node[data-kind=core] rect{fill:#bdeadd;stroke:#6bd2b3;filter:drop-shadow(0 0 15px rgba(81,203,168,.3))}
+.plan-page #planGraph .p-node[data-kind=planned] rect{fill:#164654;stroke:#64b9ae}
+.plan-page #planGraph .p-node[data-kind=condition] rect{fill:#493c2d;stroke:#d6aa68}
+.plan-page #planGraph .p-node text{fill:#ecfaf6}
+.plan-page #planGraph .p-node .p-sub{fill:#a6c9c4}
+.plan-page #planGraph .p-node[data-kind=core] text{fill:#124d49}
+.plan-page #planGraph .p-node[data-kind=core] .p-sub{fill:#397d73}
+.plan-page #planGraph .p-node.active rect,.plan-page #planGraph .p-node:hover rect,.plan-page #planGraph .p-node:focus-visible rect{stroke:#f1cb88;filter:drop-shadow(0 0 15px rgba(241,193,117,.4))}
+.plan-page #planGraph .p-ring{stroke:#82dfcb}
+.plan-page .network-footer{background:#0b2a37;border-top:1px solid rgba(124,205,189,.19)}
+.plan-page .network-footer span{color:#a3c6c1}
+.plan-page .network-footer button{background:#17404a;border-color:#386d71;color:#c0dddd}
+.plan-page .network-footer button:hover{background:#225661}
+.plan-page .region-inspector{border:1px solid #d4e5e3;border-radius:15px;background:linear-gradient(145deg,#f5fbf9,#fff);box-shadow:0 10px 28px rgba(24,75,72,.06)}
+.plan-page .region-role{background:#e8f6f1;border-color:#c7e6db;color:#277e72}
+.plan-page .region-inspector h3{color:#194653}
+.plan-page .region-inspector>p{color:#6c858a}
+.plan-page .dependency-check{background:linear-gradient(135deg,#11444a,#123343);box-shadow:none}
+.plan-page .dependency-check span{color:#93ccc1}
+.plan-page .dependency-check strong{color:#e5f5ee}
+.plan-page .region-evidence{background:#f0f8f5;border-color:#d5e9e1}
+.plan-page .region-evidence strong{color:#34776c}
+.plan-page .region-evidence p{color:#7b9491}
+.plan-page .region-source{background:linear-gradient(110deg,#248e82,#166d77);border-color:#2b9e8c;box-shadow:none}
+.plan-page .region-details>summary{background:#edf8f3;border-color:#cce8dd;color:#287f73}
