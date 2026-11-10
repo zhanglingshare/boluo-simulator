@@ -17,6 +17,7 @@ const {chromium}=require('playwright');
  assert.equal(await page.locator('.target-glance article').count(),3,'three additional target anchors visible');
  assert.equal(await page.locator('#goalsDisclosure').evaluate(el=>el.open),false,'detailed target comparison is folded by default');
  assert.equal(await page.locator('.spatial-context').evaluate(el=>el.open),false,'three-core spatial context is secondary and folded');
+ assert.equal(await page.locator('#calendar').evaluate(el=>el.open),false,'annual milestones and missing-link notes are folded');
  assert.equal(await page.locator('[data-path][aria-pressed="true"]').count(),1,'one neutral starting route');
  assert.equal(await page.locator('#pathGraph .path-node').count(),4,'one route has four mechanism stages');
  assert.match(await page.locator('#pathBuildStatus').innerText(),/机制假设/,'path boundary is explicit');
@@ -65,6 +66,8 @@ const {chromium}=require('playwright');
 
  await page.locator('.spatial-context > summary').click();
  assert.equal(await page.locator('.spatial-context').evaluate(el=>el.open),true,'three-core spatial context remains available');
+ await page.locator('#calendar > summary').click();
+ assert.equal(await page.locator('#calendar').evaluate(el=>el.open),true,'supporting annual facts can be expanded');
  assert.ok(await page.locator('#planGraph').count(),'original spatial network is preserved');
  await page.screenshot({path:'artifacts/plan-pathlab-desktop.png',fullPage:true});
  assert.deepEqual(errors,[],'desktop has no JS errors');
