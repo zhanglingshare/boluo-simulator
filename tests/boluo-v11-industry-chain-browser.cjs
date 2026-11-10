@@ -64,6 +64,8 @@ const {chromium}=require('playwright');
 
  await page.locator('#peerBars [data-peer="huidong"]').click();
  assert.match(await page.locator('#peerSelected').innerText(),/惠东/,'peer selection updates details');
+ await page.locator('#peerBars [data-peer="heshan"]').hover();
+ assert.equal(await page.locator('#peerScatter [data-peer="heshan"]').evaluate(el=>el.classList.contains('linked-hover')),true,'county comparison cross-highlights on hover');
  await page.locator('#peerScatter .scatter-dot').nth(2).click();
  assert.match(await page.locator('#peerSelected').innerText(),/四会/,'scatter point updates peer details');
  assert.deepEqual(errors,[],'no desktop runtime errors');
