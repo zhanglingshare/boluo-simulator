@@ -1,6 +1,7 @@
 /* V11 Decision Brief data adapter v2. Public selections only; never invent absent results. */
 (function(root,factory){const api=factory();if(typeof module!=="undefined"&&module.exports)module.exports=api;root.BoluoBriefData=api;})(typeof window!=="undefined"?window:globalThis,function(){
 "use strict";
+const FUTURE=typeof window!=="undefined"?window.BoluoFutureCore:typeof require==="function"?require("./future-core.js"):null;
 const KEYS=Object.freeze({
  discovery:"boluo-v11/discovery-questions/v1",
  impact:"boluo-impact-traces-v1",
@@ -9,7 +10,8 @@ const KEYS=Object.freeze({
  windTemporary:"boluo-v11-challenge-07",
  insight:"boluo-v11-insight-focus",
  challenge:"boluo-v11-challenge-last",
- region:"boluo-v11-region-focus"
+ region:"boluo-v11-region-focus",
+ future:"boluo-v11-future-snapshots-v1"
 });
 const SHOCK=Object.freeze({delay:"关键项目晚一年",invest:"投资接续走弱",orders:"本地订单外流",traffic:"通勤压力上升"});
 const CLAIM=Object.freeze({project:"投资下降，下一棒可能接不上。",orders:"工业增长，未必让本地配套受益。",people:"数字增长，未必同步改善居民获得。",agri:"农产品卖出去了，价值未必留在本地。"});
@@ -83,6 +85,8 @@ function load(store,session){
  const insight=tryRead(store,KEYS.insight,null);
  const challenge=tryRead(store,KEYS.challenge,null);
  const region=tryRead(store,KEYS.region,null);
+ const rawFuture=latest(store,KEYS.future);
+ const future=FUTURE&&rawFuture?FUTURE.cleanSnapshot(rawFuture):null;
  const params=rawWind&&cleanWindParams(rawWind.baselineParams);
  const distribution=rawWind&&cleanDistribution(rawWind.distribution);
  const savedWind=rawWind&&validScenario(rawWind.shock)&&finite(rawWind.median)&&finite(rawWind.baseline)?{
@@ -140,9 +144,10 @@ function load(store,session){
   {id:"wind",name:"风洞",page:"wind.html",exists:!!savedWind,detail:savedWind?"已保存条件实验":temp?"只有临时结果":"尚未保存"},
   {id:"insight",name:"联系",page:"insights.html",exists:!!cleanInsight,detail:cleanInsight?cleanInsight.name||"已保存关系":"尚未保存"},
   {id:"challenge",name:"反驳",page:"challenge.html",exists:!!cleanChallenge,detail:cleanChallenge?"已保存判断":"尚未保存"},
-  {id:"region",name:"区域",page:"region.html",exists:!!cleanRegion,detail:cleanRegion?cleanRegion.title:"尚未保存"}
+  {id:"region",name:"区域",page:"region.html",exists:!!cleanRegion,detail:cleanRegion?cleanRegion.title:"尚未保存"},
+  {id:"future",name:"未来",page:"future.html",exists:!!future,detail:future?FUTURE.SCENES[future.scene].short+" · "+future.summary:"尚未保存"}
  ];
- return {v:2,discovery:cleanDiscovery,impact:cleanImpact,plan:cleanPlan,wind:chosenWind,windSaved:!!savedWind,windRange:paired?temp:null,windRangeTemporary:!savedWind?temp:null,insight:cleanInsight,challenge:cleanChallenge,region:cleanRegion,steps,completed:steps.filter(s=>s.exists).length,total:steps.length};
+ return {v:2,discovery:cleanDiscovery,impact:cleanImpact,plan:cleanPlan,wind:chosenWind,windSaved:!!savedWind,windRange:paired?temp:null,windRangeTemporary:!savedWind?temp:null,insight:cleanInsight,challenge:cleanChallenge,region:cleanRegion,future,steps,completed:steps.filter(s=>s.exists).length,total:steps.length};
 }
 function textSummary(d){
  const rows=["博罗 V11｜我的决策档案 2.0","公开事实：2025年GDP现价1005.45亿元；2026年前三季度规上工业增加值同比+8.9%，工业投资同比−44.7%（统计口径不同，不据此推断因果）。",""];
@@ -160,6 +165,12 @@ function textSummary(d){
   rows.push("【10 区域观察】"+d.region.question+"；关注层："+d.region.layerTitle+"；角色假设："+(d.region.roleTitle||"未保存")+"；价值链："+(d.region.flowTitle||"未选择")+(d.region.flowStageTitle?" / "+d.region.flowStageTitle:"")+"。");
   if(d.region.pressure)rows.push("区域压力条件："+(d.region.pressure.adjusted?"滑杆已调整":"默认初始档位，未记录手动调整")+"；依赖 "+d.region.pressure.dependency+"/100；冲击 "+d.region.pressure.shock+"/100；替代能力 "+d.region.pressure.substitute+"/100；结构暴露指数 "+d.region.pressure.score+"/100（演示条件，不是经济损失或概率）。");
   rows.push("待补证据："+d.region.evidence+"。");
+ }
+ if(d.future){
+  const f=d.future;
+  rows.push("【12 未来结构实验】"+FUTURE.SCENES[f.scene].title+"；改造："+f.summary+"；操作："+({strengthen:"加强",weaken:"削弱",cut:"断开",add:"新增"})[f.mode]+"；强度："+f.intensity+"%；年份："+f.year+"。");
+  rows.push("本地环节可达演示指数："+f.baseline.local+" → "+f.future.local+"；结构连接指数："+f.baseline.connection+" → "+f.future.connection+"；韧性指数："+f.baseline.resilience+" → "+f.future.resilience+"。演示性指标，非真实经济损益或因果效果。");
+  rows.push("尚需证据："+f.evidenceGap+"。");
  }
  if(d.plan)rows.push("【06 规划关注】"+d.plan.routeTitle+(d.plan.region?" / "+d.plan.region:"")+"。");
  if(d.impact)rows.push("【05 影响观察】"+d.impact.sceneTitle+"；已保存影响链第 "+(d.impact.step+1)+" 步。");
