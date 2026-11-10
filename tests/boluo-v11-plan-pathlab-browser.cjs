@@ -61,6 +61,7 @@ const {chromium}=require('playwright');
  assert.deepEqual(saved[0].paths,['manufacturing'],'saved snapshot preserves the selected path');
  await page.locator('#viewSaved').click();
  assert.match(await page.locator('#dialogBody').innerText(),/存量企业扩能/,'saved path can be recovered');
+ await page.locator('#dialogClose').click();
 
  await page.locator('.spatial-context > summary').click();
  assert.equal(await page.locator('.spatial-context').evaluate(el=>el.open),true,'three-core spatial context remains available');
