@@ -30,6 +30,31 @@ function renderSectorList(){
    '<span class="sector-share">'+s.s25.toFixed(1)+'%</span><span class="sector-growth '+(s.g25==null?'na':s.g25<0?'down':'')+'">'+growth+'</span></button>';
  }).join('');
 }
+function renderSectorMap(){
+ const host=$('sectorMap');if(!host)return;
+ const W=700,H=292,L=58,R=24,T=28,B=42,iw=W-L-R,ih=H-T-B;
+ const x=v=>L+(v/26)*iw,y=v=>T+((26-v)/34)*ih;
+ const xt=[0,5,10,15,20,25],yt=[-5,0,10,20,25];
+ let svg='<svg viewBox="0 0 '+W+' '+H+'" role="img" aria-label="2025年行业增加值占比与增速象限图">';
+ yt.forEach(t=>{svg+='<line class="quad-line" x1="'+L+'" y1="'+y(t)+'" x2="'+(W-R)+'" y2="'+y(t)+'"/><text class="quad-label" x="'+(L-10)+'" y="'+(y(t)+3)+'" text-anchor="end">'+t+'%</text>'});
+ xt.forEach(t=>{svg+='<line class="quad-line" x1="'+x(t)+'" y1="'+T+'" x2="'+x(t)+'" y2="'+(H-B)+'"/><text class="quad-label" x="'+x(t)+'" y="'+(H-19)+'" text-anchor="middle">'+t+'%</text>'});
+ svg+='<line class="quad-axis" x1="'+L+'" y1="'+(H-B)+'" x2="'+(W-R)+'" y2="'+(H-B)+'"/><line class="quad-axis" x1="'+L+'" y1="'+T+'" x2="'+L+'" y2="'+(H-B)+'"/>';
+ svg+='<line class="quad-axis" x1="'+x(10)+'" y1="'+T+'" x2="'+x(10)+'" y2="'+(H-B)+'" stroke-dasharray="5 5"/>';
+ svg+='<text class="quad-label" x="'+(L+iw/2)+'" y="'+(H-4)+'" text-anchor="middle">行业占规上工业增加值比重 →</text>';
+ svg+='<text class="quad-label" transform="translate(13 '+(T+ih/2)+') rotate(-90)" text-anchor="middle">行业增加值同比增速 →</text>';
+ svg+='<text class="quad-label" x="'+(x(10)-8)+'" y="'+(T+10)+'" text-anchor="end">权重参考线 10%</text>';
+ const positions={electronics:[18,-15,'start'],electrical:[17,-14,'start'],rubber:[16,22,'start'],metal:[-12,23,'end'],power:[-10,-16,'end']};
+ const colors={electronics:'#238d81',electrical:'#4c8db5',rubber:'#bd6655',metal:'#6d9c79',power:'#a18d5e'};
+ sectors.filter(z=>z.g25!=null).forEach(z=>{
+  const cx=x(z.s25),cy=y(z.g25),rad=7+Math.sqrt(z.s25)*1.8,active=z.id===selectedSector;
+  const [dx,dy,anchor]=positions[z.id];
+  svg+='<g data-sector="'+z.id+'" role="button" tabindex="0" aria-label="选择'+z.short+'：占比'+z.s25+'%，增速'+pct(z.g25)+'">'+
+   '<circle class="quad-dot '+(active?'active':'')+'" cx="'+cx+'" cy="'+cy+'" r="'+rad+'" fill="'+colors[z.id]+'" fill-opacity=".9"/>'+
+   '<text class="quad-name" x="'+(cx+dx)+'" y="'+(cy+dy)+'" text-anchor="'+anchor+'">'+z.short+'</text></g>';
+ });
+ svg+='</svg>';
+ host.innerHTML=svg;
+}
 function renderSectorDetail(){
  const s=sectors.find(x=>x.id===selectedSector)||sectors[0];
  const delta=s.s25-s.s24,rate=s.g25==null?'未披露':pct(s.g25),change=s.g24==null?'未披露':pp(s.g25-s.g24);
@@ -81,7 +106,7 @@ function renderInvestment(){
   {label:'2024 工业投资',v:10.5,kind:'pos',max:14},
   {label:'2025 工业投资',v:-12.7,kind:'neg',max:14}
  ];
- $('investmentBars').innerHTML=items.map(x=>'<div class="dual-row"><span>'+x.label+'</span><span class="dual-track"><i class="dual-fill '+(x.v<0?'neg':'')+'" style="width:'+Math.abs(x.v)/x.max*100+'%"></i></span><b class="dual-value">'+pct(x.v)+'</b></div>').join('');
+ $('investmentBars').innerHTML=items.map(x=>'<div class="dual-row"><span>'+x.label+'</span><span class="dual-track"><i class="dual-fill '+(x.v<0?'neg':'')+'" style="width:'+Math.abs(x.v)/x.max*50+'%"></i></span><b class="dual-value">'+pct(x.v)+'</b></div>').join('');
 }
 function renderScale(){
  const pieces=[{name:'小微型',share:56.8,growth:9.7,color:'#238d81'},{name:'中型',share:24.0,growth:4.8,color:'#6493b6'},{name:'大型',share:19.2,growth:10.8,color:'#c59a55'}];
@@ -96,7 +121,7 @@ function renderSlider(){
  $('netAddsGap').style.color=gap>0?'#a25c42':'#20786f';
 }
 function render(){
- renderSectorList();renderSectorDetail();renderPeerDetail();renderInvestment();renderScale();renderSlider();
+ renderSectorList();renderSectorMap();renderSectorDetail();renderPeerDetail();renderInvestment();renderScale();renderSlider();
 }
 document.addEventListener('click',e=>{
  const s=e.target.closest('[data-sector]');if(s){selectedSector=s.dataset.sector;renderSectorList();renderSectorDetail();return}
