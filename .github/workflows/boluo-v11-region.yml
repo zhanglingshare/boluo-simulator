@@ -6,6 +6,8 @@ on:
       - "v11/region.html"
       - "v11/region.css"
       - "v11/region.js"
+      - "v11/region-lab.js"
+      - "tests/boluo-v11-region-lab.test.cjs"
       - "v11/challenge.html"
       - "tests/boluo-v11-region*.cjs"
       - ".github/workflows/boluo-v11-region.yml"
@@ -34,7 +36,8 @@ jobs:
       - name: Validate public claims and source code
         run: |
           node --check v11/region.js
-          node --test tests/boluo-v11-region.test.cjs
+          node --check v11/region-lab.js
+          node --test tests/boluo-v11-region.test.cjs tests/boluo-v11-region-lab.test.cjs
       - name: Install Chromium
         run: |
           npm install --no-save playwright
