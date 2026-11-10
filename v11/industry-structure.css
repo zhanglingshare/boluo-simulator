@@ -128,6 +128,7 @@ button,a,input,summary{font:inherit}button{color:inherit;cursor:pointer}a{color:
 .cluster-strip{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:8px;margin-top:10px}
 .cluster-strip>div{padding:11px 12px;border:1px solid #e4eaee;border-radius:9px;background:#f9fbfc;display:flex;flex-direction:column;gap:4px}
 .cluster-strip strong{font-size:21px;line-height:1;font-weight:900;letter-spacing:-.05em;color:#28586a}
+.cluster-strip .tiers strong{font-size:18px;letter-spacing:-.065em}
 .cluster-strip span{font-size:9px;color:#5e7382;font-weight:800;line-height:1.4}
 .cluster-strip small{font-size:8px;color:#9aa7b0;line-height:1.4}
 .target-caveat{padding:9px 11px;border-left:3px solid #c49a57;border-radius:0 7px 7px 0;background:#fff9ef;color:#826d4b}
