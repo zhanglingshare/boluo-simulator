@@ -20,6 +20,16 @@ async function visible(page,selector){await page.locator(selector).first().waitF
     assert.equal(await page.locator("body").getAttribute("data-v11-page"),String(i+3).padStart(2,"0"));
     await page.waitForTimeout(350);
     assert.ok((await page.locator(".v11-story h2").textContent()).trim().length>5,name+" missing headline");
+    if(["base-target","industry-chain","plan","region","brief"].includes(name)){
+      assert.equal(await page.locator(".v11-original-toggle").count(),1,name+" no legacy disclosure");
+      await page.locator(".v11-original-toggle").scrollIntoViewIfNeeded();
+      const original={ "base-target":".hero-kpis","industry-chain":"main > .hero","plan":".target-dashboard","region":"main > .hero","brief":"main > .hero"}[name];
+      assert.equal(await page.locator(original).isVisible(),false,name+" duplicate intro not collapsed");
+      await page.locator(".v11-original-toggle").click();
+      await page.waitForTimeout(120);
+      assert.equal(await page.locator(original).isVisible(),true,name+" legacy content inaccessible after expansion");
+      await page.locator(".v11-original-toggle").click();
+    }
     const stageWidth=await page.locator(".v11-story").evaluate(e=>e.getBoundingClientRect().width);
     assert.ok(stageWidth>150&&stageWidth<=width+1,name+" stage width="+stageWidth+" viewport="+width);
     if(name==="base-target"){
