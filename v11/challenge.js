@@ -185,13 +185,13 @@ function blockText(text,x,y,maxW,lineH,maxLines,font,color){
 function rounded(x,y,w,h,r,fill){ctx.beginPath();ctx.roundRect(x,y,w,h,r);ctx.fillStyle=fill;ctx.fill()}
 function makeImage(){
  if(!ctx){toast("当前浏览器不支持生成图片");return}
- const W=1080,H=1350,c=CONFIG[state.claim],r=c.rivals[state.rival],ev=c.proof[state.evidence];
+ const W=1080,H=1600,c=CONFIG[state.claim],r=c.rivals[state.rival],ev=c.proof[state.evidence];
  const bg=ctx.createLinearGradient(0,0,W,H);bg.addColorStop(0,"#082238");bg.addColorStop(1,"#0e3e4b");ctx.fillStyle=bg;ctx.fillRect(0,0,W,H);
  ctx.strokeStyle="rgba(129,232,215,.13)";ctx.lineWidth=2;for(let x=45;x<1120;x+=80){ctx.beginPath();ctx.moveTo(x,0);ctx.lineTo(x-220,H);ctx.stroke()}
  ctx.fillStyle="#8ddedc";ctx.font="700 27px sans-serif";ctx.fillText("BO LUO  /  09  ·  DECISION CHALLENGE",66,110);
  ctx.font="800 66px sans-serif";ctx.fillStyle="#fff";ctx.fillText("你的判断，经得起反驳吗？",66,218);
  ctx.font="500 29px sans-serif";ctx.fillStyle="#a2c9d2";ctx.fillText("一场可以被证据推翻的判断挑战",66,275);
- rounded(55,337,970,820,28,"#f3f8f8");
+ rounded(55,337,970,1120,28,"#f3f8f8");
  let y=406;ctx.font="700 25px sans-serif";ctx.fillStyle="#2e7881";ctx.fillText("我目前的判断",92,y);
  y=blockText(c.position,92,y+70,870,63,2,"800 46px sans-serif","#153b4b")+38;
  ctx.strokeStyle="#d2e3e5";ctx.lineWidth=2;ctx.beginPath();ctx.moveTo(92,y);ctx.lineTo(985,y);ctx.stroke();y+=58;
@@ -204,11 +204,10 @@ function makeImage(){
  y+=125;ctx.font="700 24px sans-serif";ctx.fillStyle="#267181";ctx.fillText("什么会让我改变判断？",92,y);
  y=blockText(state.falsifier||"尚未设定反证条件",92,y+43,870,34,2,"700 25px sans-serif","#234250")+22;
  ctx.font="500 21px sans-serif";ctx.fillStyle="#527987";ctx.fillText("阈值："+(state.threshold||"未设定")+"  ·  期限："+state.horizon+"  ·  主观确信："+state.confidence+"/100",92,y);
- let footY=1190;
- if(state.note){ctx.font="500 24px sans-serif";ctx.fillStyle="#d0e3e5";footY=blockText("我的补充："+state.note,68,1094,945,35,3,"500 23px sans-serif","#cee3e6")+25}
- ctx.strokeStyle="#539a9f";ctx.beginPath();ctx.moveTo(65,Math.max(1178,footY));ctx.lineTo(1010,Math.max(1178,footY));ctx.stroke();
- ctx.font="500 25px sans-serif";ctx.fillStyle="#a8d5d3";ctx.fillText("事实 ≠ 条件情景 ≠ 真实因果",68,1235);
- ctx.font="500 23px sans-serif";ctx.fillText("zhanglingshare.github.io/boluo-simulator/v11/challenge.html",68,1292);
+ let footY=1500;
+ ctx.strokeStyle="#539a9f";ctx.beginPath();ctx.moveTo(65,footY);ctx.lineTo(1010,footY);ctx.stroke();
+ ctx.font="500 25px sans-serif";ctx.fillStyle="#a8d5d3";ctx.fillText("事实 ≠ 条件情景 ≠ 真实因果",68,1550);
+ ctx.font="500 23px sans-serif";ctx.fillText("zhanglingshare.github.io/boluo-simulator/v11/challenge.html",68,1588);
  const a=document.createElement("a");a.href=cvs.toDataURL("image/png");a.download="博罗-我的判断挑战.png";document.body.append(a);a.click();a.remove();toast("判断卡图片已生成");
 }
 $("downloadCard").addEventListener("click",makeImage);
