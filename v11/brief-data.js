@@ -67,6 +67,9 @@ function load(store,session){
   topic:region.topic,layer:safeText(region.layer,30),title:REGION[region.topic].title,
   question:safeText(region.question,230)||REGION[region.topic].question,
   evidence:safeText(region.evidence,220)||REGION[region.topic].evidence,
+  role:({local:"本地做强",connect:"区域协作",resilient:"多元备份"})[region.role]||"",
+  exposure:region.pressure&&finite(region.pressure.score)?Math.max(0,Math.min(100,Math.round(region.pressure.score))):null,
+  flow:({manufacturing:"制造业价值链",agriculture:"农产品价值链",tourism:"游客消费链"})[region.flow]||"",
   date:safeDate(region.date)
  }:null;
  const steps=[
