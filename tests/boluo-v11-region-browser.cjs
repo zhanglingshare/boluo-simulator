@@ -42,7 +42,7 @@ const out=path.resolve(__dirname,"../artifacts/v11-region");fs.mkdirSync(out,{re
    await page.locator('[data-role="resilient"]').click();assert.match(await page.locator("#roleTitle").innerText(),/多元备份/);
    await page.locator("#saveQuestion").click();
    const savedLab=JSON.parse(await page.evaluate(()=>localStorage.getItem("boluo-v11-region-focus")));
-   assert.equal(savedLab.role,"resilient");assert.equal(savedLab.flow,"agriculture");assert.equal(savedLab.pressure.score,exposure);
+   assert.equal(savedLab.role,"resilient");assert.equal(savedLab.flow,"agriculture");assert.equal(savedLab.pressure.score,exposure);assert.equal(savedLab.pressure.touched,true);
    const replayUrl=page.url();await page.goto(replayUrl,{waitUntil:"load"});
    assert.equal(await page.locator("#pressureDependency").inputValue(),"90");
    assert.equal(await page.locator("#pressureShock").inputValue(),"90");
