@@ -623,6 +623,7 @@ h1 em{font-style:normal;background:linear-gradient(180deg,#a9e6ff,#3fc0ff);-webk
   var s=SECS.filter(function(x){return x.key===active;})[0];
   var t=document.getElementById('detTitle'), tag=document.getElementById('detTag'),
       q=document.getElementById('detQ'), list=document.getElementById('detList');
+  var siteFold=document.getElementById('siteFold');if(siteFold)siteFold.open=!!detId;
   if(detId&&evMap[detId]){
    var e=evMap[detId], b=bucketOf(e);
    t.textContent=e.title+(e.big?' · '+e.big+(e.unit||''):'');
@@ -665,7 +666,7 @@ h1 em{font-style:normal;background:linear-gradient(180deg,#a9e6ff,#3fc0ff);-webk
    }).join('')||'<span class="tw">这一版没有归入现场</span>';
   }
   Array.prototype.forEach.call(list.querySelectorAll('[data-id]'),function(b){
-   b.addEventListener('click',function(){detId=b.getAttribute('data-id');drawChart();drawDet();});
+   b.addEventListener('click',function(){detId=b.getAttribute('data-id');drawChart();drawDet();publishIndustryState();});
   });
  }
 
