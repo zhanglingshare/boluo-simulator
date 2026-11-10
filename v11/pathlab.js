@@ -59,41 +59,105 @@ function syncURL(){
  history.replaceState(null,'',u.pathname+u.search+u.hash);
  if(window.BoluoPlan?.setRoute)window.BoluoPlan.setRoute(state.primary);
 }
+let playTimer=null,playIndex=0;
+const PATH_ORDER=Object.keys(PATHS);
+const SHORT={new:'新项目',manufacturing:'存量扩能',services:'本地服务',innovation:'创新生产率',connect:'外部连接'};
+function stopPlayback(){
+ if(playTimer!==null){clearInterval(playTimer);playTimer=null;}
+ const btn=$('pathPlay');if(btn){btn.textContent='▶ 播放路径';btn.setAttribute('aria-pressed','false');}
+}
 function inspector(){
  const [id,indexText]=state.node.split(':'),path=PATHS[id]||PATHS[state.primary],i=Math.max(0,Math.min(3,Number(indexText)||0)),n=path.nodes[i];
- $('pathInspector').innerHTML='<span class="path-inspector-kicker">'+(path.kind==='direct'?'直接贡献渠道':'放大条件')+' / '+path.name+'</span>'+
+ const pct=(i+1)/4*100;
+ $('pathInspector').innerHTML=
+ '<div class="path-inspector-top"><span class="path-inspector-kicker">'+(path.kind==='direct'?'直接贡献':'放大条件')+' / '+SHORT[id]+'</span><b>环节 '+String(i+1).padStart(2,'0')+' / 04</b></div>'+
  '<h4>'+n.title+'</h4><p>'+n.question+'</p>'+
- '<div class="path-inspector-block"><small>优先核验的证据</small><strong>'+n.evidence+'</strong></div>'+
- '<div class="path-inspector-caveat"><b>推断边界</b> '+n.boundary+'</div>';
+ '<div class="path-inspector-track"><i style="width:'+pct+'%"></i></div>'+
+ '<div class="path-inspector-block"><small>证据点 · 待核验</small><strong>'+n.evidence+'</strong></div>'+
+ '<details class="path-inspector-more"><summary>推断边界</summary><p>'+n.boundary+'</p></details>';
  document.querySelectorAll('[data-path-node]').forEach(el=>el.classList.toggle('is-focused',el.dataset.pathNode===state.node));
 }
 function synergy(){
- const box=$('pathSynergy');
+ const matrix=$('synergyMatrix'),detail=$('synergyDetail');
+ const pairs=PAIRS.map(p=>({ ...p,key:[...p.ids].sort().join('|') }));
+ let html='<div class="synergy-axis-corner">×</div>';
+ PATH_ORDER.forEach(id=>html+='<div class="synergy-axis-label">'+SHORT[id]+'</div>');
+ PATH_ORDER.forEach((rowId,ri)=>{
+  html+='<div class="synergy-row-label">'+SHORT[rowId]+'</div>';
+  PATH_ORDER.forEach((colId,ci)=>{
+   if(ri===ci){html+='<span class="synergy-cell is-diagonal" aria-hidden="true">·</span>';return;}
+   const pair=pairs.find(p=>p.key===[rowId,colId].sort().join('|'));
+   if(!pair){html+='<span class="synergy-cell is-empty" aria-label="尚未定义互补假设"></span>';return;}
+   const active=state.selected.includes(rowId)&&state.selected.includes(colId);
+   html+='<button type="button" class="synergy-cell is-potential '+(active?'is-active':'')+'" data-pair="'+pair.ids.join(',')+'" aria-pressed="'+active+'" title="'+pair.title+'：点击试验这组路径"><i></i></button>';
+  });
+ });
+ matrix.innerHTML=html;
+ const selectedPairs=pairs.filter(p=>p.ids.every(id=>state.selected.includes(id)));
  if(state.selected.length<2){
-  box.innerHTML='<span class="synergy-kicker">PATH COMPLEMENTARITY / 路径互补</span><strong>再选择一条路径，观察它可能补上哪一环。</strong><p>这里不计算路径贡献额，只呈现值得验证的互补条件。</p>';return;
+  detail.innerHTML='<strong>选择第二条路径</strong><span>矩阵亮点代表可供检验的互补假设，不代表已发生的协同。</span>';
+ }else if(selectedPairs.length){
+  detail.innerHTML=selectedPairs.map(p=>'<article><b>'+p.title+'</b><span>'+p.question+'</span><small>核验：'+p.evidence+'</small></article>').join('');
+ }else{
+  detail.innerHTML='<strong>当前组合尚无预设互补关系</strong><span>不代表两条路径没有关系。需要进一步核对是否共享资源、争夺要素或形成真实交易。</span>';
  }
- const matches=PAIRS.filter(p=>p.ids.every(id=>state.selected.includes(id)));
- if(!matches.length){
-  box.innerHTML='<span class="synergy-kicker">PATH COMPLEMENTARITY / 路径互补</span><strong>多条路径共同依赖一组现实条件。</strong><p>重点检查订单、人才、交通、服务和资金是否相互补充，还是争夺同一资源。当前没有足够证据量化协同效应。</p>';return;
- }
- box.innerHTML='<span class="synergy-kicker">PATH COMPLEMENTARITY / 路径互补 · 机制假设</span><div class="synergy-grid">'+matches.map(p=>'<article><small>潜在互补 · 待验证</small><strong>'+p.title+'</strong><p>'+p.question+'</p><span>优先核验：'+p.evidence+'</span><em>'+p.boundary+'</em></article>').join('')+'</div>';
 }
 function graph(){
- const svg=$('pathGraph'),xs=[150,410,670,930],w=190,h=112+state.selected.length*126;
- let out='<defs><linearGradient id="pathLine" x1="0" x2="1"><stop stop-color="#39c5b0"/><stop offset=".55" stop-color="#68b9f4"/><stop offset="1" stop-color="#e4b56d"/></linearGradient><marker id="pathArrow" markerWidth="8" markerHeight="8" refX="6" refY="3" orient="auto"><path d="M0 0L6 3L0 6" fill="none" stroke="#75cdbd" stroke-width="1.2"/></marker></defs>';
+ const svg=$('pathGraph'),xs=[150,410,670,930],w=184,h=174+(state.selected.length-1)*154;
+ let out='<defs><linearGradient id="pathLine" x1="0" x2="1"><stop stop-color="#38c9b4"/><stop offset=".52" stop-color="#65c4ee"/><stop offset="1" stop-color="#f0bd72"/></linearGradient><filter id="pathGlow" x="-80%" y="-80%" width="260%" height="260%"><feGaussianBlur stdDeviation="3" result="blur"/><feMerge><feMergeNode in="blur"/><feMergeNode in="SourceGraphic"/></feMerge></filter></defs>';
  state.selected.forEach((id,row)=>{
-  const path=PATHS[id],y=102+row*126;
-  out+='<g class="path-row-label"><text x="24" y="'+(y-46)+'">'+String(row+1).padStart(2,'0')+' / '+(path.kind==='direct'?'直接贡献渠道':'放大条件')+'</text><text x="24" y="'+(y-27)+'">'+path.name+'</text></g>';
-  for(let i=0;i<3;i++)out+='<path class="path-edge" d="M'+(xs[i]+w/2+3)+' '+y+' H'+(xs[i+1]-w/2-12)+'" marker-end="url(#pathArrow)" style="animation-delay:'+(row*90+i*80)+'ms"/>';
+  const path=PATHS[id],y=132+row*154,primary=id===state.primary;
+  out+='<g class="path-row-label '+(primary?'is-primary':'')+'"><text x="22" y="'+(y-63)+'">'+String(row+1).padStart(2,'0')+' / '+(path.kind==='direct'?'直接贡献':'放大条件')+'</text><text x="22" y="'+(y-43)+'">'+SHORT[id]+'</text></g>';
+  for(let i=0;i<3;i++){
+   const x1=xs[i]+w/2-1,x2=xs[i+1]-w/2+1,edgeId='path-flow-'+row+'-'+i;
+   const d='M'+x1+' '+y+' C'+(x1+32)+' '+(y-27)+' '+(x2-32)+' '+(y+27)+' '+x2+' '+y;
+   out+='<path id="'+edgeId+'" class="path-edge '+(primary?'is-primary':'')+'" d="'+d+'"/>'+
+    '<circle class="flow-particle '+(primary?'is-primary':'')+'" r="'+(primary?5:3.5)+'"><animateMotion dur="'+(2.4+i*.32)+'s" begin="'+(row*.18+i*.2)+'s" repeatCount="indefinite"><mpath href="#'+edgeId+'"/></animateMotion></circle>';
+  }
   path.nodes.forEach((n,i)=>{
-   const active=state.node===id+':'+i,colors=['#1c7f82','#326d91','#9c7442','#277d69'];
-   out+='<g class="path-node '+(active?'is-focused':'')+'" data-path-node="'+id+':'+i+'" tabindex="0" role="button" aria-label="'+n.title+'。'+n.question+'" transform="translate('+xs[i]+','+y+')">'+
-    '<rect x="'+(-w/2)+'" y="-32" width="'+w+'" height="64" rx="12" fill="'+colors[i]+'"/>'+
-    '<text class="path-node-title" x="0" y="-4" text-anchor="middle">'+n.title+'</text>'+
-    '<text class="path-node-sub" x="0" y="17" text-anchor="middle">'+n.sub+'</text></g>';
+   const active=state.node===id+':'+i,colors=['#167f83','#276d91','#9a7040','#247d69'];
+   out+='<g class="path-node '+(active?'is-focused':'')+' '+(primary?'is-primary':'')+'" data-path-node="'+id+':'+i+'" tabindex="0" role="button" aria-label="'+n.title+'，待核验。'+n.question+'" transform="translate('+xs[i]+','+y+')">'+
+    '<circle class="path-node-halo" r="52"/>'+
+    '<rect x="'+(-w/2)+'" y="-42" width="'+w+'" height="84" rx="14" fill="'+colors[i]+'"/>'+
+    '<circle class="path-node-index-bg" cx="'+(-w/2+19)+'" cy="-20" r="11"/>'+
+    '<text class="path-node-index" x="'+(-w/2+19)+'" y="-16" text-anchor="middle">'+String(i+1).padStart(2,'0')+'</text>'+
+    '<text class="path-node-title" x="0" y="-5" text-anchor="middle">'+n.title+'</text>'+
+    '<text class="path-node-sub" x="0" y="15" text-anchor="middle">'+n.sub+'</text>'+
+    '<text class="path-node-status" x="0" y="31" text-anchor="middle">● 待核验</text></g>';
   });
  });
  svg.setAttribute('viewBox','0 0 1080 '+h);svg.innerHTML=out;
+}
+function targetVisuals(){
+ const reduce=window.matchMedia&&window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+ const rings=[...document.querySelectorAll('[data-ring]')],bars=[...document.querySelectorAll('[data-bar]')],hero=$('.hero-gap-track i'),counter=$('[data-count-to]');
+ rings.forEach(el=>{el.style.strokeDasharray='295.31';el.style.strokeDashoffset='295.31';});
+ bars.forEach(el=>{el.style.width='0%';});
+ if(hero)hero.style.width='0%';
+ if(counter)counter.textContent=reduce?'594.55':'0.00';
+ const animate=()=>{
+  rings.forEach(el=>{const v=Math.max(0,Math.min(100,Number(el.dataset.ring)||0));el.style.strokeDashoffset=String(295.31*(1-v/100));});
+  bars.forEach(el=>{el.style.width=Math.max(0,Math.min(100,Number(el.dataset.bar)||0))+'%';});
+  if(hero)hero.style.width='62.8%';
+ };
+ if(reduce){animate();return;}
+ requestAnimationFrame(animate);
+ if(counter){
+  const start=performance.now(),duration=1050,target=594.55;
+  const tick=now=>{const t=Math.min(1,(now-start)/duration),eased=1-Math.pow(1-t,3);counter.textContent=(target*eased).toFixed(2);if(t<1)requestAnimationFrame(tick);};
+  requestAnimationFrame(tick);
+ }
+}
+function togglePlayback(){
+ if(playTimer!==null){stopPlayback();return;}
+ if(window.matchMedia&&window.matchMedia('(prefers-reduced-motion: reduce)').matches){toast('系统已减少动态效果，可手动点击节点逐环查看。');return;}
+ const btn=$('pathPlay');playIndex=0;
+ const advance=()=>{
+  const id=state.primary;state.node=id+':'+playIndex;graph();inspector();
+  playIndex=(playIndex+1)%4;
+ };
+ advance();btn.textContent='Ⅱ 暂停';btn.setAttribute('aria-pressed','true');
+ playTimer=setInterval(advance,1350);
 }
 function updateWindLink(){
  const a=$('enterWind');if(!a)return;
@@ -108,38 +172,45 @@ function render(){
   b.setAttribute('aria-pressed',String(on));b.classList.toggle('is-selected',on);
  });
  $('pathCount').textContent=state.selected.length+' / 3';
- $('pathBuildStatus').textContent='已选 '+state.selected.length+' 条路径 · '+state.selected.map(id=>PATHS[id].name).join(' + ')+'。连线均为机制假设，不代表已证实交易。';
+ $('pathBuildStatus').textContent='已选 '+state.selected.length+' 条 · '+state.selected.map(id=>SHORT[id]).join(' + ')+' · 流线仅表示机制假设。';
  graph();inspector();synergy();updateWindLink();
 }
 document.querySelectorAll('[data-path]').forEach(b=>b.addEventListener('click',()=>{
- const id=b.dataset.path;
+ const id=b.dataset.path;stopPlayback();
  if(state.selected.includes(id)){
   if(state.selected.length===1){toast('至少保留一条路径。');return;}
   state.selected=state.selected.filter(x=>x!==id);
   if(state.primary===id)state.primary=state.selected[state.selected.length-1];
  }else{
-  if(state.selected.length>=3){toast('一次最多组合三条路径，避免把所有方向堆在一起。');return;}
+  if(state.selected.length>=3){toast('一次最多组合三条路径。');return;}
   state.selected.push(id);state.primary=id;
  }
  state.node=state.primary+':0';syncURL();render();
 }));
 $('pathGraph').addEventListener('click',e=>{
- const n=e.target.closest('[data-path-node]');if(!n)return;state.node=n.dataset.pathNode;graph();inspector();
+ const n=e.target.closest('[data-path-node]');if(!n)return;stopPlayback();state.node=n.dataset.pathNode;graph();inspector();
 });
 $('pathGraph').addEventListener('keydown',e=>{
  if(!['Enter',' '].includes(e.key))return;const n=e.target.closest('[data-path-node]');if(!n)return;
- e.preventDefault();state.node=n.dataset.pathNode;graph();inspector();
+ e.preventDefault();stopPlayback();state.node=n.dataset.pathNode;graph();inspector();
 });
+$('pathPlay').addEventListener('click',togglePlayback);
 $('pathReset').addEventListener('click',()=>{
- state.selected=[state.primary];state.node=state.primary+':0';syncURL();render();toast('已重置为当前主路径。');
+ stopPlayback();state.selected=[state.primary];state.node=state.primary+':0';syncURL();render();toast('已重置为当前主路径。');
 });
+$('synergyMatrix').addEventListener('click',e=>{
+ const cell=e.target.closest('[data-pair]');if(!cell)return;
+ const ids=cell.dataset.pair.split(',');stopPlayback();state.selected=ids;state.primary=ids[0];state.node=state.primary+':0';syncURL();render();
+});
+document.addEventListener('visibilitychange',()=>{if(document.hidden)stopPlayback();});
+window.addEventListener('pagehide',stopPlayback);
 window.addEventListener('popstate',()=>{
- const q=new URL(location.href).searchParams,route=VALID.includes(q.get('route'))?q.get('route'):'new';
+ stopPlayback();const q=new URL(location.href).searchParams,route=VALID.includes(q.get('route'))?q.get('route'):'new';
  const paths=(q.get('paths')||'').split(',').filter(x=>VALID.includes(x)).slice(0,3);
  state.selected=paths.length?paths:[route];state.primary=state.selected.includes(route)?route:state.selected[0];state.node=state.primary+':0';render();
  if(window.BoluoPlan?.setRoute)window.BoluoPlan.setRoute(state.primary);
 });
 window.BoluoPathLab={getSelected:()=>state.selected.slice(),getPrimary:()=>state.primary};
-render();
+render();targetVisuals();
 if(window.BoluoPlan?.setRoute)window.BoluoPlan.setRoute(state.primary);
 })();
