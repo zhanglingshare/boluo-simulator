@@ -32,6 +32,14 @@ const {chromium}=require('playwright');
  assert.ok(buffered.buffer.p50>buffered.stress.p50,'the original buffer scenario remains active under path-scoped stress');
  assert.match(await page.locator('#shareSummary').innerText(),/存量企业扩能/,'share summary names the selected path context');
 
+ const back=new URL(await page.locator('#returnPlan').getAttribute('href'));
+ assert.equal(back.searchParams.get('paths'),'manufacturing','return-to-06 link preserves the selected path set');
+ assert.equal(back.searchParams.get('route'),'manufacturing','return-to-06 link preserves the primary route');
+ const backPage=await browser.newPage({viewport:{width:1280,height:900}});
+ await backPage.goto(back.href,{waitUntil:'networkidle'});
+ assert.equal(await backPage.locator('[data-path="manufacturing"]').getAttribute('aria-pressed'),'true','returning to page 06 restores the selected route');
+ await backPage.close();
+
  const challenge=new URL(await page.locator('#goDecisionChallenge').getAttribute('href'));
  assert.equal(challenge.searchParams.get('paths'),'manufacturing','page 09 handoff preserves selected paths');
  assert.equal(challenge.searchParams.get('scope'),'selected','page 09 handoff preserves experiment scope');
