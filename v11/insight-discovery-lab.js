@@ -167,6 +167,7 @@ function renderEvidence(){
   const save=el("button","iq-evidence-save",state.watch.includes(item.id)?"移出关注清单":"加入关注清单");save.type="button";save.setAttribute("aria-pressed",String(state.watch.includes(item.id)));
   save.addEventListener("click",function(){if(state.watch.includes(item.id))state.watch=state.watch.filter(function(x){return x!==item.id;});else state.watch.push(item.id);persistWatch();renderEvidence();});
   const challenge=el("a","iq-evidence-challenge","带入09判断挑战 ↗");challenge.href=factorUrl(item.factor,item.focus,item.question,item.id,item.name);
+  challenge.addEventListener("click",function(event){event.preventDefault();location.href=factorUrl(item.factor,item.focus,item.question,item.id,item.name);});
   actions.append(save,challenge);card.append(actions);wrap.append(card);
  });
  $("iqWatchCount").textContent=String(state.watch.length)+" 项已加入本机关注清单";
