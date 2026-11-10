@@ -8,6 +8,8 @@ on:
       - "v11/insight-discovery-lab.js"
       - "v11/insight-discovery.css"
       - "v11/challenge.js"
+      - "v11/challenge.html"
+      - "v11/challenge.css"
       - "tests/boluo-v11-insight-discovery.cjs"
       - ".github/workflows/boluo-v11-insight-discovery.yml"
   workflow_dispatch:
