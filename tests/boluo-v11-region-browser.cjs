@@ -43,6 +43,12 @@ const out=path.resolve(__dirname,"../artifacts/v11-region");fs.mkdirSync(out,{re
    await page.locator("#saveQuestion").click();
    const savedLab=JSON.parse(await page.evaluate(()=>localStorage.getItem("boluo-v11-region-focus")));
    assert.equal(savedLab.role,"resilient");assert.equal(savedLab.flow,"agriculture");assert.equal(savedLab.pressure.score,exposure);
+   const replayUrl=page.url();await page.goto(replayUrl,{waitUntil:"load"});
+   assert.equal(await page.locator("#pressureDependency").inputValue(),"90");
+   assert.equal(await page.locator("#pressureShock").inputValue(),"90");
+   assert.equal(await page.locator("#pressureSubstitute").inputValue(),"10");
+   assert.match(await page.locator("#valueStageName").innerText(),/农户回款/);
+   assert.match(await page.locator("#roleTitle").innerText(),/多元备份/);
    const dlPromise=page.waitForEvent("download",{timeout:15000});
    await page.locator("#downloadQuestion").click();const dl=await dlPromise;assert.match(dl.suggestedFilename(),/\.png$/);
    const overflow=await page.evaluate(()=>Math.max(0,document.documentElement.scrollWidth-innerWidth));assert.ok(overflow<=25,"viewport overflow "+width+": "+overflow);
