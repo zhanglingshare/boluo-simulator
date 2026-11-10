@@ -22,7 +22,8 @@ const {chromium}=require('playwright');
  assert.equal(await page.locator('#peerScatter .scatter-dot').count(),4,'four county dots');
  assert.equal(await page.locator('#investmentBars .dual-row').count(),4,'output and investment trends across two years');
  assert.equal(await page.locator('#scaleLegend > div').count(),3,'large, medium, small/micro enterprise scale structure');
- assert.equal(await page.locator('.source-list a').count(),8,'eight traceable sources');
+ assert.equal(await page.locator('.source-list a').count(),10,'ten traceable sources');
+ assert.equal(await page.locator('#structural-constraints .signal-card').count(),4,'four structural signal cards');
 
  await page.locator('#sectorMap [data-sector="rubber"]').evaluate(el=>el.dispatchEvent(new MouseEvent('click',{bubbles:true})));
  assert.match(await page.locator('#sectorDetail').innerText(),/橡胶塑料/,'industry detail changes');
