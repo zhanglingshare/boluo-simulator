@@ -427,7 +427,8 @@ h1 em{font-style:normal;background:linear-gradient(180deg,#a9e6ff,#3fc0ff);-webk
   s.all.forEach(function(id){var b=bucketOf(evMap[id]);if(b!==null)s.bk[b].push(id);});
  });
 
- var active=SECS[0].key, view='chain', activeStage=null, activeBucket=null, detId=null;
+ var sectorQuery=(new URLSearchParams(location.search)).get('sector');
+ var active=SECS.some(function(s){return s.key===sectorQuery;})?sectorQuery:SECS[0].key, view='chain', activeStage=null, activeBucket=null, detId=null;
 
  function drawSpine(){
   var all=SECS.reduce(function(a,s){return a.concat(s.all);},[]);
