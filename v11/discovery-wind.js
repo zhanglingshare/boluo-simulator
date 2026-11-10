@@ -44,14 +44,14 @@
 
   function buildWords(list) {
     const lane = [-.78, .74, -.44, .40, -.10, .62, -.66, .16];
-    const n = Math.min(list.length, 7);
+    const n = Math.min(list.length, 6);
     return list.slice(0, n).map(function (x, i) {
       return {
         v: x.v, t: x.t || '', d: x.d || '',
         c: COLOR[x.k] || COLOR.good,
         row: i - (n - 1) / 2,
-        z: 1.0 - i * (0.62 / Math.max(1, n - 1)),
-        sp: 0.0046
+        z: i * (0.82 / Math.max(1, n - 1)),
+        sp: 0.0038
       };
     });
   }
@@ -88,8 +88,8 @@
       bg.addColorStop(1, '#04080f');
       ctx.fillStyle = bg; ctx.fillRect(0, 0, W, H);
 
-      const A0 = { x: W * 0.05, y: H * 0.38 }, A1 = { x: W * 0.96, y: H * 0.55 };
-      const R0 = Math.min(H * 0.54, W * 0.26) * breathe;
+      const A0 = { x: W * 0.13, y: H * 0.43 }, A1 = { x: W * 0.87, y: H * 0.53 };
+      const R0 = Math.min(H * 0.50, W * 0.24) * breathe;
       function ell(k) {
         const x = A0.x + (A1.x - A0.x) * k;
         const y = A0.y + (A1.y - A0.y) * k + Math.sin(k * Math.PI) * H * 0.03;
@@ -180,9 +180,10 @@
       ctx.fillStyle = halo; ctx.beginPath(); ctx.arc(th.x, th.y, 26, 0, 7); ctx.fill();
 
       // 粒子与文字同速向前，文字到喉部被吸入
+      // 输入信号从左侧进入，穿过喉部后从右侧离开
       words.forEach(function (w) {
-        w.z -= w.sp;
-        if (w.z < .252) { w.z = 1.02; w.u = (Math.random() * 2 - 1) * .62; }
+        w.z += w.sp;
+        if (w.z > 1.02) { w.z = 0; w.u = (Math.random() * 2 - 1) * .62; }
       });
       parts.forEach(function (p) {
         p.z += p.sp * 0.016;
@@ -193,26 +194,62 @@
         ctx.beginPath(); ctx.arc(px, py, 1.3 + p.z * 1.2, 0, 7); ctx.fill();
       });
 
-      // 关键数字飞进洞口
+      // 关键数字以大号信号卡进入风洞，穿过喉部后驶向输出端
       words.forEach(function (w) {
         const e = ell(w.z);
-        const sz = (H < 460 ? 8 : 10) + Math.min(w.z,1) * (H < 460 ? 15 : 22);
-        let a = .96;
-        if (w.z > .94) a = (1 - w.z) / .06;
-        else if (w.z < .42) a = (w.z - .255) / .165;
+        const compact = W < 560;
+        const sz = compact ? 25 + w.z * 10 : 32 + w.z * 12;
+        let a = .98;
+        if (w.z < .07) a = w.z / .07;
+        else if (w.z > .96) a = (1.02 - w.z) / .06;
         a = Math.max(0, Math.min(1, a));
-        const cy = H * 0.44 + w.row * (H < 460 ? 30 : 42);
-        ctx.textAlign = 'center'; ctx.textBaseline = 'middle';
-        ctx.shadowColor = 'rgba(5,14,22,.95)'; ctx.shadowBlur = 14;
-        ctx.font = '800 ' + sz.toFixed(1) + 'px "PingFang SC","Microsoft YaHei",sans-serif';
-        ctx.fillStyle = w.c.replace('ALPHA', a.toFixed(2));
-        ctx.fillText(w.v, Math.max(W*0.08, Math.min(W*0.92, e.x)), cy);
-        if (w.t) {
-          ctx.font = '500 ' + (sz * 0.44).toFixed(1) + 'px "PingFang SC","Microsoft YaHei",sans-serif';
-          ctx.fillStyle = 'rgba(196,216,230,' + (a * 0.82).toFixed(2) + ')';
-          ctx.fillText(w.t, Math.max(W*0.08, Math.min(W*0.92, e.x)), cy + sz * 0.64);
-        }
+        const cy = e.y + w.row * (compact ? 38 : 54);
+        const labelSize = compact ? 11 : 13;
+        ctx.font = '900 ' + sz.toFixed(1) + 'px "PingFang SC","Microsoft YaHei",sans-serif';
+        const valueWidth = ctx.measureText(w.v).width;
+        ctx.font = '650 ' + labelSize + 'px "PingFang SC","Microsoft YaHei",sans-serif';
+        const labelWidth = ctx.measureText(w.t || '').width;
+        const boxW = Math.min(W * .72, Math.max(valueWidth, labelWidth) + 30);
+        const boxH = compact ? 54 : 64;
+        const cx = Math.max(boxW / 2 + 6, Math.min(W - boxW / 2 - 6, e.x));
+        const top = Math.max(7, Math.min(H - boxH - 7, cy - boxH / 2));
+        const radius = compact ? 9 : 11;
+        ctx.save();
+        ctx.shadowColor = 'rgba(0,0,0,.65)';
+        ctx.shadowBlur = 17;
+        ctx.beginPath();
+        ctx.moveTo(cx - boxW / 2 + radius, top);
+        ctx.lineTo(cx + boxW / 2 - radius, top);
+        ctx.quadraticCurveTo(cx + boxW / 2, top, cx + boxW / 2, top + radius);
+        ctx.lineTo(cx + boxW / 2, top + boxH - radius);
+        ctx.quadraticCurveTo(cx + boxW / 2, top + boxH, cx + boxW / 2 - radius, top + boxH);
+        ctx.lineTo(cx - boxW / 2 + radius, top + boxH);
+        ctx.quadraticCurveTo(cx - boxW / 2, top + boxH, cx - boxW / 2, top + boxH - radius);
+        ctx.lineTo(cx - boxW / 2, top + radius);
+        ctx.quadraticCurveTo(cx - boxW / 2, top, cx - boxW / 2 + radius, top);
+        ctx.closePath();
+        ctx.fillStyle = 'rgba(4,17,30,' + (.86 * a).toFixed(2) + ')';
+        ctx.fill();
+        ctx.strokeStyle = w.c.replace('ALPHA', (.58 * a).toFixed(2));
+        ctx.lineWidth = 1.15;
+        ctx.stroke();
         ctx.shadowBlur = 0;
+        ctx.fillStyle = w.c.replace('ALPHA', a.toFixed(2));
+        ctx.fillRect(cx - boxW / 2 + 1, top + 10, 3, boxH - 20);
+        ctx.textAlign = 'center';
+        ctx.textBaseline = 'middle';
+        ctx.font = '900 ' + sz.toFixed(1) + 'px "PingFang SC","Microsoft YaHei",sans-serif';
+        ctx.shadowColor = w.c.replace('ALPHA', (.38 * a).toFixed(2));
+        ctx.shadowBlur = 9;
+        ctx.fillStyle = w.c.replace('ALPHA', a.toFixed(2));
+        ctx.fillText(w.v, cx, top + (compact ? 20 : 24), boxW - 20);
+        if (w.t) {
+          ctx.shadowBlur = 0;
+          ctx.font = '650 ' + labelSize + 'px "PingFang SC","Microsoft YaHei",sans-serif';
+          ctx.fillStyle = 'rgba(220,237,247,' + (.92 * a).toFixed(2) + ')';
+          ctx.fillText(w.t, cx, top + (compact ? 41 : 49), boxW - 20);
+        }
+        ctx.restore();
       });
 
       // 出口辉光
