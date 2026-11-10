@@ -2,15 +2,18 @@
 <html lang="zh-CN"><head>
 <meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <meta name="theme-color" content="#edf5fc">
-<meta name="description" content="博罗决策风洞第八页：从公开变化信号出发，亲手改变关系强度、表现和替代条件，观察结构假设怎样改变，并寻找最值得补的证据。">
+<meta name="description" content="博罗决策风洞第八页：从公开变化信号出发，发现遗漏变量、比较竞争性解释、检验结构断点，并把最重要的证据缺口带入下一轮判断。">
 <title>08 忽略了什么｜结构透视实验室 · 博罗 V11</title>
 <link rel="stylesheet" href="../assets/boluo-access.css?v=20261108-inline2">
 <link rel="stylesheet" href="./impact.css?v=20261107-v1">
 <link rel="stylesheet" href="./insight-workbench.css?v=20261108-i2">
+<link rel="stylesheet" href="./insight-discovery.css?v=20261111-discovery1">
 <script src="../assets/boluo-access.js?v=20261108-inline2" data-bl-access="inline"></script>
 <script defer src="./insight-topics.js?v=20261109-p1"></script>
 <script defer src="./insight-engine.js?v=20261108-i2"></script>
 <script defer src="./insight-workbench.js?v=20261108-i2"></script>
+<script defer src="./insight-discovery-core.js?v=20261111-discovery1"></script>
+<script defer src="./insight-discovery-lab.js?v=20261111-discovery1"></script>
 <script defer src="./brief-insight-save.js?v=20261109-b1"></script>
 </head>
 <body class="iq-page">
@@ -25,6 +28,17 @@
 <div class="iq-evidence-strip" aria-label="2026年前三季度博罗公开统计反差"><div><small>规上工业增加值 · 同比</small><strong class="up">+8.9%</strong></div><div><small>工业投资 · 同比</small><strong class="down">−44.7%</strong></div><a href="https://www.fz0752.com/fontHtml/html/issue/000143025_1.html" target="_blank" rel="noopener noreferrer">公开统计线索 ↗</a></div>
 </section>
 <div id="iqArrival" class="iq-arrival" role="status" hidden></div>
+
+<section class="iq-discovery-section" id="iqSignals" aria-labelledby="iqSignalsTitle">
+ <div class="iq-discovery-head"><div><p class="micro">01 / SIGNAL RADAR · 异常信号</p><h2 id="iqSignalsTitle">先看见不协调，<em>再追问为什么。</em></h2><p>一项公开统计反差，加上几类值得追问的结构问题。统计事实与研究假设分开呈现，不把相关变化写成因果。</p></div><span class="iq-discovery-badge">事实与问题分层</span></div>
+ <div class="iq-signal-grid" id="iqSignalGrid" aria-label="可选择的异常信号与待核验问题"></div>
+ <div class="iq-signal-detail" aria-live="polite">
+  <div><small id="iqSignalType" class="iq-signal-kind">公开统计信号</small><strong id="iqSignalDetailTitle">—</strong><strong id="iqSignalDetailText">—</strong></div>
+  <div><small>值得追问</small><strong id="iqSignalQuestion">—</strong></div>
+  <div><small>需要补充的证据</small><strong id="iqSignalEvidence">—</strong></div>
+  <a id="iqSignalSource" target="_blank" rel="noopener noreferrer" href="#" hidden>查看原有公开统计来源 ↗</a>
+ </div>
+</section>
 <section class="iq-console" id="iqLab" aria-labelledby="iqLabTitle">
 <div class="iq-console-top"><div><p class="micro">LIVE EXPERIMENT / 互动结构透视</p><h2 id="iqLabTitle">断开一环，<em>解释还站得住吗？</em></h2></div><span class="iq-tag">全部数值为可调假设 · 不是实际经济测算</span></div>
 <div class="iq-goalbar" role="group" aria-label="选择你想了解的结果"><button type="button" data-iq-target="growth" aria-pressed="true">产业接续</button><button type="button" data-iq-target="retention" aria-pressed="false">本地留存</button><button type="button" data-iq-target="resilience" aria-pressed="false">产业韧性</button><span id="iqGoalPrompt">下一轮增长靠什么接上？</span></div>
@@ -62,6 +76,59 @@
 </div>
 </section>
 <section class="iq-investigation" aria-labelledby="iqInvestigationTitle"><div class="iq-investigation-head"><div><p class="micro">THE MISSING EVIDENCE</p><h2 id="iqInvestigationTitle">你现在最该查的，<em>不是更多总量数据。</em></h2></div><span>先拆关系，再补证据</span></div><div class="iq-investigation-grid"><div><span>为什么怀疑这一环？</span><strong id="iqWhy">—</strong></div><div><span>哪份资料可能改变判断？</span><strong id="iqMissing">—</strong></div></div><details class="iq-limits"><summary>这次体验怎样计算？哪些结论不能下？</summary><p>这是一套以公开统计线索为起点的结构假设体验。比较图上的相对指数由重要性、运行表现、冲击强度、替代能力共同计算；这些输入是供用户质疑、调整的假设，不是对真实企业的测量或对产业网络关系的估计。</p><p>公开观察是2026年前三季度规上工业增加值与工业投资分别同比变化；两者统计口径不同，不能直接解释因果。断开一条候选联系，只从当前解释结构中排除该联系，不表示真实经济损失被消除。真实验证需要项目、企业和交易级材料。</p></details></section>
+
+<section class="iq-variable-section" id="iqVariableDiscovery" aria-labelledby="iqVariableTitle">
+ <div class="iq-discovery-head"><div><p class="micro">02 / MISSING VARIABLES · 遗漏变量发现器</p><h2 id="iqVariableTitle">还有哪些变量，<em>没有进入这张图？</em></h2><p>选择一个变量，查看它可能连接到哪里、需要什么证据。连线表示待检验的候选联系，不代表已经证实的因果关系。</p></div><span class="iq-discovery-badge" id="iqVariableCount">11 个候选变量</span></div>
+ <div class="iq-variable-layout">
+  <div class="iq-variable-rail" id="iqVariableList" role="group" aria-label="候选变量列表"></div>
+  <div class="iq-variable-stage" aria-label="当前变量的候选关联网络">
+   <span class="iq-variable-count">候选关系网络 · 非实测交易网络</span>
+   <svg class="iq-variable-lines" id="iqVariableLines" viewBox="0 0 1000 560" preserveAspectRatio="none" aria-hidden="true"></svg>
+   <div class="iq-variable-nodes" id="iqVariableNodes"></div>
+  </div>
+ </div>
+ <div class="iq-variable-add"><input id="iqCustomVariable" type="text" maxlength="32" placeholder="你发现了一个新变量？输入名称，例如：用电接入周期" aria-label="添加自定义变量"><button id="iqCustomAdd" type="button">＋ 添加变量</button></div>
+ <div class="iq-variable-detail" aria-live="polite">
+  <div><small>为什么值得关注</small><strong id="iqVariableWhy">—</strong></div>
+  <div><small>可能的作用机制</small><strong id="iqVariableMechanism">—</strong></div>
+  <div><small>下一步要问什么</small><strong id="iqVariableQuestion">—</strong></div>
+  <div><small>需要什么证据</small><strong id="iqVariableEvidence">—</strong></div>
+ </div>
+ <div class="iq-variable-status" id="iqVariableStatus">候选变量 · 待验证关系</div>
+</section>
+<section class="iq-discovery-section" id="iqCompeting" aria-labelledby="iqCompetingTitle">
+ <div class="iq-discovery-head"><div><p class="micro">03 / COMPETING EXPLANATIONS · 竞争性解释</p><h2 id="iqCompetingTitle">同一个现象，<em>可能有不止一种解释。</em></h2><p>以工业增加值与工业投资的统计反差为例。选一种解释，逐项标记证据状态。系统不会替你宣布哪种解释胜出。</p></div><span class="iq-discovery-badge">证据待核验 · 用户自评</span></div>
+ <div class="iq-hypothesis-section">
+  <div class="iq-hypothesis-list" id="iqHypothesisChoices" role="group" aria-label="选择竞争性解释"></div>
+  <div class="iq-hypothesis-detail">
+   <h3 id="iqHypothesisTitle">当前解释的可检验预期</h3>
+   <p id="iqHypothesisSummary">—</p>
+   <strong style="font-size:10px;color:#8ee6df">如果这种解释成立，可能观察到：</strong>
+   <ul class="iq-predictions" id="iqPredictions"></ul>
+   <strong style="font-size:10px;color:#8ee6df">最能区分解释的证据：</strong>
+   <div id="iqDiscriminatingEvidence"></div>
+   <div class="iq-hypothesis-status" id="iqHypothesisStatus">尚未标记证据状态</div>
+  </div>
+ </div>
+</section>
+<section class="iq-break-section" id="iqBreakLab" aria-labelledby="iqBreakTitle">
+ <div class="iq-discovery-head"><div><p class="micro">04 / STRUCTURAL BREAKPOINT · 结构断点实验</p><h2 id="iqBreakTitle">依赖更集中、替代更慢时，<em>结构暴露怎样变化？</em></h2><p>用三个可调条件做敏感性演示。数值是教学用相对指数，不是企业风险概率、GDP损失或真实阈值。</p></div><span class="iq-discovery-badge">可调参数 · 即时重算</span></div>
+ <div class="iq-break-layout">
+  <div class="iq-break-controls">
+   <label>关键环节依赖程度 <strong id="iqBreakDependenceValue">75</strong><input id="iqBreakDependence" type="range" min="0" max="100" step="5" value="75"></label>
+   <label>外部冲击强度 <strong id="iqBreakShockValue">70</strong><input id="iqBreakShock" type="range" min="0" max="100" step="5" value="70"></label>
+   <label>替代能力 <strong id="iqBreakSubstituteValue">35</strong><input id="iqBreakSubstitute" type="range" min="0" max="100" step="5" value="35"></label>
+   <div class="iq-break-score"><span>当前结构暴露<br>相对指数 / 0—100</span><strong id="iqBreakScore">—</strong></div>
+   <button id="iqBreakReset" type="button">恢复初始条件</button>
+  </div>
+  <div class="iq-break-grid-wrap"><div class="iq-break-grid" id="iqBreakGrid" aria-label="冲击强度与替代能力组合热力矩阵"></div><div class="iq-break-legend"><span>低相对暴露</span><span>高相对暴露</span></div><p class="iq-break-interpretation" id="iqBreakInterpretation">—</p></div>
+ </div>
+</section>
+<section class="iq-evidence-section" id="iqEvidenceTracker" aria-labelledby="iqEvidenceTitle">
+ <div class="iq-discovery-head"><div><p class="micro">05 / EVIDENCE TRACE · 证据追踪</p><h2 id="iqEvidenceTitle">下一步最值得补的，<em>是哪一份证据？</em></h2><p>把抽象盲区变成可调查的问题。标记关注后可保存在本机，也可把问题带入第九页接受反驳。</p></div><span class="iq-discovery-badge" id="iqWatchCount">0 项已加入本机关注清单</span></div>
+ <div class="iq-evidence-cards" id="iqEvidenceCards"></div>
+ <div class="iq-evidence-footer"><p>本机保存只记录你选择关注的证据项目，不上传服务器；“可能持有者”是调查方向，不代表已确认其掌握相关数据。</p><button id="iqSaveAllWatch" type="button">保存关注清单</button><button id="iqExportWatch" type="button">复制关注清单</button></div>
+</section>
 <section class="iq-exit"><div><p class="micro">ONE QUESTION TO TAKE AWAY</p><h2>带着一个可以核验的问题，<em>回风洞再吹一次。</em></h2><p id="iqExitSummary">哪一种缺失证据，最可能改变你对博罗的判断？</p></div><div class="iq-exit-actions"><a id="iqToWind" href="./wind.html">带这个环节去第七页 →</a><button id="iqCopy" type="button">复制核验问题</button><button id="saveInsightForBrief" class="iq-save-for-brief" type="button">保存这条关注联系</button><a id="iqToBrief" class="iq-to-brief" href="./brief.html">11 · 查看我的决策报告 ↗</a><a id="iqToChallenge" class="iq-to-challenge" href="./challenge.html">09 · 我的判断经得起反驳吗？ →</a></div></section>
 <footer class="footer"><span>博罗 V11 · 08 结构透视 · 已知事实 / 情景假设 / 待核验联系严格区分</span><a href="./wind.html">07 压力实验</a></footer>
 </main>
