@@ -577,7 +577,7 @@ h1 em{font-style:normal;background:linear-gradient(180deg,#a9e6ff,#3fc0ff);-webk
      var op=(detId&&detId!==id)?' opacity=".35"':'';
      out+='<g class="blk" data-id="'+id+'" data-col="'+c.key+'"'+op+' style="cursor:pointer">'
       +'<rect x="'+(x-bw/2)+'" y="'+y+'" width="'+bw+'" height="'+bh+'" rx="4" fill="'+fill+'" stroke="'+stroke+'" stroke-width="1.2"'+dash+'/>';
-     if(bh>=12)out+='<text x="'+x+'" y="'+(y+bh/2+4)+'" text-anchor="middle" style="font-size:'+fBlk+'px;font-weight:700;fill:'+(isWip||isSign?'#cfeaff':'#04212f')+'">'+e.town.replace(/街道|镇|/g,'')+(isOut?' 停':'')+'</text>';
+     if(bh>=12)out+='<text x="'+x+'" y="'+(y+bh/2+4)+'" text-anchor="middle" style="font-size:'+fBlk+'px;font-weight:700;fill:'+(isWip||isSign?'#cfeaff':'#04212f')+'">'+(e.town||'全县').replace(/街道|镇/g,'')+(isOut?' 停':'')+'</text>';
      out+='</g>';
     });
    }
