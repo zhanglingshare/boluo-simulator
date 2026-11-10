@@ -1,0 +1,47 @@
+name: V11 Page 08 Discovery Lab Browser Check
+on:
+  push:
+    branches: [main]
+    paths:
+      - "v11/insights.html"
+      - "v11/insight-discovery-core.js"
+      - "v11/insight-discovery-lab.js"
+      - "v11/insight-discovery.css"
+      - "v11/challenge.js"
+      - "tests/boluo-v11-insight-discovery.cjs"
+      - ".github/workflows/boluo-v11-insight-discovery.yml"
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  browser:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: "22"
+      - name: Install Playwright and Chromium
+        run: |
+          npm install --no-save playwright
+          npx playwright install --with-deps chromium
+      - name: Serve repository
+        run: |
+          python3 -m http.server 8765 --bind 127.0.0.1 >/tmp/boluo-insight-http.log 2>&1 &
+          for i in $(seq 1 20); do
+            if curl --fail --silent http://127.0.0.1:8765/v11/insights.html -o /dev/null; then exit 0; fi
+            sleep 1
+          done
+          cat /tmp/boluo-insight-http.log
+          exit 1
+      - name: Test discovery modules, evidence handoff and mobile layout
+        run: node tests/boluo-v11-insight-discovery.cjs
+      - name: Upload desktop and mobile screenshots
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: boluo-v11-insight-discovery-audit
+          path: artifacts/boluo-v11-insight-discovery-*.png
+          if-no-files-found: warn
+          retention-days: 5
