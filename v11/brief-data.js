@@ -72,7 +72,7 @@ function cleanPressure(p){
  const keys=["dependency","shock","substitute"];
  if(!keys.every(k=>finite(p[k])&&p[k]>=0&&p[k]<=100))return null;
  const dependency=Math.round(p.dependency),shock=Math.round(p.shock),substitute=Math.round(p.substitute);
- return {dependency,shock,substitute,score:Math.round(dependency*shock*(100-substitute)/10000)};
+ return {dependency,shock,substitute,score:Math.round(dependency*shock*(100-substitute)/10000),adjusted:p.touched===true};
 }
 function load(store,session){
  const discovery=tryRead(store,KEYS.discovery,[]);
@@ -158,7 +158,7 @@ function textSummary(d){
  }
  if(d.region){
   rows.push("【10 区域观察】"+d.region.question+"；关注层："+d.region.layerTitle+"；角色假设："+(d.region.roleTitle||"未保存")+"；价值链："+(d.region.flowTitle||"未选择")+(d.region.flowStageTitle?" / "+d.region.flowStageTitle:"")+"。");
-  if(d.region.pressure)rows.push("区域压力条件：依赖 "+d.region.pressure.dependency+"/100；冲击 "+d.region.pressure.shock+"/100；替代能力 "+d.region.pressure.substitute+"/100；结构暴露指数 "+d.region.pressure.score+"/100（演示条件，不是经济损失或概率）。");
+  if(d.region.pressure)rows.push("区域压力条件："+(d.region.pressure.adjusted?"滑杆已调整":"默认初始档位，未记录手动调整")+"；依赖 "+d.region.pressure.dependency+"/100；冲击 "+d.region.pressure.shock+"/100；替代能力 "+d.region.pressure.substitute+"/100；结构暴露指数 "+d.region.pressure.score+"/100（演示条件，不是经济损失或概率）。");
   rows.push("待补证据："+d.region.evidence+"。");
  }
  if(d.plan)rows.push("【06 规划关注】"+d.plan.routeTitle+(d.plan.region?" / "+d.plan.region:"")+"。");
