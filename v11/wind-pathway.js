@@ -119,16 +119,21 @@
     midBox.innerHTML = MIDDLES.map((m) =>
       '<div class="wkp-node mid" data-m="' + m.id + '"><strong>' + m.label + '</strong><small>' + m.sub + '</small></div>'
     ).join('');
+    const prevOut = state.outVals || {};
     const out = (id) => {
-      if (id === 'total') return { v: fmt(d[viewKey].p50), u: '亿元' };
-      if (id === 'hit') return { v: (d[viewKey].hit).toFixed(1) + '%', u: '' };
-      if (id === 'spread') return { v: fmt(d[viewKey].spread), u: '亿元' };
-      return { v: fmt(d[viewKey].p10), u: '亿元' };
+      if (id === 'total') return { n: d[viewKey].p50, v: fmt(d[viewKey].p50), u: '亿元' };
+      if (id === 'hit') return { n: d[viewKey].hit, v: (d[viewKey].hit).toFixed(1) + '%', u: '' };
+      if (id === 'spread') return { n: d[viewKey].spread, v: fmt(d[viewKey].spread), u: '亿元' };
+      return { n: d[viewKey].p10, v: fmt(d[viewKey].p10), u: '亿元' };
     };
     outBox.innerHTML = OUTCOMES.map((o) => {
       const v = out(o.id);
-      return '<div class="wkp-node out" data-o="' + o.id + '"><strong>' + o.label + '</strong><b>' + v.v + (v.u ? ' <small>' + v.u + '</small>' : '') + '</b><span class="wkp-out-sub">' + o.sub + '</span></div>';
+      const p = Number.isFinite(prevOut[o.id]) ? prevOut[o.id] : v.n;
+      return '<div class="wkp-node out" data-o="' + o.id + '"><strong>' + o.label + '</strong><b data-v="' + v.n + '" data-p="' + p + '">' + v.v + (v.u ? ' <small>' + v.u + '</small>' : '') + '</b><span class="wkp-out-sub">' + o.sub + '</span></div>';
     }).join('');
+    const nextOut = {};
+    OUTCOMES.forEach((o) => { nextOut[o.id] = out(o.id).n; });
+    state.outVals = nextOut;
 
     // 定位与连线
     const anchorTrig = {}, anchorMid = {}, anchorOut = {};
@@ -197,21 +202,59 @@
     const focus = state.focus;
     const maxMid = Math.max.apply(null, edges.filter((e) => e.kind === 'mid').map((e) => e.val).concat([.001]));
     const maxOut = Math.max.apply(null, edges.filter((e) => e.kind === 'out').map((e) => e.val).concat([.001]));
-    edges.forEach((e) => {
+    const defs = '';
+    const liveEdges = [];
+    edges.forEach((e, idx) => {
       const norm = e.val / (e.kind === 'mid' ? maxMid : maxOut);
-      const width = (1.1 + Math.pow(norm, .7) * 4.8).toFixed(2);
-      const color = e.pos ? '#1396df' : (e.kind === 'mid' ? '#ef8a5c' : '#f2704a');
+      const width = (1.2 + Math.pow(norm, .75) * 7.2).toFixed(2);
+      const grad = e.pos ? '#0a6fd8' : (e.kind === 'mid' ? '#e8632b' : '#d8430f');
       const dim = focus && !(focus.mid === e.mid || focus.out === e.out || focus.trig === e.trig || focus.ch === e.ch);
-      const op = e.assume ? .34 : e.live ? (e.val < .3 ? .5 : .92) : .08;
-      paths += '<path class="wkp-edge' + (dim ? ' dim' : '') + '" d="' + e.d + '" stroke="' + color + '" stroke-width="' + width + '" opacity="' + op + '"' + (e.assume ? ' stroke-dasharray="4 3"' : '') + '></path>';
+      const op = e.assume ? .34 : e.live ? (e.val < .3 ? .5 : .92) : .07;
+      const cls = 'wkp-edge' + (dim ? ' dim' : '') + (e.live ? ' live' : '') + (e.kind === 'out' ? ' out' : '');
+      if (e.live && !e.assume) {
+        paths += '<path class="wkp-glow" d="' + e.d + '" stroke="' + grad + '" stroke-width="' + (width * 1.9) + '" opacity=".12" stroke-linecap="round"></path>';
+      }
+      paths += '<path class="' + cls + '" data-i="' + idx + '" data-kind="' + e.kind + '" d="' + e.d + '" stroke="' + grad + '" stroke-width="' + width + '" opacity="' + op + '"' + (e.assume ? ' stroke-dasharray="4 3"' : '') + '></path>';
+      if (e.live && !e.assume && e.val >= .3) {
+        liveEdges.push(idx);
+        paths += '<path class="wkp-spark" data-i="' + idx + '" d="' + e.d + '" stroke="' + (e.pos ? '#ffffff' : '#fff0d6') + '" stroke-width="' + Math.max(1.8, Math.min(3.4, width * .62)) + '"></path>';
+      }
       if (e.live && e.kind === 'mid' && norm >= .55) {
-        labels += '<text x="' + (e.a.x + 34) + '" y="' + (e.a.y - 7) + '" font-size="9.5" font-weight="800" fill="#b3572f" opacity=".75">' + strengthLabel(e.val) + '</text>';
+        labels += '<text class="wkp-edge-label" x="' + (e.a.x + 34) + '" y="' + (e.a.y - 7) + '" font-size="9.5" font-weight="800" fill="#b3572f" opacity=".75">' + strengthLabel(e.val) + '</text>';
       }
     });
-    svg.innerHTML = paths + labels;
+    svg.innerHTML = defs + paths + labels;
 
-    // 流动光点：只给较强的边，控制数量
-    startFlow(svg, edges.filter((e) => e.val >= .35).slice(0, 14));
+    // 一段一段长出来：层内依次推进，先中间层，再结果层
+    const reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    const livePaths = Array.from(svg.querySelectorAll('path.wkp-edge.live'));
+    if (!reduce) {
+      livePaths.forEach((p) => {
+        const len = p.getTotalLength();
+        p.style.strokeDasharray = len;
+        p.style.strokeDashoffset = len;
+      });
+      requestAnimationFrame(() => {
+        livePaths.forEach((p, k) => {
+          const layer = p.dataset.kind === 'out' ? .55 : 0;
+          const delay = layer + (k % 8) * .05;
+          p.style.transition = 'stroke-dashoffset .66s cubic-bezier(.22,.9,.3,1) ' + delay.toFixed(2) + 's';
+          p.style.strokeDashoffset = 0;
+          setTimeout(() => { p.style.transition = ''; }, 1400 + delay * 1000);
+          // 光带：一道亮光沿路径跑，长度按路径长度换算，跑完一圈接下一圈
+          const sp = svg.querySelector('path.wkp-spark[data-i="' + p.dataset.i + '"]');
+          if (sp) {
+            const L = p.getTotalLength();
+            const dash = Math.min(150, Math.max(72, L * .3));
+            sp.style.strokeDasharray = dash.toFixed(0) + ' ' + Math.max(10, L - dash).toFixed(0);
+            sp.style.setProperty('--len', L + 'px');
+            sp.style.animationDelay = (delay + .5).toFixed(2) + 's';
+            sp.style.animationDuration = Math.max(1.2, L / 130).toFixed(2) + 's';
+          }
+        });
+      });
+    }
+
 
     // 节点高亮
     const isDim = (kind, id) => {
@@ -221,48 +264,36 @@
       if (kind === 'out') return (focus.out && focus.out !== id) || (focus.mid && !(MIDDLES.find((m) => m.id === focus.mid).ch <= 3));
       return false;
     };
-    qa('#wkpTrig .wkp-node').forEach((n) => { n.classList.toggle('on', !!focus && focus.trig === n.dataset.t); n.classList.toggle('dim', !!isDim('trig', n.dataset.t)); });
-    qa('#wkpMid .wkp-node').forEach((n) => { n.classList.toggle('on', !!focus && (focus.mid === n.dataset.m || focus.ch === MIDDLES.find((m) => m.id === n.dataset.m).ch)); n.classList.toggle('dim', !!isDim('mid', n.dataset.m)); });
+    qa('#wkpTrig .wkp-node').forEach((n) => { n.classList.toggle('on', !!focus && focus.trig === n.dataset.t); n.classList.toggle('dim', !!isDim('trig', n.dataset.t)); n.classList.toggle('live', n.dataset.t === s.shock); });
+    const liveChs = new Set();
+    MIDDLES.forEach((m) => { if ((core.MODELS[s.shock].effect[m.ch] || 0) < 0) liveChs.add(m.ch); });
+    qa('#wkpMid .wkp-node').forEach((n) => { const m = MIDDLES.find((x) => x.id === n.dataset.m); n.classList.toggle('on', !!focus && (focus.mid === n.dataset.m || focus.ch === m.ch)); n.classList.toggle('dim', !!isDim('mid', n.dataset.m)); n.classList.toggle('live', liveChs.has(m.ch)); });
     qa('#wkpOut .wkp-node').forEach((n) => { n.classList.toggle('on', !!focus && focus.out === n.dataset.o); n.classList.toggle('dim', false); });
 
+    tweenOut();
     renderCard();
   }
 
-  let flowRAF = 0;
-  function startFlow(svg, edges) {
-    cancelAnimationFrame(flowRAF);
-    if (!edges.length) return;
-    const reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-    if (reduce) return;
-    const pick = Array.from(svg.querySelectorAll('path.wkp-edge'))
-      .filter((p) => parseFloat(p.getAttribute('stroke-width')) >= 3.2)
-      .slice(0, 16);
-    if (!pick.length) return;
-    const dots = pick.map((p) => {
-      const len = p.getTotalLength ? p.getTotalLength() : 0;
-      const c = document.createElementNS('http://www.w3.org/2000/svg', 'circle');
-      c.setAttribute('class', 'wkp-flow');
-      c.setAttribute('r', '2.6');
-      c.setAttribute('fill', p.getAttribute('stroke'));
-      c.setAttribute('opacity', '.75');
-      svg.appendChild(c);
-      return { c, p, len, off: Math.random() };
-    });
-    let last = 0;
+  /* 能量流由 CSS 驱动：火花沿路径循环，不再跑 requestAnimationFrame */
+  function startFlow() { /* 保留空实现以兼容旧调用 */ }
+
+  /* 结果数字滚动：从上一帧的值推到新值 */
+  function tweenOut() {
+    const els = Array.from(document.querySelectorAll('#wkpOut b'));
+    if (!els.length) return;
+    if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+    const t0 = performance.now(), dur = 780;
     const step = (t) => {
-      if (document.hidden) { flowRAF = requestAnimationFrame(step); return; }
-      if (t - last > 42) {
-        last = t;
-        dots.forEach((d) => {
-          if (!d.len) return;
-          d.off = (d.off + .0075) % 1;
-          const pt = d.p.getPointAtLength(d.off * d.len);
-          d.c.setAttribute('cx', pt.x); d.c.setAttribute('cy', pt.y);
-        });
-      }
-      flowRAF = requestAnimationFrame(step);
+      const k = Math.min(1, (t - t0) / dur), e = 1 - Math.pow(1 - k, 3);
+      els.forEach((el, i) => {
+        const from = Number(el.dataset.p), to = Number(el.dataset.v);
+        if (!Number.isFinite(from) || !Number.isFinite(to) || !el.firstChild) return;
+        const cur = from + (to - from) * e;
+        el.firstChild.nodeValue = i === 1 ? cur.toFixed(1) + '%' : Math.round(cur).toLocaleString('zh-CN');
+      });
+      if (k < 1) requestAnimationFrame(step);
     };
-    flowRAF = requestAnimationFrame(step);
+    requestAnimationFrame(step);
   }
 
   /* ---------- 解释卡 ---------- */

@@ -119,3 +119,20 @@
  .wkp-chain .chain-node strong{font-size:10px}
  .wkp-chain .chain-answer strong{font-size:10.5px}
 }
+
+/* ---- 传导动画层：生长 / 能量流 / 节点脉冲 ---- */
+@keyframes wkpSpark{from{stroke-dashoffset:0}to{stroke-dashoffset:calc(-1 * var(--len,120px))}}
+@keyframes wkpPulse{0%{box-shadow:0 0 0 0 #0a72df5c}68%{box-shadow:0 0 0 13px #0a72df00}100%{box-shadow:0 0 0 0 #0a72df00}}
+.wkp-svg path{fill:none}
+@keyframes wkpScan{0%{transform:translateX(-30%)}100%{transform:translateX(130%)}}
+.wkp-canvas{background-image:radial-gradient(#e4edf8 1px,transparent 1px);background-size:24px 24px;background-position:center}
+.wkp-canvas::after{content:"";position:absolute;inset:0;pointer-events:none;background:linear-gradient(90deg,transparent,#ffffff00 35%,#ffffff8c 50%,#ffffff00 65%,transparent);mix-blend-mode:overlay;animation:wkpScan 7.5s ease-in-out infinite}
+@media(prefers-reduced-motion:reduce){.wkp-canvas::after{animation:none}}
+.wkp-svg path.wkp-spark{fill:none;stroke-linecap:round;opacity:.9;animation-name:wkpSpark;animation-timing-function:linear;animation-iteration-count:infinite;animation-delay:.86s;pointer-events:none}
+/* 光晕不挂 CSS filter：Chromium 对 SVG filter 在某些后端渲染不稳，改用白色内流 + 描边厚度表现 */
+.wkp-node.live{animation:wkpPulse 2.6s ease-out infinite}
+.wkp-node.live strong{color:#0a3f74}
+@media(prefers-reduced-motion:reduce){
+ .wkp-svg path.wkp-spark{animation:none;opacity:0}
+ .wkp-node.live{animation:none}
+}
