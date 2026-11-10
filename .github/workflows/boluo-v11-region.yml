@@ -7,6 +7,8 @@ on:
       - "v11/region.css"
       - "v11/region.js"
       - "v11/region-lab.js"
+      - "v11/brief.js"
+      - "v11/brief-data.js"
       - "tests/boluo-v11-region-lab.test.cjs"
       - "v11/challenge.html"
       - "tests/boluo-v11-region*.cjs"
