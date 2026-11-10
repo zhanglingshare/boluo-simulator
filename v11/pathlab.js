@@ -219,14 +219,7 @@ function render(){
   '<article class="telemetry-card"><div class="telemetry-card-head"><small>潜在互补</small><span>03</span></div><strong>'+pairs+'<i> / 5</i></strong><div class="telemetry-pairs">'+pairDots+'</div><p>已定义的可检验关系，不是统计系数</p></article>';
  graph();inspector();synergy();updateWindLink();
 }
-document.querySelectorAll('[data-path]').forEach(b=>{
-  const on=state.selected.includes(b.dataset.path);
-  b.setAttribute('aria-pressed',String(on));b.classList.toggle('is-selected',on);
- });
- $('pathCount').textContent=state.selected.length+' / 3';
- $('pathBuildStatus').textContent='已选 '+state.selected.length+' 条 · '+state.selected.map(id=>SHORT[id]).join(' + ')+' · 流线仅表示机制假设。';
- graph();inspector();synergy();updateWindLink();
-}
+
 document.querySelectorAll('[data-path]').forEach(b=>b.addEventListener('click',()=>{
  const id=b.dataset.path;stopPlayback();
  if(state.selected.includes(id)){
