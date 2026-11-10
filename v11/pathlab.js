@@ -119,8 +119,7 @@ function graph(){
    for(let i=0;i<3;i++){
     const edgeId='path-flow-m-'+row+'-'+i,d='M'+x+' '+(ys[i]+35)+' C'+(x+26)+' '+(ys[i]+49)+' '+(x-26)+' '+(ys[i+1]-49)+' '+x+' '+(ys[i+1]-35);
     out+='<path id="'+edgeId+'" class="path-edge '+(primary?'is-primary':'')+'" d="'+d+'"/>'+
-     '<circle class="flow-particle '+(primary?'is-primary':'')+'" r="'+(primary?5:3.5)+'"><animateMotion dur="'+(2.15+i*.28)+'s" begin="'+(row*.14+i*.16)+'s" repeatCount="indefinite"><mpath href="#'+edgeId+'"/></animateMotion></circle>'+
-     '<circle class="flow-particle secondary '+(primary?'is-primary':'')+'" r="2.6"><animateMotion dur="'+(2.15+i*.28)+'s" begin="'+(1.05+row*.14+i*.16)+'s" repeatCount="indefinite"><mpath href="#'+edgeId+'"/></animateMotion></circle>';
+     '<circle class="flow-particle '+(primary?'is-primary':'')+'" r="'+(primary?5:3.5)+'"><animateMotion dur="'+(2.15+i*.28)+'s" begin="'+(row*.14+i*.16)+'s" repeatCount="indefinite"><mpath href="#'+edgeId+'"/></animateMotion></circle>';
    }
    path.nodes.forEach((n,i)=>{
     const active=state.node===id+':'+i;
@@ -144,8 +143,7 @@ function graph(){
     const x1=xs[i]+w/2-2,x2=xs[i+1]-w/2+2,edgeId='path-flow-'+row+'-'+i;
     const d='M'+x1+' '+y+' C'+(x1+58)+' '+(y-34)+' '+(x2-58)+' '+(y+34)+' '+x2+' '+y;
     out+='<path id="'+edgeId+'" class="path-edge '+(primary?'is-primary':'')+'" d="'+d+'"/>'+
-     '<circle class="flow-particle '+(primary?'is-primary':'')+'" r="'+(primary?5.5:4)+'"><animateMotion dur="'+(2.35+i*.3)+'s" begin="'+(row*.16+i*.18)+'s" repeatCount="indefinite"><mpath href="#'+edgeId+'"/></animateMotion></circle>'+
-     '<circle class="flow-particle secondary '+(primary?'is-primary':'')+'" r="2.8"><animateMotion dur="'+(2.35+i*.3)+'s" begin="'+(1.12+row*.16+i*.18)+'s" repeatCount="indefinite"><mpath href="#'+edgeId+'"/></animateMotion></circle>';
+     '<circle class="flow-particle '+(primary?'is-primary':'')+'" r="'+(primary?5.5:4)+'"><animateMotion dur="'+(2.35+i*.3)+'s" begin="'+(row*.16+i*.18)+'s" repeatCount="indefinite"><mpath href="#'+edgeId+'"/></animateMotion></circle>';
    }
    path.nodes.forEach((n,i)=>{
     const active=state.node===id+':'+i;
