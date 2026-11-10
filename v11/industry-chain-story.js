@@ -94,7 +94,7 @@ function renderRunway(){
   const cards=list.map(e=>'<button type="button" class="runway-node '+(selectedId===e.id?'is-active':'')+'" data-story-id="'+esc(e.id)+'" title="'+esc(e.title)+'"><strong>'+esc(e.title)+'</strong><span><i>'+esc(labelMonth(e))+'</i><b class="stage">'+(extras.has(e.id)?'平台/通道':(belong.get(e.id)?'产业现场':'其他'))+'</b></span></button>').join('');
   return '<div class="runway-lane"><div class="runway-label '+x.k+'"><strong>'+x.label+'</strong><b>'+list.length+'</b><span>'+x.note+'</span></div><div class="runway-records">'+(cards||'<span class="runway-missing">这一筛选范围暂无对应记录</span>')+'</div></div>';
  }).join('');
- $('runFilterNote').textContent=runFilter==='all'?'37条公开记录已列出；每个卡片是一条记录，聚合项目仍按一条显示':runFilter==='sector'?'仅筛选当前产业已归类的公开记录，不能当作全县产业全样本':'公共平台与交通通道独立列示，不强行归入单一产业链';
+ $('runFilterNote').textContent=runFilter==='all'?'37条公开记录已列出；集合项目仍按一条记录显示':runFilter==='sector'?(selectionKey==='agri'?'农业仅有1条合作社干茶统计（不属于项目现场），所以跑道没有项目节点；请看下方制茶环节。':'仅筛选当前产业已归类的公开记录，不能当作全县产业全样本'):'公共平台与交通通道独立列示，不强行归入单一产业链';
 }
 function renderSectorNav(){
  const nav=$('storySectorTabs');if(!nav)return;
