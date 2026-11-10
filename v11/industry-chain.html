@@ -431,8 +431,7 @@ h1 em{font-style:normal;background:linear-gradient(180deg,#a9e6ff,#3fc0ff);-webk
  var active=SECS.some(function(s){return s.key===sectorQuery;})?sectorQuery:SECS[0].key, view='chain', activeStage=null, activeBucket=null, detId=null;
 
  function drawSpine(){
-  var all=SECS.reduce(function(a,s){return a.concat(s.all);},[]);
-  PLAT.concat(ROADS).forEach(function(id){if(evMap[id])all.push(id);});
+  var all=D.events.filter(function(e){return e.state!=='stat';}).map(function(e){return e.id;});
   var cnt={3:0,2:0,1:0,0:0}, n=0;
   all.forEach(function(id){var b=bucketOf(evMap[id]);if(b!==null){cnt[b]++;n++;}});
   document.getElementById('bar').innerHTML=BUCKETS.map(function(b){
@@ -473,12 +472,13 @@ h1 em{font-style:normal;background:linear-gradient(180deg,#a9e6ff,#3fc0ff);-webk
   var svg=document.getElementById('chainSvg');
   var W=560,H=400,base=318,top=140;
   var nar=!!(window.matchMedia&&window.matchMedia('(max-width:640px)').matches);
+  var n=cols.length;
   var fCol=nar?(n>4?14:17):(n>4?11.5:13);
   var fEn=nar?10.5:9;
   var fCnt=nar?13.5:11;
   var fBlk=nar?14:(n>4?9:9.5);
   var fEmpty=nar?12:10;
-  var n=cols.length, span=504/n, bw=Math.min(64,span-38);
+  var span=504/n, bw=Math.min(64,span-38);
   var xs=cols.map(function(_,i){return 28+span*(i+0.5);});
   var gap=5, maxN=1;
   cols.forEach(function(c){maxN=Math.max(maxN,c.ids.length);});
@@ -549,13 +549,13 @@ h1 em{font-style:normal;background:linear-gradient(180deg,#a9e6ff,#3fc0ff);-webk
   svg.innerHTML=out;
 
   Array.prototype.forEach.call(svg.querySelectorAll('.blk'),function(g){
-   g.addEventListener('click',function(){detId=g.getAttribute('data-id');drawChart();drawDet();});
+   g.addEventListener('click',function(){detId=g.getAttribute('data-id');drawChart();drawDet();publishIndustryState();});
   });
   Array.prototype.forEach.call(svg.querySelectorAll('.stg'),function(g){
    g.addEventListener('click',function(){
     var k=g.getAttribute('data-col');
     if(mode==='chain'){activeStage=(activeStage===k?null:k);}else{activeBucket=(activeBucket===k?null:k);}
-    detId=null;drawChart();drawDet();
+    detId=null;drawChart();drawDet();publishIndustryState();
    });
   });
  }
@@ -675,11 +675,45 @@ h1 em{font-style:normal;background:linear-gradient(180deg,#a9e6ff,#3fc0ff);-webk
    view=b.getAttribute('data-view');
    activeStage=null;activeBucket=null;detId=null;
    Array.prototype.forEach.call(document.querySelectorAll('.vbtn'),function(x){x.classList.toggle('on',x===b);});
-   drawChart();drawDet();
+   drawChart();drawDet();publishIndustryState();
   });
  });
 
+  function publishIndustryState(){
+   window.dispatchEvent(new CustomEvent('boluo:industry-state',{detail:{
+    active:active,view:view,activeStage:activeStage,activeBucket:activeBucket,detId:detId
+   }}));
+  }
+  window.BoluoIndustryChain={
+   getState:function(){return {active:active,view:view,activeStage:activeStage,activeBucket:activeBucket,detId:detId};},
+   getSectors:function(){return SECS.map(function(s){return {
+    key:s.key,name:s.name,en:s.en,short:s.short,total:s.total,
+    stages:s.stages.map(function(st){return {key:st.key,name:st.name,en:st.en,ids:st.ids.slice()};}),
+    all:s.all.slice(),bk:{3:s.bk[3].slice(),2:s.bk[2].slice(),1:s.bk[1].slice(),0:s.bk[0].slice()}
+   };});},
+   selectSector:function(key){
+    if(!SECS.some(function(s){return s.key===key;}))return;
+    active=key;activeStage=null;activeBucket=null;detId=null;
+    drawChart();drawSide();drawDet();publishIndustryState();
+   },
+   selectStage:function(key){
+    activeStage=activeStage===key?null:key;activeBucket=null;view='chain';detId=null;
+    Array.prototype.forEach.call(document.querySelectorAll('.vbtn'),function(b){b.classList.toggle('on',b.getAttribute('data-view')===view);});
+    drawChart();drawDet();publishIndustryState();
+   },
+   selectBucket:function(key){
+    activeBucket=activeBucket===key?null:key;activeStage=null;view='build';detId=null;
+    Array.prototype.forEach.call(document.querySelectorAll('.vbtn'),function(b){b.classList.toggle('on',b.getAttribute('data-view')===view);});
+    drawChart();drawDet();publishIndustryState();
+   },
+   selectEvent:function(id){
+    if(!evMap[id])return;
+    detId=id;drawChart();drawDet();publishIndustryState();
+   }
+  };
+
  drawSpine();drawChart();drawSide();drawDet();drawQ3();drawGaps();drawPlat();
+ publishIndustryState();
 })();
 </script>
 </body>
