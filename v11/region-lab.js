@@ -15,8 +15,10 @@ const ROLE={
 const saved=(()=>{try{return JSON.parse(localStorage.getItem("boluo-v11-region-focus")||"null")}catch(e){return null}})();
 const state={flow:FLOW[params.get("flow")]?params.get("flow"):(saved&&FLOW[saved.flow]?saved.flow:"manufacturing"),stage:saved&&Number.isInteger(saved.flowStage)?Math.max(0,Math.min(4,saved.flowStage)):0,role:ROLE[params.get("role")]?params.get("role"):(saved&&ROLE[saved.role]?saved.role:"local"),layer:params.get("pressureLayer")||saved&&saved.pressureLayer||"industry",p:{dependency:70,shock:65,substitute:30}};
 if(saved&&saved.pressure&&["dependency","shock","substitute"].every(k=>Number.isFinite(saved.pressure[k])&&saved.pressure[k]>=0&&saved.pressure[k]<=100))state.p={dependency:saved.pressure.dependency,shock:saved.pressure.shock,substitute:saved.pressure.substitute};
+const queryPressure={dependency:params.get("dep"),shock:params.get("shock"),substitute:params.get("sub")};
+if(Object.values(queryPressure).every(v=>v!==null&&/^\\d+$/.test(v)&&Number(v)>=0&&Number(v)<=100))state.p={dependency:Number(queryPressure.dependency),shock:Number(queryPressure.shock),substitute:Number(queryPressure.substitute)};
 function score(p){return Math.round(p.dependency*p.shock*(100-p.substitute)/10000)}
-function sync(){const u=new URL(location.href);u.searchParams.set("flow",state.flow);u.searchParams.set("role",state.role);u.searchParams.set("pressureLayer",state.layer);history.replaceState(null,"",u.pathname+u.search+u.hash)}
+function sync(){const u=new URL(location.href);u.searchParams.set("flow",state.flow);u.searchParams.set("role",state.role);u.searchParams.set("pressureLayer",state.layer);u.searchParams.set("dep",state.p.dependency);u.searchParams.set("shock",state.p.shock);u.searchParams.set("sub",state.p.substitute);history.replaceState(null,"",u.pathname+u.search+u.hash)}
 function renderFlow(){
  const f=FLOW[state.flow],box=$("valueFlowTrack");$("valueFlowHeadline").textContent=f.headline;box.replaceChildren();
  f.stages.forEach((s,i)=>{const b=document.createElement("button");b.type="button";b.className="value-stage"+(i===state.stage?" active":"");b.dataset.stage=String(i);b.setAttribute("aria-pressed",String(i===state.stage));const num=document.createElement("span");num.textContent="0"+(i+1);const title=document.createElement("strong");title.textContent=s[0];const desc=document.createElement("small");desc.textContent=s[1];b.append(num,title,desc);b.addEventListener("click",()=>{state.stage=i;renderFlow();sync()});box.append(b)});
@@ -34,9 +36,9 @@ function renderPressure(){
  scenarios.forEach(x=>{const n=score({dependency:x[1],shock:p.shock,substitute:x[2]}),row=document.createElement("div");row.className="pressure-bar-row "+x[3];const meta=document.createElement("div");meta.className="pressure-bar-meta";const name=document.createElement("span");name.textContent=x[0];const val=document.createElement("strong");val.textContent=n+" / 100";meta.append(name,val);const track=document.createElement("div");track.className="pressure-bar-track";const bar=document.createElement("i");bar.style.width=n+"%";track.append(bar);row.append(meta,track);box.append(row)});
  all("[data-pressure-layer]").forEach(b=>{const on=b.dataset.pressureLayer===state.layer;b.classList.toggle("active",on);b.setAttribute("aria-pressed",String(on))});
 }
-["pressureDependency","pressureShock","pressureSubstitute"].forEach(id=>$(id).addEventListener("input",()=>{const k={pressureDependency:"dependency",pressureShock:"shock",pressureSubstitute:"substitute"}[id];state.p[k]=Number($(id).value);renderPressure()}));
+["pressureDependency","pressureShock","pressureSubstitute"].forEach(id=>$(id).addEventListener("input",()=>{const k={pressureDependency:"dependency",pressureShock:"shock",pressureSubstitute:"substitute"}[id];state.p[k]=Number($(id).value);renderPressure();sync()}));
 all("[data-pressure-layer]").forEach(b=>b.addEventListener("click",()=>{state.layer=b.dataset.pressureLayer;renderPressure();sync()}));
-$("pressureReset").addEventListener("click",()=>{state.p={dependency:70,shock:65,substitute:30};renderPressure()});
+$("pressureReset").addEventListener("click",()=>{state.p={dependency:70,shock:65,substitute:30};renderPressure();sync()});
 function renderRole(){
  const r=ROLE[state.role];$("roleTitle").textContent=r.title;$("roleDescription").textContent=r.desc;$("roleEvidence").textContent=r.evidence;
  all("[data-role]").forEach(b=>{const on=b.dataset.role===state.role;b.classList.toggle("active",on);b.setAttribute("aria-pressed",String(on))});
