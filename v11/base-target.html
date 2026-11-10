@@ -1,0 +1,119 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="theme-color" content="#06121f">
+<meta name="description" content="博罗决策风洞 V11 第三页：一棵千亿经济树，从2020至2025的年轮，到2030年1600亿元的目标。探索基本盘、产业枝条、经济根系与证据缺口。">
+<title>03 基本盘与目标｜一棵千亿大树，如何结出1600亿？｜博罗决策风洞 V11</title>
+<link rel="stylesheet" href="./base-target.css?v=20261110-tree1">
+</head>
+<body>
+<div class="app-shell">
+<header class="site-top">
+  <a class="site-brand" href="./index.html" aria-label="返回博罗决策风洞首页"><span class="brand-orb"><svg viewBox="0 0 44 44" aria-hidden="true"><path d="M11 32Q5 12 35 8Q38 30 11 32Z" fill="#3af0c3"/><path d="M8 35Q24 22 35 8" fill="none" stroke="#06242d" stroke-width="3"/></svg></span><span><b>博罗决策风洞</b><small>BO LUO · V11 / PUBLIC LAB</small></span></a>
+  <nav class="top-nav" aria-label="主要页面导航">
+   <a href="./index.html">01 全息风洞</a><a href="./holo.html">02 全息关系</a><a href="./base-target.html" class="active" aria-current="page">03 基本盘与目标</a><a href="./industry-chain.html">04 产业接续</a><a href="./relations.html">05 关系世界</a>
+  </nav>
+  <a class="top-next" href="./industry-chain.html"><span>深入产业</span><span aria-hidden="true">↗</span></a>
+</header>
+
+<section class="page-intro" aria-label="页面主旨">
+  <div class="eyebrow"><span class="pulse-dot"></span> 03 / 基本盘 × 十五五目标 <span class="intro-sep">|</span> 一场有证据边界的生长实验</div>
+  <div class="intro-line"><div><h1>一棵千亿大树，<em>如何长到1600亿？</em></h1><p>树冠是目标，果实是产出。真正决定下一轮生长的，可能藏在根里。</p></div><div class="intro-hint"><span class="mini-dot"></span> 点树枝、根系和年份，看看博罗靠什么长大</div></div>
+</section>
+
+<main class="workspace">
+<aside class="left-rail" aria-label="历史与基本盘">
+ <section class="glass metric-hero">
+  <div class="panel-head"><span>2025 · 已实现的年度产出</span><span class="data-mark">统计值 A</span></div>
+  <div class="hero-value"><strong id="gdpVal">1005.45</strong><span>亿元</span></div>
+  <div class="hero-sub"><span id="yearGrowth">实际增长 5.5%</span><span id="yearBadge" class="up">广东首个千亿县</span></div>
+  <div class="meter"><span style="width:62.84%" id="gdpMeter"></span></div>
+  <div class="meter-tags"><span id="meterText">占2030目标现价总量 62.8%</span><span>1600亿</span></div>
+ </section>
+
+ <section class="glass history-card">
+  <div class="panel-head"><span>年轮 · 2020—2025</span><span class="tiny-legend">现价 GDP / 亿</span></div>
+  <div class="history-chart" id="historyChart" aria-label="2020至2025年博罗GDP柱形图"></div>
+  <div class="year-story" id="yearStory">2025年GDP首次突破千亿元。选择其他年轮，查看当年总量。</div>
+  <button id="revisions" class="text-action" type="button">为什么2024年有两个不同数字？ <span>↗</span></button>
+ </section>
+
+ <section class="glass sector-card">
+  <div class="panel-head"><span>2025 · 三根主要产业枝条</span><span class="data-mark">增加值</span></div>
+  <div class="sector-stack" id="sectorStack"></div>
+  <div class="sector-foot">点击枝条，高亮经济树；更细的产业主体留到下一页。</div>
+ </section>
+</aside>
+
+<section class="forest-stage" aria-label="交互式博罗经济树">
+ <div class="stage-noise" aria-hidden="true"></div>
+ <div class="scene-toolbar"><div class="scene-tag"><span class="signal"></span><span id="sceneName">2025 · 现实之树</span></div><button id="resetView" class="icon-btn" type="button" title="恢复全景" aria-label="恢复全景">⟲ <span>全景</span></button></div>
+ <svg class="tree-scene" id="treeScene" role="img" viewBox="0 0 1000 770" aria-label="可互动的博罗经济树。点击产业枝条或根系节点查看详情。">
+ <defs>
+  <radialGradient id="skyGlow"><stop offset="0" stop-color="#0e5970" stop-opacity=".32"/><stop offset="1" stop-color="#07304b" stop-opacity="0"/></radialGradient>
+  <linearGradient id="bark" x1="0" x2="1"><stop offset="0" stop-color="#3b312a"/><stop offset=".3" stop-color="#9c693e"/><stop offset=".55" stop-color="#f3c479"/><stop offset=".78" stop-color="#835633"/><stop offset="1" stop-color="#2b302f"/></linearGradient>
+  <linearGradient id="branchGlow" x1="0" x2="1"><stop stop-color="#d6ab64"/><stop offset=".55" stop-color="#fff1b8"/><stop offset="1" stop-color="#79d2bc"/></linearGradient>
+  <radialGradient id="leaves"><stop stop-color="#2baf89" stop-opacity=".95"/><stop offset=".64" stop-color="#116b63" stop-opacity=".92"/><stop offset="1" stop-color="#083f4d" stop-opacity=".25"/></radialGradient>
+  <radialGradient id="leafBright"><stop stop-color="#a1ffb5" stop-opacity=".6"/><stop offset="1" stop-color="#2d9978" stop-opacity="0"/></radialGradient>
+  <linearGradient id="ground" x1="0" x2="0" y1="0" y2="1"><stop stop-color="#144e54" stop-opacity=".3"/><stop offset="1" stop-color="#06101a" stop-opacity=".98"/></linearGradient>
+  <filter id="treeGlow" x="-45%" y="-45%" width="190%" height="190%"><feGaussianBlur stdDeviation="6" result="blur"/><feMerge><feMergeNode in="blur"/><feMergeNode in="SourceGraphic"/></feMerge></filter>
+  <filter id="softGlow" x="-80%" y="-80%" width="260%" height="260%"><feGaussianBlur stdDeviation="3" result="blur"/><feMerge><feMergeNode in="blur"/><feMergeNode in="SourceGraphic"/></feMerge></filter>
+ </defs>
+ <rect x="85" y="2" width="830" height="590" fill="url(#skyGlow)"/>
+ <g id="landscape" opacity=".5"></g>
+ <g id="treeWorld"></g>
+ </svg>
+ <div class="stage-legend"><span><i class="dot live"></i>2025可核实</span><span><i class="dot model"></i>目标轮廓 / 示意</span><span><i class="dot missing"></i>关系待核</span></div>
+ <div class="scene-insight" id="sceneInsight"><span class="insight-kicker">现在看到的是</span><strong>1005.45亿元的现实之树</strong><p>2025年三次产业增加值支撑现有产出。虚线树冠只表达规划目标，不是预测结果。</p></div>
+</section>
+
+<aside class="right-rail" aria-label="目标与追问">
+ <section class="glass target-card">
+  <div class="panel-head"><span>2030 · 十五五目标树冠</span><span class="goal-chip">规划目标</span></div>
+  <div class="target-number">1600 <span>亿元</span></div>
+  <div class="target-label">目标GDP，较2025年现价规模差</div>
+  <div class="target-gap"><strong>+594.55 <span>亿元</span></strong><span>总量增幅 +59.1%</span></div>
+  <div class="goal-divider"></div>
+  <div class="target-options" id="targetOptions"></div>
+  <p class="target-note">不同目标使用不同单位，不能相加，也不能把产值当GDP。</p>
+ </section>
+ <section class="glass question-card">
+  <div class="panel-head"><span>这棵树真正要回答什么？</span><span class="question-mark">?</span></div>
+  <div id="inspector" aria-live="polite"></div>
+ </section>
+ <section class="next-card"><span class="next-kicker">下一站 / 04 产业接续</span><strong>放大一根枝条，看看里面究竟长了什么。</strong><a href="./industry-chain.html">进入产业链剖面 <span aria-hidden="true">↗</span></a></section>
+</aside>
+</main>
+
+<section class="control-deck" aria-label="探索控制台">
+ <div class="mode-switch" role="group" aria-label="观察模式">
+   <button type="button" data-mode="rings" class="selected" aria-pressed="true"><span>◉</span> 年轮</button>
+   <button type="button" data-mode="roots" aria-pressed="false"><span>⌁</span> 根系</button>
+   <button type="button" data-mode="branches" aria-pressed="false"><span>♧</span> 枝条</button>
+   <button type="button" data-mode="target" aria-pressed="false"><span>◎</span> 目标</button>
+ </div>
+ <div class="timeline-control"><div class="timeline-top"><span>时间年轮</span><span id="timelineDesc">2025 · 已核实GDP</span></div><div class="timeline-main"><button class="play-btn" id="playBtn" type="button" aria-label="播放2020年至2025年演变">▶</button><input type="range" id="yearSlider" min="2020" max="2025" step="1" value="2025" aria-label="选择博罗经济树年份"><strong id="yearOn">2025</strong></div><div class="year-ticks"><span>2020</span><span>2021</span><span>2022</span><span>2023</span><span>2024</span><span>2025</span></div></div>
+ <div class="deck-note"><span class="truth-dot"></span><p>真实数据与视觉隐喻分开；2030不播放成已经发生的未来。</p><button id="evidenceBtn" type="button">证据与口径 ↗</button></div>
+</section>
+
+<footer class="site-foot"><span>博罗决策风洞 V11 · 03 基本盘与目标 · 本页不进行达标预测</span><div><a href="./holo.html">← 返回02全息关系</a><a href="./industry-chain.html">进入04产业接续 →</a></div></footer>
+<nav class="mobile-bottom" aria-label="移动端导航"><a href="./holo.html">← 02 关系</a><a href="./base-target.html" aria-current="page">03 树的基本盘</a><a href="./industry-chain.html">04 产业 →</a></nav>
+</div>
+<dialog id="evidenceDialog" class="evidence-dialog" aria-label="证据和口径说明">
+ <div class="dialog-top"><div><span>TRANSPARENCY / EVIDENCE</span><h2>证据与口径</h2></div><button id="closeEvidence" aria-label="关闭证据">×</button></div>
+ <div class="dialog-body">
+  <h3>已核实的数据</h3>
+  <p>2025 GDP 1005.45亿元，按不变价增长5.5%；三次产业增加值为107.44、549.01、349.00亿元。2024最终核实GDP为970.87亿元，不能与之前公布的952.24亿元初步数混用。</p>
+  <p>2020—2023年历史现价GDP分别为619.04、741.46、801.39、838.89亿元。历史年轮仅显示公开年度GDP，没有跨年度伪造产业分项。</p>
+  <h3>规划目标</h3>
+  <p>2030 GDP达到1600亿元、规上工业企业突破2500家、规上工业总产值突破3600亿元、高新技术企业存量突破900家。这些是规划目标，不代表实际达成或预测结果。</p>
+  <h3>模型与视觉边界</h3>
+  <p>树冠、根系、年轮是一种知识地图。线条位置、长度、亮度不编码未知资金流、实际交易量或因果系数；根系节点是研究主题，不是已证实的企业交易网络。1600与1005.45之比对应现价规模对照，不能当作实际GDP年均增速。</p>
+  <div class="source-links"><a target="_blank" rel="noopener noreferrer" href="https://static.nfnews.com/content/202601/31/c12129042.html">2025 GDP及2024年最终核实 · 南方+</a><a target="_blank" rel="noopener noreferrer" href="https://www.oweidata.com/county/441322/ind/258019">历史GDP序列 · 鸥维数据（转载整理）</a><a target="_blank" rel="noopener noreferrer" href="https://epaper.nfnews.com/nfdaily/html/202601/27/content_10161535.html">十五五主要目标 · 南方日报</a><a target="_blank" rel="noopener noreferrer" href="https://www.boluo.gov.cn/">博罗县人民政府 · 正式规划查询</a></div>
+ </div>
+</dialog>
+<script src="./base-target.js?v=20261110-tree1" defer></script>
+</body>
+</html>
