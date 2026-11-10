@@ -122,7 +122,7 @@ function renderInsight(){
  t.innerHTML='<span class="insight-kicker">现实之树 · '+state.year+'</span><strong>'+fmt(current().g)+'亿元的年度经济规模</strong><p>年轮来自历史GDP统计；树冠与根系是结构地图，不是预测或因果模型。</p>';
 }
 function renderModes(){Array.prototype.forEach.call(document.querySelectorAll('[data-mode]'),function(b){var on=b.dataset.mode===state.mode;b.classList.toggle('selected',on);b.setAttribute('aria-pressed',String(on))})}
-function render(){renderKpis();renderHistory();renderStructure();renderTargetOptions();renderGoals();renderEvidence();renderInspector();drawTree();renderInsight();renderModes()}
+function render(){renderKpis();renderHistory();renderStructure();renderTargetOptions();renderGoals();renderEvidence();renderInspector();drawTree();renderInsight();renderModes();window.dispatchEvent(new CustomEvent('boluo:base-update',{detail:{year:state.year,selected:state.selected,mode:state.mode}}))}
 document.addEventListener('click',function(e){
  var t=e.target.closest('[data-year],[data-sector],[data-root],[data-goal],[data-mode]');
  if(!t)return;
