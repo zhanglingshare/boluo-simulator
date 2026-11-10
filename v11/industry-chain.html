@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8">
 <title>03 产业底盘 · 博罗靠什么撑着，下一棒接得上吗｜博罗决策风洞 V11</title>
-<meta name="description" content="深色霓虹科技风的产业底盘与接续页：37 个公开现场分四档（在产/在建/签约/退出），同一批现场可以按链条位置切，也可以按项目接续切。">
+<meta name="description" content="产业底盘与接续：年度目标与现实对照、去年同季与今年对照、缺值标注，加 37 个公开现场四档接续与六产业双切法。">
 <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
 <meta name="theme-color" content="#050b16">
 <script src="../assets/boluo-access.js?v=20261108-inline2" data-bl-access="inline"></script>
@@ -12,7 +12,7 @@
   --bg0:#050b16; --bg1:#081424; --bg2:#0b1a33;
   --panel:linear-gradient(180deg,rgba(24,40,68,.62),rgba(11,22,42,.55));
   --panel-border:rgba(104,158,228,.16);
-  --cyan:#3fc0ff; --cyan-bright:#86d8ff; --blue:#2f9bff; --orange:#ff8a3d; --teal:#2ad0c4;
+  --cyan:#3fc0ff; --cyan-bright:#86d8ff; --blue:#2f9bff; --orange:#ff8a3d; --teal:#2ad0c4; --gold:#d8b57c;
   --ink:#f3f8ff; --t2:#a9bed8; --t3:#6c809c;
   --glow:0 0 22px rgba(63,192,255,.4);
   --r:14px;
@@ -53,19 +53,52 @@ button{font:inherit;cursor:pointer;-webkit-tap-highlight-color:transparent;backg
 .nav a.cur{color:var(--cyan);background:rgba(63,192,255,.14);box-shadow:inset 0 0 0 1px rgba(63,192,255,.25)}
 
 .wrap{position:relative;z-index:1;max-width:1120px;margin:0 auto;padding:0 24px 72px}
-.kick{font-size:10px;letter-spacing:.2em;font-weight:800;color:var(--cyan);margin:36px 0 12px;text-shadow:var(--glow)}
+.kick{font-size:10px;letter-spacing:.2em;font-weight:800;color:var(--cyan);margin:34px 0 12px;text-shadow:var(--glow)}
 h1{font-size:clamp(25px,3.4vw,37px);font-weight:850;letter-spacing:-.035em;line-height:1.18;margin:0 0 14px;text-shadow:0 0 28px rgba(63,192,255,.3)}
-h1 em{font-style:normal;color:var(--cyan-bright);background:linear-gradient(180deg,#a9e6ff,#3fc0ff);-webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent}
-.lede{font-size:14.5px;line-height:1.78;color:var(--t2);max-width:660px;margin:0}
+h1 em{font-style:normal;background:linear-gradient(180deg,#a9e6ff,#3fc0ff);-webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent}
+.lede{font-size:14.5px;line-height:1.78;color:var(--t2);max-width:680px;margin:0}
 .meta{font-size:11px;color:var(--t3);margin-top:12px}
 
-/* ===== 接续总条 ===== */
-.spine{margin-top:26px;background:var(--panel);border:1px solid var(--panel-border);border-radius:var(--r);padding:16px 18px;box-shadow:inset 0 1px 0 rgba(255,255,255,.06),0 14px 34px rgba(0,0,0,.35)}
-.spine .top{display:flex;align-items:baseline;justify-content:space-between;gap:10px;flex-wrap:wrap;margin-bottom:12px}
-.spine .top b{font-size:13.5px;font-weight:850}
-.spine .top span{font-size:11px;color:var(--t3)}
-.bar{display:flex;height:26px;border-radius:6px;overflow:hidden;box-shadow:0 0 22px rgba(63,192,255,.16)}
-.seg{display:flex;align-items:center;justify-content:center;font-size:10.5px;font-weight:800;color:#04212f;white-space:nowrap;position:relative}
+/* ===== 通用区块标题 ===== */
+.bh{display:flex;align-items:baseline;gap:10px;flex-wrap:wrap;margin:30px 0 11px}
+.bh i{font-style:normal;font-size:9.5px;font-weight:800;letter-spacing:.14em;color:var(--cyan);padding:2px 7px;border:1px solid rgba(63,192,255,.35);border-radius:4px}
+.bh h2{margin:0;font-size:15px;font-weight:850;letter-spacing:-.01em}
+.bh span{font-size:11px;color:var(--t3)}
+
+/* ===== 目标 vs 现实 ===== */
+.band{background:var(--panel);border:1px solid var(--panel-border);border-radius:var(--r);padding:18px;box-shadow:inset 0 1px 0 rgba(255,255,255,.06),0 14px 34px rgba(0,0,0,.35)}
+.gtwo{display:grid;grid-template-columns:minmax(0,1.55fr) minmax(0,1fr);gap:20px;align-items:start}
+.brow{margin-bottom:16px}
+.brow:last-child{margin-bottom:0}
+.brow .top{display:flex;align-items:baseline;gap:9px;flex-wrap:wrap}
+.brow .nm{font-size:12.5px;font-weight:800}
+.brow .nt{font-size:10px;color:var(--t3)}
+.brow .vals{margin-left:auto;display:flex;gap:12px;flex-wrap:wrap}
+.brow .vals b{font-size:12px;font-weight:800;color:#fff;font-variant-numeric:tabular-nums}
+.brow .vals b.neg{color:var(--orange)}
+.brow .vals span{font-size:10px;color:var(--t3);font-weight:700}
+.blt{position:relative;height:40px;margin:6px 0 2px}
+.blt .trk{position:absolute;left:0;right:0;top:16px;height:6px;border-radius:3px;background:rgba(104,158,228,.16)}
+.blt .zone{position:absolute;top:13px;height:12px;border:1px solid rgba(63,192,255,.5);border-radius:5px;background:rgba(63,192,255,.2)}
+.blt .tline{position:absolute;top:7px;width:2px;height:24px;background:rgba(134,216,255,.9);box-shadow:0 0 8px rgba(63,192,255,.8)}
+.blt .tlab{position:absolute;top:-4px;font-size:9px;font-weight:800;color:#8fb6dd;white-space:nowrap;transform:translateX(-50%)}
+.blt .mk{position:absolute;top:12px;width:14px;height:14px;border-radius:50%;background:var(--cyan-bright);box-shadow:0 0 12px rgba(63,192,255,.85);transform:translateX(-50%)}
+.blt .mk.o{background:var(--orange);box-shadow:0 0 12px rgba(255,138,61,.85)}
+.blt .mklab{position:absolute;font-size:9.5px;font-weight:800;color:var(--cyan-bright);transform:translateX(-50%);white-space:nowrap;background:rgba(6,13,22,.86);padding:0 3px;border-radius:3px}
+.blt .mklab.o{color:var(--orange)}
+.brow .foot{font-size:10.5px;color:var(--t3);line-height:1.6;margin:2px 0 0}
+.brow .foot b{color:var(--gold);font-weight:800}
+
+/* 同期斜率 */
+.sync .hd{font-size:10.5px;color:var(--t3);font-weight:700;margin-bottom:6px}
+.sync svg{width:100%;height:auto;display:block}
+.sync .tag{display:flex;gap:12px;font-size:10px;color:var(--t2);margin-top:4px;flex-wrap:wrap}
+.sync .tag i{width:8px;height:8px;border-radius:50%;display:inline-block;margin-right:4px;vertical-align:middle}
+
+/* ===== 接续条 ===== */
+.spine{margin-top:22px}
+.spine .bar{display:flex;height:26px;border-radius:6px;overflow:hidden;box-shadow:0 0 22px rgba(63,192,255,.16)}
+.seg{display:flex;align-items:center;justify-content:center;font-size:10.5px;font-weight:800;color:#04212f}
 .seg.s3{background:linear-gradient(180deg,#8fdcff,#3fc0ff)}
 .seg.s2{background:rgba(63,192,255,.42);color:#cfeaff}
 .seg.s1{background:rgba(63,192,255,.14);color:#a9d8ff;box-shadow:inset 0 0 0 1px rgba(134,216,255,.45)}
@@ -74,29 +107,38 @@ h1 em{font-style:normal;color:var(--cyan-bright);background:linear-gradient(180d
 .tick{font-size:11px;color:var(--t3);line-height:1.5}
 .tick b{display:block;font-size:19px;font-weight:850;color:#fff;letter-spacing:-.02em;margin-bottom:2px;text-shadow:var(--glow)}
 .tick.s0 b{color:var(--orange);text-shadow:0 0 22px rgba(255,138,61,.45)}
-.spine .say{margin:13px 0 0;font-size:12.5px;line-height:1.7;color:var(--t2);padding:11px 14px;border-left:2px solid var(--orange);background:rgba(255,138,61,.07);border-radius:0 8px 8px 0}
-.spine .say b{color:var(--orange)}
+.say{margin:13px 0 0;font-size:12.5px;line-height:1.7;color:var(--t2);padding:11px 14px;border-left:2px solid var(--orange);background:rgba(255,138,61,.07);border-radius:0 8px 8px 0}
+.say b{color:var(--orange)}
+.hard{display:flex;gap:12px;align-items:center;flex-wrap:wrap;margin-top:11px;padding:10px 13px;border-radius:9px;background:rgba(255,255,255,.03);border:1px solid rgba(104,158,228,.14);font-size:11px;color:var(--t2)}
+.hard i{font-style:normal;font-size:9.5px;font-weight:800;color:var(--gold);letter-spacing:.06em}
+.hard b{color:#fff;font-size:13px;font-weight:850}
+.hard .mini{position:relative;flex:1 1 180px;min-width:140px;height:8px;border-radius:4px;background:rgba(104,158,228,.16);overflow:hidden}
+.hard .mini span{position:absolute;left:0;top:0;bottom:0;background:linear-gradient(90deg,#8fdcff,#3fc0ff);border-radius:4px}
 
-/* ===== 产业入口 ===== */
-.entry{margin-top:22px}
-.entry-head{display:flex;align-items:baseline;gap:10px;flex-wrap:wrap;margin-bottom:9px}
-.entry-head h2{margin:0;font-size:13.5px;font-weight:800}
-.entry-head span{font-size:11px;color:var(--t3)}
-.grp{display:flex;align-items:center;gap:8px;flex-wrap:wrap;margin-bottom:8px}
-.grp>label{font-size:9.5px;letter-spacing:.08em;font-weight:800;color:var(--t3);width:62px;flex:none}
-.sec{padding:8px 13px;border-radius:9px;border:1px solid rgba(104,158,228,.18);background:rgba(255,255,255,.03);font-size:12.5px;font-weight:700;color:var(--t2);transition:all .16s ease;display:inline-flex;align-items:center;gap:8px}
+/* ===== 三次产业入口 ===== */
+.entry3{margin-top:6px}
+.erow{display:grid;grid-template-columns:88px minmax(0,1fr) auto;align-items:center;gap:12px;padding:12px 0;border-bottom:1px solid rgba(104,158,228,.1)}
+.erow:last-child{border-bottom:0}
+.erow .gn{font-size:11px;font-weight:800;color:var(--t3);line-height:1.3}
+.erow .gn b{display:block;color:#fff;font-size:12px}
+.erow .num3{display:flex;gap:12px;align-items:baseline;justify-content:flex-start;font-size:11px;color:var(--t3)}
+.erow .num3 b{font-size:15px;font-weight:850;color:#fff;font-variant-numeric:tabular-nums}
+.erow .num3 .up{color:var(--teal);font-weight:800}
+.erow .secwrap{display:flex;gap:7px;flex-wrap:wrap;justify-content:flex-end}
+.sec{padding:7px 12px;border-radius:9px;border:1px solid rgba(104,158,228,.18);background:rgba(255,255,255,.03);font-size:12px;font-weight:700;color:var(--t2);display:inline-flex;align-items:center;gap:7px}
 .sec:hover{border-color:rgba(63,192,255,.5);color:var(--cyan-bright)}
 .sec.on{border-color:var(--cyan);background:rgba(63,192,255,.13);color:#fff;box-shadow:var(--glow)}
-.sec i{font-style:normal;font-size:10px;color:var(--t3);font-weight:700}
+.sec i{font-style:normal;font-size:9.5px;color:var(--t3);font-weight:700}
 .sec.on i{color:var(--cyan-bright)}
+.caliber{font-size:10.5px;color:var(--t3);line-height:1.7;margin:9px 0 0;padding-left:2px}
+.caliber b{color:var(--gold)}
 
 /* ===== 视图切换 ===== */
-.viewbar{display:flex;align-items:center;gap:8px;margin:22px 0 0;flex-wrap:wrap}
+.viewbar{display:flex;align-items:center;gap:8px;margin:20px 0 0;flex-wrap:wrap}
 .viewbar>span{font-size:11px;color:var(--t3);font-weight:700;margin-right:2px}
 .vbtn{padding:8px 15px;border-radius:9px;border:1px solid rgba(104,158,228,.2);background:rgba(255,255,255,.03);font-size:12.5px;font-weight:700;color:var(--t2)}
 .vbtn.on{background:linear-gradient(135deg,var(--blue),#1d6fe0);border-color:transparent;color:#fff;box-shadow:0 8px 22px -8px rgba(47,155,255,.75)}
 
-/* ===== 双栏 ===== */
 .layout{display:grid;grid-template-columns:minmax(0,7fr) minmax(0,5fr);gap:20px;margin-top:14px;align-items:start}
 .panel{background:var(--panel);border:1px solid var(--panel-border);border-radius:var(--r);box-shadow:inset 0 1px 0 rgba(255,255,255,.06),0 14px 34px rgba(0,0,0,.38);backdrop-filter:blur(10px);-webkit-backdrop-filter:blur(10px)}
 .chart{padding:16px 14px 10px;position:relative;overflow:hidden}
@@ -112,19 +154,18 @@ h1 em{font-style:normal;color:var(--cyan-bright);background:linear-gradient(180d
 .legend .lg-out{background:var(--orange);box-shadow:0 0 8px rgba(255,138,61,.75)}
 .legend .lg-none{background:transparent;border:1px dashed rgba(216,195,154,.7)}
 
-/* ===== 右栏 ===== */
 .side{padding:17px 18px}
-.side .hd{font-size:15px;font-weight:850;margin:0 0 2px}
+.side .hdt{font-size:15px;font-weight:850;margin:0 0 2px}
 .side .en{font-size:9.5px;letter-spacing:.12em;color:var(--t3);font-weight:700;margin:0 0 12px}
-.side h4{margin:0 0 8px;font-size:11.5px;font-weight:800;color:var(--cyan-bright);letter-spacing:.02em}
+.side h4{margin:0 0 8px;font-size:11.5px;font-weight:800;color:var(--cyan-bright)}
 .read{font-size:12.5px;line-height:1.75;color:var(--t2);margin:0 0 14px}
 .read b{color:var(--cyan-bright)}
 .gap3{display:flex;flex-direction:column;gap:9px;margin-bottom:14px}
 .gap3 .g{display:flex;gap:9px;font-size:11.5px;line-height:1.62;padding:8px 10px;border-radius:8px;background:rgba(255,255,255,.03);border-left:2px solid rgba(104,158,228,.45)}
-.gap3 .g em{font-style:normal;flex:none;width:56px;color:var(--t3);font-weight:800}
+.gap3 .g em{font-style:normal;flex:none;width:64px;color:var(--t3);font-weight:800}
 .gap3 .g span{color:var(--t2)}
 .gap3 .g.c1{border-left-color:var(--teal)}
-.gap3 .g.c2{border-left-color:#d8b57c}
+.gap3 .g.c2{border-left-color:var(--gold)}
 .gap3 .g.c3{border-left-color:var(--cyan)}
 .qline{font-size:12px;font-weight:800;color:#ffd8b5;background:rgba(255,138,61,.08);border-radius:8px;padding:9px 11px;margin-bottom:12px;line-height:1.6}
 .acts{display:flex;gap:8px;flex-wrap:wrap}
@@ -132,40 +173,38 @@ h1 em{font-style:normal;color:var(--cyan-bright);background:linear-gradient(180d
 .btn:hover{border-color:var(--cyan);color:var(--cyan)}
 .btn.primary{background:linear-gradient(135deg,var(--blue),#1d6fe0);border-color:transparent;color:#fff;box-shadow:0 8px 22px -6px rgba(47,155,255,.7)}
 
-/* ===== 详情 ===== */
 .det{grid-column:1/-1;padding:0 18px 15px;border-top:1px solid rgba(104,158,228,.12);margin-top:2px}
 .det .dh{display:flex;align-items:baseline;gap:9px;padding:13px 0 5px;flex-wrap:wrap}
 .det .dh h4{margin:0;font-size:13px;font-weight:800}
-.det .tag{font-size:10px;font-weight:800;padding:2px 7px;border-radius:5px}
+.det .tag{font-size:10px;font-weight:800;padding:2px 7px;border-radius:5px;display:none}
 .det .tag.live{color:#7ff0e4;background:rgba(42,208,196,.12);box-shadow:inset 0 0 0 1px rgba(42,208,196,.35)}
 .det .tag.wip{color:var(--cyan-bright);background:rgba(63,192,255,.12);box-shadow:inset 0 0 0 1px rgba(63,192,255,.35)}
 .det .tag.out{color:var(--orange);background:rgba(255,138,61,.12);box-shadow:inset 0 0 0 1px rgba(255,138,61,.4)}
-.det .tag.stat{color:#d8b57c;background:rgba(216,181,124,.1);box-shadow:inset 0 0 0 1px rgba(216,181,124,.35)}
+.det .tag.stat{color:var(--gold);background:rgba(216,181,124,.1);box-shadow:inset 0 0 0 1px rgba(216,181,124,.35)}
 .det .q{margin:0;font-size:11.5px;color:var(--t2);line-height:1.7}
 .det .towers{display:flex;gap:6px;flex-wrap:wrap;margin-top:10px}
 .tw{font-size:11px;background:rgba(255,255,255,.04);border:1px solid rgba(104,158,228,.16);border-radius:7px;padding:5px 9px;font-weight:600;color:var(--t2)}
-.det .hdrow{font-weight:800;color:var(--cyan-bright);border-color:rgba(63,192,255,.35)}
+.det .hdrow{display:block;width:100%;border:0;background:none;padding:9px 0 3px;font-size:10.5px;font-weight:800;color:var(--cyan-bright);letter-spacing:.08em}
 
-/* ===== 三个可查问题 ===== */
-.q3{margin-top:24px}
-.q3-head{display:flex;align-items:baseline;gap:10px;flex-wrap:wrap;margin-bottom:10px}
-.q3-head h2{margin:0;font-size:14px;font-weight:800}
-.q3-head span{font-size:11px;color:var(--t3)}
+/* ===== 三个问题 ===== */
 .q3-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:11px}
 .qcard{background:var(--panel);border:1px solid var(--panel-border);border-radius:12px;padding:15px 16px}
-.qcard .ttl{font-size:12.5px;font-weight:850;line-height:1.45;margin-bottom:10px}
-.qcard .ttl i{font-style:normal;display:block;font-size:10px;font-weight:800;letter-spacing:.08em;color:var(--cyan);margin-bottom:5px}
+.qcard .ttl{font-size:12.5px;font-weight:850;line-height:1.45;margin-bottom:9px}
+.qcard .ttl i{font-style:normal;display:block;font-size:9.5px;font-weight:800;letter-spacing:.08em;color:var(--cyan);margin-bottom:5px}
 .qcard dl{margin:0;font-size:11px;line-height:1.6}
 .qcard dt{font-weight:800;color:var(--t3);margin-top:7px}
 .qcard dd{margin:2px 0 0;color:var(--t2)}
-.qcard dd.w{color:#d8b57c}
+.qcard dd.w{color:var(--gold)}
 .qcard dd.n{color:var(--cyan-bright)}
 
+/* ===== 缺值与边界 ===== */
+.gaps{display:grid;grid-template-columns:repeat(3,1fr);gap:11px}
+.gcard{background:var(--panel);border:1px solid var(--panel-border);border-radius:11px;padding:13px 15px;border-top:2px solid rgba(216,181,124,.5)}
+.gcard i{font-style:normal;font-size:9.5px;font-weight:800;color:var(--gold);letter-spacing:.06em}
+.gcard b{display:block;font-size:12.5px;font-weight:850;margin:5px 0 4px}
+.gcard small{font-size:11px;color:var(--t2);line-height:1.6}
+
 /* ===== 平台与通道 ===== */
-.plat{margin-top:24px}
-.plat-head{display:flex;align-items:baseline;gap:10px;flex-wrap:wrap;margin:0 0 10px}
-.plat-head h2{margin:0;font-size:14px;font-weight:800}
-.plat-head span{font-size:11px;color:var(--t3)}
 .plat-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:10px}
 .pcard{background:var(--panel);border:1px solid var(--panel-border);border-radius:11px;padding:12px 13px}
 .pcard .top{display:flex;align-items:center;gap:7px;font-size:10px;font-weight:700;color:var(--t3)}
@@ -180,15 +219,18 @@ h1 em{font-style:normal;color:var(--cyan-bright);background:linear-gradient(180d
 .foot b{color:var(--t2)}
 
 @media(max-width:960px){
+ .gtwo{grid-template-columns:1fr;gap:16px}
  .layout{grid-template-columns:1fr}
- .q3-grid{grid-template-columns:1fr}
+ .q3-grid,.gaps{grid-template-columns:1fr}
  .plat-grid{grid-template-columns:1fr 1fr}
  .ticks{grid-template-columns:1fr 1fr}
  .topbar-in{padding:11px 16px;gap:10px}
  .wrap{padding:0 16px 60px}
  .nav{overflow-x:auto;flex-wrap:nowrap;width:100%}
- .grp{flex-wrap:wrap}
- .grp>label{width:auto;margin-right:2px}
+ .erow{grid-template-columns:1fr;gap:7px}
+ .erow .num3{justify-content:flex-start;text-align:left}
+ .erow .secwrap{justify-content:flex-start}
+ .brow .vals{margin-left:0}
 }
 @media(max-width:520px){ .plat-grid{grid-template-columns:1fr} }
 </style>
@@ -211,19 +253,44 @@ h1 em{font-style:normal;color:var(--cyan-bright);background:linear-gradient(180d
 <main class="wrap">
  <p class="kick">03 / 产业底盘与接续</p>
  <h1>博罗靠什么撑着，<br><em>下一棒</em>接得上吗？</h1>
- <p class="lede">点一个产业，看正在运转的、正在建设的，还有还缺的那一环。同一批现场，可以按链条位置切，也可以按项目接续切。</p>
+ <p class="lede">先看目标差多少、去年到今年在变好还是变差；再看 37 个现场谁在产、谁在建、谁还停在纸上。这一页只做三件事：摆位置、数现场、指出缺哪条证据。</p>
  <p class="meta num" id="meta"></p>
 
- <section class="spine" aria-label="接续总览">
-  <div class="top"><b>37 个现场，四档</b><span>产业现场按项目进度分档 · 不含 3 条统计口径</span></div>
-  <div class="bar" id="bar"></div>
-  <div class="ticks" id="ticks"></div>
-  <p class="say"><b>下一棒的钱在变少：</b>19 个现场还在建或还在纸上，一个都还没形成产出；同期工业投资 −44.7%。这不是结论，是这一页要你查的地方。</p>
+ <!-- ========== 一、目标 vs 现实 + 同期 ========== -->
+ <div class="bh"><i>01</i><h2>目标和现实差多少</h2><span>年度目标只作位置参照，不计算完成差额</span></div>
+ <section class="band" aria-label="目标与现实对照">
+  <div class="gtwo">
+   <div id="bullets"></div>
+   <div class="sync" aria-label="去年同季与今年">
+    <p class="hd">相同季度，去年与今年 · 2025 Q1 → 2026 Q1</p>
+    <svg id="syncSvg" viewBox="0 0 300 150"></svg>
+    <div class="tag">
+     <span><i style="background:#86d8ff"></i>GDP 增长</span>
+     <span><i style="background:#2ad0c4"></i>规上工业增加值</span>
+    </div>
+    <p class="caliber">两期同比增速可以相减成“增速变化”，但<b>不代表总量下降</b>。工业增速从 13.0% 掉到 3.5%，是全页最陡的一条线。</p>
+   </div>
+  </div>
  </section>
 
- <section class="entry" aria-label="从哪个产业看起">
-  <div class="entry-head"><h2>从哪个产业看起？</h2><span>六个产业，分属三次产业</span></div>
-  <div id="secWrap"></div>
+ <!-- ========== 二、下一棒：现场四档 ========== -->
+ <div class="bh"><i>02</i><h2>下一棒有没有在修</h2><span>37 个公开现场，按项目进度分四档</span></div>
+ <section class="band spine" aria-label="产业现场接续">
+  <div class="bar" id="bar"></div>
+  <div class="ticks" id="ticks"></div>
+  <p class="say"><b>下一棒的钱在变少：</b>19 个现场还在建或还在纸上，一个都还没形成产出；同期工业投资 −44.7%。</p>
+  <div class="hard">
+   <i>硬口径对照</i>
+   <span>环南昆山—罗浮山引领区二期：计划 <b>114</b> 宗，已开工 <b>75</b> 宗，开工率 <b>65.8%</b>，竣工与投产仍待核。</span>
+   <span class="mini"><span style="width:65.8%"></span></span>
+  </div>
+ </section>
+
+ <!-- ========== 三、产业底盘 ========== -->
+ <div class="bh"><i>03</i><h2>从哪个产业看起</h2><span>三次产业增加值与占比，按 2026 一季度</span></div>
+ <section class="band" aria-label="三次产业与产业入口">
+  <div class="entry3" id="entry3"></div>
+  <p class="caliber">产值口径另算：规上工业总产值 <b>超 2000 亿</b>、农林牧渔总产值 <b>130.32 亿</b>；这两个是产值，<b>不是增加值</b>，不能和上面的 20.46 / 121.40 / 75.46 亿直接比大小。</p>
  </section>
 
  <div class="viewbar" role="tablist" aria-label="换一种切法">
@@ -240,7 +307,7 @@ h1 em{font-style:normal;color:var(--cyan-bright);background:linear-gradient(180d
   </section>
 
   <aside class="panel side" aria-label="这一环缺什么">
-   <p class="hd" id="sideName">铜箔与电池材料</p>
+   <p class="hdt" id="sideName">铜箔与电池材料</p>
    <p class="en" id="sideEn">COPPER → CELL</p>
    <h4>这一环，缺什么？</h4>
    <p class="read" id="sideRead"></p>
@@ -257,27 +324,29 @@ h1 em{font-style:normal;color:var(--cyan-bright);background:linear-gradient(180d
   </aside>
 
   <section class="panel det" aria-label="现场详情">
-   <div class="dh"><h4 id="detTitle">点一个方块</h4><span class="tag live" id="detTag" style="display:none"></span></div>
+   <div class="dh"><h4 id="detTitle">点一个方块</h4><span class="tag live" id="detTag"></span></div>
    <p class="q" id="detQ">图上每个方块是一个公开现场。点一下，看它处在哪一档、卡在哪句话上。</p>
    <div class="towers" id="detList"></div>
   </section>
  </div>
 
- <section class="q3" aria-label="三个可以马上去查的问题">
-  <div class="q3-head"><h2>把“下一棒”拆成三个能查的问题</h2><span>每个都写清：手上有什么、还缺什么、下一步查哪条</span></div>
-  <div class="q3-grid" id="q3Grid"></div>
- </section>
+ <!-- ========== 四、三个可查问题 ========== -->
+ <div class="bh"><i>04</i><h2>把“下一棒”拆成三个能查的问题</h2><span>每个都写清：手上有什么、还缺什么、下一步查哪条</span></div>
+ <div class="q3-grid" id="q3Grid"></div>
 
- <section class="plat" aria-label="平台与通道">
-  <div class="plat-head"><h2>四条链之外：平台与通道</h2><span>这八个现场不属于某一条链，它们同时给几条链供地、供厂房、供路上通道。</span></div>
-  <div class="plat-grid" id="platGrid"></div>
- </section>
+ <!-- ========== 五、缺值与边界 ========== -->
+ <div class="bh"><i>05</i><h2>还有哪些不知道</h2><span>缺就不补，不推测</span></div>
+ <div class="gaps" id="gaps"></div>
+
+ <!-- ========== 六、平台与通道 ========== -->
+ <div class="bh"><i>06</i><h2>四条链之外：平台与通道</h2><span>八个现场同时给几条链供地、供厂房、供路上通道</span></div>
+ <div class="plat-grid" id="platGrid"></div>
 
  <div class="foot">
   <b>口径说明：</b>环节归类依据现场的产品角色与工艺位置，属分析判断，不等于统计分类。方块为一个公开现场，厚度即数量，不做产值加权。<b>在产＝已点火投产或已启用，在建＝已开工，签约＝已签约未动土，退出＝已关停或被点名未动工</b>。<br>
+  <b>窗口说明：</b>本页同时出现多个窗口——2026 一季度（GDP +4.0%、规上工业增加值 +3.5%）、1—4 月（工业投资 −42.4%）、前三季（规上工业增加值 +8.9%、工业投资 −44.7%），并标注 1—5 月工业投资<b>缺值不补</b>。窗口不同不能相减，也不代表矛盾。<br>
   <b>数据缺口：</b>本地配套的实际交易关系、各环节对外客户与物流数据均未公开，一律标为「仍需核实」，不写成判断。<br>
-  <b>这一页回答什么：</b>博罗现在靠哪几段在转、下一棒有没有在修。具体影响谁、条件变了会怎样，留给 05 影响与 07 风洞。<br>
-  <b>与「预期与现实」对照页的区别：</b>那一页用统计口径（2026 一季度 GDP +4.0%、规上工业增加值 +3.5%、1—4月工业投资 −42.4%），本页用项目口径（前三季规上工业增加值 +8.9%、工业投资 −44.7%；农林牧渔总产值为总产值，不是增加值 20.46 亿）。<b>两页窗口不同、口径不同，不能相互替代，也不能混读成一对矛盾。</b>本页只数现场，不做因果推断。
+  <b>与原「预期与现实」页的关系：</b>该页的目标对照、同期对照、缺值与边界已并入本页；原页保留不动，不做重定向。
  </div>
 </main>
 
@@ -288,14 +357,80 @@ h1 em{font-style:normal;color:var(--cyan-bright);background:linear-gradient(180d
  var D=window.BoluoDiscoveryData, evMap={};
  if(!D||!D.events){document.getElementById('meta').textContent='数据未加载，请刷新后重试。';return;}
  D.events.forEach(function(e){evMap[e.id]=e;});
- document.getElementById('meta').textContent='数据版本 '+D.version+' · 核对于 '+D.checkedAt+' · 记录 '+D.events.length+' 条（37 项目现场 + 3 统计口径）';
+ document.getElementById('meta').textContent='现场数据 '+D.version+' · 核对于 '+D.checkedAt+' · 记录 '+D.events.length+' 条（37 项目现场 + 3 统计口径）';
 
- /* 项目进度四档：0 退出 / 1 签约 / 2 在建 / 3 在产 */
+ /* ================= 目标 vs 现实 ================= */
+ var ROWS=[
+  {nm:'GDP 增长', nt:'2026 年度目标 6.5%—7.0%', dom:[0,8],
+   target:{from:6.5,to:7.0,text:'6.5%—7.0%'},
+   marks:[{v:4.0,lab:'一季度 +4.0%',cls:''}],
+   vals:'<b>6.5%—7.0%</b><span>目标</span><b>+4.0%</b><span>一季度</span>',
+   foot:'年度目标是全年口径，一季度是阶段口径，<b>不能算出“完成度”</b>，这里只摆位置。'},
+  {nm:'规上工业增加值', nt:'2026 年度目标 ≥9.0%', dom:[0,16],
+   target:{from:9.0,to:9.0},
+   marks:[{v:3.5,lab:'一季度 +3.5%',cls:''},{v:8.9,lab:'前三季 +8.9%',cls:'o'}],
+   vals:'<b>≥9.0%</b><span>目标</span><b>+3.5%</b><span>一季度</span><b>+8.9%</b><span>前三季</span>',
+   foot:'一季度只有 3.5%；累计到前三季 8.9%，<b>回到目标线附近</b>。两个窗口并列摆着，不代表全年已完成。'},
+  {nm:'工业投资', nt:'无年度目标，看方向 · 轴 0 到 −50%', dom:[-50,0], axis:true,
+   target:null,
+   marks:[{v:-42.4,lab:'1—4 月 −42.4%',cls:'o'},{v:-44.7,lab:'前三季 −44.7%',cls:'o'}],
+   vals:'<b class="neg">−42.4%</b><span>1—4 月</span><b class="neg">−44.7%</b><span>前三季</span><b>缺</b><span>1—5 月</span>',
+   foot:'1—5 月工业投资<b>缺值，不补曲线</b>；另两个窗口都在四成以上降幅，方向没有变。'}
+ ];
+ function pct(v,d){return (v-d[0])/(d[1]-d[0])*100;}
+ function drawBullets(){
+  document.getElementById('bullets').innerHTML=ROWS.map(function(r){
+   var zone='';
+   if(r.target){
+    var a=pct(r.target.from,r.dom);
+    zone=(r.target.to===r.target.from)
+     ?'<span class="tline" style="left:'+a+'%"></span>'
+     :'<span class="zone" style="left:'+a+'%;width:'+(pct(r.target.to,r.dom)-a)+'%"></span>'
+      +'<span class="tlab" style="left:'+(a+(pct(r.target.to,r.dom)-a)/2)+'%">目标区</span>';
+   }
+   var axis=r.axis?('<span class="tline" style="left:100%;opacity:.5"></span>'
+     +'<span class="mklab" style="left:100%;top:-3px;transform:translateX(-100%);color:#5f7692">0</span>'):'';
+   var marks=r.marks.map(function(m,i){
+    var x=pct(m.v,r.dom), top=(i===0?-2:25);
+    return '<span class="mk '+(m.cls||'')+'" style="left:'+x+'%"></span>'
+     +'<span class="mklab '+(m.cls||'')+'" style="left:'+x+'%;top:'+top+'px">'+m.lab+'</span>';
+   }).join('');
+   return '<div class="brow"><div class="top"><span class="nm">'+r.nm+'</span><span class="nt">'+r.nt+'</span>'
+    +'<span class="vals">'+r.vals+'</span></div>'
+    +'<div class="blt"><span class="trk"></span>'+zone+axis+marks+'</div>'
+    +'<p class="foot">'+r.foot+'</p></div>';
+  }).join('');
+ }
+
+ /* ================= 同期斜率 ================= */
+ function drawSync(){
+  var W=300,H=150,padT=22,padB=26,x1=86,x2=214;
+  var dom=[0,14];
+  function y(v){return padT+(H-padT-padB)*(1-(v-dom[0])/(dom[1]-dom[0]));}
+  var series=[
+   {nm:'GDP 增长',a:6.0,b:4.0,c:'#86d8ff',dy:-7},
+   {nm:'规上工业增加值',a:13.0,b:3.5,c:'#2ad0c4',dy:15}
+  ];
+  var out='';
+  out+='<line x1="30" y1="'+y(0)+'" x2="280" y2="'+y(0)+'" stroke="rgba(104,158,228,.25)" stroke-width="1"/>';
+  out+='<text x="86" y="14" text-anchor="middle" style="font-size:10px;font-weight:800;fill:#8fb6dd">2025 Q1</text>';
+  out+='<text x="214" y="14" text-anchor="middle" style="font-size:10px;font-weight:800;fill:#8fb6dd">2026 Q1</text>';
+  series.forEach(function(s){
+   var ya=y(s.a), yb=y(s.b);
+   out+='<line x1="'+x1+'" y1="'+ya+'" x2="'+x2+'" y2="'+yb+'" stroke="'+s.c+'" stroke-width="2.4" opacity=".85"/>';
+   out+='<circle cx="'+x1+'" cy="'+ya+'" r="4.6" fill="'+s.c+'" opacity=".55"/>';
+   out+='<circle cx="'+x2+'" cy="'+yb+'" r="5.4" fill="'+s.c+'"/>';
+   out+='<text x="'+(x1-9)+'" y="'+(ya+4)+'" text-anchor="end" style="font-size:10px;font-weight:800;fill:'+s.c+'">'+s.a.toFixed(1)+'%</text>';
+   out+='<text x="'+(x1-9)+'" y="'+(ya-9)+'" text-anchor="end" style="font-size:9px;font-weight:700;fill:#5f7692">'+s.nm+'</text>';
+   out+='<text x="'+(x2+9)+'" y="'+(yb+s.dy)+'" style="font-size:11px;font-weight:850;fill:'+s.c+'">'+s.b.toFixed(1)+'%</text>';
+  });
+  document.getElementById('syncSvg').innerHTML=out;
+ }
+
+ /* ================= 数据与产业 ================= */
  var BUCKETS=[
-  {key:3,name:'已投产',short:'在产',cls:'s3'},
-  {key:2,name:'在建',short:'在建',cls:'s2'},
-  {key:1,name:'签约在途',short:'签约',cls:'s1'},
-  {key:0,name:'退出或受阻',short:'退出',cls:'s0'}
+  {key:3,name:'已投产',cls:'s3'},{key:2,name:'在建',cls:'s2'},
+  {key:1,name:'签约在途',cls:'s1'},{key:0,name:'退出或受阻',cls:'s0'}
  ];
  function bucketOf(e){
   if(e.state==='stat')return null;
@@ -349,7 +484,11 @@ h1 em{font-style:normal;color:var(--cyan-bright);background:linear-gradient(180d
    next:'县域茶企或合作社的加工与收购数据。',
    q:'茶卖出去了，钱回来了吗？'}
  ];
- var GRPS={1:'第一产业',2:'第二产业',3:'第三产业'};
+ var GRPS={
+  1:{nm:'第一产业',sub:'农业与初加工',val:'20.46',unit:'亿',share:'9.4',yoy:'+6.2'},
+  2:{nm:'第二产业',sub:'制造与建设',val:'121.40',unit:'亿',share:'55.9',yoy:'+4.2'},
+  3:{nm:'第三产业',sub:'服务与文旅',val:'75.46',unit:'亿',share:'34.7',yoy:'+3.0'}
+ };
  var PLAT=['futian','luofufuture','sign4','huzhen'];
  var ROADS=['huixia','huizhao','jiguang','shilong'];
 
@@ -362,21 +501,18 @@ h1 em{font-style:normal;color:var(--cyan-bright);background:linear-gradient(180d
             {key:'processing',name:'加工',en:'PROCESS',ids:s.processing},
             {key:'support',name:'配套',en:'SUPPORT',ids:s.support},
             {key:'delivery',name:'出货',en:'DELIVERY',ids:s.delivery}];
-  var all=[].concat(s.raw,s.processing,s.support,s.delivery);
-  s.all=all;
+  s.all=[].concat(s.raw,s.processing,s.support,s.delivery);
   s.bk={3:[],2:[],1:[],0:[]};
-  all.forEach(function(id){var b=bucketOf(evMap[id]);if(b!==null)s.bk[b].push(id);});
+  s.all.forEach(function(id){var b=bucketOf(evMap[id]);if(b!==null)s.bk[b].push(id);});
  });
 
  var active=SECS[0].key, view='chain', activeStage=null, activeBucket=null, detId=null;
 
- /* ---------- 接续总条 ---------- */
  function drawSpine(){
   var all=SECS.reduce(function(a,s){return a.concat(s.all);},[]);
   PLAT.concat(ROADS).forEach(function(id){if(evMap[id])all.push(id);});
-  var cnt={3:0,2:0,1:0,0:0};
-  all.forEach(function(id){var b=bucketOf(evMap[id]);if(b!==null)cnt[b]++;});
-  var n=all.filter(function(id){return bucketOf(evMap[id])!==null;}).length;
+  var cnt={3:0,2:0,1:0,0:0}, n=0;
+  all.forEach(function(id){var b=bucketOf(evMap[id]);if(b!==null){cnt[b]++;n++;}});
   document.getElementById('bar').innerHTML=BUCKETS.map(function(b){
    var v=cnt[b.key];if(!v)return '';
    var p=v/n*100;
@@ -387,24 +523,23 @@ h1 em{font-style:normal;color:var(--cyan-bright);background:linear-gradient(180d
   }).join('');
  }
 
- /* ---------- 产业入口（按三次产业分组） ---------- */
- function drawSecs(){
-  var wrap=document.getElementById('secWrap');
-  wrap.innerHTML=[1,2,3].map(function(g){
-   var items=SECS.filter(function(s){return s.grp===g;});
-   return '<div class="grp"><label>'+GRPS[g]+'</label>'+items.map(function(s){
-    return '<button class="sec'+(s.key===active?' on':'')+'" data-key="'+s.key+'" aria-pressed="'+(s.key===active)+'">'+s.short+'<i>'+s.total+'</i></button>';
-   }).join('')+'</div>';
+ function drawEntry(){
+  document.getElementById('entry3').innerHTML=[1,2,3].map(function(g){
+   var G=GRPS[g], items=SECS.filter(function(s){return s.grp===g;});
+   return '<div class="erow"><div class="gn">'+G.nm+'<b>'+G.sub+'</b></div>'
+    +'<div class="num3"><b>'+G.val+'</b>'+G.unit+'<span>占比 '+G.share+'%</span><span class="up">同比 '+G.yoy+'%</span></div>'
+    +'<div class="secwrap">'+items.map(function(s){
+     return '<button class="sec'+(s.key===active?' on':'')+'" data-key="'+s.key+'">'+s.short+'<i>'+s.total+'</i></button>';
+    }).join('')+'</div></div>';
   }).join('');
-  Array.prototype.forEach.call(wrap.querySelectorAll('.sec'),function(b){
+  Array.prototype.forEach.call(document.querySelectorAll('#entry3 .sec'),function(b){
    b.addEventListener('click',function(){
     active=b.getAttribute('data-key');activeStage=null;activeBucket=null;detId=null;
-    drawSecs();drawChart();drawSide();drawDet();
+    drawEntry();drawChart();drawSide();drawDet();
    });
   });
  }
 
- /* ---------- 图例 ---------- */
  function drawLegend(){
   var L={
    chain:[['lg-live','已投产'],['lg-wip','在途（签约/在建）'],['lg-out','退出或受阻'],['lg-none','无公开现场']],
@@ -415,7 +550,6 @@ h1 em{font-style:normal;color:var(--cyan-bright);background:linear-gradient(180d
   }).join('');
  }
 
- /* ---------- 主图 ---------- */
  function drawChart(){
   var s=SECS.filter(function(x){return x.key===active;})[0];
   drawLegend();
@@ -433,6 +567,12 @@ h1 em{font-style:normal;color:var(--cyan-bright);background:linear-gradient(180d
  function drawColumns(cols,mode){
   var svg=document.getElementById('chainSvg');
   var W=560,H=400,base=318,top=140;
+  var nar=!!(window.matchMedia&&window.matchMedia('(max-width:640px)').matches);
+  var fCol=nar?(n>4?14:17):(n>4?11.5:13);
+  var fEn=nar?10.5:9;
+  var fCnt=nar?13.5:11;
+  var fBlk=nar?14:(n>4?9:9.5);
+  var fEmpty=nar?12:10;
   var n=cols.length, span=504/n, bw=Math.min(64,span-38);
   var xs=cols.map(function(_,i){return 28+span*(i+0.5);});
   var gap=5, maxN=1;
@@ -455,29 +595,27 @@ h1 em{font-style:normal;color:var(--cyan-bright);background:linear-gradient(180d
    +'<linearGradient id="beam" x1="0" y1="0" x2="0" y2="1"><stop offset="0%" stop-color="rgba(63,192,255,.22)"/><stop offset="100%" stop-color="rgba(63,192,255,0)"/></linearGradient>'
    +'</defs>';
 
-  xs.forEach(function(x){
-   out+='<rect x="'+(x-bw/2-8)+'" y="86" width="'+(bw+16)+'" height="'+(base-86)+'" fill="url(#beam)" opacity=".55"/>';
+  cols.forEach(function(c,i){
+   var hh=c.ids.length?(Math.max(c.ids.length*bh+(c.ids.length-1)*gap,10)):refH;
+   var y1=Math.max(104,base-hh-26);
+   out+='<rect x="'+(xs[i]-bw/2-8)+'" y="'+y1+'" width="'+(bw+16)+'" height="'+(base-y1)+'" fill="url(#beam)" opacity=".55"/>';
   });
   out+='<line x1="26" y1="'+(base+2)+'" x2="534" y2="'+(base+2)+'" stroke="rgba(63,192,255,.45)" stroke-width="1.4" filter="url(#g1)"/>';
 
   cols.forEach(function(c,i){
    var x=xs[i], k=c.ids.length;
-   var isCur=(curKey===c.key);
-   var dim=(curKey&&curKey!==c.key);
+   var isCur=(curKey===c.key), dim=(curKey&&curKey!==c.key);
    out+='<g opacity="'+(dim?'.42':'1')+'">';
-   out+='<text x="'+x+'" y="62" text-anchor="middle" style="font-size:'+(n>4?12:13)+'px;font-weight:800;fill:'+(isCur?'#86d8ff':'#dbe8f8')+'">'+c.name+'</text>';
-   if(c.en)out+='<text x="'+x+'" y="76" text-anchor="middle" style="font-size:9px;letter-spacing:.1em;font-weight:700;fill:#6c809c">'+c.en+'</text>';
-   out+='<text x="'+x+'" y="'+(base+20)+'" text-anchor="middle" style="font-size:11px;font-weight:800;fill:'+(k?'#86d8ff':'#d8b57c')+'">'+(k?k+' 个现场':'无公开现场')+'</text>';
+   out+='<text x="'+x+'" y="62" text-anchor="middle" style="font-size:'+fCol+'px;font-weight:800;fill:'+(isCur?'#86d8ff':'#dbe8f8')+'">'+c.name+'</text>';
+   if(c.en)out+='<text x="'+x+'" y="76" text-anchor="middle" style="font-size:'+fEn+'px;letter-spacing:.1em;font-weight:700;fill:#6c809c">'+c.en+'</text>';
+   out+='<text x="'+x+'" y="'+(base+20)+'" text-anchor="middle" style="font-size:'+fCnt+'px;font-weight:800;fill:'+(k?'#86d8ff':'#d8b57c')+'">'+(k?k+' 个现场':'无公开现场')+'</text>';
 
    if(!k){
     out+='<rect x="'+(x-bw/2)+'" y="'+(base-8-refH)+'" width="'+bw+'" height="'+refH+'" rx="8" fill="none" stroke="rgba(216,195,154,.45)" stroke-width="1.2" stroke-dasharray="6 5"/>'
-     +'<text x="'+x+'" y="'+(base-8-refH/2)+'" text-anchor="middle" style="font-size:10px;font-weight:700;fill:#d8b57c">空</text>';
+     +'<text x="'+x+'" y="'+(base-8-refH/2)+'" text-anchor="middle" style="font-size:'+fEmpty+'px;font-weight:700;fill:#d8b57c">空</text>';
    }else{
-    var track=base-8;
-    var ids=c.ids.slice().sort(function(a,b){
-     var A=evMap[a],B=evMap[b];
-     return (B.stage||0)-(A.stage||0);
-    });
+    var track=base;
+    var ids=c.ids.slice().sort(function(a,b){return (evMap[b].stage||0)-(evMap[a].stage||0);});
     ids.forEach(function(id,j){
      var e=evMap[id];
      var y=track-(j+1)*bh-j*gap;
@@ -488,7 +626,7 @@ h1 em{font-style:normal;color:var(--cyan-bright);background:linear-gradient(180d
      var op=(detId&&detId!==id)?' opacity=".35"':'';
      out+='<g class="blk" data-id="'+id+'" data-col="'+c.key+'"'+op+' style="cursor:pointer">'
       +'<rect x="'+(x-bw/2)+'" y="'+y+'" width="'+bw+'" height="'+bh+'" rx="4" fill="'+fill+'" stroke="'+stroke+'" stroke-width="1.2"'+dash+'/>';
-     if(bh>=12)out+='<text x="'+x+'" y="'+(y+bh/2+4)+'" text-anchor="middle" style="font-size:'+(n>4?9:9.5)+'px;font-weight:700;fill:'+(isWip||isSign?'#cfeaff':'#04212f')+'">'+e.town.replace(/街道|镇|/g,'')+(isOut?' 停':'')+'</text>';
+     if(bh>=12)out+='<text x="'+x+'" y="'+(y+bh/2+4)+'" text-anchor="middle" style="font-size:'+fBlk+'px;font-weight:700;fill:'+(isWip||isSign?'#cfeaff':'#04212f')+'">'+e.town.replace(/街道|镇|/g,'')+(isOut?' 停':'')+'</text>';
      out+='</g>';
     });
    }
@@ -511,14 +649,12 @@ h1 em{font-style:normal;color:var(--cyan-bright);background:linear-gradient(180d
   Array.prototype.forEach.call(svg.querySelectorAll('.stg'),function(g){
    g.addEventListener('click',function(){
     var k=g.getAttribute('data-col');
-    if(mode==='chain'){activeStage=(activeStage===k?null:k);}
-    else{activeBucket=(activeBucket===k?null:k);}
+    if(mode==='chain'){activeStage=(activeStage===k?null:k);}else{activeBucket=(activeBucket===k?null:k);}
     detId=null;drawChart();drawDet();
    });
   });
  }
 
- /* ---------- 右栏 ---------- */
  function drawSide(){
   var s=SECS.filter(function(x){return x.key===active;})[0];
   document.getElementById('sideName').textContent=s.name;
@@ -530,14 +666,8 @@ h1 em{font-style:normal;color:var(--cyan-bright);background:linear-gradient(180d
   document.getElementById('sideQ').textContent='带走这句：'+s.q;
  }
 
- /* ---------- 详情 ---------- */
  var ST={live:'已投产',wip:'在建或签约',out:'退出或受阻',stat:'统计口径'};
- function tagOf(e){
-  if(e.state==='stat')return 'stat';
-  if(e.state==='out')return 'out';
-  if(e.state==='live')return 'live';
-  return 'wip';
- }
+ function tagOf(e){return e.state==='stat'?'stat':e.state==='out'?'out':e.state==='live'?'live':'wip';}
  function drawDet(){
   var s=SECS.filter(function(x){return x.key===active;})[0];
   var t=document.getElementById('detTitle'), tag=document.getElementById('detTag'),
@@ -547,7 +677,7 @@ h1 em{font-style:normal;color:var(--cyan-bright);background:linear-gradient(180d
    t.textContent=e.title+(e.big?' · '+e.big+(e.unit||''):'');
    tag.style.display='inline-block';
    tag.className='tag '+tagOf(e);
-   tag.textContent=e.state==='stat'?'统计口径':(BUCKETS.filter(function(x){return x.key===b;})[0].name);
+   tag.textContent=(e.state==='stat')?'统计口径':BUCKETS.filter(function(x){return x.key===b;})[0].name;
    q.textContent=(e.subtitle?e.subtitle+'。':'')+(e.question||'');
    var spans=['镇街：'+(e.town||'全县')];
    if(e.month)spans.push('月份：'+(e.month===0?'未定':e.month+' 月'));
@@ -559,13 +689,11 @@ h1 em{font-style:normal;color:var(--cyan-bright);background:linear-gradient(180d
   tag.style.display='none';
   var selKey=(view==='chain'?activeStage:activeBucket);
   if(selKey){
-   var ids, name;
+   var ids,name;
    if(view==='chain'){
-    var st=s.stages.filter(function(x){return x.key===selKey;})[0];
-    ids=st.ids;name=st.name;
+    var st=s.stages.filter(function(x){return x.key===selKey;})[0];ids=st.ids;name=st.name;
    }else{
-    var bk=BUCKETS.filter(function(x){return 'b'+x.key===selKey;})[0];
-    ids=s.bk[bk.key];name=bk.name;
+    var bk=BUCKETS.filter(function(x){return 'b'+x.key===selKey;})[0];ids=s.bk[bk.key];name=bk.name;
    }
    t.textContent=name+' · '+ids.length+' 个现场';
    q.textContent=ids.length?'这一段的现场如下。点任意一个看它卡在哪句话上。':'这一段没有公开现场——不是不存在，是没有公开主体。';
@@ -590,7 +718,6 @@ h1 em{font-style:normal;color:var(--cyan-bright);background:linear-gradient(180d
   });
  }
 
- /* ---------- 三个可查问题 ---------- */
  function drawQ3(){
   var items=[
    {no:'01',ttl:'在产 16 个，订单从哪来？',
@@ -602,23 +729,33 @@ h1 em{font-style:normal;color:var(--cyan-bright);background:linear-gradient(180d
   ];
   document.getElementById('q3Grid').innerHTML=items.map(function(x){
    return '<article class="qcard"><div class="ttl"><i>问题 '+x.no+'</i>'+x.ttl+'</div>'
-    +'<dl><dt>已有线索</dt><dd>'+x.clue+'</dd>'
-    +'<dt>仍需核实</dt><dd class="w">'+x.check+'</dd>'
+    +'<dl><dt>已有线索</dt><dd>'+x.clue+'</dd><dt>仍需核实</dt><dd class="w">'+x.check+'</dd>'
     +'<dt>下一条证据</dt><dd class="n">'+x.nxt+'</dd></dl></article>';
   }).join('');
  }
 
- /* ---------- 平台与通道 ---------- */
- function drawPlat(){
-  var html=PLAT.concat(ROADS).map(function(id){
-   var e=evMap[id];if(!e)return '';
-   return '<article class="pcard"><span class="top"><i class="dot '+e.state+'"></i>'+(e.town||'全县')+' · '+ST[e.state]+'</span>'
-    +'<b>'+(e.big||'')+(e.unit||'')+'</b><small>'+e.title.replace(/^.*?\u00b7 /,'')+(e.subtitle?' · '+e.subtitle:'')+'</small></article>';
+ function drawGaps(){
+  var g=[
+   {no:'01 时序缺口',b:'1—5 月工业投资数据缺',s:'不补曲线、不推测，只留空位。缺的一段可能改写判断，所以标出来。'},
+   {no:'02 统计边界',b:'年度目标与阶段增速不能相减',s:'目标 6.5%—7.0% 是全年口径，一季度 +4.0% 是阶段口径，算不出“落后几个百分点”。'},
+   {no:'03 项目进度',b:'开工之后，多少已经竣工投产',s:'37 个现场里 15 个在建、4 个签约，竣工与投产要逐个核，不能由开工率推出来。'}
+  ];
+  document.getElementById('gaps').innerHTML=g.map(function(x){
+   return '<div class="gcard"><i>'+x.no+'</i><b>'+x.b+'</b><small>'+x.s+'</small></div>';
   }).join('');
-  document.getElementById('platGrid').innerHTML=html;
  }
 
- /* ---------- 行动 ---------- */
+ function drawPlat(){
+  document.getElementById('platGrid').innerHTML=PLAT.concat(ROADS).map(function(id){
+   var e=evMap[id];if(!e)return '';
+   var b=bucketOf(e);
+   var lab=(b===null)?'统计口径':BUCKETS.filter(function(x){return x.key===b;})[0].name;
+   var dc=(b===0?'out':e.state==='stat'?'':e.state);
+   return '<article class="pcard"><span class="top"><i class="dot '+dc+'"></i>'+(e.town||'全县')+' · '+lab+'</span>'
+    +'<b>'+(e.big||'')+(e.unit||'')+'</b><small>'+e.title.replace(/^.*?\u00b7 /,'')+(e.subtitle?' · '+e.subtitle:'')+'</small></article>';
+  }).join('');
+ }
+
  document.getElementById('toWind').addEventListener('click',function(){
   var s=SECS.filter(function(x){return x.key===active;})[0];
   var thin=s.stages.slice().sort(function(a,b){return a.ids.length-b.ids.length;})[0];
@@ -632,14 +769,12 @@ h1 em{font-style:normal;color:var(--cyan-bright);background:linear-gradient(180d
   b.addEventListener('click',function(){
    view=b.getAttribute('data-view');
    activeStage=null;activeBucket=null;detId=null;
-   Array.prototype.forEach.call(document.querySelectorAll('.vbtn'),function(x){
-    x.classList.toggle('on',x===b);
-   });
+   Array.prototype.forEach.call(document.querySelectorAll('.vbtn'),function(x){x.classList.toggle('on',x===b);});
    drawChart();drawDet();
   });
  });
 
- drawSpine();drawSecs();drawChart();drawSide();drawDet();drawQ3();drawPlat();
+ drawBullets();drawSync();drawSpine();drawEntry();drawChart();drawSide();drawDet();drawQ3();drawGaps();drawPlat();
 })();
 </script>
 </body>
