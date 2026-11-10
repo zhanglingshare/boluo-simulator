@@ -27,10 +27,10 @@ const {chromium}=require('playwright');
  assert.match(await page.locator('#sectorDetail').innerText(),/−4\.2%|-4\.2%/,'negative industry growth is visible');
  assert.match(await page.locator('#sectorDetail').innerText(),/−0\.9个百分点|-0\.9个百分点/,'share change is visible');
 
- await page.locator('#netAdds').fill('200');
+ await page.locator('#netAdds').evaluate(el=>{el.value='200';el.dispatchEvent(new Event('input',{bubbles:true}))});
  assert.equal(await page.locator('#netAddsTotal').innerText(),'2,407家','enterprise target arithmetic');
  assert.match(await page.locator('#netAddsGap').innerText(),/还差 93 家/,'enterprise target gap arithmetic');
- await page.locator('#netAdds').fill('220');
+ await page.locator('#netAdds').evaluate(el=>{el.value='220';el.dispatchEvent(new Event('input',{bubbles:true}))});
  assert.equal(await page.locator('#netAddsTotal').innerText(),'2,507家','slider restores');
 
  await page.locator('[data-peer="huidong"]').click();
