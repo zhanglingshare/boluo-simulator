@@ -37,7 +37,9 @@ jobs:
           node --check v11/relations-world-core.js
           node --check v11/relations-world-layout.js
           node --check v11/relations-stage.js
+          node --check v11/brief-data.js
+          node --check v11/brief.js
       - name: Initialization, scopes, handoffs and existing industry results
-        run: node --test tests/boluo-v11-discovery.test.cjs tests/boluo-v11-risk.test.cjs tests/boluo-v11-relations.test.cjs tests/boluo-v11-world.test.cjs tests/boluo-plan-life.test.cjs
+        run: node --test tests/boluo-v11-discovery.test.cjs tests/boluo-v11-risk.test.cjs tests/boluo-v11-relations.test.cjs tests/boluo-v11-world.test.cjs tests/boluo-plan-life.test.cjs tests/boluo-v11-brief.test.cjs
       - name: Existing site journey
         run: node tests/verify_journey.js
