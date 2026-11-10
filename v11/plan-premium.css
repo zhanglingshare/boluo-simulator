@@ -346,3 +346,74 @@
 }
 @media(max-width:370px){.metric-ring{flex-basis:46px;width:46px;height:46px}.metric-copy>strong{font-size:9px}.output-pair strong{font-size:11px}.synergy-matrix{grid-template-columns:58px repeat(5,minmax(0,1fr))}}
 @media(prefers-reduced-motion:reduce){.plan-page .plan-hero,.flow-live-dot,#pathGraph .path-edge,#pathGraph .path-node,#pathGraph .path-node-halo,.output-track i{animation:none!important}.hero-gap-track i,.metric-ring .ring-value,.metric-bar i{transition:none!important}}
+
+
+/* V11 / 06 motion cockpit refinement: make the pathway the dominant instrument. */
+.plan-page .path-studio-grid{grid-template-columns:minmax(0,1fr);gap:10px}
+.plan-page .path-map-card{width:100%;border-color:rgba(112,220,196,.38);box-shadow:inset 0 1px rgba(255,255,255,.08),0 16px 42px rgba(0,0,0,.2)}
+.plan-page .path-map-top{min-height:48px;padding:12px 16px}
+.plan-page .path-map-scroll{overflow:hidden}
+#pathGraph{display:block;width:100%;min-width:0;height:auto;overflow:visible}
+#pathGraph .path-node rect{stroke:rgba(218,255,241,.48);stroke-width:1.4;filter:drop-shadow(0 9px 18px rgba(0,0,0,.3));transition:stroke .22s,filter .22s,opacity .22s}
+#pathGraph .path-node-title{font-size:15px;font-weight:950}
+#pathGraph .path-node-sub{font-size:10px;fill:#d9f0e7}
+#pathGraph .path-node-status{font-size:9px;letter-spacing:.04em}
+#pathGraph .path-node-aura{opacity:0;pointer-events:none}
+#pathGraph .path-node.is-focused .path-node-aura{opacity:1;animation:nodeAuraPulse 1.8s ease-out infinite}
+#pathGraph .path-node.is-focused rect{stroke:#fff0bd;stroke-width:3;filter:drop-shadow(0 0 17px rgba(130,245,204,.72))}
+#pathGraph .path-edge{stroke-width:3;stroke-dasharray:7 11;opacity:.58;animation:pathDash .9s linear infinite}
+#pathGraph .path-edge.is-primary{stroke-width:4;opacity:1;filter:drop-shadow(0 0 8px rgba(96,242,202,.62))}
+#pathGraph .flow-particle{opacity:1}
+#pathGraph .flow-particle.secondary{opacity:.62}
+.path-telemetry{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:9px;margin:10px 0 2px}
+.telemetry-card{position:relative;min-width:0;padding:12px 14px 11px;border:1px solid rgba(105,193,176,.22);border-radius:12px;background:linear-gradient(135deg,rgba(12,47,57,.96),rgba(8,31,43,.96));box-shadow:inset 0 1px rgba(255,255,255,.055),0 9px 20px rgba(9,39,48,.1);overflow:hidden}
+.telemetry-card:after{content:"";position:absolute;right:-22px;top:-32px;width:100px;height:100px;border:1px solid rgba(112,220,196,.1);border-radius:50%;box-shadow:0 0 0 12px rgba(112,220,196,.025),0 0 0 26px rgba(112,220,196,.02);pointer-events:none}
+.telemetry-card-head{display:flex;justify-content:space-between;align-items:center;gap:8px}
+.telemetry-card-head small{color:#83bcb2;font-size:9px;font-weight:900;letter-spacing:.08em}
+.telemetry-card-head span{color:#547e7f;font-size:8px;font-weight:900}
+.telemetry-card>strong{display:block;margin:4px 0 7px;color:#f0fff7;font-size:26px;line-height:1.1;font-weight:950;letter-spacing:-.05em;font-variant-numeric:tabular-nums}
+.telemetry-card>strong i{font-size:10px;color:#8bb9af;font-style:normal;letter-spacing:0}
+.telemetry-card>p{margin:7px 0 0;color:#9bbcb5;font-size:8px;line-height:1.45}
+.telemetry-slots,.telemetry-nodebar,.telemetry-pairs{display:flex;align-items:center;gap:5px;min-height:9px}
+.telemetry-slots i{display:block;width:29px;height:5px;border-radius:99px;background:rgba(168,218,204,.14);transition:background .25s,box-shadow .25s}
+.telemetry-slots i.on{background:linear-gradient(90deg,#38c9ae,#9af0cf);box-shadow:0 0 10px rgba(96,226,190,.42)}
+.telemetry-nodebar i{display:block;flex:1;height:5px;border-radius:99px;background:linear-gradient(90deg,#1d7e7e,#55c9ac);box-shadow:0 0 7px rgba(70,201,167,.24);animation:telemetryIn .45s both}
+.telemetry-nodebar i:nth-child(2n){animation-delay:.06s}
+.telemetry-pairs i{display:block;width:19px;height:8px;border-radius:3px;background:rgba(168,218,204,.13);border:1px solid rgba(168,218,204,.12)}
+.telemetry-pairs i.on{background:linear-gradient(135deg,#d6aa67,#f3d99e);border-color:#f0cf8f;box-shadow:0 0 9px rgba(229,187,113,.35)}
+.plan-page .path-inspector{display:grid;grid-template-columns:minmax(170px,.7fr) minmax(240px,1.05fr) minmax(280px,1.2fr);grid-template-rows:auto auto auto;align-items:center;gap:8px 17px;padding:13px 16px}
+.path-inspector-top{grid-column:1;grid-row:1}
+.plan-page .path-inspector h4{grid-column:1;grid-row:2;font-size:24px}
+.plan-page .path-inspector>p{grid-column:2;grid-row:1 / span 2;font-size:11px}
+.path-inspector-track{grid-column:1;grid-row:3}
+.plan-page .path-inspector-block{grid-column:3;grid-row:1 / span 2}
+.path-inspector-more{grid-column:3;grid-row:3}
+.path-inspector-more p{max-width:100%}
+@keyframes nodeAuraPulse{0%{transform:scale(.72);opacity:.65}100%{transform:scale(1.22);opacity:0}}
+@keyframes telemetryIn{from{transform:scaleX(.2);opacity:.2}to{transform:scaleX(1);opacity:1}}
+@media(max-width:900px){
+ .plan-page .path-inspector{grid-template-columns:minmax(150px,.8fr) minmax(0,1.2fr)}
+ .path-inspector-top{grid-column:1;grid-row:1}
+ .plan-page .path-inspector h4{grid-column:1;grid-row:2}
+ .plan-page .path-inspector>p{grid-column:2;grid-row:1 / span 2}
+ .path-inspector-track{grid-column:1;grid-row:3}
+ .plan-page .path-inspector-block{grid-column:1 / -1;grid-row:4}
+ .path-inspector-more{grid-column:1 / -1;grid-row:5}
+}
+@media(max-width:720px){
+ .path-telemetry{grid-template-columns:repeat(3,minmax(0,1fr));gap:5px;margin:8px 0}
+ .telemetry-card{padding:9px 8px;border-radius:9px}
+ .telemetry-card-head small{font-size:7px}.telemetry-card-head span{font-size:6px}
+ .telemetry-card>strong{font-size:20px;margin:5px 0 6px}
+ .telemetry-card>strong i{font-size:8px}
+ .telemetry-card>p{font-size:7px;line-height:1.35}
+ .telemetry-slots,.telemetry-nodebar,.telemetry-pairs{gap:3px}
+ .telemetry-slots i{width:17px;height:4px}
+ .telemetry-pairs i{width:11px;height:7px}
+ #pathGraph{min-width:0;width:100%}
+ .plan-page .path-inspector{display:flex;flex-direction:column;align-items:stretch;gap:8px;padding:12px}
+ .plan-page .path-inspector h4{font-size:20px}
+}
+@media(prefers-reduced-motion:reduce){
+ #pathGraph .path-edge,#pathGraph .path-node,#pathGraph .path-node-halo,#pathGraph .path-node-aura,.telemetry-nodebar i{animation:none!important}
+}
