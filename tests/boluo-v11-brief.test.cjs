@@ -60,7 +60,7 @@ test("page 11 exposes a research trace, evidence backlog, replay and export cont
 });
 test("page 10 replay link parser restores all three slider values and selected flow stage",()=>{
  const js=read("v11/region-lab.js");
- assert.match(js,/\^\\d\+\$\/\.test\(v\)/);
+ assert.ok(js.includes(String.raw`/^\\d+$/.test(v)`));
  assert.match(js,/flowStage/);
  assert.doesNotThrow(()=>new Function(js));
 });
