@@ -123,7 +123,7 @@ function buildRegionReplay(r){
  if(r.flowStage!==null&&r.flowStage!==undefined)u.searchParams.set("flowStage",String(r.flowStage));
  if(r.role)u.searchParams.set("role",r.role);
  if(r.layer)u.searchParams.set("pressureLayer",r.layer);
- if(r.pressure){u.searchParams.set("dep",String(r.pressure.dependency));u.searchParams.set("shock",String(r.pressure.shock));u.searchParams.set("sub",String(r.pressure.substitute));}
+ if(r.pressure){u.searchParams.set("dep",String(r.pressure.dependency));u.searchParams.set("shock",String(r.pressure.shock));u.searchParams.set("sub",String(r.pressure.substitute));u.searchParams.set("pressureAdjusted",r.pressure.adjusted?"1":"0");}
  u.hash="finalQuestion";return u.href;
 }
 function renderRegionAudit(){
@@ -142,7 +142,7 @@ function evidenceTasks(){
  if(data.challenge){
   tasks.push({title:data.challenge.falsifier?"观察反证条件是否出现":"为当前判断写下一条可推翻它的条件",detail:"待检验证据："+data.challenge.evidenceTitle+"；阈值："+(data.challenge.threshold||"尚未设定")+"；期限："+data.challenge.horizon+"。",href:"challenge.html",label:"回到第09页"});
  }
- if(data.region)tasks.push({title:data.region.question,detail:"优先补齐："+data.region.evidence+"。"+(data.region.pressure?"同时核实依赖、冲击和替代路径的真实取值。":"当前没有保存完整压力条件。"),href:"region.html",label:"回到第10页"});
+ if(data.region)tasks.push({title:data.region.question,detail:"优先补齐："+data.region.evidence+"。"+(data.region.pressure?(data.region.pressure.adjusted?"本次滑杆已调整，仍需核实三项取值是否贴近真实关系。":"已保存的是默认初始档位，尚未记录手动压力测试。"):"当前没有保存完整压力条件。"),href:"region.html",label:data.region.pressure&&!data.region.pressure.adjusted?"调整第10页压力条件":"回到第10页"});
  if(!data.windSaved)tasks.push({title:"保存一次完整的条件实验",detail:"运行后明确保存压力类型、档位、缓冲、作用范围和基准设置；临时结果不计入档案。",href:"wind.html",label:"回到第07页"});
  else if(!data.wind.baselineParams)tasks.push({title:"补齐实验基准设置",detail:"本机记录有中位数和压力条件，但没有完整保存基准参数；重新运行并保存，才能提高复现程度。",href:"wind.html",label:"重新运行实验"});
  if(data.plan)tasks.push({title:"核对规划方向的项目兑现节点",detail:"当前保存的方向："+data.plan.routeTitle+"。还需要逐项核对项目进度、责任主体和实际投产节点。",href:"plan.html",label:"回到第06页"});
