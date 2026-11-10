@@ -12,5 +12,5 @@ test("page 10 includes interactive value chain, regional pressure test and role 
 });
 test("new experiment labels its output as scenario index, not measured economic loss",()=>{
  const h=read("v11/region.html");
- assert.match(h,/不是经济损失测算/);assert.match(h,/非实测金额/);assert.match(h,/不是企业实测、概率、GDP损失或因果系数/);
+ assert.match(h,/不是经济损失测算/);assert.match(h,/非实测金额/);assert.match(h,/不是企业实测、概率或GDP损失/);
 });
