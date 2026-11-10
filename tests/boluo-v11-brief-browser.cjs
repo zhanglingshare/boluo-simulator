@@ -22,7 +22,7 @@ const session={"boluo-v11-challenge-07":{shock:"orders",strength:1.2,buffer:true
    const res=await page.goto("http://127.0.0.1:8765/v11/brief.html",{waitUntil:"networkidle"});assert.equal(res.status(),200);
    assert.equal(await page.locator("#savedCount").innerText(),"7");
    assert.match(await page.locator("#windAudit").innerText(),/关键条件|订单外流|本地价值链延伸/);
-   assert.match(await page.locator("#windAudit").innerText(),/5000/);
+   assert.match(await page.locator("#windAudit").innerText(),/5,000/);
    assert.match(await page.locator("#challengeAudit").innerText(),/本地采购份额连续两个季度上升/);
    assert.match(await page.locator("#challengeAudit").innerText(),/主观确信/);
    assert.match(await page.locator("#regionAudit").innerText(),/结构暴露 73\/100/);
