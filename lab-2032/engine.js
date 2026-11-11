@@ -36,6 +36,51 @@ function baseline(data){
  }
  return {year:2025,values:vals,gdp,shares:vals.map(x=>x/gdp),growthRates:rates,growthBasis:basis,history:rows};
 }
+/* Observable dataset diagnostics may condition a scenario, but never imply policy causality.
+ * Each coefficient below is an explicitly assumed, bounded "what-if" coupling.
+ * This is intentionally NOT a regression-to-GDP or structural causal calibration.
+ */
+let demoSignalReference=null;
+function rawSignals(data){
+ const tables=data.tables||{},firms=tables.enterprises||[],projects=tables.projects||[],workers=tables.workforce||[],surveys=tables.surveys||[];
+ const bySector=Object.fromEntries(S.map(k=>{
+  const rows=firms.filter(e=>e.sector===k&&Number(e.employees)>0&&Number.isFinite(Number(e.revenue)));
+  return [k,rows.length?C.mean(rows.map(e=>Number(e.revenue)/Number(e.employees))):null];
+ }));
+ const stageScore={signed:0,construction:.18,commissioning:.55,operating:1};
+ const readiness=projects.length?C.mean(projects.map(p=>stageScore[p.stage]??0)):null;
+ const fit=workers.length?C.mean(workers.map(w=>1-C.clamp((Number(w.skillGap)||0)/5,0,1))):null;
+ const access=surveys.length?C.mean(surveys.map(r=>C.mean(["SA1","SA2","SA3","SA4"].map(k=>Number(r[k])||0))))/7:null;
+ const idMap=new Map(firms.map(e=>[String(e.id),e]));let same=0,total=0;
+ for(const edge of tables.relations||[]){
+  const a=idMap.get(String(edge.source)),b=idMap.get(String(edge.target)),v=Number(edge.value);
+  if(!a||!b||!Number.isFinite(v)||v<0)continue;
+  total+=v;if(a.town===b.town)same+=v;
+ }
+ return {revenuePerWorkerProxy:bySector,projectReadiness:readiness,workforceSkillFit:fit,
+  surveyServiceAccess:access,localRelationShare:total?same/total:null};
+}
+function dataConditions(data){
+ if(!demoSignalReference)demoSignalReference=rawSignals(C.demo());
+ const raw=rawSignals(data),ref=demoSignalReference,diff=(a,b)=>Number.isFinite(a)&&Number.isFinite(b)?a-b:0;
+ const productivity=S.map(k=>{
+  const a=raw.revenuePerWorkerProxy[k],b=ref.revenuePerWorkerProxy[k];
+  return Number.isFinite(a)&&Number.isFinite(b)&&b>0?C.clamp((a/b-1)*.006,-.012,.012):0;
+ });
+ const pr=C.clamp(diff(raw.projectReadiness,ref.projectReadiness)*.014,-.009,.009);
+ const wr=C.clamp(diff(raw.workforceSkillFit,ref.workforceSkillFit)*.014,-.009,.009);
+ const sv=C.clamp(diff(raw.surveyServiceAccess,ref.surveyServiceAccess)*.012,-.009,.009);
+ const lk=C.clamp(diff(raw.localRelationShare,ref.localRelationShare)*.012,-.009,.009);
+ const annualDelta=[
+  productivity[0]+pr*.20+wr*.10+lk*.15,
+  productivity[1]+pr*.85+wr*.75+lk*.30,
+  productivity[2]+pr*.35+wr+sv+lk
+ ].map(v=>C.clamp(v,-.025,.025));
+ return {raw,reference:ref,annualRateDelta:annualDelta,
+  enteredDataModules:Object.entries(data.evidence||{}).filter(([,v])=>v==="IMPORTED_UNVERIFIED").map(([k])=>k),
+  status:"HEURISTIC_CONDITIONS_NOT_CAUSAL_CALIBRATION",
+  explanation:"宏观历史CAGR决定描述性基线；企业人均营收代理、项目进展、技能、调查与本地采购的偏离只以事先限定的演示系数调整情景增速。并无因果识别，不是正式政策预测。"};
+}
 function config(given={}){
  const scenario=SCENARIOS[given.scenario] ? given.scenario:"balanced";
  const knobs={};for(const [name,meta]of Object.entries(KNOBS)){
@@ -49,8 +94,8 @@ function config(given={}){
  return {scenario,knobs,trials,seed};
 }
 function simulate(data,raw={}){
- const p=config(raw),base=baseline(data);
- const rates=base.growthRates.map((v,i)=>v+SCENARIOS[p.scenario].delta[i]);
+ const p=config(raw),base=baseline(data),conditioning=dataConditions(data);
+ const rates=base.growthRates.map((v,i)=>v+SCENARIOS[p.scenario].delta[i]+conditioning.annualRateDelta[i]);
  for(const [name,value]of Object.entries(p.knobs))for(let i=0;i<3;i++)rates[i]+=KNOBS[name].effect[i]*value;
  if(rates.some(x=>x<=-.23||x>=.36))throw Error("增长假设超出引擎有效区间");
  const random=C.rng(p.seed),draws=[[],[],[]],total=[],shares=[[],[],[]],paths=Array.from({length:8},(_,i)=>({year:2025+i,primary:[],secondary:[],tertiary:[],gdp:[]}));
@@ -79,7 +124,7 @@ function simulate(data,raw={}){
  return {meta:{dataset_id:data.meta.dataset_id,mode:data.meta.mode,seed:p.seed,trials:p.trials,scenario:p.scenario,
    evidence:"CONDITIONAL_SIMULATION",model:"nominal-sector-growth-sensitivity-v2",growth_basis:base.growthBasis,
    warning:"结果依赖历史/合成基准、增长和扰动假设；概率仅为模型内条件频率，不是政策成功概率。"},
-  scenario:SCENARIOS[p.scenario],knobs:p.knobs,assumedAnnualRates:rates,baseline:base,totals,sectors,yearly,
+  scenario:SCENARIOS[p.scenario],knobs:p.knobs,assumedAnnualRates:rates,calibration:conditioning,baseline:base,totals,sectors,yearly,
   nearTarget:targetCount/p.trials,meet2030Reference:within2030,
   histogram:{min,max,counts},target:TARGET,conditional:true};
 }
@@ -271,6 +316,6 @@ function actions(data,sim){
  return choices.map(x=>({...x,score:Math.round(40+Math.min(1,x.fit)*180)})).sort((a,b)=>b.score-a.score)
   .map(x=>({...x,scoreMeaning:"Demo问题优先级，用于排序，不是政策效果评价"}));
 }
-root.BoluoEngine={S,NAMES,TARGET,SCENARIOS,KNOBS,qs,bins,baseline,simulate,compareScenarios,sensitivity,industries,projects,workforce,network,propagate,
+root.BoluoEngine={S,NAMES,TARGET,SCENARIOS,KNOBS,qs,bins,baseline,rawSignals,dataConditions,simulate,compareScenarios,sensitivity,industries,projects,workforce,network,propagate,
  models,quality,blindspots,actions};
 })(window);
