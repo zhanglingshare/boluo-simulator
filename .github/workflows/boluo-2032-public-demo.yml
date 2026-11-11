@@ -1,0 +1,37 @@
+name: Boluo 2032 | Open Demo Browser Checks
+on:
+  push:
+    paths:
+      - 'lab-2032/**'
+      - '.github/workflows/boluo-2032-public-demo.yml'
+  pull_request:
+    paths:
+      - 'lab-2032/**'
+      - '.github/workflows/boluo-2032-public-demo.yml'
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  browser:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - name: Check frontend JavaScript syntax
+        run: node --check lab-2032/app.js
+      - name: Install browser runtime
+        run: |
+          python -m pip install playwright
+          python -m playwright install chromium
+      - name: Browser integration tests
+        run: python lab-2032/tests/browser_smoke.py
+      - name: Save public Demo screenshots
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: boluo-2032-public-demo-screenshots
+          path: lab-2032/artifacts/
+          retention-days: 7
+          if-no-files-found: ignore
