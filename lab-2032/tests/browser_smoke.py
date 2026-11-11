@@ -22,7 +22,7 @@ def check():
         for _ in range(100):
             if p.poll() is not None: raise RuntimeError("static web server exited")
             try:
-                with urllib.request.urlopen("http://127.0.0.1:8899/lab-2032/", timeout=1) as response:
+                with urllib.request.urlopen("http://127.0.0.1:8899/lab-2032/quick-demo.html", timeout=1) as response:
                     if response.status==200: break
             except Exception: time.sleep(.15)
         else: raise RuntimeError("test server did not start")
@@ -36,7 +36,7 @@ def check():
                     page=ctx.new_page()
                     errors=[]
                     page.on("pageerror", lambda error: errors.append(str(error)))
-                    page.goto("http://127.0.0.1:8899/lab-2032/",wait_until="networkidle")
+                    page.goto("http://127.0.0.1:8899/lab-2032/quick-demo.html",wait_until="networkidle")
                     page.wait_for_function('document.querySelector("#resultGdp").textContent.trim() !== "—"')
                     assert "公开体验" in page.locator(".public-tag").inner_text()
                     initial=page.locator("#resultGdp").inner_text()
