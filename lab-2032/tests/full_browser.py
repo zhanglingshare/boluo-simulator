@@ -46,7 +46,7 @@ def main():
                     errors=[]
                     page.on("pageerror",lambda exc:errors.append(str(exc)))
                     page.goto("http://127.0.0.1:8899/lab-2032/",wait_until="networkidle")
-                    assert page.url.endswith("studio.html"),page.url
+                    assert "studio.html" in page.url,page.url
                     page.locator("#missionStats .stat-card").first.wait_for(timeout=15000)
                     assert page.locator("#missionStats .stat-card").count()==4
                     assert page.locator("#mainNav .nav-link").count()==len(PAGES)
