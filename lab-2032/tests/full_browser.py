@@ -13,7 +13,7 @@ import time
 import urllib.request
 import zipfile
 from pathlib import Path
-from playwright.sync_api import sync_playwright
+from playwright.sync_api import sync_playwright, expect
 
 ROOT=Path(__file__).resolve().parents[2]
 ART=ROOT/"lab-2032"/"artifacts"
@@ -99,11 +99,11 @@ def main():
                           "name":"analysis-output.json","mimeType":"application/json",
                           "buffer":json.dumps(template).encode("utf-8")
                         })
-                        page.wait_for_function('document.querySelector("#modelComparison").textContent.includes("SmartPLS")')
+                        expect(page.locator('#modelComparison')).to_contain_text('SmartPLS',timeout=20000)
                     go(page,"wind")
                     original=page.locator("#windStats .stat-card").first.inner_text()
                     page.locator("#scenarioSelect").select_option("service")
-                    page.wait_for_function('document.querySelector("#windControls")==null') # no-op; ensures DOM ready
+                    assert page.locator('#windStats .stat-card').count()==4
                     assert page.locator("#windStats .stat-card").first.inner_text()!=original
                     page.locator("#pinScenarioA").click()
                     page.locator("#scenarioSelect").select_option("stress")
@@ -129,12 +129,12 @@ def main():
                     page.locator("#importStart").click()
                     page.locator("#mappingFields select").first.wait_for()
                     page.locator("#importConfirm").click()
-                    page.wait_for_function('document.querySelector("#topMode").textContent.includes("MIXED")')
+                    expect(page.locator('#topMode')).to_contain_text('MIXED',timeout=12000)
                     go(page,"macro")
                     assert "1,150" in page.locator("#macroStats").inner_text()
                     go(page,"data")
                     page.locator("#restoreDemoTop").click()
-                    page.wait_for_function('document.querySelector("#topMode").textContent.includes("DEMO")')
+                    expect(page.locator('#topMode')).to_contain_text('DEMO',timeout=12000)
                     # XLSX is an explicit functional requirement; verify first worksheet parse.
                     from openpyxl import Workbook
                     wb=Workbook();ws=wb.active;ws.append(["year","primary","secondary","tertiary"]);ws.append([2025,121,641,388])
@@ -146,7 +146,7 @@ def main():
                     })
                     page.locator("#importStart").click()
                     page.locator("#importConfirm").wait_for(state="attached",timeout=12000)
-                    page.wait_for_function('!document.querySelector("#importConfirm").disabled',timeout=12000)
+                    expect(page.locator('#importConfirm')).to_be_enabled(timeout=12000)
                     page.locator("#importConfirm").click()
                     page.wait_for_function('document.querySelector("#topMode").textContent.includes("MIXED")',timeout=12000)
                     go(page,"macro")
