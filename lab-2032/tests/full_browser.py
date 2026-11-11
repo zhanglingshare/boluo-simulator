@@ -54,6 +54,16 @@ def main():
                         go(page,name)
                         assert page.locator('[data-page="'+name+'"]').is_visible()
                         assert not errors, (name,errors)
+                    calibration_probe=page.evaluate("""() => {
+                      const bundle=BoluoCore.demo();
+                      const a=BoluoEngine.simulate(bundle,{trials:300,seed:2032});
+                      bundle.tables.enterprises.filter(e=>e.sector==='tertiary').forEach(e=>e.revenue*=1.6);
+                      bundle.evidence.enterprises='IMPORTED_UNVERIFIED';
+                      const b=BoluoEngine.simulate(bundle,{trials:300,seed:2032});
+                      return {a:a.totals.p50,b:b.totals.p50,delta:b.calibration.annualRateDelta[2]};
+                    }""")
+                    assert calibration_probe["delta"]>0,calibration_probe
+                    assert calibration_probe["b"]>calibration_probe["a"],calibration_probe
                     go(page,"macro")
                     assert "1,005.5" in page.locator("#macroStats").inner_text()
                     assert page.locator("#macroTimeline svg").count()==1
@@ -151,6 +161,20 @@ def main():
                     page.wait_for_function('document.querySelector("#topMode").textContent.includes("MIXED")',timeout=12000)
                     go(page,"macro")
                     assert "1,150" in page.locator("#macroStats").inner_text()
+                    go(page,"data")
+                    page.locator("#restoreDemoTop").click()
+                    # Real imports can introduce previously unseen town names; lists must adapt.
+                    page.locator("#importType").select_option("enterprises")
+                    page.locator("#importFile").set_input_files({
+                      "name":"new-town.csv","mimeType":"text/csv",
+                      "buffer":b"id,sector,subsector,town,employees,revenue,productivity\nX001,secondary,Demo,TestNewTown,31,21.5,0.693\n"
+                    })
+                    page.locator("#importStart").click()
+                    expect(page.locator("#importConfirm")).to_be_enabled(timeout=12000)
+                    page.locator("#importConfirm").click()
+                    expect(page.locator("#topMode")).to_contain_text("MIXED",timeout=12000)
+                    go(page,"towns")
+                    assert "TestNewTown" in page.locator("#townFilter").inner_text()
                     go(page,"data")
                     page.locator("#restoreDemoTop").click()
                     dims=page.evaluate('({width:innerWidth,scroll:document.documentElement.scrollWidth})')
