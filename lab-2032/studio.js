@@ -198,13 +198,15 @@ function renderIndustry(){
  else $("#enterpriseDetail").hidden=true;
 }
 function renderTowns(){
- if(!C.TOWNS.includes(state.town))state.town=C.TOWNS[0];
  const rows=state.data.tables.enterprises;
- const maps=C.TOWNS.map(name=>{
+ const towns=[...new Set(rows.map(x=>String(x.town||"").trim()).filter(Boolean))].sort((a,b)=>a.localeCompare(b,"zh-CN"));
+ if(!towns.length)throw Error("当前企业数据缺少镇街字段");
+ if(!towns.includes(state.town))state.town=towns[0];
+ const maps=towns.map(name=>{
   const companies=rows.filter(x=>x.town===name),parts=E.S.map(k=>companies.filter(x=>x.sector===k).length);
   return {name,n:companies.length,parts,revenue:C.sum(companies.map(x=>x.revenue)),employees:C.sum(companies.map(x=>x.employees))};
  });
- $("#townFilter").innerHTML=C.TOWNS.map(t=>'<option value="'+esc(t)+'" '+(t===state.town?"selected":"")+'>'+esc(t)+'</option>').join("");
+ $("#townFilter").innerHTML=towns.map(t=>'<option value="'+esc(t)+'" '+(t===state.town?"selected":"")+'>'+esc(t)+'</option>').join("");
  $("#townMatrix").innerHTML=maps.map(x=>'<button type="button" class="town-cell '+(x.name===state.town?"selected":"")+'" data-town="'+esc(x.name)+'"><b>'+esc(x.name)+'</b><small>合成主体</small><strong>'+x.n+'</strong><div class="mini-stack">'+x.parts.map((v,i)=>'<i style="width:'+(x.n?dec(100*v/x.n,3):0)+'%;background:'+colors[i]+'"></i>').join("")+'</div></button>').join("");
  const t=maps.find(x=>x.name===state.town);
  $("#townDetails").innerHTML=[
@@ -363,6 +365,11 @@ function renderWind(){
  ].join("");
  $("#windShares").innerHTML=shareCompare(sim);
  $("#windSectorResults").innerHTML=sim.sectors.map(x=>'<div class="three-card"><small>'+x.name+'</small><strong>'+num(x.p50)+'亿</strong><span>P10 '+num(x.p10)+' — P90 '+num(x.p90)+'</span></div>').join("");
+ const calibration=sim.calibration;
+ $("#windDataConditions").innerHTML=[
+  insight("数据如何影响推演","当前快照中的企业经营代理指标、项目阶段、技能、调查和产业采购关系已经提取为辅助条件。它们经过有界的演示映射，而不是经过因果识别的GDP贡献。"),
+  insight("当前数据辅助增速修正","第一产业 "+pct(calibration.annualRateDelta[0])+"，第二产业 "+pct(calibration.annualRateDelta[1])+"，第三产业 "+pct(calibration.annualRateDelta[2])+"（均为年增速百分点差）。"+(calibration.enteredDataModules.length?"已导入模块："+calibration.enteredDataModules.join("、"):"当前使用默认Demo，修正值相对于Demo参考为零。"))
+ ].join("");
  $("#windTrajectory").innerHTML=timelineSvg(sim);
  $("#windHistogram").innerHTML=histogram(sim.histogram,"2032GDP条件分布",{units:"亿"});
  $("#windPercentiles").innerHTML=["p10","p50","p90"].map(k=>'<div class="three-card"><small>'+k.toUpperCase()+'</small><strong>'+num(sim.totals[k])+'亿</strong></div>').join("");
@@ -428,7 +435,7 @@ function buildReport(){
  const data=state.data,sim=ensureScenario(),q=state.quality,gaps=E.blindspots(data,sim),model=state.model,net=E.network(data);
  return {
   data:{id:data.meta.dataset_id,mode:data.meta.mode,schema_version:data.meta.schema_version,count:q.counts,quality:q.status,evidence:data.evidence},
-  scenario:{id:sim.meta.scenario,growth:sim.assumedAnnualRates,knobs:sim.knobs,seed:sim.meta.seed,trials:sim.meta.trials},
+  scenario:{id:sim.meta.scenario,growth:sim.assumedAnnualRates,knobs:sim.knobs,seed:sim.meta.seed,trials:sim.meta.trials,calibration:sim.calibration},
   baseline:sim.baseline,results:{total:sim.totals,sectors:sim.sectors,nearTarget:sim.nearTarget,meet2030:sim.meet2030Reference},
   network:{nodes:net.nodes,edges:net.edges,invalid:net.invalid,types:net.byType},
   models:model?{pls:model.fit,regression:model.benchmark,confidence:model.ci,notes:model.notes}:null,
@@ -440,14 +447,6 @@ function buildReport(){
     "未来结构是条件推演，不是确定预测；官方统计口径及授权需单独确认。"]
  };
 }
-function buildMarkdown(r){
- const p=r.results;
- return '# 博罗2032 · 产业协同研究档案\n\n'+
- '**数据快照**：'+r.data.id+' · '+r.data.mode+' · 结构版本'+r.data.schema_version+'\n\n'+
- '> **研究声明**：当前结果依赖合成或未核实数据和条件假设，不构成对真实博罗的经济预测或政策效果评价。\n\n'+
- '## 2025宏观基准\n\n'+E.S.map((k,i)=>'- '+labels[k]+'：'+num(r.baseline.values[i])+'亿元').join('\n')+'\n- GDP合计：'+num(r.baseline.gdp)+'亿元\n\n'+
- '## 2032条件结果\n\n'-0; 
-}
 function markdownReport(r){
  const g=r.results;
  let md='# 博罗2032 · 三次产业协同研究档案\n\n**数据版本：** '+r.data.id+' ｜ **模式：** '+r.data.mode+'\n\n';
@@ -458,6 +457,7 @@ function markdownReport(r){
   '\n- 总量P10/P50/P90：'+["p10","p50","p90"].map(k=>dec(g.total[k],2)).join(" / ")+'亿元\n';
  md+=g.sectors.map(x=>'- '+x.name+'中位数：'+dec(x.p50,2)+'亿元；P10–P90：'+dec(x.p10,2)+'–'+dec(x.p90,2)+'亿元；占比中位数：'+pct(x.share.p50)).join('\n');
  md+='\n- 接近1:5:4的模型内条件频率：'+pct(g.nearTarget)+'\n- 2030达到1600亿的模型内条件频率：'+pct(g.meet2030)+'\n\n';
+ md+='## 三、数据辅助条件（演示规则，不是因果估计）\n\n'+E.S.map((k,i)=>'- '+labels[k]+'：年增长假设辅助修正 '+pct(r.scenario.calibration.annualRateDelta[i])).join('\n')+'\n\n';
  md+='## 三、数据质量及网络\n\n'+Object.entries(r.data.count).map(([k,n])=>'- '+k+'：'+n+'条').join('\n')+
   '\n- 产业网络有效边：'+r.network.edges+'；无效边：'+r.network.invalid+'\n\n';
  md+='## 四、模型结果\n\n'+(r.models?
