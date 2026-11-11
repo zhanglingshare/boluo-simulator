@@ -1,0 +1,136 @@
+<!doctype html>
+<html lang="zh-CN"><head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="theme-color" content="#07182a"><meta name="description" content="博罗2032产业协同完整研究工作台：数据导入、质量体检、行业镇街、项目就业、产业网络、社会调查、双轨模型、决策风洞、压力测试与研究报告。">
+<meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self'; style-src 'self' 'unsafe-inline'; img-src 'self' data:; connect-src 'none'; object-src 'none'; base-uri 'self';">
+<title>博罗2032 · 决策模拟实验室｜完整研发版</title>
+<link rel="stylesheet" href="studio.css">
+<script defer src="core.js"></script><script defer src="engine.js"></script><script defer src="studio.js"></script>
+</head><body>
+<div class="app-shell">
+<header class="masthead">
+  <div class="identity"><span class="brand-mark">B<span>·</span></span><div class="brand-name"><b>博罗2032 <i>LAB</i></b><small>产业协同 · 决策模拟实验室</small></div></div>
+  <span class="head-separator"></span><span class="head-descriptor">2026—2032 / RESEARCH STUDIO</span>
+  <div class="head-actions"><span id="topMode" class="mode-pill">DEMO DATA</span><button type="button" id="openData" class="head-action">导入数据 ↗</button><button type="button" id="openMobileNav" class="mobile-menu" aria-label="打开导航">☰</button></div>
+</header>
+<div class="app-body">
+<aside class="sidebar" id="sidebar">
+  <div class="sidebar-heading"><span class="eyebrow">MISSION CONTROLLER</span><b>研究导航</b></div>
+  <nav id="mainNav" class="sidebar-nav" aria-label="研究工作区"></nav>
+  <div class="sidebar-footer"><div class="live-dot"></div><div><strong>免登录 · 浏览器本地计算</strong><small>真实数据不上传服务器</small></div></div>
+</aside>
+<div class="mobile-backdrop" id="mobileBackdrop" hidden></div>
+<main class="work-area">
+  <div class="context-bar"><div><span class="eyebrow" id="sectionCode">01 / OVERVIEW</span><div id="sectionPath" class="context-title">研究总览</div></div><div class="context-side"><span id="dataVersion">BOLUO_2032_DEMO_V2</span><span id="readiness" class="readiness">研究环境就绪</span></div></div>
+  <div class="global-alert"><span class="alert-dot"></span><strong>研究使用边界</strong><span id="globalCaveat">默认含合成企业、关系、问卷与情景假设；不是博罗真实调查或政策效果预测。</span></div>
+
+  <section data-page="mission" class="page-section">
+    <div class="hero-spotlight"><div><div class="eyebrow glow">BOLUO RESEARCH LAB · INTEGRATED STUDY</div><h1>不是研究一张报表。<br><em>是检验一条发展路径。</em></h1><p>农业、第二产业、第三产业一起增长，2032年如何接近更合理的产业结构？把真实数据、企业行为、产业关系和专业模型放进同一个实验。</p><div class="hero-buttons"><button type="button" class="button primary" data-go="wind">开始2032推演 →</button><button type="button" class="button translucent" data-go="data">导入一套真实数据</button></div></div><div class="hero-target"><small>2032 STRUCTURE / 研究参考</small><div><b>1</b><span>:</span><b>5</b><span>:</span><b>4</b></div><p>不是必须实现的结论。质量、就业、资源和风险一并比较。</p><div class="target-bar"><i></i><i></i><i></i></div></div></div>
+    <div class="stats-row" id="missionStats"></div>
+    <div class="split-grid wide-first"><article class="panel-card"><div class="panel-head"><div><span class="eyebrow">STUDY PIPELINE</span><h3>这次研究走到哪一步？</h3></div><span class="minor-tag">可执行的研究链</span></div><div id="missionPipeline" class="pipeline"></div></article>
+    <article class="panel-card"><div class="panel-head"><h3>这套数据是否够用？</h3><span class="minor-tag" id="missionQualityBadge">数据体检</span></div><div class="quality-score" id="missionQuality"></div><div class="compact-list" id="missionGaps"></div><button type="button" class="text-button" data-go="data">打开数据体检和字段映射 →</button></article></div>
+    <div class="section-label"><span>直接研究</span><span>从一个有用的问题出发</span></div><div class="research-shortcuts" id="researchShortcuts"></div>
+  </section>
+
+  <section data-page="data" class="page-section" hidden>
+    <div class="page-intro"><div><span class="eyebrow">DATA COMMAND CENTER</span><h1>数据接进来，所有研究重新计算。</h1><p>导入CSV、Excel或完整JSON研究包，先检查字段、观察单位和质量，再进入产业分析。Demo是默认数据，不是固定答案。</p></div><button type="button" class="button outline" id="restoreDemoTop">恢复完整Demo</button></div>
+    <div class="stats-row" id="dataStats"></div>
+    <div class="split-grid"><article class="panel-card"><div class="panel-head"><h3>六类研究数据</h3><span class="minor-tag">当前快照</span></div><div id="datasetCards" class="dataset-cards"></div></article>
+    <article class="panel-card"><div class="panel-head"><h3>导入真实数据</h3><span class="minor-tag">不上传服务器</span></div><p class="fine-print">单表导入支持CSV / XLSX / JSON；完整快照使用导出的研究包JSON。可映射中文列名，导入后保留原Demo供恢复。</p>
+      <label for="importType" class="field-label">要替换的数据表</label><select id="importType" class="input"><option value="macro">宏观三次产业（亿元）</option><option value="enterprises">企业和行业</option><option value="relations">产业主体关系</option><option value="surveys">社会调查与潜变量</option><option value="projects">重点项目及状态</option><option value="workforce">就业、工资与通勤</option></select>
+      <label for="importFile" class="field-label">选择文件</label><input type="file" class="input file-input" id="importFile" accept=".csv,.xlsx,.json">
+      <div id="mappingArea" class="mapping-area" hidden><p class="fine-print"><strong>字段映射：</strong>把文件列对应到模型所需字段。请确保单位和含义一致。</p><div id="mappingFields" class="mapping-fields"></div></div>
+      <div class="button-row"><button type="button" class="button primary" id="importStart">读取并预检查</button><button type="button" class="button secondary" id="importConfirm" disabled>确认替换数据</button></div><div id="importMessage" class="import-message" role="status"></div>
+      <div class="button-row"><button type="button" class="link-button" id="downloadTemplate">下载所选表CSV模板 ↓</button><button type="button" class="link-button" id="downloadSnapshot">下载完整当前快照JSON ↓</button></div>
+    </article></div>
+    <div class="panel-card spaced"><div class="panel-head"><div><span class="eyebrow">QUALITY GATE</span><h3>数据质量体检 · 错误不会自动补成Demo</h3></div><span class="minor-tag">模型运行前检查</span></div><div id="qualityChecks" class="quality-checks"></div></div>
+  </section>
+
+  <section data-page="macro" class="page-section" hidden>
+    <div class="page-intro"><div><span class="eyebrow">MACRO BASELINE / 2020—2032</span><h1>从1005亿出发，三产能否共同增长？</h1><p>先看历史规模与结构，再把2032情景和1:5:4参考线放在同一张图中。2020—2024 Demo历史是合成序列。</p></div><button type="button" class="button outline" data-go="wind">进入风洞改变条件 →</button></div>
+    <div class="stats-row" id="macroStats"></div>
+    <div class="panel-card"><div class="panel-head"><h3>三次产业增加值：历史与条件情景</h3><span class="minor-tag">单位：亿元 · 名义演示</span></div><div id="macroTimeline" class="svg-stage large"></div><div class="legend"><span><i class="c-primary"></i>第一产业</span><span><i class="c-secondary"></i>第二产业</span><span><i class="c-tertiary"></i>第三产业</span></div></div>
+    <div class="split-grid spaced"><article class="panel-card"><div class="panel-head"><h3>2025结构 VS 2032中位数</h3></div><div id="macroShare" class="share-comparison"></div></article><article class="panel-card"><div class="panel-head"><h3>结构之外，必须检查什么</h3></div><div id="macroInterpretation" class="insight-list"></div></article></div>
+  </section>
+
+  <section data-page="industries" class="page-section" hidden>
+    <div class="page-intro"><div><span class="eyebrow">INDUSTRY STRUCTURE</span><h1>产业不是三个百分数，是一群真实经营主体。</h1><p>可以按三次产业或细分行业拆开样本。营业收入、人数和企业数量不等于GDP增加值。</p></div><div class="toolbar"><label>产业 <select id="industryFilter" class="input"><option value="all">全部产业</option><option value="primary">第一产业</option><option value="secondary">第二产业</option><option value="tertiary">第三产业</option></select></label></div></div>
+    <div class="stats-row" id="industryStats"></div>
+    <div class="split-grid wide-first"><article class="panel-card"><div class="panel-head"><h3>细分行业 · 合成企业营业收入分布</h3><span class="minor-tag">样本内部比较</span></div><div id="subsectorBars"></div></article><article class="panel-card"><div class="panel-head"><h3>企业规模</h3><span class="minor-tag">按员工数</span></div><div id="sizeMix" class="size-mix"></div></article></div>
+    <div class="panel-card spaced"><div class="panel-head"><h3>经营主体样本 · 可选择查看</h3><span class="minor-tag">点击行打开对象档案</span></div><div class="table-scroll"><table class="data-table"><thead><tr><th>主体</th><th>行业</th><th>镇街</th><th>员工</th><th>模拟营收（百万元）</th></tr></thead><tbody id="enterpriseTable"></tbody></table></div><div id="enterpriseDetail" class="detail-panel" hidden></div></div>
+  </section>
+
+  <section data-page="towns" class="page-section" hidden>
+    <div class="page-intro"><div><span class="eyebrow">TOWN & SPATIAL STRUCTURE</span><h1>同一个博罗，不同镇街的结构可能完全不同。</h1><p>按镇街比较合成企业数量、行业构成与岗位规模。数据不完整时不推断全县镇级GDP。</p></div><div class="toolbar"><label>关注镇街 <select id="townFilter" class="input"></select></label></div></div>
+    <div class="split-grid wide-first"><article class="panel-card"><div class="panel-head"><h3>镇街产业主体分布</h3><span class="minor-tag">合成样本</span></div><div id="townMatrix" class="town-matrix"></div></article><article class="panel-card"><div class="panel-head"><h3>镇街结构详情</h3></div><div id="townDetails" class="insight-list"></div></article></div>
+    <div class="panel-card spaced"><div class="panel-head"><h3>镇街横向对照</h3><span class="minor-tag">样本企业营业收入 · 非GDP</span></div><div id="townBars"></div></div>
+  </section>
+
+  <section data-page="network" class="page-section" hidden>
+    <div class="page-intro"><div><span class="eyebrow">SNA / PRODUCTION NETWORK</span><h1>产业联系在哪里，断点可能就在哪里。</h1><p>基于主体ID与有向采购关系计算网络，允许选择具体节点并测试断裂传导；合成网络不是现实企业名单。</p></div><div class="toolbar"><label>查看产业 <select id="networkFilter" class="input"><option value="all">全部关系</option><option value="primary">农业关联</option><option value="secondary">工业关联</option><option value="tertiary">服务业关联</option></select></label></div></div>
+    <div class="stats-row" id="networkStats"></div>
+    <div class="split-grid wide-first"><article class="panel-card"><div class="panel-head"><h3>三次产业的连接强度</h3><span class="minor-tag">交易额仅为合成权重</span></div><div id="networkSankey" class="svg-stage"></div><div id="networkTypes"></div></article>
+    <article class="panel-card"><div class="panel-head"><h3>网络中的高关联主体</h3><span class="minor-tag">入向交易权重</span></div><div id="topNetworkEntities" class="compact-list"></div></article></div>
+    <div class="panel-card spaced"><div class="panel-head"><h3>模拟切断一条关键主体联系</h3><span class="minor-tag">三步示意传播，不是因果预测</span></div><div class="toolbar horizontal"><label>源主体 <select class="input" id="shockNode"></select></label><label>冲击幅度 <input type="range" id="shockStrength" min=".1" max=".8" step=".05" value=".4"><output id="shockStrengthText">40%</output></label><button type="button" class="button primary" id="runNetworkShock">模拟断点传播</button></div><div id="shockResults" class="insight-list"></div></div>
+  </section>
+
+  <section data-page="projects" class="page-section" hidden>
+    <div class="page-intro"><div><span class="eyebrow">PROJECT DELIVERY PIPELINE</span><h1>签约不是投产，投资不是增加值。</h1><p>把项目按阶段、产业、投产时间和用工拆开，检查产业增长接续会在哪个环节卡住。</p></div><div class="toolbar"><label>投产延期（演示） <input type="range" id="projectDelay" min="0" max="3" step="1" value="0"><output id="projectDelayOutput">0年</output></label></div></div>
+    <div class="stats-row" id="projectStats"></div><div class="panel-card"><div class="panel-head"><h3>项目从签约到稳定运营</h3><span class="minor-tag">阶段漏斗 · 模拟项目</span></div><div id="projectFunnel" class="project-funnel"></div></div>
+    <div class="split-grid spaced"><article class="panel-card"><div class="panel-head"><h3>未来投产窗口</h3><span class="minor-tag">延期调整会影响时间</span></div><div id="projectTimeline"></div></article><article class="panel-card"><div class="panel-head"><h3>哪个产业的项目压力更大？</h3></div><div id="projectSector"></div></article></div>
+    <div class="panel-card spaced"><div class="panel-head"><h3>项目明细</h3></div><div class="table-scroll"><table class="data-table"><thead><tr><th>项目</th><th>产业</th><th>镇街</th><th>阶段</th><th>演示投资</th><th>调整后投产年</th></tr></thead><tbody id="projectTable"></tbody></table></div></div>
+  </section>
+
+  <section data-page="labor" class="page-section" hidden>
+    <div class="page-intro"><div><span class="eyebrow">JOBS, SKILLS & DAILY LIFE</span><h1>经济增长，岗位和人的生活跟上了吗？</h1><p>模拟工资、通勤与技能约束；可以按产业切换样本，讨论增长条件的另一面。</p></div><div class="toolbar"><label>观察对象 <select id="laborFilter" class="input"><option value="all">全部劳动者</option><option value="primary">第一产业</option><option value="secondary">第二产业</option><option value="tertiary">第三产业</option></select></label></div></div>
+    <div class="stats-row" id="laborStats"></div><div class="split-grid"><article class="panel-card"><div class="panel-head"><h3>月收入分布</h3><span class="minor-tag">合成样本 · 元</span></div><div id="laborHistogram" class="svg-stage"></div></article><article class="panel-card"><div class="panel-head"><h3>通勤与技能错配</h3></div><div id="laborStructure" class="insight-list"></div></article></div>
+    <div class="panel-card spaced"><div class="panel-head"><h3>镇街劳动者样本分布</h3></div><div id="laborTowns"></div></div>
+  </section>
+
+  <section data-page="survey" class="page-section" hidden>
+    <div class="page-intro"><div><span class="eyebrow">SURVEY & LATENT CONSTRUCTS</span><h1>宏观统计之外，企业为什么这样选择？</h1><p>同一份企业问卷用于探索服务可得性、服务使用与经营表现的关系；真实调查还需要抽样和测量质量审查。</p></div><button type="button" class="button outline" data-go="models">进入多模型实验室 →</button></div>
+    <div class="stats-row" id="surveyStats"></div><div class="split-grid wide-first"><article class="panel-card"><div class="panel-head"><h3>三个潜变量 · 指标分布</h3><span class="minor-tag">1—7级题目</span></div><div id="surveyConstructs"></div></article><article class="panel-card"><div class="panel-head"><h3>样本覆盖与缺口</h3></div><div id="surveyDiagnostics" class="insight-list"></div></article></div>
+    <div class="panel-card spaced"><div class="panel-head"><h3>问卷与实际行为如何连接？</h3><span class="minor-tag">同一主体ID可匹配</span></div><div id="surveyLinkage"></div><div class="button-row"><button type="button" id="downloadQuestionnaire" class="button secondary">导出问卷变量字典 ↓</button><button type="button" id="downloadSurveyCsv" class="button outline">导出当前调查数据CSV ↓</button></div></div>
+  </section>
+
+  <section data-page="models" class="page-section" hidden>
+    <div class="page-intro"><div><span class="eyebrow">PARALLEL MODEL LAB</span><h1>同一份数据，让两种方法互相挑战。</h1><p>程序运行探索性PLS路径模型和标准化回归。SPSS/SmartPLS导入实际估计结果进行对照；不同方法不强行比较准确率。</p></div><button type="button" class="button primary" id="runModels">运行全部程序模型 →</button></div>
+    <div class="stats-row" id="modelStats"></div><div class="split-grid"><article class="panel-card"><div class="panel-head"><h3>编程轨道：路径与测量质量</h3><span class="minor-tag">可复现计算</span></div><div id="modelPaths" class="model-paths"></div><div id="measurementPanel"></div></article><article class="panel-card"><div class="panel-head"><h3>专业软件轨道：SPSS / SmartPLS</h3><span class="minor-tag">实际输出由用户导入</span></div><p class="fine-print">下载数据和构念字典，在专业软件独立估计。随后导入含软件版本、样本量和路径系数的JSON。没有导入时不伪造对照数据。</p><div class="button-row"><button type="button" class="button secondary" id="exportProfessional">下载专业分析包 ZIP ↓</button></div><label class="field-label" for="externalModelFile">导入专业软件结果JSON</label><input class="input file-input" id="externalModelFile" type="file" accept=".json"><div id="modelComparison" class="insight-list"></div></article></div>
+    <div class="panel-card spaced"><div class="panel-head"><h3>不同方法为什么可能分歧？</h3><span class="minor-tag">研究质量门</span></div><div id="modelDiagnostics" class="review-grid"></div></div>
+  </section>
+
+  <section data-page="wind" class="page-section" hidden>
+    <div class="page-intro"><div><span class="eyebrow">2032 DECISION WIND TUNNEL</span><h1>不是把2032写死，而是把发展条件放进去试。</h1><p>宏观基准、产业增长、资源约束和联合冲击共同进入2000次条件模拟；两次实验可以左右对照。</p></div><div class="button-row"><button type="button" class="button outline" id="pinScenarioA">保存为A基准</button><button type="button" class="button outline" id="pinScenarioB">保存为B方案</button></div></div>
+    <div class="split-grid wind-layout"><div class="wind-results"><div class="stats-row" id="windStats"></div>
+      <article class="panel-card"><div class="panel-head"><h3>2025基准 → 2032条件结果</h3><span class="minor-tag">产业增加值与结构</span></div><div id="windShares" class="share-comparison"></div><div id="windSectorResults" class="three-column"></div></article>
+      <article class="panel-card spaced"><div class="panel-head"><h3>从2025到2032 · 条件中位数</h3></div><div id="windTrajectory" class="svg-stage large"></div></article>
+      <article class="panel-card spaced"><div class="panel-head"><h3>GDP分布，不是一条预言</h3></div><div id="windHistogram" class="svg-stage"></div><div id="windPercentiles" class="three-column"></div></article>
+    </div><aside class="panel-card wind-controls"><div class="panel-head"><h3>改变发展条件</h3></div><label class="field-label" for="scenarioSelect">主情景</label><select id="scenarioSelect" class="input"></select><div id="scenarioKnobs" class="knobs"></div><div class="button-row"><button type="button" class="button primary stretch" id="runWind">重新运行2032风洞 →</button></div><p class="fine-print">控件修改的是有界情景假设，不能理解为已经得到政策因果效应。模型会以统一的随机种子重新计算。</p></aside></div>
+    <div class="panel-card spaced"><div class="panel-head"><h3>实验A VS 实验B · 同屏对撞</h3><span class="minor-tag">先保存两次情景</span></div><div id="windComparison" class="comparison-grid"></div></div>
+  </section>
+
+  <section data-page="stress" class="page-section" hidden>
+    <div class="page-intro"><div><span class="eyebrow">RED TEAM / SENSITIVITY</span><h1>一个条件坏了，谁先承压？</h1><p>测试产业发展对不同扰动的敏感程度，也允许项目延期、人才紧缺和外部需求变化同时发生。</p></div><button type="button" class="button primary" id="runStress">运行联合压力测试 →</button></div>
+    <div class="split-grid"><article class="panel-card"><div class="panel-head"><h3>冲击条件</h3><span class="minor-tag">可以叠加</span></div><div class="shock-picker"><label><input type="checkbox" id="stressProjects" checked> 关键项目延期</label><label><input type="checkbox" id="stressTalent" checked> 人才与技能供给恶化</label><label><input type="checkbox" id="stressDemand"> 外部市场需求减弱</label><label><input type="checkbox" id="stressServices"> 专业服务供给不足</label></div><div id="stressOutcomes" class="stress-results"></div></article><article class="panel-card"><div class="panel-head"><h3>单变量敏感性排名</h3><span class="minor-tag">Demo条件差异 · 非因果估计</span></div><div id="sensitivityBars"></div></article></div>
+    <div class="panel-card spaced"><div class="panel-head"><h3>压力传导路径与剩余不确定性</h3></div><div id="stressNarrative" class="insight-list"></div></div>
+  </section>
+
+  <section data-page="blindspots" class="page-section" hidden>
+    <div class="page-intro"><div><span class="eyebrow">RED-TEAM INTELLIGENCE</span><h1>越像结论，越值得追问它漏掉什么。</h1><p>将数据缺口、经济核算边界、模型识别限制、结构目标和产业网络风险自动组合为需要进一步核验的问题。</p></div></div>
+    <div class="stats-row" id="blindStats"></div><div id="blindspotCards" class="blindspot-grid"></div>
+  </section>
+
+  <section data-page="strategy" class="page-section" hidden>
+    <div class="page-intro"><div><span class="eyebrow">ACTION EXPERIMENTS</span><h1>给出值得验证的行动路径，而不是替人决策。</h1><p>按当前结构差距、数据缺口和情景约束排列研究优先事项；一键把行动条件送进风洞，比较收益与代价。</p></div></div>
+    <div id="actionCards" class="action-grid"></div><div class="panel-card spaced"><div class="panel-head"><h3>行动不是建议书的最后一句话</h3></div><div id="actionTrace" class="insight-list"></div></div>
+  </section>
+
+  <section data-page="report" class="page-section" hidden>
+    <div class="page-intro"><div><span class="eyebrow">RESEARCH RECORD & DELIVERY</span><h1>带走一份能重跑、能核对的研究档案。</h1><p>报告包含当前数据快照、研究方法、模拟结果、模型限制、数据问题和下一步核实清单。</p></div><div class="button-row"><button type="button" class="button primary" id="exportReport">下载研究报告 Markdown ↓</button><button type="button" class="button outline" id="exportRecord">导出复现实验 JSON ↓</button><button type="button" class="button outline" id="printReport">打印 / PDF</button></div></div>
+    <article class="panel-card report-card"><div id="reportContent"></div></article>
+  </section>
+
+  <footer class="work-footer"><span>博罗2032 · 开放研发研究台 V2.0</span><span>内置合成Demo；用户自行导入数据始终标记未核验 · 不替代官方统计</span></footer>
+</main></div></div>
+<div class="toast" id="toast" hidden role="alert"></div>
+</body></html>
