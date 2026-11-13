@@ -470,6 +470,11 @@
             <button type="button" class="active" aria-pressed="true" data-svc-origin="secondary">工业 → 服务</button>
             <button type="button" aria-pressed="false" data-svc-origin="primary">农业 → 服务</button>
           </div>
+          <div class="svc-weight-toggle" id="svc-weight-filter" role="group" aria-label="按关系权重查看">
+            <button type="button" class="active" data-svc-weight="all" aria-pressed="true">全部</button>
+            <button type="button" data-svc-weight="top25" aria-pressed="false">权重前25%</button>
+            <button type="button" data-svc-weight="top10" aria-pressed="false">权重前10%</button>
+          </div>
           <span id="svc-sample-badge" class="svc-sample-badge">合成关系 · 不代表真实交易</span>
         </div>
         <div class="svc-matrix-legend"><span><i class="svc-legend-dot dense"></i>样本关系较多</span><span><i class="svc-legend-dot sparse"></i>样本关系较少</span><span><i class="svc-legend-dot blank"></i>样本未见关系</span></div>
