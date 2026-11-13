@@ -5,7 +5,8 @@
 <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self'; style-src 'self' 'unsafe-inline'; img-src 'self' data:; connect-src 'none'; object-src 'none'; base-uri 'self';">
 <title>博罗2032 · 决策模拟实验室｜完整研发版</title>
 <link rel="stylesheet" href="studio.css">
-<script defer src="core.js"></script><script defer src="engine.js"></script><script defer src="studio.js"></script>
+<link rel="stylesheet" href="industry-2025.css">
+<script defer src="core.js"></script><script defer src="engine.js"></script><script defer src="industry-2025.js"></script><script defer src="studio.js"></script>
 </head><body>
 <div class="app-shell">
 <header class="masthead">
@@ -100,6 +101,127 @@
       <div class="target-next-actions"><button type="button" class="button primary" data-go="macro">进入三次产业基本盘 →</button><button type="button" class="button outline" data-go="data">查看数据中心</button></div>
     </div>
     <p class="target-footnote">数据边界：2025年三次产业增加值采用当前Demo内置的公开参考值，正式研究前仍需核对原始来源及统计口径；2020—2024年历史序列、企业主体、产业关系、问卷、项目和就业样本含合成数据。2032年1:5:4为目标参考，不代表已经实现的结果；本页不推算未确认的2032年GDP总量。</p>
+  </section>
+
+  <section data-page="industry" class="page-section industry-2025-page" hidden>
+    <header class="in-hero">
+      <div class="in-hero-grid"></div>
+      <div class="in-hero-copy">
+        <span class="in-overline">02 / INDUSTRIAL GROWTH · BOLUO 2025</span>
+        <h1>工厂还在增长。<br><em>投资却踩下刹车。</em></h1>
+        <p>博罗的工业下一棒靠什么？先看两组相反的信号，再拆开行业、企业主体和同类县区，找出真正值得核实的变化。</p>
+        <div class="in-hero-badges"><span>公开统计 · 2025</span><span>2024对照</span><span>非因果推断</span></div>
+      </div>
+      <div class="in-hero-data" aria-label="2025年博罗工业增长与工业投资反差">
+        <div><span>规上工业增加值</span><strong class="positive">+8.7<small>%</small></strong><i>同比增长</i></div>
+        <div class="in-vs">VS</div>
+        <div><span>工业投资</span><strong class="negative">−12.7<small>%</small></strong><i>同比下降</i></div>
+        <p>两项指标含义不同，不能直接相减或推断因果。</p>
+      </div>
+    </header>
+
+    <div class="in-section-lead">
+      <span>01 / CHANGE OF PACE</span><h2>2024到2025，哪条线转了弯？</h2>
+      <p>点击年份，观察工业增加值与工业投资增速的组合发生了什么变化。</p>
+    </div>
+    <article class="in-card in-tempo-panel">
+      <div class="in-panel-top">
+        <div><strong>工业增长 × 投资变化</strong><small>单位：同比增速（%），非绝对金额</small></div>
+        <div id="in-year-tabs" class="in-toggle" role="group" aria-label="对照年份">
+          <button type="button" class="active" data-industrial-year="2025" aria-pressed="true">2025</button>
+          <button type="button" data-industrial-year="2024" aria-pressed="false">2024</button>
+        </div>
+      </div>
+      <div class="in-tempo-layout">
+        <div id="in-year-comparison" class="in-year-comparison" aria-live="polite"></div>
+        <div class="in-tempo-insight">
+          <span class="in-small-label">最值得问的问题</span>
+          <strong id="in-year-headline">工业仍在增长，为什么投资下降？</strong>
+          <p id="in-year-note">现有统计可以证明增速方向不同，但不能直接证明增长依赖存量产能或投资下降的原因。</p>
+          <button type="button" data-go="projects" class="in-text-link">继续查看项目接续 →</button>
+        </div>
+      </div>
+    </article>
+
+    <div class="in-section-lead">
+      <span>02 / INDUSTRY LANDSCAPE</span><h2>不是所有工业都在同一速度增长。</h2>
+      <p>气泡越大，行业在规上工业增加值中的占比越高；纵向越高，增速越快。点击行业查看细节。</p>
+    </div>
+    <div class="in-industry-layout">
+      <article class="in-card in-scatter-card">
+        <div class="in-panel-top">
+          <div><strong>五个主要行业 · 结构与速度</strong><small>2025年公开统计，未披露行业不推算</small></div>
+          <div id="in-chart-modes" class="in-toggle" role="group" aria-label="图表类型">
+            <button type="button" class="active" data-industrial-chart="scatter" aria-pressed="true">气泡图</button>
+            <button type="button" data-industrial-chart="rank" aria-pressed="false">双指标对照</button>
+          </div>
+        </div>
+        <div id="in-industry-chart" class="in-chart-stage" aria-label="主要行业占比与增速交互图"></div>
+        <div class="in-chart-foot">
+          <span><i class="in-dot in-blue"></i>增长行业</span>
+          <span><i class="in-dot in-orange"></i>收缩行业</span>
+          <span>点击图形选择行业</span>
+        </div>
+      </article>
+      <aside class="in-card in-focus-card" id="in-industry-detail" aria-live="polite"></aside>
+    </div>
+    <div class="in-observation-strip">
+      <div><small>最大两个行业，占规上工业增加值</small><strong>37.4<em>%</em></strong></div>
+      <div><small>以上五个行业合计占比</small><strong>61.4<em>%</em></strong></div>
+      <p>集中度值得关注，但不能仅凭占比判定产业风险。未披露的38.6%不随意细分。</p>
+    </div>
+
+    <div class="in-section-lead">
+      <span>03 / WHO DRIVES THE ENGINE</span><h2>真正承载增长的是哪类企业？</h2>
+      <p>企业数量占比与增加值占比是两种不同的统计视角；点击下面的主体类型比较。</p>
+    </div>
+    <div class="in-enterprise-layout">
+      <article class="in-card">
+        <div class="in-panel-top"><div><strong>民营工业企业</strong><small>2025年规上工业 · 不同统计分母</small></div><span class="in-source-flag">公开统计</span></div>
+        <div class="in-ownership-visual">
+          <div class="in-ring" aria-label="民营企业数量占规上工业企业84.5%"><div><strong>84.5%</strong><small>企业数量占比</small></div></div>
+          <div class="in-enterprise-number"><strong>1,189<small>家</small></strong><span>民营规上工业企业</span><b>占规上工业增加值 <em>68.6%</em></b><small>数量占比高，不代表增加值占比相同</small></div>
+        </div>
+      </article>
+      <article class="in-card">
+        <div class="in-panel-top"><div><strong>企业规模结构</strong><small>按规上工业增加值占比，不是企业数量</small></div><span class="in-source-flag">点击比较</span></div>
+        <div id="in-size-tabs" class="in-size-tabs" role="group" aria-label="企业规模">
+          <button type="button" data-size="small" class="active" aria-pressed="true">小微型</button>
+          <button type="button" data-size="medium" aria-pressed="false">中型</button>
+          <button type="button" data-size="large" aria-pressed="false">大型</button>
+        </div>
+        <div id="in-size-chart" class="in-size-chart"></div>
+        <div id="in-size-detail" class="in-size-detail" aria-live="polite"></div>
+      </article>
+    </div>
+
+    <div class="in-section-lead">
+      <span>04 / REGIONAL MIRROR</span><h2>工业占比相近，增长却未必相同。</h2>
+      <p>统一使用2024年统计。仅用于结构参照，不进行发展水平排名。</p>
+    </div>
+    <div class="in-industry-layout">
+      <article class="in-card in-scatter-card">
+        <div class="in-panel-top"><div><strong>同类县区 · 结构与增长</strong><small>横轴二产占GDP比例，纵轴规上工业增加值增速</small></div><span class="in-source-flag">2024年</span></div>
+        <div id="in-region-chart" class="in-chart-stage"></div>
+        <div class="in-region-pills" id="in-region-pills"></div>
+      </article>
+      <aside id="in-region-detail" class="in-card in-focus-card" aria-live="polite"></aside>
+    </div>
+
+    <div class="in-section-lead">
+      <span>05 / CAPACITY TO EVOLVE</span><h2>增长的下一棒，需要哪些能力？</h2>
+      <p>这些是不同口径的能力指标，不合成为一个缺乏依据的“产业能力总分”。</p>
+    </div>
+    <article class="in-card in-capacity-section">
+      <div id="in-capacity-grid" class="in-capacity-grid"></div>
+      <div class="in-capacity-question"><span>一个仍需研究的问题</span><strong>创新企业、数字化改造与新项目，能否真正转化成持续的增加值增长？</strong><p>需要实际产出、企业经营与项目投产记录验证，不能仅凭数量判断效果。</p></div>
+    </article>
+
+    <section class="in-next-panel">
+      <div><span>CONTINUE RESEARCH</span><h2>增长只是现象，接续才是问题。</h2><p>继续查看项目、产业关系和企业主体。专业数据和Demo样本已明确分开。</p></div>
+      <div class="in-next-links"><button type="button" class="button primary" data-go="projects">查看项目接续 →</button><button type="button" class="button outline" data-go="network">产业关系网络</button><button type="button" class="button outline" data-go="industries">Demo企业样本</button></div>
+    </section>
+    <details class="in-source-details"><summary>查看数据来源、口径与仍需核实的问题</summary><div id="in-source-entries"></div></details>
   </section>
 
   <section data-page="data" class="page-section" hidden>
