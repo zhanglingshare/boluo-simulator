@@ -49,6 +49,16 @@ def main():
                     assert "studio.html" in page.url,page.url
                     page.locator("#missionStats .stat-card").first.wait_for(timeout=15000)
                     assert page.locator("#missionStats .stat-card").count()==4
+                    assert page.locator("#targetCurrentBar .mix-segment").count()==3
+                    assert page.locator("#targetGoalBar .mix-segment").count()==3
+                    assert "10.7" in page.locator("#targetCurrentRatio").inner_text()
+                    assert "54.6" in page.locator("#targetCurrentRatio").inner_text()
+                    page.locator('[data-focus="service"]').click()
+                    assert "生产性服务" in page.locator("#targetFocusPanel").inner_text()
+                    page.locator('[data-focus="agriculture"]').click()
+                    assert "加工" in page.locator("#targetFocusPanel").inner_text()
+                    page.locator('[data-focus="balanced"]').click()
+                    assert page.locator('[data-focus="balanced"]').get_attribute("aria-pressed")=="true"
                     assert page.locator("#mainNav .nav-link").count()==len(PAGES)
                     for name in PAGES:
                         go(page,name)

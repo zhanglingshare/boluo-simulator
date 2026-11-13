@@ -12,7 +12,7 @@ const labels={primary:"第一产业",secondary:"第二产业",tertiary:"第三�
 const colors=["#67d6b3","#4c91db","#eba85c"];
 const tableLabels={macro:"宏观经济",enterprises:"产业主体",relations:"企业关系",surveys:"社会调查",projects:"重点项目",workforce:"劳动者与就业"};
 const GROUPS=[
- ["研究入口",[["mission","◈","研究总览"],["data","▤","数据中心"]]],
+ ["研究入口",[["mission","◈","目标与现实"],["data","▤","数据中心"]]],
  ["发展基本盘",[["macro","◧","三次产业总览"],["industries","▦","行业结构"],["towns","⌖","镇街比较"],["network","◎","产业关系网络"],["projects","◇","项目接续"],["labor","♧","就业与人才"]]],
  ["研究与模型",[["survey","▧","社会调查"],["models","⌘","双轨模型实验室"]]],
  ["决策推演",[["wind","◉","2032风洞"],["stress","↯","压力与敏感性"],["blindspots","⚑","可能忽略什么"],["strategy","➤","行动方案"]]],
@@ -22,6 +22,7 @@ const STAGES=[["数据体检","统一数据规范及跨表关联","data"],["经�
 const state={data:C.demo(),scenario:"balanced",knobs:{},sim:null,quality:null,model:null,net:null,external:null,
     compare:{A:null,B:null},active:"mission",town:C.TOWNS[0],industry:"all",networkFilter:"all",
     laborFilter:"all",projectDelay:0,staging:null,mapping:null,selectedEnterprise:null,stress:null,version:1};
+state.missionFocus="balanced";
 let toastTimer;
 function toast(text){const e=$("#toast");e.textContent=String(text);e.hidden=false;clearTimeout(toastTimer);toastTimer=setTimeout(()=>e.hidden=true,5500);}
 function status(text){$("#readiness").textContent=text;}
@@ -106,7 +107,7 @@ function navigate(page){
  $$(".page-section").forEach(x=>x.hidden=x.dataset.page!==page);
  $$(".nav-link").forEach(x=>x.classList.toggle("selected",x.dataset.view===page));
  $("#sectionPath").textContent=GROUPS.flatMap(g=>g[1]).find(x=>x[0]===page)?.[2]||"研究总览";
- $("#sectionCode").textContent=String(GROUPS.flatMap(g=>g[1]).findIndex(x=>x[0]===page)+1).padStart(2,"0")+" / RESEARCH STUDIO";
+ $("#sectionCode").textContent=page==="mission"?"01 / TARGET & REALITY":String(GROUPS.flatMap(g=>g[1]).findIndex(x=>x[0]===page)+1).padStart(2,"0")+" / RESEARCH STUDIO";
  $("#sidebar").classList.remove("open");$("#mobileBackdrop").hidden=true;
  renderCurrent();window.scrollTo({top:0,behavior:"instant"});
 }
@@ -132,21 +133,49 @@ function renderCurrent(){
  }catch(err){status("研究模块无法运行");toast("当前模块："+err.message);}
 }
 function renderMission(){
- const sim=ensureScenario(),q=state.quality;
+ const row=state.data.tables.macro.find(x=>Number(x.year)===2025);
+ const values=row?[Number(row.primary),Number(row.secondary),Number(row.tertiary)]:[];
+ const valid=values.length===3&&values.every(x=>Number.isFinite(x)&&x>=0)&&values.reduce((a,b)=>a+b,0)>0;
+ const total=valid?values.reduce((a,b)=>a+b,0):null;
+ const shares=valid?values.map(x=>x/total):[];
+ const sectors=[
+  {key:"primary",name:"第一产业",short:"一产",color:"#43b88f",target:10},
+  {key:"secondary",name:"第二产业",short:"二产",color:"#579bdc",target:50},
+  {key:"tertiary",name:"第三产业",short:"三产",color:"#e2a45d",target:40}
+ ];
+ const fmt=(x,d=1)=>Number(x).toLocaleString("zh-CN",{minimumFractionDigits:d,maximumFractionDigits:d});
+ let source="2025公开参考值 · 待复核";
+ if(state.data.evidence?.macro==="IMPORTED_UNVERIFIED")source="客户导入数据 · 待核验";
+ else if(state.data.meta.mode!=="DEMO"&&state.data.evidence?.macro)source="当前数据版本 · 口径需核验";
  $("#missionStats").innerHTML=[
-  stat("2025地区增加值基准",num(sim.baseline.gdp)+"亿","2025公开参考值 · 待复核"),
-  stat("2032条件总量P50",num(sim.totals.p50)+"亿",sim.scenario.name+" · 非预测",true),
-  stat("数据模块",Object.keys(state.data.tables).length+" / 6","已建立统一接口"),
-  stat("关联企业主体",num(q.companies.n),"Demo合成或已导入未核实数据")
+  stat("2025地区生产总值",valid?fmt(total,2)+"亿元":"待补充",source),
+  stat("第一产业增加值",valid?fmt(values[0],2)+"亿元":"待补充",valid?fmt(shares[0]*100,1)+"% · 当前占比":"当前占比待计算"),
+  stat("第二产业增加值",valid?fmt(values[1],2)+"亿元":"待补充",valid?fmt(shares[1]*100,1)+"% · 当前占比":"当前占比待计算"),
+  stat("第三产业增加值",valid?fmt(values[2],2)+"亿元":"待补充",valid?fmt(shares[2]*100,1)+"% · 当前占比":"当前占比待计算")
  ].join("");
- $("#missionPipeline").innerHTML=STAGES.map(([name,desc,page],i)=>
-  '<button type="button" data-go="'+page+'" class="pipeline-step"><span class="pipeline-index">'+(i+1)+'</span><span><strong>'+name+'</strong><span>'+desc+'</span></span><span class="pipeline-state">'+(i<2?"已可使用":i<5?"可运行":"可导出")+' ↗</span></button>').join("");
- $("#missionQuality").innerHTML='<span class="big">'+q.score+'</span><span>字段覆盖评分 / 100<br>不代表真实数据质量或统计代表性</span>';
- $("#missionQualityBadge").textContent=q.status;
- $("#missionGaps").innerHTML=(q.flags.length?q.flags.slice(0,3):[{level:"warning",scope:"DEMO",message:"合成数据仅用于功能验证"}]).map(x=>listItem(x.scope,x.message)).join("");
- const shortcuts=[["三次产业的2032情景","wind","直接调整增长与协同条件","条件风洞"],["工业和服务业如何关联","network","从主体和交易关系看潜在断点","产业网络"],["为什么企业选择本地或县外服务","models","让调查与专业软件互相验证","双轨研究"],["项目延迟与就业有什么影响","stress","把不利条件叠加做压力测试","红队实验"],["当前最值得验证什么","blindspots","发现模型和数据可能忽略的事情","盲点与行动"],["导入一份真实研究数据包","data","字段映射、质量检查与换数据","数据接入"]];
- $("#researchShortcuts").innerHTML=shortcuts.map(([title,page,desc,label],i)=>
-  '<button class="shortcut" type="button" data-go="'+page+'"><span class="number">0'+(i+1)+' · '+label+'</span><strong>'+title+' →</strong><small>'+desc+'</small></button>').join("");
+ $("#targetCurrentTotal").textContent=valid?fmt(total,2):"待补充";
+ $("#targetCurrentRatio").textContent=valid?shares.map(x=>fmt(x*100,1)).join(" : "):"当前版本缺少完整2025基准";
+ $("#targetEvidenceTag").textContent=source;
+ $("#targetCurrentBar").innerHTML=valid?sectors.map((s,i)=>'<i class="mix-segment '+s.key+'" style="width:'+Math.max(0,shares[i]*100).toFixed(3)+'%;background:'+s.color+'"></i>').join(""):'<span class="target-empty-bar">当前版本没有完整的2025三次产业基准</span>';
+ $("#targetGoalBar").innerHTML=sectors.map(s=>'<i class="mix-segment '+s.key+'" style="width:'+s.target+'%;background:'+s.color+'"></i>').join("");
+ $("#targetCurrentLegend").innerHTML=sectors.map((s,i)=>'<div class="target-legend-item"><i style="background:'+s.color+'"></i><div><b>'+s.short+'</b><small>'+(valid?fmt(values[i],2)+'亿元 · '+fmt(shares[i]*100,1)+'%':'待补充')+'</small></div></div>').join("");
+ $("#targetGoalLegend").innerHTML=sectors.map(s=>'<div class="target-legend-item"><i style="background:'+s.color+'"></i><div><b>'+s.short+'</b><small>'+s.target.toFixed(1)+'% · 目标</small></div></div>').join("");
+ $("#targetDeltas").innerHTML=valid?sectors.map((s,i)=>{
+  const delta=s.target-shares[i]*100,sign=delta>0?"+":"";
+  return '<article class="target-delta-card"><small>'+s.name+'占比</small><strong>'+fmt(shares[i]*100,1)+'% <span>→</span> '+s.target.toFixed(1)+'%</strong><b class="'+(delta>=0?"up":"down")+'">'+sign+fmt(delta,1)+'个百分点</b></article>';
+ }).join(""):'<article class="target-delta-card">完整2025基准数据导入后，系统将自动计算结构差距。</article>';
+ renderMissionFocus();
+}
+function renderMissionFocus(){
+ const focusMap={
+  balanced:{tag:"整体视角",title:"三个产业一起增长，结构才会变。",description:"先看三次产业各自的增加值、增速和增长贡献，再检查第三产业增长是否足以推动结构向1:5:4靠近。这里比较的是发展条件，不预设最终结果。",look:"三次产业增加值、增速与就业变化",check:"现价/不变价口径、分行业增加值、就业",page:"macro",action:"查看三次产业基本盘"},
+  industrial:{tag:"工业观察",title:"工业继续做强，增长从哪里接续？",description:"第二产业目标占比低于2025年，但不意味着工业减量。要把工业绝对增加值、细分行业、存量企业扩能和新项目实际投产放在一起看。",look:"分行业增加值、存量扩能、项目投产",check:"工业增加值口径、项目真实进度、企业经营表现",page:"industries",action:"查看行业结构"},
+  service:{tag:"服务业观察",title:"服务业怎样承接工业和居民的真实需求？",description:"第三产业占比需要提高，不能只看消费热度。更值得核实的是制造企业需要什么研发、检测、物流、软件等服务，本地供给能否承接。",look:"生产性服务供给、企业采购与县外采购",check:"服务业分行业增加值、采购流向、服务商能力",page:"network",action:"查看产业关系"},
+  agriculture:{tag:"农业观察",title:"农业继续增长，价值链怎样向后延伸？",description:"第一产业目标占比略低于2025年，不意味着农业收缩。要看加工、冷链、品牌、渠道和农业服务，能否让农业增加值与经营收益共同提升。",look:"农产品加工、冷链流通、品牌渠道",check:"农业分行业增加值、加工转化、销售与回款",page:"industries",action:"查看行业结构"}
+ };
+ const key=focusMap[state.missionFocus]?state.missionFocus:"balanced",item=focusMap[key];
+ $$("[data-focus]").forEach(btn=>{const on=btn.dataset.focus===key;btn.classList.toggle("selected",on);btn.setAttribute("aria-pressed",on?"true":"false");});
+ $("#targetFocusPanel").innerHTML='<div class="target-focus-copy"><span class="focus-tag">'+esc(item.tag)+'</span><h3>'+esc(item.title)+'</h3><p>'+esc(item.description)+'</p></div><div class="target-focus-metrics"><div><small>重点观察</small><strong>'+esc(item.look)+'</strong></div><div><small>优先核实</small><strong>'+esc(item.check)+'</strong></div></div><button type="button" class="button primary" data-go="'+item.page+'">'+esc(item.action)+' →</button>';
 }
 function renderData(){
  const q=state.quality,count=q.counts;
@@ -591,6 +620,7 @@ function bind(){
  $("#mainNav").addEventListener("click",e=>{const b=e.target.closest("[data-view]");if(b)navigate(b.dataset.view);});
  $(".work-area").addEventListener("click",e=>{
   if(buttonGo(e))return;
+  const focus=e.target.closest("[data-focus]");if(focus){state.missionFocus=focus.dataset.focus;renderMissionFocus();return;}
   const company=e.target.closest("[data-company]");if(company){state.selectedEnterprise=company.dataset.company;renderIndustry();return;}
   const town=e.target.closest("[data-town]");if(town){state.town=town.dataset.town;renderTowns();return;}
   const node=e.target.closest("[data-shocknode]");if(node){$("#shockNode").value=node.dataset.shocknode;runShock();return;}

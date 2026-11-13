@@ -24,12 +24,82 @@
   <div class="context-bar"><div><span class="eyebrow" id="sectionCode">01 / OVERVIEW</span><div id="sectionPath" class="context-title">研究总览</div></div><div class="context-side"><span id="dataVersion">BOLUO_2032_DEMO_V2</span><span id="readiness" class="readiness">研究环境就绪</span></div></div>
   <div class="global-alert"><span class="alert-dot"></span><strong>研究使用边界</strong><span id="globalCaveat">默认含合成企业、关系、问卷与情景假设；不是博罗真实调查或政策效果预测。</span></div>
 
-  <section data-page="mission" class="page-section">
-    <div class="hero-spotlight"><div><div class="eyebrow glow">BOLUO RESEARCH LAB · INTEGRATED STUDY</div><h1>不是研究一张报表。<br><em>是检验一条发展路径。</em></h1><p>农业、第二产业、第三产业一起增长，2032年如何接近更合理的产业结构？把真实数据、企业行为、产业关系和专业模型放进同一个实验。</p><div class="hero-buttons"><button type="button" class="button primary" data-go="wind">开始2032推演 →</button><button type="button" class="button translucent" data-go="data">导入一套真实数据</button></div></div><div class="hero-target"><small>2032 STRUCTURE / 研究参考</small><div><b>1</b><span>:</span><b>5</b><span>:</span><b>4</b></div><p>不是必须实现的结论。质量、就业、资源和风险一并比较。</p><div class="target-bar"><i></i><i></i><i></i></div></div></div>
-    <div class="stats-row" id="missionStats"></div>
-    <div class="split-grid wide-first"><article class="panel-card"><div class="panel-head"><div><span class="eyebrow">STUDY PIPELINE</span><h3>这次研究走到哪一步？</h3></div><span class="minor-tag">可执行的研究链</span></div><div id="missionPipeline" class="pipeline"></div></article>
-    <article class="panel-card"><div class="panel-head"><h3>这套数据是否够用？</h3><span class="minor-tag" id="missionQualityBadge">数据体检</span></div><div class="quality-score" id="missionQuality"></div><div class="compact-list" id="missionGaps"></div><button type="button" class="text-button" data-go="data">打开数据体检和字段映射 →</button></article></div>
-    <div class="section-label"><span>直接研究</span><span>从一个有用的问题出发</span></div><div class="research-shortcuts" id="researchShortcuts"></div>
+  <section data-page="mission" class="page-section target-page">
+    <div class="target-hero">
+      <div class="target-hero-copy">
+        <div class="target-kicker">BOLUO 2032 · TARGET & REALITY</div>
+        <h1>三次产业都要增长，<br><em>结构要更合理。</em></h1>
+        <p>当前研究参考方向：到2032年前后，三次产业结构向 <strong>1 : 5 : 4</strong> 靠近。真正要回答的，不是让哪个产业变小，而是三个产业怎样一起发展。</p>
+        <div class="target-hero-flags"><span>三个产业共同增长</span><span>结构目标，不是预测结论</span><span>先体验，不必先上传数据</span></div>
+      </div>
+      <div class="target-hero-visual">
+        <div class="target-hero-orbit"></div>
+        <div class="target-hero-visual-top"><span>2032 / 目标结构</span><span class="target-live-dot">研究参考</span></div>
+        <div class="target-hero-ratio"><b>1</b><i>:</i><b>5</b><i>:</i><b>4</b></div>
+        <div class="target-hero-bar" aria-label="第一产业10%，第二产业50%，第三产业40%">
+          <i class="primary"></i><i class="secondary"></i><i class="tertiary"></i>
+        </div>
+        <div class="target-hero-labels"><span>一产 10%</span><span>二产 50%</span><span>三产 40%</span></div>
+        <div class="target-hero-foot"><span>关键不是做减法</span><strong>而是让增长来源发生变化</strong></div>
+      </div>
+    </div>
+
+    <div class="target-kpi-row" id="missionStats"></div>
+
+    <section class="target-section">
+      <div class="target-section-heading">
+        <div><span class="target-overline">01 / REALITY VS TARGET</span><h2>现在的结构，离目标差在哪里？</h2></div>
+        <span class="target-section-note">结构比例对照 · 不是绝对规模对照</span>
+      </div>
+      <div class="target-duel-grid">
+        <article class="target-data-card target-current-card">
+          <div class="target-card-head"><div><span class="target-overline">2025 · CURRENT BASELINE</span><h3>现在的博罗</h3></div><span id="targetEvidenceTag" class="target-source-chip">公开参考值 · 待复核</span></div>
+          <div class="target-total-line"><strong id="targetCurrentTotal">1,005.45</strong><span>亿元 · 地区生产总值</span></div>
+          <div class="target-ratio-label" id="targetCurrentRatio">10.7 : 54.6 : 34.7</div>
+          <div class="target-stack" id="targetCurrentBar" role="img" aria-label="2025年三次产业结构"></div>
+          <div class="target-legend" id="targetCurrentLegend"></div>
+        </article>
+        <div class="target-shift-mark"><span>结构<br>调整</span><b>→</b><strong>2032</strong></div>
+        <article class="target-data-card target-goal-card">
+          <div class="target-card-head"><div><span class="target-overline">2032 · TARGET REFERENCE</span><h3>希望走向的结构</h3></div><span class="target-source-chip target-goal-chip">目标参考</span></div>
+          <div class="target-goal-ratio">1 <i>:</i> 5 <i>:</i> 4</div>
+          <div class="target-goal-caption">10% : 50% : 40%</div>
+          <div class="target-stack" id="targetGoalBar" role="img" aria-label="2032年目标结构"></div>
+          <div class="target-legend" id="targetGoalLegend"></div>
+          <div class="target-no-total"><span>尚未在本页设定2032年GDP总量</span><b>先看结构，不虚构总量</b></div>
+        </article>
+      </div>
+      <div class="target-delta-row" id="targetDeltas"></div>
+    </section>
+
+    <section class="target-reframe">
+      <div class="target-reframe-top"><span>先拆掉一个容易产生的误解</span><span>占比变化 ≠ 规模变化</span></div>
+      <div class="target-reframe-main">
+        <div class="target-reframe-number"><small>第二产业占比</small><strong>54.6% <i>→</i> 50%</strong><span>下降约4.6个百分点</span></div>
+        <div class="target-reframe-divider"></div>
+        <div class="target-reframe-copy"><h3>工业不必缩小。</h3><p>第二产业占比下降，不等于第二产业增加值下降。只要工业增加值继续增长，同时全县GDP增长得更快，工业占比就可能下降。</p></div>
+      </div>
+      <div class="target-growth-rule"><span><i class="primary"></i>农业要增长</span><span><i class="secondary"></i>工业要增长</span><span><i class="tertiary"></i>服务业要增长</span></div>
+    </section>
+
+    <section class="target-focus-section">
+      <div class="target-section-heading">
+        <div><span class="target-overline">02 / CHOOSE A LENS</span><h2>你想先从哪条线看？</h2><p>这不是三选一的发展取舍，而是选择一个观察入口。三个产业都要发展。</p></div>
+      </div>
+      <div class="target-focus-options">
+        <button type="button" data-focus="balanced" class="selected" aria-pressed="true"><span>01</span><strong>三产协同</strong><small>先看整体结构</small></button>
+        <button type="button" data-focus="industrial" aria-pressed="false"><span>02</span><strong>工业继续做强</strong><small>增长从哪里接续</small></button>
+        <button type="button" data-focus="service" aria-pressed="false"><span>03</span><strong>生产性服务补链</strong><small>工业需要什么服务</small></button>
+        <button type="button" data-focus="agriculture" aria-pressed="false"><span>04</span><strong>农业延链增值</strong><small>怎样提高附加值</small></button>
+      </div>
+      <div id="targetFocusPanel" class="target-focus-panel" aria-live="polite"></div>
+    </section>
+
+    <div class="target-next-step">
+      <div><span class="target-overline">NEXT</span><strong>先看清三次产业的基本盘，再进入具体行业。</strong><small>不需要先准备数据。内置Demo可以直接体验，真实数据以后按需替换。</small></div>
+      <div class="target-next-actions"><button type="button" class="button primary" data-go="macro">进入三次产业基本盘 →</button><button type="button" class="button outline" data-go="data">查看数据中心</button></div>
+    </div>
+    <p class="target-footnote">数据边界：2025年三次产业增加值采用当前Demo内置的公开参考值，正式研究前仍需核对原始来源及统计口径；2020—2024年历史序列、企业主体、产业关系、问卷、项目和就业样本含合成数据。2032年1:5:4为目标参考，不代表已经实现的结果；本页不推算未确认的2032年GDP总量。</p>
   </section>
 
   <section data-page="data" class="page-section" hidden>
