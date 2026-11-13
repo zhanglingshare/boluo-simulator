@@ -18,7 +18,7 @@ from playwright.sync_api import sync_playwright, expect
 ROOT=Path(__file__).resolve().parents[2]
 ART=ROOT/"lab-2032"/"artifacts"
 ART.mkdir(exist_ok=True,parents=True)
-PAGES=["mission","data","macro","industries","towns","network","projects","labor",
+PAGES=["mission","industry","data","macro","industries","towns","network","projects","labor",
        "survey","models","wind","stress","blindspots","strategy","report"]
 def go(page,key):
     page.evaluate("(pageName)=>{window.location.hash='#'+pageName}",key)
@@ -60,6 +60,28 @@ def main():
                     page.locator('[data-focus="balanced"]').click()
                     assert page.locator('[data-focus="balanced"]').get_attribute("aria-pressed")=="true"
                     assert page.locator("#mainNav .nav-link").count()==len(PAGES)
+                    go(page,"industry")
+                    assert "投资却踩下刹车" in page.locator(".in-hero").inner_text()
+                    assert "+8.7" in page.locator(".in-hero").inner_text()
+                    assert page.locator("#in-industry-chart svg [data-industrial-key]").count()==5
+                    assert page.locator("#in-region-chart svg [data-region-key]").count()==4
+                    page.locator('[data-industrial-year="2024"]').click()
+                    assert "+10.5%" in page.locator("#in-year-comparison").inner_text()
+                    assert "工业与投资都在增长" in page.locator("#in-year-headline").inner_text()
+                    page.locator('[data-industrial-year="2025"]').click()
+                    assert "-12.7%" in page.locator("#in-year-comparison").inner_text()
+                    page.locator('[data-industrial-chart="rank"]').click()
+                    assert page.locator("#in-industry-chart .in-lolli").count()==5
+                    page.locator('#in-industry-chart [data-industrial-key="rubber"]').click()
+                    assert "-4.2%" in page.locator("#in-industry-detail").inner_text()
+                    page.locator('[data-industrial-chart="scatter"]').click()
+                    assert page.locator("#in-industry-chart svg [data-industrial-key]").count()==5
+                    page.locator('#in-size-tabs [data-size="medium"]').click()
+                    assert "+4.8%" in page.locator("#in-size-detail").inner_text()
+                    page.locator('#in-region-pills [data-region-key="sihui"]').click()
+                    assert "-1.2%" in page.locator("#in-region-detail").inner_text()
+                    assert page.locator("#in-capacity-grid .in-capacity-cell").count()==5
+                    assert page.locator("#in-source-entries a").count()>=5
                     for name in PAGES:
                         go(page,name)
                         assert page.locator('[data-page="'+name+'"]').is_visible()
@@ -190,6 +212,9 @@ def main():
                     dims=page.evaluate('({width:innerWidth,scroll:document.documentElement.scrollWidth})')
                     assert dims["scroll"]<=dims["width"]+2,dims
                     assert not errors,errors
+                    go(page,"industry")
+                    page.screenshot(path=str(ART/("industry-mobile.png" if mobile else "industry-desktop.png")),
+                      full_page=True,animations="disabled")
                     go(page,"mission")
                     page.screenshot(path=str(ART/("full-mobile.png" if mobile else "full-desktop.png")),
                       full_page=True,animations="disabled")

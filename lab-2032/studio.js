@@ -12,7 +12,7 @@ const labels={primary:"第一产业",secondary:"第二产业",tertiary:"第三�
 const colors=["#67d6b3","#4c91db","#eba85c"];
 const tableLabels={macro:"宏观经济",enterprises:"产业主体",relations:"企业关系",surveys:"社会调查",projects:"重点项目",workforce:"劳动者与就业"};
 const GROUPS=[
- ["研究入口",[["mission","◈","目标与现实"],["data","▤","数据中心"]]],
+ ["研究入口",[["mission","◈","目标与现实"],["industry","▧","工业发展"],["data","▤","数据中心"]]],
  ["发展基本盘",[["macro","◧","三次产业总览"],["industries","▦","行业结构"],["towns","⌖","镇街比较"],["network","◎","产业关系网络"],["projects","◇","项目接续"],["labor","♧","就业与人才"]]],
  ["研究与模型",[["survey","▧","社会调查"],["models","⌘","双轨模型实验室"]]],
  ["决策推演",[["wind","◉","2032风洞"],["stress","↯","压力与敏感性"],["blindspots","⚑","可能忽略什么"],["strategy","➤","行动方案"]]],
@@ -115,6 +115,7 @@ function renderCurrent(){
  try{
   switch(state.active){
    case"mission":return renderMission();
+   case"industry":return window.BoluoIndustryPage.render(state);
    case"data":return renderData();
    case"macro":return renderMacro();
    case"industries":return renderIndustry();
@@ -617,6 +618,7 @@ function actionToWind(id){
  state.scenario=plan.scenario;state.knobs={...plan.knobs};state.sim=null;navigate("wind");toast("已将行动方向变为可调节的情景假设，尚不是现实政策效果。");
 }
 function bind(){
+ window.BoluoIndustryPage.bind();
  $("#mainNav").addEventListener("click",e=>{const b=e.target.closest("[data-view]");if(b)navigate(b.dataset.view);});
  $(".work-area").addEventListener("click",e=>{
   if(buttonGo(e))return;
