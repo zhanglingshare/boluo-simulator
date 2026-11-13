@@ -8,7 +8,8 @@
 <link rel="stylesheet" href="industry-2025.css">
 <link rel="stylesheet" href="base-structure.css">
 <link rel="stylesheet" href="relations-experience.css">
-<script defer src="core.js"></script><script defer src="engine.js"></script><script defer src="industry-2025.js"></script><script defer src="base-structure.js"></script><script defer src="relations-experience.js"></script><script defer src="studio.js"></script>
+<link rel="stylesheet" href="service-bridge.css">
+<script defer src="core.js"></script><script defer src="engine.js"></script><script defer src="industry-2025.js"></script><script defer src="base-structure.js"></script><script defer src="relations-experience.js"></script><script defer src="service-bridge.js"></script><script defer src="studio.js"></script>
 </head><body>
 <div class="app-shell">
 <header class="masthead">
@@ -435,6 +436,103 @@
     <details class="rl-method-note"><summary>这张网是怎样生成的？哪些结论不能得出？</summary>
       <p>默认830个主体及关系为可复现合成Demo，不代表博罗实际企业与交易。产业视图由当前关系数据按细分行业汇总产生；主体视图只显示局部连接，避免几百个点同时出现。点击主体会从已有关系表提取实际Demo邻接关系，断点实验调用现有传播引擎。</p>
       <p>上传新的关系和主体表后重新计算。客户提供的数据始终标注为待核验；若仅部分表被替换，仍保留合成数据标识。连线权重单位来自当前数据契约（百万元），不能直接换算GDP或经济损失；网络中心性也不能证明因果。公开数据目前不支持声称任何具体博罗企业之间存在这里展示的采购关系。</p>
+    </details>
+  </section>
+
+  <section data-page="service" class="page-section svc-page" hidden>
+    <header class="svc-hero">
+      <div class="svc-hero-grid"></div>
+      <div class="svc-hero-text">
+        <div class="svc-overline">05 / PRODUCTIVE SERVICES · WHERE VALUE IS CAPTURED</div>
+        <h1>工厂越忙，<br><em>服务的机会留在了哪里？</em></h1>
+        <p>第三产业占比提高，不只是多开商店、多来游客。工业研发、检测、物流、软件与农业流通，能否由本地服务主体承接？先看真实信号，再用可替换的Demo关系试一次。</p>
+        <div class="svc-hero-tags"><span>公开统计做信号</span><span>客户关系作验证</span><span>情景实验不等于预测</span></div>
+      </div>
+      <div class="svc-hero-right">
+        <div class="svc-hero-target"><small>2025第三产业占比</small><strong>34.7<span>%</span></strong><div class="svc-target-track"><i></i><b></b></div><div><span>2025实际</span><span>2032结构参考：40%</span></div></div>
+        <div class="svc-hero-insight"><span>真正还不知道的答案</span><strong>本地服务承接率：<em>待核实</em></strong><small>公开GDP无法直接推出县内采购或服务本地留存比例。</small></div>
+      </div>
+    </header>
+
+    <div class="svc-section-title"><span>01 / SIGNALS</span><h2>服务业只增长1.2%，里面却有增长7.7%的行业。</h2><p>都是2026年前三季度的增加值实际增速，点击查看不同的统计对象。</p></div>
+    <article class="svc-card svc-signal-card">
+      <div class="svc-signal-head"><div><b>增长并不同步</b><small>按不变价的增加值增速 · 2026年1—9月</small></div><span class="svc-proof">公开统计信号</span></div>
+      <div id="svc-signal-bars" class="svc-signal-bars" role="group" aria-label="2026年前三季度服务业相关行业增长比较"></div>
+      <div id="svc-signal-explain" class="svc-signal-explain" aria-live="polite"></div>
+      <div class="svc-reality-foot">这些增长率属于不同统计层级。行业增加值已包含在相应产业统计中，不能把增速相加，也不能据此证明县内生产性服务的采购规模。</div>
+    </article>
+
+    <div class="svc-section-title"><span>02 / WHO NEEDS WHOM</span><h2>先找连接，再找没看见的需求。</h2><p>选择工业或农业，从现有样本中计算哪些细分产业与服务主体有关系记录。点击格子，看到对应的证据与缺口。</p></div>
+    <div class="svc-studio">
+      <article class="svc-card svc-map-card">
+        <div class="svc-map-toolbar">
+          <div class="svc-switch" id="svc-sector-switch" role="group" aria-label="选择服务需求来源">
+            <button type="button" class="active" aria-pressed="true" data-svc-origin="secondary">工业 → 服务</button>
+            <button type="button" aria-pressed="false" data-svc-origin="primary">农业 → 服务</button>
+          </div>
+          <div class="svc-weight-toggle" id="svc-weight-filter" role="group" aria-label="按关系权重查看">
+            <button type="button" class="active" data-svc-weight="all" aria-pressed="true">全部</button>
+            <button type="button" data-svc-weight="top25" aria-pressed="false">权重前25%</button>
+            <button type="button" data-svc-weight="top10" aria-pressed="false">权重前10%</button>
+          </div>
+          <span id="svc-sample-badge" class="svc-sample-badge">合成关系 · 不代表真实交易</span>
+        </div>
+        <div class="svc-matrix-legend"><span><i class="svc-legend-dot dense"></i>样本关系较多</span><span><i class="svc-legend-dot sparse"></i>样本关系较少</span><span><i class="svc-legend-dot blank"></i>样本未见关系</span></div>
+        <div class="svc-matrix-scroll"><div id="svc-matrix" class="svc-matrix" role="grid" aria-label="产业与服务关联样本矩阵"></div></div>
+        <div class="svc-matrix-hint" id="svc-matrix-hint">横轴：服务主体细分行业。纵轴：需求方细分行业。格子颜色来自当前样本的有效关系条数，不代表实际供应链完整性。</div>
+      </article>
+      <aside class="svc-detail-card" id="svc-pair-detail" aria-live="polite"></aside>
+    </div>
+    <div id="svc-sample-strip" class="svc-sample-strip" aria-label="选定范围的演示数据摘要"></div>
+
+    <div class="svc-section-title"><span>03 / CHANGE ONE CONDITION</span><h2>需求多了，服务跟得上吗？</h2><p>拖动两根滑杆，让同一批样本关系在假设条件下运行。结果不是预测，也不会直接改变真实GDP。</p></div>
+    <section class="svc-sim">
+      <div class="svc-sim-panel">
+        <div class="svc-sim-heading"><span>情景调节器</span><b id="svc-sim-origin">工业服务关系 · 合成Demo</b></div>
+        <div class="svc-control"><label for="svc-demand"><span>假设服务需求增加</span><strong id="svc-demand-value">+20%</strong></label><input type="range" id="svc-demand" min="0" max="60" step="5" value="20"/><div class="svc-range-label"><span>0%</span><span>60%</span></div></div>
+        <div class="svc-control"><label for="svc-response"><span>假设可承接量增加</span><strong id="svc-response-value">+10%</strong></label><input type="range" id="svc-response" min="0" max="60" step="5" value="10"/><div class="svc-range-label"><span>0%</span><span>60%</span></div></div>
+        <div class="svc-sim-actions"><button type="button" id="svc-sim-run">运行情景对照 →</button><button type="button" id="svc-sim-reset">恢复默认</button></div>
+        <div class="svc-sim-caveat">规则：两种假设都以当前有效关系权重为基线。这里的“可承接量”只是人为设定的对照基准，并非核验过的企业产能；差额不能理解为现实中的服务业缺口。</div>
+      </div>
+      <div id="svc-sim-result" class="svc-sim-result" aria-live="polite">
+        <div class="svc-sim-welcome">调整条件，然后运行。<small>可以观察需求增长与假设承接增长的差距。</small></div>
+      </div>
+    </section>
+
+    <div class="svc-section-title"><span>04 / FROM DEMO TO REAL WORLD</span><h2>让陈局只指出不对的地方，不必先交整套数据。</h2><p>针对当前选中的产业与服务关系，先记录一条反馈。只有证据完成核验后，才能升级数据等级。</p></div>
+    <section class="svc-feedback">
+      <div class="svc-feedback-main">
+        <span>当前待核实关系</span>
+        <h3 id="svc-feedback-topic">选择上面的一个格子</h3>
+        <div class="svc-feedback-choices" id="svc-feedback-choices" role="group" aria-label="当前关系反馈">
+          <button type="button" data-svc-feedback="seems-right">基本符合我的了解</button>
+          <button type="button" data-svc-feedback="may-differ">可能与实际差异很大</button>
+          <button type="button" data-svc-feedback="scope-issue">统计范围或方向可能不同</button>
+          <button type="button" data-svc-feedback="unknown">我暂时无法判断</button>
+        </div>
+        <div class="svc-feedback-actions"><button type="button" id="svc-feedback-save">记入待核实清单</button><button type="button" id="svc-feedback-export" disabled>导出反馈JSON</button><span id="svc-feedback-count">0 条本地反馈</span></div>
+        <p id="svc-feedback-status" aria-live="polite">仅暂存在本次浏览器会话，刷新后消失，不上传服务器，也不会修改A级数据。</p>
+      </div>
+      <aside class="svc-feedback-help">
+        <strong>客户只需三步</strong>
+        <div><b>1</b><span>看看Demo怎么说</span></div>
+        <div><b>2</b><span>指出不符或口径问题</span></div>
+        <div><b>3</b><span>愿意时再用真实数据校准</span></div>
+        <p>这里保存的是反馈线索，不是已核实的企业交易信息。没有文件和授权，就保持待核验。</p>
+      </aside>
+    </section>
+
+    <div class="svc-next">
+      <div><span>THE NEXT QUESTION</span><strong>一条关系看不见，可能是数据没采到，而不是本地没有这项服务。</strong><p>把需要核对的服务采购、供给能力和跨县区交易交给有数据的人。想继续推演，就进入已有的研究工作区。</p></div>
+      <div><button type="button" class="button primary" data-go="data">导入真实数据 →</button><button type="button" class="button outline" data-go="wind">进入2032风洞</button></div>
+    </div>
+    <details class="svc-sources"><summary>公开统计来源、演示假设与无法证明的事项</summary>
+      <ul>
+        <li><a href="https://www.fz0752.com/fontHtml/html/issue/000143025_1.html" target="_blank" rel="noopener noreferrer">博罗县统计局2026年前三季度运行情况（南方+转录）</a></li>
+        <li><a href="https://maptable.com/tjgb/2025/%E6%83%A0%E5%B7%9E%E5%B8%82/%E5%8D%9A%E7%BD%97%E5%8E%BF/report/hui-zhou-shi-2025-nian-bo-luo-guo-min-jing-ji-he-she-hui-fa-zhan-tong-ji-gong-bao-2" target="_blank" rel="noopener noreferrer">2025年博罗国民经济和社会发展统计公报（转载，待原件复核）</a></li>
+      </ul>
+      <p>2025第三产业占比34.7%，2032年40%只是研究结构参考，不能据此直接推算“尚缺多少亿元”。2026年前三季度第三产业增加值增长1.2%、交通运输仓储邮政业增长7.7%、租赁商务服务业增长5.5%，均为不变价增加值同比增速。规上服务业营业收入等经营指标并非增加值。</p>
+      <p>供需矩阵严格根据当前数据集已建立的主体ID与指定类型的有向关系生成。Demo中的830个主体、关系金额均为合成。图表只能说明演示样本覆盖，不能证明现实供需缺口、本地承接率、市场规模、政策因果效果。跨县区采购和未采集关系必须作为未知保留。客户数据导入后不自动升级证据等级，不会跨客户共享。</p>
     </details>
   </section>
 

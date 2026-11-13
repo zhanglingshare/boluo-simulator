@@ -1,4 +1,4 @@
-"""Executable 17-workspace Boluo 2032 public studio acceptance suite.
+"""Executable 18-workspace Boluo 2032 public studio acceptance suite.
 Tests actual computation, CSV/XLSX/JSON replacement, professional ZIP, report,
 desktop 1440 and Android-width 390, no JS page errors/overflow.
 """
@@ -18,7 +18,7 @@ from playwright.sync_api import sync_playwright, expect
 ROOT=Path(__file__).resolve().parents[2]
 ART=ROOT/"lab-2032"/"artifacts"
 ART.mkdir(exist_ok=True,parents=True)
-PAGES=["mission","industry","data","macro","relations","industries","towns","network","projects","labor",
+PAGES=["mission","industry","data","macro","relations","service","industries","towns","network","projects","labor",
        "survey","models","wind","stress","blindspots","strategy","report"]
 def go(page,key):
     page.evaluate("(pageName)=>{window.location.hash='#'+pageName}",key)
@@ -85,6 +85,75 @@ def main():
                     assert "制造业采购服务金额与来源" in page.locator("#base-gap-content").inner_text()
                     assert page.locator("#base-source-list a").count()==4
                     page.screenshot(path=str(ART/("base-mobile.png" if mobile else "base-desktop.png")),
+                      full_page=True,animations="disabled")
+                    go(page,"service")
+                    assert "服务的机会留在了哪里" in page.locator(".svc-hero").inner_text()
+                    assert "34.7" in page.locator(".svc-hero").inner_text()
+                    assert "待核实" in page.locator(".svc-hero-insight").inner_text()
+                    assert page.locator("#svc-signal-bars [data-svc-signal]").count()==5
+                    assert "+1.2%" in page.locator("#svc-signal-bars").inner_text()
+                    page.locator('#svc-signal-bars [data-svc-signal="transport"]').click()
+                    assert "+7.7%" in page.locator("#svc-signal-bars .active").inner_text()
+                    assert "县内工厂" in page.locator("#svc-signal-explain").inner_text()
+                    assert page.locator("#svc-matrix .svc-matrix-cell").count()>=20
+                    assert "合成Demo" in page.locator("#svc-sample-badge").inner_text()
+                    assert page.locator("#svc-sample-strip > div").count()==4
+                    assert "百万元" in page.locator("#svc-sample-strip").inner_text()
+                    all_edges=page.locator("#svc-sample-strip > div").first.locator("strong").inner_text()
+                    page.locator('[data-svc-weight="top10"]').click()
+                    top_edges=page.locator("#svc-sample-strip > div").first.locator("strong").inner_text()
+                    assert int(top_edges.replace(",","").replace("条",""))<int(all_edges.replace(",","").replace("条",""))
+                    assert "权重前10%" in page.locator("#svc-sim-origin").inner_text()
+                    assert "筛选造成" in page.locator("#svc-matrix-hint").inner_text()
+                    page.locator("#svc-sim-run").click()
+                    assert "WHAT-IF" in page.locator("#svc-sim-result").inner_text()
+                    page.locator('[data-svc-weight="all"]').click()
+                    assert "全部关系" in page.locator("#svc-sim-origin").inner_text()
+                    page.locator('#svc-matrix [data-svc-cell="0-0"]').click()
+                    assert "样本关系条数" in page.locator("#svc-pair-detail").inner_text()
+                    assert "→" in page.locator("#svc-feedback-topic").inner_text()
+                    page.locator("#svc-demand").fill("40")
+                    page.locator("#svc-response").fill("15")
+                    assert "+40%" in page.locator("#svc-demand-value").inner_text()
+                    page.locator("#svc-sim-run").click()
+                    assert "条件性" in page.locator("#svc-sim-result").inner_text()
+                    assert page.locator("#svc-sim-result .svc-sim-metrics > div").count()==3
+                    page.locator("#svc-response").fill("60")
+                    assert "可以覆盖需求" in page.locator("#svc-sim-result").inner_text()
+                    page.locator("#svc-sim-reset").click()
+                    assert "+20%" in page.locator("#svc-demand-value").inner_text()
+                    assert "+10%" in page.locator("#svc-response-value").inner_text()
+                    page.locator('[data-svc-feedback="may-differ"]').click()
+                    page.locator("#svc-feedback-save").click()
+                    assert "1 条本地反馈" in page.locator("#svc-feedback-count").inner_text()
+                    with page.expect_download() as review_info:
+                        page.locator("#svc-feedback-export").click()
+                    review_dl=review_info.value
+                    assert review_dl.suggested_filename=="boluo-service-review.json"
+                    page.locator('[data-svc-origin="primary"]').click()
+                    assert page.locator('[data-svc-origin="primary"]').get_attribute("aria-pressed")=="true"
+                    assert page.locator("#svc-matrix .svc-matrix-cell").count()>0
+                    assert "农业" in page.locator("#svc-sim-origin").inner_text()
+                    page.locator("#svc-sim-run").click()
+                    assert "WHAT-IF" in page.locator("#svc-sim-result").inner_text()
+                    page.locator('[data-svc-origin="secondary"]').click()
+                    assert "工业" in page.locator("#svc-sim-origin").inner_text()
+                    imported_probe=page.evaluate("""() => {
+                        const sample=BoluoCore.demo();
+                        sample.tables.relations=[{source:"I0001",target:"S0001",type:"professional_service",value:100}];
+                        sample.evidence.relations="IMPORTED_UNVERIFIED";
+                        BoluoServicePage.render({data:sample});
+                        return {
+                          label:document.querySelector("#svc-sample-badge").textContent,
+                          count:document.querySelector("#svc-sample-strip").textContent,
+                          grid:document.querySelectorAll("#svc-matrix .svc-matrix-cell").length
+                        };
+                    }""")
+                    assert "待核验" in imported_probe["label"],imported_probe
+                    assert "100.00" in imported_probe["count"],imported_probe
+                    assert imported_probe["grid"]>0,imported_probe
+                    page.evaluate("() => BoluoServicePage.render({data:BoluoCore.demo()})")
+                    page.screenshot(path=str(ART/("service-mobile.png" if mobile else "service-desktop.png")),
                       full_page=True,animations="disabled")
                     go(page,"relations")
                     assert "彼此牵动的一张网" in page.locator(".rl-hero").inner_text()
@@ -288,7 +357,7 @@ def main():
         server.terminate()
         try:server.wait(timeout=5)
         except subprocess.TimeoutExpired:server.kill()
-    print("PASS: full studio public, all 17 workspaces, scenario, SNA, projects, workforce, survey, models, ZIP, XLSX/CSV, report, desktop/mobile.")
+    print("PASS: full studio public, all 18 workspaces, scenario, SNA, projects, workforce, survey, models, ZIP, XLSX/CSV, report, desktop/mobile.")
 
 if __name__=="__main__":
     main()

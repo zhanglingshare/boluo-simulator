@@ -12,7 +12,7 @@ const labels={primary:"第一产业",secondary:"第二产业",tertiary:"第三�
 const colors=["#67d6b3","#4c91db","#eba85c"];
 const tableLabels={macro:"宏观经济",enterprises:"产业主体",relations:"企业关系",surveys:"社会调查",projects:"重点项目",workforce:"劳动者与就业"};
 const GROUPS=[
- ["研究入口",[["mission","◈","目标与现实"],["industry","▧","工业发展"],["macro","◧","产业底盘"],["relations","◎","产业关系"]]],
+ ["研究入口",[["mission","◈","目标与现实"],["industry","▧","工业发展"],["macro","◧","产业底盘"],["relations","◎","产业关系"],["service","▤","服务业补链"]]],
  ["发展基本盘",[["industries","▦","行业结构"],["towns","⌖","镇街比较"],["network","◉","完整网络研究"],["projects","◇","项目接续"],["labor","♧","就业与人才"]]],
  ["研究与模型",[["data","▤","数据中心"],["survey","▧","社会调查"],["models","⌘","双轨模型实验室"]]],
  ["决策推演",[["wind","◉","2032风洞"],["stress","↯","压力与敏感性"],["blindspots","⚑","可能忽略什么"],["strategy","➤","行动方案"]]],
@@ -119,6 +119,7 @@ function renderCurrent(){
    case"data":return renderData();
    case"macro":return renderMacro();
    case"relations":return window.BoluoRelationsPage.render(state);
+   case"service":return window.BoluoServicePage.render(state);
    case"industries":return renderIndustry();
    case"towns":return renderTowns();
    case"network":return renderNetwork();
@@ -623,6 +624,7 @@ function bind(){
  window.BoluoIndustryPage.bind();
  window.BoluoBasePage.bind();
  window.BoluoRelationsPage.bind();
+ window.BoluoServicePage.bind();
  $("#mainNav").addEventListener("click",e=>{const b=e.target.closest("[data-view]");if(b)navigate(b.dataset.view);});
  $(".work-area").addEventListener("click",e=>{
   if(buttonGo(e))return;
