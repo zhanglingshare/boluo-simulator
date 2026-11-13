@@ -100,8 +100,7 @@ function simulate(options){
   if(t>=p.channelPay&&t<p.channelPay+p.season)outstanding-=day;
   // Floating point correction near zero to avoid -0 on the SVG line.
   if(Math.abs(outstanding)<1e-9)outstanding=0;
-  peak=Math.max(peak,outstanding);
-  if(outstanding>=peak-1e-8&&outstanding>0&&peakDay===0)peakDay=t;
+  if(outstanding>peak+1e-8){peak=outstanding;peakDay=t;}
   if(outstanding>0)positiveDays++;
   centroid+=outstanding;
   path.push({day:t,amount:Math.max(0,outstanding)});
