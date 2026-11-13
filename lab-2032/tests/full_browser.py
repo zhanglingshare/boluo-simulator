@@ -1,4 +1,4 @@
-"""Executable 19-workspace Boluo 2032 public studio acceptance suite.
+"""Executable 20-workspace Boluo 2032 public studio acceptance suite.
 Tests actual computation, CSV/XLSX/JSON replacement, professional ZIP, report,
 desktop 1440 and Android-width 390, no JS page errors/overflow.
 """
@@ -18,7 +18,7 @@ from playwright.sync_api import sync_playwright, expect
 ROOT=Path(__file__).resolve().parents[2]
 ART=ROOT/"lab-2032"/"artifacts"
 ART.mkdir(exist_ok=True,parents=True)
-PAGES=["mission","industry","data","macro","relations","service","agri","industries","towns","network","projects","labor",
+PAGES=["mission","industry","data","macro","relations","service","agri","pipeline","industries","towns","network","projects","labor",
        "survey","models","wind","stress","blindspots","strategy","report"]
 def go(page,key):
     page.evaluate("(pageName)=>{window.location.hash='#'+pageName}",key)
@@ -154,6 +154,68 @@ def main():
                     assert imported_probe["grid"]>0,imported_probe
                     page.evaluate("() => BoluoServicePage.render({data:BoluoCore.demo()})")
                     page.screenshot(path=str(ART/("service-mobile.png" if mobile else "service-desktop.png")),
+                      full_page=True,animations="disabled")
+                    go(page,"pipeline")
+                    assert "签约很热闹" in page.locator(".pl-hero").inner_text()
+                    assert "171" in page.locator(".pl-hero").inner_text()
+                    assert "203亿元" in page.locator(".pl-hero").inner_text()
+                    assert "合成Demo" in page.locator("#pl-dataset-label").inner_text()
+                    assert page.locator("#pl-funnel [data-pl-stage]").count()==4
+                    assert "72" in page.locator("#pl-dataset-label").inner_text()
+                    assert page.locator("#pl-timeline [data-pl-year]").count()==10
+                    assert page.locator("#pl-timeline [data-pl-year='2032']").get_attribute("aria-pressed")=="true"
+                    assert page.locator("#pl-stress-summary > div").count()==4
+                    pipeline_initial=page.evaluate("""() => BoluoProjectPage.scenario()""")
+                    assert pipeline_initial["pending"].__len__()==54,pipeline_initial
+                    assert pipeline_initial["affectedCount"]>0,pipeline_initial
+                    assert pipeline_initial["crosses2032"]>0,pipeline_initial
+                    page.locator("#pl-delay").fill("0")
+                    zero_delay=page.evaluate("""() => BoluoProjectPage.scenario()""")
+                    assert zero_delay["crosses2032"]==0,zero_delay
+                    assert zero_delay["affectedCount"]==0,zero_delay
+                    page.locator("#pl-delay").fill("2")
+                    page.locator("#pl-affected").fill("100")
+                    pipeline_stressed=page.evaluate("""() => BoluoProjectPage.scenario()""")
+                    assert pipeline_stressed["affectedCount"]==54,pipeline_stressed
+                    assert pipeline_stressed["crosses2032"]>pipeline_initial["crosses2032"],pipeline_stressed
+                    assert pipeline_stressed["changedBefore2032"]<pipeline_stressed["baselineBefore2032"],pipeline_stressed
+                    page.locator('#pl-sector-switch [data-pl-sector="primary"]').click()
+                    assert "第一产业" in page.locator("#pl-timeline-scope").inner_text()
+                    agri_project=page.evaluate("""() => BoluoProjectPage.scenario()""")
+                    assert agri_project["raw"].__len__()==24,agri_project
+                    page.locator('#pl-sector-switch [data-pl-sector="all"]').click()
+                    page.locator('#pl-timeline [data-pl-year="2033"]').click()
+                    assert "2033年" in page.locator("#pl-list-title").inner_text()
+                    assert page.locator("#pl-project-items [data-pl-project]").count()>0
+                    page.locator("#pl-project-items [data-pl-project]").first.click()
+                    assert "项目ID" in page.locator("#pl-project-detail").inner_text()
+                    page.locator('#pl-funnel [data-pl-stage="commissioning"]').click()
+                    assert "投产爬坡" in page.locator("#pl-funnel-detail").inner_text()
+                    assert "良品率" in page.locator("#pl-validation-list").inner_text()
+                    with page.expect_download() as pipeline_download:
+                        page.locator("#pl-export-scenario").click()
+                    assert pipeline_download.value.suggested_filename=="boluo-project-arrival-scenario.json"
+                    with page.expect_download() as pipeline_evidence:
+                        page.locator("#pl-export-checklist").click()
+                    assert pipeline_evidence.value.suggested_filename=="boluo-project-evidence-todo.json"
+                    project_probe=page.evaluate("""() => {
+                        const data=BoluoCore.demo();
+                        data.tables.projects=[{id:"CUSTOM-01",name:"客户示例A",stage:"commissioning",
+                          sector:"secondary",town:"罗阳",commissionYear:2032,investment:150,jobs:100,confidence:.7}];
+                        data.evidence.projects="IMPORTED_UNVERIFIED";
+                        BoluoProjectPage.render({data});
+                        return {label:document.querySelector("#pl-dataset-label").textContent,
+                          count:document.querySelector("#pl-funnel").textContent,
+                          shifted:BoluoProjectPage.scenario().crosses2032};
+                    }""")
+                    assert "导入项目表" in project_probe["label"],project_probe
+                    assert "1宗" in project_probe["label"],project_probe
+                    assert project_probe["shifted"]==1,project_probe
+                    page.evaluate("() => BoluoProjectPage.render({data:BoluoCore.demo()})")
+                    page.locator("#pl-reset").click()
+                    assert "1年" in page.locator("#pl-delay-label").inner_text()
+                    assert "50%" in page.locator("#pl-affected-label").inner_text()
+                    page.screenshot(path=str(ART/("pipeline-mobile.png" if mobile else "pipeline-desktop.png")),
                       full_page=True,animations="disabled")
                     go(page,"agri")
                     assert "种得多" in page.locator(".ag-hero").inner_text()
@@ -419,7 +481,7 @@ def main():
         server.terminate()
         try:server.wait(timeout=5)
         except subprocess.TimeoutExpired:server.kill()
-    print("PASS: full studio public, all 19 workspaces, scenario, SNA, projects, workforce, survey, models, ZIP, XLSX/CSV, report, desktop/mobile.")
+    print("PASS: full studio public, all 20 workspaces, scenario, SNA, projects, workforce, survey, models, ZIP, XLSX/CSV, report, desktop/mobile.")
 
 if __name__=="__main__":
     main()
