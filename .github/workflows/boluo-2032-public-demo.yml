@@ -28,6 +28,7 @@ jobs:
           node --check lab-2032/base-structure.js
           node --check lab-2032/relations-experience.js
           node --check lab-2032/service-bridge.js
+          node --check lab-2032/agri-value.js
           node --check lab-2032/app.js
       - name: Install CJK fonts for screenshot readability
         run: |

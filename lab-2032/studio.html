@@ -9,7 +9,8 @@
 <link rel="stylesheet" href="base-structure.css">
 <link rel="stylesheet" href="relations-experience.css">
 <link rel="stylesheet" href="service-bridge.css">
-<script defer src="core.js"></script><script defer src="engine.js"></script><script defer src="industry-2025.js"></script><script defer src="base-structure.js"></script><script defer src="relations-experience.js"></script><script defer src="service-bridge.js"></script><script defer src="studio.js"></script>
+<link rel="stylesheet" href="agri-value.css">
+<script defer src="core.js"></script><script defer src="engine.js"></script><script defer src="industry-2025.js"></script><script defer src="base-structure.js"></script><script defer src="relations-experience.js"></script><script defer src="service-bridge.js"></script><script defer src="agri-value.js"></script><script defer src="studio.js"></script>
 </head><body>
 <div class="app-shell">
 <header class="masthead">
@@ -533,6 +534,98 @@
       </ul>
       <p>2025第三产业占比34.7%，2032年40%只是研究结构参考，不能据此直接推算“尚缺多少亿元”。2026年前三季度第三产业增加值增长1.2%、交通运输仓储邮政业增长7.7%、租赁商务服务业增长5.5%，均为不变价增加值同比增速。规上服务业营业收入等经营指标并非增加值。</p>
       <p>供需矩阵严格根据当前数据集已建立的主体ID与指定类型的有向关系生成。Demo中的830个主体、关系金额均为合成。图表只能说明演示样本覆盖，不能证明现实供需缺口、本地承接率、市场规模、政策因果效果。跨县区采购和未采集关系必须作为未知保留。客户数据导入后不自动升级证据等级，不会跨客户共享。</p>
+    </details>
+  </section>
+
+  <section data-page="agri" class="page-section ag-page" hidden>
+    <header class="ag-hero">
+      <div class="ag-hero-grain"></div>
+      <div class="ag-hero-content">
+        <span class="ag-kicker">06 / AGRICULTURAL VALUE CHAIN · BOLUO</span>
+        <h1>种得多，<br><em>钱就一定留下来吗？</em></h1>
+        <p>从地头走向加工、物流和回款。你不需要先提交一整套数据，就可以先拆开一条农业价值链，亲手试试哪一环可能堵住。</p>
+        <div class="ag-hero-tags"><span>真实统计作起点</span><span>案例机制需核验</span><span>逐日现金流实验</span></div>
+      </div>
+      <div class="ag-hero-kpis">
+        <div class="ag-hero-big"><small>2025 博罗第一产业增加值</small><strong>107.44<em>亿元</em></strong><span>同比实际增长 <b>+7.8%</b></span></div>
+        <div class="ag-hero-pulse"><small>2026年一季度农林牧渔业总产值增速</small><strong>+6.5%</strong><span>产值 ≠ 增加值，也不等于农户收入</span></div>
+      </div>
+    </header>
+
+    <section class="ag-section">
+      <div class="ag-section-head"><span>01 / REALITY LAYERS</span><h2>先把农业的四种数字分开。</h2><p>选县域基础盘，或打开柏塘山茶案例。山茶不是整个博罗农业，不能用一个镇代替全县。</p></div>
+      <div class="ag-scope-switch" id="ag-scope-switch" role="group" aria-label="农业范围切换">
+        <button type="button" data-ag-scope="county" class="active" aria-pressed="true">全县农业基础盘</button>
+        <button type="button" data-ag-scope="tea" aria-pressed="false">柏塘山茶 · 案例</button>
+      </div>
+      <div class="ag-real-grid" id="ag-real-grid" aria-live="polite"></div>
+      <div class="ag-evidence-line" id="ag-evidence-line"></div>
+    </section>
+
+    <section class="ag-section">
+      <div class="ag-section-head"><span>02 / VALUE CHAIN</span><h2>一条产业链，四次不同的“疼”。</h2><p>点击任意环节，观察现实中可能需要核验的证据。连线表示研究框架，而非已核实的供应链交易。</p></div>
+      <div class="ag-chain">
+        <div class="ag-chain-tracks" id="ag-chain-tracks" role="group" aria-label="农业价值链环节"></div>
+        <aside class="ag-chain-detail" id="ag-chain-detail" aria-live="polite"></aside>
+      </div>
+      <div class="ag-chain-under"><span>背景统计</span> 柏塘山茶2025年产量约2449吨、产值约12亿元。但这些数据不能证明各环节利润分配，更不能替代真实账期与成本数据。</div>
+    </section>
+
+    <section class="ag-section">
+      <div class="ag-section-head"><span>03 / THE CASH CLOCK</span><h2>钱什么时候付出去，什么时候回得来？</h2><p>每一天都运行，不用一条看似精确的乘法代替资金占用过程。</p></div>
+      <div class="ag-lab">
+        <div class="ag-controls">
+          <div class="ag-lab-heading"><span>条件实验 / 茶季示意</span><b>非真实企业经营数据</b></div>
+          <div class="ag-control"><label for="ag-season">采摘窗口 <strong id="ag-season-v">25天</strong></label><input id="ag-season" type="range" min="15" max="40" step="1" value="25"/><div><span>15天</span><span>40天</span></div></div>
+          <div class="ag-control"><label for="ag-pick">劳动力有效供给 <strong id="ag-pick-v">85%</strong></label><input id="ag-pick" type="range" min="50" max="100" step="5" value="85"/><div><span>50%</span><span>100%</span></div></div>
+          <div class="ag-control"><label for="ag-process">加工可承接比例 <strong id="ag-process-v">90%</strong></label><input id="ag-process" type="range" min="50" max="100" step="5" value="90"/><div><span>50%</span><span>100%</span></div></div>
+          <div class="ag-control"><label for="ag-farm-pay">向农户付款延迟 <strong id="ag-farm-pay-v">12天</strong></label><input id="ag-farm-pay" type="range" min="0" max="25" step="1" value="12"/><div><span>当天</span><span>25天</span></div></div>
+          <div class="ag-control"><label for="ag-channel-pay">渠道回款延迟 <strong id="ag-channel-pay-v">75天</strong></label><input id="ag-channel-pay" type="range" min="30" max="95" step="5" value="75"/><div><span>30天</span><span>95天</span></div></div>
+          <div class="ag-control"><label for="ag-day-cost">每日采购付款基准 <strong id="ag-day-cost-v">10万元</strong></label><input id="ag-day-cost" type="range" min="2" max="30" step="1" value="10"/><div><span>2万元</span><span>30万元</span></div></div>
+          <div class="ag-lab-buttons"><button type="button" id="ag-reset">恢复示例基准</button><button type="button" id="ag-export">导出实验JSON ↓</button></div>
+          <p>基准为人为选择的演示假设，不是政府统计、合作社实测或项目尽调数据。每日金额仅代表同一批货款的往来，不含工资、利润、利息和库存。</p>
+        </div>
+        <div class="ag-output">
+          <div class="ag-output-head"><span>DAY-BY-DAY · 逐日资金占用</span><strong>从采摘到回款</strong></div>
+          <div class="ag-output-metrics" id="ag-output-metrics" aria-live="polite"></div>
+          <div id="ag-cash-chart" class="ag-cash-chart" aria-label="逐日资金占用折线图" aria-live="polite"></div>
+          <div class="ag-sim-finding" id="ag-sim-finding" aria-live="polite"></div>
+          <div class="ag-output-note">资金占用峰值＝每个采摘日付款后、回款前尚未收回的金额累计。仅为有限25天左右采摘窗口的演示模型。固定持续经营情况下的63天账期差乘日支出，不适用于短季的峰值计算。</div>
+        </div>
+      </div>
+    </section>
+
+    <section class="ag-section">
+      <div class="ag-section-head"><span>04 / DEMO RELATIONSHIP EVIDENCE</span><h2>农业加工与流通，哪些连接已被样本记录？</h2><p>这张图来自现有关系数据库的实时统计。默认是合成Demo，不是现实企业网络。</p></div>
+      <div class="ag-links-panel">
+        <div class="ag-link-selector" id="ag-link-selector" role="group" aria-label="选择关系类型">
+          <button type="button" class="active" data-ag-kind="agricultural_processing" aria-pressed="true">农业 → 加工</button>
+          <button type="button" data-ag-kind="agricultural_distribution" aria-pressed="false">农业 → 流通</button>
+        </div>
+        <div id="ag-network-stats" class="ag-network-stats" aria-live="polite"></div>
+        <div id="ag-network-chart" class="ag-network-chart" aria-live="polite"></div>
+        <p id="ag-network-caveat" class="ag-network-caveat"></p>
+      </div>
+    </section>
+
+    <section class="ag-section">
+      <div class="ag-section-head"><span>05 / WHAT TO VERIFY NEXT</span><h2>现在应该问谁，补哪一个数？</h2><p>选一个堵点，系统给出最小核验清单。可以本地导出，不会直接生成未经确认的A级证据。</p></div>
+      <div class="ag-follow-up">
+        <div id="ag-questions" class="ag-questions" role="group" aria-label="选择待核验堵点"></div>
+        <div id="ag-questions-detail" class="ag-questions-detail" aria-live="polite"></div>
+      </div>
+      <div class="ag-next"><div><span>BACK TO THE DECISION LAB</span><strong>不是替陈局判断哪条路，而是把下一次调研要问的问题，变得更具体。</strong><p>专业人员可以导入真实企业、项目、关系数据。核验后再重跑，演示结果与真实结果要能够清楚区分。</p></div><div><button type="button" class="button primary" data-go="data">导入真实资料 →</button><button type="button" class="button outline" data-go="wind">进入2032风洞</button></div></div>
+    </section>
+
+    <details class="ag-sources"><summary>展开数据依据与计算限制</summary>
+      <ul>
+        <li><a target="_blank" rel="noopener noreferrer" href="https://maptable.com/tjgb/2025/%E6%83%A0%E5%B7%9E%E5%B8%82/%E5%8D%9A%E7%BD%97%E5%8E%BF/report/hui-zhou-shi-2025-nian-bo-luo-guo-min-jing-ji-he-she-hui-fa-zhan-tong-ji-gong-bao-2">2025博罗统计公报转录：第一产业107.44亿元，增长7.8%</a></li>
+        <li><a target="_blank" rel="noopener noreferrer" href="https://static.nfnews.com/content/202605/08/c12408279.html">2026年一季度博罗经济运行：农林牧渔业总产值36.03亿元，增长6.5%</a></li>
+        <li><a target="_blank" rel="noopener noreferrer" href="https://static.nfnews.com/content/202604/11/c12327937.html">2026柏塘春茶季报道：4.32万亩、2449吨、约12亿元、58家茶企与合作社</a></li>
+        <li><a target="_blank" rel="noopener noreferrer" href="https://epaper.nfnews.com/nfdaily/html/202604/10/content_10167542.html">柏塘茶产业综合体：示例的产业价值链背景</a></li>
+      </ul>
+      <p>柏塘山茶数据为媒体报道的产业信息，需部门原始统计进一步确认。茶叶产值不是增加值，农业增加值不等于农户净收益；无依据时不推算产业利润、地区承接率或政策净效应。</p>
+      <p>现金流模型中每日采摘数量设为均匀、付款与回款均以采摘日为起点、价格与付款基准相同，只为了隔离账期与窗口长度的影响。采工可用率和加工能力直接限制示例吞吐，不代表真实可售茶叶量。每个情景可复现，且能导出JSON供客户核查。关系图从现有数据表按农业加工与流通类型统计，默认合成数据并始终标识来源。</p>
     </details>
   </section>
 
