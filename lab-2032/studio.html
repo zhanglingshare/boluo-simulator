@@ -6,7 +6,8 @@
 <title>博罗2032 · 决策模拟实验室｜完整研发版</title>
 <link rel="stylesheet" href="studio.css">
 <link rel="stylesheet" href="industry-2025.css">
-<script defer src="core.js"></script><script defer src="engine.js"></script><script defer src="industry-2025.js"></script><script defer src="studio.js"></script>
+<link rel="stylesheet" href="base-structure.css">
+<script defer src="core.js"></script><script defer src="engine.js"></script><script defer src="industry-2025.js"></script><script defer src="base-structure.js"></script><script defer src="studio.js"></script>
 </head><body>
 <div class="app-shell">
 <header class="masthead">
@@ -238,11 +239,101 @@
     <div class="panel-card spaced"><div class="panel-head"><div><span class="eyebrow">QUALITY GATE</span><h3>数据质量体检 · 错误不会自动补成Demo</h3></div><span class="minor-tag">模型运行前检查</span></div><div id="qualityChecks" class="quality-checks"></div></div>
   </section>
 
-  <section data-page="macro" class="page-section" hidden>
-    <div class="page-intro"><div><span class="eyebrow">MACRO BASELINE / 2020—2032</span><h1>从1005亿出发，三产能否共同增长？</h1><p>先看历史规模与结构，再把2032情景和1:5:4参考线放在同一张图中。2020—2024 Demo历史是合成序列。</p></div><button type="button" class="button outline" data-go="wind">进入风洞改变条件 →</button></div>
-    <div class="stats-row" id="macroStats"></div>
-    <div class="panel-card"><div class="panel-head"><h3>三次产业增加值：历史与条件情景</h3><span class="minor-tag">单位：亿元 · 名义演示</span></div><div id="macroTimeline" class="svg-stage large"></div><div class="legend"><span><i class="c-primary"></i>第一产业</span><span><i class="c-secondary"></i>第二产业</span><span><i class="c-tertiary"></i>第三产业</span></div></div>
-    <div class="split-grid spaced"><article class="panel-card"><div class="panel-head"><h3>2025结构 VS 2032中位数</h3></div><div id="macroShare" class="share-comparison"></div></article><article class="panel-card"><div class="panel-head"><h3>结构之外，必须检查什么</h3></div><div id="macroInterpretation" class="insight-list"></div></article></div>
+  <section data-page="macro" class="page-section base-2025-page" hidden>
+    <header class="base-hero">
+      <div class="base-hero-glow"></div>
+      <div class="base-hero-copy">
+        <span class="base-kicker">03 / THE ECONOMIC BASE · BOLUO</span>
+        <h1>千亿博罗，<br><em>家底究竟由什么撑起？</em></h1>
+        <p>不是只看GDP有多大。把农业、工业和服务业拆开，看清各自的底盘、增长速度，以及下一步真正缺少的支撑。</p>
+        <div class="base-hero-tags"><span>2025年度基准</span><span>2026前三季度观察</span><span>2032结构参考</span></div>
+      </div>
+      <div class="base-hero-kpis">
+        <div class="base-gdp-kpi"><span>2025 · 地区生产总值</span><strong>1,005.45<small>亿元</small></strong><b>首次突破千亿 · 实际增长 +5.5%</b></div>
+        <div class="base-ratio-kpi"><span>2025真实结构</span><strong>10.7 <i>:</i> 54.6 <i>:</i> 34.7</strong><small>一产　　·　　二产　　·　　三产</small></div>
+        <div class="base-reference-kpi"><span>2032结构研究参考</span><strong>1 <i>:</i> 5 <i>:</i> 4</strong><small>非正式规划指标 · 不代表2032总量</small></div>
+      </div>
+    </header>
+
+    <div class="base-section-head">
+      <span>01 / THREE SECTORS</span><h2>三次产业，家底各不相同。</h2>
+      <p>点击一条产业带，看看它现在有多大、跑得多快，以及结构参考线还差多少。</p>
+    </div>
+    <article class="base-card base-structure-card">
+      <div class="base-card-top"><div><strong>2025真实结构 ↔ 2032研究参考</strong><small>同一条100%基准线 · 只比较产业占比</small></div><span class="base-evidence">公开统计 / 研究参考</span></div>
+      <div id="base-mix-chart" class="base-mix-chart"></div>
+      <div class="base-mix-legend" id="base-mix-legend"></div>
+      <div class="base-sector-select" id="base-sector-select" role="group" aria-label="选择产业查看家底">
+        <button type="button" data-base-sector="primary" aria-pressed="false"><i class="base-swatch primary"></i><span>第一产业<small>农业</small></span><b>10.7%</b></button>
+        <button type="button" data-base-sector="secondary" aria-pressed="false"><i class="base-swatch secondary"></i><span>第二产业<small>工业与建筑业</small></span><b>54.6%</b></button>
+        <button type="button" data-base-sector="tertiary" aria-pressed="true"><i class="base-swatch tertiary"></i><span>第三产业<small>服务业</small></span><b>34.7%</b></button>
+      </div>
+      <div id="base-sector-detail" class="base-sector-detail" aria-live="polite"></div>
+      <div class="base-structure-foot">结构差距是占比的百分点差异，不是需要增加或减少的GDP金额。产业占比下降，也不等于产业增加值下降。</div>
+    </article>
+
+    <div class="base-section-head">
+      <span>02 / SIX YEARS OF GROWTH</span><h2>博罗怎样走到千亿？</h2>
+      <p>点选年份，看经济总量的变化。2024年采用最终核实数，不沿用早期初步数。</p>
+    </div>
+    <article class="base-card">
+      <div class="base-history-layout">
+        <div class="base-history-main">
+          <div class="base-card-top"><div><strong>2020—2025 GDP年轮</strong><small>地区生产总值 · 现价规模（亿元）</small></div><span class="base-evidence">年度数据</span></div>
+          <div id="base-history-chart" class="base-history-chart"></div>
+          <div id="base-history-years" class="base-history-years" role="group" aria-label="选择历史年份"></div>
+        </div>
+        <aside id="base-history-detail" class="base-history-detail" aria-live="polite"></aside>
+      </div>
+    </article>
+
+    <div class="base-section-head">
+      <span>03 / THE LATEST SIGNAL</span><h2>到了2026年，三条增长线开始分化。</h2>
+      <p>以下全部为2026年1—9月累计数据，三个产业处在同一统计期间。</p>
+    </div>
+    <article class="base-card base-pulse-card">
+      <div class="base-pulse-top">
+        <div><span>2026 · 前三季度GDP</span><strong>721.10<small>亿元</small></strong><b>同比实际增长 +4.1%</b></div>
+        <div class="base-pulse-insight"><small>最值得追问的差距</small><strong>服务业增速比第二产业低 <em>4.2</em> 个百分点</strong><p>第一产业 +6.2%，第二产业 +5.4%，第三产业 +1.2%。这是增长速度的差异，不代表服务业规模变小。</p></div>
+      </div>
+      <div id="base-pulse-chart" class="base-pulse-chart"></div>
+      <div class="base-pulse-foot" id="base-pulse-shares"></div>
+      <p class="base-period-note">注：2026年前三季度各产业增加值为累计值；结构占比仅为同期切片，不与2025全年占比直接比较。增加值金额按现价，增速按不变价计算。</p>
+    </article>
+
+    <div class="base-section-head">
+      <span>04 / INSIDE THE SERVICE ECONOMY</span><h2>服务业不是一个行业，也不是一条增长线。</h2>
+      <p>选择一种服务，看见它怎样表现。尤其要区分“为企业生产服务”和“为居民消费服务”。</p>
+    </div>
+    <article class="base-card base-service-card">
+      <div class="base-service-tabs" id="base-service-tabs" role="group" aria-label="选择服务业类型">
+        <button type="button" class="active" data-service-view="producer" aria-pressed="true">生产性服务</button>
+        <button type="button" data-service-view="living" aria-pressed="false">生活性服务</button>
+        <button type="button" data-service-view="tourism" aria-pressed="false">文旅消费</button>
+      </div>
+      <div id="base-service-content" class="base-service-content" aria-live="polite"></div>
+      <div class="base-service-question"><span>真正需要追问</span><strong>这些服务，究竟有多少在为博罗本地企业创造价值？</strong><p>服务业增长不等于生产性服务能力同步增长。需要继续核实客户来源、本地采购、企业服务收入、岗位和增加值。</p></div>
+    </article>
+
+    <div class="base-section-head">
+      <span>05 / WHAT IS NOT YET VISIBLE</span><h2>家底看见了，真正缺的数据也要看见。</h2>
+      <p>选择一个产业，查看下一步最值得补齐的证据。这里不把空白自动填成估算结果。</p>
+    </div>
+    <article class="base-card base-gap-card">
+      <div class="base-gap-tabs" id="base-gap-tabs" role="group" aria-label="选择需要补充数据的产业">
+        <button type="button" class="active" data-gap-sector="primary" aria-pressed="true">农业</button>
+        <button type="button" data-gap-sector="secondary" aria-pressed="false">工业</button>
+        <button type="button" data-gap-sector="tertiary" aria-pressed="false">服务业</button>
+      </div>
+      <div id="base-gap-content" class="base-gap-content" aria-live="polite"></div>
+      <div class="base-gap-actions"><button type="button" class="button primary" data-go="data">进入数据中心，准备真实数据 →</button><button type="button" class="button outline" data-go="survey">查看社会调查演示</button></div>
+    </article>
+
+    <section class="base-next-panel">
+      <div><span>FROM BASE TO CONNECTION</span><h2>看清家底之后，下一步要看它们怎样连接。</h2><p>产业结构是底盘，企业、项目、人才和服务之间的真实联系，才是下一层研究对象。</p></div>
+      <div class="base-next-links"><button type="button" class="button primary" data-go="network">进入产业关系网络 →</button><button type="button" class="button outline" data-go="wind">带着问题进入2032风洞</button></div>
+    </section>
+    <details class="base-sources"><summary>查看数据来源、统计口径和边界说明</summary><div id="base-source-list"></div></details>
   </section>
 
   <section data-page="industries" class="page-section" hidden>
