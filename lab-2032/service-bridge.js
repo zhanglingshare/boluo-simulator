@@ -17,7 +17,7 @@ const CASES={
  secondary:{title:"工业 → 生产性服务",code:"professional_service",from:"secondary",question:"工业企业究竟向哪些本地服务机构采购？",subtitle:"工业样本连接服务样本"},
  primary:{title:"农业 → 服务与流通",code:"agricultural_distribution",from:"primary",question:"农业流通与服务之间的采购方向、合同、销售回款是否可以核实？",subtitle:"农业样本连接服务样本"}
 };
-let appState=null,sourceData=null,graph=null,origin="secondary",currentSignal="all",rows=[],cols=[],cells=[],focused=null,
+let appState=null,sourceData=null,graph=null,origin="secondary",weightMode="all",shownEdges=[],currentSignal="all",rows=[],cols=[],cells=[],focused=null,
  scenarioDemand=20,scenarioResponse=10,lastScenario=false,feedbackChoice=null,feedback=[],bound=false;
 const section=()=>document.querySelector('[data-page="service"]');
 const q=id=>section()?.querySelector("#"+id);
@@ -40,8 +40,12 @@ function setButtons(sel,attr,value){
 }
 function buildCells(){
  if(!graph)return;
- const mode=CASES[origin],valid=graph.graph.edges.filter(e=>
+ const mode=CASES[origin],available=graph.graph.edges.filter(e=>
   e.a.sector===mode.from&&e.b.sector==="tertiary"&&e.type===mode.code&&Number(e.value)>0);
+ const fraction=weightMode==="top10"?.10:weightMode==="top25"?.25:1;
+ const valid=fraction===1?available:available.slice().sort((a,b)=>b.value-a.value)
+  .slice(0,Math.max(1,Math.ceil(available.length*fraction)));
+ shownEdges=valid;
  const src=sourceData.tables.enterprises.filter(e=>e.sector===mode.from),
        dst=sourceData.tables.enterprises.filter(e=>e.sector==="tertiary");
  const makeNames=a=>[...new Set(a.map(x=>String(x.subsector||"未分类")))].sort((a,b)=>a.localeCompare(b,"zh-CN"));
@@ -83,6 +87,7 @@ function renderMatrix(){
  const p=buildCells(),rowN=rows.length,colN=cols.length;
  q("svc-sample-badge").textContent=evidence();
  setButtons("#svc-sector-switch button","data-svc-origin",origin);
+ setButtons("#svc-weight-filter button","data-svc-weight",weightMode);
  if(rowN===0||colN===0){
   q("svc-matrix-hint").textContent="当前数据缺少可对照的产业和服务行业分类。没有记录不能解释为零市场需求。";
   q("svc-matrix").innerHTML='<div style="padding:36px;text-align:center;color:#7793a0">当前数据没有相应产业或服务主体分类，无法生成关系矩阵。</div>';
@@ -124,10 +129,12 @@ function renderMatrix(){
   ["关系权重合计",money(total),"演示交易权重，不是地区增加值"]
  ].map(([title,value,foot])=>'<div><small>'+safe(title)+'</small><strong>'+safe(value)+'</strong><span>'+safe(foot)+'</span></div>').join("");
  q("svc-matrix-hint").textContent="横轴为服务细分行业，纵轴为需求方细分行业。颜色仅对应已匹配的样本关系条数。"+
+ (weightMode==="all"?"当前显示全部符合类型的样本关系。":"当前只显示按关系权重排序的"+
+ (weightMode==="top25"?"前25%":"前10%")+"条记录；空格可能是筛选造成，并不代表没有交易。")+
  (p.allRows.length>rows.length||p.allCols.length>cols.length?
-  " 当前显示按关联权重排序的前"+rows.length+"类需求和前"+cols.length+"类服务；其余类别未在本图展示，不代表不存在。":
-  " 样本未见关系不等于现实中没有服务或订单。");
- q("svc-sim-origin").textContent=CASES[origin].title+" · "+evidence();
+  " 另因类别过多，只展示权重较高的前"+rows.length+"类需求和前"+cols.length+"类服务；其他类别未展示。":
+  "");
+ q("svc-sim-origin").textContent=CASES[origin].title+" · "+(weightMode==="all"?"全部关系":weightMode==="top25"?"权重前25%":"权重前10%")+" · "+evidence();
  q("svc-sim-run").disabled=total<=0;
  q("svc-feedback-topic").textContent=activePair()?activePair().row+" → "+activePair().col:"当前数据缺少关系类型";
 }
@@ -153,7 +160,8 @@ function resetScenario(clear){
  '<small>这只是基于当前关系权重的条件对照，不会自动产生经济预测。</small></div>';
 }
 function renderScenario(){
- const base=sum(graph.graph.edges.filter(e=>e.a.sector===CASES[origin].from&&e.b.sector==="tertiary"&&e.type===CASES[origin].code).map(e=>e.value));
+ // The scenario must use the SAME filtered record set as the visible matrix.
+ const base=sum(shownEdges.map(e=>e.value));
  const demand=base*(1+scenarioDemand/100),capacity=base*(1+scenarioResponse/100),gap=Math.max(0,demand-capacity);
  if(base<=0){resetScenario(true);return;}
  const ratio=gap/demand*100,top=Math.max(1,demand,capacity),isGap=gap>0.000001;
@@ -212,6 +220,9 @@ function bind(){
   if(signal){currentSignal=signal.dataset.svcSignal;renderSignal();return;}
   const source=event.target.closest("[data-svc-origin]");
   if(source){changeOrigin(source.dataset.svcOrigin);return;}
+  const weight=event.target.closest("[data-svc-weight]");
+  if(weight){weightMode=weight.dataset.svcWeight;focused=null;feedbackChoice=null;
+   resetScenario();renderMatrix();setButtons("#svc-feedback-choices button","data-svc-feedback","none");return;}
   const cell=event.target.closest("[data-svc-cell]");
   if(cell){const [ri,ci]=cell.dataset.svcCell.split("-").map(Number);const item=cells.find(x=>x.ri===ri&&x.ci===ci);
    if(item){focused=item.key;feedbackChoice=null;
