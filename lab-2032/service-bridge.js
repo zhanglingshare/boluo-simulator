@@ -84,6 +84,7 @@ function renderMatrix(){
  q("svc-sample-badge").textContent=evidence();
  setButtons("#svc-sector-switch button","data-svc-origin",origin);
  if(rowN===0||colN===0){
+  q("svc-matrix-hint").textContent="当前数据缺少可对照的产业和服务行业分类。没有记录不能解释为零市场需求。";
   q("svc-matrix").innerHTML='<div style="padding:36px;text-align:center;color:#7793a0">当前数据没有相应产业或服务主体分类，无法生成关系矩阵。</div>';
   q("svc-matrix").style.gridTemplateColumns="1fr";
   q("svc-pair-detail").innerHTML='<div class="svc-detail-overline">DATA MISSING</div><h3>这不是零需求，是数据尚未齐全。</h3><p>可以在数据中心导入企业主体与关系表，核对ID和业务关系类型，再回来重新计算。</p>';
@@ -122,10 +123,10 @@ function renderMatrix(){
   ["样本服务方",f0(uniqueServiceProviders)+"个","至少出现一条样本关系"],
   ["关系权重合计",money(total),"演示交易权重，不是地区增加值"]
  ].map(([title,value,foot])=>'<div><small>'+safe(title)+'</small><strong>'+safe(value)+'</strong><span>'+safe(foot)+'</span></div>').join("");
- if(p.allRows.length>rows.length||p.allCols.length>cols.length){
-  q("svc-matrix-hint")?.remove();
-  q("svc-matrix").setAttribute("data-limited","true");
- }
+ q("svc-matrix-hint").textContent="横轴为服务细分行业，纵轴为需求方细分行业。颜色仅对应已匹配的样本关系条数。"+
+ (p.allRows.length>rows.length||p.allCols.length>cols.length?
+  " 当前显示按关联权重排序的前"+rows.length+"类需求和前"+cols.length+"类服务；其余类别未在本图展示，不代表不存在。":
+  " 样本未见关系不等于现实中没有服务或订单。");
  q("svc-sim-origin").textContent=CASES[origin].title+" · "+evidence();
  q("svc-sim-run").disabled=total<=0;
  q("svc-feedback-topic").textContent=activePair()?activePair().row+" → "+activePair().col:"当前数据缺少关系类型";
