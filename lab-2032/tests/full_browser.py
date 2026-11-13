@@ -201,6 +201,20 @@ def main():
                     with page.expect_download() as ag_question_download:
                         page.locator("#ag-export-questions").click()
                     assert ag_question_download.value.suggested_filename=="boluo-agriculture-verification-channel.json"
+                    ag_import_probe=page.evaluate("""() => {
+                      const imported=BoluoCore.demo();
+                      imported.tables.relations=[{source:"A0001",target:"I0001",type:"agricultural_processing",value:3.5}];
+                      imported.evidence.relations="IMPORTED_UNVERIFIED";
+                      BoluoAgriculturePage.render({data:imported});
+                      return {
+                        stats:document.querySelector("#ag-network-stats").textContent,
+                        caveat:document.querySelector("#ag-network-caveat").textContent
+                      };
+                    }""")
+                    assert "1条" in ag_import_probe["stats"],ag_import_probe
+                    assert "待核验" in ag_import_probe["caveat"],ag_import_probe
+                    page.evaluate("() => BoluoAgriculturePage.render({data:BoluoCore.demo()})")
+                    assert "合成Demo" in page.locator("#ag-network-caveat").inner_text()
                     page.screenshot(path=str(ART/("agri-mobile.png" if mobile else "agri-desktop.png")),
                       full_page=True,animations="disabled")
                     go(page,"relations")
