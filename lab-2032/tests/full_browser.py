@@ -212,6 +212,9 @@ def main():
                     dims=page.evaluate('({width:innerWidth,scroll:document.documentElement.scrollWidth})')
                     assert dims["scroll"]<=dims["width"]+2,dims
                     assert not errors,errors
+                    go(page,"industry")
+                    page.screenshot(path=str(ART/("industry-mobile.png" if mobile else "industry-desktop.png")),
+                      full_page=True,animations="disabled")
                     go(page,"mission")
                     page.screenshot(path=str(ART/("full-mobile.png" if mobile else "full-desktop.png")),
                       full_page=True,animations="disabled")
