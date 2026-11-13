@@ -128,6 +128,21 @@ def main():
                     assert "WHAT-IF" in page.locator("#svc-sim-result").inner_text()
                     page.locator('[data-svc-origin="secondary"]').click()
                     assert "工业" in page.locator("#svc-sim-origin").inner_text()
+                    imported_probe=page.evaluate("""() => {
+                        const sample=BoluoCore.demo();
+                        sample.tables.relations=[{source:"I0001",target:"S0001",type:"professional_service",value:100}];
+                        sample.evidence.relations="IMPORTED_UNVERIFIED";
+                        BoluoServicePage.render({data:sample});
+                        return {
+                          label:document.querySelector("#svc-sample-badge").textContent,
+                          count:document.querySelector("#svc-sample-strip").textContent,
+                          grid:document.querySelectorAll("#svc-matrix .svc-matrix-cell").length
+                        };
+                    }""")
+                    assert "待核验" in imported_probe["label"],imported_probe
+                    assert "100.00" in imported_probe["count"],imported_probe
+                    assert imported_probe["grid"]>0,imported_probe
+                    page.evaluate("() => BoluoServicePage.render({data:BoluoCore.demo()})")
                     page.screenshot(path=str(ART/("service-mobile.png" if mobile else "service-desktop.png")),
                       full_page=True,animations="disabled")
                     go(page,"relations")
