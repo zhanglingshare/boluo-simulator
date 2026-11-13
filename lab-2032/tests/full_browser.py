@@ -1,4 +1,4 @@
-"""Executable 15-workspace Boluo 2032 public studio acceptance suite.
+"""Executable 16-workspace Boluo 2032 public studio acceptance suite.
 Tests actual computation, CSV/XLSX/JSON replacement, professional ZIP, report,
 desktop 1440 and Android-width 390, no JS page errors/overflow.
 """
