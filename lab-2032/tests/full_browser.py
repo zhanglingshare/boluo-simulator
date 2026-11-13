@@ -1,4 +1,4 @@
-"""Executable 16-workspace Boluo 2032 public studio acceptance suite.
+"""Executable 17-workspace Boluo 2032 public studio acceptance suite.
 Tests actual computation, CSV/XLSX/JSON replacement, professional ZIP, report,
 desktop 1440 and Android-width 390, no JS page errors/overflow.
 """
@@ -18,7 +18,7 @@ from playwright.sync_api import sync_playwright, expect
 ROOT=Path(__file__).resolve().parents[2]
 ART=ROOT/"lab-2032"/"artifacts"
 ART.mkdir(exist_ok=True,parents=True)
-PAGES=["mission","industry","data","macro","industries","towns","network","projects","labor",
+PAGES=["mission","industry","data","macro","relations","industries","towns","network","projects","labor",
        "survey","models","wind","stress","blindspots","strategy","report"]
 def go(page,key):
     page.evaluate("(pageName)=>{window.location.hash='#'+pageName}",key)
@@ -85,6 +85,37 @@ def main():
                     assert "制造业采购服务金额与来源" in page.locator("#base-gap-content").inner_text()
                     assert page.locator("#base-source-list a").count()==4
                     page.screenshot(path=str(ART/("base-mobile.png" if mobile else "base-desktop.png")),
+                      full_page=True,animations="disabled")
+                    go(page,"relations")
+                    assert "彼此牵动的一张网" in page.locator(".rl-hero").inner_text()
+                    assert page.locator("#rl-stats .rl-stat").count()==4
+                    assert "合成Demo" in page.locator("#rl-hero-evidence").inner_text()
+                    assert page.locator("#rl-graph-stage svg [data-rl-node]").count()>=8
+                    assert page.locator("#rl-graph-stage svg [data-rl-edge]").count()>5
+                    assert "可见相关连接" in page.locator("#rl-inspector").inner_text()
+                    page.locator('#rl-sector-filters [data-rl-sector="secondary"]').click()
+                    assert page.locator('#rl-sector-filters [data-rl-sector="secondary"]').get_attribute("aria-pressed")=="true"
+                    page.locator('#rl-sector-filters [data-rl-sector="all"]').click()
+                    page.locator("#rl-type-filter").select_option("agricultural_processing")
+                    assert "农业加工" in page.locator("#rl-type-filter option:checked").inner_text()
+                    assert page.locator("#rl-graph-stage svg [data-rl-node]").count()>0
+                    page.locator("#rl-type-filter").select_option("all")
+                    page.locator('#rl-mode-buttons [data-rl-mode="actors"]').click()
+                    assert page.locator("#rl-graph-stage svg [data-rl-actor]").count()>=2
+                    assert "入向关系" in page.locator("#rl-inspector").inner_text()
+                    first_actor=page.locator("#rl-graph-stage [data-rl-actor]").first.get_attribute("data-rl-actor")
+                    page.locator("#rl-graph-stage [data-rl-actor]").first.click()
+                    assert page.locator("#rl-graph-stage svg [data-rl-actor]").count()>=2
+                    page.locator("#rl-shock").fill("60")
+                    assert "60%" in page.locator("#rl-shock-value").inner_text()
+                    page.locator("#rl-run").click()
+                    assert "实验完成" in page.locator("#rl-results").inner_text()
+                    assert "三步" not in page.locator("#rl-results .rl-run-header").inner_text()
+                    assert page.locator("#rl-results .rl-wave-row").count()==3
+                    page.locator("#rl-reset").click()
+                    assert page.locator('#rl-mode-buttons [data-rl-mode="structure"]').get_attribute("aria-pressed")=="true"
+                    assert "35%" in page.locator("#rl-shock-value").inner_text()
+                    page.screenshot(path=str(ART/("relations-mobile.png" if mobile else "relations-desktop.png")),
                       full_page=True,animations="disabled")
                     go(page,"industry")
                     assert "投资却踩下刹车" in page.locator(".in-hero").inner_text()
@@ -257,7 +288,7 @@ def main():
         server.terminate()
         try:server.wait(timeout=5)
         except subprocess.TimeoutExpired:server.kill()
-    print("PASS: full studio public, all 15 workspaces, scenario, SNA, projects, workforce, survey, models, ZIP, XLSX/CSV, report, desktop/mobile.")
+    print("PASS: full studio public, all 17 workspaces, scenario, SNA, projects, workforce, survey, models, ZIP, XLSX/CSV, report, desktop/mobile.")
 
 if __name__=="__main__":
     main()
