@@ -1,4 +1,4 @@
-"""Executable 18-workspace Boluo 2032 public studio acceptance suite.
+"""Executable 19-workspace Boluo 2032 public studio acceptance suite.
 Tests actual computation, CSV/XLSX/JSON replacement, professional ZIP, report,
 desktop 1440 and Android-width 390, no JS page errors/overflow.
 """
@@ -18,7 +18,7 @@ from playwright.sync_api import sync_playwright, expect
 ROOT=Path(__file__).resolve().parents[2]
 ART=ROOT/"lab-2032"/"artifacts"
 ART.mkdir(exist_ok=True,parents=True)
-PAGES=["mission","industry","data","macro","relations","service","industries","towns","network","projects","labor",
+PAGES=["mission","industry","data","macro","relations","service","agri","industries","towns","network","projects","labor",
        "survey","models","wind","stress","blindspots","strategy","report"]
 def go(page,key):
     page.evaluate("(pageName)=>{window.location.hash='#'+pageName}",key)
@@ -154,6 +154,54 @@ def main():
                     assert imported_probe["grid"]>0,imported_probe
                     page.evaluate("() => BoluoServicePage.render({data:BoluoCore.demo()})")
                     page.screenshot(path=str(ART/("service-mobile.png" if mobile else "service-desktop.png")),
+                      full_page=True,animations="disabled")
+                    go(page,"agri")
+                    assert "种得多" in page.locator(".ag-hero").inner_text()
+                    assert "107.44" in page.locator(".ag-hero").inner_text()
+                    assert page.locator("#ag-real-grid .ag-real-cell").count()==4
+                    assert page.locator("#ag-chain-tracks [data-ag-stage]").count()==4
+                    page.locator('[data-ag-scope="tea"]').click()
+                    assert "2449吨" in page.locator("#ag-real-grid").inner_text()
+                    assert "4.32万亩" in page.locator("#ag-real-grid").inner_text()
+                    page.locator('[data-ag-scope="county"]').click()
+                    assert "107.44亿元" in page.locator("#ag-real-grid").inner_text()
+                    page.locator('[data-ag-stage="cash"]').click()
+                    assert "付款" in page.locator("#ag-chain-detail").inner_text()
+                    assert "63天" in page.locator("#ag-output-metrics").inner_text()
+                    assert "212.5万元" in page.locator("#ag-output-metrics").inner_text()
+                    assert page.locator("#ag-cash-chart svg").count()==1
+                    cash_probe=page.evaluate("""() => {
+                      const f=BoluoAgriculturePage.simulate;
+                      const a=f({season:25,pick:85,process:90,farmPay:12,channelPay:75,dayCost:10});
+                      const b=f({season:25,pick:85,process:90,farmPay:12,channelPay:30,dayCost:10});
+                      const c=f({season:25,pick:65,process:90,farmPay:12,channelPay:75,dayCost:10});
+                      return {peak:a.peak,day:a.peakDay,delay:a.delay,shorter:b.peak,lessLabor:c.peak,atEnd:a.path.at(-1).amount};
+                    }""")
+                    assert abs(cash_probe["peak"]-212.5)<0.001,cash_probe
+                    assert cash_probe["day"]==36,cash_probe
+                    assert cash_probe["delay"]==63,cash_probe
+                    assert cash_probe["shorter"]<cash_probe["peak"],cash_probe
+                    assert cash_probe["lessLabor"]<cash_probe["peak"],cash_probe
+                    assert cash_probe["atEnd"]==0,cash_probe
+                    page.locator("#ag-pick").fill("65")
+                    assert "162.5万元" in page.locator("#ag-output-metrics").inner_text()
+                    page.locator("#ag-reset").click()
+                    assert "212.5万元" in page.locator("#ag-output-metrics").inner_text()
+                    with page.expect_download() as ag_cash_download:
+                        page.locator("#ag-export").click()
+                    assert ag_cash_download.value.suggested_filename=="boluo-agriculture-cashflow-demo.json"
+                    assert "合成Demo" in page.locator("#ag-network-caveat").inner_text()
+                    assert page.locator("#ag-network-stats > div").count()==3
+                    page.locator('[data-ag-kind="agricultural_distribution"]').click()
+                    assert page.locator('[data-ag-kind="agricultural_distribution"]').get_attribute("aria-pressed")=="true"
+                    page.locator('[data-ag-kind="agricultural_processing"]').click()
+                    assert page.locator("#ag-network-chart .ag-network-row").count()>0
+                    page.locator('[data-ag-question="channel"]').click()
+                    assert "合同账期" in page.locator("#ag-questions-detail").inner_text()
+                    with page.expect_download() as ag_question_download:
+                        page.locator("#ag-export-questions").click()
+                    assert ag_question_download.value.suggested_filename=="boluo-agriculture-verification-channel.json"
+                    page.screenshot(path=str(ART/("agri-mobile.png" if mobile else "agri-desktop.png")),
                       full_page=True,animations="disabled")
                     go(page,"relations")
                     assert "彼此牵动的一张网" in page.locator(".rl-hero").inner_text()
@@ -357,7 +405,7 @@ def main():
         server.terminate()
         try:server.wait(timeout=5)
         except subprocess.TimeoutExpired:server.kill()
-    print("PASS: full studio public, all 18 workspaces, scenario, SNA, projects, workforce, survey, models, ZIP, XLSX/CSV, report, desktop/mobile.")
+    print("PASS: full studio public, all 19 workspaces, scenario, SNA, projects, workforce, survey, models, ZIP, XLSX/CSV, report, desktop/mobile.")
 
 if __name__=="__main__":
     main()
