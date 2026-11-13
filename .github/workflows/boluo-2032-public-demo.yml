@@ -29,6 +29,11 @@ jobs:
           node --check lab-2032/relations-experience.js
           node --check lab-2032/service-bridge.js
           node --check lab-2032/app.js
+      - name: Install CJK fonts for screenshot readability
+        run: |
+          sudo apt-get update -qq
+          sudo apt-get install -y -qq fonts-noto-cjk
+          fc-cache -f
       - name: Install real browser and Excel fixtures
         run: |
           python -m pip install playwright openpyxl
