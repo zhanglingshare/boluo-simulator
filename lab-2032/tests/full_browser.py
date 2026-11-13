@@ -202,6 +202,7 @@ def main():
                     go(page,"macro")
                     assert "1,150" in page.locator("#base-gdp-total").inner_text()
                     assert "待核验" in page.locator("#base-gdp-growth").inner_text()
+                    page.locator('#base-history-years [data-history-year="2025"]').click()
                     assert "1,150.00亿" in page.locator("#base-history-detail").inner_text()
                     go(page,"data")
                     page.locator("#restoreDemoTop").click()
