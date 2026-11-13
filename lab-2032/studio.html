@@ -10,7 +10,8 @@
 <link rel="stylesheet" href="relations-experience.css">
 <link rel="stylesheet" href="service-bridge.css">
 <link rel="stylesheet" href="agri-value.css">
-<script defer src="core.js"></script><script defer src="engine.js"></script><script defer src="industry-2025.js"></script><script defer src="base-structure.js"></script><script defer src="relations-experience.js"></script><script defer src="service-bridge.js"></script><script defer src="agri-value.js"></script><script defer src="studio.js"></script>
+<link rel="stylesheet" href="project-arrivals.css">
+<script defer src="core.js"></script><script defer src="engine.js"></script><script defer src="industry-2025.js"></script><script defer src="base-structure.js"></script><script defer src="relations-experience.js"></script><script defer src="service-bridge.js"></script><script defer src="agri-value.js"></script><script defer src="project-arrivals.js"></script><script defer src="studio.js"></script>
 </head><body>
 <div class="app-shell">
 <header class="masthead">
@@ -629,7 +630,108 @@
     </details>
   </section>
 
-  <section data-page="industries" class="page-section" hidden>
+  <section data-page="pipeline" class="page-section pl-page" hidden>
+  <header class="pl-hero">
+    <div class="pl-hero-grid"></div>
+    <div class="pl-hero-content">
+      <span class="pl-kicker">07 / THE DELIVERY GAP · PROJECT PIPELINE</span>
+      <h1>签约很热闹。<br><em>什么时候真正投产？</em></h1>
+      <p>从签约到建设、从投产到稳定运营，每跨过一关都需要时间。点进来，把项目沿着时间线推进一次，再试一试晚一年会改变什么。</p>
+      <div class="pl-hero-tags"><span>公开信息看信号</span><span>项目演示可操作</span><span>实际贡献必须核算</span></div>
+    </div>
+    <div class="pl-hero-evidence">
+      <div class="pl-hero-main-fact">
+        <small>2026年 · 博罗重点项目安排计划</small>
+        <strong>171<em>宗</em></strong>
+        <div>年度计划投资 <b>超过200亿元</b></div>
+        <span>政府工作报告中的计划，不是已完成投资</span>
+      </div>
+      <div class="pl-hero-sub-fact">
+        <small>2026年8月 · 四宗项目签约</small>
+        <strong>80<em>亿元</em></strong>
+        <div>报道预计达产后年产值 <b>203亿元</b></div>
+        <span>预计年产值≠实际增加值，且与171宗不是同一项目集合</span>
+      </div>
+    </div>
+  </header>
+
+  <section class="pl-section">
+    <div class="pl-section-head"><span>01 / FOUR GATES</span><h2>项目进了门，不代表已经产生稳定产出。</h2><p>这里使用现有项目表。点击每道关卡，看看这一批示例项目目前停在哪里。</p></div>
+    <div class="pl-data-disclosure"><span id="pl-dataset-label">合成Demo：72宗演示项目，并非171宗真实清单</span><span>项目投资 ≠ GDP增加值</span></div>
+    <div id="pl-funnel" class="pl-funnel" role="group" aria-label="项目四阶段漏斗"></div>
+    <div class="pl-funnel-under"><div id="pl-funnel-detail" aria-live="polite"></div><div id="pl-funnel-stats" class="pl-funnel-stats"></div></div>
+  </section>
+
+  <section class="pl-section">
+    <div class="pl-section-head"><span>02 / CHANGE THE ARRIVAL YEAR</span><h2>假如一部分项目晚投产一年，2032还来得及吗？</h2><p>改变受扰动比例和延期时间，项目按年度重新排布。只改变已登记项目的示例时间，不自动增加或减少地区GDP。</p></div>
+    <div class="pl-workbench">
+      <div class="pl-timeline-panel">
+        <div class="pl-toolbar">
+          <div id="pl-sector-switch" class="pl-sector-switch" role="group" aria-label="选择项目所属产业">
+            <button type="button" class="active" data-pl-sector="all" aria-pressed="true">全部</button>
+            <button type="button" data-pl-sector="primary" aria-pressed="false">农业</button>
+            <button type="button" data-pl-sector="secondary" aria-pressed="false">工业</button>
+            <button type="button" data-pl-sector="tertiary" aria-pressed="false">服务业</button>
+          </div>
+          <span class="pl-toolbar-hint" id="pl-timeline-scope">显示当前数据的未运营项目</span>
+        </div>
+        <div class="pl-timeline-title"><strong>2026—2035 · 项目接续时间轴</strong><small>逐年点击查看入列项目，虚线为2032年参考边界</small></div>
+        <div id="pl-timeline" class="pl-timeline" role="group" aria-label="项目基线与延期两组年度时间轴"></div>
+        <div class="pl-timeline-key"><span><i class="pl-swatch baseline"></i>原计划年份</span><span><i class="pl-swatch adjusted"></i>条件延后年份</span><span>仅项目数量，不是产值预测</span></div>
+        <div id="pl-cohort" class="pl-cohort" aria-live="polite"></div>
+      </div>
+      <aside class="pl-controls">
+        <div class="pl-control-header"><span>CONDITION LAB</span><strong>改变两个条件</strong></div>
+        <div class="pl-control-block">
+          <label for="pl-delay"><span>被选中的项目延后</span><strong id="pl-delay-label">1年</strong></label>
+          <input id="pl-delay" type="range" min="0" max="3" step="1" value="1">
+          <div class="pl-range-ticks"><span>0年</span><span>1年</span><span>2年</span><span>3年</span></div>
+        </div>
+        <div class="pl-control-block">
+          <label for="pl-affected"><span>示例未运营项目受影响比例</span><strong id="pl-affected-label">50%</strong></label>
+          <input id="pl-affected" type="range" min="0" max="100" step="25" value="50">
+          <div class="pl-range-ticks"><span>0%</span><span>25%</span><span>50%</span><span>75%</span><span>100%</span></div>
+        </div>
+        <div id="pl-stress-summary" class="pl-stress-summary" aria-live="polite"></div>
+        <button type="button" id="pl-reset" class="pl-reset">↺ 恢复默认条件</button>
+        <p>项目选择按ID排序，结果可复现。对所有「尚未运营」的示例项目施加同样年数的时间扰动；并不代表现实中这些项目具有同等延期风险。</p>
+      </aside>
+    </div>
+  </section>
+
+  <section class="pl-section">
+    <div class="pl-section-head"><span>03 / WHICH PROJECTS MOVE</span><h2>哪一批项目从2032以前，移动到了2032以后？</h2><p>选年份查看示例项目，点击项目后显示前后年份与待核实问题。</p></div>
+    <div class="pl-project-area">
+      <article class="pl-project-list">
+        <div class="pl-project-heading"><strong id="pl-list-title">当前筛选下的样本项目</strong><span id="pl-list-count">0宗</span></div>
+        <div id="pl-project-items" class="pl-project-items" role="group" aria-label="选择项目查看里程碑"></div>
+      </article>
+      <aside id="pl-project-detail" class="pl-project-detail" aria-live="polite"></aside>
+    </div>
+  </section>
+
+  <section class="pl-section">
+    <div class="pl-section-head"><span>04 / PROJECTS ARE NOT GDP</span><h2>投产年份可以移动，经济增加值不能凭空算。</h2><p>一个项目签约、建设、投产、爬坡和达产，需要不同证据。选中哪一关，待核验清单也不同。</p></div>
+    <div class="pl-boundaries">
+      <div class="pl-boundary-number"><span>不同口径，不可混算</span><div><b>投资额</b><i>≠</i><b>预计产值</b><i>≠</i><b>实际增加值</b></div><p>项目投资是资本形成相关信息，预计年产值是未来产出的宣传或计划口径。实际GDP增加值需要相应期间的真实核算数据。</p></div>
+      <div id="pl-validation-list" class="pl-validation-list"></div>
+    </div>
+    <div class="pl-evidence-actions"><button type="button" id="pl-export-scenario">导出当前情景JSON ↓</button><button type="button" id="pl-export-checklist">导出待核验清单JSON ↓</button></div>
+  </section>
+
+  <div class="pl-next"><div><span>NEXT STEP / THINK IN DEPENDENCIES</span><strong>把真实项目进度导入，再看项目时间如何与产业承接、就业和服务需求连接。</strong><p>这页只对项目时间排队，不会把演示工期自动转换成GDP或就业预测。</p></div><div><button type="button" class="button primary" data-go="data">核验并导入项目资料 →</button><button type="button" class="button outline" data-go="projects">打开完整项目研究</button></div></div>
+  <details class="pl-sources"><summary>展开公开来源、项目数据口径与模型假设</summary>
+    <ul>
+      <li><a target="_blank" rel="noopener noreferrer" href="https://epaper.nfnews.com/nfdaily/html/202602/03/content_10162180.html">2026年博罗县政府工作报告解读：171宗重点项目、年度投资超过200亿元（计划口径）</a></li>
+      <li><a target="_blank" rel="noopener noreferrer" href="https://static.nfnews.com/content/202608/12/c12715023.html">2026年8月3日签约的4宗项目，总投资80亿元、预计达产后年产值203亿元</a></li>
+      <li><a target="_blank" rel="noopener noreferrer" href="https://epaper.nfnews.com/nfdaily/html/202607/10/content_10175328.html">2026年7月真实案例：龙溪深远新能源电动车基地报道已建成投产</a></li>
+    </ul>
+    <p>公开数据与本页72宗合成演示项目是完全不同的样本集合。演示项目阶段为签约、建设、投产爬坡、稳定运营；年份为示例计划投产年份。由于「稳定运营」项目已经跨越投产阶段，本页的未来接续年度只统计未运营项目，避免重复入列。客户导入项目数据后会按当前表重新计算，并保留「待核验」证据标识。</p>
+    <p>延期压力测试不包含企业订单、现金流、产能爬坡函数、政策效果识别或宏观产出映射，不计算投资的GDP乘数，不给出因果概率。受扰动项目由稳定ID顺序确定，不代表真实风险排序。用户导出的数据保留完整基线、参数和条件结果，便于复核。</p>
+  </details>
+</section>
+
+<section data-page="industries" class="page-section" hidden>
     <div class="page-intro"><div><span class="eyebrow">INDUSTRY STRUCTURE</span><h1>产业不是三个百分数，是一群真实经营主体。</h1><p>可以按三次产业或细分行业拆开样本。营业收入、人数和企业数量不等于GDP增加值。</p></div><div class="toolbar"><label>产业 <select id="industryFilter" class="input"><option value="all">全部产业</option><option value="primary">第一产业</option><option value="secondary">第二产业</option><option value="tertiary">第三产业</option></select></label></div></div>
     <div class="stats-row" id="industryStats"></div>
     <div class="split-grid wide-first"><article class="panel-card"><div class="panel-head"><h3>细分行业 · 合成企业营业收入分布</h3><span class="minor-tag">样本内部比较</span></div><div id="subsectorBars"></div></article><article class="panel-card"><div class="panel-head"><h3>企业规模</h3><span class="minor-tag">按员工数</span></div><div id="sizeMix" class="size-mix"></div></article></div>
