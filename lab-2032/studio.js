@@ -13,7 +13,7 @@ const colors=["#67d6b3","#4c91db","#eba85c"];
 const tableLabels={macro:"宏观经济",enterprises:"产业主体",relations:"企业关系",surveys:"社会调查",projects:"重点项目",workforce:"劳动者与就业"};
 const GROUPS=[
  ["研究入口",[["mission","◈","目标与现实"],["industry","▧","工业发展"],["data","▤","数据中心"]]],
- ["发展基本盘",[["macro","◧","三次产业总览"],["industries","▦","行业结构"],["towns","⌖","镇街比较"],["network","◎","产业关系网络"],["projects","◇","项目接续"],["labor","♧","就业与人才"]]],
+ ["发展基本盘",[["macro","◧","产业底盘"],["industries","▦","行业结构"],["towns","⌖","镇街比较"],["network","◎","产业关系网络"],["projects","◇","项目接续"],["labor","♧","就业与人才"]]],
  ["研究与模型",[["survey","▧","社会调查"],["models","⌘","双轨模型实验室"]]],
  ["决策推演",[["wind","◉","2032风洞"],["stress","↯","压力与敏感性"],["blindspots","⚑","可能忽略什么"],["strategy","➤","行动方案"]]],
  ["研究成果",[["report","▣","研究报告"]]]
@@ -193,7 +193,7 @@ function renderData(){
   ...q.flags
  ].map(item=>'<div class="quality-item '+esc(item.level||"info")+'"><strong>'+esc(item.scope)+'</strong><p>'+esc(item.message)+'</p></div>').join("");
 }
-function renderMacro(){
+function renderMacroLegacy(){
  const sim=ensureScenario(),parts=sim.sectors;
  $("#macroStats").innerHTML=[
   stat("2025三产总量",num(sim.baseline.gdp)+"亿","公开参考基数"),
@@ -210,6 +210,7 @@ function renderMacro(){
   insight("产业增加值不等于营收","服务业企业营业收入、制造业总产值与县域GDP增加值不可直接等同。")
  ].join("");
 }
+function renderMacro(){return window.BoluoBasePage.render(state);}
 function renderIndustry(){
  const scope=$("#industryFilter").value,stateFilter=scope,detail=E.industries(state.data,scope);
  $("#industryStats").innerHTML=[
@@ -619,6 +620,7 @@ function actionToWind(id){
 }
 function bind(){
  window.BoluoIndustryPage.bind();
+ window.BoluoBasePage.bind();
  $("#mainNav").addEventListener("click",e=>{const b=e.target.closest("[data-view]");if(b)navigate(b.dataset.view);});
  $(".work-area").addEventListener("click",e=>{
   if(buttonGo(e))return;
