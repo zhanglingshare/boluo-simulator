@@ -89,7 +89,7 @@ const GAPS={
   items:["生产性服务企业名录","服务业分行业增加值","企业服务收入和客户结构","制造业采购服务金额与来源","服务业岗位、工资和技能","本地采购、利润与税收留存"]
  }
 };
-let selectedSector="tertiary",selectedYear=2025,selectedService="producer",selectedGap="primary",bound=false;
+let selectedSector="tertiary",selectedYear=2025,selectedService="producer",selectedGap="primary",bound=false,appState=null;
 const section=()=>document.querySelector('[data-page="macro"]');
 const q=s=>section()?.querySelector(s)||null;
 const esc=x=>String(x??"").replace(/[&<>"']/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]));
@@ -101,37 +101,83 @@ function setActive(selector,attr,value){
   b.classList.toggle("active",active);b.setAttribute("aria-pressed",active?"true":"false");
  });
 }
+function optionalGrowth(row,key){
+ const keys=[key+"Growth",key+"_growth","growth_"+key];
+ for(const k of keys)if(row&&row[k]!==undefined&&row[k]!==""&&Number.isFinite(Number(row[k])))return Number(row[k]);
+ return null;
+}
+function macroContext(){
+ const fallback={values:[107.44,549.01,349.00],shares:[10.7,54.6,34.7],growths:[7.8,6.9,2.7],total:1005.45,imported:false};
+ const data=appState?.data,rows=data?.tables?.macro||[];
+ const evidence=data?.evidence?.macro;
+ const imported=evidence==="IMPORTED_UNVERIFIED"||evidence==="MIXED_UNVERIFIED";
+ const row=rows.find(x=>Number(x.year)===2025);
+ if(!imported||!row)return fallback;
+ const values=[Number(row.primary),Number(row.secondary),Number(row.tertiary)];
+ if(!values.every(x=>Number.isFinite(x)&&x>=0))return fallback;
+ const total=values.reduce((a,b)=>a+b,0);if(!(total>0))return fallback;
+ return {values,total,shares:values.map(x=>x/total*100),growths:["primary","secondary","tertiary"].map(k=>optionalGrowth(row,k)),imported:true};
+}
+function currentSectors(ctx=macroContext()){
+ return SECTORS.map((d,i)=>({...d,value:ctx.values[i],share:ctx.shares[i],growth:ctx.growths[i]}));
+}
+function renderHero(ctx){
+ q("#base-gdp-total").innerHTML=fmt(ctx.total,2)+'<small>亿元</small>';
+ q("#base-current-ratio").textContent=ctx.shares.map(x=>fmt(x,1)).join(" : ");
+ q("#base-gdp-growth").textContent=ctx.imported?"客户导入的2025基准 · 待核验":"首次突破千亿 · 实际增长 +5.5%";
+ const flag=q(".base-structure-card .base-evidence");
+ if(flag)flag.textContent=ctx.imported?"客户导入 · 待核验":"公开统计 / 研究参考";
+}
 function renderMix(){
- const values=[10.7,54.6,34.7],refs=[10,50,40];
- const rows=[["2025实际",values],["2032参考",refs]];
+ const ctx=macroContext(),sectors=currentSectors(ctx),values=ctx.shares,refs=[10,50,40];
+ const rows=[[ctx.imported?"导入2025":"2025实际",values],["2032参考",refs]];
+ renderHero(ctx);
  q("#base-mix-chart").innerHTML=rows.map(([label,v])=>
-  '<div class="base-mix-row"><span class="base-mix-label">'+label+'</span><div class="base-mix-track">'+SECTORS.map((s,i)=>
-   '<i class="base-mix-segment '+s.id+'" style="width:'+v[i]+'%;background:'+s.color+'">'+(v[i]>=10?fmt(v[i])+'%':"")+'</i>').join("")+'</div><strong class="base-mix-total">100%</strong></div>'
+  '<div class="base-mix-row"><span class="base-mix-label">'+label+'</span><div class="base-mix-track">'+sectors.map((d,i)=>
+   '<i class="base-mix-segment '+d.id+'" style="width:'+v[i]+'%;background:'+d.color+'">'+(v[i]>=10?fmt(v[i])+'%':"")+'</i>').join("")+'</div><strong class="base-mix-total">100%</strong></div>'
  ).join("");
- q("#base-mix-legend").innerHTML=SECTORS.map(s=>'<span><i style="background:'+s.color+'"></i>'+s.name+'</span>').join("");
+ q("#base-mix-legend").innerHTML=sectors.map(d=>'<span><i style="background:'+d.color+'"></i>'+d.name+'</span>').join("");
  setActive("#base-sector-select button","data-base-sector",selectedSector);
- const d=SECTORS.find(x=>x.id===selectedSector)||SECTORS[0],gap=d.share-d.target;
- q("#base-sector-detail").innerHTML='<div><h3>'+d.name+' · '+d.plain+'</h3><p>'+d.headline+'<br>'+d.note+'</p><p style="margin-top:8px;color:#e8c58f">继续核实：'+d.question+'</p></div>'+
+ const d=sectors.find(x=>x.id===selectedSector)||sectors[0],gap=d.share-d.target;
+ const growth=d.growth===null?"待补充":signed(d.growth);
+ const growthLabel=d.growth===null?"尚未随本次导入提供":"实际增速 · 不变价";
+ const provenance=ctx.imported?"当前金额和占比来自客户导入数据，状态为待核验。":"金额为2025公开统计参考值；增长速度按不变价计算。";
+ q("#base-sector-detail").innerHTML='<div><h3>'+d.name+' · '+d.plain+'</h3><p>'+d.headline+'<br>'+d.note+'</p><p style="margin-top:8px;color:#e8c58f">继续核实：'+d.question+'</p><p style="margin-top:7px;color:#9dbbc7;font-size:10px">'+provenance+'</p></div>'+
   '<div class="base-sector-metrics"><div><small>2025增加值 · 现价</small><strong>'+fmt(d.value,2)+'亿</strong></div>'+
   '<div><small>占GDP比重</small><strong>'+fmt(d.share,1)+'%</strong></div>'+
-  '<div><small>实际增速 · 不变价</small><strong>'+signed(d.growth)+'</strong></div>'+
+  '<div><small>'+growthLabel+'</small><strong>'+(d.growth===null?"待补充":growth)+'</strong></div>'+
   '<div><small>与2032结构参考差距</small><strong class="'+(gap<0?"down":"")+'">'+(gap>0?"+":"")+fmt(gap,1)+'个百分点</strong></div></div>';
 }
+function historyRows(){
+ const rows=YEARS.map(d=>({...d,imported:false}));
+ const data=appState?.data,macroRows=data?.tables?.macro||[];
+ if(data?.evidence?.macro==="IMPORTED_UNVERIFIED"||data?.evidence?.macro==="MIXED_UNVERIFIED"){
+  macroRows.forEach(r=>{
+   const year=Number(r.year),values=[Number(r.primary),Number(r.secondary),Number(r.tertiary)];
+   if(!Number.isFinite(year)||!values.every(x=>Number.isFinite(x)&&x>=0))return;
+   const total=values.reduce((a,b)=>a+b,0);if(!(total>0))return;
+   const existing=rows.find(x=>x.year===year);
+   if(existing){existing.gdp=total;existing.imported=true;existing.note="客户导入数据，待核验。";}
+   else rows.push({year,gdp:total,imported:true,note:"客户导入数据，待核验。"});
+  });
+ }
+ return rows.sort((a,b)=>a.year-b.year);
+}
 function renderHistory(){
- const w=850,h=245,p={l:40,r:22,t:20,b:36},max=1100,base=h-p.b;
- const x=i=>p.l+i*(w-p.l-p.r)/(YEARS.length-1);
+ const rows=historyRows(),w=850,h=245,p={l:40,r:22,t:20,b:36},max=Math.max(1100,...rows.map(d=>d.gdp))*1.08,base=h-p.b;
+ const x=i=>p.l+i*(w-p.l-p.r)/Math.max(1,rows.length-1);
  const y=v=>base-v/max*(h-p.t-p.b);
  let svg='<svg viewBox="0 0 '+w+' '+h+'" role="img" aria-label="2020至2025年博罗地区生产总值现价规模">';
- [0,500,1000].forEach(v=>{svg+='<line x1="'+p.l+'" x2="'+(w-p.r)+'" y1="'+y(v)+'" y2="'+y(v)+'" stroke="#e7eff2" stroke-dasharray="3 5"/><text x="'+(p.l-8)+'" y="'+(y(v)+4)+'" text-anchor="end" font-size="10" fill="#8ba0a9">'+v+'</text>';});
- const pts=YEARS.map((d,i)=>x(i)+","+y(d.gdp)).join(" ");
+ [0,Math.round(max/2),Math.round(max)].forEach(v=>{svg+='<line x1="'+p.l+'" x2="'+(w-p.r)+'" y1="'+y(v)+'" y2="'+y(v)+'" stroke="#e7eff2" stroke-dasharray="3 5"/><text x="'+(p.l-8)+'" y="'+(y(v)+4)+'" text-anchor="end" font-size="10" fill="#8ba0a9">'+v+'</text>';});
+ const pts=rows.map((d,i)=>x(i)+","+y(d.gdp)).join(" ");
  svg+='<polyline points="'+pts+'" fill="none" stroke="#4a9eab" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"/>';
- YEARS.forEach((d,i)=>{const active=d.year===selectedYear;
-  svg+='<g data-history-year="'+d.year+'" tabindex="0" role="button" aria-label="'+d.year+'年GDP '+fmt(d.gdp,2)+'亿元"><circle cx="'+x(i)+'" cy="'+y(d.gdp)+'" r="'+(active?17:12)+'" fill="'+(active?"#4ab398":"#6babc0")+'" opacity="'+(active?".18":".10")+'"/><circle cx="'+x(i)+'" cy="'+y(d.gdp)+'" r="'+(active?7:5)+'" fill="'+(active?"#268b7d":"#579ab5")+'" stroke="#fff" stroke-width="2"/><text x="'+x(i)+'" y="'+(y(d.gdp)-17)+'" text-anchor="middle" font-size="'+(active?14:11)+'" font-weight="'+(active?900:700)+'" fill="'+(active?"#1b6d78":"#6b8998")+'">'+Math.round(d.gdp)+'</text><text x="'+x(i)+'" y="'+(base+21)+'" text-anchor="middle" font-size="11" fill="#7f98a3">'+d.year+'</text></g>';
+ rows.forEach((d,i)=>{const active=d.year===selectedYear,color=d.imported?"#d58d57":(active?"#268b7d":"#579ab5");
+  svg+='<g data-history-year="'+d.year+'" tabindex="0" role="button" aria-label="'+d.year+'年GDP '+fmt(d.gdp,2)+'亿元'+(d.imported?'，导入待核验':'')+'"><circle cx="'+x(i)+'" cy="'+y(d.gdp)+'" r="'+(active?17:12)+'" fill="'+color+'" opacity="'+(active?".18":".10")+'"/><circle cx="'+x(i)+'" cy="'+y(d.gdp)+'" r="'+(active?7:5)+'" fill="'+color+'" stroke="#fff" stroke-width="2"/><text x="'+x(i)+'" y="'+(y(d.gdp)-17)+'" text-anchor="middle" font-size="'+(active?14:11)+'" font-weight="'+(active?900:700)+'" fill="'+(active?"#1b6d78":"#6b8998")+'">'+Math.round(d.gdp)+'</text><text x="'+x(i)+'" y="'+(base+21)+'" text-anchor="middle" font-size="11" fill="#7f98a3">'+d.year+'</text></g>';
  });
  svg+='</svg>';q("#base-history-chart").innerHTML=svg;
- q("#base-history-years").innerHTML=YEARS.map(d=>'<button type="button" data-history-year="'+d.year+'" class="'+(selectedYear===d.year?"active":"")+'" aria-pressed="'+(selectedYear===d.year)+'">'+d.year+'</button>').join("");
- const d=YEARS.find(x=>x.year===selectedYear)||YEARS[5];
- q("#base-history-detail").innerHTML='<span>'+d.year+' · 年度GDP</span><strong>'+fmt(d.gdp,2)+'亿</strong><small>'+d.note+'</small>';
+ q("#base-history-years").innerHTML=rows.map(d=>'<button type="button" data-history-year="'+d.year+'" class="'+(selectedYear===d.year?"active":"")+'" aria-pressed="'+(selectedYear===d.year)+'">'+d.year+(d.imported?"*":"")+'</button>').join("");
+ const d=rows.find(x=>x.year===selectedYear)||rows[rows.length-1];
+ q("#base-history-detail").innerHTML='<span>'+d.year+' · 年度GDP'+(d.imported?" · 导入待核验":"")+'</span><strong>'+fmt(d.gdp,2)+'亿</strong><small>'+d.note+'</small>';
 }
 function renderPulse(){
  q("#base-pulse-chart").innerHTML=PULSE.map(d=>
@@ -165,8 +211,9 @@ function renderSources(){
  q("#base-source-list").innerHTML='<ul>'+items.map(([label,url])=>'<li><a href="'+esc(url)+'" target="_blank" rel="noopener noreferrer">'+esc(label)+'</a></li>').join("")+'</ul>'+
  '<p style="font-size:10px;line-height:1.85;color:#718995">统计边界：GDP及产业增加值金额按现价计算，增长速度按不变价格计算；2025 GDP、金融业增加值、交通运输仓储邮政业增加值及规上工业增加值增速为快报数。2026年前三季度为累计数据，不与2025全年直接比较。2032年1:5:4仅为结构研究参考，不是已批准的正式规划指标，也没有据此虚构2032年GDP总量或产业金额。服务业分行业的增加值、营业收入、销售额、营业额和旅游综合收入分别保留原统计对象，不混算。</p>';
 }
-function render(){
+function render(state){
  if(!section())return;
+ appState=state||appState;
  renderMix();renderHistory();renderPulse();renderService();renderGap();renderSources();
 }
 function handleClick(ev){
