@@ -123,8 +123,9 @@ def main():
                     assert calibration_probe["delta"]>0,calibration_probe
                     assert calibration_probe["b"]>calibration_probe["a"],calibration_probe
                     go(page,"macro")
-                    assert "1,005.5" in page.locator("#macroStats").inner_text()
-                    assert page.locator("#macroTimeline svg").count()==1
+                    assert "1,005.45" in page.locator(".base-hero").inner_text()
+                    assert page.locator("#base-history-chart svg").count()==1
+                    assert page.locator("#base-pulse-chart .base-growth-row").count()==3
                     go(page,"industries")
                     assert page.locator("#enterpriseTable tr").count()>20
                     page.locator("#industryFilter").select_option("tertiary")
