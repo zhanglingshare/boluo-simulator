@@ -160,7 +160,6 @@ function renderSources(){
   ["2025年博罗县国民经济和社会发展统计公报（网络转录）","https://maptable.com/tjgb/2025/%E6%83%A0%E5%B7%9E%E5%B8%82/%E5%8D%9A%E7%BD%97%E5%8E%BF/report/hui-zhou-shi-2025-nian-bo-luo-guo-min-jing-ji-he-she-hui-fa-zhan-tong-ji-gong-bao-2"],
   ["博罗县2026年前三季度经济运行情况（南方+报道）","https://www.fz0752.com/fontHtml/html/issue/000143025_1.html"],
   ["博罗县2025年GDP与产业结构报道","https://epaper.nfnews.com/nfdaily/html/202602/03/content_10162180.html"],
-  ["博罗县工业企业主体规模报道（2026年2月）","https://epaper.nfnews.com/nfdaily/html/202602/03/content_10162180.html"],
   ["博罗县“十五五”规划纲要印发通知（官方）","https://www.boluo.gov.cn/zwgk/qt/gzjh/content/post_5842396.html"]
  ];
  q("#base-source-list").innerHTML='<ul>'+items.map(([label,url])=>'<li><a href="'+esc(url)+'" target="_blank" rel="noopener noreferrer">'+esc(label)+'</a></li>').join("")+'</ul>'+
