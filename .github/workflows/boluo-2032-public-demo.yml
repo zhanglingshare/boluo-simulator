@@ -24,6 +24,10 @@ jobs:
           node --check lab-2032/core.js
           node --check lab-2032/engine.js
           node --check lab-2032/studio.js
+          node --check lab-2032/industry-2025.js
+          node --check lab-2032/base-structure.js
+          node --check lab-2032/relations-experience.js
+          node --check lab-2032/service-bridge.js
           node --check lab-2032/app.js
       - name: Install real browser and Excel fixtures
         run: |
