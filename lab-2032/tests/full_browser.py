@@ -1,4 +1,4 @@
-"""Executable 15-workspace Boluo 2032 public studio acceptance suite.
+"""Executable 16-workspace Boluo 2032 public studio acceptance suite.
 Tests actual computation, CSV/XLSX/JSON replacement, professional ZIP, report,
 desktop 1440 and Android-width 390, no JS page errors/overflow.
 """
@@ -60,6 +60,32 @@ def main():
                     page.locator('[data-focus="balanced"]').click()
                     assert page.locator('[data-focus="balanced"]').get_attribute("aria-pressed")=="true"
                     assert page.locator("#mainNav .nav-link").count()==len(PAGES)
+                    go(page,"macro")
+                    assert "千亿博罗" in page.locator(".base-hero").inner_text()
+                    assert "1,005.45" in page.locator(".base-hero").inner_text()
+                    assert "10.7" in page.locator(".base-hero").inner_text()
+                    assert "1 : 5 : 4" in page.locator(".base-hero").inner_text()
+                    assert page.locator("#base-mix-chart .base-mix-row").count()==2
+                    page.locator('#base-sector-select [data-base-sector="primary"]').click()
+                    assert "+7.8%" in page.locator("#base-sector-detail").inner_text()
+                    page.locator('#base-sector-select [data-base-sector="secondary"]').click()
+                    assert "549.01亿" in page.locator("#base-sector-detail").inner_text()
+                    page.locator('#base-sector-select [data-base-sector="tertiary"]').click()
+                    assert "-5.3个百分点" in page.locator("#base-sector-detail").inner_text()
+                    page.locator('#base-history-years [data-history-year="2024"]').click()
+                    assert "970.87亿" in page.locator("#base-history-detail").inner_text()
+                    assert "初步数" in page.locator("#base-history-detail").inner_text()
+                    assert "4.2" in page.locator(".base-pulse-insight").inner_text()
+                    assert "+1.2%" in page.locator("#base-pulse-chart").inner_text()
+                    page.locator('#base-service-tabs [data-service-view="living"]').click()
+                    assert "+13.9%" in page.locator("#base-service-content").inner_text()
+                    page.locator('#base-service-tabs [data-service-view="tourism"]').click()
+                    assert "51.88" in page.locator("#base-service-content").inner_text()
+                    page.locator('#base-gap-tabs [data-gap-sector="tertiary"]').click()
+                    assert "制造业采购服务金额与来源" in page.locator("#base-gap-content").inner_text()
+                    assert page.locator("#base-source-list a").count()==4
+                    page.screenshot(path=str(ART/("base-mobile.png" if mobile else "base-desktop.png")),
+                      full_page=True,animations="disabled")
                     go(page,"industry")
                     assert "投资却踩下刹车" in page.locator(".in-hero").inner_text()
                     assert "+8.7" in page.locator(".in-hero").inner_text()
@@ -97,8 +123,9 @@ def main():
                     assert calibration_probe["delta"]>0,calibration_probe
                     assert calibration_probe["b"]>calibration_probe["a"],calibration_probe
                     go(page,"macro")
-                    assert "1,005.5" in page.locator("#macroStats").inner_text()
-                    assert page.locator("#macroTimeline svg").count()==1
+                    assert "1,005.45" in page.locator(".base-hero").inner_text()
+                    assert page.locator("#base-history-chart svg").count()==1
+                    assert page.locator("#base-pulse-chart .base-growth-row").count()==3
                     go(page,"industries")
                     assert page.locator("#enterpriseTable tr").count()>20
                     page.locator("#industryFilter").select_option("tertiary")
@@ -173,7 +200,10 @@ def main():
                     page.locator("#importConfirm").click()
                     expect(page.locator('#topMode')).to_contain_text('MIXED',timeout=12000)
                     go(page,"macro")
-                    assert "1,150" in page.locator("#macroStats").inner_text()
+                    assert "1,150" in page.locator("#base-gdp-total").inner_text()
+                    assert "待核验" in page.locator("#base-gdp-growth").inner_text()
+                    page.locator('#base-history-years [data-history-year="2025"]').click()
+                    assert "1,150.00亿" in page.locator("#base-history-detail").inner_text()
                     go(page,"data")
                     page.locator("#restoreDemoTop").click()
                     expect(page.locator('#topMode')).to_contain_text('DEMO',timeout=12000)
@@ -192,7 +222,10 @@ def main():
                     page.locator("#importConfirm").click()
                     page.wait_for_function('document.querySelector("#topMode").textContent.includes("MIXED")',timeout=12000)
                     go(page,"macro")
-                    assert "1,150" in page.locator("#macroStats").inner_text()
+                    assert "1,150" in page.locator("#base-gdp-total").inner_text()
+                    assert "待核验" in page.locator("#base-gdp-growth").inner_text()
+                    page.locator('#base-history-years [data-history-year="2025"]').click()
+                    assert "1,150.00亿" in page.locator("#base-history-detail").inner_text()
                     go(page,"data")
                     page.locator("#restoreDemoTop").click()
                     # Real imports can introduce previously unseen town names; lists must adapt.
