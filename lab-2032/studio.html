@@ -7,7 +7,8 @@
 <link rel="stylesheet" href="studio.css">
 <link rel="stylesheet" href="industry-2025.css">
 <link rel="stylesheet" href="base-structure.css">
-<script defer src="core.js"></script><script defer src="engine.js"></script><script defer src="industry-2025.js"></script><script defer src="base-structure.js"></script><script defer src="studio.js"></script>
+<link rel="stylesheet" href="relations-experience.css">
+<script defer src="core.js"></script><script defer src="engine.js"></script><script defer src="industry-2025.js"></script><script defer src="base-structure.js"></script><script defer src="relations-experience.js"></script><script defer src="studio.js"></script>
 </head><body>
 <div class="app-shell">
 <header class="masthead">
@@ -334,6 +335,107 @@
       <div class="base-next-links"><button type="button" class="button primary" data-go="network">进入产业关系网络 →</button><button type="button" class="button outline" data-go="wind">带着问题进入2032风洞</button></div>
     </section>
     <details class="base-sources"><summary>查看数据来源、统计口径和边界说明</summary><div id="base-source-list"></div></details>
+  </section>
+
+  <section data-page="relations" class="page-section rl-page" hidden>
+    <div class="rl-hero">
+      <div class="rl-hero-pattern"></div>
+      <div class="rl-hero-copy">
+        <span class="rl-overline">04 / RELATIONSHIP INTELLIGENCE · EXPLORE THE CONNECTIONS</span>
+        <h1>产业不是三块饼。<br><em>是彼此牵动的一张网。</em></h1>
+        <p>一家企业需要服务，另一家企业需要订单。点开一条关系，看看产业怎样互相连接；再试着拿掉一个节点，观察哪些连接可能受到影响。</p>
+        <div class="rl-hero-tags"><span>实际计算 · 不是静态示意图</span><span id="rl-hero-evidence">合成Demo · 非真实供应链</span></div>
+      </div>
+      <div class="rl-hero-symbol" aria-hidden="true">
+        <svg viewBox="0 0 460 300"><defs><radialGradient id="rlGlow"><stop stop-color="#a0f7df" stop-opacity=".36"/><stop offset="1" stop-color="#8ad6ed" stop-opacity="0"/></radialGradient></defs>
+          <circle cx="235" cy="149" r="132" fill="url(#rlGlow)"/>
+          <g stroke="#90d9de" fill="none" stroke-opacity=".4" stroke-width="2"><path d="M93 66Q185 75 221 150T381 92"/><path d="M80 207Q171 113 221 150T392 232"/><path d="M93 66Q181 207 392 232"/><path d="M80 207Q212 238 381 92"/></g>
+          <g fill="#aaf4df"><circle cx="93" cy="66" r="18"/><circle cx="80" cy="207" r="13"/><circle cx="221" cy="150" r="31"/><circle cx="381" cy="92" r="22"/><circle cx="392" cy="232" r="15"/></g>
+          <g fill="#103f50"><circle cx="93" cy="66" r="7"/><circle cx="80" cy="207" r="6"/><circle cx="221" cy="150" r="11"/><circle cx="381" cy="92" r="9"/><circle cx="392" cy="232" r="6"/></g></svg>
+      </div>
+    </div>
+
+    <div class="rl-stats" id="rl-stats" aria-label="当前研究数据关系概况"></div>
+    <section class="rl-main-section">
+      <div class="rl-section-head">
+        <div><span>01 / EXPLORE</span><h2>从一张看得懂的网开始。</h2><p>先选一个观察范围，再点击节点；网络会随数据、筛选和选择一起变化。</p></div>
+        <div class="rl-mode-buttons" id="rl-mode-buttons" role="group" aria-label="网络视角">
+          <button type="button" data-rl-mode="structure" class="active" aria-pressed="true">产业连接</button>
+          <button type="button" data-rl-mode="actors" aria-pressed="false">主体局部</button>
+        </div>
+      </div>
+      <div class="rl-workbench">
+        <article class="rl-graph-card">
+          <div class="rl-toolbar">
+            <div class="rl-filter-group" id="rl-sector-filters" role="group" aria-label="产业范围">
+              <button type="button" data-rl-sector="all" class="active" aria-pressed="true">全部</button>
+              <button type="button" data-rl-sector="primary" aria-pressed="false">农业</button>
+              <button type="button" data-rl-sector="secondary" aria-pressed="false">工业</button>
+              <button type="button" data-rl-sector="tertiary" aria-pressed="false">服务业</button>
+            </div>
+            <label class="rl-type-label">关系类型 <select id="rl-type-filter" class="input" aria-label="关系类型">
+              <option value="all">全部关系</option>
+              <option value="professional_service">专业服务</option>
+              <option value="industrial_supply">工业配套</option>
+              <option value="agricultural_processing">农业加工</option>
+              <option value="agricultural_distribution">农业流通</option>
+            </select></label>
+          </div>
+          <div class="rl-graph-frame">
+            <div class="rl-graph-caption"><span id="rl-graph-heading">产业连接 · 汇总视角</span><span id="rl-graph-evidence">演示数据</span></div>
+            <div id="rl-graph-stage" class="rl-graph-stage" aria-live="polite"></div>
+            <div class="rl-graph-footer">
+              <span><i class="rl-dot primary"></i>农业</span><span><i class="rl-dot secondary"></i>工业</span><span><i class="rl-dot tertiary"></i>服务业</span>
+              <span class="rl-graph-tip">点选节点查看连接，图形仅呈现筛选后的部分关系</span>
+            </div>
+          </div>
+          <div class="rl-graph-bottom">
+            <label>显示关系数量 <input id="rl-edge-limit" type="range" min="8" max="36" step="2" value="24"/><output id="rl-edge-limit-output">24条</output></label>
+            <button type="button" id="rl-reset" class="rl-reset">重置观察 ↺</button>
+          </div>
+        </article>
+        <aside class="rl-inspector" id="rl-inspector" aria-live="polite"></aside>
+      </div>
+      <div class="rl-below-graph">
+        <span><b>注意关系方向</b>：箭头表示当前数据中的源节点 → 目标节点；不能不加区分地理解为“供应商向客户供货”。</span>
+        <span id="rl-visible-summary"></span>
+      </div>
+    </section>
+
+    <section class="rl-experiment">
+      <div class="rl-section-head">
+        <div><span>02 / TEST A BREAK</span><h2>如果这条连接突然变弱，会影响谁？</h2><p>不靠一句“风险很大”吓人。让你亲手改变实验强度，看网络示意传播怎样改变。</p></div>
+        <span class="rl-experiment-tag">条件演示 · 非经营损失预测</span>
+      </div>
+      <div class="rl-experiment-layout">
+        <div class="rl-experiment-console">
+          <div class="rl-console-top"><span>当前实验主体</span><strong id="rl-shock-source">请先选择一个主体</strong></div>
+          <label class="rl-shock-slider" for="rl-shock"><span>连接受扰动程度</span><strong id="rl-shock-value">35%</strong></label>
+          <input id="rl-shock" type="range" min="10" max="75" value="35" step="5" aria-label="模拟冲击幅度"/>
+          <div class="rl-shock-scale"><span>10%</span><span>35%</span><span>75%</span></div>
+          <button type="button" id="rl-run" class="rl-run">运行一次断点实验 →</button>
+          <p>实验复用既有三步传播规则，强度为人工设定。受影响节点数是模型输出，不是现实中的受损企业数。</p>
+        </div>
+        <div class="rl-experiment-results" id="rl-results" aria-live="polite">
+          <div class="rl-idle">选择一个主体，改变强度，再运行实验。<small>结果将显示涉及的示意节点与传导层次。</small></div>
+        </div>
+      </div>
+    </section>
+
+    <section class="rl-next-evidence">
+      <div class="rl-section-head">
+        <div><span>03 / THE REAL QUESTION</span><h2>哪些关系值得优先去核实？</h2><p>高关联不等于高价值，更不等于已经存在真实交易。下面是研究清单，不是企业名单或结论。</p></div>
+      </div>
+      <div id="rl-questions" class="rl-questions"></div>
+      <div class="rl-next-actions">
+        <div><strong>演示走到这里，真实研究才刚开始。</strong><p>把客户关系、服务采购、订单与项目进度逐步替换进来；系统会按数据版本重新生成网络。</p></div>
+        <div class="rl-next-buttons"><button type="button" class="button primary" data-go="network">打开完整关系研究 →</button><button type="button" class="button outline" data-go="data">导入真实关系数据</button></div>
+      </div>
+    </section>
+    <details class="rl-method-note"><summary>这张网是怎样生成的？哪些结论不能得出？</summary>
+      <p>默认830个主体及关系为可复现合成Demo，不代表博罗实际企业与交易。产业视图由当前关系数据按细分行业汇总产生；主体视图只显示局部连接，避免几百个点同时出现。点击主体会从已有关系表提取实际Demo邻接关系，断点实验调用现有传播引擎。</p>
+      <p>上传新的关系和主体表后重新计算。客户提供的数据始终标注为待核验；若仅部分表被替换，仍保留合成数据标识。连线权重单位来自当前数据契约（百万元），不能直接换算GDP或经济损失；网络中心性也不能证明因果。公开数据目前不支持声称任何具体博罗企业之间存在这里展示的采购关系。</p>
+    </details>
   </section>
 
   <section data-page="industries" class="page-section" hidden>
