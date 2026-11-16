@@ -10,14 +10,29 @@ body{margin:0;background:#080b12;color:#e6edf3;font:14px/1.65 -apple-system,"Pin
 .nav a.on{background:#15803d;border-color:#22c55e;color:#fff;font-weight:600}
 .wrap{max-width:920px;margin:auto;padding:16px}
 h1{font-size:20px;margin:0 0 2px}
-.sub{color:#8fa3bf;font-size:13px;margin:0 0 12px}
+.sub{color:#aebed0;font-size:14px;margin:0 0 12px}
+.read-guide{padding:12px 14px;border:1px solid #234a34;border-radius:10px;background:#0d1a15;color:#e4efe6}
+.read-guide h2,#after h2{font-size:16px;margin:0 0 7px}
+.guide-points{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:7px 16px;margin:0}
+.guide-points div{min-width:0}
+.guide-points dt{display:inline;font-weight:700;color:#86efac}
+.guide-points dd{display:inline;margin:0;color:#d0dfd5}
+.read-guide p{margin:9px 0 0;padding-top:8px;border-top:1px solid #254333;font-size:14px}
+.read-guide p strong{color:#86efac}
+.stat-help,.rank-help{font-size:13px;color:#afbed0;line-height:1.55;margin:4px 0 0}
+#after{margin-top:14px}
+.rank-help{margin:0 0 8px}
+@media(max-width:560px){
+  .guide-points{grid-template-columns:minmax(0,1fr)}
+  .read-guide{padding:10px 12px}
+}
 .stage{background:radial-gradient(ellipse at center,#0b1a12,#080b12);border:1px solid #1c2739;border-radius:12px;position:relative;overflow:hidden}
 svg{display:block;width:100%;height:auto}
 .actbar{display:flex;gap:10px;align-items:center;margin:12px 0;flex-wrap:wrap}
-.btn{background:#15803d;color:#fff;border:0;padding:9px 20px;border-radius:8px;font-size:13.5px;font-weight:600;cursor:pointer}
+.btn{background:#15803d;color:#fff;border:0;min-height:44px;padding:9px 20px;border-radius:8px;font-size:13.5px;font-weight:600;cursor:pointer}
 .cnt{font-size:12px;color:#7d8da5;font-variant-numeric:tabular-nums}
-.acttitle{position:absolute;top:12px;left:50%;transform:translateX(-50%);font-size:13px;font-weight:700;letter-spacing:2px;color:#cbd5e1;z-index:5}
-.legend{position:absolute;bottom:9px;left:12px;font-size:10.5px;color:#6b7d96;display:flex;gap:12px;flex-wrap:wrap;z-index:5}
+.acttitle{position:absolute;top:8px;inset-inline:10px;text-align:center;font-size:12px;font-weight:700;color:#cbd5e1;z-index:5;pointer-events:none}
+.legend{display:flex;flex-wrap:wrap;gap:5px 14px;padding:7px 12px;border-top:1px solid #213529;color:#c3d0d0;font-size:12px}
 .dot{display:inline-block;width:8px;height:8px;border-radius:50%;margin-right:4px;vertical-align:middle}
 .gnode{opacity:0;animation:flyIn .55s cubic-bezier(.2,.8,.3,1) forwards}
 .gnode circle{filter:drop-shadow(0 0 6px currentColor)}
@@ -28,6 +43,10 @@ svg{display:block;width:100%;height:auto}
 }
 .edge{animation:drawEdge .6s ease-out forwards}
 @keyframes drawEdge{to{stroke-dashoffset:0}}
+@media(prefers-reduced-motion:reduce){
+  .gnode{animation:none;opacity:1}
+  .edge{animation:none;stroke-dashoffset:0}
+}
 .card{background:#0e1523;border:1px solid #1c2739;border-radius:10px;padding:14px}
 .k3{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin-top:14px}
 @media(max-width:700px){.k3{grid-template-columns:1fr}}
@@ -44,7 +63,9 @@ svg{display:block;width:100%;height:auto}
 .rank-row .bar-bg{flex:1;height:14px;background:#0a0f1a;border-radius:3px;overflow:hidden}
 .rank-row .bar{height:100%;border-radius:3px}
 .rank-row .val{width:55px;flex:none;font-size:11px;color:#93a4bd;font-variant-numeric:tabular-nums}
-.algo-note{font-size:11px;color:#5b6b82;margin-top:8px;padding:8px 10px;background:#0a0f1a;border-radius:6px;border-left:2px solid #2b3a55}
+.algo-note{font-size:13px;color:#b8c6d4;margin-top:12px;padding:8px 10px;background:#0a0f1a;border-radius:6px;border-left:2px solid #2b3a55}
+.algo-note summary{min-height:32px;display:list-item;align-content:center;cursor:pointer;color:#e4ebef;font-weight:650}
+.algo-note p{margin:5px 0}
 .blood-tag{display:inline-block;font-size:9px;padding:1px 5px;border-radius:3px;font-weight:700;margin-left:4px}
 .blood-A{background:#14532d;color:#86efac}
 .blood-B{background:#1e3a5f;color:#93c5fd}
@@ -68,55 +89,75 @@ svg{display:block;width:100%;height:auto}
 
 <div class="wrap">
   <h1>把博罗放进大湾区，看它怎么长</h1>
-  <p class="sub">33个主体、43条可佐证主边，会自己一层层长出来。注意最粗的那根线连到哪里。</p>
+  <p class="sub">先看看博罗西边怎么连到东莞，再看哪些地方把周边的人和产业串起来。</p>
+
+  <section class="read-guide" aria-labelledby="read-guide-title">
+    <h2 id="read-guide-title">怎么看这张图</h2>
+    <dl class="guide-points">
+      <div><dt>圆点</dt> <dd>代表镇街、产业或企业、人群、周边城市。颜色区分类别，见图下方。大圆点是画图时特别标出的。</dd></div>
+      <div><dt>连线</dt> <dd>表示图里记录的联系。线越粗，代表画图时越强调这段联系。</dd></div>
+    </dl>
+    <p id="read-example"><strong>先找东莞和园洲。</strong> 等线出现后，从图左边紫色的「东莞」出发，沿最粗的线就能找到「园洲」。东莞旁边还有一条线连着石湾。</p>
+  </section>
 
   <div class="actbar">
-    <button class="btn" id="bReplay">↻ 重新建构</button>
-    <span class="cnt" id="cnt">准备中…</span>
+    <button class="btn" type="button" id="bReplay">重播关系图</button>
+    <span class="cnt" id="cnt" role="status">准备画图</span>
   </div>
 
   <div class="stage">
     <div class="acttitle" id="acttitle"></div>
-    <svg id="svg" viewBox="0 0 860 620">
+    <svg id="svg" viewBox="0 0 860 620" aria-label="博罗与周边城市的关系图" aria-describedby="read-example">
       <g id="edges"></g>
       <g id="nodes"></g>
     </svg>
     <div class="legend">
       <span><i class="dot" style="background:#22c55e"></i>博罗产业</span>
-      <span><i class="dot" style="background:#9aa6b8"></i>镇街空间</span>
-      <span><i class="dot" style="background:#f97316"></i>人</span>
-      <span><i class="dot" style="background:#a78bfa"></i>外部城市</span>
+      <span><i class="dot" style="background:#9aa6b8"></i>镇街与地点</span>
+      <span><i class="dot" style="background:#f97316"></i>人群</span>
+      <span><i class="dot" style="background:#a78bfa"></i>周边城市</span>
     </div>
   </div>
 
   <div id="after">
+    <h2>看完图，能看出什么？</h2>
     <div class="k3">
-      <div class="b"><div class="l">现在连得最多</div><div class="v" id="kDegree" style="color:#4ade80">—</div><div style="font-size:11px;color:#6b7d96;margin-top:3px" id="kDegreeDesc"></div></div>
-      <div class="b"><div class="l">网络密度</div><div class="v" style="color:#fbbf24">约8%</div><div style="font-size:11px;color:#6b7d96;margin-top:3px">43/528，大量潜在连接是暗的</div></div>
-      <div class="b"><div class="l">最不能断的（必经度第一）</div><div class="v" id="kBetween" style="color:#a78bfa">—</div><div style="font-size:11px;color:#6b7d96;margin-top:3px" id="kBetweenDesc"></div></div>
+      <div class="b">
+        <div class="l">直接连得最多</div><div class="v" id="kDegree" style="color:#4ade80">—</div>
+        <p class="stat-help" id="kDegreeDesc"></p>
+      </div>
+      <div class="b">
+        <div class="l">图里画了多少关系</div><div class="v" id="relationCoverage" style="color:#fbbf24">—</div>
+        <p class="stat-help" id="coverageDesc"></p>
+      </div>
+      <div class="b">
+        <div class="l">图里常经过的中间点</div><div class="v" id="kBetween" style="color:#a78bfa">—</div>
+        <p class="stat-help" id="kBetweenDesc"></p>
+      </div>
     </div>
 
     <div class="plain">
-      <span class="lab">人话</span>
-      博罗不是一个孤立的县。它连得最紧的那根线，不是连到自己的县城，是连到东莞。这不是问题——这是博罗在大湾区里的位置。园洲石湾挨着东莞石龙，产业承接是地理给的。<span class="blood-tag blood-A">A 实测</span>
+      <span class="lab">什么叫中间点？</span>
+      东莞和高新区在图上可以这样连起来。<strong>东莞 → 园洲 → 高新区。</strong> 园洲就在这段关系的中间。
     </div>
 
     <div style="margin-top:14px">
-      <div style="font-size:13px;font-weight:700;margin-bottom:8px;color:#cbd5e1">谁连得最多？</div>
+      <div style="font-size:14px;font-weight:700;margin-bottom:3px;color:#dce6ee">谁的直连最多？</div>
+      <p class="rank-help">条越长，表示图中与这个圆点直接相连的关系记录越多。</p>
       <div id="degreeRanks"></div>
     </div>
 
     <div style="margin-top:14px">
-      <div style="font-size:13px;font-weight:700;margin-bottom:8px;color:#cbd5e1">谁在关键路径上？</div>
+      <div style="font-size:14px;font-weight:700;margin-bottom:3px;color:#dce6ee">从一个点找另一个点，经常经过谁？</div>
+      <p class="rank-help">分数越高，表示图里用最少几段线连起不同圆点时，越常经过这个中间点。</p>
       <div id="betweenRanks"></div>
     </div>
 
-    <div class="algo-note">
-      数据血统：<span class="blood-tag blood-A">A 实测</span>统计公报/镇街公开数据 ｜
-      <span class="blood-tag blood-B">B 推估</span>镇街间联系 ｜
-      <span class="blood-tag blood-C">C 假设</span>跨区域边权重 ｜
-      网络结构由作者根据公开主体与关系构建，边权重含假设，可改参数复跑。
-    </div>
+    <details class="algo-note">
+      <summary>看线条颜色和资料来源</summary>
+      <p>紫线连着周边城市。其他线里，绿色对应公开资料，蓝色据资料推估，黄色来自情景假设。红线保留了旧图的线索标记，可以留待进一步核对。</p>
+      <p>这张关系图来自 2026 年 10 月 11 日版。圆点按示意排布。整理时参考了统计公报和镇街公开资料，部分联系来自推估与假设。</p>
+    </details>
   </div>
 
   <div class="next"><a href="who.html">下一步：博罗的基本面 →</a></div>
@@ -214,7 +255,11 @@ function betweenness(adj){
 
 let timers=[];
 function clearTimers(){timers.forEach(t=>clearTimeout(t));timers=[]}
-function later(fn,ms){const t=setTimeout(fn,ms);timers.push(t);return t}
+const reducedMotion=window.matchMedia("(prefers-reduced-motion: reduce)");
+function later(fn,ms){
+  if(reducedMotion.matches){fn();return;}
+  timers.push(setTimeout(fn,ms));
+}
 
 function nodeMarkup(n){
   const r=10+n.w*3;
@@ -240,13 +285,13 @@ function start(){
   const ng=document.getElementById("nodes");
   eg.innerHTML="";ng.innerHTML="";
   document.getElementById("after").style.display="none";
-  document.getElementById("cnt").textContent="建构中…";
+  document.getElementById("cnt").textContent="正在画图。先出现圆点，再出现连线。";
 
   const phases=[
-    {title:"① 外部城市：东莞、深圳、广州、惠城",filter:n=>n.type==="ext"},
-    {title:"② 博罗镇街从西到东落下",filter:n=>n.type==="space"},
-    {title:"③ 产业节点接上",filter:n=>n.type==="ind"},
-    {title:"④ 人和游客落下",filter:n=>n.type==="talent"},
+    {title:"先看周边城市",filter:n=>n.type==="ext"},
+    {title:"博罗的镇街和地点出现了",filter:n=>n.type==="space"},
+    {title:"接着看产业和企业",filter:n=>n.type==="ind"},
+    {title:"工人、居民和游客也在图上",filter:n=>n.type==="talent"},
   ];
 
   let clock=0;
@@ -266,7 +311,7 @@ function start(){
   });
 
   later(()=>{
-    document.getElementById("acttitle").textContent="⑤ 线长出来：注意最粗的那根";
+    document.getElementById("acttitle").textContent="连线出现了。先从东莞找园洲。";
     EDGES.forEach(([f,t,w,blood],i)=>{
       const n1=nodeById(f),n2=nodeById(t);
       const isCross=n1.type==="ext"||n2.type==="ext";
@@ -296,12 +341,18 @@ function start(){
 
 function showAfter(degree,btw){
   document.getElementById("after").style.display="block";
-  document.getElementById("cnt").textContent=`33个节点 · ${EDGES.length}条主边 · 建构完成`;
+  document.getElementById("cnt").textContent="画完了 · "+NODES.length+" 个圆点 · "+EDGES.length+" 条关系记录";
+
+  const pairCount=new Set(EDGES.map(([from,to])=>[from,to].sort().join("/"))).size;
+  const possiblePairs=NODES.length*(NODES.length-1)/2;
+  document.getElementById("relationCoverage").textContent="约 "+Math.round(pairCount/possiblePairs*100)+"%";
+  document.getElementById("coverageDesc").textContent=
+    possiblePairs+" 对可能的圆点组合里，图上有 "+pairCount+" 对画了线。同一对圆点只数一次。";
 
   const degSorted=Object.entries(degree).sort((a,b)=>b[1]-a[1]);
   const topDeg=nodeById(degSorted[0][0]);
   document.getElementById("kDegree").textContent=topDeg.name;
-  document.getElementById("kDegreeDesc").textContent=`连了${degSorted[0][1]}条线，全场第一`;
+  document.getElementById("kDegreeDesc").textContent="图里有 "+degSorted[0][1]+" 条关系记录直接连到这里。";
   const maxDeg=Math.max(...Object.values(degree));
   document.getElementById("degreeRanks").innerHTML=degSorted.slice(0,8).map(([id,v])=>{
     const n=nodeById(id);
@@ -315,14 +366,14 @@ function showAfter(degree,btw){
   const btwSorted=Object.entries(btw).sort((a,b)=>b[1]-a[1]);
   const topBtw=nodeById(btwSorted[0][0]);
   document.getElementById("kBetween").textContent=topBtw.name;
-  document.getElementById("kBetweenDesc").textContent=`最短路径经过最多`;
+  document.getElementById("kBetweenDesc").textContent="在图上用尽量少的线把两个圆点连起来时，最常经过这里。";
   const maxBtw=btwSorted[0][1]||1;
   document.getElementById("betweenRanks").innerHTML=btwSorted.slice(0,8).map(([id,v])=>{
     const n=nodeById(id);
     return `<div class="rank-row">
       <span class="name">${n.name}</span>
       <div class="bar-bg"><div class="bar" style="width:${v/maxBtw*100}%;background:#a78bfa"></div></div>
-      <span class="val">${v.toFixed(0)}</span>
+      <span class="val">${v.toFixed(0)} 分</span>
     </div>`;
   }).join("");
 }
