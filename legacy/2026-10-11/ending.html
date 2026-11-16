@@ -1,51 +1,85 @@
 <!doctype html>
-<html lang="zh-CN"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
-<title>让每一个重大决策，先跑一遍 · 博罗产业风洞</title>
-<script src="lib/echarts.min.js"></script>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="description" content="游客的钱、家门口的岗位、工厂的订单。选一件事，从博罗的公开数字追到下一条证据。">
+<title>追问 · 博罗产业风洞</title>
 <style>
+:root{color-scheme:dark;--bg:#091511;--surface:#11231c;--line:#294437;--ink:#edf6ef;--muted:#bacfc3;--green:#98edb4;--orange:#ffbc94}
 *{box-sizing:border-box}
-body{margin:0;background:#080b12;color:#e6edf3;font:14px/1.7 -apple-system,"PingFang SC","Microsoft YaHei",sans-serif}
-.nav{position:sticky;top:0;z-index:50;display:flex;gap:5px;align-items:center;padding:9px 14px;background:rgba(8,11,18,.95);border-bottom:1px solid #1b2434;overflow-x:auto}
-.nav b{font-size:14px;margin-right:6px;flex:none}
-.nav a{background:#131c2b;color:#93a4bd;border:1px solid #22304a;padding:6px 12px;border-radius:20px;font-size:12.5px;text-decoration:none;white-space:nowrap;flex:none}
-.nav a.on{background:#15803d;border-color:#22c55e;color:#fff;font-weight:600}
-.wrap{max-width:880px;margin:auto;padding:18px}
-.hero{text-align:center;padding:44px 22px;background:radial-gradient(ellipse at top,#0c2a1a 0%,#0a0f1a 70%);border:1px solid #1c2739;border-radius:16px;margin-bottom:14px}
-.hero .kick{font-size:12px;letter-spacing:3px;color:#4ade80;margin-bottom:14px}
-.hero h1{font-size:25px;line-height:1.5;margin:0}
-.hero p{font-size:13px;color:#9aa9bd;margin:14px 0 0}
-.card{background:#0e1523;border:1px solid #1c2739;border-radius:12px;padding:18px;margin-bottom:14px}
-.card h2{font-size:16px;margin:0 0 12px;padding-bottom:8px;border-bottom:1px solid #1c2739}
-.policy{background:linear-gradient(160deg,#081a10,#0e1523);border-color:#14532d}
-.quote{border-left:3px solid #4ade80;background:#0a0f1a;border-radius:0 8px 8px 0;padding:9px 12px;margin:9px 0;font-size:12.5px;color:#d7f0dd;line-height:1.85}
-.quote b{color:#86efac}
-.src{font-size:11px;color:#6b7d96;margin-top:6px}
-.world .row{display:flex;gap:11px;align-items:flex-start;background:#0a0f1a;border:1px solid #1c2739;border-radius:10px;padding:11px 13px;margin-bottom:9px}
-.world .flag{flex:none;width:52px;font-size:12px;font-weight:800;color:#fbbf24}
-.world .txt{flex:1;font-size:12.3px;color:#cbd5e1;line-height:1.8}
-.world .txt b{color:#e6edf3}
-.world .note{font-size:12.5px;color:#9aa9bd;text-align:center;margin-top:10px;line-height:1.9}
-.why{display:grid;grid-template-columns:repeat(3,1fr);gap:12px}
-@media(max-width:700px){.why{grid-template-columns:1fr}}
-.why .step{background:#0a0f1a;border:1px solid #1c2739;border-radius:10px;padding:14px}
-.why .step .n{font-size:11px;font-weight:800;color:#4ade80;letter-spacing:1px}
-.why .step h3{font-size:13.5px;margin:6px 0;color:#fbbf24}
-.why .step p{font-size:12px;color:#a9b6c9;margin:0;line-height:1.85}
-.chart{width:100%;height:300px}
-.grid6{display:grid;grid-template-columns:repeat(3,1fr);gap:11px}
-@media(max-width:700px){.grid6{grid-template-columns:1fr 1fr}}
-.feat{background:#0a0f1a;border:1px solid #1c2739;border-radius:10px;padding:13px}
-.feat b{font-size:12.8px;color:#e6edf3;display:block;margin-bottom:4px}
-.feat span{font-size:11px;color:#8fa3bf;line-height:1.7}
-.closing{text-align:center;padding:34px 24px;background:linear-gradient(160deg,#0a1a0e,#0a0f1a);border:1px solid #14532d;border-radius:14px;margin-bottom:14px}
-.closing .big{font-size:15px;line-height:2.1;color:#e6edf3}
-.closing .big b{color:#4ade80}
-.sign{font-size:12px;color:#8fa3bf;margin-top:18px}
-.sign b{color:#fbbf24}
-.btn{background:#15803d;color:#fff;border:0;padding:11px 24px;border-radius:8px;font-size:14px;font-weight:600;cursor:pointer;text-decoration:none;display:inline-block}
-.btn.ghost{background:transparent;border:1px solid #2b3c5a;color:#cbd5e1}
-</style></head><body>
-
+body{margin:0;min-height:100vh;background:radial-gradient(ellipse at 72% 0,#17362a 0,transparent 52%),var(--bg);color:var(--ink);font:15px/1.58 "Inter","PingFang SC","Microsoft YaHei",system-ui,sans-serif}
+a{color:var(--green);text-underline-offset:4px}
+button{font:inherit}
+button:focus-visible,a:focus-visible,summary:focus-visible{outline:2px solid var(--green);outline-offset:3px}
+[hidden]{display:none!important}
+.nav{position:sticky;top:0;z-index:50;display:flex;gap:5px;align-items:center;padding:9px 14px;background:#0b1813f4;border-bottom:1px solid var(--line);overflow-x:auto}
+.nav b{font-size:14px;margin-right:6px;flex:none;color:var(--ink)}
+.nav a{background:#15271f;color:var(--muted);border:1px solid var(--line);padding:6px 12px;border-radius:20px;font-size:12.5px;text-decoration:none;white-space:nowrap;flex:none}
+.nav a.on{background:#24533a;border-color:#70be8b;color:#edfff2;font-weight:650}
+.wrap{max-width:1180px;margin:0 auto;padding:27px clamp(14px,4vw,38px) 20px}
+.page-name{display:flex;align-items:baseline;gap:12px;flex-wrap:wrap}
+.page-name h1{margin:0;color:var(--green);font-size:19px;line-height:1.25;letter-spacing:.14em}
+.page-name p{margin:0;color:var(--muted);font-size:13px}
+.topic-buttons,.case-buttons{display:flex;gap:8px;flex-wrap:wrap}
+.topic-buttons{margin:12px 0 19px}
+.topic-buttons button,.case-buttons button{min-height:44px;padding:7px 12px;border:1px solid #3c5c4b;border-radius:8px;background:#172c23;color:var(--ink);cursor:pointer;font-size:14px;font-weight:700}
+.topic-buttons button[aria-pressed=true],.case-buttons button[aria-pressed=true]{border-color:var(--green);background:#294d39;color:#e6ffed}
+.topic-title{margin:0 0 17px;font-size:clamp(30px,5vw,58px);line-height:1.12;letter-spacing:-.05em}
+.topic-title span{color:var(--green)}
+.topic-grid{display:grid;grid-template-columns:minmax(0,5fr) minmax(0,7fr);gap:12px}
+.facts,.scenario{min-width:0;padding:clamp(12px,2vw,20px);border:1px solid var(--line);border-radius:12px;background:var(--surface)}
+.period{margin:0 0 8px;color:var(--muted);font-size:12px}
+.numbers{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:9px;margin:0}
+.numbers.one{grid-template-columns:1fr}
+.numbers div{min-width:0;border-top:1px solid #3a5949;padding:7px 0}
+.numbers dt{font-size:13px;color:var(--ink)}
+.numbers dd{margin:1px 0 0;font-size:clamp(28px,4vw,53px);font-weight:820;letter-spacing:-.053em;line-height:1.17;font-variant-numeric:tabular-nums}
+.numbers.one dd{font-size:clamp(25px,4vw,45px)}
+.numbers .rise{color:var(--green)} .numbers .fall{color:var(--orange)}
+.numbers .number-note,.fact-note{color:var(--muted);font-size:12.5px}
+.numbers .number-note{margin:0;font-weight:400;line-height:1.5;letter-spacing:0}
+.fact-note{margin:8px 0 0}
+.scenario-setup{margin:0 0 9px;color:var(--muted);font-size:13px}
+.scenario-setup b{color:var(--green);margin-right:4px}
+.case-buttons{margin:0 0 11px}
+.path{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:15px;padding:0;margin:0;list-style:none}
+.path li{position:relative;display:grid;place-items:center;min-height:58px;padding:7px 5px;border:1px solid #436451;border-radius:7px;background:#192f25;text-align:center;font-size:14px;font-weight:700;overflow-wrap:anywhere}
+.path li+li::before{position:absolute;left:-14px;content:"›";color:var(--green);font-size:19px;animation:step-in .34s ease-out both}
+.path li.last{border-color:#8ed0a3;background:#254737;color:#e9fff0;transition:background .22s,border-color .22s,color .22s}
+.path[data-current="1"] li.last{border-color:#e6a276;background:#473328;color:#ffebdb}
+@keyframes step-in{from{opacity:.45;transform:translateY(3px)}to{opacity:1;transform:translateY(0)}}
+.scenario-summary{color:#d9ebdf;margin:9px 0 0;font-size:14px}
+.follow-up{margin-top:12px;padding:13px 15px;border-left:3px solid #82c797;border-radius:0 9px 9px 0;background:#142920}
+.follow-up h3{margin:0;color:var(--green);font-size:13px}
+.follow-question{margin:3px 0 0;font-size:clamp(17px,2.4vw,22px);font-weight:730}
+.follow-up details{margin-top:4px}
+.follow-up summary{min-height:44px;padding:9px 0;color:var(--muted);cursor:pointer}
+.follow-up .record,.follow-up .source,.follow-up .related{margin:0 0 6px;font-size:13px}
+.follow-up .record{max-width:74ch}
+.sign{margin:16px 0 0;color:var(--muted);font-size:12px}
+@media(max-width:780px){
+  .wrap{padding-top:16px}
+  .topic-buttons{margin:9px 0 14px;gap:5px}
+  .topic-buttons button,.case-buttons button{padding-inline:9px}
+  .topic-title{margin-bottom:11px}
+  .topic-grid{grid-template-columns:1fr;gap:9px}
+  .facts,.scenario{border-radius:9px}
+  .numbers dd,.path li{letter-spacing:0}
+  .path{gap:12px}
+  .path li{font-size:12.5px;min-height:53px}
+  .path li+li::before{left:-11px}
+}
+@media(max-width:360px){
+  .wrap{padding-inline:12px}
+  .topic-buttons button{font-size:13px;padding-inline:7px}
+}
+@media(prefers-reduced-motion:reduce){
+  *,*::before,*::after{animation:none!important;transition:none!important;scroll-behavior:auto!important}
+}
+</style>
+</head>
+<body>
 <div class="nav">
   <b>博罗产业风洞</b>
   <a href="index.html">① 今日话题</a>
@@ -57,158 +91,261 @@ body{margin:0;background:#080b12;color:#e6edf3;font:14px/1.7 -apple-system,"Ping
   <a href="windtunnel.html">⑥ 风洞测试</a>
   <a href="blindspot.html">⑦ 忽略了什么</a>
   <a href="report.html">⑧ 分析报告</a>
-  <a href="ending.html" class="on">⑨ 结语</a>
+  <a href="ending.html" class="on">⑨ 追问</a>
 </div>
 
-<div class="wrap">
-
-  <div class="hero">
-    <div class="kick">结 语</div>
-    <h1>让每一个重大决策，先跑一遍</h1>
-    <p>我们不替任何人做决定，只想在拍板之前，多帮着看一步路。</p>
+<main class="wrap">
+  <header class="page-name">
+    <h1>追问</h1>
+    <p>选一件跟你有关的事。</p>
+  </header>
+  <div class="topic-buttons" role="group" aria-label="选一个追问">
+      <button type="button" data-question="tourists" aria-controls="topic-tourists" aria-pressed="true">游客的钱</button>
+      <button type="button" data-question="jobs" aria-controls="topic-jobs" aria-pressed="false">家门口的岗</button>
+      <button type="button" data-question="orders" aria-controls="topic-orders" aria-pressed="false">工厂的订单</button>
   </div>
 
-  <!-- 数字中国 -->
-  <div class="card policy">
-    <h2>这件事，在“数字中国”的蓝图里</h2>
-    <p style="font-size:12.5px;color:#cbd5e1;margin:0">县域决策的科学化，不是心血来潮，而是国家早已指明的方向。</p>
-    <div class="quote">“十四五”规划和2035年远景目标纲要提出：<b>“加快构建数字技术辅助政府决策机制，提高基于高频大数据精准动态监测预测预警水平”</b>，并要求<b>“探索建设数字孪生城市”</b>。</div>
-    <div class="quote">2023年《数字中国建设整体布局规划》按照“2522”整体框架，要求数字技术与经济、政治、社会等深度融合，<b>“发展高效协同的数字政务”</b>，并强调夯实县域数字基础。</div>
-    <p style="font-size:12.5px;color:#cbd5e1;margin:10px 0 0">这台小小的县域风洞，正是把“数字技术辅助决策”落到博罗这样一个千亿县的具体尝试——它不宏大，却是数字中国这座大厦里一块<b style="color:#86efac">看得见、摸得着、可核对</b>的砖。</p>
-    <div class="src">依据来源：中国政府网公开发布的“十四五”规划纲要、《数字中国建设整体布局规划》。</div>
-  </div>
+  <section class="topic-panel" id="topic-tourists" aria-labelledby="title-tourists">
+    <h2 class="topic-title" id="title-tourists">游客多了，<wbr><span>住宿生意也更好吗？</span></h2>
 
-  <!-- 国际 -->
-  <div class="card world">
-    <h2>放眼世界，“先算后干”早已是通行做法</h2>
-    <p style="font-size:12.5px;color:#cbd5e1;margin:0 0 12px">越是成熟的经济体，越舍得在区域决策前的推演上下功夫。</p>
-    <div class="row"><div class="flag">新加坡</div><div class="txt">试错不起，建成全球首个国家级数字孪生 <b>Virtual Singapore</b>，整座城装进电脑，规划、建设、应急都先“试一遍”。</div></div>
-    <div class="row"><div class="flag">美国</div><div class="txt">州和地方政府常用区域经济模型（<b>REMI、IMPLAN</b>），加税、修路、能源政策出台前，先算清带来多少就业、多少收入。</div></div>
-    <div class="row"><div class="flag">日本</div><div class="txt">国土交通省主导 <b>Project PLATEAU</b>，为约250个城市建成三维城市模型并开放数据，规划、防洪防灾先在上面模拟。</div></div>
-    <div class="row"><div class="flag">韩国</div><div class="txt">把“数字孪生国土”写进国家空间政策，首尔用数字孪生实时模拟、调度交通，智慧城市先行试点。</div></div>
-    <div class="row"><div class="flag">英国</div><div class="txt">成立“地方经济增长实证中心” <b>What Works Centre</b>，用证据回答“哪些政策真能拉动地方经济”。</div></div>
-    <div class="note">这些地方并非更聪明，而是更早懂得——<b style="color:#fbbf24">决策前多花一分“算”的功夫，决策后就能少交十分“试错”的学费。</b></div>
-  </div>
+    <div class="topic-grid">
+      <section class="facts" aria-label="这题从什么数据开始">
+        <p class="period">博罗 · 2025 年同比</p>
+        <dl class="numbers">
+          <div><dt>接待游客人次</dt><dd class="rise">+11.7%</dd><dd class="number-note">全年 1,028.09 万人次</dd></div>
+          <div><dt>住宿业营业额</dt><dd class="fall">−2.3%</dd><dd class="number-note">全年 5.42 亿元</dd></div>
+        </dl>
+        <p class="fact-note">一项看来了多少人次，一项看住宿业做了多少生意。追问要从同一片区的客流和实际花销入手。</p>
+      </section>
 
-  <!-- 为什么 -->
-  <div class="card">
-    <h2>我们为什么想做这件事</h2>
-    <div class="why">
-      <div class="step">
-        <div class="n">第一 · 数字背后是人</div>
-        <h3>每个决策都连着具体的人</h3>
-        <p>园洲赶班车的工人、柏塘种山茶的农户、罗浮山下开民宿的夫妻、为孩子学位操心的父母——县域每个重大决定，最终都落在这样的人身上。</p>
-      </div>
-      <div class="step">
-        <div class="n">第二 · 县域是个整体</div>
-        <h3>牵一发，往往动全身</h3>
-        <p>产业、农业、文旅、通道早已咬合，一个项目晚了、一条路堵了，会牵出一连串反应。只盯一个数字，容易看不见整片森林。</p>
-      </div>
-      <div class="step">
-        <div class="n">第三 · 我们的态度</div>
-        <h3>不炫技，只想帮上忙</h3>
-        <p>模拟器替代不了一线的脚步、群众的智慧和决策者的担当。它只在动手前多提供一种“先看一看”的可能，让选择更透明、能复盘。</p>
-      </div>
+      <section class="scenario" aria-label="试一个情景">
+        <p class="scenario-setup"><b>情景题</b> 假如游客周末来到罗浮山一带。选一种走法，看看你会多问哪一句。</p>
+        <div class="case-buttons" role="group" aria-label="选择一种可能情况">
+          <button type="button" data-case="0" aria-pressed="true">当天来回</button>
+          <button type="button" data-case="1" aria-pressed="false">多住一晚</button>
+        </div>
+        <ol class="path" aria-label="沿着这件事往下看" data-current="0">
+          <li><span>游客来了</span></li>
+          <li><span>当天返程</span></li>
+          <li class="last"><span>看白天的消费</span></li>
+        </ol>
+        <p class="scenario-summary" role="status">当天来回的人也可能在这里吃饭、买东西。可以先问附近小店，来客多的周末，实收有没有一起增加？</p>
+      </section>
     </div>
-  </div>
 
-  <!-- Demo vs 正式版 -->
-  <div class="card">
-    <h2>这只是一个开始：正式版要更扎实</h2>
-    <div id="chRadar" class="chart"></div>
-    <p style="font-size:12px;color:#8fa3bf;text-align:center;margin:8px 0 0">绿线是当前Demo已做到的，橙线是正式版努力的方向。</p>
-  </div>
+    <section class="follow-up" aria-label="进一步核对问题">
+      <h3>真正要追问的这一句</h3>
+      <p class="follow-question">同一片区，同类周末，客流增加时，附近餐馆和小店的收入变了多少？</p>
+      <details>
+        <summary>要核对哪些记录</summary>
+        <p class="record">对照同一片区的到访人次与餐饮、零售商户的实收样本。按节假日和普通周末分别比较。</p>
+        <p class="source"><a href="https://maptable.com/tjgb/2025/%E6%83%A0%E5%B7%9E%E5%B8%82/%E5%8D%9A%E7%BD%97%E5%8E%BF/report/hui-zhou-shi-2025-nian-bo-luo-guo-min-jing-ji-he-she-hui-fa-zhan-tong-ji-gong-bao-2">2025 年博罗县统计公报转载 · 国内贸易和旅游</a></p>
+        <p class="related"><a href="town.html">回看各镇去处 →</a></p>
+      </details>
+    </section>
+  </section>
 
-  <!-- 首页数据怎么来的 -->
-  <div class="card">
-    <h2>首页那些话题、各镇去处和当季农品，是怎么来的</h2>
-    <div class="grid6">
-      <div class="feat"><div class="ic">📰</div><b>来源公开</b><span>博罗县政府公开公报与官方发布、南方+/惠州日报等媒体，以及公开社交平台上大家正在聊的罗浮山、各镇、农品事，每条都能点回去看原文。</span></div>
-      <div class="feat"><div class="ic">🗓️</div><b>每天更新一次</b><span>统计的是最近24小时的公开讨论；点"重新扫描"读的就是今天这一份，不是每天随时在变。</span></div>
-      <div class="feat"><div class="ic">📊</div><b>数字是合理估算</b><span>阅读、转发、点赞、"想去人数"这些，是按公开热度估出来的，不是平台后台真实统计，只用来排个先后、看个冷热。</span></div>
-      <div class="feat"><div class="ic">🌾</div><b>农品按时令</b><span>当季农产品按月份来，什么季节上什么果、什么菜，不反季；农业是博罗的特色和品牌，连着几十万农户的生计。</span></div>
-      <div class="feat"><div class="ic">🔍</div><b>能回头核对</b><span>页面里的"推演""模拟"，是把公开条件换着组合、重复跑很多遍看大致区间，不是预测，更不是官方结论；每个数都能回到公开资料核对。</span></div>
-      <div class="feat"><div class="ic">🌱</div><b>独立、开源</b><span>张凌博士个人利用业余时间做的小尝试，没有课题、没有赞助，代码与参数全部公开，欢迎一起挑错、一起改。</span></div>
-    </div>
-  </div>
+  <section class="topic-panel" id="topic-jobs" aria-labelledby="title-jobs" hidden>
+    <h2 class="topic-title" id="title-jobs">厂开始招人了，<wbr><span>家门口的人进得去吗？</span></h2>
 
-  <!-- 正式版功课 -->
-  <div class="card">
-    <h2>正式版，还要接受更严格的检验</h2>
-    <div class="grid6">
-      <div class="feat"><b>更多压力测试</b><span>投产延期、外需波动、极端天气、产业链断点等多重压力同时发生的组合情景。</span></div>
-      <div class="feat"><b>更细地找“命门”</b><span>把每个项目、每条关系、每个参数逐一扰动，找出“最不能出错”的位置。</span></div>
-      <div class="feat"><b>成千上万次推演</b><span>让未来在不同条件下反复演化，给出更稳健的可能性分布，而不是一个数字。</span></div>
-      <div class="feat"><b>更真实的数据</b><span>对接统计、交通、就业、农业等更多真实数据源，逐步减少假设成分。</span></div>
-      <div class="feat"><b>可交互 · 可核对</b><span>决策者自己改参数、提问题、现场推演，每一步都能回到公开资料核对。</span></div>
-      <div class="feat"><b>从看见到怎么走</b><span>不止于指出哪里脆弱，更进一步和一线一起，推演具体行动怎么走、先后如何排。</span></div>
-    </div>
-  </div>
+    <div class="topic-grid">
+      <section class="facts" aria-label="这题从什么数据开始">
+        <p class="period">博罗 · 2026 年政府工作报告</p>
+        <dl class="numbers one">
+          <div><dt>城镇新增就业目标</dt><dd class="rise">1.72 万人以上</dd><dd class="number-note">年度目标</dd></div>
+        </dl>
+        <p class="fact-note">县里公布的是全县就业目标。落到一个镇、一家工厂，得看看招聘、入职和在岗分别走到了哪一步。</p>
+      </section>
 
-  <!-- 收尾 -->
-  <div class="closing">
-    <div class="big">
-      一座县城的现代化，<br>
-      不只是产值过了千亿、路宽了、游客多了，<br>
-      更是每一个决策都更<b>郑重、透明、经得起追问</b>。<br>
-      多一个“先看一看”，或许就能让博罗少走一些弯路，<br>
-      让生活在这里的124万人，多一分安心。
+      <section class="scenario" aria-label="试一个情景">
+        <p class="scenario-setup"><b>情景题</b> 假如园洲一家厂贴出一批招聘。你先看招聘单，还是追到入职以后？</p>
+        <div class="case-buttons" role="group" aria-label="选择一种可能情况">
+          <button type="button" data-case="0" aria-pressed="true">看到招聘启事</button>
+          <button type="button" data-case="1" aria-pressed="false">追到入职之后</button>
+        </div>
+        <ol class="path" aria-label="沿着这件事往下看" data-current="0">
+          <li><span>工厂开始招人</span></li>
+          <li><span>看到岗位要求</span></li>
+          <li class="last"><span>查谁能去上班</span></li>
+        </ol>
+        <p class="scenario-summary" role="status">看到附近招人，可以接着问工种要什么技能、班次是几点、晚班下班还能不能回家。</p>
+      </section>
     </div>
-    <div style="background:#0f2a16;border:1px solid #1f3a24;border-left:3px solid #22c55e;border-radius:10px;padding:14px 16px;margin:20px 0;font-size:13px;color:#cbd5e1;line-height:1.9;text-align:left">
-      <b style="color:#4ade80">这个风洞为谁做？</b><br>
-      给<b style="color:#fff">决策者</b>：参数公开可改，投产、通勤、外迁拨一下看系统怎么响应，做方案前先跑压力测试。<br>
-      也给<b style="color:#fff">普通人</b>：你上班的厂、你买的福田菜心、你周末爬的罗浮山、你每天走的那条路，都在这张网里。一个项目晚两年、一条路堵了、一个龙头搬走了，会怎样影响你的工作和日子？<b style="color:#fff">只用公开数据跑一遍，讲人话。</b>
-    </div>
-    <p style="text-align:left;color:#8fa3bf;font-size:13px;margin:18px 0 8px">🧭 这台风洞，带你一层层看博罗</p>
-    <div style="display:grid;grid-template-columns:1fr 1fr;gap:8px;text-align:left;margin-bottom:10px">
-      <a href="town.html" style="background:#0e1523;border:1px solid #1c2739;border-radius:8px;padding:10px;color:#cbd5e1;text-decoration:none;font-size:12px">🏘️ 各镇吃喝玩乐<br>12镇吃什么玩什么</a>
-      <a href="network.html" style="background:#0e1523;border:1px solid #1c2739;border-radius:8px;padding:10px;color:#cbd5e1;text-decoration:none;font-size:12px">② 世界怎么长<br>33个节点飞进来</a>
-      <a href="who.html" style="background:#0e1523;border:1px solid #1c2739;border-radius:8px;padding:10px;color:#cbd5e1;text-decoration:none;font-size:12px">③ 基本面<br>千亿县长什么样</a>
-      <a href="choices.html" style="background:#0e1523;border:1px solid #1c2739;border-radius:8px;padding:10px;color:#cbd5e1;text-decoration:none;font-size:12px">④ 五条路<br>从1005亿到1600亿</a>
-      <a href="future.html" style="background:#0e1523;border:1px solid #1c2739;border-radius:8px;padding:10px;color:#cbd5e1;text-decoration:none;font-size:12px">⑤ 未来<br>跑一万次模拟</a>
-      <a href="windtunnel.html" style="background:#0e1523;border:1px solid #1c2739;border-radius:8px;padding:10px;color:#cbd5e1;text-decoration:none;font-size:12px">⑥ 风洞测试<br>拨一下参数</a>
-      <a href="blindspot.html" style="background:#0e1523;border:1px solid #1c2739;border-radius:8px;padding:10px;color:#cbd5e1;text-decoration:none;font-size:12px">⑦ 被忽略的<br>几个反常识发现</a>
-      <a href="report.html" style="background:#0e1523;border:1px solid #1c2739;border-radius:8px;padding:10px;color:#cbd5e1;text-decoration:none;font-size:12px">⑧ 一页报告<br>图文讲清博罗</a>
-    </div>
-    <div class="sign">
-      博罗产业决策风洞 · Demo版 &nbsp;|&nbsp; <b>张凌 博士</b> · 决策模拟推演
-    </div>
-    <div style="margin-top:20px;display:flex;gap:10px;justify-content:center;flex-wrap:wrap">
-      <a class="btn" href="index.html">重新看一遍</a>
-      <a class="btn ghost" href="report.html">查看分析报告</a>
-      <a class="btn" href="windtunnel.html" style="background:linear-gradient(135deg,#22c55e,#16a34a);border:none">🎲 你来当一次县长</a>
-    </div>
-    <div style="font-size:11px;color:#5b6b82;margin-top:18px;line-height:1.9">
-      本项目为个人独立完成，暂无课题、基金或商业扶持，纯个人兴趣。<br>
-      数据来自博罗县政府公开统计公报与官方发布，可公开核查。代码与参数开源（MIT）。<br>
-      张凌 博士 ｜ 68588368@qq.com ｜ zhangyu0703@gmail.com
-    </div>
-  </div>
 
-</div>
+    <section class="follow-up" aria-label="进一步核对问题">
+      <h3>真正要追问的这一句</h3>
+      <p class="follow-question">本地求职者卡在报名、录用还是通勤？</p>
+      <details>
+        <summary>要核对哪些记录</summary>
+        <p class="record">按镇街和工种对照岗位数、报名数和录用数，在晚班岗位里单独核对通勤可达性。</p>
+        <p class="source"><a href="https://www.hznews.com/xqrm/blx/202601/t20260130_1634641.shtml">惠州日报报道 · 2026 年博罗县政府工作报告</a></p>
+        <p class="related"><a href="windtunnel.html">去风洞看条件怎么变 →</a></p>
+      </details>
+    </section>
+  </section>
+
+  <section class="topic-panel" id="topic-orders" aria-labelledby="title-orders" hidden>
+    <h2 class="topic-title" id="title-orders">工业增长了，<wbr><span>附近配套厂也有新订单吗？</span></h2>
+
+    <div class="topic-grid">
+      <section class="facts" aria-label="这题从什么数据开始">
+        <p class="period">博罗 · 2025 年同比</p>
+        <dl class="numbers">
+          <div><dt>规上工业增加值</dt><dd class="rise">+8.7%</dd><dd class="number-note">达到统计门槛的工业企业创造的价值</dd></div>
+          <div><dt>工业投资</dt><dd class="fall">−12.7%</dd><dd class="number-note">全县工业投资增速</dd></div>
+        </dl>
+        <p class="fact-note">工业增加值看已经创造了多少价值，投资看新增投入。要追问本地配套厂有没有跟上，还得看采购流向。</p>
+      </section>
+
+      <section class="scenario" aria-label="试一个情景">
+        <p class="scenario-setup"><b>情景题</b> 假如一家大厂接到一批新单。换个供货地点，看看博罗哪些企业有机会接上。</p>
+        <div class="case-buttons" role="group" aria-label="选择一种可能情况">
+          <button type="button" data-case="0" aria-pressed="true">在博罗找配套</button>
+          <button type="button" data-case="1" aria-pressed="false">向外地找配套</button>
+        </div>
+        <ol class="path" aria-label="沿着这件事往下看" data-current="0">
+          <li><span>大厂接到新单</span></li>
+          <li><span>博罗配套厂供货</span></li>
+          <li class="last"><span>查本地收到多少</span></li>
+        </ol>
+        <p class="scenario-summary" role="status">配套厂能接到这一单，接下来要问的是谁供了货，最后有多少货款到了本地企业手里。</p>
+      </section>
+    </div>
+
+    <section class="follow-up" aria-label="进一步核对问题">
+      <h3>真正要追问的这一句</h3>
+      <p class="follow-question">大厂多出来的采购里，有多少实际付给了在博罗生产的配套企业？</p>
+      <details>
+        <summary>要核对哪些记录</summary>
+        <p class="record">同一批企业按同一季度核对已付款的新增采购，按供货生产地拆分本地与外地，再看两者占比。</p>
+        <p class="source"><a href="https://maptable.com/tjgb/2025/%E6%83%A0%E5%B7%9E%E5%B8%82/%E5%8D%9A%E7%BD%97%E5%8E%BF/report/hui-zhou-shi-2025-nian-bo-luo-guo-min-jing-ji-he-she-hui-fa-zhan-tong-ji-gong-bao-2">2025 年博罗县统计公报转载 · 工业与固定资产投资</a></p>
+        <p class="related"><a href="network.html">回看产业关系图 →</a></p>
+      </details>
+    </section>
+  </section>
+
+  <p class="sign">博罗产业决策风洞 · 张凌 博士 · MIT</p>
+</main>
 
 <script>
-const radar=echarts.init(document.getElementById('chRadar'));
-radar.setOption({
-  backgroundColor:'transparent',
-  tooltip:{backgroundColor:'#16203a',borderColor:'#2b3a55',textStyle:{color:'#e6edf3'}},
-  legend:{bottom:0,textStyle:{color:'#93a4bd',fontSize:12}},
-  radar:{center:['50%','48%'],radius:'62%',
-    indicator:[
-      {name:'压力测试广度',max:100},{name:'找命门精度',max:100},{name:'数据真实程度',max:100},
-      {name:'未来情景丰富度',max:100},{name:'决策交互深度',max:100}
-    ],
-    axisName:{color:'#cbd5e1',fontSize:11},
-    splitLine:{lineStyle:{color:'#1c2739'}},
-    splitArea:{areaStyle:{color:['rgba(255,255,255,.01)','rgba(255,255,255,.03)']}},
-    axisLine:{lineStyle:{color:'#1c2739'}}
-  },
-  series:[{type:'radar',data:[
-    {name:'当前Demo',value:[55,50,62,55,60],lineStyle:{color:'#22c55e',width:2},itemStyle:{color:'#22c55e'},areaStyle:{color:'rgba(34,197,94,.18)'}},
-    {name:'正式版',value:[92,90,88,90,93],lineStyle:{color:'#f59e0b',width:2},itemStyle:{color:'#f59e0b'},areaStyle:{color:'rgba(245,158,11,.15)'}}
-  ]}]
-});
-window.addEventListener('resize',()=>radar.resize());
+const scenarios = {
+  "tourists": [
+    {
+      "label": "当天来回",
+      "steps": [
+        "游客来了",
+        "当天返程",
+        "看白天的消费"
+      ],
+      "summary": "当天来回的人也可能在这里吃饭、买东西。可以先问附近小店，来客多的周末，实收有没有一起增加？",
+      "question": "同一片区，同类周末，客流增加时，附近餐馆和小店的收入变了多少？",
+      "record": "对照同一片区的到访人次与餐饮、零售商户的实收样本。按节假日和普通周末分别比较。"
+    },
+    {
+      "label": "多住一晚",
+      "steps": [
+        "游客来了",
+        "住一晚上",
+        "看住宿和晚间消费"
+      ],
+      "summary": "住一晚多了住宿和晚餐的消费机会。要看游客在哪里住、在哪里吃，以及是哪家店收到这笔钱。",
+      "question": "在这片区住一晚的游客，比当天往返的人多在哪里花钱？",
+      "record": "对同一片区的游客按是否在当地留宿分组，分别查看住宿、餐饮和购物开支，以及收款商户所在镇街。"
+    }
+  ],
+  "jobs": [
+    {
+      "label": "看到招聘启事",
+      "steps": [
+        "工厂开始招人",
+        "看到岗位要求",
+        "查谁能去上班"
+      ],
+      "summary": "看到附近招人，可以接着问工种要什么技能、班次是几点、晚班下班还能不能回家。",
+      "question": "本地求职者卡在报名、录用还是通勤？",
+      "record": "按镇街和工种对照岗位数、报名数和录用数，在晚班岗位里单独核对通勤可达性。"
+    },
+    {
+      "label": "追到入职之后",
+      "steps": [
+        "工厂开始招人",
+        "工人实际到岗",
+        "查三个月后在岗"
+      ],
+      "summary": "能入职只是过了一关。三个月后还有多少人留下来，才看得到岗位能不能接住这批求职者。",
+      "question": "这一批本地入职者，三个月后还有多少人在岗？",
+      "record": "以同一批本地入职者为分母，按工种和班次汇总三个月在岗人数。用离职原因调查区分技能、薪酬与通勤问题。"
+    }
+  ],
+  "orders": [
+    {
+      "label": "在博罗找配套",
+      "steps": [
+        "大厂接到新单",
+        "博罗配套厂供货",
+        "查本地收到多少"
+      ],
+      "summary": "配套厂能接到这一单，接下来要问的是谁供了货，最后有多少货款到了本地企业手里。",
+      "question": "大厂多出来的采购里，有多少实际付给了在博罗生产的配套企业？",
+      "record": "同一批企业按同一季度核对已付款的新增采购，按供货生产地拆分本地与外地，再看两者占比。"
+    },
+    {
+      "label": "向外地找配套",
+      "steps": [
+        "大厂接到新单",
+        "外地配套厂供货",
+        "查本地缺哪一环"
+      ],
+      "summary": "如果这批配套来自外地，可以问当地有没有企业能做，以及差的是工艺、交期还是采购准入。",
+      "question": "同一种配件，本地企业差在哪一步，导致它没有接到单？",
+      "record": "选采购额较大的配件，对照供方的工艺要求、交付记录和本地企业的达标情况，再确定哪一环有缺口。"
+    }
+  ]
+};
+const topicButtons = [...document.querySelectorAll('[data-question]')];
+const sections = Object.fromEntries(topicButtons.map(button=>[button.dataset.question,document.getElementById(button.getAttribute('aria-controls'))]));
+
+function viewFromHash() {
+  const [key, choice] = location.hash.slice(1).split('/');
+  if (!Object.hasOwn(scenarios,key)) return ['tourists',0];
+  return [key,choice === '1' ? 1 : 0];
+}
+function showQuestion(key, choice) {
+  for (const button of topicButtons) {
+    const selected = button.dataset.question === key;
+    button.setAttribute('aria-pressed',String(selected));
+    sections[button.dataset.question].hidden = !selected;
+  }
+  const panel = sections[key];
+  const view = scenarios[key][choice];
+  const path = panel.querySelector('.path');
+  path.dataset.current = String(choice);
+  panel.querySelectorAll('.path li span').forEach((step,index)=>{step.textContent=view.steps[index];});
+  panel.querySelector('.scenario-summary').textContent = view.summary;
+  panel.querySelector('.follow-question').textContent = view.question;
+  panel.querySelector('.record').textContent = view.record;
+  panel.querySelectorAll('[data-case]').forEach(button=>button.setAttribute('aria-pressed',String(Number(button.dataset.case)===choice)));
+}
+function syncQuestion() {
+  const [key,choice] = viewFromHash();
+  showQuestion(key,choice);
+}
+function selectQuestion(key,choice) {
+  const fragment = '#'+key+'/'+choice;
+  if (location.hash !== fragment) history.pushState(null,'',fragment);
+  showQuestion(key,choice);
+}
+topicButtons.forEach(button=>button.addEventListener('click',()=>{
+  const key = button.dataset.question;
+  const choice = Number(sections[key].querySelector('.path').dataset.current);
+  selectQuestion(key,choice);
+}));
+for (const [key,panel] of Object.entries(sections)) {
+  panel.querySelectorAll('[data-case]').forEach(button=>button.addEventListener('click',()=>selectQuestion(key,Number(button.dataset.case))));
+}
+window.addEventListener('hashchange',syncQuestion);
+window.addEventListener('popstate',syncQuestion);
+syncQuestion();
 </script>
 
 <div class="likebar">
@@ -216,8 +353,8 @@ window.addEventListener('resize',()=>radar.resize());
   <button onclick="sharePage()">🔁 转给朋友</button>
 </div>
 <style>
-.likebar{position:relative;bottom:auto;left:auto;transform:none;display:flex;justify-content:center;margin:20px 0;background:rgba(15,23,42,.96);border:1px solid #3b82f6;border-radius:24px;padding:9px 20px;display:flex;gap:22px;z-index:999;box-shadow:0 6px 24px rgba(0,0,0,.6)}
-.likebar button{background:none;border:none;color:#e2e8f0;font-size:14px;cursor:pointer}
+.likebar{display:flex;justify-content:center;flex-wrap:wrap;gap:12px;margin:2px auto 24px;padding:5px 12px;width:fit-content;border:1px solid #27453a;border-radius:10px}
+.likebar button{background:none;border:none;min-height:44px;padding:3px 8px;color:#d8e9df;font-size:13px;cursor:pointer}
 .likebar button:active{transform:scale(1.15)}
 </style>
 <script>
