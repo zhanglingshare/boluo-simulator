@@ -49,12 +49,17 @@ function mountShare(getPayload) {
     </div>
     <p class="duel-status" role="status"></p>
     <div class="duel-copy" hidden>
-      <label for="duel-invite-text">长按或选中复制这段邀请</label>
-      <textarea id="duel-invite-text" readonly></textarea>
+      <a class="duel-invite-link" target="_blank" rel="noopener">看看朋友打开的页面 →</a>
+      <div class="duel-copy-text" hidden>
+        <label for="duel-invite-text">长按或选中复制这段邀请</label>
+        <textarea id="duel-invite-text" readonly></textarea>
+      </div>
     </div>`);
   const button = mount.querySelector('[data-duel-action="share"]');
   const status = mount.querySelector('.duel-status');
   const copyBox = mount.querySelector('.duel-copy');
+  const manual = mount.querySelector('.duel-copy-text');
+  const invite = mount.querySelector('.duel-invite-link');
   const field = mount.querySelector('textarea');
 
   async function send(action) {
@@ -69,12 +74,15 @@ function mountShare(getPayload) {
         if (error.name === 'AbortError') return;
       }
     }
+    copyBox.hidden = false;
+    manual.hidden = true;
+    invite.href = payload.url;
+    field.value = text;
     try {
       await navigator.clipboard.writeText(text);
       status.textContent = '题目和链接已复制，可以发给朋友。';
     } catch {
-      field.value = text;
-      copyBox.hidden = false;
+      manual.hidden = false;
       status.textContent = '可以手动复制下面的题目和链接。';
       field.focus();
       field.select();

@@ -79,6 +79,7 @@
 .duel-actions .duel-copy-button { border-color: #596f61; background: transparent }
 .duel-status { margin: 4px 0 0; color: var(--duel-mint); font-size: 12px }
 .duel-status:empty { margin: 0 }
+.duel-invite-link { display: inline-flex; min-height: 36px; align-items: center; margin-top: 3px; font-size: 12px }
 .duel-copy label { display: block; margin: 6px 0 3px; color: var(--duel-soft); font-size: 12px }
 .duel-copy textarea {
   width: 100%;
