@@ -50,11 +50,13 @@ test("untrusted and out-of-range scenario parameters are bounded or omitted",()=
  assert.equal(d.wind.distribution,null);
  assert.equal(d.region.pressure.score,73);assert.equal(d.region.pressure.adjusted,true);
 });
-test("page 11 exposes a research trace, evidence backlog, replay and export controls",()=>{
+test("page 11 exposes a research trace, evidence backlog, replay and local copy controls",()=>{
  const h=read("v11/brief.html"),js=read("v11/brief.js"),css=read("v11/brief.css");
  for(const id of ["researchLedger","ledgerSaved","ledgerExperiments","ledgerFalsifiers","ledgerOpen","windAudit","challengeAudit","regionAudit","futureAudit","evidenceQueue","reportStamp"])assert.match(h,new RegExp('id="'+id+'"'));
- assert.match(h,/保存为 PDF/);assert.match(h,/可核对的记录 JSON/);
- assert.match(js,/buildWindReplay/);assert.match(js,/buildRegionReplay/);assert.match(js,/renderLedger/);assert.match(js,/boluo-v11-research-dossier/);
+ assert.match(h,/复制报告摘要/);assert.match(h,/重新读取本机记录/);
+ assert.doesNotMatch(h,/保存为 PDF/);assert.doesNotMatch(h,/可核对的记录 JSON/);
+ assert.match(js,/buildWindReplay/);assert.match(js,/buildRegionReplay/);assert.match(js,/renderLedger/);assert.match(js,/copySummary/);assert.match(js,/refreshReport/);
+ assert.doesNotMatch(js,/exportRecord/);assert.doesNotMatch(js,/download/);
  assert.match(css,/\.ledger-grid/);assert.match(css,/\.evidence-queue/);assert.match(css,/@media print/);
  assert.doesNotThrow(()=>new Function(js));
 });

@@ -39,16 +39,14 @@ const out=path.resolve(__dirname,"../artifacts/v11-challenge");fs.mkdirSync(out,
    await page.locator("#restoreChallenge").click();
    assert.match(await page.locator("#falsifier").inputValue(),/本地采购额/);
    assert.match(await page.locator("#cardClaim").innerText(),/本地配套/);
-   const downloadPromise=page.waitForEvent("download",{timeout:15000});
-   await page.locator("#downloadCard").click();
-   const download=await downloadPromise;
-   assert.match(download.suggestedFilename(),/\.png$/i);
+   assert.equal(await page.locator("#downloadCard").count(),0);
+   assert.equal(await page.locator("#exportCanvas").count(),0);
    const overflow=await page.evaluate(()=>Math.max(0,document.documentElement.scrollWidth-innerWidth));
    assert.ok(overflow<=25,"09 page overflow "+width+" "+overflow);
    await page.evaluate(()=>scrollTo(0,0));
    await page.screenshot({path:path.join(out,"challenge-"+width+".png"),fullPage:true,animations:"disabled"});
    assert.deepEqual(errors,[],"09 uncaught page errors: "+errors.join(" | "));
-   console.log("PASS page 09 "+width+"px; export="+download.suggestedFilename()+" overflow="+overflow);
+   console.log("PASS page 09 "+width+"px; overflow="+overflow);
    await ctx.close();
   }
   const ctx=await browser.newContext({viewport:{width:1280,height:800},acceptDownloads:true}),page=await ctx.newPage();

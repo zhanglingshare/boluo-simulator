@@ -184,7 +184,6 @@ function changeOrigin(v){
 }
 function feedbackSummary(){
  q("svc-feedback-count").textContent=feedback.length+" 条本地反馈";
- q("svc-feedback-export").disabled=!feedback.length;
 }
 function saveFeedback(){
  const pair=activePair();
@@ -199,13 +198,6 @@ function saveFeedback(){
  };
  feedback.push(obj);feedbackSummary();
  q("svc-feedback-status").textContent="已记入待核验清单。当前会话已保存 "+feedback.length+" 条，仅存在本地内存，不会自动升级证据等级。";
-}
-function exportFeedback(){
- if(!feedback.length)return;
- const body=JSON.stringify({schema:"BOLUO_SERVICE_REVIEW_V1",created:new Date().toISOString(),entries:feedback},null,2);
- const blob=new Blob([body],{type:"application/json;charset=utf-8"}),url=URL.createObjectURL(blob);
- const link=document.createElement("a");link.href=url;link.download="boluo-service-review.json";document.body.appendChild(link);link.click();link.remove();
- setTimeout(()=>URL.revokeObjectURL(url),600);
 }
 function render(state){
  if(!section())return;
@@ -234,7 +226,6 @@ function bind(){
   if(event.target.closest("#svc-sim-reset")){scenarioDemand=20;scenarioResponse=10;q("svc-demand").value="20";q("svc-response").value="10";
    q("svc-demand-value").textContent="+20%";q("svc-response-value").textContent="+10%";resetScenario();return;}
   if(event.target.closest("#svc-feedback-save")){saveFeedback();return;}
-  if(event.target.closest("#svc-feedback-export")){exportFeedback();return;}
  });
  for(const [id,key]of [["svc-demand","scenarioDemand"],["svc-response","scenarioResponse"]]){
   q(id).addEventListener("input",event=>{

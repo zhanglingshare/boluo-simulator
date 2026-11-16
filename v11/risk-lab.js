@@ -266,12 +266,6 @@ function closeDrawer(){
  $("detailOverlay").classList.remove("open");document.querySelector("main").inert=false;document.querySelector("header").inert=false;
  returnFocus?.focus();
 }
-function download(){
- if(!state.picked.size){toast("请先选择想继续关注的问题");return;}
- const result={project:"博罗决策风洞 V11",page:"03产业变化观察",created_at:new Date().toISOString(),items:[...state.picked],scenarios:state.values,notes:"公开事实与情景假设严格分开；条件实验不是政策目标达成率或预测"};
- const blob=new Blob([JSON.stringify(result,null,2)],{type:"application/json;charset=utf-8"});
- const url=URL.createObjectURL(blob),a=document.createElement("a");a.href=url;a.download="boluo-v11-industry-risk-questions.json";document.body.appendChild(a);a.click();a.remove();setTimeout(()=>URL.revokeObjectURL(url),0);toast("已导出观察清单");
-}
 $("tabs").querySelectorAll("[data-case]").forEach(b=>b.onclick=()=>options(b.dataset.case));
 $("slider").oninput=e=>setValues([+e.target.value]);
 $("slider2").oninput=e=>setValues([undefined,+e.target.value]);
@@ -288,7 +282,6 @@ document.addEventListener("keydown",e=>{
  }
 });
 $("saveQuestion").onclick=()=>pick(current().questions[0]);
-$("exportBtn").onclick=download;
 $("playScenario").onclick=play;
 $("resetScenario").onclick=()=>{stopPlay();state.values[state.active]=initialValues(state.active);render();announce("已恢复当前专题的初始条件");};
 function motionPreference(){

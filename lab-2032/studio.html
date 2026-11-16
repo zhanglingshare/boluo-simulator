@@ -1,7 +1,7 @@
 <!doctype html>
 <html lang="zh-CN"><head>
 <meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
-<meta name="theme-color" content="#07182a"><meta name="description" content="博罗2032产业协同完整研究工作台：数据导入、质量体检、行业镇街、项目就业、产业网络、社会调查、双轨模型、决策风洞、压力测试与研究报告。">
+<meta name="theme-color" content="#07182a"><meta name="description" content="博罗2032产业协同研究工作台：演示数据、质量体检、行业镇街、项目就业、产业网络、社会调查、双轨模型、决策风洞、压力测试与研究报告。">
 <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self'; style-src 'self' 'unsafe-inline'; img-src 'self' data:; connect-src 'none'; object-src 'none'; base-uri 'self';">
 <title>博罗2032 · 决策模拟实验室｜完整研发版</title>
 <link rel="stylesheet" href="studio.css">
@@ -17,7 +17,7 @@
 <header class="masthead">
   <div class="identity"><span class="brand-mark">B<span>·</span></span><div class="brand-name"><b>博罗2032 <i>LAB</i></b><small>产业协同 · 决策模拟实验室</small></div></div>
   <span class="head-separator"></span><span class="head-descriptor">2026—2032 / RESEARCH STUDIO</span>
-  <div class="head-actions"><span id="topMode" class="mode-pill">DEMO DATA</span><button type="button" id="openData" class="head-action">导入数据 ↗</button><button type="button" id="openMobileNav" class="mobile-menu" aria-label="打开导航">☰</button></div>
+  <div class="head-actions"><span id="topMode" class="mode-pill">DEMO DATA</span><button type="button" id="openMobileNav" class="mobile-menu" aria-label="打开导航">☰</button></div>
 </header>
 <div class="app-body">
 <aside class="sidebar" id="sidebar">
@@ -36,7 +36,7 @@
         <div class="target-kicker">BOLUO 2032 · TARGET & REALITY</div>
         <h1>三次产业都要增长，<br><em>结构要更合理。</em></h1>
         <p>当前研究参考方向：到2032年前后，三次产业结构向 <strong>1 : 5 : 4</strong> 靠近。真正要回答的，不是让哪个产业变小，而是三个产业怎样一起发展。</p>
-        <div class="target-hero-flags"><span>三个产业共同增长</span><span>结构目标，不是预测结论</span><span>先体验，不必先上传数据</span></div>
+        <div class="target-hero-flags"><span>三个产业共同增长</span><span>结构目标，不是预测结论</span><span>内置数据即可开始</span></div>
       </div>
       <div class="target-hero-visual">
         <div class="target-hero-orbit"></div>
@@ -103,7 +103,7 @@
 
     <div class="target-next-step">
       <div><span class="target-overline">NEXT</span><strong>先看清三次产业的基本盘，再进入具体行业。</strong><small>不需要先准备数据。内置Demo可以直接体验，真实数据以后按需替换。</small></div>
-      <div class="target-next-actions"><button type="button" class="button primary" data-go="macro">进入三次产业基本盘 →</button><button type="button" class="button outline" data-go="data">查看数据中心</button></div>
+      <div class="target-next-actions"><button type="button" class="button primary" data-go="macro">进入三次产业基本盘 →</button><button type="button" class="button outline" data-go="data">查看数据说明</button></div>
     </div>
     <p class="target-footnote">数据边界：2025年三次产业增加值采用当前Demo内置的公开参考值，正式研究前仍需核对原始来源及统计口径；2020—2024年历史序列、企业主体、产业关系、问卷、项目和就业样本含合成数据。2032年1:5:4为目标参考，不代表已经实现的结果；本页不推算未确认的2032年GDP总量。</p>
   </section>
@@ -230,16 +230,10 @@
   </section>
 
   <section data-page="data" class="page-section" hidden>
-    <div class="page-intro"><div><span class="eyebrow">DATA COMMAND CENTER</span><h1>数据接进来，所有研究重新计算。</h1><p>导入CSV、Excel或完整JSON研究包，先检查字段、观察单位和质量，再进入产业分析。Demo是默认数据，不是固定答案。</p></div><button type="button" class="button outline" id="restoreDemoTop">恢复完整Demo</button></div>
+    <div class="page-intro"><div><span class="eyebrow">DATA & RESEARCH BOUNDARY</span><h1>这里的每一份数据，先说清它是什么。</h1><p>爱好者版内置一份可复现的演示数据集，用于认识研究方法；真实与合成严格分开，不做云端数据库，也不承诺跨设备同步。</p></div></div>
     <div class="stats-row" id="dataStats"></div>
-    <div class="split-grid"><article class="panel-card"><div class="panel-head"><h3>六类研究数据</h3><span class="minor-tag">当前快照</span></div><div id="datasetCards" class="dataset-cards"></div></article>
-    <article class="panel-card"><div class="panel-head"><h3>导入真实数据</h3><span class="minor-tag">不上传服务器</span></div><p class="fine-print">单表导入支持CSV / XLSX / JSON；完整快照使用导出的研究包JSON。可映射中文列名，导入后保留原Demo供恢复。</p>
-      <label for="importType" class="field-label">要替换的数据表</label><select id="importType" class="input"><option value="macro">宏观三次产业（亿元）</option><option value="enterprises">企业和行业</option><option value="relations">产业主体关系</option><option value="surveys">社会调查与潜变量</option><option value="projects">重点项目及状态</option><option value="workforce">就业、工资与通勤</option></select>
-      <label for="importFile" class="field-label">选择文件</label><input type="file" class="input file-input" id="importFile" accept=".csv,.xlsx,.json">
-      <div id="mappingArea" class="mapping-area" hidden><p class="fine-print"><strong>字段映射：</strong>把文件列对应到模型所需字段。请确保单位和含义一致。</p><div id="mappingFields" class="mapping-fields"></div></div>
-      <div class="button-row"><button type="button" class="button primary" id="importStart">读取并预检查</button><button type="button" class="button secondary" id="importConfirm" disabled>确认替换数据</button></div><div id="importMessage" class="import-message" role="status"></div>
-      <div class="button-row"><button type="button" class="link-button" id="downloadTemplate">下载所选表CSV模板 ↓</button><button type="button" class="link-button" id="downloadSnapshot">下载完整当前快照JSON ↓</button></div>
-    </article></div>
+    <div class="split-grid"><article class="panel-card"><div class="panel-head"><h3>六类研究数据</h3><span class="minor-tag">内置演示</span></div><div id="datasetCards" class="dataset-cards"></div></article>
+    <article class="panel-card"><div class="panel-head"><h3>数据口径与边界</h3><span class="minor-tag">只看不改</span></div><p class="fine-print">宏观三次产业的2025年基准为公开参考值，仍需以原始统计公报复核；企业主体、产业关系、社会调查、重点项目、就业记录均为合成演示样本，不代表博罗真实企业与交易。</p><p class="fine-print">爱好者版不提供数据导入与导出。想用真实数据开展正式研究，请使用面向研究的内部版本；本页所有计算都在浏览器本地完成，数据不上传服务器。</p></article></div>
     <div class="panel-card spaced"><div class="panel-head"><div><span class="eyebrow">QUALITY GATE</span><h3>数据质量体检 · 错误不会自动补成Demo</h3></div><span class="minor-tag">模型运行前检查</span></div><div id="qualityChecks" class="quality-checks"></div></div>
   </section>
 
@@ -330,7 +324,7 @@
         <button type="button" data-gap-sector="tertiary" aria-pressed="false">服务业</button>
       </div>
       <div id="base-gap-content" class="base-gap-content" aria-live="polite"></div>
-      <div class="base-gap-actions"><button type="button" class="button primary" data-go="data">进入数据中心，准备真实数据 →</button><button type="button" class="button outline" data-go="survey">查看社会调查演示</button></div>
+      <div class="base-gap-actions"><button type="button" class="button primary" data-go="data">查看数据说明 →</button><button type="button" class="button outline" data-go="survey">查看社会调查演示</button></div>
     </article>
 
     <section class="base-next-panel">
@@ -432,12 +426,12 @@
       <div id="rl-questions" class="rl-questions"></div>
       <div class="rl-next-actions">
         <div><strong>演示走到这里，真实研究才刚开始。</strong><p>把客户关系、服务采购、订单与项目进度逐步替换进来；系统会按数据版本重新生成网络。</p></div>
-        <div class="rl-next-buttons"><button type="button" class="button primary" data-go="network">打开完整关系研究 →</button><button type="button" class="button outline" data-go="data">导入真实关系数据</button></div>
+        <div class="rl-next-buttons"><button type="button" class="button primary" data-go="network">打开完整关系研究 →</button><button type="button" class="button outline" data-go="data">查看数据说明</button></div>
       </div>
     </section>
     <details class="rl-method-note"><summary>这张网是怎样生成的？哪些结论不能得出？</summary>
       <p>默认830个主体及关系为可复现合成Demo，不代表博罗实际企业与交易。产业视图由当前关系数据按细分行业汇总产生；主体视图只显示局部连接，避免几百个点同时出现。点击主体会从已有关系表提取实际Demo邻接关系，断点实验调用现有传播引擎。</p>
-      <p>上传新的关系和主体表后重新计算。客户提供的数据始终标注为待核验；若仅部分表被替换，仍保留合成数据标识。连线权重单位来自当前数据契约（百万元），不能直接换算GDP或经济损失；网络中心性也不能证明因果。公开数据目前不支持声称任何具体博罗企业之间存在这里展示的采购关系。</p>
+      <p>演示数据中的830个主体及关系为可复现合成样本，不代表博罗实际企业与交易。产业视图由当前关系数据按细分行业汇总产生；主体视图只显示局部连接，避免几百个点同时出现。正式研究如需真实关系数据，请使用研究版并逐条核验，不自动升级证据等级。连线权重单位来自当前数据契约（百万元），不能直接换算GDP或经济损失；网络中心性也不能证明因果。</p>
     </details>
   </section>
 
@@ -512,7 +506,7 @@
           <button type="button" data-svc-feedback="scope-issue">统计范围或方向可能不同</button>
           <button type="button" data-svc-feedback="unknown">我暂时无法判断</button>
         </div>
-        <div class="svc-feedback-actions"><button type="button" id="svc-feedback-save">记入待核实清单</button><button type="button" id="svc-feedback-export" disabled>导出反馈JSON</button><span id="svc-feedback-count">0 条本地反馈</span></div>
+        <div class="svc-feedback-actions"><button type="button" id="svc-feedback-save">记入待核实清单</button><span id="svc-feedback-count">0 条本地反馈</span></div>
         <p id="svc-feedback-status" aria-live="polite">仅暂存在本次浏览器会话，刷新后消失，不上传服务器，也不会修改A级数据。</p>
       </div>
       <aside class="svc-feedback-help">
@@ -526,7 +520,7 @@
 
     <div class="svc-next">
       <div><span>THE NEXT QUESTION</span><strong>一条关系看不见，可能是数据没采到，而不是本地没有这项服务。</strong><p>把需要核对的服务采购、供给能力和跨县区交易交给有数据的人。想继续推演，就进入已有的研究工作区。</p></div>
-      <div><button type="button" class="button primary" data-go="data">导入真实数据 →</button><button type="button" class="button outline" data-go="wind">进入2032风洞</button></div>
+      <div><button type="button" class="button primary" data-go="data">查看数据说明 →</button><button type="button" class="button outline" data-go="wind">进入2032风洞</button></div>
     </div>
     <details class="svc-sources"><summary>公开统计来源、演示假设与无法证明的事项</summary>
       <ul>
@@ -534,7 +528,7 @@
         <li><a href="https://maptable.com/tjgb/2025/%E6%83%A0%E5%B7%9E%E5%B8%82/%E5%8D%9A%E7%BD%97%E5%8E%BF/report/hui-zhou-shi-2025-nian-bo-luo-guo-min-jing-ji-he-she-hui-fa-zhan-tong-ji-gong-bao-2" target="_blank" rel="noopener noreferrer">2025年博罗国民经济和社会发展统计公报（转载，待原件复核）</a></li>
       </ul>
       <p>2025第三产业占比34.7%，2032年40%只是研究结构参考，不能据此直接推算“尚缺多少亿元”。2026年前三季度第三产业增加值增长1.2%、交通运输仓储邮政业增长7.7%、租赁商务服务业增长5.5%，均为不变价增加值同比增速。规上服务业营业收入等经营指标并非增加值。</p>
-      <p>供需矩阵严格根据当前数据集已建立的主体ID与指定类型的有向关系生成。Demo中的830个主体、关系金额均为合成。图表只能说明演示样本覆盖，不能证明现实供需缺口、本地承接率、市场规模、政策因果效果。跨县区采购和未采集关系必须作为未知保留。客户数据导入后不自动升级证据等级，不会跨客户共享。</p>
+      <p>供需矩阵严格根据当前数据集已建立的主体ID与指定类型的有向关系生成。Demo中的830个主体、关系金额均为合成。图表只能说明演示样本覆盖，不能证明现实供需缺口、本地承接率、市场规模、政策因果效果。跨县区采购和未采集关系必须作为未知保留；正式研究如需真实数据，须逐条核验，不自动升级证据等级。</p>
     </details>
   </section>
 
@@ -583,7 +577,7 @@
           <div class="ag-control"><label for="ag-farm-pay">向农户付款延迟 <strong id="ag-farm-pay-v">12天</strong></label><input id="ag-farm-pay" type="range" min="0" max="25" step="1" value="12"/><div><span>当天</span><span>25天</span></div></div>
           <div class="ag-control"><label for="ag-channel-pay">渠道回款延迟 <strong id="ag-channel-pay-v">75天</strong></label><input id="ag-channel-pay" type="range" min="30" max="95" step="5" value="75"/><div><span>30天</span><span>95天</span></div></div>
           <div class="ag-control"><label for="ag-day-cost">每日采购付款基准 <strong id="ag-day-cost-v">10万元</strong></label><input id="ag-day-cost" type="range" min="2" max="30" step="1" value="10"/><div><span>2万元</span><span>30万元</span></div></div>
-          <div class="ag-lab-buttons"><button type="button" id="ag-reset">恢复示例基准</button><button type="button" id="ag-export">导出实验JSON ↓</button></div>
+          <div class="ag-lab-buttons"><button type="button" id="ag-reset">恢复示例基准</button></div>
           <p>基准为人为选择的演示假设，不是政府统计、合作社实测或项目尽调数据。每日金额仅代表同一批货款的往来，不含工资、利润、利息和库存。</p>
         </div>
         <div class="ag-output">
@@ -610,12 +604,12 @@
     </section>
 
     <section class="ag-section">
-      <div class="ag-section-head"><span>05 / WHAT TO VERIFY NEXT</span><h2>现在应该问谁，补哪一个数？</h2><p>选一个堵点，系统给出最小核验清单。可以本地导出，不会直接生成未经确认的A级证据。</p></div>
+      <div class="ag-section-head"><span>05 / WHAT TO VERIFY NEXT</span><h2>现在应该问谁，补哪一个数？</h2><p>选一个堵点，系统给出最小核验清单；清单只在页面内查看，不会直接生成未经确认的A级证据。</p></div>
       <div class="ag-follow-up">
         <div id="ag-questions" class="ag-questions" role="group" aria-label="选择待核验堵点"></div>
         <div id="ag-questions-detail" class="ag-questions-detail" aria-live="polite"></div>
       </div>
-      <div class="ag-next"><div><span>BACK TO THE DECISION LAB</span><strong>不是替陈局判断哪条路，而是把下一次调研要问的问题，变得更具体。</strong><p>专业人员可以导入真实企业、项目、关系数据。核验后再重跑，演示结果与真实结果要能够清楚区分。</p></div><div><button type="button" class="button primary" data-go="data">导入真实资料 →</button><button type="button" class="button outline" data-go="wind">进入2032风洞</button></div></div>
+      <div class="ag-next"><div><span>BACK TO THE DECISION LAB</span><strong>不是替陈局判断哪条路，而是把下一次调研要问的问题，变得更具体。</strong><p>爱好者版使用内置演示数据；正式研究如需真实数据，请使用面向研究的内部版本，让演示结果与真实结果清楚区分。</p></div><div><button type="button" class="button primary" data-go="data">查看数据说明 →</button><button type="button" class="button outline" data-go="wind">进入2032风洞</button></div></div>
     </section>
 
     <details class="ag-sources"><summary>展开数据依据与计算限制</summary>
@@ -626,7 +620,7 @@
         <li><a target="_blank" rel="noopener noreferrer" href="https://epaper.nfnews.com/nfdaily/html/202604/10/content_10167542.html">柏塘茶产业综合体：示例的产业价值链背景</a></li>
       </ul>
       <p>柏塘山茶数据为媒体报道的产业信息，需部门原始统计进一步确认。茶叶产值不是增加值，农业增加值不等于农户净收益；无依据时不推算产业利润、地区承接率或政策净效应。</p>
-      <p>现金流模型中每日采摘数量设为均匀、付款与回款均以采摘日为起点、价格与付款基准相同，只为了隔离账期与窗口长度的影响。采工可用率和加工能力直接限制示例吞吐，不代表真实可售茶叶量。每个情景可复现，且能导出JSON供客户核查。关系图从现有数据表按农业加工与流通类型统计，默认合成数据并始终标识来源。</p>
+      <p>现金流模型中每日采摘数量设为均匀、付款与回款均以采摘日为起点、价格与付款基准相同，只为了隔离账期与窗口长度的影响。采工可用率和加工能力直接限制示例吞吐，不代表真实可售茶叶量。每个情景可复现，供研究复核。关系图从现有数据表按农业加工与流通类型统计，默认合成数据并始终标识来源。</p>
     </details>
   </section>
 
@@ -716,18 +710,17 @@
       <div class="pl-boundary-number"><span>不同口径，不可混算</span><div><b>投资额</b><i>≠</i><b>预计产值</b><i>≠</i><b>实际增加值</b></div><p>项目投资是资本形成相关信息，预计年产值是未来产出的宣传或计划口径。实际GDP增加值需要相应期间的真实核算数据。</p></div>
       <div id="pl-validation-list" class="pl-validation-list"></div>
     </div>
-    <div class="pl-evidence-actions"><button type="button" id="pl-export-scenario">导出当前情景JSON ↓</button><button type="button" id="pl-export-checklist">导出待核验清单JSON ↓</button></div>
   </section>
 
-  <div class="pl-next"><div><span>NEXT STEP / THINK IN DEPENDENCIES</span><strong>把真实项目进度导入，再看项目时间如何与产业承接、就业和服务需求连接。</strong><p>这页只对项目时间排队，不会把演示工期自动转换成GDP或就业预测。</p></div><div><button type="button" class="button primary" data-go="data">核验并导入项目资料 →</button><button type="button" class="button outline" data-go="projects">打开完整项目研究</button></div></div>
+  <div class="pl-next"><div><span>NEXT STEP / THINK IN DEPENDENCIES</span><strong>把项目时间与产业承接、就业和服务需求放在一起看。</strong><p>这页只对项目时间排队，不会把演示工期自动转换成GDP或就业预测。正式研究如需真实项目进度，请使用内部版。</p></div><div><button type="button" class="button primary" data-go="data">查看数据说明 →</button><button type="button" class="button outline" data-go="projects">打开完整项目研究</button></div></div>
   <details class="pl-sources"><summary>展开公开来源、项目数据口径与模型假设</summary>
     <ul>
       <li><a target="_blank" rel="noopener noreferrer" href="https://epaper.nfnews.com/nfdaily/html/202602/03/content_10162180.html">2026年博罗县政府工作报告解读：171宗重点项目、年度投资超过200亿元（计划口径）</a></li>
       <li><a target="_blank" rel="noopener noreferrer" href="https://static.nfnews.com/content/202608/12/c12715023.html">2026年8月3日签约的4宗项目，总投资80亿元、预计达产后年产值203亿元</a></li>
       <li><a target="_blank" rel="noopener noreferrer" href="https://epaper.nfnews.com/nfdaily/html/202607/10/content_10175328.html">2026年7月真实案例：龙溪深远新能源电动车基地报道已建成投产</a></li>
     </ul>
-    <p>公开数据与本页72宗合成演示项目是完全不同的样本集合。演示项目阶段为签约、建设、投产爬坡、稳定运营；年份为示例计划投产年份。由于「稳定运营」项目已经跨越投产阶段，本页的未来接续年度只统计未运营项目，避免重复入列。客户导入项目数据后会按当前表重新计算，并保留「待核验」证据标识。</p>
-    <p>延期压力测试不包含企业订单、现金流、产能爬坡函数、政策效果识别或宏观产出映射，不计算投资的GDP乘数，不给出因果概率。受扰动项目由稳定ID顺序确定，不代表真实风险排序。用户导出的数据保留完整基线、参数和条件结果，便于复核。</p>
+    <p>公开数据与本页72宗合成演示项目是完全不同的样本集合。演示项目阶段为签约、建设、投产爬坡、稳定运营；年份为示例计划投产年份。由于「稳定运营」项目已经跨越投产阶段，本页的未来接续年度只统计未运营项目，避免重复入列。正式研究如需真实项目进度，请使用研究版并保留「待核验」证据标识。</p>
+    <p>延期压力测试不包含企业订单、现金流、产能爬坡函数、政策效果识别或宏观产出映射，不计算投资的GDP乘数，不给出因果概率。受扰动项目由稳定ID顺序确定，不代表真实风险排序。情景保留完整基线、参数和条件结果，便于复核。</p>
   </details>
 </section>
 
@@ -768,12 +761,12 @@
   <section data-page="survey" class="page-section" hidden>
     <div class="page-intro"><div><span class="eyebrow">SURVEY & LATENT CONSTRUCTS</span><h1>宏观统计之外，企业为什么这样选择？</h1><p>同一份企业问卷用于探索服务可得性、服务使用与经营表现的关系；真实调查还需要抽样和测量质量审查。</p></div><button type="button" class="button outline" data-go="models">进入多模型实验室 →</button></div>
     <div class="stats-row" id="surveyStats"></div><div class="split-grid wide-first"><article class="panel-card"><div class="panel-head"><h3>三个潜变量 · 指标分布</h3><span class="minor-tag">1—7级题目</span></div><div id="surveyConstructs"></div></article><article class="panel-card"><div class="panel-head"><h3>样本覆盖与缺口</h3></div><div id="surveyDiagnostics" class="insight-list"></div></article></div>
-    <div class="panel-card spaced"><div class="panel-head"><h3>问卷与实际行为如何连接？</h3><span class="minor-tag">同一主体ID可匹配</span></div><div id="surveyLinkage"></div><div class="button-row"><button type="button" id="downloadQuestionnaire" class="button secondary">导出问卷变量字典 ↓</button><button type="button" id="downloadSurveyCsv" class="button outline">导出当前调查数据CSV ↓</button></div></div>
+    <div class="panel-card spaced"><div class="panel-head"><h3>问卷与实际行为如何连接？</h3><span class="minor-tag">同一主体ID可匹配</span></div><div id="surveyLinkage"></div></div>
   </section>
 
   <section data-page="models" class="page-section" hidden>
-    <div class="page-intro"><div><span class="eyebrow">PARALLEL MODEL LAB</span><h1>同一份数据，让两种方法互相挑战。</h1><p>程序运行探索性PLS路径模型和标准化回归。SPSS/SmartPLS导入实际估计结果进行对照；不同方法不强行比较准确率。</p></div><button type="button" class="button primary" id="runModels">运行全部程序模型 →</button></div>
-    <div class="stats-row" id="modelStats"></div><div class="split-grid"><article class="panel-card"><div class="panel-head"><h3>编程轨道：路径与测量质量</h3><span class="minor-tag">可复现计算</span></div><div id="modelPaths" class="model-paths"></div><div id="measurementPanel"></div></article><article class="panel-card"><div class="panel-head"><h3>专业软件轨道：SPSS / SmartPLS</h3><span class="minor-tag">实际输出由用户导入</span></div><p class="fine-print">下载数据和构念字典，在专业软件独立估计。随后导入含软件版本、样本量和路径系数的JSON。没有导入时不伪造对照数据。</p><div class="button-row"><button type="button" class="button secondary" id="exportProfessional">下载专业分析包 ZIP ↓</button></div><label class="field-label" for="externalModelFile">导入专业软件结果JSON</label><input class="input file-input" id="externalModelFile" type="file" accept=".json"><div id="modelComparison" class="insight-list"></div></article></div>
+    <div class="page-intro"><div><span class="eyebrow">PARALLEL MODEL LAB</span><h1>同一份数据，让两种方法互相挑战。</h1><p>程序运行探索性PLS路径模型和标准化回归；不同方法不强行比较准确率。专业软件（SPSS / SmartPLS）的独立对照属于研究版能力，本版不提供导入与导出。</p></div><button type="button" class="button primary" id="runModels">运行全部程序模型 →</button></div>
+    <div class="stats-row" id="modelStats"></div><div class="split-grid"><article class="panel-card"><div class="panel-head"><h3>编程轨道：路径与测量质量</h3><span class="minor-tag">可复现计算</span></div><div id="modelPaths" class="model-paths"></div><div id="measurementPanel"></div></article><article class="panel-card"><div class="panel-head"><h3>专业软件轨道：SPSS / SmartPLS</h3><span class="minor-tag">研究版能力</span></div><p class="fine-print">爱好者版内置程序路径模型，用于理解“同一份数据、不同方法会得出不同视角”。专业软件（SPSS / SmartPLS）的独立估计与对照，属于研究版能力，本版不提供数据导入与导出。</p><div id="modelComparison" class="insight-list"></div></article></div>
     <div class="panel-card spaced"><div class="panel-head"><h3>不同方法为什么可能分歧？</h3><span class="minor-tag">研究质量门</span></div><div id="modelDiagnostics" class="review-grid"></div></div>
   </section>
 
@@ -804,11 +797,11 @@
   </section>
 
   <section data-page="report" class="page-section" hidden>
-    <div class="page-intro"><div><span class="eyebrow">RESEARCH RECORD & DELIVERY</span><h1>带走一份能重跑、能核对的研究档案。</h1><p>报告包含当前数据快照、研究方法、模拟结果、模型限制、数据问题和下一步核实清单。</p></div><div class="button-row"><button type="button" class="button primary" id="exportReport">下载研究报告 Markdown ↓</button><button type="button" class="button outline" id="exportRecord">导出复现实验 JSON ↓</button><button type="button" class="button outline" id="printReport">打印 / PDF</button></div></div>
+    <div class="page-intro"><div><span class="eyebrow">RESEARCH RECORD</span><h1>把这次研究的过程，完整看清楚。</h1><p>报告在浏览器内展示当前数据快照、研究方法、模拟结果、模型限制、数据问题与下一步核实清单，供随时回顾。</p></div></div>
     <article class="panel-card report-card"><div id="reportContent"></div></article>
   </section>
 
-  <footer class="work-footer"><span>博罗2032 · 开放研发研究台 V2.0</span><span>内置合成Demo；用户自行导入数据始终标记未核验 · 不替代官方统计</span></footer>
+  <footer class="work-footer"><span>博罗2032 · 开放研发研究台 V2.0</span><span>内置合成演示数据，始终标记未核验 · 不替代官方统计</span></footer>
 </main></div></div>
 <div class="toast" id="toast" hidden role="alert"></div>
 </body></html>

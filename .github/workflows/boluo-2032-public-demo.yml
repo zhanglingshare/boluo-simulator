@@ -36,9 +36,9 @@ jobs:
           sudo apt-get update -qq
           sudo apt-get install -y -qq fonts-noto-cjk
           fc-cache -f
-      - name: Install real browser and Excel fixtures
+      - name: Install real browser
         run: |
-          python -m pip install playwright openpyxl
+          python -m pip install playwright
           python -m playwright install chromium
       - name: End-to-end complete research studio
         run: python lab-2032/tests/full_browser.py

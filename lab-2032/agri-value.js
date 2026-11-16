@@ -188,32 +188,7 @@ function renderQuestions(){
  const item=QUESTION.find(x=>x.id===selectedQuestion)||QUESTION[0];
  $("ag-questions-detail").innerHTML='<h3>'+item.heading+'</h3><p>建议向 '+item.who+' 核验：</p>'+
  '<ul>'+item.fields.map(x=>'<li>'+x+'</li>').join("")+'</ul>'+
- '<button type="button" id="ag-export-questions">导出这张核验清单 JSON ↓</button>'+
  '<p>这份清单只是研究建议。待客户指出差异后仍须核实来源、时间、统计对象与数据授权，不能仅凭口头反馈变成A级。</p>';
-}
-function exportJSON(filename,body){
- const blob=new Blob([JSON.stringify(body,null,2)],{type:"application/json;charset=utf-8"});
- const url=URL.createObjectURL(blob),a=document.createElement("a");a.href=url;a.download=filename;document.body.appendChild(a);a.click();a.remove();setTimeout(()=>URL.revokeObjectURL(url),1000);
-}
-function exportExperiment(){
- const r=simulate(params);
- exportJSON("boluo-agriculture-cashflow-demo.json",{
-  schema:"BOLUO_AGRI_CASHFLOW_V1",createdAt:new Date().toISOString(),evidence:"DEMONSTRATION_ASSUMPTIONS_NOT_VERIFIED",
-  case:"Baitang tea harvest seasonal cashflow thought experiment",scope:scope,assumptions:params,
-  units:{dayCost:"ten thousand CNY/day, before effective constraints",peak:"ten thousand CNY",flow:"ten thousand CNY"},
-  results:{peak:r.peak,peakDay:r.peakDay,delay:r.delay,totalExamplePurchases:r.fullValue,
-   effectiveCapacityPercent:r.effective,days:r.path.length-1,flow:r.path},
-  caveat:"Demonstration-only. No verified actual price, staffing, financing, output, profits, GDP or policy effect."
- });
-}
-function exportQuestion(){
- const item=QUESTION.find(x=>x.id===selectedQuestion)||QUESTION[0];
- exportJSON("boluo-agriculture-verification-"+selectedQuestion+".json",{
-  schema:"BOLUO_AGRI_EVIDENCE_TASK_V1",createdAt:new Date().toISOString(),
-  subject:item.heading,peopleToVerify:item.who,fields:item.fields,
-  state:"PENDING_VERIFICATION",grade:"NOT_ASSIGNED",sourceDataStatus:provenance(),
-  note:"Requested data/feedback does not automatically qualify for grade A."
- });
 }
 function render(st){
  if(!section())return;
@@ -233,8 +208,6 @@ function bind(){
   const question=e.target.closest("[data-ag-question]");
   if(question){selectedQuestion=question.dataset.agQuestion;renderQuestions();return;}
   if(e.target.closest("#ag-reset")){params={...INIT};renderCash();return;}
-  if(e.target.closest("#ag-export")){exportExperiment();return;}
-  if(e.target.closest("#ag-export-questions")){exportQuestion();}
  });
  const names={"ag-season":"season","ag-pick":"pick","ag-process":"process",
   "ag-farm-pay":"farmPay","ag-channel-pay":"channelPay","ag-day-cost":"dayCost"};

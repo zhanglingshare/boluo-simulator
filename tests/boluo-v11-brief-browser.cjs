@@ -35,11 +35,11 @@ const session={"boluo-v11-challenge-07":{shock:"orders",strength:1.2,buffer:true
    assert.equal(u.searchParams.get("flowStage"),"4");assert.equal(u.searchParams.get("flow"),"agriculture");
    const widthCheck=await page.evaluate(()=>({inner:innerWidth,scroll:document.documentElement.scrollWidth}));
    assert.ok(widthCheck.scroll<=widthCheck.inner+2,JSON.stringify(widthCheck));
-   await page.locator("#exportPDF").click();assert.equal(await page.evaluate(()=>window.__printCount),1);
+   assert.equal(await page.locator("#copySummary").count(),1);
+   assert.equal(await page.locator("#refreshReport").count(),1);
+   assert.equal(await page.locator("#exportPDF").count(),0);
+   assert.equal(await page.locator("#exportJSON").count(),0);
    if(!mobile){
-    const dl=page.waitForEvent("download");await page.locator("#exportJSON").click();const download=await dl;const p=await download.path();const json=JSON.parse(fs.readFileSync(p,"utf8"));
-    assert.equal(json.format,"boluo-v11-research-dossier");assert.equal(json.version,2);assert.equal(json.record.region.pressure.score,73);
-    assert.equal(json.record.wind.baselineParams.count,5000);assert.equal(json.record.challenge.falsifier,"本地采购份额连续两个季度上升");
     await page.screenshot({path:path.join(out,"brief-desktop.png"),fullPage:true});
    }else await page.screenshot({path:path.join(out,"brief-mobile.png"),fullPage:true});
    assert.deepEqual(errors,[]);await ctx.close();

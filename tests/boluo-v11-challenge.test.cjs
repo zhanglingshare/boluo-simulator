@@ -3,7 +3,7 @@ const test=require("node:test"),assert=require("node:assert/strict"),fs=require(
 const root=path.resolve(__dirname,".."),read=p=>fs.readFileSync(path.join(root,p),"utf8");
 test("09 is a full linked page, not an empty concept or report",()=>{
  const html=read("v11/challenge.html");
- for(const id of ["challengeMain","choose","arenaTitle","worldATitle","worldBTitle","rivalChoices","evidenceOptions","incomingMissing","verdictTitle","myNote","myCard","downloadCard","copyChallenge","saveChallenge","restoreChallenge","exportCanvas","falsifier","falsifierThreshold","falsifierHorizon","confidence","cardFalsifier"])assert.match(html,new RegExp('id="'+id+'"'),id);
+ for(const id of ["challengeMain","choose","arenaTitle","worldATitle","worldBTitle","rivalChoices","evidenceOptions","incomingMissing","verdictTitle","myNote","myCard","copyChallenge","saveChallenge","restoreChallenge","falsifier","falsifierThreshold","falsifierHorizon","confidence","cardFalsifier"])assert.match(html,new RegExp('id="'+id+'"'),id);
  assert.equal((html.match(/data-claim="/g)||[]).length,4);
  assert.equal((html.match(/data-proof="/g)||[]).length,3);
  assert.match(html,/09 我的决策实验/);
@@ -38,11 +38,11 @@ test("09 renders interactive graphs, readable cards and mobile interactions",()=
  assert.match(css,/network-edges/);
  assert.match(css,/mobile-nav/);
  assert.match(js,/addEventListener\("click"/);
- assert.match(js,/makeImage/);
+ assert.match(js,/copyChallenge/);
  assert.match(js,/state\.falsifier/);
  assert.match(js,/state\.confidence/);
  assert.match(js,/claimFromFactor=.*agri/);
- assert.match(js,/toDataURL\("image\/png"\)/);
+ assert.match(js,/navigator\.clipboard|execCommand\("copy"\)/);
  assert.match(js,/localStorage\.setItem/);
  assert.match(js,/currentLink/);
  assert.match(js,/textContent=/);

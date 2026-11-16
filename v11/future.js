@@ -157,18 +157,12 @@ function save(){
  const record=C.snapshot(state),data=readHistory().filter(x=>!(x.scene===record.scene&&x.link===record.link&&x.mode===record.mode&&x.intensity===record.intensity&&x.year===record.year));
  data.unshift(record);
  try{localStorage.setItem(C.STORE_KEY,JSON.stringify(data.slice(0,12)));renderHistory();toast("已保存方案。第11页可读取并复核此条件实验。");}
- catch(e){toast("本机存储不可用。可以尝试导出方案JSON。");}
+ catch(e){toast("本机存储不可用，可改用复制实验链接。");}
 }
 async function copyLink(){
  const url=new URL("./future.html",location.href);url.search="?"+C.shareQuery(state);url.hash="lab";
  try{await navigator.clipboard.writeText(url.href);toast("已复制可复现实验链接（只包含条件，不包含个人资料）。");}
  catch(e){const area=el("textarea");area.value=url.href;area.style.cssText="position:fixed;left:-9999px;opacity:0";document.body.append(area);area.select();const ok=document.execCommand("copy");area.remove();toast(ok?"已复制实验链接":"复制受限，可直接使用浏览器地址栏");}
-}
-function exportCurrent(){
- const payload={format:"boluo-v11-future-structural-experiment",version:1,scope:"illustrative",exportedAt:new Date().toISOString(),note:"结构指数为条件演示，不是GDP、投资、交易额、收入、真实预测或因果效应。",snapshot:C.snapshot(state)};
- const blob=new Blob([JSON.stringify(payload,null,2)],{type:"application/json;charset=utf-8"}),url=URL.createObjectURL(blob),a=el("a");
- a.href=url;a.download="博罗V11-未来结构实验-"+state.scene+"-"+state.year+".json";document.body.append(a);a.click();a.remove();setTimeout(()=>URL.revokeObjectURL(url),1300);
- toast("已导出当前方案JSON。");
 }
 all("[data-scene]").forEach(b=>b.addEventListener("click",()=>changeScene(b.dataset.scene)));
 $("intensityRange").addEventListener("input",e=>{clearPlaying();setState({intensity:Number(e.target.value)})});
@@ -185,7 +179,6 @@ window.addEventListener("resize",renderWorldTabs);
 $("resetLab").addEventListener("click",()=>{clearPlaying();const s=C.SCENES[state.scene];setState({link:s.candidates[0].id,mode:"strengthen",intensity:65,year:2028});toast("已恢复当前场景的初始演示条件");});
 $("saveExperiment").addEventListener("click",save);
 $("copyFutureLink").addEventListener("click",copyLink);
-$("exportFuture").addEventListener("click",exportCurrent);
 window.addEventListener("storage",e=>{if(e.key===C.STORE_KEY)renderHistory()});
 persistUrl();render();renderHistory();
 window.BoluoFutureLab=Object.freeze({getState:()=>({...state}),getResult:()=>C.simulate(state),restore:raw=>{clearPlaying();state=C.validate(raw);persistUrl();render();},save,history:readHistory});

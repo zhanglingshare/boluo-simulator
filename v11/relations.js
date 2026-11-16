@@ -172,7 +172,7 @@
     const already = saved.some(v => C.key(v) === C.key(state));
     $('saveFinding').classList.toggle('is-saved', already);
     $('saveLabel').textContent = already ? '已收下 · 查看我的发现' : '带走这条发现';
-    $('localNote').textContent = storageAvailable ? '发现与补充记录保存在本机。' : '本次可暂存；浏览器未允许持久保存，请导出。';
+    $('localNote').textContent = storageAvailable ? '发现与补充记录保存在本机。' : '本次可暂存；浏览器未允许持久保存，请用复制链接保留当前画面。';
   }
   function render() {
     state.edge = selectedEdge;
@@ -268,23 +268,18 @@
       event.preventDefault();
       const record = C.evidence({ ...state, body: $('evidenceBody').value, url: $('evidenceURL').value, date: new Intl.DateTimeFormat('en-CA', { timeZone: 'Asia/Shanghai', year: 'numeric', month: '2-digit', day: '2-digit' }).format(new Date()) });
       if (!record) { $('formError').textContent = '请填写至少4个字，链接需为不带账号密码的 http 或 https 地址。'; return; }
-      notes = [record, ...notes].slice(0, 50); const stored = writeRecords(); closeDialog(); renderSavedCount(); toast(stored ? '已保存待核实记录；未发布到公共页面' : '已暂存本次记录，请在“我的发现”中导出');
+      notes = [record, ...notes].slice(0, 50); const stored = writeRecords(); closeDialog(); renderSavedCount(); toast(stored ? '已保存待核实记录；未发布到公共页面' : '已暂存本次记录，可在“我的发现”中查看');
     };
     $('evidenceBody').focus();
   }
   $('addEvidence').onclick = () => openEvidence();
-  function exportRecords() {
-    const blob = new Blob([JSON.stringify({ schema: 'boluo-relations/v1', dataVersion: C.data.version, findings: saved, unreviewedEvidence: notes }, null, 2)], { type: 'application/json;charset=utf-8' });
-    const url = URL.createObjectURL(blob), a = document.createElement('a'); a.href = url; a.download = 'boluo-relations-findings.json'; document.body.appendChild(a); a.click(); a.remove(); setTimeout(() => URL.revokeObjectURL(url), 1500); toast('已导出发现与待核实记录');
-  }
   function openSaved() {
     const findings = saved.map((v, i) => {
       const snap = C.snapshot(v), n = snap.nodes.find(node => node.id === v.item) || snap.edges.find(edge => edge.id === v.edge);
       return '<article class="saved-item"><strong>' + esc(snap.record.label + ' · ' + snap.view.label) + '</strong><p>' + esc(snap.insight.question) + '</p><small>' + esc(snap.record.snapshots[v.phase] + (n ? ' · ' + n.label : '')) + '</small><div class="saved-item-actions"><button type="button" data-open-finding="' + i + '">打开这段关系 →</button><button type="button" data-remove-finding="' + i + '">移除</button></div></article>';
     }).join('');
     const evidence = notes.map((n, i) => '<article class="saved-item"><strong>待核实记录 · ' + esc(C.data.cases[n.case].label) + '</strong><p>' + esc(n.body) + '</p>' + (n.url ? '<p><a href="' + esc(n.url) + '" target="_blank" rel="noopener noreferrer">公开来源 ↗</a></p>' : '') + '<small>本机草稿 · 尚未核验 ' + esc(n.date) + '</small><div class="saved-item-actions"><button type="button" data-remove-note="' + i + '">移除记录</button></div></article>').join('');
-    showDialog('我的发现 / 当前设备', '收下的发现与问题', '<p>这里有 ' + saved.length + ' 条发现、' + notes.length + ' 条待核实记录。可导出自行保留。</p>' + (findings || '<p class="empty-records">还没有收下发现。看到值得继续核实的联系时，点“带走这条发现”。</p>') + (evidence ? '<h3>补充记录</h3>' + evidence : '') + '<div class="dialog-actions"><button class="button" id="exportRecords" type="button">导出记录 JSON ↓</button></div>');
-    $('exportRecords').onclick = exportRecords;
+    showDialog('我的发现 / 当前设备', '收下的发现与问题', '<p>这里有 ' + saved.length + ' 条发现、' + notes.length + ' 条待核实记录，保留在本机。</p>' + (findings || '<p class="empty-records">还没有收下发现。看到值得继续核实的联系时，点“带走这条发现”。</p>') + (evidence ? '<h3>补充记录</h3>' + evidence : ''));
     $('dialogBody').querySelectorAll('[data-open-finding]').forEach(b => b.onclick = () => { const v = saved[Number(b.dataset.openFinding)]; closeDialog(); change(v); $('relationshipStage').focus(); });
     $('dialogBody').querySelectorAll('[data-remove-finding]').forEach(b => b.onclick = () => { saved.splice(Number(b.dataset.removeFinding), 1); writeRecords(); renderSavedCount(); openSaved(); });
     $('dialogBody').querySelectorAll('[data-remove-note]').forEach(b => b.onclick = () => { notes.splice(Number(b.dataset.removeNote), 1); writeRecords(); renderSavedCount(); openSaved(); });
@@ -292,7 +287,7 @@
   $('openSaved').onclick = openSaved;
   $('saveFinding').onclick = () => {
     if (saved.some(v => C.key(v) === C.key(state))) return openSaved();
-    saved = [{ ...state }, ...saved].slice(0, 50); const stored = writeRecords(); renderSavedCount(); toast(stored ? '已收下这段关系，可在“我的发现”中继续查看' : '本次已暂存，浏览器未允许持久保存，请导出');
+    saved = [{ ...state }, ...saved].slice(0, 50); const stored = writeRecords(); renderSavedCount(); toast(stored ? '已收下这段关系，可在“我的发现”中继续查看' : '本次已暂存，浏览器未允许持久保存，请用复制链接保留当前画面');
   };
   function showCopyFallback(url) {
     showDialog('分享 / 只携带公开场景', '把这段关系交给朋友看', '<p>朋友可切换视角独立核实。链接不携带本机补充内容或个人记录。</p><label class="sr-only" for="shareURL">分享链接</label><input class="copy-input" id="shareURL" readonly value="' + esc(url) + '"><p><small>复制上面的完整链接即可分享。</small></p>'); $('shareURL').focus(); $('shareURL').select();

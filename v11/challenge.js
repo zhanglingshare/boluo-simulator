@@ -176,40 +176,5 @@ async function copyText(value){
 $("copyChallenge").addEventListener("click",()=>copyText(judgmentText()));
 $("saveChallenge").addEventListener("click",()=>{const record={v:2,claim:state.claim,rival:state.rival,evidence:state.evidence,proof:state.proof,note:state.note,falsifier:state.falsifier,threshold:state.threshold,horizon:state.horizon,confidence:state.confidence,url:currentLink().href,at:new Date().toISOString()};try{localStorage.setItem(storageKey,JSON.stringify(record));toast("判断已保存到当前浏览器")}catch(e){toast("本机保存受限，请复制分享文字")}});
 $("restoreChallenge").addEventListener("click",()=>{let s;try{s=JSON.parse(localStorage.getItem(storageKey)||"null")}catch(e){}if(!s||!CONFIG[s.claim]){toast("还没有本机保存的判断");return}state.claim=s.claim;state.rival=Math.min(2,Math.max(0,Number(s.rival)||0));state.evidence=Math.min(2,Math.max(0,Number(s.evidence)||0));state.proof=allow(s.proof,["unknown","current","alternative"],"unknown");state.note=String(s.note||"").slice(0,120);state.falsifier=String(s.falsifier||"").slice(0,180);state.threshold=String(s.threshold||"").slice(0,100);state.horizon=allow(s.horizon,["未设定","未来一个季度","未来半年","未来一年","下一轮统计发布","项目下一关键节点"],"未设定");state.confidence=Math.max(0,Math.min(100,Number(s.confidence??50)||0));$("myNote").value=state.note;$("noteCount").textContent=state.note.length+" / 120";$("falsifier").value=state.falsifier;$("falsifierThreshold").value=state.threshold;$("falsifierHorizon").value=state.horizon;$("confidence").value=state.confidence;render(true);toast("已恢复本机判断")});
-const cvs=$("exportCanvas"),ctx=cvs.getContext("2d");
-function blockText(text,x,y,maxW,lineH,maxLines,font,color){
- ctx.font=font;ctx.fillStyle=color;const chars=Array.from(String(text));let line="",lines=0;
- for(let i=0;i<chars.length;i++){const next=line+chars[i];if(ctx.measureText(next).width>maxW&&line){ctx.fillText(line,x,y+lines*lineH);lines++;line="";if(lines>=maxLines)return y+lines*lineH;}line+=chars[i]}
- if(line){ctx.fillText(line,x,y+lines*lineH);lines++;}return y+lines*lineH;
-}
-function rounded(x,y,w,h,r,fill){ctx.beginPath();ctx.roundRect(x,y,w,h,r);ctx.fillStyle=fill;ctx.fill()}
-function makeImage(){
- if(!ctx){toast("当前浏览器不支持生成图片");return}
- const W=1080,H=1600,c=CONFIG[state.claim],r=c.rivals[state.rival],ev=c.proof[state.evidence];
- const bg=ctx.createLinearGradient(0,0,W,H);bg.addColorStop(0,"#082238");bg.addColorStop(1,"#0e3e4b");ctx.fillStyle=bg;ctx.fillRect(0,0,W,H);
- ctx.strokeStyle="rgba(129,232,215,.13)";ctx.lineWidth=2;for(let x=45;x<1120;x+=80){ctx.beginPath();ctx.moveTo(x,0);ctx.lineTo(x-220,H);ctx.stroke()}
- ctx.fillStyle="#8ddedc";ctx.font="700 27px sans-serif";ctx.fillText("BO LUO  /  09  ·  DECISION CHALLENGE",66,110);
- ctx.font="800 66px sans-serif";ctx.fillStyle="#fff";ctx.fillText("你的判断，经得起反驳吗？",66,218);
- ctx.font="500 29px sans-serif";ctx.fillStyle="#a2c9d2";ctx.fillText("一场可以被证据推翻的判断挑战",66,275);
- rounded(55,337,970,1120,28,"#f3f8f8");
- let y=406;ctx.font="700 25px sans-serif";ctx.fillStyle="#2e7881";ctx.fillText("我目前的判断",92,y);
- y=blockText(c.position,92,y+70,870,63,2,"800 46px sans-serif","#153b4b")+38;
- ctx.strokeStyle="#d2e3e5";ctx.lineWidth=2;ctx.beginPath();ctx.moveTo(92,y);ctx.lineTo(985,y);ctx.stroke();y+=58;
- ctx.font="700 25px sans-serif";ctx.fillStyle="#267181";ctx.fillText("最强反对意见",92,y);y+=49;
- y=blockText(r.title,92,y,875,43,3,"700 30px sans-serif","#234250")+39;
- ctx.font="700 25px sans-serif";ctx.fillStyle="#267181";ctx.fillText("什么会改变我的判断？",92,y);y+=46;
- y=blockText(ev.name,92,y,870,42,2,"700 31px sans-serif","#234250")+34;
- rounded(90,y,880,77,16,state.proof==="unknown"?"#e8eff0":state.proof==="current"?"#d5f1e8":"#ffe8dc");
- ctx.font="800 30px sans-serif";ctx.fillStyle="#184d59";ctx.fillText(BL[state.proof][0],115,y+49);
- y+=125;ctx.font="700 24px sans-serif";ctx.fillStyle="#267181";ctx.fillText("什么会让我改变判断？",92,y);
- y=blockText(state.falsifier||"尚未设定反证条件",92,y+43,870,34,2,"700 25px sans-serif","#234250")+22;
- ctx.font="500 21px sans-serif";ctx.fillStyle="#527987";ctx.fillText("阈值："+(state.threshold||"未设定")+"  ·  期限："+state.horizon+"  ·  主观确信："+state.confidence+"/100",92,y);
- let footY=1500;
- ctx.strokeStyle="#539a9f";ctx.beginPath();ctx.moveTo(65,footY);ctx.lineTo(1010,footY);ctx.stroke();
- ctx.font="500 25px sans-serif";ctx.fillStyle="#a8d5d3";ctx.fillText("事实 ≠ 条件情景 ≠ 真实因果",68,1550);
- ctx.font="500 23px sans-serif";ctx.fillText("zhanglingshare.github.io/boluo-simulator/v11/challenge.html",68,1588);
- const a=document.createElement("a");a.href=cvs.toDataURL("image/png");a.download="博罗-我的判断挑战.png";document.body.append(a);a.click();a.remove();toast("判断卡图片已生成");
-}
-$("downloadCard").addEventListener("click",makeImage);
 incoming();render(false);showSnapshot();
 })();

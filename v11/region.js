@@ -169,31 +169,6 @@ async function copyText(text){
 }
 $("copyQuestion").addEventListener("click",()=>copyText(shareText()));
 $("saveQuestion").addEventListener("click",()=>{try{localStorage.setItem("boluo-v11-region-focus",JSON.stringify({topic:state.topic,layer:state.layer,date:new Date().toISOString()}));toast("已在本机保存关注的问题")}catch(_){toast("保存受限，可复制问题链接")}});
-function rounded(ctx,x,y,w,h,r,color){ctx.fillStyle=color;ctx.beginPath();ctx.roundRect(x,y,w,h,r);ctx.fill()}
-function split(ctx,text,x,y,maxWidth,lh,maxLines,font,color){
- ctx.font=font;ctx.fillStyle=color;let line="",rows=0;
- for(const ch of Array.from(text)){if(ctx.measureText(line+ch).width>maxWidth&&line){ctx.fillText(line,x,y+rows*lh);rows++;line="";if(rows>=maxLines)return y+rows*lh}line+=ch}
- if(line){ctx.fillText(line,x,y+rows*lh);rows++}return y+rows*lh
-}
-function exportImage(){
- const cv=$("shareCanvas"),ctx=cv.getContext("2d");if(!ctx){toast("不支持图片导出");return}
- const t=TRADE[state.topic],g=ctx.createLinearGradient(0,0,1080,1350);g.addColorStop(0,"#081b2b");g.addColorStop(1,"#164c5c");ctx.fillStyle=g;ctx.fillRect(0,0,1080,1350);
- ctx.strokeStyle="#70d4d41e";for(let x=0;x<1300;x+=84){ctx.beginPath();ctx.moveTo(x,0);ctx.lineTo(x-255,1350);ctx.stroke()}
- ctx.font="850 27px sans-serif";ctx.fillStyle="#a3e9df";ctx.fillText("BO LUO  /  V11  ·  REGIONAL CONNECTIONS",65,109);
- ctx.font="900 63px sans-serif";ctx.fillStyle="#f4ffff";ctx.fillText("不只看增长多少",65,222);ctx.fillStyle="#ffcca0";ctx.fillText("还要看怎样连接",65,299);
- rounded(ctx,55,355,970,787,30,"#f0faf8");
- ctx.font="850 28px sans-serif";ctx.fillStyle="#357b85";ctx.fillText("我想继续追问",92,428);
- let y=split(ctx,t.question,91,519,866,67,4,"850 46px sans-serif","#174051")+33;
- ctx.strokeStyle="#d0e2e0";ctx.beginPath();ctx.moveTo(91,y);ctx.lineTo(987,y);ctx.stroke();y+=59;
- ctx.font="850 26px sans-serif";ctx.fillStyle="#327c88";ctx.fillText("为什么值得核实",91,y);y+=55;
- y=split(ctx,t.why,91,y,872,47,4,"500 29px sans-serif","#365b6a")+40;
- ctx.font="850 26px sans-serif";ctx.fillStyle="#327c88";ctx.fillText("可能改变判断的资料",91,y);y+=54;
- y=split(ctx,t.evidence,91,y,870,49,4,"720 30px sans-serif","#285566")+29;
- if(y<1070){rounded(ctx,90,y,885,53,12,"#dff3ed");ctx.font="800 23px sans-serif";ctx.fillStyle="#215e69";ctx.fillText("区分事实、规划与待核实联系",110,y+34)}
- ctx.font="500 23px sans-serif";ctx.fillStyle="#a0d5d7";ctx.fillText("不是排名 · 不是政策预测 · 不是已证实的企业交易网络",66,1220);ctx.fillText("zhanglingshare.github.io/boluo-simulator/v11/region.html",66,1290);
- const a=document.createElement("a");a.href=cv.toDataURL("image/png");a.download="博罗-区域联系观察.png";document.body.append(a);a.click();a.remove();toast("区域观察卡已生成")
-}
-$("downloadQuestion").addEventListener("click",exportImage);
 if(!q.has("topic")){try{const s=JSON.parse(localStorage.getItem("boluo-v11-region-focus")||"null");if(s&&TRADE[s.topic])state.topic=s.topic}catch(_){}}
 renderCompare();renderGraph();renderDetail();centerNetwork();renderTrade();renderQuestion();
 })();

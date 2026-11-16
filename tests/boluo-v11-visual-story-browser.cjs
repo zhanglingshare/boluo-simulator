@@ -72,7 +72,8 @@ async function visible(page,selector){await page.locator(selector).first().waitF
     }else if(name==="brief"){
       await page.waitForFunction(()=>document.querySelectorAll(".v11-story-steps a").length===8,{timeout:10000});
       assert.ok(await page.locator("#futureAudit").count());
-      assert.ok(await page.locator("#exportJSON").count());
+      assert.equal(await page.locator("#exportJSON").count(),0);
+      assert.ok(await page.locator("#copySummary").count());
     }else if(name==="future"){
       await page.waitForFunction(()=>document.querySelectorAll(".v11-story-metric").length===3,{timeout:10000});
       assert.ok(await page.locator("#metricsGrid").count());

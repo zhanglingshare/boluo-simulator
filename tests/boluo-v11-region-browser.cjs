@@ -49,13 +49,13 @@ const out=path.resolve(__dirname,"../artifacts/v11-region");fs.mkdirSync(out,{re
    assert.equal(await page.locator("#pressureSubstitute").inputValue(),"10");
    assert.match(await page.locator("#valueStageName").innerText(),/农户回款/);
    assert.match(await page.locator("#roleTitle").innerText(),/多元备份/);
-   const dlPromise=page.waitForEvent("download",{timeout:15000});
-   await page.locator("#downloadQuestion").click();const dl=await dlPromise;assert.match(dl.suggestedFilename(),/\.png$/);
+   assert.equal(await page.locator("#downloadQuestion").count(),0);
+   assert.equal(await page.locator("#shareCanvas").count(),0);
    const overflow=await page.evaluate(()=>Math.max(0,document.documentElement.scrollWidth-innerWidth));assert.ok(overflow<=25,"viewport overflow "+width+": "+overflow);
    await page.evaluate(()=>scrollTo(0,0));
    await page.screenshot({path:path.join(out,"region-"+width+".png"),fullPage:true,animations:"disabled"});
    assert.deepEqual(errors,[],"Page JS errors: "+errors.join(" | "));
-   console.log("PASS region "+width+" width; chart/network/proof/PNG; overflow="+overflow);
+   console.log("PASS region "+width+" width; chart/network/proof; overflow="+overflow);
    await ctx.close();
   }
   const context=await browser.newContext({viewport:{width:1280,height:800}});

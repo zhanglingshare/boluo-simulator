@@ -196,23 +196,11 @@ function conclusion(){
  $("finalRevision").textContent=ch?(ch.falsifier||("需要出现能检验“"+ch.rivalTitle+"”的可靠证据"))+"；阈值："+(ch.threshold||"未设定")+"；期限："+ch.horizon:r?"取得可以证实或否定相关区域联系的合同、调查或项目资料": "新增具有可比口径、可交叉核验的企业、项目或交易资料";
 }
 function render(){data=read();progress();journey();range();findings();optional();renderLedger();conclusion();}
-function exportRecord(){
- const payload={format:"boluo-v11-research-dossier",version:2,exportedAt:new Date().toISOString(),
-  provenance:"Current browser's explicit saved selections. Temporary computations are separately marked and are not counted as completed research.",
-  readme:"Facts, scenarios, personal judgments and unknowns are separate. No missing values are imputed. This export contains no private statistical engine or undisclosed model implementation. User-entered notes may be present; inspect before sharing.",
-  publicFacts:{year2025_GDP_current_billion:1005.45,industrialValueAdded_2026Q1Q3_yoyPercent:8.9,industrialInvestment_2026Q1Q3_yoyPercent:-44.7,planning2030GDP:1600},
-  audit:{savedSteps:data.completed,totalSteps:data.total,windIsSaved:data.windSaved,challengeHasFalsifier:Boolean(data.challenge&&data.challenge.falsifier),regionPressureSaved:Boolean(data.region&&data.region.pressure),futureExperimentSaved:Boolean(data.future)},
-  record:data,originalPages:["01/index.html","05/impact.html","06/plan.html","07/wind.html","08/insights.html","09/challenge.html","10/region.html","11/brief.html","12/future.html"]};
- const file=new Blob([JSON.stringify(payload,null,2)],{type:"application/json;charset=utf-8"}),url=URL.createObjectURL(file),a=document.createElement("a");a.href=url;a.download="博罗V11-个人研究档案-2.0.json";document.body.append(a);a.click();a.remove();setTimeout(()=>URL.revokeObjectURL(url),1200);toast("已导出研究档案 JSON。文件可能包含你的个人备注，分享前请先检查。");
-}
 async function copy(){
- const message=D.textSummary(data)+"\n报告入口：https://zhanglingshare.github.io/boluo-simulator/v11/brief.html\n提示：链接不会携带当前设备的本机记录，完整参数请使用JSON导出。";
+ const message=D.textSummary(data)+"\n报告入口：https://zhanglingshare.github.io/boluo-simulator/v11/brief.html\n提示：链接不会携带当前设备的本机记录，刷新后仍可从本机记录继续。";
  try{await navigator.clipboard.writeText(message);toast("已复制研究档案摘要");}
  catch(e){const a=el("textarea");a.value=message;a.style.cssText="position:fixed;left:-9999px;opacity:0";document.body.append(a);a.select();const ok=document.execCommand("copy");a.remove();toast(ok?"已复制研究档案摘要":"复制受限，请使用浏览器分享");}
 }
-$("printTop").addEventListener("click",()=>window.print());
-$("exportPDF").addEventListener("click",()=>window.print());
-$("exportJSON").addEventListener("click",exportRecord);
 $("copySummary").addEventListener("click",copy);
 $("refreshReport").addEventListener("click",()=>{render();toast("已重新读取当前浏览器已保存的研究记录");});
 window.addEventListener("storage",e=>{if(Object.values(D.KEYS).includes(e.key))render();});

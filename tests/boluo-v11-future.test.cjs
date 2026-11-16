@@ -59,8 +59,9 @@ test("bounded state, URL reproducibility and saved snapshot validation",()=>{
 });
 test("public descriptions prohibit causal or economic reinterpretation",()=>{
  const html=read("v11/future.html"),js=read("v11/future.js"),css=read("v11/future.css");
- for(const id of ["networkA","networkB","linkOptions","modeOptions","intensityRange","yearRange","yearValue","metricsGrid","trendChart","opportunity","tradeoff","evidenceGap","saveExperiment","copyFutureLink","exportFuture","historyList","worldTabA","worldTabB"])
+ for(const id of ["networkA","networkB","linkOptions","modeOptions","intensityRange","yearRange","yearValue","metricsGrid","trendChart","opportunity","tradeoff","evidenceGap","saveExperiment","copyFutureLink","historyList","worldTabA","worldTabB"])
   assert.match(html,new RegExp('id="'+id+'"'));
+ assert.doesNotMatch(html,/id="exportFuture"/);
  for(const key of ["manufacturing","agriculture","commuting"])assert.match(html,new RegExp('data-scene="'+key+'"'));
  assert.match(html,/非真实企业交易/);
  assert.match(html,/非GDP、收益或概率/);

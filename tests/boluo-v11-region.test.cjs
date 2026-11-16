@@ -3,7 +3,8 @@ const test=require("node:test"),assert=require("node:assert/strict"),fs=require(
 const root=path.resolve(__dirname,".."),read=p=>fs.readFileSync(path.join(root,p),"utf8");
 test("page 10 exists, covers data, region graph, tradeoffs and a user question",()=>{
  const h=read("v11/region.html");
- for(const id of ["regionRows","compareValue","regionalGraph","graphNodes","graphEdges","graphParticles","focusName","focusMissing","tradeoffCards","tradeoffEvidence","questionPicker","chosenQuestion","downloadQuestion","shareCanvas","valueFlowTrack","valueStageEvidence","pressureDependency","pressureShock","pressureSubstitute","pressureScore","pressureComparisons","roleOptions","roleEvidence"])assert.match(h,new RegExp('id="'+id+'"'));
+ for(const id of ["regionRows","compareValue","regionalGraph","graphNodes","graphEdges","graphParticles","focusName","focusMissing","tradeoffCards","tradeoffEvidence","questionPicker","chosenQuestion","valueFlowTrack","valueStageEvidence","pressureDependency","pressureShock","pressureSubstitute","pressureScore","pressureComparisons","roleOptions","roleEvidence"])assert.match(h,new RegExp('id="'+id+'"'));
+ assert.doesNotMatch(h,/id="downloadQuestion"/);assert.doesNotMatch(h,/id="shareCanvas"/);
  for(const layer of ["industry","people","services","rural"])assert.match(h,new RegExp('data-layer="'+layer+'"'));
  for(const key of ["all","fact","plan","question"])assert.match(h,new RegExp('data-filter="'+key+'"'));
  assert.match(h,/2025 · 第二产业占GDP比重/);

@@ -141,37 +141,6 @@ function renderChecklist(stageId){
   d.checks.map(t=>'<li>'+safe(t)+'</li>').join("")+'</ul>'+
   '<p>任何客户修正先记为待核验。只有资料来源、授权、时间、统计口径及复核过程完整，才考虑升级证据等级。</p>';
 }
-function downloadJSON(file,body){
- const blob=new Blob([JSON.stringify(body,null,2)],{type:"application/json;charset=utf-8"}),url=URL.createObjectURL(blob),a=document.createElement("a");
- a.href=url;a.download=file;document.body.appendChild(a);a.click();a.remove();setTimeout(()=>URL.revokeObjectURL(url),1000);
-}
-function exportScenario(){
- const r=scenario();
- downloadJSON("boluo-project-arrival-scenario.json",{
-  schema:"BOLUO_PROJECT_ARRIVAL_V1",createdAt:new Date().toISOString(),
-  evidence:evidence(),dataset_id:projectSource?.meta?.dataset_id||"unknown",
-  scope:{sector,stageFilter:"none",selectedYear},assumptions:{delayYears:delay,affectedShare:affected,
-   selection:"First round(n*share) records sorted by project ID; future commissioning only, operating excluded"},
-  result:{totalRecords:r.raw.length,pendingRecords:r.pending.length,operatingRecords:r.stable,
-   baselineBefore2032:r.baselineBefore2032,scenarioBefore2032:r.changedBefore2032,
-   crossing2032:r.crosses2032,years:r.years.map(({year,baseline,adjusted})=>({year,baseline,adjusted})),
-   projects:r.pending.map(p=>({id:p.id,name:p.name,sector:p.sector,stage:p.stage,
-    investment:p.investment,scheduledYear:p.before,scenarioYear:p.after,shiftYears:p.extension}))},
-  caution:"Counts of scheduled project milestones only; not investment completed, actual operating output or GDP."
- });
-}
-function exportChecklist(){
- const r=scenario(),candidate=r.pending.find(p=>String(p.id)===String(selectedId));
- const d=S.find(x=>x.id===(candidate?.stage||stage))||S[0];
- downloadJSON("boluo-project-evidence-todo.json",{
-  schema:"BOLUO_PROJECT_EVIDENCE_V1",createdAt:new Date().toISOString(),status:"PENDING_VERIFICATION",
-  grade:"NOT_ASSIGNED",dataset_id:projectSource?.meta?.dataset_id||"unknown",
-  evidence:evidence(),project:candidate?{id:candidate.id,name:candidate.name,stage:candidate.stage,
-   plannedYear:candidate.before,scenarioYear:candidate.after}:null,
-  verifyingStage:d.name,fields:d.checks,
-  note:"Field inquiry only; data grade A requires provenance and independent verification."
- });
-}
 function render(st){
  if(!rootEl())return;
  const changed=projectSource!==st?.data;state=st;projectSource=st?.data;
@@ -187,8 +156,6 @@ function bind(){
   const y=evt.target.closest("[data-pl-year]");if(y){selectedYear=Number(y.dataset.plYear);selectedId=null;render(state);return;}
   const p=evt.target.closest("[data-pl-project]");if(p){selectedId=p.dataset.plProject;renderProjects(scenario());return;}
   if(evt.target.closest("#pl-reset")){delay=1;affected=50;selectedYear=2032;selectedId=null;render(state);return;}
-  if(evt.target.closest("#pl-export-scenario")){exportScenario();return;}
-  if(evt.target.closest("#pl-export-checklist")){exportChecklist();return;}
  });
  q("pl-delay").addEventListener("input",evt=>{delay=Number(evt.target.value);selectedId=null;render(state);});
  q("pl-affected").addEventListener("input",evt=>{affected=Number(evt.target.value);selectedId=null;render(state);});

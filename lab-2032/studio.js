@@ -14,14 +14,14 @@ const tableLabels={macro:"宏观经济",enterprises:"产业主体",relations:"�
 const GROUPS=[
  ["研究入口",[["mission","◈","目标与现实"],["industry","▧","工业发展"],["macro","◧","产业底盘"],["relations","◎","产业关系"],["service","▤","服务业补链"],["agri","♧","农业价值链"],["pipeline","◇","项目接续"]]],
  ["发展基本盘",[["industries","▦","行业结构"],["towns","⌖","镇街比较"],["network","◉","完整网络研究"],["projects","▫","完整项目研究"],["labor","♧","就业与人才"]]],
- ["研究与模型",[["data","▤","数据中心"],["survey","▧","社会调查"],["models","⌘","双轨模型实验室"]]],
+ ["研究与模型",[["data","▤","数据说明"],["survey","▧","社会调查"],["models","⌘","双轨模型实验室"]]],
  ["决策推演",[["wind","◉","2032风洞"],["stress","↯","压力与敏感性"],["blindspots","⚑","可能忽略什么"],["strategy","➤","行动方案"]]],
  ["研究成果",[["report","▣","研究报告"]]]
 ];
 const STAGES=[["数据体检","统一数据规范及跨表关联","data"],["经济基本面","三次产业、行业与镇街","macro"],["微观与社会调查","企业关系、项目、调查","survey"],["双轨模型验证","程序运行与专业软件对照","models"],["2032情景与压力实验","改变条件，重新计算","wind"],["行动与研究报告","风险、机会、可复现档案","report"]];
-const state={data:C.demo(),scenario:"balanced",knobs:{},sim:null,quality:null,model:null,net:null,external:null,
+const state={data:C.demo(),scenario:"balanced",knobs:{},sim:null,quality:null,model:null,net:null,
     compare:{A:null,B:null},active:"mission",town:C.TOWNS[0],industry:"all",networkFilter:"all",
-    laborFilter:"all",projectDelay:0,staging:null,mapping:null,selectedEnterprise:null,stress:null,version:1};
+    laborFilter:"all",projectDelay:0,selectedEnterprise:null,stress:null};
 state.missionFocus="balanced";
 let toastTimer;
 function toast(text){const e=$("#toast");e.textContent=String(text);e.hidden=false;clearTimeout(toastTimer);toastTimer=setTimeout(()=>e.hidden=true,5500);}
@@ -85,12 +85,10 @@ function renderNav(){
 }
 function renderGlobal(){
  state.quality=E.quality(state.data);
- $("#topMode").textContent=state.data.meta.mode.replaceAll("_"," ")+" · "+state.version;
+ $("#topMode").textContent=state.data.meta.mode.replaceAll("_"," ");
  $("#dataVersion").textContent=state.data.meta.dataset_id;
- $("#globalCaveat").textContent=state.data.meta.mode==="DEMO"?
-   "2025参考值待复核；企业、关系、问卷、项目、就业及2032情景均为合成或假设。":
-   "已导入的数据仍未经来源与统计口径核实，未替换部分保留Demo假设；所有计算结果须谨慎解释。";
- status(state.quality.status==="BLOCKED"?"数据存在阻断问题":state.data.meta.mode==="DEMO"?"Demo可运行":"混合数据 · 待核验");
+ $("#globalCaveat").textContent="2025参考值待复核；企业、关系、问卷、项目、就业及2032情景均为合成或假设。";
+ status(state.quality.status==="BLOCKED"?"数据存在阻断问题":"内置Demo可运行");
 }
 function ensureScenario(){
  if(!state.sim)state.sim=E.simulate(state.data,{scenario:state.scenario,knobs:state.knobs,trials:2000,seed:2032});
@@ -350,15 +348,14 @@ function renderSurvey(){
 }
 function renderModels(){
  if(!state.model){
-  $("#modelStats").innerHTML=[stat("程序模型","未运行","点击右上角开始"),stat("专业软件","待导入","使用真实SPSS/SmartPLS输出"),
-   stat("样本量",num(state.data.tables.surveys.length),"当前问卷数据"),stat("对照状态","未验证","不能伪造专业结果")].join("");
+  $("#modelStats").innerHTML=[stat("程序模型","未运行","点击右上角开始"),stat("样本量",num(state.data.tables.surveys.length),"当前问卷数据"),
+   stat("测量质量","待计算","探索性PLS与回归")].join("");
   $("#modelPaths").innerHTML='<p class="fine-print">点击“运行全部程序模型”，计算探索性PLS路径、构念得分回归及Bootstrap置信区间。</p>';
   $("#measurementPanel").innerHTML="";
  }else{
   const m=state.model,paths=m.fit.paths;
   $("#modelStats").innerHTML=[stat("程序研究样本",num(m.n),"同一数据快照"),stat("Bootstrap",num(m.bootstrap-m.failed)+"/"+m.bootstrap,"有效重抽样"),
-   stat("PLS迭代",num(m.fit.iterations),m.fit.converged?"达到收敛条件":"未达到预设收敛条件"),
-   stat("专业软件",state.external?"已导入":"待导入","必须真实外部运行",true)].join("");
+   stat("PLS迭代",num(m.fit.iterations),m.fit.converged?"达到收敛条件":"未达到预设收敛条件")].join("");
   $("#modelPaths").innerHTML=Object.keys(paths).map(k=>{
    const ci=m.ci[k];return '<div class="path-row"><div><b>'+esc(m.pathLabels[k])+'</b><small>'+(
     ci?"Bootstrap 95% ["+dec(ci.p025,3)+","+dec(ci.p975,3)+"]":"区间不可得")+'</small></div><strong>'+dec(paths[k],3)+'</strong></div>';
@@ -367,8 +364,7 @@ function renderModels(){
    '<div class="measure-box"><small>'+k+' / Cronbach α</small><b>'+dec(v.alpha,3)+'</b><span>AVE '+dec(v.ave,3)+' · CR '+dec(v.cr,3)+'</span></div>').join("")+'</div>'+
    '<p class="fine-print">探索性Mode-A算法未经SmartPLS逐项等价验证。测量质量不等于因果识别；不能直接变成GDP贡献。</p>';
  }
- $("#modelComparison").innerHTML=state.external?buildComparison(state.model,state.external):
-  insight("等待真实专业软件输出","请先下载当前数据分析包，在SPSS/SmartPLS中独立估计，再导入其实际结果。不能凭空生成第二条轨道。");
+ $("#modelComparison").innerHTML=insight("专业软件对照属于研究版","本版不提供SPSS/SmartPLS的导入与导出；程序模型仅用于演示“同一份数据、不同方法会得到不同视角”。");
  $("#modelDiagnostics").innerHTML=[
   {name:"同数据快照",desc:"两条轨道必须使用相同样本、变量、缺失处理与数据指纹。"},
   {name:"同估计对象",desc:"PLS路径与构念得分回归不一定具有相同估计对象；不能仅比较系数大小。"},
@@ -383,11 +379,6 @@ function runModels(){
  setTimeout(()=>{try{state.model=E.models(state.data,{seed:319,bootstrap:80});renderModels();status("程序模型已完成 · SmartPLS对照待核对");toast("程序PLS与回归已计算，并保存测量质量及重抽样区间。");}
  catch(err){toast("模型无法估计："+err.message);status("模型数据缺失或不适用");}
  finally{button.disabled=false;}},15);
-}
-function buildComparison(m,external){
- if(!m)return insight("尚未完成程序估计","请先运行程序模型再对比");
- return '<div class="model-compare-header"><strong>'+esc(external.software)+' '+esc(external.software_version)+'</strong><p class="fine-print">外部结果已导入但尚未获等价性认证。以下差异只用于寻找问题。</p></div>'+
-  Object.entries(m.fit.paths).map(([name,value])=>'<div class="path-row"><div><b>'+esc(m.pathLabels[name])+'</b><small>程序 '+dec(value,3)+' · 外部 '+dec(external.paths[name],3)+'</small></div><strong>Δ '+dec(value-external.paths[name],3)+'</strong></div>').join("");
 }
 function renderWind(){
  const sim=ensureScenario();
@@ -474,34 +465,12 @@ function buildReport(){
   baseline:sim.baseline,results:{total:sim.totals,sectors:sim.sectors,nearTarget:sim.nearTarget,meet2030:sim.meet2030Reference},
   network:{nodes:net.nodes,edges:net.edges,invalid:net.invalid,types:net.byType},
   models:model?{pls:model.fit,regression:model.benchmark,confidence:model.ci,notes:model.notes}:null,
-  external:state.external?{software:state.external.software,software_version:state.external.software_version,paths:state.external.paths}:null,
   data_gaps:q.flags,blindspots:gaps,
   caveats:["Demo合成数据和混合/未核实数据都不得称为博罗实际调查结论。",
     "三次产业必须按增加值口径核算；企业营收、采购金额和项目投资不可直接合计为GDP。",
     "程序探索模型尚未获得专业软件等价性认证，路径关系不构成因果或GDP贡献。",
     "未来结构是条件推演，不是确定预测；官方统计口径及授权需单独确认。"]
  };
-}
-function markdownReport(r){
- const g=r.results;
- let md='# 博罗2032 · 三次产业协同研究档案\n\n**数据版本：** '+r.data.id+' ｜ **模式：** '+r.data.mode+'\n\n';
- md+='> 研究声明：合成Demo和未经核实导入数据不构成真实博罗的企业调查、经济预测或政策效果。\n\n';
- md+='## 一、2025年宏观基准\n\n'+E.S.map((k,i)=>'- '+labels[k]+'：'+dec(r.baseline.values[i],2)+'亿元').join('\n')+
-  '\n- GDP合计：'+dec(r.baseline.gdp,2)+'亿元\n\n';
- md+='## 二、2032情景结果\n\n- 情景：'+E.SCENARIOS[r.scenario.id].name+
-  '\n- 总量P10/P50/P90：'+["p10","p50","p90"].map(k=>dec(g.total[k],2)).join(" / ")+'亿元\n';
- md+=g.sectors.map(x=>'- '+x.name+'中位数：'+dec(x.p50,2)+'亿元；P10–P90：'+dec(x.p10,2)+'–'+dec(x.p90,2)+'亿元；占比中位数：'+pct(x.share.p50)).join('\n');
- md+='\n- 接近1:5:4的模型内条件频率：'+pct(g.nearTarget)+'\n- 2030达到1600亿的模型内条件频率：'+pct(g.meet2030)+'\n\n';
- md+='## 三、数据辅助条件（演示规则，不是因果估计）\n\n'+E.S.map((k,i)=>'- '+labels[k]+'：年增长假设辅助修正 '+pct(r.scenario.calibration.annualRateDelta[i])).join('\n')+'\n\n';
- md+='## 三、数据质量及网络\n\n'+Object.entries(r.data.count).map(([k,n])=>'- '+k+'：'+n+'条').join('\n')+
-  '\n- 产业网络有效边：'+r.network.edges+'；无效边：'+r.network.invalid+'\n\n';
- md+='## 四、模型结果\n\n'+(r.models?
-  Object.entries(r.models.pls.paths).map(([k,v])=>'- '+k+'：探索性系数 '+dec(v,4)).join('\n'):
-  '尚未运行程序路径模型。\n')+'\n\n';
- md+='## 五、需要继续核实\n\n'+r.blindspots.map((item,i)=>(i+1)+'. '+item.title+'：'+item.next).join('\n')+'\n\n';
- md+='## 六、科研与使用限制\n\n'+r.caveats.map(x=>'- '+x).join('\n')+'\n\n---\n';
- md+='实验随机种子：'+r.scenario.seed+'；轨迹数：'+r.scenario.trials+'。完整快照与参数请随报告一并导出，以便复现。\n';
- return md;
 }
 function renderReport(){
  const r=buildReport(),g=r.results;
@@ -512,107 +481,10 @@ function renderReport(){
   E.S.map((k,i)=>'<tr><td>'+labels[k]+'</td><td>'+num(r.baseline.values[i])+'</td><td>'+num(g.sectors[i].p50)+'</td><td>'+pct(g.sectors[i].share.p50)+'</td></tr>').join("")+'</tbody></table>'+
   '<p>2032 GDP P10/P50/P90：'+num(g.total.p10)+' / '+num(g.total.p50)+' / '+num(g.total.p90)+'亿元（条件分布）。</p>'+
   '<h3>03 · 真实数据替换状态</h3><p>'+Object.entries(r.data.count).map(([k,v])=>esc(tableLabels[k])+": "+num(v)).join("；")+'。</p>'+
-  '<h3>04 · 程序模型及专业软件</h3><p>'+(r.models?'探索性PLS已运行；有效Bootstrap和路径结果可在研究模型区复核。':'尚未运行程序路径模型。')+
-  (r.external?' 外部软件 '+esc(r.external.software)+' 结果已导入，但尚未确认方法等价。':' SPSS/SmartPLS实际分析尚待导入。')+'</p>'+
+  '<h3>04 · 程序模型</h3><p>'+(r.models?'探索性PLS已运行；有效Bootstrap和路径结果可在研究模型区复核。':'尚未运行程序路径模型。')+' SPSS/SmartPLS的独立对照属于研究版能力，本版不提供。'+'</p>'+
   '<h3>05 · 最需要进一步核实的问题</h3><ol>'+r.blindspots.slice(0,7).map(x=>'<li><strong>'+esc(x.title)+'</strong>：'+esc(x.next)+'</li>').join("")+'</ol>'+
   '<h3>06 · 使用边界</h3><ul>'+r.caveats.map(x=>'<li>'+esc(x)+'</li>').join("")+'</ul>';
 }
-function download(filename,content,type="application/json"){
- const blob=content instanceof Blob?content:new Blob([content],{type});
- const url=URL.createObjectURL(blob),a=document.createElement("a");a.href=url;a.download=filename;document.body.appendChild(a);a.click();a.remove();
- setTimeout(()=>URL.revokeObjectURL(url),1500);
-}
-function exportReport(){download("boluo-2032-research-report.md",markdownReport(buildReport()),"text/markdown;charset=utf-8");toast("已导出当前研究报告。");}
-function exportRecord(){download("boluo-2032-reproducible-record.json",JSON.stringify({record:buildReport(),dataset:state.data},null,2));toast("已导出数据快照和可复现实验记录（本机文件）。");}
-function exportProfessional(){
- if(!state.model)toast("建议先运行程序模型，再对照实际SPSS/SmartPLS结果。");
- const data=state.data,m=state.model;
- const files=Object.fromEntries(Object.entries(data.tables).map(([k,v])=>["data/"+k+".csv",C.encodeCSV(v)]));
- files["manifest.json"]=JSON.stringify({dataset_id:data.meta.dataset_id,mode:data.meta.mode,hash:C.identity(data),counts:state.quality.counts,provenance:data.evidence},null,2);
- files["model/constructs.json"]=JSON.stringify({SA:["SA1","SA2","SA3","SA4"],SU:["SU1","SU2","SU3"],OP:["OP1","OP2","OP3"],paths:["SA->SU","SA->OP","SU->OP"],source:"demo"},null,2);
- files["model/external_result_template.json"]=JSON.stringify({dataset_id:data.meta.dataset_id,data_fingerprint:C.identity(data),n:data.tables.surveys.length,software:"SmartPLS",software_version:"FILL_ME",method:"FILL_ME",paths:{"SA->SU":null,"SA->OP":null,"SU->OP":null},notes:"Only fill with actual software estimates. Different estimators may not be directly comparable."},null,2);
- files["computed/program_model.json"]=m?JSON.stringify(m,null,2):"{}\n";
- files["README.txt"]="BOLUO 2032 OPEN RESEARCH PACKAGE\nAll Demo companies, surveys and relations are synthetic.\nSPSS/SmartPLS use data/surveys.csv, model/constructs.json; run the actual software and retain configuration.\nReturn model/external_result_template.json filled with real estimated coefficients and software metadata. Imported figures are displayed for exploratory comparison only.\nDo not use composite/PLS path coefficients as GDP causal effects.\n";
- download("BOLUO_2032_"+data.meta.mode+"_professional_pack.zip",makeZip(files),"application/zip");
- toast("已导出专业分析包，包含数据、字典和外部结果模板。");
-}
-function makeZip(files){
- const enc=new TextEncoder(),locals=[],centrals=[];let offset=0;
- const crcTable=Array.from({length:256},(_,i)=>{let c=i;for(let j=0;j<8;j++)c=(c&1)?(0xEDB88320^(c>>>1)):(c>>>1);return c>>>0;});
- const crc=bytes=>{let c=0xffffffff;for(const b of bytes)c=crcTable[(c^b)&255]^(c>>>8);return (c^0xffffffff)>>>0;};
- const s16=(d,i,v)=>d.setUint16(i,v,true),s32=(d,i,v)=>d.setUint32(i,v>>>0,true);
- for(const [name,content] of Object.entries(files)){
-  const filename=enc.encode(name),bytes=enc.encode(content),check=crc(bytes),local=new Uint8Array(30+filename.length);
-  const l=new DataView(local.buffer);s32(l,0,0x04034b50);s16(l,4,20);s16(l,6,0x800);s32(l,14,check);s32(l,18,bytes.length);s32(l,22,bytes.length);s16(l,26,filename.length);local.set(filename,30);
-  locals.push(local,bytes);
-  const central=new Uint8Array(46+filename.length),d=new DataView(central.buffer);
-  s32(d,0,0x02014b50);s16(d,4,20);s16(d,6,20);s16(d,8,0x800);s32(d,16,check);s32(d,20,bytes.length);s32(d,24,bytes.length);s16(d,28,filename.length);s32(d,42,offset);central.set(filename,46);
-  centrals.push(central);offset+=local.length+bytes.length;
- }
- const end=new Uint8Array(22),d=new DataView(end.buffer);s32(d,0,0x06054b50);s16(d,8,centrals.length);s16(d,10,centrals.length);s32(d,12,centrals.reduce((n,a)=>n+a.length,0));s32(d,16,offset);
- return new Blob([...locals,...centrals,end],{type:"application/zip"});
-}
-async function importExternal(event){
- const file=event.target.files[0];if(!file)return;
- try{const o=JSON.parse(await file.text());
-  if(o.dataset_id!==state.data.meta.dataset_id||o.data_fingerprint!==C.identity(state.data))throw Error("数据快照ID或指纹不匹配");
-  if(o.n!==state.data.tables.surveys.length)throw Error("问卷样本量不一致");
-  if(!o.software_version||o.software_version==="FILL_ME"||!o.method||o.method==="FILL_ME")throw Error("需要填写真实软件版本和估计方法");
-  const keys=["SA->SU","SA->OP","SU->OP"];for(const k of keys)if(!Number.isFinite(o.paths?.[k]))throw Error("缺少真正估计的路径："+k);
-  state.external=o;if(!state.model)runModels();else renderModels();toast("已导入外部专业软件结果；对照不是等价性认证。");
- }catch(err){toast("外部结果导入失败："+err.message);}finally{event.target.value="";}
-}
-function applyData(bundle){
- state.data=bundle;state.version++;state.model=null;state.external=null;state.net=null;state.stress=null;state.sim=null;state.compare={A:null,B:null};
- $("#sensitivityBars").dataset.ready="";
- renderGlobal();ensureScenario();renderCurrent();
-}
-async function stageData(){
- const file=$("#importFile").files[0];if(!file){toast("先选择CSV、Excel或JSON文件");return;}
- $("#importStart").disabled=true;$("#importMessage").textContent="正在读取本地文件，不上传服务器…";
- try{
-  const parsed=await C.parseFile(file);
-  if(parsed?.tables){
-   state.staging={bundle:parsed,source:file.name};$("#mappingArea").hidden=true;
-   $("#importMessage").textContent="检测到完整研究数据包。将核对六个数据模块，逐项标记未核验。";
-  }else{
-   const type=$("#importType").value,headers=Object.keys(parsed[0]),mapping=C.suggestMapping(type,headers);
-   state.staging={rows:parsed,headers,type,source:file.name};
-   const required=C.REQUIRED[type];
-   $("#mappingArea").hidden=false;
-   $("#mappingFields").innerHTML=required.map(key=>'<div class="mapping-field"><label for="field-'+key+'">'+esc(key)+'</label><select class="input" data-field="'+esc(key)+'" id="field-'+esc(key)+'"><option value="">（请选择文件列）</option>'+
-    headers.map(h=>'<option value="'+esc(h)+'" '+(h===mapping[key]?"selected":"")+'>'+esc(h)+'</option>').join("")+'</select></div>').join("");
-   $("#importMessage").textContent="读取到"+parsed.length+"条记录。核对字段映射，之后确认替换。";
-  }
-  $("#importConfirm").disabled=false;
- }catch(err){toast("文件预检查失败："+err.message);$("#importMessage").textContent=err.message;state.staging=null;$("#importConfirm").disabled=true;}
- finally{$("#importStart").disabled=false;}
-}
-function confirmImport(){
- const s=state.staging;if(!s){toast("请先读取数据文件");return;}
- try{
-  let next=state.data;
-  if(s.bundle){
-   const provided=s.bundle.tables;if(!provided||typeof provided!=="object")throw Error("JSON数据包必须包含tables");
-   for(const type of Object.keys(C.REQUIRED))if(provided[type]){
-    next=C.replace(next,type,C.validateOne(type,provided[type]));
-   }
-  }else{
-   const mapping=Object.fromEntries($$("#mappingFields [data-field]").map(x=>[x.dataset.field,x.value]));
-   const missing=Object.entries(mapping).filter(([,v])=>!v).map(([k])=>k);
-   if(missing.length)throw Error("必须映射字段："+missing.join(","));
-   next=C.replace(next,s.type,C.applyMapping(s.rows,mapping));
-  }
-  applyData(next);$("#importMessage").textContent="导入成功："+state.data.meta.dataset_id+"。合成/未核验标识保持。";
-  $("#importConfirm").disabled=true;$("#mappingArea").hidden=true;state.staging=null;toast("已建立新研究快照，全部关联模块将使用当前数据重新计算。");
- }catch(err){toast("导入未通过质量门："+err.message);$("#importMessage").textContent=err.message;}
-}
-function restoreDemo(){applyData(C.demo());toast("已恢复唯一完整Demo，导入的数据可通过此前导出的JSON重新载入。");}
-function downloadTemplate(){
- const type=$("#importType").value;
- download("boluo2032-"+type+"-template.csv",C.encodeCSV(state.data.tables[type].slice(0,5)),"text/csv;charset=utf-8");
-}
-function exportSnapshot(){download("boluo2032-current-dataset.json",JSON.stringify(state.data,null,2));toast("已下载完整研究数据快照；文件应妥善保存。");}
 function actionToWind(id){
  const proposed={ "act-service":{scenario:"service",knobs:{service_capacity:.75}},
   "act-industry":{scenario:"industrial",knobs:{manufacturing_upgrade:.75}},
@@ -638,7 +510,6 @@ function bind(){
   const node=e.target.closest("[data-shocknode]");if(node){$("#shockNode").value=node.dataset.shocknode;runShock();return;}
   const action=e.target.closest("[data-action]");if(action){actionToWind(action.dataset.action);return;}
  });
- $("#openData").addEventListener("click",()=>navigate("data"));
  $("#openMobileNav").addEventListener("click",()=>{$("#sidebar").classList.toggle("open");$("#mobileBackdrop").hidden=!$("#sidebar").classList.contains("open");});
  $("#mobileBackdrop").addEventListener("click",()=>{$("#sidebar").classList.remove("open");$("#mobileBackdrop").hidden=true;});
  $("#industryFilter").addEventListener("change",renderIndustry);
@@ -659,18 +530,6 @@ function bind(){
   try{state.stress=E.simulate(state.data,{scenario:state.scenario,knobs:stressOptions(),trials:2000,seed:2032});renderStress();toast("联合压力实验已重新计算。");}
   catch(err){toast("压力计算失败："+err.message);}
  });
- $("#downloadQuestionnaire").addEventListener("click",()=>download("boluo-survey-dictionary.json",JSON.stringify({SA:["SA1","SA2","SA3","SA4"],SU:["SU1","SU2","SU3"],OP:["OP1","OP2","OP3"],note:"Items are synthetic; validate before field deployment."},null,2)));
- $("#downloadSurveyCsv").addEventListener("click",()=>download("boluo-survey.csv",C.encodeCSV(state.data.tables.surveys),"text/csv;charset=utf-8"));
- $("#exportProfessional").addEventListener("click",exportProfessional);
- $("#externalModelFile").addEventListener("change",importExternal);
- $("#importStart").addEventListener("click",stageData);
- $("#importConfirm").addEventListener("click",confirmImport);
- $("#downloadTemplate").addEventListener("click",downloadTemplate);
- $("#downloadSnapshot").addEventListener("click",exportSnapshot);
- $("#restoreDemoTop").addEventListener("click",restoreDemo);
- $("#exportReport").addEventListener("click",exportReport);
- $("#exportRecord").addEventListener("click",exportRecord);
- $("#printReport").addEventListener("click",()=>window.print());
  window.addEventListener("hashchange",()=>{const page=location.hash.slice(1);if(page!==state.active)navigate(page);});
 }
 function start(){

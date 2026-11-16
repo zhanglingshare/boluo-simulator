@@ -47,12 +47,8 @@ const origin="http://127.0.0.1:8765/v11/";
    assert.equal(await page.locator("#yearValue").innerText(),"2030");
    const layout=await page.evaluate(()=>({overflow:document.documentElement.scrollWidth-window.innerWidth,offenders:[...document.querySelectorAll("*")].map(e=>({name:e.tagName,className:typeof e.className==="string"?e.className.slice(0,70):"",right:e.getBoundingClientRect().right})).filter(e=>e.right>innerWidth+3).slice(0,8)}));
    assert.ok(layout.overflow<=2,"page12 "+width+"px layout="+JSON.stringify(layout));
+   assert.equal(await page.locator("#exportFuture").count(),0);
    if(!mobile){
-    const event=page.waitForEvent("download");await page.locator("#exportFuture").click();
-    const file=await event,raw=JSON.parse(fs.readFileSync(await file.path(),"utf8"));
-    assert.equal(raw.format,"boluo-v11-future-structural-experiment");
-    assert.equal(raw.snapshot.scene,"agriculture");
-    assert.match(raw.note,/不是GDP/);
     await page.screenshot({path:path.join(art,"future-desktop.png"),fullPage:true,animations:"disabled"});
    }else{
     await page.screenshot({path:path.join(art,"future-mobile.png"),fullPage:true,animations:"disabled"});

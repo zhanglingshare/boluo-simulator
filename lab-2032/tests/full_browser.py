@@ -1,17 +1,14 @@
 """Executable 20-workspace Boluo 2032 public studio acceptance suite.
-Tests actual computation, CSV/XLSX/JSON replacement, professional ZIP, report,
-desktop 1440 and Android-width 390, no JS page errors/overflow.
+Tests actual computation, read-only data notes, built-in program models, report,
+desktop 1440 and Android-width 390, no JS page errors/overflow, and that no
+import/export UI remains in the hobbyist build.
 """
 from __future__ import annotations
-import io
-import json
 import os
 import subprocess
 import sys
-import tempfile
 import time
 import urllib.request
-import zipfile
 from pathlib import Path
 from playwright.sync_api import sync_playwright, expect
 
@@ -126,10 +123,7 @@ def main():
                     page.locator('[data-svc-feedback="may-differ"]').click()
                     page.locator("#svc-feedback-save").click()
                     assert "1 条本地反馈" in page.locator("#svc-feedback-count").inner_text()
-                    with page.expect_download() as review_info:
-                        page.locator("#svc-feedback-export").click()
-                    review_dl=review_info.value
-                    assert review_dl.suggested_filename=="boluo-service-review.json"
+                    assert page.locator("#svc-feedback-export").count()==0
                     page.locator('[data-svc-origin="primary"]').click()
                     assert page.locator('[data-svc-origin="primary"]').get_attribute("aria-pressed")=="true"
                     assert page.locator("#svc-matrix .svc-matrix-cell").count()>0
@@ -192,12 +186,8 @@ def main():
                     page.locator('#pl-funnel [data-pl-stage="commissioning"]').click()
                     assert "投产爬坡" in page.locator("#pl-funnel-detail").inner_text()
                     assert "良品率" in page.locator("#pl-validation-list").inner_text()
-                    with page.expect_download() as pipeline_download:
-                        page.locator("#pl-export-scenario").click()
-                    assert pipeline_download.value.suggested_filename=="boluo-project-arrival-scenario.json"
-                    with page.expect_download() as pipeline_evidence:
-                        page.locator("#pl-export-checklist").click()
-                    assert pipeline_evidence.value.suggested_filename=="boluo-project-evidence-todo.json"
+                    assert page.locator("#pl-export-scenario").count()==0
+                    assert page.locator("#pl-export-checklist").count()==0
                     project_probe=page.evaluate("""() => {
                         const data=BoluoCore.demo();
                         data.tables.projects=[{id:"CUSTOM-01",name:"客户示例A",stage:"commissioning",
@@ -249,9 +239,7 @@ def main():
                     assert "162.5万元" in page.locator("#ag-output-metrics").inner_text()
                     page.locator("#ag-reset").click()
                     assert "212.5万元" in page.locator("#ag-output-metrics").inner_text()
-                    with page.expect_download() as ag_cash_download:
-                        page.locator("#ag-export").click()
-                    assert ag_cash_download.value.suggested_filename=="boluo-agriculture-cashflow-demo.json"
+                    assert page.locator("#ag-export").count()==0
                     assert "合成Demo" in page.locator("#ag-network-caveat").inner_text()
                     assert page.locator("#ag-network-stats > div").count()==3
                     page.locator('[data-ag-kind="agricultural_distribution"]').click()
@@ -260,9 +248,7 @@ def main():
                     assert page.locator("#ag-network-chart .ag-network-row").count()>0
                     page.locator('[data-ag-question="channel"]').click()
                     assert "合同账期" in page.locator("#ag-questions-detail").inner_text()
-                    with page.expect_download() as ag_question_download:
-                        page.locator("#ag-export-questions").click()
-                    assert ag_question_download.value.suggested_filename=="boluo-agriculture-verification-channel.json"
+                    assert page.locator("#ag-export-questions").count()==0
                     ag_import_probe=page.evaluate("""() => {
                       const imported=BoluoCore.demo();
                       imported.tables.relations=[{source:"A0001",target:"I0001",type:"agricultural_processing",value:3.5}];
@@ -375,24 +361,9 @@ def main():
                     page.locator("#runModels").click()
                     page.locator("#modelPaths .path-row").first.wait_for(timeout=45000)
                     assert page.locator("#modelPaths .path-row").count()==3
-                    with page.expect_download() as info:
-                        page.locator("#exportProfessional").click()
-                    with tempfile.TemporaryDirectory() as td:
-                        pkg=Path(td)/info.value.suggested_filename
-                        info.value.save_as(pkg)
-                        with zipfile.ZipFile(pkg) as archive:
-                            assert archive.testzip() is None
-                            assert "data/surveys.csv" in archive.namelist()
-                            template=json.loads(archive.read("model/external_result_template.json"))
-                        template.update({
-                          "software":"SmartPLS","software_version":"4.3-demo-manually-tested",
-                          "method":"PLS-SEM","paths":{"SA->SU":.42,"SA->OP":.21,"SU->OP":.29}
-                        })
-                        page.locator("#externalModelFile").set_input_files({
-                          "name":"analysis-output.json","mimeType":"application/json",
-                          "buffer":json.dumps(template).encode("utf-8")
-                        })
-                        expect(page.locator('#modelComparison')).to_contain_text('SmartPLS',timeout=20000)
+                    assert page.locator("#exportProfessional").count()==0
+                    assert page.locator("#externalModelFile").count()==0
+                    expect(page.locator('#modelComparison')).to_contain_text('研究版',timeout=20000)
                     go(page,"wind")
                     original=page.locator("#windStats .stat-card").first.inner_text()
                     page.locator("#scenarioSelect").select_option("service")
@@ -411,61 +382,16 @@ def main():
                     assert page.locator("#blindspotCards .blind-card").count()>=5
                     go(page,"report")
                     assert "三次产业协同研究报告" in page.locator("#reportContent").inner_text()
-                    with page.expect_download() as report_dl:
-                        page.locator("#exportReport").click()
-                    assert report_dl.value.suggested_filename.endswith(".md")
+                    assert page.locator("#exportReport").count()==0
                     go(page,"data")
-                    page.locator("#importType").select_option("macro")
-                    page.locator("#importFile").set_input_files({
-                      "name":"macro.csv","mimeType":"text/csv",
-                      "buffer":b"year,primary,secondary,tertiary\n2025,120,650,380\n"})
-                    page.locator("#importStart").click()
-                    page.locator("#mappingFields select").first.wait_for()
-                    page.locator("#importConfirm").click()
-                    expect(page.locator('#topMode')).to_contain_text('MIXED',timeout=12000)
+                    assert "数据说明" in page.locator("#sectionPath").inner_text()
+                    assert page.locator("#dataStats .stat-card").count()==4
+                    assert page.locator("#datasetCards .dataset-card").count()==6
+                    assert page.locator("#qualityChecks .quality-item").count()>0
+                    for gone in ["#importType","#importFile","#importStart","#mappingFields","#importConfirm","#restoreDemoTop","#downloadTemplate","#downloadSnapshot","#openData"]:
+                        assert page.locator(gone).count()==0,gone
                     go(page,"macro")
-                    assert "1,150" in page.locator("#base-gdp-total").inner_text()
-                    assert "待核验" in page.locator("#base-gdp-growth").inner_text()
-                    page.locator('#base-history-years [data-history-year="2025"]').click()
-                    assert "1,150.00亿" in page.locator("#base-history-detail").inner_text()
-                    go(page,"data")
-                    page.locator("#restoreDemoTop").click()
-                    expect(page.locator('#topMode')).to_contain_text('DEMO',timeout=12000)
-                    # XLSX is an explicit functional requirement; verify first worksheet parse.
-                    from openpyxl import Workbook
-                    wb=Workbook();ws=wb.active;ws.append(["year","primary","secondary","tertiary"]);ws.append([2025,121,641,388])
-                    buf=io.BytesIO();wb.save(buf)
-                    page.locator("#importType").select_option("macro")
-                    page.locator("#importFile").set_input_files({
-                      "name":"macro.xlsx","mimeType":"application/vnd.openxmlformats-officedocument.spreadsheetml.sheet",
-                      "buffer":buf.getvalue()
-                    })
-                    page.locator("#importStart").click()
-                    page.locator("#importConfirm").wait_for(state="attached",timeout=12000)
-                    expect(page.locator('#importConfirm')).to_be_enabled(timeout=12000)
-                    page.locator("#importConfirm").click()
-                    page.wait_for_function('document.querySelector("#topMode").textContent.includes("MIXED")',timeout=12000)
-                    go(page,"macro")
-                    assert "1,150" in page.locator("#base-gdp-total").inner_text()
-                    assert "待核验" in page.locator("#base-gdp-growth").inner_text()
-                    page.locator('#base-history-years [data-history-year="2025"]').click()
-                    assert "1,150.00亿" in page.locator("#base-history-detail").inner_text()
-                    go(page,"data")
-                    page.locator("#restoreDemoTop").click()
-                    # Real imports can introduce previously unseen town names; lists must adapt.
-                    page.locator("#importType").select_option("enterprises")
-                    page.locator("#importFile").set_input_files({
-                      "name":"new-town.csv","mimeType":"text/csv",
-                      "buffer":b"id,sector,subsector,town,employees,revenue,productivity\nX001,secondary,Demo,TestNewTown,31,21.5,0.693\n"
-                    })
-                    page.locator("#importStart").click()
-                    expect(page.locator("#importConfirm")).to_be_enabled(timeout=12000)
-                    page.locator("#importConfirm").click()
-                    expect(page.locator("#topMode")).to_contain_text("MIXED",timeout=12000)
-                    go(page,"towns")
-                    assert "TestNewTown" in page.locator("#townFilter").inner_text()
-                    go(page,"data")
-                    page.locator("#restoreDemoTop").click()
+                    assert "1,005.45" in page.locator("#base-gdp-total").inner_text()
                     dims=page.evaluate('({width:innerWidth,scroll:document.documentElement.scrollWidth})')
                     assert dims["scroll"]<=dims["width"]+2,dims
                     assert not errors,errors
@@ -481,7 +407,7 @@ def main():
         server.terminate()
         try:server.wait(timeout=5)
         except subprocess.TimeoutExpired:server.kill()
-    print("PASS: full studio public, all 20 workspaces, scenario, SNA, projects, workforce, survey, models, ZIP, XLSX/CSV, report, desktop/mobile.")
+    print("PASS: full studio public, all 20 workspaces, scenario, SNA, projects, workforce, survey, built-in models, read-only data notes, report, desktop/mobile.")
 
 if __name__=="__main__":
     main()
