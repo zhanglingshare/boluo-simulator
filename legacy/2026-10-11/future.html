@@ -51,7 +51,14 @@ table.sens td{padding:6px 8px;text-align:right;border-bottom:1px solid #152033;c
 .next{text-align:center;margin-top:16px}
 .next a{background:#15803d;color:#fff;padding:11px 24px;border-radius:8px;text-decoration:none;font-weight:600;display:inline-block}
 #out{display:none}
-</style></head><body>
+</style>
+<meta property="og:type" content="website">
+<meta property="og:title" content="同一组条件推演 2030 年，常见结果能差多少？">
+<meta property="og:description" content="打开选一次，和朋友对答案。">
+<meta property="og:image" content="https://zhanglingshare.github.io/boluo-simulator/legacy/2026-10-11/public-stage.webp">
+<link rel="stylesheet" href="public-duel.css">
+<script type="module" src="public-duel.js"></script>
+</head><body data-duel-page="future">
 
 <div class="nav">
   <b>博罗产业风洞</b>
@@ -71,17 +78,7 @@ table.sens td{padding:6px 8px;text-align:right;border-bottom:1px solid #152033;c
   <h1>2030年博罗长什么样：把未来反复跑</h1>
   <p class="sub">选模式、定种子、点按钮。同样的种子必定跑出同样的结果——这是可以复现的。</p>
 
-  <!-- 先猜后揭 -->
-  <div style="margin:12px 0;padding:16px;background:linear-gradient(135deg,#1e293b,#0f172a);border:1px solid #fbbf24;border-radius:14px">
-    <div style="font-size:15px;font-weight:800;color:#fff;margin-bottom:4px">🎯 先别往下看——你觉得2030年博罗最可能落到多少？</div>
-    <div style="font-size:12.5px;color:#94a3b8;margin-bottom:12px">凭直觉选一个，再看模型跑出来的分布。</div>
-    <div style="display:flex;gap:8px">
-      <button onclick="guess(1)" style="flex:1;background:#f8717122;border:1px solid #f87171;color:#f87171;border-radius:10px;padding:10px 6px;cursor:pointer;font-size:13px;font-weight:700">1400亿以下</button>
-      <button onclick="guess(2)" style="flex:1;background:#fbbf2422;border:1px solid #fbbf24;color:#fbbf24;border-radius:10px;padding:10px 6px;cursor:pointer;font-size:13px;font-weight:700">1400-1600亿</button>
-      <button onclick="guess(3)" style="flex:1;background:#34d39922;border:1px solid #34d399;color:#34d399;border-radius:10px;padding:10px 6px;cursor:pointer;font-size:13px;font-weight:700">1600亿以上</button>
-    </div>
-    <div id="guessOut" style="margin-top:10px;font-size:12.5px;color:#cbd5e1"></div>
-  </div>
+  <section id="friend-duel" class="friend-duel" aria-labelledby="duel-title" hidden></section>
 
   <!-- 控制 -->
   <div class="card">
@@ -369,7 +366,7 @@ run();
 
 <div class="likebar">
   <button onclick="likePage()">👍 <span id="pcount">0</span></button>
-  <button onclick="sharePage()">🔁 转给朋友</button>
+  <button type="button" data-duel-footer>发这题给朋友</button>
 </div>
 <style>
 .likebar{position:relative;bottom:auto;left:auto;transform:none;display:flex;justify-content:center;margin:20px 0;background:rgba(15,23,42,.96);border:1px solid #3b82f6;border-radius:24px;padding:9px 20px;display:flex;gap:22px;z-index:999;box-shadow:0 6px 24px rgba(0,0,0,.6)}
@@ -382,17 +379,6 @@ run();
   var n=parseInt(localStorage.getItem(k)||"0");
   document.getElementById("pcount").textContent=n;
   window.likePage=function(){n++;localStorage.setItem(k,n);document.getElementById("pcount").textContent=n;};
-  window.sharePage=function(){
-    var m=document.getElementById("shareModal");
-    if(!m){
-      m=document.createElement("div");m.id="shareModal";
-      m.style.cssText="position:fixed;inset:0;background:rgba(0,0,0,.8);z-index:9999;display:flex;align-items:center;justify-content:center;padding:20px";
-      m.onclick=function(){m.remove();};
-      m.innerHTML='<div style="background:#0f172a;padding:20px;border-radius:14px;text-align:center" onclick="event.stopPropagation()"><div style="color:#fff;font-size:14px;margin-bottom:12px">截图二维码，发给朋友/群</div><img src="https://api.qrserver.com/v1/create-qr-code/?size=200x200&data='+encodeURIComponent(location.href)+'" style="width:200px;height:200px;background:#fff;padding:8px;border-radius:8px"><div style="color:#94a3b8;font-size:12px;margin-top:12px">扫码打开</div></div>';
-      document.body.appendChild(m);
-    }
-    navigator.clipboard && navigator.clipboard.writeText(location.href);
-  };
 })();
 </script>
 <!-- 百度统计：去 mtj.baidu.com 注册后替换 YOUR_ID -->
@@ -404,15 +390,5 @@ var _hmt = _hmt || [];
   var s = document.getElementsByTagName("script")[0]; 
   s.parentNode.insertBefore(hm, s);
 })();
-</script>
-<script>
-function guess(n){
-  const msgs={
-    1:"你偏谨慎。模型跑出来中位数约1580亿——比你猜的要乐观。",
-    2:"你猜在中间。模型中位数约1580亿，正好落在你这个区间。",
-    3:"你偏乐观。模型跑出来只有约41%的概率过1600亿——比你想的要难。"
-  };
-  document.getElementById("guessOut").innerHTML="揭晓："+msgs[n]+"<br>下面这张分布，就是它跑了一万遍的结果。";
-}
 </script>
 </body></html>

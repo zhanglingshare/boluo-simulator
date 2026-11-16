@@ -146,8 +146,15 @@
   .run-fill, .run-gap-fill, .run-marker, .sector-bar, .chance-grid i { transition: none }
 }
 </style>
+
+<meta property="og:type" content="website">
+<meta property="og:title" content="博罗按 5.5% 连续增长五年，能到 1600 亿吗？">
+<meta property="og:description" content="打开选一次，和朋友对答案。">
+<meta property="og:image" content="https://zhanglingshare.github.io/boluo-simulator/legacy/2026-10-11/public-stage.webp">
+<link rel="stylesheet" href="public-duel.css">
+<script type="module" src="public-duel.js"></script>
 </head>
-<body>
+<body data-duel-page="report">
 <nav class="nav" aria-label="博罗产业风洞导航">
   <b>博罗产业风洞</b>
   <a href="index.html">① 今日话题</a>
@@ -175,6 +182,7 @@
       </div>
       <p class="vote-outcome" id="report-verdict" role="status"></p>
       <button class="retake" id="report-retake" type="button" hidden>收起答案，再猜一遍</button>
+      <section id="friend-duel" class="friend-duel duel-native" aria-label="邀请朋友一起选" hidden></section>
     </div>
     <div class="scene-card">
       <div class="shutter" id="report-shutter" aria-hidden="true"><span class="shutter-mark">?</span></div>
@@ -512,7 +520,7 @@
 </script>
 <div class="likebar">
   <button onclick="likePage()">👍 <span id="pcount">0</span></button>
-  <button onclick="sharePage()">🔁 转给朋友</button>
+  <button type="button" data-duel-footer>发这题给朋友</button>
 </div>
 <style>
 .likebar{position:relative;bottom:auto;left:auto;transform:none;display:flex;justify-content:center;margin:20px 0;background:rgba(15,23,42,.96);border:1px solid #3b82f6;border-radius:24px;padding:9px 20px;display:flex;gap:22px;z-index:999;box-shadow:0 6px 24px rgba(0,0,0,.6)}
@@ -525,17 +533,6 @@
   var n=parseInt(localStorage.getItem(k)||"0");
   document.getElementById("pcount").textContent=n;
   window.likePage=function(){n++;localStorage.setItem(k,n);document.getElementById("pcount").textContent=n;};
-  window.sharePage=function(){
-    var m=document.getElementById("shareModal");
-    if(!m){
-      m=document.createElement("div");m.id="shareModal";
-      m.style.cssText="position:fixed;inset:0;background:rgba(0,0,0,.8);z-index:9999;display:flex;align-items:center;justify-content:center;padding:20px";
-      m.onclick=function(){m.remove();};
-      m.innerHTML='<div style="background:#0f172a;padding:20px;border-radius:14px;text-align:center" onclick="event.stopPropagation()"><div style="color:#fff;font-size:14px;margin-bottom:12px">截图二维码，发给朋友/群</div><img src="https://api.qrserver.com/v1/create-qr-code/?size=200x200&data='+encodeURIComponent(location.href)+'" style="width:200px;height:200px;background:#fff;padding:8px;border-radius:8px"><div style="color:#94a3b8;font-size:12px;margin-top:12px">扫码打开</div></div>';
-      document.body.appendChild(m);
-    }
-    navigator.clipboard && navigator.clipboard.writeText(location.href);
-  };
 })();
 </script>
 <!-- 百度统计：去 mtj.baidu.com 注册后替换 YOUR_ID -->

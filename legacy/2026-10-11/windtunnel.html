@@ -50,7 +50,14 @@ input[type=range]{width:100%;accent-color:#22c55e;height:4px}
 .btn-row{display:flex;gap:8px;margin-bottom:10px;flex-wrap:wrap}
 .minibtn{background:#16203a;border:1px solid #2b3a55;color:#b9cbe4;padding:6px 14px;border-radius:6px;font-size:12px;cursor:pointer}
 .minibtn:hover{border-color:#22c55e}
-</style></head><body>
+</style>
+<meta property="og:type" content="website">
+<meta property="og:title" content="同一场博罗风洞，朋友会先改哪一项？">
+<meta property="og:description" content="我试了一组设置。打开改一项，看看两边结果差多少。">
+<meta property="og:image" content="https://zhanglingshare.github.io/boluo-simulator/legacy/2026-10-11/public-stage.webp">
+<link rel="stylesheet" href="public-duel.css">
+<script type="module" src="public-duel.js"></script>
+</head><body data-duel-page="windtunnel">
 
 <div class="nav">
   <b>博罗产业风洞</b>
@@ -69,6 +76,8 @@ input[type=range]{width:100%;accent-color:#22c55e;height:4px}
 <div class="wrap">
   <h1>风洞测试：拨动一个变量，看全局怎么变</h1>
   <p class="sub">不是预测。是"如果这样走，会怎样"。拖动任意滑块，所有图表实时联动。</p>
+
+  <section id="friend-duel" class="friend-duel" aria-labelledby="duel-title" hidden></section>
 
   <!-- 控制面板 -->
   <div class="card">
@@ -384,7 +393,7 @@ render();
 
 <div class="likebar">
   <button onclick="likePage()">👍 <span id="pcount">0</span></button>
-  <button onclick="sharePage()">🔁 转给朋友</button>
+  <button type="button" data-duel-footer>和朋友试同一组</button>
 </div>
 <style>
 .likebar{position:relative;bottom:auto;left:auto;transform:none;display:flex;justify-content:center;margin:20px 0;background:rgba(15,23,42,.96);border:1px solid #3b82f6;border-radius:24px;padding:9px 20px;display:flex;gap:22px;z-index:999;box-shadow:0 6px 24px rgba(0,0,0,.6)}
@@ -397,17 +406,6 @@ render();
   var n=parseInt(localStorage.getItem(k)||"0");
   document.getElementById("pcount").textContent=n;
   window.likePage=function(){n++;localStorage.setItem(k,n);document.getElementById("pcount").textContent=n;};
-  window.sharePage=function(){
-    var m=document.getElementById("shareModal");
-    if(!m){
-      m=document.createElement("div");m.id="shareModal";
-      m.style.cssText="position:fixed;inset:0;background:rgba(0,0,0,.8);z-index:9999;display:flex;align-items:center;justify-content:center;padding:20px";
-      m.onclick=function(){m.remove();};
-      m.innerHTML='<div style="background:#0f172a;padding:20px;border-radius:14px;text-align:center" onclick="event.stopPropagation()"><div style="color:#fff;font-size:14px;margin-bottom:12px">截图二维码，发给朋友/群</div><img src="https://api.qrserver.com/v1/create-qr-code/?size=200x200&data='+encodeURIComponent(location.href)+'" style="width:200px;height:200px;background:#fff;padding:8px;border-radius:8px"><div style="color:#94a3b8;font-size:12px;margin-top:12px">扫码打开</div></div>';
-      document.body.appendChild(m);
-    }
-    navigator.clipboard && navigator.clipboard.writeText(location.href);
-  };
 })();
 </script>
 <!-- 百度统计：去 mtj.baidu.com 注册后替换 YOUR_ID -->

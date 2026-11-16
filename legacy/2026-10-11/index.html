@@ -56,7 +56,14 @@ h1{font-size:22px;margin:0 0 2px;letter-spacing:.5px}
 .scanline.fast{animation-duration:.8s}
 @keyframes pulse{0%,100%{opacity:.4}50%{opacity:1}}
 .pulse{animation:pulse 1.5s ease-in-out infinite}
-</style></head><body>
+</style>
+<meta property="og:type" content="website">
+<meta property="og:title" content="向外地朋友介绍博罗，你会先讲哪一样？">
+<meta property="og:description" content="打开选一次，和朋友对答案。">
+<meta property="og:image" content="https://zhanglingshare.github.io/boluo-simulator/legacy/2026-10-11/public-stage.webp">
+<link rel="stylesheet" href="public-duel.css">
+<script type="module" src="public-duel.js"></script>
+</head><body data-duel-page="index">
 
 <div class="nav">
   <b>博罗产业风洞</b>
@@ -94,19 +101,12 @@ h1{font-size:22px;margin:0 0 2px;letter-spacing:.5px}
   <!-- 你是哪个镇的 -->
   <div style="margin:12px 0;padding:14px;background:linear-gradient(135deg,#14231a,#0f172a);border:1px solid #22c55e;border-radius:14px">
     <div style="font-size:15px;font-weight:800;color:#fff;margin-bottom:4px">🏘️ 你是博罗哪个镇的？</div>
-    <div style="font-size:12.5px;color:#94a3b8;margin-bottom:10px">12个镇街，每个镇都有自己的饭碗。点你的镇，看它最近在发生什么。</div>
+    <div style="font-size:12.5px;color:#94a3b8;margin-bottom:10px">从这几处镇街样本里，点一处看看最近在发生什么。</div>
     <div id="townGrid" style="display:grid;grid-template-columns:repeat(4,1fr);gap:6px"></div>
     <div id="townOut" style="margin-top:10px;font-size:12.5px;color:#cbd5e1;line-height:1.6"></div>
   </div>
 
-  <!-- 博罗骄傲 -->
-  <div style="margin:12px 0;padding:14px;background:linear-gradient(135deg,#1a2332,#0f172a);border:1px solid #fbbf24;border-radius:14px">
-    <div style="font-size:15px;font-weight:800;color:#fff;margin-bottom:4px">🏆 向外人介绍博罗，你最先说哪样？</div>
-    <div style="font-size:12.5px;color:#94a3b8;margin-bottom:10px">博罗是博罗。罗浮山、菜心山茶、东江——这是我们自己的家底。</div>
-    <div id="proudGrid" style="display:flex;gap:8px;flex-wrap:wrap"></div>
-    <div id="proudOut" style="margin-top:10px;font-size:12.5px;color:#cbd5e1;line-height:1.6"></div>
-  </div>
-
+  <section id="friend-duel" class="friend-duel" aria-labelledby="duel-title" hidden></section>
 
   <div class="toolbar">
     <button class="cat on" data-c="all">全部</button>
@@ -274,7 +274,7 @@ document.getElementById("btnScan").onclick=async function(){
 
 <div class="likebar">
   <button onclick="likePage()">👍 <span id="pcount">0</span></button>
-  <button onclick="sharePage()">🔁 转给朋友</button>
+  <button type="button" data-duel-footer>发这题给朋友</button>
 </div>
 <style>
 .likebar{position:relative;bottom:auto;left:auto;transform:none;display:flex;justify-content:center;align-items:center;margin:20px 0;background:rgba(15,23,42,.96);border:1px solid #3b82f6;border-radius:24px;padding:9px 20px;gap:22px;z-index:999;box-shadow:0 6px 24px rgba(0,0,0,.6)}
@@ -287,17 +287,6 @@ document.getElementById("btnScan").onclick=async function(){
   var n=parseInt(localStorage.getItem(k)||"0");
   document.getElementById("pcount").textContent=n;
   window.likePage=function(){n++;localStorage.setItem(k,n);document.getElementById("pcount").textContent=n;};
-  window.sharePage=function(){
-    var m=document.getElementById("shareModal");
-    if(!m){
-      m=document.createElement("div");m.id="shareModal";
-      m.style.cssText="position:fixed;inset:0;background:rgba(0,0,0,.8);z-index:9999;display:flex;align-items:center;justify-content:center;padding:20px";
-      m.onclick=function(){m.remove();};
-      m.innerHTML='<div style="background:#0f172a;padding:20px;border-radius:14px;text-align:center" onclick="event.stopPropagation()"><div style="color:#fff;font-size:14px;margin-bottom:12px">截图二维码，发给朋友/群</div><img src="https://api.qrserver.com/v1/create-qr-code/?size=200x200&data='+encodeURIComponent(location.href)+'" style="width:200px;height:200px;background:#fff;padding:8px;border-radius:8px"><div style="color:#94a3b8;font-size:12px;margin-top:12px">扫码打开</div></div>';
-      document.body.appendChild(m);
-    }
-    navigator.clipboard && navigator.clipboard.writeText(location.href);
-  };
 })();
 </script>
 <!-- 百度统计：去 mtj.baidu.com 注册后替换 YOUR_ID -->
@@ -333,30 +322,6 @@ var _hmt = _hmt || [];
   window.pickTown=function(n){
     const t=TOWNS.find(x=>x.n===n);if(!t)return;
     document.getElementById("townOut").innerHTML=`你是<b style="color:#4ade80">${t.n}人</b>——${t.tag}。<br>${t.say}<br><span style="color:#6b7280">这个镇在博罗这盘棋里，占的是${t.tag}这个位置。</span>`;
-  };
-})();
-</script>
-<script>
-// 博罗骄傲：向外人先说什么
-(function(){
-  const KEY="boluo_proud_v1";
-  const opts=[
-    {k:"luofu",label:"⛰️ 罗浮山",c:"#a78bfa",say:"岭南第一山，博罗的名片。"},
-    {k:"tea",label:"🍵 菜心山茶",c:"#84cc16",say:"国家地理标志，广东十大名茶。"},
-    {k:"river",label:"🌊 东江",c:"#38bdf8",say:"穿境而过，博罗的母亲河。"},
-    {k:"ind",label:"🏭 工业底子",c:"#f97316",say:"园洲石湾，自己的产业链。"},
-    {k:"near",label:"🚄 挨着深圳",c:"#fbbf24",say:"赣深高铁，半小时到深圳。"}
-  ];
-  let d=JSON.parse(localStorage.getItem(KEY)||'{}');
-  opts.forEach(o=>{if(typeof d[o.k]!=="number")d[o.k]=0;});
-  document.getElementById("proudGrid").innerHTML=opts.map(o=>
-    `<button onclick="pickProud('${o.k}')" style="flex:1;min-width:80px;background:${o.c}22;border:1px solid ${o.c};color:${o.c};border-radius:10px;padding:10px 6px;cursor:pointer;font-size:12px;font-weight:700">${o.label}</button>`
-  ).join("");
-  window.pickProud=function(k){
-    if(localStorage.getItem(KEY+"_done"))return;
-    d[k]++;localStorage.setItem(KEY,JSON.stringify(d));localStorage.setItem(KEY+"_done","1");
-    const my=opts.find(o=>o.k===k);
-    document.getElementById("proudOut").innerHTML=`你选了<b style="color:${my.c}">${my.label}</b>。<br>这是你本机的记录——${my.say}<br>博罗是博罗，这就是我们的家底。`;
   };
 })();
 </script>

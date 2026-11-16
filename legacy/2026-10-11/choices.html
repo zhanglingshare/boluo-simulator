@@ -31,7 +31,14 @@ h1{font-size:20px;margin:0 0 2px}
 .next a{background:#15803d;color:#fff;padding:10px 24px;border-radius:8px;text-decoration:none;font-weight:600;display:inline-block}
 .plain{background:#0f1a0e;border:1px solid #1a3a1a;border-left:3px solid #22c55e;border-radius:8px;padding:10px 12px;font-size:12.5px;line-height:1.9;color:#c8e6c9;margin-top:10px}
 .plain .lab{display:block;font-size:10.5px;font-weight:800;color:#4ade80;letter-spacing:1px;margin-bottom:3px}
-</style></head><body>
+</style>
+<meta property="og:type" content="website">
+<meta property="og:title" content="五条路，你会留下哪几条？">
+<meta property="og:description" content="我试了一组设置。打开改一项，看看两边结果差多少。">
+<meta property="og:image" content="https://zhanglingshare.github.io/boluo-simulator/legacy/2026-10-11/public-stage.webp">
+<link rel="stylesheet" href="public-duel.css">
+<script type="module" src="public-duel.js"></script>
+</head><body data-duel-page="choices">
 
 <div class="nav">
   <b>博罗产业风洞</b>
@@ -51,6 +58,8 @@ h1{font-size:20px;margin:0 0 2px}
 <div class="wrap">
   <h1>博罗的五条路</h1>
   <p class="sub">从约1005亿到参考目标1600亿。点开关，同一套模型会立刻重算2030年的中位数与达标可能——这是假设下的测算，不是把五条路简单相加，也不是完成率。</p>
+
+  <section id="friend-duel" class="friend-duel" aria-labelledby="duel-title" hidden></section>
 
   <div class="path on" data-i="0">
     <div class="icon">🏭</div>
@@ -162,7 +171,7 @@ recalc();
 
 <div class="likebar">
   <button onclick="likePage()">👍 <span id="pcount">0</span></button>
-  <button onclick="sharePage()">🔁 转给朋友</button>
+  <button type="button" data-duel-footer>和朋友试同一组</button>
 </div>
 <style>
 .likebar{position:relative;bottom:auto;left:auto;transform:none;display:flex;justify-content:center;margin:20px 0;background:rgba(15,23,42,.96);border:1px solid #3b82f6;border-radius:24px;padding:9px 20px;display:flex;gap:22px;z-index:999;box-shadow:0 6px 24px rgba(0,0,0,.6)}
@@ -175,17 +184,6 @@ recalc();
   var n=parseInt(localStorage.getItem(k)||"0");
   document.getElementById("pcount").textContent=n;
   window.likePage=function(){n++;localStorage.setItem(k,n);document.getElementById("pcount").textContent=n;};
-  window.sharePage=function(){
-    var m=document.getElementById("shareModal");
-    if(!m){
-      m=document.createElement("div");m.id="shareModal";
-      m.style.cssText="position:fixed;inset:0;background:rgba(0,0,0,.8);z-index:9999;display:flex;align-items:center;justify-content:center;padding:20px";
-      m.onclick=function(){m.remove();};
-      m.innerHTML='<div style="background:#0f172a;padding:20px;border-radius:14px;text-align:center" onclick="event.stopPropagation()"><div style="color:#fff;font-size:14px;margin-bottom:12px">截图二维码，发给朋友/群</div><img src="https://api.qrserver.com/v1/create-qr-code/?size=200x200&data='+encodeURIComponent(location.href)+'" style="width:200px;height:200px;background:#fff;padding:8px;border-radius:8px"><div style="color:#94a3b8;font-size:12px;margin-top:12px">扫码打开</div></div>';
-      document.body.appendChild(m);
-    }
-    navigator.clipboard && navigator.clipboard.writeText(location.href);
-  };
 })();
 </script>
 <!-- 百度统计：去 mtj.baidu.com 注册后替换 YOUR_ID -->

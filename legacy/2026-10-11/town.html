@@ -42,7 +42,14 @@ h1{font-size:21px;margin:0}
 @keyframes vscroll{from{transform:translateX(0)}to{transform:translateX(-50%)}}
 .next{text-align:center;margin-top:18px}
 .next a{background:#15803d;color:#fff;padding:11px 24px;border-radius:8px;text-decoration:none;font-weight:600;display:inline-block}
-</style></head><body>
+</style>
+<meta property="og:type" content="website">
+<meta property="og:title" content="只有半天，你想和朋友去哪边？">
+<meta property="og:description" content="打开选一次，和朋友对答案。">
+<meta property="og:image" content="https://zhanglingshare.github.io/boluo-simulator/legacy/2026-10-11/public-stage.webp">
+<link rel="stylesheet" href="public-duel.css">
+<script type="module" src="public-duel.js"></script>
+</head><body data-duel-page="town">
 
 <div class="nav">
   <b>博罗产业风洞</b>
@@ -69,11 +76,13 @@ h1{font-size:21px;margin:0}
     </svg>
     <div style="flex:1">
       <h1>博罗各镇，一口味道、一处山水</h1>
-      <p class="sub">12 个镇街，每镇都有自己的烟火气。点"换一换"，今天先去哪三个？</p>
+      <p class="sub">从镇街样本里挑一挑。点“换一换”，看看另一组三处。</p>
       <div class="scan-info" id="scanInfo">雷达待命…</div>
     </div>
     <button class="refresh" id="btnScan">🔄 换一换</button>
   </div>
+
+  <section id="friend-duel" class="friend-duel" aria-labelledby="duel-title" hidden></section>
 
   <div class="livebar" id="livebar">正在读今日博罗各镇…</div>
 
@@ -158,7 +167,7 @@ document.getElementById("btnScan").onclick=refresh;
 
 <div class="likebar">
   <button onclick="likePage()">👍 <span id="pcount">0</span></button>
-  <button onclick="sharePage()">🔁 转给朋友</button>
+  <button type="button" data-duel-footer>发这题给朋友</button>
 </div>
 <style>
 .likebar{position:relative;bottom:auto;left:auto;transform:none;display:flex;justify-content:center;margin:20px 0;background:rgba(15,23,42,.96);border:1px solid #3b82f6;border-radius:24px;padding:9px 20px;display:flex;gap:22px;z-index:999;box-shadow:0 6px 24px rgba(0,0,0,.6)}
@@ -171,17 +180,6 @@ document.getElementById("btnScan").onclick=refresh;
   var n=parseInt(localStorage.getItem(k)||"0");
   document.getElementById("pcount").textContent=n;
   window.likePage=function(){n++;localStorage.setItem(k,n);document.getElementById("pcount").textContent=n;};
-  window.sharePage=function(){
-    var m=document.getElementById("shareModal");
-    if(!m){
-      m=document.createElement("div");m.id="shareModal";
-      m.style.cssText="position:fixed;inset:0;background:rgba(0,0,0,.8);z-index:9999;display:flex;align-items:center;justify-content:center;padding:20px";
-      m.onclick=function(){m.remove();};
-      m.innerHTML='<div style="background:#0f172a;padding:20px;border-radius:14px;text-align:center" onclick="event.stopPropagation()"><div style="color:#fff;font-size:14px;margin-bottom:12px">截图二维码，发给朋友/群</div><img src="https://api.qrserver.com/v1/create-qr-code/?size=200x200&data='+encodeURIComponent(location.href)+'" style="width:200px;height:200px;background:#fff;padding:8px;border-radius:8px"><div style="color:#94a3b8;font-size:12px;margin-top:12px">扫码打开</div></div>';
-      document.body.appendChild(m);
-    }
-    navigator.clipboard && navigator.clipboard.writeText(location.href);
-  };
 })();
 </script>
 <!-- 百度统计：去 mtj.baidu.com 注册后替换 YOUR_ID -->

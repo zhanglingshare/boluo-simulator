@@ -30,7 +30,14 @@ h1{font-size:20px;margin:0 0 2px}
 .summary{background:linear-gradient(160deg,#0c1a2e,#0e1523);border:1px solid #1e3a5f;border-radius:14px;padding:26px;text-align:center;margin-bottom:14px}
 .summary .big{font-size:16px;line-height:2.2;color:#e6edf3}
 .summary .big b{color:#4ade80}
-</style></head><body>
+</style>
+<meta property="og:type" content="website">
+<meta property="og:title" content="博罗接待超千万人次，旅游收入摊下来每人次多少？">
+<meta property="og:description" content="打开选一次，和朋友对答案。">
+<meta property="og:image" content="https://zhanglingshare.github.io/boluo-simulator/legacy/2026-10-11/public-stage.webp">
+<link rel="stylesheet" href="public-duel.css">
+<script type="module" src="public-duel.js"></script>
+</head><body data-duel-page="blindspot">
 
 <div class="nav">
   <b>博罗产业风洞</b>
@@ -50,10 +57,12 @@ h1{font-size:20px;margin:0 0 2px}
   <h1>我们可能忽略了什么</h1>
   <p class="sub">不是"博罗哪里不对"。是"博罗手上有什么牌，可能还没被充分看见"。</p>
 
+  <section id="friend-duel" class="friend-duel" aria-labelledby="duel-title" hidden></section>
+
   <div class="insight">
     <div class="num">发现 1</div>
     <div class="t">博罗最大的底牌，不是千亿GDP，是它在大湾区里的"坐标"</div>
-    <div class="d">广东首个千亿县是跑出来的结果。比这个结果更值钱的是它脚下的位置：西边园洲石湾贴着东莞，赣深高铁半小时到深圳，罗浮山每年上千万广深游客。</div>
+    <div class="d">广东首个千亿县是跑出来的结果。比这个结果更值钱的是它脚下的位置：西边园洲石湾贴着东莞，赣深高铁半小时到深圳，罗浮山是县内主要旅游地之一。</div>
     <div id="ch1" class="chart"></div>
     <div class="deep green"><span class="lab">为什么这张牌容易被忽略</span>
       <div class="body">大家评价一个县，习惯先看GDP排名、看有多少大项目。但"到东莞20分钟、到深圳30分钟"这种区位，不会出现在任何排名表里，它是<b>地图上才看得见的资产</b>。广东能同时挨着两个万亿级城市、还通高铁的县，屈指可数。这个位置不是博罗挣来的，是地理给的——但能不能用好，取决于博罗自己。</div>
@@ -62,11 +71,11 @@ h1{font-size:20px;margin:0 0 2px}
 
   <div class="insight">
     <div class="num">发现 2</div>
-    <div class="t">罗浮山1028万游客，人均只留下约500块</div>
-    <div class="d">游客数已经很可观，超过很多5A景区。其中不少人当天来回，住宿和夜间消费还有很大提升空间——假期过夜游客已在较快增长，是个好信号。</div>
+    <div class="t">博罗 2025 年接待游客 1028.09 万人次，旅游收入平均每人次约 505 元</div>
+    <div class="d">把全县旅游综合收入和客流放在一起之后，下一问是当天往返和过夜游客分别花了多少钱。</div>
     <div id="ch2" class="chart"></div>
     <div class="deep amber"><span class="lab">这笔账被低估在哪</span>
-      <div class="body">按现在人均约500元算，旅游收入52亿。<b>同样是这1028万人，如果人均提到800元，收入就到82亿；如果有一成游客多住一晚，住宿餐饮还得另算</b>。也就是说，增长不一定靠"多拉游客"，把现有的人留住半天、多消费一笔，杠杆比想象中大。这正是"过夜经济"被反复强调的原因——它撬动的是已经进门的人。</div>
+      <div class="body">2025 年全县旅游综合收入为 51.88 亿元。<b>按同样的接待人次、每人次平均升到 800 元试算，旅游收入约为 82 亿元。</b>也就是说，增长不一定靠"多拉游客"，把现有的人留住半天、多消费一笔，杠杆比想象中大。这正是"过夜经济"被反复强调的原因——它撬动的是已经进门的人。</div>
     </div>
   </div>
 
@@ -140,7 +149,7 @@ c1.setOption({backgroundColor:'transparent',tooltip:{trigger:'axis',...tip},
 
 c2.setOption({backgroundColor:'transparent',tooltip:{trigger:'axis',...tip},
   grid:{left:60,right:30,top:20,bottom:30},
-  xAxis:{type:'category',data:['现在','人均600','人均800','人均1000'],axisLabel:{color:dark.text}},
+  xAxis:{type:'category',data:['2025实数','每人次600','每人次800','每人次1000'],axisLabel:{color:dark.text}},
   yAxis:{type:'value',axisLabel:{color:dark.text},splitLine:{lineStyle:{color:'#1c2739'}}},
   series:[{type:'bar',data:[
     {value:52,itemStyle:{color:'#6b7280'}},
@@ -183,7 +192,7 @@ window.addEventListener('resize',()=>[c1,c2,c3,c4,c5].forEach(c=>c.resize()));
 
 <div class="likebar">
   <button onclick="likePage()">👍 <span id="pcount">0</span></button>
-  <button onclick="sharePage()">🔁 转给朋友</button>
+  <button type="button" data-duel-footer>发这题给朋友</button>
 </div>
 <style>
 .likebar{position:relative;bottom:auto;left:auto;transform:none;display:flex;justify-content:center;margin:20px 0;background:rgba(15,23,42,.96);border:1px solid #3b82f6;border-radius:24px;padding:9px 20px;display:flex;gap:22px;z-index:999;box-shadow:0 6px 24px rgba(0,0,0,.6)}
@@ -196,17 +205,6 @@ window.addEventListener('resize',()=>[c1,c2,c3,c4,c5].forEach(c=>c.resize()));
   var n=parseInt(localStorage.getItem(k)||"0");
   document.getElementById("pcount").textContent=n;
   window.likePage=function(){n++;localStorage.setItem(k,n);document.getElementById("pcount").textContent=n;};
-  window.sharePage=function(){
-    var m=document.getElementById("shareModal");
-    if(!m){
-      m=document.createElement("div");m.id="shareModal";
-      m.style.cssText="position:fixed;inset:0;background:rgba(0,0,0,.8);z-index:9999;display:flex;align-items:center;justify-content:center;padding:20px";
-      m.onclick=function(){m.remove();};
-      m.innerHTML='<div style="background:#0f172a;padding:20px;border-radius:14px;text-align:center" onclick="event.stopPropagation()"><div style="color:#fff;font-size:14px;margin-bottom:12px">截图二维码，发给朋友/群</div><img src="https://api.qrserver.com/v1/create-qr-code/?size=200x200&data='+encodeURIComponent(location.href)+'" style="width:200px;height:200px;background:#fff;padding:8px;border-radius:8px"><div style="color:#94a3b8;font-size:12px;margin-top:12px">扫码打开</div></div>';
-      document.body.appendChild(m);
-    }
-    navigator.clipboard && navigator.clipboard.writeText(location.href);
-  };
 })();
 </script>
 <!-- 百度统计：去 mtj.baidu.com 注册后替换 YOUR_ID -->
