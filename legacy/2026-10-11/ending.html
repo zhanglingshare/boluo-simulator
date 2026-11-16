@@ -3,84 +3,476 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
-<meta name="description" content="游客的钱、家门口的岗位、工厂的订单。选一件事，从博罗的公开数字追到下一条证据。">
+<meta name="description" content="同一年的博罗，客流与住宿、城乡收入、工业产出与投资，放在一起对照。">
 <title>追问 · 博罗产业风洞</title>
 <style>
-:root{color-scheme:dark;--bg:#091511;--surface:#11231c;--line:#294437;--ink:#edf6ef;--muted:#bacfc3;--green:#98edb4;--orange:#ffbc94}
-*{box-sizing:border-box}
-body{margin:0;min-height:100vh;background:radial-gradient(ellipse at 72% 0,#17362a 0,transparent 52%),var(--bg);color:var(--ink);font:15px/1.58 "Inter","PingFang SC","Microsoft YaHei",system-ui,sans-serif}
-a{color:var(--green);text-underline-offset:4px}
-button{font:inherit}
-button:focus-visible,a:focus-visible,summary:focus-visible{outline:2px solid var(--green);outline-offset:3px}
-[hidden]{display:none!important}
-.nav{position:sticky;top:0;z-index:50;display:flex;gap:5px;align-items:center;padding:9px 14px;background:#0b1813f4;border-bottom:1px solid var(--line);overflow-x:auto}
-.nav b{font-size:14px;margin-right:6px;flex:none;color:var(--ink)}
-.nav a{background:#15271f;color:var(--muted);border:1px solid var(--line);padding:6px 12px;border-radius:20px;font-size:12.5px;text-decoration:none;white-space:nowrap;flex:none}
-.nav a.on{background:#24533a;border-color:#70be8b;color:#edfff2;font-weight:650}
-.wrap{max-width:1180px;margin:0 auto;padding:27px clamp(14px,4vw,38px) 20px}
-.page-name{display:flex;align-items:baseline;gap:12px;flex-wrap:wrap}
-.page-name h1{margin:0;color:var(--green);font-size:19px;line-height:1.25;letter-spacing:.14em}
-.page-name p{margin:0;color:var(--muted);font-size:13px}
-.topic-buttons,.case-buttons{display:flex;gap:8px;flex-wrap:wrap}
-.topic-buttons{margin:12px 0 19px}
-.topic-buttons button,.case-buttons button{min-height:44px;padding:7px 12px;border:1px solid #3c5c4b;border-radius:8px;background:#172c23;color:var(--ink);cursor:pointer;font-size:14px;font-weight:700}
-.topic-buttons button[aria-pressed=true],.case-buttons button[aria-pressed=true]{border-color:var(--green);background:#294d39;color:#e6ffed}
-.topic-title{margin:0 0 17px;font-size:clamp(30px,5vw,58px);line-height:1.12;letter-spacing:-.05em}
-.topic-title span{color:var(--green)}
-.topic-grid{display:grid;grid-template-columns:minmax(0,5fr) minmax(0,7fr);gap:12px}
-.facts,.scenario{min-width:0;padding:clamp(12px,2vw,20px);border:1px solid var(--line);border-radius:12px;background:var(--surface)}
-.period{margin:0 0 8px;color:var(--muted);font-size:12px}
-.numbers{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:9px;margin:0}
-.numbers.one{grid-template-columns:1fr}
-.numbers div{min-width:0;border-top:1px solid #3a5949;padding:7px 0}
-.numbers dt{font-size:13px;color:var(--ink)}
-.numbers dd{margin:1px 0 0;font-size:clamp(28px,4vw,53px);font-weight:820;letter-spacing:-.053em;line-height:1.17;font-variant-numeric:tabular-nums}
-.numbers.one dd{font-size:clamp(25px,4vw,45px)}
-.numbers .rise{color:var(--green)} .numbers .fall{color:var(--orange)}
-.numbers .number-note,.fact-note{color:var(--muted);font-size:12.5px}
-.numbers .number-note{margin:0;font-weight:400;line-height:1.5;letter-spacing:0}
-.fact-note{margin:8px 0 0}
-.scenario-setup{margin:0 0 9px;color:var(--muted);font-size:13px}
-.scenario-setup b{color:var(--green);margin-right:4px}
-.case-buttons{margin:0 0 11px}
-.path{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:15px;padding:0;margin:0;list-style:none}
-.path li{position:relative;display:grid;place-items:center;min-height:58px;padding:7px 5px;border:1px solid #436451;border-radius:7px;background:#192f25;text-align:center;font-size:14px;font-weight:700;overflow-wrap:anywhere}
-.path li+li::before{position:absolute;left:-14px;content:"›";color:var(--green);font-size:19px;animation:step-in .34s ease-out both}
-.path li.last{border-color:#8ed0a3;background:#254737;color:#e9fff0;transition:background .22s,border-color .22s,color .22s}
-.path[data-current="1"] li.last{border-color:#e6a276;background:#473328;color:#ffebdb}
-@keyframes step-in{from{opacity:.45;transform:translateY(3px)}to{opacity:1;transform:translateY(0)}}
-.scenario-summary{color:#d9ebdf;margin:9px 0 0;font-size:14px}
-.follow-up{margin-top:12px;padding:13px 15px;border-left:3px solid #82c797;border-radius:0 9px 9px 0;background:#142920}
-.follow-up h3{margin:0;color:var(--green);font-size:13px}
-.follow-question{margin:3px 0 0;font-size:clamp(17px,2.4vw,22px);font-weight:730}
-.follow-up details{margin-top:4px}
-.follow-up summary{min-height:44px;padding:9px 0;color:var(--muted);cursor:pointer}
-.follow-up .record,.follow-up .source,.follow-up .related{margin:0 0 6px;font-size:13px}
-.follow-up .record{max-width:74ch}
-.sign{margin:16px 0 0;color:var(--muted);font-size:12px}
-@media(max-width:780px){
-  .wrap{padding-top:16px}
-  .topic-buttons{margin:9px 0 14px;gap:5px}
-  .topic-buttons button,.case-buttons button{padding-inline:9px}
-  .topic-title{margin-bottom:11px}
-  .topic-grid{grid-template-columns:1fr;gap:9px}
-  .facts,.scenario{border-radius:9px}
-  .numbers dd,.path li{letter-spacing:0}
-  .path{gap:12px}
-  .path li{font-size:12.5px;min-height:53px}
-  .path li+li::before{left:-11px}
+:root {
+  color-scheme: dark;
+  --bg: #091511;
+  --card: #12241e;
+  --card-deep: #0e1d18;
+  --line: #30483d;
+  --ink: #f2f8f4;
+  --muted: #b6c9bf;
+  --aqua: #9df4c8;
+  --amber: #ffac77;
+  --blue: #afd0fd;
+  --lavender: #cbb8f6;
+  --rise-fill: linear-gradient(90deg, #3ba78b, #a0f6cc);
+  --fall-fill: repeating-linear-gradient(130deg, transparent 0 5px, #87462b54 5px 7px), linear-gradient(90deg, #ffc096, #e78a55);
 }
-@media(max-width:360px){
-  .wrap{padding-inline:12px}
-  .topic-buttons button{font-size:13px;padding-inline:7px}
+* { box-sizing: border-box }
+body {
+  margin: 0;
+  min-height: 100vh;
+  background: radial-gradient(ellipse 780px 550px at 73% 4%, #1a3a31, transparent), var(--bg);
+  color: var(--ink);
+  font: 15px/1.55 "Inter", "PingFang SC", "Microsoft YaHei", system-ui, sans-serif;
 }
-@media(prefers-reduced-motion:reduce){
-  *,*::before,*::after{animation:none!important;transition:none!important;scroll-behavior:auto!important}
+a { color: var(--aqua); text-underline-offset: 4px }
+button { font: inherit; color: inherit; cursor: pointer }
+button:focus-visible, a:focus-visible, summary:focus-visible {
+  outline: 2px solid var(--aqua);
+  outline-offset: 3px;
+}
+[hidden] { display: none !important }
+.nav {
+  position: sticky;
+  top: 0;
+  z-index: 50;
+  display: flex;
+  gap: 5px;
+  align-items: center;
+  padding: 8px 14px;
+  background: #0b1813f5;
+  border-bottom: 1px solid var(--line);
+  overflow-x: auto;
+  scrollbar-width: thin;
+}
+.nav b { flex: none; font-size: 14px; margin-right: 6px }
+.nav a {
+  flex: none;
+  border: 1px solid var(--line);
+  border-radius: 20px;
+  background: #15271f;
+  color: var(--muted);
+  padding: 6px 12px;
+  font-size: 12.5px;
+  text-decoration: none;
+  white-space: nowrap;
+}
+.nav a.on { background: #24533a; border-color: #70be8b; color: #edfff2; font-weight: 650 }
+.wrap { max-width: 1252px; margin: auto; padding: 25px clamp(16px, 4vw, 42px) 18px }
+.hero { margin-bottom: 17px }
+.edition { display: flex; align-items: center; gap: 13px; color: var(--muted); font-size: 12px }
+.edition h1 { margin: 0; color: var(--aqua); font-size: 17px; letter-spacing: .16em }
+.edition span { border-left: 1px solid #5b7067; padding-left: 13px }
+.hero-line {
+  margin: 6px 0 3px;
+  font-size: clamp(37px, 5.4vw, 73px);
+  font-weight: 850;
+  letter-spacing: -.065em;
+  line-height: 1.09;
+  text-wrap: balance;
+}
+.hero-line span { color: var(--aqua) }
+.hero-hint { margin: 9px 0 0; color: var(--muted); font-size: 14px }
+.contrast-wall { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 11px }
+.contrast {
+  position: relative;
+  appearance: none;
+  min-width: 0;
+  padding: 12px 15px 13px;
+  display: block;
+  text-align: left;
+  border: 1px solid var(--line);
+  border-radius: 13px;
+  background: linear-gradient(157deg, #1b3028, #10201a 75%);
+  transition: background .18s, border-color .18s, box-shadow .18s;
+}
+.contrast:hover { border-color: #8bc6ab }
+.contrast[aria-pressed="true"] {
+  border-color: #82d4a8;
+  background: linear-gradient(157deg, #244438, #10231c 84%);
+  box-shadow: inset 0 2px 0 #a0f0c3, 0 9px 28px #020a063d;
+}
+.contrast-header { display: flex; align-items: center; justify-content: space-between; gap: 6px }
+.contrast-label { color: var(--muted); font-size: 12px; font-weight: 700 }
+.contrast-header i { color: var(--aqua); font: 17px/1 system-ui, sans-serif }
+.contrast-title {
+  display: block;
+  margin: 2px 0 9px;
+  color: var(--ink);
+  font-size: clamp(14px, 1.52vw, 19px);
+  font-weight: 780;
+  line-height: 1.25;
+  letter-spacing: -.025em;
+}
+.contrast-values { display: grid; grid-template-columns: 1fr 1fr; gap: 11px }
+.contrast-reading { display: grid; min-width: 0; line-height: 1.25 }
+.contrast-reading:nth-child(2) { border-left: 1px solid var(--line); padding-left: 11px }
+.contrast-reading b { font-size: clamp(24px, 3.1vw, 40px); letter-spacing: -.065em; font-variant-numeric: tabular-nums }
+.contrast-reading b small { font-size: .54em; padding-left: .06em }
+.contrast-reading em { color: var(--muted); font-size: 11.5px; font-style: normal }
+.contrast-meter { display: grid; gap: 3px; margin-top: 9px }
+.reading { --value-ink: var(--aqua); --fill: var(--rise-fill); --origin: left }
+.reading.down { --value-ink: var(--amber); --fill: var(--fall-fill); --origin: right }
+.reading.cool { --value-ink: var(--blue); --fill: linear-gradient(90deg, #607db3, #b2d2fb) }
+.value { color: var(--value-ink); font-variant-numeric: tabular-nums }
+.track {
+  position: relative;
+  display: block;
+  height: 25px;
+  border-radius: 3px;
+  background: repeating-linear-gradient(to right, #bedfce19 0 1px, transparent 1px 25%);
+  border-right: 1px solid #bedfce19;
+}
+.track::after {
+  position: absolute;
+  z-index: 1;
+  inset: 0 auto 0 var(--zero);
+  width: 1px;
+  background: #d6ebe08a;
+  content: "";
+}
+.track .bar {
+  position: absolute;
+  left: var(--start);
+  top: 50%;
+  width: var(--length);
+  height: min(60%, 15px);
+  margin-top: calc(-1 * min(30%, 7.5px));
+  border-radius: 3px;
+  background: var(--fill);
+  transform-origin: var(--origin);
+}
+.contrast-meter .track { height: 6px; background-color: #080f0c55 }
+.contrast-meter .bar { height: 4px; margin-top: -2px; border-radius: 1px }
+.question-detail { margin-top: 28px }
+.question-title {
+  margin: 0 0 13px;
+  font-size: clamp(24px, 3.25vw, 43px);
+  line-height: 1.16;
+  letter-spacing: -.048em;
+}
+.question-title span { color: var(--aqua) }
+.story-grid { display: grid; grid-template-columns: minmax(0, 1.18fr) minmax(0, 1fr); gap: 14px; align-items: stretch }
+.secondary-charts { display: grid; gap: 14px }
+.chart {
+  min-width: 0;
+  margin: 0;
+  padding: clamp(13px, 1.6vw, 20px);
+  border: 1px solid var(--line);
+  border-radius: 13px;
+  background: linear-gradient(155deg, #142922, var(--card-deep) 85%);
+}
+.chart-caption { display: flex; align-items: baseline; justify-content: space-between; flex-wrap: wrap; gap: 2px 9px }
+.chart-caption h3 { margin: 0; font-size: clamp(16px, 1.55vw, 22px); line-height: 1.23; letter-spacing: -.02em }
+.scope { color: var(--muted); font-size: 11.5px }
+.lead-chart {
+  display: flex;
+  flex-direction: column;
+  min-height: 100%;
+  background: radial-gradient(ellipse at 54% 0, #244238 0, transparent 68%), var(--card-deep);
+  border-color: #426456;
+}
+.lead-chart .chart-caption h3 { font-size: clamp(18px, 1.9vw, 27px) }
+.divergence { margin-top: 16px }
+.axis-row, .metric-row {
+  display: grid;
+  grid-template-columns: minmax(94px, 1.26fr) minmax(63px, 3fr) 64px;
+  align-items: center;
+  gap: 9px;
+  width: 100%;
+  padding-inline: 10px;
+}
+.axis-row { height: 30px }
+.axis-ticks { height: 100%; position: relative; font-variant-numeric: tabular-nums }
+.axis-ticks span {
+  position: absolute;
+  top: 0;
+  left: var(--pos);
+  transform: translateX(-50%);
+  color: var(--muted);
+  white-space: nowrap;
+  font-size: 11px;
+}
+.axis-ticks span:first-child { transform: none }
+.axis-ticks span:last-child { transform: translateX(-100%) }
+.axis-ticks .zero { color: var(--ink); font-weight: 750 }
+.metric-row {
+  min-height: 57px;
+  border: 1px solid transparent;
+  border-radius: 8px;
+  background: transparent;
+  text-align: left;
+  transition: background .18s, border-color .18s;
+}
+.metric-row + .metric-row { margin-top: 4px }
+.metric-row:hover { background: #d8eee710 }
+.metric-row[aria-pressed="true"] {
+  border-color: #cfdfd14b;
+  background: #cadbd51a;
+}
+.metric-row .metric-name { font-weight: 680; font-size: clamp(12px, 1.03vw, 15px); line-height: 1.2 }
+.metric-row .value { font-size: clamp(16px, 2vw, 24px); text-align: right; letter-spacing: -.055em }
+.metric-row .bar { height: 14px; margin-top: -7px; animation: grow-x .55s cubic-bezier(.17,.66,.21,1) both }
+.metric-row[aria-pressed="true"] .bar { filter: brightness(1.13) }
+.metric-reading {
+  margin: auto 0 0;
+  min-height: 94px;
+  padding: 12px 13px;
+  border: 1px solid #436254;
+  border-left: 3px solid var(--value-ink, var(--aqua));
+  border-radius: 0 9px 9px 0;
+  background: #192e24;
+}
+.metric-reading p { margin: 0; font-weight: 680; font-size: clamp(15px, 1.25vw, 18px); line-height: 1.42 }
+.metric-reading span { display: block; margin-bottom: 5px; color: var(--value-ink, var(--aqua)); font-size: 12px }
+.chart-note, .chart-hint { margin: 9px 0 0; color: var(--muted); font-size: 11.5px }
+.chart-hint { margin: 10px 0 7px }
+.lead-chart .chart-note { margin-bottom: 14px }
+.amount-scale {
+  display: flex;
+  justify-content: space-between;
+  margin: 7px 0 4px;
+  color: var(--muted);
+  font-size: 10.5px;
+  font-variant-numeric: tabular-nums;
+}
+.amount-row + .amount-row { margin-top: 7px }
+.amount-row .track { height: 11px; background: #09161191; border: none }
+.amount-row .bar { height: 7px; margin-top: -3.5px; transform-origin: left; animation: grow-x .56s ease-out both }
+.amount-label { display: flex; align-items: baseline; justify-content: space-between; gap: 5px; margin-bottom: 1px }
+.amount-label span { color: var(--muted); font-size: 12px }
+.amount-label strong { color: var(--ink); font-size: 17px; font-variant-numeric: tabular-nums }
+.amount-label strong small { margin-left: 6px; color: var(--value-ink); font-size: 11px }
+.series-pair { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-top: 10px }
+.mini-series { min-width: 0 }
+.mini-series + .mini-series { padding-left: 10px; border-left: 1px solid var(--line) }
+.series-label { color: var(--muted); font-size: 11.5px; font-weight: 650 }
+.series-bars {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  align-items: end;
+  height: 102px;
+  margin-top: 8px;
+  border-bottom: 1px solid #8da79a;
+  background: repeating-linear-gradient(to top, #b8e3cb1a 0 1px, transparent 1px 33.33%);
+}
+.series-bar { position: relative; display: block; height: var(--height); text-align: center }
+.series-bar i {
+  display: block;
+  width: 56%;
+  margin: auto;
+  height: 100%;
+  border-radius: 3px 3px 0 0;
+  background: linear-gradient(#6bbba5, #284f44);
+  transform-origin: bottom;
+  animation: grow-y .58s ease-out both;
+}
+.series-bar:last-child i { background: linear-gradient(#a3f5ce, #3e896f) }
+.series-bar b {
+  position: absolute;
+  bottom: calc(100% + 3px);
+  left: 50%;
+  color: var(--ink);
+  font-size: 10.5px;
+  transform: translateX(-50%);
+  white-space: nowrap;
+  font-variant-numeric: tabular-nums;
+}
+.series-years { display: grid; grid-template-columns: repeat(3, 1fr); color: var(--muted); font-size: 10px; text-align: center }
+.gap-axis { margin: 10px 0 0 }
+.gap-row { padding: 4px 0 7px }
+.gap-row + .gap-row { border-top: 1px solid var(--line); margin-top: 4px }
+.gap-header, .gap-values { display: flex; justify-content: space-between; align-items: baseline; gap: 5px }
+.gap-header span { color: var(--muted); font-size: 12px }
+.gap-header strong { color: var(--aqua); font-size: 15px; font-variant-numeric: tabular-nums }
+.gap-values { margin-top: 2px; font-size: 11.5px; font-variant-numeric: tabular-nums }
+.gap-values span:first-child { color: var(--aqua) }
+.gap-values span:last-child { color: var(--blue) }
+.gap-track { position: relative; height: 18px; margin: 3px 0; background: repeating-linear-gradient(90deg, #d3eddf32 0 1px, transparent 1px 20%); border-right: 1px solid #d3eddf32 }
+.gap-track::before { position: absolute; inset: 8px 0 auto; height: 2px; background: #3b584d; content: "" }
+.gap-band {
+  position: absolute;
+  top: 7px;
+  left: var(--start);
+  width: var(--length);
+  height: 4px;
+  background: linear-gradient(90deg, var(--aqua), var(--blue));
+}
+.gap-band::before, .gap-band::after {
+  position: absolute;
+  top: 50%;
+  width: 9px;
+  height: 9px;
+  border-radius: 100%;
+  background: var(--aqua);
+  transform: translate(-50%, -50%);
+  content: "";
+}
+.gap-band::after { left: 100%; background: var(--blue) }
+.branches { margin-top: 12px }
+.branch-plot {
+  position: relative;
+  display: grid;
+  grid-template-columns: repeat(5, minmax(0, 1fr));
+  height: 144px;
+  background: repeating-linear-gradient(to top, #bce6cc17 0 1px, transparent 1px 25%);
+}
+.branch-plot::after {
+  position: absolute;
+  inset: auto 0 var(--axis) 0;
+  height: 1px;
+  background: #b5d9c690;
+  content: "";
+}
+.branch { position: relative; min-width: 0 }
+.branch i {
+  position: absolute;
+  bottom: var(--axis);
+  left: 26%;
+  width: 48%;
+  height: var(--extent);
+  background: var(--fill);
+  border-radius: 4px 4px 0 0;
+  transform-origin: bottom;
+  animation: grow-y .54s ease-out both;
+}
+.branch b {
+  position: absolute;
+  bottom: calc(var(--axis) + var(--extent) + 3px);
+  left: 50%;
+  transform: translateX(-50%);
+  color: var(--value-ink);
+  font-size: 12px;
+  white-space: nowrap;
+  font-variant-numeric: tabular-nums;
+}
+.branch.down i { top: calc(100% - var(--axis)); bottom: auto; border-radius: 0 0 4px 4px; transform-origin: top }
+.branch.down b { top: calc(100% - var(--axis) + var(--extent) + 1px); bottom: auto }
+.branch-names { display: grid; grid-template-columns: repeat(5, minmax(0, 1fr)); gap: 2px; text-align: center; color: var(--muted); font-size: 11px }
+.share-stack { display: flex; min-height: 34px; margin: 13px 0 7px; border-radius: 5px; overflow: hidden }
+.share-stack span { display: grid; place-items: center; width: var(--share); background: var(--share-color); color: #102119; font-size: 12px; font-weight: 850; font-variant-numeric: tabular-nums }
+.share-row { display: grid; grid-template-columns: minmax(74px, 1fr) 1fr 1fr; align-items: center; gap: 7px; padding: 3px 0; font-size: 12px }
+.share-row span:not(:first-child) { text-align: right; font-variant-numeric: tabular-nums }
+.share-row .value { color: var(--aqua) }
+.share-row.head { color: var(--muted); font-size: 11px }
+.share-row i { display: inline-block; width: 8px; height: 8px; margin-right: 5px; border-radius: 50%; background: var(--share-color) }
+.scenario {
+  display: grid;
+  grid-template-columns: 1.23fr 1fr;
+  gap: 16px;
+  margin-top: 14px;
+  padding: clamp(13px, 1.8vw, 23px);
+  border: 1px solid var(--line);
+  border-radius: 13px;
+  background: var(--card);
+}
+.scenario h3 { margin: 0; font-size: clamp(17px, 1.5vw, 22px) }
+.scenario-setup, .scenario-summary, .scenario-goal { margin: 4px 0 8px; color: var(--muted); font-size: 13px }
+.scenario-goal { margin: 6px 0 0; font-size: 12px }
+.case-buttons { display: flex; flex-wrap: wrap; gap: 7px; margin-bottom: 9px }
+.case-buttons button {
+  min-height: 44px;
+  padding: 7px 12px;
+  border: 1px solid #587467;
+  border-radius: 7px;
+  background: #193328;
+  color: var(--ink);
+  font-size: 13px;
+  font-weight: 730;
+}
+.case-buttons button:hover, .case-buttons button[aria-pressed="true"] { border-color: var(--aqua); background: #28503d }
+.path { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 13px; padding: 0; list-style: none; margin: 0 }
+.path li {
+  position: relative;
+  display: grid;
+  place-items: center;
+  min-height: 48px;
+  padding: 5px 4px;
+  border: 1px solid #46685a;
+  border-radius: 6px;
+  background: #192e26;
+  text-align: center;
+  font-size: 13px;
+  font-weight: 700;
+}
+.path li:last-child { background: #254a38; border-color: #8ecbaa }
+.path[data-current="1"] li:last-child { background: #493529; border-color: var(--amber) }
+.path li + li::before { position: absolute; left: -12px; content: "›"; color: var(--aqua); font-size: 17px }
+.scenario-summary { margin: 8px 0 0 }
+.investigate { align-self: stretch; padding: 11px 12px; border-left: 3px solid var(--aqua); border-radius: 0 8px 8px 0; background: #1b372c }
+.investigate-label { margin: 0; color: var(--aqua); font-size: 12px; font-weight: 750 }
+.investigate h4 { margin: 4px 0 0; font-size: clamp(16px, 1.5vw, 22px); line-height: 1.38 }
+.investigate details p { margin: 0 0 7px; color: var(--muted); font-size: 13px }
+summary { width: fit-content; min-height: 42px; padding: 10px 3px 8px 0; color: var(--muted); cursor: pointer; font-size: 13px }
+.sources { margin-top: 4px }
+.sources ul { margin: 0; padding-left: 22px; font-size: 13px }
+.sign { margin: 7px 0 0; color: var(--muted); font-size: 12px }
+.sr-only { position: absolute; width: 1px; height: 1px; padding: 0; margin: -1px; overflow: hidden; clip-path: inset(50%); white-space: nowrap; border: 0 }
+@keyframes grow-x { from { transform: scaleX(0) } to { transform: scaleX(1) } }
+@keyframes grow-y { from { transform: scaleY(0) } to { transform: scaleY(1) } }
+@media (max-width: 825px) {
+  .story-grid, .scenario { grid-template-columns: 1fr }
+  .secondary-charts { grid-template-columns: repeat(2, minmax(0, 1fr)) }
+  .metric-reading { min-height: 0 }
+  .lead-chart .chart-note { margin-bottom: 10px }
+}
+@media (max-width: 620px) {
+  .wrap { padding-top: 17px }
+  .hero { margin-bottom: 13px }
+  .hero-line { letter-spacing: -.05em; text-wrap: wrap }
+  .hero-hint { margin-top: 6px; font-size: 13px }
+  .contrast-wall { grid-template-columns: 1fr; gap: 6px }
+  .contrast {
+    display: grid;
+    grid-template-columns: minmax(0, 1.1fr) minmax(0, 1.35fr);
+    column-gap: 8px;
+    align-items: center;
+    padding: 7px 10px;
+    min-height: 65px;
+    border-radius: 9px;
+  }
+  .contrast-header { grid-column: 1; align-self: end }
+  .contrast-header i { display: none }
+  .contrast-title { margin: 2px 0 0; grid-column: 1; align-self: start; font-size: 13px }
+  .contrast-values { grid-column: 2; grid-row: 1 / 3; align-self: center; gap: 6px }
+  .contrast-reading:nth-child(2) { padding-left: 6px }
+  .contrast-reading b { font-size: 23px; line-height: 1.05 }
+  .contrast-reading em { margin-top: 3px; font-size: 10px; line-height: 1.07 }
+  .contrast-meter { grid-column: 2; margin-top: 4px; gap: 2px }
+  .contrast-meter .track { height: 4px }
+  .contrast-meter .bar { height: 2px; margin-top: -1px }
+  .question-detail { margin-top: 18px }
+  .question-title { margin-bottom: 9px; font-size: clamp(24px, 6.45vw, 36px) }
+  .story-grid, .secondary-charts { grid-template-columns: 1fr; gap: 9px }
+  .chart { border-radius: 9px }
+  .divergence { margin-top: 10px }
+  .axis-row, .metric-row { grid-template-columns: minmax(70px, 1.24fr) minmax(55px, 2.3fr) 49px; gap: 6px; padding-inline: 6px }
+  .axis-row { height: 21px }
+  .axis-ticks span { font-size: 9.5px }
+  .metric-row { min-height: 45px }
+  .metric-row + .metric-row { margin-top: 2px }
+  .metric-row .value { font-size: 17px }
+  .scenario { margin-top: 9px; gap: 11px }
+  .path li { font-size: 12px }
+}
+@media (max-width: 350px) {
+  .wrap { padding-inline: 12px }
+  .hero-line { font-size: 34px }
+  .contrast-reading b { font-size: 21px }
+  .contrast-title { font-size: 12px }
+  .metric-row .value { font-size: 16px }
+}
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after { animation: none !important; transition: none !important; scroll-behavior: auto !important }
 }
 </style>
 </head>
 <body>
-<div class="nav">
+<nav class="nav" aria-label="博罗产业风洞导航">
   <b>博罗产业风洞</b>
   <a href="index.html">① 今日话题</a>
   <a href="town.html">🏘️ 各镇吃喝玩乐</a>
@@ -91,261 +483,738 @@ button:focus-visible,a:focus-visible,summary:focus-visible{outline:2px solid var
   <a href="windtunnel.html">⑥ 风洞测试</a>
   <a href="blindspot.html">⑦ 忽略了什么</a>
   <a href="report.html">⑧ 分析报告</a>
-  <a href="ending.html" class="on">⑨ 追问</a>
-</div>
+  <a href="ending.html" class="on" aria-current="page">⑨ 追问</a>
+</nav>
 
 <main class="wrap">
-  <header class="page-name">
-    <h1>追问</h1>
-    <p>选一件跟你有关的事。</p>
+  <header class="hero">
+    <div class="edition">
+      <h1>追问</h1>
+      <span>博罗 · 2025 年公开数据</span>
+    </div>
+    <p class="hero-line">同一年，数字往<span>两边</span>走。</p>
+    <p class="hero-hint">点一组反差，看看该追问什么。</p>
   </header>
-  <div class="topic-buttons" role="group" aria-label="选一个追问">
-      <button type="button" data-question="tourists" aria-controls="topic-tourists" aria-pressed="true">游客的钱</button>
-      <button type="button" data-question="jobs" aria-controls="topic-jobs" aria-pressed="false">家门口的岗</button>
-      <button type="button" data-question="orders" aria-controls="topic-orders" aria-pressed="false">工厂的订单</button>
-  </div>
 
-  <section class="topic-panel" id="topic-tourists" aria-labelledby="title-tourists">
-    <h2 class="topic-title" id="title-tourists">游客多了，<wbr><span>住宿生意也更好吗？</span></h2>
+  <div class="contrast-wall" id="contrast-wall" role="group" aria-label="选择一个追问"></div>
 
-    <div class="topic-grid">
-      <section class="facts" aria-label="这题从什么数据开始">
-        <p class="period">博罗 · 2025 年同比</p>
-        <dl class="numbers">
-          <div><dt>接待游客人次</dt><dd class="rise">+11.7%</dd><dd class="number-note">全年 1,028.09 万人次</dd></div>
-          <div><dt>住宿业营业额</dt><dd class="fall">−2.3%</dd><dd class="number-note">全年 5.42 亿元</dd></div>
-        </dl>
-        <p class="fact-note">一项看来了多少人次，一项看住宿业做了多少生意。追问要从同一片区的客流和实际花销入手。</p>
-      </section>
-
-      <section class="scenario" aria-label="试一个情景">
-        <p class="scenario-setup"><b>情景题</b> 假如游客周末来到罗浮山一带。选一种走法，看看你会多问哪一句。</p>
-        <div class="case-buttons" role="group" aria-label="选择一种可能情况">
-          <button type="button" data-case="0" aria-pressed="true">当天来回</button>
-          <button type="button" data-case="1" aria-pressed="false">多住一晚</button>
-        </div>
-        <ol class="path" aria-label="沿着这件事往下看" data-current="0">
-          <li><span>游客来了</span></li>
-          <li><span>当天返程</span></li>
-          <li class="last"><span>看白天的消费</span></li>
-        </ol>
-        <p class="scenario-summary" role="status">当天来回的人也可能在这里吃饭、买东西。可以先问附近小店，来客多的周末，实收有没有一起增加？</p>
-      </section>
+  <article id="question-detail" class="question-detail" aria-labelledby="question-title">
+    <h2 class="question-title" id="question-title"></h2>
+    <div class="story-grid">
+      <div id="lead-chart"></div>
+      <div id="secondary-charts" class="secondary-charts"></div>
     </div>
 
-    <section class="follow-up" aria-label="进一步核对问题">
-      <h3>真正要追问的这一句</h3>
-      <p class="follow-question">同一片区，同类周末，客流增加时，附近餐馆和小店的收入变了多少？</p>
-      <details>
-        <summary>要核对哪些记录</summary>
-        <p class="record">对照同一片区的到访人次与餐饮、零售商户的实收样本。按节假日和普通周末分别比较。</p>
-        <p class="source"><a href="https://maptable.com/tjgb/2025/%E6%83%A0%E5%B7%9E%E5%B8%82/%E5%8D%9A%E7%BD%97%E5%8E%BF/report/hui-zhou-shi-2025-nian-bo-luo-guo-min-jing-ji-he-she-hui-fa-zhan-tong-ji-gong-bao-2">2025 年博罗县统计公报转载 · 国内贸易和旅游</a></p>
-        <p class="related"><a href="town.html">回看各镇去处 →</a></p>
-      </details>
-    </section>
-  </section>
-
-  <section class="topic-panel" id="topic-jobs" aria-labelledby="title-jobs" hidden>
-    <h2 class="topic-title" id="title-jobs">厂开始招人了，<wbr><span>家门口的人进得去吗？</span></h2>
-
-    <div class="topic-grid">
-      <section class="facts" aria-label="这题从什么数据开始">
-        <p class="period">博罗 · 2026 年政府工作报告</p>
-        <dl class="numbers one">
-          <div><dt>城镇新增就业目标</dt><dd class="rise">1.72 万人以上</dd><dd class="number-note">年度目标</dd></div>
-        </dl>
-        <p class="fact-note">县里公布的是全县就业目标。落到一个镇、一家工厂，得看看招聘、入职和在岗分别走到了哪一步。</p>
-      </section>
-
-      <section class="scenario" aria-label="试一个情景">
-        <p class="scenario-setup"><b>情景题</b> 假如园洲一家厂贴出一批招聘。你先看招聘单，还是追到入职以后？</p>
-        <div class="case-buttons" role="group" aria-label="选择一种可能情况">
-          <button type="button" data-case="0" aria-pressed="true">看到招聘启事</button>
-          <button type="button" data-case="1" aria-pressed="false">追到入职之后</button>
-        </div>
-        <ol class="path" aria-label="沿着这件事往下看" data-current="0">
-          <li><span>工厂开始招人</span></li>
-          <li><span>看到岗位要求</span></li>
-          <li class="last"><span>查谁能去上班</span></li>
+    <section class="scenario" aria-labelledby="scenario-title">
+      <div class="scenario-main">
+        <h3 id="scenario-title">换个情景，你会追问什么？</h3>
+        <p class="scenario-setup" id="scenario-setup"></p>
+        <div class="case-buttons" id="case-buttons" role="group" aria-label="选择一种可能情况"></div>
+        <ol class="path" id="case-path" aria-label="沿着这件事往下看">
+          <li><span></span></li>
+          <li><span></span></li>
+          <li><span></span></li>
         </ol>
-        <p class="scenario-summary" role="status">看到附近招人，可以接着问工种要什么技能、班次是几点、晚班下班还能不能回家。</p>
-      </section>
-    </div>
-
-    <section class="follow-up" aria-label="进一步核对问题">
-      <h3>真正要追问的这一句</h3>
-      <p class="follow-question">本地求职者卡在报名、录用还是通勤？</p>
-      <details>
-        <summary>要核对哪些记录</summary>
-        <p class="record">按镇街和工种对照岗位数、报名数和录用数，在晚班岗位里单独核对通勤可达性。</p>
-        <p class="source"><a href="https://www.hznews.com/xqrm/blx/202601/t20260130_1634641.shtml">惠州日报报道 · 2026 年博罗县政府工作报告</a></p>
-        <p class="related"><a href="windtunnel.html">去风洞看条件怎么变 →</a></p>
-      </details>
+        <p class="scenario-summary" id="case-summary" role="status"></p>
+        <p id="scenario-goal" class="scenario-goal" hidden></p>
+      </div>
+      <div class="investigate">
+        <p class="investigate-label">接着追问</p>
+        <h4 id="follow-question"></h4>
+        <details id="case-evidence">
+          <summary>要核对哪些记录</summary>
+          <p id="case-record"></p>
+          <p><a href="network.html">回看产业关系图 →</a></p>
+        </details>
+      </div>
     </section>
-  </section>
 
-  <section class="topic-panel" id="topic-orders" aria-labelledby="title-orders" hidden>
-    <h2 class="topic-title" id="title-orders">工业增长了，<wbr><span>附近配套厂也有新订单吗？</span></h2>
+    <details class="sources" id="sources">
+      <summary>数据出处</summary>
+      <ul id="source-list"></ul>
+    </details>
+  </article>
 
-    <div class="topic-grid">
-      <section class="facts" aria-label="这题从什么数据开始">
-        <p class="period">博罗 · 2025 年同比</p>
-        <dl class="numbers">
-          <div><dt>规上工业增加值</dt><dd class="rise">+8.7%</dd><dd class="number-note">达到统计门槛的工业企业创造的价值</dd></div>
-          <div><dt>工业投资</dt><dd class="fall">−12.7%</dd><dd class="number-note">全县工业投资增速</dd></div>
-        </dl>
-        <p class="fact-note">工业增加值看已经创造了多少价值，投资看新增投入。要追问本地配套厂有没有跟上，还得看采购流向。</p>
-      </section>
-
-      <section class="scenario" aria-label="试一个情景">
-        <p class="scenario-setup"><b>情景题</b> 假如一家大厂接到一批新单。换个供货地点，看看博罗哪些企业有机会接上。</p>
-        <div class="case-buttons" role="group" aria-label="选择一种可能情况">
-          <button type="button" data-case="0" aria-pressed="true">在博罗找配套</button>
-          <button type="button" data-case="1" aria-pressed="false">向外地找配套</button>
-        </div>
-        <ol class="path" aria-label="沿着这件事往下看" data-current="0">
-          <li><span>大厂接到新单</span></li>
-          <li><span>博罗配套厂供货</span></li>
-          <li class="last"><span>查本地收到多少</span></li>
-        </ol>
-        <p class="scenario-summary" role="status">配套厂能接到这一单，接下来要问的是谁供了货，最后有多少货款到了本地企业手里。</p>
-      </section>
-    </div>
-
-    <section class="follow-up" aria-label="进一步核对问题">
-      <h3>真正要追问的这一句</h3>
-      <p class="follow-question">大厂多出来的采购里，有多少实际付给了在博罗生产的配套企业？</p>
-      <details>
-        <summary>要核对哪些记录</summary>
-        <p class="record">同一批企业按同一季度核对已付款的新增采购，按供货生产地拆分本地与外地，再看两者占比。</p>
-        <p class="source"><a href="https://maptable.com/tjgb/2025/%E6%83%A0%E5%B7%9E%E5%B8%82/%E5%8D%9A%E7%BD%97%E5%8E%BF/report/hui-zhou-shi-2025-nian-bo-luo-guo-min-jing-ji-he-she-hui-fa-zhan-tong-ji-gong-bao-2">2025 年博罗县统计公报转载 · 工业与固定资产投资</a></p>
-        <p class="related"><a href="network.html">回看产业关系图 →</a></p>
-      </details>
-    </section>
-  </section>
-
+  <noscript>游客人次同比增长 11.7%，住宿业营业额同比下降 2.3%。启用 JavaScript 可以查看对比图和切换情景。</noscript>
   <p class="sign">博罗产业决策风洞 · 张凌 博士 · MIT</p>
 </main>
 
-<script>
-const scenarios = {
-  "tourists": [
-    {
-      "label": "当天来回",
-      "steps": [
-        "游客来了",
-        "当天返程",
-        "看白天的消费"
-      ],
-      "summary": "当天来回的人也可能在这里吃饭、买东西。可以先问附近小店，来客多的周末，实收有没有一起增加？",
-      "question": "同一片区，同类周末，客流增加时，附近餐馆和小店的收入变了多少？",
-      "record": "对照同一片区的到访人次与餐饮、零售商户的实收样本。按节假日和普通周末分别比较。"
+<script type="application/json" id="question-data">
+{
+  "sources": {
+    "bulletin25": {
+      "label": "2025 年博罗县统计公报（转载）",
+      "url": "https://tjgb.hongheiku.com/xjtjgb/xj2020/75372.html"
     },
-    {
-      "label": "多住一晚",
-      "steps": [
-        "游客来了",
-        "住一晚上",
-        "看住宿和晚间消费"
-      ],
-      "summary": "住一晚多了住宿和晚餐的消费机会。要看游客在哪里住、在哪里吃，以及是哪家店收到这笔钱。",
-      "question": "在这片区住一晚的游客，比当天往返的人多在哪里花钱？",
-      "record": "对同一片区的游客按是否在当地留宿分组，分别查看住宿、餐饮和购物开支，以及收款商户所在镇街。"
-    }
-  ],
-  "jobs": [
-    {
-      "label": "看到招聘启事",
-      "steps": [
-        "工厂开始招人",
-        "看到岗位要求",
-        "查谁能去上班"
-      ],
-      "summary": "看到附近招人，可以接着问工种要什么技能、班次是几点、晚班下班还能不能回家。",
-      "question": "本地求职者卡在报名、录用还是通勤？",
-      "record": "按镇街和工种对照岗位数、报名数和录用数，在晚班岗位里单独核对通勤可达性。"
+    "bulletin24": {
+      "label": "2024 年博罗县统计公报（转载）",
+      "url": "https://tjgb.hongheiku.com/xjtjgb/xj2020/65264.html"
     },
-    {
-      "label": "追到入职之后",
-      "steps": [
-        "工厂开始招人",
-        "工人实际到岗",
-        "查三个月后在岗"
-      ],
-      "summary": "能入职只是过了一关。三个月后还有多少人留下来，才看得到岗位能不能接住这批求职者。",
-      "question": "这一批本地入职者，三个月后还有多少人在岗？",
-      "record": "以同一批本地入职者为分母，按工种和班次汇总三个月在岗人数。用离职原因调查区分技能、薪酬与通勤问题。"
-    }
-  ],
-  "orders": [
-    {
-      "label": "在博罗找配套",
-      "steps": [
-        "大厂接到新单",
-        "博罗配套厂供货",
-        "查本地收到多少"
-      ],
-      "summary": "配套厂能接到这一单，接下来要问的是谁供了货，最后有多少货款到了本地企业手里。",
-      "question": "大厂多出来的采购里，有多少实际付给了在博罗生产的配套企业？",
-      "record": "同一批企业按同一季度核对已付款的新增采购，按供货生产地拆分本地与外地，再看两者占比。"
+    "bulletin23": {
+      "label": "2023 年博罗县统计公报（转载）",
+      "url": "https://tjgb.hongheiku.com/xjtjgb/xj2020/50757.html"
     },
-    {
-      "label": "向外地找配套",
-      "steps": [
-        "大厂接到新单",
-        "外地配套厂供货",
-        "查本地缺哪一环"
-      ],
-      "summary": "如果这批配套来自外地，可以问当地有没有企业能做，以及差的是工艺、交期还是采购准入。",
-      "question": "同一种配件，本地企业差在哪一步，导致它没有接到单？",
-      "record": "选采购额较大的配件，对照供方的工艺要求、交付记录和本地企业的达标情况，再确定哪一环有缺口。"
+    "work26": {
+      "label": "惠州日报 · 2026 年博罗县政府工作报告报道",
+      "url": "https://www.hznews.com/xqrm/blx/202601/t20260130_1634641.shtml"
     }
-  ]
-};
-const topicButtons = [...document.querySelectorAll('[data-question]')];
-const sections = Object.fromEntries(topicButtons.map(button=>[button.dataset.question,document.getElementById(button.getAttribute('aria-controls'))]));
-
-function viewFromHash() {
-  const [key, choice] = location.hash.slice(1).split('/');
-  if (!Object.hasOwn(scenarios,key)) return ['tourists',0];
-  return [key,choice === '1' ? 1 : 0];
-}
-function showQuestion(key, choice) {
-  for (const button of topicButtons) {
-    const selected = button.dataset.question === key;
-    button.setAttribute('aria-pressed',String(selected));
-    sections[button.dataset.question].hidden = !selected;
+  },
+  "topics": {
+    "tourists": {
+      "label": "游客的钱",
+      "contrast": "客流上去，住宿往下",
+      "headline": [
+        "游客破千万，",
+        "住宿生意怎么还跌了？"
+      ],
+      "featured": [
+        "visitors",
+        "lodging"
+      ],
+      "sourceKeys": [
+        "bulletin25",
+        "bulletin24",
+        "bulletin23"
+      ],
+      "lead": {
+        "title": "人多了，哪种生意跟上了？",
+        "ticks": [
+          -20,
+          -10,
+          0,
+          10,
+          20
+        ],
+        "metrics": [
+          {
+            "id": "visitors",
+            "label": "游客人次",
+            "rate": 11.7,
+            "total": 1028.09,
+            "question": "这波客流里，有多少人当天返回、多少人在本地过夜？"
+          },
+          {
+            "id": "tourism",
+            "label": "旅游综合收入",
+            "rate": 19.1,
+            "total": 51.88,
+            "question": "多出来的旅游收入，来自住宿、吃饭、购物，还是其他消费？"
+          },
+          {
+            "id": "food",
+            "label": "餐饮业营业额",
+            "rate": 2.3,
+            "total": 57.32,
+            "question": "同一片区，游客来的周末，附近餐馆的实收多了多少？"
+          },
+          {
+            "id": "lodging",
+            "label": "住宿业营业额",
+            "rate": -2.3,
+            "total": 5.42,
+            "question": "房间卖得少了，还是每间房实际收的钱少了？"
+          }
+        ],
+        "note": "旅游收入统计游客消费。餐饮和住宿是全县行业营业额，含本地居民等其他客源。"
+      },
+      "amounts": {
+        "title": "吃饭和住宿，一年做了多少生意？",
+        "scope": "2025 年全县营业额 · 亿元",
+        "max": 60,
+        "digits": 2,
+        "metricIds": [
+          "food",
+          "lodging"
+        ]
+      },
+      "history": {
+        "title": "连续三年，客流和收入怎么走？",
+        "years": [
+          2023,
+          2024,
+          2025
+        ],
+        "series": [
+          {
+            "metricId": "visitors",
+            "unit": "万人次",
+            "max": 1200,
+            "previous": [
+              871.32,
+              920.53
+            ]
+          },
+          {
+            "metricId": "tourism",
+            "unit": "亿元",
+            "max": 60,
+            "previous": [
+              41.52,
+              43.57
+            ]
+          }
+        ]
+      },
+      "setup": "假如你周末到罗浮山，选一种走法。"
+    },
+    "jobs": {
+      "label": "家门口的岗",
+      "contrast": "农村收入涨得更快",
+      "headline": [
+        "农村收入涨得更快，",
+        "到手还差多少钱？"
+      ],
+      "featured": [
+        "rural",
+        "urban"
+      ],
+      "sourceKeys": [
+        "bulletin25",
+        "work26"
+      ],
+      "lead": {
+        "title": "谁的收入涨得快？",
+        "ticks": [
+          0,
+          2,
+          4,
+          6,
+          8
+        ],
+        "metrics": [
+          {
+            "id": "rural",
+            "label": "农村居民",
+            "rate": 6.2,
+            "total": 32915,
+            "question": "增收来自工资、做生意，还是其他来源？哪一项能持续？"
+          },
+          {
+            "id": "urban",
+            "label": "城镇居民",
+            "rate": 3.5,
+            "total": 45832,
+            "question": "同一个工种，在本地能拿到多少工资？扣掉通勤成本后还剩多少？"
+          },
+          {
+            "id": "county",
+            "label": "全县居民",
+            "rate": 4.5,
+            "total": 40626,
+            "question": "平均收入在涨，各镇、各行业的新入职者实际拿到多少钱？"
+          }
+        ],
+        "note": "比较人均可支配收入的名义增速。收入包括工资、经营等多种来源。"
+      },
+      "gap": {
+        "max": 50000,
+        "oldYear": 2020,
+        "increases": {
+          "rural": 8671,
+          "urban": 8164
+        }
+      },
+      "amounts": {
+        "title": "这两种社保，各覆盖多少人？",
+        "scope": "2025 年末博罗参保人数 · 万人",
+        "max": 40,
+        "digits": 2,
+        "rows": [
+          {
+            "label": "工伤保险",
+            "value": 36.38,
+            "rate": 10.3
+          },
+          {
+            "label": "失业保险",
+            "value": 30.66,
+            "rate": 9.0
+          }
+        ],
+        "note": "同一人可参加多个险种。百分比是参保人数的同比变化。"
+      },
+      "goal": {
+        "year": 2026,
+        "minimum": 1.72,
+        "unit": "万人"
+      },
+      "setup": "假如家附近的工厂开始招人，选一步往下看。"
+    },
+    "orders": {
+      "label": "工厂的订单",
+      "contrast": "工业在涨，工业投资在跌",
+      "headline": [
+        "工厂产出在涨，",
+        "工业投资怎么在跌？"
+      ],
+      "featured": [
+        "industry",
+        "investment"
+      ],
+      "sourceKeys": [
+        "bulletin25"
+      ],
+      "lead": {
+        "title": "生产线在忙，新投入在变什么？",
+        "ticks": [
+          -20,
+          -10,
+          0,
+          10,
+          20
+        ],
+        "metrics": [
+          {
+            "id": "industry",
+            "label": "规上工业增加值",
+            "rate": 8.7,
+            "question": "增长来自原有生产线多开几班，还是建好的新线开始出货？"
+          },
+          {
+            "id": "power",
+            "label": "工业用电量",
+            "rate": 6.8,
+            "question": "增加的用电主要集中在什么行业？用电涨的企业，出货和订单也在涨吗？"
+          },
+          {
+            "id": "investment",
+            "label": "工业投资",
+            "rate": -12.7,
+            "question": "是过去一些大项目已完工，还是准备开工的新项目少了？"
+          },
+          {
+            "id": "all-investment",
+            "label": "全县固定资产投资",
+            "rate": -18.8,
+            "question": "按行业分开看，每项少投了多少钱？能不能分清地产、工业和其他领域各占多少？"
+          }
+        ],
+        "note": "增加值、用电、投资分别反映产出、用电量和新增投入。这里比较各自的变化方向。"
+      },
+      "industries": [
+        {
+          "label": "电子设备",
+          "full": "计算机、通信和其他电子设备制造业",
+          "rate": 23.0
+        },
+        {
+          "label": "电力热力",
+          "full": "电力、热力生产和供应业",
+          "rate": 14.0
+        },
+        {
+          "label": "电气机械",
+          "full": "电气机械和器材制造业",
+          "rate": 13.7
+        },
+        {
+          "label": "金属制品",
+          "full": "金属制品业",
+          "rate": 11.1
+        },
+        {
+          "label": "橡胶塑料",
+          "full": "橡胶和塑料制品业",
+          "rate": -4.2
+        }
+      ],
+      "sizeShares": [
+        {
+          "label": "小微型",
+          "share": 56.8,
+          "rate": 9.7
+        },
+        {
+          "label": "中型",
+          "share": 24.0,
+          "rate": 4.8
+        },
+        {
+          "label": "大型",
+          "share": 19.2,
+          "rate": 10.8
+        }
+      ],
+      "setup": "假如一家博罗大厂接到新单，选它去哪找配套。"
+    }
+  },
+  "scenarios": {
+    "tourists": [
+      {
+        "label": "当天来回",
+        "steps": [
+          "游客来了",
+          "当天返程",
+          "看白天的消费"
+        ],
+        "summary": "当天来回的人也可能在这里吃饭、买东西。可以先问附近小店，来客多的周末，实收有没有一起增加？",
+        "question": "同一片区，同类周末，客流增加时，附近餐馆和小店的收入变了多少？",
+        "record": "对照同一片区的到访人次与餐饮、零售商户的实收样本。按节假日和普通周末分别比较。"
+      },
+      {
+        "label": "多住一晚",
+        "steps": [
+          "游客来了",
+          "住一晚上",
+          "看住宿和晚间消费"
+        ],
+        "summary": "住一晚多了住宿和晚餐的消费机会。要看游客在哪里住、在哪里吃，以及是哪家店收到这笔钱。",
+        "question": "在这片区住一晚的游客，比当天往返的人多在哪里花钱？",
+        "record": "对同一片区的游客按是否在当地留宿分组，分别查看住宿、餐饮和购物开支，以及收款商户所在镇街。"
+      }
+    ],
+    "jobs": [
+      {
+        "label": "看到招聘启事",
+        "steps": [
+          "工厂开始招人",
+          "看到岗位要求",
+          "查谁能去上班"
+        ],
+        "summary": "看到附近招人，可以接着问工种要什么技能、班次是几点、晚班下班还能不能回家。",
+        "question": "本地求职者卡在报名、录用还是通勤？",
+        "record": "按镇街和工种对照岗位数、报名数和录用数，在晚班岗位里单独核对通勤可达性。"
+      },
+      {
+        "label": "追到入职之后",
+        "steps": [
+          "工厂开始招人",
+          "工人实际到岗",
+          "查三个月后在岗"
+        ],
+        "summary": "能入职只是过了一关。三个月后还有多少人留下来，才看得到岗位能不能接住这批求职者。",
+        "question": "这一批本地入职者，三个月后还有多少人在岗？",
+        "record": "以同一批本地入职者为分母，按工种和班次汇总三个月在岗人数。用离职原因调查区分技能、薪酬与通勤问题。"
+      }
+    ],
+    "orders": [
+      {
+        "label": "在博罗找配套",
+        "steps": [
+          "大厂接到新单",
+          "博罗配套厂供货",
+          "查本地收到多少"
+        ],
+        "summary": "配套厂能接到这一单，接下来要问的是谁供了货，最后有多少货款到了本地企业手里。",
+        "question": "大厂多出来的采购里，有多少实际付给了在博罗生产的配套企业？",
+        "record": "同一批企业按同一季度核对已付款的新增采购，按供货生产地拆分本地与外地，再看两者占比。"
+      },
+      {
+        "label": "向外地找配套",
+        "steps": [
+          "大厂接到新单",
+          "外地配套厂供货",
+          "查本地缺哪一环"
+        ],
+        "summary": "如果这批配套来自外地，可以问当地有没有企业能做，以及差的是工艺、交期还是采购准入。",
+        "question": "同一种配件，本地企业差在哪一步，导致它没有接到单？",
+        "record": "选采购额较大的配件，对照供方的工艺要求、交付记录和本地企业的达标情况，再确定哪一环有缺口。"
+      }
+    ]
   }
-  const panel = sections[key];
-  const view = scenarios[key][choice];
-  const path = panel.querySelector('.path');
-  path.dataset.current = String(choice);
-  panel.querySelectorAll('.path li span').forEach((step,index)=>{step.textContent=view.steps[index];});
-  panel.querySelector('.scenario-summary').textContent = view.summary;
-  panel.querySelector('.follow-question').textContent = view.question;
-  panel.querySelector('.record').textContent = view.record;
-  panel.querySelectorAll('[data-case]').forEach(button=>button.setAttribute('aria-pressed',String(Number(button.dataset.case)===choice)));
 }
-function syncQuestion() {
-  const [key,choice] = viewFromHash();
-  showQuestion(key,choice);
-}
-function selectQuestion(key,choice) {
-  const fragment = '#'+key+'/'+choice;
-  if (location.hash !== fragment) history.pushState(null,'',fragment);
-  showQuestion(key,choice);
-}
-topicButtons.forEach(button=>button.addEventListener('click',()=>{
-  const key = button.dataset.question;
-  const choice = Number(sections[key].querySelector('.path').dataset.current);
-  selectQuestion(key,choice);
-}));
-for (const [key,panel] of Object.entries(sections)) {
-  panel.querySelectorAll('[data-case]').forEach(button=>button.addEventListener('click',()=>selectQuestion(key,Number(button.dataset.case))));
-}
-window.addEventListener('hashchange',syncQuestion);
-window.addEventListener('popstate',syncQuestion);
-syncQuestion();
+</script>
+<script>
+(() => {
+  'use strict';
+
+  const { topics, sources, scenarios } = JSON.parse(document.getElementById('question-data').textContent);
+  const entries = Object.entries(topics);
+  const wall = document.getElementById('contrast-wall');
+  const detail = document.getElementById('question-detail');
+  const questionTitle = document.getElementById('question-title');
+  const leadChart = document.getElementById('lead-chart');
+  const secondaryCharts = document.getElementById('secondary-charts');
+  const cases = document.getElementById('case-buttons');
+  const path = document.getElementById('case-path');
+  const pathSteps = Array.from(path.querySelectorAll('li span'));
+  const evidence = document.getElementById('case-evidence');
+  const goal = document.getElementById('scenario-goal');
+  const sourceDetails = document.getElementById('sources');
+  const selectedCases = new Map();
+  const selectedMetrics = new Map();
+  let currentTopic;
+
+  function format(value, digits = 0) {
+    return value.toLocaleString('en-US', {
+      minimumFractionDigits: digits,
+      maximumFractionDigits: digits
+    });
+  }
+
+  function signed(value, digits = 1) {
+    const sign = value < 0 ? '−' : value > 0 ? '+' : '';
+    return sign + format(Math.abs(value), digits);
+  }
+
+  function direction(value) {
+    return value < 0 ? 'down' : 'up';
+  }
+
+  function findMetric(topic, id) {
+    return topic.lead.metrics.find(metric => metric.id === id);
+  }
+
+  function scale(value, low, high) {
+    return (value - low) / (high - low) * 100;
+  }
+
+  function track(value, low, high) {
+    const start = scale(Math.min(value, 0), low, high);
+    const length = Math.abs(value) / (high - low) * 100;
+    const zero = scale(0, low, high);
+    return `<span class="track" aria-hidden="true" style="--start:${start}%;--length:${length}%;--zero:${zero}%"><i class="bar"></i></span>`;
+  }
+
+  function caption(title, scope) {
+    return `<figcaption class="chart-caption"><h3>${title}</h3><span class="scope">${scope}</span></figcaption>`;
+  }
+
+  function note(message) {
+    return message ? `<p class="chart-note">${message}</p>` : '';
+  }
+
+  function renderWall() {
+    wall.innerHTML = entries.map(([key, topic]) => {
+      const pair = topic.featured.map(id => findMetric(topic, id));
+      const values = pair.map(metric =>
+        `<span class="contrast-reading reading ${direction(metric.rate)}">
+          <b class="value">${signed(metric.rate)}<small>%</small></b>
+          <em>${metric.label}</em>
+        </span>`
+      ).join('');
+      const meters = pair.map(metric => `<span class="reading ${direction(metric.rate)}">${track(metric.rate, -15, 15)}</span>`).join('');
+      return `<button type="button" class="contrast" data-question="${key}" aria-controls="question-detail" aria-pressed="false">
+        <span class="contrast-header"><span class="contrast-label">${topic.label}</span><i aria-hidden="true">↗</i></span>
+        <span class="contrast-title">${topic.contrast}</span>
+        <span class="contrast-values">${values}</span>
+        <span class="contrast-meter" aria-hidden="true">${meters}</span>
+      </button>`;
+    }).join('');
+  }
+
+  function renderLead(topic) {
+    const { title, ticks, metrics } = topic.lead;
+    const low = ticks[0];
+    const high = ticks[ticks.length - 1];
+    const axis = ticks.map(tick =>
+      `<span class="${tick === 0 ? 'zero' : ''}" style="--pos:${scale(tick, low, high)}%">${signed(tick, 0)}</span>`
+    ).join('');
+    const rows = metrics.map(metric =>
+      `<button type="button" class="metric-row reading ${direction(metric.rate)}" data-metric="${metric.id}"
+        aria-controls="metric-reading" aria-pressed="false">
+        <span class="metric-name">${metric.label}</span>
+        ${track(metric.rate, low, high)}
+        <strong class="value">${signed(metric.rate)}%</strong>
+      </button>`
+    ).join('');
+    leadChart.innerHTML = `<figure class="chart lead-chart">
+      ${caption(title, '2025 年同比 · %')}
+      <div class="divergence" role="group" aria-label="点一项指标查看追问">
+        <div class="axis-row" aria-hidden="true"><span></span><div class="axis-ticks">${axis}</div><span></span></div>
+        ${rows}
+      </div>
+      ${note(topic.lead.note)}
+      <div class="metric-reading reading" id="metric-reading" aria-live="polite">
+        <span id="metric-context"></span><p id="metric-question"></p>
+      </div>
+    </figure>`;
+  }
+
+  function showMetric(id) {
+    const metric = findMetric(topics[currentTopic], id);
+    selectedMetrics.set(currentTopic, id);
+    for (const button of leadChart.querySelectorAll('[data-metric]')) {
+      button.setAttribute('aria-pressed', String(button.dataset.metric === id));
+    }
+    document.getElementById('metric-reading').classList.toggle('down', metric.rate < 0);
+    document.getElementById('metric-context').textContent = '追问 · ' + metric.label;
+    document.getElementById('metric-question').textContent = metric.question;
+  }
+
+  function renderAmounts(topic) {
+    const amounts = topic.amounts;
+    const rows = amounts.rows || amounts.metricIds.map(id => {
+      const metric = findMetric(topic, id);
+      return { label: metric.label, value: metric.total, rate: metric.rate };
+    });
+    return `<figure class="chart">
+      ${caption(amounts.title, amounts.scope)}
+      <div class="amount-scale" aria-hidden="true"><span>0</span><span>${format(amounts.max)}</span></div>
+      ${rows.map(row => `<div class="amount-row reading ${direction(row.rate)}">
+        <div class="amount-label"><span>${row.label}</span>
+          <strong>${format(row.value, amounts.digits)}<small>同比 ${signed(row.rate)}%</small></strong>
+        </div>
+        ${track(row.value, 0, amounts.max)}
+      </div>`).join('')}
+      ${note(amounts.note)}
+    </figure>`;
+  }
+
+  function renderHistory(topic) {
+    const { title, years, series } = topic.history;
+    const yearLabels = years.map(year => `<span>${year}</span>`).join('');
+    const subplots = series.map(({ metricId, unit, max, previous }) => {
+      const metric = findMetric(topic, metricId);
+      const values = [...previous, metric.total];
+      const bars = values.map((value, index) =>
+        `<div class="series-bar" style="--height:${scale(value, 0, max)}%">
+          <b><span class="sr-only">${years[index]} 年 </span>${format(value, 2)}</b><i aria-hidden="true"></i>
+        </div>`
+      ).join('');
+      return `<div class="mini-series">
+        <div class="series-label">${metric.label} · ${unit}</div>
+        <div class="series-bars">${bars}</div>
+        <div class="series-years" aria-hidden="true">${yearLabels}</div>
+      </div>`;
+    }).join('');
+    return `<figure class="chart">
+      ${caption(title, '2023—2025 年')}
+      <div class="series-pair">${subplots}</div>
+    </figure>`;
+  }
+
+  function renderGap(topic) {
+    const { max, oldYear, increases } = topic.gap;
+    const ruralNow = findMetric(topic, 'rural').total;
+    const urbanNow = findMetric(topic, 'urban').total;
+    const years = [
+      { year: oldYear, rural: ruralNow - increases.rural, urban: urbanNow - increases.urban },
+      { year: 2025, rural: ruralNow, urban: urbanNow }
+    ];
+    const rows = years.map(({ year, rural, urban }) => {
+      const gap = urban - rural;
+      return `<div class="gap-row">
+        <div class="gap-header"><span>${year} 年</span><strong>差 ${format(gap)} 元</strong></div>
+        <div class="gap-track" aria-hidden="true">
+          <i class="gap-band" style="--start:${scale(rural, 0, max)}%;--length:${scale(gap, 0, max)}%"></i>
+        </div>
+        <div class="gap-values"><span>农村 ${format(rural)}</span><span>城镇 ${format(urban)}</span></div>
+      </div>`;
+    }).join('');
+    return `<figure class="chart">
+      ${caption('涨得更快，差距缩小多少？', '人均可支配收入 · 元')}
+      <div class="amount-scale gap-axis" aria-hidden="true"><span>0</span><span>${format(max)}</span></div>
+      ${rows}
+      ${note('2020 年数据按公报披露的五年增量倒算。两个年份都用当年的价格。')}
+    </figure>`;
+  }
+
+  function renderIndustries(industries) {
+    const min = -10;
+    const max = 29;
+    const axis = scale(0, min, max);
+    const bars = industries.map(({ full, rate }) =>
+      `<div class="branch reading ${direction(rate)}" style="--extent:${Math.abs(rate) / (max - min) * 100}%">
+        <i aria-hidden="true"></i><b><span class="sr-only">${full} </span>${signed(rate)}%</b>
+      </div>`
+    ).join('');
+    return `<figure class="chart">
+      ${caption('电子设备涨，橡胶塑料跌', '2025 年五个行业增加值同比')}
+      <div class="branches">
+        <div class="branch-plot" style="--axis:${axis}%">${bars}</div>
+        <div class="branch-names" aria-hidden="true">${industries.map(industry => `<span>${industry.label}</span>`).join('')}</div>
+      </div>
+    </figure>`;
+  }
+
+  function renderShares(sizeShares) {
+    const colors = ['var(--aqua)', 'var(--blue)', 'var(--lavender)'];
+    return `<figure class="chart">
+      ${caption('规上工业里，哪类企业占得多？', '2025 年按企业规模')}
+      <div class="share-stack" aria-hidden="true">
+        ${sizeShares.map(({ share }, index) =>
+          `<span style="--share:${share}%;--share-color:${colors[index]}">${format(share, 1)}%</span>`
+        ).join('')}
+      </div>
+      <div class="share-row head" aria-hidden="true"><span>企业规模</span><span>增加值占比</span><span>同比增速</span></div>
+      ${sizeShares.map(({ label, share, rate }, index) => `<div class="share-row">
+        <span><i aria-hidden="true" style="--share-color:${colors[index]}"></i>${label}</span>
+        <span><span class="sr-only">占比 </span>${format(share, 1)}%</span>
+        <span class="value"><span class="sr-only">同比 </span>${signed(rate)}%</span>
+      </div>`).join('')}
+    </figure>`;
+  }
+
+  function renderSecondary(topic) {
+    if (topic.history) return renderAmounts(topic) + renderHistory(topic);
+    if (topic.gap) return renderGap(topic) + renderAmounts(topic);
+    return renderIndustries(topic.industries) + renderShares(topic.sizeShares);
+  }
+
+  function renderTopic(key) {
+    const topic = topics[key];
+    currentTopic = key;
+    detail.dataset.topic = key;
+    questionTitle.innerHTML = `${topic.headline[0]}<wbr><span>${topic.headline[1]}</span>`;
+    for (const button of wall.querySelectorAll('[data-question]')) {
+      button.setAttribute('aria-pressed', String(button.dataset.question === key));
+    }
+    renderLead(topic);
+    showMetric(selectedMetrics.get(key) || topic.featured.find(id => findMetric(topic, id).rate < 0) || topic.featured[0]);
+    secondaryCharts.innerHTML = renderSecondary(topic);
+    document.getElementById('scenario-setup').textContent = topic.setup;
+    cases.innerHTML = scenarios[key].map(({ label }, index) =>
+      `<button type="button" data-case="${index}" aria-pressed="false" aria-controls="case-path follow-question">${label}</button>`
+    ).join('');
+    evidence.open = false;
+    sourceDetails.open = false;
+    goal.hidden = !topic.goal;
+    if (topic.goal) {
+      goal.textContent = `${topic.goal.year} 年城镇新增就业目标 ≥${format(topic.goal.minimum, 2)} ${topic.goal.unit}`;
+    }
+    document.getElementById('source-list').innerHTML = topic.sourceKeys.map(id => {
+      const { label, url } = sources[id];
+      return `<li><a href="${url}">${label}</a></li>`;
+    }).join('');
+  }
+
+  function showQuestion(key, choice) {
+    if (currentTopic !== key) renderTopic(key);
+    selectedCases.set(key, choice);
+    const view = scenarios[key][choice];
+    for (const button of cases.querySelectorAll('[data-case]')) {
+      button.setAttribute('aria-pressed', String(Number(button.dataset.case) === choice));
+    }
+    path.dataset.current = String(choice);
+    pathSteps.forEach((step, index) => { step.textContent = view.steps[index]; });
+    document.getElementById('case-summary').textContent = view.summary;
+    document.getElementById('follow-question').textContent = view.question;
+    document.getElementById('case-record').textContent = view.record;
+  }
+
+  function syncQuestion() {
+    const [key, choice] = location.hash.slice(1).split('/');
+    if (Object.hasOwn(topics, key)) {
+      showQuestion(key, choice === '1' ? 1 : 0);
+    } else {
+      showQuestion('tourists', 0);
+    }
+  }
+
+  function navigate(key, choice) {
+    const fragment = `#${key}/${choice}`;
+    if (location.hash !== fragment) history.pushState(null, '', fragment);
+    showQuestion(key, choice);
+  }
+
+  renderWall();
+  wall.addEventListener('click', event => {
+    const button = event.target.closest('[data-question]');
+    if (button) navigate(button.dataset.question, selectedCases.get(button.dataset.question) ?? 0);
+  });
+  leadChart.addEventListener('click', event => {
+    const button = event.target.closest('[data-metric]');
+    if (button) showMetric(button.dataset.metric);
+  });
+  cases.addEventListener('click', event => {
+    const button = event.target.closest('[data-case]');
+    if (button) navigate(currentTopic, Number(button.dataset.case));
+  });
+  window.addEventListener('popstate', syncQuestion);
+  window.addEventListener('hashchange', syncQuestion);
+  syncQuestion();
+})();
 </script>
 
 <div class="likebar">
