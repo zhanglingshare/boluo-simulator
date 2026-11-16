@@ -1,63 +1,154 @@
 <!doctype html>
-<html lang="zh-CN"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
-<title>博罗县产业分析报告（Demo版）· 张凌</title>
-<script src="lib/echarts.min.js"></script>
-<script src="model.js"></script>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="description" content="先猜博罗五年能否到1600亿，再亲手改变条件，看两种发展节奏会带来什么差别。">
+<title>分析报告 · 博罗产业风洞</title>
+<link rel="stylesheet" href="public-stage.css">
 <style>
-*{box-sizing:border-box}
-body{margin:0;background:#080b12;color:#e6edf3;font:14px/1.7 -apple-system,"PingFang SC","Microsoft YaHei",sans-serif}
-.nav{position:sticky;top:0;z-index:50;display:flex;gap:5px;align-items:center;padding:9px 14px;background:rgba(8,11,18,.95);border-bottom:1px solid #1b2434;overflow-x:auto}
-.nav b{font-size:14px;margin-right:6px;flex:none}
-.nav a{background:#131c2b;color:#93a4bd;border:1px solid #22304a;padding:6px 12px;border-radius:20px;font-size:12.5px;text-decoration:none;white-space:nowrap;flex:none}
-.nav a.on{background:#15803d;border-color:#22c55e;color:#fff;font-weight:600}
-.wrap{max-width:880px;margin:auto;padding:18px}
-.cover{text-align:center;padding:42px 20px;background:linear-gradient(160deg,#082014,#0a0f1a);border:1px solid #1c2739;border-radius:16px;margin-bottom:16px}
-.cover .kick{font-size:12px;letter-spacing:3px;color:#4ade80;margin-bottom:12px}
-.cover h1{font-size:27px;lineHeight:1.4;margin:0 0 10px}
-.cover .meta{font-size:12.5px;color:#8fa3bf;margin-top:16px}
-.card{background:#0e1523;border:1px solid #1c2739;border-radius:12px;padding:18px;margin-bottom:14px}
-.card h2{font-size:16px;margin:0 0 12px;padding-bottom:8px;border-bottom:1px solid #1c2739;color:#4ade80}
-.card h3{font-size:13.5px;color:#4ade80;margin:18px 0 6px}
-.kpis{display:grid;grid-template-columns:repeat(4,1fr);gap:10px;margin:12px 0}
-@media(max-width:700px){.kpis{grid-template-columns:repeat(2,1fr)}}
-.kpi{background:#0a0f1a;border:1px solid #1c2739;border-radius:10px;padding:12px;text-align:center}
-.kpi .v{font-size:19px;font-weight:800;color:#fbbf24}
-.kpi .l{font-size:10.5px;color:#6b7d96;margin-top:3px}
-.lights{display:grid;grid-template-columns:repeat(2,1fr);gap:10px;margin:12px 0}
-@media(max-width:700px){.lights{grid-template-columns:1fr}}
-.light{border-radius:10px;padding:11px 12px;font-size:12px;border:1px solid}
-.light .dot{display:inline-block;width:9px;height:9px;border-radius:50%;margin-right:6px}
-.g{background:#0a1a12;border-color:#14532d}.g .dot{background:#22c55e}
-.y{background:#1a1808;border-color:#713f12}.y .dot{background:#eab308}
-.r{background:#1a0c0c;border-color:#7f1d1d}.r .dot{background:#ef4444}
-ol.find{margin:0;padding-left:20px}
-ol.find li{margin-bottom:10px;line-height:1.8;font-size:13px;color:#c8d3e0}
-.two{display:grid;grid-template-columns:1fr 1fr;gap:12px}
-@media(max-width:700px){.two{grid-template-columns:1fr}}
-.people{background:linear-gradient(160deg,#1a1408,#0e1523);border:1px solid #713f12}
-.people .q{font-size:13.5px;font-weight:700;color:#fbbf24;margin-bottom:6px}
-.people .a{font-size:12.3px;color:#cbd5e1;line-height:1.85}
-.action{display:flex;gap:12px;margin-bottom:10px;align-items:flex-start}
-.action .pri{flex:none;width:46px;height:46px;border-radius:10px;display:flex;align-items:center;justify-content:center;font-size:11px;font-weight:700;color:#fff}
-.action .body{flex:1}
-.action .body b{font-size:13.5px}
-.action .body p{font-size:12px;color:#9aa9bd;margin:3px 0 0;line-height:1.7}
-.src-list{font-size:12.5px;color:#cbd5e1;line-height:2}
-.grade{display:inline-block;width:22px;height:22px;line-height:22px;text-align:center;border-radius:50%;font-size:10px;font-weight:700;margin-right:6px;color:#fff}
-.bound{font-size:12.5px;line-height:1.95;color:#cbd5e1}
-.author{display:flex;gap:16px;align-items:flex-start;flex-wrap:wrap}
-.author .badge{width:84px;height:84px;border-radius:50%;background:linear-gradient(135deg,#15803d,#0e7490);display:flex;align-items:center;justify-content:center;font-size:24px;flex:none;color:#fff;font-weight:700}
-.author .roles{font-size:12.5px;line-height:2;color:#cbd5e1}
-.tagline{font-size:12px;color:#8fa3bf;font-style:italic;margin-top:8px}
-.disc{font-size:11.5px;color:#6b7d96;line-height:1.8;text-align:center}
-.btn{background:#15803d;color:#fff;border:0;padding:10px 22px;border-radius:8px;font-size:14px;font-weight:600;cursor:pointer;text-decoration:none;display:inline-block}
-.bigquote{font-size:15px;line-height:2;text-align:center;color:#e6edf3}
-.plain{margin-top:9px;background:#081a0e;border:1px solid #14532d;border-left:3px solid #22c55e;border-radius:8px;padding:10px 12px;font-size:12.3px;line-height:1.85;color:#cdeecf}
-.plain .lab{display:block;font-size:10.5px;font-weight:800;color:#4ade80;letter-spacing:1px;margin-bottom:3px}
-.chart{width:100%;height:230px}
-</style></head><body>
+.report-answer .impact-stat strong { font-size: clamp(38px, 5.2vw, 71px) }
+.report-answer .target-gap { --stat-ink: var(--ember) }
+.report-answer[data-over="true"] .target-gap { --stat-ink: var(--mint) }
+.run-track {
+  position: relative;
+  height: 36px;
+  margin: 29px 0 7px;
+  border: 1px solid #7d8462;
+  border-radius: 3px;
+  background: repeating-linear-gradient(90deg, #bfc5961b 0 1px, transparent 1px 12.5%), #0b120b;
+}
+.run-fill, .run-gap-fill {
+  position: absolute;
+  inset: 6px auto 6px 0;
+  width: 0;
+  border-radius: 2px;
+  transition: width .37s cubic-bezier(.15,.75,.18,1), left .37s cubic-bezier(.15,.75,.18,1);
+}
+.run-fill { background: linear-gradient(90deg,#577e42,#a2f4ba); box-shadow: 0 0 14px #93f4bd56 }
+.reveal-pane.enter .run-fill { transform-origin: left; animation: meter-enter .75s cubic-bezier(.19,.7,.16,1) both }
+@keyframes meter-enter { from { transform: scaleX(0) } to { transform: scaleX(1) } }
+.run-gap-fill { background: repeating-linear-gradient(135deg,#d47a4b82 0 4px,#5c352980 4px 8px) }
+.finish-line {
+  position: absolute;
+  top: -5px;
+  bottom: -5px;
+  width: 0;
+  border-left: 2px solid var(--light);
+  filter: drop-shadow(0 0 5px #f0ee647f);
+}
+.finish-line b {
+  position: absolute;
+  bottom: calc(100% + 2px);
+  left: 0;
+  transform: translateX(-50%);
+  white-space: nowrap;
+  color: var(--light);
+  font-size: 11px;
+}
+.run-marker {
+  position: absolute;
+  z-index: 2;
+  top: 0;
+  bottom: 0;
+  width: 4px;
+  transform: translateX(-50%);
+  background: #fcffe4;
+  box-shadow: 0 0 10px #c0f9b4;
+  transition: left .37s cubic-bezier(.15,.75,.18,1);
+}
+.pace-control { display: grid; grid-template-columns: 1fr auto; gap: 2px 10px; margin-top: 12px; align-items: center }
+.pace-control label { color: var(--ink); font-size: 13px; font-weight: 760 }
+.pace-control output { color: var(--light); font-weight: 820; font-variant-numeric: tabular-nums }
+.pace-control input { grid-column: 1/-1; width: 100%; height: 30px; margin: 0; accent-color: var(--light); cursor: ew-resize }
+.report-small { margin: 6px 0 0; color: var(--muted); font-size: 12px }
+.report-play { display: grid; gap: 12px }
+.report-box, .report-drawer {
+  min-width: 0;
+  padding: clamp(13px, 2.3vw, 29px);
+  border: 1px solid var(--line);
+  border-radius: 13px;
+  background: linear-gradient(155deg,#222a1d,#171b14 78%);
+}
+.box-heading { display: flex; flex-wrap: wrap; align-items: end; justify-content: space-between; gap: 9px 16px }
+.box-heading h2 {
+  margin: 0;
+  font-size: clamp(24px, 3vw, 43px);
+  font-weight: 830;
+  line-height: 1.1;
+  letter-spacing: -.055em;
+}
+.box-heading .prompt-scope { margin-bottom: 5px }
+.box-heading > a { font-size: 12px }
+.stress-controls { display: flex; flex-wrap: wrap; gap: 6px; margin-top: 13px }
+.stress-controls button {
+  min-height: 44px;
+  border: 1px solid #746d50;
+  border-radius: 7px;
+  background: #24251a;
+  padding: 5px 11px;
+  color: var(--ink);
+  font-size: 13px;
+  font-weight: 750;
+}
+.stress-controls button:hover:not(:disabled) { border-color: var(--light) }
+.stress-controls button[aria-pressed="true"] { background: #5b382a; border-color: var(--ember); color: #fff1d4 }
+.stress-controls button:disabled { cursor: default; opacity: .52 }
+.reset-stress { margin-left: auto }
+.chance-pair { display: grid; grid-template-columns: 1fr 1fr .82fr; gap: 9px; margin-top: 12px }
+.chance-cell, .scenario-takeaway { min-width: 0; padding: clamp(9px, 1.5vw, 17px); border: 1px solid #59694c; border-radius: 8px; background: #132117 }
+.chance-cell.current { background: #241c16; border-color: #a8684f }
+.chance-title { display: block; color: var(--ink); font-size: 13px; font-weight: 720 }
+.chance-number {
+  display: block;
+  color: var(--mint);
+  font-size: clamp(34px, 5vw, 65px);
+  line-height: 1.06;
+  font-weight: 860;
+  font-variant-numeric: tabular-nums;
+  letter-spacing: -.072em;
+}
+.chance-cell.current[data-hit="false"] .chance-number { color: var(--ember) }
+.chance-grid { display: grid; grid-template-columns: repeat(20, minmax(0, 1fr)); gap: 3px; margin: 7px 0 0 }
+.chance-grid i { aspect-ratio: 1; border-radius: 2px; background: #405047; transition: background .24s, box-shadow .24s }
+.chance-grid .hit { background: var(--mint); box-shadow: 0 0 7px #95f1b68b }
+.chance-grid .lost { background: #6d422f; border: 1px solid #d5886380 }
+.scenario-takeaway { display: flex; flex-direction: column; justify-content: center; gap: 6px; background: #241f16; border-color: #746541 }
+.scenario-impact { color: var(--light); font-size: clamp(19px, 3vw, 37px); font-weight: 820; letter-spacing: -.04em; line-height: 1.1 }
+.scenario-impact small { font-size: .45em; letter-spacing: 0; white-space: nowrap }
+.scenario-takeaway p { margin: 0; color: var(--muted); font-size: 12px }
+.sector-readings { display: grid; gap: 8px; margin: 15px 0 3px }
+.sector-row { display: grid; grid-template-columns: minmax(55px,.62fr) minmax(0,3fr) 62px; align-items: center; gap: 8px; min-height: 35px }
+.sector-row .sector-label { font-size: 13px; font-weight: 730 }
+.sector-line { position: relative; display: flex; align-items: center; height: 22px; overflow: hidden; border-left: 1px solid #a9b08e; background: repeating-linear-gradient(90deg,#d5e1b915 0 1px,transparent 1px 20%) }
+.sector-bar { display: block; width: 0; height: 15px; border-radius: 0 4px 4px 0; background: var(--sector-color); transition: width .5s cubic-bezier(.15,.75,.2,1) }
+.sector-value { text-align: right; color: var(--sector-color); font-size: 19px; font-weight: 820; font-variant-numeric: tabular-nums }
+.sector-explanation { min-height: 26px }
+.report-drawer { padding-block: 0 5px }
+.report-drawer p, .report-drawer ul { margin-top: 0; color: var(--muted); font-size: 13px }
+.report-drawer li + li { margin-top: 5px }
 
-<div class="nav">
+@media (max-width: 840px) {
+  .report-answer .impact-stat strong { font-size: clamp(37px, 9.7vw, 64px) }
+  .chance-pair { grid-template-columns: 1fr 1fr }
+  .scenario-takeaway { grid-column: 1/-1 }
+}
+@media (max-width: 480px) {
+  .report-play { gap: 9px }
+  .stress-controls button { padding-inline: 8px; font-size: 11.5px }
+  .stress-controls .reset-stress { margin-left: 0 }
+  .chance-pair { gap: 6px }
+  .chance-title { font-size: 11.5px }
+  .chance-grid { grid-template-columns: repeat(10, minmax(0, 1fr)); gap: 3px }
+  .sector-controls { width: fit-content }
+}
+@media (prefers-reduced-motion: reduce) {
+  .run-fill, .run-gap-fill, .run-marker, .sector-bar, .chance-grid i { transition: none }
+}
+</style>
+</head>
+<body>
+<nav class="nav" aria-label="博罗产业风洞导航">
   <b>博罗产业风洞</b>
   <a href="index.html">① 今日话题</a>
   <a href="town.html">🏘️ 各镇吃喝玩乐</a>
@@ -67,260 +158,358 @@ ol.find li{margin-bottom:10px;line-height:1.8;font-size:13px;color:#c8d3e0}
   <a href="future.html">⑤ 未来</a>
   <a href="windtunnel.html">⑥ 风洞测试</a>
   <a href="blindspot.html">⑦ 忽略了什么</a>
-  <a href="report.html" class="on">⑧ 分析报告</a>
+  <a href="report.html" class="on" aria-current="page">⑧ 分析报告</a>
   <a href="ending.html">⑨ 追问</a>
-</div>
+</nav>
+<main class="wrap report-page">
+  <header class="page-head"><h1>分析报告</h1></header>
 
-<div class="wrap">
-
-  <!-- 封面 -->
-  <div class="cover">
-    <div class="kick">区域产业决策风洞 · 第四类样本</div>
-    <h1>博罗县产业决策<br>模拟推演分析报告</h1>
-    <div style="font-size:13px;color:#cbd5e1">——广东首个千亿县，在大湾区网络里的位置与可能（Demo版）</div>
-    <div class="meta">作者：<b style="color:#fbbf24">张凌 博士</b> &nbsp;|&nbsp; 2026年10月 · 广东惠州</div>
-  </div>
-
-  <!-- 一页看懂 -->
-  <div class="card">
-    <h2>一、一页看懂：现在什么状态</h2>
-    <div class="lights">
-      <div class="g"><span class="dot"></span>GDP过千亿：1005亿、+5.5%，广东首个千亿县</div>
-      <div class="g"><span class="dot"></span>工业稳：规上工业增加值+8.7%</div>
-      <div class="g"><span class="dot"></span>电子信息猛：+23%，是第一大行业</div>
-      <div class="g"><span class="dot"></span>文旅热：游客1028万、收入+19.1%</div>
-      <div class="y"><span class="dot"></span>消费+3.9%，三产增速仅2.7%</div>
-      <div class="y"><span class="dot"></span>城镇化率60%，还有提升空间</div>
-      <div class="r"><span class="dot"></span>固定资产投资-18.8%</div>
-      <div class="r"><span class="dot"></span>房地产投资-47.6%（调整最深）</div>
-    </div>
-    <p style="font-size:13px;color:#cbd5e1;margin:8px 0 0">一句话：<b style="color:#fbbf24">工业这条主航道跑得稳，文旅农业有亮点；投资正在换挡，关键看新产能能不能按时接上。</b></p>
-  </div>
-
-  <!-- 五条发现 -->
-  <div class="card">
-    <h2>二、五条核心发现</h2>
-    <ol class="find">
-      <li><b>博罗是广东首个千亿县</b>，2025年GDP 1005.45亿元、增长5.5%；二产占54.6%，工业是主航道，电子信息、电气机械是两大支柱。</li>
-      <li><b>最大的底牌是区位</b>：西边园洲石湾贴着东莞，赣深高铁半小时到深圳，这张"地图上的资产"比GDP排名更稀缺。</li>
-      <li><b>增长靠"产业承接+新投产"双引擎</b>：两条路合计贡献约400亿，是新增量的大头，但都与东莞、深圳的外溢节奏相连。</li>
-      <li><b>最被低估的是罗浮山过夜经济和特色农业</b>：千万游客人均仅消费约500元，一产增速却最快（7.8%），提升杠杆比想象中大。</li>
-      <li><b>真正敏感的是投产节奏</b>：固投换挡期，眼前增长靠前几年产能释放，新项目按时投产才能把下一档增长接上。</li>
-    </ol>
-  </div>
-
-  <!-- 基本面 -->
-  <div class="card">
-    <h2>三、我们站在哪：基本面快照</h2>
-    <div class="kpis">
-      <div class="kpi"><div class="v">1005亿</div><div class="l">GDP · +5.5%</div></div>
-      <div class="kpi"><div class="v">549亿</div><div class="l">二产 · +6.9%</div></div>
-      <div class="kpi"><div class="v">124万</div><div class="l">常住人口</div></div>
-      <div class="kpi"><div class="v">686家</div><div class="l">高新技术企业</div></div>
-      <div class="kpi"><div class="v" style="color:#f87171">-18.8%</div><div class="l">固定资产投资</div></div>
-      <div class="kpi"><div class="v">297亿</div><div class="l">社消零 · +3.9%</div></div>
-      <div class="kpi"><div class="v">95.3亿</div><div class="l">一般公共预算</div></div>
-      <div class="kpi"><div class="v">1028万</div><div class="l">年游客人次</div></div>
-    </div>
-    <div class="two">
-      <div>
-        <h3 style="margin-top:6px">三次产业结构</h3>
-        <div id="rStruct" class="chart"></div>
-        <div class="plain"><span class="lab">人话版</span>博罗每赚100块，55块来自工厂，35块来自商场餐馆旅游，还有11块来自种地。和市中心城区比，博罗农业占比不低，但这正是它的特色——近49万农村人口、大湾区的菜篮子，都在这11块里。</div>
+  <section class="arena" id="report-stage" data-open="false" aria-labelledby="report-question">
+    <div class="story-prompt">
+      <p class="prompt-scope">博罗 2025 → 2030</p>
+      <h2 class="stage-question" id="report-question">已经过了千亿，<br><em>1600 亿还远吗？</em></h2>
+      <p class="stage-instruction">假如往后每年都按 5.5% 增长，五年够不够？</p>
+      <div class="vote-buttons" id="report-vote" role="group" aria-label="你认为五年够不够">
+        <button type="button" data-vote="reach" aria-controls="run-reveal" aria-pressed="false">够，能追上</button>
+        <button type="button" data-vote="short" aria-controls="run-reveal" aria-pressed="false">还会差一截</button>
       </div>
-      <div>
-        <h3 style="margin-top:6px">工业两大引擎增速</h3>
-        <div id="rInd" class="chart"></div>
-        <div class="plain"><span class="lab">人话版</span>电子信息一年增长23%，是跑得最快的行业；电气机械增长13.7%。这两个行业加起来占了规上工业的三分之一还多，是博罗工业的两台主发动机，而且都和东莞深圳的产业链连着。</div>
-      </div>
+      <p class="vote-outcome" id="report-verdict" role="status"></p>
+      <button class="retake" id="report-retake" type="button" hidden>收起答案，再猜一遍</button>
     </div>
-  </div>
-
-  <!-- 离目标多远 -->
-  <div class="card">
-    <h2>四、离2030目标还有多远</h2>
-    <h3>GDP爬坡：从千亿到1600亿</h3>
-    <div id="rClimb" class="chart"></div>
-    <div class="plain"><span class="lab">人话版</span>5年要从1005亿涨到1600亿，相当于年均跑9.7%，而2025年实际增速是5.5%——目标比当前节奏快了近一倍。这不是匀速爬坡，而是靠几个大项目投产"跳台阶"，每一级都得踩稳。</div>
-    <h3>2030年三种可能</h3>
-    <div id="rScen" class="chart"></div>
-    <div class="plain"><span class="lab">人话版</span>顺的时候约1800亿，比目标高；一半一半约1500亿，离目标线不远；不顺时约1100亿，守住千亿但离1600差一大截。中位那档离目标线距离不大，一个关键项目晚投产，就可能滑到下面一档。</div>
-  </div>
-
-  <!-- 决策者三件事 -->
-  <div class="card" style="border-color:#7f1d1d">
-    <h2>五、决策者最该重视的三件事</h2>
-    <h3>1. 两本账分开看：常规波动 vs 现实场景</h3>
-    <p style="font-size:12.5px;color:#cbd5e1;margin:0;line-height:1.85">常规敏感性里，投资、外需等参数扰动，投资与外需靠前；另一本是单独做的<b>受控场景压测</b>——把"关键项目投产延期""通道拥堵"这类现实里真可能发生的事单独压一遍，它们不在常规排序里，但一旦发生更直接。</p>
-    <h3>2. 先做"影响大、自己可控"的事</h3>
-    <div id="rMatrix" class="chart"></div>
-    <div class="plain"><span class="lab">人话版</span>越靠右上角，越是"自己说了算、又管用"的事——盯投产节点、做园区配套、打通道，都在这一片；而外需、全球环境虽然热闹，钥匙不全在自己手里。先把自己能掌控的事办好，心里才踏实。</div>
-    <h3>3. 时间窗口不等人</h3>
-    <p style="font-size:12.5px;color:#cbd5e1;margin:0">"再等等、稳一点"听起来轻，但在有明确投产节点的系统里，晚一点会明显拉低达标可能。<b style="color:#f87171">该上的项目、该通的路，窗口就这几年。</b></p>
-  </div>
-
-  <!-- 因素影响 -->
-  <div class="card">
-    <h2>六、哪些因素最牵动结果</h2>
-    <div id="rCoef" class="chart"></div>
-    <div class="plain"><span class="lab">人话版</span>排在最前的是"项目能不能按时投产"和"东莞外溢节奏"；房地产虽然跌得深（-47.6%），但对GDP的实际传导反而靠后。这正是反常识的地方：<b>跌得最响的，不一定是最牵动全局的。</b></div>
-  </div>
-
-  <!-- 老百姓 -->
-  <div class="card people">
-    <h2 style="border-color:#713f12;color:#fbbf24">七、这和普通老百姓有什么关系</h2>
-    <div class="two">
-      <div><div class="q">在园洲石湾上班，机会会更多吗？</div><div class="a">西边挨着东莞，工厂和配套多，产业承接带来的岗位首先落在这一片，家门口的工作机会会跟着多。</div></div>
-      <div><div class="q">柏塘种茶、福田种菜，能卖出更好价钱吗？</div><div class="a">山茶菜心是地理标志品牌，品牌化、电商卖全国，收购价和农户收入都有提升空间。</div></div>
-      <div><div class="q">罗浮山开民宿餐馆，有奔头吗？</div><div class="a">游客已经上千万，如果更多人过夜，住宿、餐饮、夜间消费的生意会明显更旺。</div></div>
-      <div><div class="q">年轻人留博罗，还是去深圳？</div><div class="a">高铁半小时到深圳，既可以去深圳上班，也可以回博罗居住消费，通勤圈变了，选择比以前多。</div></div>
-    </div>
-  </div>
-
-  <!-- 行动建议 -->
-  <div class="card">
-    <h2>八、行动建议（按轻重缓急）</h2>
-    <div class="action"><div class="pri" style="background:#b91c1c">优先</div><div class="body"><b>盯紧新投产项目节点</b><p>把重大项目列清单、节点到人，尽量避免延期，换挡期增长底盘才稳。</p></div></div>
-    <div class="action"><div class="pri" style="background:#b91c1c">优先</div><div class="body"><b>接住东莞深圳外溢</b><p>做强园洲石湾承接平台和深莞共建园，把区位优势变成实实在在的项目和岗位。</p></div></div>
-    <div class="action"><div class="pri" style="background:#c2410c">重要</div><div class="body"><b>做强罗浮山过夜经济</b><p>补住宿、夜间消费和康养配套，让千万游客多留半天、多消费一笔。</p></div></div>
-    <div class="action"><div class="pri" style="background:#c2410c">重要</div><div class="body"><b>特色农业品牌化</b><p>把山茶、菜心、南药做成品牌、打通电商，带动近49万农村人口增收。</p></div></div>
-    <div class="action"><div class="pri" style="background:#15803d">持续</div><div class="body"><b>打通融深融莞通道</b><p>用好高铁、枢纽和过江通道，缩短通勤物流时间，放大通道效应。</p></div></div>
-    <p style="font-size:11px;color:#5b6b82;margin:10px 0 0">建议方向对应博罗"产业强县、文旅兴旺、乡村振兴、融深融莞"等官方战略表述，为模拟推演的优先级提示，非替代官方决策。</p>
-  </div>
-
-  <!-- 数据来源 -->
-  <div class="card">
-    <h2>九、数据来源与分级</h2>
-    <div class="src-list">
-      <div><span class="grade" style="background:#14532d">A</span><b>实测</b>：统计公报、政府工作报告中直接给出的数字</div>
-      <div><span class="grade" style="background:#1e40af">B</span><b>推估</b>：部分历史序列按公开增速回推</div>
-      <div><span class="grade" style="background:#713f12">C</span><b>代理</b>：镇街级联系与供给代理，非逐镇街实查</div>
-      <div><span class="grade" style="background:#7f1d1d">D</span><b>假设</b>：网络边权重、路径贡献、跨城通勤强度</div>
-    </div>
-    <h3>主要公开来源</h3>
-    <div style="font-size:12px;color:#cbd5e1;line-height:2">
-      · 博罗县人民政府门户网站及统计部门发布<br>
-      · 《2025年博罗国民经济和社会发展统计公报》<br>
-      · 博罗县政府工作报告、县委主要领导公开访谈<br>
-      · 南方+等官方媒体公开报道、上市公司公告
-    </div>
-  </div>
-
-  <!-- 边界 -->
-  <div class="card">
-    <h2>十、模型边界与免责声明</h2>
-    <div class="bound">
-      1. <b>不是预测器</b>：不预测具体产值或招商成败，只在公开数据与明确假设下给出叙事分布与结构提示。<br>
-      2. <b>不做因果断言</b>：统一使用"关联、同步、结构提示"，路径系数为模型内部关联，不代表现实因果。<br>
-      3. <b>反事实不可验证，但参数可核对</b>：每个参数都能回到公开资料核对。<br>
-      4. <b>可复现</b>：固定随机种子后结果完全可复现；网络指标由代码实时计算，非硬编码。<br>
-      5. <b>两本账</b>：参数敏感性与受控场景压测分开计算、分开解读，不混排。<br>
-      6. <b>不构成投资建议</b>，亦不替代官方决策；结论随假设改变而改变。
-    </div>
-  </div>
-
-  <!-- 作者 -->
-  <div class="card">
-    <h2>十一、作者介绍</h2>
-    <div class="author">
-      <div class="badge">张凌</div>
-      <div style="flex:1;min-width:240px">
-        <div style="font-size:16px;font-weight:700;color:#fbbf24">张凌 博士</div>
-        <div class="roles">
-          · 高校副教授<br>
-          · 南粤优秀教师<br>
-          · 国际SCI期刊审稿人<br>
-          · 广东省乡村振兴驻镇工作队成员<br>
-          · 曾任驻村第一书记
+    <div class="scene-card">
+      <div class="shutter" id="report-shutter" aria-hidden="true"><span class="shutter-mark">?</span></div>
+      <div class="reveal-pane report-answer" id="run-reveal" hidden>
+        <p class="scene-note">2030 年 · 按固定增速试算</p>
+        <div class="impact-pair">
+          <div class="impact-stat"><strong id="run-value"></strong><span>按当前设置推算</span></div>
+          <div class="impact-stat target-gap"><strong id="run-gap"></strong><span id="gap-caption">距 1,600 亿参考线</span></div>
         </div>
-        <div class="tagline">"把不确定性，变成可拍板的结构。"</div>
+        <div class="run-track" id="run-track" aria-hidden="true">
+          <span class="run-fill" id="run-fill"></span>
+          <span class="run-gap-fill" id="run-gap-fill"></span>
+          <span class="finish-line" id="finish-line"><b>1600 亿线</b></span>
+          <span class="run-marker" id="run-marker"></span>
+        </div>
+        <div class="rail-labels"><span>2025 起点 1,005.45 亿</span><span>1,800 亿</span></div>
+        <div class="pace-control">
+          <label for="pace">把每年增速调一调</label><output id="pace-value" for="pace">5.5%</output>
+          <input id="pace" type="range" min="3" max="12" step=".1" value="5.5" />
+        </div>
+        <p class="report-small" id="run-explanation"></p>
       </div>
     </div>
+    <span class="arena-image-note">情景配图 · AI 生成</span>
+  </section>
+
+  <div class="after-play report-play" id="report-play" hidden>
+    <section class="report-box" aria-labelledby="stress-title">
+      <div class="box-heading">
+        <div><p class="prompt-scope">2030 年 · 风洞场景模拟</p><h2 id="stress-title">一项慢，和两项一起慢，差多远？</h2></div>
+        <a href="windtunnel.html">打开完整风洞 →</a>
+      </div>
+      <div class="stress-controls" id="stress-controls" role="group" aria-label="改变模拟条件">
+        <button type="button" data-shock="1" aria-pressed="false" aria-controls="stress-result">新项目贡献少两成</button>
+        <button type="button" data-shock="2" aria-pressed="false" aria-controls="stress-result">产业承接贡献少两成</button>
+        <button class="reset-stress" id="stress-reset" type="button" disabled>恢复基准</button>
+      </div>
+      <div id="stress-result">
+        <div class="chance-pair">
+          <div class="chance-cell">
+            <span class="chance-title">基准 · 过线率</span>
+            <strong class="chance-number" id="baseline-rate"></strong>
+            <div class="chance-grid" id="baseline-dots" aria-hidden="true"></div>
+          </div>
+          <div class="chance-cell current" id="current-chance">
+            <span class="chance-title" id="active-scenario"></span>
+            <strong class="chance-number" id="scenario-rate"></strong>
+            <div class="chance-grid" id="scenario-dots" aria-hidden="true"></div>
+          </div>
+          <div class="scenario-takeaway" role="status">
+            <div class="scenario-impact" id="scenario-impact"></div>
+            <p id="stress-question"></p>
+          </div>
+        </div>
+        <p class="report-small" id="stress-caption">亮格表示过了 1600 亿线，每格约代表百分之一。同一批 10,000 次模拟，切换时只改变你选中的路径贡献。</p>
+        <p class="report-small" id="stress-range"></p>
+      </div>
+    </section>
+
+    <section class="report-box" aria-labelledby="sector-title">
+      <div class="box-heading">
+        <div><p class="prompt-scope">2025 年 · 统计公报</p><h2 id="sector-title">涨得最快，撑起的盘子也最大？</h2></div>
+        <div class="subject-switch sector-controls" id="sector-controls" role="group" aria-label="切换三次产业的比较指标">
+          <button type="button" data-sector="growth" aria-pressed="true">比增速</button>
+          <button type="button" data-sector="share" aria-pressed="false">比总量占比</button>
+        </div>
+      </div>
+      <div class="sector-readings" id="sector-readings"></div>
+      <p class="report-small" id="sector-explanation" role="status"></p>
+    </section>
+
+    <details class="report-drawer">
+      <summary class="stage-summary">行动前，手上有哪些账可以核对？</summary>
+      <ul>
+        <li><strong>新投产</strong>　把设备到厂、试产、第一批出货三个日期排到一张表。</li>
+        <li><strong>产业承接</strong>　按采购实际付款和供货地，查本地有多少企业真的接了单。</li>
+        <li><strong>文旅与农业</strong>　分别查客房实收和农产品收购价，看看钱到哪一环。</li>
+        <li><strong>通勤</strong>　查园区班次和车程，再对照同批入职者三个月后的留岗人数。</li>
+      </ul>
+      <p><a href="ending.html">去《追问》继续对照游客、岗位和订单 →</a></p>
+    </details>
+    <details class="report-drawer">
+      <summary class="stage-summary">基本盘、数据出处与口径</summary>
+      <p>2025 年博罗 GDP 为 1,005.45 亿元，规上工业增加值增长 8.7%，固定资产投资下降 18.8%，房地产开发投资下降 47.6%。</p>
+      <p>公报的 5.5% 是按不变价格算的 2025 年增速。页面把它当作一把固定的算术尺，套在 2025 年现价总量上演示五年复利。1600 亿元取自博罗“十五五”目标。试算与下方的情景模拟各有自己的假设。</p>
+      <p>风洞对照来自站内同一批模拟。路径贡献来自情景设定，过线率和区间随设定变化。投资跌幅是实际观测，页面的压力开关调整的是对未来新增产出的假设。</p>
+      <ul>
+        <li><a href="https://tjgb.hongheiku.com/xjtjgb/xj2020/75372.html">2025 年博罗县统计公报（转载）</a></li>
+        <li><a href="https://epaper.nfnews.com/nfdaily/html/2026/02/03/content_10162180.html">南方日报 · 博罗“十五五”目标与 2025 年基本盘</a></li>
+        <li><a href="future.html">未来页 · 模拟区间与路径比较</a></li>
+      </ul>
+    </details>
   </div>
 
-  <div class="card">
-    <p class="bigquote" style="margin:4px 0">博罗的较量，不在补齐自己缺的，<br>而在看清<b style="color:#4ade80">自己在大湾区网络里，已经占着哪些位置、还能多占几个</b>。</p>
-    <p class="disc" style="margin-top:14px">本报告为Demo演示版本。数据以博罗县统计公报与官方发布为准；2030年1600亿等为参考外延目标，非现行刚性指标。模拟结果仅代表当前数据、参数与规则下的压力测试，不代表精确预测，亦不构成投资建议。</p>
-  </div>
-
-  <div style="text-align:center;margin:22px 0"><a class="btn" href="index.html">回到首页</a></div>
-</div>
-
-<script>
-const tip={backgroundColor:'#16203a',borderColor:'#2b3a55',textStyle:{color:'#e6edf3'}};
-function mk(id){return echarts.init(document.getElementById(id))}
-const cStruct=mk('rStruct'),cInd=mk('rInd'),cClimb=mk('rClimb'),cScen=mk('rScen'),cMatrix=mk('rMatrix'),cCoef=mk('rCoef');
-
-cStruct.setOption({backgroundColor:'transparent',tooltip:tip,
-  series:[{type:'pie',radius:['42%','70%'],
-    data:[
-      {value:10.7,name:'一产 10.7%',itemStyle:{color:'#84cc16'}},
-      {value:54.6,name:'二产 54.6%',itemStyle:{color:'#22c55e'}},
-      {value:34.7,name:'三产 34.7%',itemStyle:{color:'#3b82f6'}}
-    ],label:{color:'#cbd5e1',fontSize:10.5}}]});
-
-cInd.setOption({backgroundColor:'transparent',tooltip:{trigger:'axis',...tip},
-  grid:{left:75,right:25,top:15,bottom:30},
-  xAxis:{type:'value',axisLabel:{color:'#6b7d96',formatter:'{value}%'},splitLine:{lineStyle:{color:'#1c2739'}}},
-  yAxis:{type:'category',data:['电气机械','电子信息'],axisLabel:{color:'#cbd5e1'}},
-  series:[{type:'bar',data:[
-    {value:13.7,itemStyle:{color:'#3b82f6'}},
-    {value:23.0,itemStyle:{color:'#22c55e'}}
-  ],barWidth:26,label:{show:true,position:'right',color:'#cbd5e1',formatter:'{c}%'}}]});
-
-cClimb.setOption({backgroundColor:'transparent',tooltip:{trigger:'axis',...tip},
-  legend:{top:0,textStyle:{color:'#93a4bd',fontSize:10.5}},
-  grid:{left:55,right:25,top:35,bottom:30},
-  xAxis:{type:'category',data:['2025','2026','2027','2028','2029','2030'],axisLabel:{color:'#6b7d96'}},
-  yAxis:{type:'value',min:950,axisLabel:{color:'#6b7d96'},splitLine:{lineStyle:{color:'#1c2739'}}},
-  series:[
-    {name:'目标轨道',type:'line',data:[1005,1080,1170,1280,1420,1600],lineStyle:{color:'#fbbf24',type:'dashed',width:2},itemStyle:{color:'#fbbf24'},symbol:'diamond',symbolSize:7},
-    {name:'自然增长5.5%',type:'line',data:[1005,1061,1119,1180,1245,1314],lineStyle:{color:'#6b7280',width:2},itemStyle:{color:'#6b7280'},symbol:'none'}
-  ]});
-
-cScen.setOption({backgroundColor:'transparent',tooltip:{trigger:'axis',...tip},
-  grid:{left:55,right:25,top:20,bottom:30},
-  xAxis:{type:'category',data:['不顺','一半一半','顺利'],axisLabel:{color:'#cbd5e1'}},
-  yAxis:{type:'value',min:900,axisLabel:{color:'#6b7d96'},splitLine:{lineStyle:{color:'#1c2739'}}},
-  series:[
-    {type:'bar',data:[
-      {value:1100,itemStyle:{color:'#f87171'}},
-      {value:1500,itemStyle:{color:'#fbbf24'}},
-      {value:1800,itemStyle:{color:'#22c55e'}}
-    ],barWidth:40,label:{show:true,position:'top',color:'#cbd5e1',formatter:'{c}亿'},
-    markLine:{silent:true,symbol:'none',data:[{yAxis:1600,lineStyle:{color:'#a78bfa',type:'dashed'},label:{color:'#a78bfa',formatter:'目标1600'}}]}}
-  ]});
-
-cMatrix.setOption({backgroundColor:'transparent',tooltip:tip,
-  grid:{left:55,right:30,top:20,bottom:45},
-  xAxis:{name:'自己可控 →',nameLocation:'middle',nameGap:28,min:0,max:10,axisLabel:{color:'#6b7d96'},splitLine:{lineStyle:{color:'#1c2739'}},nameTextStyle:{color:'#6b7d96'}},
-  yAxis:{name:'影响 →',nameLocation:'middle',nameGap:32,min:0,max:10,axisLabel:{color:'#6b7d96'},splitLine:{lineStyle:{color:'#1c2739'}},nameTextStyle:{color:'#6b7d96'}},
-  series:[{type:'scatter',symbolSize:22,data:[
-    {value:[8.5,9],name:'盯投产节点'},{value:[8,8],name:'园区配套'},
-    {value:[7.5,7.5],name:'融深通道'},{value:[7,6.5],name:'文旅配套'},
-    {value:[7,6],name:'农业品牌'},{value:[4,3.5],name:'外需'},{value:[3,2.5],name:'全球环境'}
-  ],itemStyle:{color:'#4ade80'},
-    label:{show:true,position:'top',color:'#cbd5e1',fontSize:9.5,formatter:p=>p.data.name}}]});
-
-// 影响系数：直接读 model.js 同一内核输出，不再写死
-// coefs 顺序=[产业承接(东莞外溢), 新投产(投产工期), 融深(融深通道), 文旅, 农业]
-const _bm=HT.run(42,10000,HT.DEFAULT_PATHS);
-cCoef.setOption({backgroundColor:'transparent',tooltip:{trigger:'axis',...tip},
-  grid:{left:95,right:45,top:15,bottom:30},
-  xAxis:{type:'value',max:1,axisLabel:{color:'#6b7d96'},splitLine:{lineStyle:{color:'#1c2739'}}},
-  yAxis:{type:'category',data:['房地产','文旅','农业','融深通道','东莞外溢','投产工期'],axisLabel:{color:'#cbd5e1',fontSize:11}},
-  series:[{type:'bar',data:[
-    {value:0.28,itemStyle:{color:'#94a3b8'}},
-    {value:+_bm.coefs[3].toFixed(2),itemStyle:{color:'#fbbf24'}},
-    {value:+_bm.coefs[4].toFixed(2),itemStyle:{color:'#84cc16'}},
-    {value:+_bm.coefs[2].toFixed(2),itemStyle:{color:'#a78bfa'}},
-    {value:+_bm.coefs[0].toFixed(2),itemStyle:{color:'#3b82f6'}},
-    {value:+_bm.coefs[1].toFixed(2),itemStyle:{color:'#22c55e'}}
-  ],barWidth:17,label:{show:true,position:'right',color:'#93a4bd',fontSize:10,formatter:p=>p.value+'（模型输出）'}}]});
-
-window.addEventListener('resize',()=>[cStruct,cInd,cClimb,cScen,cMatrix,cCoef].forEach(c=>c.resize()));
+  <noscript><p>这页需要 JavaScript 来切换算术试算和风洞条件。<a href="future.html">查看未来页 →</a></p></noscript>
+  <p class="sign">博罗产业决策风洞 · 张凌 博士 · MIT</p>
+</main>
+<script type="application/json" id="report-data">
+{
+  "baselineYear": 2025,
+  "horizonYear": 2030,
+  "base": 1005.45,
+  "target": 1600,
+  "comparisonCeiling": 1800,
+  "benchmark": 5.5,
+  "stress": {
+    "seed": 42,
+    "runs": 10000,
+    "reduction": 0.2,
+    "switches": [
+      {
+        "mask": 1,
+        "path": "新投产项目",
+        "label": "新项目贡献减少"
+      },
+      {
+        "mask": 2,
+        "path": "产业承接升级",
+        "label": "产业承接贡献减少"
+      }
+    ],
+    "questions": [
+      "先挑一个条件，看看基准结果有多依赖它。",
+      "先核对重点项目的设备到厂、试产和首批出货节点。",
+      "先核对新承接订单的实付金额，有多少在博罗生产。",
+      "把项目首批出货日期和本地企业接到新单的时间放在一起看，哪一环先落空？"
+    ]
+  },
+  "sectors": [
+    {
+      "label": "第一产业",
+      "plain": "农业等",
+      "share": 10.7,
+      "growth": 7.8,
+      "color": "#f6ed72"
+    },
+    {
+      "label": "第二产业",
+      "plain": "工业和建筑业",
+      "share": 54.6,
+      "growth": 6.9,
+      "color": "#93f4c4"
+    },
+    {
+      "label": "第三产业",
+      "plain": "服务业",
+      "share": 34.7,
+      "growth": 2.7,
+      "color": "#aebcff"
+    }
+  ]
+}
 </script>
+<script src="model.js"></script>
+<script>
+(() => {
+  'use strict';
 
+  const data = JSON.parse(document.getElementById('report-data').textContent);
+  const el = id => document.getElementById(id);
+  const stage = el('report-stage');
+  const reveal = el('run-reveal');
+  const ballot = el('report-vote');
+  const slider = el('pace');
+  const stressControls = el('stress-controls');
+  const stressCache = new Map();
+  const years = data.horizonYear - data.baselineYear;
+  const thresholdRate = ((data.target / data.base) ** (1 / years) - 1) * 100;
+  const plotX = amount => (amount - data.base) / (data.comparisonCeiling - data.base) * 100;
+  let shockMask = 0;
+  let dotsReady = false;
+
+  function format(value, digits = 0) {
+    return value.toLocaleString('en-US', {minimumFractionDigits: digits, maximumFractionDigits: digits});
+  }
+
+  function projected(rate) {
+    return data.base * (1 + rate / 100) ** years;
+  }
+
+  function renderPace() {
+    const rate = slider.valueAsNumber;
+    const value = projected(rate);
+    const gap = data.target - value;
+    const position = plotX(value);
+    const finish = plotX(data.target);
+    reveal.dataset.over = String(gap <= 0);
+    el('pace-value').textContent = format(rate, 1) + '%';
+    el('run-value').innerHTML = `${format(value)}<small>亿</small>`;
+    el('run-gap').innerHTML = `${format(Math.abs(gap))}<small>亿</small>`;
+    el('gap-caption').textContent = gap > 0 ? '还差多少' : '超过参考线';
+    el('run-fill').style.width = position + '%';
+    el('run-gap-fill').style.left = Math.min(position, finish) + '%';
+    el('run-gap-fill').style.width = gap > 0 ? (finish - position) + '%' : '0%';
+    el('run-marker').style.left = position + '%';
+    el('finish-line').style.left = finish + '%';
+    el('run-explanation').textContent = `到 1600 亿，连续五年每年需要约 ${format(thresholdRate, 2)}%。`;
+  }
+
+  function modelReadings(mask) {
+    if (!stressCache.has(mask)) {
+      const paths = HT.DEFAULT_PATHS.map(path => {
+        const selected = data.stress.switches.some(item => (mask & item.mask) && path.name === item.path);
+        return { ...path, mu: path.mu * (selected ? 1 - data.stress.reduction : 1) };
+      });
+      const {hit, p10, p90} = HT.run(data.stress.seed, data.stress.runs, paths, {base:data.base, target:data.target});
+      stressCache.set(mask, {hit, p10, p90});
+    }
+    return stressCache.get(mask);
+  }
+
+  function colorDots(grid, hit, reference) {
+    const lit = Math.round(hit);
+    const formerlyLit = Math.round(reference);
+    for (let index = 0; index < grid.children.length; index++) {
+      grid.children[index].classList.toggle('hit', index < lit);
+      grid.children[index].classList.toggle('lost', index >= lit && index < formerlyLit);
+    }
+  }
+
+  function renderStress() {
+    const compatible = typeof HT !== 'undefined'
+      && data.stress.switches.every(item => HT.DEFAULT_PATHS.some(path => path.name === item.path));
+    if (!compatible) {
+      for (const button of stressControls.querySelectorAll('button')) button.disabled = true;
+      el('stress-result').innerHTML = '<p class="report-small">情景暂时未能加载。<a href="windtunnel.html">可以到完整风洞查看 →</a></p>';
+      return;
+    }
+    if (!dotsReady) {
+      const dots = '<i></i>'.repeat(100);
+      el('baseline-dots').innerHTML = dots;
+      el('scenario-dots').innerHTML = dots;
+      dotsReady = true;
+    }
+    const baseline = modelReadings(0);
+    const current = modelReadings(shockMask);
+    for (const button of stressControls.querySelectorAll('[data-shock]')) {
+      button.setAttribute('aria-pressed', String(Boolean(shockMask & Number(button.dataset.shock))));
+    }
+    el('stress-reset').disabled = shockMask === 0;
+    el('current-chance').dataset.hit = String(shockMask === 0);
+    el('baseline-rate').textContent = format(baseline.hit, 1) + '%';
+    el('scenario-rate').textContent = format(current.hit, 1) + '%';
+    const active = data.stress.switches.filter(item => shockMask & item.mask);
+    el('active-scenario').textContent = active.length === 2 ? '两项同时变慢 · 过线率'
+      : active.length === 1 ? active[0].label + ' · 过线率' : '当前与基准相同';
+    colorDots(el('baseline-dots'), baseline.hit, baseline.hit);
+    colorDots(el('scenario-dots'), current.hit, baseline.hit);
+    el('scenario-impact').innerHTML = shockMask
+      ? `−${format(baseline.hit - current.hit, 1)}<small> 个百分点</small>`
+      : '拨一个开关';
+    el('stress-question').textContent = data.stress.questions[shockMask];
+    el('stress-range').textContent = `这一情景中，中间 80% 的模拟总量落在 ${format(current.p10)}—${format(current.p90)} 亿元。`;
+  }
+
+  function renderSectors(mode) {
+    const byGrowth = mode === 'growth';
+    const high = byGrowth ? 10 : 100;
+    for (const button of el('sector-controls').querySelectorAll('[data-sector]')) {
+      button.setAttribute('aria-pressed', String(button.dataset.sector === mode));
+    }
+    data.sectors.forEach((sector, index) => {
+      const figure = sector[mode];
+      el('sector-bar-' + index).style.width = (figure / high * 100) + '%';
+      el('sector-value-' + index).textContent = format(figure, 1) + '%';
+    });
+    el('sector-explanation').textContent = byGrowth
+      ? '看到的是各产业比上一年跑快了多少。切到占比，看看哪一块体量最大。'
+      : '看到的是 2025 年 GDP 每 100 元来自哪里。第二产业占了 54.6 元。';
+  }
+
+  function openAnswer(picked) {
+    const reaches = projected(data.benchmark) >= data.target;
+    const matched = reaches === (picked === 'reach');
+    const firstReveal = reveal.hidden;
+    if (firstReveal) {
+      shockMask = 0;
+      renderStress();
+      renderSectors('growth');
+    }
+    slider.value = String(data.benchmark);
+    stage.dataset.open = 'true';
+    reveal.hidden = false;
+    el('report-shutter').hidden = true;
+    el('report-retake').hidden = false;
+    el('report-play').hidden = false;
+    reveal.classList.toggle('enter', firstReveal);
+    for (const button of ballot.querySelectorAll('[data-vote]')) {
+      button.setAttribute('aria-pressed', String(button.dataset.vote === picked));
+    }
+    el('report-verdict').dataset.right = String(matched);
+    el('report-verdict').textContent = matched ? '按 5.5% 连跑五年，你判断对了。' : '按 5.5% 连跑五年，终点前还留着一截。';
+    renderPace();
+  }
+
+  ballot.addEventListener('click', event => {
+    const button = event.target.closest('[data-vote]');
+    if (button) openAnswer(button.dataset.vote);
+  });
+  el('report-retake').addEventListener('click', () => {
+    stage.dataset.open = 'false';
+    reveal.hidden = true;
+    el('report-play').hidden = true;
+    el('report-shutter').hidden = false;
+    el('report-retake').hidden = true;
+    el('report-verdict').textContent = '';
+    for (const button of ballot.querySelectorAll('[data-vote]')) button.setAttribute('aria-pressed', 'false');
+    ballot.querySelector('button').focus();
+  });
+  slider.addEventListener('input', renderPace);
+  stressControls.addEventListener('click', event => {
+    const button = event.target.closest('[data-shock]');
+    if (button) {
+      shockMask ^= Number(button.dataset.shock);
+      renderStress();
+    }
+  });
+  el('stress-reset').addEventListener('click', () => {
+    shockMask = 0;
+    renderStress();
+  });
+  el('sector-controls').addEventListener('click', event => {
+    const button = event.target.closest('[data-sector]');
+    if (button) renderSectors(button.dataset.sector);
+  });
+
+  el('sector-readings').innerHTML = data.sectors.map(({label, plain, color}, index) => `
+    <div class="sector-row" style="--sector-color:${color}">
+      <span class="sector-label" title="${plain}">${label}</span>
+      <span class="sector-line" aria-hidden="true"><i class="sector-bar" id="sector-bar-${index}"></i></span>
+      <strong class="sector-value" id="sector-value-${index}"></strong>
+    </div>`
+  ).join('');
+})();
+</script>
 <div class="likebar">
   <button onclick="likePage()">👍 <span id="pcount">0</span></button>
   <button onclick="sharePage()">🔁 转给朋友</button>
