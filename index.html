@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-<meta name="theme-color" content="#0a1730">
+<meta name="theme-color" content="#05090e">
 <meta name="description" content="博罗产业风洞模拟器：从一个问题进入一座县城的运行世界，按你的使用目的进入大众、探索或研究工作台。">
 <title>博罗产业风洞模拟器｜认知入口</title>
 <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Cdefs%3E%3ClinearGradient id='g' x1='0' y1='0' x2='1' y2='1'%3E%3Cstop stop-color='%236ce0f1'/%3E%3Cstop offset='1' stop-color='%232b6fd6'/%3E%3C/linearGradient%3E%3C/defs%3E%3Crect width='64' height='64' rx='15' fill='url(%23g)'/%3E%3Ctext x='32' y='43' font-family='sans-serif' font-size='34' font-weight='bold' fill='white' text-anchor='middle'%3EB%3C/text%3E%3C/svg%3E">
@@ -11,100 +11,117 @@
   *{box-sizing:border-box}
   html,body{margin:0;padding:0}
   :root{
-    --ink:#eef4fb; --sub:rgba(226,238,250,.74); --muted:rgba(198,218,234,.56);
-    --line:rgba(255,255,255,.13); --card:rgba(18,34,56,.40); --card-hover:rgba(26,48,76,.56);
-    --cyan:#7cc8ff; --accent:#6ce0f1;
+    --bg:#04080f; --ink:#eaf4ff; --sub:rgba(200,224,240,.74); --muted:rgba(150,180,205,.56);
+    --cyan:#7fd4ff; --cyan2:#2ea8e6; --line:rgba(127,212,255,.20);
+    --card:rgba(12,26,44,.62); --card-hi:rgba(20,42,70,.78);
+    --red:#ff9680; --gold:#ffd682;
     --font:-apple-system,BlinkMacSystemFont,"SF Pro Display","PingFang SC","Hiragino Sans GB","Microsoft YaHei",sans-serif;
   }
-  body{
-    min-height:100vh; font-family:var(--font); color:var(--ink);
-    -webkit-font-smoothing:antialiased; text-rendering:optimizeLegibility;
-    background:#0a1730 url("assets/portal-bg.jpg") center/cover no-repeat fixed;
-  }
-  .scrim{position:fixed;inset:0;z-index:0;pointer-events:none;
-    background:
-      radial-gradient(120% 90% at 18% 20%,rgba(7,16,34,.55),rgba(7,16,34,0) 60%),
-      linear-gradient(180deg,rgba(7,16,34,.42) 0%,rgba(7,16,34,.18) 45%,rgba(7,16,34,.62) 100%);}
-  .wrap{position:relative;z-index:1;min-height:100vh;display:flex;flex-direction:column;
-    padding:clamp(22px,4.5vh,52px) clamp(20px,6vw,86px);}
-  .kicker{margin:0;text-align:center;font-size:12px;letter-spacing:.42em;text-indent:.42em;
-    color:var(--sub);font-weight:600;text-transform:uppercase}
-  main{flex:1;display:flex;flex-direction:column;justify-content:center;max-width:880px;width:100%;margin:0 auto}
-  h1{margin:clamp(18px,3vh,34px) 0 0;font-size:clamp(34px,6.2vw,66px);line-height:1.12;
-    font-weight:850;letter-spacing:-.03em}
-  .lede{margin:14px 0 0;color:var(--sub);font-size:clamp(14px,1.6vw,18px);line-height:1.6}
-  .paths{list-style:none;margin:clamp(26px,4.5vh,46px) 0 0;padding:0;display:flex;flex-direction:column;gap:14px}
-  .path{position:relative;display:flex;align-items:center;gap:clamp(16px,2.4vw,26px);
-    padding:clamp(17px,2.4vh,24px) clamp(18px,2.6vw,30px);
-    background:var(--card);border:1px solid var(--line);border-radius:18px;
-    -webkit-backdrop-filter:blur(18px) saturate(1.25);backdrop-filter:blur(18px) saturate(1.25);
-    color:var(--ink);text-decoration:none;
-    transition:transform .25s ease,background .25s ease,border-color .25s ease,box-shadow .25s ease;}
-  .path:hover,.path:focus-visible{transform:translateY(-3px);background:var(--card-hover);
-    border-color:rgba(124,200,255,.5);box-shadow:0 18px 40px rgba(3,10,24,.45)}
-  .path:focus-visible{outline:3px solid var(--cyan);outline-offset:3px}
-  .num{flex:none;font-size:clamp(22px,2.6vw,30px);font-weight:800;letter-spacing:.02em;
-    font-variant-numeric:tabular-nums;
-    background:linear-gradient(135deg,#fff,var(--accent));-webkit-background-clip:text;background-clip:text;
-    -webkit-text-fill-color:transparent;color:transparent;min-width:44px}
-  .txt{flex:1;min-width:0}
-  .txt b{display:block;font-size:clamp(16px,1.9vw,20px);font-weight:750;letter-spacing:-.01em}
-  .txt small{display:block;margin-top:6px;color:var(--muted);font-size:clamp(12px,1.4vw,13.5px);line-height:1.5}
-  .go{flex:none;color:var(--cyan);font-size:22px;transition:transform .25s ease,color .25s ease}
-  .path:hover .go{transform:translateX(5px);color:var(--accent)}
-  .foot{margin:clamp(20px,3vh,30px) 0 0;text-align:center;color:var(--muted);font-size:11.5px;letter-spacing:.04em}
+  body{min-height:100vh;font-family:var(--font);color:var(--ink);background:
+    radial-gradient(120% 80% at 50% -10%,#0e2138 0%,#070f1d 55%,var(--bg) 100%);
+    -webkit-font-smoothing:antialiased;text-rendering:optimizeLegibility;}
+  .page{width:min(1180px,100%);margin:0 auto;padding:clamp(20px,4vh,44px) clamp(18px,5vw,60px) clamp(22px,4vh,40px);}
+  .kicker{margin:0;color:var(--cyan);font-size:12px;font-weight:700;letter-spacing:.26em;text-transform:uppercase}
+  h1{margin:clamp(12px,2vh,22px) 0 0;font-size:clamp(32px,6vw,64px);line-height:1.1;font-weight:900;letter-spacing:-.03em}
+  h1 em{font-style:normal;color:var(--cyan)}
+  .sub{margin:12px 0 0;color:var(--sub);font-size:clamp(14px,1.6vw,18px);line-height:1.6}
+  .badges{display:flex;flex-wrap:wrap;gap:9px;margin:clamp(16px,2.4vh,24px) 0 0}
+  .badges span{font-size:12.5px;font-weight:650;color:#d6ecfb;padding:8px 13px;border-radius:999px;
+    background:rgba(127,212,255,.10);border:1px solid var(--line)}
+  .stage{position:relative;margin:clamp(18px,2.6vh,30px) 0 0;height:clamp(240px,40vh,440px);
+    border:1px solid var(--line);border-radius:18px;overflow:hidden;
+    background:#050a13;box-shadow:0 24px 60px rgba(2,8,20,.6),inset 0 0 0 1px rgba(127,212,255,.06)}
+  #wind{display:block;width:100%;height:100%}
+  .flow-note{position:absolute;right:14px;bottom:12px;font-size:11px;letter-spacing:.18em;color:var(--muted);
+    background:rgba(4,10,18,.6);padding:5px 10px;border-radius:8px;border:1px solid var(--line)}
+  .route-kicker{margin:clamp(22px,3.4vh,34px) 0 14px;font-size:clamp(15px,1.8vw,19px);font-weight:800;letter-spacing:-.01em}
+  .routes{list-style:none;margin:0;padding:0;display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:14px}
+  .route{position:relative;display:flex;flex-direction:column;gap:10px;padding:20px 20px 18px;min-height:150px;
+    background:var(--card);border:1px solid var(--line);border-radius:16px;color:var(--ink);text-decoration:none;
+    -webkit-backdrop-filter:blur(16px);backdrop-filter:blur(16px);
+    transition:transform .25s ease,background .25s ease,border-color .25s ease,box-shadow .25s ease}
+  .route:hover,.route:focus-visible{transform:translateY(-4px);background:var(--card-hi);
+    border-color:rgba(127,212,255,.55);box-shadow:0 18px 42px rgba(2,8,20,.55)}
+  .route:focus-visible{outline:3px solid var(--cyan);outline-offset:3px}
+  .route .no{font-size:26px;font-weight:900;font-variant-numeric:tabular-nums;
+    background:linear-gradient(135deg,#fff,var(--cyan));-webkit-background-clip:text;background-clip:text;
+    -webkit-text-fill-color:transparent}
+  .route b{font-size:16.5px;font-weight:780;line-height:1.4;letter-spacing:-.01em}
+  .route small{color:var(--muted);font-size:12.5px;line-height:1.5}
+  .route .go{margin-top:auto;color:var(--cyan);font-size:18px}
+  .route:hover .go{color:var(--cyan)}
+  .foot{margin:clamp(20px,3vh,30px) 0 0;color:var(--muted);font-size:11.5px;line-height:1.6;text-align:center}
   .fade{opacity:0;animation:rise .7s cubic-bezier(.2,.7,.25,1) forwards}
-  .d1{animation-delay:.05s}.d2{animation-delay:.14s}.d3{animation-delay:.23s}.d4{animation-delay:.32s}.d5{animation-delay:.41s}
-  @keyframes rise{from{opacity:0;transform:translateY(16px)}to{opacity:1;transform:translateY(0)}}
-  @media (max-width:640px){
-    body{background-attachment:scroll}
-    .wrap{padding:26px 18px calc(20px + env(safe-area-inset-bottom))}
-    .kicker{font-size:10.5px;letter-spacing:.32em;text-indent:.32em}
-    .paths{gap:12px}
-    .path{border-radius:16px;padding:16px 17px;gap:14px}
-    .num{min-width:34px}
-    .go{font-size:19px}
+  .a1{animation-delay:.05s}.a2{animation-delay:.13s}.a3{animation-delay:.21s}.a4{animation-delay:.30s}
+  @keyframes rise{from{opacity:0;transform:translateY(14px)}to{opacity:1;transform:translateY(0)}}
+  @media (max-width:760px){
+    .routes{grid-template-columns:1fr;gap:11px}
+    .route{min-height:0;padding:16px 17px;gap:7px}
+    .stage{height:300px;border-radius:15px}
+    .badges span{font-size:11.5px;padding:7px 11px}
   }
   @media (prefers-reduced-motion:reduce){
     .fade{opacity:1;animation:none}
-    .path,.go{transition:none}
+    .route{transition:none}
   }
 </style>
 </head>
 <body>
-<div class="scrim" aria-hidden="true"></div>
-<div class="wrap">
-  <p class="kicker fade d1">BOLUO · DECISION SIMULATION</p>
-  <main>
-    <h1 class="fade d2">你想怎样认识博罗？</h1>
-    <p class="lede fade d3">从一个问题，进入一座县城的运行世界。先告诉我你想做什么，我再带你到合适的地方。</p>
-    <nav aria-label="按使用目的选择入口">
-      <ul class="paths">
-        <li class="fade d3">
-          <a class="path" href="legacy/2026-10-11/index.html">
-            <span class="num">01</span>
-            <span class="txt"><b>我想看看博罗发生了什么</b><small>轻松了解变化，发现身边的故事</small></span>
-            <span class="go" aria-hidden="true">→</span>
-          </a>
-        </li>
-        <li class="fade d4">
-          <a class="path" href="v11/index.html">
-            <span class="num">02</span>
-            <span class="txt"><b>我想探索博罗是如何运行的</b><small>产业、关系、变化、未来，以及实验</small></span>
-            <span class="go" aria-hidden="true">→</span>
-          </a>
-        </li>
-        <li class="fade d5">
-          <a class="path" href="https://zhanglingshare.github.io/boluo-internal/index.html">
-            <span class="num">03</span>
-            <span class="txt"><b>我想研究和推演实际问题</b><small>进入七工作台，开展专业分析与决策支持</small></span>
-            <span class="go" aria-hidden="true">→</span>
-          </a>
-        </li>
-      </ul>
-    </nav>
-  </main>
-  <p class="foot fade d5">无需登录，全部内容公开可浏览</p>
+<div class="page">
+  <p class="kicker fade a1">产业决策模拟器 · BOLUO 2026</p>
+  <h1 class="fade a2">博罗这笔账，<em>先过风洞</em></h1>
+  <p class="sub fade a2">先选个角度，再进一座县城的运行世界。真实信号从这里进入，经过检验，再带你到合适的地方。</p>
+  <div class="badges fade a3">
+    <span>规上工业总产值 超 2000 亿</span><span>工业投资 −44.7%</span><span>19 个现场 · 11 个镇街</span>
+  </div>
+
+  <section class="stage fade a3" aria-label="3D 风洞：真实信号进入测试段">
+    <canvas id="wind" aria-label="3D 风洞测试段，悬浮的真实数据信号穿过风洞"></canvas>
+    <span class="flow-note">INPUT → TEST → OUTPUT</span>
+  </section>
+
+  <p class="route-kicker fade a4">你想怎样认识博罗？</p>
+  <nav aria-label="按使用目的选择入口">
+    <ul class="routes">
+      <li class="fade a4">
+        <a class="route" href="legacy/2026-10-11/index.html">
+          <span class="no">01</span><b>我想看看博罗发生了什么</b>
+          <small>轻松了解变化，发现身边的故事</small><span class="go">进入 →</span>
+        </a>
+      </li>
+      <li class="fade a4">
+        <a class="route" href="v11/index.html">
+          <span class="no">02</span><b>我想探索博罗是如何运行的</b>
+          <small>产业、关系、变化、未来，以及实验</small><span class="go">进入 →</span>
+        </a>
+      </li>
+      <li class="fade a4">
+        <a class="route" href="https://zhanglingshare.github.io/boluo-internal/index.html">
+          <span class="no">03</span><b>我想研究和推演实际问题</b>
+          <small>进入七工作台，开展专业分析与决策支持</small><span class="go">进入 →</span>
+        </a>
+      </li>
+    </ul>
+  </nav>
+
+  <p class="foot fade a4">数字能说明方向，不能说明原因；无需登录，全部内容公开可浏览。决策使用前请核对发布机构原始口径。</p>
 </div>
+
+<script src="assets/portal-wind.js"></script>
+<script>
+(function(){
+  var items=[
+    {v:"721.1 亿",t:"前三季GDP增4.1%",d:"Q1–Q3",k:"good"},
+    {v:"+8.9%",t:"规上工业增加值",d:"Q1–Q3",k:"good"},
+    {v:"2500 盘/时",t:"智慧育秧线投运",d:"11-10",k:"good"},
+    {v:"100 亿",t:"铜来顺点火冲百亿",d:"10-13",k:"good"},
+    {v:"200MW",t:"欣旺达储能并网",d:"10-10",k:"good"},
+    {v:"−44.7%",t:"前三季工业投资",d:"Q1–Q3",k:"bad"}
+  ];
+  var c=document.getElementById("wind");
+  function start(){ if(window.BoluoWind) window.BoluoWind.mount(c,items); }
+  if(document.readyState==="complete") start(); else window.addEventListener("load",start);
+})();
+</script>
 </body>
 </html>
