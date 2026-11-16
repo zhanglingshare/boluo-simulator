@@ -19,7 +19,8 @@
 .friend-duel [hidden] { display: none !important }
 .friend-duel.duel-landing {
   display: grid;
-  min-height: min(710px, calc(100svh - 62px));
+  min-height: calc(100vh - 54px);
+  min-height: calc(100svh - 54px);
   align-content: center;
   background: linear-gradient(90deg,#122019f7,#122019be), url("public-stage.webp") center 55% / cover;
 }
