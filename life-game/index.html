@@ -1,0 +1,231 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <meta name="theme-color" content="#101d2b">
+  <meta name="description" content="走进一座虚构的罗阳生活街区，认识八个角色，做出七天选择，看看一件小事如何牵动一群人。">
+  <title>今天，博罗有戏！｜街角小集七日挑战</title>
+  <link rel="stylesheet" href="./game.css">
+  <script defer src="./game.js"></script>
+</head>
+<body>
+  <div class="app-shell">
+    <header class="topbar">
+      <a class="brand" href="./index.html" aria-label="今天，博罗有戏！首页">
+        <span class="brand-mark">戏</span>
+        <span class="brand-copy"><strong>今天，博罗有戏！</strong><small>BO LUO · LIFE SIMULATION</small></span>
+      </a>
+      <div class="top-actions">
+        <span class="season-pill"><i></i> 第一季 · 街角小集</span>
+        <button class="icon-button" id="soundToggle" type="button" aria-pressed="false" title="声音提示开关">♫</button>
+        <button class="quiet-button" id="resetGame" type="button">重新开始</button>
+      </div>
+    </header>
+
+    <main class="page">
+      <section class="hero">
+        <div class="hero-copy">
+          <div class="eyebrow"><span class="eyebrow-dot"></span> 罗阳生活圈 · 虚构街区</div>
+          <h1>你不是来围观的。<br><em>你会改变接下来的故事。</em></h1>
+          <p>八个街坊，一场街角小集，七天连续选择。先听他们怎么说，再决定你要怎么做。</p>
+          <div class="hero-meta">
+            <span>🎭 8位虚构角色</span>
+            <span>🧩 21条可调查线索</span>
+            <span>🎮 7个章节，不用等现实七天</span>
+          </div>
+        </div>
+        <div class="hero-stamp">
+          <div class="stamp-ring"><span>7</span><small>DAY<br>STORY</small></div>
+          <div class="stamp-caption">一件小事<br><b>牵动一群人</b></div>
+        </div>
+      </section>
+
+      <section class="player-strip" aria-label="当前玩家状态">
+        <div class="player-id">
+          <span class="player-avatar" id="playerAvatar">🎒</span>
+          <span><small>你的视角</small><strong id="playerRole">尚未选择</strong></span>
+        </div>
+        <div class="strip-divider"></div>
+        <div class="chapter-progress">
+          <div class="progress-label"><span id="progressText">第 1 / 7 天</span><span id="progressPercent">0%</span></div>
+          <div class="progress-track"><span id="progressBar"></span></div>
+        </div>
+        <div class="strip-divider desktop-only"></div>
+        <div class="save-status"><span class="save-dot"></span><span id="saveStatus">进度保存在本机</span></div>
+      </section>
+
+      <section class="stats-grid" id="statsGrid" aria-label="街角小集状态">
+        <article class="stat-card stat-money">
+          <div class="stat-top"><span class="stat-icon">💰</span><span class="stat-name">预算余量</span><span class="stat-value" id="budgetValue">55</span></div>
+          <div class="meter"><span id="budgetBar"></span></div>
+          <small id="budgetHint">钱够不够周转？</small>
+        </article>
+        <article class="stat-card stat-trust">
+          <div class="stat-top"><span class="stat-icon">🤝</span><span class="stat-name">街坊信任</span><span class="stat-value" id="trustValue">42</span></div>
+          <div class="meter"><span id="trustBar"></span></div>
+          <small id="trustHint">大家还愿不愿意一起做？</small>
+        </article>
+        <article class="stat-card stat-buzz">
+          <div class="stat-top"><span class="stat-icon">✨</span><span class="stat-name">现场热度</span><span class="stat-value" id="buzzValue">24</span></div>
+          <div class="meter"><span id="buzzBar"></span></div>
+          <small id="buzzHint">有多少人注意到这件事？</small>
+        </article>
+        <article class="stat-card stat-energy">
+          <div class="stat-top"><span class="stat-icon">⚡</span><span class="stat-name">团队精力</span><span class="stat-value" id="energyValue">76</span></div>
+          <div class="meter"><span id="energyBar"></span></div>
+          <small id="energyHint">大家还能撑多久？</small>
+        </article>
+        <article class="stat-card stat-evidence">
+          <div class="stat-top"><span class="stat-icon">🔎</span><span class="stat-name">线索进度</span><span class="stat-value" id="evidenceValue">0</span></div>
+          <div class="meter"><span id="evidenceBar"></span></div>
+          <small id="evidenceHint">你看见了多少隐藏条件？</small>
+        </article>
+      </section>
+
+      <section class="game-layout">
+        <div class="world-column">
+          <div class="section-head">
+            <div><span class="section-kicker">THE NEIGHBORHOOD</span><h2>逛一逛这片街区</h2></div>
+            <span class="live-label"><i></i> 故事正在发生</span>
+          </div>
+          <div class="map-card">
+            <div class="map-topline"><span>📍 罗阳生活圈 · 示意地图</span><span>点地点，看看谁在这里</span></div>
+            <div class="map-canvas" id="mapCanvas">
+              <svg class="map-art" viewBox="0 0 760 470" role="img" aria-label="虚构街区示意地图">
+                <defs>
+                  <pattern id="gridDots" width="24" height="24" patternUnits="userSpaceOnUse"><circle cx="2" cy="2" r="1.2" fill="#d6d9cb" opacity=".58"/></pattern>
+                  <linearGradient id="parkFill" x1="0" y1="0" x2="1" y2="1"><stop stop-color="#d9e8c7"/><stop offset="1" stop-color="#b7d5a8"/></linearGradient>
+                  <linearGradient id="waterFill" x1="0" y1="0" x2="1" y2="1"><stop stop-color="#b9dce2"/><stop offset="1" stop-color="#9cc9d4"/></linearGradient>
+                </defs>
+                <rect width="760" height="470" fill="#f1f0df"/>
+                <rect width="760" height="470" fill="url(#gridDots)"/>
+                <path d="M-30 360 C120 280 180 350 280 295 S460 220 790 270" fill="none" stroke="#c5dce0" stroke-width="70" opacity=".8"/>
+                <path d="M-30 360 C120 280 180 350 280 295 S460 220 790 270" fill="none" stroke="#f8fbf4" stroke-width="3" stroke-dasharray="12 13" opacity=".9"/>
+                <path d="M80 -30 C150 80 200 110 260 185 S390 310 460 510" fill="none" stroke="#e5d9b9" stroke-width="48"/>
+                <path d="M80 -30 C150 80 200 110 260 185 S390 310 460 510" fill="none" stroke="#fff9e8" stroke-width="3" stroke-dasharray="10 12"/>
+                <path d="M-20 135 C130 150 210 95 340 110 S580 160 790 90" fill="none" stroke="#e5d9b9" stroke-width="34"/>
+                <path d="M-20 135 C130 150 210 95 340 110 S580 160 790 90" fill="none" stroke="#fff9e8" stroke-width="3" stroke-dasharray="9 12"/>
+                <path d="M515 18 Q635 8 725 88 L704 190 Q626 214 544 170Z" fill="url(#parkFill)" opacity=".92"/>
+                <path d="M34 285 Q104 235 165 278 L147 405 Q72 430 24 375Z" fill="url(#parkFill)" opacity=".88"/>
+                <path d="M565 330 Q665 280 742 340 L730 445 Q630 465 574 410Z" fill="url(#parkFill)" opacity=".88"/>
+                <g fill="#b9c9a9" stroke="#91b58b" stroke-width="2">
+                  <rect x="320" y="42" width="74" height="44" rx="8"/><rect x="410" y="40" width="90" height="52" rx="8"/>
+                  <rect x="330" y="130" width="88" height="54" rx="8"/><rect x="445" y="125" width="76" height="44" rx="8"/>
+                  <rect x="500" y="220" width="84" height="48" rx="8"/><rect x="615" y="215" width="72" height="46" rx="8"/>
+                  <rect x="180" y="220" width="68" height="45" rx="8"/><rect x="275" y="345" width="78" height="48" rx="8"/>
+                  <rect x="390" y="350" width="88" height="45" rx="8"/>
+                </g>
+                <g fill="#9bb68f" opacity=".8">
+                  <circle cx="585" cy="64" r="15"/><circle cx="624" cy="105" r="12"/><circle cx="685" cy="61" r="16"/>
+                  <circle cx="73" cy="333" r="17"/><circle cx="111" cy="373" r="12"/><circle cx="664" cy="383" r="16"/>
+                  <circle cx="708" cy="414" r="11"/>
+                </g>
+                <g fill="#7e9e86" font-size="13" font-family="sans-serif" opacity=".75">
+                  <text x="565" y="145">小公园</text><text x="55" y="420">树荫步道</text><text x="628" y="455">慢行绿地</text>
+                </g>
+                <g fill="#fff" opacity=".7"><circle cx="282" cy="225" r="7"/><circle cx="468" cy="293" r="6"/><circle cx="205" cy="118" r="5"/></g>
+              </svg>
+              <button class="map-pin pin-square" data-place="square" type="button"><span>🌳</span><b>社区广场</b><small>街坊碰头</small></button>
+              <button class="map-pin pin-alley" data-place="alley" type="button"><span>🏪</span><b>街角小店</b><small>烟火气</small></button>
+              <button class="map-pin pin-hub" data-place="hub" type="button"><span>🛵</span><b>巷口驿点</b><small>来来往往</small></button>
+              <button class="map-pin pin-warehouse" data-place="warehouse" type="button"><span>📦</span><b>后街仓</b><small>货从这里来</small></button>
+              <button class="map-pin pin-desk" data-place="desk" type="button"><span>💡</span><b>共享桌</b><small>新点子</small></button>
+              <div class="map-compass">N<br>↑</div>
+              <div class="map-caption">故事地图 · 非真实地理坐标</div>
+            </div>
+            <div class="place-detail" id="placeDetail"><span class="place-emoji">🌳</span><div><b>整个街区</b><small>点选地图上的地点，看看谁在这里。</small></div><button class="text-button" id="showAllPeople" type="button">看全部人物 →</button></div>
+          </div>
+
+          <div class="section-head npc-heading">
+            <div><span class="section-kicker">MEET THE LOCALS</span><h2>认识这八个人</h2></div>
+            <span class="tiny-note" id="npcCount">8 位角色</span>
+          </div>
+          <div class="npc-grid" id="npcGrid" aria-live="polite"></div>
+          <div class="npc-footnote">人物均为虚构角色。点开人物，可以查看他的目标、关系和今天的想法。</div>
+        </div>
+
+        <aside class="story-column">
+          <div class="section-head story-head">
+            <div><span class="section-kicker">YOUR STORYLINE</span><h2>今天发生什么？</h2></div>
+            <span class="day-badge" id="dayBadge">DAY 01</span>
+          </div>
+          <div class="day-rail" id="dayRail" aria-label="七日故事进度"></div>
+          <article class="event-card" id="eventCard">
+            <div class="event-art"><span class="event-sun">✦</span><span class="event-label" id="eventLabel">第一天 · 起点</span><div class="event-illustration"><span>🏘️</span><span>🧺</span><span>☕</span><span>🌿</span></div></div>
+            <div class="event-content"><span class="event-hook" id="eventHook">一个空出来的街角，让八个人有了不同打算。</span><h3 id="eventTitle">这块空地，要不要办个小集？</h3><p id="eventStory"></p><div class="focus-note"><span>🎯</span><span id="eventFocus"></span></div></div>
+          </article>
+
+          <section class="clue-section">
+            <div class="subhead"><div><span class="section-kicker">FIND THE CLUE</span><h3>翻一张线索牌</h3></div><span class="clue-limit" id="clueLimit">每天 1 次</span></div>
+            <p class="micro-copy">三条线索只能先看一条。你会把注意力放在哪里？</p>
+            <div class="clue-grid" id="clueGrid"></div>
+            <div class="clue-reveal" id="clueReveal" hidden></div>
+          </section>
+
+          <section class="choice-section">
+            <div class="subhead"><div><span class="section-kicker">MAKE A MOVE</span><h3>轮到你做决定</h3></div><span class="choice-count">三选一</span></div>
+            <div class="choice-list" id="choiceList"></div>
+            <div class="choice-outcome" id="choiceOutcome" hidden></div>
+            <button class="primary-button next-day-button" id="nextDay" type="button" hidden>进入下一天 <span>→</span></button>
+          </section>
+        </aside>
+      </section>
+
+      <section class="social-section">
+        <div class="section-head">
+          <div><span class="section-kicker">THE GROUP CHAT</span><h2>街坊群正在聊</h2></div>
+          <span class="chat-live"><i></i> 今日消息</span>
+        </div>
+        <div class="chat-panel">
+          <div class="chat-title"><span class="chat-room-icon">💬</span><div><b>街角小集筹备群</b><small>8 位成员 · 虚构剧情群聊</small></div><span class="chat-lock">剧情演绎</span></div>
+          <div class="chat-feed" id="chatFeed"></div>
+          <div class="chat-foot"><span>群聊由剧情脚本驱动，实时 AI 对话尚未接入。</span><button class="text-button" id="refreshChat" type="button">换一组街坊动态 ↻</button></div>
+        </div>
+      </section>
+
+      <section class="bridge-section">
+        <div class="bridge-copy"><span class="section-kicker">FROM STORY TO REALITY</span><h2>故事之外，真实世界还有什么？</h2><p>这场小集是虚构游戏。想研究博罗真实的产业变化、主体关系和数据条件，可以从这里继续。</p></div>
+        <div class="bridge-links">
+          <a href="../v11/index.html"><span>🧭</span><b>进入 V11 探索</b><small>看真实公开信息与产业关系</small><i>↗</i></a>
+          <a href="../lab-2032/studio.html"><span>🧪</span><b>进入 Lab-2032</b><small>导入数据，做自己的研究实验</small><i>↗</i></a>
+        </div>
+      </section>
+
+      <footer class="footer">
+        <div><b>今天，博罗有戏！</b><span>一座虚构街区，一群不同的人，一次次真实的选择。</span></div>
+        <p>本原型的人物、街区、事件、对话、经营数字及结果均为虚构，不是现实居民访谈或统计调查。游戏数值仅用于玩法，不代表博罗实际经营状况。V11 与 Lab-2032 中的真实信息请以各自页面证据口径为准。</p>
+      </footer>
+    </main>
+  </div>
+
+  <div class="modal" id="roleModal" hidden>
+    <div class="modal-backdrop" data-close="role"></div>
+    <section class="modal-card role-modal" role="dialog" aria-modal="true" aria-labelledby="roleTitle">
+      <div class="modal-kicker">CHOOSE YOUR POINT OF VIEW</div>
+      <h2 id="roleTitle">先选一个视角，进入故事</h2>
+      <p>你不是固定扮演某个人，而是带着一种关注点参与这场小集。</p>
+      <div class="role-options" id="roleOptions"></div>
+      <div class="modal-footnote">不同身份会改变初始资源与观察重点，不会决定唯一正确结局。</div>
+    </section>
+  </div>
+
+  <div class="modal" id="npcModal" hidden>
+    <div class="modal-backdrop" data-close="npc"></div>
+    <section class="modal-card npc-modal" role="dialog" aria-modal="true" aria-labelledby="npcName">
+      <button class="modal-close" data-close="npc" type="button" aria-label="关闭">×</button>
+      <div id="npcProfile"></div>
+    </section>
+  </div>
+
+  <div class="modal" id="endingModal" hidden>
+    <div class="modal-backdrop" data-close="ending"></div>
+    <section class="modal-card ending-modal" role="dialog" aria-modal="true" aria-labelledby="endingTitle">
+      <button class="modal-close" data-close="ending" type="button" aria-label="关闭">×</button>
+      <div id="endingContent"></div>
+    </section>
+  </div>
+
+  <div class="toast" id="toast" role="status" aria-live="polite"></div>
+</body>
+</html>
