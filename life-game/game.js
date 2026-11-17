@@ -206,9 +206,9 @@
     var chosenId = state.cluesByDay[state.day];
     var wrap = document.getElementById("clueGrid");
     var reveal = document.getElementById("clueReveal");
-    document.getElementById("clueLimit").textContent = chosenId ? "今日已翻开" : "每天 1 次";
+    document.getElementById("clueLimit").textContent = chosenId ? "今日已翻开" : (state.resolved ? "今日已封存" : "每天 1 次");
     wrap.innerHTML = day.clues.map(function (clue, index) {
-      var used = !!chosenId;
+      var used = !!chosenId || state.resolved;
       return '<button class="clue-card" type="button" data-clue="' + esc(clue.id) + '"' + (used ? " disabled" : "") + '>' +
         '<span class="clue-icon">' + (index === 0 ? "🗂️" : index === 1 ? "🧾" : "🔍") + '</span>' +
         '<b>' + esc(clue.title) + '</b><small>' + esc(clue.kind) + ' · ' + (used && clue.id === chosenId ? "已翻开" : "点击调查") + '</small></button>';
@@ -345,7 +345,7 @@
       var other = getNpc(id);
       return other ? '<span class="relation-chip">' + esc(other.avatar) + ' ' + esc(other.name) + '</span>' : "";
     }).join("");
-    var talked = state.talkedDays[String(state.day)] === npc.id;
+    var talked = !!state.talkedDays[String(state.day)];
     var place = data.locations.find(function (p) { return p.id === npc.place; });
     var reply = replyText ? '<div class="profile-reply">' + esc(replyText) + '</div>' : "";
     var actions = [
@@ -366,7 +366,8 @@
   function talkToNpc(action) {
     if (!activeNpc) return;
     var npc = getNpc(activeNpc);
-    if (!npc || state.talkedDays[String(state.day)] === npc.id) {
+    if (state.resolved) { showToast("今天的决定已经落下，下一天再继续互动。"); return; }
+    if (!npc || state.talkedDays[String(state.day)]) {
       showToast("今天已经和这位街坊聊过了。");
       return;
     }
