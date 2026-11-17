@@ -3,6 +3,7 @@ on:
   push:
     paths:
       - "public-life-v2/**"
+      - ".github/workflows/public-life-v2-smoke.yml"
       - "data/hot-last.json"
       - "legacy/2026-10-11/life.json"
   workflow_dispatch:
