@@ -109,4 +109,32 @@
 @media (prefers-reduced-motion: reduce) {
   .duel-result.reveal-duel, .reveal-duel .duel-meter span { animation: none }
   .duel-options button { transition: none }
+  .duel-needs-return .duel-share { animation: none }
+}
+
+.duel-name { display: flex; align-items: center; gap: 6px; margin: 9px 0 0; color: var(--duel-soft); font-size: 12px }
+.duel-name input {
+  min-height: 32px; max-width: 140px;
+  border: 1px solid #6c8972; border-radius: 7px;
+  background: #0f1f17; color: var(--duel-ink);
+  font: inherit; font-size: 12px; padding: 2px 8px;
+}
+.duel-name input:focus-visible { outline: 2px solid var(--duel-yellow); outline-offset: 3px }
+.duel-echo {
+  margin: 0 0 9px; padding: 8px 10px;
+  border-left: 3px solid var(--duel-yellow);
+  background: #14261c; color: var(--duel-ink);
+  font-size: 12.5px; line-height: 1.55;
+}
+.duel-echo strong { color: var(--duel-yellow); margin-right: 6px }
+.duel-needs-return .duel-share {
+  border-color: var(--duel-yellow);
+  background: #2a2410;
+  color: #ffe98a;
+  animation: duel-pulse 1.8s ease-in-out infinite;
+}
+.duel-needs-return .duel-status { color: var(--duel-yellow) }
+@keyframes duel-pulse {
+  0%, 100% { box-shadow: 0 0 0 0 rgba(247, 237, 120, .45) }
+  50% { box-shadow: 0 0 0 6px rgba(247, 237, 120, 0) }
 }
