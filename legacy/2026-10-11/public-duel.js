@@ -35,7 +35,7 @@ function recordEcho(spec, visit) {
   const key = `${spec.id}|${name}|${visit.from}|${visit.reply}`;
   const list = readEchoes();
   if (list.some(item => item.k === key)) return;
-  list.push({ k: key, d: spec.id, name, from: visit.from, reply: visit.reply, at: Date.now() });
+  list.push({ k: key, d: spec.id, p: page, t: spec.title, o: (spec.options || []).slice(0, 8), name, from: visit.from, reply: visit.reply, at: Date.now() });
   try { localStorage.setItem(ECHO_KEY, JSON.stringify(list.slice(-30))); } catch {}
 }
 
@@ -49,13 +49,13 @@ function showEcho(spec, visit) {
   if (visit.from !== null && visit.reply !== null) {
     const who = visit.by || '朋友';
     const same = visit.from === visit.reply;
-    box.innerHTML = `<strong>${who} 回了你</strong> TA 选「${spec.options[Number(visit.reply)]}」，你选「${spec.options[Number(visit.from)]}」，${same ? '你们选到一块了。' : '你们不一样。'}`;
+    box.innerHTML = `<strong>${who} 回了你</strong> TA 选「${spec.options[Number(visit.reply)]}」，你选「${spec.options[Number(visit.from)]}」，${same ? '你们选到一块了。' : '你们不一样。'} <a href="echo.html">我的回音 →</a>`;
     box.hidden = false;
     return;
   }
   const count = readEchoes().length;
   box.hidden = count === 0;
-  if (count) box.innerHTML = `<strong>你收到过 ${count} 条回音</strong>`;
+  if (count) box.innerHTML = `<strong>你收到过 ${count} 条回音</strong><a href="echo.html">查看全部 →</a>`;
 }
 
 function inviteFor(spec, valid) {
