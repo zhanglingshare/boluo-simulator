@@ -49,7 +49,10 @@ function showEcho(spec, visit) {
   if (visit.from !== null && visit.reply !== null) {
     const who = visit.by || '朋友';
     const same = visit.from === visit.reply;
-    box.innerHTML = `<strong>${who} 回了你</strong> TA 选「${spec.options[Number(visit.reply)]}」，你选「${spec.options[Number(visit.from)]}」，${same ? '你们选到一块了。' : '你们不一样。'} <a href="echo.html">我的回音 →</a>`;
+    const mine = readEchoes().filter(e => String(e.d) === String(spec.id));
+    const sameCount = mine.filter(e => String(e.from) === String(e.reply)).length;
+    const tally = mine.length > 1 ? `<span class="duel-echo-tally">第 ${mine.length} 个回你题的朋友${sameCount ? `，${sameCount} 个和你选一样` : '，都和你选得不一样'}</span>` : '';
+    box.innerHTML = `<strong>${who} 回了你</strong> TA 选「${spec.options[Number(visit.reply)]}」，你选「${spec.options[Number(visit.from)]}」，${same ? '你们选到一块了。' : '你们不一样。'} <a href="echo.html">我的回音 →</a>${tally}`;
     box.hidden = false;
     return;
   }

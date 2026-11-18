@@ -127,6 +127,7 @@
   font-size: 12.5px; line-height: 1.55;
 }
 .duel-echo strong { color: var(--duel-yellow); margin-right: 6px }
+.duel-echo-tally { display: block; margin-top: 3px; font-size: 11.5px; color: #9fb0c6 }
 .duel-needs-return .duel-share {
   border-color: var(--duel-yellow);
   background: #2a2410;
