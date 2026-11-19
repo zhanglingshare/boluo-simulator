@@ -66,8 +66,8 @@
  function mechanismHtml(ctx){
   const x=Core.mechanism(ctx);
   return '<div class="blc-panel"><h3>路径透视 · 机制假设</h3>'+x.paths.map(p=>
-   '<div class="blc-step"><span class="blc-dot">↗</span><div class="blc-steptext"><span>'+e(p.from)+' → '+e(p.to)+'</span><small>演示关联系数 '+fmt(p.coef)+'</small></div></div>').join('')+
-   '<div class="blc-info">示例：资源投入经“技术转化”间接作用于生产能力，路径乘积约 '+x.indirect+'。这只是设定的机制系数，不是通过样本验证的因果效果。</div></div>';
+   '<div class="blc-step"><span class="blc-dot">↗</span><div class="blc-steptext"><span>'+e(p.from)+' → '+e(p.to)+'</span><small>合成样本系数 '+fmt(p.coef)+' · 重抽样区间 '+fmt(p.low)+'～'+fmt(p.high)+'</small></div></div>').join('')+
+   '<div class="blc-info">示例：资源投入经“技术转化”间接作用于生产能力，路径乘积约 '+x.indirect+'。系数由'+x.n+'条模拟记录计算，并重复抽样'+x.bootstrap+'次；路径和数据生成条件均由开发假设设定，不能解释为现实因果效应。</div></div>';
  }
  function change(ctx){
   const sample=Core.sensitivity(ctx,{n:150,seed:20261120});
