@@ -316,6 +316,18 @@ body{background:radial-gradient(ellipse 1250px 620px at 63% -16%,#0d4d68 0%,tran
 @media(max-width:520px){.v9-persons{grid-template-columns:repeat(2,1fr)}}
 
 .v9-policyblock{display:flex;flex-direction:column;justify-content:space-between;gap:6px;min-height:100px;border-radius:11px;border:1px solid #436c7d;padding:11px;background:linear-gradient(125deg,#102c3e,#19293b)}.v9-policyblock b{font-size:21px;color:#f6d497}.v9-policyblock span{font-size:10px;color:#bad3db}.v9-policyblock small{font-size:9px;color:#8facc1}.v9-policyblock.warn{border-color:#a76e51;background:#3b2730a8}.v9-policyblock.warn b{color:#ffa6a3}
+
+/* V10 comparison of full industrial seasons, same exogenous stress tape */
+.v10-wrap{border:1px solid #8a7954;border-radius:16px;padding:17px;background:radial-gradient(ellipse at 75% 0%,#2e536b7d,transparent 65%),linear-gradient(130deg,#10273a,#101d2c);margin:14px 0}
+.v10-heading{display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:12px;margin-bottom:12px}
+.v10-heading h3{font-size:23px;color:#f8d995;margin:3px 0}.v10-heading p{font-size:10px;color:#a4c5d6;margin:0}
+.v10-run{border:1px solid #f0d69c;background:linear-gradient(120deg,#f0d499,#a87a3f);color:#1e2b39;font-weight:900;border-radius:9px;padding:11px 13px;cursor:pointer}
+.v10-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:10px}.v10-result{border:1px solid #47667a;border-radius:13px;background:#0b2639;padding:13px}
+.v10-result h4{font-size:13px;color:#f9d799;margin:0 0 8px}.v10-result .big{font-size:34px;line-height:1;color:#f6e0ac;display:block;font-weight:1000}.v10-result .tiny{font-size:10px;color:#a2c1d0;margin-top:7px;line-height:1.5}
+.v10-result .stats{display:grid;grid-template-columns:1fr 1fr;gap:9px;margin-top:10px}.v10-result .stats b{font-size:14px;color:#d5ebea}.v10-result .stats small{display:block;font-size:9px;color:#a1becc}
+.v10-plot{width:100%;height:auto;display:block;background:#0a2334;border:1px solid #41677b;border-radius:11px;margin:12px 0}.v10-alert{font-size:10px;color:#c4b591;background:#3930205e;border-radius:9px;padding:10px;border:1px solid #806c4c;margin-top:9px}
+.v10-legend{display:flex;gap:12px;flex-wrap:wrap;font-size:10px;color:#d1dee8}.v10-legend span:before{content:"";display:inline-block;width:13px;height:4px;vertical-align:middle;margin-right:7px;border-radius:3px;background:var(--ink)}
+@media(max-width:760px){.v10-grid{grid-template-columns:1fr}.v10-heading h3{font-size:19px}}
 </style></head>
 <body><div class="shell">
 <header class="top"><div class="brand"><div class="brand-mark">B</div><div><div class="eyebrow">BORO INDUSTRY INTELLIGENCE</div><h1>博罗产业能力与结构研判 <span style="color:#829ab2;font-size:12px;font-weight:500">内部辅助决策系统</span></h1></div></div><div class="top-right"><span class="pill live">● 原型运行中</span><span class="pill">2026 年度 · 内部版</span><span class="pill warn">证据优先</span></div></header>
@@ -427,7 +439,12 @@ body{background:radial-gradient(ellipse 1250px 620px at 63% -16%,#0d4d68 0%,tran
 <div class="career-hero"><section class="career-field"><div class="career-head"><div><div class="micro">INDUSTRY CAREER · QUARTERLY SIMULATION</div><strong id="careerClock">2026 Q1</strong></div><span class="pill warn">演示赛季 · 可回放</span></div>
 <div class="career-track" id="careerQuarterTrack"></div><div id="careerScoreboard" class="career-cardset"></div><div class="career-controls"><button class="career-btn" id="careerAdvance">▶ 推进一季度</button><button class="career-btn secondary" id="careerRewind">↶ 撤回上一季</button><button class="career-btn secondary" id="careerRestart">↺ 新赛季</button></div><div class="career-risk" id="careerQuarterHint">主体选择、要素预算、训练投入和冲击事件共同影响下一季度。</div></section>
 <aside class="career-panel"><h4>⚙ 经营策略 / 本季度只执行一次</h4><div class="career-options" id="careerPolicy"></div><div class="career-muted" style="margin-top:10px">投入会占用有限资源。选择不同方向，可能提升某项能力，却牺牲短期韧性。</div></aside></div>
-<div class="v9-headline" style="margin-top:15px"><div class="v9-title">单季经营决策 · 资源承诺与成长代价</div><button class="career-btn secondary" id="v9FourQuarters">▶ 连续推演四季度</button></div><div id="v9PolicyLedger" class="v9-outcomes"></div><section class="career-panel" id="v9Dashboard">
+<div class="v9-headline" style="margin-top:15px"><div class="v9-title">单季经营决策 · 资源承诺与成长代价</div><button class="career-btn secondary" id="v9FourQuarters">▶ 连续推演四季度</button></div><div id="v9PolicyLedger" class="v9-outcomes"></div><section class="v10-wrap" id="v10ScenarioLab">
+<div class="v10-heading"><div><div class="micro">28 QUARTERS · SAME EXTERNAL SHOCKS</div><h3>28季度三路线经营总决赛</h3><p>同一起点时间、同一组外部事件；龙头优先 / 链条均衡 / 成长接棒三路线，弱中强三档扰动。</p></div><button class="v10-run" id="v10Run">▶ 跑完 2026—2032</button></div>
+<div class="v10-grid" id="v10Results"><div class="career-muted">点击右上方按钮，从2026年起执行九组连续28季度演示。</div></div>
+<svg class="v10-plot" id="v10Curve" viewBox="0 0 860 270" role="img" aria-label="三路线28季度产业能力指数对比"></svg>
+<div class="v10-legend"><span style="--ink:#eac27d">龙头优先</span><span style="--ink:#6bd4c5">链条均衡</span><span style="--ink:#80a8ff">成长接棒</span></div>
+<div id="v10Insight" class="v10-alert">不会改动你当前正在经营的赛季。这里的产业主体、关联权重、预算均为假设场景；所有指数仅可用于模型内部路线对比。</div></section><section class="career-panel" id="v9Dashboard">
 <div class="v9-headline"><div><div class="micro">V9 / ONE WORLD · ONE STATE</div><div class="v9-title">季度经营结算 · 哪些主体真正变了？</div></div><div class="v9-snap"><button id="v9QuarterA">存 A</button><button id="v9QuarterB">存 B</button><button id="v9Compare">A / B 对照</button></div></div>
 <div id="v9Outcomes" class="v9-outcomes"></div>
 <div class="v9-graph"><svg id="v9Trend" viewBox="0 0 740 220" role="img" aria-label="真实演示状态随季度的变化折线"></svg><div id="v9Summary" class="v9-graph-note"></div></div>
@@ -1030,6 +1047,7 @@ function initManager(){
 
 
 // V8 CAREER ENGINE: entirely scenario-generated values with explicit quarterly state.
+let v10Simulating=false,v10ShockScale=1;
 const careerPolicies=[
  {id:"balanced",name:"稳健经营",desc:"维护韧性 / 小幅成长",cost:[0,4,2,2,1],boost:[.35,.25,.2],risk:.7},
  {id:"technology",name:"技术突破",desc:"资金+人才密集 / 长期成长",cost:[0,14,4,13,5],boost:[1.0,1.55,.25],risk:1.15},
@@ -1171,6 +1189,107 @@ function v9LoadCareer(){
 }
 
 
+
+const v10Routes=[
+ {id:"anchor",label:"龙头优先",ink:"#eac27d",plan:"anchor",policies:["technology","market","cash","supply"],bench:"liwei",promotionQuarter:5},
+ {id:"balanced",label:"链条均衡",ink:"#6bd4c5",plan:"balanced",policies:["supply","market","balanced","cash"],bench:"banyongkang",promotionQuarter:5},
+ {id:"future",label:"成长接棒",ink:"#80a8ff",plan:"future",policies:["reserve","technology","market","balanced"],bench:"unionfoil",promotionQuarter:3}
+];
+function v10FreshCareer(slots,bench){
+ return {quarter:0,policy:"balanced",bench,benchReady:0,training:{capacity:0,tech:0,resilience:0},fatigue:0,recovery:0,score:0,rival:64,history:[],snapshots:[],journal:[],initialSlots:{...slots},spent:[0,0,0,0,0],rivalStrategy:"balanced",companyStates:{},curve:[],comparison:{A:null,B:null},lastOutcome:null,initialScore:0};
+}
+function v10TryPromote(){
+ if(!career.bench||career.benchReady<1.5)return false;
+ const id=career.bench;
+ if(Object.values(manager.slots).includes(id))return false;
+ const place=managerRoles.find(r=>!manager.slots[r.id])?.id;
+ if(!place)return false;
+ const candidate=companies.find(p=>p.id===id);
+ if(!candidate)return false;
+ const extra=managerResource(candidate),before=managerCompute();
+ if(extra.some((n,i)=>before.used[i]+n>managerCaps[i]))return false;
+ manager.slots={...manager.slots,[place]:id};
+ career.bench=null;career.benchReady=0;
+ career.score=careerScore();
+ return true;
+}
+function v10RunAll(){
+ const old={career,slots:{...manager.slots},year:manager.year,event:manager.event,wtState:{...wtState},shock:v10ShockScale,sim:v10Simulating};
+ const results=[];
+ try{
+  v10Simulating=true;
+  for(const route of v10Routes){
+   for(const shock of [.75,1,1.25]){
+    v10ShockScale=shock;
+    manager.slots={...managerPlans[route.plan]};manager.event="none";manager.year=0;
+    career=v10FreshCareer(manager.slots,route.bench);
+    career.score=careerScore();career.initialScore=career.score;
+    const scores=[career.score],resources=[],events=[],warnings=[];
+    let promoted=false,unaffordable=0;
+    for(let q=0;q<28;q++){
+     career.policy=route.policies[q%route.policies.length];
+     careerTick();
+     if(!career.lastOutcome.paid)unaffordable++;
+     if(q+1>=route.promotionQuarter&&!promoted)promoted=v10TryPromote();
+     career.score=careerScore();
+     scores.push(career.score);
+     const state=managerCompute();
+     resources.push(state.used.slice());
+     if(state.overloaded.some(n=>n>0))warnings.push(q+1);
+     events.push({label:career.lastOutcome.event,source:career.lastOutcome.source,affected:career.lastOutcome.affected.length});
+    }
+    const end=managerCompute();
+    results.push({
+      id:route.id,label:route.label,ink:route.ink,shock,start:scores[0],end:scores.at(-1),
+      change:+(scores.at(-1)-scores[0]).toFixed(1),min:Math.min(...scores),
+      mean:+(scores.reduce((a,b)=>a+b,0)/scores.length).toFixed(1),
+      maxResource:managerNeeds.map((name,i)=>({name,value:+Math.max(...resources.map(row=>row[i])).toFixed(1)})),
+      overQuarters:warnings.length,unaffordable,promoted,
+      lineup:Object.values(manager.slots).filter(Boolean),scores,
+      shockCount:events.filter(e=>e.source).length,
+      touched:events.reduce((sum,e)=>sum+e.affected,0),
+      recovery:career.recovery,damage:+Object.values(career.companyStates).reduce((s,x)=>s+x.damage.reduce((a,v)=>a+v,0),0).toFixed(1)
+    });
+   }
+  }
+ }finally{
+  career=old.career;
+  manager.slots=old.slots;manager.year=old.year;manager.event=old.event;
+  Object.assign(wtState,old.wtState);
+  v10ShockScale=old.shock;v10Simulating=old.sim;
+ }
+ return results;
+}
+function v10Show(){
+ const result=v10RunAll();
+ const baseline=result.filter(x=>x.shock===1);
+ $("v10Results").innerHTML=v10Routes.map(route=>{
+  const x=baseline.find(item=>item.id===route.id),
+        variants=result.filter(item=>item.id===route.id),
+        low=Math.min(...variants.map(z=>z.end)),high=Math.max(...variants.map(z=>z.end));
+  return '<div class="v10-result"><h4>'+route.label+'</h4><strong class="big">'+x.end.toFixed(1)+'</strong><div class="tiny">2032年末情景能力指数 · 初始 '+x.start.toFixed(1)+'</div><div class="stats">'+
+    '<div><b>'+(x.change>=0?"+":"")+x.change.toFixed(1)+'</b><small>相对自身起点</small></div>'+
+    '<div><b>'+x.min.toFixed(1)+'</b><small>28季最低谷</small></div>'+
+    '<div><b>'+low.toFixed(1)+'–'+high.toFixed(1)+'</b><small>弱/中/强扰动终值范围</small></div>'+
+    '<div><b>'+x.overQuarters+' / '+x.unaffordable+'</b><small>超限季度 / 策略受阻</small></div>'+
+    '</div><div class="tiny">接棒：'+(x.promoted?"完成":"未能完成")+' · 网络事件 '+x.shockCount+' 季</div></div>';
+ }).join("");
+ const mid=baseline;
+ let svg='<rect x="30" y="20" width="800" height="220" fill="none" stroke="#415e71"/>';
+ for(const y of [40,60,80,100]){const py=240-y*2.1;svg+='<line x1="30" x2="830" y1="'+py+'" y2="'+py+'" stroke="#4a6574" stroke-dasharray="2 7"/><text x="6" y="'+(py+4)+'" font-size="11" fill="#99b7c7">'+y+'</text>'}
+ for(const r of mid){
+  const coords=r.scores.map((s,i)=>[30+i/28*800,240-Math.max(0,Math.min(100,s))*2.1]);
+  svg+='<polyline points="'+coords.map(p=>p.map(n=>n.toFixed(1)).join(",")).join(" ")+'" stroke="'+r.ink+'" stroke-width="3" fill="none"/>';
+ }
+ for(const q of [0,4,8,12,16,20,24,28])svg+='<text x="'+(30+q/28*800)+'" y="258" font-size="10" text-anchor="middle" fill="#acc6d4">'+(2026+Math.floor(q/4))+'</text>';
+ $("v10Curve").innerHTML=svg;
+ const gain=[...baseline].sort((a,b)=>b.change-a.change)[0],
+       bottom=[...baseline].sort((a,b)=>b.min-a.min)[0],
+       constraints=baseline.filter(x=>x.unaffordable>0||x.overQuarters>0);
+ $("v10Insight").textContent="相对自身起点改善最大："+gain.label+"（"+(gain.change>=0?"+":"")+gain.change.toFixed(1)+"）；最低谷表现最稳："+bottom.label+"（"+bottom.min.toFixed(1)+"）。"+(constraints.length?constraints.map(x=>x.label+" 有 "+x.unaffordable+" 季策略受阻").join("；"):"三条路线没有资源超限或执行受阻")+"。这些是同一套假设模型对不同组合与策略的敏感性比较，并非对真实县域的优劣排序。";
+ return result;
+}
+
 function v9PolicyLedger(){
  const policy=careerPolicies.find(x=>x.id===career.policy)||careerPolicies[0],v=managerCompute();
  const margins=policy.cost.map((cost,i)=>managerCaps[i]-v.used[i]-cost);
@@ -1191,6 +1310,7 @@ function v9FourQuarters(){
 
 function v9Init(){
  $("v9FourQuarters").onclick=v9FourQuarters;
+ $("v10Run").onclick=v10Show;
  $("v9CompanyTiles").onclick=e=>{const b=e.target.closest('[data-v9-company]');if(b)openPlayer(b.dataset.v9Company)};
  $("v9QuarterA").onclick=()=>{career.comparison.A=v9Snapshot();v9Render();v9SaveCareer()};
  $("v9QuarterB").onclick=()=>{career.comparison.B=v9Snapshot();v9Render();v9SaveCareer()};
@@ -1204,7 +1324,7 @@ function careerTick(){
  const paid=price.every((x,i)=>before.used[i]+x<=managerCaps[i]);
  const event=careerEvents[careerSeed(career.quarter)];
  const q=career.quarter+1;
- const roll=event[2],intensity=roll>0?roll*policy.risk:roll;
+ const roll=event[2]*v10ShockScale,intensity=roll>0?roll*policy.risk:roll;
  const nextFatigue=Math.max(0,career.fatigue*.69+Math.max(0,intensity)*7-(policy.id==="cash"?6:0));
  const nextRecovery=Math.max(0,career.recovery*.55+(roll>0?roll*6:0)-(policy.id==="supply"?2:0));
  const upgrade=paid?policy.boost:[0,0,0];
@@ -1218,7 +1338,7 @@ function careerTick(){
  career.training.tech=+(career.training.tech+upgrade[1]*(.75+q*.03)).toFixed(2);
  career.training.resilience=+(career.training.resilience+upgrade[2]).toFixed(2);
  career.fatigue=+nextFatigue.toFixed(2);career.recovery=+nextRecovery.toFixed(2);
- const transmission=v9AdvanceCompanies(policy,paid,event);
+ const transmission=v9AdvanceCompanies(policy,paid,[event[0],event[1],event[2]*v10ShockScale]);
  manager.year=Math.min(2,Math.floor(q/4));
  manager.event=roll>0?event[1]:"none";
  career.rival=+careerRival(q).toFixed(1);
@@ -1229,7 +1349,7 @@ function careerTick(){
  const shift=+(career.score-(beforeSnapshot.score??before.score)).toFixed(1);
  career.journal.unshift({date:careerPrintQuarter(q),name:event[0],text:(paid?"策略执行":"资源不足，策略未执行")+" · "+policy.name+" · 组合指数 "+(shift>=0?"+":"")+shift+" · 对手："+career.rivalStrategy});
  if(career.journal.length>14)career.journal.pop();
- managerSync();refreshScores();renderDuel();renderManagerSeason();renderCareer();
+ if(!v10Simulating){managerSync();refreshScores();renderDuel();renderManagerSeason();renderCareer()}
 }
 function careerUndo(){
  if(!career.history.length)return;
