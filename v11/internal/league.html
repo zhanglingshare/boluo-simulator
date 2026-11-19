@@ -620,7 +620,8 @@ function wtCalculate(mitigate){
   }
   frontier=[...new Set(next)];
  }
- return {effects,depth,average:Object.values(effects).reduce((a,b)=>a+b,0)/Object.keys(effects).length,protected:protection};
+ const comparable=wtVisibleNodes();const sum=comparable.reduce((acc,id)=>acc+(effects[id]||0),0);
+ return {effects,depth,average:sum/Math.max(1,comparable.length),protected:protection};
 }
 function wtVisibleNodes(){
  const links=wtLinks.filter(l=>l.a===wtState.source||l.b===wtState.source);
