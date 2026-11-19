@@ -297,7 +297,7 @@ body{background:radial-gradient(ellipse 1250px 620px at 63% -16%,#0d4d68 0%,tran
 <div class="disclaimer">组合推演当前只展示主体组合、赛道覆盖和关系核验任务。只有获得真实采购、供应、客户、技术合作、人才流动或项目合作数据后，才计算网络协同与风险传导。</div>
 </section>
 
-<section class="view" id="view-wind">
+<section class="view" id="view-wind"><div class="mgr-statebar" id="mgrWindBar"></div>
 <div class="wt-head"><div><div class="micro">INDUSTRY NETWORK / DYNAMIC STRESS LAB</div><h3>产业关系风洞 <span style="color:#65dfec">V5</span></h3><p>选主体、施加冲击、查看传导、调整缓冲措施，并排比较。所有连接目前均为演示假设，非已证实采购或供应关系。</p></div><span class="wt-chip hyp">◆ 全部关系：假设网络 / 可替换真实数据</span></div>
 <div class="wt-layout">
 <aside class="wt-box">
@@ -580,7 +580,7 @@ function openPlayer(id){
  $("modalBody").innerHTML='<div class="detail-layout" style="margin-top:15px"><div class="detail-card"><div class="detail-head"><div class="avatar">'+esc(p.initial)+'</div><div><h3>'+esc(p.name)+'</h3><p>'+esc(t.name)+' · '+esc(p.club)+'</p><span class="tag gold">'+esc(p.role)+'</span></div></div><div class="rating-row"><div class="rating-box"><strong>'+s.ovr+'</strong><span>OVR · 模型估算</span></div><div class="rating-box"><strong>'+s.pot+'</strong><span>POT · 情景潜力</span></div></div><div class="detail-note">⚠ 开发版探索性评分，资料覆盖 '+s.coverage+'%；不是企业真实排名，未披露指标均使用赛道先验。</div></div><div class="detail-right"><div class="panel"><h4>六维属性 · ENTITY ATTRIBUTES</h4><div class="radar-wrap">'+radar(s.values)+'<div>'+bars+'</div></div></div></div></div><div class="panel" style="margin-top:13px"><h4>球探报告 · ASSESSMENT REPORT</h4><div class="scout-verdict"><div><b>成长线索：</b>'+esc(s.strength)+'</div><div><b>主要弱点：</b>'+esc(s.weak)+'</div><div><b>下一步核验：</b>'+esc(p.verify)+'</div></div><div class="evidence-box"><div class="evidence-item"><b>公开事实</b><span>'+esc(s.factual)+'</span></div><div class="evidence-item"><b>资料覆盖</b><span>'+s.grade+' / '+s.coverage+'% · 不是评分准确概率</span></div><div class="evidence-item"><b>评分说明</b><span>六维加权评分：'+dims.map((d,i)=>d+' '+Math.round(w[i]/total*100)+'%').join('；')+'。POT 采用行业成长先验。</span></div><div class="evidence-item"><b>原始出处</b><span>'+source+'</span></div></div></div>';
  $("modalActions").innerHTML='<button class="action primary" id="addTactic">加入观察阵容</button><button class="action" id="goTeam">查看所属产业板块</button>';
  $("modal").classList.add("open");
- $("addTactic").onclick=()=>{if(!tacticIds.includes(id))tacticIds.push(id);$("modal").classList.remove("open");setView("tactics")};
+ $("addTactic").onclick=()=>{if(!tacticIds.includes(id))tacticIds.push(id);managerAdoptTactics();$("modal").classList.remove("open");setView("tactics")};
  $("goTeam").onclick=()=>{currentTeam=p.team;$("modal").classList.remove("open");setView("teams")};
 }
 $("modalClose").onclick=()=>$("modal").classList.remove("open");
@@ -602,9 +602,9 @@ $("tacticRoster").innerHTML=chosen.map(p=>'<div class="notice"><div style="flex:
 }
 $("tacticTeam").onchange=e=>{tacticTeam=e.target.value;renderTactics()};
 $("tacticSearch").oninput=renderTactics;
-$("tacticCandidates").onclick=e=>{const b=e.target.closest("[data-add]");if(b&&!tacticIds.includes(b.dataset.add)){tacticIds.push(b.dataset.add);renderTactics()}};
-$("tacticRoster").onclick=e=>{const b=e.target.closest("[data-remove]");if(b){tacticIds=tacticIds.filter(x=>x!==b.dataset.remove);renderTactics()}};
-$("clearTactic").onclick=()=>{tacticIds=[];renderTactics()};
+$("tacticCandidates").onclick=e=>{const b=e.target.closest("[data-add]");if(b&&!tacticIds.includes(b.dataset.add)){tacticIds.push(b.dataset.add);managerAdoptTactics()}};
+$("tacticRoster").onclick=e=>{const b=e.target.closest("[data-remove]");if(b){tacticIds=tacticIds.filter(x=>x!==b.dataset.remove);managerAdoptTactics()}};
+$("clearTactic").onclick=()=>{tacticIds=[];managerAdoptTactics()};
 $("exportTactic").onclick=()=>{const rows=tacticIds.map(id=>companies.find(p=>p.id===id)).filter(Boolean).map(p=>[p.name,team(p.team).name,p.club,p.role,p.evidence,p.verify].join("\t"));const blob=new Blob(["企业\t产业板块\t赛道\t定位\t证据状态\t待核事项\n"+rows.join("\n")],{type:"text/tab-separated-values;charset=utf-8"});const a=document.createElement("a");a.href=URL.createObjectURL(blob);a.download="博罗产业观察结构组合.tsv";a.click();URL.revokeObjectURL(a.href)};
 
 // V5: Deterministic demonstrator network. No verified buyer-supplier edges are claimed.
@@ -675,6 +675,7 @@ function wtGraphSvg(result){
  return svg;
 }
 function renderWind(){
+ const mv=managerCompute();$("mgrWindBar").innerHTML="<span>经营阵容："+mv.ps.length+" 家主体</span><span>五项要素超限："+mv.overloaded.filter(n=>n>0).length+"</span><span>成长阶段：T"+manager.year+"</span><span>当前事件："+({none:"正常",orders:"订单收缩",talent:"人才流失",supply:"供应断点"}[manager.event])+"</span><button class=\"mgr-switch\" data-open-view=\"tactics\">返回阵容实验室 ↗</button>";
  const s=wtState,raw=wtCalculate(false),buf=wtCalculate(true),visible=wtVisibleNodes();
  const current=s.phase===0?Object.fromEntries([[s.source,buf.effects[s.source]]]):s.phase===1?Object.fromEntries(Object.entries(buf.effects).filter(([id])=>(buf.depth[id]||0)<=1)):buf.effects;
  const mean=(Object.values(current).reduce((a,b)=>a+b,0)/Math.max(1,Object.keys(current).length))*100;
@@ -753,12 +754,29 @@ function managerCompute(year=manager.year,evt=manager.event){
 function managerCommit(nextSlots){manager.history.push(JSON.stringify(manager.slots));if(manager.history.length>50)manager.history.shift();manager.future=[];manager.slots=nextSlots;managerSync();}
 function managerSync(){
  tacticIds=Object.values(manager.slots).filter(Boolean);
- if(manager.ps){} // No hidden effect; preserve existing engine identifiers.
+ // Keep the existing tactical roster synchronized with the operating board.
  renderManager();
  if(currentView==="tactics")renderTactics();
  if(currentView==="season")renderManagerSeason();
  if(currentView==="wind")renderWind();
  try{sessionStorage.setItem("boluo-manager-v6",JSON.stringify({slots:manager.slots,year:manager.year,event:manager.event}))}catch(e){}
+}
+function managerAdoptTactics(){
+ const slots=Object.fromEntries(managerRoles.map(r=>[r.id,null]));
+ const chosen=tacticIds.slice(0,managerRoles.length).map(id=>companies.find(p=>p.id===id)).filter(Boolean);
+ for(const p of chosen){
+  const proposed=p.role.includes("配套")?"supply":p.role.includes("成长")?"growth":p.role.includes("平台")||p.team==="tertiary"?"service":p.team==="primary"?"base":"core";
+  const slot=!slots[proposed]?proposed:managerRoles.find(r=>!slots[r.id])?.id;
+  if(slot)slots[slot]=p.id;
+ }
+ managerCommit(slots);
+}
+function managerToWind(){
+ const id=Object.values(manager.slots).find(Boolean);if(id)wtState.source=id;
+ if(manager.event==="orders"){wtState.type="orders";wtState.shock=25}
+ if(manager.event==="supply"){wtState.type="supply";wtState.shock=30}
+ if(manager.event==="talent"){wtState.type="delay";wtState.shock=20}
+ wtState.phase=2;setView("wind");
 }
 function managerChoose(role,id){
  if(id && Object.entries(manager.slots).some(([r,v])=>r!==role&&v===id))return;
@@ -798,7 +816,7 @@ function initManager(){
  $("mgrClear").onclick=()=>managerCommit(Object.fromEntries(managerRoles.map(r=>[r.id,null])));
  $("mgrUndo").onclick=()=>{if(!manager.history.length)return;manager.future.push(JSON.stringify(manager.slots));manager.slots=JSON.parse(manager.history.pop());managerSync()};
  $("mgrRedo").onclick=()=>{if(!manager.future.length)return;manager.history.push(JSON.stringify(manager.slots));manager.slots=JSON.parse(manager.future.pop());managerSync()};
- $("mgrToWind").onclick=()=>{const id=Object.values(manager.slots).find(Boolean);if(id)wtState.source=id;setView("wind")};
+ $("mgrToWind").onclick=managerToWind;
  $("mgrToSeason").onclick=()=>setView("season");
  $("mgrSeasonNext").onclick=()=>{manager.year=Math.min(2,manager.year+1);managerSync()};
  $("mgrSeasonReset").onclick=()=>{manager.year=0;manager.event="none";managerSync()};
