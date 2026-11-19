@@ -354,7 +354,7 @@ body{background:radial-gradient(ellipse 1250px 620px at 63% -16%,#0d4d68 0%,tran
 </section><div class="mgr-head"><div><div class="mgr-eyebrow">INDUSTRY MANAGER · OPERATING BOARD</div><h3>经营模式 · 六类角色与要素上限</h3><div class="mgr-sub">同一组合同时驱动能力评价、资源占用、成长状态和风险风洞。企业关系与资源需求均为开发演示假设。</div></div><div class="mgr-control"><button id="mgrPresetAnchor">龙头优先</button><button id="mgrPresetBalance">链条均衡</button><button id="mgrPresetFuture">成长突破</button><button id="mgrClear">清空角色</button></div></div>
 <div class="mgr-board"><section class="mgr-panel"><h4>◆ 产业阵容 / 角色槽位</h4><div id="mgrRoles" class="mgr-roles"></div><div class="mgr-sub">点击任一槽位，选择企业或移除主体；一个企业只能占一个主槽位，多重作用保留在企业档案中。</div></section><section class="mgr-panel"><h4>◈ 要素预算 / 经营边界</h4><div id="mgrBudgets" class="mgr-budget"></div><div id="mgrConstraint" class="mgr-alert"></div><div class="mgr-line"></div><div id="mgrSummary" class="mgr-impact"></div><div class="mgr-line"></div><div class="mgr-control"><button id="mgrUndo">↶ 撤销</button><button id="mgrRedo">↷ 重做</button><button id="mgrToWind">◉ 去关系风洞</button><button id="mgrToSeason">▶ 推进成长</button></div></section></div>
 <div class="mgr-modal" id="mgrModal"><div class="mgr-dialog"><div class="mgr-head"><h3 id="mgrPickTitle">选择产业主体</h3><button id="mgrClose" class="mgr-switch">关闭 ✕</button></div><div id="mgrPickList" class="mgr-options"></div></div></div>
-<div class="scenario-board">
+<section class="mgr-panel" style="margin:12px 0"><div class="mgr-head"><div><div class="mgr-eyebrow">LINEUP CHEMISTRY / ROLE DEPENDENCY</div><h3>阵容化学反应 · 补链还是互相挤占？</h3></div><span class="pill warn">假设关联网络</span></div><div id="managerChemistry" class="mgr-impact"></div><div id="managerChemistryLines" class="mgr-tray" style="margin-top:11px"></div><div class="mgr-sub">只有明确设置的假设关联参与化学反应；资源争夺通过五项预算单独计算。相同赛道不自动形成真实供应关系。</div></section><div class="scenario-board">
 <section class="scenario-field"><div class="micro" style="color:#d8e7d3;margin:0 0 14px;position:relative;z-index:1">◈ SECONDARY INDUSTRY / STRUCTURAL COMPOSITION</div><div id="scenarioSquad" class="scenario-squad"></div></section>
 <aside class="scenario-insight"><div class="viz-panel"><h4>◈ 当前结构</h4><div id="scenarioMetric" class="scenario-metric">--</div><div class="micro">已选企业样本模型均值，非产业真实总分</div><div class="scenario-bars" id="scenarioBars" style="margin-top:15px"></div></div><div class="viz-panel"><h4>⚠ 潜在结构短板</h4><div id="scenarioGaps"></div></div><div class="viz-panel"><h4>↗ 条件调节</h4><div class="micro">示例：额外配套改善强度 <b id="scenarioSliderValue" style="color:#f3cc83">35%</b></div><input id="scenarioSlider" class="scenario-slider" type="range" min="0" max="100" value="35" step="5"><div class="micro" style="margin-top:8px">仅演示条件敏感性，不代表经济收益预测</div></div></aside>
 </div>
@@ -537,7 +537,7 @@ let currentTeam="secondary",currentView="overview",selectedPlayer=null,filters="
 const $=id=>document.getElementById(id);
 function team(id){return teams.find(t=>t.id===id)}
 function esc(s){return String(s??"").replace(/[&<>"']/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]))}
-function setView(v){currentView=v;document.querySelectorAll(".view").forEach(x=>x.classList.toggle("active",x.id==="view-"+v));document.querySelectorAll("#nav button").forEach(x=>x.classList.toggle("active",x.dataset.view===v));if(v==="compare")renderDuel();if(v==="teams")renderTeam();if(v==="players")renderPlayers();if(v==="scout")renderScout();if(v==="academy")renderAcademy();if(v==="tactics"){renderTactics();cxRender();}if(v==="wind")renderWind();if(v==="season"){renderSeason();renderManagerSeason();renderCareer();}window.scrollTo({top:0,behavior:"smooth"})}
+function setView(v){currentView=v;document.querySelectorAll(".view").forEach(x=>x.classList.toggle("active",x.id==="view-"+v));document.querySelectorAll("#nav button").forEach(x=>x.classList.toggle("active",x.dataset.view===v));if(v==="compare")renderDuel();if(v==="teams")renderTeam();if(v==="players")renderPlayers();if(v==="scout")renderScout();if(v==="academy")renderAcademy();if(v==="tactics"){renderTactics();cxRender();renderChemistry();}if(v==="wind")renderWind();if(v==="season"){renderSeason();renderManagerSeason();renderCareer();}window.scrollTo({top:0,behavior:"smooth"})}
 $("nav").addEventListener("click",e=>{const b=e.target.closest("button[data-view]");if(b)setView(b.dataset.view)});
 document.querySelectorAll("[data-open-view]").forEach(btn=>btn.addEventListener("click",()=>setView(btn.dataset.openView)));
 function card(p){const t=team(p.team),s=getRating(p);const mini=[0,2,3].map(i=>'<div class="score-mini"><span>'+dimKeys[i]+'</span><span class="track"><i style="width:'+s.values[i]+'%"></i></span><b>'+s.values[i]+'</b></div>').join("");return '<article class="player-card" data-player="'+esc(p.id)+'"><div class="pc-top"><div class="avatar">'+esc(p.initial||p.name.slice(0,1))+'</div><div class="score-number">'+s.ovr+'<small>OVR</small></div></div><h4>'+esc(p.name)+'</h4><div class="company-sub">'+esc(p.club)+' · '+esc(p.role)+'</div><div class="player-tags"><span class="tag gold">POT '+s.pot+'</span><span class="tag">'+s.grade+' · 资料覆盖</span></div><div class="scores-row"><div>'+mini+'</div><div style="font-size:10px;color:#9bb0c8">模型覆盖 <strong style="font-size:20px;color:#ecc67c">'+s.coverage+'%</strong><br>估算属性</div></div><div class="card-bottom"><span>'+esc(t.name)+'</span><span>查看球探报告 ↗</span></div><button class="duel-compare-btn" data-compare="'+esc(p.id)+'" type="button">VS · 加入能力对决</button></article>'}
@@ -812,6 +812,26 @@ function managerResource(p){
  return raw.map((x,i)=>Math.round(x*factors[i]));
 }
 function managerSelected(){return Object.values(manager.slots).filter(Boolean).map(id=>companies.find(p=>p.id===id)).filter(Boolean)}
+
+// Hypothetical chemistry draws on wind-tunnel scenario edges, not inferred real contracts.
+function managerChemistry(){
+ const ps=managerSelected(),ids=ps.map(p=>p.id);
+ const links=wtLinks.filter(e=>ids.includes(e.a)&&ids.includes(e.b));
+ const positive=links.reduce((sum,e)=>sum+e.w,0);
+ const coverage=new Set(ps.map(p=>p.team)).size;
+ const used=[0,0,0,0,0];ps.forEach(p=>managerResource(p).forEach((x,i)=>used[i]+=x));
+ const overflow=used.reduce((sum,x,i)=>sum+Math.max(0,x-managerCaps[i]),0)/100;
+ const techLink=ps.filter(p=>p.club.includes("电子")||p.club.includes("新材料")||p.club.includes("装备")).length;
+ // Reward diverse role coverage and explicit demo links, penalize over-concentration and overload.
+ const net=+(Math.min(5,positive*2.1+(coverage>1?coverage-1:0)*.65)-overflow*4-Math.max(0,techLink-3)*.6).toFixed(1);
+ return {links,positive:+positive.toFixed(2),overflow,net,coverage};
+}
+function renderChemistry(){
+ const x=managerChemistry();
+ $("managerChemistry").innerHTML=[["假设连接",x.links.length],["组合增益",x.net>0?"+"+x.net:x.net],["资源竞争",x.overflow.toFixed(2)]].map(([name,value])=>'<div><strong>'+value+'</strong><span>'+name+'</span></div>').join("");
+ $("managerChemistryLines").innerHTML=x.links.length?x.links.map(e=>{const a=companies.find(p=>p.id===e.a),b=companies.find(p=>p.id===e.b);return '<span class="wt-chip hyp">'+esc(a.short)+' ┄ '+esc(b.short)+'</span>'}).join(""):'<span class="wt-chip">暂无已设置关联，不能自动认定协同</span>';
+}
+
 function managerCompute(year=manager.year,evt=manager.event){
  const ps=managerSelected(),used=[0,0,0,0,0];
  ps.forEach(p=>managerResource(p).forEach((v,i)=>used[i]+=v));
@@ -822,14 +842,15 @@ function managerCompute(year=manager.year,evt=manager.event){
  const potential=ps.length?ps.reduce((s,p)=>s+getRating(p).pot,0)/ps.length:0;
  const growth=ps.length?ps.reduce((s,p)=>s+Math.max(0,getRating(p).pot-getRating(p).ovr),0)/ps.length:0;
  const stage=Math.min(2,Math.max(0,year));
- const score=Math.max(0,Math.min(100,base+stage*(growth*.18-1.1)-strain*(18+stage*4)-incident*(stage?1:.7)));
+ const chemistry=managerChemistry();
+ const score=Math.max(0,Math.min(100,base+chemistry.net+stage*(growth*.18-1.1)-strain*(18+stage*4)-incident*(stage?1:.7)));
  return {ps,used,overloaded,strain,base,potential,score:Math.round(score*10)/10,incident,coverage:new Set(ps.map(p=>p.team)).size};
 }
 function managerCommit(nextSlots){manager.history.push(JSON.stringify(manager.slots));if(manager.history.length>50)manager.history.shift();manager.future=[];manager.slots=nextSlots;managerSync();}
 function managerSync(){
  tacticIds=Object.values(manager.slots).filter(Boolean);
  // Keep the existing tactical roster synchronized with the operating board.
- renderManager();
+ renderManager();renderChemistry();
  if(currentView==="tactics")renderTactics();
  cxRender();
  if(currentView==="season")renderManagerSeason();
