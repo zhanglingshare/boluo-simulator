@@ -222,6 +222,17 @@ function renderSubjects(){
 }
 function renderProfile(){
  var s=subject(state.subject);el("profileName").textContent=s.name;el("profileDesc").textContent=s.desc;el("profileEmblem").textContent=s.short;el("profileEyebrow").textContent="INDUSTRY PROFILE / "+s.id.toUpperCase();
+ var attr=el("attributeList");attr.innerHTML="";
+ dimensions.forEach(function(d){var row=document.createElement("div");row.className="attribute-row";row.innerHTML="<b>"+d[0]+"</b><div class='attribute-track'><i></i></div><small>待核验</small>";attr.appendChild(row)});
+ var scout={
+  electronics:["需要核验产品是否进入稳定客户供应链，是否形成关键工艺或本地配套优势。","重点追问核心客户集中度、关键零部件外采比例、订单波动和本地采购深度。","核心支柱型 / 成长突破型均为候选角色，须结合产值、企业层级和网络位置判断。"],
+  materials:["需要核验产品是否有明确下游应用、稳定客户和可持续的技术适配能力。","重点追问原料来源、设备依赖、客户认证周期、产品价格波动和替代品。","关键配套型 / 成长突破型为待验证角色，不能仅凭产业名称认定。"],
+  precision:["需要核验加工精度、质量体系、交付能力及进入核心客户供应链的门槛。","重点追问客户集中、设备更新、良率、订单稳定性和关键工艺外部依赖。","关键配套型 / 核心支柱型为候选角色，需查明真实服务对象。"],
+  logistics:["需要核验物流节点是否服务本地制造业，以及时效和成本是否形成可量化优势。","重点追问线路集中、仓储利用率、能源成本、关键客户依赖和替代运输方案。","基础保障型 / 生产服务型为候选角色，需用实际业务流量验证。"],
+  rd:["需要核验研发检测平台是否被本地企业实际使用，以及成果是否进入生产环节。","重点追问设备利用率、专业人才、服务收入、成果转化和财政资金依赖。","生产服务型 / 关键配套型为候选角色，须以服务记录和企业反馈为证。"],
+  production:["需要核验生产性服务是否嵌入制造流程，并带来效率、质量或市场拓展变化。","重点追问服务收入来源、客户集中、人才供给、数字化能力和服务价值留存。","生产服务型为候选角色，须区分一般商业服务与生产性服务。"]
+ };
+ var note=scout[s.id]||scout.electronics;el("scoutStrength").textContent=note[0];el("scoutWeakness").textContent=note[1];el("scoutFit").textContent=note[2];
  var grid=el("capabilityGrid");grid.innerHTML="";
  dimensions.forEach(function(d,i){var card=document.createElement("article");card.className="panel capability";card.innerHTML="<div class='cap-top'><h4>"+d[0]+"</h4><span class='tag amber'>待核验</span></div><p>"+d[1]+"</p><div class='status-line' style='--w:"+[18,22,15,12,16,10][i]+"%'><i style='width:var(--w);opacity:.38'></i></div><p style='margin-top:8px;color:#829bb0'>注意： "+d[2]+"</p>";grid.appendChild(card)});
  var body=el("evidenceBody");body.innerHTML="";
