@@ -17,7 +17,7 @@
 <aside class="panel"><h3>04 · 五类硬约束</h3><p class="desc">土地、资金、能源、人才、公共平台均单独核验。不能互相抵扣。</p><div class="budget" id="budget"></div><div class="section" id="constraints"></div><div class="section"><h3>主体详情</h3><div id="selectedDetail" class="entity-summary"><b>点一张主体卡</b><small>查看当前能力、潜力、证据和资源需求。</small></div></div><div class="section"><h3>组合解释</h3><div class="small-block" id="insights"></div></div></aside>
 </div>
 <div class="grid2">
-<section class="panel"><div class="scenario-heading"><h3>05 · 方案档案与复盘</h3><button class="btn" id="snapshot">＋ 保存快照</button></div><p class="desc">参数、主体槽位、县域配置与模型版本一并保存。下次可从快照恢复。</p><div id="snapshotList"></div></section>
+<section class="panel"><div class="scenario-heading"><h3>05 · 方案档案与复盘</h3><button class="btn" id="snapshot">＋ 保存快照</button></div><p class="desc">参数、主体槽位、县域配置与模型版本保存在当前浏览器中。刷新后可在本浏览器恢复。</p><div id="snapshotList"></div></section>
 <section class="panel"><h3>06 · 能力与结构提示</h3><div id="advice" class="small-block"></div><p class="foot">当前只建“主体选择—要素占用—角色覆盖”最小闭环。真实产业关系、成长时滞、风险传导需要经核验的数据及单独模型，不用臆造协同收益。</p></section>
 </div>
 <div class="foot">GENERIC DEMONSTRATOR V1.0 · 本地示例参数，不代表真实县域预算或企业能力 · 可替换 JSON 配置 · 代码与案例参数分离</div>
@@ -45,6 +45,23 @@ const keyName=["land","fund","energy","talent","platform"];
 function copy(o){return JSON.parse(JSON.stringify(o))}
 function emptySlots(){return Object.fromEntries(roles.map(r=>[r.id,null]))}
 let config=copy(demo),state={slots:{core:"manufacture",supply:"parts"},selected:"manufacture"},undo=[],redo=[],snapshots=[],saved={A:null,B:null};
+const STORAGE_KEY="county-industry-simulator:v1";
+function persist(){
+ try{localStorage.setItem(STORAGE_KEY,JSON.stringify({config,state,snapshots,saved,version:VERSION}))}catch(e){}
+}
+function loadPersisted(){
+ try{
+  const data=JSON.parse(localStorage.getItem(STORAGE_KEY)||"null");if(!data||data.version!==VERSION)return;
+  validate(data.config);config=copy(data.config);
+  if(data.state&&data.state.slots&&typeof data.state.slots==="object"){
+   const legal=new Set(config.entities.map(e=>e.id)),seen=new Set(),slots=emptySlots();
+   for(const role of roles){const id=data.state.slots[role.id];if(legal.has(id)&&!seen.has(id)){slots[role.id]=id;seen.add(id)}}
+   state={slots,selected:legal.has(data.state.selected)?data.state.selected:config.entities[0].id};
+  }
+  snapshots=Array.isArray(data.snapshots)?data.snapshots.filter(s=>s&&s.state&&s.config).slice(-30):[];
+  saved={A:data.saved?.A?.state?data.saved.A:null,B:data.saved?.B?.state?data.saved.B:null};
+ }catch(e){config=copy(demo);state={slots:{core:"manufacture",supply:"parts"},selected:"manufacture"};snapshots=[];saved={A:null,B:null}}
+}
 const $=id=>document.getElementById(id);
 const escapeText=s=>String(s??"").replace(/[&<>"']/g,x=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[x]));
 const find=id=>config.entities.find(e=>e.id===id);
@@ -83,7 +100,7 @@ function render(){
  '<div class="event">◈ <b>当前假设</b>：主体之间的真实采购、技术合作或替代关系尚未建立，系统不会凭同产业自动计算“化学反应”。</div>',
  '<div class="event">✦ <b>下一步证据</b>：需要补充'+(v.filled?assigned.map(e=>e.name).slice(0,2).join('、'):'候选主体')+'的土地需求、真实融资、人才供给以及实际客户关系。</div>'
  ].join("");
- $("undo").disabled=undo.length===0;$("redo").disabled=redo.length===0;
+ $("undo").disabled=undo.length===0;$("redo").disabled=redo.length===0;persist();
 }
 function restore(next){push();state=copy(next);render()}
 function newSnapshot(label){return {label,timestamp:new Date().toLocaleString("zh-CN"),version:VERSION,config:copy(config),state:copy(state)}}
@@ -98,7 +115,7 @@ function validate(candidate){
  if(!Array.isArray(e.cap)||e.cap.length!==6||e.cap.some(x=>!Number.isFinite(x)||x<0||x>100))throw Error(e.name+" 六维属性需0-100");
  if(!Array.isArray(e.need)||e.need.length!==5||e.need.some(x=>!Number.isFinite(x)||x<0))throw Error(e.name+" 资源需求必须是五个非负数");
  if(!Number.isFinite(e.potential)||e.potential<0||e.potential>100||!Number.isFinite(e.coverage)||e.coverage<0||e.coverage>100)throw Error(e.name+" 的潜力与覆盖需0-100");
- if(!["A","B","C","D"].includes(e.evidence))throw Error(e.name+" 的证据等级必须A/B/C/D");
+ if(!["A","B","C"].includes(e.evidence))throw Error(e.name+" 的证据等级必须A/B/C；缺失信息请另列缺口");
  }
  return true;
 }
@@ -129,5 +146,5 @@ $("applyConfig").onclick=()=>{
 $("exportConfig").onclick=()=>exportFile("县域产业配置模板.json",config);
 $("resetDemo").onclick=()=>{config=copy(demo);state={slots:{core:"manufacture",supply:"parts"},selected:"manufacture"};undo=[];redo=[];saved={A:null,B:null};snapshots=[];render();$("configModal").classList.remove("open")};
 $("importConfig").onclick=()=>{try{const candidate=JSON.parse($("importJson").value);validate(candidate);config=copy(candidate);state={slots:emptySlots(),selected:candidate.entities[0].id};undo=[];redo=[];snapshots=[];saved={A:null,B:null};render();$("importStatus").textContent="已导入并初始化，原方案已清空";$("configModal").classList.remove("open")}catch(e){$("importStatus").textContent="导入失败："+e.message}};
-render();
+loadPersisted();render();
 </script></body></html>
