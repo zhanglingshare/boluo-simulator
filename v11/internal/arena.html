@@ -62,6 +62,34 @@ button,input,select{font:inherit}button{cursor:pointer}a{color:inherit;text-deco
 @media(max-width:1100px){.player-detail-grid{grid-template-columns:1fr}.attribute-layout{grid-template-columns:minmax(220px,.8fr) minmax(220px,1fr)}}
 @media(max-width:760px){.player-detail-grid{grid-template-columns:1fr}.attribute-layout{grid-template-columns:1fr}.radar-stage svg{max-height:220px}.attribute-list{grid-template-columns:1fr 1fr;gap:10px}.attribute-row{grid-template-columns:54px minmax(0,1fr) 45px;gap:6px}.role-grid{height:auto;min-height:620px;grid-template-columns:repeat(2,minmax(0,1fr));grid-template-rows:repeat(3,minmax(155px,1fr));padding:12px;gap:8px}.role-grid:before{display:none}.role-grid:after{width:55px;height:55px}.role-slot:nth-child(n){grid-column:auto;grid-row:auto}.pitch-caption{font-size:8px}.profile-emblem{width:58px;height:58px;font-size:25px}.profile-hero:after{right:-100px}.scout-grade{flex-wrap:wrap}.scout-grade small{width:100%;margin-left:0}}
 @media(max-width:420px){.attribute-list{grid-template-columns:1fr}.role-grid{grid-template-columns:1fr;grid-template-rows:none;min-height:0}.role-slot{min-height:135px}.role-grid:after{display:none}}
+
+/* Visualization-first layer: visual evidence coverage, scouting matrix and live squad composition */
+.evidence-visual{margin-top:17px;padding-top:14px;border-top:1px solid var(--line)}
+.evidence-visual-head,.scout-map-title,.lineup-summary-head{display:flex;align-items:center;justify-content:space-between;gap:10px;margin-bottom:12px}
+.evidence-visual-head b,.scout-map-title b,.lineup-summary-head b{font-size:11px;color:#dceaf4}
+.evidence-visual-head span,.scout-map-title span,.lineup-summary-head span{font-size:9px;color:#7894a9}
+.coverage-grid{display:grid;grid-template-columns:repeat(6,minmax(0,1fr));gap:7px}
+.coverage-cell{border:1px solid rgba(145,180,204,.13);border-radius:9px;padding:9px 5px;text-align:center;background:rgba(7,24,37,.55)}
+.coverage-cell .coverage-icon{width:24px;height:24px;border-radius:8px;margin:0 auto 7px;display:grid;place-items:center;background:rgba(94,224,220,.08);color:#6bcac7;font-size:12px}
+.coverage-cell b{display:block;font-size:9px;color:#b8ccda;white-space:nowrap}
+.coverage-cell small{display:block;font-size:8px;color:#718da2;margin-top:5px}
+.coverage-cell .coverage-track{height:3px;background:#263e52;border-radius:5px;margin-top:8px;overflow:hidden}
+.coverage-cell .coverage-track i{display:block;width:0;height:100%;background:#5ee0dc}
+.attribute-row{padding:5px 0}.attribute-row .attribute-track{position:relative;background:repeating-linear-gradient(90deg,#253c50 0,#253c50 8px,transparent 8px,transparent 11px);height:8px}.attribute-row .attribute-track:after{content:"";position:absolute;inset:0;background:linear-gradient(90deg,transparent,rgba(255,255,255,.025))}
+.scout-map{padding:12px 0 13px;border-bottom:1px solid rgba(170,203,229,.1)}
+.scout-quadrants{height:170px;display:grid;grid-template-columns:1fr 1fr;grid-template-rows:1fr 1fr;position:relative;border:1px solid rgba(170,203,229,.17);border-radius:10px;overflow:hidden;background:linear-gradient(90deg,transparent calc(50% - .5px),rgba(170,203,229,.18) 50%,transparent calc(50% + .5px)),linear-gradient(0deg,transparent calc(50% - .5px),rgba(170,203,229,.18) 50%,transparent calc(50% + .5px)),rgba(7,21,33,.35)}
+.quad{padding:12px;display:flex;flex-direction:column;justify-content:center;gap:5px}.quad b{font-size:10px;color:#d6e5ef}.quad small{font-size:8px;color:#7893a8}.qdot{width:7px;height:7px;border-radius:50%;display:block}.qdot.green{background:var(--green)}.qdot.amber{background:var(--amber)}.qdot.cyan{background:var(--cyan)}.qdot.red{background:var(--red)}
+.quad-center{position:absolute;left:50%;top:50%;transform:translate(-50%,-50%);width:66px;height:50px;border-radius:10px;background:#173247;border:1px solid rgba(94,224,220,.35);display:grid;place-content:center;text-align:center;color:var(--cyan);font-size:10px;font-weight:750;box-shadow:0 5px 20px #06141d}.quad-center small{font-size:7px;color:#8eabbc;font-weight:400}
+.lineup-summary{margin-top:14px;padding:11px 12px;border:1px solid rgba(130,193,177,.16);border-radius:11px;background:rgba(5,22,30,.55)}
+.role-distribution{display:flex;height:13px;border-radius:20px;overflow:hidden;background:#203849;gap:2px}
+.role-distribution span{display:block;min-width:3px;transition:width .3s ease;border-radius:20px}
+.role-distribution-legend{display:flex;gap:10px;flex-wrap:wrap;margin-top:9px}
+.role-distribution-legend span{font-size:8px;color:#8ca7b8;display:flex;align-items:center;gap:4px}
+.role-distribution-legend i{width:6px;height:6px;border-radius:2px;display:inline-block}
+.role-grid{background-image:linear-gradient(rgba(11,48,45,.18),rgba(11,48,45,.18)),repeating-linear-gradient(0deg,transparent 0,transparent 48px,rgba(129,203,181,.06) 49px,transparent 50px)}
+.role-grid .pitch-link-layer{position:absolute;inset:0;width:100%;height:100%;z-index:0;pointer-events:none;opacity:.72}
+.role-slot{z-index:1}
+@media(max-width:760px){.coverage-grid{grid-template-columns:repeat(3,minmax(0,1fr))}.scout-quadrants{height:155px}.quad{padding:8px}.lineup-summary-head{align-items:flex-start;flex-direction:column}}
 </style>
 </head>
 <body>
@@ -132,10 +160,24 @@ button,input,select{font:inherit}button{cursor:pointer}a{color:inherit;text-deco
       </svg><div class="radar-legend"><span><i></i>能力数据待接入</span><span><i></i>不生成虚构分数</span></div></div>
       <div class="attribute-list" id="attributeList"></div>
      </div>
+     <div class="evidence-visual">
+      <div class="evidence-visual-head"><b>证据覆盖雷达</b><span>覆盖情况 ≠ 能力高低</span></div>
+      <div class="coverage-grid" id="coverageGrid"></div>
+     </div>
     </section>
     <section class="panel scouting-report">
      <div class="scout-head"><div><div class="eyebrow">SCOUTING REPORT / 球探报告</div><h2>这支产业队伍，值得看什么？</h2></div><div class="scout-stamp">SCOUT<br>NOTE</div></div>
      <div class="scout-grade"><span>综合判断</span><b>待证据</b><small>不以印象代替评级</small></div>
+     <div class="scout-map">
+      <div class="scout-map-title"><b>潜力 × 风险观察矩阵</b><span>定性检查项，非量化评分</span></div>
+      <div class="scout-quadrants">
+       <div class="quad"><i class="qdot green"></i><b>潜力线索</b><small>技术 / 订单 / 市场</small></div>
+       <div class="quad"><i class="qdot amber"></i><b>关键依赖</b><small>客户 / 设备 / 原料</small></div>
+       <div class="quad"><i class="qdot cyan"></i><b>协同机会</b><small>配套 / 服务 / 人才</small></div>
+       <div class="quad"><i class="qdot red"></i><b>脆弱环节</b><small>集中 / 替代 / 现金流</small></div>
+       <div class="quad-center">待证据<br><small>不预设位置</small></div>
+      </div>
+     </div>
      <div class="scout-block"><b><i class="scout-dot good"></i>优势线索 / 值得验证</b><p id="scoutStrength">当前缺少主体级证据，暂不判定优势。先核验产品、订单、技术和本地配套。</p></div>
      <div class="scout-block"><b><i class="scout-dot risk"></i>短板风险 / 必须追问</b><p id="scoutWeakness">重点检查客户集中、关键设备依赖、订单稳定性和价值留存，不能把缺失数据解释成能力不足。</p></div>
      <div class="scout-block"><b><i class="scout-dot fit"></i>角色适配 / 阵容位置</b><p id="scoutFit">适配角色需要由规模、功能、网络位置和替代难度共同判断。</p></div>
@@ -158,6 +200,7 @@ button,input,select{font:inherit}button{cursor:pointer}a{color:inherit;text-deco
   <div class="pitch-wrap">
    <div class="pitch-caption"><span>TACTICAL BOARD / 产业战术板</span><span>拖动主体卡片改变阵型位置</span></div>
    <div class="role-grid" id="roleGrid"></div>
+   <div class="lineup-summary"><div class="lineup-summary-head"><b>阵容角色分布</b><span>按当前拖拽配置实时变化</span></div><div class="role-distribution" id="roleDistribution"></div></div>
   </div>
   <div class="panel pool"><div class="section-title"><div><h2>候选产业池</h2><p>尚未放入当前阵容的主体</p></div><span class="tag">拖入上方角色区</span></div><div class="chip-list" id="poolList"></div></div>
  </section>
@@ -223,7 +266,9 @@ function renderSubjects(){
 function renderProfile(){
  var s=subject(state.subject);el("profileName").textContent=s.name;el("profileDesc").textContent=s.desc;el("profileEmblem").textContent=s.short;el("profileEyebrow").textContent="INDUSTRY PROFILE / "+s.id.toUpperCase();
  var attr=el("attributeList");attr.innerHTML="";
- dimensions.forEach(function(d){var row=document.createElement("div");row.className="attribute-row";row.innerHTML="<b>"+d[0]+"</b><div class='attribute-track'><i></i></div><small>待核验</small>";attr.appendChild(row)});
+ dimensions.forEach(function(d){var row=document.createElement("div");row.className="attribute-row";row.innerHTML="<b>"+d[0]+"</b><div class='attribute-track'><i></i></div><small>无数据</small>";attr.appendChild(row)});
+ var coverage=el("coverageGrid");coverage.innerHTML="";
+ ["规","单","技","链","值","险"].forEach(function(icon,i){var cell=document.createElement("div");cell.className="coverage-cell";cell.innerHTML="<div class='coverage-icon'>"+icon+"</div><b>"+dimensions[i][0]+"</b><small>待接入</small><div class='coverage-track'><i></i></div>";coverage.appendChild(cell)});
  var scout={
   electronics:["需要核验产品是否进入稳定客户供应链，是否形成关键工艺或本地配套优势。","重点追问核心客户集中度、关键零部件外采比例、订单波动和本地采购深度。","核心支柱型 / 成长突破型均为候选角色，须结合产值、企业层级和网络位置判断。"],
   materials:["需要核验产品是否有明确下游应用、稳定客户和可持续的技术适配能力。","重点追问原料来源、设备依赖、客户认证周期、产品价格波动和替代品。","关键配套型 / 成长突破型为待验证角色，不能仅凭产业名称认定。"],
@@ -242,6 +287,9 @@ el("addToLineup").addEventListener("click",function(){var id=state.subject;if(al
 el("openEvidence").addEventListener("click",function(){openDrawer("证据规则","<div class='drawer-block'><b>事实</b><p>有明确来源、时间和统计口径的观测信息。</p></div><div class='drawer-block'><b>估算</b><p>由已知信息按公开方法推算，需展示方法和区间。</p></div><div class='drawer-block'><b>假设</b><p>为了运行情景而设置的条件，必须允许调整。</p></div><div class='drawer-block'><b>模型输出</b><p>特定输入和模型版本下的计算结果，不等于事实。</p></div><p>数据完整度回答“覆盖多少”；证据可信度回答“判断有多可靠”。两者不能混成一个分数。</p>")});
 function renderLineup(){
  var grid=el("roleGrid");grid.innerHTML="";
+ var links=document.createElementNS("http://www.w3.org/2000/svg","svg");links.setAttribute("class","pitch-link-layer");links.setAttribute("viewBox","0 0 600 420");links.setAttribute("preserveAspectRatio","none");
+ [[300,95,105,95],[300,95,495,95],[105,95,105,325],[105,325,300,325],[300,95,300,325],[495,95,495,325],[300,325,495,325]].forEach(function(p){var line=document.createElementNS("http://www.w3.org/2000/svg","path");line.setAttribute("d","M"+p[0]+" "+p[1]+" L"+p[2]+" "+p[3]);line.setAttribute("stroke","rgba(116,205,187,.42)");line.setAttribute("stroke-width","1.5");line.setAttribute("stroke-dasharray","5 7");line.setAttribute("fill","none");links.appendChild(line)});
+ grid.appendChild(links);
  roles.forEach(function(r){
   var slot=document.createElement("div");slot.className="role-slot";slot.dataset.role=r.id;
   var ids=state.lineup[r.id]||[];
@@ -256,7 +304,15 @@ function renderLineup(){
  var pool=el("poolList");pool.innerHTML="";
  var assigned=allAssigned();
  subjects.filter(function(s){return assigned.indexOf(s.id)<0}).forEach(function(s){pool.appendChild(makeChip(s,"pool"))});
- renderMatrix();renderChecks()
+ renderMatrix();renderChecks();renderRoleDistribution()
+}
+function renderRoleDistribution(){
+ var box=el("roleDistribution");if(!box)return;box.innerHTML="";
+ var total=allAssigned().length;
+ roles.forEach(function(r){var n=(state.lineup[r.id]||[]).length;var seg=document.createElement("span");seg.style.width=(total?n/total*100:0)+"%";seg.style.background=r.color;seg.title=r.name+": "+n;box.appendChild(seg)});
+ var legend=document.createElement("div");legend.className="role-distribution-legend";
+ roles.forEach(function(r){var n=(state.lineup[r.id]||[]).length;var item=document.createElement("span");item.innerHTML="<i style='background:"+r.color+"'></i>"+r.name+" "+n;legend.appendChild(item)});
+ box.parentNode.appendChild(legend)
 }
 function makeChip(s,from){
  var c=document.createElement("div");c.className="industry-chip";c.draggable=true;c.dataset.subject=s.id;c.style.setProperty("--chip",s.color);
