@@ -148,6 +148,30 @@ button,input,select{font:inherit}button{cursor:pointer}a{color:inherit;text-deco
 @media(max-width:1150px){.player-screen{grid-template-columns:290px minmax(0,1fr)}.ability-workspace{grid-template-columns:1fr}.traits-panel,.attribute-detail{grid-column:auto}.squad-layout{grid-template-columns:1fr}.squad-side{grid-template-columns:repeat(2,1fr)}.squad-pool-panel{grid-column:1/-1}}
 @media(max-width:760px){.player-screen{grid-template-columns:1fr}.player-card-column{max-width:420px;width:100%;margin:auto}.ability-workspace{grid-template-columns:1fr}.trait-list{grid-template-columns:repeat(2,1fr)}.dimension-detail{grid-template-columns:1fr 1fr}.scout-hero{padding:17px;align-items:flex-start}.scout-score-ring{width:90px;height:90px}.scout-score-ring b{font-size:27px}.scout-grid{grid-template-columns:1fr}.development-track{grid-template-columns:1fr}.lineup-toolbar{align-items:flex-start;flex-direction:column}.squad-side{grid-template-columns:1fr}.squad-pitch{min-height:620px;padding:18px 4%;gap:7px}.squad-card{width:100px}.squad-card-top b{font-size:18px}.squad-card-name{font-size:8px}.lineup-compare{grid-template-columns:1fr 1fr}}
 @media(max-width:430px){.player-card{min-height:470px}.scout-grade-row{gap:13px}.scout-grade-row b{font-size:14px}.scout-score-ring{width:76px;height:76px}.scout-score-ring b{font-size:23px}.trait-list{grid-template-columns:1fr 1fr}.dimension-detail{grid-template-columns:1fr}.squad-pitch{min-height:560px;grid-template-columns:repeat(2,minmax(0,1fr));grid-template-rows:repeat(3,1fr);padding:12px 3%}.squad-slot[data-role="growth"]{grid-column:2;grid-row:1}.squad-slot[data-role="core"]{grid-column:1;grid-row:1}.squad-slot[data-role="key"]{grid-column:1;grid-row:2}.squad-slot[data-role="service"]{grid-column:2;grid-row:2}.squad-slot[data-role="base"]{grid-column:1;grid-row:3}.squad-slot[data-role="reserve"]{grid-column:2;grid-row:3}.squad-card{width:95px}.lineup-compare{grid-template-columns:1fr}}
+
+/* INDUSTRY PLAYER DATABASE / roster game UI */
+.workspaces{grid-template-columns:repeat(4,minmax(0,1fr))}
+.roster-scoreboard{display:grid;grid-template-columns:repeat(4,minmax(95px,1fr)) minmax(180px,1.7fr);gap:9px;padding:13px;border:1px solid var(--line);border-radius:15px;background:linear-gradient(110deg,#112c42,#0c1f30);margin-bottom:13px}
+.roster-scoreboard>div:not(.roster-board-note){padding:6px 12px;border-right:1px solid var(--line)}.roster-scoreboard b{display:block;font-size:26px;color:#f0d18d;letter-spacing:-.05em}.roster-scoreboard span{font-size:9px;color:#8ba6b9}.roster-board-note{display:flex;align-items:center;justify-content:flex-end;font-size:10px;color:#79b9bd;letter-spacing:.08em}
+.roster-toolbar{display:grid;grid-template-columns:minmax(240px,1fr) 220px 160px;gap:9px;margin:12px 0}
+.roster-search{display:flex;align-items:center;gap:8px;padding:0 12px;border:1px solid #29475e;border-radius:10px;background:#0b1d2d;color:#70d8d5}.roster-search span{font-size:20px}.roster-search input{width:100%;border:0;outline:0;background:transparent;color:#eaf4fa;padding:11px 0;font-size:11px}.roster-search input::placeholder{color:#69859b}
+.roster-toolbar select{width:100%;background:#0b1d2d;border:1px solid #29475e;border-radius:10px;color:#d7e6f0;padding:10px;font-size:10px}
+.team-tabs{display:flex;gap:7px;overflow-x:auto;padding:3px 0 12px;scrollbar-width:thin}.team-tab{flex:none;border:1px solid #2a465d;border-radius:999px;padding:8px 12px;background:#102438;color:#91a9bc;font-size:9px;white-space:nowrap}.team-tab b{color:#e4eef5;margin-right:5px}.team-tab.active{border-color:#5bc7cf;background:linear-gradient(100deg,#17415a,#123443);color:#f3e4c2;box-shadow:0 5px 18px #37c2c522}
+.roster-heading{display:flex;align-items:end;justify-content:space-between;margin:14px 0 12px}.roster-heading h2{font-size:23px;margin:5px 0 0}.roster-heading>span{font-size:9px;color:#7f9bb0}
+.cluster-section{margin:0 0 20px}.cluster-head{display:flex;align-items:center;justify-content:space-between;gap:12px;padding:11px 13px;border-left:3px solid var(--cluster-color,#5ee0dc);border-radius:0 11px 11px 0;background:linear-gradient(90deg,rgba(68,158,188,.12),rgba(15,36,54,.45));margin-bottom:9px}.cluster-head h3{font-size:13px;margin:0}.cluster-head p{font-size:9px;color:#819caf;margin:4px 0 0}.cluster-metric{text-align:right;font-size:11px;color:#f0d18d;font-weight:800;white-space:nowrap}.cluster-metric small{display:block;font-size:8px;color:#7f9bb0;font-weight:500;margin-top:3px}
+.players-grid{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:10px}
+.player-tile{position:relative;min-width:0;overflow:hidden;border:1px solid rgba(169,204,227,.16);border-radius:14px;background:linear-gradient(145deg,#17354d,#0d2133 72%);padding:12px;cursor:pointer;transition:transform .2s,border-color .2s,box-shadow .2s}
+.player-tile:hover{transform:translateY(-4px);border-color:#e2c47f88;box-shadow:0 14px 30px #0005}.player-tile:before{content:"";position:absolute;inset:0 auto 0 0;width:3px;background:var(--tile-color,#5ee0dc);opacity:.85}.tile-top{display:flex;justify-content:space-between;align-items:center;gap:5px}.tile-position{font-size:8px;color:#8fb5c7;letter-spacing:.05em}.tile-status{font-size:7px;color:#e3c987;border:1px solid #e3c98744;border-radius:5px;padding:3px 5px;white-space:nowrap}
+.tile-main{display:grid;grid-template-columns:58px 1fr;gap:9px;align-items:center;margin:12px 0 8px}.tile-ovr{font-size:37px;line-height:1;font-weight:900;color:#f1d18c;letter-spacing:-.08em;text-shadow:0 5px 18px #e7c47722}.tile-ovr small{display:block;font-size:7px;letter-spacing:.2em;color:#839caf;margin-top:4px}.tile-title{font-size:12px;line-height:1.35;font-weight:800;color:#edf5fa}.tile-title small{display:block;font-size:8px;font-weight:500;color:#7e9bb0;margin-top:5px;line-height:1.45}
+.tile-bars{display:grid;gap:5px;margin:9px 0}.tile-bar{display:grid;grid-template-columns:30px 1fr 22px;align-items:center;gap:5px}.tile-bar span{font-size:7px;color:#7895aa}.tile-bar i{height:4px;background:#263f53;border-radius:5px;overflow:hidden}.tile-bar i:after{content:"";display:block;width:var(--v);height:100%;background:linear-gradient(90deg,var(--tile-color,#4da9c8),#f0cf83);border-radius:5px}.tile-bar b{font-size:7px;color:#b9ccd9;text-align:right}
+.tile-club{font-size:8px;color:#a7bac8;line-height:1.5;padding-top:7px;border-top:1px solid #ffffff17;min-height:34px}.tile-club strong{color:#dce9ef;font-weight:650}.tile-bottom{display:flex;justify-content:space-between;align-items:center;margin-top:8px}.tile-pot{font-size:8px;color:#76d9d0}.tile-open{font-size:8px;color:#e7ca85}
+.roster-footnote{font-size:9px;line-height:1.75;color:#6f8ba0;padding:14px 2px;border-top:1px solid var(--line);margin-top:16px}
+.player-select-box #addToLineup{width:100%;margin-top:8px}
+.player-fact-tag{display:inline-block;font-size:8px;color:#e4c782;border:1px solid #e4c78244;border-radius:5px;padding:3px 6px;margin-top:6px}
+@media(max-width:1200px){.players-grid{grid-template-columns:repeat(3,minmax(0,1fr))}.roster-scoreboard{grid-template-columns:repeat(4,1fr)}.roster-board-note{grid-column:1/-1;justify-content:flex-start;padding:5px 12px}}
+@media(max-width:900px){.players-grid{grid-template-columns:repeat(2,minmax(0,1fr))}.workspaces{grid-template-columns:repeat(2,minmax(0,1fr))}}
+@media(max-width:760px){.roster-toolbar{grid-template-columns:1fr 1fr}.roster-search{grid-column:1/-1}.roster-scoreboard{grid-template-columns:repeat(2,1fr)}.roster-scoreboard>div:nth-child(2){border-right:0}.roster-scoreboard>div:nth-child(4){border-right:0}.roster-board-note{grid-column:1/-1}.players-grid{grid-template-columns:repeat(2,minmax(0,1fr));gap:7px}.player-tile{padding:10px}.tile-main{grid-template-columns:49px 1fr;gap:7px}.tile-ovr{font-size:31px}.tile-title{font-size:10px}.roster-heading{align-items:flex-start;flex-direction:column;gap:5px}.workspaces{grid-template-columns:1fr}}
+@media(max-width:390px){.players-grid{grid-template-columns:1fr}.roster-toolbar{grid-template-columns:1fr}.roster-search{grid-column:auto}.tile-main{grid-template-columns:58px 1fr}.tile-ovr{font-size:36px}}
 </style>
 </head>
 <body>
@@ -157,9 +181,10 @@ button,input,select{font:inherit}button{cursor:pointer}a{color:inherit;text-deco
  <div class="nav-label">工作空间 / WORKSPACES</div>
  <div class="nav-row">
   <button class="nav-btn active" data-view="overview"><span class="num">01</span><b>产业总览</b></button>
-  <button class="nav-btn" data-view="profile"><span class="num">02</span><b>能力属性卡</b></button>
-  <button class="nav-btn" data-view="scout"><span class="num">03</span><b>球探报告</b></button>
-  <button class="nav-btn" data-view="lineup"><span class="num">04</span><b>产业阵容</b></button>
+  <button class="nav-btn" data-view="players"><span class="num">02</span><b>产业球员库</b></button>
+  <button class="nav-btn" data-view="profile"><span class="num">03</span><b>能力属性卡</b></button>
+  <button class="nav-btn" data-view="scout"><span class="num">04</span><b>球探报告</b></button>
+  <button class="nav-btn" data-view="lineup"><span class="num">05</span><b>产业阵容</b></button>
  </div>
  <div class="side-bottom"><strong>内部辅助决策原型</strong><br>事实、估算、假设与模型输出分层呈现。当前为交互原型，尚未接入发改部门真实数据。</div>
 </aside>
@@ -169,13 +194,13 @@ button,input,select{font:inherit}button{cursor:pointer}a{color:inherit;text-deco
 <section class="view active" id="view-overview">
  <div class="page-head"><div><div class="eyebrow">INDUSTRY COMMAND CENTER</div><h1>产业全局，先看结构。<br><span style="color:var(--cyan)">再决定往哪里深入。</span></h1><p>把产业变化、主体能力、组合关系和风险线索放在同一张工作台上。先发现值得关注的地方，再进入具体主体和组合实验。</p></div><div class="head-right"><span class="tag cyan">内部辅助决策</span><span class="tag amber">演示数据 / 待接入</span></div></div>
  <div class="grid overview-grid">
-  <div class="panel metric" style="--glow:rgba(84,167,255,.13)"><div class="metric-label">分析对象层级</div><div class="metric-value">05 <span style="font-size:12px;color:var(--muted);font-weight:500">级</span></div><div class="metric-note">区域体系 → 支撑平台</div></div>
-  <div class="panel metric" style="--glow:rgba(94,224,220,.13)"><div class="metric-label">主体能力维度</div><div class="metric-value">06 <span style="font-size:12px;color:var(--muted);font-weight:500">维</span></div><div class="metric-note">规模、动能、技术、协同、价值、韧性</div></div>
+  <div class="panel metric" style="--glow:rgba(84,167,255,.13)"><div class="metric-label">分析对象层级</div><div class="metric-value">08 <span style="font-size:12px;color:var(--muted);font-weight:500">群</span></div><div class="metric-note">八大产业集群 → 细分产业球员</div></div>
+  <div class="panel metric" style="--glow:rgba(94,224,220,.13)"><div class="metric-label">主体能力维度</div><div class="metric-value">38 <span style="font-size:12px;color:var(--muted);font-weight:500">位</span></div><div class="metric-note">细分产业球员 · 含未来储备与支撑席</div></div>
   <div class="panel metric" style="--glow:rgba(87,214,160,.13)"><div class="metric-label">证据分层</div><div class="metric-value">A—D</div><div class="metric-note">事实、线索、估算、数据缺口</div></div>
-  <div class="panel metric" style="--glow:rgba(181,160,255,.13)"><div class="metric-label">核心工作空间</div><div class="metric-value">03</div><div class="metric-note">总览、主体档案、产业阵容</div></div>
+  <div class="panel metric" style="--glow:rgba(181,160,255,.13)"><div class="metric-label">核心工作空间</div><div class="metric-value">04</div><div class="metric-note">球员库、属性卡、球探报告、阵容</div></div>
  </div>
  <div class="grid workspaces">
-  <article class="panel workspace" data-open="profile"><div class="orb"></div><div class="index">01 / SCOUTING ROOM</div><h3>主体档案室</h3><p>查看产业主体的六维能力、发展潜力、证据可信度和数据缺口。由产业门类继续下钻到产业链与企业群体。</p><div class="go">↗</div></article>
+  <article class="panel workspace" data-open="players"><div class="orb"></div><div class="index">01 / PLAYER DATABASE</div><h3>产业球员库</h3><p>从八大产业集群下钻到细分产业，查看每个球员的总评、位置、俱乐部、特长和短板。</p><div class="go">↗</div></article>
   <article class="panel workspace" data-open="lineup"><div class="orb"></div><div class="index">02 / LINEUP LAB</div><h3>产业阵容工作台</h3><p>调整产业角色与组合，检查协同、资源竞争和结构缺口。拖动不是装饰，组合变化必须可见。</p><div class="go">↗</div></article>
   <article class="panel workspace" data-open="profile"><div class="orb"></div><div class="index">03 / EVIDENCE DESK</div><h3>证据与能力</h3><p>不把缺失数据伪装成评分。每个判断都应能回到指标定义、来源、时间和核验状态。</p><div class="go">↗</div></article>
  </div>
@@ -201,157 +226,226 @@ button,input,select{font:inherit}button{cursor:pointer}a{color:inherit;text-deco
  </div>
 </section>
 
+
+<section class="view" id="view-players">
+ <div class="page-head game-head"><div><div class="eyebrow">INDUSTRY PLAYER DATABASE / 2026</div><h1>博罗产业球员库</h1><p>先选球队，再看球员。每一个细分产业都是一个独立分析对象，可以进入能力卡、球探报告，也可以拖进阵容。</p></div><div class="head-right"><span class="tag amber">能力值为开发演示参数</span></div></div>
+ <div class="roster-scoreboard"><div><b>08</b><span>主力产业集群</span></div><div><b id="rosterPlayerCount">38</b><span>细分产业球员</span></div><div><b>04</b><span>未来储备席</span></div><div><b>03</b><span>共享支撑席</span></div><div class="roster-board-note">按产业集群分队 · 不是把企业名单当产业分类</div></div>
+ <div class="roster-toolbar"><div class="roster-search"><span>⌕</span><input id="playerSearch" type="search" placeholder="搜索产业、环节、企业样本…" autocomplete="off"></div><select id="clusterFilter" aria-label="按产业集群筛选"><option value="all">全部球队 / 集群</option></select><select id="sortPlayers" aria-label="球员排序"><option value="ovr">按 OVR 总评</option><option value="pot">按 POT 潜力</option><option value="name">按名称</option></select></div>
+ <div class="team-tabs" id="teamTabs"></div>
+ <div class="roster-heading"><div><span class="eyebrow">SQUAD ROSTER</span><h2 id="rosterHeading">全部产业球员</h2></div><span id="rosterSubheading">点击卡片查看详细能力</span></div>
+ <div id="playersGrid" class="players-grid"></div>
+ <div class="roster-footnote">说明：八大产业集群名称和公开报道中的企业样本用于搭建开发版产业地图；球员是进一步拆分的产业链环节，不代表每个环节都已在博罗形成完整规模。OVR、POT、六维属性是为了先跑通 FIFA / NBA 式界面而设置的演示值，不是官方评价或真实测算。标注「待核」的环节用于补链观察，不能当作已存在的本地企业。</div>
+</section>
+
 <section class="view" id="view-profile">
- <div class="page-head game-head"><div><div class="eyebrow">PLAYER ATTRIBUTES / INDUSTRY PROFILE</div><h1>产业主体能力卡</h1><p>像看一名球员一样，第一眼看总评、位置、特长和短板；再展开六维能力。</p></div><div class="head-right"><span class="tag amber">演示数值 · 非正式评价</span></div></div>
- <div class="demo-ribbon"><span class="live-dot"></span>开发演示模式　能力总评 OVR、成长潜力 POT、六维属性均为模拟界面数据，先把产品体验跑通。</div>
+ <div class="page-head game-head"><div><div class="eyebrow">PLAYER ATTRIBUTES / INDUSTRY PROFILE</div><h1>产业主体能力卡</h1><p>第一眼看总评、位置、潜力和俱乐部；再拆开六维能力，识别它在产业阵容中的真实角色。</p></div><div class="head-right"><span class="tag amber">演示数值 · 非正式评价</span></div></div>
+ <div class="demo-ribbon"><span class="live-dot"></span>开发阶段先完整模拟游戏体验。OVR、POT、六维属性均为演示参数，后续可由真实数据替换。</div>
  <div class="player-screen">
   <aside class="player-card-column">
    <article class="player-card" id="playerCard">
     <div class="player-card-top"><span>BORO INDUSTRY</span><span>PLAYER CARD · 2026</span></div>
-    <div class="player-card-main"><div><div class="player-position" id="playerPosition">核心型</div><div class="player-ovr" id="cardOvr">82</div><div class="player-ovr-label">OVERALL</div><div class="player-nation">博罗产业主体 · <b id="cardShort">电子</b></div></div><div class="player-emblem" id="profileEmblem">电</div></div>
-    <div class="player-art"><div class="art-orbit orbit-a"></div><div class="art-orbit orbit-b"></div><div class="art-core" id="artCore">电</div><div class="art-lines"></div><div class="art-glow"></div></div>
-    <div class="player-name"><h2 id="profileName">电子信息产业</h2><span id="profileEnglish">ELECTRONIC INFORMATION</span></div>
-    <div class="player-card-stats"><div><b id="cardPot">91</b><small>POT 潜力</small></div><div><b id="cardState">76</b><small>状态</small></div><div><b id="cardRisk">68</b><small>风险承受</small></div></div>
-    <div class="player-card-footer"><span>✦ 产业能力卡</span><span>DEMO DATA</span></div>
+    <div class="player-card-main"><div><div class="player-position" id="playerPosition">CAM · 创新前腰</div><div class="player-ovr" id="cardOvr">91</div><div class="player-ovr-label">OVERALL</div><div class="player-nation">博罗产业球员 · <b id="cardShort">HDI</b></div></div><div class="player-emblem" id="profileEmblem">板</div></div>
+    <div class="player-art"><div class="art-orbit orbit-a"></div><div class="art-orbit orbit-b"></div><div class="art-core" id="artCore">板</div><div class="art-lines"></div><div class="art-glow"></div></div>
+    <div class="player-name"><h2 id="profileName">高密度互连线路板</h2><span id="profileEnglish">HDI PRINTED CIRCUIT BOARD</span></div>
+    <div class="player-card-stats"><div><b id="cardPot">94</b><small>POT 潜力</small></div><div><b id="cardState">82</b><small>状态</small></div><div><b id="cardRisk">71</b><small>抗风险</small></div></div>
+    <div class="player-card-footer"><span>✦ 产业能力卡</span><span id="cardCluster">电子信息</span></div>
    </article>
-   <div class="player-select-box"><label for="subjectSelect">切换分析主体</label><select id="subjectSelect"></select></div>
-   <div class="mini-profile-note"><b>球员卡式呈现</b><span>总评不是全部。高总评也可能存在关键弱点，潜力高也不等于必然成长。</span></div>
+   <div class="player-select-box"><label for="subjectSelect">切换分析球员</label><select id="subjectSelect"></select><button class="primary-btn" id="addToLineup">＋ 加入产业阵容</button></div>
+   <div class="mini-profile-note"><b id="playerClub">俱乐部 / 公开样本</b><span id="playerFact">公开信息与待核实信息分开呈现。</span></div>
   </aside>
   <div class="ability-workspace">
-   <section class="panel attribute-panel">
-    <div class="game-section-title"><div><i>01</i><div><b>六维核心属性</b><small>PLAYER ATTRIBUTES</small></div></div><span class="tag cyan">LIVE PROFILE</span></div>
-    <div class="attribute-list" id="attributeList"></div>
-    <div class="attribute-scale"><span>0 弱</span><span>50 中位</span><span>100 强</span></div>
-   </section>
-   <section class="panel radar-panel">
-    <div class="game-section-title"><div><i>02</i><div><b>能力结构雷达</b><small>ATTRIBUTE RADAR</small></div></div><span class="micro">六维对照</span></div>
-    <svg id="radarSvg" viewBox="0 0 360 310" role="img" aria-label="产业六维能力雷达图"></svg>
-    <div class="radar-foot"><span><i></i>当前能力</span><span><i class="ghost"></i>成长潜力轮廓</span></div>
-   </section>
-   <section class="panel traits-panel">
-    <div class="game-section-title"><div><i>03</i><div><b>球员特性 / 产业标签</b><small>PLAYER TRAITS</small></div></div><span class="micro">可随数据更新</span></div>
-    <div class="trait-list" id="traitList"></div>
-   </section>
-   <section class="panel attribute-detail">
-    <div class="game-section-title"><div><i>04</i><div><b>属性拆解</b><small>WHAT SITS BEHIND THE SCORE</small></div></div><span class="micro">点击维度查看解释</span></div>
-    <div class="dimension-detail" id="dimensionDetail"></div>
-   </section>
+   <section class="panel attribute-panel"><div class="game-section-title"><div><i>01</i><div><b>六维核心属性</b><small>PLAYER ATTRIBUTES</small></div></div><span class="tag cyan">LIVE PROFILE</span></div><div class="attribute-list" id="attributeList"></div><div class="attribute-scale"><span>0 弱</span><span>50 中位</span><span>100 强</span></div></section>
+   <section class="panel radar-panel"><div class="game-section-title"><div><i>02</i><div><b>能力结构雷达</b><small>ATTRIBUTE RADAR</small></div></div><span class="micro">六维对照</span></div><svg id="radarSvg" viewBox="0 0 360 310" role="img" aria-label="产业六维能力雷达图"></svg><div class="radar-foot"><span><i></i>当前能力</span><span><i class="ghost"></i>成长潜力轮廓</span></div></section>
+   <section class="panel traits-panel"><div class="game-section-title"><div><i>03</i><div><b>球员特性 / 产业标签</b><small>PLAYER TRAITS</small></div></div><span class="micro">随主体变化</span></div><div class="trait-list" id="traitList"></div></section>
+   <section class="panel attribute-detail"><div class="game-section-title"><div><i>04</i><div><b>属性拆解</b><small>WHAT SITS BEHIND THE SCORE</small></div></div><span class="micro">六维能力口径</span></div><div class="dimension-detail" id="dimensionDetail"></div></section>
   </div>
  </div>
- <details class="evidence-accordion"><summary>展开：数据口径、证据来源与评分规则</summary><div class="evidence-accordion-inner"><p id="profileDesc">当前为演示主体。正式接入时，每个属性均绑定指标、来源、时间和证据等级。</p><table class="evidence-table"><thead><tr><th>核验项目</th><th>当前状态</th><th>下一步需要的数据</th></tr></thead><tbody id="evidenceBody"></tbody></table></div></details>
-</section><section class="view" id="view-lineup">
- <div class="page-head game-head"><div><div class="eyebrow">SQUAD BUILDER / INDUSTRY LINEUP</div><h1>产业阵容工作台</h1><p>把产业主体放进同一支队伍。看谁是核心、谁负责创造机会、谁补短板，以及阵容里哪些位置无人可替。</p></div><div class="head-right"><span class="tag cyan">拖拽换位</span><span class="tag amber">演示阵容</span></div></div>
- <div class="demo-ribbon"><span class="live-dot"></span>阵容评分和化学反应为演示参数。拖动主体即可调整位置，正式版接入真实产业关联和资源约束后计算。</div>
- <div class="lineup-toolbar"><div><b>当前战术：产业协同 4-2-3-1</b><small>角色阵型可调整，不代表行政产业分类</small></div><div class="lineup-actions"><button class="soft-btn" id="resetLineup">恢复默认阵容</button><button class="soft-btn" id="saveLineup">保存阵容</button><button class="primary-btn" id="compareLineup">检查阵容短板</button></div></div>
+ <details class="evidence-accordion"><summary>展开：数据口径、证据来源与评分规则</summary><div class="evidence-accordion-inner"><p id="profileDesc">每个产业球员均需绑定具体指标、企业范围、时间和证据状态。</p><table class="evidence-table"><thead><tr><th>核验项目</th><th>当前状态</th><th>下一步需要的数据</th></tr></thead><tbody id="evidenceBody"></tbody></table></div></details>
+</section>
+
+<section class="view" id="view-scout">
+ <div class="page-head game-head"><div><div class="eyebrow">SCOUTING REPORT / INDUSTRY INTELLIGENCE</div><h1>产业球探报告</h1><p>不只看它强不强，还看强在哪里、短板在哪里、适合什么位置，以及下一步该盯什么。</p></div><div class="head-right"><span class="tag amber">演示报告 · 可替换</span></div></div>
+ <div class="demo-ribbon"><span class="live-dot"></span>球探内容是开发阶段的结构化观察样例；不是对企业或行业的正式评级。</div>
+ <div class="scout-hero"><div class="scout-hero-left"><div class="scout-kicker">SCOUT'S VERDICT</div><h2 id="scoutName">高密度互连线路板</h2><p id="scoutIntro">产业球员观察报告</p><div class="scout-grade-row"><div class="scout-grade"><b id="scoutGrade">A−</b><small>综合观察等级</small></div><div class="scout-potential"><b id="scoutPotential">ELITE</b><small>成长空间</small></div><div class="scout-role"><b id="scoutRole">创新前腰</b><small>适配位置</small></div></div></div><div class="scout-score-ring"><div><b id="scoutScore">91</b><small>SCOUT INDEX</small></div></div></div>
+ <div class="scout-grid">
+  <section class="panel scout-panel strengths"><div class="game-section-title"><div><i>＋</i><div><b>优势与可利用特性</b><small>STRENGTHS</small></div></div><span class="tag green">优势端</span></div><div id="scoutStrengths" class="scout-bullet-list"></div></section>
+  <section class="panel scout-panel weaknesses"><div class="game-section-title"><div><i>!</i><div><b>弱点与暴露风险</b><small>WEAKNESSES</small></div></div><span class="tag red">风险端</span></div><div id="scoutWeaknesses" class="scout-bullet-list"></div></section>
+  <section class="panel scout-panel fit-panel"><div class="game-section-title"><div><i>◎</i><div><b>阵容适配分析</b><small>ROLE FIT</small></div></div></div><div id="scoutFit" class="fit-list"></div></section>
+  <section class="panel scout-panel watch-panel"><div class="game-section-title"><div><i>⌁</i><div><b>下一步球探观察清单</b><small>WHAT TO WATCH NEXT</small></div></div></div><div id="scoutWatch" class="watch-list"></div></section>
+ </div>
+ <section class="panel development-panel"><div class="game-section-title"><div><i>↗</i><div><b>成长路线 / 动态能力成长</b><small>DEVELOPMENT PATH</small></div></div><span class="tag cyan">情景演示</span></div><div class="development-track" id="developmentTrack"></div></section>
+ <div class="scout-bottom-note">球探报告不是一锤定音的结论。它是一份可更新的观察档案：新项目、新订单、新企业关系和新数据进入后，优势、弱点、适配位置和成长路线都可以变化。</div>
+</section>
+
+<section class="view" id="view-lineup">
+ <div class="page-head game-head"><div><div class="eyebrow">SQUAD BUILDER / INDUSTRY LINEUP</div><h1>产业阵容工作台</h1><p>不是把八个产业集群各放一张卡，而是从几十个细分产业球员中挑选阵容。谁进主力，谁做配套，谁仍在替补席？</p></div><div class="head-right"><span class="tag cyan">拖拽换位</span><span class="tag amber">演示阵容</span></div></div>
+ <div class="demo-ribbon"><span class="live-dot"></span>将产业球员拖入不同位置，阵容结构即时变化。协同指数为演示值，不代表真实产值贡献。</div>
+ <div class="lineup-toolbar"><div><b>当前战术：产业协同 4-2-3-1</b><small>阵型是观察工具，不是行政产业分类</small></div><div class="lineup-actions"><button class="soft-btn" id="resetLineup">恢复默认阵容</button><button class="soft-btn" id="saveLineup">保存阵容</button><button class="primary-btn" id="compareLineup">检查阵容短板</button></div></div>
  <div class="squad-layout">
   <section class="pitch-panel"><div class="pitch-label"><span>HOME SQUAD · BORO INDUSTRY</span><span>TACTICAL FORMATION</span></div><div class="squad-pitch" id="squadPitch">
    <div class="pitch-lines"><span class="pitch-half"></span><span class="pitch-circle"></span><span class="pitch-box top"></span><span class="pitch-box bottom"></span></div>
    <div class="squad-slot" data-role="growth"><small>前场突破 / 成长引擎</small><div class="squad-slot-cards"></div></div>
-   <div class="squad-slot" data-role="core"><small>核心组织 / 支柱产业</small><div class="squad-slot-cards"></div></div>
-   <div class="squad-slot" data-role="key"><small>关键配套 / 产业链节点</small><div class="squad-slot-cards"></div></div>
+   <div class="squad-slot" data-role="core"><small>核心组织 / 主力支柱</small><div class="squad-slot-cards"></div></div>
+   <div class="squad-slot" data-role="key"><small>关键配套 / 中场连接</small><div class="squad-slot-cards"></div></div>
    <div class="squad-slot" data-role="service"><small>生产服务 / 价值放大</small><div class="squad-slot-cards"></div></div>
-   <div class="squad-slot" data-role="base"><small>基础保障 / 底盘支撑</small><div class="squad-slot-cards"></div></div>
-   <div class="squad-slot" data-role="reserve"><small>替补席 / 战略储备</small><div class="squad-slot-cards"></div></div>
-  </div>
-  <div class="squad-legend"><span><i class="legend-blue"></i>核心能力</span><span><i class="legend-green"></i>成长能力</span><span><i class="legend-gold"></i>支撑能力</span><span><i class="legend-red"></i>风险提示</span></div></section>
+   <div class="squad-slot" data-role="base"><small>基础保障 / 防守底盘</small><div class="squad-slot-cards"></div></div>
+   <div class="squad-slot" data-role="reserve"><small>替补席 / 未来储备</small><div class="squad-slot-cards"></div></div>
+  </div><div class="squad-legend"><span><i class="legend-blue"></i>核心能力</span><span><i class="legend-green"></i>成长能力</span><span><i class="legend-gold"></i>支撑能力</span><span><i class="legend-red"></i>风险提示</span></div></section>
   <aside class="squad-side">
    <section class="panel chemistry-panel"><div class="game-section-title"><div><i>✦</i><div><b>阵容化学反应</b><small>SQUAD CHEMISTRY</small></div></div><span class="tag amber">演示值</span></div><div class="chemistry-score"><b id="chemistryScore">78</b><span>/ 100</span><small>协同适配指数</small></div><div class="chemistry-bar"><i id="chemistryBar"></i></div><div id="chemistryNotes" class="chemistry-notes"></div></section>
    <section class="panel squad-check-panel"><div class="game-section-title"><div><i>⌖</i><div><b>阵容短板扫描</b><small>WEAK SPOTS</small></div></div></div><div id="lineupChecks" class="lineup-checks"></div></section>
-   <section class="panel squad-pool-panel"><div class="game-section-title"><div><i>＋</i><div><b>候选主体池</b><small>AVAILABLE PLAYERS</small></div></div></div><div id="poolList" class="pool-list"></div></section>
+   <section class="panel squad-pool-panel"><div class="game-section-title"><div><i>＋</i><div><b>候选球员池</b><small>AVAILABLE PLAYERS</small></div></div></div><div id="poolList" class="pool-list"></div></section>
   </aside>
  </div>
  <section class="panel squad-compare"><div class="game-section-title"><div><i>⇄</i><div><b>阵容变化对比</b><small>LINEUP COMPARISON</small></div></div><span class="micro">拖动后自动更新</span></div><div id="lineupCompare" class="lineup-compare"></div></section>
-</section>lass="game-section-title"><div><i>↗</i><div><b>成长路线 / 动态能力成长</b><small>DEVELOPMENT PATH</small></div></div><span class="tag cyan">情景演示</span></div><div class="development-track" id="developmentTrack"></div></section>
- <div class="scout-bottom-note">球探报告不是一锤定音的结论。它是一份可更新的观察档案：每次新数据进入，优势、弱点、适配位置和成长路线都可以变化。</div>
-</section><section class="view" id="view-lineup">
- <div class="page-head"><div><div class="eyebrow">INDUSTRY LINEUP LAB</div><h1>强产业不等于强阵容。<br><span style="color:var(--cyan)">关键在于如何组合。</span></h1><p>借鉴体育游戏阵容管理：调整角色、移动产业、观察空缺与关系。当前先验证组合结构，不虚构协同产值或增长贡献。</p></div><div class="head-right"><span class="tag cyan">可拖拽调整</span><span class="tag amber">演示阵容</span></div></div>
- <section class="panel panel-pad">
-  <div class="lineup-top"><div><div class="section-title" style="margin:0"><div><h2>产业阵容配置</h2><p>拖动产业卡片到不同角色槽位；点击 × 可移回候选区</p></div></div></div><div class="lineup-tools"><button class="soft-btn" id="resetLineup">恢复演示阵容</button><button class="soft-btn" id="saveLineup">保存当前阵容</button><button class="primary-btn" id="compareLineup">检查组合结构</button></div></div>
-  <div class="pitch-wrap">
-   <div class="pitch-caption"><span>TACTICAL BOARD / 产业战术板</span><span>拖动主体卡片改变阵型位置</span></div>
-   <div class="role-grid" id="roleGrid"></div>
-   <div class="lineup-summary"><div class="lineup-summary-head"><b>阵容角色分布</b><span>按当前拖拽配置实时变化</span></div><div class="role-distribution" id="roleDistribution"></div></div>
-  </div>
-  <div class="panel pool"><div class="section-title"><div><h2>候选产业池</h2><p>尚未放入当前阵容的主体</p></div><span class="tag">拖入上方角色区</span></div><div class="chip-list" id="poolList"></div></div>
- </section>
- <div class="split">
-  <section class="panel panel-pad"><div class="section-title"><div><h2>产业关系检查</h2><p>关系类型必须来自证据，不能因产业相似就默认协同</p></div><span class="tag amber">人工核验入口</span></div>
-   <div class="matrix">
-    <div class="matrix-row head"><span>主体 A</span><span>主体 B</span><span>关系判断</span><span>状态</span></div>
-    <div id="matrixRows"></div>
-   </div>
-  </section>
-  <section class="panel panel-pad"><div class="section-title"><div><h2>阵容结构检查</h2><p>仅检查当前配置，不代替经济影响测算</p></div></div>
-   <div id="lineupChecks" style="display:grid;gap:10px"></div>
-   <div class="footer-note">移除某个产业后，本页只报告角色空缺和配置变化。若要计算供应中断造成的真实损失，仍需企业关系、采购数据、替代能力与模型参数。</div>
-  </section>
- </div>
 </section>
 <p class="footer-note">BORO INDUSTRY ARENA · 内部辅助决策原型。当前界面不提供未经核验的产业评分、协同收益或风险概率。未来接入真实数据后，应保存数据版本、模型版本、参数、时间戳与结果快照。</p>
 </main>
 </div>
 <div class="drawer" id="drawer"><div class="drawer-panel"><button class="drawer-close" id="drawerClose" aria-label="关闭">×</button><div class="eyebrow">SYSTEM NOTES</div><h2 id="drawerTitle">系统说明</h2><div id="drawerBody"></div></div></div>
 <div class="toast" id="toast"></div>
+
 <script>
 (function(){
 "use strict";
-var subjects=[
-{id:"electronics",name:"电子信息产业",short:"电子",en:"ELECTRONIC INFORMATION",position:"核心组织者",role:"核心支柱",ovr:82,pot:91,status:76,risk:68,attrs:[88,82,79,75,83,72],traits:[["⚡","订单牵引","需求变化传导快"],["◆","链主潜质","上下游连接值得观察"],["✦","技术迭代","工艺与产品升级"],["◎","市场敏感","客户结构影响较大"]],strengths:[["产业基础","有望承担产业规模与制造业支撑角色。"],["市场连接","订单、客户和供应链变化值得作为领先观察信号。"],["带动空间","若关键配套本地化，可能提升产业链连接密度。"]],weaknesses:[["客户集中","需要观察核心客户集中度与订单波动。"],["关键部件","高价值环节和关键部件的外部依赖需要核验。"],["价值留存","产值增长不必然意味着利润和本地价值同步增长。"]],watch:["新增项目从签约到投产的转化率","核心客户订单和采购变化","关键配套本地采购比例","高附加值环节是否在本地沉淀"],fit:[["核心支柱",92],["成长突破",84],["关键配套",78]],desc:"演示主体。重点拆分电子信息产业链环节、企业群体和关键配套。",evidence:["产业规模与企业范围","订单、投产与市场需求","研发、专利质量与工艺升级","本地采购与上下游交易关系","利润、生产率与产品结构","客户集中、供应依赖与替代能力"]},
-{id:"materials",name:"先进材料",short:"材",en:"ADVANCED MATERIALS",position:"关键配套",role:"成长突破",ovr:77,pot:90,status:68,risk:62,attrs:[73,79,86,82,76,69],traits:[["◆","关键材料","下游适配决定价值"],["✦","技术壁垒","工艺和认证门槛"],["↗","成长空间","需观察客户放量"],["⚠","原料敏感","价格与供应链风险"]],strengths:[["技术门槛","产品工艺、认证和稳定性可能形成进入壁垒。"],["产业连接","一旦进入下游供应链，可能连接多个制造环节。"],["成长空间","客户验证通过后的放量节奏值得跟踪。"]],weaknesses:[["原料波动","关键原料价格和供应来源可能影响成本。"],["客户认证","认证周期较长，产能建设不等于订单落地。"],["替代竞争","需观察同类材料和外部供应商替代能力。"]],watch:["重点产品通过客户验证的进度","关键原料价格与来源集中度","产能利用率与订单兑现","下游客户扩产和产品路线变化"],fit:[["关键配套",94],["成长突破",91],["核心支柱",66]],desc:"演示主体。重点核验产品类别、下游应用、稳定采购与技术适配。",evidence:["产品类别与产能口径","订单和下游需求","研发成果与产业化进度","与下游制造企业的真实交易","产品结构与价值留存","关键原料、设备与市场依赖"]},
-{id:"precision",name:"精密制造",short:"精",en:"PRECISION MANUFACTURING",position:"全能型中场",role:"关键配套",ovr:81,pot:86,status:79,risk:74,attrs:[78,85,82,88,80,74],traits:[["◎","工艺能力","质量和精度是门槛"],["↗","客户拓展","供应链认证很关键"],["◆","协同枢纽","连接多类制造环节"],["✦","效率提升","设备更新与良率"]],strengths:[["制造基础","工艺、质量和交付能力可能形成稳定竞争力。"],["链条协同","有机会服务多个下游行业与企业群体。"],["升级空间","设备更新、自动化和良率改善值得观察。"]],weaknesses:[["订单依赖","需识别头部客户依赖和订单周期。"],["设备更新","关键设备投资和维护可能形成成本压力。"],["技术替代","工艺路线变化可能带来设备和人才再投资。"]],watch:["核心客户新增与流失","良率、交期与设备利用率","自动化改造后的人均产出","关键工序是否存在单点依赖"],fit:[["关键配套",93],["核心支柱",82],["成长突破",85]],desc:"演示主体。重点区分加工能力、设备能力、质量体系和进入核心客户供应链的能力。",evidence:["企业范围、产值与就业","开工、订单与产能利用","设备、工艺与质量认证","本地上下游配套关系","生产率、利润与产品升级","核心客户、设备与原料依赖"]},
-{id:"logistics",name:"工业物流",short:"物",en:"INDUSTRIAL LOGISTICS",position:"后场保障",role:"基础保障",ovr:76,pot:82,status:73,risk:81,attrs:[72,75,69,83,74,87],traits:[["盾","供应保障","节点稳定性重要"],["↔","网络连接","线路和仓配密度"],["⚡","效率驱动","时效和成本敏感"],["◎","基础支撑","服务制造业生产"]],strengths:[["网络支撑","物流节点和线路可能影响制造业交付效率。"],["抗冲击价值","多通道和替代线路有助于降低单点风险。"],["效率空间","仓配数字化和运输组织优化值得观察。"]],weaknesses:[["线路集中","单一线路、枢纽或能源依赖可能形成风险。"],["成本波动","燃料、人工和仓储成本影响服务竞争力。"],["需求错配","物流供给规模不等于本地制造业真实使用。"]],watch:["制造业客户占比和货物流向","重点线路中断后的替代方案","单位物流成本与交付时效","仓储利用率和数字化调度"],fit:[["基础保障",95],["生产服务",88],["关键配套",79]],desc:"演示主体。重点识别制造业真实使用、交付效率、仓配网络和供应链保障能力。",evidence:["物流企业与服务范围","业务量、时效与需求变化","数字化、仓储与运输能力","制造业客户及服务关系","物流成本与服务附加值","线路、节点与能源依赖"]},
-{id:"rd",name:"研发检测服务",short:"研",en:"R&D AND TESTING",position:"技术创造者",role:"生产服务",ovr:80,pot:93,status:71,risk:76,attrs:[64,78,94,89,85,76],traits:[["✦","技术引擎","研发与成果转化"],["◎","专业人才","人才密度影响上限"],["◆","赋能平台","服务多个产业主体"],["↗","潜力突出","需验证使用率"]],strengths:[["技术赋能","研发检测能力可能帮助制造企业提高质量与工艺水平。"],["跨行业服务","平台能力有机会服务多个产业门类。"],["成长潜力","成果转化和企业采用率提升值得跟踪。"]],weaknesses:[["成果转化","平台数量不代表成果已进入生产环节。"],["人才依赖","专业人才供给和稳定性可能形成约束。"],["使用效率","设备利用率和企业付费使用情况需要核验。"]],watch:["本地企业使用频次与服务收入","研发成果产业化和复购情况","关键技术人才净流入","设备利用率与平台运营效率"],fit:[["生产服务",96],["关键配套",88],["成长突破",91]],desc:"演示主体。重点核验平台是否被本地企业实际采用，成果是否转化为产品、工艺或质量提升。",evidence:["平台数量、资质与服务范围","检测需求与服务增长","设备、技术与专业人员","企业使用关系与合作项目","服务收入与成果转化","关键设备、人才与资金依赖"]},
-{id:"production",name:"生产性服务业",short:"服",en:"PRODUCER SERVICES",position:"进攻型组织者",role:"生产服务",ovr:81,pot:89,status:80,risk:73,attrs:[70,82,79,88,91,78],traits:[["↗","价值放大","服务嵌入生产"],["◎","客户协同","连接企业需求"],["✦","知识密集","专业能力重要"],["◆","价值留存","服务收入与附加值"]],strengths:[["价值放大","服务嵌入制造流程后可能提升效率与产品价值。"],["客户连接","有机会连接制造企业、市场和专业资源。"],["结构升级","生产性服务发展有助于产业价值链延伸。"]],weaknesses:[["服务泛化","需要区分真正生产性服务与一般商业服务。"],["人才约束","专业人才和行业经验可能限制扩张。"],["需求验证","服务能力必须由企业实际采购和使用证明。"]],watch:["制造企业服务采购金额与频次","服务收入中本地制造业贡献","服务后生产效率或良率变化","专业人才供给和客户集中度"],fit:[["生产服务",97],["成长突破",85],["核心支柱",68]],desc:"演示主体。重点核验服务是否真正嵌入生产过程，以及对制造效率、市场拓展和价值创造的影响。",evidence:["服务主体与业务范围","订单、客户和市场变化","专业能力与数字化水平","与制造企业的嵌入关系","服务化收入与价值创造","客户集中、人才与资金风险"]}
+var clusters=[
+{id:"electronic",name:"新一代电子信息",short:"电子信息",color:"#5bb9ff",metric:"2026年末预计 800 亿元",sub:"HDI / FPC / SMT / 算力散热 / 元器件",note:"新一代电子信息是博罗当前最强的产业引擎之一。",badge:"主力集群"},
+{id:"materials",name:"新材料",short:"新材料",color:"#b5a0ff",metric:"2026年末预计 550 亿元",sub:"铜箔 / 高分子 / 功能材料 / 表面处理",note:"从基础材料走向电子材料、功能材料和高附加值环节。",badge:"主力集群"},
+{id:"energy",name:"新能源",short:"新能源",color:"#57d6a0",metric:"百亿级产业集群",sub:"锂电池 / 储能系统 / 电池检测 / 能源管理",note:"观察电池制造、储能系统与源网荷储的真实连接。",badge:"主力集群"},
+{id:"equipment",name:"智能装备制造",short:"智能装备",color:"#73b6e9",metric:"百亿级 · 省级特色集群",sub:"精密模具 / 自动化 / 工业控制 / 热管理装备",note:"智能装备是制造业升级的底层能力，也与机器人产业交叉。",badge:"特色集群"},
+{id:"mobility",name:"智能出行",short:"智能出行",color:"#f3c56c",metric:"产值超 150 亿 · 年产量约 300 万辆",sub:"电动两轮车 / 电机电控 / 电池 / 车架部件",note:"已有整车规模和配套企业基础，关键短板在高端配套。",badge:"百亿集群"},
+{id:"home",name:"智能家居",short:"智能家居",color:"#ff8797",metric:"百亿级产业集群",sub:"智能家具 / 家电 / 家居五金 / 控制系统",note:"要区分传统家具产能与智能化、品牌化、系统化能力。",badge:"百亿集群"},
+{id:"food",name:"现代食品",short:"现代食品",color:"#e0bd79",metric:"百亿级 · 食品工业培育试点",sub:"饮料 / 食品加工 / 农产品精深加工",note:"从原料生产延伸到加工、品牌、冷链和渠道。",badge:"百亿集群"},
+{id:"ai",name:"人工智能与机器人",short:"AI与机器人",color:"#5ee0dc",metric:"2026年末预计 500 亿元",sub:"机器人本体 / 核心部件 / 机器视觉 / 算力硬件",note:"既是未来增长引擎，也要警惕概念项目与真实产能混淆。",badge:"新兴主力"},
+{id:"health",name:"生命健康 · 未来储备",short:"生命健康",color:"#d29be8",metric:"未来储备席",sub:"医疗器械 / 中成药 / 生物医药",note:"公开资料可见项目与企业线索，需进一步拆分产品、注册和市场能力。",badge:"未来储备"},
+{id:"lowaltitude",name:"低空经济 · 未来储备",short:"低空经济",color:"#8bd1cf",metric:"未来储备席",sub:"无人机 / eVTOL / 飞控 / 复合材料",note:"前瞻观察方向，不把规划方向直接当作现有产业规模。",badge:"未来储备"},
+{id:"services",name:"产业服务 · 共享支撑",short:"共享支撑",color:"#9cb4c8",metric:"跨产业共享球员",sub:"研发检测 / 工业软件 / 物流供应链",note:"这些能力服务多个产业集群，不宜被塞进单一制造业门类。",badge:"共享支撑"}
+];
+function mk(id,cluster,name,short,position,ovr,pot,attrs,club,fact,tag,desc,good,bad,watch,role){
+return {id:id,cluster:cluster,name:name,short:short,en:name.toUpperCase(),position:position,ovr:ovr,pot:pot,status:Math.round((attrs[1]+attrs[3]+attrs[5])/3),risk:attrs[5],attrs:attrs,club:club,fact:fact,tag:tag,desc:desc,role:role||"关键配套",traits:[[ "✦",good[0][0],good[0][1] ],[ "◆",good[1][0],good[1][1] ],[ "⚠",bad[0][0],bad[0][1] ],[ "↗","成长观察","关注能力能否兑现为订单、利润和本地配套" ]],strengths:good,weaknesses:bad,watch:watch,fit:[[role||"关键配套",92],["成长突破",Math.min(96,pot)],["协同连接",attrs[3]]],evidence:["产业规模、企业范围与产能口径","订单、投产、客户与需求变化","研发、专利、工艺和设备资料","本地采购、供应商及企业关系","利润、生产率、产品结构与价值留存","客户集中、供应依赖及替代能力"]};
+}
+var players=[
+mk("hdi","electronic","高密度互连线路板（HDI）","HDI","CAM · 技术创造",91,95,[94,91,96,88,91,82],"惠州华通","惠州华通2025年产值104.89亿元；HDI线路板出货量全球领先。","公开主体","高密度互连线路板是电子信息产业的高技术含量环节，连接手机、服务器、汽车电子等终端。",[["工艺壁垒","高密度线路与良率控制"],["客户覆盖","多类终端产品应用"]],[["客户集中","大客户订单波动需要持续观察"],["资本投入","高端设备与工艺升级持续投入"]],["AI服务器与高端终端订单变化","HDI产品结构和单价变化","关键设备、材料和技术人才供给"],"核心支柱"),
+mk("fpc","柔性线路板与软硬结合板","FPC","LW · 灵活连接",87,92,[86,88,94,85,87,78],"惠州华通","公开报道确认华通布局FPC及软硬结合线路板生产。","公开主体","柔性线路板连接高端消费电子、穿戴设备和汽车电子，价值取决于工艺、良率和客户认证。",[["产品延伸","从硬板延伸到柔性与软硬结合"],["应用广度","穿戴、汽车电子等多场景"]],[["认证周期","客户验证与切换周期较长"],["工艺稳定","良率波动会放大成本压力"]],["FPC与软硬结合板出货变化","高端客户认证与新产品导入","本地材料与设备配套比例"],"关键配套"),
+mk("smt","表面贴装与电子组装","SMT","CM · 制造中场",82,87,[82,84,80,86,79,76],"惠州华通等电子制造主体","公开报道确认华通具备表面贴片（SMT）生产制造能力。","公开主体","SMT是电子制造的重要制造环节，重点观察自动化、良率、交付和本地配套。",[["制造承接","连接线路板与终端组装"],["效率提升","自动化和工艺优化空间"]],[["利润压力","代工环节可能受成本挤压"],["订单波动","终端需求变化传导较快"]],["产线稼动率和良率","订单结构与客户集中度","自动化改造后的单位产出"],"关键配套"),
+mk("thermal","AI算力散热与热管理","散热","CAM · 算力关键位",88,97,[79,96,94,91,92,82],"龙溪散热产业集群","2026年公开报道：散热产业近三年平均增速超34%，算力硬件产品进入全球行业龙头供应链。","公开产业线索","服务器、算力设备的热管理正从普通配套变成影响性能和能耗的关键环节。",[["高速成长","算力硬件需求带来新应用"],["特色集群","已形成省级中小企业特色产业集群"]],[["技术迭代","液冷等路线变化可能改变竞争格局"],["客户认证","进入头部供应链有门槛"]],["液冷与风冷产品结构变化","头部客户认证和订单","核心材料、工艺与能效表现"],"成长突破"),
+mk("components","电子元器件与连接件","元件","CDM · 链条连接",75,88,[72,79,78,86,74,76],"鑫源达电子元器件等项目线索","公开报道提及鑫源达电子元器件项目新开工。","项目线索","连接器、元件、线束和小型电子部件是电子产业链的基础连接环节。",[["补链价值","配套本地化可缩短交付链条"],["应用广泛","可服务多个电子制造环节"]],[["规模待核","不能把项目开工等同于形成产能"],["客户验证","需核验真实供货关系"]],["项目建设与投产进度","本地电子企业采购清单","产品认证、良率与客户数量"],"关键配套"),
+
+mk("copperfoil","电子铜箔与铜基材料","铜箔","CDM · 材料后腰",85,94,[82,89,93,88,90,79],"惠州联合铜箔（三期项目）","公开报道提及联合铜箔三期建成投产；铜基产业被列入2030年重点方向。","公开主体/项目","电子铜箔连接覆铜板、线路板和新能源材料链条，铜基材料还有进一步延伸空间。",[["关键材料","连接电子信息和新能源链条"],["升级方向","铜基产业被列为未来重点布局"]],[["周期波动","铜价变化影响成本与库存"],["工艺门槛","高端产品质量稳定性要求高"]],["高端铜箔产品占比","产能利用率和客户认证","铜基材料向下游延伸项目"],"关键配套"),
+mk("polymer","高分子与改性塑料材料","高分子","CM · 材料中场",80,90,[82,85,88,83,80,74],"泰塑新材料（二期项目）","公开报道提及泰塑新材料二期项目建成投产。","公开主体/项目","改性塑料和高分子材料服务电子、电器、汽车和家居等制造业。",[["跨行业配套","服务电子、电器、汽车和家居"],["工艺升级","功能化、轻量化和环保材料"]],[["原料价格","石化原料波动影响成本"],["产品同质","需要形成配方和工艺壁垒"]],["高性能材料销售占比","原料价格向产品价格传导","下游客户结构与认证"],"关键配套"),
+mk("functional","功能材料与复合材料","功能材","CAM · 技术前腰",76,93,[70,85,94,79,86,72],"方大新材等项目线索","公开报道提及方大新材等项目建成投产。","公开主体/项目","功能材料、复合材料需要按具体产品、应用场景和客户认证继续拆分。",[["技术潜力","有机会进入高附加值应用"],["跨链协同","可服务电子、装备、新能源"]],[["边界较宽","需明确具体产品而非泛称新材料"],["商业化","技术成果不等于规模订单"]],["具体产品目录与收入结构","客户验证与量产状态","研发成果转化和毛利变化"],"成长突破"),
+mk("surface","表面处理与精密加工","表处","CDM · 工艺防守",82,88,[78,82,85,89,80,78],"省级中小企业特色产业集群","表面处理已入选省级中小企业特色产业集群。","特色产业集群","表面处理影响耐腐蚀、导电、外观和可靠性，是多类制造业的工艺节点。",[["工艺门槛","质量控制影响下游产品可靠性"],["共享配套","可服务多类制造企业"]],[["环保约束","排放、能耗与合规成本"],["分散风险","企业工艺水平可能差异较大"]],["园区集中度和环保设施","工艺良率与单位成本","下游客户和订单结构"],"关键配套"),
+
+mk("lithium","锂离子电池制造","锂电池","ST · 能源主力",91,95,[94,89,90,86,91,83],"欣旺达、锂威新能源","公开报道确认欣旺达为博罗百亿级企业；锂威新能源入选省级制造业单项冠军。","公开主体","电芯、模组和电池包是新能源产业的核心环节，需分开看消费电池、动力电池与储能电池。",[["规模基础","龙头企业和制造基础较强"],["技术迭代","电池性能、成本和安全持续升级"]],[["技术路线","产品路线和价格周期变化快"],["客户集中","大客户结构影响订单稳定性"]],["不同应用电池的收入结构","产能利用率和良率","客户集中度与关键材料依赖"],"核心支柱"),
+mk("batterytest","电池检测与质量服务","电池检测","CDM · 安全后腰",73,91,[65,79,87,90,78,85],"欣旺达上下游配套企业群","公开访谈提及围绕欣旺达引进电池检测、电子新材料等20多家配套企业。","公开产业线索","检测、认证和安全测试决定电池产品能否进入客户供应链，是产业链的重要服务节点。",[["关键门槛","安全检测关系产品认证"],["链主带动","可围绕龙头企业形成专业服务"]],[["规模待核","需核实检测机构和实际业务量"],["设备投入","专业设备与资质要求较高"]],["检测机构数量和资质","服务客户与订单量","测试能力和设备利用率"],"关键配套"),
+mk("storage","新型储能系统与集成","储能","CAM · 能源组织者",82,96,[76,91,90,89,91,84],"欣旺达源网荷储项目等","公开资料提及欣旺达源网荷储一体化及集中共享储能试点。","项目线索","储能系统集成涉及电池、PCS、BMS、EMS、消防和运营，不能只看电芯产能。",[["系统价值","从电芯制造延伸到系统集成"],["应用空间","园区储能和电网侧场景"]],[["收益机制","利用小时和电价机制影响回报"],["安全责任","消防、寿命和运维风险"]],["项目备案与实际并网","系统成本和利用率","安全事故、衰减与运维成本"],"成长突破"),
+mk("energysystem","源网荷储与综合能源管理","能源管控","GK · 能源门将",77,92,[72,83,86,91,88,91],"园区集中共享储能试点","公开工作报告提及智能装备园集中共享储能试点项目。","项目线索","综合能源管理把发电、储能、负荷和园区用能连接起来，影响产业运行成本。",[["系统协同","连接园区能源供需"],["韧性价值","提升用能调节与保障能力"]],[["投资回收","建设成本与收益机制需测算"],["调度复杂","需要真实负荷和电网数据"]],["园区负荷曲线","储能利用率和峰谷价差","项目回收期与供电可靠性"],"基础保障"),
+
+mk("mold","精密模具与模具制造","精密模具","CDM · 制造后腰",84,90,[81,84,89,87,83,82],"天倬科技","公开报道提及模具行业龙头企业天倬科技在博罗设立新生产基地。","公开主体/项目","模具决定产品精度、开发速度和量产稳定性，是电子、家电、汽车和装备制造的底层能力。",[["产业基础","多类制造业需要模具能力"],["工艺门槛","精度、寿命和交付形成壁垒"]],[["订单周期","下游新品周期影响需求"],["人才瓶颈","设计和精密加工人才稀缺"]],["模具企业产值和客户结构","高精度模具占比","设计周期、寿命和交付率"],"关键配套"),
+mk("automation","自动化产线与智能装备","自动化","CM · 产业中场",81,93,[78,86,89,91,85,84],"智能装备产业集群","智能装备制造已是博罗百亿级产业集群。","产业集群","自动化装备把单点设备升级为整线解决方案，关键在系统集成和客户复购。",[["效率提升","改造后影响良率和人均产出"],["跨行业应用","可服务电子、食品、家居等行业"]],[["项目制风险","订单交付与回款周期较长"],["核心部件","高端控制、伺服等环节依赖外部"]],["整线项目订单和交付周期","本地核心零部件比例","客户复购与设备利用率"],"核心支柱"),
+mk("industrialcontrol","工业控制与驱动设备","工控驱动","CDM · 控制后腰",74,91,[68,81,88,86,82,81],"本地企业名单待接入","该细分是智能装备与机器人产业的关键底层环节，当前需核实本地主体。","补链观察","工业控制、伺服驱动和运动控制连接设备硬件与生产工艺。",[["技术含量","控制精度影响整机性能"],["跨链价值","可服务机器人、装备和智能出行"]],[["本地主体待核","不能把产业需求当成本地供给"],["技术门槛","核心芯片和算法可能依赖外部"]],["本地企业与产品目录","伺服、控制器本地供给率","客户验证和可靠性"],"成长突破"),
+mk("hvac","智能空调与热管理装备","空调装备","ST · 热管理主力",86,90,[89,84,87,83,88,86],"大金空调（惠州）","公开报道提及大金华南空调生产基地，达产后营业额规划可达70亿元。","公开主体","空调和热泵制造连接压缩机、换热器、电控、材料与系统集成。",[["制造规模","大型制造基地和技术体系"],["应用延展","热泵、工业温控和节能技术"]],[["核心部件","压缩机、电控等配套结构需核验"],["能效要求","能效标准和市场结构变化"]],["项目达产与产能利用率","核心零部件本地配套","高能效产品和工业温控收入"],"核心支柱"),
+
+mk("ebike","电动两轮车整车制造","电动车","ST · 整车前锋",88,94,[92,92,82,88,85,79],"台铃、小刀、新日、绿佳","2026年公开报道：博罗电动车产业产值超150亿元，整车年产量约300万辆，集聚24家上下游配套企业。","公开主体","电动两轮车整车是博罗智能出行产业的核心球员，规模增长后更要关注品牌、渠道和本地配套。",[["规模兑现","整车产量和头部企业落地"],["集群形成","上下游配套企业逐步集聚"]],[["高端配套","电池、电机、电控仍有补链空间"],["品牌渠道","终端市场与渠道库存影响生产节奏"]],["整车产量和产能利用率","品牌渠道库存与终端销量","本地电池、电机、电控配套率"],"核心支柱"),
+mk("motorcontrol","电机、电控与驱动系统","电驱动","CAM · 动力中枢",71,96,[63,85,92,91,88,83],"24家上下游配套企业群（具体企业待核）","公开报道指出电动车产业高端配套仍需补齐，建议引进新能源电池和智能控制系统项目。","补链观察","电机、电控和驱动系统决定车辆效率、性能与智能化，是整车产业链的重要短板观察位。",[["补链价值","本地化可提高产业链完整度"],["技术空间","高效电机和智能控制升级"]],[["供给待核","尚需核实本地企业和产能"],["技术认证","可靠性与安全标准要求高"]],["本地电机电控企业清单","整车企业采购额与外采比例","控制算法、效率和质量认证"],"成长突破"),
+mk("vehiclebattery","两轮车电池与电源系统","车用电池","CDM · 能源后腰",75,93,[72,84,86,89,83,82],"新能源电池配套主体待核","公开建议将新能源电池列为博罗电动车产业补链方向。","补链观察","两轮车电池需要按铅酸、锂电、换电等路线拆分，不能把所有电池需求混成一个市场。",[["关键配套","电池决定续航、安全和成本"],["路线空间","换电和智能BMS带来新机会"]],[["路线分化","不同车型电池标准不同"],["安全风险","热失控与回收体系需关注"]],["本地电池企业和产能","车型电池路线占比","回收、检测与安全记录"],"关键配套"),
+mk("vehicleparts","车架、制动与结构件","结构件","CB · 结构中卫",76,87,[77,80,75,90,78,82],"智能出行上下游配套企业群","博罗已集聚24家电动车上下游配套企业，具体企业与产品需进一步拆分。","公开产业线索","车架、制动、轮毂和结构件决定整车可靠性，是适合逐家识别的本地配套球员。",[["本地化空间","适合形成近距离供货关系"],["多企业配套","可支撑多家整车厂"]],[["低价竞争","标准件容易陷入价格竞争"],["质量风险","安全件质量问题影响整车品牌"]],["24家配套企业的产品目录","本地采购金额和供货份额","质量追溯与客户集中度"],"关键配套"),
+
+mk("smartfurniture","智能家具与定制家居","智能家具","RW · 家居边锋",75,88,[77,83,76,82,82,73],"诚业智能家居、宝居乐等项目线索","公开政府工作报告提及诚业智能家居、宝居乐等项目建设。","公开项目线索","智能家具从传统家具向电动、感应、互联和空间系统延伸。",[["传统基础","家具制造和项目建设基础"],["产品升级","智能化与定制化有成长空间"]],[["品牌能力","制造规模不等于品牌溢价"],["渠道库存","地产和消费需求影响订单"]],["智能产品收入占比","线上线下渠道与复购","核心五金、电机和控制系统来源"],"成长突破"),
+mk("smartappliance","智能家电与家居设备","智能家电","CAM · 场景组织者",79,89,[82,84,85,82,84,78],"本地家电及设备企业待细化","智能家居集群需要进一步拆分家电、控制、传感和系统集成主体。","链条观察","智能家电连接家电制造、传感器、控制系统和家庭场景服务。",[["场景连接","产品可跨家居和智能硬件"],["产品升级","节能、互联与智能控制"]],[["边界待核","需区分整机、零件和品牌运营"],["软件短板","系统互联和用户体验影响价值"]],["本地整机与零部件企业","智能产品占比和专利","品牌渠道与售后服务能力"],"成长突破"),
+mk("homehardware","家居五金与功能部件","家居五金","CDM · 配套后腰",72,85,[73,76,72,87,75,78],"本地家居配套企业待核","家居产业链配套环节需进一步从企业名录和采购关系中识别。","补链观察","五金、铰链、滑轨、驱动和功能部件是智能家居升级的基础配套。",[["配套需求","与家具整机企业距离近"],["产品细分","可通过工艺和可靠性形成差异"]],[["企业分散","规模与技术水平可能差异较大"],["价格竞争","标准化部件利润承压"]],["本地家居采购清单","关键部件本地供货比例","产品认证和客户复购"],"关键配套"),
+
+mk("beverage","饮料制造与品牌饮品","饮料","ST · 消费前锋",84,89,[87,86,76,82,86,79],"百岁山、椰泰","公开报道提及百岁山、椰泰等现代食品龙头企业。","公开主体","饮料制造连接水源、配方、包装、灌装、渠道和品牌，关注产能利用与渠道动销。",[["品牌产品","具备规模化制造和渠道基础"],["链条完整","包装、仓储、物流带动配套"]],[["渠道依赖","经销商库存和终端动销影响生产"],["成本压力","包材、能源和运输成本"]],["产能利用率与SKU结构","渠道库存和终端动销","本地农产品和包装采购"],"核心支柱"),
+mk("foodprocessing","食品加工与休闲食品","食品加工","CAM · 食品中场",81,88,[82,85,78,86,84,82],"顺兴食品、罗巴克","公开报道将顺兴食品、罗巴克列为博罗食品产业龙头企业。","公开主体","食品加工连接农产品原料、配方、加工、冷链、品牌和销售渠道。",[["链主带动","公开报道有龙头企业样本"],["价值延伸","从初级农产品走向加工产品"]],[["食品安全","质量追溯和供应稳定要求高"],["渠道竞争","品牌与渠道费用影响利润"]],["加工产能与产品结构","原料采购半径和季节性","食品安全、渠道和毛利"],"核心支柱"),
+mk("agriprocess","农产品精深加工","农产加工","CM · 农业中场",74,93,[73,84,82,88,89,84],"绿色农产品生产供应基地及加工主体","博罗依托绿色农产品生产供应基地推进现代农业与食品产业链建设。","产业链观察","把农产品从原料销售延伸到分级、加工、冷链、品牌和餐饮供应。",[["农业底盘","可连接本地农业与食品制造"],["价值提升","精深加工和品牌化空间"]],[["原料季节性","供应和价格波动明显"],["加工标准","标准化和稳定供货需要强化"]],["主要农产品加工率","原料收购与农户连接","冷链、仓储和品牌渠道"],"成长突破"),
+
+mk("robotbody","工业机器人本体与整机","机器人","ST · 未来前锋",70,98,[65,91,93,82,88,77],"人工智能与机器人产业链待核","人工智能与机器人被列入博罗新兴产业方向，2026年末产值预计突破500亿元。","新兴产业","机器人本体是智能制造的关键装备，需要与控制、减速器、伺服和系统集成一起观察。",[["成长空间","机器人应用扩张带来需求"],["制造升级","与本地装备制造基础有交集"]],[["产业化待证","规划和招商不能当作现有产能"],["核心部件","关键部件依赖需逐项核实"]],["本地机器人企业和产线","订单、出货与应用场景","核心部件本地配套率"],"成长突破"),
+mk("robotparts","机器人核心零部件","机器人部件","CDM · 技术后腰",65,99,[58,88,98,86,91,79],"本地企业与项目清单待接入","核心零部件包括伺服、减速器、控制器和传感器，当前作为补链观察位。","补链观察","零部件决定机器人精度、速度、可靠性和成本，是产业链价值较高的节点。",[["高技术壁垒","精密制造和控制技术门槛高"],["产业乘数","可服务多个机器人整机厂"]],[["供给基础待核","不预设本地已有完整供给"],["研发周期","验证和客户导入周期较长"]],["本地企业和产品目录","核心零部件进口/外采比例","样机验证与批量订单"],"成长突破"),
+mk("visionai","机器视觉与工业AI","视觉AI","CAM · 创新前腰",68,98,[61,91,97,88,92,78],"人工智能与机器人产业链待核","AI与机器人产业方向已进入博罗公开产业布局，细分企业仍需核验。","新兴产业","机器视觉、算法和工业AI连接设备、生产线和质量检测。",[["知识密集","算法与行业Know-how形成壁垒"],["跨行业应用","可赋能电子、装备、食品和出行"]],[["落地难度","算法需要真实生产场景验证"],["人才依赖","高端算法和工程人才竞争激烈"]],["付费客户和项目复购","算法部署后的良率提升","核心人才和知识产权"],"成长突破"),
+mk("aihardware","AI服务器与算力硬件","算力硬件","ST · 算力前锋",83,98,[82,96,92,88,94,81],"华通线路板、龙溪散热产业链","公开报道提及算力硬件产品进入全球行业龙头供应链，散热产业快速增长。","公开产业线索","算力硬件包括服务器板卡、机箱、散热、电源和高速互连等环节。",[["需求牵引","AI基础设施更新带来硬件需求"],["本地连接","线路板与散热可形成产业交叉"]],[["周期波动","全球资本开支变化影响订单"],["高端环节","服务器整机和关键芯片等需分清本地能力"]],["服务器相关订单占比","散热和线路板的本地协同","客户集中度与出口市场"],"成长突破"),
+
+mk("medical","医疗器械制造","医疗器械","CAM · 健康前腰",66,92,[61,78,87,75,84,80],"华研医疗器械项目线索","公开政府工作报告提及华研医疗器械项目建设。","未来储备","医疗器械需按产品注册证、临床应用、质量体系和销售渠道拆分。",[["专业门槛","注册、质量和临床验证形成壁垒"],["需求韧性","健康需求长期存在"]],[["注册周期","产品认证和临床验证耗时"],["市场准入","渠道和医院采购关系重要"]],["产品注册证和实际投产","临床验证与销售收入","质量体系和渠道覆盖"],"战略储备"),
+mk("biopharma","中成药与生物医药","医药","ST · 健康前锋",75,90,[77,81,88,76,87,84],"罗浮山国药、新峰药业","公开报道提及罗浮山国药、新峰药业等本土药企。","公开主体","药品制造需要按品种、批文、产能、销售渠道和研发管线拆分。",[["本土品牌","已有本土药企和品牌基础"],["产品积累","药品批文和渠道构成资产"]],[["品种集中","核心品种和渠道依赖需观察"],["研发投入","新产品上市周期较长"]],["核心产品销售和毛利","新药/仿制药注册进度","渠道覆盖与研发投入"],"成长突破"),
+mk("drone","无人机与低空飞行器","无人机","RW · 低空边锋",55,98,[48,88,94,72,88,68],"低空经济前瞻布局","低空经济被列入博罗前瞻布局方向，不能视作已形成规模的现有产业。","未来储备","无人机整机、任务载荷、飞控、通信和地面系统需要拆成不同球员。",[["成长想象","低空场景扩张可能创造新需求"],["产业交叉","电子、材料和装备可提供基础"]],[["规模未证","目前不以规划代替企业和订单"],["适航合规","空域、认证和安全约束"]],["实际落地企业和订单","试飞、适航与场景许可","关键部件本地配套率"],"战略储备"),
+mk("evtol","eVTOL关键部件与飞控","eVTOL","CAM · 低空组织者",44,99,[35,82,98,68,91,62],"低空产业链储备节点","作为低空经济的潜在高技术环节，当前为远期观察对象。","未来储备","电推进、飞控、复合材料结构件和电池系统是eVTOL关键子系统。",[["高技术含量","飞控、电推进和复材技术要求高"],["跨链赋能","可连接新能源、电子和材料"]],[["产业阶段早","不可把技术方向当作现有产值"],["安全门槛","适航和系统安全验证严格"]],["本地研发主体和专利","试验验证和适航进度","关键子系统供应商"],"战略储备"),
+
+mk("rdtesting","研发检测与中试服务","研发检测","CAM · 技术组织者",74,93,[68,83,94,93,88,85],"跨产业共享支撑席","研发检测服务应按设备、资质、服务收入和本地企业使用关系核验。","共享支撑","研发、检测、中试和认证是多产业共用的技术服务球员。",[["共享赋能","能服务电子、材料、装备和食品"],["成果转化","连接实验室与规模生产"]],[["利用率","平台建成不等于企业真实使用"],["收入模式","持续运营和人才成本需关注"]],["企业付费使用频次","设备利用率与服务收入","成果转化和企业复购"],"生产服务"),
+mk("industrialsoftware","工业软件与数字化服务","工业软件","CAM · 数字前腰",72,95,[66,88,96,91,90,80],"规上企业数字化转型群","博罗持续推进规上工业企业数字化转型，服务商与软件产品需进一步识别。","共享支撑","工业软件、MES、工业互联网和数据服务连接设备、工厂与管理系统。",[["跨行业赋能","可服务多产业生产管理"],["高附加值","软件订阅和解决方案可持续迭代"]],[["本地供给待核","需区分本地服务商与外来系统"],["项目交付","定制项目容易形成低复用"]],["本地软件企业与产品清单","企业实际部署和续费率","数字化改造前后效率变化"],"生产服务"),
+mk("logistics","工业物流与供应链服务","工业物流","GK · 供应链门将",78,87,[79,82,73,90,79,91],"园区物流与制造业供应链主体待接入","物流服务跨产业支撑制造交付，需从客户、线路、时效和成本识别主体。","共享支撑","工业物流、仓储、报关和供应链服务决定交付效率与库存占用。",[["基础保障","影响多个制造业集群"],["网络韧性","多线路和仓配节点可降低单点风险"]],[["成本波动","燃料、人工和仓储价格影响成本"],["关系待核","需用真实货流和合同识别连接"]],["制造业客户占比","货物流向、时效和库存周转","线路集中度与替代方案"],"基础保障")
 ];
 var dims=["规模","增长","技术","协同","价值","韧性"];
 var dimInfo=["企业范围、产值、就业、产能和产业基础。","订单、投产、需求、扩产与市场成长速度。","研发、专利质量、设备工艺与产品迭代。","上下游采购、供应链连接与本地配套关系。","利润、生产率、附加值和本地价值留存。","客户集中、供应依赖、替代能力和抗冲击能力。"];
 var roles=[{id:"growth",name:"成长突破"},{id:"core",name:"核心支柱"},{id:"key",name:"关键配套"},{id:"service",name:"生产服务"},{id:"base",name:"基础保障"},{id:"reserve",name:"战略储备"}];
-var defaults={growth:["materials"],core:["electronics"],key:["precision"],service:["rd","production"],base:["logistics"],reserve:[]};
-var state={subject:"electronics",lineup:JSON.parse(JSON.stringify(defaults))};
+var defaults={growth:["thermal","storage","robotbody"],core:["hdi","lithium","ebike","beverage"],key:["copperfoil","motorcontrol","mold","surface"],service:["rdtesting","industrialsoftware"],base:["energysystem","logistics"],reserve:["drone","medical","evtol"]};
+var state={subject:"hdi",lineup:JSON.parse(JSON.stringify(defaults)),filter:"all",search:"",sort:"ovr"};
 function el(id){return document.getElementById(id)}
-function subject(id){return subjects.find(function(s){return s.id===id})}
-function toast(msg){var t=el("toast");if(!t)return;t.textContent=msg;t.classList.add("show");clearTimeout(toast.timer);toast.timer=setTimeout(function(){t.classList.remove("show")},2200)}
+function subject(id){return players.find(function(s){return s.id===id})}
+function cluster(id){return clusters.find(function(s){return s.id===id})}
 function assigned(){return roles.reduce(function(a,r){return a.concat(state.lineup[r.id]||[])},[])}
-function switchView(name){document.querySelectorAll(".view").forEach(function(v){v.classList.toggle("active",v.id==="view-"+name)});document.querySelectorAll(".nav-btn").forEach(function(b){b.classList.toggle("active",b.dataset.view===name)});var names={overview:"产业总览",profile:"能力属性卡",scout:"球探报告",lineup:"产业阵容"};el("crumbCurrent").innerHTML="<b>"+names[name]+"</b>";window.scrollTo({top:0,behavior:"smooth"})}
+function toast(msg){var t=el("toast");if(!t)return;t.textContent=msg;t.classList.add("show");clearTimeout(toast.timer);toast.timer=setTimeout(function(){t.classList.remove("show")},2200)}
+function switchView(name){document.querySelectorAll(".view").forEach(function(v){v.classList.toggle("active",v.id==="view-"+name)});document.querySelectorAll(".nav-btn").forEach(function(b){b.classList.toggle("active",b.dataset.view===name)});var names={overview:"产业总览",players:"产业球员库",profile:"能力属性卡",scout:"球探报告",lineup:"产业阵容"};el("crumbCurrent").innerHTML="<b>"+names[name]+"</b>";window.scrollTo({top:0,behavior:"smooth"})}
 document.querySelectorAll("[data-view]").forEach(function(b){b.addEventListener("click",function(){switchView(b.dataset.view)})});
 document.querySelectorAll("[data-open]").forEach(function(b){b.addEventListener("click",function(){switchView(b.dataset.open)})});
-function renderSelect(){var s=el("subjectSelect");s.innerHTML=subjects.map(function(x){return "<option value='"+x.id+"'>"+x.name+"</option>"}).join("");s.value=state.subject;s.addEventListener("change",function(){state.subject=s.value;renderProfile();renderScout()})}
+function renderSelect(){var s=el("subjectSelect");s.innerHTML=clusters.map(function(c){return "<optgroup label='"+c.name+"'>"+players.filter(function(p){return p.cluster===c.id}).map(function(p){return "<option value='"+p.id+"'>"+p.name+"</option>"}).join("")+"</optgroup>"}).join("");s.value=state.subject;s.onchange=function(){state.subject=s.value;renderProfile();renderScout()}}
+function renderTeamTabs(){var tabs=el("teamTabs");tabs.innerHTML="";var all=document.createElement("button");all.className="team-tab"+(state.filter==="all"?" active":"");all.innerHTML="<b>ALL</b>全部球员";all.onclick=function(){state.filter="all";el("clusterFilter").value="all";renderPlayers()};tabs.appendChild(all);clusters.forEach(function(c){var n=players.filter(function(p){return p.cluster===c.id}).length;var b=document.createElement("button");b.className="team-tab"+(state.filter===c.id?" active":"");b.style.setProperty("--tile-color",c.color);b.innerHTML="<b>"+String(n).padStart(2,"0")+"</b>"+c.short;b.onclick=function(){state.filter=c.id;el("clusterFilter").value=c.id;renderPlayers()};tabs.appendChild(b)})}
+function tile(p){var cl=cluster(p.cluster);var bars=[["技",p.attrs[2]],["协",p.attrs[3]],["韧",p.attrs[5]]];return "<article class='player-tile' data-player='"+p.id+"' style='--tile-color:"+cl.color+"'><div class='tile-top'><span class='tile-position'>"+p.position+"</span><span class='tile-status'>"+p.tag+"</span></div><div class='tile-main'><div class='tile-ovr'>"+p.ovr+"<small>OVR</small></div><div class='tile-title'>"+p.name+"<small>"+cl.short+" · "+p.role+"</small></div></div><div class='tile-bars'>"+bars.map(function(b){return "<div class='tile-bar'><span>"+b[0]+"</span><i style='--v:"+b[1]+"%'></i><b>"+b[1]+"</b></div>"}).join("")+"</div><div class='tile-club'><strong>俱乐部 / 样本：</strong>"+p.club+"</div><div class='tile-bottom'><span class='tile-pot'>POT "+p.pot+" · 成长潜力</span><span class='tile-open'>查看球探报告 ↗</span></div></article>"}
+function renderPlayers(){
+ var query=state.search.trim().toLowerCase(),filter=state.filter,sort=state.sort;
+ var list=players.filter(function(p){var ok=(filter==="all"||p.cluster===filter);var text=(p.name+" "+p.short+" "+p.club+" "+p.desc+" "+p.fact).toLowerCase();return ok&&(!query||text.indexOf(query)>=0)});
+ list.sort(function(a,b){if(sort==="pot")return b.pot-a.pot;if(sort==="name")return a.name.localeCompare(b.name,"zh-CN");return b.ovr-a.ovr});
+ el("rosterPlayerCount").textContent=players.length;
+ el("rosterHeading").textContent=filter==="all"?"全部产业球员":cluster(filter).name;
+ el("rosterSubheading").textContent=list.length+" 名球员 · 点击卡片进入能力档案";
+ var html="";
+ if(filter==="all"&&!query){clusters.forEach(function(c){var arr=list.filter(function(p){return p.cluster===c.id});if(!arr.length)return;html+="<section class='cluster-section' style='--cluster-color:"+c.color+"'><div class='cluster-head'><div><h3>"+c.name+" <span class='tag'>"+arr.length+" 名球员</span></h3><p>"+c.sub+"</p></div><div class='cluster-metric'>"+c.metric+"<small>"+c.badge+"</small></div></div><div class='players-grid'>"+arr.map(tile).join("")+"</div></section>"})}
+ else{html="<div class='players-grid'>"+list.map(tile).join("")+"</div>"}
+ if(!list.length)html="<div class='panel panel-pad' style='color:#90a9bb;font-size:12px'>没有找到匹配的产业球员。试试其他关键词。</div>";
+ el("playersGrid").innerHTML=html;renderTeamTabs();
+}
 function renderProfile(){
- var s=subject(state.subject);el("profileName").textContent=s.name;el("profileEnglish").textContent=s.en;el("profileEmblem").textContent=s.short;el("artCore").textContent=s.short;el("cardShort").textContent=s.short;el("playerPosition").textContent=s.position;el("cardOvr").textContent=s.ovr;el("cardPot").textContent=s.pot;el("cardState").textContent=s.status;el("cardRisk").textContent=s.risk;el("profileDesc").textContent=s.desc;
- var bars=el("attributeList");bars.innerHTML="";
- dims.forEach(function(d,i){var row=document.createElement("div");row.className="attribute-row";row.innerHTML="<b>"+d+"</b><div class='attribute-track'><i style='width:0%'></i></div><strong>"+s.attrs[i]+"</strong>";bars.appendChild(row);requestAnimationFrame(function(){row.querySelector("i").style.width=s.attrs[i]+"%"})});
- var svg=el("radarSvg");var cx=180,cy=148,r=105,pts=[];function point(v,i,scale){var a=(-Math.PI/2)+i*Math.PI/3;return [cx+Math.cos(a)*r*v/100*scale,cy+Math.sin(a)*r*v/100*scale]}
- var html="";[25,50,75,100].forEach(function(k){var p=dims.map(function(_,i){return point(k,i,1).join(",")}).join(" ");html+="<polygon points='"+p+"' fill='none' stroke='rgba(170,203,229,.22)' stroke-width='1'/>"});
- dims.forEach(function(d,i){var p=point(100,i,1);html+="<line x1='"+cx+"' y1='"+cy+"' x2='"+p[0]+"' y2='"+p[1]+"' stroke='rgba(170,203,229,.18)'/>";var lp=point(116,i,1);html+="<text x='"+lp[0]+"' y='"+(lp[1]+4)+"' fill='#a5bdce' font-size='10' text-anchor='middle'>"+d+"</text>"});
- var current=dims.map(function(_,i){return point(s.attrs[i],i,1).join(",")}).join(" ");var potential=dims.map(function(_,i){return point(Math.min(100,s.attrs[i]+(s.pot-s.ovr)*.45),i,1).join(",")}).join(" ");
- html+="<polygon points='"+potential+"' fill='rgba(243,197,108,.07)' stroke='#d9b96d' stroke-width='1.5' stroke-dasharray='4 5'/><polygon points='"+current+"' fill='rgba(80,213,210,.22)' stroke='#5ee0dc' stroke-width='2'/>";
- dims.forEach(function(_,i){var p=point(s.attrs[i],i,1);html+="<circle cx='"+p[0]+"' cy='"+p[1]+"' r='4' fill='#f3d28b' stroke='#0c263a' stroke-width='2'/>"});
- svg.innerHTML=html;
+ var s=subject(state.subject),cl=cluster(s.cluster);
+ el("subjectSelect").value=s.id;el("profileName").textContent=s.name;el("profileEnglish").textContent=s.en;el("profileEmblem").textContent=s.short.slice(0,2);el("artCore").textContent=s.short.slice(0,2);el("cardShort").textContent=s.short;el("playerPosition").textContent=s.position;el("cardOvr").textContent=s.ovr;el("cardPot").textContent=s.pot;el("cardState").textContent=s.status;el("cardRisk").textContent=s.risk;el("cardCluster").textContent=cl.short;el("profileDesc").textContent=s.desc;el("playerClub").textContent="俱乐部 / 公开样本："+s.club;el("playerFact").textContent=s.fact;el("playerFact").insertAdjacentHTML("afterend","<span class='player-fact-tag'>"+s.tag+"</span>");
+ var bars=el("attributeList");bars.innerHTML="";dims.forEach(function(d,i){var row=document.createElement("div");row.className="attribute-row";row.innerHTML="<b>"+d+"</b><div class='attribute-track'><i style='width:0%'></i></div><strong>"+s.attrs[i]+"</strong>";bars.appendChild(row);requestAnimationFrame(function(){row.querySelector("i").style.width=s.attrs[i]+"%"})});
+ var svg=el("radarSvg"),cx=180,cy=148,r=105;function point(v,i){var a=(-Math.PI/2)+i*Math.PI/3;return [cx+Math.cos(a)*r*v/100,cy+Math.sin(a)*r*v/100]}
+ var sh="";[25,50,75,100].forEach(function(k){sh+="<polygon points='"+dims.map(function(_,i){return point(k,i).join(",")}).join(" ")+"' fill='none' stroke='rgba(170,203,229,.22)'/>"});dims.forEach(function(d,i){var p=point(100,i),lp=point(116,i);sh+="<line x1='"+cx+"' y1='"+cy+"' x2='"+p[0]+"' y2='"+p[1]+"' stroke='rgba(170,203,229,.18)'/><text x='"+lp[0]+"' y='"+(lp[1]+4)+"' fill='#a5bdce' font-size='10' text-anchor='middle'>"+d+"</text>"});var current=dims.map(function(_,i){return point(s.attrs[i],i).join(",")}).join(" "),potential=dims.map(function(_,i){return point(Math.min(100,s.attrs[i]+(s.pot-s.ovr)*.45),i).join(",")}).join(" ");sh+="<polygon points='"+potential+"' fill='rgba(243,197,108,.07)' stroke='#d9b96d' stroke-width='1.5' stroke-dasharray='4 5'/><polygon points='"+current+"' fill='rgba(80,213,210,.22)' stroke='#5ee0dc' stroke-width='2'/>";dims.forEach(function(_,i){var p=point(s.attrs[i],i);sh+="<circle cx='"+p[0]+"' cy='"+p[1]+"' r='4' fill='#f3d28b' stroke='#0c263a' stroke-width='2'/>"});svg.innerHTML=sh;
  var traits=el("traitList");traits.innerHTML="";s.traits.forEach(function(t){var d=document.createElement("div");d.className="trait-badge";d.innerHTML="<div class='trait-icon'>"+t[0]+"</div><div><b>"+t[1]+"</b><small>"+t[2]+"</small></div>";traits.appendChild(d)});
  var details=el("dimensionDetail");details.innerHTML="";dims.forEach(function(d,i){var x=document.createElement("div");x.className="dimension-card";x.innerHTML="<b>"+d+" · "+s.attrs[i]+"</b><p>"+dimInfo[i]+"</p>";details.appendChild(x)});
- var body=el("evidenceBody");body.innerHTML="";s.evidence.forEach(function(x,i){var tr=document.createElement("tr");tr.innerHTML="<td>"+x+"</td><td><span class='tag amber'>待接入 / 待核验</span></td><td>"+["统计口径、年度数据与企业范围","订单、投产、需求变化及时间序列","研发、专利质量、设备与工艺资料","采购流向、供应商和企业调查","利润、生产率与产品结构数据","客户/供应商集中度及替代方案"][i]+"</td>";body.appendChild(tr)})
+ var body=el("evidenceBody");body.innerHTML="";s.evidence.forEach(function(x,i){var tr=document.createElement("tr");tr.innerHTML="<td>"+x+"</td><td><span class='tag amber'>待接入 / 待核验</span></td><td>"+["统计口径、年度数据与企业范围","订单、投产、需求变化及时间序列","研发、专利质量、设备与工艺资料","采购流向、供应商和企业调查","利润、生产率与产品结构数据","客户/供应商集中度及替代方案"][i]+"</td>";body.appendChild(tr)});
 }
 function bulletList(id,items){var box=el(id);box.innerHTML="";items.forEach(function(x){var d=document.createElement("div");d.className="scout-item";d.innerHTML="<i></i><div><b>"+x[0]+"</b><p>"+x[1]+"</p></div>";box.appendChild(d)})}
-function renderScout(){var s=subject(state.subject);el("scoutName").textContent=s.name;el("scoutIntro").textContent="球探观察：识别优势、短板、适配位置和成长路线。当前为演示样例。";el("scoutGrade").textContent=s.ovr>=82?"A−":s.ovr>=79?"B＋":"B";el("scoutPotential").textContent=s.pot>=90?"VERY HIGH":s.pot>=85?"HIGH":"MEDIUM";el("scoutRole").textContent=s.role;el("scoutScore").textContent=s.ovr;el("scoutScore").parentNode.parentNode.style.background="conic-gradient(#f1ce7c 0 "+s.ovr+"%,#31495a "+s.ovr+"%)";bulletList("scoutStrengths",s.strengths);bulletList("scoutWeaknesses",s.weaknesses);var fit=el("scoutFit");fit.innerHTML="";s.fit.forEach(function(x){var d=document.createElement("div");d.className="fit-row";d.innerHTML="<span>"+x[0]+"</span><div class='fit-meter'><i style='width:"+x[1]+"%'></i></div><b>"+x[1]+"</b>";fit.appendChild(d)});var watch=el("scoutWatch");watch.innerHTML="";s.watch.forEach(function(x,i){var d=document.createElement("div");d.className="watch-row";d.innerHTML="<span>"+(i+1)+". "+x+"</span><b>›</b>";watch.appendChild(d)});var track=el("developmentTrack");track.innerHTML="";[["01 · 近期","补齐关键证据","优先核验订单、企业范围、客户结构和关键供应依赖。"],["02 · 中期","强化关键能力","围绕技术升级、配套关系、人才和服务能力观察变化。"],["03 · 远期","检验成长兑现","检查潜力是否转化为产能、订单、利润和本地价值留存。"]].forEach(function(x){var d=document.createElement("div");d.className="development-step";d.innerHTML="<small>"+x[0]+"</small><b>"+x[1]+"</b><p>"+x[2]+"</p>";track.appendChild(d)})}
-function cardHTML(id){var s=subject(id);return "<div class='squad-card' draggable='true' data-id='"+id+"'><div class='squad-card-top'><b>"+s.ovr+"</b><span>OVR</span></div><div class='squad-card-name'>"+s.name+"</div><div class='squad-card-role'>"+s.role+" · POT "+s.pot+"</div></div>"}
+function renderScout(){
+ var s=subject(state.subject),cl=cluster(s.cluster);el("scoutName").textContent=s.name;el("scoutIntro").textContent=cl.name+" / "+s.position+" / "+s.club;el("scoutGrade").textContent=s.ovr>=88?"A":s.ovr>=80?"A−":s.ovr>=72?"B＋":"B";el("scoutPotential").textContent=s.pot>=96?"ELITE":s.pot>=90?"VERY HIGH":s.pot>=84?"HIGH":"DEVELOPING";el("scoutRole").textContent=s.position;el("scoutScore").textContent=s.ovr;el("scoutScore").parentNode.parentNode.style.background="conic-gradient(#f1ce7c 0 "+s.ovr+"%,#31495a "+s.ovr+"%)";bulletList("scoutStrengths",s.strengths);bulletList("scoutWeaknesses",s.weaknesses);
+ var fit=el("scoutFit");fit.innerHTML="";s.fit.forEach(function(x){var d=document.createElement("div");d.className="fit-row";d.innerHTML="<span>"+x[0]+"</span><div class='fit-meter'><i style='width:"+x[1]+"%'></i></div><b>"+x[1]+"</b>";fit.appendChild(d)});
+ var watch=el("scoutWatch");watch.innerHTML="";s.watch.forEach(function(x,i){var d=document.createElement("div");d.className="watch-row";d.innerHTML="<span>"+(i+1)+". "+x+"</span><b>›</b>";watch.appendChild(d)});
+ var track=el("developmentTrack");track.innerHTML="";[["01 · 近期","补齐关键证据","优先核验企业范围、订单、客户结构、关键工艺和供应依赖。"],["02 · 中期","强化关键能力","围绕技术升级、配套关系、人才和生产效率观察变化。"],["03 · 远期","检验成长兑现","检查潜力是否转化为产能、订单、利润和本地价值留存。"]].forEach(function(x){var d=document.createElement("div");d.className="development-step";d.innerHTML="<small>"+x[0]+"</small><b>"+x[1]+"</b><p>"+x[2]+"</p>";track.appendChild(d)})
+}
+function squadCard(id){var s=subject(id),cl=cluster(s.cluster);return "<div class='squad-card' draggable='true' data-id='"+id+"' style='border-color:"+cl.color+"66'><div class='squad-card-top'><b>"+s.ovr+"</b><span>OVR</span></div><div class='squad-card-name'>"+s.name+"</div><div class='squad-card-role'>"+s.position+" · POT "+s.pot+"</div></div>"}
 function renderLineup(){
- document.querySelectorAll(".squad-slot").forEach(function(slot){var role=slot.dataset.role,box=slot.querySelector(".squad-slot-cards");box.innerHTML="";(state.lineup[role]||[]).forEach(function(id){box.insertAdjacentHTML("beforeend",cardHTML(id))});slot.ondragover=function(e){e.preventDefault();slot.classList.add("drag-over")};slot.ondragleave=function(){slot.classList.remove("drag-over")};slot.ondrop=function(e){e.preventDefault();slot.classList.remove("drag-over");var id=e.dataTransfer.getData("text/plain");moveCard(id,role)}});
- document.querySelectorAll(".squad-card").forEach(function(card){card.addEventListener("dragstart",function(e){e.dataTransfer.setData("text/plain",card.dataset.id);e.dataTransfer.effectAllowed="move"})});
- var pool=el("poolList");pool.innerHTML="";subjects.filter(function(s){return assigned().indexOf(s.id)<0}).forEach(function(s){var d=document.createElement("div");d.className="pool-card";d.draggable=true;d.dataset.id=s.id;d.innerHTML="<b>"+s.name+"</b><span>OVR "+s.ovr+" · POT "+s.pot+"</span>";d.addEventListener("dragstart",function(e){e.dataTransfer.setData("text/plain",s.id)});pool.appendChild(d)});
- var n=assigned().length;var chemistry=Math.min(96,Math.round(57+n*5+(state.lineup.service.length?6:0)+(state.lineup.key.length?4:0)));el("chemistryScore").textContent=chemistry;el("chemistryBar").style.width=chemistry+"%";el("chemistryNotes").innerHTML="<div>当前配置 "+n+" 个产业主体，覆盖 "+roles.filter(function(r){return state.lineup[r.id].length>0}).length+" 类阵容角色。</div><div>服务、配套和核心主体之间的关系仍需真实采购与合作数据验证。</div>";
- var empty=roles.filter(function(r){return state.lineup[r.id].length===0});var checks=el("lineupChecks");checks.innerHTML="";[["主体数量",n+" 个",n>=5?"good":"warn"],["角色空缺",empty.length+" 个",empty.length?"warn":"good"],["关键关系","待核验","warn"],["协同收益","未测算","warn"]].forEach(function(x){var d=document.createElement("div");d.className="check-row";d.innerHTML="<span>"+x[0]+"</span><b class='"+x[2]+"'>"+x[1]+"</b>";checks.appendChild(d)});
- var cmp=el("lineupCompare");cmp.innerHTML="";[["阵容覆盖",roles.filter(function(r){return state.lineup[r.id].length>0}).length+"/6","已配置角色数"],["主体数量",n,"已放入阵容的主体"],["化学反应",chemistry,"演示协同适配指数"]].forEach(function(x){var d=document.createElement("div");d.className="compare-metric";d.innerHTML="<small>"+x[0]+"</small><b>"+x[1]+"</b><span>"+x[2]+"</span>";cmp.appendChild(d)})
+ document.querySelectorAll(".squad-slot").forEach(function(slot){var role=slot.dataset.role,box=slot.querySelector(".squad-slot-cards");box.innerHTML="";(state.lineup[role]||[]).forEach(function(id){if(subject(id))box.insertAdjacentHTML("beforeend",squadCard(id))});slot.ondragover=function(e){e.preventDefault();slot.classList.add("drag-over")};slot.ondragleave=function(){slot.classList.remove("drag-over")};slot.ondrop=function(e){e.preventDefault();slot.classList.remove("drag-over");moveCard(e.dataTransfer.getData("text/plain"),role)}});
+ document.querySelectorAll(".squad-card").forEach(function(card){card.ondragstart=function(e){e.dataTransfer.setData("text/plain",card.dataset.id);e.dataTransfer.effectAllowed="move"}});
+ var pool=el("poolList");pool.innerHTML="";players.filter(function(s){return assigned().indexOf(s.id)<0}).forEach(function(s){var d=document.createElement("div");d.className="pool-card";d.draggable=true;d.dataset.id=s.id;d.innerHTML="<b>"+s.name+"</b><span>OVR "+s.ovr+" · POT "+s.pot+"</span>";d.ondragstart=function(e){e.dataTransfer.setData("text/plain",s.id)};pool.appendChild(d)});
+ pool.ondragover=function(e){e.preventDefault()};pool.ondrop=function(e){e.preventDefault();removeFromLineup(e.dataTransfer.getData("text/plain"))};
+ var n=assigned().length,covered=roles.filter(function(r){return state.lineup[r.id].length>0}).length,chemistry=Math.min(97,Math.round(52+covered*5+Math.min(12,n)+ (state.lineup.key.length?4:0)+(state.lineup.service.length?4:0)));
+ el("chemistryScore").textContent=chemistry;el("chemistryBar").style.width=chemistry+"%";el("chemistryNotes").innerHTML="<div>当前首发与替补共配置 "+n+" 名球员，覆盖 "+covered+" 类阵容角色。</div><div>阵容跨越 "+new Set(assigned().map(function(id){return subject(id).cluster})).size+" 个产业集群；真实协同仍需采购、客户和技术关系数据验证。</div>";
+ var empty=roles.filter(function(r){return state.lineup[r.id].length===0}),checks=el("lineupChecks");checks.innerHTML="";[["上场球员",n+" 名",n>=8?"good":"warn"],["角色空缺",empty.length+" 个",empty.length?"warn":"good"],["产业覆盖",new Set(assigned().map(function(id){return subject(id).cluster})).size+" 个集群","good"],["真实协同","待数据验证","warn"]].forEach(function(x){var d=document.createElement("div");d.className="check-row";d.innerHTML="<span>"+x[0]+"</span><b class='"+x[2]+"'>"+x[1]+"</b>";checks.appendChild(d)});
+ var cmp=el("lineupCompare");cmp.innerHTML="";[["阵容覆盖",covered+"/6","已配置角色数"],["产业集群",new Set(assigned().map(function(id){return subject(id).cluster})).size,"覆盖的集群数"],["化学反应",chemistry,"演示协同适配指数"]].forEach(function(x){var d=document.createElement("div");d.className="compare-metric";d.innerHTML="<small>"+x[0]+"</small><b>"+x[1]+"</b><span>"+x[2]+"</span>";cmp.appendChild(d)})
 }
 function moveCard(id,role){if(!subject(id))return;roles.forEach(function(r){state.lineup[r.id]=state.lineup[r.id].filter(function(x){return x!==id})});state.lineup[role].push(id);renderLineup();toast(subject(id).name+" 已调整至 "+roles.find(function(r){return r.id===role}).name)}
-el("addToLineup").addEventListener("click",function(){var id=state.subject;if(assigned().indexOf(id)<0){state.lineup.reserve.push(id);renderLineup();toast("已加入替补席："+subject(id).name)}else toast("该主体已在阵容中");switchView("lineup")});
+function removeFromLineup(id){roles.forEach(function(r){state.lineup[r.id]=state.lineup[r.id].filter(function(x){return x!==id})});renderLineup();toast("已将球员移回候选池")}
+document.addEventListener("click",function(e){var card=e.target.closest("[data-player]");if(card){state.subject=card.dataset.player;renderProfile();renderScout();switchView("profile")}});
+el("playerSearch").addEventListener("input",function(e){state.search=e.target.value;renderPlayers()});
+el("clusterFilter").innerHTML="<option value='all'>全部球队 / 集群</option>"+clusters.map(function(x){return "<option value='"+x.id+"'>"+x.name+"</option>"}).join("");
+el("clusterFilter").addEventListener("change",function(e){state.filter=e.target.value;renderPlayers()});
+el("sortPlayers").addEventListener("change",function(e){state.sort=e.target.value;renderPlayers()});
+el("addToLineup").addEventListener("click",function(){var id=state.subject;if(assigned().indexOf(id)<0){state.lineup.reserve.push(id);renderLineup();toast("已加入替补席："+subject(id).name)}else toast("该球员已在阵容中");switchView("lineup")});
 el("resetLineup").addEventListener("click",function(){state.lineup=JSON.parse(JSON.stringify(defaults));renderLineup();toast("已恢复演示阵容")});
-el("saveLineup").addEventListener("click",function(){try{localStorage.setItem("boroIndustrySquadV2",JSON.stringify(state.lineup));toast("阵容已保存到当前浏览器")}catch(e){toast("浏览器暂不支持本地保存") }});
+el("saveLineup").addEventListener("click",function(){try{localStorage.setItem("boroIndustrySquadV3",JSON.stringify(state.lineup));toast("阵容已保存到当前浏览器")}catch(e){toast("浏览器暂不支持本地保存")}});
 el("compareLineup").addEventListener("click",function(){renderLineup();toast("阵容短板已刷新")});
-el("systemMap").addEventListener("click",function(){openDrawer("系统说明","<div class='drawer-block'><b>界面开发原则</b><p>参考体育游戏的球员能力卡、球探报告和阵容战术板，把产业主体能力、潜力、弱点、适配角色与组合关系可视化。</p></div><div class='drawer-block'><b>演示参数</b><p>当前 OVR、POT、属性条、球探指数和阵容化学反应均为开发演示数值，不能作为博罗产业真实评价或正式测算结论。</p></div><div class='drawer-block'><b>正式数据接入</b><p>后续将主体边界、指标口径、证据等级、来源和时间戳绑定到各属性；缺失数据不自动填成低分。</p></div><div class='drawer-block'><b>战略口径</b><p>2032年前后1:5:4是产业布局方向，不是三次产业增加值比例。</p></div><p>GitHub Pages 为公开静态托管，不适合存放涉密数据。正式内部使用前需另行配置身份认证、访问控制和数据隔离。</p>")});
+el("systemMap").addEventListener("click",function(){openDrawer("系统说明","<div class='drawer-block'><b>产业层级</b><p>产业集群是球队；细分产业链环节是球员；具体企业是俱乐部；企业间采购、技术、人才和订单关系是配合网络。</p></div><div class='drawer-block'><b>开发演示参数</b><p>当前OVR、POT、六维属性和阵容化学反应均为界面演示参数，不代表真实产业排名或测算结果。</p></div><div class='drawer-block'><b>公开样本与待核节点</b><p>公开报道出现的企业和项目作为样本；尚未核实的产业链环节明确标记为补链观察，不假定本地已经具备完整供给。</p></div><div class='drawer-block'><b>数据接入</b><p>正式接入后，企业、行业和项目数据分别绑定口径、来源、时间、证据等级与更新记录；缺失数据不自动填成低分。</p></div><div class='drawer-block'><b>战略口径</b><p>博罗2032年前后1:5:4是产业布局方向，不是三次产业增加值比例。</p></div><p>GitHub Pages 是公开静态托管，不适合存放涉密数据。正式内部使用前需另行配置身份认证、访问控制和数据隔离。</p>")});
 function openDrawer(title,body){el("drawerTitle").textContent=title;el("drawerBody").innerHTML=body;el("drawer").classList.add("open")}
 el("drawerClose").addEventListener("click",function(){el("drawer").classList.remove("open")});el("drawer").addEventListener("click",function(e){if(e.target===el("drawer"))el("drawer").classList.remove("open")});
-try{var saved=localStorage.getItem("boroIndustrySquadV2");if(saved){var parsed=JSON.parse(saved);if(parsed&&roles.every(function(r){return Array.isArray(parsed[r.id])}))state.lineup=parsed}}catch(e){}
-renderSelect();renderProfile();renderScout();renderLineup();
+try{var saved=localStorage.getItem("boroIndustrySquadV3");if(saved){var parsed=JSON.parse(saved);if(parsed&&roles.every(function(r){return Array.isArray(parsed[r.id])}))state.lineup=parsed}}catch(e){}
+renderSelect();renderPlayers();renderProfile();renderScout();renderLineup();
 })();
 </script>
 </body>
