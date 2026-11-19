@@ -1032,7 +1032,7 @@ const careerPolicies=[
 const careerEvents=[
  ["订单波动","orders",1.3],["人才紧缺","talent",1],["供应中断","supply",1.5],["新项目机会","none",-1],["技术突破窗口","none",-.8],["市场正常","none",0]
 ];
-let career={quarter:0,policy:"balanced",bench:null,training:{capacity:0,tech:0,resilience:0},fatigue:0,recovery:0,score:0,rival:64,history:[],snapshots:[],journal:[],initialSlots:null,spent:[0,0,0,0,0],benchReady:0,rivalStrategy:"balanced",companyStates:{},curve:[],comparison:{A:null,B:null},lastOutcome:null};
+let career={quarter:0,policy:"balanced",bench:null,training:{capacity:0,tech:0,resilience:0},fatigue:0,recovery:0,score:0,rival:64,history:[],snapshots:[],journal:[],initialSlots:null,spent:[0,0,0,0,0],benchReady:0,rivalStrategy:"balanced",companyStates:{},curve:[],comparison:{A:null,B:null},lastOutcome:null,initialScore:0};
 function careerBonus(){return career.training.capacity*.42+career.training.tech*.48+career.training.resilience*.34-career.fatigue*.3}
 function careerScore(){const base=managerCompute(),buff=careerBonus();return Math.max(0,Math.min(100,+((base.score+buff-career.recovery*.12).toFixed(1))))}
 function careerRival(q){const shift=career.rivalStrategy==="aggressive"?1.35:career.rivalStrategy==="innovation"?1.04:.7;return Math.max(40,Math.min(99,64+q*shift+Math.sin(q*1.4)*2.6))}
@@ -1096,7 +1096,7 @@ function v9Render(){
  ["网络压力",network.pressure.toFixed(1),"假设网络 · 固定节点均值"],
  ["资源风险",v.overloaded.filter(x=>x>0).length,"超限项数"]
  ].map(x=>'<div class="v9-outcome"><span>'+x[0]+'</span><b>'+x[1]+'</b><small>'+x[2]+'</small></div>').join("");
- const series=[{quarter:0,score:career.curve?.[0]?.score??(career.history[0]?.score??snap.score)},...(career.curve||[])];
+ const series=[{quarter:0,score:career.initialScore??(career.history[0]?.score??snap.score)},...(career.curve||[])];
  const pts=series.map((x,i)=>[36+(i/Math.max(1,series.length-1))*662,195-(Math.max(0,Math.min(100,x.score))/100)*158]);
  let lines='<line x1="32" y1="195" x2="710" y2="195" stroke="#62849b"/><line x1="32" y1="35" x2="32" y2="195" stroke="#62849b"/>';
  lines+='<polyline fill="none" stroke="#f2d18b" stroke-width="3.5" points="'+pts.map(x=>x.join(",")).join(" ")+'"/>';
@@ -1112,6 +1112,26 @@ function v9Comparison(){
  const d=B.score-A.score;
  $("v9Summary").innerHTML='<small>A / B 方案对照</small><strong>'+(d>=0?'+':'')+d.toFixed(1)+'</strong><span>组合指数差；A：'+A.quarter+'季，B：'+B.quarter+'季。<br>资源占用变化：'+B.spent.map((v,i)=>managerNeeds[i]+" "+(v-A.spent[i]).toFixed(1)).join(' / ')+'。<br>这不是现实绩效差距。</span>';
 }
+
+// V9 browser-local season continuity. Never uploads user data.
+const V9_STORE="boluo-industry-career-v9";
+function v9SaveCareer(){
+ try{sessionStorage.setItem(V9_STORE,JSON.stringify({career:{...career,history:career.history.slice(-28),journal:career.journal.slice(0,14)},slots:{...manager.slots},version:9}))}catch(e){}
+}
+function v9LoadCareer(){
+ try{
+  const data=JSON.parse(sessionStorage.getItem(V9_STORE)||"null");
+  if(!data||data.version!==9||!data.career||!data.slots)return;
+  if(!Object.values(data.slots).filter(Boolean).every(id=>companies.some(p=>p.id===id)))return;
+  const s=data.career;
+  if(!Number.isInteger(s.quarter)||s.quarter<0||s.quarter>28)return;
+  if(!Array.isArray(s.spent)||s.spent.length!==5||!Array.isArray(s.history)||!Array.isArray(s.curve))return;
+  if(!s.companyStates||typeof s.companyStates!=="object"||!s.training||!s.comparison)return;
+  career={...career,...s};manager.slots={...manager.slots,...data.slots};
+  manager.year=Math.min(2,Math.floor(s.quarter/4));
+ }catch(e){}
+}
+
 function v9Init(){
  $("v9CompanyTiles").onclick=e=>{const b=e.target.closest('[data-v9-company]');if(b)openPlayer(b.dataset.v9Company)};
  $("v9QuarterA").onclick=()=>{career.comparison.A=v9Snapshot();v9Render()};
@@ -1129,7 +1149,7 @@ function careerTick(){
  const nextFatigue=Math.max(0,career.fatigue*.69+Math.max(0,intensity)*7-(policy.id==="cash"?6:0));
  const nextRecovery=Math.max(0,career.recovery*.55+(roll>0?roll*6:0)-(policy.id==="supply"?2:0));
  const upgrade=paid?policy.boost:[0,0,0];
- const beforeSnapshot={quarter:career.quarter,policy:career.policy,bench:career.bench,benchReady:career.benchReady,spent:career.spent.slice(),rivalStrategy:career.rivalStrategy,training:{...career.training},fatigue:career.fatigue,recovery:career.recovery,score:career.score,rival:career.rival,slots:{...manager.slots},managerEvent:manager.event,managerYear:manager.year,journal:career.journal.slice(),companyStates:JSON.parse(JSON.stringify(career.companyStates||{})),curve:(career.curve||[]).slice(),lastOutcome:career.lastOutcome};
+ const beforeSnapshot={quarter:career.quarter,policy:career.policy,bench:career.bench,benchReady:career.benchReady,spent:career.spent.slice(),rivalStrategy:career.rivalStrategy,training:{...career.training},fatigue:career.fatigue,recovery:career.recovery,score:career.score,rival:career.rival,initialScore:career.initialScore,slots:{...manager.slots},managerEvent:manager.event,managerYear:manager.year,journal:career.journal.slice(),companyStates:JSON.parse(JSON.stringify(career.companyStates||{})),curve:(career.curve||[]).slice(),lastOutcome:career.lastOutcome};
  career.history.push(beforeSnapshot);if(career.history.length>28)career.history.shift();
  career.quarter=q;
  career.spent=career.spent.map((x,i)=>Math.max(0,x*.35)+(paid?price[i]:0));
@@ -1147,21 +1167,23 @@ function careerTick(){
  career.lastOutcome={event:event[0],policy:policy.name,paid};
  if(!career.curve)career.curve=[];
  career.curve.push({quarter:q,score:career.score});
- const shift=+(career.score-(beforeSnapshot.score||before.score)).toFixed(1);
+ const shift=+(career.score-(beforeSnapshot.score??before.score)).toFixed(1);
  career.journal.unshift({date:careerPrintQuarter(q),name:event[0],text:(paid?"策略执行":"资源不足，策略未执行")+" · "+policy.name+" · 组合指数 "+(shift>=0?"+":"")+shift+" · 对手："+career.rivalStrategy});
  if(career.journal.length>14)career.journal.pop();
- managerSync();renderManagerSeason();renderCareer();
+ managerSync();refreshScores();renderDuel();renderManagerSeason();renderCareer();
 }
 function careerUndo(){
  if(!career.history.length)return;
  const s=career.history.pop();
- for(const k of ["quarter","policy","bench","benchReady","spent","rivalStrategy","training","fatigue","recovery","score","rival","journal","companyStates","curve","lastOutcome"])career[k]=s[k];
+ for(const k of ["quarter","policy","bench","benchReady","spent","rivalStrategy","training","fatigue","recovery","score","rival","journal","companyStates","curve","lastOutcome","initialScore"])career[k]=s[k];
  manager.slots=s.slots;manager.event=s.managerEvent;manager.year=s.managerYear;
- managerSync();renderManagerSeason();renderCareer();
+ managerSync();refreshScores();renderDuel();renderManagerSeason();renderCareer();
 }
 function careerNew(){
- career={quarter:0,policy:"balanced",bench:null,training:{capacity:0,tech:0,resilience:0},fatigue:0,recovery:0,score:0,rival:64,history:[],snapshots:[],journal:[],initialSlots:{...manager.slots},spent:[0,0,0,0,0],benchReady:0,rivalStrategy:"balanced",companyStates:{},curve:[],comparison:{A:null,B:null},lastOutcome:null};
- manager.year=0;manager.event="none";career.score=careerScore();managerSync();renderManagerSeason();renderCareer();
+ const compare=career.comparison||{A:null,B:null};
+ const original=career.initialSlots?{...career.initialSlots}:{...manager.slots};
+ career={quarter:0,policy:"balanced",bench:null,training:{capacity:0,tech:0,resilience:0},fatigue:0,recovery:0,score:0,rival:64,history:[],snapshots:[],journal:[],initialSlots:{...manager.slots},spent:[0,0,0,0,0],benchReady:0,rivalStrategy:"balanced",companyStates:{},curve:[],comparison:compare,lastOutcome:null,initialScore:0};
+ manager.slots=original;manager.year=0;manager.event="none";career.score=careerScore();career.initialScore=career.score;managerSync();refreshScores();renderDuel();renderManagerSeason();renderCareer();
 }
 function careerPromote(){
  if(!career.bench||career.benchReady<1.5)return;
@@ -1199,14 +1221,14 @@ function renderCareer(){
  $("careerQuarterHint").textContent="预算超限 "+v.overloaded.filter(x=>x>0).length+" 项 · 状态疲劳 "+career.fatigue.toFixed(1)+" · 恢复负担 "+career.recovery.toFixed(1)+" · 季度成本结转："+career.spent.map((x,i)=>managerNeeds[i]+" "+x.toFixed(0)).join(" / ")+"。所有要素为演示单位。";
  $("careerAdvance").disabled=career.quarter>=28;
  $("careerRewind").disabled=!career.history.length;
- v9Render();
+ v9Render();v9SaveCareer();
 }
 function initCareer(){
  $("careerPolicy").onclick=e=>{const b=e.target.closest("[data-career-policy]");if(b){career.policy=b.dataset.careerPolicy;renderCareer()}};
  $("careerAdvance").onclick=careerTick;$("careerRewind").onclick=careerUndo;$("careerRestart").onclick=careerNew;
  $("careerBench").onchange=e=>{if(e.target.id==="careerBenchPick"){career.bench=e.target.value||null;career.benchReady=0;renderCareer()}};
  $("careerBench").onclick=e=>{if(e.target.closest("#careerPromote"))careerPromote();if(e.target.closest("#careerInspect")&&career.bench)openPlayer(career.bench)};
- career.initialSlots={...manager.slots};career.score=careerScore();renderCareer();
+ career.initialSlots={...manager.slots};career.score=careerScore();career.initialScore=career.score;v9LoadCareer();renderCareer();
 }
 
 function renderSeason(){
