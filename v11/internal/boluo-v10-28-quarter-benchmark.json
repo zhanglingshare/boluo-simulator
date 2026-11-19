@@ -1,0 +1,700 @@
+{
+  "schema": "boluo-industry-manager-v10-benchmark",
+  "date": "2026-11-20",
+  "project": "博罗内部版 / 虚构经营情景",
+  "status": "synthetic developer test; not an economic forecast",
+  "period": "2026-Q1 through 2032-Q4",
+  "quarters": 28,
+  "experiment": "3 role lineups × 3 common exogenous shock scales × 28 quarters",
+  "parameters": {
+    "resourceCaps": [
+      100,
+      100,
+      100,
+      100,
+      100
+    ],
+    "resources": [
+      "land",
+      "capital",
+      "energy",
+      "talent",
+      "shared_platform"
+    ],
+    "shockScales": [
+      0.75,
+      1,
+      1.25
+    ],
+    "shocks": "deterministic shared external event calendar",
+    "model": "scenario-only capability index; cannot infer county gross industrial output or the 1:5:4 target"
+  },
+  "routes": [
+    {
+      "route": "anchor",
+      "scenario": "龙头优先",
+      "shockScale": 0.75,
+      "initialIndex": 87.1,
+      "finalIndex": 81.7,
+      "change": -5.4,
+      "lowestIndex": 75.8,
+      "meanIndex": 85.1,
+      "resourceBlockedQuarters": 10,
+      "overlimitQuarters": 0,
+      "reservePromoted": true,
+      "finalRosterIds": [
+        "huatong",
+        "liwei",
+        "unionfoil"
+      ],
+      "stressQuarters": 13,
+      "networkTouchedOccurrences": 70,
+      "residualDamageIndex": 36.8,
+      "peakResources": [
+        {
+          "name": "土地",
+          "value": 96.3
+        },
+        {
+          "name": "资金",
+          "value": 97.3
+        },
+        {
+          "name": "用能",
+          "value": 73.3
+        },
+        {
+          "name": "人才",
+          "value": 72.2
+        },
+        {
+          "name": "平台",
+          "value": 67.4
+        }
+      ],
+      "quarterlyIndex": [
+        87.1,
+        88,
+        89.1,
+        83.8,
+        76.1,
+        88.6,
+        89.7,
+        80,
+        76,
+        87.2,
+        88.9,
+        81.1,
+        82.1,
+        89.4,
+        89.8,
+        90.5,
+        83.1,
+        76,
+        87.9,
+        90.5,
+        81.3,
+        75.8,
+        88,
+        91.1,
+        81.6,
+        81.7,
+        89.2,
+        91.5,
+        81.7
+      ]
+    },
+    {
+      "route": "anchor",
+      "scenario": "龙头优先",
+      "shockScale": 1,
+      "initialIndex": 87.1,
+      "finalIndex": 80.9,
+      "change": -6.2,
+      "lowestIndex": 73.9,
+      "meanIndex": 84.3,
+      "resourceBlockedQuarters": 10,
+      "overlimitQuarters": 0,
+      "reservePromoted": true,
+      "finalRosterIds": [
+        "huatong",
+        "liwei",
+        "unionfoil"
+      ],
+      "stressQuarters": 13,
+      "networkTouchedOccurrences": 79,
+      "residualDamageIndex": 52.6,
+      "peakResources": [
+        {
+          "name": "土地",
+          "value": 96.3
+        },
+        {
+          "name": "资金",
+          "value": 97.3
+        },
+        {
+          "name": "用能",
+          "value": 73.3
+        },
+        {
+          "name": "人才",
+          "value": 72.2
+        },
+        {
+          "name": "平台",
+          "value": 67.4
+        }
+      ],
+      "quarterlyIndex": [
+        87.1,
+        88,
+        89.1,
+        83.2,
+        74.8,
+        87.6,
+        89.4,
+        79.6,
+        74.7,
+        86.3,
+        88.4,
+        80.4,
+        81.3,
+        88.9,
+        89.4,
+        90.4,
+        82.6,
+        74.5,
+        86.8,
+        89.9,
+        79.8,
+        73.9,
+        86.6,
+        90.1,
+        80.2,
+        80.1,
+        88.1,
+        91.2,
+        80.9
+      ]
+    },
+    {
+      "route": "anchor",
+      "scenario": "龙头优先",
+      "shockScale": 1.25,
+      "initialIndex": 87.1,
+      "finalIndex": 79.7,
+      "change": -7.4,
+      "lowestIndex": 72,
+      "meanIndex": 83.4,
+      "resourceBlockedQuarters": 10,
+      "overlimitQuarters": 0,
+      "reservePromoted": true,
+      "finalRosterIds": [
+        "huatong",
+        "liwei",
+        "unionfoil"
+      ],
+      "stressQuarters": 13,
+      "networkTouchedOccurrences": 84,
+      "residualDamageIndex": 66.7,
+      "peakResources": [
+        {
+          "name": "土地",
+          "value": 96.3
+        },
+        {
+          "name": "资金",
+          "value": 97.3
+        },
+        {
+          "name": "用能",
+          "value": 73.3
+        },
+        {
+          "name": "人才",
+          "value": 72.2
+        },
+        {
+          "name": "平台",
+          "value": 67.4
+        }
+      ],
+      "quarterlyIndex": [
+        87.1,
+        88,
+        89.1,
+        83,
+        73.5,
+        86.7,
+        89,
+        78.8,
+        73.2,
+        85.4,
+        87.5,
+        79.5,
+        80.2,
+        88.2,
+        88.9,
+        90.3,
+        82,
+        72.7,
+        85.8,
+        89.3,
+        78.5,
+        72,
+        85.3,
+        89.3,
+        78.6,
+        78.2,
+        87,
+        90.5,
+        79.7
+      ]
+    },
+    {
+      "route": "balanced",
+      "scenario": "链条均衡",
+      "shockScale": 0.75,
+      "initialIndex": 83.8,
+      "finalIndex": 81.1,
+      "change": -2.7,
+      "lowestIndex": 73.4,
+      "meanIndex": 83,
+      "resourceBlockedQuarters": 7,
+      "overlimitQuarters": 0,
+      "reservePromoted": false,
+      "finalRosterIds": [
+        "sunwoda",
+        "liwei",
+        "zhongneng"
+      ],
+      "stressQuarters": 13,
+      "networkTouchedOccurrences": 55,
+      "residualDamageIndex": 26.6,
+      "peakResources": [
+        {
+          "name": "土地",
+          "value": 82.1
+        },
+        {
+          "name": "资金",
+          "value": 94.6
+        },
+        {
+          "name": "用能",
+          "value": 60.3
+        },
+        {
+          "name": "人才",
+          "value": 77.3
+        },
+        {
+          "name": "平台",
+          "value": 69.3
+        }
+      ],
+      "quarterlyIndex": [
+        83.8,
+        84.9,
+        84.8,
+        79.1,
+        73.4,
+        85.8,
+        85.5,
+        76,
+        74.5,
+        86.1,
+        86.3,
+        76.7,
+        79.8,
+        87.6,
+        87.7,
+        87.9,
+        81.4,
+        75.7,
+        87,
+        88.1,
+        80.2,
+        76.4,
+        87.5,
+        88.9,
+        80.7,
+        82,
+        89,
+        89.8,
+        81.1
+      ]
+    },
+    {
+      "route": "balanced",
+      "scenario": "链条均衡",
+      "shockScale": 1,
+      "initialIndex": 83.8,
+      "finalIndex": 80.8,
+      "change": -3,
+      "lowestIndex": 72.1,
+      "meanIndex": 82.3,
+      "resourceBlockedQuarters": 7,
+      "overlimitQuarters": 0,
+      "reservePromoted": false,
+      "finalRosterIds": [
+        "sunwoda",
+        "liwei",
+        "zhongneng"
+      ],
+      "stressQuarters": 13,
+      "networkTouchedOccurrences": 60,
+      "residualDamageIndex": 37.6,
+      "peakResources": [
+        {
+          "name": "土地",
+          "value": 82.1
+        },
+        {
+          "name": "资金",
+          "value": 94.6
+        },
+        {
+          "name": "用能",
+          "value": 60.3
+        },
+        {
+          "name": "人才",
+          "value": 77.3
+        },
+        {
+          "name": "平台",
+          "value": 69.3
+        }
+      ],
+      "quarterlyIndex": [
+        83.8,
+        84.9,
+        84.8,
+        78.1,
+        72.1,
+        84.8,
+        85.1,
+        74.7,
+        73,
+        85.1,
+        85.7,
+        75.2,
+        78.8,
+        86.5,
+        87.3,
+        87.6,
+        81.2,
+        74.7,
+        86.4,
+        87.7,
+        79.7,
+        75.3,
+        86.8,
+        88.4,
+        80.3,
+        81.2,
+        88.5,
+        89.4,
+        80.8
+      ]
+    },
+    {
+      "route": "balanced",
+      "scenario": "链条均衡",
+      "shockScale": 1.25,
+      "initialIndex": 83.8,
+      "finalIndex": 80,
+      "change": -3.8,
+      "lowestIndex": 71.2,
+      "meanIndex": 81.6,
+      "resourceBlockedQuarters": 7,
+      "overlimitQuarters": 0,
+      "reservePromoted": false,
+      "finalRosterIds": [
+        "sunwoda",
+        "liwei",
+        "zhongneng"
+      ],
+      "stressQuarters": 13,
+      "networkTouchedOccurrences": 67,
+      "residualDamageIndex": 48.3,
+      "peakResources": [
+        {
+          "name": "土地",
+          "value": 82.1
+        },
+        {
+          "name": "资金",
+          "value": 94.6
+        },
+        {
+          "name": "用能",
+          "value": 60.3
+        },
+        {
+          "name": "人才",
+          "value": 77.3
+        },
+        {
+          "name": "平台",
+          "value": 69.3
+        }
+      ],
+      "quarterlyIndex": [
+        83.8,
+        84.9,
+        84.8,
+        77.6,
+        71.2,
+        83.9,
+        84.7,
+        73.8,
+        71.6,
+        84,
+        85.2,
+        74.2,
+        77.5,
+        85.8,
+        86.8,
+        87.3,
+        81,
+        73.5,
+        85.8,
+        87.2,
+        78.7,
+        73.5,
+        85.9,
+        87.9,
+        79.3,
+        80.1,
+        87.8,
+        89,
+        80
+      ]
+    },
+    {
+      "route": "future",
+      "scenario": "成长接棒",
+      "shockScale": 0.75,
+      "initialIndex": 76.9,
+      "finalIndex": 75,
+      "change": -1.9,
+      "lowestIndex": 65,
+      "meanIndex": 76.4,
+      "resourceBlockedQuarters": 7,
+      "overlimitQuarters": 0,
+      "reservePromoted": false,
+      "finalRosterIds": [
+        "bolan",
+        "tianzhuo",
+        "luofushan-group"
+      ],
+      "stressQuarters": 13,
+      "networkTouchedOccurrences": 75,
+      "residualDamageIndex": 46.2,
+      "peakResources": [
+        {
+          "name": "土地",
+          "value": 73.3
+        },
+        {
+          "name": "资金",
+          "value": 90.5
+        },
+        {
+          "name": "用能",
+          "value": 54
+        },
+        {
+          "name": "人才",
+          "value": 80.7
+        },
+        {
+          "name": "平台",
+          "value": 65.8
+        }
+      ],
+      "quarterlyIndex": [
+        76.9,
+        77.8,
+        77.8,
+        71.6,
+        65,
+        77.5,
+        78.3,
+        68.6,
+        65.9,
+        78.3,
+        79.8,
+        70.3,
+        72.2,
+        80.2,
+        81.2,
+        82.6,
+        75.3,
+        69.7,
+        81.4,
+        82.9,
+        73.4,
+        70.1,
+        82,
+        83.5,
+        74.2,
+        75.9,
+        83.3,
+        84.4,
+        75
+      ]
+    },
+    {
+      "route": "future",
+      "scenario": "成长接棒",
+      "shockScale": 1,
+      "initialIndex": 76.9,
+      "finalIndex": 73.9,
+      "change": -3,
+      "lowestIndex": 63.4,
+      "meanIndex": 75.4,
+      "resourceBlockedQuarters": 7,
+      "overlimitQuarters": 0,
+      "reservePromoted": false,
+      "finalRosterIds": [
+        "bolan",
+        "tianzhuo",
+        "luofushan-group"
+      ],
+      "stressQuarters": 13,
+      "networkTouchedOccurrences": 86,
+      "residualDamageIndex": 65.7,
+      "peakResources": [
+        {
+          "name": "土地",
+          "value": 73.3
+        },
+        {
+          "name": "资金",
+          "value": 90.5
+        },
+        {
+          "name": "用能",
+          "value": 54
+        },
+        {
+          "name": "人才",
+          "value": 80.7
+        },
+        {
+          "name": "平台",
+          "value": 65.8
+        }
+      ],
+      "quarterlyIndex": [
+        76.9,
+        77.8,
+        77.8,
+        70.9,
+        63.4,
+        76.6,
+        77.4,
+        67.3,
+        63.8,
+        76.9,
+        78.8,
+        68.4,
+        70.4,
+        79.2,
+        80.5,
+        82.2,
+        74.5,
+        68.1,
+        80.4,
+        82.3,
+        72.3,
+        68.4,
+        80.9,
+        82.8,
+        73,
+        74.3,
+        82.4,
+        83.8,
+        73.9
+      ]
+    },
+    {
+      "route": "future",
+      "scenario": "成长接棒",
+      "shockScale": 1.25,
+      "initialIndex": 76.9,
+      "finalIndex": 72.4,
+      "change": -4.5,
+      "lowestIndex": 61.8,
+      "meanIndex": 74.3,
+      "resourceBlockedQuarters": 7,
+      "overlimitQuarters": 0,
+      "reservePromoted": false,
+      "finalRosterIds": [
+        "bolan",
+        "tianzhuo",
+        "luofushan-group"
+      ],
+      "stressQuarters": 13,
+      "networkTouchedOccurrences": 91,
+      "residualDamageIndex": 82.9,
+      "peakResources": [
+        {
+          "name": "土地",
+          "value": 73.3
+        },
+        {
+          "name": "资金",
+          "value": 90.5
+        },
+        {
+          "name": "用能",
+          "value": 54
+        },
+        {
+          "name": "人才",
+          "value": 80.7
+        },
+        {
+          "name": "平台",
+          "value": 65.8
+        }
+      ],
+      "quarterlyIndex": [
+        76.9,
+        77.8,
+        77.8,
+        69.9,
+        61.8,
+        75.8,
+        76.8,
+        65.7,
+        62.1,
+        75.8,
+        78.1,
+        67,
+        68.9,
+        78.2,
+        79.9,
+        81.7,
+        73.7,
+        66.2,
+        79.5,
+        81.7,
+        71,
+        66.5,
+        79.8,
+        81.9,
+        71.6,
+        72.8,
+        81.5,
+        83.2,
+        72.4
+      ]
+    }
+  ]
+}
