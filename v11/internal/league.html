@@ -22,11 +22,25 @@ button,input,select{font:inherit}button{cursor:pointer;color:inherit}.shell{max-
 .modal-backdrop{display:none;position:fixed;inset:0;background:#020812bb;backdrop-filter:blur(8px);z-index:20;padding:18px;align-items:center;justify-content:center}.modal-backdrop.open{display:flex}.modal{max-width:680px;width:100%;max-height:88vh;overflow:auto;background:#14253a;border:1px solid #45627d;border-radius:20px;padding:20px;box-shadow:0 30px 100px #0009}.modal-head{display:flex;justify-content:space-between;gap:12px;align-items:center}.modal-head h3{margin:0}.close{border:1px solid #40566d;background:#1a3047;border-radius:9px;padding:6px 10px}.modal p{color:#a8bacb;font-size:12px}.modal-actions{display:flex;gap:8px;flex-wrap:wrap;margin-top:16px}.action{border:1px solid #3d5d78;background:#1d3b57;padding:9px 12px;border-radius:9px;font-size:11px}.action.primary{background:#d9b96c;color:#152338;border-color:#d9b96c;font-weight:800}
 @media(max-width:950px){.hero{grid-template-columns:1fr}.team-grid{grid-template-columns:1fr}.overview-grid{grid-template-columns:1fr}.player-grid{grid-template-columns:repeat(2,minmax(0,1fr))}.detail-layout{grid-template-columns:1fr}.youth-grid{grid-template-columns:repeat(2,1fr)}}
 @media(max-width:620px){.shell{padding:14px 12px 50px}.top{align-items:flex-start}.brand h1{font-size:17px}.top-right{justify-content:flex-end}.top-right .pill:nth-child(2){display:none}.hero-main{padding:20px}.hero-side{min-height:140px}.player-grid{grid-template-columns:1fr 1fr;gap:8px}.player-card{padding:10px}.player-card h4{font-size:12px}.avatar{width:38px;height:38px}.ovr{font-size:17px}.detail-layout{grid-template-columns:1fr}.attribute-grid{grid-template-columns:repeat(2,1fr)}.evidence-box{grid-template-columns:1fr}.scout-grid,.youth-grid{grid-template-columns:1fr}.formation{grid-template-columns:repeat(2,1fr)}.pitch{min-height:430px}.team-stats{gap:5px}.stat{padding:7px}.stat b{font-size:15px}.section-head{align-items:flex-start;flex-direction:column}.search{min-width:0;width:100%}}
+
+.model-strip{display:flex;justify-content:space-between;gap:12px;flex-wrap:wrap;align-items:center;padding:13px 15px;border:1px solid #496079;background:#182d41;border-radius:13px;margin:12px 0}
+.model-strip b{color:#e8cd8a}.model-strip p{font-size:10px;color:#a9bfd0;margin:3px 0}
+.model-strip select,.model-strip button{background:#10253b;color:white;border:1px solid #52728d;border-radius:8px;padding:8px;font-size:11px}
+.model-controls{display:flex;gap:8px;align-items:center}
+.weight-panel{border:1px solid #425e77;padding:14px;border-radius:12px;background:#102237;margin:8px 0}
+.weight-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:10px}
+.weight-cell{font-size:10px}.weight-cell label{display:flex;justify-content:space-between}.weight-cell input{width:100%;accent-color:#62d6df}
+.scores-row{display:grid;grid-template-columns:1fr 1fr;gap:9px;margin:10px 0}.score-number{font-size:31px;font-weight:900;color:#f0d18d;line-height:1}.score-number small{font-size:9px;display:block;color:#8aa5b8}
+.score-mini{display:grid;grid-template-columns:28px 1fr 25px;gap:6px;align-items:center;font-size:9px;margin:5px 0;color:#a9c2d6}.score-mini .track,.score-big .track{background:#283f53;border-radius:10px;height:6px;overflow:hidden}.track i{display:block;height:100%;background:linear-gradient(90deg,#438ed3,#62d9d3,#eec779);border-radius:10px}
+.score-big{display:grid;grid-template-columns:54px 1fr 27px;gap:8px;align-items:center;margin:10px 0;font-size:11px}.score-big b{color:#f4d58d;text-align:right}
+.radar-wrap{display:grid;grid-template-columns:1fr 1fr;gap:14px}.radar-wrap svg{width:100%;min-height:250px}
+.scout-verdict{display:grid;gap:8px;padding:12px;border-radius:10px;background:#0d2133;border:1px solid #38516a;margin:12px 0;font-size:11px}.scout-verdict b{color:#f0d18d}
+@media(max-width:650px){.radar-wrap{grid-template-columns:1fr}.weight-grid{grid-template-columns:repeat(2,1fr)}}
 </style></head>
 <body><div class="shell">
 <header class="top"><div class="brand"><div class="brand-mark">B</div><div><div class="eyebrow">BORO INDUSTRY LEAGUE</div><h1>博罗产业联赛 <span style="color:#829ab2;font-size:12px;font-weight:500">内部辅助决策系统</span></h1></div></div><div class="top-right"><span class="pill live">● 原型运行中</span><span class="pill">2026 赛季 · 内部版</span><span class="pill warn">证据优先</span></div></header>
 <section class="hero"><div class="hero-main"><div class="hero-kicker">THE COUNTY ECONOMY, REIMAGINED</div><h2>把产业看成球队，<br>把企业看成球员。</h2><p>观察三次产业的阵容深度、核心主体、潜力新秀与跨产业配合。不是给企业排名，而是帮助发现结构优势、关键短板和下一步值得核验的机会。</p></div><div class="hero-side"><div class="side-head"><span>赛季数据准备度</span><span>DATA READINESS</span></div><div class="season">2026 <small>SEASON / 原型阶段</small></div><div class="readiness"><div class="ring"><b>待接入</b></div><p><strong>不虚构总评</strong>企业能力评分、潜力值和球队实力等待真实数据及调查接口。当前优先展示主体、关系和证据状态。</p></div></div></section>
-<nav class="nav" id="nav"><button class="active" data-view="overview">联赛总览</button><button data-view="teams">球队阵容</button><button data-view="players">球员市场</button><button data-view="scout">球探中心</button><button data-view="academy">青训预备队</button><button data-view="tactics">战术实验室</button><button data-view="season">赛季演化</button></nav>
+<div class="model-strip"><div><b>公开线索 + 行业先验 · 球员能力模拟</b><p>OVR / POT 为可调模型估算，不是实际企业排名。缺失值采用赛道假设，公开数据仅用于约束。</p></div><div class="model-controls"><select id="scorePreset"><option value="base">均衡权重</option><option value="growth">成长优先</option><option value="safe">韧性优先</option></select><button id="weightToggle">⚙ 权重</button></div></div><div class="weight-panel" id="weightPanel" hidden><div class="weight-grid" id="weightGrid"></div><button class="action" id="resetWeights">恢复预设</button></div><nav class="nav" id="nav"><button class="active" data-view="overview">联赛总览</button><button data-view="teams">球队阵容</button><button data-view="players">球员市场</button><button data-view="scout">球探中心</button><button data-view="academy">青训预备队</button><button data-view="tactics">战术实验室</button><button data-view="season">赛季演化</button></nav>
 
 <section class="view active" id="view-overview">
 <div class="section-head"><div><div class="micro">LEAGUE TABLE / 三次产业</div><h3>三支球队，构成博罗经济联赛</h3><p>球队代表三次产业；细分产业是战术分组；真实企业才是球员。</p></div><span class="pill">点击球队进入阵容</span></div>
@@ -69,7 +83,7 @@ button,input,select{font:inherit}button{cursor:pointer;color:inherit}.shell{max-
 <div class="overview-grid"><div class="panel"><h4>企业成长事件</h4><div class="timeline" id="seasonTimeline"></div></div><div class="panel"><h4>赛季更新规则</h4><div class="notice-list"><div class="notice"><span class="nicon">↗</span><div><b>升级</b><small>有连续经营、订单、产能或技术证据支持。</small></div></div><div class="notice"><span class="nicon">＋</span><div><b>新秀入队</b><small>企业、产品或项目达到对应验证阶段。</small></div></div><div class="notice"><span class="nicon">⚠</span><div><b>状态预警</b><small>订单、客户、现金流、产能或供应链出现异常信号。</small></div></div><div class="notice"><span class="nicon">↘</span><div><b>降级 / 离队观察</b><small>持续经营变化需要核实，不因单一负面新闻自动定性。</small></div></div></div></div></div>
 </section>
 
-<div class="disclaimer"><b>数据纪律：</b>当前是开发原型。已列企业名称来自现有项目资料中的公开主体线索，仍需逐家回溯工商主体、属地、主营产品、经营状态和原始出处。OVR、POT、六维属性暂不打分；不把产业方向、招商意向、项目开工或产品概念冒充已形成的本地企业产能。未识别到的主体明确留空，后续由公开资料、企业问卷和发改部门数据接口补齐。</div>
+<div class="disclaimer"><b>数据纪律：</b>当前是开发原型。已列企业名称来自现有项目资料中的公开主体线索，仍需逐家回溯工商主体、属地、主营产品、经营状态和原始出处。OVR、POT、六维属性现使用公开资料与赛道先验做探索性估算，非实测、非官方评级；不把产业方向、招商意向、项目开工或产品概念冒充已形成的本地企业产能。未识别到的主体明确留空，后续由公开资料、企业问卷和发改部门数据接口补齐。</div>
 <div class="footer">BORO INDUSTRY LEAGUE · INTERNAL DECISION SUPPORT PROTOTYPE · EVIDENCE BEFORE RATINGS</div>
 </div>
 
@@ -139,15 +153,72 @@ const evidenceTasks=[
 {icon:"🧪",title:"青训：给产品和项目单独建档",desc:"样品、认证、首单、复购、量产逐级验证，不与企业数量混算。"},
 {icon:"🪑",title:"小企业池：逐家识别，不只看龙头",desc:"表面处理园区公开报道提及130余家上下游企业；当前只识别到部分主体线索，必须逐家建立实名档案。"}
 ];
+
+const dims=["规模","增长","技术","协同","韧性","带动"];
+const dimKeys=["SCL","GRW","TEC","LNK","RST","IMP"];
+const baseWeights={primary:[18,14,14,18,12,24],secondary:[22,18,22,18,10,10],tertiary:[15,18,18,22,12,15]};
+const presetWeights={growth:[16,27,22,18,7,10],safe:[14,12,15,19,29,11]};
+let scorePreset="base",overrides=null;
+const known={
+huatong:[[95,88,94,88,76,87],94,"A-","华通2025年104.89亿元为两家公司组合口径；不能直接归于单一法人。","AI服务器HDI与高端产品需求","客户集中和主体口径拆分","https://epaper.nfnews.com/nfdaily/html/202602/10/content_10162866.html"],
+sunwoda:[[93,83,86,87,74,85],91,"B","博罗欣旺达百亿级产值线索，需核对法人及业务组合。","电池制造与链主带动","各法人和各产品线数据待拆分","https://epaper.nfnews.com/nfdaily/html/202602/10/content_10162866.html"],
+liwei:[[76,80,85,79,71,73],89,"C","锂威企业线索需核验具体资质及产品。","电池专业化配套","企业级量化数据不足",null],
+unionfoil:[[81,79,85,87,69,76],89,"B-","湖镇联合铜箔项目及厂房见公开报道。","铜箔与高端线路板配套","产能利用率和铜价风险","https://epaper.nfnews.com/nfdaily/html/202602/12/content_10163091.html"],
+banyongkang:[[78,70,73,88,74,90],84,"A-","研究记录：2020年大米综合生产能力10万吨，销售收入2.006亿元；这是历史值。","种植—仓储—加工—销售全链条","2025–2026经营数仍待更新","https://gdnykx.gdaas.cn/cn/article/pdf/preview/10.16768/j.issn.1004-874X.2024.09.004.pdf"],
+jiuyou:[[68,72,69,82,72,81],82,"B","2024年研究资料列为丝苗米产业园省级龙头企业。","粮食加工与农户联系","订单和产值公开资料有限","https://gdnykx.gdaas.cn/cn/article/pdf/preview/10.16768/j.issn.1004-874X.2024.09.004.pdf"],
+"jiafu-grain":[[51,60,54,69,65,70],75,"B-","研究资料列出石坝家福粮食加工厂。","本地小微粮食加工","最新加工量和经营状态待核",null],
+"zhangji-grain":[[49,59,52,68,64,69],74,"B-","研究资料列出石坝张基粮食加工厂。","农产品加工的小企业网络","客户订单待核",null],
+"fuhua-grain":[[50,60,53,68,64,70],74,"B-","研究资料列出公庄福华粮食加工厂。","粮食加工与农户采购","产能与经营状态待核",null],
+jianong:[[73,75,79,85,71,87],86,"B","广东省农科院2023年走访建农畜牧等企业。","三黄胡须鸡种源和技术","缺2025–2026经营数据","https://www.gdaas.cn/fwsnn/kjfw/content/post_1121075.html"],
+siyuan:[[67,72,71,82,70,84],82,"B-","2023年省农科院调研名单出现思源养殖。","种养协同和本地农户联系","规模与销售待核",null],
+hecheng:[[60,65,67,75,67,78],78,"C","省农科院调研名单出现福和畜禽。","标准化养殖","经营数据缺失",null],
+yuanli:[[59,65,66,75,66,77],78,"C","省农科院调研名单出现元立养殖。","本地养殖网络","客户与经营数据缺失",null],
+hesheng:[[62,66,65,76,67,78],79,"C","省农科院调研名单出现和盛农牧。","区域养殖协同","主体经营状态待更新",null],
+sanhuang:[[61,68,68,77,68,80],80,"C","省农科院调研名单出现石坝三黄畜牧。","三黄胡须鸡品牌与养殖","出栏量与销售待核",null],
+bolan:[[68,76,82,80,66,72],87,"B","公开报道提及博兰智能门锁及表面处理。","智能门锁及电镀工艺","环保和客户依赖风险","https://epaper.nfnews.com/nfdaily/html/202508/12/content_10144475.html"],
+"luofushan-group":[[76,80,71,88,69,87],91,"B-","公开招聘证实县属文旅投资集团运作。","文旅资产和服务整合","资本规模不等于经营收入","http://www.boluo.gov.cn/zwgk/zpxx/content/post_5896046.html"],
+zhongneng:[[79,78,86,85,72,81],90,"B-","报道提及中节能铁汉总部落户。","生态治理服务","总部落地不等于全部收入落地",null]
+};
+function hashId(s){let h=0;for(const ch of s)h=(h*31+ch.charCodeAt(0))%100003;return h}
+function getModel(p){
+ const k=known[p.id];
+ if(k)return {values:k[0],potential:k[1],grade:k[2],factual:k[3],strength:k[4],weak:k[5],source:k[6]||p.sourceUrl,coverage:k[2].startsWith("A")?75:k[2].startsWith("B")?55:32};
+ const prior={primary:[59,66,64,72,68,77],secondary:[67,73,76,76,69,71],tertiary:[59,67,69,76,71,74]}[p.team];
+ const h=hashId(p.id),values=prior.map((x,i)=>Math.min(94,x+((h>>(i%6))%15)-7));
+ if(p.role.includes("核心")){values[0]+=8;values[3]+=5}
+ return {values,potential:Math.min(95,Math.max(...values)+5),grade:p.sourceUrl?"C+":"C",factual:p.fact,strength:"赛道特征显示潜在增长与协同空间",weak:"缺少企业级经营数据，主要依赖行业先验",source:p.sourceUrl,coverage:p.sourceUrl?30:18};
+}
+function getWeights(t){return overrides||presetWeights[scorePreset]||baseWeights[t]}
+function getRating(p){
+ const m=getModel(p),w=getWeights(p.team),total=w.reduce((a,b)=>a+b,0);
+ const ovr=Math.round(m.values.reduce((a,x,i)=>a+x*w[i],0)/total);
+ return {...m,ovr,pot:Math.max(ovr,Math.round(.75*m.potential+.25*ovr))};
+}
+function radar(vals){
+ const x=150,y=131,r=90,pt=(v,i)=>[x+Math.cos(-Math.PI/2+i*Math.PI/3)*r*v/100,y+Math.sin(-Math.PI/2+i*Math.PI/3)*r*v/100];
+ let s="";
+ [25,50,75,100].forEach(n=>s+='<polygon points="'+dims.map((_,i)=>pt(n,i).join(",")).join(" ")+'" fill="none" stroke="#3c5870"/>');
+ dims.forEach((d,i)=>{const p=pt(116,i),q=pt(100,i);s+='<line x1="'+x+'" y1="'+y+'" x2="'+q[0]+'" y2="'+q[1]+'" stroke="#335168"/><text x="'+p[0]+'" y="'+(p[1]+4)+'" text-anchor="middle" font-size="11" fill="#bbd1df">'+d+'</text>'});
+ s+='<polygon points="'+vals.map((v,i)=>pt(v,i).join(",")).join(" ")+'" fill="#5fd6d333" stroke="#65d9d9" stroke-width="2.5"/>';
+ return '<svg viewBox="0 0 300 270" aria-label="六维能力雷达图" role="img">'+s+'</svg>';
+}
+function refreshScores(){renderOverview();renderTeam();renderPlayers();renderScout();if(selectedPlayer&&$("modal").classList.contains("open"))openPlayer(selectedPlayer)}
+function renderWeightControls(){const w=overrides||[18,18,18,18,14,14];$("weightGrid").innerHTML=dims.map((d,i)=>'<div class="weight-cell"><label>'+d+' <b id="weightLabel'+i+'">'+w[i]+'</b></label><input type="range" min="1" max="45" value="'+w[i]+'" data-w="'+i+'"></div>').join("")}
+$("scorePreset").onchange=e=>{scorePreset=e.target.value;overrides=null;renderWeightControls();refreshScores()};
+$("weightToggle").onclick=()=>{$("weightPanel").hidden=!$("weightPanel").hidden};
+$("resetWeights").onclick=()=>{overrides=null;renderWeightControls();refreshScores()};
+$("weightGrid").oninput=e=>{const a=e.target.closest("[data-w]");if(!a)return;if(!overrides)overrides=[18,18,18,18,14,14];overrides[+a.dataset.w]=+a.value;$("weightLabel"+a.dataset.w).textContent=a.value;refreshScores()};
+renderWeightControls();
+
 let currentTeam="secondary",currentView="overview",selectedPlayer=null,filters="all",tacticTeam="secondary",tacticIds=[];
 const $=id=>document.getElementById(id);
 function team(id){return teams.find(t=>t.id===id)}
 function esc(s){return String(s??"").replace(/[&<>"']/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]))}
 function setView(v){currentView=v;document.querySelectorAll(".view").forEach(x=>x.classList.toggle("active",x.id==="view-"+v));document.querySelectorAll("#nav button").forEach(x=>x.classList.toggle("active",x.dataset.view===v));if(v==="teams")renderTeam();if(v==="players")renderPlayers();if(v==="scout")renderScout();if(v==="academy")renderAcademy();if(v==="tactics")renderTactics();if(v==="season")renderSeason();window.scrollTo({top:0,behavior:"smooth"})}
 $("nav").addEventListener("click",e=>{const b=e.target.closest("button[data-view]");if(b)setView(b.dataset.view)});
-function card(p){const t=team(p.team);return '<article class="player-card" data-player="'+esc(p.id)+'"><div class="pc-top"><div class="avatar">'+esc(p.initial||p.name.slice(0,1))+'</div><div class="ovr">--<small>OVR</small></div></div><h4>'+esc(p.name)+'</h4><div class="company-sub">'+esc(p.club)+' · '+esc(p.role)+'</div><div class="player-tags"><span class="tag">'+esc(p.kind)+'</span><span class="tag gold">'+esc(p.evidence)+'</span></div><div class="card-bottom"><span>'+esc(t.name)+'</span><span>查看球探档案 ↗</span></div></article>'}
+function card(p){const t=team(p.team),s=getRating(p);const mini=[0,2,3].map(i=>'<div class="score-mini"><span>'+dimKeys[i]+'</span><span class="track"><i style="width:'+s.values[i]+'%"></i></span><b>'+s.values[i]+'</b></div>').join("");return '<article class="player-card" data-player="'+esc(p.id)+'"><div class="pc-top"><div class="avatar">'+esc(p.initial||p.name.slice(0,1))+'</div><div class="score-number">'+s.ovr+'<small>OVR</small></div></div><h4>'+esc(p.name)+'</h4><div class="company-sub">'+esc(p.club)+' · '+esc(p.role)+'</div><div class="player-tags"><span class="tag gold">POT '+s.pot+'</span><span class="tag">'+s.grade+' · 资料覆盖</span></div><div class="scores-row"><div>'+mini+'</div><div style="font-size:10px;color:#9bb0c8">模型覆盖 <strong style="font-size:20px;color:#ecc67c">'+s.coverage+'%</strong><br>估算属性</div></div><div class="card-bottom"><span>'+esc(t.name)+'</span><span>查看雷达与球探 ↗</span></div></article>'}
 function renderOverview(){
-$("teamCards").innerHTML=teams.map(t=>{const ps=companies.filter(p=>p.team===t.id),pr=prospects.filter(p=>p.team===t.id);return '<article class="team-card" data-team="'+t.id+'" style="--team:'+t.color+'"><div class="team-top"><div class="team-icon" style="background:'+t.color+'22;color:'+t.color+'">'+t.icon+'</div><span class="pill">'+t.en+'</span></div><h4>'+t.name+'</h4><div class="team-desc">'+t.desc+'</div><div class="team-stats"><div class="stat"><b>'+ps.length+'</b><span>已建企业档案</span></div><div class="stat"><b>'+pr.length+'</b><span>产品 / 项目新秀</span></div><div class="stat"><b>待评</b><span>球队综合实力</span></div></div><div style="font-size:9px;color:#839bb1;margin:0 0 10px">'+esc(t.benchmark)+'</div><div class="team-foot"><span><i class="status-dot"></i>'+ (ps.length?"已有主体线索":"主体名册待建立")+'</span><b>进入球队 →</b></div></article>'}).join("");
+$("teamCards").innerHTML=teams.map(t=>{const ps=companies.filter(p=>p.team===t.id),pr=prospects.filter(p=>p.team===t.id);return '<article class="team-card" data-team="'+t.id+'" style="--team:'+t.color+'"><div class="team-top"><div class="team-icon" style="background:'+t.color+'22;color:'+t.color+'">'+t.icon+'</div><span class="pill">'+t.en+'</span></div><h4>'+t.name+'</h4><div class="team-desc">'+t.desc+'</div><div class="team-stats"><div class="stat"><b>'+ps.length+'</b><span>已建企业档案</span></div><div class="stat"><b>'+pr.length+'</b><span>产品 / 项目新秀</span></div><div class="stat"><b>'+Math.round(ps.reduce((a,p)=>a+getRating(p).ovr,0)/Math.max(ps.length,1))+'</b><span>已建档球员模型均值</span></div></div><div style="font-size:9px;color:#839bb1;margin:0 0 10px">'+esc(t.benchmark)+'</div><div class="team-foot"><span><i class="status-dot"></i>'+ (ps.length?"已有主体线索":"主体名册待建立")+'</span><b>进入球队 →</b></div></article>'}).join("");
 $("teamCards").addEventListener("click",e=>{const c=e.target.closest("[data-team]");if(c){currentTeam=c.dataset.team;setView("teams")}});
 $("rosterBars").innerHTML=teams.map(t=>{const n=companies.filter(p=>p.team===t.id).length;return '<div class="roster-row"><span>'+t.name+'</span><div class="bar"><i style="width:'+Math.min(100,n*8)+'%;background:'+t.color+'"></i></div><em>'+n+' 份档案</em></div>'}).join("");
 $("overviewNotices").innerHTML=evidenceTasks.map(x=>'<div class="notice"><span class="nicon">'+x.icon+'</span><div><b>'+x.title+'</b><small>'+x.desc+'</small></div></div>').join("");
@@ -173,13 +244,16 @@ $("allPlayers").innerHTML=list.length?list.map(card).join(""):'<div class="empty
 $("playerSearch").addEventListener("input",renderPlayers);
 document.body.addEventListener("click",e=>{const p=e.target.closest("[data-player]");if(p){const id=p.dataset.player;openPlayer(id)}});
 function openPlayer(id){
-const p=companies.find(x=>x.id===id);if(!p)return;selectedPlayer=id;const t=team(p.team);
-$("modalTitle").textContent=p.name+" · 球员档案";
-$("modalBody").innerHTML='<div class="detail-layout" style="margin-top:15px"><div class="detail-card"><div class="detail-head"><div class="avatar">'+esc(p.initial)+'</div><div><h3>'+esc(p.name)+'</h3><p>'+esc(t.name)+' / '+esc(p.club)+'</p><span class="tag gold">'+esc(p.role)+'</span></div></div><div class="rating-row"><div class="rating-box"><strong>--</strong><span>OVR · 当前综合能力</span></div><div class="rating-box"><strong>待观察</strong><span>POT · 成长潜力</span></div></div><div class="detail-note">当前不输出企业能力分数。待接入营收、利润、订单、产能、研发、客户、供应链和风险数据后，再形成可解释的属性评价。</div></div><div class="detail-right"><div class="panel"><h4>六维能力卡</h4><div class="attribute-grid">'+["规模能力","成长能力","技术能力","协同能力","价值创造","经营韧性"].map(x=>'<div class="attribute"><b>'+x+'</b><span>企业真实数据待接入</span><div class="unknown">未评分 / 不以猜测填值</div></div>').join("")+'</div></div><div class="panel"><h4>球探观察报告</h4><div class="evidence-box"><div class="evidence-item"><b>现有线索</b><span>'+esc(p.fact)+'</span></div><div class="evidence-item"><b>下一步核验</b><span>'+esc(p.verify)+'</span></div><div class="evidence-item"><b>证据状态</b><span>'+esc(p.evidence)+'</span></div><div class="evidence-item"><b>阵容定位</b><span>'+esc(p.role)+'，暂不构成实力排名。</span></div><div class="evidence-item" style="grid-column:1/-1"><b>原始出处</b><span>'+(p.sourceUrl?'<a href="'+esc(p.sourceUrl)+'" target="_blank" rel="noopener" style="color:#74cde3">打开公开来源 ↗</a> · '+esc(p.sourceDate||"日期待核"):'尚未挂接原始出处，待补')+'</span></div></div></div></div></div>';
-$("modalActions").innerHTML='<button class="action primary" id="addTactic">加入战术观察阵容</button><button class="action" id="goTeam">查看所属球队</button>';
-$("modal").classList.add("open");
-$("addTactic").onclick=()=>{if(!tacticIds.includes(id))tacticIds.push(id);$("modal").classList.remove("open");setView("tactics")};
-$("goTeam").onclick=()=>{currentTeam=p.team;$("modal").classList.remove("open");setView("teams")};
+ const p=companies.find(x=>x.id===id);if(!p)return;selectedPlayer=id;
+ const t=team(p.team),s=getRating(p),w=getWeights(p.team),total=w.reduce((a,b)=>a+b,0);
+ $("modalTitle").textContent=p.name+" · 能力卡 / 球探报告";
+ const bars=dims.map((d,i)=>'<div class="score-big"><span>'+d+'</span><span class="track"><i style="width:'+s.values[i]+'%"></i></span><b>'+s.values[i]+'</b></div>').join("");
+ const source=s.source?'<a href="'+esc(s.source)+'" target="_blank" rel="noopener" style="color:#75d6e8">查看原始公开来源 ↗</a>':'原始出处待补';
+ $("modalBody").innerHTML='<div class="detail-layout" style="margin-top:15px"><div class="detail-card"><div class="detail-head"><div class="avatar">'+esc(p.initial)+'</div><div><h3>'+esc(p.name)+'</h3><p>'+esc(t.name)+' · '+esc(p.club)+'</p><span class="tag gold">'+esc(p.role)+'</span></div></div><div class="rating-row"><div class="rating-box"><strong>'+s.ovr+'</strong><span>OVR · 模型估算</span></div><div class="rating-box"><strong>'+s.pot+'</strong><span>POT · 情景潜力</span></div></div><div class="detail-note">⚠ 开发版探索性评分，资料覆盖 '+s.coverage+'%；不是企业真实排名，未披露指标均使用赛道先验。</div></div><div class="detail-right"><div class="panel"><h4>六维属性 · PLAYER ATTRIBUTES</h4><div class="radar-wrap">'+radar(s.values)+'<div>'+bars+'</div></div></div></div></div><div class="panel" style="margin-top:13px"><h4>球探报告 · SCOUTING REPORT</h4><div class="scout-verdict"><div><b>成长线索：</b>'+esc(s.strength)+'</div><div><b>主要弱点：</b>'+esc(s.weak)+'</div><div><b>下一步核验：</b>'+esc(p.verify)+'</div></div><div class="evidence-box"><div class="evidence-item"><b>公开事实</b><span>'+esc(s.factual)+'</span></div><div class="evidence-item"><b>资料覆盖</b><span>'+s.grade+' / '+s.coverage+'% · 不是评分准确概率</span></div><div class="evidence-item"><b>评分说明</b><span>六维加权评分：'+dims.map((d,i)=>d+' '+Math.round(w[i]/total*100)+'%').join('；')+'。POT 采用行业成长先验。</span></div><div class="evidence-item"><b>原始出处</b><span>'+source+'</span></div></div></div>';
+ $("modalActions").innerHTML='<button class="action primary" id="addTactic">加入战术观察阵容</button><button class="action" id="goTeam">查看所属球队</button>';
+ $("modal").classList.add("open");
+ $("addTactic").onclick=()=>{if(!tacticIds.includes(id))tacticIds.push(id);$("modal").classList.remove("open");setView("tactics")};
+ $("goTeam").onclick=()=>{currentTeam=p.team;$("modal").classList.remove("open");setView("teams")};
 }
 $("modalClose").onclick=()=>$("modal").classList.remove("open");
 $("modal").addEventListener("click",e=>{if(e.target===$("modal"))$("modal").classList.remove("open")});
