@@ -1067,7 +1067,7 @@ function careerBonus(){
 function careerScore(){const base=managerCompute(),buff=careerBonus();return Math.max(0,Math.min(100,+((base.score+buff-career.recovery*.12).toFixed(1))))}
 function careerRival(q){const shift=career.rivalStrategy==="aggressive"?1.35:career.rivalStrategy==="innovation"?1.04:.7;return Math.max(40,Math.min(99,64+q*shift+Math.sin(q*1.4)*2.6))}
 function careerSeed(q){const x=((q+1)*1664525+1013904223)>>>0;return (x>>>16)%careerEvents.length} // Identical exogenous event calendar across compared strategies.
-function careerPrintQuarter(q){return (2026+Math.floor(q/4))+" Q"+(q%4+1)}
+function careerPrintQuarter(q){if(q===0)return "2026 开局";return (2026+Math.floor((q-1)/4))+" Q"+((q-1)%4+1)}
 
 // V9: company capabilities, recovery and scenario pressure all share quarterly state.
 function v9Company(id){
@@ -1281,7 +1281,7 @@ function v10Show(){
   const coords=r.scores.map((s,i)=>[30+i/28*800,240-Math.max(0,Math.min(100,s))*2.1]);
   svg+='<polyline points="'+coords.map(p=>p.map(n=>n.toFixed(1)).join(",")).join(" ")+'" stroke="'+r.ink+'" stroke-width="3" fill="none"/>';
  }
- for(const q of [0,4,8,12,16,20,24,28])svg+='<text x="'+(30+q/28*800)+'" y="258" font-size="10" text-anchor="middle" fill="#acc6d4">'+(2026+Math.floor(q/4))+'</text>';
+ for(const q of [0,4,8,12,16,20,24,28])svg+='<text x="'+(30+q/28*800)+'" y="258" font-size="10" text-anchor="middle" fill="#acc6d4">'+(q===0?'开局':2026+Math.floor((q-1)/4))+'</text>';
  $("v10Curve").innerHTML=svg;
  const gain=[...baseline].sort((a,b)=>b.change-a.change)[0],
        bottom=[...baseline].sort((a,b)=>b.min-a.min)[0],
@@ -1381,7 +1381,7 @@ function careerCards(){
 function renderCareer(){
  const {v,score}=careerCards();
  $("careerClock").textContent=careerPrintQuarter(career.quarter);
- $("careerQuarterTrack").innerHTML=[0,1,2,3].map(n=>'<span class="'+(career.quarter%4===n?'active':'')+'">Q'+(n+1)+'<br>'+["布局","投入","调整","复盘"][n]+'</span>').join("");
+ $("careerQuarterTrack").innerHTML=[0,1,2,3].map(n=>'<span class="'+((career.quarter===0?0:(career.quarter-1)%4)===n?'active':'')+'">Q'+(n+1)+'<br>'+["布局","投入","调整","复盘"][n]+'</span>').join("");
  $("careerScoreboard").innerHTML=[["经营指数",score.toFixed(1)],["后备成长",career.benchReady.toFixed(1)],["状态疲劳",career.fatigue.toFixed(1)]].map(x=>'<div><b>'+x[1]+'</b><span>'+x[0]+'</span></div>').join("");
  $("careerPolicy").innerHTML=careerPolicies.map(p=>'<button class="'+(career.policy===p.id?'active':'')+'" data-career-policy="'+p.id+'"><b>'+p.name+'</b><small>'+p.desc+'</small></button>').join("");
  $("careerGrowth").innerHTML=[["产能与效率",career.training.capacity],["技术与人才",career.training.tech],["供应链韧性",career.training.resilience]].map(x=>'<div><span>'+x[0]+'</span><span class="track"><i style="width:'+Math.min(100,x[1]*5)+'%"></i></span><b>'+x[1].toFixed(1)+'</b></div>').join("");
