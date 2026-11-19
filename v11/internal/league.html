@@ -202,12 +202,12 @@ function radar(vals){
  s+='<polygon points="'+vals.map((v,i)=>pt(v,i).join(",")).join(" ")+'" fill="#5fd6d333" stroke="#65d9d9" stroke-width="2.5"/>';
  return '<svg viewBox="0 0 300 270" aria-label="六维能力雷达图" role="img">'+s+'</svg>';
 }
-function refreshScores(){renderWeightControls();renderOverview();renderTeam();renderPlayers();renderScout();if(selectedPlayer&&$("modal").classList.contains("open"))openPlayer(selectedPlayer)}
-function renderWeightControls(){const w=overrides||[18,18,18,18,14,14];$("weightGrid").innerHTML=dims.map((d,i)=>'<div class="weight-cell"><label>'+d+' <b id="weightLabel'+i+'">'+w[i]+'</b></label><input type="range" min="1" max="45" value="'+w[i]+'" data-w="'+i+'"></div>').join("")}
-$("scorePreset").onchange=e=>{scorePreset=e.target.value;overrides=null;renderWeightControls();refreshScores()};
+function refreshScores(){$("scorePreset").onchange=e=>{scorePreset=e.target.value;overrides=null;renderWeightControls();refreshScores()};
 $("weightToggle").onclick=()=>{$("weightPanel").hidden=!$("weightPanel").hidden};
 $("resetWeights").onclick=()=>{overrides=null;renderWeightControls();refreshScores()};
 $("weightGrid").oninput=e=>{const a=e.target.closest("[data-w]");if(!a)return;if(!overrides)overrides=[18,18,18,18,14,14];overrides[+a.dataset.w]=+a.value;$("weightLabel"+a.dataset.w).textContent=a.value;refreshScores()};
+renderWeightControls();renderOverview();renderTeam();renderPlayers();renderScout();if(selectedPlayer&&$("modal").classList.contains("open"))openPlayer(selectedPlayer)}
+function renderWeightControls(){const w=overrides||[18,18,18,18,14,14];$("weightGrid").innerHTML=dims.map((d,i)=>'<div class="weight-cell"><label>'+d+' <b id="weightLabel'+i+'">'+w[i]+'</b></label><input type="range" min="1" max="45" value="'+w[i]+'" data-w="'+i+'"></div>').join("")}
 
 let currentTeam="secondary",currentView="overview",selectedPlayer=null,filters="all",tacticTeam="secondary",tacticIds=[];
 const $=id=>document.getElementById(id);
