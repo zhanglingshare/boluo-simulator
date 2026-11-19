@@ -314,6 +314,8 @@ body{background:radial-gradient(ellipse 1250px 620px at 63% -16%,#0d4d68 0%,tran
 .v9-legend{color:#a8becd;font-size:9px;margin-top:4px}
 @media(max-width:850px){.v9-outcomes{grid-template-columns:repeat(2,1fr)}.v9-graph{grid-template-columns:1fr}}
 @media(max-width:520px){.v9-persons{grid-template-columns:repeat(2,1fr)}}
+
+.v9-policyblock{display:flex;flex-direction:column;justify-content:space-between;gap:6px;min-height:100px;border-radius:11px;border:1px solid #436c7d;padding:11px;background:linear-gradient(125deg,#102c3e,#19293b)}.v9-policyblock b{font-size:21px;color:#f6d497}.v9-policyblock span{font-size:10px;color:#bad3db}.v9-policyblock small{font-size:9px;color:#8facc1}.v9-policyblock.warn{border-color:#a76e51;background:#3b2730a8}.v9-policyblock.warn b{color:#ffa6a3}
 </style></head>
 <body><div class="shell">
 <header class="top"><div class="brand"><div class="brand-mark">B</div><div><div class="eyebrow">BORO INDUSTRY INTELLIGENCE</div><h1>博罗产业能力与结构研判 <span style="color:#829ab2;font-size:12px;font-weight:500">内部辅助决策系统</span></h1></div></div><div class="top-right"><span class="pill live">● 原型运行中</span><span class="pill">2026 年度 · 内部版</span><span class="pill warn">证据优先</span></div></header>
@@ -425,7 +427,7 @@ body{background:radial-gradient(ellipse 1250px 620px at 63% -16%,#0d4d68 0%,tran
 <div class="career-hero"><section class="career-field"><div class="career-head"><div><div class="micro">INDUSTRY CAREER · QUARTERLY SIMULATION</div><strong id="careerClock">2026 Q1</strong></div><span class="pill warn">演示赛季 · 可回放</span></div>
 <div class="career-track" id="careerQuarterTrack"></div><div id="careerScoreboard" class="career-cardset"></div><div class="career-controls"><button class="career-btn" id="careerAdvance">▶ 推进一季度</button><button class="career-btn secondary" id="careerRewind">↶ 撤回上一季</button><button class="career-btn secondary" id="careerRestart">↺ 新赛季</button></div><div class="career-risk" id="careerQuarterHint">主体选择、要素预算、训练投入和冲击事件共同影响下一季度。</div></section>
 <aside class="career-panel"><h4>⚙ 经营策略 / 本季度只执行一次</h4><div class="career-options" id="careerPolicy"></div><div class="career-muted" style="margin-top:10px">投入会占用有限资源。选择不同方向，可能提升某项能力，却牺牲短期韧性。</div></aside></div>
-<section class="career-panel" id="v9Dashboard">
+<div class="v9-headline" style="margin-top:15px"><div class="v9-title">单季经营决策 · 资源承诺与成长代价</div><button class="career-btn secondary" id="v9FourQuarters">▶ 连续推演四季度</button></div><div id="v9PolicyLedger" class="v9-outcomes"></div><section class="career-panel" id="v9Dashboard">
 <div class="v9-headline"><div><div class="micro">V9 / ONE WORLD · ONE STATE</div><div class="v9-title">季度经营结算 · 哪些主体真正变了？</div></div><div class="v9-snap"><button id="v9QuarterA">存 A</button><button id="v9QuarterB">存 B</button><button id="v9Compare">A / B 对照</button></div></div>
 <div id="v9Outcomes" class="v9-outcomes"></div>
 <div class="v9-graph"><svg id="v9Trend" viewBox="0 0 740 220" role="img" aria-label="真实演示状态随季度的变化折线"></svg><div id="v9Summary" class="v9-graph-note"></div></div>
@@ -1124,7 +1126,7 @@ function v9Comparison(){
 // V9 browser-local season continuity. Never uploads user data.
 const V9_STORE="boluo-industry-career-v9";
 function v9SaveCareer(){
- try{sessionStorage.setItem(V9_STORE,JSON.stringify({career:{...career,history:career.history.slice(-28),journal:career.journal.slice(0,14)},slots:{...manager.slots},version:9}))}catch(e){}
+ try{sessionStorage.setItem(V9_STORE,JSON.stringify({career:{...career,history:career.history.slice(-28),journal:career.journal.slice(0,14)},slots:{...manager.slots},managerEvent:manager.event,managerYear:manager.year,version:9}))}catch(e){}
 }
 function v9LoadCareer(){
  try{
@@ -1136,11 +1138,32 @@ function v9LoadCareer(){
   if(!Array.isArray(s.spent)||s.spent.length!==5||!Array.isArray(s.history)||!Array.isArray(s.curve))return;
   if(!s.companyStates||typeof s.companyStates!=="object"||!s.training||!s.comparison)return;
   career={...career,...s};manager.slots={...manager.slots,...data.slots};
+  manager.event=["none","orders","talent","supply"].includes(data.managerEvent)?data.managerEvent:"none";
   manager.year=Math.min(2,Math.floor(s.quarter/4));
  }catch(e){}
 }
 
+
+function v9PolicyLedger(){
+ const policy=careerPolicies.find(x=>x.id===career.policy)||careerPolicies[0],v=managerCompute();
+ const margins=policy.cost.map((cost,i)=>managerCaps[i]-v.used[i]-cost);
+ const maxI=policy.cost.reduce((index,cost,i)=>cost>policy.cost[index]?i:index,0);
+ const fails=margins.filter(x=>x<0).length;
+ const eventLabel=({none:"无额外事件",orders:"订单冲击",talent:"人才扰动",supply:"供应中断"})[manager.event]||"未定义";
+ const items=[
+  {value:fails?"阻断":"可执行",name:"本季策略状态",desc:fails?fails+" 项资源不足":"保留后仍需处理真实审批"},
+  {value:policy.cost[maxI],name:"主要新增需求",desc:managerNeeds[maxI]+" · 演示要素"},
+  {value:v.overloaded.filter(x=>x>0).length,name:"当前资源冲突",desc:"投入前的约束压力"},
+  {value:career.recovery.toFixed(1),name:"恢复负担",desc:eventLabel+" · 可跨季递减"}
+ ];
+ $("v9PolicyLedger").innerHTML=items.map(x=>'<div class="v9-policyblock '+(x.value==="阻断"?'warn':'')+'"><span>'+x.name+'</span><b>'+x.value+'</b><small>'+x.desc+'</small></div>').join("");
+}
+function v9FourQuarters(){
+ for(let i=0;i<4&&career.quarter<28;i++)careerTick();
+}
+
 function v9Init(){
+ $("v9FourQuarters").onclick=v9FourQuarters;
  $("v9CompanyTiles").onclick=e=>{const b=e.target.closest('[data-v9-company]');if(b)openPlayer(b.dataset.v9Company)};
  $("v9QuarterA").onclick=()=>{career.comparison.A=v9Snapshot();v9Render();v9SaveCareer()};
  $("v9QuarterB").onclick=()=>{career.comparison.B=v9Snapshot();v9Render();v9SaveCareer()};
@@ -1230,7 +1253,7 @@ function renderCareer(){
  $("careerQuarterHint").textContent="预算超限 "+v.overloaded.filter(x=>x>0).length+" 项 · 状态疲劳 "+career.fatigue.toFixed(1)+" · 恢复负担 "+career.recovery.toFixed(1)+" · 季度成本结转："+career.spent.map((x,i)=>managerNeeds[i]+" "+x.toFixed(0)).join(" / ")+"。所有要素为演示单位。";
  $("careerAdvance").disabled=career.quarter>=28;
  $("careerRewind").disabled=!career.history.length;
- v9Render();v9SaveCareer();
+ v9Render();v9PolicyLedger();v9SaveCareer();
 }
 function initCareer(){
  $("careerPolicy").onclick=e=>{const b=e.target.closest("[data-career-policy]");if(b){career.policy=b.dataset.careerPolicy;renderCareer()}};
