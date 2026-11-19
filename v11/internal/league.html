@@ -236,7 +236,40 @@ body{background:radial-gradient(ellipse 1250px 620px at 63% -16%,#0d4d68 0%,tran
 .mgr-incident{display:flex;justify-content:space-between;gap:10px;align-items:center;margin:11px 0;padding:11px;border:1px solid #6b614e;background:#30292177;border-radius:9px;color:#e5ca9e;font-size:11px}
 @media(max-width:900px){.mgr-board{grid-template-columns:1fr}}
 @media(max-width:580px){.mgr-roles,.mgr-options{grid-template-columns:repeat(2,1fr)}.mgr-progression{grid-template-columns:1fr}.mgr-impact{grid-template-columns:repeat(3,1fr)}.mgr-impact strong{font-size:20px}.mgr-head{align-items:start;flex-direction:column}.mgr-event{grid-template-columns:auto 1fr}.mgr-event button{grid-column:2}}
-.mgr-hero-launch{margin-top:14px;margin-right:8px;padding:10px 14px;border:1px solid #ffdfa4;border-radius:9px;background:linear-gradient(140deg,#efd8a0,#9a6d32);color:#1b2b35;font-size:12px;font-weight:950;box-shadow:0 0 19px #ebc77b40}.mgr-hero-launch:hover{filter:brightness(1.1)}@media(max-width:560px){.mgr-hero-launch{width:100%;margin-right:0}}</style></head>
+.mgr-hero-launch{margin-top:14px;margin-right:8px;padding:10px 14px;border:1px solid #ffdfa4;border-radius:9px;background:linear-gradient(140deg,#efd8a0,#9a6d32);color:#1b2b35;font-size:12px;font-weight:950;box-shadow:0 0 19px #ebc77b40}.mgr-hero-launch:hover{filter:brightness(1.1)}@media(max-width:560px){.mgr-hero-launch{width:100%;margin-right:0}}
+/* V7 CINEMATIC ENTERPRISE JOURNEY. Original sports-manager-inspired control deck. */
+.cx-stage{position:relative;overflow:hidden;isolation:isolate;min-height:440px;border:1px solid #be9558;border-radius:22px;background:radial-gradient(ellipse 460px 270px at 25% 30%,#276d8877,transparent 75%),radial-gradient(ellipse 350px 200px at 90% 85%,#8c642d38,transparent 75%),linear-gradient(130deg,#101d2e,#07182a 74%);box-shadow:0 30px 80px #0008,inset 0 0 50px #d6a45113;margin:10px 0 16px;display:grid;grid-template-columns:minmax(255px,.8fr) minmax(0,1.35fr);gap:0}
+.cx-stage:before{content:"";position:absolute;width:630px;height:630px;border:1px solid #86d9e729;border-radius:50%;left:34%;top:-260px;transform:rotate(-20deg);box-shadow:0 0 0 55px #92d4dd07,0 0 0 125px #cfb06e07;pointer-events:none}
+.cx-matrix{position:absolute;inset:0;background:repeating-linear-gradient(0deg,transparent,transparent 37px,#7bcce808 38px),repeating-linear-gradient(90deg,transparent,transparent 47px,#7bcce808 48px);opacity:.6;pointer-events:none}
+.cx-card-zone{position:relative;padding:20px;display:grid;place-items:center}
+.cx-hero-card{position:relative;width:min(100%,305px);min-height:370px;border:2px solid #e8c482;border-radius:22px;padding:16px 19px;background:radial-gradient(ellipse 160px 190px at 65% 43%,#78d1e33d,transparent 80%),linear-gradient(135deg,#284e64,#122d43 55%,#0d1e32);box-shadow:0 0 0 5px #d8ab6030,0 23px 55px #000b,inset 0 0 50px #efc47d16;transform:perspective(900px) rotateY(-6deg);animation:cxArrival .55s ease-out both}
+.cx-hero-card:before{content:"";position:absolute;inset:9px;border:1px solid #caa46d83;border-radius:14px;pointer-events:none}
+.cx-card-top{position:relative;display:flex;align-items:start;justify-content:space-between}
+.cx-ovr{font-size:77px;color:#ffe5a4;text-shadow:0 0 20px #eac67e6d;line-height:.95;font-weight:1000;letter-spacing:-.08em}
+.cx-mini-label{font-size:9px;letter-spacing:1px;color:#d0e0e7;font-weight:750}
+.cx-rating-pill{font-size:10px;border:1px solid #f2d28c;color:#f6d691;background:#47371d88;border-radius:6px;padding:6px}
+.cx-monogram{position:relative;display:grid;place-items:center;width:122px;height:122px;margin:13px auto 17px;background:linear-gradient(130deg,#e9d8a2,#4aa7ae 52%,#233c61);border:3px solid #ffdfa4;border-radius:26px;transform:rotate(-7deg);font-size:53px;color:#16314b;font-weight:1000;box-shadow:0 0 55px #75dbe14f}
+.cx-name{font-size:19px;text-align:center;color:#ffeaad;font-weight:1000;min-height:48px;line-height:1.15;position:relative;margin:0}
+.cx-club{text-align:center;color:#b8d2dc;font-size:10px;min-height:19px;position:relative}
+.cx-stats{position:relative;display:flex;justify-content:space-between;gap:5px;border-top:1px solid #ddc18666;padding-top:12px;margin-top:13px}
+.cx-stats div{text-align:center;flex:1}.cx-stats b{font-size:18px;color:#f6d495;display:block}.cx-stats span{font-size:9px;color:#9dc2d3}
+.cx-content{position:relative;padding:25px 21px 20px;display:flex;flex-direction:column;justify-content:space-between;gap:13px}
+.cx-heading{display:flex;gap:10px;align-items:center;flex-wrap:wrap}.cx-heading span{font-size:10px;color:#80dce8;letter-spacing:2px}.cx-heading b{color:#f8daa1;font-size:12px}
+.cx-content h3{font-size:clamp(23px,2.4vw,35px);line-height:1.18;color:#ffe0a3;margin:7px 0;font-weight:1000;letter-spacing:-.03em}
+.cx-content p{font-size:11px;color:#abc7d6;line-height:1.6;margin:5px 0}
+.cx-select{background:#112b42;border:1px solid #5d7e91;border-radius:9px;color:#e8f3f9;width:100%;padding:11px;font-size:12px}
+.cx-six{display:grid;grid-template-columns:repeat(3,1fr);gap:7px}.cx-attr{background:#0b2538b5;border:1px solid #416079;border-radius:9px;padding:9px 11px}.cx-attr b{font-size:20px;color:#f5d38e;display:block}.cx-attr span{font-size:9px;color:#97bbc9}
+.cx-badges{display:flex;gap:7px;flex-wrap:wrap}.cx-badges span{font-size:9px;border:1px solid #a38a5d;border-radius:7px;padding:6px 9px;color:#e9c989;background:#55402339}
+.cx-actions{display:grid;grid-template-columns:1.05fr 1fr;gap:9px}.cx-btn{border:1px solid #d0ab69;border-radius:11px;padding:12px;background:#273b4e;color:#f6d590;font-weight:850;font-size:12px}.cx-btn.main{background:linear-gradient(125deg,#f3d798,#bb8b48);color:#21313f;border-color:#ffe4a2;box-shadow:0 0 19px #eabb6d43}.cx-btn:hover{filter:brightness(1.13)}
+.cx-events{display:grid;grid-template-columns:repeat(4,1fr);gap:8px;margin:11px 0}.cx-event{background:linear-gradient(140deg,#16324a,#0a2034);border:1px solid #456880;border-radius:12px;padding:12px 8px;text-align:left;cursor:pointer;position:relative;overflow:hidden;min-height:88px}.cx-event b{display:block;color:#f6d38f;font-size:12px}.cx-event small{color:#aac1cf;font-size:9px;display:block;margin:5px 0}.cx-event.active{border-color:#f2bd73;box-shadow:0 0 25px #edab5d3f,inset 0 0 30px #da85492e;transform:translateY(-2px)}.cx-event .em{font-size:22px;display:block;margin-bottom:5px}
+.cx-replay{border:1px solid #456b80;border-radius:14px;padding:12px;background:#0a2032;display:grid;grid-template-columns:1fr auto;gap:12px;align-items:center;margin:12px 0}
+.cx-replay-track{display:flex;gap:5px;align-items:center}.cx-replay-track button{flex:1;border:1px solid #496e82;border-radius:8px;background:#142e45;padding:9px;font-size:10px;cursor:pointer}.cx-replay-track button.active{border-color:#f5c875;color:#ffe4aa;background:#604729}.cx-replay-data{display:grid;grid-template-columns:repeat(3,1fr);gap:9px}.cx-replay-data div{border-left:2px solid #5bd4db;padding-left:10px}.cx-replay-data b{font-size:23px;color:#f1d38c;display:block}.cx-replay-data small{font-size:9px;color:#9fb8c9}
+.cx-caution{font-size:10px;color:#c9ad79;margin:8px 0 13px}
+@keyframes cxArrival{from{opacity:.3;transform:perspective(900px) rotateY(-16deg) translateY(16px) scale(.97)}to{opacity:1;transform:perspective(900px) rotateY(-6deg) translateY(0) scale(1)}}
+@media(max-width:800px){.cx-stage{grid-template-columns:1fr}.cx-card-zone{padding:20px}.cx-hero-card{min-height:310px}.cx-content{padding:20px}.cx-events{grid-template-columns:repeat(2,1fr)}.cx-replay{grid-template-columns:1fr}}
+@media(max-width:480px){.cx-six{grid-template-columns:repeat(3,1fr)}.cx-actions{grid-template-columns:1fr}.cx-replay-data{grid-template-columns:repeat(3,1fr)}.cx-replay-data b{font-size:20px}}
+@media(prefers-reduced-motion:reduce){.cx-hero-card{animation:none;transform:none}}
+</style></head>
 <body><div class="shell">
 <header class="top"><div class="brand"><div class="brand-mark">B</div><div><div class="eyebrow">BORO INDUSTRY INTELLIGENCE</div><h1>博罗产业能力与结构研判 <span style="color:#829ab2;font-size:12px;font-weight:500">内部辅助决策系统</span></h1></div></div><div class="top-right"><span class="pill live">● 原型运行中</span><span class="pill">2026 年度 · 内部版</span><span class="pill warn">证据优先</span></div></header>
 <section class="hero"><div class="hero-main"><div class="hero-kicker">BORO / INDUSTRY INTELLIGENCE</div><h2>从产业结构到企业能力，<br>看见真正的增长与风险。</h2><p>识别三次产业结构、龙头带动、企业成长梯队和跨产业连接。发现关键主体、薄弱环节、成长机会和风险传导。</p><button class="mgr-hero-launch" data-open-view="tactics">♛ 进入产业经营模式　›</button><button class="wt-hero-launch" data-open-view="wind">◉ 进入产业关系风洞　<span>选企业 → 冲击 → 传导 → 缓冲</span>　›</button></div><div class="hero-side"><div class="side-head"><span>数据准备度</span><span>DATA READINESS</span></div><div class="season">2026 <small>YEAR / 开发阶段</small></div><div class="readiness"><div class="ring"><b>待接入</b></div><p><strong>动态能力观察</strong>公开资料与合理先验生成探索性区间和能力画像；正式接入调查数据后持续校准。</p></div></div></section>
@@ -285,7 +318,16 @@ body{background:radial-gradient(ellipse 1250px 620px at 63% -16%,#0d4d68 0%,tran
 
 <section class="view" id="view-tactics">
 <div class="section-head"><div><div class="micro">SCENARIO WORKBENCH</div><h3>阵容实验室 · 换个组合会怎样？</h3><p>组合不同主体与产业环节，观察覆盖结构和关键缺口。当前不计算未经证实的协同收益。</p></div></div>
-<div class="mgr-head"><div><div class="mgr-eyebrow">INDUSTRY MANAGER · OPERATING BOARD</div><h3>经营模式 · 六类角色与要素上限</h3><div class="mgr-sub">同一组合同时驱动能力评价、资源占用、成长状态和风险风洞。企业关系与资源需求均为开发演示假设。</div></div><div class="mgr-control"><button id="mgrPresetAnchor">龙头优先</button><button id="mgrPresetBalance">链条均衡</button><button id="mgrPresetFuture">成长突破</button><button id="mgrClear">清空角色</button></div></div>
+<section class="cx-stage" id="cinematicJourney" aria-label="企业沉浸经营控制台"><div class="cx-matrix"></div><div class="cx-card-zone"><div class="cx-hero-card" id="cxHero"></div></div><div class="cx-content">
+<div><div class="cx-heading"><span>MY INDUSTRY / CAREER MODE</span><b>◎ 产业经营驾驶舱</b></div><h3>选一家企业，<br>改写整个阵容。</h3><p>先看主体、再做选择；观察资源变化、假设关系和风险状态，最后推进到下一个赛季。</p></div>
+<div><select class="cx-select" id="cxSelect" aria-label="选择焦点企业"></select><div class="cx-six" id="cxAttrs"></div><div class="cx-badges" id="cxBadges" style="margin-top:9px"></div></div>
+<div class="cx-actions"><button class="cx-btn main" id="cxAdd">＋ 放入当前阵容</button><button class="cx-btn" id="cxProfile">◈ 完整企业能力卡</button></div>
+</div></section>
+<section class="mgr-panel" id="cxIncidents"><div class="mgr-head"><div><div class="mgr-eyebrow">LIVE EVENTS · INDUSTRY STRESS TEST</div><h3>⚡ 经营事件与逐阶段回放</h3><div class="mgr-sub">选择事件，随后点击回放阶段；传导的主体和数值根据当前选定企业与假设关系动态重算。</div></div><span class="pill warn">演示事件 · 非真实企业事件</span></div>
+<div class="cx-events" id="cxEventCards"></div>
+<div class="cx-replay"><div class="cx-replay-track" id="cxPhases"><button data-cx-phase="0">① 冲击发生</button><button data-cx-phase="1">② 一阶传导</button><button data-cx-phase="2">③ 系统回响</button></div><button class="cx-btn main" id="cxLaunchWind">◉ 进入网络全景 ›</button></div>
+<div class="cx-replay-data" id="cxReadout"></div><div class="cx-caution">所有企业关系使用开发演示假设；压力指数不等于实际产值、利润或就业损失。事件与现实企业经营状况无关。</div>
+</section><div class="mgr-head"><div><div class="mgr-eyebrow">INDUSTRY MANAGER · OPERATING BOARD</div><h3>经营模式 · 六类角色与要素上限</h3><div class="mgr-sub">同一组合同时驱动能力评价、资源占用、成长状态和风险风洞。企业关系与资源需求均为开发演示假设。</div></div><div class="mgr-control"><button id="mgrPresetAnchor">龙头优先</button><button id="mgrPresetBalance">链条均衡</button><button id="mgrPresetFuture">成长突破</button><button id="mgrClear">清空角色</button></div></div>
 <div class="mgr-board"><section class="mgr-panel"><h4>◆ 产业阵容 / 角色槽位</h4><div id="mgrRoles" class="mgr-roles"></div><div class="mgr-sub">点击任一槽位，选择企业或移除主体；一个企业只能占一个主槽位，多重作用保留在企业档案中。</div></section><section class="mgr-panel"><h4>◈ 要素预算 / 经营边界</h4><div id="mgrBudgets" class="mgr-budget"></div><div id="mgrConstraint" class="mgr-alert"></div><div class="mgr-line"></div><div id="mgrSummary" class="mgr-impact"></div><div class="mgr-line"></div><div class="mgr-control"><button id="mgrUndo">↶ 撤销</button><button id="mgrRedo">↷ 重做</button><button id="mgrToWind">◉ 去关系风洞</button><button id="mgrToSeason">▶ 推进成长</button></div></section></div>
 <div class="mgr-modal" id="mgrModal"><div class="mgr-dialog"><div class="mgr-head"><h3 id="mgrPickTitle">选择产业主体</h3><button id="mgrClose" class="mgr-switch">关闭 ✕</button></div><div id="mgrPickList" class="mgr-options"></div></div></div>
 <div class="scenario-board">
@@ -756,7 +798,7 @@ function managerSync(){
  tacticIds=Object.values(manager.slots).filter(Boolean);
  // Keep the existing tactical roster synchronized with the operating board.
  renderManager();
- if(currentView==="tactics")renderTactics();
+ if(currentView==="tactics"){renderTactics();cxRender();}
  if(currentView==="season")renderManagerSeason();
  if(currentView==="wind")renderWind();
  try{sessionStorage.setItem("boluo-manager-v6",JSON.stringify({slots:manager.slots,year:manager.year,event:manager.event}))}catch(e){}
@@ -797,6 +839,71 @@ function renderManager(){
  $("mgrSummary").innerHTML=[["已配置",v.ps.length],["产业覆盖",v.coverage+"/3"],["组合指数",v.score.toFixed(1)]].map(x=>'<div><strong>'+x[1]+'</strong><span>'+x[0]+'</span></div>').join("");
  $("mgrUndo").disabled=!manager.history.length;$("mgrRedo").disabled=!manager.future.length;
 }
+
+// CINEMATIC JOURNEY (V7): no inference about real companies' events.
+let cxState={id:"huatong",phase:0};
+const cxEventOptions=[["none","◎","常态观察","无外部冲击"],["orders","↘","订单收缩","需求侧情景"],["talent","◇","人才流失","技能与人才扰动"],["supply","⚠","供应中断","网络传导情景"]];
+function cxSelectFocus(id){
+ if(!companies.some(p=>p.id===id))return;
+ cxState.id=id;
+ wtState.source=id;
+ cxRender();
+}
+function cxAddSelected(){
+ const id=cxState.id,p=companies.find(x=>x.id===id);
+ if(!p)return;
+ const occupied=Object.entries(manager.slots).find(([r,v])=>v===id);
+ if(occupied){setView("tactics");return}
+ const candidate=p.role.includes("配套")?"supply":p.role.includes("成长")?"growth":p.team==="tertiary"?"service":p.team==="primary"?"base":"core";
+ const slot=!manager.slots[candidate]?candidate:managerRoles.find(r=>!manager.slots[r.id])?.id;
+ if(!slot){managerPick("reserve");return}
+ managerCommit({...manager.slots,[slot]:id});
+}
+function cxSetEvent(id){
+ if(!cxEventOptions.some(x=>x[0]===id))return;
+ manager.event=id;cxState.phase=0;managerSync();
+}
+function cxReplay(phase){
+ cxState.phase=Math.min(2,Math.max(0,phase));wtState.phase=cxState.phase;cxRender();
+}
+function cxRender(){
+ const p=companies.find(x=>x.id===cxState.id);if(!p)return;
+ const m=getRating(p);
+ const stat=(a,b)=>'<div><b>'+a+'</b><span>'+b+'</span></div>';
+ $("cxHero").innerHTML='<div class="cx-card-top"><div><div class="cx-ovr">'+m.ovr+'</div><div class="cx-mini-label">OVR · ESTIMATE</div></div><span class="cx-rating-pill">POT '+m.pot+'</span></div><div class="cx-monogram">'+esc(p.initial||p.name.slice(0,1))+'</div><h4 class="cx-name">'+esc(p.name)+'</h4><div class="cx-club">'+esc(p.club)+'</div><div class="cx-stats">'+stat(m.values[0],"规模")+stat(m.values[2],"技术")+stat(m.values[3],"协同")+'</div>';
+ $("cxSelect").value=p.id;
+ $("cxAttrs").innerHTML=dims.map((name,i)=>'<div class="cx-attr"><b>'+m.values[i]+'</b><span>'+name+'</span></div>').join("");
+ const assigned=Object.entries(manager.slots).find(([r,id])=>id===p.id);
+ $("cxBadges").innerHTML='<span>资料覆盖 '+m.coverage+'%</span><span>潜力 '+m.pot+'</span><span>'+(assigned?"阵容位置："+managerRoles.find(r=>r.id===assigned[0]).name:"待加入阵容")+'</span>';
+ $("cxAdd").textContent=assigned?"✓ 已在阵容 · 查看":"＋ 放入当前阵容";
+ $("cxEventCards").innerHTML=cxEventOptions.map(e=>'<button class="cx-event '+(manager.event===e[0]?'active':'')+'" data-cx-event="'+e[0]+'"><span class="em">'+e[1]+'</span><b>'+e[2]+'</b><small>'+e[3]+'</small></button>').join("");
+ document.querySelectorAll("[data-cx-phase]").forEach(btn=>btn.classList.toggle("active",+btn.dataset.cxPhase===cxState.phase));
+ const chosen=managerSelected(),resource=managerCompute();
+ const event=manager.event;
+ const preserved={source:wtState.source,type:wtState.type,shock:wtState.shock,phase:wtState.phase};
+ wtState.source=p.id;
+ wtState.type=event==="supply"?"supply":event==="talent"?"delay":"orders";
+ wtState.shock=event==="none"?0:event==="supply"?30:event==="talent"?20:25;
+ wtState.phase=cxState.phase;
+ const values=wtCalculate(true);
+ const active=Object.entries(values.effects).filter(([id,pressure])=>pressure>.006&&(values.depth[id]??9)<=cxState.phase);
+ const count=Math.max(0,active.length-(cxState.phase>=0?1:0));
+ const average=(active.reduce((a,[id,val])=>a+val,0)/Math.max(1,active.length))*100;
+ $("cxReadout").innerHTML='<div><b>'+count+'</b><small>触达主体 · 假设网络</small></div><div><b>'+average.toFixed(1)+'</b><small>压力指数 · 情景</small></div><div><b>'+resource.overloaded.filter(x=>x>0).length+'</b><small>阵容资源超限</small></div>';
+ // Keep the focal company as wind-tunnel source; event changes propagate only on explicit selection.
+ wtState.source=p.id;
+}
+function initCinematic(){
+ $("cxSelect").innerHTML=companies.map(p=>'<option value="'+esc(p.id)+'">'+esc(p.name)+'</option>').join("");
+ $("cxSelect").onchange=e=>cxSelectFocus(e.target.value);
+ $("cxAdd").onclick=cxAddSelected;
+ $("cxProfile").onclick=()=>openPlayer(cxState.id);
+ $("cxEventCards").onclick=e=>{const btn=e.target.closest("[data-cx-event]");if(btn)cxSetEvent(btn.dataset.cxEvent)};
+ $("cxPhases").onclick=e=>{const btn=e.target.closest("[data-cx-phase]");if(btn)cxReplay(+btn.dataset.cxPhase)};
+ $("cxLaunchWind").onclick=()=>{managerToWind();wtState.source=cxState.id;wtState.phase=cxState.phase;renderWind()};
+ cxRender();
+}
+
 function managerEventCards(){
  return [["none","◎","正常运行","清除事件，观察无冲击基线"],["orders","↓","订单收缩","示例：需求侧扰动"],["talent","◇","人才流失","示例：技能供给受压"],["supply","⚠","供应断点","示例：上游供给受压"]];
 }
@@ -842,6 +949,6 @@ $("weightGrid").oninput=e=>{const a=e.target.closest("[data-w]");if(!a)return;if
 document.body.addEventListener("click",e=>{const b=e.target.closest("[data-scenario]");if(b){premiumScenarioMode=b.dataset.scenario;renderPremiumScenario()}const g=e.target.closest("[data-find-gap]");if(g){$("tacticSearch").value=g.dataset.findGap;renderTactics();$("tacticSearch").focus()}const v=e.target.closest("[data-open-view]");if(v)setView(v.dataset.openView)});
 $("scenarioSlider").oninput=e=>{premiumScenarioStrength=Number(e.target.value);renderPremiumScenario()};
 renderWeightControls();
-renderOverview();renderTeam();renderPlayers();initDuel();initWind();initManager();
+renderOverview();renderTeam();renderPlayers();initDuel();initWind();initManager();initCinematic();
 if(window.location && window.location.hash==="#wind")setView("wind");
 </script></body></html>
