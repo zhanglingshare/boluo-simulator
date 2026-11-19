@@ -37,6 +37,31 @@ button,input,select{font:inherit}button{cursor:pointer}a{color:inherit;text-deco
 @media(max-width:1100px){.overview-grid{grid-template-columns:repeat(2,1fr)}.workspaces{grid-template-columns:1fr}.workspace{min-height:145px}.role-grid{grid-template-columns:repeat(2,1fr)}.capability-grid{grid-template-columns:repeat(2,1fr)}}
 @media(max-width:760px){.shell{grid-template-columns:1fr}.sidebar{height:auto;position:sticky;top:0;padding:9px 12px;border-right:0;border-bottom:1px solid var(--line);display:block}.brand{padding:2px 3px 9px}.brand-mark{width:30px;height:30px}.brand strong{font-size:12px}.brand small{font-size:8px}.nav-label,.side-bottom{display:none}.nav-row{display:flex;overflow:auto;gap:6px;padding-bottom:2px}.nav-btn{white-space:nowrap;width:auto;padding:8px 10px;margin:0;gap:7px}.nav-btn .num{font-size:9px}.nav-btn b{font-size:10px}.main{padding:0 14px 40px}.topbar{height:49px}.page-head{padding:25px 0 17px;display:block}.head-right{justify-content:flex-start;margin-top:13px}.overview-grid{gap:8px}.metric{padding:13px;min-height:100px}.metric-value{font-size:21px}.alert-grid,.split,.profile-layout{grid-template-columns:1fr}.profile-layout{gap:10px}.selector-list{display:grid;grid-template-columns:repeat(2,1fr)}.profile-facts{grid-template-columns:1fr 1fr}.capability-grid{grid-template-columns:1fr 1fr}.role-grid{grid-template-columns:1fr 1fr;gap:8px}.role-slot{padding:11px;min-height:160px}.matrix-row{grid-template-columns:1fr 1fr;gap:6px}.matrix-row.head{display:none}.matrix-row select{grid-column:1/-1}.profile-hero{padding:17px}.profile-emblem{width:48px;height:48px}.section-title{align-items:flex-start}.lineup-tools{width:100%}.lineup-tools button{flex:1}.toast{left:14px;right:14px;bottom:14px;text-align:center}}
 @media(max-width:420px){.role-grid,.capability-grid{grid-template-columns:1fr}.selector-list{grid-template-columns:1fr 1fr}.edition{display:none}.matrix-row{grid-template-columns:1fr}.matrix-row select{grid-column:auto}}
+
+/* 2K-inspired visual layer: identity card, scouting report and tactical pitch */
+.player-detail-grid{display:grid;grid-template-columns:minmax(0,1.15fr) minmax(320px,.85fr);gap:13px;margin-top:13px}
+.player-attributes,.scouting-report{padding:19px;min-width:0}
+.player-attributes{background:linear-gradient(145deg,#102a40,#0c1d2c)}
+.attribute-layout{display:grid;grid-template-columns:minmax(220px,.95fr) minmax(190px,1.05fr);gap:8px;align-items:center}
+.radar-stage{min-width:0}.radar-stage svg{width:100%;max-height:260px;overflow:visible}.radar-legend{display:flex;justify-content:center;gap:13px;flex-wrap:wrap;font-size:9px;color:#7e9bb1}.radar-legend span{display:flex;align-items:center;gap:5px}.radar-legend i{width:6px;height:6px;border-radius:50%;background:#5ee0dc}
+.attribute-list{display:grid;gap:12px;padding:6px 2px}.attribute-row{display:grid;grid-template-columns:65px minmax(0,1fr) 58px;align-items:center;gap:9px}.attribute-row b{font-size:10px;color:#d5e5f0}.attribute-track{height:7px;background:#263e52;border-radius:10px;overflow:hidden}.attribute-track i{display:block;width:0;height:100%;background:linear-gradient(90deg,#398bd0,#5ee0dc);border-radius:10px}.attribute-row small{font-size:9px;color:#7894aa;text-align:right}
+.scouting-report{background:radial-gradient(380px 190px at 100% 0%,rgba(243,197,108,.09),transparent 70%),linear-gradient(145deg,#192d3d,#102131);position:relative;overflow:hidden}.scout-head{display:flex;justify-content:space-between;gap:12px;align-items:flex-start}.scout-head h2{font-size:17px;margin:7px 0 0}.scout-stamp{border:1px solid rgba(243,197,108,.35);color:#eacb8c;border-radius:8px;padding:7px 8px;font-size:8px;line-height:1.45;letter-spacing:.15em;text-align:center;transform:rotate(5deg)}
+.scout-grade{display:flex;align-items:center;gap:10px;padding:12px 0;margin:12px 0;border-top:1px solid var(--line);border-bottom:1px solid var(--line)}.scout-grade span{font-size:10px;color:#8fa9bc}.scout-grade b{font-size:20px;color:var(--amber);letter-spacing:.04em}.scout-grade small{font-size:9px;color:#718ba0;margin-left:auto}
+.scout-block{padding:9px 0 8px;border-bottom:1px solid rgba(170,203,229,.08)}.scout-block b{font-size:10px;display:flex;align-items:center;gap:7px}.scout-block p{font-size:10px;line-height:1.7;color:#a2b7c8;margin:6px 0 0 14px}.scout-dot{width:6px;height:6px;border-radius:50%;display:inline-block}.scout-dot.good{background:var(--green);box-shadow:0 0 9px #57d6a0}.scout-dot.risk{background:var(--red);box-shadow:0 0 9px #ff7884}.scout-dot.fit{background:var(--cyan);box-shadow:0 0 9px #5ee0dc}.scout-footer{font-size:9px;color:#71899d;line-height:1.65;padding-top:11px}
+.profile-hero{min-height:178px;position:relative;overflow:hidden}.profile-hero:after{content:"";position:absolute;right:75px;top:-85px;width:280px;height:280px;border:1px solid rgba(94,224,220,.12);border-radius:50%;box-shadow:0 0 0 24px rgba(94,224,220,.025),0 0 0 50px rgba(94,224,220,.018);pointer-events:none}.profile-emblem{width:88px;height:88px;border-radius:22px;font-size:35px;position:relative;z-index:1;box-shadow:0 12px 35px #4ab8d84a,0 0 0 7px rgba(94,224,220,.07)}
+/* Tactical board: six strategic positions arranged as a team formation */
+.pitch-wrap{margin-top:17px;padding:14px;border-radius:17px;border:1px solid rgba(94,224,220,.2);background:linear-gradient(145deg,#0b2930,#0b202d);overflow:hidden}
+.pitch-caption{display:flex;justify-content:space-between;gap:12px;color:#83a9b5;font-size:9px;letter-spacing:.12em;padding:2px 5px 12px}
+.role-grid{height:485px;position:relative;display:grid;grid-template-columns:repeat(3,minmax(0,1fr));grid-template-rows:repeat(2,minmax(0,1fr));gap:12px;padding:19px 7%;border:1px solid rgba(115,206,183,.22);border-radius:13px;background:repeating-linear-gradient(0deg,transparent 0,transparent 48px,rgba(129,203,181,.045) 49px,transparent 50px),linear-gradient(90deg,rgba(44,142,119,.13),rgba(26,105,95,.1));}
+.role-grid:before{content:"";position:absolute;left:50%;top:0;bottom:0;border-left:1px solid rgba(140,216,194,.18)}.role-grid:after{content:"";position:absolute;width:90px;height:90px;border:1px solid rgba(140,216,194,.18);border-radius:50%;left:50%;top:50%;transform:translate(-50%,-50%);pointer-events:none}
+.role-slot{position:relative;z-index:1;min-height:0;padding:12px;background:linear-gradient(145deg,rgba(16,43,55,.96),rgba(11,31,42,.95));border:1px solid rgba(114,190,183,.23);border-radius:13px;display:flex;flex-direction:column;box-shadow:0 8px 20px #06151c55}
+.role-slot:nth-child(1){grid-column:2;grid-row:1}.role-slot:nth-child(2){grid-column:1;grid-row:1}.role-slot:nth-child(3){grid-column:3;grid-row:1}.role-slot:nth-child(4){grid-column:1;grid-row:2}.role-slot:nth-child(5){grid-column:2;grid-row:2}.role-slot:nth-child(6){grid-column:3;grid-row:2}
+.role-head{margin-bottom:8px}.role-head b{font-size:10px;color:#cfe8e1}.role-head small{font-size:8px;line-height:1.4}.role-count{font-size:8px;color:#76aaa0}.role-slot .chip-list{align-content:flex-start;min-height:0;overflow:auto}.industry-chip{background:linear-gradient(110deg,#1b4351,#183544);border-color:rgba(102,194,183,.24);font-size:9px;padding:7px 8px}.industry-chip:hover{box-shadow:0 0 0 2px rgba(94,224,220,.1)}
+.role-slot.drag-over{border-color:#5ee0dc;background:rgba(94,224,220,.12);box-shadow:0 0 0 2px rgba(94,224,220,.16),0 0 30px rgba(94,224,220,.1)}
+.pool{background:linear-gradient(145deg,#12293b,#0c1d2c)}.pool .industry-chip{background:#162d40}
+@media(max-width:1100px){.player-detail-grid{grid-template-columns:1fr}.attribute-layout{grid-template-columns:minmax(220px,.8fr) minmax(220px,1fr)}}
+@media(max-width:760px){.player-detail-grid{grid-template-columns:1fr}.attribute-layout{grid-template-columns:1fr}.radar-stage svg{max-height:220px}.attribute-list{grid-template-columns:1fr 1fr;gap:10px}.attribute-row{grid-template-columns:54px minmax(0,1fr) 45px;gap:6px}.role-grid{height:auto;min-height:620px;grid-template-columns:repeat(2,minmax(0,1fr));grid-template-rows:repeat(3,minmax(155px,1fr));padding:12px;gap:8px}.role-grid:before{display:none}.role-grid:after{width:55px;height:55px}.role-slot:nth-child(n){grid-column:auto;grid-row:auto}.pitch-caption{font-size:8px}.profile-emblem{width:58px;height:58px;font-size:25px}.profile-hero:after{right:-100px}.scout-grade{flex-wrap:wrap}.scout-grade small{width:100%;margin-left:0}}
+@media(max-width:420px){.attribute-list{grid-template-columns:1fr}.role-grid{grid-template-columns:1fr;grid-template-rows:none;min-height:0}.role-slot{min-height:135px}.role-grid:after{display:none}}
 </style>
 </head>
 <body>
@@ -95,8 +120,27 @@ button,input,select{font:inherit}button{cursor:pointer}a{color:inherit;text-deco
   <aside class="panel panel-pad"><div class="section-title"><div><h2>选择分析主体</h2><p>样例对象，用于跑通界面与交互</p></div></div><div class="selector-list" id="subjectList"></div><div class="footer-note">当前样例产业名称仅用于演示分析结构。主体边界、产业数据和真实关系须经公开资料及部门数据核验。</div></aside>
   <div>
    <section class="panel profile-hero"><div><div class="eyebrow" id="profileEyebrow">INDUSTRY PROFILE / DEMO</div><h2 id="profileName">电子信息产业</h2><p id="profileDesc">查看产业规模、增长动能、技术升级、产业协同、价值创造和抗风险能力。当前未接入可核验的主体级指标。</p><div style="display:flex;gap:7px;flex-wrap:wrap;margin-top:13px"><span class="tag cyan">能力画像</span><span class="tag amber">证据待核验</span><span class="tag">主体边界待确认</span></div></div><div class="profile-emblem" id="profileEmblem">电</div></section>
-   <div class="profile-facts">
-    <div class="fact"><span>当前能力</span><b>待真实指标计算</b></div><div class="fact"><span>发展潜力</span><b>条件性研判，不等于现实能力</b></div><div class="fact"><span>证据可信度</span><b>逐项核验，不汇总伪分数</b></div>
+   <div class="player-detail-grid">
+    <section class="panel player-attributes">
+     <div class="section-title"><div><div class="eyebrow">PLAYER ATTRIBUTES / 产业属性</div><h2>六维能力面板</h2><p>不是总评分，而是六项能力的证据状态</p></div><span class="tag amber">未评分</span></div>
+     <div class="attribute-layout">
+      <div class="radar-stage"><svg viewBox="0 0 300 260" role="img" aria-label="六维产业能力雷达图，等待真实数据填充">
+       <g fill="none" stroke="rgba(164,196,220,.23)" stroke-width="1"><polygon points="150,30 254,90 254,170 150,230 46,170 46,90"/><polygon points="150,65 223,107 223,153 150,195 77,153 77,107"/><polygon points="150,100 192,124 192,136 150,160 108,136 108,124"/><path d="M150 30V230M46 90L254 170M254 90L46 170"/></g>
+       <polygon points="150,30 254,90 254,170 150,230 46,170 46,90" fill="rgba(94,224,220,.035)" stroke="rgba(94,224,220,.55)" stroke-width="1.5" stroke-dasharray="5 5"/>
+       <g fill="#9bb4c8" font-size="10" text-anchor="middle"><text x="150" y="17">规模</text><text x="270" y="88">动能</text><text x="270" y="184">技术</text><text x="150" y="250">协同</text><text x="30" y="184">价值</text><text x="30" y="88">韧性</text></g>
+       <circle cx="150" cy="130" r="4" fill="#5ee0dc"/><text x="150" y="117" fill="#d7e8f5" font-size="10" text-anchor="middle">等待真实数据</text>
+      </svg><div class="radar-legend"><span><i></i>能力数据待接入</span><span><i></i>不生成虚构分数</span></div></div>
+      <div class="attribute-list" id="attributeList"></div>
+     </div>
+    </section>
+    <section class="panel scouting-report">
+     <div class="scout-head"><div><div class="eyebrow">SCOUTING REPORT / 球探报告</div><h2>这支产业队伍，值得看什么？</h2></div><div class="scout-stamp">SCOUT<br>NOTE</div></div>
+     <div class="scout-grade"><span>综合判断</span><b>待证据</b><small>不以印象代替评级</small></div>
+     <div class="scout-block"><b><i class="scout-dot good"></i>优势线索 / 值得验证</b><p id="scoutStrength">当前缺少主体级证据，暂不判定优势。先核验产品、订单、技术和本地配套。</p></div>
+     <div class="scout-block"><b><i class="scout-dot risk"></i>短板风险 / 必须追问</b><p id="scoutWeakness">重点检查客户集中、关键设备依赖、订单稳定性和价值留存，不能把缺失数据解释成能力不足。</p></div>
+     <div class="scout-block"><b><i class="scout-dot fit"></i>角色适配 / 阵容位置</b><p id="scoutFit">适配角色需要由规模、功能、网络位置和替代难度共同判断。</p></div>
+     <div class="scout-footer">球探报告不是结论书。每条优势、弱点与适配判断，都应能展开到指标、来源、时间和置信等级。</div>
+    </section>
    </div>
    <div class="grid capability-grid" id="capabilityGrid"></div>
    <section class="panel panel-pad" style="margin-top:12px"><div class="section-title"><div><h2>证据与数据完整度</h2><p>数据覆盖情况和判断可信度分开看</p></div><span class="tag amber">等待数据接入</span></div>
@@ -111,7 +155,10 @@ button,input,select{font:inherit}button{cursor:pointer}a{color:inherit;text-deco
  <div class="page-head"><div><div class="eyebrow">INDUSTRY LINEUP LAB</div><h1>强产业不等于强阵容。<br><span style="color:var(--cyan)">关键在于如何组合。</span></h1><p>借鉴体育游戏阵容管理：调整角色、移动产业、观察空缺与关系。当前先验证组合结构，不虚构协同产值或增长贡献。</p></div><div class="head-right"><span class="tag cyan">可拖拽调整</span><span class="tag amber">演示阵容</span></div></div>
  <section class="panel panel-pad">
   <div class="lineup-top"><div><div class="section-title" style="margin:0"><div><h2>产业阵容配置</h2><p>拖动产业卡片到不同角色槽位；点击 × 可移回候选区</p></div></div></div><div class="lineup-tools"><button class="soft-btn" id="resetLineup">恢复演示阵容</button><button class="soft-btn" id="saveLineup">保存当前阵容</button><button class="primary-btn" id="compareLineup">检查组合结构</button></div></div>
-  <div class="role-grid" id="roleGrid"></div>
+  <div class="pitch-wrap">
+   <div class="pitch-caption"><span>TACTICAL BOARD / 产业战术板</span><span>拖动主体卡片改变阵型位置</span></div>
+   <div class="role-grid" id="roleGrid"></div>
+  </div>
   <div class="panel pool"><div class="section-title"><div><h2>候选产业池</h2><p>尚未放入当前阵容的主体</p></div><span class="tag">拖入上方角色区</span></div><div class="chip-list" id="poolList"></div></div>
  </section>
  <div class="split">
