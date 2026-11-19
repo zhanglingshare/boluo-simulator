@@ -839,6 +839,7 @@ const managerPlans={
  balanced:{core:"sunwoda",growth:null,supply:"liwei",service:"zhongneng",base:null,reserve:null},
  future:{core:null,growth:"bolan",supply:"tianzhuo",service:"luofushan-group",base:null,reserve:null}
 };
+let v9EngineReady=false;
 let manager={slots:{...managerPlans.anchor},year:0,event:"none",history:[],future:[],pick:null};
 function managerResource(p){
  let h=0;for(const ch of p.id)h=(h*31+ch.charCodeAt(0))%100003;
@@ -887,12 +888,13 @@ function managerCompute(year=manager.year,evt=manager.event){
 }
 function managerCommit(nextSlots){manager.history.push(JSON.stringify(manager.slots));if(manager.history.length>50)manager.history.shift();manager.future=[];manager.slots=nextSlots;managerSync();}
 function managerSync(){
+ if(v9EngineReady)career.score=careerScore();
  tacticIds=Object.values(manager.slots).filter(Boolean);
  // Keep the existing tactical roster synchronized with the operating board.
  renderManager();renderChemistry();
  if(currentView==="tactics")renderTactics();
  cxRender();
- if(currentView==="season")renderManagerSeason();
+ if(currentView==="season"){renderManagerSeason();if(v9EngineReady)renderCareer()}
  if(currentView==="wind")renderWind();
  try{sessionStorage.setItem("boluo-manager-v6",JSON.stringify({slots:manager.slots,year:manager.year,event:manager.event}))}catch(e){}
 }
@@ -1285,7 +1287,7 @@ function initCareer(){
  $("careerAdvance").onclick=careerTick;$("careerRewind").onclick=careerUndo;$("careerRestart").onclick=careerNew;
  $("careerBench").onchange=e=>{if(e.target.id==="careerBenchPick"){career.bench=e.target.value||null;career.benchReady=0;renderCareer()}};
  $("careerBench").onclick=e=>{if(e.target.closest("#careerPromote"))careerPromote();if(e.target.closest("#careerInspect")&&career.bench)openPlayer(career.bench)};
- career.initialSlots={...manager.slots};career.score=careerScore();career.initialScore=career.score;v9LoadCareer();managerSync();refreshScores();renderCareer();
+ career.initialSlots={...manager.slots};career.score=careerScore();career.initialScore=career.score;v9LoadCareer();v9EngineReady=true;managerSync();refreshScores();renderCareer();
 }
 
 function renderSeason(){
