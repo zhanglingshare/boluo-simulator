@@ -38,7 +38,7 @@
   const opt=options||{},random=rng(seed),param=POLICY[opt.policy]||POLICY[input.policy]||POLICY.balanced;
   const r=readiness(input), horizon=clamp(Math.floor(opt.horizon||input.horizon||28),1,28);
   const dims={talent:1,funding:1,network:1,market:1,volatility:1,...(opt.factors||{})};
-  let value=clamp(Number(input.score)||0,0,100), shockMemory=0, injury=r.recovery*.16,capacity=0,redundancy=r.resilience*.03+r.network*.05;
+  let value=clamp(Number(input.score)||0,0,100), shockMemory=0, injury=r.recovery*.16,capacity=0,redundancy=clamp(r.resilience*.03+r.network*.05,.0,.55);
   const series=[value];
   for(let t=1;t<=horizon;t++){
     const globalShock=normal(random);
@@ -46,13 +46,13 @@
     const market=clamp(dims.market*(1+.05*shockMemory),.35,1.65);
     const budgetAvailable=clamp((.25+r.cash*1.2)*dims.funding,.05,1.3);
     const talentAvailable=clamp((.4+r.talent)*dims.talent,.05,1.4);
-    const investment=clamp(budgetAvailable-(param.cost/75)*dims.funding,.03,1.2);
+    const investment=clamp(budgetAvailable-param.cost/75,.03,1.2);
     const productive=param.growth*(.25+.4*investment+.35*talentAvailable)+.12*(market-1)+.06*capacity;
     capacity=clamp(capacity*.93+param.skill*.1*talentAvailable,0,4);
     redundancy=clamp(redundancy*.92+param.buffer*.035*dims.network,0,.65);
     const disturbance=normal(random)*(.85*dims.volatility)*(1-redundancy*.42);
-    const eventChance=clamp(.13*dims.volatility*(1+.12*Math.max(0,r.network<0?-r.network:0)),.02,.4);
-    const event=random()<eventChance?(.9+random()*3.7)*(1-redundancy*.5):0;
+    const eventChance=clamp(.13*dims.volatility*(1.45-.45*dims.network)*(1+.12*Math.max(0,-r.network)),.02,.4);
+    const event=random()<eventChance?(.9+random()*3.7)*(1-redundancy*.5)*(1.35-.35*dims.network):0;
     injury=clamp(injury*.73+event*.42,0,17);
     const budgetPenalty=Math.max(0,param.cost/100-r.cash*.19)*.8;
     value=clamp(value+productive+.10+disturbance-event*.9-injury*.09-budgetPenalty-r.stress*.006,0,100);
