@@ -835,6 +835,8 @@ function renderChemistry(){
 function managerCompute(year=manager.year,evt=manager.event){
  const ps=managerSelected(),used=[0,0,0,0,0];
  ps.forEach(p=>managerResource(p).forEach((v,i)=>used[i]+=v));
+ // Quarterly committed strategy resources are real constraints within this demo world.
+ if(typeof career!=="undefined" && Array.isArray(career.spent))career.spent.forEach((x,i)=>{used[i]+=x});
  const overloaded=used.map((v,i)=>Math.max(0,v-managerCaps[i]));
  const strain=overloaded.reduce((s,v)=>s+v,0)/100;
  const incident=evt==="none"?0:evt==="orders"?8:evt==="talent"?6:evt==="supply"?10:0;
@@ -1008,7 +1010,7 @@ function careerSeed(q){let a=0;for(const id of Object.values(manager.slots).filt
 function careerPrintQuarter(q){return (2026+Math.floor(q/4))+" Q"+(q%4+1)}
 function careerTick(){
  const policy=careerPolicies.find(x=>x.id===career.policy),before=managerCompute(),price=policy.cost;
- const paid=price.every((x,i)=>before.used[i]+career.spent[i]+x<=managerCaps[i]);
+ const paid=price.every((x,i)=>before.used[i]+x<=managerCaps[i]);
  const event=careerEvents[careerSeed(career.quarter)];
  const q=career.quarter+1;
  const roll=event[2],intensity=roll>0?roll*policy.risk:roll;
