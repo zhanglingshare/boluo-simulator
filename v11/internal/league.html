@@ -1139,8 +1139,8 @@ function v9LoadCareer(){
 
 function v9Init(){
  $("v9CompanyTiles").onclick=e=>{const b=e.target.closest('[data-v9-company]');if(b)openPlayer(b.dataset.v9Company)};
- $("v9QuarterA").onclick=()=>{career.comparison.A=v9Snapshot();v9Render()};
- $("v9QuarterB").onclick=()=>{career.comparison.B=v9Snapshot();v9Render()};
+ $("v9QuarterA").onclick=()=>{career.comparison.A=v9Snapshot();v9Render();v9SaveCareer()};
+ $("v9QuarterB").onclick=()=>{career.comparison.B=v9Snapshot();v9Render();v9SaveCareer()};
  $("v9Compare").onclick=v9Comparison;
  v9Render();
 }
