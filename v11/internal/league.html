@@ -505,7 +505,7 @@ let currentTeam="secondary",currentView="overview",selectedPlayer=null,filters="
 const $=id=>document.getElementById(id);
 function team(id){return teams.find(t=>t.id===id)}
 function esc(s){return String(s??"").replace(/[&<>"']/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]))}
-function setView(v){currentView=v;document.querySelectorAll(".view").forEach(x=>x.classList.toggle("active",x.id==="view-"+v));document.querySelectorAll("#nav button").forEach(x=>x.classList.toggle("active",x.dataset.view===v));if(v==="compare")renderDuel();if(v==="teams")renderTeam();if(v==="players")renderPlayers();if(v==="scout")renderScout();if(v==="academy")renderAcademy();if(v==="tactics")renderTactics();if(v==="wind")renderWind();if(v==="season"){renderSeason();renderManagerSeason();}window.scrollTo({top:0,behavior:"smooth"})}
+function setView(v){currentView=v;document.querySelectorAll(".view").forEach(x=>x.classList.toggle("active",x.id==="view-"+v));document.querySelectorAll("#nav button").forEach(x=>x.classList.toggle("active",x.dataset.view===v));if(v==="compare")renderDuel();if(v==="teams")renderTeam();if(v==="players")renderPlayers();if(v==="scout")renderScout();if(v==="academy")renderAcademy();if(v==="tactics"){renderTactics();cxRender();}if(v==="wind")renderWind();if(v==="season"){renderSeason();renderManagerSeason();}window.scrollTo({top:0,behavior:"smooth"})}
 $("nav").addEventListener("click",e=>{const b=e.target.closest("button[data-view]");if(b)setView(b.dataset.view)});
 document.querySelectorAll("[data-open-view]").forEach(btn=>btn.addEventListener("click",()=>setView(btn.dataset.openView)));
 function card(p){const t=team(p.team),s=getRating(p);const mini=[0,2,3].map(i=>'<div class="score-mini"><span>'+dimKeys[i]+'</span><span class="track"><i style="width:'+s.values[i]+'%"></i></span><b>'+s.values[i]+'</b></div>').join("");return '<article class="player-card" data-player="'+esc(p.id)+'"><div class="pc-top"><div class="avatar">'+esc(p.initial||p.name.slice(0,1))+'</div><div class="score-number">'+s.ovr+'<small>OVR</small></div></div><h4>'+esc(p.name)+'</h4><div class="company-sub">'+esc(p.club)+' · '+esc(p.role)+'</div><div class="player-tags"><span class="tag gold">POT '+s.pot+'</span><span class="tag">'+s.grade+' · 资料覆盖</span></div><div class="scores-row"><div>'+mini+'</div><div style="font-size:10px;color:#9bb0c8">模型覆盖 <strong style="font-size:20px;color:#ecc67c">'+s.coverage+'%</strong><br>估算属性</div></div><div class="card-bottom"><span>'+esc(t.name)+'</span><span>查看球探报告 ↗</span></div><button class="duel-compare-btn" data-compare="'+esc(p.id)+'" type="button">VS · 加入能力对决</button></article>'}
@@ -798,7 +798,8 @@ function managerSync(){
  tacticIds=Object.values(manager.slots).filter(Boolean);
  // Keep the existing tactical roster synchronized with the operating board.
  renderManager();
- if(currentView==="tactics"){renderTactics();cxRender();}
+ if(currentView==="tactics")renderTactics();
+ cxRender();
  if(currentView==="season")renderManagerSeason();
  if(currentView==="wind")renderWind();
  try{sessionStorage.setItem("boluo-manager-v6",JSON.stringify({slots:manager.slots,year:manager.year,event:manager.event}))}catch(e){}
@@ -857,11 +858,11 @@ function cxAddSelected(){
  const candidate=p.role.includes("配套")?"supply":p.role.includes("成长")?"growth":p.team==="tertiary"?"service":p.team==="primary"?"base":"core";
  const slot=!manager.slots[candidate]?candidate:managerRoles.find(r=>!manager.slots[r.id])?.id;
  if(!slot){managerPick("reserve");return}
- managerCommit({...manager.slots,[slot]:id});
+ managerCommit({...manager.slots,[slot]:id});cxRender();
 }
 function cxSetEvent(id){
  if(!cxEventOptions.some(x=>x[0]===id))return;
- manager.event=id;cxState.phase=0;managerSync();
+ manager.event=id;cxState.phase=0;managerSync();cxRender();
 }
 function cxReplay(phase){
  cxState.phase=Math.min(2,Math.max(0,phase));wtState.phase=cxState.phase;cxRender();
@@ -880,7 +881,7 @@ function cxRender(){
  document.querySelectorAll("[data-cx-phase]").forEach(btn=>btn.classList.toggle("active",+btn.dataset.cxPhase===cxState.phase));
  const chosen=managerSelected(),resource=managerCompute();
  const event=manager.event;
- const preserved={source:wtState.source,type:wtState.type,shock:wtState.shock,phase:wtState.phase};
+ 
  wtState.source=p.id;
  wtState.type=event==="supply"?"supply":event==="talent"?"delay":"orders";
  wtState.shock=event==="none"?0:event==="supply"?30:event==="talent"?20:25;
