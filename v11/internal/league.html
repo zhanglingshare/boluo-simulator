@@ -135,11 +135,34 @@ body{background:radial-gradient(ellipse 1250px 620px at 63% -16%,#0d4d68 0%,tran
 .scenario-choice small{font-size:9px;color:#9fb6c8}
 @media(max-width:1100px){.viz-hub{grid-template-columns:1fr 1fr}.viz-hub>.viz-panel:first-child{grid-column:1/-1}.scenario-board{grid-template-columns:1fr}.team-grid{grid-template-columns:repeat(3,1fr)}}
 @media(max-width:760px){.shell{padding:12px}.top{align-items:flex-start}.brand h1{font-size:20px}.hero{grid-template-columns:1fr}.team-grid{grid-template-columns:1fr}.viz-hub{grid-template-columns:1fr}.viz-hub>.viz-panel:first-child{grid-column:auto}.scenario-squad{grid-template-columns:repeat(2,1fr);min-height:440px}.scenario-compare{grid-template-columns:1fr 1fr}.team-card{min-height:0}.quickstep b{font-size:13px}}
+
+/* V4 collectible-card head-to-head visual module */
+.duel-title{font-size:clamp(25px,3vw,43px);font-weight:1000;color:#f9d895;text-shadow:0 0 20px #f2c47033;margin:4px 0}
+.duel-select{display:grid;grid-template-columns:1fr 55px 1fr;align-items:center;gap:10px;padding:12px;border:1px solid #48657c;background:#12263a;border-radius:13px;margin-bottom:14px}
+.duel-select label{display:block;color:#93b2c5;font-size:10px;margin-bottom:6px}.duel-select select{width:100%;padding:11px;background:#142c44;border:1px solid #436883;color:white;border-radius:8px;font-size:12px}.duel-vs{text-align:center;font-size:25px;color:#f1c777;font-weight:1000}
+.duel-arena{display:grid;grid-template-columns:minmax(180px,1fr) minmax(270px,.95fr) minmax(180px,1fr);gap:12px}
+.duel-card{position:relative;min-height:455px;padding:17px;border-radius:20px;border:2px solid #f1c872;background:radial-gradient(ellipse 210px 170px at 50% 35%,#327e9b66,transparent 70%),linear-gradient(135deg,#28445a,#0b1e31 78%);box-shadow:0 0 25px #f4c16b35,0 25px 50px #0008,inset 0 0 35px #f1c66f20;overflow:hidden}
+.duel-card.side-b{border-color:#67dfea;box-shadow:0 0 25px #57deee30,0 25px 50px #0008}
+.duel-card:before{content:"";position:absolute;inset:8px;border:1px solid #eaca8570;border-radius:14px;pointer-events:none}
+.duel-ovr{font-size:clamp(62px,6vw,88px);line-height:1;font-weight:1000;letter-spacing:-.08em;color:#ffe0a0;text-shadow:0 0 25px #e6b96785}
+.side-b .duel-ovr{color:#9af5fa;text-shadow:0 0 25px #5addea8c}
+.duel-badge{width:102px;height:102px;margin:15px auto;border-radius:25px;background:linear-gradient(135deg,#f2d68e,#659bad 70%,#1b405f);border:3px solid #f1cb8b;display:grid;place-items:center;color:#193046;font-size:43px;font-weight:1000;transform:rotate(-7deg);box-shadow:0 0 35px #b3e1df4d}
+.side-b .duel-badge{background:linear-gradient(135deg,#a2f5fa,#398db1);border-color:#89edf9}
+.duel-name{text-align:center;color:#ffebbb;font-weight:950;font-size:clamp(14px,1.35vw,20px);min-height:53px;margin:0}.duel-sub{text-align:center;font-size:10px;color:#a4c2d1;min-height:32px}
+.duel-keyline{display:flex;justify-content:space-between;gap:6px;margin-top:17px;padding-top:13px;border-top:1px solid #e3c98755;color:#d4c6a6;font-size:11px}
+.duel-middle{display:grid;gap:10px;min-width:0}.duel-middle .panel{padding:14px}
+.duel-middle svg{width:100%;max-height:265px}.duel-gap{display:grid;grid-template-columns:45px 1fr 37px;gap:7px;align-items:center;padding:7px 0;border-bottom:1px solid #2a4559;font-size:10px}.duel-gap .track{height:8px;border-radius:9px;background:#2a455a;position:relative;overflow:hidden}
+.duel-gap .track:before{content:"";position:absolute;width:var(--a);height:8px;background:#f3ca79;border-radius:9px}.duel-gap .track:after{content:"";position:absolute;width:var(--b);height:3px;top:3px;background:#58deef;border-radius:9px}
+.duel-controller{display:flex;gap:8px;flex-wrap:wrap;margin:13px 0}.duel-controller button{padding:10px 14px;border-radius:8px;background:#17354d;border:1px solid #43627b}.duel-controller button.active{background:#554023;border-color:#e4b764;color:#ffdfa0}
+.duel-insights{display:grid;grid-template-columns:repeat(3,1fr);gap:10px}.duel-insights .panel{min-height:130px}.duel-insights p{color:#a7bdcf;font-size:11px}
+.duel-card .action{margin-top:18px;width:100%;background:#463920;border-color:#d4a861;color:#fce1ab}
+@media(max-width:1080px){.duel-arena{grid-template-columns:1fr 1fr}.duel-middle{grid-column:1/-1;grid-row:2;grid-template-columns:1fr 1fr}.duel-card{min-height:390px}}
+@media(max-width:650px){.duel-select{grid-template-columns:1fr 27px 1fr;gap:5px;padding:8px}.duel-select select{padding:8px 3px;font-size:10px}.duel-vs{font-size:17px}.duel-arena{gap:7px}.duel-card{padding:10px;min-height:305px;border-radius:12px}.duel-ovr{font-size:47px}.duel-badge{height:66px;width:66px;font-size:28px;margin:12px auto}.duel-name{font-size:12px;min-height:45px}.duel-keyline{font-size:9px}.duel-middle{grid-template-columns:1fr}.duel-insights{grid-template-columns:1fr}}
 </style></head>
 <body><div class="shell">
 <header class="top"><div class="brand"><div class="brand-mark">B</div><div><div class="eyebrow">BORO INDUSTRY INTELLIGENCE</div><h1>博罗产业能力与结构研判 <span style="color:#829ab2;font-size:12px;font-weight:500">内部辅助决策系统</span></h1></div></div><div class="top-right"><span class="pill live">● 原型运行中</span><span class="pill">2026 年度 · 内部版</span><span class="pill warn">证据优先</span></div></header>
 <section class="hero"><div class="hero-main"><div class="hero-kicker">BORO / INDUSTRY INTELLIGENCE</div><h2>从产业结构到企业能力，<br>看见真正的增长与风险。</h2><p>识别三次产业结构、龙头带动、企业成长梯队和跨产业连接。发现关键主体、薄弱环节、成长机会和风险传导。</p></div><div class="hero-side"><div class="side-head"><span>数据准备度</span><span>DATA READINESS</span></div><div class="season">2026 <small>YEAR / 开发阶段</small></div><div class="readiness"><div class="ring"><b>待接入</b></div><p><strong>动态能力观察</strong>公开资料与合理先验生成探索性区间和能力画像；正式接入调查数据后持续校准。</p></div></div></section>
-<div class="model-strip"><div><b>公开线索 + 行业先验 · 主体能力测算</b><p>OVR / POT 为可调模型估算，不是实际企业排名。缺失值采用赛道假设，公开数据仅用于约束。</p></div><div class="model-controls"><select id="scorePreset"><option value="base">均衡权重</option><option value="growth">成长优先</option><option value="safe">韧性优先</option></select><button id="weightToggle">⚙ 权重</button></div></div><div class="weight-panel" id="weightPanel" hidden><div class="weight-grid" id="weightGrid"></div><button class="action" id="resetWeights">恢复预设</button></div><div class="quickstart" aria-label="快速体验"><button class="quickstep" data-open-view="teams"><span class="qicon">🏆</span><span><b>看王牌</b><small>谁在支撑产业？</small></span><span class="qarr">›</span></button><button class="quickstep" data-open-view="players"><span class="qicon">⚡</span><span><b>比实力</b><small>看六维能力值</small></span><span class="qarr">›</span></button><button class="quickstep" data-open-view="academy"><span class="qicon">✦</span><span><b>挖新秀</b><small>谁有成长潜力？</small></span><span class="qarr">›</span></button><button class="quickstep" data-open-view="tactics"><span class="qicon">◎</span><span><b>调阵容</b><small>换个组合会怎样？</small></span><span class="qarr">›</span></button></div><nav class="nav" id="nav"><button class="active" data-view="overview">产业总览</button><button data-view="teams">王牌与阵容</button><button data-view="players">企业能力卡</button><button data-view="scout">球探雷达</button><button data-view="academy">潜力新秀</button><button data-view="tactics">阵容实验室</button><button data-view="season">成长轨迹</button></nav>
+<div class="model-strip"><div><b>公开线索 + 行业先验 · 主体能力测算</b><p>OVR / POT 为可调模型估算，不是实际企业排名。缺失值采用赛道假设，公开数据仅用于约束。</p></div><div class="model-controls"><select id="scorePreset"><option value="base">均衡权重</option><option value="growth">成长优先</option><option value="safe">韧性优先</option></select><button id="weightToggle">⚙ 权重</button></div></div><div class="weight-panel" id="weightPanel" hidden><div class="weight-grid" id="weightGrid"></div><button class="action" id="resetWeights">恢复预设</button></div><div class="quickstart" aria-label="快速体验"><button class="quickstep" data-open-view="teams"><span class="qicon">🏆</span><span><b>看王牌</b><small>谁在支撑产业？</small></span><span class="qarr">›</span></button><button class="quickstep" data-open-view="players"><span class="qicon">⚡</span><span><b>比实力</b><small>看六维能力值</small></span><span class="qarr">›</span></button><button class="quickstep" data-open-view="academy"><span class="qicon">✦</span><span><b>挖新秀</b><small>谁有成长潜力？</small></span><span class="qarr">›</span></button><button class="quickstep" data-open-view="tactics"><span class="qicon">◎</span><span><b>调阵容</b><small>换个组合会怎样？</small></span><span class="qarr">›</span></button></div><nav class="nav" id="nav"><button class="active" data-view="overview">产业总览</button><button data-view="teams">王牌与阵容</button><button data-view="players">企业能力卡</button><button data-view="compare">能力对决 VS</button><button data-view="scout">球探雷达</button><button data-view="academy">潜力新秀</button><button data-view="tactics">阵容实验室</button><button data-view="season">成长轨迹</button></nav>
 
 <section class="view active" id="view-overview">
 <div class="section-head"><div><div class="micro">SECTOR STRUCTURE / 三次产业</div><h3>谁是王牌？哪里还有空缺？</h3><p>以三次产业为一级框架，下钻产业链、企业主体与重点产品。</p></div><span class="pill">点击进入产业结构</span></div>
@@ -161,9 +184,16 @@ body{background:radial-gradient(ellipse 1250px 620px at 63% -16%,#0d4d68 0%,tran
 
 <section class="view" id="view-players">
 <div class="section-head"><div><div class="micro">ENTERPRISE DATABASE</div><h3>企业能力值 · 谁强在哪一项？</h3><p>企业档案对应可识别的经营主体；产品、项目单独建档，避免重复计算。</p></div></div>
-<div class="toolbar"><div class="team-switch" id="playerFilters"></div><input class="search" id="playerSearch" placeholder="搜索企业、产业、产品关键词…"></div><div class="player-grid" id="allPlayers"></div>
+<div class="toolbar"><div class="team-switch" id="playerFilters"></div><input class="search" id="playerSearch" placeholder="搜索企业、产业、产品关键词…"></div><div class="player-grid" id="allPlayers"></div><div class="guide-ribbon"><b>想把两家企业放在一起看？</b><button class="action primary" data-open-view="compare">打开企业能力对决 VS</button></div>
 </section>
 
+<section class="view" id="view-compare">
+<div class="section-head"><div><div class="micro">HEAD TO HEAD / ENTERPRISE ABILITY</div><h3 class="duel-title">企业能力对决 <span style="color:#59e4f0">VS</span></h3><p>选择两个企业，切换评价情景；六维雷达、能力差异与报告同步变化。</p></div><span class="pill warn">探索性模型 · 非官方评级</span></div>
+<div class="duel-select"><div><label for="duelA">企业主体 A</label><select id="duelA"></select></div><b class="duel-vs">VS</b><div><label for="duelB">企业主体 B</label><select id="duelB"></select></div></div>
+<div class="duel-arena"><div class="duel-card" id="duelCardA"></div><div class="duel-middle"><div class="panel"><h4>六维能力对照</h4><div id="duelRadar"></div><div style="display:flex;justify-content:center;gap:18px;color:#aac9d4;font-size:10px"><span style="color:#efca7e">■ A</span><span style="color:#68e0eb">■ B</span></div></div><div class="panel"><h4>属性差异</h4><div id="duelBars"></div></div></div><div class="duel-card side-b" id="duelCardB"></div></div>
+<div class="duel-controller"><button data-duel-mode="base" class="active">均衡</button><button data-duel-mode="growth">成长优先</button><button data-duel-mode="safe">韧性优先</button><button id="swapDuel">⇄ 交换双方</button></div>
+<div class="duel-insights" id="duelInsights"></div><div class="disclaimer">跨产业总评分数不宜直接比较。当前属性使用公开线索与赛道先验，缺失部分为假设；能力分差不代表企业真实经营差距。</div>
+</section>
 <section class="view" id="view-scout">
 <div class="section-head"><div><div class="micro">ENTITY DISCOVERY</div><h3>球探雷达 · 发现被忽略的增长力量</h3><p>从公开线索、产业缺口和企业调查中发现潜力主体。线索不等于已验证企业。</p></div></div>
 <div class="scout-grid" id="scoutCards"></div>
@@ -317,7 +347,7 @@ let currentTeam="secondary",currentView="overview",selectedPlayer=null,filters="
 const $=id=>document.getElementById(id);
 function team(id){return teams.find(t=>t.id===id)}
 function esc(s){return String(s??"").replace(/[&<>"']/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]))}
-function setView(v){currentView=v;document.querySelectorAll(".view").forEach(x=>x.classList.toggle("active",x.id==="view-"+v));document.querySelectorAll("#nav button").forEach(x=>x.classList.toggle("active",x.dataset.view===v));if(v==="teams")renderTeam();if(v==="players")renderPlayers();if(v==="scout")renderScout();if(v==="academy")renderAcademy();if(v==="tactics")renderTactics();if(v==="season")renderSeason();window.scrollTo({top:0,behavior:"smooth"})}
+function setView(v){currentView=v;document.querySelectorAll(".view").forEach(x=>x.classList.toggle("active",x.id==="view-"+v));document.querySelectorAll("#nav button").forEach(x=>x.classList.toggle("active",x.dataset.view===v));if(v==="compare")renderDuel();if(v==="teams")renderTeam();if(v==="players")renderPlayers();if(v==="scout")renderScout();if(v==="academy")renderAcademy();if(v==="tactics")renderTactics();if(v==="season")renderSeason();window.scrollTo({top:0,behavior:"smooth"})}
 $("nav").addEventListener("click",e=>{const b=e.target.closest("button[data-view]");if(b)setView(b.dataset.view)});
 document.querySelectorAll("[data-open-view]").forEach(btn=>btn.addEventListener("click",()=>setView(btn.dataset.openView)));
 function card(p){const t=team(p.team),s=getRating(p);const mini=[0,2,3].map(i=>'<div class="score-mini"><span>'+dimKeys[i]+'</span><span class="track"><i style="width:'+s.values[i]+'%"></i></span><b>'+s.values[i]+'</b></div>').join("");return '<article class="player-card" data-player="'+esc(p.id)+'"><div class="pc-top"><div class="avatar">'+esc(p.initial||p.name.slice(0,1))+'</div><div class="score-number">'+s.ovr+'<small>OVR</small></div></div><h4>'+esc(p.name)+'</h4><div class="company-sub">'+esc(p.club)+' · '+esc(p.role)+'</div><div class="player-tags"><span class="tag gold">POT '+s.pot+'</span><span class="tag">'+s.grade+' · 资料覆盖</span></div><div class="scores-row"><div>'+mini+'</div><div style="font-size:10px;color:#9bb0c8">模型覆盖 <strong style="font-size:20px;color:#ecc67c">'+s.coverage+'%</strong><br>估算属性</div></div><div class="card-bottom"><span>'+esc(t.name)+'</span><span>查看球探报告 ↗</span></div></article>'}
@@ -356,6 +386,42 @@ function renderPremiumScenario(){
  const opts=[{id:"balanced",n:"均衡",desc:"采用制造业常规评价权重"},{id:"growth",n:"成长优先",desc:"提高增长与技术权重"},{id:"safe",n:"韧性优先",desc:"提高韧性评价权重"}];
  $("scenarioCompare").innerHTML=opts.map(o=>'<button class="scenario-choice '+(premiumScenarioMode===o.id?'active':'')+'" data-scenario="'+o.id+'"><b>'+o.n+'</b><strong>'+calc(o.id).mean+' <small>OVR情景</small></strong><small>'+o.desc+' · 非预测</small></button>').join("");
  $("scenarioSliderValue").textContent=premiumScenarioStrength+"%";
+}
+
+
+let duelState={a:"huatong",b:"sunwoda",mode:"base"};
+function duelModel(p){
+ const m=getModel(p),w=duelState.mode==="base"?baseWeights[p.team]:presetWeights[duelState.mode],total=w.reduce((s,v)=>s+v,0);
+ const ovr=Math.round(m.values.reduce((s,v,i)=>s+v*w[i],0)/total);
+ return {...m,ovr,pot:Math.max(ovr,Math.round(.75*m.potential+.25*ovr))};
+}
+function dualRadar(a,b){
+ const cx=150,cy=130,r=88,pt=(v,i)=>[cx+Math.cos(-Math.PI/2+i*Math.PI/3)*r*v/100,cy+Math.sin(-Math.PI/2+i*Math.PI/3)*r*v/100];
+ let s="";for(const n of [25,50,75,100])s+='<polygon points="'+dims.map((_,i)=>pt(n,i).join(",")).join(" ")+'" fill="none" stroke="#35576c"/>';
+ dims.forEach((d,i)=>{const p=pt(118,i);s+='<text x="'+p[0]+'" y="'+(p[1]+3)+'" fill="#bad4de" text-anchor="middle" font-size="11">'+d+'</text>'});
+ s+='<polygon points="'+a.values.map((v,i)=>pt(v,i).join(",")).join(" ")+'" fill="#f0c87533" stroke="#f0c875" stroke-width="2.5"/>';
+ s+='<polygon points="'+b.values.map((v,i)=>pt(v,i).join(",")).join(" ")+'" fill="#61ddeb33" stroke="#61ddeb" stroke-width="2.5"/>';
+ return '<svg viewBox="0 0 300 265" role="img" aria-label="双企业六维能力雷达图">'+s+'</svg>';
+}
+function duelCard(p,m){return '<div style="position:relative"><div class="duel-ovr">'+m.ovr+'</div><div class="micro">OVERALL · MODEL</div><div class="duel-badge">'+esc(p.initial)+'</div><h4 class="duel-name">'+esc(p.name)+'</h4><p class="duel-sub">'+esc(p.club)+'</p><div class="duel-keyline"><b>POT '+m.pot+'</b><span>'+esc(m.grade)+' · '+m.coverage+'% 资料覆盖</span></div><div class="duel-keyline"><span>TECH '+m.values[2]+'</span><span>LINK '+m.values[3]+'</span></div><button class="action" data-player="'+esc(p.id)+'">查看完整能力档案</button></div>'}
+function renderDuel(){
+ const a=companies.find(p=>p.id===duelState.a),b=companies.find(p=>p.id===duelState.b);if(!a||!b)return;
+ const x=duelModel(a),y=duelModel(b);
+ $("duelA").value=a.id;$("duelB").value=b.id;
+ $("duelCardA").innerHTML=duelCard(a,x);$("duelCardB").innerHTML=duelCard(b,y);
+ $("duelRadar").innerHTML=dualRadar(x,y);
+ $("duelBars").innerHTML=dims.map((n,i)=>'<div class="duel-gap"><b>'+n+'</b><span class="track" style="--a:'+x.values[i]+'%;--b:'+y.values[i]+'%"></span><strong>'+Math.abs(x.values[i]-y.values[i])+(x.values[i]===y.values[i]?' =':x.values[i]>y.values[i]?' A':' B')+'</strong></div>').join("");
+ $("duelInsights").innerHTML=[["综合能力","A "+x.ovr+" / B "+y.ovr+"。模型分差 "+Math.abs(x.ovr-y.ovr)+" 分。"],["成长潜力","A POT "+x.pot+"；B POT "+y.pot+"。仅表示情景潜力。"],["重点核验","A："+esc(x.weak)+"；B："+esc(y.weak)+"。"]].map((v,i)=>'<div class="panel"><div class="micro">INSIGHT 0'+(i+1)+'</div><h4>'+v[0]+'</h4><p>'+v[1]+'</p></div>').join("");
+ document.querySelectorAll("[data-duel-mode]").forEach(btn=>btn.classList.toggle("active",btn.dataset.duelMode===duelState.mode));
+}
+function initDuel(){
+ const html=teams.map(t=>'<optgroup label="'+t.name+'">'+companies.filter(p=>p.team===t.id).map(p=>'<option value="'+p.id+'">'+esc(p.name)+'</option>').join("")+'</optgroup>').join("");
+ $("duelA").innerHTML=html;$("duelB").innerHTML=html;
+ $("duelA").onchange=e=>{duelState.a=e.target.value;renderDuel()};
+ $("duelB").onchange=e=>{duelState.b=e.target.value;renderDuel()};
+ $("swapDuel").onclick=()=>{const x=duelState.a;duelState.a=duelState.b;duelState.b=x;renderDuel()};
+ document.querySelectorAll("[data-duel-mode]").forEach(b=>b.onclick=()=>{duelState.mode=b.dataset.duelMode;renderDuel()});
+ renderDuel();
 }
 
 function renderOverview(){
@@ -436,5 +502,5 @@ $("weightGrid").oninput=e=>{const a=e.target.closest("[data-w]");if(!a)return;if
 document.body.addEventListener("click",e=>{const b=e.target.closest("[data-scenario]");if(b){premiumScenarioMode=b.dataset.scenario;renderPremiumScenario()}const g=e.target.closest("[data-find-gap]");if(g){$("tacticSearch").value=g.dataset.findGap;renderTactics();$("tacticSearch").focus()}const v=e.target.closest("[data-open-view]");if(v)setView(v.dataset.openView)});
 $("scenarioSlider").oninput=e=>{premiumScenarioStrength=Number(e.target.value);renderPremiumScenario()};
 renderWeightControls();
-renderOverview();renderTeam();renderPlayers();
+renderOverview();renderTeam();renderPlayers();initDuel();
 </script></body></html>
