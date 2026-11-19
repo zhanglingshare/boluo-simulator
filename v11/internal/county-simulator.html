@@ -4,6 +4,40 @@
 @media(max-width:1200px){.main{grid-template-columns:1fr 1.25fr}.main>.panel:last-child{grid-column:1/-1}.budget{grid-template-columns:repeat(5,1fr)}.budget .res{min-width:0}.stats{grid-template-columns:repeat(3,1fr)}}
 @media(max-width:760px){.wrap{padding:12px}.top,.bar{align-items:start;display:flex;flex-direction:column}.main,.grid2{grid-template-columns:1fr}.stats{grid-template-columns:repeat(2,1fr)}.slot-grid{grid-template-columns:repeat(2,1fr)}.formation{min-height:430px}.budget,.config{grid-template-columns:1fr 1fr}#factorFields{grid-template-columns:repeat(2,1fr)}.pills{justify-content:start}.entity{grid-template-columns:45px 1fr auto}}
 @media(prefers-reduced-motion:reduce){*,*:before,*:after{animation:none!important;transition:none!important}}
+
+/* V2 imaginative sandbox: the visualization is playable; all relationships are hypothetical */
+.pulse-title{display:flex;justify-content:space-between;align-items:center;gap:12px;flex-wrap:wrap}
+.pulse-title h3{font-size:18px;margin:0;color:#f7d595}
+.scene-tabs{display:flex;gap:7px;flex-wrap:wrap}.scene-tabs button{padding:9px 14px;background:#142c41;border:1px solid #476981;border-radius:9px;color:#b5d1e1;font-size:11px;font-weight:800}.scene-tabs button.active{border-color:#f1c97b;color:#ffe1a2;background:linear-gradient(140deg,#6b4d24,#2a2c35)}
+.sim-layout{display:grid;grid-template-columns:minmax(0,1.45fr) minmax(270px,.55fr);gap:12px;margin:12px 0}
+.sim-stage{position:relative;overflow:hidden;padding:12px 14px;border:1px solid #3d8a9b;border-radius:15px;min-height:450px;background:radial-gradient(ellipse 480px 270px at 50% 40%,#146b8a59,transparent 75%),linear-gradient(145deg,#102f42,#071927);box-shadow:inset 0 0 45px #4fcee21b,0 17px 39px #0006}
+.sim-stage:before{content:"";pointer-events:none;position:absolute;inset:17px;border:1px solid #4ccde735;border-radius:50%;transform:scaleX(.77)}
+.sim-stage-head{position:relative;z-index:2;display:flex;justify-content:space-between;gap:8px;align-items:center}
+.sim-stage-head strong{color:#f6d591;font-size:12px}
+.sim-stage-head small{color:#86b4c6;font-size:9px}
+.sim-svg{width:100%;height:355px;position:relative;z-index:1;display:block}
+.sim-link{stroke-width:2;stroke-dasharray:7 7;fill:none;opacity:.77;animation:simFlow 7s linear infinite}
+.sim-link.pos{stroke:#65e0bf}.sim-link.neg{stroke:#ef9a87}.sim-link.none{stroke:#d1b46a;opacity:.3}
+.sim-node{cursor:pointer;transition:opacity .2s}.sim-node circle{fill:#153f58;stroke:#6de0e7;stroke-width:2;filter:drop-shadow(0 0 7px #59dce64f)}
+.sim-node.selected circle{stroke:#f5cc7d;stroke-width:4;filter:drop-shadow(0 0 13px #e8b960a0)}
+.sim-node text{fill:#ecf8ff;font-size:11px;font-weight:850;pointer-events:none}.sim-node .sim-score{fill:#f8d590;font-size:16px;font-weight:950}
+.sim-legend{display:flex;gap:8px;flex-wrap:wrap}.sim-legend span{color:#a9c3d4;font-size:10px}
+.sim-legend .positive{color:#72dfba}.sim-legend .negative{color:#f4a192}
+.sim-results{display:grid;gap:10px;align-content:start}
+.sim-score-panel{border:1px solid #8c7447;background:linear-gradient(125deg,#4c3921,#132f43);padding:14px;border-radius:13px}
+.sim-score-panel b{font-size:34px;color:#ffe0a0;display:block;line-height:1.13}
+.sim-score-panel span{font-size:10px;color:#c0d2d9}
+.sim-issue{border-radius:10px;padding:10px;background:#10283d;border:1px solid #355b73;font-size:11px;line-height:1.6}
+.sim-issue b{display:block;color:#e9cc8c}
+.sim-issue.warn{border-color:#8d5a4a;background:#402b2e6b}
+.sim-sparklines{display:grid;grid-template-columns:repeat(3,1fr);gap:9px;margin:10px 0}
+.sim-sparklines>div{padding:13px;border:1px solid #345973;border-radius:11px;background:#0d2639}
+.sim-sparklines b{display:block;color:#f3d18b;font-size:25px}.sim-sparklines span{display:block;font-size:9px;color:#92b6c7;margin-top:4px}
+.sim-controls{display:flex;align-items:center;gap:9px;flex-wrap:wrap;margin:10px 0}.sim-controls button{background:#17334b;border:1px solid #45718b;border-radius:8px;padding:9px 12px;font-size:10px}.sim-controls button.primary{background:#a47a42;border-color:#f0c77e;color:#10283a;font-weight:900}
+.sim-note{font-size:10px;color:#e9be87;border:1px solid #8f6d43;background:#3d302233;border-radius:8px;padding:10px;line-height:1.65;margin-top:9px}
+@keyframes simFlow{to{stroke-dashoffset:-140}}
+@media(max-width:950px){.sim-layout{grid-template-columns:1fr}.sim-results{grid-template-columns:repeat(2,1fr)}}
+@media(max-width:620px){.sim-results{grid-template-columns:1fr}.sim-stage{min-height:340px}.sim-svg{height:285px}.sim-sparklines{grid-template-columns:1fr 1fr}}
 </style></head><body><div class="wrap">
 <header class="top"><div class="logo"><div class="mark">县</div><div><div class="kicker">COUNTY INDUSTRY DECISION SIMULATOR / GENERIC CORE</div><h1>县域产业决策风洞</h1></div></div><div class="pills"><span class="pill">通用县域配置</span><span class="pill gold">开发原型 · 非官方预测</span><span class="pill"><span class="status"></span>本地可交互</span></div></header>
 <section class="bar"><div><div class="kicker">STRUCTURE · CAPABILITY · RESOURCE CONSTRAINTS</div><h2 id="countyTitle">演示县域 · 产业组合工作台</h2><p>选主体 → 放入六类角色槽位 → 检查五种要素 → 比较取舍与代价。借鉴顶级经理游戏的操作反馈，输出真正的产业结构约束。</p></div><div class="actions"><button class="btn" id="undo" title="撤销">↶ 撤销</button><button class="btn" id="redo" title="重做">↷ 重做</button><button class="btn" id="saveA">存为 A</button><button class="btn" id="saveB">存为 B</button><button class="btn primary" id="openConfig">⚙ 县域配置 / 数据导入</button></div></section>
@@ -20,12 +54,26 @@
 <section class="panel"><div class="scenario-heading"><h3>05 · 方案档案与复盘</h3><button class="btn" id="snapshot">＋ 保存快照</button></div><p class="desc">参数、主体槽位、县域配置与模型版本保存在当前浏览器中。刷新后可在本浏览器恢复。</p><div id="snapshotList"></div></section>
 <section class="panel"><h3>06 · 能力与结构提示</h3><div id="advice" class="small-block"></div><p class="foot">当前只建“主体选择—要素占用—角色覆盖”最小闭环。真实产业关系、成长时滞、风险传导需要经核验的数据及单独模型，不用臆造协同收益。</p></section>
 </div>
-<div class="foot">GENERIC DEMONSTRATOR V1.0 · 本地示例参数，不代表真实县域预算或企业能力 · 可替换 JSON 配置 · 代码与案例参数分离</div>
+<section class="panel section" id="growthScene">
+<div class="pulse-title"><div><div class="kicker">STRUCTURE LAB / TIME EVOLUTION / EXPLORATORY MODEL</div><h3>07 · 产业生态动态场</h3><p class="desc">一个组合，三段时间。绿色代表假设协同，橙色代表资源竞争。调整主体后整张关系图重排。</p></div><div class="scene-tabs" id="sceneTabs"><button data-stage="0" class="active">T0 · 当期</button><button data-stage="1">T1 · 中期</button><button data-stage="2">T2 · 远期</button></div></div>
+<div class="sim-layout"><div class="sim-stage">
+<div class="sim-stage-head"><strong>◉ 动态产业关系场</strong><small>点击主体节点查看详情 · 连线均为演示假设</small></div>
+<svg class="sim-svg" id="simNetwork" viewBox="0 0 860 380" role="img" aria-label="产业主体关系与演化示意"></svg>
+<div class="sim-legend"><span class="positive">━━ 假设协同</span><span class="negative">━━ 资源竞争</span><span>┄ 待核联系</span></div></div>
+<aside class="sim-results"><div class="sim-score-panel"><span>组合能力指数 · 演示</span><b id="simPower">--</b><span>不是县域GDP、产值或经济收益</span></div>
+<div class="sim-issue"><b>假设协同</b><div id="simSynergy">--</div></div>
+<div class="sim-issue warn"><b>资源竞争</b><div id="simCompetition">--</div></div>
+<div class="sim-issue"><b>当前增长限制</b><div id="simBottleneck">--</div></div></aside></div>
+<div class="sim-sparklines"><div><b id="simT0">--</b><span>T0 · 当前组合</span></div><div><b id="simT1">--</b><span>T1 · 情景推进</span></div><div><b id="simT2">--</b><span>T2 · 长期情景</span></div></div>
+<div class="sim-controls"><button id="simPrev">← 上一阶段</button><button class="primary" id="simNext">▶ 推进时间</button><button id="simReset">↺ 返回 T0</button><span class="pill gold">演示关系和系数可被真实数据替换</span></div>
+<div class="sim-note">开发实验：协同、竞争、成长、时滞均用可复现的示例规则，不代表真实交易、因果估计或预测。项目类主体在T0不以成熟企业计算；跨期增长需同时受到资源超限与阶段折旧约束。</div>
+</section>
+<div class="foot">GENERIC DEMONSTRATOR V2.0 · 本地示例参数，不代表真实县域预算或企业能力 · 可替换 JSON 配置 · 代码与案例参数分离</div>
 </div>
 <div class="modal" id="configModal"><div class="panel"><div class="scenario-heading"><h3>县域配置 / 数据导入</h3><button class="btn" id="closeConfig">✕ 关闭</button></div><p class="desc">修改县名与资源上限，或导入符合结构的 JSON（需包含 county、capacities、entities）。下载当前配置作为模板。</p><label>县域名称<input class="search" id="countyName" placeholder="演示县域"></label><div id="factorFields"></div><div class="actions section"><button class="btn primary" id="applyConfig">应用县域设置</button><button class="btn" id="exportConfig">导出 JSON</button><button class="btn" id="resetDemo">恢复初始演示</button></div><h3 class="section">导入配置 JSON</h3><textarea id="importJson" placeholder="粘贴 JSON 配置，必须包含县名、资源上限和主体数据"></textarea><div class="actions"><button class="btn" id="importConfig">校验并导入</button><span class="save-state" id="importStatus"></span></div><div class="warn section">导入将在当前浏览器中更新工作台。所有演示分值和资源占用需要重新核对，并不能直接作为行政审批或财政决策依据。</div></div></div>
 <script>
 "use strict";
-const VERSION="generic-v1.0";
+const VERSION="generic-v2.0";
 const roles=[{id:"core",name:"核心支柱",hint:"当期支撑与龙头牵引"},{id:"growth",name:"成长突破",hint:"未来增长与技术升级"},{id:"supply",name:"关键配套",hint:"产业链缺口与本地采购"},{id:"service",name:"生产服务",hint:"物流、检测、数字化、研发"},{id:"base",name:"基础保障",hint:"能源、生态、农业与公共供给"},{id:"reserve",name:"战略储备",hint:"长周期技术与培育项目"}];
 const factorNames=["土地","资金","能源","人才","公共平台"];
 const demo={
@@ -71,6 +119,63 @@ function assign(id,role){const e=find(id);if(!e||!roles.some(r=>r.id===role))ret
 function remove(role){if(!state.slots[role])return;push();state.slots[role]=null;render()}
 function msg(text){const place=$("constraints");if(place)place.innerHTML='<div class="warn danger">'+escapeText(text)+'</div>'}
 function roleName(id){return roles.find(x=>x.id===id)?.name||"未配置"}
+
+// VISUAL SCENARIO DEMO: links and coefficients are synthetic, never reported as actual contracts.
+let simStage=0;
+const demoRelations=[
+["manufacture","parts","synergy",.72],["manufacture","service","synergy",.42],
+["parts","startup","synergy",.52],["service","startup","synergy",.61],
+["agri","food","synergy",.72],["logistics","food","synergy",.46],
+["manufacture","startup","competition",.39],["manufacture","energy","competition",.51],
+["service","logistics","competition",.28],["energy","future","competition",.32],
+["future","startup","synergy",.37],["service","future","synergy",.43],
+["parts","future","competition",.30]
+].map(([a,b,type,weight])=>({a,b,type,weight,status:"hypothesis"}));
+function scenario(stage=simStage){
+ const v=total(),ids=v.assigned,entities=ids.map(find),ratios=keyName.map((k,i)=>v.used[i]/config.capacities[k]);
+ const friction=Math.max(0,...ratios.map(x=>x-1));
+ const edges=demoRelations.filter(x=>ids.includes(x.a)&&ids.includes(x.b));
+ const synergies=edges.filter(x=>x.type==="synergy"),conflicts=edges.filter(x=>x.type==="competition");
+ const base=entities.reduce((s,e)=>s+e.cap.reduce((a,b)=>a+b,0)/6,0)/Math.max(1,entities.length);
+ // Tech and growth increase progressively, with diminishing returns; project gains materialize later.
+ const step=stage/2;
+ const growth=entities.reduce((s,e)=>s+(e.cap[1]-50)*.16*step*(e.type==="项目"?(stage===0?0:.52):1),0)/Math.max(1,entities.length);
+ const projectPenalty=entities.filter(e=>e.type==="项目").length*(stage===0?5:stage===1?2:0);
+ const synergy=synergies.reduce((s,e)=>s+e.weight*(stage===0?1:1+stage*.17),0)*2.6;
+ const conflict=conflicts.reduce((s,e)=>s+e.weight,0)*2.7;
+ const decay=stage*.7+(entities.filter(e=>e.cap[4]<60).length*stage*.5);
+ const capacityPenalty=friction*19*(1+stage*.22);
+ const score=Math.max(0,Math.min(100,Math.round((base+growth+synergy-conflict-projectPenalty-decay-capacityPenalty)*10)/10));
+ return {score,edges,synergies,conflicts,friction,capacityPenalty,ids,entities,ratios,stage};
+}
+function drawScene(result){
+ const ids=result.ids,cx=430,cy=183,pos={};
+ ids.forEach((id,i)=>{const angle=-Math.PI/2+i*Math.PI*2/Math.max(1,ids.length);const radius=ids.length<3?130:157;pos[id]=[cx+Math.cos(angle)*radius*1.45,cy+Math.sin(angle)*radius*.82]});
+ let svg='<defs><radialGradient id="sceneHalo"><stop stop-color="#56b5d6" stop-opacity=".23"/><stop offset="1" stop-color="#0d243a" stop-opacity="0"/></radialGradient></defs><rect width="860" height="380" fill="url(#sceneHalo)"/>';
+ for(const r of [65,124,192])svg+='<ellipse cx="'+cx+'" cy="'+cy+'" rx="'+r*1.4+'" ry="'+r*.78+'" stroke="#74d9e4" stroke-opacity=".16" fill="none"/>';
+ for(const edge of result.edges){const a=pos[edge.a],b=pos[edge.b];if(!a||!b)continue;svg+='<line class="sim-link '+(edge.type==="synergy"?"pos":"neg")+'" x1="'+a[0]+'" y1="'+a[1]+'" x2="'+b[0]+'" y2="'+b[1]+'" stroke-width="'+(1+edge.weight*3)+'"><title>假设'+(edge.type==="synergy"?"协同":"竞争")+' · 参数 '+edge.weight+' · 不代表真实关系</title></line>'}
+ ids.forEach(id=>{const e=find(id),p=pos[id],ovr=Math.round(e.cap.reduce((s,x)=>s+x,0)/6);svg+='<g class="sim-node" data-scene-id="'+escapeText(id)+'" role="button" tabindex="0"><circle cx="'+p[0]+'" cy="'+p[1]+'" r="31"/><text class="sim-score" x="'+p[0]+'" y="'+(p[1]-3)+'" text-anchor="middle">'+ovr+'</text><text x="'+p[0]+'" y="'+(p[1]+12)+'" text-anchor="middle" font-size="10">'+escapeText(e.short)+'</text><text x="'+p[0]+'" y="'+(p[1]+49)+'" text-anchor="middle">'+escapeText(e.name.slice(0,9))+'</text><title>'+escapeText(e.name)+'，点击查看详情</title></g>'});
+ if(!ids.length)svg+='<text x="430" y="170" text-anchor="middle" fill="#f5d18a" font-size="21">先加入主体，关系场才会出现</text>';
+ return svg;
+}
+function renderScene(){
+ const t=scenario(simStage),all=[scenario(0),scenario(1),scenario(2)];
+ $("simNetwork").innerHTML=drawScene(t);$("simPower").textContent=t.score.toFixed(1);
+ $("simSynergy").textContent=t.synergies.length+" 条假设协同，模型贡献 "+(t.synergies.reduce((s,x)=>s+x.weight,0)*2.6).toFixed(1)+" 指数点";
+ $("simCompetition").textContent=t.conflicts.length+" 条资源竞争，模型扣减 "+(t.conflicts.reduce((s,x)=>s+x.weight,0)*2.7).toFixed(1)+" 指数点";
+ const maxRatio=Math.max(...t.ratios),at=t.ratios.indexOf(maxRatio);
+ $("simBottleneck").textContent=maxRatio>1?factorNames[at]+"超限 "+Math.round((maxRatio-1)*100)+"%，跨期压力加剧":"暂无硬约束超限；仍存在未建模外部风险";
+ all.forEach((p,i)=>{$("simT"+i).textContent=p.score.toFixed(1)});
+ document.querySelectorAll("[data-stage]").forEach(b=>b.classList.toggle("active",+b.dataset.stage===simStage));
+ $("simPrev").disabled=simStage===0;$("simNext").disabled=simStage===2;
+}
+$("sceneTabs").onclick=e=>{const b=e.target.closest("[data-stage]");if(b){simStage=+b.dataset.stage;renderScene()}};
+$("simNext").onclick=()=>{simStage=Math.min(2,simStage+1);renderScene()};
+$("simPrev").onclick=()=>{simStage=Math.max(0,simStage-1);renderScene()};
+$("simReset").onclick=()=>{simStage=0;renderScene()};
+$("simNetwork").onclick=e=>{const g=e.target.closest("[data-scene-id]");if(g){state.selected=g.dataset.sceneId;render()}};
+$("simNetwork").onkeydown=e=>{const g=e.target.closest("[data-scene-id]");if(g&&(e.key==="Enter"||e.key===" ")){e.preventDefault();state.selected=g.dataset.sceneId;render()}};
+
 function render(){
  $("countyTitle").textContent=config.county+" · 产业组合工作台";
  const v=total();$("stats").innerHTML=[
@@ -100,7 +205,7 @@ function render(){
  '<div class="event">◈ <b>当前假设</b>：主体之间的真实采购、技术合作或替代关系尚未建立，系统不会凭同产业自动计算“化学反应”。</div>',
  '<div class="event">✦ <b>下一步证据</b>：需要补充'+(v.filled?assigned.map(e=>e.name).slice(0,2).join('、'):'候选主体')+'的土地需求、真实融资、人才供给以及实际客户关系。</div>'
  ].join("");
- $("undo").disabled=undo.length===0;$("redo").disabled=redo.length===0;persist();
+ $("undo").disabled=undo.length===0;$("redo").disabled=redo.length===0;renderScene();persist();
 }
 function restore(next){push();state=copy(next);render()}
 function newSnapshot(label){return {label,timestamp:new Date().toLocaleString("zh-CN"),version:VERSION,config:copy(config),state:copy(state)}}
