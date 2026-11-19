@@ -12,9 +12,9 @@
  const coach={open:false,tab:"diagnose",focus:null,uncertainty:"normal",other:"supply",inRender:false};
  function currentFocus(){
   let id=coach.focus;
-  if(currentView==="wind")id=wtState.source;
-  else if(currentView==="tactics")id=cxState.id||id;
-  else if(currentView==="players"||currentView==="scout")id=selectedPlayer||id;
+  if(!id&&currentView==="wind")id=wtState.source;
+  else if(!id&&currentView==="tactics")id=cxState.id||id;
+  else if(!id&&(currentView==="players"||currentView==="scout"))id=selectedPlayer||id;
   if(!companies.some(p=>p.id===id))id=managerSelected()[0]?.id||companies[0]?.id;
   return id;
  }
@@ -67,7 +67,7 @@
   const x=Core.mechanism(ctx);
   return '<div class="blc-panel"><h3>路径透视 · 机制假设</h3>'+x.paths.map(p=>
    '<div class="blc-step"><span class="blc-dot">↗</span><div class="blc-steptext"><span>'+e(p.from)+' → '+e(p.to)+'</span><small>演示关联系数 '+fmt(p.coef)+'</small></div></div>').join('')+
-   '<div class="blc-info">示例：资源投入经“技术转化”间接作用于生产能力，路径乘积约 '+x.indirect+'。这只是设定的机制系数，不是SEM估计或因果效果。</div></div>';
+   '<div class="blc-info">示例：资源投入经“技术转化”间接作用于生产能力，路径乘积约 '+x.indirect+'。这只是设定的机制系数，不是通过样本验证的因果效果。</div></div>';
  }
  function change(ctx){
   const sample=Core.sensitivity(ctx,{n:150,seed:20261120});
@@ -77,11 +77,11 @@
   return '<div class="blc-hero"><div class="head">02 · CHANGE / 可改变的条件</div><strong>先找瓶颈，再决定投入</strong><p>以当前阵容、经营状态和同一组随机扰动做条件扫描；变化最明显的未必是投资最多的变量。</p></div>'+
    '<div class="blc-panel"><h3>什么变量最影响未来区间中位数？</h3><div class="blc-sensitivity">'+sample.items.map(x=>
     '<div class="blc-sensrow"><span>'+e(x.label)+'</span><div class="blc-sensbar"><i style="width:'+Math.max(2,x.amplitude/max*100).toFixed(0)+'%"></i></div><strong>'+(x.delta>0?'+':'')+fmt(x.delta)+'</strong></div>').join('')+
-   '</div><div class="blc-info">对单个条件做约±20%扫描，其余假设不变。结果是情景模型内的中位数变化，不是实证因果效应或全局敏感性分解。</div></div>'+
+   '</div><div class="blc-info">对单个条件做约±20%扫描，其余假设不变。结果是情景模型内的中位数变化，不能解释为已验证的因果效应。</div></div>'+
    mechanismHtml(ctx)+
    '<div class="blc-panel"><h3>下一季度怎么选择？</h3>'+policyCards+
    '<div class="blc-actions"><button class="blc-action secondary" data-blc-tab="future">先看不同未来</button></div></div>'+
-   '<div class="blc-disclosure">路径系数目前是可编辑的机制假设，尚没有企业问卷支持的SEM估计、信效度检验或Bootstrap区间。相关模型识别和检验应留在后台完成。</div>';
+   '<div class="blc-disclosure">路径系数目前是可编辑的机制假设，尚没有基于真实调查数据的参数估计和稳健性检验；相应验证留在后台完成。</div>';
  }
  function chart(forecast){
   const t=forecast.path,length=t.length-1,x=i=>35+i/Math.max(1,length)*410,y=v=>204-Math.max(0,Math.min(100,v))*1.74;
@@ -95,6 +95,7 @@
   return s;
  }
  function future(ctx){
+  if(coach.other===ctx.policy)coach.other=ctx.policy==="supply"?"technology":"supply";
   const vol=coach.uncertainty==="calm"?.75:coach.uncertainty==="hard"?1.25:1;
   const options={n:850,seed:20261120,horizon:ctx.horizon,factors:{volatility:vol}};
   const result=Core.forecast(ctx,options);
@@ -181,7 +182,7 @@
   const oldSync=managerSync;
   managerSync=function(){const result=oldSync.apply(this,arguments);render();return result};
   const oldSetView=setView;
-  setView=function(){const result=oldSetView.apply(this,arguments);render();return result};
+  setView=function(){coach.focus=null;const result=oldSetView.apply(this,arguments);render();return result};
   const oldRefresh=refreshScores;
   refreshScores=function(){const result=oldRefresh.apply(this,arguments);render();return result};
   const oldOpenPlayer=openPlayer;
