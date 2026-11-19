@@ -732,7 +732,7 @@ function wtCalculate(mitigate){
  const s=wtState,factor=s.type==="orders"?1:s.type==="delay"?.75:1.18;
  const shock=wtClamp(s.shock/100*factor);
  const baselineProtection=mitigate?wtClamp(.36*s.sub/100+.31*s.market/100+.28*s.coord/100):0;
- const quarterlyResilience=typeof career!=="undefined"&&career.training?Math.min(.22,career.training.resilience*.012):0;
+ const quarterlyResilience=mitigate&&typeof career!=="undefined"&&career.training?Math.min(.22,career.training.resilience*.012):0;
  const protection=wtClamp(baselineProtection+quarterlyResilience);
  const effects={[s.source]:shock},depth={[s.source]:0};
  let frontier=[s.source];
@@ -1110,7 +1110,7 @@ function v9Render(){
  lines+='<polyline fill="none" stroke="#f2d18b" stroke-width="3.5" points="'+pts.map(x=>x.join(",")).join(" ")+'"/>';
  for(let i=0;i<pts.length;i++)lines+='<circle cx="'+pts[i][0]+'" cy="'+pts[i][1]+'" r="4" fill="#8ce4d5"/><text x="'+pts[i][0]+'" y="'+(pts[i][1]-12)+'" text-anchor="middle" fill="#f1d393" font-size="11">'+(i===0?"基准":"Q"+i)+'</text>';
  $("v9Trend").innerHTML=lines;
- const prior=career.curve?.[career.curve.length-2],difference=prior?(snap.score-prior.score):0;
+ const prior=career.curve?.[career.curve.length-2],baseline=career.initialScore??snap.score,difference=snap.score-(prior?prior.score:baseline);
  $("v9Summary").innerHTML='<small>本季度与上一阶段</small><strong>'+(difference>=0?"+":"")+difference.toFixed(1)+'</strong><span>组合变化来自主体能力、资源约束、事件伤害及后续恢复。<br>本季事件：'+esc(manager.event==='none'?'正常运行':manager.event)+'<br>网络假设触达：'+network.affected+'个主体。<br>虚拟对手策略：'+esc(career.rivalStrategy)+'。</span>';
  $("v9CompanyTiles").innerHTML=managerSelected().map(p=>{const r=getRating(p),v=v9Company(p.id),d=v.damage.reduce((a,b)=>a+b,0);return '<button class="v9-person" data-v9-company="'+esc(p.id)+'"><b>'+esc(p.short)+'</b><strong>'+r.ovr+'</strong><small>成长 '+v.growth.reduce((a,b)=>a+b,0).toFixed(1)+' / 受损 '+d.toFixed(1)+'</small></button>'}).join("")||'<div class="career-muted">先在阵容中选择主体。</div>';
 }
@@ -1132,7 +1132,7 @@ function v9LoadCareer(){
   if(!data||data.version!==9||!data.career||!data.slots)return;
   if(!Object.values(data.slots).filter(Boolean).every(id=>companies.some(p=>p.id===id)))return;
   const s=data.career;
-  if(!Number.isInteger(s.quarter)||s.quarter<0||s.quarter>27)return;
+  if(!Number.isInteger(s.quarter)||s.quarter<0||s.quarter>28)return;
   if(!Array.isArray(s.spent)||s.spent.length!==5||!Array.isArray(s.history)||!Array.isArray(s.curve))return;
   if(!s.companyStates||typeof s.companyStates!=="object"||!s.training||!s.comparison)return;
   career={...career,...s};manager.slots={...manager.slots,...data.slots};
@@ -1149,7 +1149,7 @@ function v9Init(){
 }
 
 function careerTick(){
- if(career.quarter>=27)return;
+ if(career.quarter>=28)return;
  const policy=careerPolicies.find(x=>x.id===career.policy),before=managerCompute(),price=policy.cost;
  const paid=price.every((x,i)=>before.used[i]+x<=managerCaps[i]);
  const event=careerEvents[careerSeed(career.quarter)];
@@ -1228,7 +1228,7 @@ function renderCareer(){
  $("careerCompetition").innerHTML=[["博罗 · 当前组合",score],["虚拟竞争县 · "+({balanced:"稳健经营",aggressive:"扩张策略",innovation:"技术追赶"}[career.rivalStrategy]),career.rival]].map(x=>'<div><small>'+x[0]+'</small><strong>'+Number(x[1]).toFixed(1)+'</strong><span class="career-muted">演示综合能力指数</span></div>').join("");
  $("careerFeed").innerHTML=career.journal.length?career.journal.map(x=>'<div><b>'+esc(x.date)+'</b><span>'+esc(x.name)+' · '+esc(x.text)+'</span></div>').join(""):'<div><b>2026 Q1</b><span>赛季开始。选择经营策略，点击推进季度。</span></div>';
  $("careerQuarterHint").textContent="预算超限 "+v.overloaded.filter(x=>x>0).length+" 项 · 状态疲劳 "+career.fatigue.toFixed(1)+" · 恢复负担 "+career.recovery.toFixed(1)+" · 季度成本结转："+career.spent.map((x,i)=>managerNeeds[i]+" "+x.toFixed(0)).join(" / ")+"。所有要素为演示单位。";
- $("careerAdvance").disabled=career.quarter>=27;
+ $("careerAdvance").disabled=career.quarter>=28;
  $("careerRewind").disabled=!career.history.length;
  v9Render();v9SaveCareer();
 }
@@ -1237,7 +1237,7 @@ function initCareer(){
  $("careerAdvance").onclick=careerTick;$("careerRewind").onclick=careerUndo;$("careerRestart").onclick=careerNew;
  $("careerBench").onchange=e=>{if(e.target.id==="careerBenchPick"){career.bench=e.target.value||null;career.benchReady=0;renderCareer()}};
  $("careerBench").onclick=e=>{if(e.target.closest("#careerPromote"))careerPromote();if(e.target.closest("#careerInspect")&&career.bench)openPlayer(career.bench)};
- career.initialSlots={...manager.slots};career.score=careerScore();career.initialScore=career.score;v9LoadCareer();renderCareer();
+ career.initialSlots={...manager.slots};career.score=careerScore();career.initialScore=career.score;v9LoadCareer();managerSync();refreshScores();renderCareer();
 }
 
 function renderSeason(){
