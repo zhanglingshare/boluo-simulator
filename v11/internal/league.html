@@ -36,7 +36,106 @@ button,input,select{font:inherit}button{cursor:pointer;color:inherit}.shell{max-
 .radar-wrap{display:grid;grid-template-columns:1fr 1fr;gap:14px}.radar-wrap svg{width:100%;min-height:250px}
 .scout-verdict{display:grid;gap:8px;padding:12px;border-radius:10px;background:#0d2133;border:1px solid #38516a;margin:12px 0;font-size:11px}.scout-verdict b{color:#f0d18d}
 @media(max-width:650px){.radar-wrap{grid-template-columns:1fr}.weight-grid{grid-template-columns:repeat(2,1fr)}}
-.quickstart{display:grid;grid-template-columns:repeat(4,1fr);gap:9px;margin-bottom:13px}.quickstep{border:1px solid #35546d;background:linear-gradient(145deg,#1b3349,#102338);padding:13px;border-radius:12px;display:flex;gap:9px;align-items:center;text-align:left}.quickstep:hover{border-color:#6dd8dc;transform:translateY(-2px)}.quickstep .qicon{font-size:20px}.quickstep b{font-size:12px;display:block}.quickstep small{font-size:10px;display:block;color:#9bafc5;margin-top:3px}.quickstep .qarr{margin-left:auto;color:#efcf88}.play-tag{color:#e6ce85;background:#2e2a1f;border:1px solid #574d30;border-radius:5px;font-size:9px;padding:3px 5px}@media(max-width:850px){.quickstart{grid-template-columns:repeat(2,1fr)}}@media(max-width:520px){.quickstep{padding:10px 8px}.quickstep b{font-size:10px}.quickstep small{font-size:9px}}</style></head>
+.quickstart{display:grid;grid-template-columns:repeat(4,1fr);gap:9px;margin-bottom:13px}.quickstep{border:1px solid #35546d;background:linear-gradient(145deg,#1b3349,#102338);padding:13px;border-radius:12px;display:flex;gap:9px;align-items:center;text-align:left}.quickstep:hover{border-color:#6dd8dc;transform:translateY(-2px)}.quickstep .qicon{font-size:20px}.quickstep b{font-size:12px;display:block}.quickstep small{font-size:10px;display:block;color:#9bafc5;margin-top:3px}.quickstep .qarr{margin-left:auto;color:#efcf88}.play-tag{color:#e6ce85;background:#2e2a1f;border:1px solid #574d30;border-radius:5px;font-size:9px;padding:3px 5px}@media(max-width:850px){.quickstart{grid-template-columns:repeat(2,1fr)}}@media(max-width:520px){.quickstep{padding:10px 8px}.quickstep b{font-size:10px}.quickstep small{font-size:9px}}
+/* V3 visual-first command center: original high-energy sports-card visual language */
+:root{--gold:#f5c870;--cyan:#56e3ef;--panel:#0e1f33}
+body{background:radial-gradient(ellipse 1250px 620px at 63% -16%,#0d4d68 0%,transparent 72%),linear-gradient(130deg,#071320,#06101c 54%,#0c1b2c);background-attachment:fixed}
+.shell{max-width:1660px;padding:18px 27px 80px}
+.top{border-bottom:1px solid #75d7ed2a;padding:8px 0 18px;margin-bottom:14px;position:relative}
+.top:after{content:"";height:2px;width:36%;background:linear-gradient(90deg,transparent,#ecc273,transparent);position:absolute;bottom:-1px;left:32%}
+.brand h1{font-size:clamp(22px,2.3vw,36px);font-weight:950;letter-spacing:.04em;color:#f6db9e;text-shadow:0 0 25px #ddac4d66,0 2px 2px #111}
+.brand-mark{width:58px;height:58px;border-radius:13px;background:linear-gradient(140deg,#ffebae,#c99335 60%,#795324);border:2px solid #fce8a0;box-shadow:0 0 22px #eabc656b,0 10px 26px #0007;font-size:31px}
+.top-right .pill{border-radius:8px;background:#0b2034e6;box-shadow:inset 0 0 13px #1a608133}
+.hero{grid-template-columns:1.46fr .54fr;gap:12px;margin-bottom:12px}
+.hero-main{min-height:145px;padding:22px 28px;background:radial-gradient(ellipse 500px 220px at 90% 0%,#18a6bc29,transparent 70%),linear-gradient(100deg,#112c45,#102136 60%,#0b2a40);border:1px solid #45a2cb66;box-shadow:inset 0 0 28px #1a668122,0 12px 35px #0006}
+.hero-main h2{font-size:clamp(27px,3vw,46px);color:#f4e4ba;font-weight:1000;letter-spacing:.015em;text-shadow:0 3px 17px #f0b64f2a}
+.hero-main p{font-size:12px;max-width:690px}
+.hero-main:after{width:360px;height:360px;border-color:#4ad8f244;box-shadow:0 0 0 35px #15bddc0d,0 0 0 80px #15bddc08}
+.hero-side{border-color:#af8a4966;background:linear-gradient(110deg,#192a3e,#111c2b);box-shadow:inset 0 0 18px #f3c76c13}
+.nav{gap:8px;border:0;padding:8px 0 16px;margin:0 0 8px}
+.nav button{position:relative;border:1px solid #275376;color:#b0daee;background:linear-gradient(160deg,#16384f,#0c2033);border-radius:10px;padding:12px 16px;box-shadow:inset 0 1px #46bce32c,0 4px 14px #0004;letter-spacing:.04em}
+.nav button.active{background:linear-gradient(140deg,#6e542b,#302819 75%);color:#ffe7aa;border-color:#d4a55b;box-shadow:inset 0 1px #fff4bd58,0 0 22px #dfae4a26}
+.quickstep{border-color:#2a7b91;border-radius:13px;background:linear-gradient(125deg,#12364c,#0e1d33);box-shadow:inset 0 1px #85dfff27,0 8px 23px #0005;min-height:72px}
+.quickstep:nth-child(1),.quickstep:nth-child(4){background:linear-gradient(135deg,#47361d,#142338);border-color:#a58143}
+.quickstep:nth-child(3){background:linear-gradient(130deg,#382450,#101d34);border-color:#7652ac}
+.quickstep .qicon{font-size:28px;filter:drop-shadow(0 0 8px #f6cf7e66)}
+.quickstep b{font-size:18px;font-weight:900}.quickstep small{font-size:10px}
+.model-strip{border-color:#3c6073;background:linear-gradient(90deg,#13283b,#0c2433);box-shadow:inset 0 0 15px #43a8cb16}
+.section-head h3{font-size:clamp(20px,2vw,27px);font-weight:950;color:#f8e3ab;letter-spacing:.02em}
+.team-grid{gap:13px;grid-template-columns:.9fr 1.2fr .9fr}
+.team-card{border-radius:16px;min-height:255px;background:radial-gradient(ellipse 270px 120px at 75% 24%,color-mix(in srgb,var(--team) 22%,transparent),transparent),linear-gradient(155deg,#1a334b,#0b1c2c);border:1px solid color-mix(in srgb,var(--team) 55%,#3d5571);box-shadow:inset 0 0 0 2px #ffffff07,0 14px 29px #0007;transform-origin:bottom center}
+.team-card:nth-child(2){border-color:#f1c66d;box-shadow:0 0 0 2px #ecbe6636,0 0 29px #e9af4c38,0 23px 50px #0008;background:radial-gradient(ellipse 340px 200px at 70% 20%,#a5772e38,transparent),linear-gradient(145deg,#35402f,#111e32)}
+.team-card:nth-child(2):before{content:"主力产业";position:absolute;top:0;right:18px;padding:4px 12px;background:linear-gradient(90deg,#c79a45,#ffe29c);color:#3d2c14;font-size:9px;font-weight:900;border-radius:0 0 9px 9px;z-index:2}
+.team-card h4{font-size:27px;color:#f9edc9;margin:17px 0 6px;font-weight:950}
+.team-card .team-desc{font-size:11px;color:#bbcede;min-height:38px}
+.team-card .stat{background:#081727bd;border-color:#3b5269}
+.team-card .stat b{color:#f7d184;font-size:24px}
+.team-card .team-icon{width:54px;height:54px;font-size:26px;border:1px solid var(--team);box-shadow:0 0 18px color-mix(in srgb,var(--team) 35%,transparent)}
+.team-card:hover{transform:translateY(-6px) scale(1.01)}
+.panel{background:linear-gradient(145deg,#142b42,#0b1c2b);border-color:#2e5068;box-shadow:inset 0 1px #8dc1e01a,0 12px 32px #0005}
+.panel h4{color:#f4dba3;font-size:15px}
+.player-card{background:radial-gradient(170px 130px at 75% 10%,#2c7e9c29,transparent),linear-gradient(145deg,#1b3750,#102339 66%,#0d1e31);border-color:#46627a;box-shadow:inset 0 0 0 1px #ffffff06,0 10px 25px #0006;min-height:232px}
+.player-card:hover{border-color:#f1c477;box-shadow:0 0 25px #e7ba5634,0 18px 38px #0007;transform:translateY(-5px)}
+.player-card .score-number,.score-number{font-size:37px;color:#ffe39c;text-shadow:0 0 20px #eab85e44}
+.avatar{background:linear-gradient(145deg,#60bed4,#234967 60%,#162c46);border:1px solid #f0c977b8;box-shadow:0 0 16px #66cfe64c;color:#f7e8ba;font-size:18px}
+.pot{color:#5af0dc}
+.player-card .tag.gold,.play-tag{background:linear-gradient(120deg,#60451d,#322818);color:#ffe3a5;border-color:#b48b48}
+.score-big .track{height:10px}
+.detail-card{border:2px solid #b28a4e;box-shadow:inset 0 0 45px #e5bc4a16,0 0 30px #b48b4833;background:radial-gradient(circle at 65% 15%,#416b7a6b,transparent 55%),linear-gradient(155deg,#233d4c,#111d2d)}
+.rating-box{background:linear-gradient(145deg,#543d1a,#181f2a);border-color:#c5a05b}
+.rating-box strong{color:#ffdc8e;font-size:37px;text-shadow:0 0 19px #ffcf7b80}
+.modal{max-width:1100px;background:linear-gradient(135deg,#182f43,#0a1727);border:1px solid #d1a961;box-shadow:0 35px 120px #000e,0 0 48px #ca994d32}
+.modal h3{color:#f3d28e}
+.radar-wrap svg{filter:drop-shadow(0 0 9px #f1c97737)}
+.slot{border:1px dashed #c9b77c88;background:#0b2837cc;box-shadow:0 0 10px #75f0d816}
+.slot.filled{border:1px solid #dfbc6c;background:linear-gradient(145deg,#33536c,#13283d);box-shadow:0 0 19px #e9b95c44;transition:.2s}
+.slot.filled:hover{transform:translateY(-4px)}
+.pitch{background:radial-gradient(ellipse 330px 170px at 50% 20%,#2c998658,transparent 80%),repeating-linear-gradient(0deg,#0b3e43 0px,#0b3e43 49px,#155258 50px,#155258 99px);border:2px solid #95d1a76e;box-shadow:inset 0 0 40px #00ccb41e}
+.view.active{animation:appear .38s ease-out both}
+@keyframes appear{from{opacity:0;transform:translateY(11px)}to{opacity:1;transform:translateY(0)}}
+@keyframes pulseGlow{0%,100%{box-shadow:0 0 10px #54f4dc2c}50%{box-shadow:0 0 24px #54f4dc88}}
+@media(prefers-reduced-motion:reduce){*,*:before,*:after{animation:none!important;transition:none!important}}
+.viz-hub{display:grid;grid-template-columns:1.25fr 1fr .9fr;gap:12px;margin-top:13px}
+.viz-panel{padding:16px;border:1px solid #37516c;border-radius:14px;background:linear-gradient(145deg,#142d44,#0a1c2d);position:relative;overflow:hidden}
+.viz-panel h4{font-size:13px;color:#f5d28c;margin:0 0 12px}
+.viz-radar{width:100%;height:220px;filter:drop-shadow(0 0 10px #edbf793d)}
+.viz-ranking{display:grid;gap:11px}
+.viz-rank-row{display:grid;grid-template-columns:22px 1fr 48px;gap:10px;align-items:center;cursor:pointer;padding:8px;border:1px solid #29455c;background:#0c2337;border-radius:9px}
+.viz-rank-row:hover{border-color:#b79451}
+.viz-rank-row .rank-medal{display:grid;place-items:center;width:23px;height:23px;background:linear-gradient(130deg,#f4d785,#785b2d);border-radius:6px;color:#17273a;font-weight:1000}
+.viz-rank-row b{font-size:11px}.viz-rank-row small{display:block;color:#85a5bb;font-size:9px}
+.viz-rank-row strong{color:#f2d085;font-size:21px;text-align:right}
+.viz-risk-row{display:flex;justify-content:space-between;gap:8px;padding:10px 0;border-bottom:1px solid #2a435c;font-size:11px}
+.viz-risk-row .risk-mark{color:#f2cf83}
+.viz-actions{display:flex;gap:6px;margin-top:14px}
+.viz-actions button{flex:1;border:1px solid #4c7190;border-radius:8px;background:#1a3a52;color:#dff2f5;padding:8px;font-size:10px}
+.scenario-board{display:grid;grid-template-columns:minmax(0,1.45fr) minmax(280px,.55fr);gap:13px;margin-bottom:14px}
+.scenario-field{border:2px solid #3aa5a8;border-radius:15px;padding:22px;background:radial-gradient(circle at 50% 36%,#2c806b56,transparent 55%),repeating-linear-gradient(0deg,#0f3c3e,#0f3c3e 55px,#114c47 56px,#114c47 110px);position:relative;overflow:hidden}
+.scenario-field:before{content:"";pointer-events:none;position:absolute;inset:12px;border:1px solid #8cdcb35a;border-radius:6px}
+.scenario-field:after{content:"";position:absolute;left:50%;top:50%;width:130px;height:130px;border:1px solid #a0e8b755;border-radius:50%;transform:translate(-50%,-50%);pointer-events:none}
+.scenario-squad{position:relative;z-index:1;display:grid;grid-template-columns:repeat(3,1fr);gap:10px;min-height:375px;align-content:center}
+.scenario-node{background:linear-gradient(155deg,#26556f,#0e2236);border:1px solid #c7ad6a;border-radius:10px;text-align:center;padding:11px 7px;cursor:pointer;box-shadow:0 0 17px #50dddd30}
+.scenario-node:hover{transform:translateY(-3px);box-shadow:0 0 22px #f2ca7e55}
+.scenario-node .n-score{display:block;color:#f7d68a;font-size:25px;font-weight:950}
+.scenario-node b{font-size:10px}.scenario-node small{display:block;color:#b0ccda;font-size:9px}
+.scenario-node.empty{border:1px dashed #e4bd6d;background:#332d20b0}
+.scenario-node.empty .n-score{font-size:20px;color:#f4cb7e}
+.scenario-insight{display:grid;gap:11px}
+.scenario-insight .viz-panel{padding:15px}
+.scenario-metric{font-size:31px;font-weight:950;color:#f5d486;line-height:1.2}
+.scenario-bars{display:grid;gap:12px}
+.scenario-bar{display:grid;grid-template-columns:60px 1fr 35px;gap:8px;align-items:center;font-size:10px}
+.scenario-bar>span{background:#253f53;border-radius:10px;height:8px;overflow:hidden}
+.scenario-bar>span i{display:block;height:100%;background:linear-gradient(90deg,#4eb9d7,#68e2d0)}
+.scenario-slider{width:100%;accent-color:#f0c770}
+.scenario-compare{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin-bottom:12px}
+.scenario-choice{padding:14px;background:linear-gradient(130deg,#142b42,#0b1d2e);border:1px solid #3a647f;border-radius:12px;text-align:left}
+.scenario-choice.active{border:2px solid #edc579;box-shadow:0 0 24px #dbae503a;background:linear-gradient(130deg,#3c301e,#16253a)}
+.scenario-choice b{display:block;font-size:13px}.scenario-choice strong{font-size:28px;color:#ebcb8d;display:block;margin:5px 0}
+.scenario-choice small{font-size:9px;color:#9fb6c8}
+@media(max-width:1100px){.viz-hub{grid-template-columns:1fr 1fr}.viz-hub>.viz-panel:first-child{grid-column:1/-1}.scenario-board{grid-template-columns:1fr}.team-grid{grid-template-columns:repeat(3,1fr)}}
+@media(max-width:760px){.shell{padding:12px}.top{align-items:flex-start}.brand h1{font-size:20px}.hero{grid-template-columns:1fr}.team-grid{grid-template-columns:1fr}.viz-hub{grid-template-columns:1fr}.viz-hub>.viz-panel:first-child{grid-column:auto}.scenario-squad{grid-template-columns:repeat(2,1fr);min-height:440px}.scenario-compare{grid-template-columns:1fr 1fr}.team-card{min-height:0}.quickstep b{font-size:13px}}
+</style></head>
 <body><div class="shell">
 <header class="top"><div class="brand"><div class="brand-mark">B</div><div><div class="eyebrow">BORO INDUSTRY INTELLIGENCE</div><h1>博罗产业能力与结构研判 <span style="color:#829ab2;font-size:12px;font-weight:500">内部辅助决策系统</span></h1></div></div><div class="top-right"><span class="pill live">● 原型运行中</span><span class="pill">2026 年度 · 内部版</span><span class="pill warn">证据优先</span></div></header>
 <section class="hero"><div class="hero-main"><div class="hero-kicker">BORO / INDUSTRY INTELLIGENCE</div><h2>从产业结构到企业能力，<br>看见真正的增长与风险。</h2><p>识别三次产业结构、龙头带动、企业成长梯队和跨产业连接。发现关键主体、薄弱环节、成长机会和风险传导。</p></div><div class="hero-side"><div class="side-head"><span>数据准备度</span><span>DATA READINESS</span></div><div class="season">2026 <small>YEAR / 开发阶段</small></div><div class="readiness"><div class="ring"><b>待接入</b></div><p><strong>动态能力观察</strong>公开资料与合理先验生成探索性区间和能力画像；正式接入调查数据后持续校准。</p></div></div></section>
@@ -45,7 +144,11 @@ button,input,select{font:inherit}button{cursor:pointer;color:inherit}.shell{max-
 <section class="view active" id="view-overview">
 <div class="section-head"><div><div class="micro">SECTOR STRUCTURE / 三次产业</div><h3>谁是王牌？哪里还有空缺？</h3><p>以三次产业为一级框架，下钻产业链、企业主体与重点产品。</p></div><span class="pill">点击进入产业结构</span></div>
 <div class="team-grid" id="teamCards"></div>
-<div class="overview-grid"><div class="panel"><h4>已识别多少核心企业？</h4><div class="roster-bars" id="rosterBars"></div><div style="font-size:9px;color:#8198af;margin-top:12px">这里只统计当前已建立的主体档案，不代表当地企业总量或产业规模。</div></div><div class="panel"><h4>球探雷达 · 机会与风险</h4><div class="notice-list" id="overviewNotices"></div></div></div>
+<div class="viz-hub">
+<div class="viz-panel"><h4>◈ 产业能力画像 <span class="micro">六维综合雷达 / 模型估算</span></h4><div id="overviewVizRadar"></div><div class="micro">点击上方产业卡切换板块，权重调整可改变能力画像</div></div>
+<div class="viz-panel"><h4>♛ 王牌主体 <span class="micro">已建档企业样本</span></h4><div class="viz-ranking" id="overviewTopPlayers"></div><div class="viz-actions"><button data-open-view="players">全部能力卡 →</button><button data-open-view="scout">球探雷达 →</button></div></div>
+<div class="viz-panel"><h4>⚠ 关键缺口 <span class="micro">验证清单</span></h4><div id="overviewGaps"></div><div class="viz-actions"><button data-open-view="tactics">进入实验室 →</button></div></div>
+</div><div class="overview-grid"><div class="panel"><h4>已识别多少核心企业？</h4><div class="roster-bars" id="rosterBars"></div><div style="font-size:9px;color:#8198af;margin-top:12px">这里只统计当前已建立的主体档案，不代表当地企业总量或产业规模。</div></div><div class="panel"><h4>球探雷达 · 机会与风险</h4><div class="notice-list" id="overviewNotices"></div></div></div>
 </section>
 
 <section class="view" id="view-teams">
@@ -74,6 +177,11 @@ button,input,select{font:inherit}button{cursor:pointer;color:inherit}.shell{max-
 
 <section class="view" id="view-tactics">
 <div class="section-head"><div><div class="micro">SCENARIO WORKBENCH</div><h3>阵容实验室 · 换个组合会怎样？</h3><p>组合不同主体与产业环节，观察覆盖结构和关键缺口。当前不计算未经证实的协同收益。</p></div></div>
+<div class="scenario-board">
+<section class="scenario-field"><div class="micro" style="color:#d8e7d3;margin:0 0 14px;position:relative;z-index:1">◈ SECONDARY INDUSTRY / STRUCTURAL COMPOSITION</div><div id="scenarioSquad" class="scenario-squad"></div></section>
+<aside class="scenario-insight"><div class="viz-panel"><h4>◈ 当前结构</h4><div id="scenarioMetric" class="scenario-metric">--</div><div class="micro">已选企业样本模型均值，非产业真实总分</div><div class="scenario-bars" id="scenarioBars" style="margin-top:15px"></div></div><div class="viz-panel"><h4>⚠ 潜在结构短板</h4><div id="scenarioGaps"></div></div><div class="viz-panel"><h4>↗ 条件调节</h4><div class="micro">示例：额外配套改善强度 <b id="scenarioSliderValue" style="color:#f3cc83">35%</b></div><input id="scenarioSlider" class="scenario-slider" type="range" min="0" max="100" value="35" step="5"><div class="micro" style="margin-top:8px">仅演示条件敏感性，不代表经济收益预测</div></div></aside>
+</div>
+<div class="scenario-compare" id="scenarioCompare"></div>
 <div class="overview-grid"><div class="panel"><h4>选择企业加入观察组合</h4><div class="toolbar"><select id="tacticTeam" class="search" style="min-width:160px"><option value="primary">第一产业</option><option value="secondary" selected>第二产业</option><option value="tertiary">第三产业</option></select><input id="tacticSearch" class="search" placeholder="搜索可加入的企业…"></div><div id="tacticCandidates" class="notice-list"></div></div><div class="panel"><h4>当前观察阵容</h4><div id="tacticRoster" class="notice-list"></div><div class="modal-actions"><button class="action" id="clearTactic">清空阵容</button><button class="action primary" id="exportTactic">导出观察清单</button></div></div></div>
 <div class="disclaimer">组合推演当前只展示主体组合、赛道覆盖和关系核验任务。只有获得真实采购、供应、客户、技术合作、人才流动或项目合作数据后，才计算网络协同与风险传导。</div>
 </section>
@@ -213,10 +321,34 @@ function setView(v){currentView=v;document.querySelectorAll(".view").forEach(x=>
 $("nav").addEventListener("click",e=>{const b=e.target.closest("button[data-view]");if(b)setView(b.dataset.view)});
 document.querySelectorAll("[data-open-view]").forEach(btn=>btn.addEventListener("click",()=>setView(btn.dataset.openView)));
 function card(p){const t=team(p.team),s=getRating(p);const mini=[0,2,3].map(i=>'<div class="score-mini"><span>'+dimKeys[i]+'</span><span class="track"><i style="width:'+s.values[i]+'%"></i></span><b>'+s.values[i]+'</b></div>').join("");return '<article class="player-card" data-player="'+esc(p.id)+'"><div class="pc-top"><div class="avatar">'+esc(p.initial||p.name.slice(0,1))+'</div><div class="score-number">'+s.ovr+'<small>OVR</small></div></div><h4>'+esc(p.name)+'</h4><div class="company-sub">'+esc(p.club)+' · '+esc(p.role)+'</div><div class="player-tags"><span class="tag gold">POT '+s.pot+'</span><span class="tag">'+s.grade+' · 资料覆盖</span></div><div class="scores-row"><div>'+mini+'</div><div style="font-size:10px;color:#9bb0c8">模型覆盖 <strong style="font-size:20px;color:#ecc67c">'+s.coverage+'%</strong><br>估算属性</div></div><div class="card-bottom"><span>'+esc(t.name)+'</span><span>查看球探报告 ↗</span></div></article>'}
+function renderPremiumOverview(){
+ const subset=companies.filter(p=>p.team==="secondary").map(p=>({p,s:getRating(p)})).sort((a,b)=>b.s.ovr-a.s.ovr);
+ const sample=subset.length?subset[0].s.values:[65,68,65,65,65,65];
+ $("overviewVizRadar").innerHTML=radar(sample).replace('<svg ','<svg class="viz-radar" ');
+ $("overviewTopPlayers").innerHTML=subset.slice(0,4).map((x,i)=>'<div class="viz-rank-row" data-player="'+esc(x.p.id)+'"><span class="rank-medal">'+(i+1)+'</span><div><b>'+esc(x.p.name)+'</b><small>'+esc(x.p.club)+'</small></div><strong>'+x.s.ovr+'</strong></div>').join("");
+ $("overviewGaps").innerHTML=['高端电子材料：配套深度待核','机器人核心部件：本地供给待核','工业软件服务：主体覆盖不足','食品深加工：价值留存待核'].map((x,i)=>'<div class="viz-risk-row"><span>0'+(i+1)+'　'+x+'</span><span class="risk-mark">待核 ›</span></div>').join("");
+}
+let premiumScenarioMode="balanced",premiumScenarioStrength=35;
+function renderPremiumScenario(){
+ const selected=tacticIds.map(id=>companies.find(p=>p.id===id)).filter(Boolean);
+ const target=selected.length?selected:companies.filter(p=>p.team==="secondary").slice(0,6);
+ $("scenarioSquad").innerHTML=target.slice(0,6).map(p=>{const s=getRating(p);return '<div class="scenario-node" data-player="'+esc(p.id)+'"><span class="n-score">'+s.ovr+'</span><b>'+esc(p.short)+'</b><small>'+esc(p.club)+'</small></div>'}).join("")+['高端电子材料','机器人核心部件','工业软件服务'].map(x=>'<div class="scenario-node empty" data-find-gap="'+x+'"><span class="n-score">＋</span><b>'+x+'</b><small>关键位置 · 待核</small></div>').join("");
+ const total=target.reduce((s,p)=>s+getRating(p).ovr,0)/Math.max(1,target.length);
+ const avg=target.length?Math.round(total):0;
+ const dimsNow=[0,2,3].map(i=>Math.round(target.reduce((s,p)=>s+getRating(p).values[i],0)/Math.max(1,target.length)));
+ $("scenarioMetric").textContent=avg||"--";
+ $("scenarioBars").innerHTML=["规模","技术","协同"].map((n,i)=>'<div class="scenario-bar"><b>'+n+'</b><span><i style="width:'+dimsNow[i]+'%"></i></span><b>'+dimsNow[i]+'</b></div>').join("");
+ $("scenarioGaps").innerHTML=['核心零部件关系待验证','采购协同不可由同产业推断','当前阵容不等于县域企业总体'].map(x=>'<div class="viz-risk-row">⚠ '+x+'</div>').join("");
+ const base=avg;
+ const opts=[{id:"balanced",n:"均衡",mod:0,desc:"保持当前结构"},{id:"growth",n:"成长优先",mod:4,desc:"增强成长与技术权重"},{id:"safe",n:"韧性优先",mod:2,desc:"提升关键环节韧性"}];
+ $("scenarioCompare").innerHTML=opts.map(o=>'<button class="scenario-choice '+(premiumScenarioMode===o.id?'active':'')+'" data-scenario="'+o.id+'"><b>'+o.n+'</b><strong>'+Math.min(100,base+o.mod)+' <small>OVR情景</small></strong><small>'+o.desc+' · 非预测</small></button>').join("");
+ $("scenarioSliderValue").textContent=premiumScenarioStrength+"%";
+}
 function renderOverview(){
 $("teamCards").innerHTML=teams.map(t=>{const ps=companies.filter(p=>p.team===t.id),pr=prospects.filter(p=>p.team===t.id);return '<article class="team-card" data-team="'+t.id+'" style="--team:'+t.color+'"><div class="team-top"><div class="team-icon" style="background:'+t.color+'22;color:'+t.color+'">'+t.icon+'</div><span class="pill">'+t.en+'</span></div><h4>'+t.name+'</h4><div class="team-desc">'+t.desc+'</div><div class="team-stats"><div class="stat"><b>'+ps.length+'</b><span>已建企业档案</span></div><div class="stat"><b>'+pr.length+'</b><span>产品 / 项目储备</span></div><div class="stat"><b>'+Math.round(ps.reduce((a,p)=>a+getRating(p).ovr,0)/Math.max(ps.length,1))+'</b><span>样本主体模型均值</span></div></div><div style="font-size:9px;color:#839bb1;margin:0 0 10px">'+esc(t.benchmark)+'</div><div class="team-foot"><span><i class="status-dot"></i>'+ (ps.length?"已有主体线索":"主体名册待完善")+'</span><b>进入产业板块 →</b></div></article>'}).join("");
 $("teamCards").addEventListener("click",e=>{const c=e.target.closest("[data-team]");if(c){currentTeam=c.dataset.team;setView("teams")}});
 $("rosterBars").innerHTML=teams.map(t=>{const n=companies.filter(p=>p.team===t.id).length;return '<div class="roster-row"><span>'+t.name+'</span><div class="bar"><i style="width:'+Math.min(100,n*8)+'%;background:'+t.color+'"></i></div><em>'+n+' 份档案</em></div>'}).join("");
+renderPremiumOverview();
 $("overviewNotices").innerHTML=evidenceTasks.map(x=>'<div class="notice"><span class="nicon">'+x.icon+'</span><div><b>'+x.title+'</b><small>'+x.desc+'</small></div></div>').join("");
 }
 function renderTeam(){
@@ -263,6 +395,7 @@ function renderTactics(){
 $("tacticTeam").value=tacticTeam;
 const q=$("tacticSearch").value.trim().toLowerCase();
 const cand=companies.filter(p=>p.team===tacticTeam&&[p.name,p.club,p.tags.join(" ")].join(" ").toLowerCase().includes(q));
+renderPremiumScenario();
 $("tacticCandidates").innerHTML=cand.map(p=>'<div class="notice"><div style="flex:1"><b>'+esc(p.name)+'</b><small>'+esc(p.club)+' · '+esc(p.role)+'</small></div><button class="action" data-add="'+p.id+'">加入</button></div>').join("")||'<div class="empty"><b>本队暂无匹配企业</b><small>先补充企业主体名册。</small></div>';
 const chosen=tacticIds.map(id=>companies.find(p=>p.id===id)).filter(Boolean);
 $("tacticRoster").innerHTML=chosen.map(p=>'<div class="notice"><div style="flex:1"><b>'+esc(p.name)+'</b><small>'+esc(team(p.team).name)+' · '+esc(p.club)+'</small></div><button class="action" data-remove="'+p.id+'">移除</button></div>').join("")||'<div class="empty"><b>观察结构组合还是空的</b><small>从左侧加入企业，组合成待核验的产业结构组合。</small></div>';
@@ -286,6 +419,8 @@ $("scorePreset").onchange=e=>{scorePreset=e.target.value;overrides=null;renderWe
 $("weightToggle").onclick=()=>{$("weightPanel").hidden=!$("weightPanel").hidden};
 $("resetWeights").onclick=()=>{overrides=null;renderWeightControls();refreshScores()};
 $("weightGrid").oninput=e=>{const a=e.target.closest("[data-w]");if(!a)return;if(!overrides)overrides=[18,18,18,18,14,14];overrides[+a.dataset.w]=+a.value;$("weightLabel"+a.dataset.w).textContent=a.value;refreshScores()};
+document.body.addEventListener("click",e=>{const b=e.target.closest("[data-scenario]");if(b){premiumScenarioMode=b.dataset.scenario;renderPremiumScenario()}const g=e.target.closest("[data-find-gap]");if(g){$("tacticSearch").value=g.dataset.findGap;renderTactics();$("tacticSearch").focus()}const v=e.target.closest("[data-open-view]");if(v)setView(v.dataset.openView)});
+$("scenarioSlider").oninput=e=>{premiumScenarioStrength=Number(e.target.value);renderPremiumScenario()};
 renderWeightControls();
 renderOverview();renderTeam();renderPlayers();
 </script></body></html>
