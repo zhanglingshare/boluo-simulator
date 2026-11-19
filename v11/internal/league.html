@@ -889,8 +889,8 @@ function cxRender(){
  const values=wtCalculate(true);
  const active=Object.entries(values.effects).filter(([id,pressure])=>pressure>.006&&(values.depth[id]??9)<=cxState.phase);
  const count=Math.max(0,active.length-(cxState.phase>=0?1:0));
- const average=(active.reduce((a,[id,val])=>a+val,0)/Math.max(1,active.length))*100;
- $("cxReadout").innerHTML='<div><b>'+count+'</b><small>触达主体 · 假设网络</small></div><div><b>'+average.toFixed(1)+'</b><small>压力指数 · 情景</small></div><div><b>'+resource.overloaded.filter(x=>x>0).length+'</b><small>阵容资源超限</small></div>';
+ const average=(active.reduce((a,[id,val])=>a+val,0)/Math.max(1,wtVisibleNodes().length))*100;
+ $("cxReadout").innerHTML='<div><b>'+count+'</b><small>触达主体 · 假设网络</small></div><div><b>'+average.toFixed(1)+'</b><small>固定样本平均压力 · 情景</small></div><div><b>'+resource.overloaded.filter(x=>x>0).length+'</b><small>阵容资源超限</small></div>';
  // Keep the focal company as wind-tunnel source; event changes propagate only on explicit selection.
  wtState.source=p.id;
 }
