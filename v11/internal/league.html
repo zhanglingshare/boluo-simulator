@@ -1048,7 +1048,7 @@ function careerBonus(){
 }
 function careerScore(){const base=managerCompute(),buff=careerBonus();return Math.max(0,Math.min(100,+((base.score+buff-career.recovery*.12).toFixed(1))))}
 function careerRival(q){const shift=career.rivalStrategy==="aggressive"?1.35:career.rivalStrategy==="innovation"?1.04:.7;return Math.max(40,Math.min(99,64+q*shift+Math.sin(q*1.4)*2.6))}
-function careerSeed(q){let a=0;for(const id of Object.values(manager.slots).filter(Boolean))for(const ch of id)a=(a*17+ch.charCodeAt(0))%997;return (a+q*11)%careerEvents.length}
+function careerSeed(q){const x=((q+1)*1664525+1013904223)>>>0;return (x>>>16)%careerEvents.length} // Identical exogenous event calendar across compared strategies.
 function careerPrintQuarter(q){return (2026+Math.floor(q/4))+" Q"+(q%4+1)}
 
 // V9: company capabilities, recovery and scenario pressure all share quarterly state.
@@ -1241,7 +1241,7 @@ function careerUndo(){
 function careerNew(){
  const compare=career.comparison||{A:null,B:null};
  const original=career.initialSlots?{...career.initialSlots}:{...manager.slots};
- career={quarter:0,policy:"balanced",bench:null,training:{capacity:0,tech:0,resilience:0},fatigue:0,recovery:0,score:0,rival:64,history:[],snapshots:[],journal:[],initialSlots:{...manager.slots},spent:[0,0,0,0,0],benchReady:0,rivalStrategy:"balanced",companyStates:{},curve:[],comparison:compare,lastOutcome:null,initialScore:0};
+ career={quarter:0,policy:"balanced",bench:null,training:{capacity:0,tech:0,resilience:0},fatigue:0,recovery:0,score:0,rival:64,history:[],snapshots:[],journal:[],initialSlots:{...original},spent:[0,0,0,0,0],benchReady:0,rivalStrategy:"balanced",companyStates:{},curve:[],comparison:compare,lastOutcome:null,initialScore:0};
  manager.slots=original;manager.year=0;manager.event="none";career.score=careerScore();career.initialScore=career.score;managerSync();refreshScores();renderDuel();renderManagerSeason();renderCareer();
 }
 function careerPromote(){
