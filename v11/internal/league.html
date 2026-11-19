@@ -212,7 +212,31 @@ body{background:radial-gradient(ellipse 1250px 620px at 63% -16%,#0d4d68 0%,tran
 .wt-demo-lines{display:flex;gap:8px;flex-wrap:wrap;margin:10px 0}
 @media(max-width:1200px){.wt-layout{grid-template-columns:235px minmax(0,1fr)}.wt-results{grid-column:1/-1;display:grid;grid-template-columns:repeat(3,1fr);gap:12px}.wt-results>h4{grid-column:1/-1}.wt-results .wt-result{margin:0}}
 @media(max-width:760px){.wt-layout{grid-template-columns:1fr}.wt-results{display:block}.wt-stage svg{height:350px}.wt-bottom{grid-template-columns:1fr}.wt-stage-head{padding:12px}.wt-head h3{font-size:28px}}
-.wt-hero-launch{margin-top:14px;padding:10px 15px;border:1px solid #edbf73;border-radius:9px;background:linear-gradient(120deg,#f0ca83,#b78d42);color:#203041;font-size:12px;font-weight:950;box-shadow:0 0 20px #f4c87542}.wt-hero-launch span{font-size:10px;color:#4c493a;font-weight:650}@media(max-width:520px){.wt-hero-launch{width:100%;text-align:left}.wt-hero-launch span{display:block}}</style></head>
+.wt-hero-launch{margin-top:14px;padding:10px 15px;border:1px solid #edbf73;border-radius:9px;background:linear-gradient(120deg,#f0ca83,#b78d42);color:#203041;font-size:12px;font-weight:950;box-shadow:0 0 20px #f4c87542}.wt-hero-launch span{font-size:10px;color:#4c493a;font-weight:650}@media(max-width:520px){.wt-hero-launch{width:100%;text-align:left}.wt-hero-launch span{display:block}}
+/* Boluo Industry Manager V6: sports-manager interaction, original presentation */
+.mgr-head{display:flex;justify-content:space-between;align-items:center;gap:10px;margin:14px 0}
+.mgr-head h3{color:#ffe3a6;font-size:23px;margin:0}.mgr-eyebrow{font-size:9px;letter-spacing:2px;color:#75ddea}
+.mgr-control{display:flex;gap:7px;flex-wrap:wrap}.mgr-control button{border:1px solid #52758c;background:#17334a;border-radius:9px;padding:9px 12px;font-size:11px}.mgr-control button.active{color:#ffdf9a;border-color:#e8bb71;background:linear-gradient(120deg,#664b26,#1c3143)}
+.mgr-board{display:grid;grid-template-columns:minmax(0,1.2fr) minmax(265px,.8fr);gap:12px;margin:12px 0}
+.mgr-panel{border:1px solid #3c6178;border-radius:15px;padding:15px;background:linear-gradient(140deg,#183247,#0b1e31);box-shadow:0 13px 28px #0005}
+.mgr-panel h4{color:#f2d28e;margin:0 0 12px;font-size:14px}.mgr-sub{font-size:10px;color:#9abbd0;margin:4px 0 12px}
+.mgr-roles{display:grid;grid-template-columns:repeat(3,1fr);gap:9px}.mgr-slot{min-height:100px;padding:12px 7px;border:1px dashed #947a4f;border-radius:11px;background:#0b2938cc;cursor:pointer;text-align:center;transition:.17s}
+.mgr-slot.filled{border:1px solid #deb66c;background:linear-gradient(160deg,#33546c,#182a42);box-shadow:0 0 16px #d2b36930}
+.mgr-slot:hover,.mgr-slot:focus-visible{transform:translateY(-3px);border-color:#ffdd98}
+.mgr-slot .mgr-role{font-size:9px;color:#f2ce90}.mgr-slot b{display:block;font-size:12px;margin-top:7px}.mgr-slot small{display:block;color:#a7c1cf;font-size:9px;margin-top:4px}
+.mgr-budget{display:grid;gap:10px}.mgr-meter{display:grid;grid-template-columns:62px 1fr 64px;gap:9px;align-items:center;font-size:10px}.mgr-meter>span{height:9px;background:#2a465b;border-radius:8px;overflow:hidden}.mgr-meter i{display:block;height:100%;width:var(--w);background:linear-gradient(90deg,#4b9fd3,#67e0c9);transition:width .35s}.mgr-meter.over i{background:linear-gradient(90deg,#e0a156,#f36f77)}.mgr-meter b{text-align:right;color:#f0d18f}
+.mgr-alert{border:1px solid #986c48;background:#382c225b;border-radius:9px;padding:10px;font-size:10px;color:#e7cba7;margin-top:10px}.mgr-alert.danger{color:#ffb3ab;border-color:#b46a64}
+.mgr-line{border-top:1px solid #35546a;margin:12px 0}.mgr-impact{display:grid;grid-template-columns:repeat(3,1fr);gap:9px}.mgr-impact>div{background:#0c273c;border:1px solid #345b74;border-radius:10px;padding:11px}.mgr-impact strong{display:block;color:#ffe2a1;font-size:25px}.mgr-impact span{color:#9db7c8;font-size:9px}
+.mgr-tray{display:flex;flex-wrap:wrap;gap:8px}.mgr-tray button{border:1px solid #4a6a82;background:#142d43;border-radius:8px;padding:8px 10px;font-size:10px}
+.mgr-tray button.active{color:#ffdaa0;border-color:#e6bc7c;background:#584226}
+.mgr-modal{position:fixed;z-index:50;inset:0;background:#020b18d9;display:none;place-items:center;padding:15px}.mgr-modal.open{display:grid}.mgr-dialog{width:min(850px,100%);max-height:87vh;overflow:auto;background:linear-gradient(140deg,#18344b,#0b1e31);border:1px solid #f2c776;border-radius:16px;padding:18px;box-shadow:0 25px 85px #0009}.mgr-options{display:grid;grid-template-columns:repeat(3,1fr);gap:8px}.mgr-option{text-align:left;background:#132b40;border:1px solid #4d7288;border-radius:10px;padding:11px}.mgr-option:hover{border-color:#d9b16e}.mgr-option b{display:block;font-size:11px}.mgr-option small{font-size:9px;color:#a4c0d0}.mgr-option strong{display:block;color:#f2d08b;font-size:19px}
+.mgr-event{display:grid;grid-template-columns:auto 1fr auto;gap:12px;align-items:center;padding:13px;border:1px solid #425e77;background:#10273b;border-radius:12px;margin:7px 0}.mgr-event .mgr-icon{font-size:24px}.mgr-event b{display:block;font-size:12px}.mgr-event small{display:block;color:#99b7c9;font-size:10px}.mgr-event button{border:1px solid #d7b272;background:#4b3920;border-radius:8px;padding:9px 12px;font-size:10px}
+.mgr-progression{display:grid;grid-template-columns:repeat(3,1fr);gap:11px}.mgr-year{border:1px solid #3c647a;background:#10283d;border-radius:12px;padding:15px}.mgr-year.active{border-color:#edca79;box-shadow:0 0 18px #e9bb5930}.mgr-year strong{font-size:35px;color:#f2d38f;display:block}.mgr-year b{display:block;font-size:13px}.mgr-year small{color:#9db6c8;font-size:10px}
+.mgr-statebar{display:flex;align-items:center;gap:7px;flex-wrap:wrap;margin-bottom:9px}.mgr-statebar span{border:1px solid #4a6c83;border-radius:7px;padding:5px 8px;color:#afd4e3;font-size:10px}.mgr-switch{border:1px solid #b18b53;background:linear-gradient(120deg,#5e4828,#193148);padding:8px 13px;border-radius:8px;color:#f6dba1;font-size:11px;font-weight:850}
+.mgr-incident{display:flex;justify-content:space-between;gap:10px;align-items:center;margin:11px 0;padding:11px;border:1px solid #6b614e;background:#30292177;border-radius:9px;color:#e5ca9e;font-size:11px}
+@media(max-width:900px){.mgr-board{grid-template-columns:1fr}}
+@media(max-width:580px){.mgr-roles,.mgr-options{grid-template-columns:repeat(2,1fr)}.mgr-progression{grid-template-columns:1fr}.mgr-impact{grid-template-columns:repeat(3,1fr)}.mgr-impact strong{font-size:20px}.mgr-head{align-items:start;flex-direction:column}.mgr-event{grid-template-columns:auto 1fr}.mgr-event button{grid-column:2}}
+</style></head>
 <body><div class="shell">
 <header class="top"><div class="brand"><div class="brand-mark">B</div><div><div class="eyebrow">BORO INDUSTRY INTELLIGENCE</div><h1>博罗产业能力与结构研判 <span style="color:#829ab2;font-size:12px;font-weight:500">内部辅助决策系统</span></h1></div></div><div class="top-right"><span class="pill live">● 原型运行中</span><span class="pill">2026 年度 · 内部版</span><span class="pill warn">证据优先</span></div></header>
 <section class="hero"><div class="hero-main"><div class="hero-kicker">BORO / INDUSTRY INTELLIGENCE</div><h2>从产业结构到企业能力，<br>看见真正的增长与风险。</h2><p>识别三次产业结构、龙头带动、企业成长梯队和跨产业连接。发现关键主体、薄弱环节、成长机会和风险传导。</p><button class="wt-hero-launch" data-open-view="wind">◉ 进入产业关系风洞　<span>选企业 → 冲击 → 传导 → 缓冲</span>　›</button></div><div class="hero-side"><div class="side-head"><span>数据准备度</span><span>DATA READINESS</span></div><div class="season">2026 <small>YEAR / 开发阶段</small></div><div class="readiness"><div class="ring"><b>待接入</b></div><p><strong>动态能力观察</strong>公开资料与合理先验生成探索性区间和能力画像；正式接入调查数据后持续校准。</p></div></div></section>
@@ -261,6 +285,9 @@ body{background:radial-gradient(ellipse 1250px 620px at 63% -16%,#0d4d68 0%,tran
 
 <section class="view" id="view-tactics">
 <div class="section-head"><div><div class="micro">SCENARIO WORKBENCH</div><h3>阵容实验室 · 换个组合会怎样？</h3><p>组合不同主体与产业环节，观察覆盖结构和关键缺口。当前不计算未经证实的协同收益。</p></div></div>
+<div class="mgr-head"><div><div class="mgr-eyebrow">INDUSTRY MANAGER · OPERATING BOARD</div><h3>经营模式 · 六类角色与要素上限</h3><div class="mgr-sub">同一组合同时驱动能力评价、资源占用、成长状态和风险风洞。企业关系与资源需求均为开发演示假设。</div></div><div class="mgr-control"><button id="mgrPresetAnchor">龙头优先</button><button id="mgrPresetBalance">链条均衡</button><button id="mgrPresetFuture">成长突破</button><button id="mgrClear">清空角色</button></div></div>
+<div class="mgr-board"><section class="mgr-panel"><h4>◆ 产业阵容 / 角色槽位</h4><div id="mgrRoles" class="mgr-roles"></div><div class="mgr-sub">点击任一槽位，选择企业或移除主体；一个企业只能占一个主槽位，多重作用保留在企业档案中。</div></section><section class="mgr-panel"><h4>◈ 要素预算 / 经营边界</h4><div id="mgrBudgets" class="mgr-budget"></div><div id="mgrConstraint" class="mgr-alert"></div><div class="mgr-line"></div><div id="mgrSummary" class="mgr-impact"></div><div class="mgr-line"></div><div class="mgr-control"><button id="mgrUndo">↶ 撤销</button><button id="mgrRedo">↷ 重做</button><button id="mgrToWind">◉ 去关系风洞</button><button id="mgrToSeason">▶ 推进成长</button></div></section></div>
+<div class="mgr-modal" id="mgrModal"><div class="mgr-dialog"><div class="mgr-head"><h3 id="mgrPickTitle">选择产业主体</h3><button id="mgrClose" class="mgr-switch">关闭 ✕</button></div><div id="mgrPickList" class="mgr-options"></div></div></div>
 <div class="scenario-board">
 <section class="scenario-field"><div class="micro" style="color:#d8e7d3;margin:0 0 14px;position:relative;z-index:1">◈ SECONDARY INDUSTRY / STRUCTURAL COMPOSITION</div><div id="scenarioSquad" class="scenario-squad"></div></section>
 <aside class="scenario-insight"><div class="viz-panel"><h4>◈ 当前结构</h4><div id="scenarioMetric" class="scenario-metric">--</div><div class="micro">已选企业样本模型均值，非产业真实总分</div><div class="scenario-bars" id="scenarioBars" style="margin-top:15px"></div></div><div class="viz-panel"><h4>⚠ 潜在结构短板</h4><div id="scenarioGaps"></div></div><div class="viz-panel"><h4>↗ 条件调节</h4><div class="micro">示例：额外配套改善强度 <b id="scenarioSliderValue" style="color:#f3cc83">35%</b></div><input id="scenarioSlider" class="scenario-slider" type="range" min="0" max="100" value="35" step="5"><div class="micro" style="margin-top:8px">仅演示条件敏感性，不代表经济收益预测</div></div></aside>
@@ -307,7 +334,7 @@ body{background:radial-gradient(ellipse 1250px 620px at 63% -16%,#0d4d68 0%,tran
 </section>
 <section class="view" id="view-season">
 <div class="section-head"><div><div class="micro">SEASON EVOLUTION</div><h3>成长轨迹 · 谁上升，谁承压？</h3><p>跟踪企业进入、成长、扩产、转型、收缩与退出，保存每次判断的时间快照。</p></div></div>
-<div class="overview-grid"><div class="panel"><h4>主体变化轨迹</h4><div class="timeline" id="seasonTimeline"></div></div><div class="panel"><h4>动态更新规则</h4><div class="notice-list"><div class="notice"><span class="nicon">↗</span><div><b>升级</b><small>有连续经营、订单、产能或技术证据支持。</small></div></div><div class="notice"><span class="nicon">＋</span><div><b>新主体进入</b><small>企业、产品或项目达到对应验证阶段。</small></div></div><div class="notice"><span class="nicon">⚠</span><div><b>状态预警</b><small>订单、客户、现金流、产能或供应链出现异常信号。</small></div></div><div class="notice"><span class="nicon">↘</span><div><b>收缩 / 退出观察</b><small>持续经营变化需要核实，不因单一负面新闻自动定性。</small></div></div></div></div></div>
+<div class="mgr-head"><div><div class="mgr-eyebrow">CAREER / GROWTH / EVENTS</div><h3>产业成长赛季 · 三阶段推进</h3><div class="mgr-sub">跨期成长不仅与能力有关，还受资源约束、主体状态和突发事件影响。</div></div><div class="mgr-control"><button id="mgrSeasonReset">↺ 回到 T0</button><button id="mgrSeasonNext">▶ 推进阶段</button><button id="mgrSeasonWind">⚡ 风洞冲击</button></div></div><div id="mgrYearCards" class="mgr-progression"></div><div class="mgr-incident"><span>◉ <b>事件中心</b>　选定一次演示事件，观察受压主体及组合韧性变化。</span><span class="pill warn">模拟事件</span></div><div id="mgrEvents"></div><div id="mgrSeasonInsight" class="mgr-alert"></div><div class="overview-grid"><div class="panel"><h4>主体变化轨迹</h4><div class="timeline" id="seasonTimeline"></div></div><div class="panel"><h4>动态更新规则</h4><div class="notice-list"><div class="notice"><span class="nicon">↗</span><div><b>升级</b><small>有连续经营、订单、产能或技术证据支持。</small></div></div><div class="notice"><span class="nicon">＋</span><div><b>新主体进入</b><small>企业、产品或项目达到对应验证阶段。</small></div></div><div class="notice"><span class="nicon">⚠</span><div><b>状态预警</b><small>订单、客户、现金流、产能或供应链出现异常信号。</small></div></div><div class="notice"><span class="nicon">↘</span><div><b>收缩 / 退出观察</b><small>持续经营变化需要核实，不因单一负面新闻自动定性。</small></div></div></div></div></div>
 </section>
 
 <div class="disclaimer"><b>数据纪律：</b>当前是开发原型。已列企业名称来自现有项目资料中的公开主体线索，仍需逐家回溯工商主体、属地、主营产品、经营状态和原始出处。OVR、POT、六维属性现使用公开资料与赛道先验做探索性估算，非实测、非官方评级；不把产业方向、招商意向、项目开工或产品概念冒充已形成的本地企业产能。未识别到的主体明确留空，后续由公开资料、企业问卷和发改部门数据接口补齐。</div>
@@ -436,7 +463,7 @@ let currentTeam="secondary",currentView="overview",selectedPlayer=null,filters="
 const $=id=>document.getElementById(id);
 function team(id){return teams.find(t=>t.id===id)}
 function esc(s){return String(s??"").replace(/[&<>"']/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]))}
-function setView(v){currentView=v;document.querySelectorAll(".view").forEach(x=>x.classList.toggle("active",x.id==="view-"+v));document.querySelectorAll("#nav button").forEach(x=>x.classList.toggle("active",x.dataset.view===v));if(v==="compare")renderDuel();if(v==="teams")renderTeam();if(v==="players")renderPlayers();if(v==="scout")renderScout();if(v==="academy")renderAcademy();if(v==="tactics")renderTactics();if(v==="wind")renderWind();if(v==="season")renderSeason();window.scrollTo({top:0,behavior:"smooth"})}
+function setView(v){currentView=v;document.querySelectorAll(".view").forEach(x=>x.classList.toggle("active",x.id==="view-"+v));document.querySelectorAll("#nav button").forEach(x=>x.classList.toggle("active",x.dataset.view===v));if(v==="compare")renderDuel();if(v==="teams")renderTeam();if(v==="players")renderPlayers();if(v==="scout")renderScout();if(v==="academy")renderAcademy();if(v==="tactics")renderTactics();if(v==="wind")renderWind();if(v==="season"){renderSeason();renderManagerSeason();}window.scrollTo({top:0,behavior:"smooth"})}
 $("nav").addEventListener("click",e=>{const b=e.target.closest("button[data-view]");if(b)setView(b.dataset.view)});
 document.querySelectorAll("[data-open-view]").forEach(btn=>btn.addEventListener("click",()=>setView(btn.dataset.openView)));
 function card(p){const t=team(p.team),s=getRating(p);const mini=[0,2,3].map(i=>'<div class="score-mini"><span>'+dimKeys[i]+'</span><span class="track"><i style="width:'+s.values[i]+'%"></i></span><b>'+s.values[i]+'</b></div>').join("");return '<article class="player-card" data-player="'+esc(p.id)+'"><div class="pc-top"><div class="avatar">'+esc(p.initial||p.name.slice(0,1))+'</div><div class="score-number">'+s.ovr+'<small>OVR</small></div></div><h4>'+esc(p.name)+'</h4><div class="company-sub">'+esc(p.club)+' · '+esc(p.role)+'</div><div class="player-tags"><span class="tag gold">POT '+s.pot+'</span><span class="tag">'+s.grade+' · 资料覆盖</span></div><div class="scores-row"><div>'+mini+'</div><div style="font-size:10px;color:#9bb0c8">模型覆盖 <strong style="font-size:20px;color:#ecc67c">'+s.coverage+'%</strong><br>估算属性</div></div><div class="card-bottom"><span>'+esc(t.name)+'</span><span>查看球探报告 ↗</span></div><button class="duel-compare-btn" data-compare="'+esc(p.id)+'" type="button">VS · 加入能力对决</button></article>'}
@@ -686,6 +713,101 @@ function initWind(){
  renderWind();
 }
 
+
+// Industry manager V6: shared front-end simulation context.
+// All enterprise resource demands, events and budget caps are DEMONSTRATION assumptions.
+const managerRoles=[
+ {id:"core",name:"核心支柱",hint:"当期支撑"},{id:"growth",name:"成长突破",hint:"接棒新秀"},
+ {id:"supply",name:"关键配套",hint:"补链企业"},{id:"service",name:"生产服务",hint:"公共赋能"},
+ {id:"base",name:"基础保障",hint:"资源韧性"},{id:"reserve",name:"战略储备",hint:"长期潜力"}
+];
+const managerNeeds=["土地","资金","用能","人才","平台"];
+const managerCaps=[100,100,100,100,100];
+const managerPlans={
+ anchor:{core:"huatong",growth:null,supply:"unionfoil",service:null,base:null,reserve:null},
+ balanced:{core:"sunwoda",growth:null,supply:"liwei",service:"zhongneng",base:null,reserve:null},
+ future:{core:null,growth:"bolan",supply:"tianzhuo",service:"luofushan-group",base:null,reserve:null}
+};
+let manager={slots:{...managerPlans.anchor},year:0,event:"none",history:[],future:[],pick:null};
+function managerResource(p){
+ let h=0;for(const ch of p.id)h=(h*31+ch.charCodeAt(0))%100003;
+ const v=getModel(p).values;
+ const raw=[10+Math.round(v[0]*.19)+h%8,8+Math.round(v[0]*.24)+h%7,6+Math.round(v[0]*.18)+h%5,6+Math.round(v[2]*.17)+h%6,5+Math.round(v[3]*.15)+h%5];
+ const factors=p.team==="primary"?[1.12,.66,.66,.79,.71]:p.team==="tertiary"?[.54,.87,.49,1.16,1.14]:[1,1,1,1,1];
+ return raw.map((x,i)=>Math.round(x*factors[i]));
+}
+function managerSelected(){return Object.values(manager.slots).filter(Boolean).map(id=>companies.find(p=>p.id===id)).filter(Boolean)}
+function managerCompute(year=manager.year,evt=manager.event){
+ const ps=managerSelected(),used=[0,0,0,0,0];
+ ps.forEach(p=>managerResource(p).forEach((v,i)=>used[i]+=v));
+ const overloaded=used.map((v,i)=>Math.max(0,v-managerCaps[i]));
+ const strain=overloaded.reduce((s,v)=>s+v,0)/100;
+ const incident=evt==="none"?0:evt==="orders"?8:evt==="talent"?6:evt==="supply"?10:0;
+ const base=ps.length?ps.reduce((s,p)=>s+getRating(p).ovr,0)/ps.length:0;
+ const potential=ps.length?ps.reduce((s,p)=>s+getRating(p).pot,0)/ps.length:0;
+ const growth=ps.length?ps.reduce((s,p)=>s+Math.max(0,getRating(p).pot-getRating(p).ovr),0)/ps.length:0;
+ const stage=Math.min(2,Math.max(0,year));
+ const score=Math.max(0,Math.min(100,base+stage*(growth*.18-1.1)-strain*(18+stage*4)-incident*(stage?1:.7)));
+ return {ps,used,overloaded,strain,base,potential,score:Math.round(score*10)/10,incident,coverage:new Set(ps.map(p=>p.team)).size};
+}
+function managerCommit(nextSlots){manager.history.push(JSON.stringify(manager.slots));if(manager.history.length>50)manager.history.shift();manager.future=[];manager.slots=nextSlots;managerSync();}
+function managerSync(){
+ tacticIds=Object.values(manager.slots).filter(Boolean);
+ if(manager.ps){} // No hidden effect; preserve existing engine identifiers.
+ renderManager();
+ if(currentView==="tactics")renderTactics();
+ if(currentView==="season")renderManagerSeason();
+ if(currentView==="wind")renderWind();
+ try{sessionStorage.setItem("boluo-manager-v6",JSON.stringify({slots:manager.slots,year:manager.year,event:manager.event}))}catch(e){}
+}
+function managerChoose(role,id){
+ if(id && Object.entries(manager.slots).some(([r,v])=>r!==role&&v===id))return;
+ const slots={...manager.slots,[role]:id||null};managerCommit(slots);$("mgrModal").classList.remove("open");
+}
+function managerPick(role){
+ manager.pick=role;$("mgrPickTitle").textContent="为「"+managerRoles.find(r=>r.id===role).name+"」选择主体";
+ const list=[null,...companies];
+ $("mgrPickList").innerHTML=list.map(p=>'<button class="mgr-option" data-mgr-select="'+(p?esc(p.id):'')+'"><strong>'+(p?getRating(p).ovr:'＋')+'</strong><b>'+(p?esc(p.name):'清空槽位')+'</b><small>'+(p?esc(p.club)+' · 模型估算':'释放当前要素')+'</small></button>').join("");
+ $("mgrModal").classList.add("open");
+}
+function renderManager(){
+ const v=managerCompute();
+ $("mgrRoles").innerHTML=managerRoles.map(r=>{const id=manager.slots[r.id],p=companies.find(x=>x.id===id);return '<button class="mgr-slot '+(p?'filled':'')+'" data-mgr-role="'+r.id+'"><span class="mgr-role">'+r.name+'</span><b>'+(p?esc(p.short):'＋ 待选择')+'</b><small>'+(p?esc(p.club):r.hint)+'</small></button>'}).join("");
+ $("mgrBudgets").innerHTML=managerNeeds.map((name,i)=>'<div class="mgr-meter '+(v.used[i]>managerCaps[i]?'over':'')+'"><b>'+name+'</b><span><i style="--w:'+Math.min(100,v.used[i])+'%"></i></span><b>'+v.used[i]+' / 100</b></div>').join("");
+ $("mgrConstraint").className="mgr-alert"+(v.strain>0?" danger":"");
+ $("mgrConstraint").textContent=v.strain>0?'⚠ 资源约束已超限。该方案不应直接执行；可更换企业或分期配置。':'◎ 本轮演示五项约束未超限；仍需真实数据核查。';
+ $("mgrSummary").innerHTML=[["已配置",v.ps.length],["产业覆盖",v.coverage+"/3"],["组合指数",v.score.toFixed(1)]].map(x=>'<div><strong>'+x[1]+'</strong><span>'+x[0]+'</span></div>').join("");
+ $("mgrUndo").disabled=!manager.history.length;$("mgrRedo").disabled=!manager.future.length;
+}
+function managerEventCards(){
+ return [["none","◎","正常运行","清除事件，观察无冲击基线"],["orders","↓","订单收缩","示例：需求侧扰动"],["talent","◇","人才流失","示例：技能供给受压"],["supply","⚠","供应断点","示例：上游供给受压"]];
+}
+function renderManagerSeason(){
+ const curr=managerCompute();
+ $("mgrYearCards").innerHTML=[0,1,2].map(t=>{const x=managerCompute(t);return '<button class="mgr-year '+(manager.year===t?'active':'')+'" data-mgr-year="'+t+'"><small>T'+t+' · '+["当期","中期","远期"][t]+'</small><strong>'+x.score.toFixed(1)+'</strong><b>组合状态指数</b><small>成长、资源压力与事件共同作用</small></button>'}).join("");
+ $("mgrEvents").innerHTML=managerEventCards().map(x=>'<div class="mgr-event"><span class="mgr-icon">'+x[1]+'</span><div><b>'+x[2]+'</b><small>'+x[3]+'</small></div><button data-mgr-event="'+x[0]+'" '+(manager.event===x[0]?'style="border-color:#ffdc94"':'')+'>'+(manager.event===x[0]?'已启用':'触发事件')+'</button></div>').join("");
+ $("mgrSeasonInsight").textContent="T"+manager.year+"：已选"+curr.ps.length+"个主体；预算超限"+curr.overloaded.filter(x=>x>0).length+"项；事件冲击"+curr.incident+"个模型点。这里是演示状态指数，不是GDP或产值预测。";
+}
+function initManager(){
+ try{const saved=JSON.parse(sessionStorage.getItem("boluo-manager-v6")||"null");if(saved&&saved.slots){const ids=Object.values(saved.slots).filter(Boolean);if(ids.every(id=>companies.some(p=>p.id===id))){manager.slots={...manager.slots,...saved.slots};manager.year=Math.min(2,Math.max(0,Number(saved.year)||0));manager.event=managerEventCards().some(x=>x[0]===saved.event)?saved.event:"none"}}}catch(e){}
+ $("mgrRoles").onclick=e=>{const btn=e.target.closest("[data-mgr-role]");if(btn)managerPick(btn.dataset.mgrRole)};
+ $("mgrPickList").onclick=e=>{const btn=e.target.closest("[data-mgr-select]");if(btn)managerChoose(manager.pick,btn.dataset.mgrSelect)};
+ $("mgrClose").onclick=()=>{$("mgrModal").classList.remove("open")};
+ $("mgrModal").onclick=e=>{if(e.target===$("mgrModal"))$("mgrModal").classList.remove("open")};
+ [["mgrPresetAnchor","anchor"],["mgrPresetBalance","balanced"],["mgrPresetFuture","future"]].forEach(([id,key])=>$(id).onclick=()=>managerCommit({...managerPlans[key]}));
+ $("mgrClear").onclick=()=>managerCommit(Object.fromEntries(managerRoles.map(r=>[r.id,null])));
+ $("mgrUndo").onclick=()=>{if(!manager.history.length)return;manager.future.push(JSON.stringify(manager.slots));manager.slots=JSON.parse(manager.history.pop());managerSync()};
+ $("mgrRedo").onclick=()=>{if(!manager.future.length)return;manager.history.push(JSON.stringify(manager.slots));manager.slots=JSON.parse(manager.future.pop());managerSync()};
+ $("mgrToWind").onclick=()=>{const id=Object.values(manager.slots).find(Boolean);if(id)wtState.source=id;setView("wind")};
+ $("mgrToSeason").onclick=()=>setView("season");
+ $("mgrSeasonNext").onclick=()=>{manager.year=Math.min(2,manager.year+1);managerSync()};
+ $("mgrSeasonReset").onclick=()=>{manager.year=0;manager.event="none";managerSync()};
+ $("mgrSeasonWind").onclick=()=>{$("mgrToWind").click()};
+ $("mgrYearCards").onclick=e=>{const btn=e.target.closest("[data-mgr-year]");if(btn){manager.year=+btn.dataset.mgrYear;managerSync()}};
+ $("mgrEvents").onclick=e=>{const btn=e.target.closest("[data-mgr-event]");if(btn){manager.event=btn.dataset.mgrEvent;managerSync()}};
+ managerSync();
+}
+
 function renderSeason(){
 $("seasonTimeline").innerHTML=[
 ["主体建档","先建立企业、产品、项目三个独立对象，避免混算。"],
@@ -702,6 +824,6 @@ $("weightGrid").oninput=e=>{const a=e.target.closest("[data-w]");if(!a)return;if
 document.body.addEventListener("click",e=>{const b=e.target.closest("[data-scenario]");if(b){premiumScenarioMode=b.dataset.scenario;renderPremiumScenario()}const g=e.target.closest("[data-find-gap]");if(g){$("tacticSearch").value=g.dataset.findGap;renderTactics();$("tacticSearch").focus()}const v=e.target.closest("[data-open-view]");if(v)setView(v.dataset.openView)});
 $("scenarioSlider").oninput=e=>{premiumScenarioStrength=Number(e.target.value);renderPremiumScenario()};
 renderWeightControls();
-renderOverview();renderTeam();renderPlayers();initDuel();initWind();
+renderOverview();renderTeam();renderPlayers();initDuel();initWind();initManager();
 if(window.location && window.location.hash==="#wind")setView("wind");
 </script></body></html>
