@@ -1,0 +1,248 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="theme-color" content="#081522">
+<meta name="description" content="博罗内部版产业动态能力系统：产业主体档案、产业阵容工作台、产业总览中心。">
+<title>博罗内部版｜产业动态能力系统</title>
+<style>
+:root{--bg:#081522;--bg2:#0d1d2d;--panel:#102438;--panel2:#142c42;--line:rgba(170,203,229,.14);--text:#edf5fc;--muted:#91a9bc;--blue:#54a7ff;--cyan:#5ee0dc;--green:#57d6a0;--amber:#f3c56c;--red:#ff7884;--violet:#b5a0ff;--shadow:0 18px 55px rgba(0,0,0,.24);--r:18px}
+*{box-sizing:border-box}html{scroll-behavior:smooth}body{margin:0;background:radial-gradient(1000px 550px at 70% -10%,rgba(48,116,172,.19),transparent 65%),linear-gradient(145deg,#07121e,#0a1928 55%,#091522);color:var(--text);font-family:Inter,-apple-system,BlinkMacSystemFont,"Segoe UI","PingFang SC","Microsoft YaHei",sans-serif;min-height:100vh}
+button,input,select{font:inherit}button{cursor:pointer}a{color:inherit;text-decoration:none}
+.shell{display:grid;grid-template-columns:250px minmax(0,1fr);min-height:100vh}
+.sidebar{border-right:1px solid var(--line);background:rgba(6,17,28,.76);backdrop-filter:blur(18px);padding:25px 16px;position:sticky;top:0;height:100vh;display:flex;flex-direction:column;z-index:10}
+.brand{display:flex;gap:12px;align-items:center;padding:5px 9px 27px}.brand-mark{width:38px;height:38px;border-radius:12px;background:linear-gradient(135deg,#56b9ff,#57e0cf);display:grid;place-items:center;color:#061724;font-weight:900;font-size:19px;box-shadow:0 8px 25px #43a9e64a}.brand strong{display:block;font-size:14px;letter-spacing:.04em}.brand small{display:block;color:var(--muted);font-size:9px;letter-spacing:.14em;margin-top:4px}
+.nav-label{font-size:10px;color:#637e94;letter-spacing:.18em;padding:10px 12px}.nav-btn{width:100%;border:1px solid transparent;background:transparent;color:#a9bdce;text-align:left;padding:13px 12px;border-radius:12px;display:flex;align-items:center;gap:12px;margin:3px 0;transition:.2s}.nav-btn .num{font-size:10px;color:#6f91ab;letter-spacing:.08em}.nav-btn b{font-size:13px;font-weight:650}.nav-btn:hover{background:#13283b;color:white}.nav-btn.active{background:linear-gradient(100deg,rgba(71,156,230,.2),rgba(73,214,208,.07));border-color:rgba(84,167,255,.28);color:#fff;box-shadow:inset 3px 0 #59b5ff}.side-bottom{margin-top:auto;padding:15px 11px;border-top:1px solid var(--line);color:var(--muted);font-size:11px;line-height:1.7}.side-bottom strong{color:#dcebf7;font-weight:600}
+.main{min-width:0;padding:0 34px 60px}.topbar{height:70px;border-bottom:1px solid var(--line);display:flex;align-items:center;justify-content:space-between;gap:16px}.crumb{font-size:12px;color:var(--muted)}.crumb b{color:#dceaf7;font-weight:600}.top-actions{display:flex;align-items:center;gap:10px}.edition{border:1px solid rgba(94,224,220,.25);color:var(--cyan);border-radius:999px;padding:7px 11px;font-size:10px;letter-spacing:.1em}.quiet-btn,.primary-btn,.soft-btn{border:1px solid var(--line);background:#142b40;color:#dceaf7;border-radius:10px;padding:9px 13px;font-size:11px;transition:.2s}.quiet-btn:hover,.soft-btn:hover{border-color:#5a9cc9;background:#19364f}.primary-btn{background:linear-gradient(110deg,#4c9ff2,#49c8cb);border:0;color:#061725;font-weight:750;box-shadow:0 7px 22px #39a7d52e}.primary-btn:hover{filter:brightness(1.1);transform:translateY(-1px)}
+.page-head{padding:34px 0 22px;display:flex;justify-content:space-between;align-items:flex-end;gap:20px}.eyebrow{color:var(--cyan);font-size:10px;letter-spacing:.2em;font-weight:700}.page-head h1{font-size:clamp(28px,3.2vw,43px);letter-spacing:-.04em;line-height:1.13;margin:10px 0 8px}.page-head p{color:var(--muted);font-size:13px;margin:0;line-height:1.7;max-width:690px}.head-right{display:flex;gap:8px;flex-wrap:wrap;justify-content:flex-end}
+.view{display:none;animation:fadeUp .35s ease both}.view.active{display:block}@keyframes fadeUp{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:none}}
+.panel{background:linear-gradient(145deg,rgba(20,43,64,.94),rgba(12,30,46,.94));border:1px solid var(--line);border-radius:var(--r);box-shadow:var(--shadow)}.panel-pad{padding:20px}.section-title{display:flex;align-items:center;justify-content:space-between;gap:14px;margin-bottom:16px}.section-title h2{font-size:15px;margin:0;letter-spacing:-.01em}.section-title p{font-size:11px;color:var(--muted);margin:5px 0 0}.micro{font-size:10px;color:var(--muted)}.tag{display:inline-flex;align-items:center;gap:6px;padding:5px 8px;border-radius:7px;font-size:10px;color:#b5c9d9;background:rgba(141,175,203,.1);border:1px solid rgba(141,175,203,.12);white-space:nowrap}.tag.cyan{color:var(--cyan);background:rgba(94,224,220,.08);border-color:rgba(94,224,220,.2)}.tag.amber{color:var(--amber);background:rgba(243,197,108,.08);border-color:rgba(243,197,108,.2)}.tag.red{color:var(--red);background:rgba(255,120,132,.08);border-color:rgba(255,120,132,.2)}.tag.green{color:var(--green);background:rgba(87,214,160,.08);border-color:rgba(87,214,160,.2)}
+.grid{display:grid;gap:15px}.overview-grid{grid-template-columns:repeat(4,minmax(0,1fr))}.metric{padding:17px 18px;position:relative;overflow:hidden;min-height:118px}.metric:after{content:"";position:absolute;width:90px;height:90px;border-radius:50%;right:-28px;top:-34px;background:var(--glow,rgba(84,167,255,.1));filter:blur(2px)}.metric-label{font-size:11px;color:var(--muted)}.metric-value{font-size:27px;font-weight:780;letter-spacing:-.04em;margin:12px 0 3px}.metric-note{font-size:10px;color:#7f9ab0}
+.workspaces{grid-template-columns:repeat(3,minmax(0,1fr));margin-top:15px}.workspace{padding:20px;min-height:190px;position:relative;overflow:hidden;cursor:pointer;transition:.22s}.workspace:hover{transform:translateY(-4px);border-color:rgba(84,167,255,.42)}.workspace .index{font-size:10px;color:var(--cyan);letter-spacing:.16em}.workspace h3{font-size:19px;margin:13px 0 7px}.workspace p{font-size:11px;color:var(--muted);line-height:1.7;margin:0;max-width:260px}.workspace .go{position:absolute;right:20px;bottom:18px;color:var(--cyan);font-size:20px}.workspace .orb{position:absolute;width:130px;height:130px;border:1px solid rgba(91,189,228,.15);border-radius:50%;right:-40px;top:15px;box-shadow:0 0 0 18px rgba(91,189,228,.025),0 0 0 38px rgba(91,189,228,.02)}
+.alert-grid{grid-template-columns:repeat(3,minmax(0,1fr));margin-top:15px}.alert-card{padding:18px;min-height:164px}.alert-head{display:flex;align-items:center;justify-content:space-between}.alert-card h3{font-size:14px;margin:16px 0 7px}.alert-card p{font-size:11px;color:var(--muted);line-height:1.65;margin:0}.alert-foot{margin-top:13px;font-size:10px;color:#7d96aa}
+.split{display:grid;grid-template-columns:minmax(0,1.4fr) minmax(280px,.8fr);gap:15px;margin-top:15px}.timeline{display:flex;flex-direction:column;gap:0}.timeline-item{display:grid;grid-template-columns:76px 14px minmax(0,1fr);gap:12px;min-height:65px}.timeline-time{font-size:10px;color:#7e9bb2;padding-top:3px}.timeline-line{position:relative}.timeline-line:before{content:"";position:absolute;top:6px;left:4px;width:6px;height:6px;border-radius:50%;background:var(--cyan);box-shadow:0 0 0 4px #5ee0dc1c}.timeline-line:after{content:"";position:absolute;top:17px;bottom:-2px;left:6px;width:1px;background:#34526a}.timeline-item:last-child .timeline-line:after{display:none}.timeline-copy b{font-size:11px;display:block;margin-bottom:4px}.timeline-copy span{font-size:10px;color:var(--muted)}
+.profile-layout{display:grid;grid-template-columns:260px minmax(0,1fr);gap:15px}.selector-list{display:flex;flex-direction:column;gap:7px}.subject-option{padding:12px;border:1px solid transparent;background:#0c1e2e;border-radius:11px;color:#b8cbd9;text-align:left;display:flex;justify-content:space-between;align-items:center;gap:10px}.subject-option:hover{border-color:#355b77}.subject-option.active{background:linear-gradient(100deg,#173b58,#122c42);border-color:#438ec1;color:#fff}.subject-option small{display:block;color:#7e9bb1;font-size:9px;margin-top:4px}.subject-option .arrow{color:#6b95b4}
+.profile-hero{padding:22px;display:flex;justify-content:space-between;gap:18px;align-items:flex-start;background:radial-gradient(400px 180px at 90% 0%,rgba(71,174,213,.15),transparent 75%),linear-gradient(130deg,#16344d,#102438)}.profile-hero h2{font-size:25px;margin:0 0 7px}.profile-hero p{font-size:11px;color:#a4bbcd;line-height:1.7;margin:0;max-width:620px}.profile-emblem{width:64px;height:64px;border-radius:18px;background:linear-gradient(145deg,#58b7ff,#5be0cf);display:grid;place-items:center;color:#092033;font-size:25px;font-weight:900;flex:none;box-shadow:0 12px 30px #4ab8d82b}
+.profile-facts{display:grid;grid-template-columns:repeat(3,1fr);gap:9px;margin-top:12px}.fact{padding:13px;border:1px solid var(--line);border-radius:12px;background:#0d2030}.fact span{font-size:9px;color:var(--muted)}.fact b{display:block;font-size:12px;margin-top:7px}
+.capability-grid{grid-template-columns:repeat(3,minmax(0,1fr));margin-top:12px}.capability{padding:15px;min-height:128px}.capability .cap-top{display:flex;align-items:center;justify-content:space-between}.capability h4{font-size:12px;margin:0}.capability p{font-size:10px;color:var(--muted);line-height:1.6;margin:10px 0 0}.status-line{height:4px;background:#243d52;border-radius:9px;margin-top:12px;overflow:hidden}.status-line i{display:block;height:100%;width:var(--w,22%);background:linear-gradient(90deg,#438fd1,#57d8ce);border-radius:9px}
+.evidence-table{width:100%;border-collapse:collapse;font-size:10px}.evidence-table th{text-align:left;color:#7692a9;font-weight:600;padding:10px;border-bottom:1px solid var(--line)}.evidence-table td{padding:11px 10px;border-bottom:1px solid rgba(170,203,229,.08);color:#c4d4e0}.evidence-table tr:last-child td{border-bottom:0}
+.lineup-top{display:flex;justify-content:space-between;align-items:center;gap:14px;flex-wrap:wrap}.lineup-tools{display:flex;gap:8px;align-items:center;flex-wrap:wrap}.role-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:12px;margin-top:15px}.role-slot{padding:14px;min-height:190px;border:1px dashed rgba(114,160,192,.32);border-radius:15px;background:rgba(10,27,42,.6);transition:.2s}.role-slot.drag-over{border-color:var(--cyan);background:rgba(94,224,220,.08);box-shadow:inset 0 0 0 1px rgba(94,224,220,.2)}.role-head{display:flex;align-items:flex-start;justify-content:space-between;margin-bottom:12px}.role-head b{font-size:12px}.role-head small{display:block;font-size:9px;color:var(--muted);margin-top:4px}.role-count{font-size:10px;color:#7d9ab1}
+.chip-list{display:flex;flex-wrap:wrap;gap:7px;min-height:70px}.industry-chip{border:1px solid rgba(95,161,203,.3);background:linear-gradient(120deg,#173650,#132b40);color:#dcecf8;border-radius:10px;padding:9px 10px;font-size:10px;display:flex;align-items:center;gap:8px;cursor:grab;user-select:none;transition:.2s}.industry-chip:active{cursor:grabbing}.industry-chip .chip-dot{width:6px;height:6px;border-radius:50%;background:var(--chip,var(--cyan))}.industry-chip button{border:0;background:transparent;color:#8da9bf;font-size:13px;padding:0 0 0 3px}.industry-chip:hover{border-color:#62b9dd;transform:translateY(-1px)}
+.pool{padding:16px;margin-top:15px}.pool .chip-list{min-height:45px}.matrix{margin-top:15px}.matrix-row{display:grid;grid-template-columns:1.1fr 1.1fr 1.2fr 130px;gap:12px;align-items:center;padding:12px 5px;border-bottom:1px solid rgba(170,203,229,.08);font-size:10px}.matrix-row.head{color:#7894ab;font-size:9px}.matrix-row select{background:#0b1d2d;border:1px solid #29465d;border-radius:8px;color:#d6e6f2;padding:7px;font-size:10px;width:100%}
+.compare-strip{display:flex;gap:9px;flex-wrap:wrap;margin-top:15px}.compare-pill{padding:9px 11px;border-radius:9px;background:#0c2031;border:1px solid var(--line);font-size:10px;color:#b5cadb}.compare-pill b{color:#fff;margin-right:6px}
+.toast{position:fixed;bottom:22px;right:22px;background:#e7f6ff;color:#0b263b;padding:12px 16px;border-radius:11px;font-size:12px;font-weight:650;box-shadow:0 12px 30px #0005;opacity:0;transform:translateY(10px);pointer-events:none;transition:.25s;z-index:50}.toast.show{opacity:1;transform:none}
+.drawer{position:fixed;inset:0;background:rgba(2,10,17,.65);display:none;align-items:stretch;justify-content:flex-end;z-index:40;backdrop-filter:blur(5px)}.drawer.open{display:flex}.drawer-panel{width:min(470px,100%);background:#0c1e2e;border-left:1px solid var(--line);padding:24px;overflow:auto;animation:slideIn .25s ease}@keyframes slideIn{from{transform:translateX(20px);opacity:.5}to{transform:none;opacity:1}}.drawer-close{float:right;background:transparent;border:0;color:#a9c0d2;font-size:22px}.drawer h2{font-size:21px;margin:32px 0 8px}.drawer p{font-size:11px;color:var(--muted);line-height:1.8}.drawer-block{border-top:1px solid var(--line);padding:15px 0}.drawer-block b{font-size:11px}.drawer-block p{margin:6px 0 0}
+.footer-note{font-size:10px;color:#6e879b;line-height:1.7;margin:20px 0 0;padding:13px 2px;border-top:1px solid var(--line)}
+@media(max-width:1100px){.overview-grid{grid-template-columns:repeat(2,1fr)}.workspaces{grid-template-columns:1fr}.workspace{min-height:145px}.role-grid{grid-template-columns:repeat(2,1fr)}.capability-grid{grid-template-columns:repeat(2,1fr)}}
+@media(max-width:760px){.shell{grid-template-columns:1fr}.sidebar{height:auto;position:sticky;top:0;padding:9px 12px;border-right:0;border-bottom:1px solid var(--line);display:block}.brand{padding:2px 3px 9px}.brand-mark{width:30px;height:30px}.brand strong{font-size:12px}.brand small{font-size:8px}.nav-label,.side-bottom{display:none}.nav-row{display:flex;overflow:auto;gap:6px;padding-bottom:2px}.nav-btn{white-space:nowrap;width:auto;padding:8px 10px;margin:0;gap:7px}.nav-btn .num{font-size:9px}.nav-btn b{font-size:10px}.main{padding:0 14px 40px}.topbar{height:49px}.page-head{padding:25px 0 17px;display:block}.head-right{justify-content:flex-start;margin-top:13px}.overview-grid{gap:8px}.metric{padding:13px;min-height:100px}.metric-value{font-size:21px}.alert-grid,.split,.profile-layout{grid-template-columns:1fr}.profile-layout{gap:10px}.selector-list{display:grid;grid-template-columns:repeat(2,1fr)}.profile-facts{grid-template-columns:1fr 1fr}.capability-grid{grid-template-columns:1fr 1fr}.role-grid{grid-template-columns:1fr 1fr;gap:8px}.role-slot{padding:11px;min-height:160px}.matrix-row{grid-template-columns:1fr 1fr;gap:6px}.matrix-row.head{display:none}.matrix-row select{grid-column:1/-1}.profile-hero{padding:17px}.profile-emblem{width:48px;height:48px}.section-title{align-items:flex-start}.lineup-tools{width:100%}.lineup-tools button{flex:1}.toast{left:14px;right:14px;bottom:14px;text-align:center}}
+@media(max-width:420px){.role-grid,.capability-grid{grid-template-columns:1fr}.selector-list{grid-template-columns:1fr 1fr}.edition{display:none}.matrix-row{grid-template-columns:1fr}.matrix-row select{grid-column:auto}}
+</style>
+</head>
+<body>
+<div class="shell">
+<aside class="sidebar">
+ <div class="brand"><div class="brand-mark">◈</div><div><strong>博罗产业动态能力系统</strong><small>BORO INDUSTRY ARENA</small></div></div>
+ <div class="nav-label">工作空间 / WORKSPACES</div>
+ <div class="nav-row">
+  <button class="nav-btn active" data-view="overview"><span class="num">01</span><b>产业总览</b></button>
+  <button class="nav-btn" data-view="profile"><span class="num">02</span><b>主体档案</b></button>
+  <button class="nav-btn" data-view="lineup"><span class="num">03</span><b>产业阵容</b></button>
+ </div>
+ <div class="side-bottom"><strong>内部辅助决策原型</strong><br>事实、估算、假设与模型输出分层呈现。当前为交互原型，尚未接入发改部门真实数据。</div>
+</aside>
+<main class="main">
+ <div class="topbar"><div class="crumb">博罗内部版　/　<span id="crumbCurrent"><b>产业总览</b></span></div><div class="top-actions"><span class="edition">INTERNAL · PROTOTYPE 01</span><button class="quiet-btn" id="systemMap">系统说明</button></div></div>
+
+<section class="view active" id="view-overview">
+ <div class="page-head"><div><div class="eyebrow">INDUSTRY COMMAND CENTER</div><h1>产业全局，先看结构。<br><span style="color:var(--cyan)">再决定往哪里深入。</span></h1><p>把产业变化、主体能力、组合关系和风险线索放在同一张工作台上。先发现值得关注的地方，再进入具体主体和组合实验。</p></div><div class="head-right"><span class="tag cyan">内部辅助决策</span><span class="tag amber">演示数据 / 待接入</span></div></div>
+ <div class="grid overview-grid">
+  <div class="panel metric" style="--glow:rgba(84,167,255,.13)"><div class="metric-label">分析对象层级</div><div class="metric-value">05 <span style="font-size:12px;color:var(--muted);font-weight:500">级</span></div><div class="metric-note">区域体系 → 支撑平台</div></div>
+  <div class="panel metric" style="--glow:rgba(94,224,220,.13)"><div class="metric-label">主体能力维度</div><div class="metric-value">06 <span style="font-size:12px;color:var(--muted);font-weight:500">维</span></div><div class="metric-note">规模、动能、技术、协同、价值、韧性</div></div>
+  <div class="panel metric" style="--glow:rgba(87,214,160,.13)"><div class="metric-label">证据分层</div><div class="metric-value">A—D</div><div class="metric-note">事实、线索、估算、数据缺口</div></div>
+  <div class="panel metric" style="--glow:rgba(181,160,255,.13)"><div class="metric-label">核心工作空间</div><div class="metric-value">03</div><div class="metric-note">总览、主体档案、产业阵容</div></div>
+ </div>
+ <div class="grid workspaces">
+  <article class="panel workspace" data-open="profile"><div class="orb"></div><div class="index">01 / SCOUTING ROOM</div><h3>主体档案室</h3><p>查看产业主体的六维能力、发展潜力、证据可信度和数据缺口。由产业门类继续下钻到产业链与企业群体。</p><div class="go">↗</div></article>
+  <article class="panel workspace" data-open="lineup"><div class="orb"></div><div class="index">02 / LINEUP LAB</div><h3>产业阵容工作台</h3><p>调整产业角色与组合，检查协同、资源竞争和结构缺口。拖动不是装饰，组合变化必须可见。</p><div class="go">↗</div></article>
+  <article class="panel workspace" data-open="profile"><div class="orb"></div><div class="index">03 / EVIDENCE DESK</div><h3>证据与能力</h3><p>不把缺失数据伪装成评分。每个判断都应能回到指标定义、来源、时间和核验状态。</p><div class="go">↗</div></article>
+ </div>
+ <div class="grid alert-grid">
+  <article class="panel alert-card"><div class="alert-head"><span class="tag cyan">变化提醒</span><span class="micro">信号入口</span></div><h3>哪些事情最近发生了变化？</h3><p>接入公开统计、项目进展、企业公告、招聘和招投标线索后，在这里形成可追溯的变化提醒。</p><div class="alert-foot">当前状态：等待数据源接入，不生成虚构事件</div></article>
+  <article class="panel alert-card"><div class="alert-head"><span class="tag amber">条件预警</span><span class="micro">风险入口</span></div><h3>什么条件下可能出现风险？</h3><p>预警由触发条件、证据等级和影响路径共同构成。没有满足条件，不因页面需要而强行报警。</p><div class="alert-foot">当前状态：规则框架已预留，阈值待核验</div></article>
+  <article class="panel alert-card"><div class="alert-head"><span class="tag green">目标达成</span><span class="micro">目标入口</span></div><h3>距离产业布局方向还缺什么？</h3><p>围绕2032年前后产业布局方向1:5:4，检查产业角色、关键支撑、项目转化与配套条件。</p><div class="alert-foot">口径锁定：产业布局方向，不是增加值比例</div></article>
+ </div>
+ <div class="split">
+  <section class="panel panel-pad"><div class="section-title"><div><h2>判断链条</h2><p>让每一次点击都有下一步，而不是把用户困在一张大屏里</p></div><span class="tag">工作流</span></div>
+   <div class="timeline">
+    <div class="timeline-item"><div class="timeline-time">STEP 01</div><div class="timeline-line"></div><div class="timeline-copy"><b>发现变化信号</b><span>公开数据、项目事件、企业线索与调查信息</span></div></div>
+    <div class="timeline-item"><div class="timeline-time">STEP 02</div><div class="timeline-line"></div><div class="timeline-copy"><b>进入主体档案</b><span>辨认能力、状态、潜力与证据缺口</span></div></div>
+    <div class="timeline-item"><div class="timeline-time">STEP 03</div><div class="timeline-line"></div><div class="timeline-copy"><b>放入产业阵容</b><span>观察角色互补、资源竞争和网络依赖</span></div></div>
+    <div class="timeline-item"><div class="timeline-time">STEP 04</div><div class="timeline-line"></div><div class="timeline-copy"><b>保存情景并复核</b><span>记录输入、版本和假设，等待真实数据验证</span></div></div>
+   </div>
+  </section>
+  <section class="panel panel-pad"><div class="section-title"><div><h2>战略口径锁定</h2><p>所有页面共用，不允许口径漂移</p></div><span class="tag amber">必须遵守</span></div>
+   <div style="font-size:34px;font-weight:800;letter-spacing:.04em;color:var(--cyan);margin:12px 0">1 : 5 : 4</div>
+   <p style="font-size:12px;color:#c3d4e2;line-height:1.8;margin:0">博罗2032年前后产业布局方向。不得解释为三次产业增加值比例，也不得将目标方向写成已经实现的现实结果。</p>
+   <div class="footer-note">目标监测应进一步拆解产业门类、项目转化、配套能力、人才与生产性服务条件。</div>
+  </section>
+ </div>
+</section>
+
+<section class="view" id="view-profile">
+ <div class="page-head"><div><div class="eyebrow">INDUSTRY SCOUTING ROOM</div><h1>不是给产业打分。<br><span style="color:var(--cyan)">是把它的能力看清楚。</span></h1><p>像球员档案一样快速识别主体，但产业属性必须由证据支撑。能力、潜力、证据可信度分开呈现。</p></div><div class="head-right"><span class="tag amber">样例主体 / 非正式评价</span></div></div>
+ <div class="profile-layout">
+  <aside class="panel panel-pad"><div class="section-title"><div><h2>选择分析主体</h2><p>样例对象，用于跑通界面与交互</p></div></div><div class="selector-list" id="subjectList"></div><div class="footer-note">当前样例产业名称仅用于演示分析结构。主体边界、产业数据和真实关系须经公开资料及部门数据核验。</div></aside>
+  <div>
+   <section class="panel profile-hero"><div><div class="eyebrow" id="profileEyebrow">INDUSTRY PROFILE / DEMO</div><h2 id="profileName">电子信息产业</h2><p id="profileDesc">查看产业规模、增长动能、技术升级、产业协同、价值创造和抗风险能力。当前未接入可核验的主体级指标。</p><div style="display:flex;gap:7px;flex-wrap:wrap;margin-top:13px"><span class="tag cyan">能力画像</span><span class="tag amber">证据待核验</span><span class="tag">主体边界待确认</span></div></div><div class="profile-emblem" id="profileEmblem">电</div></section>
+   <div class="profile-facts">
+    <div class="fact"><span>当前能力</span><b>待真实指标计算</b></div><div class="fact"><span>发展潜力</span><b>条件性研判，不等于现实能力</b></div><div class="fact"><span>证据可信度</span><b>逐项核验，不汇总伪分数</b></div>
+   </div>
+   <div class="grid capability-grid" id="capabilityGrid"></div>
+   <section class="panel panel-pad" style="margin-top:12px"><div class="section-title"><div><h2>证据与数据完整度</h2><p>数据覆盖情况和判断可信度分开看</p></div><span class="tag amber">等待数据接入</span></div>
+    <table class="evidence-table"><thead><tr><th>核验项目</th><th>当前状态</th><th>下一步需要的数据</th></tr></thead><tbody id="evidenceBody"></tbody></table>
+   </section>
+   <section class="panel panel-pad" style="margin-top:12px"><div class="section-title"><div><h2>主体下一步</h2><p>从单体能力进入组合关系</p></div></div><div style="display:flex;gap:8px;flex-wrap:wrap"><button class="primary-btn" id="addToLineup">加入产业阵容</button><button class="soft-btn" id="openEvidence">查看证据规则</button></div></section>
+  </div>
+ </div>
+</section>
+
+<section class="view" id="view-lineup">
+ <div class="page-head"><div><div class="eyebrow">INDUSTRY LINEUP LAB</div><h1>强产业不等于强阵容。<br><span style="color:var(--cyan)">关键在于如何组合。</span></h1><p>借鉴体育游戏阵容管理：调整角色、移动产业、观察空缺与关系。当前先验证组合结构，不虚构协同产值或增长贡献。</p></div><div class="head-right"><span class="tag cyan">可拖拽调整</span><span class="tag amber">演示阵容</span></div></div>
+ <section class="panel panel-pad">
+  <div class="lineup-top"><div><div class="section-title" style="margin:0"><div><h2>产业阵容配置</h2><p>拖动产业卡片到不同角色槽位；点击 × 可移回候选区</p></div></div></div><div class="lineup-tools"><button class="soft-btn" id="resetLineup">恢复演示阵容</button><button class="soft-btn" id="saveLineup">保存当前阵容</button><button class="primary-btn" id="compareLineup">检查组合结构</button></div></div>
+  <div class="role-grid" id="roleGrid"></div>
+  <div class="panel pool"><div class="section-title"><div><h2>候选产业池</h2><p>尚未放入当前阵容的主体</p></div><span class="tag">拖入上方角色区</span></div><div class="chip-list" id="poolList"></div></div>
+ </section>
+ <div class="split">
+  <section class="panel panel-pad"><div class="section-title"><div><h2>产业关系检查</h2><p>关系类型必须来自证据，不能因产业相似就默认协同</p></div><span class="tag amber">人工核验入口</span></div>
+   <div class="matrix">
+    <div class="matrix-row head"><span>主体 A</span><span>主体 B</span><span>关系判断</span><span>状态</span></div>
+    <div id="matrixRows"></div>
+   </div>
+  </section>
+  <section class="panel panel-pad"><div class="section-title"><div><h2>阵容结构检查</h2><p>仅检查当前配置，不代替经济影响测算</p></div></div>
+   <div id="lineupChecks" style="display:grid;gap:10px"></div>
+   <div class="footer-note">移除某个产业后，本页只报告角色空缺和配置变化。若要计算供应中断造成的真实损失，仍需企业关系、采购数据、替代能力与模型参数。</div>
+  </section>
+ </div>
+</section>
+<p class="footer-note">BORO INDUSTRY ARENA · 内部辅助决策原型。当前界面不提供未经核验的产业评分、协同收益或风险概率。未来接入真实数据后，应保存数据版本、模型版本、参数、时间戳与结果快照。</p>
+</main>
+</div>
+<div class="drawer" id="drawer"><div class="drawer-panel"><button class="drawer-close" id="drawerClose" aria-label="关闭">×</button><div class="eyebrow">SYSTEM NOTES</div><h2 id="drawerTitle">系统说明</h2><div id="drawerBody"></div></div></div>
+<div class="toast" id="toast"></div>
+<script>
+(function(){
+"use strict";
+var subjects=[
+{id:"electronics",name:"电子信息产业",short:"电子",desc:"样例主体。应进一步拆分具体产业链环节、企业群体和关键配套，避免用产业门类总量代替链条能力。",color:"#5bb9ff",evidence:["产业规模与企业范围","订单、投产与市场需求","研发、专利质量与工艺升级","本地采购与上下游交易关系","利润、生产率与产品结构","客户集中、供应依赖与替代能力"]},
+{id:"materials",name:"先进材料",short:"材",desc:"样例主体。重点核验材料产品与下游应用之间是否存在真实供需关系、技术适配和稳定采购。",color:"#b5a0ff",evidence:["产品类别与产能口径","订单和下游需求","研发成果与产业化进度","与下游制造企业的真实交易","产品结构与价值留存","关键原料、设备与市场依赖"]},
+{id:"precision",name:"精密制造",short:"精",desc:"样例主体。应区分加工能力、设备能力、质量体系和进入核心客户供应链的能力。",color:"#57d6a0",evidence:["企业范围、产值与就业","开工、订单与产能利用","设备、工艺与质量认证","本地上下游配套关系","生产率、利润与产品升级","核心客户、设备与原料依赖"]},
+{id:"logistics",name:"工业物流",short:"物",desc:"样例主体。重点不是物流企业数量，而是制造业企业实际使用、交付效率、仓配网络和供应链保障能力。",color:"#f3c56c",evidence:["物流企业与服务范围","业务量、时效与需求变化","数字化、仓储与运输能力","制造业客户及服务关系","物流成本与服务附加值","线路、节点与能源依赖"]},
+{id:"rd",name:"研发检测服务",short:"研",desc:"样例主体。应核验服务平台是否被本地企业实际采用，成果是否转化为产品、工艺或质量提升。",color:"#5ee0dc",evidence:["平台数量、资质与服务范围","检测需求与服务增长","设备、技术与专业人员","企业使用关系与合作项目","服务收入与成果转化","关键设备、人才与资金依赖"]},
+{id:"production",name:"生产性服务业",short:"服",desc:"样例主体。需要识别服务是否真正嵌入生产过程，以及对制造效率、市场拓展和价值创造的影响。",color:"#ff8797",evidence:["服务主体与业务范围","订单、客户和市场变化","专业能力与数字化水平","与制造企业的嵌入关系","服务化收入与价值创造","客户集中、人才与资金风险"]}
+];
+var dimensions=[
+["产业规模","产值、增加值、企业数量、就业与产能","企业数量不能直接代表链条完整度。"],
+["增长动能","增速、订单、投产、市场需求与扩产","单年增长不能自动代表持续成长。"],
+["技术升级","研发、专利质量、设备工艺与产品迭代","专利数量不等于技术壁垒。"],
+["产业协同","本地配套、上下游连接、采购与协作密度","地理相邻不等于真实交易。"],
+["价值创造","生产率、利润、产品附加值与价值留存","规模大不等于价值留存高。"],
+["抗风险能力","市场集中、供应依赖、财务压力与替代能力","没有观察到冲击不等于韧性已被证明。"]
+];
+var roles=[
+{id:"core",name:"核心支柱型",desc:"规模、就业与产业基础支撑",color:"#5bb9ff"},
+{id:"growth",name:"成长突破型",desc:"成长空间与潜在新引擎",color:"#5ee0dc"},
+{id:"key",name:"关键配套型",desc:"影响多个产业的关键环节",color:"#57d6a0"},
+{id:"service",name:"生产服务型",desc:"物流、研发、检测、工业服务",color:"#f3c56c"},
+{id:"base",name:"基础保障型",desc:"能源、交通与基础设施",color:"#b5a0ff"},
+{id:"reserve",name:"战略储备型",desc:"规模有限但有待验证的战略价值",color:"#ff8797"}
+];
+var defaultLineup={core:["electronics"],growth:["materials","precision"],key:["logistics"],service:["rd","production"],base:[],reserve:[]};
+var state={subject:"electronics",lineup:clone(defaultLineup),relations:{}};
+function clone(o){return JSON.parse(JSON.stringify(o))}
+function el(id){return document.getElementById(id)}
+function toast(msg){var t=el("toast");t.textContent=msg;t.classList.add("show");clearTimeout(toast.timer);toast.timer=setTimeout(function(){t.classList.remove("show")},2400)}
+function subject(id){return subjects.find(function(s){return s.id===id})}
+function allAssigned(){var a=[];roles.forEach(function(r){(state.lineup[r.id]||[]).forEach(function(id){a.push(id)})});return a}
+function switchView(name){document.querySelectorAll(".view").forEach(function(v){v.classList.toggle("active",v.id==="view-"+name)});document.querySelectorAll(".nav-btn").forEach(function(b){b.classList.toggle("active",b.dataset.view===name)});el("crumbCurrent").innerHTML="<b>"+({overview:"产业总览",profile:"主体档案",lineup:"产业阵容"}[name])+"</b>";window.scrollTo({top:0,behavior:"smooth"})}
+document.querySelectorAll("[data-view]").forEach(function(b){b.addEventListener("click",function(){switchView(b.dataset.view)})});
+document.querySelectorAll("[data-open]").forEach(function(b){b.addEventListener("click",function(){switchView(b.dataset.open)})});
+function renderSubjects(){
+ var list=el("subjectList");list.innerHTML="";
+ subjects.forEach(function(s){var b=document.createElement("button");b.className="subject-option"+(state.subject===s.id?" active":"");b.innerHTML="<span><b>"+s.name+"</b><small>样例主体 · 待接入证据</small></span><span class='arrow'>›</span>";b.addEventListener("click",function(){state.subject=s.id;renderSubjects();renderProfile()});list.appendChild(b)})
+}
+function renderProfile(){
+ var s=subject(state.subject);el("profileName").textContent=s.name;el("profileDesc").textContent=s.desc;el("profileEmblem").textContent=s.short;el("profileEyebrow").textContent="INDUSTRY PROFILE / "+s.id.toUpperCase();
+ var grid=el("capabilityGrid");grid.innerHTML="";
+ dimensions.forEach(function(d,i){var card=document.createElement("article");card.className="panel capability";card.innerHTML="<div class='cap-top'><h4>"+d[0]+"</h4><span class='tag amber'>待核验</span></div><p>"+d[1]+"</p><div class='status-line' style='--w:"+[18,22,15,12,16,10][i]+"%'><i style='width:var(--w);opacity:.38'></i></div><p style='margin-top:8px;color:#829bb0'>注意： "+d[2]+"</p>";grid.appendChild(card)});
+ var body=el("evidenceBody");body.innerHTML="";
+ s.evidence.forEach(function(x,i){var tr=document.createElement("tr");tr.innerHTML="<td>"+x+"</td><td><span class='tag amber'>待接入 / 待核验</span></td><td>"+["统计口径、年度数据与企业范围","订单、投产、需求变化及时间序列","研发、专利质量、设备与工艺资料","采购流向、供应商和企业调查","利润、生产率与产品结构数据","客户/供应商集中度及替代方案"][i]+"</td>";body.appendChild(tr)})
+}
+el("addToLineup").addEventListener("click",function(){var id=state.subject;if(allAssigned().indexOf(id)<0){state.lineup.reserve.push(id);renderLineup();toast("已加入候选阵容："+subject(id).name)}else{toast("该主体已在阵容中")};switchView("lineup")});
+el("openEvidence").addEventListener("click",function(){openDrawer("证据规则","<div class='drawer-block'><b>事实</b><p>有明确来源、时间和统计口径的观测信息。</p></div><div class='drawer-block'><b>估算</b><p>由已知信息按公开方法推算，需展示方法和区间。</p></div><div class='drawer-block'><b>假设</b><p>为了运行情景而设置的条件，必须允许调整。</p></div><div class='drawer-block'><b>模型输出</b><p>特定输入和模型版本下的计算结果，不等于事实。</p></div><p>数据完整度回答“覆盖多少”；证据可信度回答“判断有多可靠”。两者不能混成一个分数。</p>")});
+function renderLineup(){
+ var grid=el("roleGrid");grid.innerHTML="";
+ roles.forEach(function(r){
+  var slot=document.createElement("div");slot.className="role-slot";slot.dataset.role=r.id;
+  var ids=state.lineup[r.id]||[];
+  slot.innerHTML="<div class='role-head'><div><b>"+r.name+"</b><small>"+r.desc+"</small></div><span class='role-count'>"+ids.length+" 个主体</span></div><div class='chip-list'></div>";
+  var chips=slot.querySelector(".chip-list");
+  ids.forEach(function(id){var s=subject(id);var chip=makeChip(s,r.id);chips.appendChild(chip)});
+  slot.addEventListener("dragover",function(e){e.preventDefault();slot.classList.add("drag-over")});
+  slot.addEventListener("dragleave",function(){slot.classList.remove("drag-over")});
+  slot.addEventListener("drop",function(e){e.preventDefault();slot.classList.remove("drag-over");var id=e.dataTransfer.getData("text/plain");moveSubject(id,r.id)});
+  grid.appendChild(slot)
+ });
+ var pool=el("poolList");pool.innerHTML="";
+ var assigned=allAssigned();
+ subjects.filter(function(s){return assigned.indexOf(s.id)<0}).forEach(function(s){pool.appendChild(makeChip(s,"pool"))});
+ renderMatrix();renderChecks()
+}
+function makeChip(s,from){
+ var c=document.createElement("div");c.className="industry-chip";c.draggable=true;c.dataset.subject=s.id;c.style.setProperty("--chip",s.color);
+ c.innerHTML="<span class='chip-dot'></span>"+s.name+(from==="pool"?"":"<button title='移回候选池' aria-label='移回候选池'>×</button>");
+ c.addEventListener("dragstart",function(e){e.dataTransfer.setData("text/plain",s.id);e.dataTransfer.effectAllowed="move"});
+ c.addEventListener("click",function(e){if(e.target.tagName==="BUTTON"){removeSubject(s.id);return}state.subject=s.id;renderSubjects();renderProfile();switchView("profile")});
+ return c
+}
+function removeSubject(id){roles.forEach(function(r){state.lineup[r.id]=(state.lineup[r.id]||[]).filter(function(x){return x!==id})});renderLineup();toast("已移回候选产业池")}
+function moveSubject(id,to){if(!subject(id))return;removeSubjectSilent(id);state.lineup[to].push(id);renderLineup();toast(subject(id).name+" → "+roles.find(function(r){return r.id===to}).name)}
+function removeSubjectSilent(id){roles.forEach(function(r){state.lineup[r.id]=(state.lineup[r.id]||[]).filter(function(x){return x!==id})})}
+function renderMatrix(){
+ var rows=el("matrixRows");rows.innerHTML="";
+ var pairs=[["electronics","precision"],["materials","electronics"],["precision","logistics"],["precision","rd"],["electronics","production"]];
+ pairs.forEach(function(pair,i){
+  var key=pair.join("_");var row=document.createElement("div");row.className="matrix-row";
+  var opts=["待核验","可能协同","可能竞争","可能冲突","暂无关系证据"];
+  var val=state.relations[key]||"待核验";
+  row.innerHTML="<span>"+subject(pair[0]).name+"</span><span>"+subject(pair[1]).name+"</span><span>关系类型由证据确认</span><select aria-label='关系判断'>"+opts.map(function(o){return "<option "+(o===val?"selected":"")+">"+o+"</option>"}).join("")+"</select>";
+  row.querySelector("select").addEventListener("change",function(e){state.relations[key]=e.target.value;toast("关系判断已更新。请补充证据来源。")});rows.appendChild(row)
+ })
+}
+function renderChecks(){
+ var box=el("lineupChecks");box.innerHTML="";
+ var assigned=allAssigned();var count=assigned.length;
+ var empty=roles.filter(function(r){return (state.lineup[r.id]||[]).length===0});
+ var checks=[
+ ["已配置主体",count+" 个","当前阵容中已放置的样例主体数量，不代表产业规模。",count?"green":"amber"],
+ ["空缺角色",empty.length+" / 6","空缺可能是有意选择，也可能提示需要核验的结构缺口。",empty.length?"amber":"green"],
+ ["关系核验","待核验","当前未接入企业采购、供应链或投入产出关系数据。","amber"],
+ ["组合收益","不计算","未建立经过验证的协同参数，不输出虚构收益。","red"]
+ ];
+ checks.forEach(function(c){var d=document.createElement("div");d.style.cssText="padding:12px;border:1px solid var(--line);border-radius:11px;background:#0c2031";d.innerHTML="<div style='display:flex;justify-content:space-between;gap:10px;align-items:center'><b style='font-size:11px'>"+c[0]+"</b><span class='tag "+c[3]+"'>"+c[1]+"</span></div><p style='font-size:10px;color:var(--muted);line-height:1.6;margin:7px 0 0'>"+c[2]+"</p>";box.appendChild(d)})
+}
+el("resetLineup").addEventListener("click",function(){state.lineup=clone(defaultLineup);renderLineup();toast("已恢复演示阵容")});
+el("saveLineup").addEventListener("click",function(){try{localStorage.setItem("boroArenaLineup",JSON.stringify(state.lineup));toast("阵容已保存在当前浏览器")}catch(e){toast("当前浏览器不支持本地保存")}});
+el("compareLineup").addEventListener("click",function(){renderChecks();toast("结构检查已刷新。当前只检查角色配置与证据状态。")});
+el("systemMap").addEventListener("click",function(){openDrawer("系统架构与使用边界","<div class='drawer-block'><b>01 主体档案室</b><p>五级主体、六维能力、当前能力/潜力/证据可信度分开呈现。</p></div><div class='drawer-block'><b>02 产业阵容工作台</b><p>六类角色、拖拽组合、关系核验和结构缺口检查。</p></div><div class='drawer-block'><b>03 产业总览中心</b><p>变化提醒、条件预警、目标达成检查与跨工作空间入口。</p></div><div class='drawer-block'><b>数据边界</b><p>A级：政府统计和正式资料；B级：企业公告、招聘、招投标等；C级：多来源线索与合理估算；D级：尚缺企业内部数据。当前原型没有接入真实主体级数据。</p></div><div class='drawer-block'><b>战略口径</b><p>2032年前后1:5:4是产业布局方向，不是三次产业增加值比例。</p></div><p>注意：GitHub Pages 是公开静态托管。本原型未接入涉密数据，也不提供账号鉴权。正式内部部署前需另行配置身份认证、访问控制与数据隔离。</p>")});
+function openDrawer(title,body){el("drawerTitle").textContent=title;el("drawerBody").innerHTML=body;el("drawer").classList.add("open")}
+el("drawerClose").addEventListener("click",function(){el("drawer").classList.remove("open")});
+el("drawer").addEventListener("click",function(e){if(e.target===el("drawer"))el("drawer").classList.remove("open")});
+try{var saved=localStorage.getItem("boroArenaLineup");if(saved){var parsed=JSON.parse(saved);if(parsed&&roles.every(function(r){return Array.isArray(parsed[r.id])}))state.lineup=parsed}}catch(e){}
+renderSubjects();renderProfile();renderLineup();
+})();
+</script>
+</body>
+</html>
