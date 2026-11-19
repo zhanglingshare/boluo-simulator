@@ -129,13 +129,15 @@ const prospects=[
 {id:"robot-parts",name:"机器人核心零部件",type:"技术新秀方向",team:"secondary",club:"人工智能与机器人",stage:"主体待发现",fact:"作为机器人产业链关键位置观察，不代表博罗已形成对应规模供给。",verify:"寻找减速器、伺服、控制器、传感器等真实企业和产品。",color:"blue"},
 {id:"industrial-software",name:"工业软件与数字化服务",type:"服务新秀方向",team:"tertiary",club:"软件信息与商务服务",stage:"主体待发现",fact:"关注本地软件服务商及制造企业数字化服务供给。",verify:"识别本地服务商、产品、付费客户、部署量和续费率。",color:"purple"},
 {id:"industrial-logistics",name:"工业物流与供应链服务",type:"服务新秀方向",team:"tertiary",club:"交通运输与现代物流",stage:"主体待发现",fact:"关注物流、仓储、供应链服务对制造业交付与库存的支撑。",verify:"识别企业主体、制造业客户、线路、时效、仓配节点与货流数据。",color:"purple"},
-{id:"rd-platform",name:"研发检测与中试服务",type:"服务新秀方向",team:"tertiary",club:"研发设计与检验检测",stage:"主体待发现",fact:"关注跨产业共用的研发、检测、中试和认证服务能力。",verify:"核验平台设备、资质、企业使用频次、服务收入与成果转化。",color:"purple"}
+{id:"rd-platform",name:"研发检测与中试服务",type:"服务新秀方向",team:"tertiary",club:"研发设计与检验检测",stage:"主体待发现",fact:"关注跨产业共用的研发、检测、中试和认证服务能力。",verify:"核验平台设备、资质、企业使用频次、服务收入与成果转化。",color:"purple"},
+{id:"shangyuan-sign",name:"上原铭牌（企业全称待核）",type:"小企业球员线索",team:"secondary",club:"表面处理 / 铭牌加工",stage:"主体核验",fact:"公开报道在博罗表面处理产业集群相关报道中提及上原铭牌车间。",verify:"核验工商全称、博罗经营地址、主营产品、客户与企业规模，确认是否独立法人。",color:"blue"}
 ];
 const evidenceTasks=[
 {icon:"🔎",title:"第一产业：先补企业主体",desc:"把合作社、家庭农场、农业龙头企业、种养大户与产品品牌分开建档。"},
 {icon:"🧩",title:"第二产业：从产业球员转向企业球员",desc:"核验企业全称、属地法人、产品、客户、产能与真实经营状态。"},
 {icon:"🌐",title:"第三产业：识别生产性服务球员",desc:"优先寻找物流、研发检测、工业软件、供应链和品牌渠道服务主体。"},
-{icon:"🧪",title:"青训：给产品和项目单独建档",desc:"样品、认证、首单、复购、量产逐级验证，不与企业数量混算。"}
+{icon:"🧪",title:"青训：给产品和项目单独建档",desc:"样品、认证、首单、复购、量产逐级验证，不与企业数量混算。"},
+{icon:"🪑",title:"小企业池：逐家识别，不只看龙头",desc:"表面处理园区公开报道提及130余家上下游企业；当前只识别到部分主体线索，必须逐家建立实名档案。"}
 ];
 let currentTeam="secondary",currentView="overview",selectedPlayer=null,filters="all",tacticTeam="secondary",tacticIds=[];
 const $=id=>document.getElementById(id);
