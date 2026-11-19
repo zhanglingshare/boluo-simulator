@@ -185,6 +185,8 @@ const playbooks={
 let activePlaybook=null;
 function selectPlaybook(name){
  if(!playbooks[name])return;
+ const missing=Object.values(playbooks[name]).filter(Boolean).filter(id=>!find(id));
+ if(missing.length){msg("当前导入的县域主体与演示布局模板不匹配，请使用手动配置或载入演示配置。");return}
  push();state.slots=copy(playbooks[name]);state.selected=Object.values(state.slots).find(Boolean)||config.entities[0]?.id;
  activePlaybook=name;simStage=0;render();
 }
