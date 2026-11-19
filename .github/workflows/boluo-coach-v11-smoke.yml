@@ -1,0 +1,21 @@
+name: Boluo V11 Industry Coach Regression
+on:
+  push:
+    paths:
+      - 'v11/internal/coach-core-v1.js'
+      - 'v11/internal/coach-v1.js'
+      - 'v11/internal/coach-v1.css'
+      - 'v11/internal/league.html'
+      - 'tests/boluo-coach-core.cjs'
+      - '.github/workflows/boluo-coach-v11-smoke.yml'
+  workflow_dispatch:
+jobs:
+  regression:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+      - name: Check stochastic coach engine and paths
+        run: node tests/boluo-coach-core.cjs
