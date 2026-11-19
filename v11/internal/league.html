@@ -1038,7 +1038,10 @@ const careerEvents=[
  ["订单波动","orders",1.3],["人才紧缺","talent",1],["供应中断","supply",1.5],["新项目机会","none",-1],["技术突破窗口","none",-.8],["市场正常","none",0]
 ];
 let career={quarter:0,policy:"balanced",bench:null,training:{capacity:0,tech:0,resilience:0},fatigue:0,recovery:0,score:0,rival:64,history:[],snapshots:[],journal:[],initialSlots:null,spent:[0,0,0,0,0],benchReady:0,rivalStrategy:"balanced",companyStates:{},curve:[],comparison:{A:null,B:null},lastOutcome:null,initialScore:0};
-function careerBonus(){return career.training.capacity*.42+career.training.tech*.48+career.training.resilience*.34-career.fatigue*.3}
+function careerBonus(){
+ const weighted=career.training.capacity*.42+career.training.tech*.48+career.training.resilience*.34;
+ return 9*(1-Math.exp(-weighted/10))-career.fatigue*.3;
+}
 function careerScore(){const base=managerCompute(),buff=careerBonus();return Math.max(0,Math.min(100,+((base.score+buff-career.recovery*.12).toFixed(1))))}
 function careerRival(q){const shift=career.rivalStrategy==="aggressive"?1.35:career.rivalStrategy==="innovation"?1.04:.7;return Math.max(40,Math.min(99,64+q*shift+Math.sin(q*1.4)*2.6))}
 function careerSeed(q){let a=0;for(const id of Object.values(manager.slots).filter(Boolean))for(const ch of id)a=(a*17+ch.charCodeAt(0))%997;return (a+q*11)%careerEvents.length}
@@ -1070,7 +1073,7 @@ function v9AdvanceCompanies(policy,paid,event){
    else if(policy.id==="balanced")inc=.12+.15*trend;
    else if(policy.id==="cash"&&i===5)inc=.4;
    if(role==="growth")inc*=1.16;
-   st.growth[i]=Math.min(20,st.growth[i]+inc*gain);
+   st.growth[i]=Math.min(14,st.growth[i]+inc*gain*Math.max(.14,1-st.growth[i]/15));
   }
   // Deterministic, explicitly hypothetical event targeting.
   const hit=eventType==="orders"?[1,4]:eventType==="talent"?[2,3]:eventType==="supply"?[3,5]:[];
@@ -1129,7 +1132,7 @@ function v9LoadCareer(){
   if(!data||data.version!==9||!data.career||!data.slots)return;
   if(!Object.values(data.slots).filter(Boolean).every(id=>companies.some(p=>p.id===id)))return;
   const s=data.career;
-  if(!Number.isInteger(s.quarter)||s.quarter<0||s.quarter>28)return;
+  if(!Number.isInteger(s.quarter)||s.quarter<0||s.quarter>27)return;
   if(!Array.isArray(s.spent)||s.spent.length!==5||!Array.isArray(s.history)||!Array.isArray(s.curve))return;
   if(!s.companyStates||typeof s.companyStates!=="object"||!s.training||!s.comparison)return;
   career={...career,...s};manager.slots={...manager.slots,...data.slots};
@@ -1146,6 +1149,7 @@ function v9Init(){
 }
 
 function careerTick(){
+ if(career.quarter>=27)return;
  const policy=careerPolicies.find(x=>x.id===career.policy),before=managerCompute(),price=policy.cost;
  const paid=price.every((x,i)=>before.used[i]+x<=managerCaps[i]);
  const event=careerEvents[careerSeed(career.quarter)];
@@ -1224,7 +1228,7 @@ function renderCareer(){
  $("careerCompetition").innerHTML=[["博罗 · 当前组合",score],["虚拟竞争县 · "+({balanced:"稳健经营",aggressive:"扩张策略",innovation:"技术追赶"}[career.rivalStrategy]),career.rival]].map(x=>'<div><small>'+x[0]+'</small><strong>'+Number(x[1]).toFixed(1)+'</strong><span class="career-muted">演示综合能力指数</span></div>').join("");
  $("careerFeed").innerHTML=career.journal.length?career.journal.map(x=>'<div><b>'+esc(x.date)+'</b><span>'+esc(x.name)+' · '+esc(x.text)+'</span></div>').join(""):'<div><b>2026 Q1</b><span>赛季开始。选择经营策略，点击推进季度。</span></div>';
  $("careerQuarterHint").textContent="预算超限 "+v.overloaded.filter(x=>x>0).length+" 项 · 状态疲劳 "+career.fatigue.toFixed(1)+" · 恢复负担 "+career.recovery.toFixed(1)+" · 季度成本结转："+career.spent.map((x,i)=>managerNeeds[i]+" "+x.toFixed(0)).join(" / ")+"。所有要素为演示单位。";
- $("careerAdvance").disabled=career.quarter>=28;
+ $("careerAdvance").disabled=career.quarter>=27;
  $("careerRewind").disabled=!career.history.length;
  v9Render();v9SaveCareer();
 }
