@@ -328,7 +328,7 @@ body{background:radial-gradient(ellipse 1250px 620px at 63% -16%,#0d4d68 0%,tran
 .v10-plot{width:100%;height:auto;display:block;background:#0a2334;border:1px solid #41677b;border-radius:11px;margin:12px 0}.v10-alert{font-size:10px;color:#c4b591;background:#3930205e;border-radius:9px;padding:10px;border:1px solid #806c4c;margin-top:9px}
 .v10-legend{display:flex;gap:12px;flex-wrap:wrap;font-size:10px;color:#d1dee8}.v10-legend span:before{content:"";display:inline-block;width:13px;height:4px;vertical-align:middle;margin-right:7px;border-radius:3px;background:var(--ink)}
 @media(max-width:760px){.v10-grid{grid-template-columns:1fr}.v10-heading h3{font-size:19px}}
-</style></head>
+</style><link rel="stylesheet" href="./coach-v1.css"></head>
 <body><div class="shell">
 <header class="top"><div class="brand"><div class="brand-mark">B</div><div><div class="eyebrow">BORO INDUSTRY INTELLIGENCE</div><h1>博罗产业能力与结构研判 <span style="color:#829ab2;font-size:12px;font-weight:500">内部辅助决策系统</span></h1></div></div><div class="top-right"><span class="pill live">● 原型运行中</span><span class="pill">2026 年度 · 内部版</span><span class="pill warn">证据优先</span></div></header>
 <section class="hero"><div class="hero-main"><div class="hero-kicker">BORO / INDUSTRY INTELLIGENCE</div><h2>从产业结构到企业能力，<br>看见真正的增长与风险。</h2><p>识别三次产业结构、龙头带动、企业成长梯队和跨产业连接。发现关键主体、薄弱环节、成长机会和风险传导。</p><button class="mgr-hero-launch" data-open-view="tactics">♛ 进入产业经营模式　›</button><button class="wt-hero-launch" data-open-view="wind">◉ 进入产业关系风洞　<span>选企业 → 冲击 → 传导 → 缓冲</span>　›</button></div><div class="hero-side"><div class="side-head"><span>数据准备度</span><span>DATA READINESS</span></div><div class="season">2026 <small>YEAR / 开发阶段</small></div><div class="readiness"><div class="ring"><b>待接入</b></div><p><strong>动态能力观察</strong>公开资料与合理先验生成探索性区间和能力画像；正式接入调查数据后持续校准。</p></div></div></section>
@@ -1428,4 +1428,4 @@ $("scenarioSlider").oninput=e=>{premiumScenarioStrength=Number(e.target.value);r
 renderWeightControls();
 renderOverview();renderTeam();renderPlayers();initDuel();initWind();initManager();initCinematic();initCareer();v9Init();
 if(window.location && /^#(wind|season|tactics|players|compare)$/.test(window.location.hash))setView(window.location.hash.slice(1));
-</script></body></html>
+</script><script src="./coach-core-v1.js"></script><script src="./coach-v1.js"></script></body></html>
