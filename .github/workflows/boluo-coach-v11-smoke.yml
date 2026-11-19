@@ -7,6 +7,7 @@ on:
       - 'v11/internal/coach-v1.css'
       - 'v11/internal/league.html'
       - 'tests/boluo-coach-core.cjs'
+      - 'tests/boluo-coach-browser.cjs'
       - '.github/workflows/boluo-coach-v11-smoke.yml'
   workflow_dispatch:
 jobs:
@@ -19,3 +20,26 @@ jobs:
           node-version: '20'
       - name: Check stochastic coach engine and paths
         run: node tests/boluo-coach-core.cjs
+      - name: Install Chromium browser runner
+        run: |
+          npm install --no-save playwright
+          npx playwright install --with-deps chromium
+      - name: Serve site for browser regression
+        run: |
+          python3 -m http.server 8765 --bind 127.0.0.1 >/tmp/boluo-coach-http.log 2>&1 &
+          for i in $(seq 1 20); do
+            if curl --fail --silent http://127.0.0.1:8765/v11/internal/league.html -o /dev/null; then exit 0; fi
+            sleep 1
+          done
+          cat /tmp/boluo-coach-http.log
+          exit 1
+      - name: Check shared state and mobile browser interaction
+        run: node tests/boluo-coach-browser.cjs
+      - name: Upload desktop and mobile screenshots
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: boluo-v11-coach-browser-audit
+          path: artifacts/boluo-v11-coach-*.png
+          if-no-files-found: warn
+          retention-days: 7
