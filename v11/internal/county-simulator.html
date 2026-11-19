@@ -178,9 +178,9 @@ $("simNetwork").onkeydown=e=>{const g=e.target.closest("[data-scene-id]");if(g&&
 
 
 const playbooks={
- anchor:{core:"manufacture",growth:"startup",supply:"parts",service:null,base:"energy",reserve:null},
- balanced:{core:"manufacture",growth:null,supply:"parts",service:"service",base:"agri",reserve:null},
- future:{core:"manufacture",growth:"startup",supply:null,service:"service",base:null,reserve:"future"}
+ anchor:{core:"manufacture",growth:null,supply:null,service:null,base:"energy",reserve:null},
+ balanced:{core:null,growth:null,supply:"parts",service:"service",base:"agri",reserve:null},
+ future:{core:null,growth:"startup",supply:null,service:"service",base:null,reserve:"future"}
 };
 let activePlaybook=null;
 function selectPlaybook(name){
