@@ -38,10 +38,10 @@
 @keyframes simFlow{to{stroke-dashoffset:-140}}
 @media(max-width:950px){.sim-layout{grid-template-columns:1fr}.sim-results{grid-template-columns:repeat(2,1fr)}}
 @media(max-width:620px){.sim-results{grid-template-columns:1fr}.sim-stage{min-height:340px}.sim-svg{height:285px}.sim-sparklines{grid-template-columns:1fr 1fr}}
-</style></head><body><div class="wrap">
+.playbooks{display:flex;align-items:center;gap:8px;flex-wrap:wrap;margin:0 0 15px;padding:10px 12px;border:1px solid #4b657b;border-radius:12px;background:linear-gradient(120deg,#172f43,#0d2133)}.playbooks-intro{margin-right:auto}.playbooks-intro b{display:block;color:#f4cf87;font-size:12px}.playbooks-intro span{font-size:10px;color:#91b8c9}.playbooks button{padding:10px 13px;border:1px solid #668296;border-radius:9px;background:#1a364d;font-size:11px;font-weight:800}.playbooks button:hover{border-color:#ffda86;box-shadow:0 0 14px #e7b96744}.playbooks button.active{border-color:#f2c674;background:linear-gradient(110deg,#6c4f2b,#2e3040);color:#ffdb99}@media(max-width:760px){.playbooks{display:grid;grid-template-columns:1fr 1fr}.playbooks-intro{grid-column:1/-1}.playbooks button{padding:10px 6px;font-size:10px}}</style></head><body><div class="wrap">
 <header class="top"><div class="logo"><div class="mark">县</div><div><div class="kicker">COUNTY INDUSTRY DECISION SIMULATOR / GENERIC CORE</div><h1>县域产业决策风洞</h1></div></div><div class="pills"><span class="pill">通用县域配置</span><span class="pill gold">开发原型 · 非官方预测</span><span class="pill"><span class="status"></span>本地可交互</span></div></header>
 <section class="bar"><div><div class="kicker">STRUCTURE · CAPABILITY · RESOURCE CONSTRAINTS</div><h2 id="countyTitle">演示县域 · 产业组合工作台</h2><p>选主体 → 放入六类角色槽位 → 检查五种要素 → 比较取舍与代价。借鉴顶级经理游戏的操作反馈，输出真正的产业结构约束。</p></div><div class="actions"><button class="btn" id="undo" title="撤销">↶ 撤销</button><button class="btn" id="redo" title="重做">↷ 重做</button><button class="btn" id="saveA">存为 A</button><button class="btn" id="saveB">存为 B</button><button class="btn primary" id="openConfig">⚙ 县域配置 / 数据导入</button></div></section>
-<section class="stats" id="stats"></section>
+<div class="playbooks"><div class="playbooks-intro"><b>⚡ 一键加载三种布局</b><span>同一县域预算，三种不同取舍</span></div><button data-playbook="anchor">🏭 龙头优先</button><button data-playbook="balanced">⚖️ 链条均衡</button><button data-playbook="future">✦ 未来押注</button><button id="playbookReset">↺ 重置</button></div><section class="stats" id="stats"></section>
 <div class="main">
 <aside class="panel"><h3>01 · 主体能力库</h3><p class="desc">企业、平台、项目独立建档。按六维能力、证据与产业角色挑选主体。</p><input class="search" id="search" placeholder="搜索企业 / 平台 / 项目" aria-label="搜索主体"><select class="select" id="sectorFilter"><option value="all">全部三次产业</option><option value="primary">第一产业</option><option value="secondary">第二产业</option><option value="tertiary">第三产业</option></select><div class="collection" id="entities"></div><div class="warn section">卡面分数仅用于演示视觉层级。能力值、成长潜力、数据覆盖和证据可靠性是不同概念，不得相互替代。</div></aside>
 <div class="center">
@@ -115,8 +115,8 @@ const escapeText=s=>String(s??"").replace(/[&<>"']/g,x=>({"&":"&amp;","<":"&lt;"
 const find=id=>config.entities.find(e=>e.id===id);
 function total(s=state){const used=[0,0,0,0,0];const assigned=Object.values(s.slots).filter(Boolean);for(const id of assigned){const e=find(id);if(e)e.need.forEach((x,i)=>used[i]+=x)}return {used,assigned,over:used.some((v,i)=>v>config.capacities[keyName[i]]),filled:assigned.length,coverage:new Set(assigned.map(id=>find(id)?.sector)).size}}
 function push(){undo.push(copy(state));if(undo.length>60)undo.shift();redo=[]}
-function assign(id,role){const e=find(id);if(!e||!roles.some(r=>r.id===role))return;if(Object.entries(state.slots).some(([slot,v])=>v===id&&slot!==role)){msg("同一主体不能占用两个角色槽位，请先移除或替换");return}push();state.slots[role]=id;state.selected=id;render()}
-function remove(role){if(!state.slots[role])return;push();state.slots[role]=null;render()}
+function assign(id,role){const e=find(id);if(!e||!roles.some(r=>r.id===role))return;if(Object.entries(state.slots).some(([slot,v])=>v===id&&slot!==role)){msg("同一主体不能占用两个角色槽位，请先移除或替换");return}push();activePlaybook=null;state.slots[role]=id;state.selected=id;render()}
+function remove(role){if(!state.slots[role])return;push();activePlaybook=null;state.slots[role]=null;render()}
 function msg(text){const place=$("constraints");if(place)place.innerHTML='<div class="warn danger">'+escapeText(text)+'</div>'}
 function roleName(id){return roles.find(x=>x.id===id)?.name||"未配置"}
 
@@ -176,9 +176,26 @@ $("simReset").onclick=()=>{simStage=0;renderScene()};
 $("simNetwork").onclick=e=>{const g=e.target.closest("[data-scene-id]");if(g){state.selected=g.dataset.sceneId;render()}};
 $("simNetwork").onkeydown=e=>{const g=e.target.closest("[data-scene-id]");if(g&&(e.key==="Enter"||e.key===" ")){e.preventDefault();state.selected=g.dataset.sceneId;render()}};
 
+
+const playbooks={
+ anchor:{core:"manufacture",growth:"startup",supply:"parts",service:null,base:"energy",reserve:null},
+ balanced:{core:"manufacture",growth:null,supply:"parts",service:"service",base:"agri",reserve:null},
+ future:{core:"manufacture",growth:"startup",supply:null,service:"service",base:null,reserve:"future"}
+};
+let activePlaybook=null;
+function selectPlaybook(name){
+ if(!playbooks[name])return;
+ push();state.slots=copy(playbooks[name]);state.selected=Object.values(state.slots).find(Boolean)||config.entities[0]?.id;
+ activePlaybook=name;simStage=0;render();
+}
+document.querySelectorAll("[data-playbook]").forEach(btn=>btn.onclick=()=>selectPlaybook(btn.dataset.playbook));
+$("playbookReset").onclick=()=>{push();state.slots=emptySlots();state.selected=config.entities[0]?.id;activePlaybook=null;simStage=0;render()};
+
 function render(){
  $("countyTitle").textContent=config.county+" · 产业组合工作台";
- const v=total();$("stats").innerHTML=[
+ const v=total();
+ document.querySelectorAll("[data-playbook]").forEach(b=>b.classList.toggle("active",b.dataset.playbook===activePlaybook));
+ $("stats").innerHTML=[
  ["已配置主体",v.filled,"/ 6 个角色槽位"],["产业覆盖",v.coverage,"/ 3 个产业板块"],["资源超限",v.used.filter((x,i)=>x>config.capacities[keyName[i]]).length,"项硬约束"],["待核实主体",v.assigned.filter(id=>find(id)?.evidence!=="A").length,"未达A层事实级"],["可执行性",v.over?"阻断":"待核",v.over?"超出至少一项上限":"仍需其他合规校验"]
  ].map((x,i)=>'<div class="stat '+(i===2&&x[1]>0||i===4&&v.over?"alert":"")+'"><span>'+x[0]+'</span><strong>'+x[1]+'</strong><em>'+x[2]+'</em></div>').join("");
  const q=$("search").value.trim().toLowerCase(),sector=$("sectorFilter").value;
