@@ -269,6 +269,30 @@ body{background:radial-gradient(ellipse 1250px 620px at 63% -16%,#0d4d68 0%,tran
 @media(max-width:800px){.cx-stage{grid-template-columns:1fr}.cx-card-zone{padding:20px}.cx-hero-card{min-height:310px}.cx-content{padding:20px}.cx-events{grid-template-columns:repeat(2,1fr)}.cx-replay{grid-template-columns:1fr}}
 @media(max-width:480px){.cx-six{grid-template-columns:repeat(3,1fr)}.cx-actions{grid-template-columns:1fr}.cx-replay-data{grid-template-columns:repeat(3,1fr)}.cx-replay-data b{font-size:20px}}
 @media(prefers-reduced-motion:reduce){.cx-hero-card{animation:none;transform:none}}
+
+/* V8 Quarter-by-quarter Career Lab */
+.career-hero{display:grid;grid-template-columns:1.2fr .8fr;gap:12px;margin:14px 0}
+.career-field{border:1px solid #6d8b83;border-radius:16px;background:radial-gradient(ellipse at 35% 20%,#2b8d7a4a,transparent 70%),linear-gradient(130deg,#142d40,#091d2d);padding:17px}
+.career-head{display:flex;align-items:center;justify-content:space-between;gap:9px;flex-wrap:wrap}
+.career-head strong{font-size:26px;color:#f7d48f}.career-head small{font-size:10px;color:#adc9d6}
+.career-track{display:grid;grid-template-columns:repeat(4,1fr);gap:7px;margin:16px 0}
+.career-track span{border-radius:8px;border:1px solid #3e6a74;background:#0b304080;height:46px;padding:8px;text-align:center;color:#93b3c5;font-size:11px}
+.career-track .active{border-color:#f1c97d;background:#75532973;color:#ffe5ac;box-shadow:0 0 18px #e8b66a42}
+.career-cardset{display:grid;grid-template-columns:repeat(3,1fr);gap:9px;margin:12px 0}
+.career-cardset>div{background:#0d293c;border:1px solid #3e627a;border-radius:10px;padding:12px}.career-cardset b{font-size:30px;color:#f6d08b;display:block}.career-cardset span{font-size:10px;color:#abc5d0}
+.career-btn{background:linear-gradient(120deg,#d6ad65,#f3dfa4);color:#1b293b;border:1px solid #f9db98;border-radius:10px;padding:12px;font-size:12px;font-weight:900;cursor:pointer}
+.career-btn.secondary{background:#17354b;color:#e5d3a5;border-color:#718fa0}.career-btn:disabled{opacity:.4;cursor:not-allowed}
+.career-panel{border:1px solid #476b82;border-radius:14px;padding:14px;background:linear-gradient(140deg,#18344b,#0a2033);margin:12px 0}
+.career-panel h4{color:#f4d390;margin:0 0 12px;font-size:14px}
+.career-options{display:grid;grid-template-columns:repeat(3,1fr);gap:8px}.career-options button{text-align:left;border:1px solid #57758c;background:#102b40;border-radius:11px;padding:11px;color:#d4e5f0;min-height:79px;cursor:pointer}
+.career-options button.active{border-color:#f1c97b;background:#59412366;box-shadow:0 0 15px #ddb47123}.career-options button b{color:#f8d69a;display:block;font-size:13px}.career-options button small{color:#a2becb;display:block;font-size:9px;margin-top:6px}
+.career-badges{display:flex;flex-wrap:wrap;gap:7px}.career-badges span{border:1px solid #c99c53;background:#5540244d;padding:7px 10px;color:#f6d393;border-radius:9px;font-size:10px}
+.career-feed{display:grid;gap:6px;max-height:340px;overflow:auto}.career-feed>div{display:grid;grid-template-columns:64px 1fr;gap:9px;border:1px solid #34556d;border-radius:9px;background:#112b40;padding:9px;font-size:10px}.career-feed b{color:#eccb89}.career-feed span{color:#d2e2ea}
+.career-progress{display:grid;gap:12px}.career-progress>div{display:grid;grid-template-columns:80px 1fr 45px;gap:8px;align-items:center;font-size:10px}.career-progress i{display:block;background:linear-gradient(90deg,#568fb7,#78e2be);height:10px;border-radius:8px}.career-progress .track{background:#27445a;height:10px;border-radius:8px;overflow:hidden}
+.career-row{display:grid;grid-template-columns:1.1fr .9fr;gap:12px;margin:12px 0}.career-competition{display:grid;grid-template-columns:1fr 1fr;gap:8px}.career-competition>div{border:1px solid #3e647a;background:#0b2537;border-radius:11px;padding:14px}.career-competition strong{font-size:30px;color:#f2d08a;display:block}
+.career-controls{display:flex;flex-wrap:wrap;gap:9px;margin:12px 0}.career-muted{font-size:10px;color:#9db5c7}.career-risk{border:1px solid #a77649;color:#e7bd84;border-radius:9px;background:#4f342635;padding:10px;font-size:10px}
+@media(max-width:950px){.career-hero,.career-row{grid-template-columns:1fr}}
+@media(max-width:560px){.career-options{grid-template-columns:1fr 1fr}.career-cardset{grid-template-columns:repeat(3,1fr)}.career-cardset b{font-size:23px}.career-competition strong{font-size:23px}}
 </style></head>
 <body><div class="shell">
 <header class="top"><div class="brand"><div class="brand-mark">B</div><div><div class="eyebrow">BORO INDUSTRY INTELLIGENCE</div><h1>博罗产业能力与结构研判 <span style="color:#829ab2;font-size:12px;font-weight:500">内部辅助决策系统</span></h1></div></div><div class="top-right"><span class="pill live">● 原型运行中</span><span class="pill">2026 年度 · 内部版</span><span class="pill warn">证据优先</span></div></header>
@@ -376,6 +400,14 @@ body{background:radial-gradient(ellipse 1250px 620px at 63% -16%,#0d4d68 0%,tran
 </section>
 <section class="view" id="view-season">
 <div class="section-head"><div><div class="micro">SEASON EVOLUTION</div><h3>成长轨迹 · 谁上升，谁承压？</h3><p>跟踪企业进入、成长、扩产、转型、收缩与退出，保存每次判断的时间快照。</p></div></div>
+
+<div class="career-hero"><section class="career-field"><div class="career-head"><div><div class="micro">INDUSTRY CAREER · QUARTERLY SIMULATION</div><strong id="careerClock">2026 Q1</strong></div><span class="pill warn">演示赛季 · 可回放</span></div>
+<div class="career-track" id="careerQuarterTrack"></div><div id="careerScoreboard" class="career-cardset"></div><div class="career-controls"><button class="career-btn" id="careerAdvance">▶ 推进一季度</button><button class="career-btn secondary" id="careerRewind">↶ 撤回上一季</button><button class="career-btn secondary" id="careerRestart">↺ 新赛季</button></div><div class="career-risk" id="careerQuarterHint">主体选择、要素预算、训练投入和冲击事件共同影响下一季度。</div></section>
+<aside class="career-panel"><h4>⚙ 经营策略 / 本季度只执行一次</h4><div class="career-options" id="careerPolicy"></div><div class="career-muted" style="margin-top:10px">投入会占用有限资源。选择不同方向，可能提升某项能力，却牺牲短期韧性。</div></aside></div>
+<div class="career-row"><section class="career-panel"><h4>◆ 成长树 · 训练与突破</h4><div id="careerGrowth" class="career-progress"></div><div class="career-badges" id="careerBadges" style="margin-top:15px"></div></section>
+<section class="career-panel"><h4>↗ 预备队 / 接棒池</h4><div class="career-options" id="careerBench"></div><p class="career-muted">从已有38条主体线索中选择后备，推进赛季后可替换当前角色；接棒会有准备周期和资源代价。</p></section></div>
+<div class="career-row"><section class="career-panel"><h4>◎ 周边竞争县域 · 虚拟对手</h4><div id="careerCompetition" class="career-competition"></div><p class="career-muted">对手为计算生成的虚拟竞争策略，并非真实周边县区排名或表现。</p></section>
+<section class="career-panel"><h4>▤ 赛季事件回放</h4><div id="careerFeed" class="career-feed"></div></section></div>
 <div class="mgr-head"><div><div class="mgr-eyebrow">CAREER / GROWTH / EVENTS</div><h3>产业成长赛季 · 三阶段推进</h3><div class="mgr-sub">跨期成长不仅与能力有关，还受资源约束、主体状态和突发事件影响。</div></div><div class="mgr-control"><button id="mgrSeasonReset">↺ 回到 T0</button><button id="mgrSeasonNext">▶ 推进阶段</button><button id="mgrSeasonWind">⚡ 风洞冲击</button></div></div><div id="mgrYearCards" class="mgr-progression"></div><div class="mgr-incident"><span>◉ <b>事件中心</b>　选定一次演示事件，观察受压主体及组合韧性变化。</span><span class="pill warn">模拟事件</span></div><div id="mgrEvents"></div><div id="mgrSeasonInsight" class="mgr-alert"></div><div class="overview-grid"><div class="panel"><h4>主体变化轨迹</h4><div class="timeline" id="seasonTimeline"></div></div><div class="panel"><h4>动态更新规则</h4><div class="notice-list"><div class="notice"><span class="nicon">↗</span><div><b>升级</b><small>有连续经营、订单、产能或技术证据支持。</small></div></div><div class="notice"><span class="nicon">＋</span><div><b>新主体进入</b><small>企业、产品或项目达到对应验证阶段。</small></div></div><div class="notice"><span class="nicon">⚠</span><div><b>状态预警</b><small>订单、客户、现金流、产能或供应链出现异常信号。</small></div></div><div class="notice"><span class="nicon">↘</span><div><b>收缩 / 退出观察</b><small>持续经营变化需要核实，不因单一负面新闻自动定性。</small></div></div></div></div></div>
 </section>
 
@@ -505,7 +537,7 @@ let currentTeam="secondary",currentView="overview",selectedPlayer=null,filters="
 const $=id=>document.getElementById(id);
 function team(id){return teams.find(t=>t.id===id)}
 function esc(s){return String(s??"").replace(/[&<>"']/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]))}
-function setView(v){currentView=v;document.querySelectorAll(".view").forEach(x=>x.classList.toggle("active",x.id==="view-"+v));document.querySelectorAll("#nav button").forEach(x=>x.classList.toggle("active",x.dataset.view===v));if(v==="compare")renderDuel();if(v==="teams")renderTeam();if(v==="players")renderPlayers();if(v==="scout")renderScout();if(v==="academy")renderAcademy();if(v==="tactics"){renderTactics();cxRender();}if(v==="wind")renderWind();if(v==="season"){renderSeason();renderManagerSeason();}window.scrollTo({top:0,behavior:"smooth"})}
+function setView(v){currentView=v;document.querySelectorAll(".view").forEach(x=>x.classList.toggle("active",x.id==="view-"+v));document.querySelectorAll("#nav button").forEach(x=>x.classList.toggle("active",x.dataset.view===v));if(v==="compare")renderDuel();if(v==="teams")renderTeam();if(v==="players")renderPlayers();if(v==="scout")renderScout();if(v==="academy")renderAcademy();if(v==="tactics"){renderTactics();cxRender();}if(v==="wind")renderWind();if(v==="season"){renderSeason();renderManagerSeason();renderCareer();}window.scrollTo({top:0,behavior:"smooth"})}
 $("nav").addEventListener("click",e=>{const b=e.target.closest("button[data-view]");if(b)setView(b.dataset.view)});
 document.querySelectorAll("[data-open-view]").forEach(btn=>btn.addEventListener("click",()=>setView(btn.dataset.openView)));
 function card(p){const t=team(p.team),s=getRating(p);const mini=[0,2,3].map(i=>'<div class="score-mini"><span>'+dimKeys[i]+'</span><span class="track"><i style="width:'+s.values[i]+'%"></i></span><b>'+s.values[i]+'</b></div>').join("");return '<article class="player-card" data-player="'+esc(p.id)+'"><div class="pc-top"><div class="avatar">'+esc(p.initial||p.name.slice(0,1))+'</div><div class="score-number">'+s.ovr+'<small>OVR</small></div></div><h4>'+esc(p.name)+'</h4><div class="company-sub">'+esc(p.club)+' · '+esc(p.role)+'</div><div class="player-tags"><span class="tag gold">POT '+s.pot+'</span><span class="tag">'+s.grade+' · 资料覆盖</span></div><div class="scores-row"><div>'+mini+'</div><div style="font-size:10px;color:#9bb0c8">模型覆盖 <strong style="font-size:20px;color:#ecc67c">'+s.coverage+'%</strong><br>估算属性</div></div><div class="card-bottom"><span>'+esc(t.name)+'</span><span>查看球探报告 ↗</span></div><button class="duel-compare-btn" data-compare="'+esc(p.id)+'" type="button">VS · 加入能力对决</button></article>'}
@@ -934,6 +966,105 @@ function initManager(){
  managerSync();
 }
 
+
+// V8 CAREER ENGINE: entirely scenario-generated values with explicit quarterly state.
+const careerPolicies=[
+ {id:"balanced",name:"稳健经营",desc:"维护韧性 / 小幅成长",cost:[0,4,2,2,1],boost:[.35,.25,.2],risk:.7},
+ {id:"technology",name:"技术突破",desc:"资金+人才密集 / 长期成长",cost:[0,14,4,13,5],boost:[1.0,1.55,.25],risk:1.15},
+ {id:"supply",name:"补链强链",desc:"工业配套优先 / 网络韧性",cost:[6,9,5,5,10],boost:[.7,.45,1.4],risk:.7},
+ {id:"market",name:"开拓市场",desc:"订单韧性 / 更快成长",cost:[2,11,2,7,3],boost:[1.25,.55,.6],risk:1.05},
+ {id:"reserve",name:"培养接棒",desc:"后备成长 / 本季见效较慢",cost:[3,9,3,9,5],boost:[.3,.8,.9],risk:.8},
+ {id:"cash",name:"保留资源",desc:"压缩扩张 / 增强现金缓冲",cost:[0,0,0,0,0],boost:[.05,.05,.35],risk:.45}
+];
+const careerEvents=[
+ ["订单波动","orders",1.3],["人才紧缺","talent",1],["供应中断","supply",1.5],["新项目机会","none",-1],["技术突破窗口","none",-.8],["市场正常","none",0]
+];
+let career={quarter:0,policy:"balanced",bench:null,training:{capacity:0,tech:0,resilience:0},fatigue:0,recovery:0,score:0,rival:64,history:[],snapshots:[],journal:[],initialSlots:null};
+function careerBonus(){return career.training.capacity*.42+career.training.tech*.48+career.training.resilience*.34-career.fatigue*.3}
+function careerScore(){const base=managerCompute(),buff=careerBonus();return Math.max(0,Math.min(100,+((base.score+buff-career.recovery*.12).toFixed(1))))}
+function careerRival(q){return Math.max(40,Math.min(99,64+q*.64+Math.sin(q*1.4)*2.6))}
+function careerSeed(q){let a=0;for(const id of Object.values(manager.slots).filter(Boolean))for(const ch of id)a=(a*17+ch.charCodeAt(0))%997;return (a+q*11)%careerEvents.length}
+function careerPrintQuarter(q){return (2026+Math.floor(q/4))+" Q"+(q%4+1)}
+function careerTick(){
+ const policy=careerPolicies.find(x=>x.id===career.policy),before=managerCompute(),price=policy.cost;
+ const paid=price.every((x,i)=>before.used[i]+x<=managerCaps[i]);
+ const event=careerEvents[careerSeed(career.quarter)];
+ const q=career.quarter+1;
+ const roll=event[2],intensity=roll>0?roll*policy.risk:roll;
+ const nextFatigue=Math.max(0,career.fatigue*.69+Math.max(0,intensity)*7-(policy.id==="cash"?6:0));
+ const nextRecovery=Math.max(0,career.recovery*.55+(roll>0?roll*6:0)-(policy.id==="supply"?2:0));
+ const upgrade=paid?policy.boost:[0,0,0];
+ const beforeSnapshot={quarter:career.quarter,policy:career.policy,bench:career.bench,training:{...career.training},fatigue:career.fatigue,recovery:career.recovery,score:career.score,rival:career.rival,slots:{...manager.slots},managerEvent:manager.event,managerYear:manager.year,journal:career.journal.slice()};
+ career.history.push(beforeSnapshot);if(career.history.length>28)career.history.shift();
+ career.quarter=q;
+ career.training.capacity=+(career.training.capacity+upgrade[0]*(.85+q*.015)).toFixed(2);
+ career.training.tech=+(career.training.tech+upgrade[1]*(.75+q*.03)).toFixed(2);
+ career.training.resilience=+(career.training.resilience+upgrade[2]).toFixed(2);
+ career.fatigue=+nextFatigue.toFixed(2);career.recovery=+nextRecovery.toFixed(2);
+ manager.year=Math.min(2,Math.floor(q/4));
+ manager.event=roll>0?event[1]:"none";
+ career.rival=+careerRival(q).toFixed(1);
+ career.score=careerScore();
+ const shift=+(career.score-(beforeSnapshot.score||before.score)).toFixed(1);
+ career.journal.unshift({date:careerPrintQuarter(q),name:event[0],text:(paid?"策略执行":"资源不足，策略未执行")+" · "+policy.name+" · 组合指数 "+(shift>=0?"+":"")+shift});
+ if(career.journal.length>14)career.journal.pop();
+ managerSync();renderManagerSeason();renderCareer();
+}
+function careerUndo(){
+ if(!career.history.length)return;
+ const s=career.history.pop();
+ for(const k of ["quarter","policy","bench","training","fatigue","recovery","score","rival","journal"])career[k]=s[k];
+ manager.slots=s.slots;manager.event=s.managerEvent;manager.year=s.managerYear;
+ managerSync();renderManagerSeason();renderCareer();
+}
+function careerNew(){
+ career={quarter:0,policy:"balanced",bench:null,training:{capacity:0,tech:0,resilience:0},fatigue:0,recovery:0,score:0,rival:64,history:[],snapshots:[],journal:[],initialSlots:{...manager.slots}};
+ manager.year=0;manager.event="none";career.score=careerScore();managerSync();renderManagerSeason();renderCareer();
+}
+function careerPromote(){
+ if(!career.bench)return;
+ const id=career.bench,p=companies.find(x=>x.id===id);if(!p)return;
+ const role=managerRoles.find(r=>!manager.slots[r.id])?.id||"reserve";
+ const slot=Object.entries(manager.slots).find(([r])=>r===role)?.[0]||"reserve";
+ if(Object.values(manager.slots).includes(id))return;
+ managerCommit({...manager.slots,[slot]:id});career.bench=null;
+ career.journal.unshift({date:careerPrintQuarter(career.quarter),name:"梯队接棒",text:p.name+" 转入 "+managerRoles.find(r=>r.id===slot).name+"；角色改变将影响要素占用"});
+ renderCareer();
+}
+function careerCards(){
+ const v=managerCompute(),score=career.score||careerScore(),unused=managerCaps.map((x,i)=>x-v.used[i]);
+ return {v,score,unused};
+}
+function renderCareer(){
+ const {v,score}=careerCards();
+ $("careerClock").textContent=careerPrintQuarter(career.quarter);
+ $("careerQuarterTrack").innerHTML=[0,1,2,3].map(n=>'<span class="'+(career.quarter%4===n?'active':'')+'">Q'+(n+1)+'<br>'+["布局","投入","调整","复盘"][n]+'</span>').join("");
+ $("careerScoreboard").innerHTML=[["经营指数",score.toFixed(1)],["后备成长",career.training.tech.toFixed(1)],["状态疲劳",career.fatigue.toFixed(1)]].map(x=>'<div><b>'+x[1]+'</b><span>'+x[0]+'</span></div>').join("");
+ $("careerPolicy").innerHTML=careerPolicies.map(p=>'<button class="'+(career.policy===p.id?'active':'')+'" data-career-policy="'+p.id+'"><b>'+p.name+'</b><small>'+p.desc+'</small></button>').join("");
+ $("careerGrowth").innerHTML=[["产能与效率",career.training.capacity],["技术与人才",career.training.tech],["供应链韧性",career.training.resilience]].map(x=>'<div><span>'+x[0]+'</span><span class="track"><i style="width:'+Math.min(100,x[1]*5)+'%"></i></span><b>'+x[1].toFixed(1)+'</b></div>').join("");
+ const badges=[];
+ if(career.training.tech>=3)badges.push("✦ 技术跃迁");
+ if(career.training.resilience>=3)badges.push("♜ 韧性增强");
+ if(career.training.capacity>=3)badges.push("↑ 效率提升");
+ if(career.quarter>=4)badges.push("◈ 完整赛季");
+ if(career.fatigue>=12)badges.push("⚠ 高负荷经营");
+ $("careerBadges").innerHTML=(badges.length?badges:["◌ 徽章尚待解锁"]).map(x=>'<span>'+x+'</span>').join("");
+ const chosen=new Set(Object.values(manager.slots).filter(Boolean)),bench=companies.filter(p=>!chosen.has(p.id)).sort((a,b)=>getRating(b).pot-getRating(a).pot).slice(0,9);
+ $("careerBench").innerHTML='<select id="careerBenchPick" class="cx-select" style="grid-column:1/-1"><option value="">选一个后备主体</option>'+bench.map(p=>'<option value="'+esc(p.id)+'" '+(p.id===career.bench?'selected':'')+'>'+esc(p.short)+' · POT '+getRating(p).pot+'</option>').join("")+'</select><button id="careerPromote" '+(!career.bench?'disabled':'')+'><b>▲ 启用接棒主体</b><small>占用角色槽位和要素</small></button><button id="careerInspect" '+(!career.bench?'disabled':'')+'><b>◉ 球探报告</b><small>先评估再进入阵容</small></button>';
+ $("careerCompetition").innerHTML=[["博罗 · 当前组合",score],["虚拟竞争县",career.rival]].map(x=>'<div><small>'+x[0]+'</small><strong>'+Number(x[1]).toFixed(1)+'</strong><span class="career-muted">演示综合能力指数</span></div>').join("");
+ $("careerFeed").innerHTML=career.journal.length?career.journal.map(x=>'<div><b>'+esc(x.date)+'</b><span>'+esc(x.name)+' · '+esc(x.text)+'</span></div>').join(""):'<div><b>2026 Q1</b><span>赛季开始。选择经营策略，点击推进季度。</span></div>';
+ $("careerQuarterHint").textContent="经营模拟：当前预算超限 "+v.overloaded.filter(x=>x>0).length+" 项；累计状态疲劳 "+career.fatigue.toFixed(1)+"；恢复负担 "+career.recovery.toFixed(1)+"。数值是演示状态而非经济损失。";
+ $("careerAdvance").disabled=career.quarter>=28;
+ $("careerRewind").disabled=!career.history.length;
+}
+function initCareer(){
+ $("careerPolicy").onclick=e=>{const b=e.target.closest("[data-career-policy]");if(b){career.policy=b.dataset.careerPolicy;renderCareer()}};
+ $("careerAdvance").onclick=careerTick;$("careerRewind").onclick=careerUndo;$("careerRestart").onclick=careerNew;
+ $("careerBench").onchange=e=>{if(e.target.id==="careerBenchPick"){career.bench=e.target.value||null;renderCareer()}};
+ $("careerBench").onclick=e=>{if(e.target.closest("#careerPromote"))careerPromote();if(e.target.closest("#careerInspect")&&career.bench)openPlayer(career.bench)};
+ career.initialSlots={...manager.slots};career.score=careerScore();renderCareer();
+}
+
 function renderSeason(){
 $("seasonTimeline").innerHTML=[
 ["主体建档","先建立企业、产品、项目三个独立对象，避免混算。"],
@@ -950,6 +1081,6 @@ $("weightGrid").oninput=e=>{const a=e.target.closest("[data-w]");if(!a)return;if
 document.body.addEventListener("click",e=>{const b=e.target.closest("[data-scenario]");if(b){premiumScenarioMode=b.dataset.scenario;renderPremiumScenario()}const g=e.target.closest("[data-find-gap]");if(g){$("tacticSearch").value=g.dataset.findGap;renderTactics();$("tacticSearch").focus()}const v=e.target.closest("[data-open-view]");if(v)setView(v.dataset.openView)});
 $("scenarioSlider").oninput=e=>{premiumScenarioStrength=Number(e.target.value);renderPremiumScenario()};
 renderWeightControls();
-renderOverview();renderTeam();renderPlayers();initDuel();initWind();initManager();initCinematic();
+renderOverview();renderTeam();renderPlayers();initDuel();initWind();initManager();initCinematic();initCareer();
 if(window.location && window.location.hash==="#wind")setView("wind");
 </script></body></html>
