@@ -90,6 +90,64 @@ button,input,select{font:inherit}button{cursor:pointer}a{color:inherit;text-deco
 .role-grid .pitch-link-layer{position:absolute;inset:0;width:100%;height:100%;z-index:0;pointer-events:none;opacity:.72}
 .role-slot{z-index:1}
 @media(max-width:760px){.coverage-grid{grid-template-columns:repeat(3,minmax(0,1fr))}.scout-quadrants{height:155px}.quad{padding:8px}.lineup-summary-head{align-items:flex-start;flex-direction:column}}
+ 
+/* GAME UI PASS: FIFA/NBA-inspired player cards, scouting reports and squad builder */
+.topbar{height:72px}.topbar .crumb{font-size:13px;letter-spacing:.02em}
+.game-head{padding:27px 0 17px}.game-head h1{font-size:clamp(30px,3.4vw,46px);letter-spacing:-.045em}
+.demo-ribbon{display:flex;align-items:center;gap:9px;padding:10px 14px;border:1px solid rgba(243,197,108,.22);border-radius:10px;background:linear-gradient(90deg,rgba(243,197,108,.09),rgba(20,43,64,.4));color:#c5b58f;font-size:10px;margin:0 0 15px}
+.live-dot{width:7px;height:7px;border-radius:50%;background:#f3c56c;box-shadow:0 0 10px #f3c56c;flex:none}
+.player-screen{display:grid;grid-template-columns:minmax(280px,340px) minmax(0,1fr);gap:15px;align-items:start}
+.player-card-column{display:grid;gap:10px}
+.player-card{position:relative;overflow:hidden;min-height:505px;padding:18px 19px 14px;border-radius:22px;border:1px solid rgba(239,202,121,.48);background:radial-gradient(300px 220px at 50% 40%,rgba(80,195,211,.25),transparent 72%),linear-gradient(145deg,#163e58 0%,#102a43 46%,#091b2c 100%);box-shadow:0 25px 55px #0006,inset 0 0 0 4px rgba(240,201,117,.06)}
+.player-card:before{content:"";position:absolute;inset:8px;border:1px solid rgba(241,207,139,.23);border-radius:16px;pointer-events:none}
+.player-card-top,.player-card-footer{display:flex;justify-content:space-between;position:relative;z-index:2;color:#c6d6e1;font-size:8px;letter-spacing:.16em}
+.player-card-main{display:flex;justify-content:space-between;position:relative;z-index:2;margin-top:17px}
+.player-position{font-size:10px;color:#f4d58e;font-weight:800;letter-spacing:.1em}.player-ovr{font-size:58px;font-weight:900;line-height:.95;letter-spacing:-.08em;color:#f5d58f;text-shadow:0 5px 20px #f2c66a44}.player-ovr-label{font-size:8px;letter-spacing:.25em;color:#b5c6d2;margin-top:5px}.player-nation{font-size:9px;color:#b9cad7;margin-top:9px}
+.player-emblem{width:54px;height:54px;display:grid;place-items:center;border-radius:17px;border:1px solid #f1d08a66;background:linear-gradient(145deg,#f3d28c,#9c7844);color:#10283c;font-size:26px;font-weight:900;box-shadow:0 7px 25px #e8c47744}
+.player-art{height:188px;position:relative;margin:0 -7px;overflow:hidden}.art-orbit{position:absolute;border:1px solid rgba(104,225,229,.4);border-radius:50%;left:50%;top:50%;transform:translate(-50%,-50%) rotate(-18deg)}.orbit-a{width:210px;height:135px}.orbit-b{width:150px;height:205px;transform:translate(-50%,-50%) rotate(48deg);border-color:#f0ca7b66}.art-core{position:absolute;left:50%;top:50%;transform:translate(-50%,-50%);width:105px;height:105px;border-radius:30px;display:grid;place-items:center;background:linear-gradient(145deg,#74e4e7,#1b6682 55%,#0b2942);border:2px solid #f0cf83;box-shadow:0 0 50px #4ed7e5aa,inset 0 0 20px #d5ffff55;color:#09243a;font-size:48px;font-weight:900;z-index:2}
+.art-lines{position:absolute;inset:0;background:repeating-linear-gradient(0deg,transparent 0 17px,rgba(125,222,230,.07) 18px),repeating-linear-gradient(90deg,transparent 0 23px,rgba(125,222,230,.05) 24px);mask-image:radial-gradient(ellipse at center,#000,transparent 72%)}
+.art-glow{position:absolute;left:50%;top:50%;width:170px;height:170px;border-radius:50%;background:#48d9e5;filter:blur(65px);opacity:.18;transform:translate(-50%,-50%)}
+.player-name{position:relative;z-index:2;text-align:center;padding:7px 0 13px;border-bottom:1px solid #d9c18a44}.player-name h2{font-size:22px;margin:0;color:#f4e5c4;letter-spacing:-.03em}.player-name span{font-size:8px;letter-spacing:.17em;color:#9db4c5}
+.player-card-stats{display:grid;grid-template-columns:repeat(3,1fr);position:relative;z-index:2;padding:13px 0}.player-card-stats div{text-align:center;border-right:1px solid #d9c18a33}.player-card-stats div:last-child{border:0}.player-card-stats b{display:block;font-size:23px;color:#f2d48f}.player-card-stats small{font-size:8px;color:#a7bac8;letter-spacing:.1em}
+.player-card-footer{border-top:1px solid #d9c18a33;padding-top:10px;color:#9bb0bd}
+.player-select-box,.mini-profile-note{padding:13px 14px;border:1px solid var(--line);border-radius:12px;background:#102438}.player-select-box label{display:block;font-size:9px;color:#89a5b9;margin-bottom:7px}.player-select-box select{width:100%;background:#091b2a;border:1px solid #36536b;color:#e4f0f7;border-radius:8px;padding:10px;font-size:12px}
+.mini-profile-note b,.mini-profile-note span{display:block}.mini-profile-note b{font-size:11px;color:#d9e8f1}.mini-profile-note span{font-size:9px;color:#829caf;line-height:1.6;margin-top:5px}
+.ability-workspace{display:grid;grid-template-columns:minmax(0,1.1fr) minmax(300px,.9fr);gap:13px}
+.attribute-panel,.radar-panel,.traits-panel,.attribute-detail{padding:18px;min-width:0}
+.game-section-title{display:flex;justify-content:space-between;align-items:center;gap:10px;margin-bottom:15px}
+.game-section-title>div{display:flex;align-items:center;gap:10px}.game-section-title>div>i{width:27px;height:27px;display:grid;place-items:center;border-radius:8px;background:rgba(94,224,220,.1);color:var(--cyan);font-size:10px;font-style:normal;font-weight:800}
+.game-section-title b{display:block;font-size:13px;color:#e4eff6}.game-section-title small{display:block;font-size:8px;letter-spacing:.15em;color:#7895aa;margin-top:4px}
+.attribute-list{display:grid;gap:14px}.attribute-row{display:grid;grid-template-columns:72px minmax(0,1fr) 34px;gap:9px;align-items:center}.attribute-row b{font-size:10px;color:#c8d9e5}.attribute-row strong{font-size:12px;color:#f3d28d;text-align:right}
+.attribute-track{height:9px;border-radius:10px;background:repeating-linear-gradient(90deg,#243d52 0,#243d52 8px,transparent 8px,transparent 10px);overflow:hidden}.attribute-track i{display:block;height:100%;border-radius:10px;background:linear-gradient(90deg,#3d92d2,#5edbd4,#f1d18c);box-shadow:0 0 12px #53c9d7aa;transition:width .8s cubic-bezier(.2,.8,.2,1)}
+.attribute-scale{display:flex;justify-content:space-between;font-size:8px;color:#647f94;margin:13px 0 0 80px}
+.radar-panel svg{width:100%;max-height:300px;display:block}.radar-foot{display:flex;justify-content:center;gap:16px;font-size:9px;color:#7895aa}.radar-foot span{display:flex;align-items:center;gap:6px}.radar-foot i{width:7px;height:7px;border-radius:50%;background:#5ee0dc}.radar-foot i.ghost{background:#f2c96e}
+.traits-panel,.attribute-detail{grid-column:1/-1}.trait-list{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:9px}.trait-badge{padding:12px;border:1px solid rgba(94,224,220,.18);border-radius:11px;background:linear-gradient(145deg,#132f45,#0c2030);display:flex;gap:10px;align-items:center}.trait-icon{width:34px;height:34px;border-radius:10px;display:grid;place-items:center;background:rgba(94,224,220,.13);color:#6de1db;font-size:17px}.trait-badge b{display:block;font-size:10px;color:#d9e9f2}.trait-badge small{display:block;font-size:8px;color:#7896aa;margin-top:4px}
+.dimension-detail{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:8px}.dimension-card{padding:11px;border:1px solid var(--line);border-radius:10px;background:#0d2030}.dimension-card b{font-size:10px;color:#d7e6ef}.dimension-card p{font-size:9px;line-height:1.6;color:#829caf;margin:6px 0 0}
+.evidence-accordion{margin-top:13px;border:1px solid var(--line);border-radius:13px;background:#0c1e2e;padding:13px 16px}.evidence-accordion summary{font-size:10px;color:#9eb6c7;cursor:pointer}.evidence-accordion-inner{padding-top:12px}.evidence-accordion-inner p{font-size:10px;color:#8ea8ba}
+.scout-hero{display:flex;align-items:center;justify-content:space-between;gap:20px;padding:23px 26px;border:1px solid rgba(243,197,108,.25);border-radius:18px;background:radial-gradient(400px 220px at 100% 0%,#e0b95b20,transparent 75%),linear-gradient(120deg,#1a344a,#122539);box-shadow:var(--shadow)}
+.scout-kicker{font-size:9px;letter-spacing:.22em;color:#eacb86}.scout-hero h2{font-size:27px;margin:9px 0 5px}.scout-hero p{font-size:11px;color:#9bb2c4;margin:0}.scout-grade-row{display:flex;gap:28px;margin-top:18px}.scout-grade-row>div{padding-left:13px;border-left:2px solid #5ee0dc55}.scout-grade-row b,.scout-grade-row small{display:block}.scout-grade-row b{font-size:17px;color:#f1d18a}.scout-grade-row small{font-size:8px;color:#829bad;margin-top:4px}
+.scout-score-ring{width:120px;height:120px;border-radius:50%;padding:8px;background:conic-gradient(#f1ce7c 0 82%,#31495a 82%);flex:none;box-shadow:0 0 35px #eacb8633}.scout-score-ring>div{height:100%;border-radius:50%;display:grid;align-content:center;justify-items:center;background:#10263a}.scout-score-ring b{font-size:35px;color:#f2d18a}.scout-score-ring small{font-size:8px;color:#88a2b5;letter-spacing:.12em}
+.scout-grid{display:grid;grid-template-columns:1fr 1fr;gap:13px;margin-top:13px}.scout-panel{padding:17px}.scout-panel.strengths{border-top:2px solid #55d69b}.scout-panel.weaknesses{border-top:2px solid #ff7d87}.scout-bullet-list{display:grid;gap:9px}.scout-item{display:grid;grid-template-columns:8px 1fr;gap:9px;padding:9px 10px;border-radius:9px;background:#0d2030}.scout-item i{width:7px;height:7px;border-radius:50%;margin-top:4px;background:#55d69b}.weaknesses .scout-item i{background:#ff7d87}.scout-item b{font-size:10px;color:#dce9f1}.scout-item p{font-size:9px;line-height:1.6;color:#849daf;margin:4px 0 0}
+.fit-list,.watch-list{display:grid;gap:8px}.fit-row,.watch-row{display:flex;justify-content:space-between;gap:10px;align-items:center;padding:9px 10px;background:#0d2030;border-radius:9px}.fit-row span,.watch-row span{font-size:9px;color:#a9bdcb}.fit-row b{font-size:10px;color:#e9cf8d}.fit-meter{width:80px;height:5px;background:#294255;border-radius:10px;overflow:hidden}.fit-meter i{display:block;height:100%;background:linear-gradient(90deg,#4b9fd8,#5bd5c9)}
+.development-panel{padding:18px;margin-top:13px}.development-track{display:grid;grid-template-columns:repeat(3,1fr);gap:10px}.development-step{position:relative;padding:14px;border:1px solid var(--line);border-radius:11px;background:#0d2030}.development-step small{font-size:8px;color:#5edbd5;letter-spacing:.14em}.development-step b{display:block;font-size:12px;margin:7px 0;color:#e0edf4}.development-step p{font-size:9px;line-height:1.6;color:#819bad;margin:0}.development-step:after{content:"›";position:absolute;right:10px;top:12px;color:#e6c87f;font-size:20px}
+.scout-bottom-note{font-size:9px;color:#708b9f;padding:13px 2px}
+.lineup-toolbar{display:flex;align-items:center;justify-content:space-between;gap:14px;padding:13px 15px;border:1px solid var(--line);border-radius:12px;background:#102438;margin-bottom:13px}.lineup-toolbar b,.lineup-toolbar small{display:block}.lineup-toolbar b{font-size:12px}.lineup-toolbar small{font-size:9px;color:#829caf;margin-top:5px}.lineup-actions{display:flex;gap:7px;flex-wrap:wrap}
+.squad-layout{display:grid;grid-template-columns:minmax(0,1.5fr) minmax(280px,.7fr);gap:13px;align-items:start}
+.pitch-panel{padding:15px;border-radius:17px;border:1px solid rgba(87,205,167,.2);background:linear-gradient(145deg,#0c2c32,#0b202d);box-shadow:var(--shadow)}
+.pitch-label{display:flex;justify-content:space-between;color:#7db9aa;font-size:8px;letter-spacing:.16em;margin-bottom:12px}
+.squad-pitch{min-height:680px;position:relative;display:grid;grid-template-columns:repeat(3,minmax(0,1fr));grid-template-rows:repeat(3,1fr);gap:12px;padding:25px 7%;border:1px solid #5db79a55;border-radius:13px;overflow:hidden;background:linear-gradient(90deg,#1d735c20,#1a6a5720),repeating-linear-gradient(0deg,transparent 0 49px,#8ce0b015 50px),linear-gradient(180deg,#15534144,#0d403844)}
+.pitch-lines{position:absolute;inset:0;pointer-events:none}.pitch-half{position:absolute;left:0;right:0;top:50%;border-top:1px solid #9de0c52a}.pitch-circle{position:absolute;width:130px;height:130px;border:1px solid #9de0c52a;border-radius:50%;left:50%;top:50%;transform:translate(-50%,-50%)}.pitch-box{position:absolute;left:25%;width:50%;height:12%;border:1px solid #9de0c52a}.pitch-box.top{top:0;border-top:0}.pitch-box.bottom{bottom:0;border-bottom:0}
+.squad-slot{z-index:1;position:relative;display:flex;flex-direction:column;justify-content:center;align-items:center;gap:7px;min-width:0;padding:7px;border:1px dashed #8bd3b344;border-radius:11px;background:#0b2736b8;transition:.2s}.squad-slot>small{font-size:8px;color:#a2c9bc;text-align:center}.squad-slot.drag-over{border:1px solid #f2d18a;background:#e6c16b1c;box-shadow:0 0 25px #e8c26c22}
+.squad-slot[data-role="growth"]{grid-column:2;grid-row:1}.squad-slot[data-role="core"]{grid-column:1;grid-row:2}.squad-slot[data-role="key"]{grid-column:3;grid-row:2}.squad-slot[data-role="service"]{grid-column:1;grid-row:3}.squad-slot[data-role="base"]{grid-column:2;grid-row:3}.squad-slot[data-role="reserve"]{grid-column:3;grid-row:3}
+.squad-slot-cards{display:flex;flex-wrap:wrap;justify-content:center;gap:6px;max-width:100%}
+.squad-card{width:126px;padding:8px 8px 7px;border:1px solid #d8bf8055;border-radius:9px;background:linear-gradient(145deg,#1d4560,#102a40);box-shadow:0 7px 16px #0005;cursor:grab;user-select:none;transition:.2s}.squad-card:hover{transform:translateY(-3px);border-color:#f0d18d}.squad-card:active{cursor:grabbing}.squad-card-top{display:flex;justify-content:space-between;align-items:center}.squad-card-top b{font-size:21px;color:#f0d28e}.squad-card-top span{font-size:7px;color:#8fb5c4}.squad-card-name{font-size:9px;color:#edf5f8;font-weight:700;margin:5px 0 6px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}.squad-card-role{font-size:7px;color:#a7c5d0;border-top:1px solid #ffffff20;padding-top:5px}
+.squad-legend{display:flex;gap:13px;flex-wrap:wrap;padding:12px 2px 0;color:#88a99f;font-size:8px}.squad-legend span{display:flex;align-items:center;gap:5px}.squad-legend i{width:7px;height:7px;border-radius:2px}.legend-blue{background:#54a7ff}.legend-green{background:#57d6a0}.legend-gold{background:#f3c56c}.legend-red{background:#ff7884}
+.squad-side{display:grid;gap:12px}.chemistry-panel,.squad-check-panel,.squad-pool-panel{padding:15px}.chemistry-score{display:flex;align-items:baseline;gap:4px}.chemistry-score b{font-size:45px;color:#f2d18a;letter-spacing:-.06em}.chemistry-score span{font-size:11px;color:#809caf}.chemistry-score small{font-size:9px;color:#91a9bc;margin-left:auto}.chemistry-bar{height:8px;border-radius:9px;background:#263f52;overflow:hidden;margin:8px 0 12px}.chemistry-bar i{display:block;height:100%;width:78%;background:linear-gradient(90deg,#4b9ed6,#5bd5bd,#f1d18a);transition:width .5s}.chemistry-notes{display:grid;gap:7px}.chemistry-notes div{font-size:9px;color:#8ea8b9;padding-left:12px;position:relative;line-height:1.5}.chemistry-notes div:before{content:"";position:absolute;left:0;top:5px;width:5px;height:5px;border-radius:50%;background:#5ed8c7}
+.lineup-checks{display:grid;gap:8px}.check-row{padding:9px 10px;border-radius:9px;background:#0d2030;display:flex;justify-content:space-between;align-items:center;gap:8px}.check-row span{font-size:9px;color:#9bb0bf}.check-row b{font-size:10px}.check-row b.warn{color:#f3c56c}.check-row b.good{color:#57d6a0}.pool-list{display:grid;gap:6px}.pool-card{display:flex;justify-content:space-between;align-items:center;gap:8px;padding:8px;border:1px solid var(--line);border-radius:8px;background:#0c2030;cursor:grab}.pool-card b{font-size:9px;color:#cfe0ea}.pool-card span{font-size:8px;color:#f0d18c}
+.squad-compare{padding:17px;margin-top:13px}.lineup-compare{display:grid;grid-template-columns:repeat(3,1fr);gap:9px}.compare-metric{padding:12px;border-radius:10px;background:#0d2030;border:1px solid var(--line)}.compare-metric small{display:block;font-size:8px;color:#829caf}.compare-metric b{display:block;font-size:19px;color:#f0d18c;margin:5px 0}.compare-metric span{font-size:8px;color:#7994a7}
+@media(max-width:1150px){.player-screen{grid-template-columns:290px minmax(0,1fr)}.ability-workspace{grid-template-columns:1fr}.traits-panel,.attribute-detail{grid-column:auto}.squad-layout{grid-template-columns:1fr}.squad-side{grid-template-columns:repeat(2,1fr)}.squad-pool-panel{grid-column:1/-1}}
+@media(max-width:760px){.player-screen{grid-template-columns:1fr}.player-card-column{max-width:420px;width:100%;margin:auto}.ability-workspace{grid-template-columns:1fr}.trait-list{grid-template-columns:repeat(2,1fr)}.dimension-detail{grid-template-columns:1fr 1fr}.scout-hero{padding:17px;align-items:flex-start}.scout-score-ring{width:90px;height:90px}.scout-score-ring b{font-size:27px}.scout-grid{grid-template-columns:1fr}.development-track{grid-template-columns:1fr}.lineup-toolbar{align-items:flex-start;flex-direction:column}.squad-side{grid-template-columns:1fr}.squad-pitch{min-height:620px;padding:18px 4%;gap:7px}.squad-card{width:100px}.squad-card-top b{font-size:18px}.squad-card-name{font-size:8px}.lineup-compare{grid-template-columns:1fr 1fr}}
+@media(max-width:430px){.player-card{min-height:470px}.scout-grade-row{gap:13px}.scout-grade-row b{font-size:14px}.scout-score-ring{width:76px;height:76px}.scout-score-ring b{font-size:23px}.trait-list{grid-template-columns:1fr 1fr}.dimension-detail{grid-template-columns:1fr}.squad-pitch{min-height:560px;grid-template-columns:repeat(2,minmax(0,1fr));grid-template-rows:repeat(3,1fr);padding:12px 3%}.squad-slot[data-role="growth"]{grid-column:2;grid-row:1}.squad-slot[data-role="core"]{grid-column:1;grid-row:1}.squad-slot[data-role="key"]{grid-column:1;grid-row:2}.squad-slot[data-role="service"]{grid-column:2;grid-row:2}.squad-slot[data-role="base"]{grid-column:1;grid-row:3}.squad-slot[data-role="reserve"]{grid-column:2;grid-row:3}.squad-card{width:95px}.lineup-compare{grid-template-columns:1fr}}
 </style>
 </head>
 <body>
@@ -99,13 +157,14 @@ button,input,select{font:inherit}button{cursor:pointer}a{color:inherit;text-deco
  <div class="nav-label">工作空间 / WORKSPACES</div>
  <div class="nav-row">
   <button class="nav-btn active" data-view="overview"><span class="num">01</span><b>产业总览</b></button>
-  <button class="nav-btn" data-view="profile"><span class="num">02</span><b>主体档案</b></button>
-  <button class="nav-btn" data-view="lineup"><span class="num">03</span><b>产业阵容</b></button>
+  <button class="nav-btn" data-view="profile"><span class="num">02</span><b>能力属性卡</b></button>
+  <button class="nav-btn" data-view="scout"><span class="num">03</span><b>球探报告</b></button>
+  <button class="nav-btn" data-view="lineup"><span class="num">04</span><b>产业阵容</b></button>
  </div>
  <div class="side-bottom"><strong>内部辅助决策原型</strong><br>事实、估算、假设与模型输出分层呈现。当前为交互原型，尚未接入发改部门真实数据。</div>
 </aside>
 <main class="main">
- <div class="topbar"><div class="crumb">博罗内部版　/　<span id="crumbCurrent"><b>产业总览</b></span></div><div class="top-actions"><span class="edition">INTERNAL · PROTOTYPE 01</span><button class="quiet-btn" id="systemMap">系统说明</button></div></div>
+ <div class="topbar"><div class="crumb"><b>博罗内部版</b>　/　产业主体能力工作台</div><div class="top-actions"><span class="edition">INTERNAL · PROTOTYPE 02</span><button class="quiet-btn" id="systemMap">系统说明</button></div></div>
 
 <section class="view active" id="view-overview">
  <div class="page-head"><div><div class="eyebrow">INDUSTRY COMMAND CENTER</div><h1>产业全局，先看结构。<br><span style="color:var(--cyan)">再决定往哪里深入。</span></h1><p>把产业变化、主体能力、组合关系和风险线索放在同一张工作台上。先发现值得关注的地方，再进入具体主体和组合实验。</p></div><div class="head-right"><span class="tag cyan">内部辅助决策</span><span class="tag amber">演示数据 / 待接入</span></div></div>
@@ -143,57 +202,68 @@ button,input,select{font:inherit}button{cursor:pointer}a{color:inherit;text-deco
 </section>
 
 <section class="view" id="view-profile">
- <div class="page-head"><div><div class="eyebrow">INDUSTRY SCOUTING ROOM</div><h1>不是给产业打分。<br><span style="color:var(--cyan)">是把它的能力看清楚。</span></h1><p>像球员档案一样快速识别主体，但产业属性必须由证据支撑。能力、潜力、证据可信度分开呈现。</p></div><div class="head-right"><span class="tag amber">样例主体 / 非正式评价</span></div></div>
- <div class="profile-layout">
-  <aside class="panel panel-pad"><div class="section-title"><div><h2>选择分析主体</h2><p>样例对象，用于跑通界面与交互</p></div></div><div class="selector-list" id="subjectList"></div><div class="footer-note">当前样例产业名称仅用于演示分析结构。主体边界、产业数据和真实关系须经公开资料及部门数据核验。</div></aside>
-  <div>
-   <section class="panel profile-hero"><div><div class="eyebrow" id="profileEyebrow">INDUSTRY PROFILE / DEMO</div><h2 id="profileName">电子信息产业</h2><p id="profileDesc">查看产业规模、增长动能、技术升级、产业协同、价值创造和抗风险能力。当前未接入可核验的主体级指标。</p><div style="display:flex;gap:7px;flex-wrap:wrap;margin-top:13px"><span class="tag cyan">能力画像</span><span class="tag amber">证据待核验</span><span class="tag">主体边界待确认</span></div></div><div class="profile-emblem" id="profileEmblem">电</div></section>
-   <div class="player-detail-grid">
-    <section class="panel player-attributes">
-     <div class="section-title"><div><div class="eyebrow">PLAYER ATTRIBUTES / 产业属性</div><h2>六维能力面板</h2><p>不是总评分，而是六项能力的证据状态</p></div><span class="tag amber">未评分</span></div>
-     <div class="attribute-layout">
-      <div class="radar-stage"><svg viewBox="0 0 300 260" role="img" aria-label="六维产业能力雷达图，等待真实数据填充">
-       <g fill="none" stroke="rgba(164,196,220,.23)" stroke-width="1"><polygon points="150,30 254,90 254,170 150,230 46,170 46,90"/><polygon points="150,65 223,107 223,153 150,195 77,153 77,107"/><polygon points="150,100 192,124 192,136 150,160 108,136 108,124"/><path d="M150 30V230M46 90L254 170M254 90L46 170"/></g>
-       <polygon points="150,30 254,90 254,170 150,230 46,170 46,90" fill="rgba(94,224,220,.035)" stroke="rgba(94,224,220,.55)" stroke-width="1.5" stroke-dasharray="5 5"/>
-       <g fill="#9bb4c8" font-size="10" text-anchor="middle"><text x="150" y="17">规模</text><text x="270" y="88">动能</text><text x="270" y="184">技术</text><text x="150" y="250">协同</text><text x="30" y="184">价值</text><text x="30" y="88">韧性</text></g>
-       <circle cx="150" cy="130" r="4" fill="#5ee0dc"/><text x="150" y="117" fill="#d7e8f5" font-size="10" text-anchor="middle">等待真实数据</text>
-      </svg><div class="radar-legend"><span><i></i>能力数据待接入</span><span><i></i>不生成虚构分数</span></div></div>
-      <div class="attribute-list" id="attributeList"></div>
-     </div>
-     <div class="evidence-visual">
-      <div class="evidence-visual-head"><b>证据覆盖雷达</b><span>覆盖情况 ≠ 能力高低</span></div>
-      <div class="coverage-grid" id="coverageGrid"></div>
-     </div>
-    </section>
-    <section class="panel scouting-report">
-     <div class="scout-head"><div><div class="eyebrow">SCOUTING REPORT / 球探报告</div><h2>这支产业队伍，值得看什么？</h2></div><div class="scout-stamp">SCOUT<br>NOTE</div></div>
-     <div class="scout-grade"><span>综合判断</span><b>待证据</b><small>不以印象代替评级</small></div>
-     <div class="scout-map">
-      <div class="scout-map-title"><b>潜力 × 风险观察矩阵</b><span>定性检查项，非量化评分</span></div>
-      <div class="scout-quadrants">
-       <div class="quad"><i class="qdot green"></i><b>潜力线索</b><small>技术 / 订单 / 市场</small></div>
-       <div class="quad"><i class="qdot amber"></i><b>关键依赖</b><small>客户 / 设备 / 原料</small></div>
-       <div class="quad"><i class="qdot cyan"></i><b>协同机会</b><small>配套 / 服务 / 人才</small></div>
-       <div class="quad"><i class="qdot red"></i><b>脆弱环节</b><small>集中 / 替代 / 现金流</small></div>
-       <div class="quad-center">待证据<br><small>不预设位置</small></div>
-      </div>
-     </div>
-     <div class="scout-block"><b><i class="scout-dot good"></i>优势线索 / 值得验证</b><p id="scoutStrength">当前缺少主体级证据，暂不判定优势。先核验产品、订单、技术和本地配套。</p></div>
-     <div class="scout-block"><b><i class="scout-dot risk"></i>短板风险 / 必须追问</b><p id="scoutWeakness">重点检查客户集中、关键设备依赖、订单稳定性和价值留存，不能把缺失数据解释成能力不足。</p></div>
-     <div class="scout-block"><b><i class="scout-dot fit"></i>角色适配 / 阵容位置</b><p id="scoutFit">适配角色需要由规模、功能、网络位置和替代难度共同判断。</p></div>
-     <div class="scout-footer">球探报告不是结论书。每条优势、弱点与适配判断，都应能展开到指标、来源、时间和置信等级。</div>
-    </section>
-   </div>
-   <div class="grid capability-grid" id="capabilityGrid"></div>
-   <section class="panel panel-pad" style="margin-top:12px"><div class="section-title"><div><h2>证据与数据完整度</h2><p>数据覆盖情况和判断可信度分开看</p></div><span class="tag amber">等待数据接入</span></div>
-    <table class="evidence-table"><thead><tr><th>核验项目</th><th>当前状态</th><th>下一步需要的数据</th></tr></thead><tbody id="evidenceBody"></tbody></table>
+ <div class="page-head game-head"><div><div class="eyebrow">PLAYER ATTRIBUTES / INDUSTRY PROFILE</div><h1>产业主体能力卡</h1><p>像看一名球员一样，第一眼看总评、位置、特长和短板；再展开六维能力。</p></div><div class="head-right"><span class="tag amber">演示数值 · 非正式评价</span></div></div>
+ <div class="demo-ribbon"><span class="live-dot"></span>开发演示模式　能力总评 OVR、成长潜力 POT、六维属性均为模拟界面数据，先把产品体验跑通。</div>
+ <div class="player-screen">
+  <aside class="player-card-column">
+   <article class="player-card" id="playerCard">
+    <div class="player-card-top"><span>BORO INDUSTRY</span><span>PLAYER CARD · 2026</span></div>
+    <div class="player-card-main"><div><div class="player-position" id="playerPosition">核心型</div><div class="player-ovr" id="cardOvr">82</div><div class="player-ovr-label">OVERALL</div><div class="player-nation">博罗产业主体 · <b id="cardShort">电子</b></div></div><div class="player-emblem" id="profileEmblem">电</div></div>
+    <div class="player-art"><div class="art-orbit orbit-a"></div><div class="art-orbit orbit-b"></div><div class="art-core" id="artCore">电</div><div class="art-lines"></div><div class="art-glow"></div></div>
+    <div class="player-name"><h2 id="profileName">电子信息产业</h2><span id="profileEnglish">ELECTRONIC INFORMATION</span></div>
+    <div class="player-card-stats"><div><b id="cardPot">91</b><small>POT 潜力</small></div><div><b id="cardState">76</b><small>状态</small></div><div><b id="cardRisk">68</b><small>风险承受</small></div></div>
+    <div class="player-card-footer"><span>✦ 产业能力卡</span><span>DEMO DATA</span></div>
+   </article>
+   <div class="player-select-box"><label for="subjectSelect">切换分析主体</label><select id="subjectSelect"></select></div>
+   <div class="mini-profile-note"><b>球员卡式呈现</b><span>总评不是全部。高总评也可能存在关键弱点，潜力高也不等于必然成长。</span></div>
+  </aside>
+  <div class="ability-workspace">
+   <section class="panel attribute-panel">
+    <div class="game-section-title"><div><i>01</i><div><b>六维核心属性</b><small>PLAYER ATTRIBUTES</small></div></div><span class="tag cyan">LIVE PROFILE</span></div>
+    <div class="attribute-list" id="attributeList"></div>
+    <div class="attribute-scale"><span>0 弱</span><span>50 中位</span><span>100 强</span></div>
    </section>
-   <section class="panel panel-pad" style="margin-top:12px"><div class="section-title"><div><h2>主体下一步</h2><p>从单体能力进入组合关系</p></div></div><div style="display:flex;gap:8px;flex-wrap:wrap"><button class="primary-btn" id="addToLineup">加入产业阵容</button><button class="soft-btn" id="openEvidence">查看证据规则</button></div></section>
+   <section class="panel radar-panel">
+    <div class="game-section-title"><div><i>02</i><div><b>能力结构雷达</b><small>ATTRIBUTE RADAR</small></div></div><span class="micro">六维对照</span></div>
+    <svg id="radarSvg" viewBox="0 0 360 310" role="img" aria-label="产业六维能力雷达图"></svg>
+    <div class="radar-foot"><span><i></i>当前能力</span><span><i class="ghost"></i>成长潜力轮廓</span></div>
+   </section>
+   <section class="panel traits-panel">
+    <div class="game-section-title"><div><i>03</i><div><b>球员特性 / 产业标签</b><small>PLAYER TRAITS</small></div></div><span class="micro">可随数据更新</span></div>
+    <div class="trait-list" id="traitList"></div>
+   </section>
+   <section class="panel attribute-detail">
+    <div class="game-section-title"><div><i>04</i><div><b>属性拆解</b><small>WHAT SITS BEHIND THE SCORE</small></div></div><span class="micro">点击维度查看解释</span></div>
+    <div class="dimension-detail" id="dimensionDetail"></div>
+   </section>
   </div>
  </div>
-</section>
-
-<section class="view" id="view-lineup">
+ <details class="evidence-accordion"><summary>展开：数据口径、证据来源与评分规则</summary><div class="evidence-accordion-inner"><p id="profileDesc">当前为演示主体。正式接入时，每个属性均绑定指标、来源、时间和证据等级。</p><table class="evidence-table"><thead><tr><th>核验项目</th><th>当前状态</th><th>下一步需要的数据</th></tr></thead><tbody id="evidenceBody"></tbody></table></div></details>
+</section><section class="view" id="view-lineup">
+ <div class="page-head game-head"><div><div class="eyebrow">SQUAD BUILDER / INDUSTRY LINEUP</div><h1>产业阵容工作台</h1><p>把产业主体放进同一支队伍。看谁是核心、谁负责创造机会、谁补短板，以及阵容里哪些位置无人可替。</p></div><div class="head-right"><span class="tag cyan">拖拽换位</span><span class="tag amber">演示阵容</span></div></div>
+ <div class="demo-ribbon"><span class="live-dot"></span>阵容评分和化学反应为演示参数。拖动主体即可调整位置，正式版接入真实产业关联和资源约束后计算。</div>
+ <div class="lineup-toolbar"><div><b>当前战术：产业协同 4-2-3-1</b><small>角色阵型可调整，不代表行政产业分类</small></div><div class="lineup-actions"><button class="soft-btn" id="resetLineup">恢复默认阵容</button><button class="soft-btn" id="saveLineup">保存阵容</button><button class="primary-btn" id="compareLineup">检查阵容短板</button></div></div>
+ <div class="squad-layout">
+  <section class="pitch-panel"><div class="pitch-label"><span>HOME SQUAD · BORO INDUSTRY</span><span>TACTICAL FORMATION</span></div><div class="squad-pitch" id="squadPitch">
+   <div class="pitch-lines"><span class="pitch-half"></span><span class="pitch-circle"></span><span class="pitch-box top"></span><span class="pitch-box bottom"></span></div>
+   <div class="squad-slot" data-role="growth"><small>前场突破 / 成长引擎</small><div class="squad-slot-cards"></div></div>
+   <div class="squad-slot" data-role="core"><small>核心组织 / 支柱产业</small><div class="squad-slot-cards"></div></div>
+   <div class="squad-slot" data-role="key"><small>关键配套 / 产业链节点</small><div class="squad-slot-cards"></div></div>
+   <div class="squad-slot" data-role="service"><small>生产服务 / 价值放大</small><div class="squad-slot-cards"></div></div>
+   <div class="squad-slot" data-role="base"><small>基础保障 / 底盘支撑</small><div class="squad-slot-cards"></div></div>
+   <div class="squad-slot" data-role="reserve"><small>替补席 / 战略储备</small><div class="squad-slot-cards"></div></div>
+  </div>
+  <div class="squad-legend"><span><i class="legend-blue"></i>核心能力</span><span><i class="legend-green"></i>成长能力</span><span><i class="legend-gold"></i>支撑能力</span><span><i class="legend-red"></i>风险提示</span></div></section>
+  <aside class="squad-side">
+   <section class="panel chemistry-panel"><div class="game-section-title"><div><i>✦</i><div><b>阵容化学反应</b><small>SQUAD CHEMISTRY</small></div></div><span class="tag amber">演示值</span></div><div class="chemistry-score"><b id="chemistryScore">78</b><span>/ 100</span><small>协同适配指数</small></div><div class="chemistry-bar"><i id="chemistryBar"></i></div><div id="chemistryNotes" class="chemistry-notes"></div></section>
+   <section class="panel squad-check-panel"><div class="game-section-title"><div><i>⌖</i><div><b>阵容短板扫描</b><small>WEAK SPOTS</small></div></div></div><div id="lineupChecks" class="lineup-checks"></div></section>
+   <section class="panel squad-pool-panel"><div class="game-section-title"><div><i>＋</i><div><b>候选主体池</b><small>AVAILABLE PLAYERS</small></div></div></div><div id="poolList" class="pool-list"></div></section>
+  </aside>
+ </div>
+ <section class="panel squad-compare"><div class="game-section-title"><div><i>⇄</i><div><b>阵容变化对比</b><small>LINEUP COMPARISON</small></div></div><span class="micro">拖动后自动更新</span></div><div id="lineupCompare" class="lineup-compare"></div></section>
+</section>lass="game-section-title"><div><i>↗</i><div><b>成长路线 / 动态能力成长</b><small>DEVELOPMENT PATH</small></div></div><span class="tag cyan">情景演示</span></div><div class="development-track" id="developmentTrack"></div></section>
+ <div class="scout-bottom-note">球探报告不是一锤定音的结论。它是一份可更新的观察档案：每次新数据进入，优势、弱点、适配位置和成长路线都可以变化。</div>
+</section><section class="view" id="view-lineup">
  <div class="page-head"><div><div class="eyebrow">INDUSTRY LINEUP LAB</div><h1>强产业不等于强阵容。<br><span style="color:var(--cyan)">关键在于如何组合。</span></h1><p>借鉴体育游戏阵容管理：调整角色、移动产业、观察空缺与关系。当前先验证组合结构，不虚构协同产值或增长贡献。</p></div><div class="head-right"><span class="tag cyan">可拖拽调整</span><span class="tag amber">演示阵容</span></div></div>
  <section class="panel panel-pad">
   <div class="lineup-top"><div><div class="section-title" style="margin:0"><div><h2>产业阵容配置</h2><p>拖动产业卡片到不同角色槽位；点击 × 可移回候选区</p></div></div></div><div class="lineup-tools"><button class="soft-btn" id="resetLineup">恢复演示阵容</button><button class="soft-btn" id="saveLineup">保存当前阵容</button><button class="primary-btn" id="compareLineup">检查组合结构</button></div></div>
@@ -226,136 +296,62 @@ button,input,select{font:inherit}button{cursor:pointer}a{color:inherit;text-deco
 (function(){
 "use strict";
 var subjects=[
-{id:"electronics",name:"电子信息产业",short:"电子",desc:"样例主体。应进一步拆分具体产业链环节、企业群体和关键配套，避免用产业门类总量代替链条能力。",color:"#5bb9ff",evidence:["产业规模与企业范围","订单、投产与市场需求","研发、专利质量与工艺升级","本地采购与上下游交易关系","利润、生产率与产品结构","客户集中、供应依赖与替代能力"]},
-{id:"materials",name:"先进材料",short:"材",desc:"样例主体。重点核验材料产品与下游应用之间是否存在真实供需关系、技术适配和稳定采购。",color:"#b5a0ff",evidence:["产品类别与产能口径","订单和下游需求","研发成果与产业化进度","与下游制造企业的真实交易","产品结构与价值留存","关键原料、设备与市场依赖"]},
-{id:"precision",name:"精密制造",short:"精",desc:"样例主体。应区分加工能力、设备能力、质量体系和进入核心客户供应链的能力。",color:"#57d6a0",evidence:["企业范围、产值与就业","开工、订单与产能利用","设备、工艺与质量认证","本地上下游配套关系","生产率、利润与产品升级","核心客户、设备与原料依赖"]},
-{id:"logistics",name:"工业物流",short:"物",desc:"样例主体。重点不是物流企业数量，而是制造业企业实际使用、交付效率、仓配网络和供应链保障能力。",color:"#f3c56c",evidence:["物流企业与服务范围","业务量、时效与需求变化","数字化、仓储与运输能力","制造业客户及服务关系","物流成本与服务附加值","线路、节点与能源依赖"]},
-{id:"rd",name:"研发检测服务",short:"研",desc:"样例主体。应核验服务平台是否被本地企业实际采用，成果是否转化为产品、工艺或质量提升。",color:"#5ee0dc",evidence:["平台数量、资质与服务范围","检测需求与服务增长","设备、技术与专业人员","企业使用关系与合作项目","服务收入与成果转化","关键设备、人才与资金依赖"]},
-{id:"production",name:"生产性服务业",short:"服",desc:"样例主体。需要识别服务是否真正嵌入生产过程，以及对制造效率、市场拓展和价值创造的影响。",color:"#ff8797",evidence:["服务主体与业务范围","订单、客户和市场变化","专业能力与数字化水平","与制造企业的嵌入关系","服务化收入与价值创造","客户集中、人才与资金风险"]}
+{id:"electronics",name:"电子信息产业",short:"电子",en:"ELECTRONIC INFORMATION",position:"核心组织者",role:"核心支柱",ovr:82,pot:91,status:76,risk:68,attrs:[88,82,79,75,83,72],traits:[["⚡","订单牵引","需求变化传导快"],["◆","链主潜质","上下游连接值得观察"],["✦","技术迭代","工艺与产品升级"],["◎","市场敏感","客户结构影响较大"]],strengths:[["产业基础","有望承担产业规模与制造业支撑角色。"],["市场连接","订单、客户和供应链变化值得作为领先观察信号。"],["带动空间","若关键配套本地化，可能提升产业链连接密度。"]],weaknesses:[["客户集中","需要观察核心客户集中度与订单波动。"],["关键部件","高价值环节和关键部件的外部依赖需要核验。"],["价值留存","产值增长不必然意味着利润和本地价值同步增长。"]],watch:["新增项目从签约到投产的转化率","核心客户订单和采购变化","关键配套本地采购比例","高附加值环节是否在本地沉淀"],fit:[["核心支柱",92],["成长突破",84],["关键配套",78]],desc:"演示主体。重点拆分电子信息产业链环节、企业群体和关键配套。",evidence:["产业规模与企业范围","订单、投产与市场需求","研发、专利质量与工艺升级","本地采购与上下游交易关系","利润、生产率与产品结构","客户集中、供应依赖与替代能力"]},
+{id:"materials",name:"先进材料",short:"材",en:"ADVANCED MATERIALS",position:"关键配套",role:"成长突破",ovr:77,pot:90,status:68,risk:62,attrs:[73,79,86,82,76,69],traits:[["◆","关键材料","下游适配决定价值"],["✦","技术壁垒","工艺和认证门槛"],["↗","成长空间","需观察客户放量"],["⚠","原料敏感","价格与供应链风险"]],strengths:[["技术门槛","产品工艺、认证和稳定性可能形成进入壁垒。"],["产业连接","一旦进入下游供应链，可能连接多个制造环节。"],["成长空间","客户验证通过后的放量节奏值得跟踪。"]],weaknesses:[["原料波动","关键原料价格和供应来源可能影响成本。"],["客户认证","认证周期较长，产能建设不等于订单落地。"],["替代竞争","需观察同类材料和外部供应商替代能力。"]],watch:["重点产品通过客户验证的进度","关键原料价格与来源集中度","产能利用率与订单兑现","下游客户扩产和产品路线变化"],fit:[["关键配套",94],["成长突破",91],["核心支柱",66]],desc:"演示主体。重点核验产品类别、下游应用、稳定采购与技术适配。",evidence:["产品类别与产能口径","订单和下游需求","研发成果与产业化进度","与下游制造企业的真实交易","产品结构与价值留存","关键原料、设备与市场依赖"]},
+{id:"precision",name:"精密制造",short:"精",en:"PRECISION MANUFACTURING",position:"全能型中场",role:"关键配套",ovr:81,pot:86,status:79,risk:74,attrs:[78,85,82,88,80,74],traits:[["◎","工艺能力","质量和精度是门槛"],["↗","客户拓展","供应链认证很关键"],["◆","协同枢纽","连接多类制造环节"],["✦","效率提升","设备更新与良率"]],strengths:[["制造基础","工艺、质量和交付能力可能形成稳定竞争力。"],["链条协同","有机会服务多个下游行业与企业群体。"],["升级空间","设备更新、自动化和良率改善值得观察。"]],weaknesses:[["订单依赖","需识别头部客户依赖和订单周期。"],["设备更新","关键设备投资和维护可能形成成本压力。"],["技术替代","工艺路线变化可能带来设备和人才再投资。"]],watch:["核心客户新增与流失","良率、交期与设备利用率","自动化改造后的人均产出","关键工序是否存在单点依赖"],fit:[["关键配套",93],["核心支柱",82],["成长突破",85]],desc:"演示主体。重点区分加工能力、设备能力、质量体系和进入核心客户供应链的能力。",evidence:["企业范围、产值与就业","开工、订单与产能利用","设备、工艺与质量认证","本地上下游配套关系","生产率、利润与产品升级","核心客户、设备与原料依赖"]},
+{id:"logistics",name:"工业物流",short:"物",en:"INDUSTRIAL LOGISTICS",position:"后场保障",role:"基础保障",ovr:76,pot:82,status:73,risk:81,attrs:[72,75,69,83,74,87],traits:[["盾","供应保障","节点稳定性重要"],["↔","网络连接","线路和仓配密度"],["⚡","效率驱动","时效和成本敏感"],["◎","基础支撑","服务制造业生产"]],strengths:[["网络支撑","物流节点和线路可能影响制造业交付效率。"],["抗冲击价值","多通道和替代线路有助于降低单点风险。"],["效率空间","仓配数字化和运输组织优化值得观察。"]],weaknesses:[["线路集中","单一线路、枢纽或能源依赖可能形成风险。"],["成本波动","燃料、人工和仓储成本影响服务竞争力。"],["需求错配","物流供给规模不等于本地制造业真实使用。"]],watch:["制造业客户占比和货物流向","重点线路中断后的替代方案","单位物流成本与交付时效","仓储利用率和数字化调度"],fit:[["基础保障",95],["生产服务",88],["关键配套",79]],desc:"演示主体。重点识别制造业真实使用、交付效率、仓配网络和供应链保障能力。",evidence:["物流企业与服务范围","业务量、时效与需求变化","数字化、仓储与运输能力","制造业客户及服务关系","物流成本与服务附加值","线路、节点与能源依赖"]},
+{id:"rd",name:"研发检测服务",short:"研",en:"R&D AND TESTING",position:"技术创造者",role:"生产服务",ovr:80,pot:93,status:71,risk:76,attrs:[64,78,94,89,85,76],traits:[["✦","技术引擎","研发与成果转化"],["◎","专业人才","人才密度影响上限"],["◆","赋能平台","服务多个产业主体"],["↗","潜力突出","需验证使用率"]],strengths:[["技术赋能","研发检测能力可能帮助制造企业提高质量与工艺水平。"],["跨行业服务","平台能力有机会服务多个产业门类。"],["成长潜力","成果转化和企业采用率提升值得跟踪。"]],weaknesses:[["成果转化","平台数量不代表成果已进入生产环节。"],["人才依赖","专业人才供给和稳定性可能形成约束。"],["使用效率","设备利用率和企业付费使用情况需要核验。"]],watch:["本地企业使用频次与服务收入","研发成果产业化和复购情况","关键技术人才净流入","设备利用率与平台运营效率"],fit:[["生产服务",96],["关键配套",88],["成长突破",91]],desc:"演示主体。重点核验平台是否被本地企业实际采用，成果是否转化为产品、工艺或质量提升。",evidence:["平台数量、资质与服务范围","检测需求与服务增长","设备、技术与专业人员","企业使用关系与合作项目","服务收入与成果转化","关键设备、人才与资金依赖"]},
+{id:"production",name:"生产性服务业",short:"服",en:"PRODUCER SERVICES",position:"进攻型组织者",role:"生产服务",ovr:81,pot:89,status:80,risk:73,attrs:[70,82,79,88,91,78],traits:[["↗","价值放大","服务嵌入生产"],["◎","客户协同","连接企业需求"],["✦","知识密集","专业能力重要"],["◆","价值留存","服务收入与附加值"]],strengths:[["价值放大","服务嵌入制造流程后可能提升效率与产品价值。"],["客户连接","有机会连接制造企业、市场和专业资源。"],["结构升级","生产性服务发展有助于产业价值链延伸。"]],weaknesses:[["服务泛化","需要区分真正生产性服务与一般商业服务。"],["人才约束","专业人才和行业经验可能限制扩张。"],["需求验证","服务能力必须由企业实际采购和使用证明。"]],watch:["制造企业服务采购金额与频次","服务收入中本地制造业贡献","服务后生产效率或良率变化","专业人才供给和客户集中度"],fit:[["生产服务",97],["成长突破",85],["核心支柱",68]],desc:"演示主体。重点核验服务是否真正嵌入生产过程，以及对制造效率、市场拓展和价值创造的影响。",evidence:["服务主体与业务范围","订单、客户和市场变化","专业能力与数字化水平","与制造企业的嵌入关系","服务化收入与价值创造","客户集中、人才与资金风险"]}
 ];
-var dimensions=[
-["产业规模","产值、增加值、企业数量、就业与产能","企业数量不能直接代表链条完整度。"],
-["增长动能","增速、订单、投产、市场需求与扩产","单年增长不能自动代表持续成长。"],
-["技术升级","研发、专利质量、设备工艺与产品迭代","专利数量不等于技术壁垒。"],
-["产业协同","本地配套、上下游连接、采购与协作密度","地理相邻不等于真实交易。"],
-["价值创造","生产率、利润、产品附加值与价值留存","规模大不等于价值留存高。"],
-["抗风险能力","市场集中、供应依赖、财务压力与替代能力","没有观察到冲击不等于韧性已被证明。"]
-];
-var roles=[
-{id:"core",name:"核心支柱型",desc:"规模、就业与产业基础支撑",color:"#5bb9ff"},
-{id:"growth",name:"成长突破型",desc:"成长空间与潜在新引擎",color:"#5ee0dc"},
-{id:"key",name:"关键配套型",desc:"影响多个产业的关键环节",color:"#57d6a0"},
-{id:"service",name:"生产服务型",desc:"物流、研发、检测、工业服务",color:"#f3c56c"},
-{id:"base",name:"基础保障型",desc:"能源、交通与基础设施",color:"#b5a0ff"},
-{id:"reserve",name:"战略储备型",desc:"规模有限但有待验证的战略价值",color:"#ff8797"}
-];
-var defaultLineup={core:["electronics"],growth:["materials","precision"],key:["logistics"],service:["rd","production"],base:[],reserve:[]};
-var state={subject:"electronics",lineup:clone(defaultLineup),relations:{}};
-function clone(o){return JSON.parse(JSON.stringify(o))}
+var dims=["规模","增长","技术","协同","价值","韧性"];
+var dimInfo=["企业范围、产值、就业、产能和产业基础。","订单、投产、需求、扩产与市场成长速度。","研发、专利质量、设备工艺与产品迭代。","上下游采购、供应链连接与本地配套关系。","利润、生产率、附加值和本地价值留存。","客户集中、供应依赖、替代能力和抗冲击能力。"];
+var roles=[{id:"growth",name:"成长突破"},{id:"core",name:"核心支柱"},{id:"key",name:"关键配套"},{id:"service",name:"生产服务"},{id:"base",name:"基础保障"},{id:"reserve",name:"战略储备"}];
+var defaults={growth:["materials"],core:["electronics"],key:["precision"],service:["rd","production"],base:["logistics"],reserve:[]};
+var state={subject:"electronics",lineup:JSON.parse(JSON.stringify(defaults))};
 function el(id){return document.getElementById(id)}
-function toast(msg){var t=el("toast");t.textContent=msg;t.classList.add("show");clearTimeout(toast.timer);toast.timer=setTimeout(function(){t.classList.remove("show")},2400)}
 function subject(id){return subjects.find(function(s){return s.id===id})}
-function allAssigned(){var a=[];roles.forEach(function(r){(state.lineup[r.id]||[]).forEach(function(id){a.push(id)})});return a}
-function switchView(name){document.querySelectorAll(".view").forEach(function(v){v.classList.toggle("active",v.id==="view-"+name)});document.querySelectorAll(".nav-btn").forEach(function(b){b.classList.toggle("active",b.dataset.view===name)});el("crumbCurrent").innerHTML="<b>"+({overview:"产业总览",profile:"主体档案",lineup:"产业阵容"}[name])+"</b>";window.scrollTo({top:0,behavior:"smooth"})}
+function toast(msg){var t=el("toast");if(!t)return;t.textContent=msg;t.classList.add("show");clearTimeout(toast.timer);toast.timer=setTimeout(function(){t.classList.remove("show")},2200)}
+function assigned(){return roles.reduce(function(a,r){return a.concat(state.lineup[r.id]||[])},[])}
+function switchView(name){document.querySelectorAll(".view").forEach(function(v){v.classList.toggle("active",v.id==="view-"+name)});document.querySelectorAll(".nav-btn").forEach(function(b){b.classList.toggle("active",b.dataset.view===name)});var names={overview:"产业总览",profile:"能力属性卡",scout:"球探报告",lineup:"产业阵容"};el("crumbCurrent").innerHTML="<b>"+names[name]+"</b>";window.scrollTo({top:0,behavior:"smooth"})}
 document.querySelectorAll("[data-view]").forEach(function(b){b.addEventListener("click",function(){switchView(b.dataset.view)})});
 document.querySelectorAll("[data-open]").forEach(function(b){b.addEventListener("click",function(){switchView(b.dataset.open)})});
-function renderSubjects(){
- var list=el("subjectList");list.innerHTML="";
- subjects.forEach(function(s){var b=document.createElement("button");b.className="subject-option"+(state.subject===s.id?" active":"");b.innerHTML="<span><b>"+s.name+"</b><small>样例主体 · 待接入证据</small></span><span class='arrow'>›</span>";b.addEventListener("click",function(){state.subject=s.id;renderSubjects();renderProfile()});list.appendChild(b)})
-}
+function renderSelect(){var s=el("subjectSelect");s.innerHTML=subjects.map(function(x){return "<option value='"+x.id+"'>"+x.name+"</option>"}).join("");s.value=state.subject;s.addEventListener("change",function(){state.subject=s.value;renderProfile();renderScout()})}
 function renderProfile(){
- var s=subject(state.subject);el("profileName").textContent=s.name;el("profileDesc").textContent=s.desc;el("profileEmblem").textContent=s.short;el("profileEyebrow").textContent="INDUSTRY PROFILE / "+s.id.toUpperCase();
- var attr=el("attributeList");attr.innerHTML="";
- dimensions.forEach(function(d){var row=document.createElement("div");row.className="attribute-row";row.innerHTML="<b>"+d[0]+"</b><div class='attribute-track'><i></i></div><small>无数据</small>";attr.appendChild(row)});
- var coverage=el("coverageGrid");coverage.innerHTML="";
- ["规","单","技","链","值","险"].forEach(function(icon,i){var cell=document.createElement("div");cell.className="coverage-cell";cell.innerHTML="<div class='coverage-icon'>"+icon+"</div><b>"+dimensions[i][0]+"</b><small>待接入</small><div class='coverage-track'><i></i></div>";coverage.appendChild(cell)});
- var scout={
-  electronics:["需要核验产品是否进入稳定客户供应链，是否形成关键工艺或本地配套优势。","重点追问核心客户集中度、关键零部件外采比例、订单波动和本地采购深度。","核心支柱型 / 成长突破型均为候选角色，须结合产值、企业层级和网络位置判断。"],
-  materials:["需要核验产品是否有明确下游应用、稳定客户和可持续的技术适配能力。","重点追问原料来源、设备依赖、客户认证周期、产品价格波动和替代品。","关键配套型 / 成长突破型为待验证角色，不能仅凭产业名称认定。"],
-  precision:["需要核验加工精度、质量体系、交付能力及进入核心客户供应链的门槛。","重点追问客户集中、设备更新、良率、订单稳定性和关键工艺外部依赖。","关键配套型 / 核心支柱型为候选角色，需查明真实服务对象。"],
-  logistics:["需要核验物流节点是否服务本地制造业，以及时效和成本是否形成可量化优势。","重点追问线路集中、仓储利用率、能源成本、关键客户依赖和替代运输方案。","基础保障型 / 生产服务型为候选角色，需用实际业务流量验证。"],
-  rd:["需要核验研发检测平台是否被本地企业实际使用，以及成果是否进入生产环节。","重点追问设备利用率、专业人才、服务收入、成果转化和财政资金依赖。","生产服务型 / 关键配套型为候选角色，须以服务记录和企业反馈为证。"],
-  production:["需要核验生产性服务是否嵌入制造流程，并带来效率、质量或市场拓展变化。","重点追问服务收入来源、客户集中、人才供给、数字化能力和服务价值留存。","生产服务型为候选角色，须区分一般商业服务与生产性服务。"]
- };
- var note=scout[s.id]||scout.electronics;el("scoutStrength").textContent=note[0];el("scoutWeakness").textContent=note[1];el("scoutFit").textContent=note[2];
- var grid=el("capabilityGrid");grid.innerHTML="";
- dimensions.forEach(function(d,i){var card=document.createElement("article");card.className="panel capability";card.innerHTML="<div class='cap-top'><h4>"+d[0]+"</h4><span class='tag amber'>待核验</span></div><p>"+d[1]+"</p><div class='status-line' style='--w:"+[18,22,15,12,16,10][i]+"%'><i style='width:var(--w);opacity:.38'></i></div><p style='margin-top:8px;color:#829bb0'>注意： "+d[2]+"</p>";grid.appendChild(card)});
- var body=el("evidenceBody");body.innerHTML="";
- s.evidence.forEach(function(x,i){var tr=document.createElement("tr");tr.innerHTML="<td>"+x+"</td><td><span class='tag amber'>待接入 / 待核验</span></td><td>"+["统计口径、年度数据与企业范围","订单、投产、需求变化及时间序列","研发、专利质量、设备与工艺资料","采购流向、供应商和企业调查","利润、生产率与产品结构数据","客户/供应商集中度及替代方案"][i]+"</td>";body.appendChild(tr)})
+ var s=subject(state.subject);el("profileName").textContent=s.name;el("profileEnglish").textContent=s.en;el("profileEmblem").textContent=s.short;el("artCore").textContent=s.short;el("cardShort").textContent=s.short;el("playerPosition").textContent=s.position;el("cardOvr").textContent=s.ovr;el("cardPot").textContent=s.pot;el("cardState").textContent=s.status;el("cardRisk").textContent=s.risk;el("profileDesc").textContent=s.desc;
+ var bars=el("attributeList");bars.innerHTML="";
+ dims.forEach(function(d,i){var row=document.createElement("div");row.className="attribute-row";row.innerHTML="<b>"+d+"</b><div class='attribute-track'><i style='width:0%'></i></div><strong>"+s.attrs[i]+"</strong>";bars.appendChild(row);requestAnimationFrame(function(){row.querySelector("i").style.width=s.attrs[i]+"%"})});
+ var svg=el("radarSvg");var cx=180,cy=148,r=105,pts=[];function point(v,i,scale){var a=(-Math.PI/2)+i*Math.PI/3;return [cx+Math.cos(a)*r*v/100*scale,cy+Math.sin(a)*r*v/100*scale]}
+ var html="";[25,50,75,100].forEach(function(k){var p=dims.map(function(_,i){return point(k,i,1).join(",")}).join(" ");html+="<polygon points='"+p+"' fill='none' stroke='rgba(170,203,229,.22)' stroke-width='1'/>"});
+ dims.forEach(function(d,i){var p=point(100,i,1);html+="<line x1='"+cx+"' y1='"+cy+"' x2='"+p[0]+"' y2='"+p[1]+"' stroke='rgba(170,203,229,.18)'/>";var lp=point(116,i,1);html+="<text x='"+lp[0]+"' y='"+(lp[1]+4)+"' fill='#a5bdce' font-size='10' text-anchor='middle'>"+d+"</text>"});
+ var current=dims.map(function(_,i){return point(s.attrs[i],i,1).join(",")}).join(" ");var potential=dims.map(function(_,i){return point(Math.min(100,s.attrs[i]+(s.pot-s.ovr)*.45),i,1).join(",")}).join(" ");
+ html+="<polygon points='"+potential+"' fill='rgba(243,197,108,.07)' stroke='#d9b96d' stroke-width='1.5' stroke-dasharray='4 5'/><polygon points='"+current+"' fill='rgba(80,213,210,.22)' stroke='#5ee0dc' stroke-width='2'/>";
+ dims.forEach(function(_,i){var p=point(s.attrs[i],i,1);html+="<circle cx='"+p[0]+"' cy='"+p[1]+"' r='4' fill='#f3d28b' stroke='#0c263a' stroke-width='2'/>"});
+ svg.innerHTML=html;
+ var traits=el("traitList");traits.innerHTML="";s.traits.forEach(function(t){var d=document.createElement("div");d.className="trait-badge";d.innerHTML="<div class='trait-icon'>"+t[0]+"</div><div><b>"+t[1]+"</b><small>"+t[2]+"</small></div>";traits.appendChild(d)});
+ var details=el("dimensionDetail");details.innerHTML="";dims.forEach(function(d,i){var x=document.createElement("div");x.className="dimension-card";x.innerHTML="<b>"+d+" · "+s.attrs[i]+"</b><p>"+dimInfo[i]+"</p>";details.appendChild(x)});
+ var body=el("evidenceBody");body.innerHTML="";s.evidence.forEach(function(x,i){var tr=document.createElement("tr");tr.innerHTML="<td>"+x+"</td><td><span class='tag amber'>待接入 / 待核验</span></td><td>"+["统计口径、年度数据与企业范围","订单、投产、需求变化及时间序列","研发、专利质量、设备与工艺资料","采购流向、供应商和企业调查","利润、生产率与产品结构数据","客户/供应商集中度及替代方案"][i]+"</td>";body.appendChild(tr)})
 }
-el("addToLineup").addEventListener("click",function(){var id=state.subject;if(allAssigned().indexOf(id)<0){state.lineup.reserve.push(id);renderLineup();toast("已加入候选阵容："+subject(id).name)}else{toast("该主体已在阵容中")};switchView("lineup")});
-el("openEvidence").addEventListener("click",function(){openDrawer("证据规则","<div class='drawer-block'><b>事实</b><p>有明确来源、时间和统计口径的观测信息。</p></div><div class='drawer-block'><b>估算</b><p>由已知信息按公开方法推算，需展示方法和区间。</p></div><div class='drawer-block'><b>假设</b><p>为了运行情景而设置的条件，必须允许调整。</p></div><div class='drawer-block'><b>模型输出</b><p>特定输入和模型版本下的计算结果，不等于事实。</p></div><p>数据完整度回答“覆盖多少”；证据可信度回答“判断有多可靠”。两者不能混成一个分数。</p>")});
+function bulletList(id,items){var box=el(id);box.innerHTML="";items.forEach(function(x){var d=document.createElement("div");d.className="scout-item";d.innerHTML="<i></i><div><b>"+x[0]+"</b><p>"+x[1]+"</p></div>";box.appendChild(d)})}
+function renderScout(){var s=subject(state.subject);el("scoutName").textContent=s.name;el("scoutIntro").textContent="球探观察：识别优势、短板、适配位置和成长路线。当前为演示样例。";el("scoutGrade").textContent=s.ovr>=82?"A−":s.ovr>=79?"B＋":"B";el("scoutPotential").textContent=s.pot>=90?"VERY HIGH":s.pot>=85?"HIGH":"MEDIUM";el("scoutRole").textContent=s.role;el("scoutScore").textContent=s.ovr;el("scoutScore").parentNode.parentNode.style.background="conic-gradient(#f1ce7c 0 "+s.ovr+"%,#31495a "+s.ovr+"%)";bulletList("scoutStrengths",s.strengths);bulletList("scoutWeaknesses",s.weaknesses);var fit=el("scoutFit");fit.innerHTML="";s.fit.forEach(function(x){var d=document.createElement("div");d.className="fit-row";d.innerHTML="<span>"+x[0]+"</span><div class='fit-meter'><i style='width:"+x[1]+"%'></i></div><b>"+x[1]+"</b>";fit.appendChild(d)});var watch=el("scoutWatch");watch.innerHTML="";s.watch.forEach(function(x,i){var d=document.createElement("div");d.className="watch-row";d.innerHTML="<span>"+(i+1)+". "+x+"</span><b>›</b>";watch.appendChild(d)});var track=el("developmentTrack");track.innerHTML="";[["01 · 近期","补齐关键证据","优先核验订单、企业范围、客户结构和关键供应依赖。"],["02 · 中期","强化关键能力","围绕技术升级、配套关系、人才和服务能力观察变化。"],["03 · 远期","检验成长兑现","检查潜力是否转化为产能、订单、利润和本地价值留存。"]].forEach(function(x){var d=document.createElement("div");d.className="development-step";d.innerHTML="<small>"+x[0]+"</small><b>"+x[1]+"</b><p>"+x[2]+"</p>";track.appendChild(d)})}
+function cardHTML(id){var s=subject(id);return "<div class='squad-card' draggable='true' data-id='"+id+"'><div class='squad-card-top'><b>"+s.ovr+"</b><span>OVR</span></div><div class='squad-card-name'>"+s.name+"</div><div class='squad-card-role'>"+s.role+" · POT "+s.pot+"</div></div>"}
 function renderLineup(){
- var grid=el("roleGrid");grid.innerHTML="";
- var links=document.createElementNS("http://www.w3.org/2000/svg","svg");links.setAttribute("class","pitch-link-layer");links.setAttribute("viewBox","0 0 600 420");links.setAttribute("preserveAspectRatio","none");
- [[300,95,105,95],[300,95,495,95],[105,95,105,325],[105,325,300,325],[300,95,300,325],[495,95,495,325],[300,325,495,325]].forEach(function(p){var line=document.createElementNS("http://www.w3.org/2000/svg","path");line.setAttribute("d","M"+p[0]+" "+p[1]+" L"+p[2]+" "+p[3]);line.setAttribute("stroke","rgba(116,205,187,.42)");line.setAttribute("stroke-width","1.5");line.setAttribute("stroke-dasharray","5 7");line.setAttribute("fill","none");links.appendChild(line)});
- grid.appendChild(links);
- roles.forEach(function(r){
-  var slot=document.createElement("div");slot.className="role-slot";slot.dataset.role=r.id;
-  var ids=state.lineup[r.id]||[];
-  slot.innerHTML="<div class='role-head'><div><b>"+r.name+"</b><small>"+r.desc+"</small></div><span class='role-count'>"+ids.length+" 个主体</span></div><div class='chip-list'></div>";
-  var chips=slot.querySelector(".chip-list");
-  ids.forEach(function(id){var s=subject(id);var chip=makeChip(s,r.id);chips.appendChild(chip)});
-  slot.addEventListener("dragover",function(e){e.preventDefault();slot.classList.add("drag-over")});
-  slot.addEventListener("dragleave",function(){slot.classList.remove("drag-over")});
-  slot.addEventListener("drop",function(e){e.preventDefault();slot.classList.remove("drag-over");var id=e.dataTransfer.getData("text/plain");moveSubject(id,r.id)});
-  grid.appendChild(slot)
- });
- var pool=el("poolList");pool.innerHTML="";
- var assigned=allAssigned();
- subjects.filter(function(s){return assigned.indexOf(s.id)<0}).forEach(function(s){pool.appendChild(makeChip(s,"pool"))});
- renderMatrix();renderChecks();renderRoleDistribution()
+ document.querySelectorAll(".squad-slot").forEach(function(slot){var role=slot.dataset.role,box=slot.querySelector(".squad-slot-cards");box.innerHTML="";(state.lineup[role]||[]).forEach(function(id){box.insertAdjacentHTML("beforeend",cardHTML(id))});slot.addEventListener("dragover",function(e){e.preventDefault();slot.classList.add("drag-over")});slot.addEventListener("dragleave",function(){slot.classList.remove("drag-over")});slot.addEventListener("drop",function(e){e.preventDefault();slot.classList.remove("drag-over");var id=e.dataTransfer.getData("text/plain");moveCard(id,role)})});
+ document.querySelectorAll(".squad-card").forEach(function(card){card.addEventListener("dragstart",function(e){e.dataTransfer.setData("text/plain",card.dataset.id);e.dataTransfer.effectAllowed="move"})});
+ var pool=el("poolList");pool.innerHTML="";subjects.filter(function(s){return assigned().indexOf(s.id)<0}).forEach(function(s){var d=document.createElement("div");d.className="pool-card";d.draggable=true;d.dataset.id=s.id;d.innerHTML="<b>"+s.name+"</b><span>OVR "+s.ovr+" · POT "+s.pot+"</span>";d.addEventListener("dragstart",function(e){e.dataTransfer.setData("text/plain",s.id)});pool.appendChild(d)});
+ var n=assigned().length;var chemistry=Math.min(96,Math.round(57+n*5+(state.lineup.service.length?6:0)+(state.lineup.key.length?4:0)));el("chemistryScore").textContent=chemistry;el("chemistryBar").style.width=chemistry+"%";el("chemistryNotes").innerHTML="<div>当前配置 "+n+" 个产业主体，覆盖 "+roles.filter(function(r){return state.lineup[r.id].length>0}).length+" 类阵容角色。</div><div>服务、配套和核心主体之间的关系仍需真实采购与合作数据验证。</div>";
+ var empty=roles.filter(function(r){return state.lineup[r.id].length===0});var checks=el("lineupChecks");checks.innerHTML="";[["主体数量",n+" 个",n>=5?"good":"warn"],["角色空缺",empty.length+" 个",empty.length?"warn":"good"],["关键关系","待核验","warn"],["协同收益","未测算","warn"]].forEach(function(x){var d=document.createElement("div");d.className="check-row";d.innerHTML="<span>"+x[0]+"</span><b class='"+x[2]+"'>"+x[1]+"</b>";checks.appendChild(d)});
+ var cmp=el("lineupCompare");cmp.innerHTML="";[["阵容覆盖",roles.filter(function(r){return state.lineup[r.id].length>0}).length+"/6","已配置角色数"],["主体数量",n,"已放入阵容的主体"],["化学反应",chemistry,"演示协同适配指数"]].forEach(function(x){var d=document.createElement("div");d.className="compare-metric";d.innerHTML="<small>"+x[0]+"</small><b>"+x[1]+"</b><span>"+x[2]+"</span>";cmp.appendChild(d)})
 }
-function renderRoleDistribution(){
- var box=el("roleDistribution");if(!box)return;box.innerHTML="";
- var total=allAssigned().length;
- roles.forEach(function(r){var n=(state.lineup[r.id]||[]).length;var seg=document.createElement("span");seg.style.width=(total?n/total*100:0)+"%";seg.style.background=r.color;seg.title=r.name+": "+n;box.appendChild(seg)});
- var legend=document.createElement("div");legend.className="role-distribution-legend";
- roles.forEach(function(r){var n=(state.lineup[r.id]||[]).length;var item=document.createElement("span");item.innerHTML="<i style='background:"+r.color+"'></i>"+r.name+" "+n;legend.appendChild(item)});
- box.parentNode.appendChild(legend)
-}
-function makeChip(s,from){
- var c=document.createElement("div");c.className="industry-chip";c.draggable=true;c.dataset.subject=s.id;c.style.setProperty("--chip",s.color);
- c.innerHTML="<span class='chip-dot'></span>"+s.name+(from==="pool"?"":"<button title='移回候选池' aria-label='移回候选池'>×</button>");
- c.addEventListener("dragstart",function(e){e.dataTransfer.setData("text/plain",s.id);e.dataTransfer.effectAllowed="move"});
- c.addEventListener("click",function(e){if(e.target.tagName==="BUTTON"){removeSubject(s.id);return}state.subject=s.id;renderSubjects();renderProfile();switchView("profile")});
- return c
-}
-function removeSubject(id){roles.forEach(function(r){state.lineup[r.id]=(state.lineup[r.id]||[]).filter(function(x){return x!==id})});renderLineup();toast("已移回候选产业池")}
-function moveSubject(id,to){if(!subject(id))return;removeSubjectSilent(id);state.lineup[to].push(id);renderLineup();toast(subject(id).name+" → "+roles.find(function(r){return r.id===to}).name)}
-function removeSubjectSilent(id){roles.forEach(function(r){state.lineup[r.id]=(state.lineup[r.id]||[]).filter(function(x){return x!==id})})}
-function renderMatrix(){
- var rows=el("matrixRows");rows.innerHTML="";
- var pairs=[["electronics","precision"],["materials","electronics"],["precision","logistics"],["precision","rd"],["electronics","production"]];
- pairs.forEach(function(pair,i){
-  var key=pair.join("_");var row=document.createElement("div");row.className="matrix-row";
-  var opts=["待核验","可能协同","可能竞争","可能冲突","暂无关系证据"];
-  var val=state.relations[key]||"待核验";
-  row.innerHTML="<span>"+subject(pair[0]).name+"</span><span>"+subject(pair[1]).name+"</span><span>关系类型由证据确认</span><select aria-label='关系判断'>"+opts.map(function(o){return "<option "+(o===val?"selected":"")+">"+o+"</option>"}).join("")+"</select>";
-  row.querySelector("select").addEventListener("change",function(e){state.relations[key]=e.target.value;toast("关系判断已更新。请补充证据来源。")});rows.appendChild(row)
- })
-}
-function renderChecks(){
- var box=el("lineupChecks");box.innerHTML="";
- var assigned=allAssigned();var count=assigned.length;
- var empty=roles.filter(function(r){return (state.lineup[r.id]||[]).length===0});
- var checks=[
- ["已配置主体",count+" 个","当前阵容中已放置的样例主体数量，不代表产业规模。",count?"green":"amber"],
- ["空缺角色",empty.length+" / 6","空缺可能是有意选择，也可能提示需要核验的结构缺口。",empty.length?"amber":"green"],
- ["关系核验","待核验","当前未接入企业采购、供应链或投入产出关系数据。","amber"],
- ["组合收益","不计算","未建立经过验证的协同参数，不输出虚构收益。","red"]
- ];
- checks.forEach(function(c){var d=document.createElement("div");d.style.cssText="padding:12px;border:1px solid var(--line);border-radius:11px;background:#0c2031";d.innerHTML="<div style='display:flex;justify-content:space-between;gap:10px;align-items:center'><b style='font-size:11px'>"+c[0]+"</b><span class='tag "+c[3]+"'>"+c[1]+"</span></div><p style='font-size:10px;color:var(--muted);line-height:1.6;margin:7px 0 0'>"+c[2]+"</p>";box.appendChild(d)})
-}
-el("resetLineup").addEventListener("click",function(){state.lineup=clone(defaultLineup);renderLineup();toast("已恢复演示阵容")});
-el("saveLineup").addEventListener("click",function(){try{localStorage.setItem("boroArenaLineup",JSON.stringify(state.lineup));toast("阵容已保存在当前浏览器")}catch(e){toast("当前浏览器不支持本地保存")}});
-el("compareLineup").addEventListener("click",function(){renderChecks();toast("结构检查已刷新。当前只检查角色配置与证据状态。")});
-el("systemMap").addEventListener("click",function(){openDrawer("系统架构与使用边界","<div class='drawer-block'><b>01 主体档案室</b><p>五级主体、六维能力、当前能力/潜力/证据可信度分开呈现。</p></div><div class='drawer-block'><b>02 产业阵容工作台</b><p>六类角色、拖拽组合、关系核验和结构缺口检查。</p></div><div class='drawer-block'><b>03 产业总览中心</b><p>变化提醒、条件预警、目标达成检查与跨工作空间入口。</p></div><div class='drawer-block'><b>数据边界</b><p>A级：政府统计和正式资料；B级：企业公告、招聘、招投标等；C级：多来源线索与合理估算；D级：尚缺企业内部数据。当前原型没有接入真实主体级数据。</p></div><div class='drawer-block'><b>战略口径</b><p>2032年前后1:5:4是产业布局方向，不是三次产业增加值比例。</p></div><p>注意：GitHub Pages 是公开静态托管。本原型未接入涉密数据，也不提供账号鉴权。正式内部部署前需另行配置身份认证、访问控制与数据隔离。</p>")});
+function moveCard(id,role){if(!subject(id))return;roles.forEach(function(r){state.lineup[r.id]=state.lineup[r.id].filter(function(x){return x!==id})});state.lineup[role].push(id);renderLineup();toast(subject(id).name+" 已调整至 "+roles.find(function(r){return r.id===role}).name)}
+el("addToLineup").addEventListener("click",function(){var id=state.subject;if(assigned().indexOf(id)<0){state.lineup.reserve.push(id);renderLineup();toast("已加入替补席："+subject(id).name)}else toast("该主体已在阵容中");switchView("lineup")});
+el("resetLineup").addEventListener("click",function(){state.lineup=JSON.parse(JSON.stringify(defaults));renderLineup();toast("已恢复演示阵容")});
+el("saveLineup").addEventListener("click",function(){try{localStorage.setItem("boroIndustrySquadV2",JSON.stringify(state.lineup));toast("阵容已保存到当前浏览器")}catch(e){toast("浏览器暂不支持本地保存") }});
+el("compareLineup").addEventListener("click",function(){renderLineup();toast("阵容短板已刷新")});
+el("systemMap").addEventListener("click",function(){openDrawer("系统说明","<div class='drawer-block'><b>界面开发原则</b><p>参考体育游戏的球员能力卡、球探报告和阵容战术板，把产业主体能力、潜力、弱点、适配角色与组合关系可视化。</p></div><div class='drawer-block'><b>演示参数</b><p>当前 OVR、POT、属性条、球探指数和阵容化学反应均为开发演示数值，不能作为博罗产业真实评价或正式测算结论。</p></div><div class='drawer-block'><b>正式数据接入</b><p>后续将主体边界、指标口径、证据等级、来源和时间戳绑定到各属性；缺失数据不自动填成低分。</p></div><div class='drawer-block'><b>战略口径</b><p>2032年前后1:5:4是产业布局方向，不是三次产业增加值比例。</p></div><p>GitHub Pages 为公开静态托管，不适合存放涉密数据。正式内部使用前需另行配置身份认证、访问控制和数据隔离。</p>")});
 function openDrawer(title,body){el("drawerTitle").textContent=title;el("drawerBody").innerHTML=body;el("drawer").classList.add("open")}
-el("drawerClose").addEventListener("click",function(){el("drawer").classList.remove("open")});
-el("drawer").addEventListener("click",function(e){if(e.target===el("drawer"))el("drawer").classList.remove("open")});
-try{var saved=localStorage.getItem("boroArenaLineup");if(saved){var parsed=JSON.parse(saved);if(parsed&&roles.every(function(r){return Array.isArray(parsed[r.id])}))state.lineup=parsed}}catch(e){}
-renderSubjects();renderProfile();renderLineup();
+el("drawerClose").addEventListener("click",function(){el("drawer").classList.remove("open")});el("drawer").addEventListener("click",function(e){if(e.target===el("drawer"))el("drawer").classList.remove("open")});
+try{var saved=localStorage.getItem("boroIndustrySquadV2");if(saved){var parsed=JSON.parse(saved);if(parsed&&roles.every(function(r){return Array.isArray(parsed[r.id])}))state.lineup=parsed}}catch(e){}
+renderSelect();renderProfile();renderScout();renderLineup();
 })();
 </script>
 </body>
