@@ -1060,8 +1060,8 @@ function v9Snapshot(){
 }
 function v9DamageNow(id){const s=career.companyStates?.[id];return s?s.damage.reduce((a,b)=>a+b,0)/6:0}
 function v9AdvanceCompanies(policy,paid,event){
- const active=managerSelected(),gain=paid?1:0;
- const eventType=event[1];
+ const active=managerSelected(),gain=paid?1:0,eventType=event[1];
+ // Evolve selected companies; every model attribute remains bounded and reversible.
  for(const p of active){
   const st=v9Company(p.id),role=Object.entries(manager.slots).find(([r,id])=>id===p.id)?.[0];
   const trend=getModel(p).values[1]/100;
@@ -1077,17 +1077,42 @@ function v9AdvanceCompanies(policy,paid,event){
    if(role==="growth")inc*=1.16;
    st.growth[i]=Math.min(14,st.growth[i]+inc*gain*Math.max(.14,1-st.growth[i]/15));
   }
-  // Deterministic, explicitly hypothetical event targeting.
-  const hit=eventType==="orders"?[1,4]:eventType==="talent"?[2,3]:eventType==="supply"?[3,5]:[];
-  if(hit.length){
-   const factor=(p.id===active[0]?.id?1:.42)*(1-Math.min(.45,career.training.resilience*.028));
-   hit.forEach(i=>st.damage[i]=Math.min(24,st.damage[i]+event[2]*4*factor));
+ }
+ // Reuse the existing V5 hypothetical network, rather than applying the same shock to every company.
+ const hit=eventType==="orders"?[1,4]:eventType==="talent"?[2,3]:eventType==="supply"?[3,5]:[];
+ const result={source:null,affected:[],maxStress:0};
+ if(hit.length&&active.length){
+  const source=active[(career.quarter-1+active.length)%active.length];
+  result.source=source.id;
+  const old={...wtState};
+  wtState.source=source.id;
+  wtState.type=eventType==="supply"?"supply":eventType==="talent"?"delay":"orders";
+  wtState.shock=Math.min(50,Math.round(event[2]*23));
+  let effects;
+  try{effects=wtCalculate(true).effects}finally{Object.assign(wtState,old)}
+  const resilience=Math.min(.5,career.training.resilience*.028);
+  for(const [id,pressure] of Object.entries(effects)){
+   if(pressure<=.006||!companies.some(p=>p.id===id))continue;
+   const st=v9Company(id);
+   for(const i of hit)st.damage[i]=Math.min(24,st.damage[i]+pressure*19*(1-resilience));
    st.eventCount++;
+   result.affected.push(id);
+   result.maxStress=Math.max(result.maxStress,pressure);
+  }
+  // A county-wide labor-market shock also reaches roster firms without a known supply link.
+  if(eventType==="talent"){
+   for(const p of active){
+    if(result.affected.includes(p.id))continue;
+    const st=v9Company(p.id);
+    st.damage[2]=Math.min(24,st.damage[2]+.85*(1-resilience));
+    result.affected.push(p.id);
+   }
   }
  }
+ return result;
 }
 function v9NetworkState(){
- const id=Object.values(manager.slots).find(Boolean);
+ const id=(career.lastOutcome?.eventKey===manager.event&&career.lastOutcome?.source)||Object.values(manager.slots).find(Boolean);
  if(!id)return {affected:0,pressure:0};
  const old={...wtState};
  const event=manager.event;
@@ -1113,7 +1138,7 @@ function v9Render(){
  for(let i=0;i<pts.length;i++)lines+='<circle cx="'+pts[i][0]+'" cy="'+pts[i][1]+'" r="4" fill="#8ce4d5"/><text x="'+pts[i][0]+'" y="'+(pts[i][1]-12)+'" text-anchor="middle" fill="#f1d393" font-size="11">'+(i===0?"基准":"Q"+i)+'</text>';
  $("v9Trend").innerHTML=lines;
  const prior=career.curve?.[career.curve.length-2],baseline=career.initialScore??snap.score,difference=snap.score-(prior?prior.score:baseline);
- $("v9Summary").innerHTML='<small>本季度与上一阶段</small><strong>'+(difference>=0?"+":"")+difference.toFixed(1)+'</strong><span>组合变化来自主体能力、资源约束、事件伤害及后续恢复。<br>本季事件：'+esc(manager.event==='none'?'正常运行':manager.event)+'<br>网络假设触达：'+network.affected+'个主体。<br>虚拟对手策略：'+esc(career.rivalStrategy)+'。</span>';
+ $("v9Summary").innerHTML='<small>本季度与上一阶段</small><strong>'+(difference>=0?"+":"")+difference.toFixed(1)+'</strong><span>组合变化来自主体能力、资源约束、事件伤害及后续恢复。<br>本季事件：'+esc(manager.event==='none'?'正常运行':manager.event)+'<br>网络假设触达：'+network.affected+'个主体。<br>本季传导焦点：'+esc(companies.find(p=>p.id===career.lastOutcome?.source)?.short||"无")+'。<br>虚拟对手策略：'+esc(career.rivalStrategy)+'。</span>';
  $("v9CompanyTiles").innerHTML=managerSelected().map(p=>{const r=getRating(p),v=v9Company(p.id),d=v.damage.reduce((a,b)=>a+b,0);return '<button class="v9-person" data-v9-company="'+esc(p.id)+'"><b>'+esc(p.short)+'</b><strong>'+r.ovr+'</strong><small>成长 '+v.growth.reduce((a,b)=>a+b,0).toFixed(1)+' / 受损 '+d.toFixed(1)+'</small></button>'}).join("")||'<div class="career-muted">先在阵容中选择主体。</div>';
 }
 function v9Comparison(){
@@ -1191,12 +1216,12 @@ function careerTick(){
  career.training.tech=+(career.training.tech+upgrade[1]*(.75+q*.03)).toFixed(2);
  career.training.resilience=+(career.training.resilience+upgrade[2]).toFixed(2);
  career.fatigue=+nextFatigue.toFixed(2);career.recovery=+nextRecovery.toFixed(2);
- v9AdvanceCompanies(policy,paid,event);
+ const transmission=v9AdvanceCompanies(policy,paid,event);
  manager.year=Math.min(2,Math.floor(q/4));
  manager.event=roll>0?event[1]:"none";
  career.rival=+careerRival(q).toFixed(1);
  career.score=careerScore();
- career.lastOutcome={event:event[0],policy:policy.name,paid};
+ career.lastOutcome={event:event[0],eventKey:event[1],policy:policy.name,paid,source:transmission.source,affected:transmission.affected};
  if(!career.curve)career.curve=[];
  career.curve.push({quarter:q,score:career.score});
  const shift=+(career.score-(beforeSnapshot.score??before.score)).toFixed(1);
