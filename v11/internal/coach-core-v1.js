@@ -113,17 +113,72 @@
   }).sort((a,b)=>b.weighted-a.weighted);
   return {nodes:nodeScores,assumedLinks:links.length,totalWeight:round(totalWeight,2),isolated:nodeScores.filter(x=>!x.links).map(x=>x.id)};
  }
+ // Synthetic survey-style structural rehearsal: standardized two-input regressions
+ // and bootstrap intervals on GENERATED records. Never a fitted local SEM.
+ const pathCache=new Map();
+ function simulateLatents(input,seed,n){
+  const p=POLICY[input.policy]||POLICY.balanced,r=readiness(input),rand=rng(seed),out={invest:[],talent:[],tech:[],supply:[],output:[],resilience:[]};
+  const a=.24+.43*p.skill,b=.23+.07*clamp(r.talent,0,1),
+        d=.20+.38*p.buffer,e=.19+.08*clamp(r.network/5,0,1),
+        f=.43+.18*p.growth,g=.18+.24*p.buffer,
+        h=.35+.29*p.buffer,i=.19+.15*p.skill;
+  for(let k=0;k<n;k++){
+   const invest=normal(rand),talent=.26*invest+normal(rand)*.96;
+   const tech=a*invest+b*talent+normal(rand)*.75;
+   const supply=d*invest+e*talent+normal(rand)*.84;
+   const output=f*tech+g*supply+normal(rand)*.73;
+   const resilience=h*supply+i*tech+normal(rand)*.76;
+   out.invest.push(invest);out.talent.push(talent);out.tech.push(tech);out.supply.push(supply);
+   out.output.push(output);out.resilience.push(resilience);
+  }
+  return out;
+ }
+ function fitTwo(data,xKey,zKey,yKey,index){
+  const x=data[xKey],z=data[zKey],y=data[yKey],n=index.length;
+  let mx=0,mz=0,my=0;
+  for(const at of index){mx+=x[at];mz+=z[at];my+=y[at]}
+  mx/=n;mz/=n;my/=n;
+  let xx=0,zz=0,yy=0,xz=0,xy=0,zy=0;
+  for(const at of index){const a=x[at]-mx,b=z[at]-mz,c=y[at]-my;xx+=a*a;zz+=b*b;yy+=c*c;xz+=a*b;xy+=a*c;zy+=b*c}
+  const scale=(a,b,c)=>c>0?a/Math.sqrt(Math.max(1e-9,b*c)):0;
+  const rxz=scale(xz,xx,zz),rxy=scale(xy,xx,yy),rzy=scale(zy,zz,yy),den=Math.max(.02,1-rxz*rxz);
+  return [clamp((rxy-rzy*rxz)/den,-1,1),clamp((rzy-rxy*rxz)/den,-1,1)];
+ }
  function mechanism(input){
-  const p=input.policy||"balanced",c=POLICY[p]||POLICY.balanced;
-  const baseTalent=.28+.1*(c.skill/.4);
-  const paths=[
-   {from:"资源投入",to:"技术转化",coef:round(.30+c.skill*.32,2)},
-   {from:"人才供给",to:"技术转化",coef:round(baseTalent,2)},
-   {from:"技术转化",to:"生产能力",coef:round(.34+c.growth*.20,2)},
-   {from:"产业协同",to:"供应替代",coef:round(.26+c.buffer*.37,2)},
-   {from:"供应替代",to:"系统韧性",coef:round(.38+c.buffer*.22,2)}
+  const key=[input.policy,round(input.networkScore||0,1),round(input.resources?.[3]||0,0)].join(":");
+  if(pathCache.has(key))return pathCache.get(key);
+  const N=260,B=140,data=simulateLatents(input,20261120,N),baseline=Array.from({length:N},(_,i)=>i);
+  const relations=[
+   ["invest","talent","tech",["资源投入","技术转化"],["人才供给","技术转化"]],
+   ["invest","talent","supply",["资源投入","配套能力"],["人才供给","配套能力"]],
+   ["tech","supply","output",["技术转化","生产能力"],["配套能力","生产能力"]],
+   ["supply","tech","resilience",["配套能力","系统韧性"],["技术转化","系统韧性"]]
   ];
-  return {paths,indirect:round(paths[0].coef*paths[2].coef,3),techPath:paths[2].coef,supplyPath:paths[4].coef,disclosure:"mechanism coefficients are authored demonstration assumptions, not estimated SEM paths"};
+  const estimates=[],draws=Array.from({length:8},()=>[]);
+  for(let block=0;block<relations.length;block++){
+   const [x,z,y]=relations[block],pair=fitTwo(data,x,z,y,baseline);
+   estimates.push(...pair);
+  }
+  const random=rng(408211);
+  for(let j=0;j<B;j++){
+   const indexes=Array.from({length:N},()=>Math.floor(random()*N));
+   for(let block=0;block<relations.length;block++){
+    const [x,z,y]=relations[block],pair=fitTwo(data,x,z,y,indexes);
+    draws[block*2].push(pair[0]);draws[block*2+1].push(pair[1]);
+   }
+  }
+  const paths=[];
+  for(let k=0;k<8;k++){
+   const item=relations[Math.floor(k/2)][3+k%2],sorted=draws[k].sort((a,b)=>a-b);
+   paths.push({from:item[0],to:item[1],coef:round(estimates[k],3),low:round(quant(sorted,.05),3),high:round(quant(sorted,.95),3)});
+  }
+  const by=(from,to)=>paths.find(x=>x.from===from&&x.to===to).coef;
+  const indirect=by("资源投入","技术转化")*by("技术转化","生产能力")+by("资源投入","配套能力")*by("配套能力","生产能力");
+  const result={paths,indirect:round(indirect,3),n:N,bootstrap:B,
+   disclosure:"Synthetic observations generated from authored relations; regression and bootstrap intervals only describe synthetic data, not Boluo empirical effects or SmartPLS results"};
+  if(pathCache.size>24)pathCache.clear();
+  pathCache.set(key,result);
+  return result;
  }
  return {rng,quant,POLICY,FACTORS,forecast,sensitivity,pairedPolicies,graph,mechanism,trajectory};
 });
