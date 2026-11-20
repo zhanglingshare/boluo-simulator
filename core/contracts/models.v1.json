@@ -1,0 +1,222 @@
+{
+  "schema": "boluo-model-registry/1",
+  "created": "2026-11-20",
+  "note": "只登记可核实源码中的入口。status=source_verified_adapter_pending 意味着接口仍未包装/运行验证；绝不将登记视作已接入。",
+  "models": [
+    {
+      "id": "lab2032.sector_sim",
+      "version": "2.0",
+      "file": "lab-2032/engine.js",
+      "entry": "BoluoEngine.simulate",
+      "runtime": "browser",
+      "status": "source_verified_adapter_pending",
+      "inputs": [
+        "lab2032.data_snapshot",
+        "lab2032.scenario",
+        "lab2032.knobs"
+      ],
+      "outputs": [
+        {
+          "id": "result.sector_share",
+          "measure": "value_added_share",
+          "unit": "比例"
+        }
+      ],
+      "horizon": "2032 scenario",
+      "method": "synthetic sector simulation",
+      "evidence": "C"
+    },
+    {
+      "id": "lab2032.network",
+      "version": "2.0",
+      "file": "lab-2032/engine.js",
+      "entry": "BoluoEngine.propagate",
+      "runtime": "browser",
+      "status": "source_verified_adapter_pending",
+      "inputs": [
+        "lab2032.data_snapshot",
+        "lab2032.source_node",
+        "lab2032.shock"
+      ],
+      "outputs": [
+        {
+          "id": "result.network_pressure",
+          "measure": "network_exposure_simulation",
+          "unit": "抽象受影响量"
+        }
+      ],
+      "horizon": "3 propagation steps",
+      "method": "synthetic directed network propagation",
+      "evidence": "C"
+    },
+    {
+      "id": "lab2032.pls",
+      "version": "2.0",
+      "file": "lab-2032/engine.js",
+      "entry": "BoluoEngine.models",
+      "runtime": "browser",
+      "status": "source_verified_adapter_pending",
+      "inputs": [
+        "lab2032.survey_snapshot"
+      ],
+      "outputs": [
+        {
+          "id": "pls.path_coefficients",
+          "measure": "synthetic_association",
+          "unit": "系数"
+        }
+      ],
+      "horizon": "cross-sectional",
+      "method": "exploratory PLS and score regression; not externally validated SmartPLS equivalence",
+      "evidence": "C"
+    },
+    {
+      "id": "legacy.gdp2030",
+      "version": "1",
+      "file": "model.js",
+      "entry": "HT.run",
+      "runtime": "browser/node",
+      "status": "source_verified_adapter_pending",
+      "inputs": [
+        "seed",
+        "draws",
+        "paths",
+        "base",
+        "target",
+        "noise"
+      ],
+      "outputs": [
+        {
+          "id": "result.gdp_2030",
+          "measure": "regional_value_added",
+          "unit": "亿元"
+        }
+      ],
+      "horizon": "2030",
+      "method": "authored path increment Monte Carlo",
+      "evidence": "C"
+    },
+    {
+      "id": "internal.career_v12",
+      "version": "12",
+      "file": "v11/internal/career-montecarlo-v12.js",
+      "entry": "BoluoCareerUnified.forecast",
+      "runtime": "league-browser-only",
+      "status": "source_verified_adapter_pending",
+      "inputs": [
+        "career_state",
+        "policy",
+        "factors",
+        "seed"
+      ],
+      "outputs": [
+        {
+          "id": "result.enterprise_ability",
+          "measure": "scenario_ability_index",
+          "unit": "指数"
+        }
+      ],
+      "horizon": "up to 28 quarters",
+      "method": "reuses careerTick with paired seeded draws; stateful",
+      "evidence": "C"
+    },
+    {
+      "id": "internal.enterprise_v13",
+      "version": "13",
+      "file": "v11/internal/enterprise-attributes-v13.js",
+      "entry": "BoluoEnterpriseAttributes.profile",
+      "runtime": "browser/node",
+      "status": "source_verified_adapter_pending",
+      "inputs": [
+        "enterprise_profile",
+        "six_axis_rating"
+      ],
+      "outputs": [
+        {
+          "id": "firm.orders_score",
+          "measure": "scenario_ability_index",
+          "unit": "0-100分"
+        }
+      ],
+      "horizon": "per state snapshot",
+      "method": "36 deterministic derived tactical traits",
+      "evidence": "C"
+    },
+    {
+      "id": "internal.scout_v1",
+      "version": "1",
+      "file": "v11/internal/scenario-kernel-v1.js",
+      "entry": "BoluoScenarioKernel.evaluate",
+      "runtime": "browser",
+      "status": "source_verified_adapter_pending",
+      "inputs": [
+        "scenario.external_demand",
+        "scenario.supply_disruption",
+        "scenario.technology_improvement"
+      ],
+      "outputs": [
+        {
+          "id": "result.network_pressure",
+          "measure": "scenario_pressure_index",
+          "unit": "标准化指数"
+        }
+      ],
+      "horizon": "one static scenario",
+      "method": "500 draws with fixed seed synthetic archetypes",
+      "evidence": "C"
+    },
+    {
+      "id": "internal.coach_v11",
+      "version": "11",
+      "file": "v11/internal/coach-core-v1.js",
+      "entry": "BoluoCoachCore.mechanism",
+      "runtime": "browser/node",
+      "status": "source_verified_adapter_pending",
+      "inputs": [
+        "synthetic_resource_and_policy_context"
+      ],
+      "outputs": [
+        {
+          "id": "coach.synthetic_paths",
+          "measure": "synthetic_association",
+          "unit": "回归系数"
+        }
+      ],
+      "horizon": "cross-sectional",
+      "method": "synthetic regression + bootstrap; not empirical SEM",
+      "evidence": "C"
+    }
+  ],
+  "incompatibilities": [
+    {
+      "a": "legacy.gdp2030",
+      "b": "internal.career_v12",
+      "comparable": false,
+      "reason": "GDP amount vs firm ability score"
+    },
+    {
+      "a": "legacy.gdp2030",
+      "b": "lab2032.sector_sim",
+      "comparable": false,
+      "reason": "2030 GDP scenario vs 2032 sector structure; compare only after common date and accounting reconciliation"
+    },
+    {
+      "a": "internal.scout_v1",
+      "b": "lab2032.network",
+      "comparable": false,
+      "reason": "different graph populations, topology and output unit"
+    },
+    {
+      "a": "internal.scout_v1",
+      "b": "internal.career_v12",
+      "comparable": false,
+      "reason": "static pressure index vs quarterly ability score"
+    },
+    {
+      "a": "lab2032.pls",
+      "b": "internal.coach_v11",
+      "comparable": false,
+      "reason": "synthetic path algorithms differ; no direct coefficient equivalence"
+    }
+  ]
+}
