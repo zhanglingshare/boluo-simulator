@@ -1,0 +1,36 @@
+/* V13 Sports-manager enterprise attributes: six tactical domains, 36 deep traits */
+.v13-head{position:relative;margin:16px 0 12px;border:1px solid #b99a63;border-radius:16px;padding:15px;background:radial-gradient(ellipse at right top,#1f73736b,transparent 56%),linear-gradient(128deg,#1b3749,#0b2234)}
+.v13-headtop{display:flex;gap:10px;align-items:center;justify-content:space-between;flex-wrap:wrap}
+.v13-eyebrow{font-size:10px;letter-spacing:1.3px;color:#8bdadc;font-weight:800}
+.v13-head h3{font-size:20px;color:#f9d998;margin:8px 0 4px;line-height:1.2}
+.v13-head p{font-size:10px;color:#9ebdcf;margin:6px 0}
+.v13-count{font-size:36px;font-weight:1000;color:#f5d793;line-height:.8}
+.v13-scoretiles{display:grid;grid-template-columns:repeat(6,minmax(0,1fr));gap:6px;margin:15px 0}
+.v13-scoretile{border:1px solid #436b80;border-radius:10px;background:#102c40;padding:8px 5px;text-align:center}
+.v13-scoretile b{display:block;font-size:20px;color:#f6d793}.v13-scoretile small{display:block;font-size:9px;color:#9fc5ce}
+.v13-shell{display:grid;grid-template-columns:175px 1fr;gap:10px;margin:12px 0}
+.v13-nav{display:grid;gap:6px;align-content:start}
+.v13-nav button{border:1px solid #41617d;border-radius:10px;padding:10px;background:#10293c;color:#cee0e7;cursor:pointer;text-align:left;font-size:11px;display:flex;align-items:center;justify-content:space-between;gap:6px}
+.v13-nav button.active{border-color:#f2ce88;background:linear-gradient(115deg,#574328,#193d49);color:#fff1be;box-shadow:0 0 13px #c8a15c30}
+.v13-nav b{font-size:14px;color:#f0ce8e}
+.v13-metrics{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:7px}
+.v13-metric{background:linear-gradient(140deg,#10283b,#101f32);border:1px solid #42617b;border-radius:10px;padding:10px}
+.v13-metric.high{border-color:#559a87}.v13-metric.low{border-color:#a66f67}
+.v13-metrichead{display:flex;align-items:baseline;justify-content:space-between;gap:8px}
+.v13-metric b{font-size:18px;color:#f4d28c}.v13-metric span{font-size:10px;color:#d8e5e6}
+.v13-track{height:6px;border-radius:8px;overflow:hidden;background:#29455b;margin:7px 0}.v13-track i{display:block;height:100%;background:linear-gradient(90deg,#65b3d0,#f5d18c);border-radius:8px}
+.v13-metric small{font-size:9px;color:#94b3c4}
+.v13-section{border:1px solid #42647c;background:#0e2538;border-radius:14px;padding:13px;margin:12px 0}
+.v13-section h4{margin:0 0 10px;color:#f1d393;font-size:14px}
+.v13-three{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+.v13-line{display:flex;align-items:center;justify-content:space-between;gap:10px;border-bottom:1px solid #37546a;padding:8px 0;font-size:10px;color:#c9e1e8}
+.v13-line:last-child{border:0}
+.v13-line b{color:#f3d18c;font-size:15px}
+.v13-warning{padding:11px;border:1px solid #96774e;border-radius:9px;font-size:10px;line-height:1.55;color:#d9bd8b;background:#4a382634;margin-top:8px}
+.v13-badges{display:flex;flex-wrap:wrap;gap:7px;margin-top:10px}
+.v13-badges span{border:1px solid #a98c64;border-radius:7px;background:#4b382933;padding:5px 9px;font-size:9px;color:#f6d6a5}
+.v13-detail{display:flex;flex-wrap:wrap;gap:5px;margin:10px 0}
+.v13-chip{border:1px solid #4d7185;border-radius:6px;background:#122d41;padding:5px 9px;font-size:9px;color:#a9d3dc}
+.v13-chip.weak{border-color:#9e6155;color:#edc4b9}
+@media(max-width:750px){.modal{max-width:min(96vw,900px)}.v13-scoretiles{grid-template-columns:repeat(3,1fr)}.v13-shell{grid-template-columns:1fr}.v13-nav{grid-template-columns:repeat(3,minmax(0,1fr))}.v13-nav button{font-size:10px;padding:8px 6px}.v13-nav b{font-size:12px}}
+@media(max-width:470px){.v13-metrics{grid-template-columns:1fr 1fr}.v13-three{grid-template-columns:1fr}.v13-head h3{font-size:17px}}
