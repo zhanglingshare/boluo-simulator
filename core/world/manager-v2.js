@@ -154,6 +154,39 @@ function renderHub(){
     '<button class="btn tiny ghost" data-view="scout">去找更多主体</button>')+'</div>'+
  '</div>';
 }
+function tradeNetwork(id){
+ const focus=findFirm(id);if(!focus)return '<p class="hint">请选择一家公司。</p>';
+ const settled=new Map((world.lastTrades||[]).map(x=>[x.buyer+"|"+x.supplier,x.amount]));
+ const edges=world.links.filter(e=>e.buyer===id||e.supplier===id)
+  .sort((a,b)=>(settled.get(b.buyer+"|"+b.supplier)||0)-(settled.get(a.buyer+"|"+a.supplier)||0)||b.weight-a.weight)
+  .slice(0,13);
+ const pts=new Map([[id,{x:315,y:143}]]);
+ edges.forEach(e=>{
+  const nid=e.buyer===id?e.supplier:e.buyer;
+  if(pts.has(nid))return;
+  const n=pts.size-1,ang=n*2*Math.PI/Math.max(6,edges.length)-Math.PI/2;
+  pts.set(nid,{x:315+232*Math.cos(ang),y:148+103*Math.sin(ang)});
+ });
+ let paths="",nodes="";
+ for(const e of edges){
+  const src=pts.get(e.supplier),dst=pts.get(e.buyer);if(!src||!dst)continue;
+  const traded=settled.get(e.buyer+"|"+e.supplier)||0,active=traded>0;
+  paths+='<path d="M'+src.x.toFixed(1)+' '+src.y.toFixed(1)+' L'+dst.x.toFixed(1)+' '+dst.y.toFixed(1)+'" stroke="'+(active?"#f1c782":"#67bdc5")+'" stroke-width="'+(active?Math.min(6,2+Math.log1p(traded)):1.2)+'" opacity="'+(active?".94":".36")+'" '+(active?'':'stroke-dasharray="5 6"')+' fill="none"/>';
+ }
+ for(const [id,p] of pts){
+  const central=id===focus.id,r=central?29:17;
+  nodes+='<g role="button" tabindex="0" data-do="open-firm" data-firm="'+safe(id)+'" style="cursor:pointer">'+
+   '<circle cx="'+p.x.toFixed(1)+'" cy="'+p.y.toFixed(1)+'" r="'+r+'" fill="'+(central?"#1f797d":"#6b5a44")+'" stroke="'+(central?"#a1f3e5":"#f2cf96")+'" stroke-width="1.6"/>'+
+   '<text x="'+p.x.toFixed(1)+'" y="'+(p.y+3).toFixed(1)+'" text-anchor="middle" font-size="'+(central?13:10)+'" fill="#fff">'+safe(central?"观察":id.slice(0,1))+'</text>'+
+   '<text x="'+p.x.toFixed(1)+'" y="'+(p.y+(central?47:31)).toFixed(1)+'" text-anchor="middle" font-size="10" fill="#b5d4e0">'+safe(id)+'</text>'+
+   '</g>';
+ }
+ return '<svg viewBox="0 0 630 310" role="img" aria-label="合成产业关系与本季实际成交网络" style="width:100%;height:300px;display:block">'+
+  '<rect x="5" y="6" width="620" height="298" rx="13" fill="#0d2a3c"/>'+paths+nodes+'</svg>'+
+  '<div class="legend"><span style="color:var(--gold)">━━ 本季实际模拟成交</span><span style="color:var(--aqua)">┄ 潜在合成关系，尚未成交</span></div>'+
+  '<p class="hint">点击任意节点打开该企业完整V13能力卡。这个网络是开发合成关系，不是博罗真实采购网络。</p>';
+}
+
 function renderSquad(){
  const group=sectorTotals(),k=selectedSector,fs=sectorFirms(k);
  const top=[...fs].sort((a,b)=>rating(b).ovr-rating(a).ovr).slice(0,6);
@@ -173,7 +206,13 @@ function renderSquad(){
    '<p class="hint">不同产业当前表现随每一季度的真实模拟产出更新；不能视为真实县域三次产业增加值。</p>')+'</div>'+
  '<div class="span5">'+box('阵容能力并非越高越好',
   '<div class="report"><h3>经营的真实约束</h3><p>高能力企业也可能面临订单不足、资金积压和供应链风险。给某家企业加分，不等于整个产业自动变强。</p></div>'+
-  '<button class="btn soft" data-view="tactics">▶ 用现有企业配置下一季度行动</button>')+'</div></div>';
+  '<button class="btn soft" data-view="tactics">▶ 用现有企业配置下一季度行动</button>')+'</div>'+
+ '<div class="span8">'+box('◈ 动态关系战术图',tradeNetwork(selectedFirm),badge("当前关注："+selectedFirm,"gold"))+'</div>'+
+ '<div class="span4">'+box('关系不是简单的连线',
+   pairLine("潜在合成关系",world.links.filter(e=>e.buyer===selectedFirm||e.supplier===selectedFirm).length,"条")+
+   pairLine("本季已成交", (world.lastTrades||[]).filter(e=>e.buyer===selectedFirm||e.supplier===selectedFirm).length,"条")+
+   '<div class="report"><h3>供需协调才有价值</h3><p>网络结构里的联系，不代表每个季度一定发生交易。实际成交由需求、上期成品库存和现金约束决定。</p></div>'+
+   '<button class="btn soft" data-do="open-firm" data-firm="'+safe(selectedFirm)+'">打开企业深度档案</button>')+'</div></div>';
 }
 function filtered(){
  let a=world.firms;
