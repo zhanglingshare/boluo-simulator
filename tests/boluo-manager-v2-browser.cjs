@@ -25,7 +25,7 @@ const fs=require("node:fs"),assert=require("node:assert/strict"),{chromium}=requ
    assert.ok(await page.locator("#drawerContent .attribute").count()>=6);
    assert.match(await page.locator("#drawerContent").innerText(),/完整36项战术档案/);
    await page.locator("#drawer [data-do='watch']").click();
-   assert.match(await page.locator("#toast").innerText(),/排入|名单|已/).catch(()=>{});
+   assert.match(await page.locator("#drawerContent").innerText(),/加入观察名单/);
    await page.locator("#drawer [data-do='close-drawer']").click();
    await page.locator("#nav [data-view='tactics']").click();
    assert.equal(await page.locator("#screen-tactics .policy").count(),4);
