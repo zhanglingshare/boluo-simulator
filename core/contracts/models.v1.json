@@ -1,7 +1,7 @@
 {
   "schema": "boluo-model-registry/1",
   "created": "2026-11-20",
-  "note": "只登记可核实源码中的入口。status=source_verified_adapter_pending 意味着接口仍未包装/运行验证；绝不将登记视作已接入。",
+  "note": "Registration statuses: demo_adapter_verified and seed_handoff_browser_verified describe executed synthetic tests only, never research or causal validation. Other models remain pending.",
   "models": [
     {
       "id": "lab2032.sector_sim",
@@ -9,7 +9,7 @@
       "file": "lab-2032/engine.js",
       "entry": "BoluoEngine.simulate",
       "runtime": "browser",
-      "status": "source_verified_adapter_pending",
+      "status": "demo_adapter_verified",
       "inputs": [
         "lab2032.data_snapshot",
         "lab2032.scenario",
@@ -24,7 +24,13 @@
       ],
       "horizon": "2032 scenario",
       "method": "synthetic sector simulation",
-      "evidence": "C"
+      "evidence": "C",
+      "adapter": "core/adapters/lab2032-project-v1.js",
+      "verified_by": [
+        "tests/boluo-full-run-v1.cjs",
+        "tests/boluo-full-browser-v1.cjs"
+      ],
+      "validation_scope": "Synthetic demo execution only; no empirical identification or administrative integration."
     },
     {
       "id": "lab2032.network",
@@ -32,7 +38,7 @@
       "file": "lab-2032/engine.js",
       "entry": "BoluoEngine.propagate",
       "runtime": "browser",
-      "status": "source_verified_adapter_pending",
+      "status": "demo_adapter_verified",
       "inputs": [
         "lab2032.data_snapshot",
         "lab2032.source_node",
@@ -47,7 +53,13 @@
       ],
       "horizon": "3 propagation steps",
       "method": "synthetic directed network propagation",
-      "evidence": "C"
+      "evidence": "C",
+      "adapter": "core/ops/full-run-v1.js",
+      "verified_by": [
+        "tests/boluo-full-run-v1.cjs",
+        "tests/boluo-full-browser-v1.cjs"
+      ],
+      "validation_scope": "Synthetic demo execution only; no empirical identification or administrative integration."
     },
     {
       "id": "lab2032.pls",
@@ -55,7 +67,7 @@
       "file": "lab-2032/engine.js",
       "entry": "BoluoEngine.models",
       "runtime": "browser",
-      "status": "source_verified_adapter_pending",
+      "status": "demo_adapter_verified",
       "inputs": [
         "lab2032.survey_snapshot"
       ],
@@ -68,7 +80,13 @@
       ],
       "horizon": "cross-sectional",
       "method": "exploratory PLS and score regression; not externally validated SmartPLS equivalence",
-      "evidence": "C"
+      "evidence": "C",
+      "adapter": "core/ops/full-run-v1.js",
+      "verified_by": [
+        "tests/boluo-full-run-v1.cjs",
+        "tests/boluo-full-browser-v1.cjs"
+      ],
+      "validation_scope": "Synthetic demo execution only; no empirical identification or administrative integration."
     },
     {
       "id": "legacy.gdp2030",
@@ -102,7 +120,7 @@
       "file": "v11/internal/career-montecarlo-v12.js",
       "entry": "BoluoCareerUnified.forecast",
       "runtime": "league-browser-only",
-      "status": "source_verified_adapter_pending",
+      "status": "seed_handoff_browser_verified",
       "inputs": [
         "career_state",
         "policy",
@@ -118,7 +136,12 @@
       ],
       "horizon": "up to 28 quarters",
       "method": "reuses careerTick with paired seeded draws; stateful",
-      "evidence": "C"
+      "evidence": "C",
+      "adapter": "v11/internal/full-run-v12-bridge-v1.js",
+      "verified_by": [
+        "tests/boluo-full-browser-v1.cjs"
+      ],
+      "validation_scope": "Same scenario ID and seed; native V12 state; NO project-to-company causal mapping."
     },
     {
       "id": "internal.enterprise_v13",
@@ -126,7 +149,7 @@
       "file": "v11/internal/enterprise-attributes-v13.js",
       "entry": "BoluoEnterpriseAttributes.profile",
       "runtime": "browser/node",
-      "status": "source_verified_adapter_pending",
+      "status": "demo_adapter_verified",
       "inputs": [
         "enterprise_profile",
         "six_axis_rating"
@@ -140,7 +163,13 @@
       ],
       "horizon": "per state snapshot",
       "method": "36 deterministic derived tactical traits",
-      "evidence": "C"
+      "evidence": "C",
+      "adapter": "core/ops/full-run-v1.js",
+      "verified_by": [
+        "tests/boluo-full-run-v1.cjs",
+        "tests/boluo-full-browser-v1.cjs"
+      ],
+      "validation_scope": "Synthetic demo execution only; no empirical identification or administrative integration."
     },
     {
       "id": "internal.scout_v1",
@@ -171,7 +200,7 @@
       "file": "v11/internal/coach-core-v1.js",
       "entry": "BoluoCoachCore.mechanism",
       "runtime": "browser/node",
-      "status": "source_verified_adapter_pending",
+      "status": "demo_adapter_verified",
       "inputs": [
         "synthetic_resource_and_policy_context"
       ],
@@ -184,7 +213,13 @@
       ],
       "horizon": "cross-sectional",
       "method": "synthetic regression + bootstrap; not empirical SEM",
-      "evidence": "C"
+      "evidence": "C",
+      "adapter": "core/ops/full-run-v1.js",
+      "verified_by": [
+        "tests/boluo-full-run-v1.cjs",
+        "tests/boluo-full-browser-v1.cjs"
+      ],
+      "validation_scope": "Synthetic demo execution only; no empirical identification or administrative integration."
     }
   ],
   "incompatibilities": [
