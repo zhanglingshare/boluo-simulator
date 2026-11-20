@@ -1,0 +1,22 @@
+name: Boluo full-pipeline demo validation
+on:
+  push:
+    paths:
+      - 'core/ops/**'
+      - 'core/data/**'
+      - 'core/adapters/**'
+      - 'tests/boluo-full-run-v1.cjs'
+      - '.github/workflows/boluo-full-run-v1.yml'
+  workflow_dispatch:
+jobs:
+  run:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - name: Test full seeded public-anchor plus synthetic pipeline
+        run: |
+          node --check core/ops/full-run-v1.js
+          node tests/boluo-full-run-v1.cjs
