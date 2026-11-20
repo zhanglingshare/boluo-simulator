@@ -34,7 +34,7 @@ function evaluate(v,draws=500){
  const median=q(.5);
  const sens={};
  for(const key of ["demand","supply","tech"]){
-  const lo=input({...p,[key]:p[key]-5}),hi=input({...p,[key]:p[key]+5]});
+  const lo=input({...p,[key]:p[key]-5}),hi=input({...p,[key]:p[key]+5});
   const v0=step(lo,Array(6).fill(1)).reduce((a,b)=>a+b,0)/6;
   const v1=step(hi,Array(6).fill(1)).reduce((a,b)=>a+b,0)/6;
   sens[key]=+(v1-v0).toFixed(2);
