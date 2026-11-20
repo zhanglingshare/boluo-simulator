@@ -96,14 +96,18 @@
    funding:round(clamp(100-avg(["cashBuffer","assetEfficiency","execution"]),4,97)),
    energy:round(clamp(100-avg(["energy","assetEfficiency","recovery"]),4,97))
   };
+  // A star anchor is not automatically the right prospect or reserve.
+  // Growth and reserve positions reward upside rather than current OVR alone.
+  const upside=clamp(25+(rating.pot-rating.ovr)*4.5,8,95);
   const roles={
-   core:avg(["capacity","delivery","anchor","projectMaturity"]),
-   growth:avg(["orders","productGrowth","rnd","expansion"]),
-   supply:avg(["localSupply","substitution","process","chainFit"]),
-   service:avg(["sharedServices","digital","marketAccess","supplierDev"]),
-   base:avg(["delivery","energy","recovery","cashBuffer"]),
-   reserve:avg(["projectMaturity","rnd","skillDepth","expansion"])
+   core:avg(["capacity","delivery","anchor","projectMaturity"])+(flags.anchor?4:0),
+   growth:avg(["orders","productGrowth","rnd","expansion"])*.70+upside*.30+(flags.technology?3:0),
+   supply:avg(["localSupply","substitution","process","chainFit"])+(flags.processing?3:0),
+   service:avg(["sharedServices","digital","marketAccess","supplierDev"])+(flags.service?7:0),
+   base:avg(["delivery","energy","recovery","cashBuffer"])+(flags.agriculture?5:0),
+   reserve:avg(["projectMaturity","rnd","skillDepth","expansion"])*.55+upside*.45
   };
+  for(const k of Object.keys(roles))roles[k]=clamp(roles[k],0,100);
   const roleRanks=Object.entries(roles).map(([role,score])=>({role,score:round(score)})).sort((a,b)=>b.score-a.score);
   const risks=Object.entries(exposures).map(([name,value])=>({name,value})).sort((a,b)=>b.value-a.value);
   const strengths=[...all].sort((a,b)=>b.value-a.value).slice(0,4).map(x=>x.id);
