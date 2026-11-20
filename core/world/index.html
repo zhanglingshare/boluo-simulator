@@ -1,49 +1,50 @@
 <!doctype html>
-<html lang="zh-CN"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
-<meta name="description" content="博罗产业经理：公开宏观事实 + 合成企业世界，真实执行跨企业季度经营与状态守恒。">
-<title>博罗产业世界 · 经理生涯</title>
-<style>
-:root{color-scheme:dark;--bg:#091625;--panel:#14273a;--panel2:#1c3549;--border:rgba(188,217,233,.18);--white:#f0f6fb;--muted:#b3c7d6;--aqua:#70d7cf;--gold:#f0cc8d;--amber:#edae60;--red:#f58d83}
-*{box-sizing:border-box}html{scroll-behavior:smooth}body{margin:0;font:14px/1.55 -apple-system,BlinkMacSystemFont,"PingFang SC","Segoe UI",sans-serif;color:var(--white);background:radial-gradient(ellipse 90% 560px at 50% -160px,#24475d 0,transparent 82%),var(--bg)}button,select,input{font:inherit}button{cursor:pointer;transition:transform .16s,background .16s;border:0}button:hover:not(:disabled){transform:translateY(-1px)}button:disabled{opacity:.43;cursor:not-allowed}
-a{color:var(--aqua)}main{width:min(1260px,100%);margin:auto;padding:20px 18px 80px}.top{display:flex;align-items:center;justify-content:space-between;gap:12px;flex-wrap:wrap;margin-bottom:19px}.brand{display:flex;gap:12px;align-items:center}.brandicon{width:47px;height:47px;display:grid;place-items:center;background:linear-gradient(130deg,#d4a45c,#ffe7aa);border-radius:14px;color:#183145;font-size:26px}.eyebrow{font-size:10px;color:var(--aqua);letter-spacing:2px;font-weight:700}.brand h1{font-size:clamp(22px,3vw,30px);margin:0;letter-spacing:-.4px}.meta{display:flex;gap:10px;align-items:center}.pill{font-size:12px;padding:8px 12px;background:#1d3a51;border:1px solid var(--border);border-radius:999px;color:var(--muted)}.pill b{color:var(--gold)}
-.alert{padding:10px 15px;border:1px solid rgba(240,204,141,.35);background:rgba(213,150,66,.09);color:#f7dbad;border-radius:11px;margin-bottom:15px;font-size:12px}
-.hero{display:grid;grid-template-columns:1.35fr 1fr;gap:14px;margin:0 0 14px}.panel{border-radius:18px;border:1px solid var(--border);background:linear-gradient(145deg,rgba(30,60,80,.96),rgba(16,36,54,.99));box-shadow:0 14px 34px #01081445;padding:20px;min-width:0}.hero .panel:first-child{background:linear-gradient(120deg,#1d4354,#142c42 63%,#193242)}.cap{font-size:11px;text-transform:uppercase;letter-spacing:1.2px;color:#9ec7d3;font-weight:700}.big{font-size:clamp(26px,4vw,39px);font-weight:800;color:#f4d393;line-height:1.18;margin:6px 0}.desc{color:var(--muted);font-size:12px;margin:6px 0}.summary{display:grid;grid-template-columns:repeat(4,1fr);gap:9px;margin-top:18px}.stat{padding:12px 10px;background:#0d293cb0;border:1px solid var(--border);border-radius:13px}.stat strong{font-size:clamp(17px,2.4vw,24px);color:#f4d393;display:block;white-space:nowrap}.stat small{display:block;color:#b4c9d7;font-size:11px}.controlsRow{display:flex;flex-wrap:wrap;gap:9px;margin-top:16px;align-items:center}.primary{background:linear-gradient(110deg,#f3d796,#d5a761);color:#182a3c;border-radius:12px;font-weight:800;padding:12px 18px;box-shadow:0 9px 23px #b0834b35}.secondary{color:#e2edf5;background:#294b61;border:1px solid #557991;border-radius:12px;padding:11px 14px}.smallButton{color:#a6d0db;background:transparent;border:1px solid var(--border);padding:7px 12px;border-radius:9px}.choice{display:block;text-align:left;width:100%;padding:11px 12px;background:#0d2a3f;border:1px solid #34556e;border-radius:11px;color:#e4eff7;margin:8px 0}.choice.selected{background:#2c5464;border-color:#77d8d0;box-shadow:inset 0 0 0 1px #6dbeb8}.choice strong{display:block;font-size:13px}.choice small{display:block;font-size:11px;color:#b4cbd9}.choice .cost{float:right;color:#f4cd90;font-weight:bold}.sectionTitle{display:flex;align-items:center;justify-content:space-between;gap:10px;margin-bottom:12px}.sectionTitle h2{font-size:17px;margin:0}.sectionTitle span{font-size:11px;color:var(--muted)}.layout{display:grid;grid-template-columns:1.27fr 1fr;gap:14px}.stack{display:grid;gap:14px;align-content:start}.kpis{display:grid;grid-template-columns:repeat(3,1fr);gap:9px}.kpi{padding:13px;background:#0b263a;border-radius:13px}.kpi b{display:block;color:#e9cc93;font-size:22px}.kpi span{color:#aac3d2;font-size:11px}.chart{width:100%;height:200px;display:block}.network{width:100%;height:290px;display:block}.sectorbars{display:flex;gap:8px;height:13px;overflow:hidden;border-radius:8px;background:#1e3445;margin:14px 0 6px}.sectorbars>span{display:block;transition:width .5s}.legend{display:flex;flex-wrap:wrap;justify-content:space-between;gap:9px;color:#c0d5e1;font-size:11px}.note{font-size:11px;color:#a6bece}.firmControls{display:flex;align-items:center;gap:8px;flex-wrap:wrap}.firmControls input{max-width:180px;width:100%;color:#eff8fa;background:#0b2436;border:1px solid #46637a;border-radius:9px;padding:7px 9px}.firmName{font-weight:800;font-size:19px;color:#f2d497;margin:10px 0}.business{display:grid;grid-template-columns:repeat(3,1fr);gap:8px}.business div{padding:9px;background:#0d293a;border-radius:9px}.business b{display:block;font-size:16px;color:#d5e5ed}.business small{display:block;font-size:10px;color:#a4becf}.news{display:grid;gap:8px}.news article{padding:10px 12px;border-left:3px solid var(--aqua);background:#0e2b3b;border-radius:4px 10px 10px 4px;font-size:12px}.news article.warning{border-color:#f2b470}.debug{margin-top:14px}.debug summary{cursor:pointer;font-weight:700;color:#a9d3df}.debug pre{white-space:pre-wrap;word-break:break-all;max-height:260px;overflow:auto;background:#071d2b;padding:12px;border-radius:10px;font-size:11px}.tag{display:inline-flex;padding:3px 7px;background:#254659;border-radius:7px;font-size:10px;color:#badde4}.compare{border-left:3px solid #f1cb87;padding:12px 14px;background:#112c3d;border-radius:10px;min-height:65px;font-size:12px}.controlsRow .muted{color:#9cb7c8;font-size:11px}.phase{display:flex;gap:10px;align-items:center}.phase .round{height:8px;flex:1;background:#2e5164;border-radius:100px;overflow:hidden}.phase .round span{height:100%;background:#e3c184;display:block;width:0;transition:width .35s}.runStatus{font-size:12px;color:#95cfca}
-footer{color:#93acbd;font-size:11px;line-height:1.9;margin-top:18px}footer a{margin-right:15px}
-@media(max-width:940px){.hero,.layout{grid-template-columns:1fr}.summary{grid-template-columns:repeat(4,1fr)}}
-@media(max-width:560px){main{padding:12px 10px 60px}.top{margin-bottom:10px}.hero{gap:10px}.panel{padding:14px;border-radius:14px}.summary{grid-template-columns:repeat(2,1fr)}.kpis{grid-template-columns:repeat(2,1fr)}.hero .panel{padding:16px}.network{height:240px}.brandicon{width:38px;height:38px;font-size:20px}.controlsRow button{flex:1}.meta{width:100%;justify-content:flex-start}.pill{padding:5px 10px}}
-@media(prefers-reduced-motion:reduce){*{transition:none!important;animation:none!important}}
-</style></head>
-<body><main>
-<header class="top"><div class="brand"><div class="brandicon">◈</div><div><div class="eyebrow">BORO INDUSTRY MANAGER · DEVELOPMENT WORLD</div><h1>博罗 · 产业经理</h1></div></div><div class="meta"><span class="pill" id="quarterBadge"><b>2026 Q1</b> 开局</span><span class="pill" id="budgetBadge">行动资源 <b>100</b> 点</span></div></header>
-<div class="alert">开发世界：公开宏观事实作为现实参照，830家企业、产业关系及项目明细为可复现合成数据。此处模拟的样本产出和增加值代理，均不是博罗真实GDP。</div>
-<div class="hero">
- <section class="panel"><div class="cap">你的产业世界 · 2026—2032</div><div class="big" id="worldHeadline">经营从今天开始</div><p class="desc" id="worldSub">企业会自己接单、采购、生产和投资。你的选择只能影响部分条件，不能直接指定GDP。</p><div class="summary">
-  <div class="stat"><strong id="firmCount">830</strong><small>演示企业</small></div><div class="stat"><strong id="edgeCount">1,699</strong><small>交易关系</small></div><div class="stat"><strong id="projectCount">72</strong><small>演示项目</small></div><div class="stat"><strong id="ledger">待结算</strong><small>库存/现金账</small></div></div>
-  <div class="controlsRow"><button class="primary" id="advance">▶ 推进下一季度</button><button class="secondary" id="advance4">快进四季度</button><button class="smallButton" id="reset">重新开局</button></div>
-  <div class="phase"><span class="note" id="timelineLabel">0 / 28季度</span><div class="round"><span id="timelineFill"></span></div></div><p class="runStatus" id="runStatus" role="status">正在初始化产业世界……</p>
- </section>
- <section class="panel"><div class="sectionTitle"><h2>✦ 本季度经理决策</h2><span class="tag">只能选择一项</span></div><p class="desc" id="eventText">企业和项目正在等待新的季度。</p>
-  <button class="choice selected" data-action="none"><strong>继续观察 <span class="cost">0点</span></strong><small>不直接干预，让企业自主经营</small></button>
-  <button class="choice" data-action="expedite"><strong>协调项目投产 <span class="cost">12点</span></strong><small>将一个合成项目的计划落地时间提前两个季度</small></button>
-  <button class="choice" data-action="substitute"><strong>帮助企业寻找备选供应 <span class="cost">9点</span></strong><small>对所选企业提高四季度的替代采购能力</small></button>
-  <button class="choice" data-action="skills"><strong>支持企业技能升级 <span class="cost">10点</span></strong><small>逐步改善所选企业的能力和市场适应性</small></button>
-  <div class="firmControls"><label for="worldScenario">外部环境</label><select id="worldScenario" class="secondary"><option value="normal">正常波动</option><option value="supply">供应冲击 · Q3起</option><option value="demand">需求走弱 · Q3起</option></select></div>
- </section>
-</div>
-<div class="layout">
- <div class="stack">
-  <section class="panel"><div class="sectionTitle"><h2>产业运行脉搏</h2><span>同一世界逐季度更新</span></div><div class="kpis"><div class="kpi"><b id="grossProduction">—</b><span>合成样本产出 · 百万元/季</span></div><div class="kpi"><b id="valueAdded">—</b><span>合成增加值代理 · 百万元/季</span></div><div class="kpi"><b id="orderGap">—</b><span>未满足订单 · 百万元等值</span></div></div><svg id="historyChart" class="chart" viewBox="0 0 660 200" aria-label="季度样本产出与增加值代理趋势" role="img"></svg><div id="sectorBars" class="sectorbars"></div><div id="sectorLegend" class="legend"></div><p class="note">只有上述企业样本的模拟状态会随季度更新。官方GDP和全县总产出不能用这些样本直接推算。</p></section>
-  <section class="panel"><div class="sectionTitle"><h2>产业连接现场</h2><span>选中企业及其交易邻居</span></div><svg id="networkMap" class="network" viewBox="0 0 620 290" role="img" aria-label="企业采购和销售关系示意网络"></svg><div class="legend"><span>● 青色：当前企业</span><span>● 金色：供应与服务企业</span><span>金色实线：本季度实际演示成交；青色虚线：潜在合成联系，不是现实合同</span></div></section>
-  <section class="panel"><div class="sectionTitle"><h2>同一初始条件，换一种选择</h2><span>四季度反事实</span></div><div class="compare" id="comparison">选择一项经理行动，点击“对比四季度后果”。</div><div class="controlsRow"><button id="compareButton" class="secondary">◉ 对比四季度后果</button><button id="exportWorld" class="smallButton">导出整个世界 JSON</button></div><p class="note">两条路线使用相同种子、外部冲击和起点；差异属于合成模型机制，不是经真实数据识别的政策效果。</p></section>
+<html lang="zh-CN"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="description" content="博罗产业经理 V2，借鉴足球经理与NBA经营模式的原创产业经营演示。830家合成企业在同一个可复现世界中自主运行。">
+<title>博罗产业经理 · Franchise World V2</title>
+<link rel="stylesheet" href="./manager-v2.css">
+</head><body>
+<div class="topline"></div>
+<div class="shell">
+<header class="masthead">
+ <div class="logo"><div class="crest" aria-hidden="true">B</div><div><div class="eyebrow">BORO 2032 · INDUSTRY FRANCHISE</div><h1>博罗产业经理 <span style="font-size:12px;color:#a7c3ce">V2</span></h1><div class="subbrand">接管一个持续运转的产业世界，不是查看一份报告</div></div></div>
+ <div class="topstats">
+  <div class="minihead"><span>当前赛季</span><b id="topQuarter">2026 · Q1</b></div>
+  <div class="minihead"><span>行动资源</span><b id="topCredits">100 点</b></div>
+  <div class="minihead"><span>世界进度</span><b id="topProgress">0 / 28</b></div>
+  <button id="topAdvance" class="topAction">▶ 推进季度</button>
  </div>
- <div class="stack">
-  <section class="panel"><div class="sectionTitle"><h2>企业球探</h2><span>自主经营的主体</span></div><div class="firmControls"><label for="selectedFirm">查看企业</label><input id="selectedFirm" list="firmSuggestions" value="I0236" aria-label="企业ID" autocomplete="off"><datalist id="firmSuggestions"></datalist><button class="smallButton" id="selectFirmButton">定位</button></div><div class="firmName" id="firmName">制造企业 I0236</div><div class="business"><div><b id="firmCash">—</b><small>现金 · 百万元</small></div><div><b id="firmRaw">—</b><small>原料库存 · 等值</small></div><div><b id="firmFinish">—</b><small>成品库存 · 等值</small></div><div><b id="firmCapacity">—</b><small>季度产能 · 等值</small></div><div><b id="firmUse">—</b><small>产能利用率</small></div><div><b id="firmBacklog">—</b><small>积压订单 · 等值</small></div></div><p class="note" id="firmDetail">指标为模型状态，不是现实企业的经营记录。</p></section>
-  <section class="panel"><div class="sectionTitle"><h2>正在发生</h2><span>每季度更新</span></div><div class="news" id="news"><article>公开统计为世界提供现实参照，企业行为使用固定合成规则。</article></div></section>
-  <section class="panel"><div class="sectionTitle"><h2>现实参照</h2><span>来源可查</span></div><div class="kpis"><div class="kpi"><b id="publicGDP">1005.45</b><span>2025 GDP · 亿元</span></div><div class="kpi"><b id="public2026">721.10</b><span>2026前三季累计GDP · 亿元</span></div></div><p class="note">这些数据不随游戏季度而变化。2026前三季度累计数不能直接与2025全年比较。</p><div id="publicSource" class="note"></div></section>
- </div>
+</header>
+<nav class="navbar" id="nav" aria-label="游戏主要工作区">
+ <button class="navbutton active" data-view="hub"><span class="navico">⌂</span>经理总部 <span class="minor">HUB</span></button>
+ <button class="navbutton" data-view="squad"><span class="navico">▦</span>产业阵容 <span class="minor">ROSTER</span></button>
+ <button class="navbutton" data-view="scout"><span class="navico">◎</span>球探中心 <span class="minor">SCOUTING</span></button>
+ <button class="navbutton" data-view="tactics"><span class="navico">◇</span>经营战术 <span class="minor">TACTICS</span></button>
+ <button class="navbutton" data-view="season"><span class="navico">▤</span>赛季日历 <span class="minor">SEASON</span></button>
+ <button class="navbutton" data-view="office"><span class="navico">▣</span>经营办公室 <span class="minor">OFFICE</span></button>
+ <button class="navbutton" data-view="lab"><span class="navico">⚙</span>研发实验室 <span class="minor">LAB</span></button>
+</nav>
+<div class="livebar">
+ <div class="signal"><span class="pulse"></span><b>产业世界运行中</b><span id="liveCaption">830家企业 · 1,699条关系 · 72宗项目</span></div>
+ <div class="toolbar"><span class="badge gold">公开事实 + 合成世界</span><span class="badge" id="topScenario">常态环境</span><button id="topReset" class="btn tiny ghost">↺ 重开赛季</button></div>
 </div>
-<details class="panel debug"><summary>开发者实验室 · 数据、规则与模型检查（普通模式可不看）</summary><p class="note">开发版本允许检查公开统计来源、完整主体状态、每季度守恒结果及模型版本。未来真实数据接口需要独立完成映射与重新校准。</p><pre id="debugText"></pre><div class="controlsRow"><a class="secondary" href="../workbench/">已有12环节研究工作台</a><a class="secondary" href="../../lab-2032/">2032研究实验室</a><a class="secondary" href="../../v11/internal/league.html#season">V12原生经理</a></div></details>
-<footer>演示经济机制：同一世界内的订单→实际原料→生产→发货→现金结算→产能和项目更新。用户拥有的是有限行动资源，并非企业所有权。<br>每次推进都进行逐企业现金、原料、成品库存守恒检查。任何模型内结果不能视为实测统计或现实政策效果。</footer>
+<main id="main" aria-live="polite">
+ <section id="screen-hub" class="screen active"><div class="panel">正在进入经理总部…</div></section>
+ <section id="screen-squad" class="screen"><div class="panel">正在准备产业阵容…</div></section>
+ <section id="screen-scout" class="screen"><div class="panel">正在准备球探名册…</div></section>
+ <section id="screen-tactics" class="screen"><div class="panel">正在准备经营战术…</div></section>
+ <section id="screen-season" class="screen"><div class="panel">正在整理赛季日历…</div></section>
+ <section id="screen-office" class="screen"><div class="panel">正在整理经营账目…</div></section>
+ <section id="screen-lab" class="screen"><div class="panel">正在连接研发实验室…</div></section>
 </main>
-<script src="../../lab-2032/core.js"></script><script src="./world-engine-v1.js"></script><script src="./world-ui-v1.js"></script>
+<footer class="statusbar"><span>当前为开发演示：企业、关系、项目和政策传导均为合成假设。游戏中“能力分数”不代表企业实测评级。</span><span>操作结果不等于博罗实际GDP变化。<a href="./classic-v1.html">旧版界面</a> · <a href="../workbench/">研究计算台</a></span></footer>
+</div>
+<div id="drawerOverlay" class="overlay" hidden role="presentation">
+ <aside id="drawer" class="drawer" role="dialog" aria-modal="true" aria-labelledby="drawerTitle"><div class="drawerhead"><div><div class="overline">INDUSTRIAL PLAYER DOSSIER</div><h2 id="drawerTitle">企业详细档案</h2></div><button class="btn ghost" data-do="close-drawer" aria-label="关闭企业详情">✕</button></div><div id="drawerContent"></div></aside>
+</div>
+<div id="toast" class="toast" hidden role="status"></div>
+<script src="../../lab-2032/core.js"></script>
+<script src="../../v11/internal/enterprise-attributes-v13.js"></script>
+<script src="./world-engine-v1.js"></script>
+<script src="./manager-v2.js"></script>
 </body></html>
