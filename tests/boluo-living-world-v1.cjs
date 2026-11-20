@@ -35,7 +35,8 @@ assert(stressed.history[11].sampleValueAddedProxy<normal.history[11].sampleValue
 const skills=W.run(init,4,{0:[{type:"skills",target:"I0001"}]});
 assert(skills.actions.some(x=>x.type==="skills"));
 assert(skills.firms.find(x=>x.id==="I0001").talent>normal.firms.find(x=>x.id==="I0001").talent);
-assert(skills.budget<normal.budget,"governance resources should be finite");
+assert.equal(skills.history[0].policy[0].cost,10,"policy must consume credits");
+assert(W.step(init,[{type:"skills",target:"I0001"}]).budget<100,"quarterly budget cost is enforced before replenishment");
 const expedite=W.run(init,8,{0:[{type:"expedite",target:"P001"}]});
 assert(expedite.projects.find(x=>x.id==="P001").arrivalQ<normal.projects.find(x=>x.id==="P001").arrivalQ);
 const compared=W.compare(init,8,{0:[{type:"skills",target:"I0001"}]});
