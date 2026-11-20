@@ -1,0 +1,24 @@
+name: Boluo unified execution v1
+on:
+  push:
+    paths:
+      - 'core/**'
+      - 'tests/boluo-execution-v1.cjs'
+      - '.github/workflows/boluo-execution-v1.yml'
+  workflow_dispatch:
+jobs:
+  execution:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - name: Syntax check
+        run: |
+          node --check core/adapters/lab2032-project-v1.js
+          node --check core/contracts/contract-v1.js
+      - name: Validate contracts
+        run: node tests/boluo-contract-v1.cjs
+      - name: Run original research engine and check integration
+        run: node tests/boluo-execution-v1.cjs
