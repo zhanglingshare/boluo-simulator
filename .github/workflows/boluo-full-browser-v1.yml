@@ -1,0 +1,43 @@
+name: Boluo full-pipeline browser regression
+on:
+  push:
+    paths:
+      - 'core/workbench/**'
+      - 'core/data/full-run-reference-20261120.v1.json'
+      - 'v11/internal/full-run-v12-bridge-v1.js'
+      - 'v11/internal/league.html'
+      - 'tests/boluo-full-browser-v1.cjs'
+      - '.github/workflows/boluo-full-browser-v1.yml'
+  workflow_dispatch:
+jobs:
+  browser:
+    runs-on: ubuntu-latest
+    timeout-minutes: 18
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - name: Install Playwright Chromium
+        run: |
+          npm install --no-save playwright
+          npx playwright install --with-deps chromium
+      - name: Serve repository
+        run: |
+          python3 -m http.server 8765 --bind 127.0.0.1 >/tmp/boluo-full-browser-http.log 2>&1 &
+          for i in $(seq 1 20); do
+            if curl --fail --silent http://127.0.0.1:8765/core/workbench/ -o /dev/null; then exit 0; fi
+            sleep 1
+          done
+          cat /tmp/boluo-full-browser-http.log
+          exit 1
+      - name: Test desktop mobile and V12 handoff
+        run: node tests/boluo-full-browser-v1.cjs
+      - name: Upload visual evidence
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: boluo-full-pipeline-browser-screenshots
+          path: artifacts/boluo-full-workbench-*.png
+          if-no-files-found: warn
+          retention-days: 7
