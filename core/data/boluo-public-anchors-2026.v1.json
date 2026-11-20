@@ -1,0 +1,79 @@
+{
+  "schema": "boluo-public-anchors/1",
+  "as_of": "2026-11-20",
+  "region": "广东省惠州市博罗县",
+  "accounting": "GDP/sector value added, 100 million CNY",
+  "records": [
+    {
+      "year": 2025,
+      "period": "FY",
+      "time_basis": "annual",
+      "status": "published",
+      "gdp": 1005.45,
+      "primary": 107.44,
+      "secondary": 549.01,
+      "tertiary": 349,
+      "real_growth_pct": 5.5,
+      "source": "https://static.nfnews.com/content/202601/31/c12129042.html",
+      "source_note": "地方统计部门公布，南方+报道；2025年名义增加值和不变价增速不可混算"
+    },
+    {
+      "year": 2026,
+      "period": "Q1_YTD",
+      "time_basis": "cumulative",
+      "status": "published",
+      "gdp": 217.32,
+      "primary": 20.46,
+      "secondary": 121.4,
+      "tertiary": 75.46,
+      "real_growth_pct": 4,
+      "source": "https://static.nfnews.com/content/202605/08/c12408279.html"
+    },
+    {
+      "year": 2026,
+      "period": "Q3_YTD",
+      "time_basis": "cumulative",
+      "status": "published_secondary_transcription",
+      "gdp": 721.1,
+      "primary": 79.48,
+      "secondary": 418.45,
+      "tertiary": 223.17,
+      "real_growth_pct": 4.1,
+      "source": "https://www.fz0752.com/fontHtml/html/issue/000143025_1.html",
+      "cross_reference": "https://epaper.nfnews.com/nfdaily/html/202611/10/content_10185712.html",
+      "source_note": "前三季度累计；请在正式研究前再次核对博罗县统计局原始公报"
+    }
+  ],
+  "planning": [
+    {
+      "year": 2030,
+      "indicator": "GDP",
+      "goal": 1600,
+      "unit": "亿元",
+      "status": "reported_government_target",
+      "source": "https://epaper.nfnews.com/nfdaily/html/202611/17/content_10186428.html?origin=4"
+    },
+    {
+      "year": 2030,
+      "indicator": "规上工业总产值",
+      "goal": 3600,
+      "unit": "亿元",
+      "status": "reported_government_target",
+      "source": "https://epaper.nfnews.com/nfdaily/html/202611/17/content_10186428.html?origin=4"
+    },
+    {
+      "year": 2026,
+      "indicator": "重点项目计划宗数",
+      "goal": 171,
+      "unit": "宗",
+      "status": "plan_not_achieved_count",
+      "source": "https://www.sohu.com/a/983044407_161794"
+    }
+  ],
+  "guardrails": [
+    "Annual and year-to-date GDP amounts must not be compared as equal-period totals.",
+    "Firm revenue, project investment, gross industrial output and value added are distinct concepts.",
+    "2026 YTD observations are not inserted into the current synthetic historical macro time series.",
+    "2032 1:5:4 gross-output planning objective must not be treated as GDP sector value-added shares."
+  ]
+}
