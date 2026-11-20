@@ -9,7 +9,7 @@ const fs=require("node:fs"),assert=require("node:assert/strict"),{chromium}=requ
    const page=await context.newPage(),errors=[];
    page.on("pageerror",e=>errors.push(e.message));
    page.on("console",m=>{if(m.type()==="error"&&!/favicon/i.test(m.text()))errors.push(m.text())});
-   await page.goto("http://127.0.0.1:8765/core/world/manager-v2.html",{waitUntil:"networkidle",timeout:45000});
+   await page.goto("http://127.0.0.1:8765/core/world/",{waitUntil:"networkidle",timeout:45000});
    try{await page.waitForFunction(()=>document.querySelector("#screen-hub .hero-title"),{timeout:7500})}
    catch(e){console.log("EARLY_RENDER_DEBUG",JSON.stringify({errors,text:(await page.locator("body").innerText()).slice(0,1600),scripts:await page.evaluate(()=>[...document.scripts].map(s=>s.src))}));throw e}
    assert.equal(await page.locator("#nav .navbutton").count(),7,"seven manager destinations");
