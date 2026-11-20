@@ -118,7 +118,7 @@ function step(world,actions=[],external={}){
  const policyLog=executeActions(w,actions);
  const byId=new Map(w.firms.map(f=>[f.id,f]));
  const ledger=new Map(w.firms.map(f=>[f.id,{openCash:f.cash,openingRaw:f.raw,openingFinished:f.finished,
-   outsideSales:0,internalSales:0,localPurchases:0,imports:0,wages:0,fixed:0,interest:0,capex:0,borrowed:0,
+   outsideSales:0,internalSales:0,localPurchases:0,imports:0,wages:0,variable:0,fixed:0,interest:0,capex:0,borrowed:0,
    rawConsumed:0,produced:0,soldExternal:0,shippedInternal:0,receivedInternal:0}]));
  const events=[],projectArrivals=[];
  // Stage 1: planned facilities are linked to individual synthetic firms.
@@ -133,12 +133,21 @@ function step(world,actions=[],external={}){
   projectArrivals.push({id:p.id,firmId:f.id,capacityGainPct:round(factor*100,2)});
  }
  // Stage 2: establish desired production and intermediate-input requests.
- const plans=new Map(),buyerLinks=new Map();
+ const plans=new Map(),buyerLinks=new Map(),peerGroups=new Map();
+ for(const f of w.firms){
+  const key=f.sector+"|"+f.subsector;
+  const score=.68+.42*f.innovation+.12*f.talent+(f.skillUntil>=q?.065:0);
+  if(!peerGroups.has(key))peerGroups.set(key,{mass:0,weighted:0});
+  const peer=peerGroups.get(key);peer.mass+=f.base;peer.weighted+=f.base*score;
+ }
  for(const e of w.links){if(!buyerLinks.has(e.buyer))buyerLinks.set(e.buyer,[]);buyerLinks.get(e.buyer).push(e)}
  for(const f of w.firms){
   const baseline=f.base*Math.pow(1+GROW[f.sector],q);
   const noise=(random01(w.seed,q,f.id,"market")-.5)*.18;
-  const demand=baseline*clamp((1+noise)*demandMultiplier,.25,2);
+  const peer=peerGroups.get(f.sector+"|"+f.subsector);
+  const score=.68+.42*f.innovation+.12*f.talent+(f.skillUntil>=q?.065:0);
+  const relative=clamp(score/(peer.weighted/Math.max(.0001,peer.mass)),.78,1.22);
+  const demand=baseline*clamp((1+noise)*demandMultiplier*relative*(1+.025*Math.sin(q*.72)),.25,2);
   const desired=clamp(demand+f.backlog*.35+f.base*.20-f.finished,0,f.capacity);
   const rawGap=Math.max(0,desired*f.mat-f.raw);
   plans.set(f.id,{demand,desired,rawGap,remaining:rawGap,
@@ -178,17 +187,19 @@ function step(world,actions=[],external={}){
   f.raw=round(f.raw+imports);f.cash=round(f.cash-imports*importPrice);
   l.imports+=imports*importPrice;importSpend+=imports*importPrice;
   // A synthetic credit line finances temporary production liquidity, not permanent cash creation.
-  const expectedMaxWages=p.desired*.22,overhead=f.base*.025;
+  const operatingRate=f.sector==="primary"?.17:f.sector==="secondary"?.12:.14;
+  const expectedMaxWages=p.desired*(.22+operatingRate),overhead=f.base*.065;
   const extra=Math.max(0,expectedMaxWages+overhead-f.cash);
   const room=Math.max(0,2*f.base-f.debt),draw=Math.min(extra,room);
   f.cash=round(f.cash+draw);f.debt=round(f.debt+draw);l.borrowed+=draw;borrowSum+=draw;
-  const canPay=Math.max(0,(f.cash-overhead)/.22);
+  const canPay=Math.max(0,(f.cash-overhead)/(.22+operatingRate));
   const skill=1+(f.skillUntil>=q?f.talent*.035:0);
   const prod=Math.max(0,Math.min(f.capacity*skill,p.desired,f.raw/f.mat,canPay));
-  const material=prod*f.mat,wage=prod*.22;
+  const material=prod*f.mat,wage=prod*.22,operating=prod*operatingRate;
   f.raw=round(Math.max(0,f.raw-material));f.finished=round(f.finished+prod);
-  f.cash=round(f.cash-wage);l.rawConsumed=material;l.wages=wage;l.produced=prod;
-  productionTotal+=prod;const va=prod-material;vaProxy+=va;sectorVA[f.sector]+=va;sectorGross[f.sector]+=prod;
+  f.cash=round(f.cash-wage-operating);
+  l.rawConsumed=material;l.wages=wage;l.variable=operating;l.produced=prod;
+  productionTotal+=prod;const va=prod-material-operating;vaProxy+=va;sectorVA[f.sector]+=va;sectorGross[f.sector]+=prod;
   const fixed=Math.min(f.cash,overhead);f.cash=round(f.cash-fixed);l.fixed=fixed;
   const targetSales=p.demand+f.backlog*.25;
   const sold=Math.min(f.finished,targetSales);
@@ -212,19 +223,19 @@ function step(world,actions=[],external={}){
   f.quarterVA=round(va);f.quarterCashChange=round(f.cash-l.openCash);
   f.utilization=round(prod/Math.max(f.capacity,eps));
   f.producedLifetime+=prod;f.soldLifetime+=f.quarterSales;f.ordersLifetime+=p.demand;
-  f.receiptsLifetime+=f.quarterSales;f.profitLifetime+=f.quarterSales-material-wage-fixed-interest;
+  f.receiptsLifetime+=f.quarterSales;f.profitLifetime+=f.quarterSales-material-wage-operating-fixed-interest;
   assert(f.raw>=-eps&&f.finished>=-eps&&f.cash>=-eps,"Negative firm stock/cash: "+f.id);
  }
  // Stage 5: reconcile BOTH each firm and the complete economic subsystem.
  const fail=[],tol=0.002,totals={cashOpen:0,cashClose:0,internalSales:0,internalPurchases:0,
    openingRaw:0,closingRaw:0,importsQty:0,internalReceived:0,rawConsumed:0,
    openingFinished:0,closingFinished:0,production:0,internalShipped:0,externalShipped:0,
-   externalFinalSales:0,externalImportsCost:0,wages:0,fixed:0,interest:0,capex:0,
+   externalFinalSales:0,externalImportsCost:0,wages:0,variable:0,fixed:0,interest:0,capex:0,
    borrowed:0,repayments:0};
  for(const f of w.firms){
   const l=ledger.get(f.id);const repay=l.repayment||0;
   const expected=l.openCash+l.outsideSales+l.internalSales+l.borrowed
-   -l.localPurchases-l.imports-l.wages-l.fixed-l.interest-l.capex-repay;
+   -l.localPurchases-l.imports-l.wages-l.variable-l.fixed-l.interest-l.capex-repay;
   if(Math.abs(f.cash-expected)>tol)fail.push({id:f.id,type:"cash",diff:round(f.cash-expected)});
   const rawExpected=l.openingRaw+l.receivedInternal+l.imports/(f.backupUntil>=q?1.12:1.05)-l.rawConsumed;
   if(Math.abs(f.raw-rawExpected)>tol)fail.push({id:f.id,type:"raw",diff:round(f.raw-rawExpected)});
@@ -236,7 +247,7 @@ function step(world,actions=[],external={}){
   totals.rawConsumed+=l.rawConsumed;totals.openingFinished+=l.openingFinished;
   totals.closingFinished+=f.finished;totals.production+=l.produced;totals.internalShipped+=l.shippedInternal;
   totals.externalShipped+=l.soldExternal;totals.externalFinalSales+=l.outsideSales;
-  totals.externalImportsCost+=l.imports;totals.wages+=l.wages;totals.fixed+=l.fixed;
+  totals.externalImportsCost+=l.imports;totals.wages+=l.wages;totals.variable+=l.variable;totals.fixed+=l.fixed;
   totals.interest+=l.interest;totals.capex+=l.capex;totals.borrowed+=l.borrowed;totals.repayments+=repay;
  }
  if(Math.abs(totals.internalSales-totals.internalPurchases)>tol)fail.push({type:"internal_cash_mismatch"});
