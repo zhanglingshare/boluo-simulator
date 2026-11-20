@@ -1,4 +1,5 @@
 /* V13 Sports-manager enterprise attributes: six tactical domains, 36 deep traits */
+.modal-backdrop .modal{max-width:min(920px,96vw)}
 .v13-head{position:relative;margin:16px 0 12px;border:1px solid #b99a63;border-radius:16px;padding:15px;background:radial-gradient(ellipse at right top,#1f73736b,transparent 56%),linear-gradient(128deg,#1b3749,#0b2234)}
 .v13-headtop{display:flex;gap:10px;align-items:center;justify-content:space-between;flex-wrap:wrap}
 .v13-eyebrow{font-size:10px;letter-spacing:1.3px;color:#8bdadc;font-weight:800}
