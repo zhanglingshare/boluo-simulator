@@ -111,7 +111,7 @@ function messages(){
  const H=last(),p=nextProjects()[0],rows=[];
  if(!H)rows.push(["📌","第一次经营决策","企业将自主接单、采购、生产并结算现金。你可以先观察一个季度。","开发场景"]);
  if(H?.projectsActivated)rows.push(["🏗","项目进入投产阶段",H.projectsActivated+"宗合成项目到达设定投产时点，但不代表真实达产。","本季度"]);
- if(H?.unmetFinalDemand>H.grossProduction*.05)rows.push(["⚠","订单交付压力升高","样本未满足订单 "+fmt(H.unmetFinalDemand,0)+" 百万元等值，检查企业供应关系。","需关注"]);
+ if(H && H.unmetFinalDemand>H.grossProduction*.05)rows.push(["⚠","订单交付压力升高","样本未满足订单 "+fmt(H.unmetFinalDemand,0)+" 百万元等值，检查企业供应关系。","需关注"]);
  if(H?.external?.supplyDisruption>0)rows.push(["🌪","供应冲击正在发生","原料可得性降低，企业备选供应能力和库存缓冲成为关键。","环境"]);
  if(H?.external?.demandMultiplier<.9)rows.push(["📉","外部需求走弱","即使企业产能充足，也未必能维持订单增长。","环境"]);
  if(p)rows.push(["🗓","下一宗待投产项目",p.id+" · "+sectorName[p.sector]+" · 计划 "+qLabel(Math.max(0,p.arrivalQ)),"日程"]);
