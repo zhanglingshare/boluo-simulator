@@ -118,11 +118,45 @@
   cache.set(key,output);
   return output;
  }
+ // Fast tactical projection. Exactly matches the full 36-item inspector,
+ // but only evaluates requested groups and does not allocate 36 profile objects.
+ const indexByMetric=new Map(G.flatMap((group,gi)=>group.items.map((it,i)=>[it[0],{gi,i}])));
+ const stationary=new Map();
+ function offsets(p){
+  if(stationary.has(p.id))return stationary.get(p.id);
+  const flags=signature(p);
+  const arrays=G.map(g=>g.items.map(([id])=>modifiers(p,id,flags)+((hash(p.id+"|"+id)%2001)/1000-1)*8));
+  if(stationary.size>150)stationary.clear();
+  stationary.set(p.id,arrays);
+  return arrays;
+ }
+ function fastValues(p,rating,names){
+  const v=rating.values,need=new Set(names),found=Object.create(null);
+  const constants=offsets(p);
+  for(let gi=0;gi<G.length;gi++){
+   const g=G[gi];if(!g.items.some(x=>need.has(x[0])))continue;
+   const raw=g.items.map(([id,label,primary,cross],i)=>v[primary]*.78+v[cross]*.22+constants[gi][i]);
+   const shift=v[g.axis]-raw.reduce((s,x)=>s+x,0)/6;
+   const limited=raw.map(n=>clamp(n+shift,2,99));
+   const diff=v[g.axis]-limited.reduce((s,x)=>s+x,0)/6;
+   for(let i=0;i<6;i++)if(need.has(g.items[i][0]))found[g.items[i][0]]=round(clamp(limited[i]+diff,2,99));
+  }
+  return name=>found[name]??50;
+ }
+ const exposureKeys={
+  orders:["demandStability","marketAccess","customerMix"],
+  talent:["retention","skillDepth","supplierDev"],
+  supply:["substitution","backup","suppliers"],
+  funding:["cashBuffer","assetEfficiency","execution"],
+  energy:["energy","assetEfficiency","recovery"]
+ };
  function exposure(p,rating,type){
-  return profile(p,rating).exposures[type]??50;
+  const keys=exposureKeys[type];if(!keys)return 50;
+  const val=fastValues(p,rating,keys);
+  return round(clamp(100-keys.reduce((s,k)=>s+val(k),0)/keys.length,4,97));
  }
  function resourceFactors(p,rating){
-  const a=profile(p,rating).traits,val=k=>a[k].value;
+  const val=fastValues(p,rating,["assetEfficiency","cashBuffer","energy","skillDepth","sharedServices"]);
   return [
    clamp(1+(55-val("assetEfficiency"))/400,.87,1.13),
    clamp(1+(55-val("cashBuffer"))/340,.85,1.15),
@@ -131,6 +165,25 @@
    clamp(1+(55-val("sharedServices"))/390,.86,1.14)
   ];
  }
- function roleFit(p,rating,role){return round(profile(p,rating).roles[role]??50)}
+ const roleMetrics={
+  core:["capacity","delivery","anchor","projectMaturity"],
+  growth:["orders","productGrowth","rnd","expansion"],
+  supply:["localSupply","substitution","process","chainFit"],
+  service:["sharedServices","digital","marketAccess","supplierDev"],
+  base:["delivery","energy","recovery","cashBuffer"],
+  reserve:["projectMaturity","rnd","skillDepth","expansion"]
+ };
+ function roleFit(p,rating,role){
+  const keys=roleMetrics[role];if(!keys)return 50;
+  const val=fastValues(p,rating,keys),mean=keys.reduce((s,k)=>s+val(k),0)/4,flags=signature(p);
+  const upside=clamp(25+(rating.pot-rating.ovr)*4.5,8,95);
+  const score=role==="growth"?mean*.70+upside*.30+(flags.technology?3:0)
+   :role==="reserve"?mean*.55+upside*.45
+   :role==="core"?mean+(flags.anchor?4:0)
+   :role==="supply"?mean+(flags.processing?3:0)
+   :role==="service"?mean+(flags.service?7:0)
+   :mean+(flags.agriculture?5:0);
+  return round(clamp(score,0,100));
+ }
  return {groups:G,profile,exposure,resourceFactors,roleFit,metricCount:36,scenarioVersion:13,explain:"36 authored, deterministic scenario-derived traits per enterprise, not collected enterprise observations"};
 });
