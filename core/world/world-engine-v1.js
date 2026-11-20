@@ -78,7 +78,7 @@ function createWorld(bundle,opts={}){
    budget:100,budgetUnit:"demo_action_credits_not_public_finance",
    publicBaseline:opts.publicBaseline||null,
    dataFingerprint:opts.dataFingerprint||bundle.meta.dataset_id||"synthetic-unidentified",
-   firms,links,projects:projectsState,history:[],events:[],actions:[],
+   firms,links,projects:projectsState,lastTrades:[],history:[],events:[],actions:[],
    config:{projectDelayQuarters:delay,affectedPct,
     priceBasis:"one synthetic finished-output token = 1 million CNY at demo price 1",
     govPolicyCredits:"fictitious action budget, not government spending"}};
@@ -155,7 +155,7 @@ function step(world,actions=[],external={}){
  }
  // Stage 3: actual interfirm trades settle cash on delivery. Seller finished stocks
  // were produced in an earlier period; no supplier can sell nonexistent units.
- let internalShip=0,internalSpend=0;
+ let internalShip=0,internalSpend=0;const quarterTrades=[];
  for(const f of w.firms){
   if(f.closed)continue;
   const p=plans.get(f.id),edges=buyerLinks.get(f.id)||[];
@@ -170,6 +170,7 @@ function step(world,actions=[],external={}){
    seller.cash=round(seller.cash+qty);const bl=ledger.get(f.id),sl=ledger.get(seller.id);
    bl.localPurchases+=qty;bl.receivedInternal+=qty;sl.internalSales+=qty;sl.shippedInternal+=qty;
    p.localDelivered+=qty;internalShip+=qty;internalSpend+=qty;
+   quarterTrades.push({buyer:f.id,supplier:seller.id,amount:round(qty)});
   }
  }
  // Stage 4: externally supplied raw inputs, financing, production, final orders.
@@ -257,6 +258,7 @@ function step(world,actions=[],external={}){
  if(Math.abs(totals.closingRaw-(totals.openingRaw+totals.importsQty+totals.internalReceived-totals.rawConsumed))>tol)
   fail.push({type:"aggregate_raw_mismatch"});
  assert(!fail.length,"Stock-flow reconciliation failed: "+JSON.stringify(fail.slice(0,4)));
+ w.lastTrades=quarterTrades;
  const exits=w.firms.filter(f=>f.closed).length;
  const quarter={index:q,label:(2026+Math.floor(q/4))+" Q"+(q%4+1),
    external:{demandMultiplier,supplyDisruption},
@@ -265,7 +267,7 @@ function step(world,actions=[],external={}){
    grossProduction:round(productionTotal),sampleValueAddedProxy:round(vaProxy),
    sectorGross:Object.fromEntries(Object.entries(sectorGross).map(([k,v])=>[k,round(v)])),
    sectorVA:Object.fromEntries(Object.entries(sectorVA).map(([k,v])=>[k,round(v)])),
-   outsideSales:round(finalRevenue),internalTrade:round(internalShip),
+   outsideSales:round(finalRevenue),internalTrade:round(internalShip),tradedEdges:quarterTrades.length,
    importsCost:round(importSpend),newCredit:round(borrowSum),
    unmetFinalDemand:round(unfilled),cashTotal:round(totals.cashClose),
    debtTotal:round(w.firms.reduce((s,f)=>s+f.debt,0)),
