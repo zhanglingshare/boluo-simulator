@@ -9,7 +9,7 @@ const assert=require("node:assert/strict"),fs=require("node:fs"),{chromium}=requ
    const page=await c.newPage(),errors=[];
    page.on("pageerror",e=>errors.push(e.message));
    page.on("console",e=>{if(e.type()==="error"&&!/favicon/i.test(e.text()))errors.push(e.text())});
-   await page.goto("http://127.0.0.1:8765/core/world/",{waitUntil:"networkidle",timeout:45000});
+   await page.goto("http://127.0.0.1:8765/core/world/classic-v1.html",{waitUntil:"networkidle",timeout:45000});
    await page.waitForFunction(()=>document.querySelector("#runStatus")?.textContent.includes("已推进 0"),{timeout:20000});
    assert.match(await page.locator("#publicGDP").innerText(),/1,005\.45/);
    assert.match(await page.locator("#public2026").innerText(),/721\.10/);
