@@ -8,7 +8,7 @@ const W=window.BoluoLivingWorld,C=window.BoluoCore;
 const esc=x=>String(x??"").replace(/[&<>"']/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]));
 const n=(x,p=1)=>Number(x||0).toLocaleString("zh-CN",{minimumFractionDigits:p,maximumFractionDigits:p});
 const storeKey="boluo-living-world-browser-v1";
-let bundle=C.demo(),world,worldStart,worldSnapshots=[],selected="none",firmId="I0001",
+let bundle=C.demo(),world,worldStart,worldSnapshots=[],selected="none",firmId="I0236",
   scenario="normal",evidence=null,busy=false;
 function loadInitial(){
  const fy=evidence?.records?.find(x=>x.period==="FY"&&x.year===2025);
@@ -20,7 +20,7 @@ function loadInitial(){
  if(old?.schema==="boluo-world-session/1"&&old.state?.schema===W.VERSION&&old.state.seed===worldStart.seed
     &&old.state.dataFingerprint===worldStart.dataFingerprint&&old.state.q>=0&&old.state.q<=28){
   world=old.state;scenario=["normal","supply","demand"].includes(old.scenario)?old.scenario:"normal";
-  firmId=world.firms.some(x=>x.id===old.firmId)?old.firmId:"I0001";
+  firmId=world.firms.some(x=>x.id===old.firmId)?old.firmId:"I0236";
  }else world=worldStart;
  $("worldScenario").value=scenario;$("selectedFirm").value=firmId;
  worldSnapshots=[world];render();
@@ -69,10 +69,12 @@ function drawNetwork(){
   if(!positions.has(other)){const count=positions.size-1,theta=count*(2*Math.PI/Math.max(7,neighbors.length))-.9;
    positions.set(other,{x:310+210*Math.cos(theta),y:147+103*Math.sin(theta)});}
  });
+ const traded=new Map((world.lastTrades||[]).map(x=>[x.buyer+"|"+x.supplier,x.amount]));
  let lines='',nodes='';
  for(const e of neighbors){
   const source=positions.get(e.supplier),target=positions.get(e.buyer);if(!source||!target)continue;
-  lines+='<path d="M'+source.x.toFixed(1)+' '+source.y.toFixed(1)+' L'+target.x.toFixed(1)+' '+target.y.toFixed(1)+'" stroke="#73c4c9" stroke-width="'+Math.min(3,.8+e.weight*.8)+'" opacity=".52" fill="none" stroke-dasharray="4 5"/>';
+  const amount=traded.get(e.buyer+"|"+e.supplier)||0;
+  lines+='<path d="M'+source.x.toFixed(1)+' '+source.y.toFixed(1)+' L'+target.x.toFixed(1)+' '+target.y.toFixed(1)+'" stroke="'+(amount>0?"#f2c983":"#73c4c9")+'" stroke-width="'+(amount>0?Math.min(6,2+Math.log1p(amount)):1.25)+'" opacity="'+(amount>0?".96":".35")+'" fill="none"'+(amount>0?'':' stroke-dasharray="4 5"')+'/>';
  }
  for(const [id,p] of positions){
   const central=id===center.id;
@@ -103,7 +105,8 @@ function renderFirm(){
  $("firmCash").textContent=n(f.cash);$("firmRaw").textContent=n(f.raw);
  $("firmFinish").textContent=n(f.finished);$("firmCapacity").textContent=n(f.capacity);
  $("firmUse").textContent=n(f.utilization*100,0)+"%";$("firmBacklog").textContent=n(f.backlog);
- $("firmDetail").textContent=f.sector+" / "+f.subsector+" / "+f.town+"。现金、库存与订单来自季度状态更新；不是现实企业数据。";
+ const flow=(world.lastTrades||[]).filter(t=>t.buyer===f.id||t.supplier===f.id);
+ $("firmDetail").textContent=f.sector+" / "+f.subsector+" / "+f.town+"。本季已成交合成交易 "+flow.length+" 条；其余关系仍可能存在但未成交。非现实企业记录。";
 }
 function renderNews(){
  const h=world.history.at(-1),news=$("news");
