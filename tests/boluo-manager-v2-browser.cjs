@@ -10,7 +10,8 @@ const fs=require("node:fs"),assert=require("node:assert/strict"),{chromium}=requ
    page.on("pageerror",e=>errors.push(e.message));
    page.on("console",m=>{if(m.type()==="error"&&!/favicon/i.test(m.text()))errors.push(m.text())});
    await page.goto("http://127.0.0.1:8765/core/world/manager-v2.html",{waitUntil:"networkidle",timeout:45000});
-   await page.waitForFunction(()=>document.querySelector("#screen-hub .hero-title"),{timeout:18000});
+   try{await page.waitForFunction(()=>document.querySelector("#screen-hub .hero-title"),{timeout:7500})}
+   catch(e){console.log("EARLY_RENDER_DEBUG",JSON.stringify({errors,text:(await page.locator("body").innerText()).slice(0,1600),scripts:await page.evaluate(()=>[...document.scripts].map(s=>s.src))}));throw e}
    assert.equal(await page.locator("#nav .navbutton").count(),7,"seven manager destinations");
    assert.match(await page.locator("#liveCaption").innerText(),/830家企业/);
    assert.match(await page.locator("#topCredits").innerText(),/100/);
