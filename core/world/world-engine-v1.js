@@ -259,6 +259,7 @@ function step(world,actions=[],external={}){
  assert(!fail.length,"Stock-flow reconciliation failed: "+JSON.stringify(fail.slice(0,4)));
  const exits=w.firms.filter(f=>f.closed).length;
  const quarter={index:q,label:(2026+Math.floor(q/4))+" Q"+(q%4+1),
+   external:{demandMultiplier,supplyDisruption},
    policy:policyLog,projectsActivated:projectArrivals.length,projectArrivals:projectArrivals.slice(0,10),
    firms:w.firms.length,activeFirms:w.firms.length-exits,exits,newExits:events.length,
    grossProduction:round(productionTotal),sampleValueAddedProxy:round(vaProxy),
