@@ -1,0 +1,31 @@
+{
+  "schema": "boluo-scenario/1",
+  "scenario_id": "BL-DEMO-2032-001",
+  "baseline_id": "lab2032-demo-v2",
+  "data_snapshot": "lab2032-synthetic-20321112",
+  "period": {
+    "start": "2026-Q1",
+    "end": "2032-Q4"
+  },
+  "seed": 20261120,
+  "evidence_mode": "demo",
+  "review_id": null,
+  "model_id": "lab2032.sector_sim",
+  "changes": [
+    {
+      "variable": "project.delay_years",
+      "kind": "decision",
+      "value": 1,
+      "unit": "年",
+      "note": "Synthetic demonstration only"
+    },
+    {
+      "variable": "scenario.external_demand",
+      "kind": "exogenous",
+      "value": -10,
+      "unit": "%",
+      "note": "This is a change proposal; registered model does not yet consume this variable"
+    }
+  ],
+  "notes": "Contract sample only: adapters are not yet verified. No GDP output should be inferred."
+}
