@@ -10,7 +10,7 @@ const engines={Core:ctx.BoluoCore,Engine:ctx.BoluoEngine,Bridge,Attributes:ctx.B
 const options={seed:20261120,trials:300,bootstrap:50,delay:1,affectedPct:50,proxy:.5,sourceShock:.35};
 const a=Full.run(options,engines,anchors),b=Full.run(options,engines,anchors);
 assert.equal(JSON.stringify(a),JSON.stringify(b),"exact deterministic full-run JSON");
-assert.equal(a.modules.length,11);
+assert.equal(a.modules.length,12);
 assert(a.modules.every(x=>x.executed),"all modules executed");
 assert.equal(a.quality.counts.enterprises,830);
 assert.equal(a.quality.counts.surveys,420);
