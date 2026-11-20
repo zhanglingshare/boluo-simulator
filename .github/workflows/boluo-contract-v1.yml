@@ -1,0 +1,20 @@
+name: Boluo core contract validation
+on:
+  push:
+    paths:
+      - 'core/contracts/**'
+      - 'tests/boluo-contract-v1.cjs'
+      - '.github/workflows/boluo-contract-v1.yml'
+  workflow_dispatch:
+jobs:
+  contract:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - name: Verify contracts with Node
+        run: |
+          node --check core/contracts/contract-v1.js
+          node tests/boluo-contract-v1.cjs
