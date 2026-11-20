@@ -1,0 +1,985 @@
+{
+  "schema": "boluo-full-run/1",
+  "scenario_id": "BL-FULL-DEMO-20261120",
+  "as_of": "2026-11-20",
+  "dataset_id": "BOLUO_2032_DEMO_V2",
+  "fingerprint": "24e53083",
+  "seed": 20261120,
+  "status": "complete_synthetic_demonstration_not_approved_for_decisions",
+  "modules": [
+    {
+      "id": "public_evidence",
+      "executed": true
+    },
+    {
+      "id": "data_quality",
+      "executed": true
+    },
+    {
+      "id": "project_pipeline",
+      "executed": true
+    },
+    {
+      "id": "enterprise_industry",
+      "executed": true
+    },
+    {
+      "id": "labor_constraints",
+      "executed": true
+    },
+    {
+      "id": "enterprise_v13",
+      "executed": true
+    },
+    {
+      "id": "network_propagation",
+      "executed": true
+    },
+    {
+      "id": "macroeconomic_montecarlo",
+      "executed": true
+    },
+    {
+      "id": "sensitivity",
+      "executed": true
+    },
+    {
+      "id": "survey_pls",
+      "executed": true
+    },
+    {
+      "id": "coach_v11_proxy",
+      "executed": true
+    },
+    {
+      "id": "blindspot_and_review",
+      "executed": true
+    }
+  ],
+  "public": {
+    "records": [
+      {
+        "year": 2025,
+        "period": "FY",
+        "time_basis": "annual",
+        "status": "published",
+        "gdp": 1005.45,
+        "primary": 107.44,
+        "secondary": 549.01,
+        "tertiary": 349,
+        "real_growth_pct": 5.5,
+        "source": "https://static.nfnews.com/content/202601/31/c12129042.html",
+        "source_note": "地方统计部门公布，南方+报道；2025年名义增加值和不变价增速不可混算",
+        "comparable_with_previous_annual": true
+      },
+      {
+        "year": 2026,
+        "period": "Q1_YTD",
+        "time_basis": "cumulative",
+        "status": "published",
+        "gdp": 217.32,
+        "primary": 20.46,
+        "secondary": 121.4,
+        "tertiary": 75.46,
+        "real_growth_pct": 4,
+        "source": "https://static.nfnews.com/content/202605/08/c12408279.html",
+        "comparable_with_previous_annual": false
+      },
+      {
+        "year": 2026,
+        "period": "Q3_YTD",
+        "time_basis": "cumulative",
+        "status": "published_secondary_transcription",
+        "gdp": 721.1,
+        "primary": 79.48,
+        "secondary": 418.45,
+        "tertiary": 223.17,
+        "real_growth_pct": 4.1,
+        "source": "https://www.fz0752.com/fontHtml/html/issue/000143025_1.html",
+        "cross_reference": "https://epaper.nfnews.com/nfdaily/html/202611/10/content_10185712.html",
+        "source_note": "前三季度累计；请在正式研究前再次核对博罗县统计局原始公报",
+        "comparable_with_previous_annual": false
+      }
+    ],
+    "goals": [
+      {
+        "year": 2030,
+        "indicator": "GDP",
+        "goal": 1600,
+        "unit": "亿元",
+        "status": "reported_government_target",
+        "source": "https://epaper.nfnews.com/nfdaily/html/202611/17/content_10186428.html?origin=4",
+        "attainment_not_evaluated": true
+      },
+      {
+        "year": 2030,
+        "indicator": "规上工业总产值",
+        "goal": 3600,
+        "unit": "亿元",
+        "status": "reported_government_target",
+        "source": "https://epaper.nfnews.com/nfdaily/html/202611/17/content_10186428.html?origin=4",
+        "attainment_not_evaluated": true
+      },
+      {
+        "year": 2026,
+        "indicator": "重点项目计划宗数",
+        "goal": 171,
+        "unit": "宗",
+        "status": "plan_not_achieved_count",
+        "source": "https://www.sohu.com/a/983044407_161794",
+        "attainment_not_evaluated": true
+      }
+    ],
+    "caveat": "2026 Q1 and Q3 are cumulative periods, not full-year forecasts. Never annualize automatically."
+  },
+  "quality": {
+    "counts": {
+      "macro": 6,
+      "enterprises": 830,
+      "relations": 1699,
+      "surveys": 420,
+      "projects": 72,
+      "workforce": 420
+    },
+    "invalidEdges": 0,
+    "surveySize": 420,
+    "sectorCounts": {
+      "primary": 110,
+      "secondary": 460,
+      "tertiary": 260
+    },
+    "mode": "DEMO"
+  },
+  "project": {
+    "total": 72,
+    "stage": [
+      {
+        "stage": "signed",
+        "label": "签约",
+        "n": 18,
+        "investment": 10701.4,
+        "jobs": 9185
+      },
+      {
+        "stage": "construction",
+        "label": "建设",
+        "n": 18,
+        "investment": 11574.529999999999,
+        "jobs": 10851
+      },
+      {
+        "stage": "commissioning",
+        "label": "投产爬坡",
+        "n": 18,
+        "investment": 11379.639999999998,
+        "jobs": 8028
+      },
+      {
+        "stage": "operating",
+        "label": "稳定运营",
+        "n": 18,
+        "investment": 8447.75,
+        "jobs": 10299
+      }
+    ],
+    "schedule": {
+      "eligible": 54,
+      "delayed": 27,
+      "before2032": 54,
+      "after2032": 50,
+      "crossed2032": 4
+    },
+    "shift_detail": [
+      {
+        "id": "P001",
+        "sector": "primary",
+        "stage": "signed",
+        "before": 2026,
+        "after": 2027,
+        "moved": true
+      },
+      {
+        "id": "P002",
+        "sector": "secondary",
+        "stage": "construction",
+        "before": 2027,
+        "after": 2028,
+        "moved": true
+      },
+      {
+        "id": "P003",
+        "sector": "tertiary",
+        "stage": "commissioning",
+        "before": 2028,
+        "after": 2029,
+        "moved": true
+      },
+      {
+        "id": "P005",
+        "sector": "secondary",
+        "stage": "signed",
+        "before": 2030,
+        "after": 2031,
+        "moved": true
+      },
+      {
+        "id": "P006",
+        "sector": "tertiary",
+        "stage": "construction",
+        "before": 2031,
+        "after": 2032,
+        "moved": true
+      },
+      {
+        "id": "P007",
+        "sector": "primary",
+        "stage": "commissioning",
+        "before": 2032,
+        "after": 2033,
+        "moved": true
+      },
+      {
+        "id": "P009",
+        "sector": "tertiary",
+        "stage": "signed",
+        "before": 2027,
+        "after": 2028,
+        "moved": true
+      },
+      {
+        "id": "P010",
+        "sector": "primary",
+        "stage": "construction",
+        "before": 2028,
+        "after": 2029,
+        "moved": true
+      },
+      {
+        "id": "P011",
+        "sector": "secondary",
+        "stage": "commissioning",
+        "before": 2029,
+        "after": 2030,
+        "moved": true
+      },
+      {
+        "id": "P013",
+        "sector": "primary",
+        "stage": "signed",
+        "before": 2031,
+        "after": 2032,
+        "moved": true
+      },
+      {
+        "id": "P014",
+        "sector": "secondary",
+        "stage": "construction",
+        "before": 2032,
+        "after": 2033,
+        "moved": true
+      },
+      {
+        "id": "P015",
+        "sector": "tertiary",
+        "stage": "commissioning",
+        "before": 2026,
+        "after": 2027,
+        "moved": true
+      },
+      {
+        "id": "P017",
+        "sector": "secondary",
+        "stage": "signed",
+        "before": 2028,
+        "after": 2029,
+        "moved": true
+      },
+      {
+        "id": "P018",
+        "sector": "tertiary",
+        "stage": "construction",
+        "before": 2029,
+        "after": 2030,
+        "moved": true
+      },
+      {
+        "id": "P019",
+        "sector": "primary",
+        "stage": "commissioning",
+        "before": 2030,
+        "after": 2031,
+        "moved": true
+      }
+    ],
+    "unit": "project_count",
+    "evidence": "synthetic"
+  },
+  "industry": {
+    "enterpriseCount": 830,
+    "aggregateSampleRevenue": 25749.96,
+    "sectorCounts": [
+      {
+        "sector": "secondary",
+        "n": 460
+      },
+      {
+        "sector": "tertiary",
+        "n": 260
+      },
+      {
+        "sector": "primary",
+        "n": 110
+      }
+    ],
+    "townTop": [
+      {
+        "town": "园洲镇",
+        "count": 68
+      },
+      {
+        "town": "长宁镇",
+        "count": 69
+      },
+      {
+        "town": "龙溪街道",
+        "count": 69
+      },
+      {
+        "town": "杨村镇",
+        "count": 68
+      },
+      {
+        "town": "龙华镇",
+        "count": 69
+      }
+    ],
+    "revenueUnit": "synthetic million_CNY",
+    "notGDP": true
+  },
+  "talent": {
+    "count": 420,
+    "meanCommute": 59.92,
+    "meanWage": 9587.88,
+    "highSkillGapFraction": 0.405,
+    "evidence": "synthetic survey",
+    "unit": "minutes/CNY_per_month"
+  },
+  "enterprise": {
+    "id": "I0001",
+    "synthetic": true,
+    "tacticalAttributes": 36,
+    "axis": [
+      88.7,
+      54.2,
+      94,
+      82,
+      52.2,
+      83.1
+    ],
+    "overall": 75.7,
+    "groups": [
+      {
+        "id": "SCL",
+        "name": "经营承载",
+        "score": 88.7
+      },
+      {
+        "id": "GRW",
+        "name": "成长与市场",
+        "score": 54.2
+      },
+      {
+        "id": "TEC",
+        "name": "产品与技术",
+        "score": 94
+      },
+      {
+        "id": "LNK",
+        "name": "网络与协同",
+        "score": 82
+      },
+      {
+        "id": "RST",
+        "name": "经营韧性",
+        "score": 52.2
+      },
+      {
+        "id": "IMP",
+        "name": "本地带动",
+        "score": 83.1
+      }
+    ],
+    "exposure": {
+      "orders": 52.1,
+      "talent": 24.9,
+      "supply": 38.3,
+      "funding": 22.9,
+      "energy": 35.1
+    },
+    "warning": "Six synthetic profile axes are arbitrary transparent mappings of synthetic fields; not six real measurements."
+  },
+  "relationship": {
+    "nodes": 830,
+    "edges": 1699,
+    "invalid": 0,
+    "source": "A0001",
+    "depth": 3,
+    "shock": 0.35,
+    "affected": 6,
+    "hotspots": [
+      {
+        "id": "A0001",
+        "impact": 35
+      },
+      {
+        "id": "I0008",
+        "impact": 10.6
+      },
+      {
+        "id": "S0001",
+        "impact": 4.1
+      },
+      {
+        "id": "S0208",
+        "impact": 2.34
+      },
+      {
+        "id": "S0171",
+        "impact": 1.53
+      },
+      {
+        "id": "S0134",
+        "impact": 0.58
+      }
+    ],
+    "waves": 6,
+    "warning": "三步传播是透明的演示规则，不是对真实供应链冲击的经验估计。"
+  },
+  "macro": {
+    "baseline": {
+      "p10": 1551.31,
+      "p50": 1699.78,
+      "p90": 1853.1,
+      "shares": [
+        {
+          "sector": "primary",
+          "p10": 8.15,
+          "p50": 9,
+          "p90": 9.99
+        },
+        {
+          "sector": "secondary",
+          "p10": 51.82,
+          "p50": 55.34,
+          "p90": 58.54
+        },
+        {
+          "sector": "tertiary",
+          "p10": 32.56,
+          "p50": 35.6,
+          "p90": 38.87
+        }
+      ],
+      "yearly": [
+        {
+          "year": 2025,
+          "gdp": 1005.45
+        },
+        {
+          "year": 2026,
+          "gdp": 1086.57
+        },
+        {
+          "year": 2027,
+          "gdp": 1171.53
+        },
+        {
+          "year": 2028,
+          "gdp": 1262.06
+        },
+        {
+          "year": 2029,
+          "gdp": 1357.71
+        },
+        {
+          "year": 2030,
+          "gdp": 1461.65
+        },
+        {
+          "year": 2031,
+          "gdp": 1573.35
+        },
+        {
+          "year": 2032,
+          "gdp": 1699.78
+        }
+      ],
+      "meet2030ReferenceModelFrequency": 5.8
+    },
+    "assumedPressure": {
+      "p10": 1495.08,
+      "p50": 1636.85,
+      "p90": 1785.3,
+      "shares": [
+        {
+          "sector": "primary",
+          "p10": 8.46,
+          "p50": 9.34,
+          "p90": 10.37
+        },
+        {
+          "sector": "secondary",
+          "p10": 50.78,
+          "p50": 54.36,
+          "p90": 57.58
+        },
+        {
+          "sector": "tertiary",
+          "p10": 33.16,
+          "p50": 36.24,
+          "p90": 39.55
+        }
+      ],
+      "yearly": [
+        {
+          "year": 2025,
+          "gdp": 1005.45
+        },
+        {
+          "year": 2026,
+          "gdp": 1080.86
+        },
+        {
+          "year": 2027,
+          "gdp": 1159.15
+        },
+        {
+          "year": 2028,
+          "gdp": 1242.2
+        },
+        {
+          "year": 2029,
+          "gdp": 1328.96
+        },
+        {
+          "year": 2030,
+          "gdp": 1423.2
+        },
+        {
+          "year": 2031,
+          "gdp": 1524.32
+        },
+        {
+          "year": 2032,
+          "gdp": 1636.85
+        }
+      ],
+      "meet2030ReferenceModelFrequency": 2.8
+    },
+    "medianDiff": -62.93,
+    "trials": 500,
+    "seed": 20261120,
+    "accounting": "GDP_sector_value_added",
+    "targetBasis": "2030 1600 GDP reference; not 2032 1:5:4 gross output",
+    "coupling": "NONE: GDP stress is separately specified macro proxy. Project schedule never converted to GDP.",
+    "proxy": 0.5
+  },
+  "sensitivity": {
+    "rows": [
+      {
+        "name": "external_demand",
+        "label": "外部需求",
+        "low": -143.52,
+        "high": 155.39
+      },
+      {
+        "name": "manufacturing_upgrade",
+        "label": "制造业升级",
+        "low": -114.49,
+        "high": 123.21
+      },
+      {
+        "name": "service_capacity",
+        "label": "专业服务",
+        "low": -109.35,
+        "high": 118.47
+      },
+      {
+        "name": "talent_supply",
+        "label": "人才与技能",
+        "low": -102.58,
+        "high": 109.57
+      },
+      {
+        "name": "local_linkages",
+        "label": "本地产业联系",
+        "low": -76.15,
+        "high": 80.09
+      },
+      {
+        "name": "project_delay",
+        "label": "项目延期",
+        "low": 62.07,
+        "high": -59.77
+      },
+      {
+        "name": "agricultural_upgrade",
+        "label": "农业提质",
+        "low": -47.85,
+        "high": 51.23
+      }
+    ],
+    "method": "existing full model rerun with fixed seed and single-knob bounds; NOT causal effects",
+    "output": "scenario GDP median difference, 亿"
+  },
+  "path": {
+    "n": 420,
+    "model": "experimental-mode-a-pls-v2",
+    "bootstrap": 60,
+    "failed": 0,
+    "paths": {
+      "SA->SU": 0.4388508482222641,
+      "SA->OP": 0.2197912651328597,
+      "SU->OP": 0.30009151455418376
+    },
+    "intervals": {
+      "SA->SU": {
+        "p10": 0.40201407658157695,
+        "p50": 0.4459956553419593,
+        "p90": 0.5011991755099732,
+        "p025": 0.37677695515944154,
+        "p975": 0.5138984739224565
+      },
+      "SA->OP": {
+        "p10": 0.16929466899819307,
+        "p50": 0.21533174505289537,
+        "p90": 0.2683651475269782,
+        "p025": 0.15047642935817873,
+        "p975": 0.2968886159907388
+      },
+      "SU->OP": {
+        "p10": 0.2458549809081215,
+        "p50": 0.3011085297995347,
+        "p90": 0.35076901924050513,
+        "p025": 0.21747148804291228,
+        "p975": 0.3685254832674574
+      }
+    },
+    "warnings": [
+      "程序PLS为教学及工程验证实现；尚未逐项通过SmartPLS等价认证。",
+      "显著性、拟合和路径系数均不意味着因果识别，更不能直接用于GDP增量。",
+      "构念测量还需检验区分效度、共同方法偏差、样本代表性和外部验证。"
+    ]
+  },
+  "coach": {
+    "n": 200,
+    "scoreStart": 75.7,
+    "p10": 56.2,
+    "p50": 67.5,
+    "p90": 78.7,
+    "trajectory": [
+      {
+        "q": 0,
+        "p10": 75.7,
+        "p50": 75.7,
+        "p90": 75.7
+      },
+      {
+        "q": 1,
+        "p10": 73.7,
+        "p50": 75.6,
+        "p90": 76.9
+      },
+      {
+        "q": 2,
+        "p10": 72.4,
+        "p50": 75.5,
+        "p90": 77.3
+      },
+      {
+        "q": 3,
+        "p10": 71.9,
+        "p50": 75.2,
+        "p90": 77.7
+      },
+      {
+        "q": 4,
+        "p10": 71.2,
+        "p50": 75,
+        "p90": 78
+      },
+      {
+        "q": 5,
+        "p10": 70.7,
+        "p50": 75.2,
+        "p90": 78.3
+      },
+      {
+        "q": 6,
+        "p10": 69.7,
+        "p50": 74.9,
+        "p90": 78.5
+      },
+      {
+        "q": 7,
+        "p10": 68.6,
+        "p50": 74.6,
+        "p90": 78.7
+      },
+      {
+        "q": 8,
+        "p10": 67.4,
+        "p50": 74.3,
+        "p90": 78.4
+      },
+      {
+        "q": 9,
+        "p10": 66.7,
+        "p50": 73.9,
+        "p90": 79
+      },
+      {
+        "q": 10,
+        "p10": 66,
+        "p50": 73.8,
+        "p90": 79.6
+      },
+      {
+        "q": 11,
+        "p10": 65.8,
+        "p50": 73.4,
+        "p90": 78.8
+      },
+      {
+        "q": 12,
+        "p10": 65.6,
+        "p50": 73.5,
+        "p90": 79.1
+      },
+      {
+        "q": 13,
+        "p10": 65.1,
+        "p50": 72.9,
+        "p90": 79.2
+      },
+      {
+        "q": 14,
+        "p10": 63.7,
+        "p50": 72.7,
+        "p90": 79
+      },
+      {
+        "q": 15,
+        "p10": 63.8,
+        "p50": 72.2,
+        "p90": 78.3
+      },
+      {
+        "q": 16,
+        "p10": 62.2,
+        "p50": 71.4,
+        "p90": 78.2
+      },
+      {
+        "q": 17,
+        "p10": 62.1,
+        "p50": 71.4,
+        "p90": 77.7
+      },
+      {
+        "q": 18,
+        "p10": 61,
+        "p50": 70.5,
+        "p90": 77.8
+      },
+      {
+        "q": 19,
+        "p10": 61.1,
+        "p50": 70.5,
+        "p90": 78.2
+      },
+      {
+        "q": 20,
+        "p10": 60.7,
+        "p50": 70.3,
+        "p90": 78.1
+      },
+      {
+        "q": 21,
+        "p10": 59.8,
+        "p50": 70,
+        "p90": 77.9
+      },
+      {
+        "q": 22,
+        "p10": 59.2,
+        "p50": 69.6,
+        "p90": 78.3
+      },
+      {
+        "q": 23,
+        "p10": 58.3,
+        "p50": 69.5,
+        "p90": 78.4
+      },
+      {
+        "q": 24,
+        "p10": 58.1,
+        "p50": 68.7,
+        "p90": 78.4
+      },
+      {
+        "q": 25,
+        "p10": 58,
+        "p50": 68.5,
+        "p90": 79.1
+      },
+      {
+        "q": 26,
+        "p10": 58.1,
+        "p50": 68.8,
+        "p90": 79
+      },
+      {
+        "q": 27,
+        "p10": 56.5,
+        "p50": 68.4,
+        "p90": 79.2
+      },
+      {
+        "q": 28,
+        "p10": 56.2,
+        "p50": 67.5,
+        "p90": 78.7
+      }
+    ],
+    "mechanismPaths": [
+      {
+        "from": "资源投入",
+        "to": "技术转化",
+        "coef": 0.339,
+        "low": 0.248,
+        "high": 0.423
+      },
+      {
+        "from": "人才供给",
+        "to": "技术转化",
+        "coef": 0.343,
+        "low": 0.263,
+        "high": 0.434
+      },
+      {
+        "from": "资源投入",
+        "to": "配套能力",
+        "coef": 0.3,
+        "low": 0.204,
+        "high": 0.387
+      },
+      {
+        "from": "人才供给",
+        "to": "配套能力",
+        "coef": 0.201,
+        "low": 0.123,
+        "high": 0.285
+      },
+      {
+        "from": "技术转化",
+        "to": "生产能力",
+        "coef": 0.437,
+        "low": 0.363,
+        "high": 0.54
+      },
+      {
+        "from": "配套能力",
+        "to": "生产能力",
+        "coef": 0.2,
+        "low": 0.121,
+        "high": 0.278
+      },
+      {
+        "from": "配套能力",
+        "to": "系统韧性",
+        "coef": 0.427,
+        "low": 0.336,
+        "high": 0.51
+      },
+      {
+        "from": "技术转化",
+        "to": "系统韧性",
+        "coef": 0.24,
+        "low": 0.146,
+        "high": 0.33
+      }
+    ],
+    "syntheticN": 260,
+    "warning": "Coach V11 proxy, not full V12 careerTick; independent synthetic mechanism and input mapping. No causal link to GDP."
+  },
+  "blindspots": [
+    {
+      "priority": "HIGH",
+      "title": "产业占比不是发展质量",
+      "category": "统计口径",
+      "next": "核对2025各产业增加值与2026—2032价格口径"
+    },
+    {
+      "priority": "HIGH",
+      "title": "营业收入不能直接转成增加值",
+      "category": "经济核算",
+      "next": "补充行业增加值率、统计口径和项目投产证据"
+    },
+    {
+      "priority": "HIGH",
+      "title": "产业关系可能大量缺失",
+      "category": "网络结构",
+      "next": "设计重点制造企业采购与服务商关系调查"
+    },
+    {
+      "priority": "MEDIUM",
+      "title": "问卷关系不等于政策因果",
+      "category": "科研识别",
+      "next": "通过企业实际经营记录、纵向调查或对照设计核验"
+    },
+    {
+      "priority": "MEDIUM",
+      "title": "项目投资不等于投产贡献",
+      "category": "项目接续",
+      "next": "追踪投产、产能爬坡、订单及实际用工"
+    }
+  ],
+  "compatibility": {
+    "project_to_macro": false,
+    "network_to_macro": false,
+    "pls_to_gdp": false,
+    "coach_to_real_enterprise": false,
+    "firm_revenue_to_gdp": false,
+    "reason": "Distinct accounting populations, synthetic records, and unestimated cross-model structural coefficients"
+  },
+  "assumptions": {
+    "delay": 1,
+    "affectedPct": 50,
+    "proxy": 0.5,
+    "sourceShock": 0.35,
+    "bootstrap": 60,
+    "trials": 500,
+    "all_company_and_relationship_data": "synthetic",
+    "real_data_only": "2025 and 2026 published high-level GDP summaries"
+  },
+  "nextEvidence": [
+    "Verified enterprise orders/capacity/profit and firm IDs",
+    "Project-level plans, commissioning evidence and project-to-enterprise links",
+    "Verified directed procurement/contract networks",
+    "Representative surveys with sample frame and temporal identification",
+    "Gross output accounting mapping separate from value added"
+  ],
+  "reference_options": {
+    "seed": 20261120,
+    "trials": 500,
+    "bootstrap": 60,
+    "delay": 1,
+    "affectedPct": 50,
+    "proxy": 0.5,
+    "sourceShock": 0.35,
+    "scenarioId": "BL-FULL-DEMO-20261120"
+  },
+  "snapshot_note": "Completed deterministic synthetic demo. Public anchor values are sourced separately, not a real GDP forecast."
+}
