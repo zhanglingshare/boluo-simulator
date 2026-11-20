@@ -6,7 +6,11 @@ on:
       - 'v11/internal/coach-v1.js'
       - 'v11/internal/coach-v1.css'
       - 'v11/internal/league.html'
+      - 'v11/internal/enterprise-attributes-v13.js'
+      - 'v11/internal/enterprise-attributes-v13.css'
+      - 'v11/internal/career-montecarlo-v12.js'
       - 'tests/boluo-coach-core.cjs'
+      - 'tests/boluo-enterprise-v13.cjs'
       - 'tests/boluo-coach-browser.cjs'
       - '.github/workflows/boluo-coach-v11-smoke.yml'
   workflow_dispatch:
@@ -20,6 +24,8 @@ jobs:
           node-version: '20'
       - name: Check stochastic coach engine and paths
         run: node tests/boluo-coach-core.cjs
+      - name: Check detailed enterprise role, resilience and resource mechanics
+        run: node tests/boluo-enterprise-v13.cjs
       - name: Install Chromium browser runner
         run: |
           npm install --no-save playwright
