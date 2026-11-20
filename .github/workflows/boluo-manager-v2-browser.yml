@@ -1,0 +1,40 @@
+name: Boluo franchise manager V2 browser
+on:
+  push:
+    paths:
+      - 'core/world/manager-v2.*'
+      - 'core/world/world-engine-v1.js'
+      - 'tests/boluo-manager-v2-browser.cjs'
+      - '.github/workflows/boluo-manager-v2-browser.yml'
+  workflow_dispatch:
+jobs:
+  v2:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - name: Install Chromium
+        run: |
+          npm install --no-save playwright
+          npx playwright install --with-deps chromium
+      - name: Start local server
+        run: |
+          python3 -m http.server 8765 --bind 127.0.0.1 >/tmp/boluo-manager-v2.log 2>&1 &
+          for i in $(seq 1 20); do
+            if curl --fail --silent http://127.0.0.1:8765/core/world/manager-v2.html -o /dev/null; then exit 0; fi
+            sleep 1
+          done
+          exit 1
+      - name: Test desktop and mobile complete gameplay
+        run: node tests/boluo-manager-v2-browser.cjs
+      - name: Upload layout screenshots
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: boluo-manager-v2-screenshots
+          path: artifacts/boluo-franchise-v2-*.png
+          if-no-files-found: warn
+          retention-days: 7
