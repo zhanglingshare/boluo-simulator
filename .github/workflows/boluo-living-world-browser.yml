@@ -1,0 +1,40 @@
+name: Boluo Living World playable browser
+on:
+  push:
+    paths:
+      - 'core/world/**'
+      - 'tests/boluo-living-world-browser-v1.cjs'
+      - '.github/workflows/boluo-living-world-browser.yml'
+  workflow_dispatch:
+jobs:
+  browser:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - name: Install Playwright browser
+        run: |
+          npm install --no-save playwright
+          npx playwright install --with-deps chromium
+      - name: Start HTTP server
+        run: |
+          python3 -m http.server 8765 --bind 127.0.0.1 >/tmp/boluo-living-world.log 2>&1 &
+          for i in $(seq 1 20); do
+            if curl --fail --silent http://127.0.0.1:8765/core/world/ -o /dev/null; then exit 0; fi
+            sleep 1
+          done
+          cat /tmp/boluo-living-world.log
+          exit 1
+      - name: Test mobile, desktop, decisions and full season
+        run: node tests/boluo-living-world-browser-v1.cjs
+      - name: Upload screenshots
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: boluo-living-world-visual-audit
+          path: artifacts/boluo-living-*.png
+          if-no-files-found: warn
+          retention-days: 7
