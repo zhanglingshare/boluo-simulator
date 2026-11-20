@@ -3,6 +3,7 @@ on:
   push:
     paths:
       - 'core/world/manager-v2.*'
+      - 'core/world/index.html'
       - 'core/world/world-engine-v1.js'
       - 'tests/boluo-manager-v2-browser.cjs'
       - '.github/workflows/boluo-manager-v2-browser.yml'
