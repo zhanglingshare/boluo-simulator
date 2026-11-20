@@ -1,0 +1,20 @@
+name: Boluo Living World engine regression
+on:
+  push:
+    paths:
+      - 'core/world/**'
+      - 'tests/boluo-living-world-v1.cjs'
+      - '.github/workflows/boluo-living-world.yml'
+  workflow_dispatch:
+jobs:
+  living-world:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - name: Check live world engine syntax
+        run: node --check core/world/world-engine-v1.js
+      - name: Replay 28 quarters and policy counterfactual
+        run: node tests/boluo-living-world-v1.cjs
