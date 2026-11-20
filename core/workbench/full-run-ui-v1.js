@@ -38,7 +38,7 @@ const tally=(r)=>{
  '<p>公开统计来源：'+r.public.records.map(x=>'<a href="'+esc(x.source)+'" target="_blank" rel="noopener">'+x.year+' '+esc(x.period)+'</a>').join(' · ')+'</p>';
 };
 async function start(){
- btn.disabled=true;$("fullRunStatus").textContent="正在使用原有引擎计算 11 个模块……";
+ btn.disabled=true;$("fullRunStatus").textContent="正在使用原有引擎计算 12 个环节……";
  await new Promise(r=>setTimeout(r,20));
  try{
   const publicData=await(await fetch("../data/boluo-public-anchors-2026.v1.json")).json();
