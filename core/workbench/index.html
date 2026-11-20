@@ -23,4 +23,4 @@ async function run(){try{
  }catch(e){$("message").textContent="运行失败："+e.message;console.error(e)}}
 ["delay","affected","proxy","draws"].forEach(id=>$(id).addEventListener("input",()=>{$(id+"Label").textContent=$(id).value+(id==="delay"?"年":id==="affected"?"%":"")}));
 $("run").onclick=run;$("export").onclick=()=>{if(!latest)return;const blob=new Blob([JSON.stringify(latest,null,2)],{type:"application/json"}),a=document.createElement("a");a.href=URL.createObjectURL(blob);a.download="boluo-unified-scenario-demo.json";a.click();setTimeout(()=>URL.revokeObjectURL(a.href),1000)};run();
-</script></body></html>
+</script><script src="../../v11/internal/enterprise-attributes-v13.js"></script><script src="../../v11/internal/coach-core-v1.js"></script><script src="../ops/full-run-v1.js"></script><script src="./full-run-ui-v1.js"></script></body></html>
