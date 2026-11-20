@@ -1,0 +1,50 @@
+<!doctype html>
+<html lang="zh-CN"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="description" content="博罗产业经理 V2，借鉴足球经理与NBA经营模式的原创产业经营演示。830家合成企业在同一个可复现世界中自主运行。">
+<title>博罗产业经理 · Franchise World V2</title>
+<link rel="stylesheet" href="./manager-v2.css">
+</head><body>
+<div class="topline"></div>
+<div class="shell">
+<header class="masthead">
+ <div class="logo"><div class="crest" aria-hidden="true">B</div><div><div class="eyebrow">BORO 2032 · INDUSTRY FRANCHISE</div><h1>博罗产业经理 <span style="font-size:12px;color:#a7c3ce">V2</span></h1><div class="subbrand">接管一个持续运转的产业世界，不是查看一份报告</div></div></div>
+ <div class="topstats">
+  <div class="minihead"><span>当前赛季</span><b id="topQuarter">2026 · Q1</b></div>
+  <div class="minihead"><span>行动资源</span><b id="topCredits">100 点</b></div>
+  <div class="minihead"><span>世界进度</span><b id="topProgress">0 / 28</b></div>
+  <button id="topAdvance" class="topAction">▶ 推进季度</button>
+ </div>
+</header>
+<nav class="navbar" id="nav" aria-label="游戏主要工作区">
+ <button class="navbutton active" data-view="hub"><span class="navico">⌂</span>经理总部 <span class="minor">HUB</span></button>
+ <button class="navbutton" data-view="squad"><span class="navico">▦</span>产业阵容 <span class="minor">ROSTER</span></button>
+ <button class="navbutton" data-view="scout"><span class="navico">◎</span>球探中心 <span class="minor">SCOUTING</span></button>
+ <button class="navbutton" data-view="tactics"><span class="navico">◇</span>经营战术 <span class="minor">TACTICS</span></button>
+ <button class="navbutton" data-view="season"><span class="navico">▤</span>赛季日历 <span class="minor">SEASON</span></button>
+ <button class="navbutton" data-view="office"><span class="navico">▣</span>经营办公室 <span class="minor">OFFICE</span></button>
+ <button class="navbutton" data-view="lab"><span class="navico">⚙</span>研发实验室 <span class="minor">LAB</span></button>
+</nav>
+<div class="livebar">
+ <div class="signal"><span class="pulse"></span><b>产业世界运行中</b><span id="liveCaption">830家企业 · 1,699条关系 · 72宗项目</span></div>
+ <div class="toolbar"><span class="badge gold">公开事实 + 合成世界</span><span class="badge" id="topScenario">常态环境</span><button id="topReset" class="btn tiny ghost">↺ 重开赛季</button></div>
+</div>
+<main id="main" aria-live="polite">
+ <section id="screen-hub" class="screen active"><div class="panel">正在进入经理总部…</div></section>
+ <section id="screen-squad" class="screen"><div class="panel">正在准备产业阵容…</div></section>
+ <section id="screen-scout" class="screen"><div class="panel">正在准备球探名册…</div></section>
+ <section id="screen-tactics" class="screen"><div class="panel">正在准备经营战术…</div></section>
+ <section id="screen-season" class="screen"><div class="panel">正在整理赛季日历…</div></section>
+ <section id="screen-office" class="screen"><div class="panel">正在整理经营账目…</div></section>
+ <section id="screen-lab" class="screen"><div class="panel">正在连接研发实验室…</div></section>
+</main>
+<footer class="statusbar"><span>当前为开发演示：企业、关系、项目和政策传导均为合成假设。游戏中“能力分数”不代表企业实测评级。</span><span>操作结果不等于博罗实际GDP变化。<a href="./classic-v1.html">旧版界面</a> · <a href="../workbench/">研究计算台</a></span></footer>
+</div>
+<div id="drawerOverlay" class="overlay" hidden role="presentation">
+ <aside id="drawer" class="drawer" role="dialog" aria-modal="true" aria-labelledby="drawerTitle"><div class="drawerhead"><div><div class="overline">INDUSTRIAL PLAYER DOSSIER</div><h2 id="drawerTitle">企业详细档案</h2></div><button class="btn ghost" data-action="close-drawer" aria-label="关闭企业详情">✕</button></div><div id="drawerContent"></div></aside>
+</div>
+<div id="toast" class="toast" hidden role="status"></div>
+<script src="../../lab-2032/core.js"></script>
+<script src="../../v11/internal/enterprise-attributes-v13.js"></script>
+<script src="./world-engine-v1.js"></script>
+<script src="./manager-v2.js"></script>
+</body></html>
