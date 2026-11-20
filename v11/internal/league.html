@@ -1048,6 +1048,8 @@ function initManager(){
 
 // V8 CAREER ENGINE: entirely scenario-generated values with explicit quarterly state.
 let v10Simulating=false,v10ShockScale=1;
+// V12 external-scenario tape. Null means the original V10 deterministic career behavior.
+let v12Scenario=null;
 const careerPolicies=[
  {id:"balanced",name:"稳健经营",desc:"维护韧性 / 小幅成长",cost:[0,4,2,2,1],boost:[.35,.25,.2],risk:.7},
  {id:"technology",name:"技术突破",desc:"资金+人才密集 / 长期成长",cost:[0,14,4,13,5],boost:[1.0,1.55,.25],risk:1.15},
@@ -1080,7 +1082,7 @@ function v9Snapshot(){
 }
 function v9DamageNow(id){const s=career.companyStates?.[id];return s?s.damage.reduce((a,b)=>a+b,0)/6:0}
 function v9AdvanceCompanies(policy,paid,event){
- const active=managerSelected(),gain=paid?1:0,eventType=event[1];
+ const active=managerSelected(),gain=paid?(v12Scenario?.current?.companyGrowth??1):1*0,eventType=event[1];
  // Evolve selected companies; every model attribute remains bounded and reversible.
  for(const p of active){
   const st=v9Company(p.id),role=Object.entries(manager.slots).find(([r,id])=>id===p.id)?.[0];
@@ -1322,14 +1324,15 @@ function careerTick(){
  if(career.quarter>=28)return;
  const policy=careerPolicies.find(x=>x.id===career.policy),before=managerCompute(),price=policy.cost;
  const paid=price.every((x,i)=>before.used[i]+x<=managerCaps[i]);
- const event=careerEvents[careerSeed(career.quarter)];
+ const scenarioStep=v12Scenario?.steps?.[career.quarter]||null;
+ const event=careerEvents[scenarioStep?scenarioStep.eventIndex:careerSeed(career.quarter)];
  const q=career.quarter+1;
- const roll=event[2]*v10ShockScale,intensity=roll>0?roll*policy.risk:roll;
+ const roll=event[2]*v10ShockScale*(scenarioStep?.shockScale??1),intensity=roll>0?roll*policy.risk:roll;
  const nextFatigue=Math.max(0,career.fatigue*.69+Math.max(0,intensity)*7-(policy.id==="cash"?6:0));
  const nextRecovery=Math.max(0,career.recovery*.55+(roll>0?roll*6:0)-(policy.id==="supply"?2:0));
- const upgrade=paid?policy.boost:[0,0,0];
- const beforeSnapshot={quarter:career.quarter,policy:career.policy,bench:career.bench,benchReady:career.benchReady,spent:career.spent.slice(),rivalStrategy:career.rivalStrategy,training:{...career.training},fatigue:career.fatigue,recovery:career.recovery,score:career.score,rival:career.rival,initialScore:career.initialScore,slots:{...manager.slots},managerEvent:manager.event,managerYear:manager.year,journal:career.journal.slice(),companyStates:JSON.parse(JSON.stringify(career.companyStates||{})),curve:(career.curve||[]).slice(),lastOutcome:career.lastOutcome};
- career.history.push(beforeSnapshot);if(career.history.length>28)career.history.shift();
+ const upgrade=paid?policy.boost.map((v,i)=>v*(scenarioStep?.boost?.[i]??1)):[0,0,0];
+ const beforeSnapshot=v10Simulating?null:{quarter:career.quarter,policy:career.policy,bench:career.bench,benchReady:career.benchReady,spent:career.spent.slice(),rivalStrategy:career.rivalStrategy,training:{...career.training},fatigue:career.fatigue,recovery:career.recovery,score:career.score,rival:career.rival,initialScore:career.initialScore,slots:{...manager.slots},managerEvent:manager.event,managerYear:manager.year,journal:career.journal.slice(),companyStates:JSON.parse(JSON.stringify(career.companyStates||{})),curve:(career.curve||[]).slice(),lastOutcome:career.lastOutcome};
+ if(beforeSnapshot){career.history.push(beforeSnapshot);if(career.history.length>28)career.history.shift()}
  career.quarter=q;
  career.spent=career.spent.map((x,i)=>Math.max(0,x*.35)+(paid?price[i]:0));
  if(career.bench)career.benchReady=Math.min(3,career.benchReady+(policy.id==="reserve"?1.5:.65));
@@ -1338,7 +1341,7 @@ function careerTick(){
  career.training.tech=+(career.training.tech+upgrade[1]*(.75+q*.03)).toFixed(2);
  career.training.resilience=+(career.training.resilience+upgrade[2]).toFixed(2);
  career.fatigue=+nextFatigue.toFixed(2);career.recovery=+nextRecovery.toFixed(2);
- const transmission=v9AdvanceCompanies(policy,paid,[event[0],event[1],event[2]*v10ShockScale]);
+ const transmission=v9AdvanceCompanies(policy,paid,[event[0],event[1],roll]);
  manager.year=Math.min(2,Math.floor(q/4));
  manager.event=roll>0?event[1]:"none";
  career.rival=+careerRival(q).toFixed(1);
@@ -1346,10 +1349,12 @@ function careerTick(){
  career.lastOutcome={event:event[0],eventKey:event[1],policy:policy.name,paid,source:transmission.source,affected:transmission.affected};
  if(!career.curve)career.curve=[];
  career.curve.push({quarter:q,score:career.score});
- const shift=+(career.score-(beforeSnapshot.score??before.score)).toFixed(1);
- career.journal.unshift({date:careerPrintQuarter(q),name:event[0],text:(paid?"策略执行":"资源不足，策略未执行")+" · "+policy.name+" · 组合指数 "+(shift>=0?"+":"")+shift+" · 对手："+career.rivalStrategy});
- if(career.journal.length>14)career.journal.pop();
- if(!v10Simulating){managerSync();refreshScores();renderDuel();renderManagerSeason();renderCareer()}
+ if(!v10Simulating){
+  const shift=+(career.score-(beforeSnapshot.score??before.score)).toFixed(1);
+  career.journal.unshift({date:careerPrintQuarter(q),name:event[0],text:(paid?"策略执行":"资源不足，策略未执行")+" · "+policy.name+" · 组合指数 "+(shift>=0?"+":"")+shift+" · 对手："+career.rivalStrategy});
+  if(career.journal.length>14)career.journal.pop();
+  managerSync();refreshScores();renderDuel();renderManagerSeason();renderCareer();
+ }
 }
 function careerUndo(){
  if(!career.history.length)return;
@@ -1428,4 +1433,4 @@ $("scenarioSlider").oninput=e=>{premiumScenarioStrength=Number(e.target.value);r
 renderWeightControls();
 renderOverview();renderTeam();renderPlayers();initDuel();initWind();initManager();initCinematic();initCareer();v9Init();
 if(window.location && /^#(wind|season|tactics|players|compare)$/.test(window.location.hash))setView(window.location.hash.slice(1));
-</script><script src="./coach-core-v1.js"></script><script src="./coach-v1.js"></script></body></html>
+</script><script src="./coach-core-v1.js"></script><script src="./career-montecarlo-v12.js"></script><script src="./coach-v1.js"></script></body></html>
