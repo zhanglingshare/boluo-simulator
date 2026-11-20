@@ -13,9 +13,11 @@ const pane=document.createElement("div");pane.className="scout-bridge";pane.id="
 function read(){try{let p=JSON.parse(sessionStorage.getItem(KEY)||"null");return p&&p.schema===1&&Number.isFinite(p.demand)&&Number.isFinite(p.supply)&&Number.isFinite(p.tech)?p:null}catch(e){return null}}
 function paint(){
 const p=read();
+const shared=p&&window.BoluoScenarioKernel?window.BoluoScenarioKernel.evaluate(p):null;
+const summary=shared?'<div style="display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:8px;margin:12px 0"><div><b style="font-size:23px;color:#ffda90">'+shared.median+'</b><small>共享内核压力中位数</small></div><div><b style="font-size:20px;color:#8ce6d5">'+shared.p10+'–'+shared.p90+'</b><small>P10–P90 模拟区间</small></div><div><b style="font-size:20px;color:#ffda90">'+shared.rank[0].id+'</b><small>最高暴露虚构原型</small></div></div><div style="font-size:11px;color:#d4e4eb">局部敏感性 · 每项参数增加5个百分点：外需 '+shared.sensitivity.demand+' / 断供 '+shared.sensitivity.supply+' / 技改 '+shared.sensitivity.tech+'</div>':'';
 pane.innerHTML='<h4>◈ 球探实验室 → 产业关系风洞</h4>'+
 (p?'<p>已接收：'+String(p.archetype||"虚构主体").replace(/[<>&"]/g,"")+'｜外需 '+p.demand+'%｜断供 '+p.supply+'%｜技改 '+p.tech+'%</p><button id="scoutApply">套用情景参数</button><button id="scoutClear">清除快照</button>':'<p>尚无球探快照。先在球探实验室调整参数，点击“发送到产业风洞”。</p><a href="'+base+'">去球探实验室 →</a>')+
-'<small>注意：参数只做单位相容的近似映射；两套模型的拓扑和计算方法不同，结果不得直接视为一致。冲击源沿用当前风洞选择的真实档案主体，不自动映射虚构原型。</small>';
+summary+'<small>注意：参数只做单位相容的近似映射；两套模型的拓扑和计算方法不同，结果不得直接视为一致。冲击源沿用当前风洞选择的真实档案主体，不自动映射虚构原型。</small>';
 const apply=pane.querySelector("#scoutApply");
 if(apply)apply.onclick=()=>{
  const safe=(v,min,max)=>Math.max(min,Math.min(max,Math.round(v/5)*5));
@@ -33,5 +35,23 @@ if(apply)apply.onclick=()=>{
 const clear=pane.querySelector("#scoutClear");if(clear)clear.onclick=()=>{sessionStorage.removeItem(KEY);paint()};
 }
 paint();window.addEventListener("focus",paint);
+
+// Shared-kernel scenario strip in season view. Advisory overlay; does not modify existing quarterly engine.
+const season=document.getElementById("view-season");
+if(season){
+ const strip=document.createElement("section");strip.className="scout-bridge";strip.id="scoutSeasonScenario";
+ season.insertBefore(strip,season.children[1]||null);
+ function seasonPaint(){
+  const p=read();
+  if(!p){strip.innerHTML='<h4>◈ 球探情景 · 赛季外部压力参考</h4><p>尚无已保存情景。可先在球探实验室设置外需、断供、技改，再导入。不会改动原有季度经营计算。</p><a href="'+base+'">建立情景 →</a>';return}
+  const s=window.BoluoScenarioKernel.evaluate(p);
+  // Quarter tape is only a deterministic illustrative exposure path, not a forecast or endogenous company evolution.
+  const points=Array.from({length:29},(_,q)=>{const phase=Math.exp(-q/10),cycle=1+.09*Math.sin(q*.55);return {q,value:s.median*phase*cycle}});
+  const xy=points.map(x=>(30+x.q*18.2)+','+(144-x.value/Math.max(1,s.median)*100)).join(' ');
+  strip.innerHTML='<h4>◈ 同一球探情景 · 28季度压力参考曲线</h4><div style="display:flex;gap:18px;flex-wrap:wrap"><div><b style="font-size:30px;color:#ffe1a3">'+s.median+'</b><small>期初标准化压力中位数</small></div><div><b style="font-size:30px;color:#78e3d4">'+s.p10+'–'+s.p90+'</b><small>期初模拟区间</small></div></div><svg style="width:100%;height:180px" viewBox="0 0 590 180" aria-label="假设冲击按固定衰减路径递减的28季度示意曲线"><line x1="28" y1="146" x2="565" y2="146" stroke="#628aa2"/><polyline points="'+xy+'" fill="none" stroke="#7be1da" stroke-width="3"/><text x="30" y="165" fill="#aac5d3" font-size="12">2026 Q1</text><text x="500" y="165" fill="#aac5d3" font-size="12">2032 Q4</text></svg><p>演示衰减规则：压力随季度按 exp(−q/10) 衰减，叠加9%固定周期扰动。这不是企业成长预测，也不自动影响经理模式的资源与分数。</p><a href="'+base+'">修改球探情景</a>';
+ }
+ seasonPaint();window.addEventListener("focus",seasonPaint);
+}
+
 const btn=document.createElement("a");btn.href=base;btn.className="mgr-hero-launch";btn.textContent="◈ 24项产业球探实验室";const hero=document.querySelector(".hero-main");if(hero)hero.appendChild(btn);
 })();
