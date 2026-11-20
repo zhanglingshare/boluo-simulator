@@ -1,0 +1,1930 @@
+{
+  "schema": "boluo-living-world-reference/1",
+  "created": "2026-11-20",
+  "engine": "boluo-living-world/1",
+  "seed": 20261120,
+  "publicGDPFY2025": {
+    "year": 2025,
+    "period": "FY",
+    "time_basis": "annual",
+    "status": "published",
+    "gdp": 1005.45,
+    "primary": 107.44,
+    "secondary": 549.01,
+    "tertiary": 349,
+    "real_growth_pct": 5.5,
+    "source": "https://static.nfnews.com/content/202601/31/c12129042.html",
+    "source_note": "地方统计部门公布，南方+报道；2025年名义增加值和不变价增速不可混算"
+  },
+  "publicGDPYTD2026": {
+    "year": 2026,
+    "period": "Q3_YTD",
+    "time_basis": "cumulative",
+    "status": "published_secondary_transcription",
+    "gdp": 721.1,
+    "primary": 79.48,
+    "secondary": 418.45,
+    "tertiary": 223.17,
+    "real_growth_pct": 4.1,
+    "source": "https://www.fz0752.com/fontHtml/html/issue/000143025_1.html",
+    "cross_reference": "https://epaper.nfnews.com/nfdaily/html/202611/10/content_10185712.html",
+    "source_note": "前三季度累计；请在正式研究前再次核对博罗县统计局原始公报"
+  },
+  "evidence": {
+    "company": "SYNTHETIC",
+    "network": "SYNTHETIC",
+    "projects": "SYNTHETIC",
+    "price_tokens": "MILLION_CNY_DEMO_EQUIVALENT",
+    "count": {
+      "firms": 830,
+      "links": 1699,
+      "projects": 72
+    },
+    "dataset": "24e53083",
+    "notGDP": true
+  },
+  "assumptions": {
+    "projectDelayQuarters": 4,
+    "affectedPct": 50,
+    "worldHorizonQuarters": 28,
+    "shocks": "2026 Q3–2027 Q4: supply 55% reduction on affected import channel and demand multiplier .94, all hypothetical",
+    "policy": "Synthetic enterprise I0236 skills Q1 and backup suppliers Q3, not empirical intervention"
+  },
+  "baseline": {
+    "lastQuarter": {
+      "index": 27,
+      "label": "2032 Q4",
+      "external": {
+        "demandMultiplier": 1,
+        "supplyDisruption": 0
+      },
+      "policy": [],
+      "projectsActivated": 0,
+      "projectArrivals": [],
+      "firms": 830,
+      "activeFirms": 830,
+      "exits": 0,
+      "newExits": 0,
+      "grossProduction": 8466.489907,
+      "sampleValueAddedProxy": 3525.010827,
+      "sectorGross": {
+        "primary": 362.332587,
+        "secondary": 6387.17718,
+        "tertiary": 1716.98014
+      },
+      "sectorVA": {
+        "primary": 177.49336,
+        "secondary": 2368.507326,
+        "tertiary": 979.01014
+      },
+      "outsideSales": 8345.690848,
+      "internalTrade": 213.057231,
+      "tradedEdges": 543,
+      "importsCost": 3842.986258,
+      "newCredit": 0,
+      "unmetFinalDemand": 379.077532,
+      "cashTotal": 38153.945991,
+      "debtTotal": 0,
+      "averageUtilization": 0.920408,
+      "balanced": true,
+      "ledgerResidualMax": 0,
+      "accounting": "Synthetic million CNY equivalent tokens; not official GDP, gross industrial output or full-county aggregates."
+    },
+    "totalProjectsActivated": 50,
+    "remainingProjects": [
+      "P007",
+      "P014",
+      "P021",
+      "P035"
+    ],
+    "totalActions": [],
+    "totalWorldFirms": 830,
+    "quarterSeries": [
+      {
+        "index": 0,
+        "label": "2026 Q1",
+        "grossProduction": 6241.752399,
+        "sectorVA": {
+          "primary": 137.618185,
+          "secondary": 1738.852119,
+          "tertiary": 724.708072
+        },
+        "valueAddedProxy": 2601.178376,
+        "internalTrade": 113.42461,
+        "tradedEdges": 1127,
+        "backlog": 3.729993,
+        "balanced": true,
+        "policy": [],
+        "external": {
+          "demandMultiplier": 1,
+          "supplyDisruption": 0
+        }
+      },
+      {
+        "index": 1,
+        "label": "2026 Q2",
+        "grossProduction": 6678.534745,
+        "sectorVA": {
+          "primary": 145.949795,
+          "secondary": 1842.579801,
+          "tertiary": 803.902311
+        },
+        "valueAddedProxy": 2792.431908,
+        "internalTrade": 309.719452,
+        "tradedEdges": 747,
+        "backlog": 5.371511,
+        "balanced": true,
+        "policy": [],
+        "external": {
+          "demandMultiplier": 1,
+          "supplyDisruption": 0
+        }
+      },
+      {
+        "index": 2,
+        "label": "2026 Q3",
+        "grossProduction": 6964.477676,
+        "sectorVA": {
+          "primary": 155.568125,
+          "secondary": 1907.888829,
+          "tertiary": 855.366041
+        },
+        "valueAddedProxy": 2918.822995,
+        "internalTrade": 169.849057,
+        "tradedEdges": 636,
+        "backlog": 11.428226,
+        "balanced": true,
+        "policy": [],
+        "external": {
+          "demandMultiplier": 1,
+          "supplyDisruption": 0
+        }
+      },
+      {
+        "index": 3,
+        "label": "2026 Q4",
+        "grossProduction": 6951.483918,
+        "sectorVA": {
+          "primary": 153.619218,
+          "secondary": 1922.205608,
+          "tertiary": 828.517166
+        },
+        "valueAddedProxy": 2904.341992,
+        "internalTrade": 277.597759,
+        "tradedEdges": 696,
+        "backlog": 20.809517,
+        "balanced": true,
+        "policy": [],
+        "external": {
+          "demandMultiplier": 1,
+          "supplyDisruption": 0
+        }
+      },
+      {
+        "index": 4,
+        "label": "2027 Q1",
+        "grossProduction": 7033.550669,
+        "sectorVA": {
+          "primary": 155.52237,
+          "secondary": 1932.818813,
+          "tertiary": 856.76715
+        },
+        "valueAddedProxy": 2945.108334,
+        "internalTrade": 173.710598,
+        "tradedEdges": 649,
+        "backlog": 25.661742,
+        "balanced": true,
+        "policy": [],
+        "external": {
+          "demandMultiplier": 1,
+          "supplyDisruption": 0
+        }
+      },
+      {
+        "index": 5,
+        "label": "2027 Q2",
+        "grossProduction": 6876.875543,
+        "sectorVA": {
+          "primary": 152.679357,
+          "secondary": 1900.351113,
+          "tertiary": 820.366163
+        },
+        "valueAddedProxy": 2873.396633,
+        "internalTrade": 275.73486,
+        "tradedEdges": 697,
+        "backlog": 19.230951,
+        "balanced": true,
+        "policy": [],
+        "external": {
+          "demandMultiplier": 1,
+          "supplyDisruption": 0
+        }
+      },
+      {
+        "index": 6,
+        "label": "2027 Q3",
+        "grossProduction": 6983.427394,
+        "sectorVA": {
+          "primary": 153.626893,
+          "secondary": 1917.253572,
+          "tertiary": 854.295069
+        },
+        "valueAddedProxy": 2925.175534,
+        "internalTrade": 172.053086,
+        "tradedEdges": 648,
+        "backlog": 12.606514,
+        "balanced": true,
+        "policy": [],
+        "external": {
+          "demandMultiplier": 1,
+          "supplyDisruption": 0
+        }
+      },
+      {
+        "index": 7,
+        "label": "2027 Q4",
+        "grossProduction": 6929.090023,
+        "sectorVA": {
+          "primary": 152.723811,
+          "secondary": 1919.604367,
+          "tertiary": 820.378952
+        },
+        "valueAddedProxy": 2892.70713,
+        "internalTrade": 279.930734,
+        "tradedEdges": 712,
+        "backlog": 18.034183,
+        "balanced": true,
+        "policy": [],
+        "external": {
+          "demandMultiplier": 1,
+          "supplyDisruption": 0
+        }
+      },
+      {
+        "index": 8,
+        "label": "2028 Q1",
+        "grossProduction": 7192.74432,
+        "sectorVA": {
+          "primary": 156.58566,
+          "secondary": 1983.128341,
+          "tertiary": 869.544791
+        },
+        "valueAddedProxy": 3009.258792,
+        "internalTrade": 175.828275,
+        "tradedEdges": 642,
+        "backlog": 23.90695,
+        "balanced": true,
+        "policy": [],
+        "external": {
+          "demandMultiplier": 1,
+          "supplyDisruption": 0
+        }
+      },
+      {
+        "index": 9,
+        "label": "2028 Q2",
+        "grossProduction": 7236.065464,
+        "sectorVA": {
+          "primary": 157.742435,
+          "secondary": 2008.350775,
+          "tertiary": 853.583843
+        },
+        "valueAddedProxy": 3019.677053,
+        "internalTrade": 272.339397,
+        "tradedEdges": 679,
+        "backlog": 36.763218,
+        "balanced": true,
+        "policy": [],
+        "external": {
+          "demandMultiplier": 1,
+          "supplyDisruption": 0
+        }
+      },
+      {
+        "index": 10,
+        "label": "2028 Q3",
+        "grossProduction": 7483.572823,
+        "sectorVA": {
+          "primary": 163.525325,
+          "secondary": 2066.56392,
+          "tertiary": 898.850406
+        },
+        "valueAddedProxy": 3128.939651,
+        "internalTrade": 171.346324,
+        "tradedEdges": 628,
+        "backlog": 59.716256,
+        "balanced": true,
+        "policy": [],
+        "external": {
+          "demandMultiplier": 1,
+          "supplyDisruption": 0
+        }
+      },
+      {
+        "index": 11,
+        "label": "2028 Q4",
+        "grossProduction": 7536.224477,
+        "sectorVA": {
+          "primary": 161.608198,
+          "secondary": 2100.338906,
+          "tertiary": 879.211566
+        },
+        "valueAddedProxy": 3141.158671,
+        "internalTrade": 261.353667,
+        "tradedEdges": 648,
+        "backlog": 71.48753,
+        "balanced": true,
+        "policy": [],
+        "external": {
+          "demandMultiplier": 1,
+          "supplyDisruption": 0
+        }
+      },
+      {
+        "index": 12,
+        "label": "2029 Q1",
+        "grossProduction": 7608.176705,
+        "sectorVA": {
+          "primary": 164.939054,
+          "secondary": 2106.958847,
+          "tertiary": 905.553198
+        },
+        "valueAddedProxy": 3177.4511,
+        "internalTrade": 160.193012,
+        "tradedEdges": 595,
+        "backlog": 81.712716,
+        "balanced": true,
+        "policy": [],
+        "external": {
+          "demandMultiplier": 1,
+          "supplyDisruption": 0
+        }
+      },
+      {
+        "index": 13,
+        "label": "2029 Q2",
+        "grossProduction": 7475.038256,
+        "sectorVA": {
+          "primary": 162.152635,
+          "secondary": 2077.8548,
+          "tertiary": 877.900161
+        },
+        "valueAddedProxy": 3117.907596,
+        "internalTrade": 254.933092,
+        "tradedEdges": 637,
+        "backlog": 72.543576,
+        "balanced": true,
+        "policy": [],
+        "external": {
+          "demandMultiplier": 1,
+          "supplyDisruption": 0
+        }
+      },
+      {
+        "index": 14,
+        "label": "2029 Q3",
+        "grossProduction": 7558.941506,
+        "sectorVA": {
+          "primary": 160.287225,
+          "secondary": 2095.563081,
+          "tertiary": 900.801607
+        },
+        "valueAddedProxy": 3156.651913,
+        "internalTrade": 162.357305,
+        "tradedEdges": 601,
+        "backlog": 82.495801,
+        "balanced": true,
+        "policy": [],
+        "external": {
+          "demandMultiplier": 1,
+          "supplyDisruption": 0
+        }
+      },
+      {
+        "index": 15,
+        "label": "2029 Q4",
+        "grossProduction": 7510.969477,
+        "sectorVA": {
+          "primary": 161.273595,
+          "secondary": 2101.233081,
+          "tertiary": 863.599963
+        },
+        "valueAddedProxy": 3126.106638,
+        "internalTrade": 259.989233,
+        "tradedEdges": 656,
+        "backlog": 63.5214,
+        "balanced": true,
+        "policy": [],
+        "external": {
+          "demandMultiplier": 1,
+          "supplyDisruption": 0
+        }
+      },
+      {
+        "index": 16,
+        "label": "2030 Q1",
+        "grossProduction": 7683.985138,
+        "sectorVA": {
+          "primary": 164.182248,
+          "secondary": 2136.193172,
+          "tertiary": 904.835698
+        },
+        "valueAddedProxy": 3205.211118,
+        "internalTrade": 172.484269,
+        "tradedEdges": 619,
+        "backlog": 81.119495,
+        "balanced": true,
+        "policy": [],
+        "external": {
+          "demandMultiplier": 1,
+          "supplyDisruption": 0
+        }
+      },
+      {
+        "index": 17,
+        "label": "2030 Q2",
+        "grossProduction": 7703.129688,
+        "sectorVA": {
+          "primary": 165.251949,
+          "secondary": 2153.802828,
+          "tertiary": 887.678341
+        },
+        "valueAddedProxy": 3206.733119,
+        "internalTrade": 255.928365,
+        "tradedEdges": 656,
+        "backlog": 116.261824,
+        "balanced": true,
+        "policy": [],
+        "external": {
+          "demandMultiplier": 1,
+          "supplyDisruption": 0
+        }
+      },
+      {
+        "index": 18,
+        "label": "2030 Q3",
+        "grossProduction": 7962.202819,
+        "sectorVA": {
+          "primary": 169.743438,
+          "secondary": 2215.247846,
+          "tertiary": 935.654895
+        },
+        "valueAddedProxy": 3320.64618,
+        "internalTrade": 164.342708,
+        "tradedEdges": 591,
+        "backlog": 147.964337,
+        "balanced": true,
+        "policy": [],
+        "external": {
+          "demandMultiplier": 1,
+          "supplyDisruption": 0
+        }
+      },
+      {
+        "index": 19,
+        "label": "2030 Q4",
+        "grossProduction": 8027.787762,
+        "sectorVA": {
+          "primary": 169.552335,
+          "secondary": 2244.739968,
+          "tertiary": 928.046019
+        },
+        "valueAddedProxy": 3342.338322,
+        "internalTrade": 234.310165,
+        "tradedEdges": 606,
+        "backlog": 168.167059,
+        "balanced": true,
+        "policy": [],
+        "external": {
+          "demandMultiplier": 1,
+          "supplyDisruption": 0
+        }
+      },
+      {
+        "index": 20,
+        "label": "2031 Q1",
+        "grossProduction": 8183.374725,
+        "sectorVA": {
+          "primary": 173.421065,
+          "secondary": 2277.852677,
+          "tertiary": 961.567144
+        },
+        "valueAddedProxy": 3412.840885,
+        "internalTrade": 155.224961,
+        "tradedEdges": 556,
+        "backlog": 224.582778,
+        "balanced": true,
+        "policy": [],
+        "external": {
+          "demandMultiplier": 1,
+          "supplyDisruption": 0
+        }
+      },
+      {
+        "index": 21,
+        "label": "2031 Q2",
+        "grossProduction": 8136.569039,
+        "sectorVA": {
+          "primary": 173.240731,
+          "secondary": 2274.389702,
+          "tertiary": 940.236856
+        },
+        "valueAddedProxy": 3387.867289,
+        "internalTrade": 216.052402,
+        "tradedEdges": 561,
+        "backlog": 244.673205,
+        "balanced": true,
+        "policy": [],
+        "external": {
+          "demandMultiplier": 1,
+          "supplyDisruption": 0
+        }
+      },
+      {
+        "index": 22,
+        "label": "2031 Q3",
+        "grossProduction": 8163.46175,
+        "sectorVA": {
+          "primary": 172.044042,
+          "secondary": 2280.758331,
+          "tertiary": 947.296716
+        },
+        "valueAddedProxy": 3400.099089,
+        "internalTrade": 158.61943,
+        "tradedEdges": 545,
+        "backlog": 219.410048,
+        "balanced": true,
+        "policy": [],
+        "external": {
+          "demandMultiplier": 1,
+          "supplyDisruption": 0
+        }
+      },
+      {
+        "index": 23,
+        "label": "2031 Q4",
+        "grossProduction": 8076.942384,
+        "sectorVA": {
+          "primary": 168.929337,
+          "secondary": 2264.213147,
+          "tertiary": 926.771775
+        },
+        "valueAddedProxy": 3359.914259,
+        "internalTrade": 225.266869,
+        "tradedEdges": 579,
+        "backlog": 226.254977,
+        "balanced": true,
+        "policy": [],
+        "external": {
+          "demandMultiplier": 1,
+          "supplyDisruption": 0
+        }
+      },
+      {
+        "index": 24,
+        "label": "2032 Q1",
+        "grossProduction": 8188.713559,
+        "sectorVA": {
+          "primary": 172.919102,
+          "secondary": 2285.722305,
+          "tertiary": 953.192476
+        },
+        "valueAddedProxy": 3411.833883,
+        "internalTrade": 162.719104,
+        "tradedEdges": 565,
+        "backlog": 220.030574,
+        "balanced": true,
+        "policy": [],
+        "external": {
+          "demandMultiplier": 1,
+          "supplyDisruption": 0
+        }
+      },
+      {
+        "index": 25,
+        "label": "2032 Q2",
+        "grossProduction": 8230.640925,
+        "sectorVA": {
+          "primary": 170.012673,
+          "secondary": 2310.963815,
+          "tertiary": 942.178348
+        },
+        "valueAddedProxy": 3423.154837,
+        "internalTrade": 223.876112,
+        "tradedEdges": 589,
+        "backlog": 234.440288,
+        "balanced": true,
+        "policy": [],
+        "external": {
+          "demandMultiplier": 1,
+          "supplyDisruption": 0
+        }
+      },
+      {
+        "index": 26,
+        "label": "2032 Q3",
+        "grossProduction": 8415.692327,
+        "sectorVA": {
+          "primary": 174.7048,
+          "secondary": 2353.14573,
+          "tertiary": 976.699367
+        },
+        "valueAddedProxy": 3504.549897,
+        "internalTrade": 157.085601,
+        "tradedEdges": 551,
+        "backlog": 315.876334,
+        "balanced": true,
+        "policy": [],
+        "external": {
+          "demandMultiplier": 1,
+          "supplyDisruption": 0
+        }
+      },
+      {
+        "index": 27,
+        "label": "2032 Q4",
+        "grossProduction": 8466.489907,
+        "sectorVA": {
+          "primary": 177.49336,
+          "secondary": 2368.507326,
+          "tertiary": 979.01014
+        },
+        "valueAddedProxy": 3525.010827,
+        "internalTrade": 213.057231,
+        "tradedEdges": 543,
+        "backlog": 379.077532,
+        "balanced": true,
+        "policy": [],
+        "external": {
+          "demandMultiplier": 1,
+          "supplyDisruption": 0
+        }
+      }
+    ]
+  },
+  "supplyStress": {
+    "lastQuarter": {
+      "index": 27,
+      "label": "2032 Q4",
+      "external": {
+        "demandMultiplier": 1,
+        "supplyDisruption": 0
+      },
+      "policy": [],
+      "projectsActivated": 0,
+      "projectArrivals": [],
+      "firms": 830,
+      "activeFirms": 830,
+      "exits": 0,
+      "newExits": 0,
+      "grossProduction": 8387.427764,
+      "sampleValueAddedProxy": 3490.630971,
+      "sectorGross": {
+        "primary": 359.820031,
+        "secondary": 6335.094704,
+        "tertiary": 1692.51303
+      },
+      "sectorVA": {
+        "primary": 176.262101,
+        "secondary": 2349.314562,
+        "tertiary": 965.054309
+      },
+      "outsideSales": 8289.313686,
+      "internalTrade": 226.996872,
+      "tradedEdges": 581,
+      "importsCost": 3792.040805,
+      "newCredit": 0,
+      "unmetFinalDemand": 435.915824,
+      "cashTotal": 35549.550826,
+      "debtTotal": 0,
+      "averageUtilization": 0.91406,
+      "balanced": true,
+      "ledgerResidualMax": 0,
+      "accounting": "Synthetic million CNY equivalent tokens; not official GDP, gross industrial output or full-county aggregates."
+    },
+    "totalProjectsActivated": 50,
+    "remainingProjects": [
+      "P007",
+      "P014",
+      "P021",
+      "P035"
+    ],
+    "totalActions": [],
+    "totalWorldFirms": 830,
+    "quarterSeries": [
+      {
+        "index": 0,
+        "label": "2026 Q1",
+        "grossProduction": 6241.752399,
+        "sectorVA": {
+          "primary": 137.618185,
+          "secondary": 1738.852119,
+          "tertiary": 724.708072
+        },
+        "valueAddedProxy": 2601.178376,
+        "internalTrade": 113.42461,
+        "tradedEdges": 1127,
+        "backlog": 3.729993,
+        "balanced": true,
+        "policy": [],
+        "external": {
+          "demandMultiplier": 1,
+          "supplyDisruption": 0
+        }
+      },
+      {
+        "index": 1,
+        "label": "2026 Q2",
+        "grossProduction": 6678.534745,
+        "sectorVA": {
+          "primary": 145.949795,
+          "secondary": 1842.579801,
+          "tertiary": 803.902311
+        },
+        "valueAddedProxy": 2792.431908,
+        "internalTrade": 309.719452,
+        "tradedEdges": 747,
+        "backlog": 5.371511,
+        "balanced": true,
+        "policy": [],
+        "external": {
+          "demandMultiplier": 1,
+          "supplyDisruption": 0
+        }
+      },
+      {
+        "index": 2,
+        "label": "2026 Q3",
+        "grossProduction": 3155.846424,
+        "sectorVA": {
+          "primary": 66.662611,
+          "secondary": 879.026865,
+          "tertiary": 369.561503
+        },
+        "valueAddedProxy": 1315.250979,
+        "internalTrade": 167.018707,
+        "tradedEdges": 640,
+        "backlog": 2382.924357,
+        "balanced": true,
+        "policy": [],
+        "external": {
+          "demandMultiplier": 0.94,
+          "supplyDisruption": 0.55
+        }
+      },
+      {
+        "index": 3,
+        "label": "2026 Q4",
+        "grossProduction": 3606.572744,
+        "sectorVA": {
+          "primary": 79.346732,
+          "secondary": 998.703969,
+          "tertiary": 428.557924
+        },
+        "valueAddedProxy": 1506.608626,
+        "internalTrade": 0,
+        "tradedEdges": 0,
+        "backlog": 2790.332744,
+        "balanced": true,
+        "policy": [],
+        "external": {
+          "demandMultiplier": 0.94,
+          "supplyDisruption": 0.55
+        }
+      },
+      {
+        "index": 4,
+        "label": "2027 Q1",
+        "grossProduction": 3720.599608,
+        "sectorVA": {
+          "primary": 81.540193,
+          "secondary": 1032.212274,
+          "tertiary": 439.861877
+        },
+        "valueAddedProxy": 1553.614344,
+        "internalTrade": 0,
+        "tradedEdges": 0,
+        "backlog": 2654.835431,
+        "balanced": true,
+        "policy": [],
+        "external": {
+          "demandMultiplier": 0.94,
+          "supplyDisruption": 0.55
+        }
+      },
+      {
+        "index": 5,
+        "label": "2027 Q2",
+        "grossProduction": 3759.247207,
+        "sectorVA": {
+          "primary": 82.12676,
+          "secondary": 1043.451481,
+          "tertiary": 444.066821
+        },
+        "valueAddedProxy": 1569.645061,
+        "internalTrade": 0,
+        "tradedEdges": 0,
+        "backlog": 2553.9513,
+        "balanced": true,
+        "policy": [],
+        "external": {
+          "demandMultiplier": 0.94,
+          "supplyDisruption": 0.55
+        }
+      },
+      {
+        "index": 6,
+        "label": "2027 Q3",
+        "grossProduction": 3775.297855,
+        "sectorVA": {
+          "primary": 82.669969,
+          "secondary": 1046.7106,
+          "tertiary": 447.578586
+        },
+        "valueAddedProxy": 1576.959154,
+        "internalTrade": 0,
+        "tradedEdges": 0,
+        "backlog": 2535.170798,
+        "balanced": true,
+        "policy": [],
+        "external": {
+          "demandMultiplier": 0.94,
+          "supplyDisruption": 0.55
+        }
+      },
+      {
+        "index": 7,
+        "label": "2027 Q4",
+        "grossProduction": 3789.793837,
+        "sectorVA": {
+          "primary": 83.036226,
+          "secondary": 1052.508042,
+          "tertiary": 446.62244
+        },
+        "valueAddedProxy": 1582.166708,
+        "internalTrade": 0,
+        "tradedEdges": 0,
+        "backlog": 2579.469841,
+        "balanced": true,
+        "policy": [],
+        "external": {
+          "demandMultiplier": 0.94,
+          "supplyDisruption": 0.55
+        }
+      },
+      {
+        "index": 8,
+        "label": "2028 Q1",
+        "grossProduction": 8558.671764,
+        "sectorVA": {
+          "primary": 187.655456,
+          "secondary": 2370.467981,
+          "tertiary": 1018.801372
+        },
+        "valueAddedProxy": 3576.924808,
+        "internalTrade": 0,
+        "tradedEdges": 0,
+        "backlog": 39.43348,
+        "balanced": true,
+        "policy": [],
+        "external": {
+          "demandMultiplier": 1,
+          "supplyDisruption": 0
+        }
+      },
+      {
+        "index": 9,
+        "label": "2028 Q2",
+        "grossProduction": 7954.864505,
+        "sectorVA": {
+          "primary": 170.83158,
+          "secondary": 2223.121715,
+          "tertiary": 918.936351
+        },
+        "valueAddedProxy": 3312.889646,
+        "internalTrade": 232.192312,
+        "tradedEdges": 482,
+        "backlog": 64.323208,
+        "balanced": true,
+        "policy": [],
+        "external": {
+          "demandMultiplier": 1,
+          "supplyDisruption": 0
+        }
+      },
+      {
+        "index": 10,
+        "label": "2028 Q3",
+        "grossProduction": 7962.94447,
+        "sectorVA": {
+          "primary": 172.902332,
+          "secondary": 2195.603472,
+          "tertiary": 962.93108
+        },
+        "valueAddedProxy": 3331.436884,
+        "internalTrade": 115.964521,
+        "tradedEdges": 344,
+        "backlog": 100.660304,
+        "balanced": true,
+        "policy": [],
+        "external": {
+          "demandMultiplier": 1,
+          "supplyDisruption": 0
+        }
+      },
+      {
+        "index": 11,
+        "label": "2028 Q4",
+        "grossProduction": 7800.001953,
+        "sectorVA": {
+          "primary": 166.385736,
+          "secondary": 2177.896902,
+          "tertiary": 904.817029
+        },
+        "valueAddedProxy": 3249.099667,
+        "internalTrade": 237.865159,
+        "tradedEdges": 555,
+        "backlog": 133.51355,
+        "balanced": true,
+        "policy": [],
+        "external": {
+          "demandMultiplier": 1,
+          "supplyDisruption": 0
+        }
+      },
+      {
+        "index": 12,
+        "label": "2029 Q1",
+        "grossProduction": 7818.206298,
+        "sectorVA": {
+          "primary": 169.655117,
+          "secondary": 2159.615234,
+          "tertiary": 938.823577
+        },
+        "valueAddedProxy": 3268.093928,
+        "internalTrade": 134.374223,
+        "tradedEdges": 405,
+        "backlog": 116.403816,
+        "balanced": true,
+        "policy": [],
+        "external": {
+          "demandMultiplier": 1,
+          "supplyDisruption": 0
+        }
+      },
+      {
+        "index": 13,
+        "label": "2029 Q2",
+        "grossProduction": 7591.198993,
+        "sectorVA": {
+          "primary": 163.803571,
+          "secondary": 2114.710875,
+          "tertiary": 885.36716
+        },
+        "valueAddedProxy": 3163.881607,
+        "internalTrade": 251.225615,
+        "tradedEdges": 618,
+        "backlog": 103.009211,
+        "balanced": true,
+        "policy": [],
+        "external": {
+          "demandMultiplier": 1,
+          "supplyDisruption": 0
+        }
+      },
+      {
+        "index": 14,
+        "label": "2029 Q3",
+        "grossProduction": 7656.68634,
+        "sectorVA": {
+          "primary": 162.176424,
+          "secondary": 2117.828159,
+          "tertiary": 919.808419
+        },
+        "valueAddedProxy": 3199.813002,
+        "internalTrade": 140.950683,
+        "tradedEdges": 455,
+        "backlog": 112.677773,
+        "balanced": true,
+        "policy": [],
+        "external": {
+          "demandMultiplier": 1,
+          "supplyDisruption": 0
+        }
+      },
+      {
+        "index": 15,
+        "label": "2029 Q4",
+        "grossProduction": 7547.378067,
+        "sectorVA": {
+          "primary": 161.474793,
+          "secondary": 2115.583901,
+          "tertiary": 861.880042
+        },
+        "valueAddedProxy": 3138.938736,
+        "internalTrade": 260.342819,
+        "tradedEdges": 668,
+        "backlog": 98.935296,
+        "balanced": true,
+        "policy": [],
+        "external": {
+          "demandMultiplier": 1,
+          "supplyDisruption": 0
+        }
+      },
+      {
+        "index": 16,
+        "label": "2030 Q1",
+        "grossProduction": 7711.454705,
+        "sectorVA": {
+          "primary": 164.865556,
+          "secondary": 2138.724703,
+          "tertiary": 915.707838
+        },
+        "valueAddedProxy": 3219.298097,
+        "internalTrade": 157.970932,
+        "tradedEdges": 491,
+        "backlog": 109.201138,
+        "balanced": true,
+        "policy": [],
+        "external": {
+          "demandMultiplier": 1,
+          "supplyDisruption": 0
+        }
+      },
+      {
+        "index": 17,
+        "label": "2030 Q2",
+        "grossProduction": 7687.643396,
+        "sectorVA": {
+          "primary": 164.562424,
+          "secondary": 2152.659605,
+          "tertiary": 881.393273
+        },
+        "valueAddedProxy": 3198.615302,
+        "internalTrade": 259.837989,
+        "tradedEdges": 673,
+        "backlog": 169.253226,
+        "balanced": true,
+        "policy": [],
+        "external": {
+          "demandMultiplier": 1,
+          "supplyDisruption": 0
+        }
+      },
+      {
+        "index": 18,
+        "label": "2030 Q3",
+        "grossProduction": 7944.772878,
+        "sectorVA": {
+          "primary": 169.770674,
+          "secondary": 2204.550279,
+          "tertiary": 942.145663
+        },
+        "valueAddedProxy": 3316.466616,
+        "internalTrade": 144.943057,
+        "tradedEdges": 468,
+        "backlog": 183.81082,
+        "balanced": true,
+        "policy": [],
+        "external": {
+          "demandMultiplier": 1,
+          "supplyDisruption": 0
+        }
+      },
+      {
+        "index": 19,
+        "label": "2030 Q4",
+        "grossProduction": 7978.327058,
+        "sectorVA": {
+          "primary": 168.525247,
+          "secondary": 2233.383276,
+          "tertiary": 918.551656
+        },
+        "valueAddedProxy": 3320.460178,
+        "internalTrade": 235.490444,
+        "tradedEdges": 633,
+        "backlog": 216.03822,
+        "balanced": true,
+        "policy": [],
+        "external": {
+          "demandMultiplier": 1,
+          "supplyDisruption": 0
+        }
+      },
+      {
+        "index": 20,
+        "label": "2031 Q1",
+        "grossProduction": 8154.173657,
+        "sectorVA": {
+          "primary": 172.807452,
+          "secondary": 2263.452903,
+          "tertiary": 967.989381
+        },
+        "valueAddedProxy": 3404.249736,
+        "internalTrade": 133.69386,
+        "tradedEdges": 432,
+        "backlog": 278.24896,
+        "balanced": true,
+        "policy": [],
+        "external": {
+          "demandMultiplier": 1,
+          "supplyDisruption": 0
+        }
+      },
+      {
+        "index": 21,
+        "label": "2031 Q2",
+        "grossProduction": 8072.445061,
+        "sectorVA": {
+          "primary": 172.393897,
+          "secondary": 2259.964241,
+          "tertiary": 926.94456
+        },
+        "valueAddedProxy": 3359.302698,
+        "internalTrade": 227.158833,
+        "tradedEdges": 588,
+        "backlog": 293.053797,
+        "balanced": true,
+        "policy": [],
+        "external": {
+          "demandMultiplier": 1,
+          "supplyDisruption": 0
+        }
+      },
+      {
+        "index": 22,
+        "label": "2031 Q3",
+        "grossProduction": 8134.940681,
+        "sectorVA": {
+          "primary": 171.513601,
+          "secondary": 2265.206074,
+          "tertiary": 955.767027
+        },
+        "valueAddedProxy": 3392.486701,
+        "internalTrade": 132.541941,
+        "tradedEdges": 423,
+        "backlog": 267.120249,
+        "balanced": true,
+        "policy": [],
+        "external": {
+          "demandMultiplier": 1,
+          "supplyDisruption": 0
+        }
+      },
+      {
+        "index": 23,
+        "label": "2031 Q4",
+        "grossProduction": 8009.778682,
+        "sectorVA": {
+          "primary": 167.892999,
+          "secondary": 2248.724112,
+          "tertiary": 913.58055
+        },
+        "valueAddedProxy": 3330.197661,
+        "internalTrade": 240.157751,
+        "tradedEdges": 612,
+        "backlog": 266.286171,
+        "balanced": true,
+        "policy": [],
+        "external": {
+          "demandMultiplier": 1,
+          "supplyDisruption": 0
+        }
+      },
+      {
+        "index": 24,
+        "label": "2032 Q1",
+        "grossProduction": 8162.319639,
+        "sectorVA": {
+          "primary": 172.391508,
+          "secondary": 2271.111241,
+          "tertiary": 961.451785
+        },
+        "valueAddedProxy": 3404.954535,
+        "internalTrade": 135.530223,
+        "tradedEdges": 439,
+        "backlog": 265.382012,
+        "balanced": true,
+        "policy": [],
+        "external": {
+          "demandMultiplier": 1,
+          "supplyDisruption": 0
+        }
+      },
+      {
+        "index": 25,
+        "label": "2032 Q2",
+        "grossProduction": 8161.440486,
+        "sectorVA": {
+          "primary": 169.082709,
+          "secondary": 2295.262751,
+          "tertiary": 928.112467
+        },
+        "valueAddedProxy": 3392.457927,
+        "internalTrade": 235.178607,
+        "tradedEdges": 616,
+        "backlog": 281.081227,
+        "balanced": true,
+        "policy": [],
+        "external": {
+          "demandMultiplier": 1,
+          "supplyDisruption": 0
+        }
+      },
+      {
+        "index": 26,
+        "label": "2032 Q3",
+        "grossProduction": 8383.191098,
+        "sectorVA": {
+          "primary": 174.14081,
+          "secondary": 2336.292989,
+          "tertiary": 984.978203
+        },
+        "valueAddedProxy": 3495.412002,
+        "internalTrade": 128.506565,
+        "tradedEdges": 428,
+        "backlog": 369.202038,
+        "balanced": true,
+        "policy": [],
+        "external": {
+          "demandMultiplier": 1,
+          "supplyDisruption": 0
+        }
+      },
+      {
+        "index": 27,
+        "label": "2032 Q4",
+        "grossProduction": 8387.427764,
+        "sectorVA": {
+          "primary": 176.262101,
+          "secondary": 2349.314562,
+          "tertiary": 965.054309
+        },
+        "valueAddedProxy": 3490.630971,
+        "internalTrade": 226.996872,
+        "tradedEdges": 581,
+        "backlog": 435.915824,
+        "balanced": true,
+        "policy": [],
+        "external": {
+          "demandMultiplier": 1,
+          "supplyDisruption": 0
+        }
+      }
+    ]
+  },
+  "policyWithStress": {
+    "lastQuarter": {
+      "index": 27,
+      "label": "2032 Q4",
+      "external": {
+        "demandMultiplier": 1,
+        "supplyDisruption": 0
+      },
+      "policy": [],
+      "projectsActivated": 0,
+      "projectArrivals": [],
+      "firms": 830,
+      "activeFirms": 830,
+      "exits": 0,
+      "newExits": 0,
+      "grossProduction": 8386.671745,
+      "sampleValueAddedProxy": 3490.350864,
+      "sectorGross": {
+        "primary": 359.821761,
+        "secondary": 6334.338972,
+        "tertiary": 1692.511012
+      },
+      "sectorVA": {
+        "primary": 176.262926,
+        "secondary": 2349.034772,
+        "tertiary": 965.053167
+      },
+      "outsideSales": 8288.613617,
+      "internalTrade": 227.015815,
+      "tradedEdges": 581,
+      "importsCost": 3791.616423,
+      "newCredit": 0,
+      "unmetFinalDemand": 436.59397,
+      "cashTotal": 35564.213875,
+      "debtTotal": 0,
+      "averageUtilization": 0.914036,
+      "balanced": true,
+      "ledgerResidualMax": 0,
+      "accounting": "Synthetic million CNY equivalent tokens; not official GDP, gross industrial output or full-county aggregates."
+    },
+    "totalProjectsActivated": 50,
+    "remainingProjects": [
+      "P007",
+      "P014",
+      "P021",
+      "P035"
+    ],
+    "totalActions": [
+      {
+        "q": 0,
+        "type": "skills",
+        "target": "I0236",
+        "cost": 10,
+        "unit": "demo_action_credits",
+        "impactKind": "conditional_mechanism"
+      },
+      {
+        "q": 2,
+        "type": "substitute",
+        "target": "I0236",
+        "cost": 9,
+        "unit": "demo_action_credits",
+        "impactKind": "conditional_mechanism"
+      }
+    ],
+    "totalWorldFirms": 830,
+    "quarterSeries": [
+      {
+        "index": 0,
+        "label": "2026 Q1",
+        "grossProduction": 6242.168453,
+        "sectorVA": {
+          "primary": 137.618185,
+          "secondary": 1739.112013,
+          "tertiary": 724.708072
+        },
+        "valueAddedProxy": 2601.43827,
+        "internalTrade": 112.75597,
+        "tradedEdges": 1120,
+        "backlog": 3.666252,
+        "balanced": true,
+        "policy": [
+          {
+            "q": 0,
+            "type": "skills",
+            "target": "I0236",
+            "cost": 10,
+            "unit": "demo_action_credits",
+            "impactKind": "conditional_mechanism"
+          }
+        ],
+        "external": {
+          "demandMultiplier": 1,
+          "supplyDisruption": 0
+        }
+      },
+      {
+        "index": 1,
+        "label": "2026 Q2",
+        "grossProduction": 6678.403418,
+        "sectorVA": {
+          "primary": 145.939124,
+          "secondary": 1842.857588,
+          "tertiary": 803.576713
+        },
+        "valueAddedProxy": 2792.373424,
+        "internalTrade": 309.804709,
+        "tradedEdges": 747,
+        "backlog": 5.262011,
+        "balanced": true,
+        "policy": [],
+        "external": {
+          "demandMultiplier": 1,
+          "supplyDisruption": 0
+        }
+      },
+      {
+        "index": 2,
+        "label": "2026 Q3",
+        "grossProduction": 3204.62593,
+        "sectorVA": {
+          "primary": 66.656774,
+          "secondary": 897.665675,
+          "tertiary": 369.645555
+        },
+        "valueAddedProxy": 1333.968004,
+        "internalTrade": 167.066141,
+        "tradedEdges": 639,
+        "backlog": 2339.793041,
+        "balanced": true,
+        "policy": [
+          {
+            "q": 2,
+            "type": "substitute",
+            "target": "I0236",
+            "cost": 9,
+            "unit": "demo_action_credits",
+            "impactKind": "conditional_mechanism"
+          }
+        ],
+        "external": {
+          "demandMultiplier": 0.94,
+          "supplyDisruption": 0.55
+        }
+      },
+      {
+        "index": 3,
+        "label": "2026 Q4",
+        "grossProduction": 3661.687244,
+        "sectorVA": {
+          "primary": 79.345712,
+          "secondary": 1019.800613,
+          "tertiary": 428.545776
+        },
+        "valueAddedProxy": 1527.692101,
+        "internalTrade": 0,
+        "tradedEdges": 0,
+        "backlog": 2728.469235,
+        "balanced": true,
+        "policy": [],
+        "external": {
+          "demandMultiplier": 0.94,
+          "supplyDisruption": 0.55
+        }
+      },
+      {
+        "index": 4,
+        "label": "2027 Q1",
+        "grossProduction": 3775.880784,
+        "sectorVA": {
+          "primary": 81.539781,
+          "secondary": 1053.366729,
+          "tertiary": 439.856517
+        },
+        "valueAddedProxy": 1574.763027,
+        "internalTrade": 0,
+        "tradedEdges": 0,
+        "backlog": 2598.958451,
+        "balanced": true,
+        "policy": [],
+        "external": {
+          "demandMultiplier": 0.94,
+          "supplyDisruption": 0.55
+        }
+      },
+      {
+        "index": 5,
+        "label": "2027 Q2",
+        "grossProduction": 3814.619074,
+        "sectorVA": {
+          "primary": 82.126553,
+          "secondary": 1064.635435,
+          "tertiary": 444.06437
+        },
+        "valueAddedProxy": 1590.826358,
+        "internalTrade": 0,
+        "tradedEdges": 0,
+        "backlog": 2500.016523,
+        "balanced": true,
+        "policy": [],
+        "external": {
+          "demandMultiplier": 0.94,
+          "supplyDisruption": 0.55
+        }
+      },
+      {
+        "index": 6,
+        "label": "2027 Q3",
+        "grossProduction": 3830.736604,
+        "sectorVA": {
+          "primary": 82.669873,
+          "secondary": 1067.919382,
+          "tertiary": 447.577262
+        },
+        "valueAddedProxy": 1598.166517,
+        "internalTrade": 0,
+        "tradedEdges": 0,
+        "backlog": 2478.694795,
+        "balanced": true,
+        "policy": [],
+        "external": {
+          "demandMultiplier": 0.94,
+          "supplyDisruption": 0.55
+        }
+      },
+      {
+        "index": 7,
+        "label": "2027 Q4",
+        "grossProduction": 3788.448039,
+        "sectorVA": {
+          "primary": 83.036179,
+          "secondary": 1052.006626,
+          "tertiary": 446.621878
+        },
+        "valueAddedProxy": 1581.664684,
+        "internalTrade": 0,
+        "tradedEdges": 0,
+        "backlog": 2580.807123,
+        "balanced": true,
+        "policy": [],
+        "external": {
+          "demandMultiplier": 0.94,
+          "supplyDisruption": 0.55
+        }
+      },
+      {
+        "index": 8,
+        "label": "2028 Q1",
+        "grossProduction": 8556.488719,
+        "sectorVA": {
+          "primary": 187.655431,
+          "secondary": 2369.658536,
+          "tertiary": 1018.800957
+        },
+        "valueAddedProxy": 3576.114924,
+        "internalTrade": 0,
+        "tradedEdges": 0,
+        "backlog": 38.496863,
+        "balanced": true,
+        "policy": [],
+        "external": {
+          "demandMultiplier": 1,
+          "supplyDisruption": 0
+        }
+      },
+      {
+        "index": 9,
+        "label": "2028 Q2",
+        "grossProduction": 7952.676345,
+        "sectorVA": {
+          "primary": 170.831575,
+          "secondary": 2222.309709,
+          "tertiary": 918.935617
+        },
+        "valueAddedProxy": 3312.076901,
+        "internalTrade": 232.978946,
+        "tradedEdges": 483,
+        "backlog": 64.142823,
+        "balanced": true,
+        "policy": [],
+        "external": {
+          "demandMultiplier": 1,
+          "supplyDisruption": 0
+        }
+      },
+      {
+        "index": 10,
+        "label": "2028 Q3",
+        "grossProduction": 7961.058189,
+        "sectorVA": {
+          "primary": 172.896291,
+          "secondary": 2194.897066,
+          "tertiary": 962.930897
+        },
+        "valueAddedProxy": 3330.724254,
+        "internalTrade": 115.974564,
+        "tradedEdges": 344,
+        "backlog": 100.410489,
+        "balanced": true,
+        "policy": [],
+        "external": {
+          "demandMultiplier": 1,
+          "supplyDisruption": 0
+        }
+      },
+      {
+        "index": 11,
+        "label": "2028 Q4",
+        "grossProduction": 7797.781863,
+        "sectorVA": {
+          "primary": 166.389604,
+          "secondary": 2177.079888,
+          "tertiary": 904.812323
+        },
+        "valueAddedProxy": 3248.281815,
+        "internalTrade": 238.069824,
+        "tradedEdges": 556,
+        "backlog": 134.604637,
+        "balanced": true,
+        "policy": [],
+        "external": {
+          "demandMultiplier": 1,
+          "supplyDisruption": 0
+        }
+      },
+      {
+        "index": 12,
+        "label": "2029 Q1",
+        "grossProduction": 7816.968462,
+        "sectorVA": {
+          "primary": 169.65157,
+          "secondary": 2159.15501,
+          "tertiary": 938.822695
+        },
+        "valueAddedProxy": 3267.629276,
+        "internalTrade": 134.422398,
+        "tradedEdges": 406,
+        "backlog": 116.132288,
+        "balanced": true,
+        "policy": [],
+        "external": {
+          "demandMultiplier": 1,
+          "supplyDisruption": 0
+        }
+      },
+      {
+        "index": 13,
+        "label": "2029 Q2",
+        "grossProduction": 7590.138525,
+        "sectorVA": {
+          "primary": 163.8063,
+          "secondary": 2114.31913,
+          "tertiary": 885.365514
+        },
+        "valueAddedProxy": 3163.490944,
+        "internalTrade": 251.405963,
+        "tradedEdges": 619,
+        "backlog": 102.781063,
+        "balanced": true,
+        "policy": [],
+        "external": {
+          "demandMultiplier": 1,
+          "supplyDisruption": 0
+        }
+      },
+      {
+        "index": 14,
+        "label": "2029 Q3",
+        "grossProduction": 7655.891352,
+        "sectorVA": {
+          "primary": 162.174147,
+          "secondary": 2117.533201,
+          "tertiary": 919.807653
+        },
+        "valueAddedProxy": 3199.515001,
+        "internalTrade": 140.917703,
+        "tradedEdges": 455,
+        "backlog": 112.330442,
+        "balanced": true,
+        "policy": [],
+        "external": {
+          "demandMultiplier": 1,
+          "supplyDisruption": 0
+        }
+      },
+      {
+        "index": 15,
+        "label": "2029 Q4",
+        "grossProduction": 7546.301159,
+        "sectorVA": {
+          "primary": 161.476218,
+          "secondary": 2115.188401,
+          "tertiary": 861.878835
+        },
+        "valueAddedProxy": 3138.543454,
+        "internalTrade": 260.519299,
+        "tradedEdges": 668,
+        "backlog": 100.060652,
+        "balanced": true,
+        "policy": [],
+        "external": {
+          "demandMultiplier": 1,
+          "supplyDisruption": 0
+        }
+      },
+      {
+        "index": 16,
+        "label": "2030 Q1",
+        "grossProduction": 7710.465592,
+        "sectorVA": {
+          "primary": 164.86322,
+          "secondary": 2138.358901,
+          "tertiary": 915.708941
+        },
+        "valueAddedProxy": 3218.931061,
+        "internalTrade": 157.98648,
+        "tradedEdges": 491,
+        "backlog": 109.372512,
+        "balanced": true,
+        "policy": [],
+        "external": {
+          "demandMultiplier": 1,
+          "supplyDisruption": 0
+        }
+      },
+      {
+        "index": 17,
+        "label": "2030 Q2",
+        "grossProduction": 7686.662759,
+        "sectorVA": {
+          "primary": 164.563946,
+          "secondary": 2152.299045,
+          "tertiary": 881.392076
+        },
+        "valueAddedProxy": 3198.255067,
+        "internalTrade": 260.016523,
+        "tradedEdges": 673,
+        "backlog": 170.110974,
+        "balanced": true,
+        "policy": [],
+        "external": {
+          "demandMultiplier": 1,
+          "supplyDisruption": 0
+        }
+      },
+      {
+        "index": 18,
+        "label": "2030 Q3",
+        "grossProduction": 7944.006539,
+        "sectorVA": {
+          "primary": 169.768391,
+          "secondary": 2204.266293,
+          "tertiary": 942.146769
+        },
+        "valueAddedProxy": 3316.181453,
+        "internalTrade": 144.980842,
+        "tradedEdges": 469,
+        "backlog": 184.682764,
+        "balanced": true,
+        "policy": [],
+        "external": {
+          "demandMultiplier": 1,
+          "supplyDisruption": 0
+        }
+      },
+      {
+        "index": 19,
+        "label": "2030 Q4",
+        "grossProduction": 7977.389514,
+        "sectorVA": {
+          "primary": 168.526167,
+          "secondary": 2233.039709,
+          "tertiary": 918.550306
+        },
+        "valueAddedProxy": 3320.116182,
+        "internalTrade": 235.641887,
+        "tradedEdges": 634,
+        "backlog": 216.659006,
+        "balanced": true,
+        "policy": [],
+        "external": {
+          "demandMultiplier": 1,
+          "supplyDisruption": 0
+        }
+      },
+      {
+        "index": 20,
+        "label": "2031 Q1",
+        "grossProduction": 8153.539976,
+        "sectorVA": {
+          "primary": 172.805885,
+          "secondary": 2263.216209,
+          "tertiary": 967.989989
+        },
+        "valueAddedProxy": 3404.012083,
+        "internalTrade": 133.666804,
+        "tradedEdges": 432,
+        "backlog": 279.225548,
+        "balanced": true,
+        "policy": [],
+        "external": {
+          "demandMultiplier": 1,
+          "supplyDisruption": 0
+        }
+      },
+      {
+        "index": 21,
+        "label": "2031 Q2",
+        "grossProduction": 8071.647007,
+        "sectorVA": {
+          "primary": 172.394789,
+          "secondary": 2259.669065,
+          "tertiary": 926.943483
+        },
+        "valueAddedProxy": 3359.007336,
+        "internalTrade": 227.300975,
+        "tradedEdges": 588,
+        "backlog": 293.916098,
+        "balanced": true,
+        "policy": [],
+        "external": {
+          "demandMultiplier": 1,
+          "supplyDisruption": 0
+        }
+      },
+      {
+        "index": 22,
+        "label": "2031 Q3",
+        "grossProduction": 8134.149064,
+        "sectorVA": {
+          "primary": 171.512536,
+          "secondary": 2264.913277,
+          "tertiary": 955.768101
+        },
+        "valueAddedProxy": 3392.193914,
+        "internalTrade": 132.606107,
+        "tradedEdges": 423,
+        "backlog": 267.843513,
+        "balanced": true,
+        "policy": [],
+        "external": {
+          "demandMultiplier": 1,
+          "supplyDisruption": 0
+        }
+      },
+      {
+        "index": 23,
+        "label": "2031 Q4",
+        "grossProduction": 8009.031771,
+        "sectorVA": {
+          "primary": 167.893888,
+          "secondary": 2248.447697,
+          "tertiary": 913.579474
+        },
+        "valueAddedProxy": 3329.921059,
+        "internalTrade": 240.217077,
+        "tradedEdges": 612,
+        "backlog": 267.117238,
+        "balanced": true,
+        "policy": [],
+        "external": {
+          "demandMultiplier": 1,
+          "supplyDisruption": 0
+        }
+      },
+      {
+        "index": 24,
+        "label": "2032 Q1",
+        "grossProduction": 8161.560604,
+        "sectorVA": {
+          "primary": 172.389808,
+          "secondary": 2270.829883,
+          "tertiary": 961.452853
+        },
+        "valueAddedProxy": 3404.672544,
+        "internalTrade": 135.598075,
+        "tradedEdges": 439,
+        "backlog": 266.165376,
+        "balanced": true,
+        "policy": [],
+        "external": {
+          "demandMultiplier": 1,
+          "supplyDisruption": 0
+        }
+      },
+      {
+        "index": 25,
+        "label": "2032 Q2",
+        "grossProduction": 8160.678229,
+        "sectorVA": {
+          "primary": 169.08343,
+          "secondary": 2294.980335,
+          "tertiary": 928.111357
+        },
+        "valueAddedProxy": 3392.175122,
+        "internalTrade": 235.166905,
+        "tradedEdges": 616,
+        "backlog": 281.727188,
+        "balanced": true,
+        "policy": [],
+        "external": {
+          "demandMultiplier": 1,
+          "supplyDisruption": 0
+        }
+      },
+      {
+        "index": 26,
+        "label": "2032 Q3",
+        "grossProduction": 8382.51565,
+        "sectorVA": {
+          "primary": 174.139229,
+          "secondary": 2336.042802,
+          "tertiary": 984.979345
+        },
+        "valueAddedProxy": 3495.161376,
+        "internalTrade": 128.567287,
+        "tradedEdges": 428,
+        "backlog": 369.742948,
+        "balanced": true,
+        "policy": [],
+        "external": {
+          "demandMultiplier": 1,
+          "supplyDisruption": 0
+        }
+      },
+      {
+        "index": 27,
+        "label": "2032 Q4",
+        "grossProduction": 8386.671745,
+        "sectorVA": {
+          "primary": 176.262926,
+          "secondary": 2349.034772,
+          "tertiary": 965.053167
+        },
+        "valueAddedProxy": 3490.350864,
+        "internalTrade": 227.015815,
+        "tradedEdges": 581,
+        "backlog": 436.59397,
+        "balanced": true,
+        "policy": [],
+        "external": {
+          "demandMultiplier": 1,
+          "supplyDisruption": 0
+        }
+      }
+    ]
+  },
+  "cautions": [
+    "All quarterly production, value-added proxies and company resources reflect synthetic enterprise world; cannot be extrapolated to county GDP or official industrial gross output.",
+    "The world is deterministically generated but its micro parameters and matching rules are uncalibrated development assumptions.",
+    "Public GDP 2025 annual and 2026 YTD are separate observed periods, not joined to quarterly demo GDP.",
+    "Policy action changes do not establish real causal effects."
+  ]
+}
