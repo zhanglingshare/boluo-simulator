@@ -4,6 +4,7 @@ on:
     paths:
       - 'core/world/**'
       - 'tests/boluo-living-world-v1.cjs'
+      - 'tests/boluo-living-world-reference.cjs'
       - '.github/workflows/boluo-living-world.yml'
   workflow_dispatch:
 jobs:
@@ -17,4 +18,6 @@ jobs:
       - name: Check live world engine syntax
         run: node --check core/world/world-engine-v1.js
       - name: Replay 28 quarters and policy counterfactual
-        run: node tests/boluo-living-world-v1.cjs
+        run: |
+          node tests/boluo-living-world-v1.cjs
+          node tests/boluo-living-world-reference.cjs
