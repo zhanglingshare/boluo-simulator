@@ -328,7 +328,7 @@ body{background:radial-gradient(ellipse 1250px 620px at 63% -16%,#0d4d68 0%,tran
 .v10-plot{width:100%;height:auto;display:block;background:#0a2334;border:1px solid #41677b;border-radius:11px;margin:12px 0}.v10-alert{font-size:10px;color:#c4b591;background:#3930205e;border-radius:9px;padding:10px;border:1px solid #806c4c;margin-top:9px}
 .v10-legend{display:flex;gap:12px;flex-wrap:wrap;font-size:10px;color:#d1dee8}.v10-legend span:before{content:"";display:inline-block;width:13px;height:4px;vertical-align:middle;margin-right:7px;border-radius:3px;background:var(--ink)}
 @media(max-width:760px){.v10-grid{grid-template-columns:1fr}.v10-heading h3{font-size:19px}}
-</style><link rel="stylesheet" href="./coach-v1.css"></head>
+</style><link rel="stylesheet" href="./coach-v1.css"><link rel="stylesheet" href="./enterprise-attributes-v13.css"></head>
 <body><div class="shell">
 <header class="top"><div class="brand"><div class="brand-mark">B</div><div><div class="eyebrow">BORO INDUSTRY INTELLIGENCE</div><h1>博罗产业能力与结构研判 <span style="color:#829ab2;font-size:12px;font-weight:500">内部辅助决策系统</span></h1></div></div><div class="top-right"><span class="pill live">● 原型运行中</span><span class="pill">2026 年度 · 内部版</span><span class="pill warn">证据优先</span></div></header>
 <section class="hero"><div class="hero-main"><div class="hero-kicker">BORO / INDUSTRY INTELLIGENCE</div><h2>从产业结构到企业能力，<br>看见真正的增长与风险。</h2><p>识别三次产业结构、龙头带动、企业成长梯队和跨产业连接。发现关键主体、薄弱环节、成长机会和风险传导。</p><button class="mgr-hero-launch" data-open-view="tactics">♛ 进入产业经营模式　›</button><button class="wt-hero-launch" data-open-view="wind">◉ 进入产业关系风洞　<span>选企业 → 冲击 → 传导 → 缓冲</span>　›</button></div><div class="hero-side"><div class="side-head"><span>数据准备度</span><span>DATA READINESS</span></div><div class="season">2026 <small>YEAR / 开发阶段</small></div><div class="readiness"><div class="ring"><b>待接入</b></div><p><strong>动态能力观察</strong>公开资料与合理先验生成探索性区间和能力画像；正式接入调查数据后持续校准。</p></div></div></section>
@@ -463,7 +463,7 @@ body{background:radial-gradient(ellipse 1250px 620px at 63% -16%,#0d4d68 0%,tran
 </div>
 
 <div class="modal-backdrop" id="modal"><div class="modal"><div class="modal-head"><h3 id="modalTitle">主体能力档案</h3><button class="close" id="modalClose">关闭 ✕</button></div><div id="modalBody"></div><div class="modal-actions" id="modalActions"></div></div></div>
-<script>
+<script src="./enterprise-attributes-v13.js"></script><script>
 const teams=[
 {id:"primary",name:"第一产业",en:"PRIMARY INDUSTRY",icon:"🌱",color:"#79c995",desc:"种植业、林业、畜牧业、渔业与农产品原料供给。",benchmark:"公开报道：80家农业龙头企业、103家示范家庭农场；这是农业产业化经营主体参照，不等同第一产业企业数",clubs:["粮食与重要农产品","蔬菜与特色种植","林业与林下经济","畜牧养殖","水产养殖与渔业"],vacancies:["种植业龙头主体","农产品规模经营主体","农民合作社与家庭农场","水产养殖与加工衔接主体"],focus:"重点看规模经营、亩均产出、加工转化、品牌渠道与农户收益。"},
 {id:"secondary",name:"第二产业",en:"SECONDARY INDUSTRY",icon:"🏭",color:"#68bce5",desc:"制造业、工业集群与建筑业。博罗现有产业集群主要在这支产业板块。",benchmark:"公开报道：2025年规上工业企业1407家（全县口径）",clubs:["新一代电子信息","新材料","新能源","智能装备制造","智能出行","智能家居","现代食品制造","人工智能与机器人","医药与医疗器械","建筑业"],vacancies:["高端电子材料与核心元件","电机、电控与关键零部件","机器人核心部件","食品精深加工主体"],focus:"重点看订单、产能利用率、技术、利润、生产率、本地配套与价值留存。"},
@@ -571,6 +571,33 @@ function getRating(p){
  const ovr=Math.round(m.values.reduce((a,x,i)=>a+x*w[i],0)/total);
  return {...m,ovr,pot:Math.max(ovr,Math.round(.75*m.potential+.25*ovr))};
 }
+
+/* V13 enterprise capability model preserves the original six domain contracts.
+ * Thirty-six sub-traits are synthetic, not 36 separate observed variables.
+ */
+let v13ActiveDomain=0;
+const v13RoleNames={core:"核心支柱",growth:"成长突破",supply:"关键配套",service:"生产服务",base:"基础保障",reserve:"战略储备"};
+const v13RiskNames={orders:"订单收缩",talent:"人才流失",supply:"供应中断",funding:"资金紧缩",energy:"用能扰动"};
+function getEnterpriseDepth(p){return window.BoluoEnterpriseAttributes.profile(p,getRating(p))}
+function v13BuildInspector(p){
+ const d=getEnterpriseDepth(p),hot=d.all.filter(x=>x.value>=85).length,weak=d.all.filter(x=>x.value<60).length;
+ const scores=d.groups.map(g=>'<div class="v13-scoretile"><b>'+Number(g.score).toFixed(0)+'</b><small>'+g.name+'</small></div>').join("");
+ const badges=d.strengths.slice(0,3).map(k=>'<span>✦ '+esc(d.traits[k].label)+'</span>').join("");
+ return '<section class="v13-head"><div class="v13-headtop"><div><div class="v13-eyebrow">ENTERPRISE ATTRIBUTES / DEEP SCOUTING</div><h3>企业深度能力档案</h3><p>6类核心能力 × 每类6项细分指标，沿用当前成长、受损和阵容状态</p></div><div><b class="v13-count">'+d.count+'</b><div class="v13-eyebrow">TACTICAL TRAITS</div></div></div><div class="v13-scoretiles">'+scores+'</div><div class="v13-badges">'+badges+'</div></section>'+
+ '<section class="v13-section"><h4>能力细目 · 点击能力域查看六项属性</h4><div class="v13-shell"><div class="v13-nav" id="v13Nav">'+d.groups.map((g,i)=>'<button data-v13-group="'+i+'" class="'+(v13ActiveDomain===i?'active':'')+'"><span>'+g.name+'</span><b>'+Number(g.score).toFixed(0)+'</b></button>').join("")+'</div><div class="v13-metrics" id="v13Metrics"></div></div><div class="v13-warning">36项细分属性为开发阶段的情景推导值，不代表企业已公开披露36项数据。分项均值锚定原六维能力，缺乏观测的分项后续可用真实数据替换。</div></section>'+
+ '<div class="v13-three"><section class="v13-section"><h4>阵容角色适配 · ROLE FIT</h4>'+d.roleRanks.map(x=>'<div class="v13-line"><span>'+v13RoleNames[x.role]+'</span><b>'+x.score.toFixed(0)+'</b></div>').join("")+'</section>'+
+ '<section class="v13-section"><h4>经营风险暴露 · EVENT EXPOSURE</h4>'+d.risks.map(x=>'<div class="v13-line"><span>'+v13RiskNames[x.name]+'</span><b>'+x.value.toFixed(0)+'</b></div>').join("")+'</section></div>'+
+ '<div class="v13-detail"><span class="v13-chip">高属性（≥85）：'+hot+'项</span><span class="v13-chip weak">待提升（<60）：'+weak+'项</span><span class="v13-chip">分项潜力随季度成长</span></div>';
+}
+function v13DisplayGroup(p,i){
+ const depth=getEnterpriseDepth(p),n=Math.min(5,Math.max(0,i|0));
+ v13ActiveDomain=n;
+ const group=depth.groups[n];if(!$("v13Metrics"))return;
+ $("v13Metrics").innerHTML=group.items.map(m=>
+  '<div class="v13-metric '+(m.value>=85?'high':m.value<60?'low':'')+'"><div class="v13-metrichead"><span>'+esc(m.label)+'</span><b>'+m.value.toFixed(0)+'</b></div><div class="v13-track"><i style="width:'+m.value+'%"></i></div><small>潜力 '+m.developmentPotential.toFixed(0)+' · 开发情景</small></div>').join("");
+ document.querySelectorAll("#v13Nav button").forEach(b=>b.classList.toggle("active",+b.dataset.v13Group===n));
+}
+
 function radar(vals){
  const x=150,y=131,r=90,pt=(v,i)=>[x+Math.cos(-Math.PI/2+i*Math.PI/3)*r*v/100,y+Math.sin(-Math.PI/2+i*Math.PI/3)*r*v/100];
  let s="";
@@ -696,16 +723,20 @@ document.body.addEventListener("click",e=>{
 });
 function openPlayer(id){
  const p=companies.find(x=>x.id===id);if(!p)return;selectedPlayer=id;
+ v13ActiveDomain=0;
  const t=team(p.team),s=getRating(p),w=getWeights(p.team),total=w.reduce((a,b)=>a+b,0);
  $("modalTitle").textContent=p.name+" · 能力卡 / 球探报告";
  const bars=dims.map((d,i)=>'<div class="score-big"><span>'+d+'</span><span class="track"><i style="width:'+s.values[i]+'%"></i></span><b>'+s.values[i]+'</b></div>').join("");
  const source=s.source?'<a href="'+esc(s.source)+'" target="_blank" rel="noopener" style="color:#75d6e8">查看原始公开来源 ↗</a>':'原始出处待补';
  $("modalBody").innerHTML='<div class="detail-layout" style="margin-top:15px"><div class="detail-card"><div class="detail-head"><div class="avatar">'+esc(p.initial)+'</div><div><h3>'+esc(p.name)+'</h3><p>'+esc(t.name)+' · '+esc(p.club)+'</p><span class="tag gold">'+esc(p.role)+'</span></div></div><div class="rating-row"><div class="rating-box"><strong>'+s.ovr+'</strong><span>OVR · 模型估算</span></div><div class="rating-box"><strong>'+s.pot+'</strong><span>POT · 情景潜力</span></div></div><div class="detail-note">⚠ 开发版探索性评分，资料覆盖 '+s.coverage+'%；不是企业真实排名，未披露指标均使用赛道先验。</div></div><div class="detail-right"><div class="panel"><h4>六维属性 · ENTITY ATTRIBUTES</h4><div class="radar-wrap">'+radar(s.values)+'<div>'+bars+'</div></div></div></div></div><div class="panel" style="margin-top:13px"><h4>球探报告 · ASSESSMENT REPORT</h4><div class="scout-verdict"><div><b>成长线索：</b>'+esc(s.strength)+'</div><div><b>主要弱点：</b>'+esc(s.weak)+'</div><div><b>下一步核验：</b>'+esc(p.verify)+'</div></div><div class="evidence-box"><div class="evidence-item"><b>公开事实</b><span>'+esc(s.factual)+'</span></div><div class="evidence-item"><b>资料覆盖</b><span>'+s.grade+' / '+s.coverage+'% · 不是评分准确概率</span></div><div class="evidence-item"><b>评分说明</b><span>六维加权评分：'+dims.map((d,i)=>d+' '+Math.round(w[i]/total*100)+'%').join('；')+'。POT 采用行业成长先验。</span></div><div class="evidence-item"><b>原始出处</b><span>'+source+'</span></div></div></div>';
+ $("modalBody").innerHTML+=v13BuildInspector(p);
+ v13DisplayGroup(p,0);
  $("modalActions").innerHTML='<button class="action primary" id="addTactic">加入观察阵容</button><button class="action" id="goTeam">查看所属产业板块</button>';
  $("modal").classList.add("open");
  $("addTactic").onclick=()=>{if(!tacticIds.includes(id))tacticIds.push(id);managerAdoptTactics();$("modal").classList.remove("open");setView("tactics")};
  $("goTeam").onclick=()=>{currentTeam=p.team;$("modal").classList.remove("open");setView("teams")};
 }
+$("modalBody").addEventListener("click",e=>{const b=e.target.closest("[data-v13-group]");if(b){const p=companies.find(x=>x.id===selectedPlayer);if(p)v13DisplayGroup(p,+b.dataset.v13Group)}});
 $("modalClose").onclick=()=>$("modal").classList.remove("open");
 $("modal").addEventListener("click",e=>{if(e.target===$("modal"))$("modal").classList.remove("open")});
 function renderScout(){
@@ -863,7 +894,8 @@ function managerResource(p){
  const v=getModel(p).values;
  const raw=[10+Math.round(v[0]*.19)+h%8,8+Math.round(v[0]*.24)+h%7,6+Math.round(v[0]*.18)+h%5,6+Math.round(v[2]*.17)+h%6,5+Math.round(v[3]*.15)+h%5];
  const factors=p.team==="primary"?[1.12,.66,.66,.79,.71]:p.team==="tertiary"?[.54,.87,.49,1.16,1.14]:[1,1,1,1,1];
- return raw.map((x,i)=>Math.round(x*factors[i]));
+ const effects=window.BoluoEnterpriseAttributes.resourceFactors(p,getRating(p));
+ return raw.map((x,i)=>Math.round(x*factors[i]*effects[i]));
 }
 function managerSelected(){return Object.values(manager.slots).filter(Boolean).map(id=>companies.find(p=>p.id===id)).filter(Boolean)}
 
@@ -877,12 +909,15 @@ function managerChemistry(){
  const overflow=used.reduce((sum,x,i)=>sum+Math.max(0,x-managerCaps[i]),0)/100;
  const techLink=ps.filter(p=>p.club.includes("电子")||p.club.includes("新材料")||p.club.includes("装备")).length;
  // Reward diverse role coverage and explicit demo links, penalize over-concentration and overload.
- const net=+(Math.min(5,positive*2.1+(coverage>1?coverage-1:0)*.65)-overflow*4-Math.max(0,techLink-3)*.6).toFixed(1);
- return {links,positive:+positive.toFixed(2),overflow,net,coverage};
+ const fits=Object.entries(manager.slots).filter(([role,id])=>id&&companies.some(p=>p.id===id)).map(([role,id])=>{const p=companies.find(x=>x.id===id);return window.BoluoEnterpriseAttributes.roleFit(p,getRating(p),role)});
+ const roleFit=fits.length?fits.reduce((a,b)=>a+b,0)/fits.length:0;
+ const bonus=fits.length?Math.max(-2,Math.min(2,(roleFit-70)*.075)):0;
+ const net=+(Math.min(5,positive*2.1+(coverage>1?coverage-1:0)*.65)-overflow*4-Math.max(0,techLink-3)*.6+bonus).toFixed(1);
+ return {links,positive:+positive.toFixed(2),overflow,net,coverage,roleFit:+roleFit.toFixed(1)};
 }
 function renderChemistry(){
  const x=managerChemistry();
- $("managerChemistry").innerHTML=[["假设连接",x.links.length],["组合增益",x.net>0?"+"+x.net:x.net],["资源竞争",x.overflow.toFixed(2)]].map(([name,value])=>'<div><strong>'+value+'</strong><span>'+name+'</span></div>').join("");
+ $("managerChemistry").innerHTML=[["假设连接",x.links.length],["组合增益",x.net>0?"+"+x.net:x.net],["角色适配",x.roleFit.toFixed(0)],["资源竞争",x.overflow.toFixed(2)]].map(([name,value])=>'<div><strong>'+value+'</strong><span>'+name+'</span></div>').join("");
  $("managerChemistryLines").innerHTML=x.links.length?x.links.map(e=>{const a=companies.find(p=>p.id===e.a),b=companies.find(p=>p.id===e.b);return '<span class="wt-chip hyp">'+esc(a.short)+' ┄ '+esc(b.short)+'</span>'}).join(""):'<span class="wt-chip">暂无已设置关联，不能自动认定协同</span>';
 }
 
@@ -986,7 +1021,8 @@ function cxRender(){
  $("cxSelect").value=p.id;
  $("cxAttrs").innerHTML=dims.map((name,i)=>'<div class="cx-attr"><b>'+m.values[i]+'</b><span>'+name+'</span></div>').join("");
  const assigned=Object.entries(manager.slots).find(([r,id])=>id===p.id);
- $("cxBadges").innerHTML='<span>资料覆盖 '+m.coverage+'%</span><span>潜力 '+m.pot+'</span><span>'+(assigned?"阵容位置："+managerRoles.find(r=>r.id===assigned[0]).name:"待加入阵容")+'</span>';
+ const detailed=getEnterpriseDepth(p);
+ $("cxBadges").innerHTML='<span>36项深度属性</span><span>优势 '+esc(detailed.traits[detailed.strengths[0]].label)+'</span><span>最高适配 '+v13RoleNames[detailed.roleRanks[0].role]+'</span><span>'+(assigned?"阵容位置："+managerRoles.find(r=>r.id===assigned[0]).name:"待加入阵容")+'</span>';
  $("cxAdd").textContent=assigned?"✓ 已在阵容 · 查看":"＋ 放入当前阵容";
  $("cxEventCards").innerHTML=cxEventOptions.map(e=>'<button class="cx-event '+(manager.event===e[0]?'active':'')+'" data-cx-event="'+e[0]+'"><span class="em">'+e[1]+'</span><b>'+e[2]+'</b><small>'+e[3]+'</small></button>').join("");
  document.querySelectorAll("[data-cx-phase]").forEach(btn=>btn.classList.toggle("active",+btn.dataset.cxPhase===cxState.phase));
@@ -1116,7 +1152,10 @@ function v9AdvanceCompanies(policy,paid,event){
   for(const [id,pressure] of Object.entries(effects)){
    if(pressure<=.006||!companies.some(p=>p.id===id))continue;
    const st=v9Company(id);
-   for(const i of hit)st.damage[i]=Math.min(24,st.damage[i]+pressure*19*(1-resilience));
+   const company=companies.find(p=>p.id===id);
+   const risk=window.BoluoEnterpriseAttributes.exposure(company,getRating(company),eventType);
+   const vulnerability=Math.max(.72,Math.min(1.40,.74+risk*.007));
+   for(const i of hit)st.damage[i]=Math.min(24,st.damage[i]+pressure*19*(1-resilience)*vulnerability);
    st.eventCount++;
    result.affected.push(id);
    result.maxStress=Math.max(result.maxStress,pressure);
@@ -1126,7 +1165,8 @@ function v9AdvanceCompanies(policy,paid,event){
    for(const p of active){
     if(result.affected.includes(p.id))continue;
     const st=v9Company(p.id);
-    st.damage[2]=Math.min(24,st.damage[2]+.85*(1-resilience));
+    const risk=window.BoluoEnterpriseAttributes.exposure(p,getRating(p),"talent");
+    st.damage[2]=Math.min(24,st.damage[2]+.85*(1-resilience)*Math.max(.72,Math.min(1.4,.74+risk*.007)));
     result.affected.push(p.id);
    }
   }
