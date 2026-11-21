@@ -246,6 +246,8 @@ function microphoneInput(){
    if(!ok){asrStatus('未启用语音输入，文字查询仍可使用。');return}
    demoVoiceConsent=true;
  }
+ // Authorize voice output during the same microphone interaction, so later ASR replies can speak automatically.
+ if(preferredVoiceKey==='cloud'&&!cloudSpeechConsent){requestCloudConsent()}
  try{
    const rec=new API();
    rec.lang='zh-CN';rec.continuous=false;rec.interimResults=false;rec.maxAlternatives=1;
