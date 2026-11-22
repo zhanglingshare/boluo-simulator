@@ -344,4 +344,81 @@ function miniEscalate(n){let m=miniAI[n];if(typeof window.setRoomFeedback==='fun
 const prevRoom=window.renderRoom;if(typeof prevRoom==='function'){window.renderRoom=function(){prevRoom();miniDrawRoom()}}
 const prevGuide=window.guideRefresh;if(typeof prevGuide==='function'){window.guideRefresh=function(){prevGuide();miniDrawHome()}}
 miniDrawHome();miniDrawRoom();
+})();</script><script>(function(){
+'use strict';
+const g=id=>document.getElementById(id);
+const stages=[
+{load:49,temp:24.5,delta:8.7,power:3.55,note:'08:00 工况正常，UPS 和制冷系统处于演示基准。'},
+{load:54,temp:24.6,delta:8.6,power:3.58,note:'负载小幅上行，UPS 温度尚未明显变化。'},
+{load:62,temp:24.9,delta:8.4,power:3.62,note:'业务负载增长，UPS 温度开始滞后响应。'},
+{load:69,temp:25.5,delta:8.2,power:3.67,note:'负载持续增加，制冷工况逐步变化。'},
+{load:76,temp:26.4,delta:7.8,power:3.73,note:'小 AI 识别温度上行趋势，尚无足够证据触发报警。'},
+{load:81,temp:27.6,delta:7.3,power:3.79,note:'UPS 温度持续升高，回送风温差收窄。'},
+{load:83,temp:28.9,delta:6.9,power:3.83,note:'温升趋势显著，建议继续观察下一个时段。'},
+{load:85,temp:30.1,delta:6.5,power:3.84,note:'首次越过模拟阈值，系统只记录异常点。'},
+{load:84,temp:31.0,delta:6.2,power:3.82,note:'连续两个时段超限，触发 UPS 与空调小 AI 联合提醒。'},
+{load:79,temp:31.2,delta:6.3,power:3.76,note:'负载回落，热惯性使温度尚未下降，告警保留。'},
+{load:70,temp:29.6,delta:7.0,power:3.67,note:'温度开始下降，进入恢复观察，但不立刻撤销告警。'},
+{load:61,temp:27.6,delta:7.8,power:3.59,note:'连续改善，模拟告警解除，提醒保留历史事件。'},
+{load:56,temp:25.8,delta:8.3,power:3.55,note:'设备回归平稳，历史告警可在工位墙中继续查看。'}
+];
+let position=0,active=false,tickTimer=null,kwh=24500,wasAlert=false;const fixedOtherAlerts=[];let currentEvents=[];
+const preset=[
+{caption:'🔋 查看 UPS-03',code:'ups'},
+{caption:'❄ 查看空调小 AI',code:'ac'},
+{caption:'⚠ 今日告警',code:'alerts'},
+{caption:'⚡ 查看用电',code:'energy'},
+{caption:'◈ Tokens 消耗',code:'tokens'},
+{caption:'👩‍💻 数字员工办公室',code:'crew'},
+{caption:'▶ 播放设备演进',code:'play'},
+{caption:'＋ 下一时段',code:'next'},
+{caption:'⌂ 返回总览',code:'home'},
+{caption:'🔊 中文试音',code:'voice'}
+];
+function stop(){active=false;clearInterval(tickTimer);tickTimer=null;g('simPlay').textContent='▶ 播放演进'}
+function guideSpeak(msg,requested){const reply=g('reply');if(reply)reply.textContent='小宇：'+msg;if(requested&&typeof speak==='function')speak(msg)}
+function showRoom(n){selected=n-1;show('room');if(window.renderRoom)window.renderRoom();if(window.setRoomFeedback)window.setRoomFeedback('已打开对应设备及专属小 AI 的模拟运行趋势。',false)}
+function actions(code,fromVoice=false){
+let message='';
+if(code==='ups'){showRoom(3);message='已定位三号 UPS。'}
+else if(code==='ac'){showRoom(7);message='已定位精密空调七号设备。'}
+else if(code==='alerts'){show('home');document.querySelector('.guide-hub')?.scrollIntoView({behavior:'smooth'});message='已显示本次模拟告警。'}
+else if(code==='energy'){show('home');document.querySelector('.resource-overview')?.scrollIntoView({behavior:'smooth'});message='已跳转到用电透视。'}
+else if(code==='tokens'){show('ai');document.querySelector('.token-overview')?.scrollIntoView({behavior:'smooth'});message='已打开 Tokens 使用情况。'}
+else if(code==='crew'){show('ai');message='已打开数字员工办公室。'}
+else if(code==='play'){play();message='设备模拟正在演进。'}
+else if(code==='next'){advance();message='已推进十五分钟。'}
+else if(code==='home'){show('home');message='已返回总览。'}
+else if(code==='voice'){document.getElementById('voiceDock')?.classList.add('open');document.getElementById('voiceTest')?.click();return true}
+else{return false}
+guideSpeak(message,fromVoice);return true
+}
+function populate(){for(let slot of ['presetCommands','roomPresets']){let box=g(slot);if(!box)continue;box.innerHTML=preset.map(c=>'<button type="button" data-preset="'+c.code+'">'+c.caption+'</button>').join('');box.querySelectorAll('[data-preset]').forEach(b=>b.onclick=()=>actions(b.dataset.preset))}}
+window.yutaiPresetCommand=function(s,fromVoice=false){
+let q=s.replace(/\s+/g,'').toLowerCase();
+let action=/查看.*(ups|三号|3号)|定位.*(ups|三号|3号)/i.test(q)?'ups':/空调|crac|制冷/.test(q)?'ac':/今日告警|查看告警|所有告警/.test(q)?'alerts':/用电|能耗|电费/.test(q)?'energy':/token|令牌|调用成本/.test(q)?'tokens':/员工|工位|办公室|团队/.test(q)?'crew':/播放模拟|演进|开始推演/.test(q)?'play':/下一时段|下一步模拟|推进/.test(q)?'next':/返回总览|回到总览|回首页/.test(q)?'home':null;
+return action?actions(action,fromVoice):false
+};
+function eventsFor(p){let items=[];
+if(p>=8&&p<=10){items.push({id:'ups-hot-'+p,device:3,kind:'warn',title:'UPS-03 · 持续温升',desc:'连续超过演示阈值，点击查看专属小 AI',next:'去设备查看 →'});items.push({id:'crac-hot-'+p,device:7,kind:'warn',title:'CRAC-07 · 温差收窄',desc:'模拟制冷指标变化，需要联合核查',next:'查看空调 →'})}
+else if(p>=11){items.push({id:'recover-'+p,device:3,kind:'info',title:'UPS-03 · 恢复观察',desc:'温度回落，模拟告警已解除，历史保留',next:'查看趋势 →'})}
+return items
+}
+function update(p,notify=true){let x=stages[p],ups=devices[2],ac=devices[6];ups.load=x.load;ups.temp=x.temp;ups.status=p>=8&&p<=10?'warn':'normal';ac.temp=+(25+(8.7-x.delta)*1.45).toFixed(1);ac.load=Math.round(53+(x.load-49)*.47);ac.status=p>=8&&p<=10?'warn':'normal';
+g('simUpsLoad').textContent=x.load+'%';g('simUpsTemp').textContent=x.temp.toFixed(1)+'℃';g('simCracDelta').textContent=x.delta.toFixed(1)+'℃';g('simClock').textContent='第 '+p+' / 12 时段 · '+String(8+Math.floor(p/4)).padStart(2,'0')+':'+String((p%4)*15).padStart(2,'0');g('simEvent').textContent=x.note;g('simBadge').textContent=p>=8&&p<=10?'连续异常 · 模拟':p>=11?'恢复观察 · 模拟':active?'场景演进中':'模拟已暂停';
+const nextAlerts=eventsFor(p);g('simAlertCount').textContent=String(nextAlerts.length);
+if(window.yutaiMiniSync)window.yutaiMiniSync({step:p,load:x.load,temp:x.temp,delta:x.delta,alert:p>=8&&p<=10,recover:p>=11});
+if(window.yutaiEnergySync)window.yutaiEnergySync(x.power,kwh);
+if(typeof renderHome==='function')renderHome();
+if(document.getElementById('room').classList.contains('on')&&window.renderRoom)window.renderRoom();
+if(window.yutaiGuideSetEvents)window.yutaiGuideSetEvents(nextAlerts);
+if(p===8&&notify){guideSpeak('三号 UPS 温度持续上升，空调温差也在变化。建议点击提醒卡查看。',false);toast('小宇发现连续异常','UPS-03 温度 '+x.temp+'℃。点击可定位设备。',3)}
+if(p===11&&notify){guideSpeak('三号 UPS 温度正在回落，已进入恢复观察。',false)}
+}
+function toast(title,detail,n){document.querySelector('.sim-alert-toast')?.remove();let e=document.createElement('div');e.className='sim-alert-toast';e.innerHTML='<b>'+title+'</b><div>'+detail+'</div><button type="button">查看设备 ›</button><button type="button">关闭</button>';document.body.append(e);e.querySelectorAll('button')[0].onclick=()=>{e.remove();showRoom(n)};e.querySelectorAll('button')[1].onclick=()=>e.remove()}
+function advance(){if(position>=stages.length-1){stop();return}let old=stages[position];position++;let now=stages[position];kwh+=Math.round((old.power+now.power)*1000/2*.25);update(position);if(position===stages.length-1)stop()}
+function play(){if(active){stop();g('simBadge').textContent='模拟已暂停';return}if(position===stages.length-1){reset()}active=true;g('simPlay').textContent='❚❚ 暂停演进';g('simBadge').textContent='场景演进中';tickTimer=setInterval(advance,1500)}
+function reset(){stop();position=0;kwh=24500;wasAlert=false;document.querySelector('.sim-alert-toast')?.remove();update(0,false);g('simEvent').textContent='已重置。点击播放，观察负载如何影响温度，以及何时触发提醒。';g('simBadge').textContent='模拟已暂停'}
+g('simPlay').onclick=play;g('simStep').onclick=()=>{stop();advance()};g('simReset').onclick=reset;
+populate();reset();
 })();</script></body></html>
