@@ -1,0 +1,64 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="theme-color" content="#071525">
+<title>宇泰智能数据中心｜炫思维 · 炫未来</title>
+<meta name="description" content="从设备数字化到设备智能化。了解宇泰智能数据中心的愿景、系统构想与 V13.8 概念演示。">
+<style>
+:root{--bg:#061321;--panel:#0b2033;--line:rgba(123,205,239,.18);--cyan:#53d9f4;--blue:#5797ff;--mint:#54e2c0;--text:#eaf6ff;--muted:#9bb5c9;--gold:#ffc878}
+*{box-sizing:border-box}html{scroll-behavior:smooth}body{margin:0;background:radial-gradient(ellipse at 75% 8%,#123a58 0,transparent 38%),radial-gradient(ellipse at 8% 55%,#0c2a40 0,transparent 36%),var(--bg);color:var(--text);font-family:Inter,"PingFang SC","Microsoft YaHei",system-ui,sans-serif;overflow-x:hidden}
+a{color:inherit;text-decoration:none}.top{position:fixed;z-index:10;top:0;left:0;right:0;display:flex;align-items:center;justify-content:space-between;padding:17px clamp(18px,5vw,76px);background:linear-gradient(180deg,rgba(4,15,27,.92),rgba(4,15,27,.35));backdrop-filter:blur(12px);border-bottom:1px solid rgba(130,210,244,.1)}.brand{font-size:13px;letter-spacing:.14em;color:#c9eafa}.brand b{color:var(--cyan);font-size:17px;margin-right:10px}.top a:last-child{font-size:12px;color:var(--cyan);border:1px solid rgba(83,217,244,.35);padding:9px 14px;border-radius:30px}
+section{position:relative;min-height:100vh;padding:120px clamp(22px,8vw,130px) 80px;display:flex;flex-direction:column;justify-content:center;overflow:hidden}.eyebrow{color:var(--cyan);font-size:11px;letter-spacing:.25em;text-transform:uppercase}.hero{min-height:100svh;padding-top:150px}.hero h1{font-size:clamp(48px,9vw,118px);line-height:1.04;letter-spacing:-.055em;margin:25px 0 18px;max-width:1000px}.hero h1 span{display:block;background:linear-gradient(100deg,#fff 5%,#73e5ff 48%,#7d9eff 90%);-webkit-background-clip:text;background-clip:text;color:transparent}.hero p{font-size:clamp(16px,2vw,21px);line-height:1.9;color:#b5cddd;max-width:720px;margin:15px 0 32px}.actions{display:flex;gap:12px;flex-wrap:wrap}.btn{display:inline-flex;align-items:center;gap:10px;padding:14px 21px;border-radius:6px;background:linear-gradient(100deg,#39c8e8,#638eff);color:#041523;font-weight:750;font-size:14px;box-shadow:0 10px 35px #3bc7e522}.btn.secondary{background:transparent;border:1px solid #4a7893;color:#d7edf9;box-shadow:none}.hero-art{position:absolute;right:-5vw;bottom:3vh;width:min(52vw,760px);height:65vh;opacity:.8;pointer-events:none}.orb{position:absolute;width:clamp(260px,36vw,520px);aspect-ratio:1;border-radius:50%;right:8%;top:13%;background:radial-gradient(circle at 35% 32%,#7cecff 0,#267eb1 12%,#123a60 38%,#071525 68%);box-shadow:0 0 100px #25b9e755,inset -30px -30px 80px #020a14;animation:float 8s ease-in-out infinite}.orbit{position:absolute;width:95%;height:42%;border:1px solid #5adbf477;border-radius:50%;right:-3%;top:40%;transform:rotate(-23deg);box-shadow:0 0 24px #49d9ef22}.orbit:before,.orbit:after{content:"";position:absolute;width:9px;height:9px;border-radius:50%;background:var(--cyan);box-shadow:0 0 18px var(--cyan)}.orbit:before{left:17%;top:16%}.orbit:after{right:15%;bottom:15%}.node{position:absolute;border:1px solid #5bd8ef66;background:#0b2539dd;padding:12px 15px;border-radius:8px;color:#c8eaf7;font-size:12px;box-shadow:0 12px 36px #0005;backdrop-filter:blur(8px)}.node b{display:block;color:var(--cyan);font-size:13px;margin-bottom:4px}.n1{top:14%;left:2%}.n2{top:52%;left:0}.n3{right:0;top:25%}.n4{right:5%;bottom:5%}
+.section-head{max-width:800px;margin-bottom:44px}.section-head h2{font-size:clamp(34px,5vw,64px);line-height:1.16;letter-spacing:-.04em;margin:17px 0}.section-head p{color:var(--muted);line-height:1.9;font-size:16px;max-width:680px}.compare{display:grid;grid-template-columns:1fr 1fr;gap:18px}.compare article,.card{background:linear-gradient(145deg,#102b40cc,#091b2ccc);border:1px solid var(--line);border-radius:12px;padding:26px;min-height:245px;position:relative;overflow:hidden}.compare h3,.card h3{font-size:19px;margin:0 0 10px}.compare p,.card p{color:var(--muted);line-height:1.8;font-size:14px}.compare .future{border-color:#46d5ed66;box-shadow:0 0 45px #28c3e511}.metric{display:flex;gap:8px;align-items:center;margin-top:24px;color:#a7c6d9;font-size:12px}.metric i{display:block;width:7px;height:7px;border-radius:50%;background:var(--gold);box-shadow:0 0 12px currentColor}.future .metric i{background:var(--mint)}
+.steps{display:grid;grid-template-columns:repeat(3,1fr);gap:16px}.card{min-height:260px}.num{font-size:12px;color:var(--cyan);letter-spacing:.15em}.card h3{font-size:22px;margin-top:25px}.card .big{font-size:40px;color:#d9f8ff;font-weight:800;letter-spacing:-.05em}.ecosystem{display:grid;grid-template-columns:1.1fr .9fr;gap:20px;align-items:stretch}.ecosystem-main{border:1px solid var(--line);border-radius:14px;background:linear-gradient(135deg,#0e2b42,#071827);padding:30px;min-height:400px}.ecosystem-main h3{font-size:23px}.flow{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin-top:30px}.flow div{border:1px solid #4a91ad66;background:#0a2235;padding:16px 12px;border-radius:8px;text-align:center;font-size:13px;color:#d7edf8}.flow b{display:block;color:var(--cyan);font-size:18px;margin-bottom:8px}.side-stack{display:grid;gap:14px}.side-stack .card{min-height:0;padding:22px}.disclaimer{border-left:2px solid var(--gold);padding:13px 17px;background:#ffc8780d;color:#c5d2dc;font-size:12px;line-height:1.8;margin-top:22px}.closing{text-align:center;align-items:center;background:radial-gradient(ellipse at 50% 55%,#15476677,transparent 50%)}.closing h2{font-size:clamp(40px,7vw,86px);line-height:1.15;letter-spacing:-.05em;margin:22px 0}.closing p{color:var(--muted);line-height:1.9;max-width:680px}.foot{padding:25px 8vw;color:#68869b;font-size:11px;border-top:1px solid var(--line);display:flex;justify-content:space-between;gap:15px;flex-wrap:wrap}
+@keyframes float{0%,100%{transform:translateY(0)}50%{transform:translateY(-18px)}}@media(max-width:800px){.hero-art{opacity:.27;width:90vw;right:-25vw}.compare,.steps,.ecosystem{grid-template-columns:1fr}.flow{grid-template-columns:1fr}.hero{justify-content:flex-start;padding-top:23vh}.node{font-size:10px}.compare article{min-height:190px}section{padding-left:22px;padding-right:22px}.top{padding:14px 18px}}
+.reveal{opacity:0;transform:translateY(24px);transition:opacity .8s ease,transform .8s ease}.reveal.show{opacity:1;transform:none}
+</style>
+</head>
+<body>
+<header class="top"><div class="brand"><b>Y◉</b> YUTAI INTELLIGENCE</div><a href="./index.html">进入 V13.8 演示系统 ↗</a></header>
+<main>
+<section class="hero">
+<div class="eyebrow">YUTAI · INTELLIGENT DEVICE DATA CENTER</div>
+<h1>炫思维<span>炫未来</span></h1>
+<p>让设备不再只是被看见。让数据能够被理解，让 AI 能够协作，让每一次经过授权的行动，都有迹可循。</p>
+<div class="actions"><a class="btn" href="./index.html">进入宇泰智能世界 <span>→</span></a><a class="btn secondary" href="#vision">探索我们的构想 ↓</a></div>
+<div class="hero-art"><div class="orb"></div><div class="orbit"></div><div class="node n1"><b>设备感知</b>状态 · 能耗 · 异常</div><div class="node n2"><b>专业 AI</b>诊断 · 分析 · 协作</div><div class="node n3"><b>私有智能</b>统一调度 · 知识推理</div><div class="node n4"><b>授权执行</b>审批 · 反馈 · 留痕</div></div>
+</section>
+<section id="vision">
+<div class="section-head reveal"><div class="eyebrow">01 / THE SHIFT</div><h2>从一台台设备，<br>到一个会思考的系统。</h2><p>设备数字化的价值，不应止步于把数据搬上屏幕。真正的变化，是让分散的设备信息形成关联，让异常能够被发现，让专业知识参与判断，让人始终掌握关键决策权。</p></div>
+<div class="compare reveal">
+<article><div class="eyebrow">TODAY · TODAY'S CHALLENGE</div><h3>设备各自运行，信息分散</h3><p>设备有数据，系统有报表，人员有经验。但数据之间缺少连接，问题往往依赖人工逐一发现，跨设备协同成本高。</p><div class="metric"><i></i> 看得见状态，不一定看得懂关系</div></article>
+<article class="future"><div class="eyebrow">TOMORROW · THE VISION</div><h3>设备互联，智能协作</h3><p>设备、边缘计算、专业 AI、私有云与人员形成协作网络。系统持续观察、辅助分析、提出建议，并在授权与审计约束下探索执行。</p><div class="metric"><i></i> 从数据展示走向理解与行动</div></article>
+</div>
+</section>
+<section>
+<div class="section-head reveal"><div class="eyebrow">02 / THREE EVOLUTIONS</div><h2>三步进化，<br>把数据变成能力。</h2><p>这不是一次性替换设备的工程，而是一条可以逐步验证、逐步扩展的能力路线。</p></div>
+<div class="steps reveal">
+<article class="card"><div class="num">01 / SEE</div><div class="big">看见</div><h3>设备运行可视化</h3><p>统一观察设备状态、能耗、告警、趋势与关联关系。让现场、机房和管理者看到同一幅运行图景。</p></article>
+<article class="card"><div class="num">02 / UNDERSTAND</div><div class="big">理解</div><h3>AI 专业协作</h3><p>小宇作为交互与协调入口，不同 AI 员工承担采集、诊断、知识检索、分析和复核等专业任务。</p></article>
+<article class="card"><div class="num">03 / ACT</div><div class="big">行动</div><h3>授权下的智能执行</h3><p>从提醒、建议和人工确认开始，逐步在独立测试台架与低风险场景验证动作执行，形成可追溯闭环。</p></article>
+</div>
+</section>
+<section>
+<div class="section-head reveal"><div class="eyebrow">03 / ONE ECOSYSTEM</div><h2>不是一个大模型，<br>而是一支协作团队。</h2><p>宇泰要构建的不是“一个 AI 包打天下”，而是让不同能力各司其职，在统一调度与明确边界下接力完成任务。</p></div>
+<div class="ecosystem reveal">
+<div class="ecosystem-main"><div class="eyebrow">CONNECTED INTELLIGENCE</div><h3>从设备现场到私有智能中枢</h3><div class="flow"><div><b>01</b>设备与传感器<small>数据采集</small></div><div><b>02</b>边缘小 AI<small>实时判断</small></div><div><b>03</b>专业 AI<small>领域诊断</small></div><div><b>04</b>私有云中枢<small>任务编排</small></div><div><b>05</b>小宇与人员<small>交互协同</small></div><div><b>06</b>授权执行<small>反馈留痕</small></div></div><div class="disclaimer">真实部署时，各环节按设备协议、网络分区、数据权限与安全策略接入。任何控制动作均须经过独立授权、策略校验和必要的人为确认。</div></div>
+<div class="side-stack"><article class="card"><div class="num">THE INTERFACE</div><h3>小宇：让复杂系统容易沟通</h3><p>主动提醒、解释变化、协调任务。常用简单操作可通过语音完成，但语音不是所有控制的唯一入口。</p></article><article class="card"><div class="num">THE TEAM</div><h3>AI 员工：各自承担专业工作</h3><p>把任务拆分给合适的工具和模型，展示工作状态、交接过程与结果，而不是只播放一段 AI 对话。</p></article><article class="card"><div class="num">THE FOUNDATION</div><h3>私有化：让数据与控制留在边界内</h3><p>正式运行以受控内网为基础。研发辅助与生产运行分离，跨边界成果经过审查、测试和批准。</p></article></div>
+</div>
+</section>
+<section class="closing">
+<div class="eyebrow reveal">04 / EXPERIENCE THE CONCEPT</div>
+<h2 class="reveal">让未来，<br><span style="color:var(--cyan)">先被看见。</span></h2>
+<p class="reveal">下面进入 V13.8 概念演示。你将看到设备态势、小宇、AI 员工、分布式协作与产品智能实验场如何组成一个可体验的未来构想。</p>
+<div class="actions reveal"><a class="btn" href="./index.html">进入 V13.8 · 契约接力版 →</a></div>
+<p class="disclaimer reveal" style="max-width:760px;text-align:left">演示边界：当前版本使用合成数据、虚拟设备和模拟任务；页面中的状态、告警、能耗、Token 与诊断结果均为演示数据，不代表真实生产环境运行结果。真实设备接入、模型调用与动作执行能力须另行完成接口适配、权限配置、安全验证和现场测试。</p>
+</section>
+</main>
+<footer class="foot"><span>宇泰智能数据中心 · 炫思维 · 炫未来</span><span>V13.8 概念演示序章 · 不构成生产控制系统</span></footer>
+<script>
+const items=document.querySelectorAll('.reveal');const io=new IntersectionObserver(es=>es.forEach(e=>{if(e.isIntersecting){e.target.classList.add('show');io.unobserve(e.target)}}),{threshold:.12});items.forEach(x=>io.observe(x));
+</script>
+</body></html>
