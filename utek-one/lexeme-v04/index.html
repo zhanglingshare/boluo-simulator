@@ -174,4 +174,5 @@ function lexRenderHeatmap(){let headers=PT_TYPES.map(t=>t.id);let rows=PT_CASES.
 const oldPtRender=ptRender;
 ptRender=function(){oldPtRender();lexRenderProfile();lexRenderTypes();lexRenderNetwork();lexRenderHeatmap();$('#lex-visible-count').textContent=PT_LIBRARY.filter(x=>ptState.filter==='全部'||x.type===ptState.filter).length;$('#lex-case-note').textContent=`${ptCase().name}：候选词元 ${ptCase().ids.length} 个。适配矩阵高亮当前场景的能力分布，仍需逐项核验触发条件与证据。`;$('#lex-run-status').textContent=ptState.status==='done'?'本轮沙箱模拟已完成，尚未在真实企业系统执行。':ptState.checked?`已检查适配：${ptLevel(ptState.score)}，评分 ${ptState.score}/100。`: '等待选择词元。点击“检查适配”开始一次实验。';};
 $('#lex-run-focus').onclick=()=>{nav('tokens');if(!ptState.checked)ptMatch();else ptRun();};
+ptRender(); // initialize all V0.4 visualizations on first page load
 </script></body></html>
