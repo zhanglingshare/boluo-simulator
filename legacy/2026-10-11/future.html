@@ -320,6 +320,7 @@ function run(){
     再次说明：这是模型内部的关联，不代表现实因果大小。全部参数公开，换种子、改预期，结果会相应变化——你可以自己复跑。
   `;
   document.getElementById('out').style.display='block';
+  requestAnimationFrame(()=>Object.values(charts).forEach(c=>c.resize()));
   window.sensBase={seed,s};
 }
 
@@ -361,6 +362,7 @@ function runSensitivity(){
   `;
   document.getElementById('sensStatus').textContent=`完成（基准达标率${base.hit.toFixed(1)}%）`;
   document.getElementById('sensOut').style.display='block';
+  requestAnimationFrame(()=>{charts.chSens&&charts.chSens.resize()});
 }
 
 document.getElementById('bRun').onclick=run;
