@@ -137,3 +137,25 @@ body.base-page .tree-reset{background:rgba(255,255,255,.92)!important;border-col
 /* 小字灰标签统一到可读灰 */
 small,.cap-en,.cap-hint,.meta.num,.foot,.wt-kick,.wt-note,.wt-lab,.wt-flow-tag span,.v11-nav-group:not(.is-current) .v11-nav-range{color:#6f7c8c!important}
 .placeholder,p.wt-kick{color:#6f7c8c!important}
+
+/* ===== 第10页 region：首屏标题恢复 ink + 强调蓝 ===== */
+#heroTitle{color:#12161c!important}
+#heroTitle strong{color:#0a84ff!important}
+#heroTitle em{color:#0a7f95!important}
+
+/* ===== wind 分布图：第二实例不在 #distChart 内，做全局兜底 ===== */
+path.area-path{stroke:none!important;fill-opacity:.16!important}
+path.area-path.base-area{fill:#0a84ff!important}
+path.area-path.stress-area{fill:#e25700!important}
+path.area-path.buffer-area{fill:#0a7f95!important}
+path.dist-path{fill:none!important;stroke-width:2.4!important;stroke-linejoin:round!important;stroke-linecap:round!important}
+path.dist-path.base-line{stroke:#0a84ff!important}
+path.dist-path.stress-line{stroke:#e25700!important}
+path.dist-path.buffer-line{stroke:#0a7f95!important}
+.target-line{stroke:#c93b3b!important;stroke-dasharray:5 5!important;stroke-opacity:.85!important}
+path.distribution-grid,.distribution-grid{stroke:rgba(17,24,39,.10)!important;stroke-opacity:1!important}
+rect.target-chip{fill:#eef4ff!important;stroke:rgba(10,132,255,.28)!important}
+text.target-label{fill:#0a84ff!important;font-weight:700!important}
+text.x-tick{fill:#5f6773!important}
+/* insights 排序行：原为居中，浅底上像空白条，改为左对齐列表 */
+.v11-story-rank-chip{justify-content:flex-start!important;text-align:left!important}

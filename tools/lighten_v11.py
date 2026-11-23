@@ -390,6 +390,10 @@ def build_override():
         "future.css", "impact.css", "impact-premium.css", "plan.css",
         "plan-ux.css", "plan-premium.css", "industry-structure.css",
         "visual-story.css",
+        # 2026-11-24 追加：此前判定为「已浅色」但 story 面板仍为深色的 5 页
+        "region.css", "brief.css", "challenge.css",
+        "insight-workbench.css", "insight-discovery.css",
+        "wind.css", "wind-exp.css", "wind-pathway.css",
     ]
     out = []
     out.append("/* =====================================================================\n"
