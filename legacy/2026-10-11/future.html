@@ -266,7 +266,7 @@ function run(){
     backgroundColor:'transparent',
     tooltip:{trigger:'axis',backgroundColor:'#f8fafc',borderColor:'#d8dee8',textStyle:{color:'#12161c'},formatter:ps=>`约${ps[0].name}亿<br/>出现${ps[0].value}次`},
     grid:{left:55,right:25,top:25,bottom:40},
-    xAxis:{type:'category',data:labels,axisLabel:{color:'#5f6773',interval:Math.floor(bins/8)},axisLine:{lineStyle:{color:'#cbd5e1'}}},
+    xAxis:{type:'category',data:labels,axisLabel:{color:'#5f6773',fontSize:10,hideOverlap:true,interval:Math.floor(bins/8)},axisLine:{lineStyle:{color:'#cbd5e1'}}},
     yAxis:{type:'value',axisLabel:{color:'#5f6773'},splitLine:{lineStyle:{color:'#e6e9ef'}}},
     series:[{type:'bar',data:data.map(v=>({value:v,itemStyle:{color:new echarts.graphic.LinearGradient(0,0,0,1,[{offset:0,color:'#0a84ff'},{offset:1,color:'#68b7ff'}])}})),barCategoryGap:'15%',
       markLine:{silent:true,symbol:'none',data:[{xAxis:String(Math.round(TARGET)),lineStyle:{color:'#e25700',width:2,type:'dashed'},label:{color:'#e25700',fontWeight:700,formatter:'1600亿',position:'start'}}]}}]

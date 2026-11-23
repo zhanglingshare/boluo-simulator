@@ -276,15 +276,15 @@ function render(){
   charts.chTrack.setOption({
     backgroundColor:'transparent',
     tooltip:{trigger:'axis',backgroundColor:'#f8fafc',borderColor:'#d8dee8',textStyle:{color:'#12161c'}},
-    legend:{top:0,textStyle:{color:'#5f6773',fontSize:11}},
-    grid:{left:55,right:25,top:35,bottom:30},
+    legend:{top:0,left:0,right:0,type:'scroll',textStyle:{color:'#12161c',fontSize:10.5},itemWidth:14,itemGap:10},
+    grid:{left:55,right:25,top:38,bottom:30},
     xAxis:{type:'category',data:years,axisLabel:{color:'#12161c',fontWeight:700},axisLine:{lineStyle:{color:'#cbd5e1'}}},
     yAxis:{type:'value',min:900,axisLabel:{color:'#5f6773'},axisLine:{lineStyle:{color:'#cbd5e1'}},splitLine:{lineStyle:{color:'#e6e9ef'}}},
     series:[
       {name:'目标轨道1600亿',type:'line',data:targetPath,lineStyle:{color:'#e25700',width:2.5,type:'dashed'},itemStyle:{color:'#e25700'},symbol:'diamond',symbolSize:8},
       {name:'自然增长5.5%',type:'line',data:basePath,lineStyle:{color:'#94a3b8',width:2},itemStyle:{color:'#94a3b8'},symbol:'circle',symbolSize:6},
       {name:'你的设置',type:'line',data:path,lineStyle:{color:'#0a84ff',width:4},itemStyle:{color:'#0a84ff'},areaStyle:{color:new echarts.graphic.LinearGradient(0,0,0,1,[{offset:0,color:'rgba(10,132,255,.22)'},{offset:1,color:'rgba(10,132,255,.02)'}])},symbol:'circle',symbolSize:8,
-       markLine:{silent:true,symbol:'none',data:[{yAxis:1600,lineStyle:{color:'#e25700',type:'dotted',opacity:0.6,width:2},label:{color:'#e25700',fontWeight:700,formatter:'1600亿目标线'}}]}}
+       markLine:{silent:true,symbol:'none',data:[{yAxis:1600,lineStyle:{color:'#e25700',type:'dotted',opacity:0.6,width:2},label:{show:false}}]}}
     ]
   });
 
