@@ -3,45 +3,45 @@
 <title>博罗产业风洞 · 各镇吃喝玩乐</title>
 <style>
 *{box-sizing:border-box}
-body{margin:0;background:#080b12;color:#e6edf3;font:14px/1.65 -apple-system,"PingFang SC","Microsoft YaHei",sans-serif}
-.nav{position:sticky;top:0;z-index:50;display:flex;gap:5px;align-items:center;padding:9px 14px;background:rgba(8,11,18,.95);border-bottom:1px solid #1b2434;overflow-x:auto}
+body{margin:0;background:#f6f7f9;color:#12161c;font:14px/1.65 -apple-system,"PingFang SC","Microsoft YaHei",sans-serif}
+.nav{position:sticky;top:0;z-index:50;display:flex;gap:5px;align-items:center;padding:9px 14px;background:rgba(255,255,255,.86);border-bottom:1px solid #e6e9ef;overflow-x:auto}
 .nav b{font-size:14px;margin-right:6px;flex:none}
-.nav a{background:#131c2b;color:#93a4bd;border:1px solid #22304a;padding:6px 12px;border-radius:20px;font-size:12.5px;text-decoration:none;white-space:nowrap;flex:none}
-.nav a.on{background:#15803d;border-color:#22c55e;color:#fff;font-weight:600}
+.nav a{background:#eef1f5;color:#5f6773;border:1px solid #dfe3ea;padding:6px 12px;border-radius:20px;font-size:12.5px;text-decoration:none;white-space:nowrap;flex:none}
+.nav a.on{background:#0a84ff;border-color:#0a84ff;color:#fff;font-weight:600}
 .wrap{max-width:960px;margin:auto;padding:16px}
-.scan{background:radial-gradient(ellipse at center,#0b1a12,#080b12);border:1px solid #1c2739;border-radius:14px;padding:18px;display:flex;align-items:center;gap:16px;margin-bottom:14px}
+.scan{background:radial-gradient(ellipse at center,#f2f7f4,#f6f7f9);border:1px solid #e6e9ef;border-radius:14px;padding:18px;display:flex;align-items:center;gap:16px;margin-bottom:14px}
 .radar{width:64px;height:64px;flex:none}
-.refresh{background:#f59e0b;color:#1a1206;border:0;padding:7px 18px;border-radius:18px;font-size:12.5px;font-weight:700;cursor:pointer}
+.refresh{background:#ff9f0a;color:#1a1206;border:0;padding:7px 18px;border-radius:18px;font-size:12.5px;font-weight:700;cursor:pointer}
 .refresh:active{transform:scale(.96)}
-.scan-info{font-size:11px;color:#5b6b82;margin-top:4px}
+.scan-info{font-size:11px;color:#98a1ad;margin-top:4px}
 h1{font-size:21px;margin:0}
-.sub{color:#8fa3bf;font-size:13px;margin:4px 0 0}
-.livebar{background:#1a1206;border:1px solid #7c4a12;border-radius:10px;padding:10px 14px;margin-bottom:14px;font-size:12.5px;color:#fcd34d}
-.livebar b{color:#fbbf24}
+.sub{color:#5f6773;font-size:13px;margin:4px 0 0}
+.livebar{background:#1a1206;border:1px solid #f0d6ad;border-radius:10px;padding:10px 14px;margin-bottom:14px;font-size:12.5px;color:#a86a00}
+.livebar b{color:#b25b00}
 .grid{display:grid;grid-template-columns:repeat(2,1fr);gap:12px}
 @media(max-width:680px){.grid{grid-template-columns:1fr}}
-.town{background:#0e1523;border:1px solid #1c2739;border-radius:12px;padding:15px;position:relative;overflow:hidden}
-.town.pick{border-color:#22c55e;box-shadow:0 0 0 1px #22c55e inset}
-.town .pick-tag{position:absolute;top:10px;right:10px;background:#22c55e;color:#04120a;font-size:10px;font-weight:800;padding:2px 8px;border-radius:10px}
+.town{background:#ffffff;border:1px solid #e6e9ef;border-radius:12px;padding:15px;position:relative;overflow:hidden}
+.town.pick{border-color:#0a84ff;box-shadow:0 0 0 1px #0a84ff inset}
+.town .pick-tag{position:absolute;top:10px;right:10px;background:#0a84ff;color:#f2f8f4;font-size:10px;font-weight:800;padding:2px 8px;border-radius:10px}
 .town .head{display:flex;align-items:baseline;gap:8px;margin-bottom:6px}
 .town .n{font-size:18px;font-weight:800}
-.town .tag{font-size:10.5px;color:#4ade80;background:#0f2a16;border:1px solid #1a3a1a;padding:2px 8px;border-radius:10px}
-.town .row{font-size:12.5px;color:#cbd5e1;margin-top:5px;line-height:1.7}
-.town .row .k{display:inline-block;width:34px;color:#6b7d96}
-.town .why{margin-top:9px;padding-top:8px;border-top:1px dashed #1c2739;font-size:12px;color:#8fa3bf;font-style:italic}
-.disc{font-size:11px;color:#5b6b82;margin-top:16px;line-height:1.8}
+.town .tag{font-size:10.5px;color:#00a6c0;background:#eff8f2;border:1px solid #edf5e8;padding:2px 8px;border-radius:10px}
+.town .row{font-size:12.5px;color:#5f6773;margin-top:5px;line-height:1.7}
+.town .row .k{display:inline-block;width:34px;color:#8a93a1}
+.town .why{margin-top:9px;padding-top:8px;border-top:1px dashed #e6e9ef;font-size:12px;color:#5f6773;font-style:italic}
+.disc{font-size:11px;color:#98a1ad;margin-top:16px;line-height:1.8}
 .veg{margin-bottom:14px}
-.veg-title{font-size:13px;color:#4ade80;margin-bottom:8px;font-weight:700}
-.veg-track{overflow:hidden;mask-image:linear-gradient(90deg,transparent,#000 4%,#000 96%,transparent)}
+.veg-title{font-size:13px;color:#00a6c0;margin-bottom:8px;font-weight:700}
+.veg-track{overflow:hidden;mask-image:linear-gradient(90deg,transparent,#12161c 4%,#12161c 96%,transparent)}
 .veg-inner{display:flex;gap:10px;animation:vscroll 26s linear infinite;width:max-content}
 .veg-track:hover .veg-inner{animation-play-state:paused}
-.vegcard{flex:none;background:#0e1523;border:1px solid #1f3a24;border-left:3px solid #22c55e;border-radius:10px;padding:10px 14px;width:190px}
-.vegcard .vn{font-size:14px;font-weight:700;color:#e6edf3}
-.vegcard .vp{font-size:11px;color:#4ade80;margin-top:2px}
-.vegcard .vd{font-size:11.5px;color:#8fa3bf;margin-top:4px;line-height:1.5}
+.vegcard{flex:none;background:#ffffff;border:1px solid #edf5ee;border-left:3px solid #0a84ff;border-radius:10px;padding:10px 14px;width:190px}
+.vegcard .vn{font-size:14px;font-weight:700;color:#12161c}
+.vegcard .vp{font-size:11px;color:#00a6c0;margin-top:2px}
+.vegcard .vd{font-size:11.5px;color:#5f6773;margin-top:4px;line-height:1.5}
 @keyframes vscroll{from{transform:translateX(0)}to{transform:translateX(-50%)}}
 .next{text-align:center;margin-top:18px}
-.next a{background:#15803d;color:#fff;padding:11px 24px;border-radius:8px;text-decoration:none;font-weight:600;display:inline-block}
+.next a{background:#0a84ff;color:#fff;padding:11px 24px;border-radius:8px;text-decoration:none;font-weight:600;display:inline-block}
 </style>
 <meta property="og:type" content="website">
 <meta property="og:title" content="只有半天，你想和朋友去哪边？">
@@ -49,6 +49,11 @@ h1{font-size:21px;margin:0}
 <meta property="og:image" content="https://zhanglingshare.github.io/boluo-simulator/legacy/2026-10-11/public-stage.webp">
 <link rel="stylesheet" href="public-duel.css?v=5">
 <script type="module" src="public-duel.js?v=4"></script>
+<meta name="theme-color" content="#f6f7f9">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns=%27http://www.w3.org/2000/svg%27 viewBox=%270 0 64 64%27%3E%3Cdefs%3E%3ClinearGradient id=%27g%27 x1=%270%27 y1=%270%27 x2=%271%27 y2=%271%27%3E%3Cstop stop-color=%27%230A84FF%27/%3E%3Cstop offset=%271%27 stop-color=%27%2300A6C0%27/%3E%3C/linearGradient%3E%3C/defs%3E%3Crect width=%2764%27 height=%2764%27 rx=%2715%27 fill=%27url(%23g)%27/%3E%3Ctext x=%2732%27 y=%2744%27 font-family=%27sans-serif%27 font-size=%2730%27 font-weight=%27bold%27 fill=%27white%27 text-anchor=%27middle%27%3E%E5%8D%9A%3C/text%3E%3C/svg%3E">
+<link rel="preconnect" href="https://miaoda.feishu.cn">
+<link rel="stylesheet" href="https://miaoda.feishu.cn/fonts/css2?family=Noto+Sans+SC:wght@400;500;700;800&family=Inter:wght@400;500;600;700;800&display=swap">
+<link rel="stylesheet" href="light.css?v=1">
 </head><body data-duel-page="town">
 
 <div class="nav">
@@ -68,11 +73,11 @@ h1{font-size:21px;margin:0}
 <div class="wrap">
   <div class="scan">
     <svg class="radar" viewBox="0 0 64 64">
-      <circle cx="32" cy="32" r="28" fill="none" stroke="#1c2739" stroke-width="1"/>
-      <circle cx="32" cy="32" r="18" fill="none" stroke="#1c2739" stroke-width="1"/>
-      <circle cx="32" cy="32" r="8" fill="none" stroke="#1c2739" stroke-width="1"/>
-      <g class="scanline" id="scanline" style="transform-origin:32px 32px"><line x1="32" y1="32" x2="32" y2="4" stroke="#22c55e" stroke-width="1.5"/></g>
-      <circle cx="32" cy="32" r="2.5" fill="#22c55e"/>
+      <circle cx="32" cy="32" r="28" fill="none" stroke="#e6e9ef" stroke-width="1"/>
+      <circle cx="32" cy="32" r="18" fill="none" stroke="#e6e9ef" stroke-width="1"/>
+      <circle cx="32" cy="32" r="8" fill="none" stroke="#e6e9ef" stroke-width="1"/>
+      <g class="scanline" id="scanline" style="transform-origin:32px 32px"><line x1="32" y1="32" x2="32" y2="4" stroke="#0a84ff" stroke-width="1.5"/></g>
+      <circle cx="32" cy="32" r="2.5" fill="#0a84ff"/>
     </svg>
     <div style="flex:1">
       <h1>博罗各镇，一口味道、一处山水</h1>
@@ -106,10 +111,10 @@ let TOWNS=[],VEG=[],PULSE=[],UPDATED='',SRC='';
 let picks=[];
 
 function renderVeg(){
-  const levelColor={"高":"#f87171","较高":"#fbbf24","中":"#34d399"};
+  const levelColor={"高":"#c93b3b","较高":"#b25b00","中":"#00a6c0"};
   const cards=(VEG.length?VEG:[{n:"—",p:"",d:"",level:"中"}]).map(v=>{
-    const lc=levelColor[v.level]||"#34d399";
-    return `<div class="vegcard"><div class="vn">${v.n}</div><div class="vp">${v.p}</div><div class="vd">${v.d}</div><div style="font-size:11px;font-weight:800;color:${lc};border:1px solid ${lc};border-radius:7px;padding:2px 8px;margin-top:6px;display:inline-block">人气 · ${v.level}</div><div style="font-size:9px;color:#5b6b82;margin-top:3px">📎 公开渠道 · 近期打卡分档，非人数</div></div>`;
+    const lc=levelColor[v.level]||"#00a6c0";
+    return `<div class="vegcard"><div class="vn">${v.n}</div><div class="vp">${v.p}</div><div class="vd">${v.d}</div><div style="font-size:11px;font-weight:800;color:${lc};border:1px solid ${lc};border-radius:7px;padding:2px 8px;margin-top:6px;display:inline-block">人气 · ${v.level}</div><div style="font-size:9px;color:#98a1ad;margin-top:3px">📎 公开渠道 · 近期打卡分档，非人数</div></div>`;
   }).join("");
   document.getElementById("vegInner").innerHTML=cards+cards;
 }
@@ -120,11 +125,11 @@ function pickThree(){
 }
 
 function render(){
-  const levelColor={"高":"#f87171","较高":"#fbbf24","中":"#34d399"};
+  const levelColor={"高":"#c93b3b","较高":"#b25b00","中":"#00a6c0"};
   const g=document.getElementById("grid");
   g.innerHTML=TOWNS.map(t=>{
     const isPick=picks.includes(t.n);
-    const lc=levelColor[t.level]||"#34d399";
+    const lc=levelColor[t.level]||"#00a6c0";
     return `<div class="town${isPick?' pick':''}">
       ${isPick?'<span class="pick-tag">✨ 今日推荐</span>':''}
       <div class="head"><span class="n">${t.n}</span><span class="tag">${t.tag}</span></div>
@@ -132,7 +137,7 @@ function render(){
       <div class="row"><span class="k">🏔️ 玩</span>${t.plays.join("、")}</div>
       <div class="why">→ ${t.why}</div>
       <div style="margin-top:8px"><span style="font-size:11px;font-weight:800;color:${lc};border:1px solid ${lc};border-radius:8px;padding:3px 10px">人气 · ${t.level}</span></div>
-      <div style="font-size:9.5px;color:#5b6b82;margin-top:4px;line-height:1.4">📎 来源：${SRC}<br>近期公开打卡热度分档，非人数统计</div>
+      <div style="font-size:9.5px;color:#98a1ad;margin-top:4px;line-height:1.4">📎 来源：${SRC}<br>近期公开打卡热度分档，非人数统计</div>
     </div>`;
   }).join("");
 }
@@ -158,7 +163,7 @@ loadLife();
 document.getElementById("btnScan").onclick=refresh;
 </script>
 
-<div style="font-size:11px;color:#5b6b82;line-height:1.8;margin:16px 0;padding:12px;background:#0a0f1a;border-radius:8px">
+<div style="font-size:11px;color:#98a1ad;line-height:1.8;margin:16px 0;padding:12px;background:#f6f7f9;border-radius:8px">
     📌 数据说明：
   <br>① 镇街与农品：来自各镇政府公开介绍、南方+/惠州日报报道，以及点评/小红书/抖音近期公开打卡热度，分为高/较高/中三档，非平台后台真实人数统计。
   <br>② 当季农品：按当月真实时令列出；福田菜心现处9-11月播种季、尚未上市，不反季。
@@ -170,8 +175,8 @@ document.getElementById("btnScan").onclick=refresh;
   <button type="button" data-duel-footer>发这题给朋友</button>
 </div>
 <style>
-.likebar{position:relative;bottom:auto;left:auto;transform:none;display:flex;justify-content:center;margin:20px 0;background:rgba(15,23,42,.96);border:1px solid #3b82f6;border-radius:24px;padding:9px 20px;display:flex;gap:22px;z-index:999;box-shadow:0 6px 24px rgba(0,0,0,.6)}
-.likebar button{background:none;border:none;color:#e2e8f0;font-size:14px;cursor:pointer}
+.likebar{position:relative;bottom:auto;left:auto;transform:none;display:flex;justify-content:center;margin:20px 0;background:rgba(255,255,255,.94);border:1px solid #0a84ff;border-radius:24px;padding:9px 20px;display:flex;gap:22px;z-index:999;box-shadow:0 6px 24px rgba(17,24,39,.10)}
+.likebar button{background:none;border:none;color:#12161c;font-size:14px;cursor:pointer}
 .likebar button:active{transform:scale(1.15)}
 </style>
 <script>

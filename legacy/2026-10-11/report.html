@@ -16,7 +16,7 @@
   margin: 29px 0 7px;
   border: 1px solid #7d8462;
   border-radius: 3px;
-  background: repeating-linear-gradient(90deg, #bfc5961b 0 1px, transparent 1px 12.5%), #0b120b;
+  background: repeating-linear-gradient(90deg, rgba(17,24,39,.06) 0 1px, transparent 1px 12.5%), #f6f7f9;
 }
 .run-fill, .run-gap-fill {
   position: absolute;
@@ -25,7 +25,7 @@
   border-radius: 2px;
   transition: width .37s cubic-bezier(.15,.75,.18,1), left .37s cubic-bezier(.15,.75,.18,1);
 }
-.run-fill { background: linear-gradient(90deg,#577e42,#a2f4ba); box-shadow: 0 0 14px #93f4bd56 }
+.run-fill { background: linear-gradient(90deg,#5f9e3f,#00a6c0); box-shadow: 0 0 14px rgba(0,166,192,.30) }
 .reveal-pane.enter .run-fill { transform-origin: left; animation: meter-enter .75s cubic-bezier(.19,.7,.16,1) both }
 @keyframes meter-enter { from { transform: scaleX(0) } to { transform: scaleX(1) } }
 .run-gap-fill { background: repeating-linear-gradient(135deg,#d47a4b82 0 4px,#5c352980 4px 8px) }
@@ -68,7 +68,7 @@
   padding: clamp(13px, 2.3vw, 29px);
   border: 1px solid var(--line);
   border-radius: 13px;
-  background: linear-gradient(155deg,#222a1d,#171b14 78%);
+  background: linear-gradient(155deg,#f4f7f2,#f4f7f2 78%);
 }
 .box-heading { display: flex; flex-wrap: wrap; align-items: end; justify-content: space-between; gap: 9px 16px }
 .box-heading h2 {
@@ -85,7 +85,7 @@
   min-height: 44px;
   border: 1px solid #746d50;
   border-radius: 7px;
-  background: #24251a;
+  background: #f9f8f2;
   padding: 5px 11px;
   color: var(--ink);
   font-size: 13px;
@@ -96,8 +96,8 @@
 .stress-controls button:disabled { cursor: default; opacity: .52 }
 .reset-stress { margin-left: auto }
 .chance-pair { display: grid; grid-template-columns: 1fr 1fr .82fr; gap: 9px; margin-top: 12px }
-.chance-cell, .scenario-takeaway { min-width: 0; padding: clamp(9px, 1.5vw, 17px); border: 1px solid #59694c; border-radius: 8px; background: #132117 }
-.chance-cell.current { background: #241c16; border-color: #a8684f }
+.chance-cell, .scenario-takeaway { min-width: 0; padding: clamp(9px, 1.5vw, 17px); border: 1px solid #59694c; border-radius: 8px; background: #f2f8f4 }
+.chance-cell.current { background: #fff8ee; border-color: #a8684f }
 .chance-title { display: block; color: var(--ink); font-size: 13px; font-weight: 720 }
 .chance-number {
   display: block;
@@ -113,14 +113,14 @@
 .chance-grid i { aspect-ratio: 1; border-radius: 2px; background: #405047; transition: background .24s, box-shadow .24s }
 .chance-grid .hit { background: var(--mint); box-shadow: 0 0 7px #95f1b68b }
 .chance-grid .lost { background: #6d422f; border: 1px solid #d5886380 }
-.scenario-takeaway { display: flex; flex-direction: column; justify-content: center; gap: 6px; background: #241f16; border-color: #746541 }
+.scenario-takeaway { display: flex; flex-direction: column; justify-content: center; gap: 6px; background: #fff8ee; border-color: #746541 }
 .scenario-impact { color: var(--light); font-size: clamp(19px, 3vw, 37px); font-weight: 820; letter-spacing: -.04em; line-height: 1.1 }
 .scenario-impact small { font-size: .45em; letter-spacing: 0; white-space: nowrap }
 .scenario-takeaway p { margin: 0; color: var(--muted); font-size: 12px }
 .sector-readings { display: grid; gap: 8px; margin: 15px 0 3px }
 .sector-row { display: grid; grid-template-columns: minmax(55px,.62fr) minmax(0,3fr) 62px; align-items: center; gap: 8px; min-height: 35px }
 .sector-row .sector-label { font-size: 13px; font-weight: 730 }
-.sector-line { position: relative; display: flex; align-items: center; height: 22px; overflow: hidden; border-left: 1px solid #a9b08e; background: repeating-linear-gradient(90deg,#d5e1b915 0 1px,transparent 1px 20%) }
+.sector-line { position: relative; display: flex; align-items: center; height: 22px; overflow: hidden; border-left: 1px solid #cbd2dc; background: repeating-linear-gradient(90deg,rgba(17,24,39,.06) 0 1px,transparent 1px 20%) }
 .sector-bar { display: block; width: 0; height: 15px; border-radius: 0 4px 4px 0; background: var(--sector-color); transition: width .5s cubic-bezier(.15,.75,.2,1) }
 .sector-value { text-align: right; color: var(--sector-color); font-size: 19px; font-weight: 820; font-variant-numeric: tabular-nums }
 .sector-explanation { min-height: 26px }
@@ -153,6 +153,11 @@
 <meta property="og:image" content="https://zhanglingshare.github.io/boluo-simulator/legacy/2026-10-11/public-stage.webp">
 <link rel="stylesheet" href="public-duel.css?v=5">
 <script type="module" src="public-duel.js?v=4"></script>
+<meta name="theme-color" content="#f6f7f9">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns=%27http://www.w3.org/2000/svg%27 viewBox=%270 0 64 64%27%3E%3Cdefs%3E%3ClinearGradient id=%27g%27 x1=%270%27 y1=%270%27 x2=%271%27 y2=%271%27%3E%3Cstop stop-color=%27%230A84FF%27/%3E%3Cstop offset=%271%27 stop-color=%27%2300A6C0%27/%3E%3C/linearGradient%3E%3C/defs%3E%3Crect width=%2764%27 height=%2764%27 rx=%2715%27 fill=%27url(%23g)%27/%3E%3Ctext x=%2732%27 y=%2744%27 font-family=%27sans-serif%27 font-size=%2730%27 font-weight=%27bold%27 fill=%27white%27 text-anchor=%27middle%27%3E%E5%8D%9A%3C/text%3E%3C/svg%3E">
+<link rel="preconnect" href="https://miaoda.feishu.cn">
+<link rel="stylesheet" href="https://miaoda.feishu.cn/fonts/css2?family=Noto+Sans+SC:wght@400;500;700;800&family=Inter:wght@400;500;600;700;800&display=swap">
+<link rel="stylesheet" href="light.css?v=1">
 </head>
 <body data-duel-page="report">
 <nav class="nav" aria-label="博罗产业风洞导航">
@@ -324,7 +329,7 @@
       "plain": "工业和建筑业",
       "share": 54.6,
       "growth": 6.9,
-      "color": "#93f4c4"
+      "color": "#0b7a86"
     },
     {
       "label": "第三产业",
@@ -523,8 +528,8 @@
   <button type="button" data-duel-footer>发这题给朋友</button>
 </div>
 <style>
-.likebar{position:relative;bottom:auto;left:auto;transform:none;display:flex;justify-content:center;margin:20px 0;background:rgba(15,23,42,.96);border:1px solid #3b82f6;border-radius:24px;padding:9px 20px;display:flex;gap:22px;z-index:999;box-shadow:0 6px 24px rgba(0,0,0,.6)}
-.likebar button{background:none;border:none;color:#e2e8f0;font-size:14px;cursor:pointer}
+.likebar{position:relative;bottom:auto;left:auto;transform:none;display:flex;justify-content:center;margin:20px 0;background:rgba(255,255,255,.94);border:1px solid #0a84ff;border-radius:24px;padding:9px 20px;display:flex;gap:22px;z-index:999;box-shadow:0 6px 24px rgba(17,24,39,.10)}
+.likebar button{background:none;border:none;color:#12161c;font-size:14px;cursor:pointer}
 .likebar button:active{transform:scale(1.15)}
 </style>
 <script>

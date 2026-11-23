@@ -4,32 +4,32 @@
 <script src="lib/echarts.min.js"></script>
 <style>
 *{box-sizing:border-box}
-body{margin:0;background:#080b12;color:#e6edf3;font:14px/1.6 -apple-system,"PingFang SC","Microsoft YaHei",sans-serif}
-.nav{position:sticky;top:0;z-index:50;display:flex;gap:5px;align-items:center;padding:9px 14px;background:rgba(8,11,18,.95);border-bottom:1px solid #1b2434;overflow-x:auto}
+body{margin:0;background:#f6f7f9;color:#12161c;font:14px/1.6 -apple-system,"PingFang SC","Microsoft YaHei",sans-serif}
+.nav{position:sticky;top:0;z-index:50;display:flex;gap:5px;align-items:center;padding:9px 14px;background:rgba(255,255,255,.86);border-bottom:1px solid #e6e9ef;overflow-x:auto}
 .nav b{font-size:14px;margin-right:6px;flex:none}
-.nav a{background:#131c2b;color:#93a4bd;border:1px solid #22304a;padding:6px 12px;border-radius:20px;font-size:12.5px;text-decoration:none;white-space:nowrap;flex:none}
-.nav a.on{background:#15803d;border-color:#22c55e;color:#fff;font-weight:600}
+.nav a{background:#eef1f5;color:#5f6773;border:1px solid #dfe3ea;padding:6px 12px;border-radius:20px;font-size:12.5px;text-decoration:none;white-space:nowrap;flex:none}
+.nav a.on{background:#0a84ff;border-color:#0a84ff;color:#fff;font-weight:600}
 .wrap{max-width:920px;margin:auto;padding:16px}
 h1{font-size:20px;margin:0 0 2px}
-.sub{color:#8fa3bf;font-size:13px;margin:0 0 16px}
-.insight{background:#0e1523;border:1px solid #1c2739;border-radius:12px;padding:20px;margin-bottom:14px;border-left:3px solid #a78bfa}
-.insight .num{font-size:11px;color:#a78bfa;font-weight:700;letter-spacing:2px}
+.sub{color:#5f6773;font-size:13px;margin:0 0 16px}
+.insight{background:#ffffff;border:1px solid #e6e9ef;border-radius:12px;padding:20px;margin-bottom:14px;border-left:3px solid #6a5be0}
+.insight .num{font-size:11px;color:#6a5be0;font-weight:700;letter-spacing:2px}
 .insight .t{font-size:16.5px;font-weight:700;margin:7px 0 9px}
-.insight .d{font-size:13px;color:#a9b6c9;line-height:1.95}
+.insight .d{font-size:13px;color:#98a1ad;line-height:1.95}
 .chart{width:100%;height:250px;margin:12px 0}
-.deep{background:#0a0f1a;border-radius:9px;padding:13px 15px;margin-top:11px;font-size:12.5px;line-height:1.95}
+.deep{background:#f6f7f9;border-radius:9px;padding:13px 15px;margin-top:11px;font-size:12.5px;line-height:1.95}
 .deep .lab{display:block;font-size:10.5px;font-weight:800;letter-spacing:1px;margin-bottom:5px}
-.deep.green{border-left:3px solid #22c55e}
-.deep.green .lab{color:#4ade80}
-.deep.amber{border-left:3px solid #fbbf24}
-.deep.amber .lab{color:#fbbf24}
-.deep.body{color:#c8d3e0}
-.deep b{color:#fbbf24}
+.deep.green{border-left:3px solid #0a84ff}
+.deep.green .lab{color:#00a6c0}
+.deep.amber{border-left:3px solid #b25b00}
+.deep.amber .lab{color:#b25b00}
+.deep.body{color:#5f6773}
+.deep b{color:#b25b00}
 .next{text-align:center;margin-top:18px}
-.next a{background:#15803d;color:#fff;padding:10px 24px;border-radius:8px;text-decoration:none;font-weight:600;display:inline-block}
-.summary{background:linear-gradient(160deg,#0c1a2e,#0e1523);border:1px solid #1e3a5f;border-radius:14px;padding:26px;text-align:center;margin-bottom:14px}
-.summary .big{font-size:16px;line-height:2.2;color:#e6edf3}
-.summary .big b{color:#4ade80}
+.next a{background:#0a84ff;color:#fff;padding:10px 24px;border-radius:8px;text-decoration:none;font-weight:600;display:inline-block}
+.summary{background:linear-gradient(160deg,#f8fafc,#ffffff);border:1px solid #e8f0fb;border-radius:14px;padding:26px;text-align:center;margin-bottom:14px}
+.summary .big{font-size:16px;line-height:2.2;color:#12161c}
+.summary .big b{color:#00a6c0}
 </style>
 <meta property="og:type" content="website">
 <meta property="og:title" content="博罗接待超千万人次，旅游收入摊下来每人次多少？">
@@ -37,6 +37,11 @@ h1{font-size:20px;margin:0 0 2px}
 <meta property="og:image" content="https://zhanglingshare.github.io/boluo-simulator/legacy/2026-10-11/public-stage.webp">
 <link rel="stylesheet" href="public-duel.css?v=5">
 <script type="module" src="public-duel.js?v=4"></script>
+<meta name="theme-color" content="#f6f7f9">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns=%27http://www.w3.org/2000/svg%27 viewBox=%270 0 64 64%27%3E%3Cdefs%3E%3ClinearGradient id=%27g%27 x1=%270%27 y1=%270%27 x2=%271%27 y2=%271%27%3E%3Cstop stop-color=%27%230A84FF%27/%3E%3Cstop offset=%271%27 stop-color=%27%2300A6C0%27/%3E%3C/linearGradient%3E%3C/defs%3E%3Crect width=%2764%27 height=%2764%27 rx=%2715%27 fill=%27url(%23g)%27/%3E%3Ctext x=%2732%27 y=%2744%27 font-family=%27sans-serif%27 font-size=%2730%27 font-weight=%27bold%27 fill=%27white%27 text-anchor=%27middle%27%3E%E5%8D%9A%3C/text%3E%3C/svg%3E">
+<link rel="preconnect" href="https://miaoda.feishu.cn">
+<link rel="stylesheet" href="https://miaoda.feishu.cn/fonts/css2?family=Noto+Sans+SC:wght@400;500;700;800&family=Inter:wght@400;500;600;700;800&display=swap">
+<link rel="stylesheet" href="light.css?v=1">
 </head><body data-duel-page="blindspot">
 
 <div class="nav">
@@ -121,71 +126,71 @@ h1{font-size:20px;margin:0 0 2px}
   </div>
 
   <!-- 博罗特色投票 -->
-  <div style="margin:12px 0;padding:14px;background:linear-gradient(135deg,#1a2332,#0f172a);border:1px solid #fbbf24;border-radius:14px">
-    <div style="font-size:15px;font-weight:800;color:#fff;margin-bottom:4px">🍵 你最希望把博罗哪样做成真正的大品牌？</div>
-    <div style="font-size:12.5px;color:#94a3b8;margin-bottom:10px">这些牌一直都在。哪张最该摆到桌面上？</div>
+  <div style="margin:12px 0;padding:14px;background:linear-gradient(135deg,#f7f9fc,#ffffff);border:1px solid #b25b00;border-radius:14px">
+    <div style="font-size:15px;font-weight:800;color:#12161c;margin-bottom:4px">🍵 你最希望把博罗哪样做成真正的大品牌？</div>
+    <div style="font-size:12.5px;color:#8a93a1;margin-bottom:10px">这些牌一直都在。哪张最该摆到桌面上？</div>
     <div id="brandGrid" style="display:flex;gap:8px;flex-wrap:wrap"></div>
-    <div id="brandOut" style="margin-top:10px;font-size:12.5px;color:#cbd5e1;line-height:1.6"></div>
+    <div id="brandOut" style="margin-top:10px;font-size:12.5px;color:#5f6773;line-height:1.6"></div>
   </div>
 
   <div class="next"><a href="report.html">下一步：分析报告 →</a></div>
 </div>
 
 <script>
-const dark={text:'#93a4bd'};
+const dark={text:'#5f6773'};
 function base(id){return echarts.init(document.getElementById(id))}
 const c1=base('ch1'),c2=base('ch2'),c3=base('ch3'),c4=base('ch4'),c5=base('ch5');
-const tip={backgroundColor:'#16203a',borderColor:'#2b3a55',textStyle:{color:'#e6edf3'}};
+const tip={backgroundColor:'#f8fafc',borderColor:'#d8dee8',textStyle:{color:'#12161c'}};
 
 c1.setOption({backgroundColor:'transparent',tooltip:{trigger:'axis',...tip},
   grid:{left:100,right:45,top:10,bottom:30},
-  xAxis:{type:'value',axisLabel:{color:dark.text},splitLine:{lineStyle:{color:'#1c2739'}}},
-  yAxis:{type:'category',data:['广州','深圳(高铁)','东莞石龙'],axisLabel:{color:'#cbd5e1',fontSize:12}},
+  xAxis:{type:'value',axisLabel:{color:dark.text},splitLine:{lineStyle:{color:'#e6e9ef'}}},
+  yAxis:{type:'category',data:['广州','深圳(高铁)','东莞石龙'],axisLabel:{color:'#5f6773',fontSize:12}},
   series:[{type:'bar',data:[
-    {value:90,itemStyle:{color:'#6b7280'}},
-    {value:30,itemStyle:{color:'#22c55e'}},
-    {value:20,itemStyle:{color:'#4ade80'}}
-  ],barWidth:20,label:{show:true,position:'right',color:'#cbd5e1',formatter:'{c}分钟'}}]});
+    {value:90,itemStyle:{color:'#98a1ad'}},
+    {value:30,itemStyle:{color:'#0a84ff'}},
+    {value:20,itemStyle:{color:'#00a6c0'}}
+  ],barWidth:20,label:{show:true,position:'right',color:'#5f6773',formatter:'{c}分钟'}}]});
 
 c2.setOption({backgroundColor:'transparent',tooltip:{trigger:'axis',...tip},
   grid:{left:60,right:30,top:20,bottom:30},
   xAxis:{type:'category',data:['2025实数','每人次600','每人次800','每人次1000'],axisLabel:{color:dark.text}},
-  yAxis:{type:'value',axisLabel:{color:dark.text},splitLine:{lineStyle:{color:'#1c2739'}}},
+  yAxis:{type:'value',axisLabel:{color:dark.text},splitLine:{lineStyle:{color:'#e6e9ef'}}},
   series:[{type:'bar',data:[
-    {value:52,itemStyle:{color:'#6b7280'}},
-    {value:62,itemStyle:{color:'#3b82f6'}},
-    {value:82,itemStyle:{color:'#22c55e'}},
-    {value:103,itemStyle:{color:'#4ade80'}}
-  ],barWidth:30,label:{show:true,position:'top',color:'#cbd5e1',formatter:'{c}亿'}}]});
+    {value:52,itemStyle:{color:'#98a1ad'}},
+    {value:62,itemStyle:{color:'#0a84ff'}},
+    {value:82,itemStyle:{color:'#0a84ff'}},
+    {value:103,itemStyle:{color:'#00a6c0'}}
+  ],barWidth:30,label:{show:true,position:'top',color:'#5f6773',formatter:'{c}亿'}}]});
 
 c3.setOption({backgroundColor:'transparent',tooltip:{trigger:'axis',...tip},
   grid:{left:60,right:30,top:20,bottom:30},
-  xAxis:{type:'category',data:['一产','二产','三产'],axisLabel:{color:'#cbd5e1',fontSize:12}},
-  yAxis:{type:'value',axisLabel:{color:dark.text,formatter:'{value}%'},splitLine:{lineStyle:{color:'#1c2739'}}},
+  xAxis:{type:'category',data:['一产','二产','三产'],axisLabel:{color:'#5f6773',fontSize:12}},
+  yAxis:{type:'value',axisLabel:{color:dark.text,formatter:'{value}%'},splitLine:{lineStyle:{color:'#e6e9ef'}}},
   series:[{type:'bar',data:[
-    {value:7.8,itemStyle:{color:'#84cc16'}},
-    {value:6.9,itemStyle:{color:'#22c55e'}},
-    {value:2.7,itemStyle:{color:'#3b82f6'}}
-  ],barWidth:36,label:{show:true,position:'top',color:'#cbd5e1',formatter:'{c}%'}}]});
+    {value:7.8,itemStyle:{color:'#5f9e3f'}},
+    {value:6.9,itemStyle:{color:'#0a84ff'}},
+    {value:2.7,itemStyle:{color:'#0a84ff'}}
+  ],barWidth:36,label:{show:true,position:'top',color:'#5f6773',formatter:'{c}%'}}]});
 
 c4.setOption({backgroundColor:'transparent',tooltip:{trigger:'axis',...tip},
   legend:{top:0,textStyle:{color:dark.text,fontSize:11}},
   grid:{left:50,right:20,top:30,bottom:30},
-  xAxis:{type:'category',data:['一产','二产','三产'],axisLabel:{color:'#cbd5e1'}},
-  yAxis:{type:'value',axisLabel:{color:dark.text,formatter:'{value}%'},splitLine:{lineStyle:{color:'#1c2739'}}},
+  xAxis:{type:'category',data:['一产','二产','三产'],axisLabel:{color:'#5f6773'}},
+  yAxis:{type:'value',axisLabel:{color:dark.text,formatter:'{value}%'},splitLine:{lineStyle:{color:'#e6e9ef'}}},
   series:[
-    {name:'博罗',type:'bar',data:[10.7,54.6,34.7],itemStyle:{color:'#22c55e'},barWidth:20},
-    {name:'惠城',type:'bar',data:[1.5,27.6,69.0],itemStyle:{color:'#3b82f6'},barWidth:20}
+    {name:'博罗',type:'bar',data:[10.7,54.6,34.7],itemStyle:{color:'#0a84ff'},barWidth:20},
+    {name:'惠城',type:'bar',data:[1.5,27.6,69.0],itemStyle:{color:'#0a84ff'},barWidth:20}
   ]});
 
 c5.setOption({backgroundColor:'transparent',tooltip:{trigger:'axis',...tip},
   legend:{top:0,textStyle:{color:dark.text,fontSize:11}},
   grid:{left:60,right:20,top:30,bottom:30},
-  xAxis:{type:'category',data:['2023','2024','2025'],axisLabel:{color:'#cbd5e1'}},
-  yAxis:{type:'value',axisLabel:{color:dark.text,formatter:'{value}%'},splitLine:{lineStyle:{color:'#1c2739'}}},
+  xAxis:{type:'category',data:['2023','2024','2025'],axisLabel:{color:'#5f6773'}},
+  yAxis:{type:'value',axisLabel:{color:dark.text,formatter:'{value}%'},splitLine:{lineStyle:{color:'#e6e9ef'}}},
   series:[
-    {name:'规上工业增速',type:'line',data:[10.2,9.5,8.7],smooth:true,lineStyle:{color:'#22c55e',width:2},itemStyle:{color:'#22c55e'}},
-    {name:'固投增速',type:'line',data:[5.3,-8.2,-18.8],smooth:true,lineStyle:{color:'#f87171',width:2},itemStyle:{color:'#f87171'}}
+    {name:'规上工业增速',type:'line',data:[10.2,9.5,8.7],smooth:true,lineStyle:{color:'#0a84ff',width:2},itemStyle:{color:'#0a84ff'}},
+    {name:'固投增速',type:'line',data:[5.3,-8.2,-18.8],smooth:true,lineStyle:{color:'#c93b3b',width:2},itemStyle:{color:'#c93b3b'}}
   ]});
 window.addEventListener('resize',()=>[c1,c2,c3,c4,c5].forEach(c=>c.resize()));
 </script>
@@ -195,8 +200,8 @@ window.addEventListener('resize',()=>[c1,c2,c3,c4,c5].forEach(c=>c.resize()));
   <button type="button" data-duel-footer>发这题给朋友</button>
 </div>
 <style>
-.likebar{position:relative;bottom:auto;left:auto;transform:none;display:flex;justify-content:center;margin:20px 0;background:rgba(15,23,42,.96);border:1px solid #3b82f6;border-radius:24px;padding:9px 20px;display:flex;gap:22px;z-index:999;box-shadow:0 6px 24px rgba(0,0,0,.6)}
-.likebar button{background:none;border:none;color:#e2e8f0;font-size:14px;cursor:pointer}
+.likebar{position:relative;bottom:auto;left:auto;transform:none;display:flex;justify-content:center;margin:20px 0;background:rgba(255,255,255,.94);border:1px solid #0a84ff;border-radius:24px;padding:9px 20px;display:flex;gap:22px;z-index:999;box-shadow:0 6px 24px rgba(17,24,39,.10)}
+.likebar button{background:none;border:none;color:#12161c;font-size:14px;cursor:pointer}
 .likebar button:active{transform:scale(1.15)}
 </style>
 <script>
@@ -222,11 +227,11 @@ var _hmt = _hmt || [];
 (function(){
   const KEY="boluo_brand_v1";
   const opts=[
-    {k:"tea",label:"🍵 柏塘山茶",c:"#84cc16"},
-    {k:"caixin",label:"🥬 福田菜心",c:"#22c55e"},
-    {k:"luofu",label:"⛰️ 罗浮山",c:"#a78bfa"},
-    {k:"oil",label:"🥜 观音阁花生油",c:"#fbbf24"},
-    {k:"peanut",label:"🥜 公庄花生",c:"#f97316"}
+    {k:"tea",label:"🍵 柏塘山茶",c:"#5f9e3f"},
+    {k:"caixin",label:"🥬 福田菜心",c:"#0a84ff"},
+    {k:"luofu",label:"⛰️ 罗浮山",c:"#6a5be0"},
+    {k:"oil",label:"🥜 观音阁花生油",c:"#b25b00"},
+    {k:"peanut",label:"🥜 公庄花生",c:"#e25700"}
   ];
   let d=JSON.parse(localStorage.getItem(KEY)||'{}');
   opts.forEach(o=>{if(typeof d[o.k]!=="number")d[o.k]=0;});

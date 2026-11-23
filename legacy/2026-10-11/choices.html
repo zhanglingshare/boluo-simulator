@@ -3,34 +3,34 @@
 <title>博罗产业风洞 · 五条路</title>
 <style>
 *{box-sizing:border-box}
-body{margin:0;background:#080b12;color:#e6edf3;font:14px/1.6 -apple-system,"PingFang SC","Microsoft YaHei",sans-serif}
-.nav{position:sticky;top:0;z-index:50;display:flex;gap:5px;align-items:center;padding:9px 14px;background:rgba(8,11,18,.95);border-bottom:1px solid #1b2434;overflow-x:auto}
+body{margin:0;background:#f6f7f9;color:#12161c;font:14px/1.6 -apple-system,"PingFang SC","Microsoft YaHei",sans-serif}
+.nav{position:sticky;top:0;z-index:50;display:flex;gap:5px;align-items:center;padding:9px 14px;background:rgba(255,255,255,.86);border-bottom:1px solid #e6e9ef;overflow-x:auto}
 .nav b{font-size:14px;margin-right:6px;flex:none}
-.nav a{background:#131c2b;color:#93a4bd;border:1px solid #22304a;padding:6px 12px;border-radius:20px;font-size:12.5px;text-decoration:none;white-space:nowrap;flex:none}
-.nav a.on{background:#15803d;border-color:#22c55e;color:#fff;font-weight:600}
-.nav .sp{margin-left:auto;font-size:11.5px;color:#64748b;flex:none}
+.nav a{background:#eef1f5;color:#5f6773;border:1px solid #dfe3ea;padding:6px 12px;border-radius:20px;font-size:12.5px;text-decoration:none;white-space:nowrap;flex:none}
+.nav a.on{background:#0a84ff;border-color:#0a84ff;color:#fff;font-weight:600}
+.nav .sp{margin-left:auto;font-size:11.5px;color:#98a1ad;flex:none}
 .wrap{max-width:800px;margin:auto;padding:16px}
 h1{font-size:20px;margin:0 0 2px}
-.sub{color:#8fa3bf;font-size:13px;margin:0 0 16px}
-.path{background:#0e1523;border:1px solid #1c2739;border-radius:12px;padding:16px;margin-bottom:10px;display:flex;gap:14px;align-items:flex-start;cursor:pointer;transition:.2s}
-.path:hover{border-color:#22c55e}
+.sub{color:#5f6773;font-size:13px;margin:0 0 16px}
+.path{background:#ffffff;border:1px solid #e6e9ef;border-radius:12px;padding:16px;margin-bottom:10px;display:flex;gap:14px;align-items:flex-start;cursor:pointer;transition:.2s}
+.path:hover{border-color:#0a84ff}
 .path.off{opacity:.4}
 .path .icon{font-size:28px;flex:none}
 .path .body{flex:1}
 .path .t{font-size:15px;font-weight:700;margin-bottom:4px}
-.path .d{font-size:12px;color:#8fa3bf;line-height:1.6}
-.path .src{font-size:10px;color:#5b6b82;margin-top:4px}
-.path .num{font-size:14px;font-weight:700;color:#fbbf24;margin-top:6px}
-.switch{width:44px;height:24px;background:#1c2739;border-radius:12px;position:relative;flex:none;margin-top:4px;transition:.2s}
-.switch::after{content:'';position:absolute;width:20px;height:20px;background:#6b7280;border-radius:50%;top:2px;left:2px;transition:.2s}
-.path.on .switch{background:#15803d}
+.path .d{font-size:12px;color:#5f6773;line-height:1.6}
+.path .src{font-size:10px;color:#98a1ad;margin-top:4px}
+.path .num{font-size:14px;font-weight:700;color:#b25b00;margin-top:6px}
+.switch{width:44px;height:24px;background:#e6e9ef;border-radius:12px;position:relative;flex:none;margin-top:4px;transition:.2s}
+.switch::after{content:'';position:absolute;width:20px;height:20px;background:#98a1ad;border-radius:50%;top:2px;left:2px;transition:.2s}
+.path.on .switch{background:#0a84ff}
 .path.on .switch::after{left:22px;background:#fff}
-.gap{background:#0a0f1a;border:1px solid #1c2739;border-radius:12px;padding:16px;margin-top:14px;text-align:center}
-.gap .big{font-size:28px;font-weight:800;color:#fbbf24}
+.gap{background:#f6f7f9;border:1px solid #e6e9ef;border-radius:12px;padding:16px;margin-top:14px;text-align:center}
+.gap .big{font-size:28px;font-weight:800;color:#b25b00}
 .next{text-align:center;margin-top:18px}
-.next a{background:#15803d;color:#fff;padding:10px 24px;border-radius:8px;text-decoration:none;font-weight:600;display:inline-block}
-.plain{background:#0f1a0e;border:1px solid #1a3a1a;border-left:3px solid #22c55e;border-radius:8px;padding:10px 12px;font-size:12.5px;line-height:1.9;color:#c8e6c9;margin-top:10px}
-.plain .lab{display:block;font-size:10.5px;font-weight:800;color:#4ade80;letter-spacing:1px;margin-bottom:3px}
+.next a{background:#0a84ff;color:#fff;padding:10px 24px;border-radius:8px;text-decoration:none;font-weight:600;display:inline-block}
+.plain{background:#f1f6ec;border:1px solid #edf5e8;border-left:3px solid #0a84ff;border-radius:8px;padding:10px 12px;font-size:12.5px;line-height:1.9;color:#0b7a86;margin-top:10px}
+.plain .lab{display:block;font-size:10.5px;font-weight:800;color:#00a6c0;letter-spacing:1px;margin-bottom:3px}
 </style>
 <meta property="og:type" content="website">
 <meta property="og:title" content="五条路，你会留下哪几条？">
@@ -38,6 +38,11 @@ h1{font-size:20px;margin:0 0 2px}
 <meta property="og:image" content="https://zhanglingshare.github.io/boluo-simulator/legacy/2026-10-11/public-stage.webp">
 <link rel="stylesheet" href="public-duel.css?v=5">
 <script type="module" src="public-duel.js?v=4"></script>
+<meta name="theme-color" content="#f6f7f9">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns=%27http://www.w3.org/2000/svg%27 viewBox=%270 0 64 64%27%3E%3Cdefs%3E%3ClinearGradient id=%27g%27 x1=%270%27 y1=%270%27 x2=%271%27 y2=%271%27%3E%3Cstop stop-color=%27%230A84FF%27/%3E%3Cstop offset=%271%27 stop-color=%27%2300A6C0%27/%3E%3C/linearGradient%3E%3C/defs%3E%3Crect width=%2764%27 height=%2764%27 rx=%2715%27 fill=%27url(%23g)%27/%3E%3Ctext x=%2732%27 y=%2744%27 font-family=%27sans-serif%27 font-size=%2730%27 font-weight=%27bold%27 fill=%27white%27 text-anchor=%27middle%27%3E%E5%8D%9A%3C/text%3E%3C/svg%3E">
+<link rel="preconnect" href="https://miaoda.feishu.cn">
+<link rel="stylesheet" href="https://miaoda.feishu.cn/fonts/css2?family=Noto+Sans+SC:wght@400;500;700;800&family=Inter:wght@400;500;600;700;800&display=swap">
+<link rel="stylesheet" href="light.css?v=1">
 </head><body data-duel-page="choices">
 
 <div class="nav">
@@ -65,7 +70,7 @@ h1{font-size:20px;margin:0 0 2px}
     <div class="icon">🏭</div>
     <div class="body">
       <div class="t">产业承接升级（园洲石湾接东莞）</div>
-      <div class="d">园洲规上工业344亿、石湾2513家企业，挨着东莞石龙。深莞共建产业园、4宗链主项目总投资80亿预计年产值203亿。从"接企业"到"融产业链"。<br><span style="color:#7dd3fc">→ 走通了你会感到：园洲石湾的厂房更满了</span></div>
+      <div class="d">园洲规上工业344亿、石湾2513家企业，挨着东莞石龙。深莞共建产业园、4宗链主项目总投资80亿预计年产值203亿。从"接企业"到"融产业链"。<br><span style="color:#2f9bd6">→ 走通了你会感到：园洲石湾的厂房更满了</span></div>
       <div class="src">来源：南方+、惠州政府网、镇街公开数据</div>
       <div class="num">…</div>
     </div>
@@ -76,7 +81,7 @@ h1{font-size:20px;margin:0 0 2px}
     <div class="icon">⚡</div>
     <div class="body">
       <div class="t">新投产项目（欣旺达等）</div>
-      <div class="d">电子信息+23%、电气机械+13.7%，8个百亿级产业集群。5年引进项目1042宗，规上工业企业从1400+目标到2500家。高新企业686→900家。<br><span style="color:#7dd3fc">→ 走通了你会感到：家门口多几个新工厂、新岗位</span></div>
+      <div class="d">电子信息+23%、电气机械+13.7%，8个百亿级产业集群。5年引进项目1042宗，规上工业企业从1400+目标到2500家。高新企业686→900家。<br><span style="color:#2f9bd6">→ 走通了你会感到：家门口多几个新工厂、新岗位</span></div>
       <div class="src">来源：统计公报、博罗新春第一会</div>
       <div class="num">…</div>
     </div>
@@ -87,7 +92,7 @@ h1{font-size:20px;margin:0 0 2px}
     <div class="icon">🏔️</div>
     <div class="body">
       <div class="t">罗浮山文旅升级</div>
-      <div class="d">年游客1028万、旅游收入52亿，但人均消费仅约500元。如果从"路过"变成"过夜"，人均消费和停留时间提升，罗浮未来城写入深圳十五五规划。<br><span style="color:#7dd3fc">→ 走通了你会感到：周末民宿更满、周边小店有人气</span></div>
+      <div class="d">年游客1028万、旅游收入52亿，但人均消费仅约500元。如果从"路过"变成"过夜"，人均消费和停留时间提升，罗浮未来城写入深圳十五五规划。<br><span style="color:#2f9bd6">→ 走通了你会感到：周末民宿更满、周边小店有人气</span></div>
       <div class="src">来源：统计公报、南方+罗浮未来城报道</div>
       <div class="num">…</div>
     </div>
@@ -98,7 +103,7 @@ h1{font-size:20px;margin:0 0 2px}
     <div class="icon">🌾</div>
     <div class="body">
       <div class="t">特色农业品牌化</div>
-      <div class="d">一产107亿+7.8%，柏塘山茶（广东十大名茶）、福田菜心（国家地理标志）、罗浮山国药、景田百岁山。从"卖原料"到"卖品牌"。<br><span style="color:#7dd3fc">→ 走通了你会感到：山茶菜心能卖出溢价</span></div>
+      <div class="d">一产107亿+7.8%，柏塘山茶（广东十大名茶）、福田菜心（国家地理标志）、罗浮山国药、景田百岁山。从"卖原料"到"卖品牌"。<br><span style="color:#2f9bd6">→ 走通了你会感到：山茶菜心能卖出溢价</span></div>
       <div class="src">来源：统计公报、农业农村局公开信息</div>
       <div class="num">…</div>
     </div>
@@ -109,7 +114,7 @@ h1{font-size:20px;margin:0 0 2px}
     <div class="icon">🚄</div>
     <div class="body">
       <div class="t">融深融莞通道</div>
-      <div class="d">赣深高铁博罗站、莞惠城轨北延、罗浮未来城（深圳惠州十五五规划均写入）。常住人口从124万目标到160万，产业和人口双向流入。<br><span style="color:#7dd3fc">→ 走通了你会感到：半小时到深圳，周末去哪都快</span></div>
+      <div class="d">赣深高铁博罗站、莞惠城轨北延、罗浮未来城（深圳惠州十五五规划均写入）。常住人口从124万目标到160万，产业和人口双向流入。<br><span style="color:#2f9bd6">→ 走通了你会感到：半小时到深圳，周末去哪都快</span></div>
       <div class="src">来源：今日惠州网一把手访谈、南方+</div>
       <div class="num">…</div>
     </div>
@@ -117,10 +122,10 @@ h1{font-size:20px;margin:0 0 2px}
   </div>
 
   <div class="gap">
-    <div style="font-size:12px;color:#6b7280;margin-bottom:8px">同一套模型、固定随机种子，按当前开关实时算（不是把五个数字直接相加）</div>
+    <div style="font-size:12px;color:#98a1ad;margin-bottom:8px">同一套模型、固定随机种子，按当前开关实时算（不是把五个数字直接相加）</div>
     <div style="display:flex;gap:22px;justify-content:center;flex-wrap:wrap;margin-bottom:8px">
-      <div><div style="font-size:11px;color:#6b7280">2030 中位数</div><div class="big" id="curP50" style="font-size:22px;margin:0">—</div></div>
-      <div><div style="font-size:11px;color:#6b7280">达标可能</div><div class="big" id="curHit" style="font-size:22px;color:#4ade80;margin:0">—</div></div>
+      <div><div style="font-size:11px;color:#98a1ad">2030 中位数</div><div class="big" id="curP50" style="font-size:22px;margin:0">—</div></div>
+      <div><div style="font-size:11px;color:#98a1ad">达标可能</div><div class="big" id="curHit" style="font-size:22px;color:#00a6c0;margin:0">—</div></div>
     </div>
     <div class="big" id="gapNum" style="font-size:18px;margin:0">—</div>
   </div>
@@ -164,7 +169,7 @@ function recalc(){
   document.getElementById("curHit").textContent="约"+Math.round(hit)+"%";
   const gn=document.getElementById("gapNum");
   gn.textContent=gap>0?("距参考目标 约"+Math.round(gap)+"亿"):"已到参考目标";
-  gn.style.color=gap<=0?"#34d399":gap<100?"#fbbf24":"#f87171";
+  gn.style.color=gap<=0?"#00a6c0":gap<100?"#b25b00":"#c93b3b";
 }
 recalc();
 </script>
@@ -174,8 +179,8 @@ recalc();
   <button type="button" data-duel-footer>和朋友试同一组</button>
 </div>
 <style>
-.likebar{position:relative;bottom:auto;left:auto;transform:none;display:flex;justify-content:center;margin:20px 0;background:rgba(15,23,42,.96);border:1px solid #3b82f6;border-radius:24px;padding:9px 20px;display:flex;gap:22px;z-index:999;box-shadow:0 6px 24px rgba(0,0,0,.6)}
-.likebar button{background:none;border:none;color:#e2e8f0;font-size:14px;cursor:pointer}
+.likebar{position:relative;bottom:auto;left:auto;transform:none;display:flex;justify-content:center;margin:20px 0;background:rgba(255,255,255,.94);border:1px solid #0a84ff;border-radius:24px;padding:9px 20px;display:flex;gap:22px;z-index:999;box-shadow:0 6px 24px rgba(17,24,39,.10)}
+.likebar button{background:none;border:none;color:#12161c;font-size:14px;cursor:pointer}
 .likebar button:active{transform:scale(1.15)}
 </style>
 <script>

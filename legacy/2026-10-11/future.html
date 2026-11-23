@@ -5,51 +5,51 @@
 <script src="model.js"></script>
 <style>
 *{box-sizing:border-box}
-body{margin:0;background:#080b12;color:#e6edf3;font:14px/1.6 -apple-system,"PingFang SC","Microsoft YaHei",sans-serif}
-.nav{position:sticky;top:0;z-index:50;display:flex;gap:5px;align-items:center;padding:9px 14px;background:rgba(8,11,18,.95);border-bottom:1px solid #1b2434;overflow-x:auto}
+body{margin:0;background:#f6f7f9;color:#12161c;font:14px/1.6 -apple-system,"PingFang SC","Microsoft YaHei",sans-serif}
+.nav{position:sticky;top:0;z-index:50;display:flex;gap:5px;align-items:center;padding:9px 14px;background:rgba(255,255,255,.86);border-bottom:1px solid #e6e9ef;overflow-x:auto}
 .nav b{font-size:14px;margin-right:6px;flex:none}
-.nav a{background:#131c2b;color:#93a4bd;border:1px solid #22304a;padding:6px 12px;border-radius:20px;font-size:12.5px;text-decoration:none;white-space:nowrap;flex:none}
-.nav a.on{background:#15803d;border-color:#22c55e;color:#fff;font-weight:600}
+.nav a{background:#eef1f5;color:#5f6773;border:1px solid #dfe3ea;padding:6px 12px;border-radius:20px;font-size:12.5px;text-decoration:none;white-space:nowrap;flex:none}
+.nav a.on{background:#0a84ff;border-color:#0a84ff;color:#fff;font-weight:600}
 .wrap{max-width:880px;margin:auto;padding:16px}
 h1{font-size:20px;margin:0 0 2px}
-.sub{color:#8fa3bf;font-size:13px;margin:0 0 14px}
-.card{background:#0e1523;border:1px solid #1c2739;border-radius:12px;padding:18px;margin-bottom:12px}
-.card h2{font-size:14.5px;margin:0 0 12px;color:#cbd5e1}
-.btn{background:#15803d;color:#fff;border:0;padding:10px 22px;border-radius:8px;font-size:14px;font-weight:600;cursor:pointer}
+.sub{color:#5f6773;font-size:13px;margin:0 0 14px}
+.card{background:#ffffff;border:1px solid #e6e9ef;border-radius:12px;padding:18px;margin-bottom:12px}
+.card h2{font-size:14.5px;margin:0 0 12px;color:#5f6773}
+.btn{background:#0a84ff;color:#fff;border:0;padding:10px 22px;border-radius:8px;font-size:14px;font-weight:600;cursor:pointer}
 .btn.gh{background:#059669}
 .ctrl{display:flex;gap:10px;align-items:center;flex-wrap:wrap}
-select{background:#16203a;color:#e6edf3;border:1px solid #2b3a55;padding:8px 12px;border-radius:6px;font-size:12.5px}
-.seed-in{background:#0a0f1a;border:1px solid #2b3a55;color:#fbbf24;padding:8px 10px;border-radius:6px;font-size:13px;width:90px}
+select{background:#f8fafc;color:#12161c;border:1px solid #d8dee8;padding:8px 12px;border-radius:6px;font-size:12.5px}
+.seed-in{background:#f6f7f9;border:1px solid #d8dee8;color:#b25b00;padding:8px 10px;border-radius:6px;font-size:13px;width:90px}
 .prob{font-size:38px;font-weight:800;text-align:center;margin:6px 0}
 .gauges{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin:12px 0}
 @media(max-width:700px){.gauges{grid-template-columns:1fr}}
-.gauge{background:#0a0f1a;border:1px solid #1c2739;border-radius:10px;padding:14px;text-align:center}
-.gauge .l{font-size:11px;color:#6b7d96}
+.gauge{background:#f6f7f9;border:1px solid #e6e9ef;border-radius:10px;padding:14px;text-align:center}
+.gauge .l{font-size:11px;color:#8a93a1}
 .gauge .v{font-size:24px;font-weight:800;margin-top:5px;font-variant-numeric:tabular-nums}
-.gauge .d{font-size:10.5px;color:#5b6b82;margin-top:4px}
+.gauge .d{font-size:10.5px;color:#98a1ad;margin-top:4px}
 .chart{width:100%;height:280px}
 .chart-sm{height:200px}
-.note{font-size:12.5px;color:#93a4bf;margin-top:10px;line-height:2;background:#0a0f1a;border-radius:8px;padding:12px 14px}
-.note b{color:#cbd5e1}
-.note .h{color:#4ade80;font-weight:800;display:block;font-size:11px;letter-spacing:1px;margin-bottom:5px}
-.note .warn-h{color:#fbbf24}
+.note{font-size:12.5px;color:#5f6773;margin-top:10px;line-height:2;background:#f6f7f9;border-radius:8px;padding:12px 14px}
+.note b{color:#5f6773}
+.note .h{color:#00a6c0;font-weight:800;display:block;font-size:11px;letter-spacing:1px;margin-bottom:5px}
+.note .warn-h{color:#b25b00}
 .scen3{display:grid;grid-template-columns:repeat(3,1fr);gap:9px}
 @media(max-width:700px){.scen3{grid-template-columns:1fr}}
-.scen3 .s{background:#0a0f1a;border-radius:9px;padding:12px;text-align:center;border:1px solid}
-.scen3 .s .l{font-size:10.5px;color:#6b7d96}
+.scen3 .s{background:#f6f7f9;border-radius:9px;padding:12px;text-align:center;border:1px solid}
+.scen3 .s .l{font-size:10.5px;color:#8a93a1}
 .scen3 .s .v{font-size:19px;font-weight:800;margin-top:4px}
-.param-panel{font-size:12px;color:#93a4bf;line-height:2}
+.param-panel{font-size:12px;color:#5f6773;line-height:2}
 .param-panel .row{display:flex;gap:8px;padding:3px 0}
-.param-panel .k{color:#cbd5e1;flex:none;min-width:110px}
-.param-panel .v2{color:#fbbf24}
+.param-panel .k{color:#5f6773;flex:none;min-width:110px}
+.param-panel .v2{color:#b25b00}
 table.sens{width:100%;border-collapse:collapse;font-size:11.5px;margin-top:10px}
-table.sens th{color:#6b7d96;font-weight:600;padding:6px 8px;text-align:right;border-bottom:1px solid #1c2739;font-size:10.5px}
+table.sens th{color:#8a93a1;font-weight:600;padding:6px 8px;text-align:right;border-bottom:1px solid #e6e9ef;font-size:10.5px}
 table.sens th:first-child,table.sens td:first-child{text-align:left}
-table.sens td{padding:6px 8px;text-align:right;border-bottom:1px solid #152033;color:#93a4bf}
-.status{font-size:11.5px;color:#6b7d96;margin-left:8px}
-.conclusion{background:#0e1523;border:1px solid #1c2739;border-radius:12px;padding:18px;font-size:13px;line-height:2;color:#cbd5e1}
+table.sens td{padding:6px 8px;text-align:right;border-bottom:1px solid #f6f9fd;color:#5f6773}
+.status{font-size:11.5px;color:#8a93a1;margin-left:8px}
+.conclusion{background:#ffffff;border:1px solid #e6e9ef;border-radius:12px;padding:18px;font-size:13px;line-height:2;color:#5f6773}
 .next{text-align:center;margin-top:16px}
-.next a{background:#15803d;color:#fff;padding:11px 24px;border-radius:8px;text-decoration:none;font-weight:600;display:inline-block}
+.next a{background:#0a84ff;color:#fff;padding:11px 24px;border-radius:8px;text-decoration:none;font-weight:600;display:inline-block}
 #out{display:none}
 </style>
 <meta property="og:type" content="website">
@@ -58,6 +58,11 @@ table.sens td{padding:6px 8px;text-align:right;border-bottom:1px solid #152033;c
 <meta property="og:image" content="https://zhanglingshare.github.io/boluo-simulator/legacy/2026-10-11/public-stage.webp">
 <link rel="stylesheet" href="public-duel.css?v=5">
 <script type="module" src="public-duel.js?v=4"></script>
+<meta name="theme-color" content="#f6f7f9">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns=%27http://www.w3.org/2000/svg%27 viewBox=%270 0 64 64%27%3E%3Cdefs%3E%3ClinearGradient id=%27g%27 x1=%270%27 y1=%270%27 x2=%271%27 y2=%271%27%3E%3Cstop stop-color=%27%230A84FF%27/%3E%3Cstop offset=%271%27 stop-color=%27%2300A6C0%27/%3E%3C/linearGradient%3E%3C/defs%3E%3Crect width=%2764%27 height=%2764%27 rx=%2715%27 fill=%27url(%23g)%27/%3E%3Ctext x=%2732%27 y=%2744%27 font-family=%27sans-serif%27 font-size=%2730%27 font-weight=%27bold%27 fill=%27white%27 text-anchor=%27middle%27%3E%E5%8D%9A%3C/text%3E%3C/svg%3E">
+<link rel="preconnect" href="https://miaoda.feishu.cn">
+<link rel="stylesheet" href="https://miaoda.feishu.cn/fonts/css2?family=Noto+Sans+SC:wght@400;500;700;800&family=Inter:wght@400;500;600;700;800&display=swap">
+<link rel="stylesheet" href="light.css?v=1">
 </head><body data-duel-page="future">
 
 <div class="nav">
@@ -88,7 +93,7 @@ table.sens td{padding:6px 8px;text-align:right;border-bottom:1px solid #152033;c
         <option value="1000">快速模式 · 1000次</option>
         <option value="10000" selected>完整模式 · 10000次</option>
       </select>
-      <span style="font-size:12px;color:#93a4bd">随机种子</span>
+      <span style="font-size:12px;color:#5f6773">随机种子</span>
       <input type="number" class="seed-in" id="seed" value="42">
       <button class="btn" id="bRun">🎲 开始模拟</button>
     </div>
@@ -103,28 +108,28 @@ table.sens td{padding:6px 8px;text-align:right;border-bottom:1px solid #152033;c
 
     <!-- 概率 -->
     <div class="card" style="text-align:center">
-      <div style="font-size:12.5px;color:#8fa3bf">达到1600亿参考目标的模拟比例</div>
+      <div style="font-size:12.5px;color:#5f6773">达到1600亿参考目标的模拟比例</div>
       <div class="prob" id="prob">—</div>
-      <div style="font-size:11.5px;color:#6b7d96">这不是"博罗有多少概率成功"，是"在当前假设下，一万次里有多少次过线"</div>
+      <div style="font-size:11.5px;color:#8a93a1">这不是"博罗有多少概率成功"，是"在当前假设下，一万次里有多少次过线"</div>
     </div>
 
     <!-- 三档 -->
     <div class="card">
       <h2>三档结果：把一万次从小到大排队</h2>
       <div class="gauges">
-        <div class="gauge" style="border-color:#7f1d1d">
+        <div class="gauge" style="border-color:#fbe9e9">
           <div class="l">第10百分位</div>
-          <div class="v" id="p10" style="color:#f87171">—</div>
+          <div class="v" id="p10" style="color:#c93b3b">—</div>
           <div class="d">只有10%比这更低</div>
         </div>
-        <div class="gauge" style="border-color:#713f12">
+        <div class="gauge" style="border-color:#efe2cc">
           <div class="l">中位数 P50</div>
-          <div class="v" id="p50" style="color:#fbbf24">—</div>
+          <div class="v" id="p50" style="color:#b25b00">—</div>
           <div class="d">一半在这上面，一半在下面</div>
         </div>
         <div class="gauge" style="border-color:#14532d">
           <div class="l">第90百分位</div>
-          <div class="v" id="p90" style="color:#34d399">—</div>
+          <div class="v" id="p90" style="color:#00a6c0">—</div>
           <div class="d">只有10%比这更高</div>
         </div>
       </div>
@@ -167,9 +172,9 @@ table.sens td{padding:6px 8px;text-align:right;border-bottom:1px solid #152033;c
     </div>
 
     <!-- 参数敏感性 -->
-    <div class="card" style="border-color:#2b3a55">
+    <div class="card" style="border-color:#d8dee8">
       <h2>参数敏感性：每条路单独±20%，结果变多少</h2>
-      <div style="font-size:12.5px;color:#93a4bf;line-height:1.9;margin-bottom:10px">
+      <div style="font-size:12.5px;color:#5f6773;line-height:1.9;margin-bottom:10px">
         保持其他路不动，只把某条路的预期贡献调高或调低20%，用<b>同一个种子</b>重跑，差异纯粹来自这个参数。这跟上一页的"事件压测"是两本账，分开看。
       </div>
       <div class="ctrl">
@@ -179,7 +184,7 @@ table.sens td{padding:6px 8px;text-align:right;border-bottom:1px solid #152033;c
       <div id="sensOut" style="display:none">
         <div id="chSens" class="chart"></div>
         <table class="sens" id="sensTable"></table>
-        <div class="note" style="margin-top:12px"><span class="h warn-h" style="color:#fbbf24">怎么用这个结果</span>
+        <div class="note" style="margin-top:12px"><span class="h warn-h" style="color:#b25b00">怎么用这个结果</span>
           蓝色=该路+20%后达标率的变化，红色=-20%后的变化。条越长=这条路越敏感。资源有限时先盯敏感的路——它动一点，达标率就动得多。但<b>"敏感"不等于"重要"</b>：敏感只说明模型里它和结果绑得紧，现实中先做哪条，还要看谁可控、成本低、见效快。
         </div>
       </div>
@@ -189,9 +194,9 @@ table.sens td{padding:6px 8px;text-align:right;border-bottom:1px solid #152033;c
     <div class="card">
       <h2>三个情景对应什么局面</h2>
       <div class="scen3">
-        <div class="s" style="border-color:#7f1d1d"><div class="l">较差 · 什么同时不顺</div><div class="v" id="sBad" style="color:#f87171">—</div></div>
-        <div class="s" style="border-color:#713f12"><div class="l">中位 · 正常走</div><div class="v" id="sMid" style="color:#fbbf24">—</div></div>
-        <div class="s" style="border-color:#14532d"><div class="l">较好 · 超预期</div><div class="v" id="sGood" style="color:#34d399">—</div></div>
+        <div class="s" style="border-color:#fbe9e9"><div class="l">较差 · 什么同时不顺</div><div class="v" id="sBad" style="color:#c93b3b">—</div></div>
+        <div class="s" style="border-color:#efe2cc"><div class="l">中位 · 正常走</div><div class="v" id="sMid" style="color:#b25b00">—</div></div>
+        <div class="s" style="border-color:#14532d"><div class="l">较好 · 超预期</div><div class="v" id="sGood" style="color:#00a6c0">—</div></div>
       </div>
       <div class="note" style="margin-top:10px">
         较差情景对应"投产延期+外溢放缓"一起发生；中位对应"按节奏走"；较好对应"招商超预期+高铁效应放大"。较好和较差之间的差距，差不多相当于博罗现在半年多的GDP——这个摆动幅度说明结果落在一个区间里，关键看几个节点守不守得住。
@@ -234,16 +239,16 @@ function run(){
 
   // 参数面板
   document.getElementById('paramPanel').innerHTML=`
-    <div class="row"><span class="k">随机种子</span><span class="v2">${seed}</span><span style="color:#5b6b82">（同种子必同结果）</span></div>
+    <div class="row"><span class="k">随机种子</span><span class="v2">${seed}</span><span style="color:#98a1ad">（同种子必同结果）</span></div>
     <div class="row"><span class="k">模拟次数</span><span class="v2">${N.toLocaleString()}次</span></div>
-    <div class="row"><span class="k">起点（实测）</span><span class="v2">${BASE}亿</span><span style="color:#5b6b82">2025年GDP</span></div>
-    <div class="row"><span class="k">参考目标</span><span class="v2">${TARGET}亿</span><span style="color:#5b6b82">县委书记访谈提出，非刚性指标</span></div>
+    <div class="row"><span class="k">起点（实测）</span><span class="v2">${BASE}亿</span><span style="color:#98a1ad">2025年GDP</span></div>
+    <div class="row"><span class="k">参考目标</span><span class="v2">${TARGET}亿</span><span style="color:#98a1ad">县委书记访谈提出，非刚性指标</span></div>
     <div class="row" style="margin-top:6px"><span class="k">五条路预期/摆动</span></div>
     ${PATHS.map(p=>`<div class="row" style="padding-left:20px"><span style="color:${p.color};min-width:110px">· ${p.name}</span><span class="v2">预期${p.mu}亿，摆动±${p.sd}亿</span></div>`).join('')}
-    <div class="row"><span class="k">全局扰动</span><span class="v2">±${GLOBAL_SD}亿</span><span style="color:#5b6b82">模拟外部冲击等随机因素</span></div>
+    <div class="row"><span class="k">全局扰动</span><span class="v2">±${GLOBAL_SD}亿</span><span style="color:#98a1ad">模拟外部冲击等随机因素</span></div>
   `;
 
-  const probColor=s.hit>50?'#34d399':s.hit>20?'#fbbf24':'#f87171';
+  const probColor=s.hit>50?'#00a6c0':s.hit>20?'#b25b00':'#c93b3b';
   document.getElementById('prob').innerHTML=`<span style="color:${probColor}">${s.hit.toFixed(1)}%</span>`;
   document.getElementById('p10').textContent=Math.round(s.p10)+'亿';
   document.getElementById('p50').textContent=Math.round(s.p50)+'亿';
@@ -259,24 +264,24 @@ function run(){
   s.sorted.forEach(r=>{const bi=Math.min(bins-1,Math.max(0,Math.floor((r-min)/step)));data[bi]++});
   charts.chHist.setOption({
     backgroundColor:'transparent',
-    tooltip:{trigger:'axis',backgroundColor:'#16203a',borderColor:'#2b3a55',textStyle:{color:'#e6edf3'},formatter:ps=>`约${ps[0].name}亿<br/>出现${ps[0].value}次`},
+    tooltip:{trigger:'axis',backgroundColor:'#f8fafc',borderColor:'#d8dee8',textStyle:{color:'#12161c'},formatter:ps=>`约${ps[0].name}亿<br/>出现${ps[0].value}次`},
     grid:{left:55,right:25,top:25,bottom:40},
-    xAxis:{type:'category',data:labels,axisLabel:{color:'#6b7d96',interval:Math.floor(bins/8)},axisLine:{lineStyle:{color:'#2b3a55'}}},
-    yAxis:{type:'value',axisLabel:{color:'#6b7d96'},splitLine:{lineStyle:{color:'#1c2739'}}},
-    series:[{type:'bar',data:data.map((v,i)=>({value:v,itemStyle:{color:labels[i]>=TARGET?'#22c55e':'#3b82f6',opacity:.8}})),barCategoryGap:'15%',
-      markLine:{silent:true,symbol:'none',data:[{xAxis:String(Math.round(TARGET)),lineStyle:{color:'#a78bfa',width:2,type:'dashed'},label:{color:'#a78bfa',formatter:'1600亿',position:'start'}}]}}]
+    xAxis:{type:'category',data:labels,axisLabel:{color:'#8a93a1',interval:Math.floor(bins/8)},axisLine:{lineStyle:{color:'#d8dee8'}}},
+    yAxis:{type:'value',axisLabel:{color:'#8a93a1'},splitLine:{lineStyle:{color:'#e6e9ef'}}},
+    series:[{type:'bar',data:data.map((v,i)=>({value:v,itemStyle:{color:labels[i]>=TARGET?'#0a84ff':'#0a84ff',opacity:.8}})),barCategoryGap:'15%',
+      markLine:{silent:true,symbol:'none',data:[{xAxis:String(Math.round(TARGET)),lineStyle:{color:'#6a5be0',width:2,type:'dashed'},label:{color:'#6a5be0',formatter:'1600亿',position:'start'}}]}}]
   });
 
   // 堆叠
   charts.chStack.setOption({
     backgroundColor:'transparent',
-    tooltip:{trigger:'axis',backgroundColor:'#16203a',borderColor:'#2b3a55',textStyle:{color:'#e6edf3'},axisPointer:{type:'shadow'}},
-    legend:{top:0,textStyle:{color:'#93a4bd',fontSize:10.5},type:'scroll'},
+    tooltip:{trigger:'axis',backgroundColor:'#f8fafc',borderColor:'#d8dee8',textStyle:{color:'#12161c'},axisPointer:{type:'shadow'}},
+    legend:{top:0,textStyle:{color:'#5f6773',fontSize:10.5},type:'scroll'},
     grid:{left:60,right:20,top:35,bottom:20},
-    xAxis:{type:'value',axisLabel:{color:'#6b7d96'},splitLine:{lineStyle:{color:'#1c2739'}}},
-    yAxis:{type:'category',data:['2030年'],axisLabel:{color:'#93a4bd'}},
+    xAxis:{type:'value',axisLabel:{color:'#8a93a1'},splitLine:{lineStyle:{color:'#e6e9ef'}}},
+    yAxis:{type:'category',data:['2030年'],axisLabel:{color:'#5f6773'}},
     series:[
-      {name:'现有盘子',type:'bar',stack:'s',data:[BASE],itemStyle:{color:'#374151'}},
+      {name:'现有盘子',type:'bar',stack:'s',data:[BASE],itemStyle:{color:'#e9edf3'}},
       ...PATHS.map(p=>({name:p.name,type:'bar',stack:'s',data:[p.mu],itemStyle:{color:p.color}}))
     ]
   });
@@ -285,14 +290,14 @@ function run(){
   const tSorted=[...PATHS].sort((a,b)=>b.sd-a.sd);
   charts.chTorn.setOption({
     backgroundColor:'transparent',
-    tooltip:{trigger:'axis',backgroundColor:'#16203a',borderColor:'#2b3a55',textStyle:{color:'#e6edf3'},formatter:ps=>{const p=tSorted[ps[0].dataIndex];return `${p.name}<br/>摆动±${p.sd}亿`}},
-    legend:{top:0,textStyle:{color:'#93a4bd',fontSize:10.5},data:['向下摆','向上摆']},
+    tooltip:{trigger:'axis',backgroundColor:'#f8fafc',borderColor:'#d8dee8',textStyle:{color:'#12161c'},formatter:ps=>{const p=tSorted[ps[0].dataIndex];return `${p.name}<br/>摆动±${p.sd}亿`}},
+    legend:{top:0,textStyle:{color:'#5f6773',fontSize:10.5},data:['向下摆','向上摆']},
     grid:{left:110,right:50,top:35,bottom:30},
-    xAxis:{type:'value',axisLabel:{color:'#6b7d96',formatter:'{value}'},splitLine:{lineStyle:{color:'#1c2739'}}},
-    yAxis:{type:'category',data:tSorted.map(p=>p.name),axisLabel:{color:'#cbd5e1',fontSize:11.5}},
+    xAxis:{type:'value',axisLabel:{color:'#8a93a1',formatter:'{value}'},splitLine:{lineStyle:{color:'#e6e9ef'}}},
+    yAxis:{type:'category',data:tSorted.map(p=>p.name),axisLabel:{color:'#5f6773',fontSize:11.5}},
     series:[
-      {name:'向下摆',type:'bar',data:tSorted.map(p=>-p.sd),itemStyle:{color:'#f87171',opacity:.75},barWidth:18},
-      {name:'向上摆',type:'bar',data:tSorted.map(p=>p.sd),itemStyle:{color:'#3b82f6',opacity:.75},barWidth:18}
+      {name:'向下摆',type:'bar',data:tSorted.map(p=>-p.sd),itemStyle:{color:'#c93b3b',opacity:.75},barWidth:18},
+      {name:'向上摆',type:'bar',data:tSorted.map(p=>p.sd),itemStyle:{color:'#0a84ff',opacity:.75},barWidth:18}
     ]
   });
 
@@ -300,17 +305,17 @@ function run(){
   const cOrder=coefs.map((v,i)=>({v,p:PATHS[i]})).sort((a,b)=>b.v-a.v);
   charts.chCoef.setOption({
     backgroundColor:'transparent',
-    tooltip:{trigger:'axis',backgroundColor:'#16203a',borderColor:'#2b3a55',textStyle:{color:'#e6edf3'},formatter:ps=>`${cOrder[ps[0].dataIndex].p.name}<br/>关联强度 ${ps[0].value.toFixed(3)}`},
+    tooltip:{trigger:'axis',backgroundColor:'#f8fafc',borderColor:'#d8dee8',textStyle:{color:'#12161c'},formatter:ps=>`${cOrder[ps[0].dataIndex].p.name}<br/>关联强度 ${ps[0].value.toFixed(3)}`},
     grid:{left:110,right:50,top:15,bottom:30},
-    xAxis:{type:'value',max:1,axisLabel:{color:'#6b7d96'},splitLine:{lineStyle:{color:'#1c2739'}}},
-    yAxis:{type:'category',data:cOrder.map(o=>o.p.name),axisLabel:{color:'#cbd5e1',fontSize:11.5}},
+    xAxis:{type:'value',max:1,axisLabel:{color:'#8a93a1'},splitLine:{lineStyle:{color:'#e6e9ef'}}},
+    yAxis:{type:'category',data:cOrder.map(o=>o.p.name),axisLabel:{color:'#5f6773',fontSize:11.5}},
     series:[{type:'bar',data:cOrder.map(o=>({value:o.v.toFixed(3),itemStyle:{color:o.p.color}})),barWidth:18,
-      label:{show:true,position:'right',color:'#93a4bd',fontSize:10.5}}]
+      label:{show:true,position:'right',color:'#5f6773',fontSize:10.5}}]
   });
 
   const topCoef=cOrder[0];
   document.getElementById('conclusion').innerHTML=`
-    中位数落在 <b style="color:#fbbf24">${Math.round(s.p50)}亿</b>，${s.hit>50?'一万次里过半数过了1600亿参考线':'一万次里过半数没过线'}（比例${s.hit.toFixed(1)}%）。
+    中位数落在 <b style="color:#b25b00">${Math.round(s.p50)}亿</b>，${s.hit>50?'一万次里过半数过了1600亿参考线':'一万次里过半数没过线'}（比例${s.hit.toFixed(1)}%）。
     在模型内部，和最终结果同步性最强的是 <b style="color:${topCoef.p.color}">${topCoef.p.name}</b>（关联强度${topCoef.v.toFixed(3)}）。
     再次说明：这是模型内部的关联，不代表现实因果大小。全部参数公开，换种子、改预期，结果会相应变化——你可以自己复跑。
   `;
@@ -336,22 +341,22 @@ function runSensitivity(){
   rows.sort((a,b)=>(Math.abs(b.plusProb)+Math.abs(b.minusProb))-(Math.abs(a.plusProb)+Math.abs(a.minusProb)));
   charts.chSens.setOption({
     backgroundColor:'transparent',
-    tooltip:{trigger:'axis',backgroundColor:'#16203a',borderColor:'#2b3a55',textStyle:{color:'#e6edf3'},formatter:ps=>{const r=rows[ps[0].dataIndex];const d=ps[0].seriesName==='+20%'?r.plusProb:r.minusProb;return `${r.name}<br/>${ps[0].seriesName}：达标率${d>=0?'+':''}${d.toFixed(1)}%`}},
-    legend:{top:0,textStyle:{color:'#93a4bd',fontSize:11},data:['+20%','-20%']},
+    tooltip:{trigger:'axis',backgroundColor:'#f8fafc',borderColor:'#d8dee8',textStyle:{color:'#12161c'},formatter:ps=>{const r=rows[ps[0].dataIndex];const d=ps[0].seriesName==='+20%'?r.plusProb:r.minusProb;return `${r.name}<br/>${ps[0].seriesName}：达标率${d>=0?'+':''}${d.toFixed(1)}%`}},
+    legend:{top:0,textStyle:{color:'#5f6773',fontSize:11},data:['+20%','-20%']},
     grid:{left:110,right:50,top:35,bottom:30},
-    xAxis:{type:'value',axisLabel:{color:'#6b7d96',formatter:'{value}%'},splitLine:{lineStyle:{color:'#1c2739'}}},
-    yAxis:{type:'category',data:rows.map(r=>r.name),axisLabel:{color:'#cbd5e1',fontSize:11.5}},
+    xAxis:{type:'value',axisLabel:{color:'#8a93a1',formatter:'{value}%'},splitLine:{lineStyle:{color:'#e6e9ef'}}},
+    yAxis:{type:'category',data:rows.map(r=>r.name),axisLabel:{color:'#5f6773',fontSize:11.5}},
     series:[
-      {name:'+20%',type:'bar',data:rows.map(r=>r.plusProb.toFixed(1)),itemStyle:{color:'#3b82f6',opacity:.8},barWidth:16},
-      {name:'-20%',type:'bar',data:rows.map(r=>r.minusProb.toFixed(1)),itemStyle:{color:'#f87171',opacity:.8},barWidth:16}
+      {name:'+20%',type:'bar',data:rows.map(r=>r.plusProb.toFixed(1)),itemStyle:{color:'#0a84ff',opacity:.8},barWidth:16},
+      {name:'-20%',type:'bar',data:rows.map(r=>r.minusProb.toFixed(1)),itemStyle:{color:'#c93b3b',opacity:.8},barWidth:16}
     ]
   });
   document.getElementById('sensTable').innerHTML=`
     <tr><th>路径</th><th>-20%中位</th><th>基准</th><th>+20%中位</th><th>摆动</th></tr>
     ${rows.map(r=>`<tr><td style="color:${r.color}">${r.name}</td>
-      <td style="color:#f87171">${Math.round(base.p50+r.p50M)}</td>
-      <td style="color:#fbbf24">${Math.round(base.p50)}</td>
-      <td style="color:#34d399">${Math.round(base.p50+r.p50P)}</td>
+      <td style="color:#c93b3b">${Math.round(base.p50+r.p50M)}</td>
+      <td style="color:#b25b00">${Math.round(base.p50)}</td>
+      <td style="color:#00a6c0">${Math.round(base.p50+r.p50P)}</td>
       <td>±${Math.round((Math.abs(r.p50P)+Math.abs(r.p50M))/2)}</td></tr>`).join('')}
   `;
   document.getElementById('sensStatus').textContent=`完成（基准达标率${base.hit.toFixed(1)}%）`;
@@ -369,8 +374,8 @@ run();
   <button type="button" data-duel-footer>发这题给朋友</button>
 </div>
 <style>
-.likebar{position:relative;bottom:auto;left:auto;transform:none;display:flex;justify-content:center;margin:20px 0;background:rgba(15,23,42,.96);border:1px solid #3b82f6;border-radius:24px;padding:9px 20px;display:flex;gap:22px;z-index:999;box-shadow:0 6px 24px rgba(0,0,0,.6)}
-.likebar button{background:none;border:none;color:#e2e8f0;font-size:14px;cursor:pointer}
+.likebar{position:relative;bottom:auto;left:auto;transform:none;display:flex;justify-content:center;margin:20px 0;background:rgba(255,255,255,.94);border:1px solid #0a84ff;border-radius:24px;padding:9px 20px;display:flex;gap:22px;z-index:999;box-shadow:0 6px 24px rgba(17,24,39,.10)}
+.likebar button{background:none;border:none;color:#12161c;font-size:14px;cursor:pointer}
 .likebar button:active{transform:scale(1.15)}
 </style>
 <script>

@@ -1,0 +1,1342 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="description" content="先按直觉投一票，再从博罗的公开数据看游客、收入和工业为什么走出了不同的结果。">
+<title>追问 · 博罗产业风洞</title>
+<link rel="stylesheet" href="public-stage.css">
+<style>
+
+.question-page {
+  --aqua: var(--mint);
+  --amber: var(--ember);
+  --card: #20271b;
+  --card-deep: #151b13;
+  --rise-fill: linear-gradient(90deg,#4c9676,#93f4c4);
+  --fall-fill: repeating-linear-gradient(135deg,#a4533d61 0 3px,transparent 3px 6px),linear-gradient(90deg,#ffc39e,#ec9566);
+}
+.chart-drawer { margin: 10px 0 0; border-top: 1px solid var(--line); }
+.next-stage { font-size: 13px; }
+.reading { --value-ink: var(--aqua); --fill: var(--rise-fill); --origin: left }
+.reading.down { --value-ink: var(--amber); --fill: var(--fall-fill); --origin: right }
+.value { color: var(--value-ink); font-variant-numeric: tabular-nums }
+.track {
+  position: relative;
+  display: block;
+  height: 25px;
+  border-radius: 3px;
+  background: repeating-linear-gradient(to right, #bedfce19 0 1px, transparent 1px 25%);
+  border-right: 1px solid #bedfce19;
+}
+.track::after {
+  position: absolute;
+  z-index: 1;
+  inset: 0 auto 0 var(--zero);
+  width: 1px;
+  background: #d6ebe08a;
+  content: "";
+}
+.track .bar {
+  position: absolute;
+  left: var(--start);
+  top: 50%;
+  width: var(--length);
+  height: min(60%, 15px);
+  margin-top: calc(-1 * min(30%, 7.5px));
+  border-radius: 3px;
+  background: var(--fill);
+  transform-origin: var(--origin);
+}
+.question-detail { margin-top: 28px }
+.story-grid { display: grid; grid-template-columns: minmax(0, 1.18fr) minmax(0, 1fr); gap: 14px; align-items: stretch }
+.secondary-charts { display: grid; gap: 14px }
+.chart {
+  min-width: 0;
+  margin: 0;
+  padding: clamp(13px, 1.6vw, 20px);
+  border: 1px solid var(--line);
+  border-radius: 13px;
+  background: linear-gradient(155deg, #142922, var(--card-deep) 85%);
+}
+.chart-caption { display: flex; align-items: baseline; justify-content: space-between; flex-wrap: wrap; gap: 2px 9px }
+.chart-caption h3 { margin: 0; font-size: clamp(16px, 1.55vw, 22px); line-height: 1.23; letter-spacing: -.02em }
+.scope { color: var(--muted); font-size: 11.5px }
+.lead-chart {
+  display: flex;
+  flex-direction: column;
+  min-height: 100%;
+  background: radial-gradient(ellipse at 54% 0, #244238 0, transparent 68%), var(--card-deep);
+  border-color: #426456;
+}
+.lead-chart .chart-caption h3 { font-size: clamp(18px, 1.9vw, 27px) }
+.divergence { margin-top: 16px }
+.axis-row, .metric-row {
+  display: grid;
+  grid-template-columns: minmax(94px, 1.26fr) minmax(63px, 3fr) 64px;
+  align-items: center;
+  gap: 9px;
+  width: 100%;
+  padding-inline: 10px;
+}
+.axis-row { height: 30px }
+.axis-ticks { height: 100%; position: relative; font-variant-numeric: tabular-nums }
+.axis-ticks span {
+  position: absolute;
+  top: 0;
+  left: var(--pos);
+  transform: translateX(-50%);
+  color: var(--muted);
+  white-space: nowrap;
+  font-size: 11px;
+}
+.axis-ticks span:first-child { transform: none }
+.axis-ticks span:last-child { transform: translateX(-100%) }
+.axis-ticks .zero { color: var(--ink); font-weight: 750 }
+.metric-row {
+  min-height: 57px;
+  border: 1px solid transparent;
+  border-radius: 8px;
+  background: transparent;
+  text-align: left;
+  transition: background .18s, border-color .18s;
+}
+.metric-row + .metric-row { margin-top: 4px }
+.metric-row:hover { background: #d8eee710 }
+.metric-row[aria-pressed="true"] {
+  border-color: #cfdfd14b;
+  background: #cadbd51a;
+}
+.metric-row .metric-name { font-weight: 680; font-size: clamp(12px, 1.03vw, 15px); line-height: 1.2 }
+.metric-row .value { font-size: clamp(16px, 2vw, 24px); text-align: right; letter-spacing: -.055em }
+.metric-row .bar { height: 14px; margin-top: -7px; animation: grow-x .55s cubic-bezier(.17,.66,.21,1) both }
+.metric-row[aria-pressed="true"] .bar { filter: brightness(1.13) }
+.metric-reading {
+  margin: auto 0 0;
+  min-height: 94px;
+  padding: 12px 13px;
+  border: 1px solid #436254;
+  border-left: 3px solid var(--value-ink, var(--aqua));
+  border-radius: 0 9px 9px 0;
+  background: #192e24;
+}
+.metric-reading p { margin: 0; font-weight: 680; font-size: clamp(15px, 1.25vw, 18px); line-height: 1.42 }
+.metric-reading span { display: block; margin-bottom: 5px; color: var(--value-ink, var(--aqua)); font-size: 12px }
+.chart-note, .chart-hint { margin: 9px 0 0; color: var(--muted); font-size: 11.5px }
+.chart-hint { margin: 10px 0 7px }
+.lead-chart .chart-note { margin-bottom: 14px }
+.amount-scale {
+  display: flex;
+  justify-content: space-between;
+  margin: 7px 0 4px;
+  color: var(--muted);
+  font-size: 10.5px;
+  font-variant-numeric: tabular-nums;
+}
+.amount-row + .amount-row { margin-top: 7px }
+.amount-row .track { height: 11px; background: #09161191; border: none }
+.amount-row .bar { height: 7px; margin-top: -3.5px; transform-origin: left; animation: grow-x .56s ease-out both }
+.amount-label { display: flex; align-items: baseline; justify-content: space-between; gap: 5px; margin-bottom: 1px }
+.amount-label span { color: var(--muted); font-size: 12px }
+.amount-label strong { color: var(--ink); font-size: 17px; font-variant-numeric: tabular-nums }
+.amount-label strong small { margin-left: 6px; color: var(--value-ink); font-size: 11px }
+.series-pair { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-top: 10px }
+.mini-series { min-width: 0 }
+.mini-series + .mini-series { padding-left: 10px; border-left: 1px solid var(--line) }
+.series-label { color: var(--muted); font-size: 11.5px; font-weight: 650 }
+.series-bars {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  align-items: end;
+  height: 102px;
+  margin-top: 8px;
+  border-bottom: 1px solid #8da79a;
+  background: repeating-linear-gradient(to top, #b8e3cb1a 0 1px, transparent 1px 33.33%);
+}
+.series-bar { position: relative; display: block; height: var(--height); text-align: center }
+.series-bar i {
+  display: block;
+  width: 56%;
+  margin: auto;
+  height: 100%;
+  border-radius: 3px 3px 0 0;
+  background: linear-gradient(#6bbba5, #284f44);
+  transform-origin: bottom;
+  animation: grow-y .58s ease-out both;
+}
+.series-bar:last-child i { background: linear-gradient(#a3f5ce, #3e896f) }
+.series-bar b {
+  position: absolute;
+  bottom: calc(100% + 3px);
+  left: 50%;
+  color: var(--ink);
+  font-size: 10.5px;
+  transform: translateX(-50%);
+  white-space: nowrap;
+  font-variant-numeric: tabular-nums;
+}
+.series-years { display: grid; grid-template-columns: repeat(3, 1fr); color: var(--muted); font-size: 10px; text-align: center }
+.gap-axis { margin: 10px 0 0 }
+.gap-row { padding: 4px 0 7px }
+.gap-row + .gap-row { border-top: 1px solid var(--line); margin-top: 4px }
+.gap-header, .gap-values { display: flex; justify-content: space-between; align-items: baseline; gap: 5px }
+.gap-header span { color: var(--muted); font-size: 12px }
+.gap-header strong { color: var(--aqua); font-size: 15px; font-variant-numeric: tabular-nums }
+.gap-values { margin-top: 2px; font-size: 11.5px; font-variant-numeric: tabular-nums }
+.gap-values span:first-child { color: var(--aqua) }
+.gap-values span:last-child { color: var(--blue) }
+.gap-track { position: relative; height: 18px; margin: 3px 0; background: repeating-linear-gradient(90deg, #d3eddf32 0 1px, transparent 1px 20%); border-right: 1px solid #d3eddf32 }
+.gap-track::before { position: absolute; inset: 8px 0 auto; height: 2px; background: #3b584d; content: "" }
+.gap-band {
+  position: absolute;
+  top: 7px;
+  left: var(--start);
+  width: var(--length);
+  height: 4px;
+  background: linear-gradient(90deg, var(--aqua), var(--blue));
+}
+.gap-band::before, .gap-band::after {
+  position: absolute;
+  top: 50%;
+  width: 9px;
+  height: 9px;
+  border-radius: 100%;
+  background: var(--aqua);
+  transform: translate(-50%, -50%);
+  content: "";
+}
+.gap-band::after { left: 100%; background: var(--blue) }
+.branches { margin-top: 12px }
+.branch-plot {
+  position: relative;
+  display: grid;
+  grid-template-columns: repeat(5, minmax(0, 1fr));
+  height: 144px;
+  background: repeating-linear-gradient(to top, #bce6cc17 0 1px, transparent 1px 25%);
+}
+.branch-plot::after {
+  position: absolute;
+  inset: auto 0 var(--axis) 0;
+  height: 1px;
+  background: #b5d9c690;
+  content: "";
+}
+.branch { position: relative; min-width: 0 }
+.branch i {
+  position: absolute;
+  bottom: var(--axis);
+  left: 26%;
+  width: 48%;
+  height: var(--extent);
+  background: var(--fill);
+  border-radius: 4px 4px 0 0;
+  transform-origin: bottom;
+  animation: grow-y .54s ease-out both;
+}
+.branch b {
+  position: absolute;
+  bottom: calc(var(--axis) + var(--extent) + 3px);
+  left: 50%;
+  transform: translateX(-50%);
+  color: var(--value-ink);
+  font-size: 12px;
+  white-space: nowrap;
+  font-variant-numeric: tabular-nums;
+}
+.branch.down i { top: calc(100% - var(--axis)); bottom: auto; border-radius: 0 0 4px 4px; transform-origin: top }
+.branch.down b { top: calc(100% - var(--axis) + var(--extent) + 1px); bottom: auto }
+.branch-names { display: grid; grid-template-columns: repeat(5, minmax(0, 1fr)); gap: 2px; text-align: center; color: var(--muted); font-size: 11px }
+.share-stack { display: flex; min-height: 34px; margin: 13px 0 7px; border-radius: 5px; overflow: hidden }
+.share-stack span { display: grid; place-items: center; width: var(--share); background: var(--share-color); color: #102119; font-size: 12px; font-weight: 850; font-variant-numeric: tabular-nums }
+.share-row { display: grid; grid-template-columns: minmax(74px, 1fr) 1fr 1fr; align-items: center; gap: 7px; padding: 3px 0; font-size: 12px }
+.share-row span:not(:first-child) { text-align: right; font-variant-numeric: tabular-nums }
+.share-row .value { color: var(--aqua) }
+.share-row.head { color: var(--muted); font-size: 11px }
+.share-row i { display: inline-block; width: 8px; height: 8px; margin-right: 5px; border-radius: 50%; background: var(--share-color) }
+.scenario {
+  display: grid;
+  grid-template-columns: 1.23fr 1fr;
+  gap: 16px;
+  margin-top: 14px;
+  padding: clamp(13px, 1.8vw, 23px);
+  border: 1px solid var(--line);
+  border-radius: 13px;
+  background: var(--card);
+}
+.scenario h3 { margin: 0; font-size: clamp(17px, 1.5vw, 22px) }
+.scenario-setup, .scenario-summary, .scenario-goal { margin: 4px 0 8px; color: var(--muted); font-size: 13px }
+.scenario-goal { margin: 6px 0 0; font-size: 12px }
+.case-buttons { display: flex; flex-wrap: wrap; gap: 7px; margin-bottom: 9px }
+.case-buttons button {
+  min-height: 44px;
+  padding: 7px 12px;
+  border: 1px solid #587467;
+  border-radius: 7px;
+  background: #193328;
+  color: var(--ink);
+  font-size: 13px;
+  font-weight: 730;
+}
+.case-buttons button:hover, .case-buttons button[aria-pressed="true"] { border-color: var(--aqua); background: #28503d }
+.path { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 13px; padding: 0; list-style: none; margin: 0 }
+.path li {
+  position: relative;
+  display: grid;
+  place-items: center;
+  min-height: 48px;
+  padding: 5px 4px;
+  border: 1px solid #46685a;
+  border-radius: 6px;
+  background: #192e26;
+  text-align: center;
+  font-size: 13px;
+  font-weight: 700;
+}
+.path li:last-child { background: #254a38; border-color: #8ecbaa }
+.path[data-current="1"] li:last-child { background: #493529; border-color: var(--amber) }
+.path li + li::before { position: absolute; left: -12px; content: "›"; color: var(--aqua); font-size: 17px }
+.scenario-summary { margin: 8px 0 0 }
+.investigate { align-self: stretch; padding: 11px 12px; border-left: 3px solid var(--aqua); border-radius: 0 8px 8px 0; background: #1b372c }
+.investigate-label { margin: 0; color: var(--aqua); font-size: 12px; font-weight: 750 }
+.investigate h4 { margin: 4px 0 0; font-size: clamp(16px, 1.5vw, 22px); line-height: 1.38 }
+.investigate details p { margin: 0 0 7px; color: var(--muted); font-size: 13px }
+summary { width: fit-content; min-height: 42px; padding: 10px 3px 8px 0; color: var(--muted); cursor: pointer; font-size: 13px }
+.sources { margin-top: 4px }
+.sources ul { margin: 0; padding-left: 22px; font-size: 13px }
+.sr-only { position: absolute; width: 1px; height: 1px; padding: 0; margin: -1px; overflow: hidden; clip-path: inset(50%); white-space: nowrap; border: 0 }
+@keyframes grow-x { from { transform: scaleX(0) } to { transform: scaleX(1) } }
+@keyframes grow-y { from { transform: scaleY(0) } to { transform: scaleY(1) } }
+@media (max-width: 825px) {
+  .story-grid, .scenario { grid-template-columns: 1fr }
+  .secondary-charts { grid-template-columns: repeat(2, minmax(0, 1fr)) }
+  .metric-reading { min-height: 0 }
+  .lead-chart .chart-note { margin-bottom: 10px }
+}
+@media (max-width: 620px) {
+  .story-grid, .secondary-charts { grid-template-columns: 1fr; gap: 9px }
+  .chart { border-radius: 9px }
+  .divergence { margin-top: 10px }
+  .axis-row, .metric-row { grid-template-columns: minmax(70px, 1.24fr) minmax(55px, 2.3fr) 49px; gap: 6px; padding-inline: 6px }
+  .axis-row { height: 21px }
+  .axis-ticks span { font-size: 9.5px }
+  .metric-row { min-height: 45px }
+  .metric-row + .metric-row { margin-top: 2px }
+  .metric-row .value { font-size: 17px }
+  .scenario { margin-top: 9px; gap: 11px }
+  .path li { font-size: 12px }
+}
+@media (max-width: 350px) {
+  .metric-row .value { font-size: 16px }
+}
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after { animation: none !important; transition: none !important; scroll-behavior: auto !important }
+}
+</style>
+
+<meta property="og:type" content="website">
+<meta property="og:title" content="博罗的游客、城乡收入、工厂订单，哪一道你会猜中？">
+<meta property="og:description" content="打开选一次，和朋友对答案。">
+<meta property="og:image" content="https://zhanglingshare.github.io/boluo-simulator/legacy/2026-10-11/public-stage.webp">
+<link rel="stylesheet" href="public-duel.css?v=5">
+<script type="module" src="public-duel.js?v=4"></script>
+</head>
+<body data-duel-page="ending">
+<nav class="nav" aria-label="博罗产业风洞导航">
+  <b>博罗产业风洞</b>
+  <a href="index.html">① 今日话题</a><a href="echo.html">我的回音</a>
+  <a href="town.html">🏘️ 各镇吃喝玩乐</a>
+  <a href="network.html">② 世界怎么长</a>
+  <a href="who.html">③ 基本面</a>
+  <a href="choices.html">④ 五条路</a>
+  <a href="future.html">⑤ 未来</a>
+  <a href="windtunnel.html">⑥ 风洞测试</a>
+  <a href="blindspot.html">⑦ 忽略了什么</a>
+  <a href="report.html">⑧ 分析报告</a>
+  <a href="ending.html" class="on" aria-current="page">⑨ 追问</a>
+</nav>
+<main class="wrap question-page">
+  <header class="page-head">
+    <h1>追问</h1>
+    <div class="subject-switch" id="subject-switch" role="group" aria-label="选择一个追问">
+      <button type="button" data-question="tourists" aria-pressed="true">游客的钱</button>
+      <button type="button" data-question="jobs" aria-pressed="false">家门口的收入</button>
+      <button type="button" data-question="orders" aria-pressed="false">工厂的订单</button>
+    </div>
+  </header>
+
+  <section class="arena" id="guess-stage" data-open="false" aria-labelledby="trial-title">
+    <div class="story-prompt">
+      <p class="prompt-scope">2025 年 · 博罗</p>
+      <h2 class="stage-question" id="trial-title">游客破千万，<br><em>住宿肯定也涨？</em></h2>
+      <p class="stage-instruction">先凭直觉选一次。选完揭开数据。</p>
+      <div class="vote-buttons" id="vote-buttons" role="group" aria-label="选你的判断">
+        <button type="button" data-vote="0" aria-controls="trial-reveal" aria-pressed="false">营业额跟着涨</button>
+        <button type="button" data-vote="1" aria-controls="trial-reveal" aria-pressed="false">营业额反而跌</button>
+      </div>
+      <p class="vote-outcome" id="vote-outcome" role="status"></p>
+      <button class="retake" id="retake" type="button" hidden>收起答案，再猜一遍</button>
+      <section id="friend-duel" class="friend-duel duel-native" aria-label="邀请朋友一起选" hidden></section>
+    </div>
+    <div class="scene-card">
+      <div class="shutter" id="trial-shutter" aria-hidden="true"><span class="shutter-mark">?</span></div>
+      <div class="reveal-pane" id="trial-reveal" hidden>
+        <p class="scene-note">2025 年博罗统计公报 · 同比</p>
+        <div class="impact-pair" id="impact-pair"></div>
+        <canvas class="impact-canvas" id="impact-canvas" aria-hidden="true"></canvas>
+        <div class="trace-labels" aria-hidden="true"><span>上年基准</span><span>2025 年</span></div>
+        <p class="real-insight" id="trial-insight"></p>
+      </div>
+    </div>
+    <span class="arena-image-note">情景配图 · AI 生成</span>
+  </section>
+
+  <article id="question-detail" class="question-detail after-play" aria-labelledby="question-title" hidden>
+    <h2 class="sr-only" id="question-title"></h2>
+    <section class="scenario" aria-labelledby="scenario-title">
+      <div class="scenario-main">
+        <h3 id="scenario-title">换个情景，你会追问什么？</h3>
+        <p class="scenario-setup" id="scenario-setup"></p>
+        <div class="case-buttons" id="case-buttons" role="group" aria-label="选择一种可能情况"></div>
+        <ol class="path" id="case-path" aria-label="沿着这件事往下看">
+          <li><span></span></li><li><span></span></li><li><span></span></li>
+        </ol>
+        <p class="scenario-summary" id="case-summary" role="status"></p>
+        <p id="scenario-goal" class="scenario-goal" hidden></p>
+      </div>
+      <div class="investigate">
+        <p class="investigate-label">接着追问</p>
+        <h4 id="follow-question"></h4>
+        <details id="case-evidence">
+          <summary>要核对哪些记录</summary>
+          <p id="case-record"></p>
+          <p><a href="network.html">回看产业关系图 →</a></p>
+        </details>
+      </div>
+    </section>
+
+    <details class="chart-drawer" id="chart-drawer">
+      <summary class="stage-summary">打开三张明细图</summary>
+      <div class="story-grid">
+        <div id="lead-chart"></div>
+        <div id="secondary-charts" class="secondary-charts"></div>
+      </div>
+    </details>
+    <details class="sources" id="sources">
+      <summary>数据出处</summary>
+      <ul id="source-list"></ul>
+    </details>
+    <p class="next-stage"><a href="report.html">去《分析报告》试试五年能不能走到 1600 亿 →</a></p>
+  </article>
+
+  <noscript><p>2025 年博罗游客人次增长 11.7%，住宿业营业额下降 2.3%。启用 JavaScript 后可选择观点并查看明细图。</p></noscript>
+  <p class="sign">博罗产业决策风洞 · 张凌 博士 · MIT</p>
+</main>
+<script type="application/json" id="question-data">
+{
+  "sources": {
+    "bulletin25": {
+      "label": "2025 年博罗县统计公报（转载）",
+      "url": "https://tjgb.hongheiku.com/xjtjgb/xj2020/75372.html"
+    },
+    "bulletin24": {
+      "label": "2024 年博罗县统计公报（转载）",
+      "url": "https://tjgb.hongheiku.com/xjtjgb/xj2020/65264.html"
+    },
+    "bulletin23": {
+      "label": "2023 年博罗县统计公报（转载）",
+      "url": "https://tjgb.hongheiku.com/xjtjgb/xj2020/50757.html"
+    },
+    "work26": {
+      "label": "惠州日报 · 2026 年博罗县政府工作报告报道",
+      "url": "https://www.hznews.com/xqrm/blx/202601/t20260130_1634641.shtml"
+    }
+  },
+  "topics": {
+    "tourists": {
+      "label": "游客的钱",
+      "contrast": "客流上去，住宿往下",
+      "headline": [
+        "游客破千万，",
+        "住宿生意怎么还跌了？"
+      ],
+      "featured": [
+        "visitors",
+        "lodging"
+      ],
+      "sourceKeys": [
+        "bulletin25",
+        "bulletin24",
+        "bulletin23"
+      ],
+      "lead": {
+        "title": "人多了，哪种生意跟上了？",
+        "ticks": [
+          -20,
+          -10,
+          0,
+          10,
+          20
+        ],
+        "metrics": [
+          {
+            "id": "visitors",
+            "label": "游客人次",
+            "rate": 11.7,
+            "total": 1028.09,
+            "question": "这波客流里，有多少人当天返回、多少人在本地过夜？"
+          },
+          {
+            "id": "tourism",
+            "label": "旅游综合收入",
+            "rate": 19.1,
+            "total": 51.88,
+            "question": "多出来的旅游收入，来自住宿、吃饭、购物，还是其他消费？"
+          },
+          {
+            "id": "food",
+            "label": "餐饮业营业额",
+            "rate": 2.3,
+            "total": 57.32,
+            "question": "同一片区，游客来的周末，附近餐馆的实收多了多少？"
+          },
+          {
+            "id": "lodging",
+            "label": "住宿业营业额",
+            "rate": -2.3,
+            "total": 5.42,
+            "question": "房间卖得少了，还是每间房实际收的钱少了？"
+          }
+        ],
+        "note": "旅游收入统计游客消费。餐饮和住宿是全县行业营业额，含本地居民等其他客源。"
+      },
+      "amounts": {
+        "title": "吃饭和住宿，一年做了多少生意？",
+        "scope": "2025 年全县营业额 · 亿元",
+        "max": 60,
+        "digits": 2,
+        "metricIds": [
+          "food",
+          "lodging"
+        ]
+      },
+      "history": {
+        "title": "连续三年，客流和收入怎么走？",
+        "years": [
+          2023,
+          2024,
+          2025
+        ],
+        "series": [
+          {
+            "metricId": "visitors",
+            "unit": "万人次",
+            "max": 1200,
+            "previous": [
+              871.32,
+              920.53
+            ]
+          },
+          {
+            "metricId": "tourism",
+            "unit": "亿元",
+            "max": 60,
+            "previous": [
+              41.52,
+              43.57
+            ]
+          }
+        ]
+      },
+      "setup": "假如你周末到罗浮山，选一种走法。",
+      "guess": {
+        "title": [
+          "游客破千万，",
+          "住宿肯定也涨？"
+        ],
+        "choices": [
+          "营业额跟着涨",
+          "营业额反而跌"
+        ],
+        "correct": 1,
+        "insight": "接下来查客房卖了多少晚，每晚实际收了多少钱。",
+        "colors": [
+          "#93f4c4",
+          "#ff9b70"
+        ]
+      }
+    },
+    "jobs": {
+      "label": "家门口的岗",
+      "contrast": "农村收入涨得更快",
+      "headline": [
+        "农村收入涨得更快，",
+        "到手还差多少钱？"
+      ],
+      "featured": [
+        "rural",
+        "urban"
+      ],
+      "sourceKeys": [
+        "bulletin25",
+        "work26"
+      ],
+      "lead": {
+        "title": "谁的收入涨得快？",
+        "ticks": [
+          0,
+          2,
+          4,
+          6,
+          8
+        ],
+        "metrics": [
+          {
+            "id": "rural",
+            "label": "农村居民",
+            "rate": 6.2,
+            "total": 32915,
+            "question": "增收来自工资、做生意，还是其他来源？哪一项能持续？"
+          },
+          {
+            "id": "urban",
+            "label": "城镇居民",
+            "rate": 3.5,
+            "total": 45832,
+            "question": "同一个工种，在本地能拿到多少工资？扣掉通勤成本后还剩多少？"
+          },
+          {
+            "id": "county",
+            "label": "全县居民",
+            "rate": 4.5,
+            "total": 40626,
+            "question": "平均收入在涨，各镇、各行业的新入职者实际拿到多少钱？"
+          }
+        ],
+        "note": "比较人均可支配收入的名义增速。收入包括工资、经营等多种来源。"
+      },
+      "gap": {
+        "max": 50000,
+        "oldYear": 2020,
+        "increases": {
+          "rural": 8671,
+          "urban": 8164
+        }
+      },
+      "amounts": {
+        "title": "这两种社保，各覆盖多少人？",
+        "scope": "2025 年末博罗参保人数 · 万人",
+        "max": 40,
+        "digits": 2,
+        "rows": [
+          {
+            "label": "工伤保险",
+            "value": 36.38,
+            "rate": 10.3
+          },
+          {
+            "label": "失业保险",
+            "value": 30.66,
+            "rate": 9.0
+          }
+        ],
+        "note": "同一人可参加多个险种。百分比是参保人数的同比变化。"
+      },
+      "goal": {
+        "year": 2026,
+        "minimum": 1.72,
+        "unit": "万人"
+      },
+      "setup": "假如家附近的工厂开始招人，选一步往下看。",
+      "guess": {
+        "title": [
+          "城里挣得多，",
+          "收入也涨得快？"
+        ],
+        "choices": [
+          "城镇涨得更快",
+          "农村涨得更快"
+        ],
+        "correct": 1,
+        "insight": "2025 年城乡人均可支配收入仍差 {gap} 元。",
+        "colors": [
+          "#93f4c4",
+          "#aebcff"
+        ]
+      }
+    },
+    "orders": {
+      "label": "工厂的订单",
+      "contrast": "工业在涨，工业投资在跌",
+      "headline": [
+        "工厂产出在涨，",
+        "工业投资怎么在跌？"
+      ],
+      "featured": [
+        "industry",
+        "investment"
+      ],
+      "sourceKeys": [
+        "bulletin25"
+      ],
+      "lead": {
+        "title": "生产线在忙，新投入在变什么？",
+        "ticks": [
+          -20,
+          -10,
+          0,
+          10,
+          20
+        ],
+        "metrics": [
+          {
+            "id": "industry",
+            "label": "规上工业增加值",
+            "rate": 8.7,
+            "question": "增长来自原有生产线多开几班，还是建好的新线开始出货？"
+          },
+          {
+            "id": "power",
+            "label": "工业用电量",
+            "rate": 6.8,
+            "question": "增加的用电主要集中在什么行业？用电涨的企业，出货和订单也在涨吗？"
+          },
+          {
+            "id": "investment",
+            "label": "工业投资",
+            "rate": -12.7,
+            "question": "是过去一些大项目已完工，还是准备开工的新项目少了？"
+          },
+          {
+            "id": "all-investment",
+            "label": "全县固定资产投资",
+            "rate": -18.8,
+            "question": "按行业分开看，每项少投了多少钱？能不能分清地产、工业和其他领域各占多少？"
+          }
+        ],
+        "note": "增加值、用电、投资分别反映产出、用电量和新增投入。这里比较各自的变化方向。"
+      },
+      "industries": [
+        {
+          "label": "电子设备",
+          "full": "计算机、通信和其他电子设备制造业",
+          "rate": 23.0
+        },
+        {
+          "label": "电力热力",
+          "full": "电力、热力生产和供应业",
+          "rate": 14.0
+        },
+        {
+          "label": "电气机械",
+          "full": "电气机械和器材制造业",
+          "rate": 13.7
+        },
+        {
+          "label": "金属制品",
+          "full": "金属制品业",
+          "rate": 11.1
+        },
+        {
+          "label": "橡胶塑料",
+          "full": "橡胶和塑料制品业",
+          "rate": -4.2
+        }
+      ],
+      "sizeShares": [
+        {
+          "label": "小微型",
+          "share": 56.8,
+          "rate": 9.7
+        },
+        {
+          "label": "中型",
+          "share": 24.0,
+          "rate": 4.8
+        },
+        {
+          "label": "大型",
+          "share": 19.2,
+          "rate": 10.8
+        }
+      ],
+      "setup": "假如一家博罗大厂接到新单，选它去哪找配套。",
+      "guess": {
+        "title": [
+          "工厂产出涨了，",
+          "工业投资也涨？"
+        ],
+        "choices": [
+          "工业投资跟着涨",
+          "工业投资反而跌"
+        ],
+        "correct": 1,
+        "insight": "今年产出增长的同时，新投入减少了。接着查哪些新线能按时开始出货。",
+        "colors": [
+          "#93f4c4",
+          "#ff9b70"
+        ]
+      }
+    }
+  },
+  "scenarios": {
+    "tourists": [
+      {
+        "label": "当天来回",
+        "steps": [
+          "游客来了",
+          "当天返程",
+          "看白天的消费"
+        ],
+        "summary": "当天来回的人也可能在这里吃饭、买东西。可以先问附近小店，来客多的周末，实收有没有一起增加？",
+        "question": "同一片区，同类周末，客流增加时，附近餐馆和小店的收入变了多少？",
+        "record": "对照同一片区的到访人次与餐饮、零售商户的实收样本。按节假日和普通周末分别比较。"
+      },
+      {
+        "label": "多住一晚",
+        "steps": [
+          "游客来了",
+          "住一晚上",
+          "看住宿和晚间消费"
+        ],
+        "summary": "住一晚多了住宿和晚餐的消费机会。要看游客在哪里住、在哪里吃，以及是哪家店收到这笔钱。",
+        "question": "在这片区住一晚的游客，比当天往返的人多在哪里花钱？",
+        "record": "对同一片区的游客按是否在当地留宿分组，分别查看住宿、餐饮和购物开支，以及收款商户所在镇街。"
+      }
+    ],
+    "jobs": [
+      {
+        "label": "看到招聘启事",
+        "steps": [
+          "工厂开始招人",
+          "看到岗位要求",
+          "查谁能去上班"
+        ],
+        "summary": "看到附近招人，可以接着问工种要什么技能、班次是几点、晚班下班还能不能回家。",
+        "question": "本地求职者卡在报名、录用还是通勤？",
+        "record": "按镇街和工种对照岗位数、报名数和录用数，在晚班岗位里单独核对通勤可达性。"
+      },
+      {
+        "label": "追到入职之后",
+        "steps": [
+          "工厂开始招人",
+          "工人实际到岗",
+          "查三个月后在岗"
+        ],
+        "summary": "能入职只是过了一关。三个月后还有多少人留下来，才看得到岗位能不能接住这批求职者。",
+        "question": "这一批本地入职者，三个月后还有多少人在岗？",
+        "record": "以同一批本地入职者为分母，按工种和班次汇总三个月在岗人数。用离职原因调查区分技能、薪酬与通勤问题。"
+      }
+    ],
+    "orders": [
+      {
+        "label": "在博罗找配套",
+        "steps": [
+          "大厂接到新单",
+          "博罗配套厂供货",
+          "查本地收到多少"
+        ],
+        "summary": "配套厂能接到这一单，接下来要问的是谁供了货，最后有多少货款到了本地企业手里。",
+        "question": "大厂多出来的采购里，有多少实际付给了在博罗生产的配套企业？",
+        "record": "同一批企业按同一季度核对已付款的新增采购，按供货生产地拆分本地与外地，再看两者占比。"
+      },
+      {
+        "label": "向外地找配套",
+        "steps": [
+          "大厂接到新单",
+          "外地配套厂供货",
+          "查本地缺哪一环"
+        ],
+        "summary": "如果这批配套来自外地，可以问当地有没有企业能做，以及差的是工艺、交期还是采购准入。",
+        "question": "同一种配件，本地企业差在哪一步，导致它没有接到单？",
+        "record": "选采购额较大的配件，对照供方的工艺要求、交付记录和本地企业的达标情况，再确定哪一环有缺口。"
+      }
+    ]
+  }
+}
+</script>
+<script>
+(() => {
+  'use strict';
+
+  const { topics, sources, scenarios } = JSON.parse(document.getElementById('question-data').textContent);
+  const entries = Object.entries(topics);
+  const wall = document.getElementById('subject-switch');
+  const detail = document.getElementById('question-detail');
+  const questionTitle = document.getElementById('question-title');
+  const leadChart = document.getElementById('lead-chart');
+  const secondaryCharts = document.getElementById('secondary-charts');
+  const cases = document.getElementById('case-buttons');
+  const path = document.getElementById('case-path');
+  const pathSteps = Array.from(path.querySelectorAll('li span'));
+  const evidence = document.getElementById('case-evidence');
+  const goal = document.getElementById('scenario-goal');
+  const sourceDetails = document.getElementById('sources');
+  const selectedCases = new Map();
+  const selectedMetrics = new Map();
+  let currentTopic;
+
+  function format(value, digits = 0) {
+    return value.toLocaleString('en-US', {
+      minimumFractionDigits: digits,
+      maximumFractionDigits: digits
+    });
+  }
+
+  function signed(value, digits = 1) {
+    const sign = value < 0 ? '−' : value > 0 ? '+' : '';
+    return sign + format(Math.abs(value), digits);
+  }
+
+  function direction(value) {
+    return value < 0 ? 'down' : 'up';
+  }
+
+  function findMetric(topic, id) {
+    return topic.lead.metrics.find(metric => metric.id === id);
+  }
+
+  function scale(value, low, high) {
+    return (value - low) / (high - low) * 100;
+  }
+
+  function track(value, low, high) {
+    const start = scale(Math.min(value, 0), low, high);
+    const length = Math.abs(value) / (high - low) * 100;
+    const zero = scale(0, low, high);
+    return `<span class="track" aria-hidden="true" style="--start:${start}%;--length:${length}%;--zero:${zero}%"><i class="bar"></i></span>`;
+  }
+
+  function caption(title, scope) {
+    return `<figcaption class="chart-caption"><h3>${title}</h3><span class="scope">${scope}</span></figcaption>`;
+  }
+
+  function note(message) {
+    return message ? `<p class="chart-note">${message}</p>` : '';
+  }
+
+  const stage = document.getElementById('guess-stage');
+  const shutter = document.getElementById('trial-shutter');
+  const reveal = document.getElementById('trial-reveal');
+  const ballot = document.getElementById('vote-buttons');
+  const verdict = document.getElementById('vote-outcome');
+  const retake = document.getElementById('retake');
+  const chartDrawer = document.getElementById('chart-drawer');
+  const canvas = document.getElementById('impact-canvas');
+  const motion = matchMedia('(prefers-reduced-motion: reduce)');
+  const votes = new Map();
+  const openTopics = new Set();
+  let traceFrame = 0;
+
+  function duelMetrics(key) {
+    const topic = topics[key];
+    return topic.featured.map(id => findMetric(topic, id));
+  }
+
+  function paintTraces(progress) {
+    const ctx = canvas.getContext('2d');
+    const width = canvas.clientWidth;
+    const height = canvas.clientHeight;
+    if (!ctx || width < 50 || height < 50) return;
+    const pixelRatio = Math.min(devicePixelRatio || 1, 2);
+    if (canvas.width !== Math.round(width * pixelRatio) || canvas.height !== Math.round(height * pixelRatio)) {
+      canvas.width = Math.round(width * pixelRatio);
+      canvas.height = Math.round(height * pixelRatio);
+    }
+    ctx.setTransform(pixelRatio, 0, 0, pixelRatio, 0, 0);
+    ctx.clearRect(0, 0, width, height);
+
+    const topic = topics[currentTopic];
+    const [first, second] = duelMetrics(currentTopic);
+    const [topColor, otherColor] = topic.guess.colors;
+    const step = Math.max(Math.abs(first.rate), Math.abs(second.rate)) > 10 ? 10 : 5;
+    const bottomLimit = Math.min(first.rate, second.rate) < 0 ? -2 * step : -step;
+    const topLimit = 2 * step;
+    const x0 = 31;
+    const x1 = width - 12;
+    const y = rate => 8 + (topLimit - rate) / (topLimit - bottomLimit) * (height - 19);
+
+    ctx.lineWidth = 1;
+    ctx.font = '10px system-ui, sans-serif';
+    ctx.textAlign = 'left';
+    ctx.textBaseline = 'middle';
+    for (let rate = bottomLimit + step; rate < topLimit; rate += step) {
+      const axis = y(rate);
+      ctx.strokeStyle = rate === 0 ? '#e6e9b695' : '#a8bb8a31';
+      ctx.beginPath();
+      ctx.moveTo(x0, axis);
+      ctx.lineTo(x1, axis);
+      ctx.stroke();
+      ctx.fillStyle = '#cbc9a8';
+      ctx.fillText(signed(rate, 0) + '%', 0, axis);
+    }
+
+    const x = x0 + (x1 - x0) * progress;
+    const base = y(0);
+    const ya = y(first.rate * progress);
+    const yb = y(second.rate * progress);
+    const space = ctx.createLinearGradient(x0, 0, x1, 0);
+    space.addColorStop(0, '#998d4600');
+    space.addColorStop(1, '#e6d87c30');
+    ctx.fillStyle = space;
+    ctx.beginPath();
+    ctx.moveTo(x0, base);
+    ctx.lineTo(x, ya);
+    ctx.lineTo(x, yb);
+    ctx.closePath();
+    ctx.fill();
+
+    [[ya, topColor], [yb, otherColor]].forEach(([end, color]) => {
+      ctx.lineWidth = 3;
+      ctx.lineCap = 'round';
+      ctx.strokeStyle = color;
+      ctx.shadowColor = color;
+      ctx.shadowBlur = 9;
+      ctx.beginPath();
+      ctx.moveTo(x0, base);
+      ctx.lineTo(x, end);
+      ctx.stroke();
+      ctx.shadowBlur = 0;
+      ctx.fillStyle = color;
+      ctx.beginPath();
+      ctx.arc(x, end, 4.5, 0, Math.PI * 2);
+      ctx.fill();
+    });
+    ctx.fillStyle = '#f8f4cc';
+    ctx.beginPath();
+    ctx.arc(x0, base, 4, 0, Math.PI * 2);
+    ctx.fill();
+  }
+
+  function drawDuel(animate) {
+    cancelAnimationFrame(traceFrame);
+    if (!animate || motion.matches) {
+      paintTraces(1);
+      return;
+    }
+    const start = performance.now();
+    const step = time => {
+      const progress = Math.min(1, (time - start) / 700);
+      paintTraces(1 - (1 - progress) ** 3);
+      if (progress < 1) traceFrame = requestAnimationFrame(step);
+    };
+    traceFrame = requestAnimationFrame(step);
+  }
+
+  function renderBallot(topic) {
+    const { title, choices } = topic.guess;
+    document.getElementById('trial-title').innerHTML = `${title[0]}<br><em>${title[1]}</em>`;
+    ballot.innerHTML = choices.map((choice, index) => `<button type="button" data-vote="${index}" aria-controls="trial-reveal" aria-pressed="false">${choice}</button>`).join('');
+  }
+
+  function showReveal(visible, animate = false) {
+    const topic = topics[currentTopic];
+    const picked = votes.get(currentTopic);
+    const hasVote = picked !== undefined;
+    stage.dataset.open = String(visible);
+    detail.hidden = !visible;
+    reveal.hidden = !visible;
+    shutter.hidden = visible;
+    retake.hidden = !visible;
+    verdict.textContent = visible && hasVote
+      ? (picked === topic.guess.correct ? '你的判断与这一年的数据对上了。' : '这一年的数据给出了另一边的答案。')
+      : '';
+    verdict.dataset.right = String(hasVote && picked === topic.guess.correct);
+    for (const button of ballot.querySelectorAll('[data-vote]')) {
+      button.setAttribute('aria-pressed', String(visible && Number(button.dataset.vote) === picked));
+    }
+    if (!visible) {
+      cancelAnimationFrame(traceFrame);
+      return;
+    }
+    document.getElementById('impact-pair').innerHTML = duelMetrics(currentTopic).map((metric, index) => `
+      <div class="impact-stat" style="--stat-ink:${topic.guess.colors[index]}">
+        <strong>${signed(metric.rate)}<small>%</small></strong><span>${metric.label}</span>
+      </div>`
+    ).join('');
+    let insight = topic.guess.insight;
+    if (topic.gap) insight = insight.replace('{gap}', format(findMetric(topic, 'urban').total - findMetric(topic, 'rural').total));
+    document.getElementById('trial-insight').textContent = insight;
+    reveal.classList.toggle('enter', animate);
+    drawDuel(animate);
+  }
+
+  function renderLead(topic) {
+    const { title, ticks, metrics } = topic.lead;
+    const low = ticks[0];
+    const high = ticks[ticks.length - 1];
+    const axis = ticks.map(tick =>
+      `<span class="${tick === 0 ? 'zero' : ''}" style="--pos:${scale(tick, low, high)}%">${signed(tick, 0)}</span>`
+    ).join('');
+    const rows = metrics.map(metric =>
+      `<button type="button" class="metric-row reading ${direction(metric.rate)}" data-metric="${metric.id}"
+        aria-controls="metric-reading" aria-pressed="false">
+        <span class="metric-name">${metric.label}</span>
+        ${track(metric.rate, low, high)}
+        <strong class="value">${signed(metric.rate)}%</strong>
+      </button>`
+    ).join('');
+    leadChart.innerHTML = `<figure class="chart lead-chart">
+      ${caption(title, '2025 年同比 · %')}
+      <div class="divergence" role="group" aria-label="点一项指标查看追问">
+        <div class="axis-row" aria-hidden="true"><span></span><div class="axis-ticks">${axis}</div><span></span></div>
+        ${rows}
+      </div>
+      ${note(topic.lead.note)}
+      <div class="metric-reading reading" id="metric-reading" aria-live="polite">
+        <span id="metric-context"></span><p id="metric-question"></p>
+      </div>
+    </figure>`;
+  }
+
+  function showMetric(id) {
+    const metric = findMetric(topics[currentTopic], id);
+    selectedMetrics.set(currentTopic, id);
+    for (const button of leadChart.querySelectorAll('[data-metric]')) {
+      button.setAttribute('aria-pressed', String(button.dataset.metric === id));
+    }
+    document.getElementById('metric-reading').classList.toggle('down', metric.rate < 0);
+    document.getElementById('metric-context').textContent = '追问 · ' + metric.label;
+    document.getElementById('metric-question').textContent = metric.question;
+  }
+
+  function renderAmounts(topic) {
+    const amounts = topic.amounts;
+    const rows = amounts.rows || amounts.metricIds.map(id => {
+      const metric = findMetric(topic, id);
+      return { label: metric.label, value: metric.total, rate: metric.rate };
+    });
+    return `<figure class="chart">
+      ${caption(amounts.title, amounts.scope)}
+      <div class="amount-scale" aria-hidden="true"><span>0</span><span>${format(amounts.max)}</span></div>
+      ${rows.map(row => `<div class="amount-row reading ${direction(row.rate)}">
+        <div class="amount-label"><span>${row.label}</span>
+          <strong>${format(row.value, amounts.digits)}<small>同比 ${signed(row.rate)}%</small></strong>
+        </div>
+        ${track(row.value, 0, amounts.max)}
+      </div>`).join('')}
+      ${note(amounts.note)}
+    </figure>`;
+  }
+
+  function renderHistory(topic) {
+    const { title, years, series } = topic.history;
+    const yearLabels = years.map(year => `<span>${year}</span>`).join('');
+    const subplots = series.map(({ metricId, unit, max, previous }) => {
+      const metric = findMetric(topic, metricId);
+      const values = [...previous, metric.total];
+      const bars = values.map((value, index) =>
+        `<div class="series-bar" style="--height:${scale(value, 0, max)}%">
+          <b><span class="sr-only">${years[index]} 年 </span>${format(value, 2)}</b><i aria-hidden="true"></i>
+        </div>`
+      ).join('');
+      return `<div class="mini-series">
+        <div class="series-label">${metric.label} · ${unit}</div>
+        <div class="series-bars">${bars}</div>
+        <div class="series-years" aria-hidden="true">${yearLabels}</div>
+      </div>`;
+    }).join('');
+    return `<figure class="chart">
+      ${caption(title, '2023—2025 年')}
+      <div class="series-pair">${subplots}</div>
+    </figure>`;
+  }
+
+  function renderGap(topic) {
+    const { max, oldYear, increases } = topic.gap;
+    const ruralNow = findMetric(topic, 'rural').total;
+    const urbanNow = findMetric(topic, 'urban').total;
+    const years = [
+      { year: oldYear, rural: ruralNow - increases.rural, urban: urbanNow - increases.urban },
+      { year: 2025, rural: ruralNow, urban: urbanNow }
+    ];
+    const rows = years.map(({ year, rural, urban }) => {
+      const gap = urban - rural;
+      return `<div class="gap-row">
+        <div class="gap-header"><span>${year} 年</span><strong>差 ${format(gap)} 元</strong></div>
+        <div class="gap-track" aria-hidden="true">
+          <i class="gap-band" style="--start:${scale(rural, 0, max)}%;--length:${scale(gap, 0, max)}%"></i>
+        </div>
+        <div class="gap-values"><span>农村 ${format(rural)}</span><span>城镇 ${format(urban)}</span></div>
+      </div>`;
+    }).join('');
+    return `<figure class="chart">
+      ${caption('涨得更快，差距缩小多少？', '人均可支配收入 · 元')}
+      <div class="amount-scale gap-axis" aria-hidden="true"><span>0</span><span>${format(max)}</span></div>
+      ${rows}
+      ${note('2020 年数据按公报披露的五年增量倒算。两个年份都用当年的价格。')}
+    </figure>`;
+  }
+
+  function renderIndustries(industries) {
+    const min = -10;
+    const max = 29;
+    const axis = scale(0, min, max);
+    const bars = industries.map(({ full, rate }) =>
+      `<div class="branch reading ${direction(rate)}" style="--extent:${Math.abs(rate) / (max - min) * 100}%">
+        <i aria-hidden="true"></i><b><span class="sr-only">${full} </span>${signed(rate)}%</b>
+      </div>`
+    ).join('');
+    return `<figure class="chart">
+      ${caption('电子设备涨，橡胶塑料跌', '2025 年五个行业增加值同比')}
+      <div class="branches">
+        <div class="branch-plot" style="--axis:${axis}%">${bars}</div>
+        <div class="branch-names" aria-hidden="true">${industries.map(industry => `<span>${industry.label}</span>`).join('')}</div>
+      </div>
+    </figure>`;
+  }
+
+  function renderShares(sizeShares) {
+    const colors = ['var(--aqua)', 'var(--blue)', 'var(--lavender)'];
+    return `<figure class="chart">
+      ${caption('规上工业里，哪类企业占得多？', '2025 年按企业规模')}
+      <div class="share-stack" aria-hidden="true">
+        ${sizeShares.map(({ share }, index) =>
+          `<span style="--share:${share}%;--share-color:${colors[index]}">${format(share, 1)}%</span>`
+        ).join('')}
+      </div>
+      <div class="share-row head" aria-hidden="true"><span>企业规模</span><span>增加值占比</span><span>同比增速</span></div>
+      ${sizeShares.map(({ label, share, rate }, index) => `<div class="share-row">
+        <span><i aria-hidden="true" style="--share-color:${colors[index]}"></i>${label}</span>
+        <span><span class="sr-only">占比 </span>${format(share, 1)}%</span>
+        <span class="value"><span class="sr-only">同比 </span>${signed(rate)}%</span>
+      </div>`).join('')}
+    </figure>`;
+  }
+
+  function renderSecondary(topic) {
+    if (topic.history) return renderAmounts(topic) + renderHistory(topic);
+    if (topic.gap) return renderGap(topic) + renderAmounts(topic);
+    return renderIndustries(topic.industries) + renderShares(topic.sizeShares);
+  }
+
+  function renderTopic(key) {
+    const topic = topics[key];
+    currentTopic = key;
+    detail.dataset.topic = key;
+    renderBallot(topic);
+    chartDrawer.open = false;
+    questionTitle.innerHTML = `${topic.headline[0]}<wbr><span>${topic.headline[1]}</span>`;
+    for (const button of wall.querySelectorAll('[data-question]')) {
+      button.setAttribute('aria-pressed', String(button.dataset.question === key));
+    }
+    renderLead(topic);
+    showMetric(selectedMetrics.get(key) || topic.featured.find(id => findMetric(topic, id).rate < 0) || topic.featured[0]);
+    secondaryCharts.innerHTML = renderSecondary(topic);
+    document.getElementById('scenario-setup').textContent = topic.setup;
+    cases.innerHTML = scenarios[key].map(({ label }, index) =>
+      `<button type="button" data-case="${index}" aria-pressed="false" aria-controls="case-path follow-question">${label}</button>`
+    ).join('');
+    evidence.open = false;
+    sourceDetails.open = false;
+    goal.hidden = !topic.goal;
+    if (topic.goal) {
+      goal.textContent = `${topic.goal.year} 年城镇新增就业目标 ≥${format(topic.goal.minimum, 2)} ${topic.goal.unit}`;
+    }
+    document.getElementById('source-list').innerHTML = topic.sourceKeys.map(id => {
+      const { label, url } = sources[id];
+      return `<li><a href="${url}">${label}</a></li>`;
+    }).join('');
+  }
+
+  function showQuestion(key, choice, visible) {
+    const changed = currentTopic !== key;
+    if (changed) renderTopic(key);
+    selectedCases.set(key, choice);
+    const view = scenarios[key][choice];
+    for (const button of cases.querySelectorAll('[data-case]')) {
+      button.setAttribute('aria-pressed', String(Number(button.dataset.case) === choice));
+    }
+    path.dataset.current = String(choice);
+    pathSteps.forEach((step, index) => { step.textContent = view.steps[index]; });
+    document.getElementById('case-summary').textContent = view.summary;
+    document.getElementById('follow-question').textContent = view.question;
+    document.getElementById('case-record').textContent = view.record;
+    if (changed || detail.hidden === visible) showReveal(visible);
+  }
+
+  function syncQuestion() {
+    const [key, choice] = location.hash.slice(1).split('/');
+    if (!Object.hasOwn(topics, key)) {
+      showQuestion('tourists', 0, false);
+      return;
+    }
+    const visible = choice === '0' || choice === '1';
+    if (visible) openTopics.add(key);
+    showQuestion(key, choice === '1' ? 1 : 0, visible);
+  }
+
+  function setAddress(fragment) {
+    if (location.hash !== fragment) history.pushState(null, '', fragment);
+  }
+
+  wall.addEventListener('click', event => {
+    const button = event.target.closest('[data-question]');
+    if (!button) return;
+    const key = button.dataset.question;
+    const choice = selectedCases.get(key) ?? 0;
+    const open = openTopics.has(key);
+    setAddress(open ? `#${key}/${choice}` : `#${key}`);
+    showQuestion(key, choice, open);
+  });
+  ballot.addEventListener('click', event => {
+    const button = event.target.closest('[data-vote]');
+    if (!button) return;
+    const animate = reveal.hidden;
+    votes.set(currentTopic, Number(button.dataset.vote));
+    openTopics.add(currentTopic);
+    setAddress(`#${currentTopic}/${selectedCases.get(currentTopic)}`);
+    showReveal(true, animate);
+  });
+  retake.addEventListener('click', () => {
+    votes.delete(currentTopic);
+    openTopics.delete(currentTopic);
+    history.replaceState(null, '', `#${currentTopic}`);
+    chartDrawer.open = false;
+    showReveal(false);
+    ballot.querySelector('button').focus();
+  });
+  leadChart.addEventListener('click', event => {
+    const button = event.target.closest('[data-metric]');
+    if (button) showMetric(button.dataset.metric);
+  });
+  cases.addEventListener('click', event => {
+    const button = event.target.closest('[data-case]');
+    if (!button) return;
+    const choice = Number(button.dataset.case);
+    setAddress(`#${currentTopic}/${choice}`);
+    showQuestion(currentTopic, choice, true);
+  });
+  window.addEventListener('popstate', syncQuestion);
+  window.addEventListener('hashchange', syncQuestion);
+  window.addEventListener('resize', () => { if (!reveal.hidden) drawDuel(false); });
+  syncQuestion();
+})();
+</script>
+<div class="likebar">
+  <button onclick="likePage()">👍 <span id="pcount">0</span></button>
+  <button type="button" data-duel-footer>发这题给朋友</button>
+</div>
+<style>
+.likebar{display:flex;justify-content:center;flex-wrap:wrap;gap:12px;margin:2px auto 24px;padding:5px 12px;width:fit-content;border:1px solid #27453a;border-radius:10px}
+.likebar button{background:none;border:none;min-height:44px;padding:3px 8px;color:#d8e9df;font-size:13px;cursor:pointer}
+.likebar button:active{transform:scale(1.15)}
+</style>
+<script>
+(function(){
+  var k="like_"+location.pathname;
+  var n=parseInt(localStorage.getItem(k)||"0");
+  document.getElementById("pcount").textContent=n;
+  window.likePage=function(){n++;localStorage.setItem(k,n);document.getElementById("pcount").textContent=n;};
+})();
+</script>
+<!-- 百度统计：去 mtj.baidu.com 注册后替换 YOUR_ID -->
+<script>
+var _hmt = _hmt || [];
+(function() {
+  var hm = document.createElement("script");
+  hm.src = "https://hm.baidu.com/hm.js?YOUR_ID";
+  var s = document.getElementsByTagName("script")[0]; 
+  s.parentNode.insertBefore(hm, s);
+})();
+</script>
+</body></html>

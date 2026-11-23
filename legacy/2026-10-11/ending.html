@@ -11,10 +11,10 @@
 .question-page {
   --aqua: var(--mint);
   --amber: var(--ember);
-  --card: #20271b;
-  --card-deep: #151b13;
-  --rise-fill: linear-gradient(90deg,#4c9676,#93f4c4);
-  --fall-fill: repeating-linear-gradient(135deg,#a4533d61 0 3px,transparent 3px 6px),linear-gradient(90deg,#ffc39e,#ec9566);
+  --card: #f4f2e9;
+  --card-deep: #f5f4ec;
+  --rise-fill: linear-gradient(90deg,#bfd8cd,#0b7a86);
+  --fall-fill: repeating-linear-gradient(135deg,rgba(226,87,0,.20) 0 3px,transparent 3px 6px),linear-gradient(90deg,#a05a33,#a05a33);
 }
 .chart-drawer { margin: 10px 0 0; border-top: 1px solid var(--line); }
 .next-stage { font-size: 13px; }
@@ -26,15 +26,15 @@
   display: block;
   height: 25px;
   border-radius: 3px;
-  background: repeating-linear-gradient(to right, #bedfce19 0 1px, transparent 1px 25%);
-  border-right: 1px solid #bedfce19;
+  background: repeating-linear-gradient(to right, rgba(17,24,39,.06) 0 1px, transparent 1px 25%);
+  border-right: 1px solid rgba(17,24,39,.06);
 }
 .track::after {
   position: absolute;
   z-index: 1;
   inset: 0 auto 0 var(--zero);
   width: 1px;
-  background: #d6ebe08a;
+  background: rgba(17,24,39,.10);
   content: "";
 }
 .track .bar {
@@ -57,7 +57,7 @@
   padding: clamp(13px, 1.6vw, 20px);
   border: 1px solid var(--line);
   border-radius: 13px;
-  background: linear-gradient(155deg, #142922, var(--card-deep) 85%);
+  background: linear-gradient(155deg, #eef7f1, var(--card-deep) 85%);
 }
 .chart-caption { display: flex; align-items: baseline; justify-content: space-between; flex-wrap: wrap; gap: 2px 9px }
 .chart-caption h3 { margin: 0; font-size: clamp(16px, 1.55vw, 22px); line-height: 1.23; letter-spacing: -.02em }
@@ -66,8 +66,8 @@
   display: flex;
   flex-direction: column;
   min-height: 100%;
-  background: radial-gradient(ellipse at 54% 0, #244238 0, transparent 68%), var(--card-deep);
-  border-color: #426456;
+  background: radial-gradient(ellipse at 54% 0, #e8f2ee 0, transparent 68%), var(--card-deep);
+  border-color: #cbd9d2;
 }
 .lead-chart .chart-caption h3 { font-size: clamp(18px, 1.9vw, 27px) }
 .divergence { margin-top: 16px }
@@ -102,10 +102,10 @@
   transition: background .18s, border-color .18s;
 }
 .metric-row + .metric-row { margin-top: 4px }
-.metric-row:hover { background: #d8eee710 }
+.metric-row:hover { background: rgba(17,24,39,.05) }
 .metric-row[aria-pressed="true"] {
-  border-color: #cfdfd14b;
-  background: #cadbd51a;
+  border-color: rgba(17,24,39,.08);
+  background: rgba(17,24,39,.06);
 }
 .metric-row .metric-name { font-weight: 680; font-size: clamp(12px, 1.03vw, 15px); line-height: 1.2 }
 .metric-row .value { font-size: clamp(16px, 2vw, 24px); text-align: right; letter-spacing: -.055em }
@@ -115,10 +115,10 @@
   margin: auto 0 0;
   min-height: 94px;
   padding: 12px 13px;
-  border: 1px solid #436254;
+  border: 1px solid #cbd9d2;
   border-left: 3px solid var(--value-ink, var(--aqua));
   border-radius: 0 9px 9px 0;
-  background: #192e24;
+  background: #f1f7f3;
 }
 .metric-reading p { margin: 0; font-weight: 680; font-size: clamp(15px, 1.25vw, 18px); line-height: 1.42 }
 .metric-reading span { display: block; margin-bottom: 5px; color: var(--value-ink, var(--aqua)); font-size: 12px }
@@ -185,7 +185,7 @@
 .gap-values { margin-top: 2px; font-size: 11.5px; font-variant-numeric: tabular-nums }
 .gap-values span:first-child { color: var(--aqua) }
 .gap-values span:last-child { color: var(--blue) }
-.gap-track { position: relative; height: 18px; margin: 3px 0; background: repeating-linear-gradient(90deg, #d3eddf32 0 1px, transparent 1px 20%); border-right: 1px solid #d3eddf32 }
+.gap-track { position: relative; height: 18px; margin: 3px 0; background: repeating-linear-gradient(90deg, rgba(17,24,39,.08) 0 1px, transparent 1px 20%); border-right: 1px solid rgba(17,24,39,.08) }
 .gap-track::before { position: absolute; inset: 8px 0 auto; height: 2px; background: #3b584d; content: "" }
 .gap-band {
   position: absolute;
@@ -247,7 +247,7 @@
 .branch.down b { top: calc(100% - var(--axis) + var(--extent) + 1px); bottom: auto }
 .branch-names { display: grid; grid-template-columns: repeat(5, minmax(0, 1fr)); gap: 2px; text-align: center; color: var(--muted); font-size: 11px }
 .share-stack { display: flex; min-height: 34px; margin: 13px 0 7px; border-radius: 5px; overflow: hidden }
-.share-stack span { display: grid; place-items: center; width: var(--share); background: var(--share-color); color: #102119; font-size: 12px; font-weight: 850; font-variant-numeric: tabular-nums }
+.share-stack span { display: grid; place-items: center; width: var(--share); background: var(--share-color); color: #f2f8f4; font-size: 12px; font-weight: 850; font-variant-numeric: tabular-nums }
 .share-row { display: grid; grid-template-columns: minmax(74px, 1fr) 1fr 1fr; align-items: center; gap: 7px; padding: 3px 0; font-size: 12px }
 .share-row span:not(:first-child) { text-align: right; font-variant-numeric: tabular-nums }
 .share-row .value { color: var(--aqua) }
@@ -272,7 +272,7 @@
   padding: 7px 12px;
   border: 1px solid #587467;
   border-radius: 7px;
-  background: #193328;
+  background: #eef5f1;
   color: var(--ink);
   font-size: 13px;
   font-weight: 730;
@@ -287,7 +287,7 @@
   padding: 5px 4px;
   border: 1px solid #46685a;
   border-radius: 6px;
-  background: #192e26;
+  background: #f1f7f3;
   text-align: center;
   font-size: 13px;
   font-weight: 700;
@@ -296,7 +296,7 @@
 .path[data-current="1"] li:last-child { background: #493529; border-color: var(--amber) }
 .path li + li::before { position: absolute; left: -12px; content: "›"; color: var(--aqua); font-size: 17px }
 .scenario-summary { margin: 8px 0 0 }
-.investigate { align-self: stretch; padding: 11px 12px; border-left: 3px solid var(--aqua); border-radius: 0 8px 8px 0; background: #1b372c }
+.investigate { align-self: stretch; padding: 11px 12px; border-left: 3px solid var(--aqua); border-radius: 0 8px 8px 0; background: #edf5f0 }
 .investigate-label { margin: 0; color: var(--aqua); font-size: 12px; font-weight: 750 }
 .investigate h4 { margin: 4px 0 0; font-size: clamp(16px, 1.5vw, 22px); line-height: 1.38 }
 .investigate details p { margin: 0 0 7px; color: var(--muted); font-size: 13px }
@@ -339,6 +339,11 @@ summary { width: fit-content; min-height: 42px; padding: 10px 3px 8px 0; color: 
 <meta property="og:image" content="https://zhanglingshare.github.io/boluo-simulator/legacy/2026-10-11/public-stage.webp">
 <link rel="stylesheet" href="public-duel.css?v=5">
 <script type="module" src="public-duel.js?v=4"></script>
+<meta name="theme-color" content="#f6f7f9">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns=%27http://www.w3.org/2000/svg%27 viewBox=%270 0 64 64%27%3E%3Cdefs%3E%3ClinearGradient id=%27g%27 x1=%270%27 y1=%270%27 x2=%271%27 y2=%271%27%3E%3Cstop stop-color=%27%230A84FF%27/%3E%3Cstop offset=%271%27 stop-color=%27%2300A6C0%27/%3E%3C/linearGradient%3E%3C/defs%3E%3Crect width=%2764%27 height=%2764%27 rx=%2715%27 fill=%27url(%23g)%27/%3E%3Ctext x=%2732%27 y=%2744%27 font-family=%27sans-serif%27 font-size=%2730%27 font-weight=%27bold%27 fill=%27white%27 text-anchor=%27middle%27%3E%E5%8D%9A%3C/text%3E%3C/svg%3E">
+<link rel="preconnect" href="https://miaoda.feishu.cn">
+<link rel="stylesheet" href="https://miaoda.feishu.cn/fonts/css2?family=Noto+Sans+SC:wght@400;500;700;800&family=Inter:wght@400;500;600;700;800&display=swap">
+<link rel="stylesheet" href="light.css?v=1">
 </head>
 <body data-duel-page="ending">
 <nav class="nav" aria-label="博罗产业风洞导航">
@@ -560,8 +565,8 @@ summary { width: fit-content; min-height: 42px; padding: 10px 3px 8px 0; color: 
         "correct": 1,
         "insight": "接下来查客房卖了多少晚，每晚实际收了多少钱。",
         "colors": [
-          "#93f4c4",
-          "#ff9b70"
+          "#0b7a86",
+          "#b2542a"
         ]
       }
     },
@@ -659,7 +664,7 @@ summary { width: fit-content; min-height: 42px; padding: 10px 3px 8px 0; color: 
         "correct": 1,
         "insight": "2025 年城乡人均可支配收入仍差 {gap} 元。",
         "colors": [
-          "#93f4c4",
+          "#0b7a86",
           "#aebcff"
         ]
       }
@@ -772,8 +777,8 @@ summary { width: fit-content; min-height: 42px; padding: 10px 3px 8px 0; color: 
         "correct": 1,
         "insight": "今年产出增长的同时，新投入减少了。接着查哪些新线能按时开始出货。",
         "colors": [
-          "#93f4c4",
-          "#ff9b70"
+          "#0b7a86",
+          "#b2542a"
         ]
       }
     }
