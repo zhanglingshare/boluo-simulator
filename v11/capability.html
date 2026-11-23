@@ -121,6 +121,8 @@ h1{font-size:clamp(26px,3.6vw,37px);font-weight:850;letter-spacing:-.035em;line-
  .nav{overflow-x:auto;flex-wrap:nowrap;width:100%}
 }
 </style>
+<link rel="stylesheet" href="./light-v11.css?v=20261123-l1">
+<link rel="stylesheet" href="./light-capability.css?v=20261123-l1">
 </head>
 <body>
 <header class="topbar">
@@ -219,20 +221,20 @@ h1{font-size:clamp(26px,3.6vw,37px);font-weight:850;letter-spacing:-.035em;line-
   let s='';
   s+='<defs>'
    +'<filter id="glow" x="-60%" y="-60%" width="220%" height="220%"><feGaussianBlur stdDeviation="3.2" result="b"/><feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge></filter>'
-   +'<radialGradient id="ball" cx="50%" cy="42%" r="65%"><stop offset="0%" stop-color="#bfe9ff"/><stop offset="45%" stop-color="#3fc0ff"/><stop offset="100%" stop-color="#1a6fc4"/></radialGradient>'
+   +'<radialGradient id="ball" cx="50%" cy="42%" r="65%"><stop offset="0%" stop-color="#7cc4ff"/><stop offset="45%" stop-color="#0a84ff"/><stop offset="100%" stop-color="#0653b8"/></radialGradient>'
    +'</defs>';
   for(let k=1;k<=RINGS;k++){
    const rr=R*k/RINGS;
    const pts=CAPS.map(function(c,i){const p=pos(i,rr);return p.x+','+p.y;}).join(' ');
-   s+='<polygon points="'+pts+'" fill="none" stroke="rgba(120,165,225,.16)" stroke-width="1"/>';
+   s+='<polygon points="'+pts+'" fill="none" stroke="rgba(15,23,42,.10)" stroke-width="1"/>';
   }
   CAPS.forEach(function(c,i){
    const p=pos(i,R);
-   s+='<line x1="'+CX+'" y1="'+CY+'" x2="'+p.x+'" y2="'+p.y+'" stroke="rgba(120,165,225,.14)" stroke-width="1"/>';
+   s+='<line x1="'+CX+'" y1="'+CY+'" x2="'+p.x+'" y2="'+p.y+'" stroke="rgba(15,23,42,.08)" stroke-width="1"/>';
   });
   if(revealed){
    const d='M'+CAPS.map(function(c,i){const p=pos(i,R*c.count/maxCount);return p.x+','+p.y;}).join('L')+'Z';
-   s+='<path id="dataPath" d="'+d+'" fill="rgba(63,192,255,.14)" stroke="#3fc0ff" stroke-width="2" stroke-linejoin="round" filter="url(#glow)"/>';
+   s+='<path id="dataPath" d="'+d+'" fill="rgba(10,132,255,.12)" stroke="#0a84ff" stroke-width="2" stroke-linejoin="round" filter="url(#glow)"/>';
    CAPS.forEach(function(c,i){
     const p=pos(i,R*c.count/maxCount);
     const isActive=active===c.key;
@@ -243,11 +245,11 @@ h1{font-size:clamp(26px,3.6vw,37px);font-weight:850;letter-spacing:-.035em;line-
    const lp=pos(i,R+26),ac=anchor(i);
    const dim=(active&&active!==c.key)?'opacity:.45':'';
    s+='<g class="axis" data-key="'+c.key+'" style="'+dim+'">'
-    +'<text x="'+lp.x+'" y="'+lp.y+'" text-anchor="'+ac+'" style="font-size:12.5px;font-weight:700;fill:'+(active===c.key?'#86d8ff':'#d7e4f5')+'">'+c.name+'</text>'
+    +'<text x="'+lp.x+'" y="'+lp.y+'" text-anchor="'+ac+'" style="font-size:12.5px;font-weight:700;fill:'+(active===c.key?'#0a84ff':'#3d4a5a')+'">'+c.name+'</text>'
     +(revealed?'<text x="'+lp.x+'" y="'+(lp.y+14)+'" text-anchor="'+ac+'" style="font-size:11px;font-weight:700;fill:#6c809c">'+c.count+' 个现场</text>':'')
     +'<circle cx="'+lp.x+'" cy="'+lp.y+'" r="16" fill="transparent"/></g>';
   });
-  s+='<circle cx="'+CX+'" cy="'+CY+'" r="3" fill="#3a4d68"/>';
+  s+='<circle cx="'+CX+'" cy="'+CY+'" r="3" fill="#94a3b8"/>';
   document.getElementById('radar').innerHTML=s;
   if(revealed){
    const path=document.getElementById('dataPath');

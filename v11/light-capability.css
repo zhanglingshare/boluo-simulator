@@ -1,0 +1,30 @@
+/* =====================================================================
+   capability.html 浅色覆盖层（内联样式映射，tools/lighten_v11.py 生成）
+   ===================================================================== */
+
+.topbar{background:#f4f6f8!important}
+.ov b{color:#12161c!important}
+.cap-row{border-top:1px solid rgba(104,158,228,0.12)!important}
+.cap-hint{border-top:1px solid rgba(104,158,228,0.12)!important}
+.act-row{border-top:1px solid rgba(104,158,228,0.12)!important}
+.btn{border:1px solid rgba(104,158,228,0.25)!important;background:rgba(255,255,255,0.04)!important}
+.btn.primary{background:linear-gradient(135deg,var(--blue),#0a84ff)!important;box-shadow:0 8px 22px -6px rgba(47,155,255,0.7)!important}
+.btn.primary:hover{color:#12161c!important;box-shadow:0 10px 26px -4px rgba(63,192,255,0.8)!important}
+.chip{background:rgba(255,255,255,0.04)!important;border:1px solid rgba(104,158,228,0.16)!important}
+.gap{border:1px dashed rgba(216,195,154,0.5)!important;color:#e25700!important;background:rgba(253,250,243,0.04)!important}
+
+/* 人工微调 */
+
+:root{
+ --bg0:#f6f7f9!important;--bg1:#f2f5f8!important;--bg2:#eef3f6!important;
+ --panel:linear-gradient(180deg,rgba(255,255,255,.94),rgba(247,250,252,.9))!important;
+ --panel-border:rgba(17,24,39,.08)!important;
+ --cyan:#0a84ff!important;--cyan-bright:#0a84ff!important;--blue:#0a84ff!important;--orange:#e25700!important;
+ --ink:#12161c!important;--t2:#5f6773!important;--t3:#98a1ad!important;
+ --glow:0 8px 24px rgba(10,132,255,.18)!important;
+}
+body{background:#f6f7f9!important;color:#12161c!important}
+.nav a.cur{color:#0a84ff!important;background:rgba(10,132,255,.10)!important;box-shadow:inset 0 0 0 1px rgba(10,132,255,.22)!important}
+.nav a:hover{background:rgba(10,132,255,.07)!important;color:#0a84ff!important}
+.topbar{background:rgba(255,255,255,.9)!important;border-bottom:1px solid rgba(17,24,39,.07)!important;backdrop-filter:blur(20px)!important}
+

@@ -1,0 +1,12 @@
+:root{
+ --bg0:#f6f7f9!important;--bg1:#f2f5f8!important;--bg2:#eef3f6!important;
+ --panel:linear-gradient(180deg,rgba(255,255,255,.94),rgba(247,250,252,.9))!important;
+ --panel-border:rgba(17,24,39,.08)!important;
+ --cyan:#0a84ff!important;--cyan-bright:#0a84ff!important;--blue:#0a84ff!important;--orange:#e25700!important;
+ --ink:#12161c!important;--t2:#5f6773!important;--t3:#98a1ad!important;
+ --glow:0 8px 24px rgba(10,132,255,.18)!important;
+}
+body{background:#f6f7f9!important;color:#12161c!important}
+.nav a.cur{color:#0a84ff!important;background:rgba(10,132,255,.10)!important;box-shadow:inset 0 0 0 1px rgba(10,132,255,.22)!important}
+.nav a:hover{background:rgba(10,132,255,.07)!important;color:#0a84ff!important}
+.topbar{background:rgba(255,255,255,.9)!important;border-bottom:1px solid rgba(17,24,39,.07)!important;backdrop-filter:blur(20px)!important}

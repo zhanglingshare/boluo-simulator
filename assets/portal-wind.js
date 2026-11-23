@@ -1,9 +1,9 @@
 /* 首页深色风洞主视觉：canvas 伪 3D（透视投影 + 绕轴微旋） */
 (function () {
   const COLOR = {
-    bad:   'rgba(255,150,128,ALPHA)',
+    bad:   'rgba(201,59,59,ALPHA)',
     good:  'rgba(170,236,255,ALPHA)',
-    money: 'rgba(255,214,130,ALPHA)'
+    money: 'rgba(178,91,0,ALPHA)'
   };
   const DEFAULT_WORDS = [
     { v: '−44.7%',     t: '前三季工业投资', d: 'Q1–Q3', k: 'bad' },
@@ -16,7 +16,7 @@
     { v: '+8.9%',      t: '规上增加值还在涨', d: 'Q1–Q3', k: 'good' }
   ];
   'use strict';
-  const CY = '#7fd4ff', CY2 = '#2ea8e6', DIM = 'rgba(127,212,255,.55)';
+  const CY = '#0a84ff', CY2 = '#00a6c0', DIM = 'rgba(10,132,255,.55)';
 
   function rotY(p, a) {
     const c = Math.cos(a), s = Math.sin(a);
@@ -83,9 +83,9 @@
       ctx.clearRect(0, 0, W, H);
 
       const bg = ctx.createRadialGradient(W * 0.42, H * 0.46, 10, W * 0.5, H * 0.5, Math.max(W, H) * 0.85);
-      bg.addColorStop(0, 'rgba(16,38,64,.85)');
-      bg.addColorStop(.5, 'rgba(6,13,24,.94)');
-      bg.addColorStop(1, '#04080f');
+      bg.addColorStop(0, 'rgba(255,255,255,.88)');
+      bg.addColorStop(.5, 'rgba(255,255,255,.96)');
+      bg.addColorStop(1, '#ffffff');
       ctx.fillStyle = bg; ctx.fillRect(0, 0, W, H);
 
       const A0 = { x: W * 0.13, y: H * 0.43 }, A1 = { x: W * 0.87, y: H * 0.53 };
@@ -106,7 +106,7 @@
         ctx.beginPath();
         ctx.moveTo(e.x - W * 0.5, e.y + e.ry * 1.65);
         ctx.lineTo(e.x + W * 0.5, e.y + e.ry * 1.65);
-        ctx.strokeStyle = 'rgba(64,132,180,' + Math.max(.015, .16 - k * .013) + ')';
+        ctx.strokeStyle = 'rgba(10,132,255,' + Math.max(.015, .16 - k * .013) + ')';
         ctx.stroke();
       }
       for (let g = -6; g <= 6; g++) {
@@ -118,7 +118,7 @@
           const px = e.x + off * (1 - k * .0) * .9, py = e.y + e.ry * 1.65 + off * .16;
           if (f) { ctx.moveTo(px, py); f = false; } else ctx.lineTo(px, py);
         }
-        ctx.strokeStyle = 'rgba(64,132,180,.07)'; ctx.stroke();
+        ctx.strokeStyle = 'rgba(10,132,255,.07)'; ctx.stroke();
       }
 
       // 城市剪影
@@ -126,13 +126,13 @@
       for (let i = 0; i < 34; i++) {
         const bx = W * 0.03 + i * W * 0.029;
         const bh = (8 + (i * 41 % 30)) * (H / 420);
-        ctx.fillStyle = 'rgba(8,17,29,.85)';
+        ctx.fillStyle = 'rgba(255,255,255,.92)';
         ctx.fillRect(bx, A1.y + R0 * 0.52, W * 0.023, bh + 30);
-        ctx.fillStyle = 'rgba(120,200,255,.10)';
+        ctx.fillStyle = 'rgba(10,132,255,.10)';
         ctx.fillRect(bx + 2, A1.y + R0 * 0.52 + 6, 2, 2);
       }
       const fog = ctx.createLinearGradient(0, A1.y + R0 * 0.3, 0, H);
-      fog.addColorStop(0, 'rgba(4,8,15,0)'); fog.addColorStop(1, 'rgba(4,8,15,.85)');
+      fog.addColorStop(0, 'rgba(246,247,249,0)'); fog.addColorStop(1, 'rgba(246,247,249,.9)');
       ctx.fillStyle = fog; ctx.fillRect(0, A1.y + R0 * 0.3, W, H);
       ctx.restore();
 
@@ -142,10 +142,10 @@
         const k = i / steps;
         const e = ell(k);
         ctx.beginPath(); ringPath(e);
-        ctx.fillStyle = 'rgba(52,120,180,.055)';
+        ctx.fillStyle = 'rgba(10,132,255,.06)';
         ctx.fill();
         const al = k < .3 ? .9 : (k > .72 ? .45 : .66);
-        ctx.strokeStyle = 'rgba(127,212,255,' + al * .58 + ')';
+        ctx.strokeStyle = 'rgba(10,132,255,' + al * .58 + ')';
         ctx.lineWidth = k < .3 ? 1.8 : 1.15;
         ctx.stroke();
       }
@@ -160,23 +160,23 @@
           const py = e.y + Math.cos(a) * e.rx * Math.sin(e.rot) + Math.sin(a) * e.ry * Math.cos(e.rot);
           if (f) { ctx.moveTo(px, py); f = false; } else ctx.lineTo(px, py);
         }
-        ctx.strokeStyle = 'rgba(127,212,255,' + (ai % 2 ? .22 : .34) + ')';
+        ctx.strokeStyle = 'rgba(10,132,255,' + (ai % 2 ? .22 : .34) + ')';
         ctx.lineWidth = 1;
         ctx.stroke();
       });
 
       // 喉部扇叶
       const th = ell(0.30);
-      ctx.strokeStyle = 'rgba(150,225,255,.9)'; ctx.lineWidth = 2.2;
+      ctx.strokeStyle = 'rgba(10,132,255,.9)'; ctx.lineWidth = 2.2;
       for (let i = 0; i < 6; i++) {
         const a = i / 6 * Math.PI * 2 + t * 0.45;
         const px = th.x + Math.cos(a) * th.rx * 1.02, py = th.y + Math.sin(a) * th.ry * 1.02;
         ctx.beginPath(); ctx.moveTo(th.x, th.y); ctx.lineTo(px, py); ctx.stroke();
       }
-      ctx.fillStyle = '#d8f2ff';
+      ctx.fillStyle = '#12161c';
       ctx.beginPath(); ctx.arc(th.x, th.y, 3.6, 0, 7); ctx.fill();
       const halo = ctx.createRadialGradient(th.x, th.y, 1, th.x, th.y, 26);
-      halo.addColorStop(0, 'rgba(160,225,255,.5)'); halo.addColorStop(1, 'rgba(160,225,255,0)');
+      halo.addColorStop(0, 'rgba(10,132,255,.5)'); halo.addColorStop(1, 'rgba(10,132,255,0)');
       ctx.fillStyle = halo; ctx.beginPath(); ctx.arc(th.x, th.y, 26, 0, 7); ctx.fill();
 
       // 粒子与文字同速向前，文字到喉部被吸入
@@ -190,7 +190,7 @@
         if (p.z > 1) p.z = 0;
         const e = ell(p.z);
         const px = e.x + p.u * e.rx * 1.05, py = e.y + p.v * e.ry * 1.05;
-        ctx.fillStyle = 'rgba(160,225,255,' + (.12 + p.z * .55) + ')';
+        ctx.fillStyle = 'rgba(10,132,255,' + (.12 + p.z * .55) + ')';
         ctx.beginPath(); ctx.arc(px, py, 1.3 + p.z * 1.2, 0, 7); ctx.fill();
       });
 
@@ -228,7 +228,7 @@
         ctx.lineTo(cx - boxW / 2, top + radius);
         ctx.quadraticCurveTo(cx - boxW / 2, top, cx - boxW / 2 + radius, top);
         ctx.closePath();
-        ctx.fillStyle = 'rgba(4,17,30,' + (.86 * a).toFixed(2) + ')';
+        ctx.fillStyle = 'rgba(255,255,255,' + (.94 * a).toFixed(2) + ')';
         ctx.fill();
         ctx.strokeStyle = w.c.replace('ALPHA', (.58 * a).toFixed(2));
         ctx.lineWidth = 1.15;
@@ -246,7 +246,7 @@
         if (w.t) {
           ctx.shadowBlur = 0;
           ctx.font = '650 ' + labelSize + 'px "PingFang SC","Microsoft YaHei",sans-serif';
-          ctx.fillStyle = 'rgba(220,237,247,' + (.92 * a).toFixed(2) + ')';
+          ctx.fillStyle = 'rgba(95,103,115,' + (.96 * a).toFixed(2) + ')';
           ctx.fillText(w.t, cx, top + (compact ? 41 : 49), boxW - 20);
         }
         ctx.restore();
@@ -255,7 +255,7 @@
       // 出口辉光
       const out = ell(1);
       const glow = ctx.createRadialGradient(out.x, out.y, 4, out.x, out.y, out.rx * 1.5);
-      glow.addColorStop(0, 'rgba(127,212,255,.16)'); glow.addColorStop(1, 'rgba(127,212,255,0)');
+      glow.addColorStop(0, 'rgba(10,132,255,.16)'); glow.addColorStop(1, 'rgba(10,132,255,0)');
       ctx.fillStyle = glow; ctx.beginPath(); ctx.arc(out.x, out.y, out.rx * 1.5, 0, 7); ctx.fill();
 
       raf = requestAnimationFrame(frame);
