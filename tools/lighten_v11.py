@@ -277,6 +277,8 @@ def is_dark_rule(sel: str, body: str):
         if ":" not in decl:
             continue
         prop, val = decl.split(":", 1)
+        val = re.sub(r"(?<![-\w])white(?![-\w])", "#ffffff", val)
+        val = re.sub(r"(?<![-\w])black(?![-\w])", "#000000", val)
         role = role_of(prop)
         if role == "surface":
             for c in COLOR_RE.findall(val):
@@ -304,7 +306,7 @@ def has_text_decl(body: str) -> bool:
         if ":" not in decl:
             continue
         prop, val = decl.split(":", 1)
-        if role_of(prop) in ("text", "line") and (COLOR_RE.search(val) or RGBA_RE.search(val)):
+        if role_of(prop) in ("text", "line") and (COLOR_RE.search(val) or RGBA_RE.search(val) or re.fullmatch(r"\s*(white|black)\s*", val)):
             return True
     return False
 
@@ -367,6 +369,8 @@ def transform_rule(body: str, bg_dark: bool = True, sel: str = ""):
         if ":" not in decl:
             continue
         prop, val = decl.split(":", 1)
+        val = re.sub(r"(?<![-\w])white(?![-\w])", "#ffffff", val)
+        val = re.sub(r"(?<![-\w])black(?![-\w])", "#000000", val)
         role = role_of(prop)
         if text_clip and role == "surface":
             role = "text"
@@ -484,6 +488,46 @@ def build_root_index():
     print("wrote light-index.css rules=%d" % n)
 
 
+
+def build_lab():
+    """lab-2032 决策实验室：把 7 份深色页面 CSS 映射成浅色覆盖层。"""
+    lab = ROOT / "lab-2032"
+    out = ["/* =====================================================================\n"
+           "   博罗2032 决策实验室 · 浅色高级设计系统覆盖层\n"
+           "   由 tools/lighten_v11.py lab 生成：原 CSS 一行未改。\n"
+           "   ===================================================================== */\n"]
+    total = 0
+    for path in sorted(lab.glob("*.css")):
+        if path.name.startswith("light-"):
+            continue
+        css = path.read_text(encoding="utf-8")
+        buf = []
+        for media, sel, body in split_rules(css):
+            if not (is_dark_rule(sel, body) or has_text_decl(body)):
+                continue
+            changed = transform_rule(body, rule_bg_dark(body), sel)
+            if not changed:
+                continue
+            decls = ";".join("%s:%s!important" % (p_, v) for p_, _, v in changed)
+            rule = "%s{%s}" % (sel.replace("\n", " "), decls)
+            if media:
+                rule = "%s{%s}" % (media, rule)
+            buf.append(rule)
+        if buf:
+            out.append("\n/* ---- %s : %d 条 ---- */\n" % (path.name, len(buf)))
+            out.append("\n".join(buf) + "\n")
+            total += len(buf)
+    tune = ROOT / "tools" / "tune_light-lab.css"
+    if tune.exists():
+        out.append("\n/* =====================================================================\n"
+                   "   人工微调层（tools/tune_light-lab.css）\n"
+                   "   ===================================================================== */\n")
+        out.append(tune.read_text(encoding="utf-8"))
+    text = "".join(out)
+    (lab / "light-lab.css").write_text(text, encoding="utf-8")
+    print("wrote lab-2032/light-lab.css  rules=%d  bytes=%d" % (total, len(text)))
+
+
 if __name__ == "__main__":
     cmd = sys.argv[1] if len(sys.argv) > 1 else "rules"
     if cmd == "rules":
@@ -491,5 +535,7 @@ if __name__ == "__main__":
     if cmd == "inline":
         build_inline("baseplan.html", "light-baseplan.css")
         build_inline("capability.html", "light-capability.css")
+    if cmd == "lab":
+        build_lab()
     if cmd == "root":
         build_root_index()

@@ -1,0 +1,143 @@
+/* =====================================================================
+   博罗2032 决策实验室 · 浅色系统人工微调
+   只做视觉层：白玻璃顶栏 + 浅色侧栏 + 蓝/橙主色
+   ===================================================================== */
+
+/* ---------- 顶栏：白玻璃 ---------- */
+.masthead{
+  background:rgba(255,255,255,.88)!important;
+  -webkit-backdrop-filter:blur(18px)!important;
+  backdrop-filter:blur(18px)!important;
+  border-bottom:1px solid rgba(17,24,39,.075)!important;
+  color:#12161c!important;
+  box-shadow:0 6px 24px rgba(17,24,39,.04)!important;
+}
+.brand-name b{color:#12161c!important}
+.brand-name i{color:#0a84ff!important}
+.brand-name small{color:#6f7c8c!important}
+.head-separator{background:rgba(17,24,39,.10)!important}
+.head-descriptor{color:#7b8798!important}
+.mode-pill{
+  border-color:rgba(10,127,149,.35)!important;
+  color:#0a7f95!important;
+  background:rgba(10,127,149,.08)!important;
+}
+.head-action{
+  border-color:rgba(17,24,39,.12)!important;
+  background:#fff!important;
+  color:#3d4a5a!important;
+}
+.head-action:hover{background:#f2f6fa!important;border-color:rgba(10,132,255,.35)!important;color:#0a84ff!important}
+.mobile-menu{border-color:rgba(17,24,39,.14)!important;color:#3d4a5a!important;background:#fff!important}
+
+/* ---------- 侧栏：浅色 ---------- */
+.sidebar{
+  background:linear-gradient(180deg,#fbfcfd 0%,#f3f7f9 100%)!important;
+  color:#12161c!important;
+  border-right:1px solid rgba(17,24,39,.07)!important;
+  scrollbar-color:#c9d4dc transparent!important;
+}
+.sidebar-heading{border-bottom-color:rgba(17,24,39,.07)!important}
+.sidebar-heading b{color:#12161c!important}
+.eyebrow{color:#0a7f95!important}
+.nav-group-label{color:#8a95a3!important}
+.nav-link{color:#4a5866!important}
+.nav-link:hover{background:rgba(10,132,255,.07)!important;color:#12161c!important}
+.nav-link.selected{
+  border-color:rgba(10,132,255,.22)!important;
+  background:rgba(10,132,255,.10)!important;
+  color:#0a6fd6!important;
+}
+.nav-icon{color:#7b8798!important}
+.nav-link.selected .nav-icon{color:#0a84ff!important}
+.nav-count{color:#8a95a3!important}
+.sidebar-footer{background:#fff!important;border-color:rgba(17,24,39,.09)!important}
+.sidebar-footer strong{color:#12161c!important}
+.sidebar-footer small{color:#6f7c8c!important}
+.live-dot{background:#2f9e44!important;box-shadow:0 0 0 5px rgba(47,158,68,.14)!important}
+
+/* ---------- 首屏 hero：浅色渐变 ---------- */
+.hero-spotlight{
+  background:
+    radial-gradient(circle at 83% 22%,rgba(10,132,255,.12) 0%,transparent 42%),
+    linear-gradient(125deg,#f1f7ff 0%,#ffffff 58%,#f6fbfa 100%)!important;
+  color:#12161c!important;
+  box-shadow:0 23px 55px rgba(17,24,39,.06)!important;
+  border:1px solid rgba(17,24,39,.06)!important;
+}
+.hero-spotlight h1{color:#12161c!important}
+.hero-spotlight h1 em{color:#e25700!important}
+.hero-spotlight p{color:#5f6773!important}
+.hero-target{background:#fff!important;border-color:rgba(17,24,39,.09)!important;box-shadow:0 16px 40px rgba(17,24,39,.06)!important}
+.hero-target>small{color:#6f7c8c!important}
+.hero-target>div b:nth-child(1){color:#0a7f95!important}
+.hero-target>div b:nth-child(3){color:#0a84ff!important}
+.hero-target>div b:nth-child(5){color:#e25700!important}
+.hero-target>div span{color:#8a95a3!important}
+.hero-target p{color:#5f6773!important}
+.eyebrow.glow{color:#0a7f95!important}
+.target-hero-visual{background:#fff!important;border-color:rgba(17,24,39,.09)!important}
+.target-hero-copy>p{color:#5f6773!important}
+.target-hero-copy>p strong{color:#12161c!important}
+.target-hero-flags span{border-color:rgba(17,24,39,.10)!important;background:#fff!important;color:#4a5866!important}
+.target-hero-visual-top{color:#6f7c8c!important}
+.target-hero-labels{color:#6f7c8c!important}
+.target-hero-foot{border-top-color:rgba(17,24,39,.08)!important;color:#6f7c8c!important}
+.target-hero-foot strong{color:#12161c!important}
+
+/* ---------- 按钮 ---------- */
+.button.primary{background:#0a84ff!important;border-color:#0a84ff!important;color:#fff!important}
+.button.primary:hover{background:#0653b8!important}
+.button.translucent{background:#fff!important;border-color:rgba(10,132,255,.28)!important;color:#0a84ff!important}
+.button.secondary{background:#0a7f95!important;border-color:#0a7f95!important;color:#fff!important}
+.button.outline{background:#fff!important;border-color:rgba(17,24,39,.14)!important;color:#3d4a5a!important}
+
+/* ---------- 深色面板转浅 ---------- */
+.wind-controls{background:#fff!important;color:#3d4a5a!important;border-color:rgba(17,24,39,.09)!important}
+.wind-controls .panel-head h3{color:#12161c!important}
+.wind-controls .field-label{color:#5f6773!important}
+.wind-controls .input{background:#f7fafc!important;border-color:rgba(17,24,39,.12)!important;color:#12161c!important}
+.wind-controls .fine-print{color:#6f7c8c!important}
+.knob-control{border-bottom-color:rgba(17,24,39,.07)!important}
+.knob-control label{color:#5f6773!important}
+.knob-control output{color:#0a7f95!important}
+.stress-summary{background:linear-gradient(135deg,#0a84ff,#0653b8)!important;color:#fff!important}
+.stress-summary small{color:rgba(255,255,255,.78)!important}
+.stat-card.dark{background:#fff!important;border-color:rgba(17,24,39,.09)!important;color:#12161c!important}
+.stat-card.dark small,.stat-card.dark span{color:#6f7c8c!important}
+#toast{background:#12161c!important;border-color:rgba(10,132,255,.5)!important;color:#fff!important}
+
+/* ---------- 各页 hero ---------- */
+.base-hero,.target-hero,.ind-hero,.agri-hero,.rel-hero,.bridge-hero,.arrivals-hero{
+  color:#12161c!important;
+  border:1px solid rgba(17,24,39,.06)!important;
+  box-shadow:0 23px 55px rgba(17,24,39,.06)!important;
+}
+.base-hero{background:
+  radial-gradient(circle at 90% 12%,rgba(10,132,255,.12),transparent 38%),
+  linear-gradient(125deg,#f2f8ff,#ffffff 67%,#f7fbfa)!important}
+.base-hero h1,.base-hero h2,.base-hero h3{color:#12161c!important}
+.base-hero h1 em{color:#e25700!important}
+.base-hero-copy p{color:#5f6773!important}
+.base-kicker,.base-section-head>span{color:#0a7f95!important}
+.base-hero-tags span{background:#fff!important;border-color:rgba(17,24,39,.10)!important;color:#4a5866!important}
+.base-hero-kpis>div{background:#fff!important;border-color:rgba(17,24,39,.09)!important}
+.base-hero-kpis>div>span{color:#6f7c8c!important}
+.base-gdp-kpi strong{color:#0a84ff!important}
+.base-gdp-kpi b{color:#5f6773!important}
+.base-ratio-kpi strong,.base-reference-kpi strong{color:#12161c!important}
+.base-ratio-kpi strong i,.base-reference-kpi strong i{color:#0a84ff!important}
+.base-ratio-kpi small,.base-reference-kpi small{color:#6f7c8c!important}
+.base-sector-detail{background:#fff!important;color:#12161c!important;border:1px solid rgba(17,24,39,.07)!important}
+.base-sector-detail h3{color:#12161c!important}
+.base-sector-detail p{color:#5f6773!important}
+.base-sector-metrics>div{background:#f7fafc!important;border-color:rgba(17,24,39,.07)!important}
+.base-sector-metrics small{color:#6f7c8c!important}
+.base-sector-metrics strong{color:#0a84ff!important}
+
+/* ---------- 滑杆与输入控件 ---------- */
+input[type=range]{accent-color:#0a84ff!important}
+.knob-control input{accent-color:#0a84ff!important}
+.shock-picker input{accent-color:#0a84ff!important}
+.town-cell{background:#fff!important}
+.town-cell.selected{background:rgba(10,132,255,.08)!important;border-color:rgba(10,132,255,.45)!important}
