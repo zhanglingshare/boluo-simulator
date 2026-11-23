@@ -199,3 +199,4 @@ svg.tree-scene rect[fill="#093844"]{fill:#eef4f8!important;stroke:rgba(10,127,14
 svg .scatter-label{fill:#12161c!important}
 .stage-graphic svg text:nth-of-type(1){fill:#12161c!important}
 #regionalGraph{overflow:visible!important}
+.graph-scroll #regionalGraph{box-sizing:border-box!important;padding:0 26px!important}
