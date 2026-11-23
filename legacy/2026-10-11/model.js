@@ -13,11 +13,11 @@ const HT = {
   TARGET: 1600,
   NOISE_SD: 40,   // 博罗用加性全局噪声（±40亿），与 future.html 原口径一致
   DEFAULT_PATHS: [
-    {mu: 220, sd: 45, name: '产业承接升级', color: '#3b82f6'},
-    {mu: 180, sd: 40, name: '新投产项目',   color: '#8b5cf6'},
-    {mu: 70,  sd: 28, name: '融深融莞通道', color: '#06b6d4'},
-    {mu: 60,  sd: 22, name: '罗浮山文旅',   color: '#fbbf24'},
-    {mu: 45,  sd: 14, name: '特色农业',     color: '#34d399'}
+    {mu: 220, sd: 45, name: '产业承接升级', color: '#0a84ff'},
+    {mu: 180, sd: 40, name: '新投产项目',   color: '#7c3aed'},
+    {mu: 70,  sd: 28, name: '融深融莞通道', color: '#00a6c0'},
+    {mu: 60,  sd: 22, name: '罗浮山文旅',   color: '#e25700'},
+    {mu: 45,  sd: 14, name: '特色农业',     color: '#2f9e44'}
   ],
 
   mulberry32(a) {

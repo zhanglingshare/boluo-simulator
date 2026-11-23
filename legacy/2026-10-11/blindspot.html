@@ -140,57 +140,59 @@ h1{font-size:20px;margin:0 0 2px}
 const dark={text:'#5f6773'};
 function base(id){return echarts.init(document.getElementById(id))}
 const c1=base('ch1'),c2=base('ch2'),c3=base('ch3'),c4=base('ch4'),c5=base('ch5');
-const tip={backgroundColor:'#f8fafc',borderColor:'#d8dee8',textStyle:{color:'#12161c'}};
+const tip={backgroundColor:'#ffffff',borderColor:'#dfe3ea',textStyle:{color:'#12161c'}};
+const xLine={lineStyle:{color:'#cbd5e1'}};
+const split={lineStyle:{color:'#e6e9ef'}};
 
 c1.setOption({backgroundColor:'transparent',tooltip:{trigger:'axis',...tip},
-  grid:{left:100,right:45,top:10,bottom:30},
-  xAxis:{type:'value',axisLabel:{color:dark.text},splitLine:{lineStyle:{color:'#e6e9ef'}}},
-  yAxis:{type:'category',data:['广州','深圳(高铁)','东莞石龙'],axisLabel:{color:'#5f6773',fontSize:12}},
+  grid:{left:100,right:55,top:10,bottom:30},
+  xAxis:{type:'value',axisLabel:{color:dark.text},axisLine:xLine,splitLine:split},
+  yAxis:{type:'category',data:['广州','深圳(高铁)','东莞石龙'],axisLabel:{color:'#12161c',fontSize:12}},
   series:[{type:'bar',data:[
-    {value:90,itemStyle:{color:'#98a1ad'}},
+    {value:90,itemStyle:{color:'#94a3b8'}},
     {value:30,itemStyle:{color:'#0a84ff'}},
     {value:20,itemStyle:{color:'#00a6c0'}}
-  ],barWidth:20,label:{show:true,position:'right',color:'#5f6773',formatter:'{c}分钟'}}]});
+  ],barWidth:20,label:{show:true,position:'right',color:'#12161c',fontWeight:700,formatter:'{c}分钟'}}]});
 
 c2.setOption({backgroundColor:'transparent',tooltip:{trigger:'axis',...tip},
-  grid:{left:60,right:30,top:20,bottom:30},
-  xAxis:{type:'category',data:['2025实数','每人次600','每人次800','每人次1000'],axisLabel:{color:dark.text}},
-  yAxis:{type:'value',axisLabel:{color:dark.text},splitLine:{lineStyle:{color:'#e6e9ef'}}},
+  grid:{left:60,right:30,top:24,bottom:30},
+  xAxis:{type:'category',data:['2025实数','每人次600','每人次800','每人次1000'],axisLabel:{color:'#12161c',fontWeight:700},axisLine:xLine},
+  yAxis:{type:'value',axisLabel:{color:dark.text},splitLine:split},
   series:[{type:'bar',data:[
-    {value:52,itemStyle:{color:'#98a1ad'}},
+    {value:52,itemStyle:{color:'#94a3b8'}},
     {value:62,itemStyle:{color:'#0a84ff'}},
     {value:82,itemStyle:{color:'#0a84ff'}},
     {value:103,itemStyle:{color:'#00a6c0'}}
-  ],barWidth:30,label:{show:true,position:'top',color:'#5f6773',formatter:'{c}亿'}}]});
+  ],barWidth:30,label:{show:true,position:'top',color:'#12161c',fontWeight:700,formatter:'{c}亿'}}]});
 
 c3.setOption({backgroundColor:'transparent',tooltip:{trigger:'axis',...tip},
-  grid:{left:60,right:30,top:20,bottom:30},
-  xAxis:{type:'category',data:['一产','二产','三产'],axisLabel:{color:'#5f6773',fontSize:12}},
-  yAxis:{type:'value',axisLabel:{color:dark.text,formatter:'{value}%'},splitLine:{lineStyle:{color:'#e6e9ef'}}},
+  grid:{left:60,right:30,top:24,bottom:30},
+  xAxis:{type:'category',data:['一产','二产','三产'],axisLabel:{color:'#12161c',fontWeight:700},axisLine:xLine},
+  yAxis:{type:'value',axisLabel:{color:dark.text,formatter:'{value}%'},splitLine:split},
   series:[{type:'bar',data:[
-    {value:7.8,itemStyle:{color:'#5f9e3f'}},
+    {value:7.8,itemStyle:{color:'#2f9e44'}},
     {value:6.9,itemStyle:{color:'#0a84ff'}},
-    {value:2.7,itemStyle:{color:'#0a84ff'}}
-  ],barWidth:36,label:{show:true,position:'top',color:'#5f6773',formatter:'{c}%'}}]});
+    {value:2.7,itemStyle:{color:'#7c3aed'}}
+  ],barWidth:36,label:{show:true,position:'top',color:'#12161c',fontWeight:700,formatter:'{c}%'}}]});
 
 c4.setOption({backgroundColor:'transparent',tooltip:{trigger:'axis',...tip},
-  legend:{top:0,textStyle:{color:dark.text,fontSize:11}},
-  grid:{left:50,right:20,top:30,bottom:30},
-  xAxis:{type:'category',data:['一产','二产','三产'],axisLabel:{color:'#5f6773'}},
-  yAxis:{type:'value',axisLabel:{color:dark.text,formatter:'{value}%'},splitLine:{lineStyle:{color:'#e6e9ef'}}},
+  legend:{top:0,textStyle:{color:'#12161c',fontSize:11}},
+  grid:{left:50,right:20,top:34,bottom:30},
+  xAxis:{type:'category',data:['一产','二产','三产'],axisLabel:{color:'#12161c',fontWeight:700},axisLine:xLine},
+  yAxis:{type:'value',axisLabel:{color:dark.text,formatter:'{value}%'},splitLine:split},
   series:[
     {name:'博罗',type:'bar',data:[10.7,54.6,34.7],itemStyle:{color:'#0a84ff'},barWidth:20},
-    {name:'惠城',type:'bar',data:[1.5,27.6,69.0],itemStyle:{color:'#0a84ff'},barWidth:20}
+    {name:'惠城',type:'bar',data:[1.5,27.6,69.0],itemStyle:{color:'#e25700'},barWidth:20}
   ]});
 
 c5.setOption({backgroundColor:'transparent',tooltip:{trigger:'axis',...tip},
-  legend:{top:0,textStyle:{color:dark.text,fontSize:11}},
-  grid:{left:60,right:20,top:30,bottom:30},
-  xAxis:{type:'category',data:['2023','2024','2025'],axisLabel:{color:'#5f6773'}},
-  yAxis:{type:'value',axisLabel:{color:dark.text,formatter:'{value}%'},splitLine:{lineStyle:{color:'#e6e9ef'}}},
+  legend:{top:0,textStyle:{color:'#12161c',fontSize:11}},
+  grid:{left:60,right:20,top:34,bottom:30},
+  xAxis:{type:'category',data:['2023','2024','2025'],axisLabel:{color:'#12161c',fontWeight:700},axisLine:xLine},
+  yAxis:{type:'value',axisLabel:{color:dark.text,formatter:'{value}%'},splitLine:split},
   series:[
-    {name:'规上工业增速',type:'line',data:[10.2,9.5,8.7],smooth:true,lineStyle:{color:'#0a84ff',width:2},itemStyle:{color:'#0a84ff'}},
-    {name:'固投增速',type:'line',data:[5.3,-8.2,-18.8],smooth:true,lineStyle:{color:'#c93b3b',width:2},itemStyle:{color:'#c93b3b'}}
+    {name:'规上工业增速',type:'line',data:[10.2,9.5,8.7],smooth:true,symbol:'circle',symbolSize:7,lineStyle:{color:'#0a84ff',width:2.5},itemStyle:{color:'#0a84ff'}},
+    {name:'固投增速',type:'line',data:[5.3,-8.2,-18.8],smooth:true,symbol:'circle',symbolSize:7,lineStyle:{color:'#c93b3b',width:2.5},itemStyle:{color:'#c93b3b'}}
   ]});
 window.addEventListener('resize',()=>[c1,c2,c3,c4,c5].forEach(c=>c.resize()));
 </script>

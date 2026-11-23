@@ -11,10 +11,11 @@
 .question-page {
   --aqua: var(--mint);
   --amber: var(--ember);
+  --lavender: #7c3aed;
   --card: #f4f2e9;
   --card-deep: #f5f4ec;
-  --rise-fill: linear-gradient(90deg,#bfd8cd,#0b7a86);
-  --fall-fill: repeating-linear-gradient(135deg,rgba(226,87,0,.20) 0 3px,transparent 3px 6px),linear-gradient(90deg,#a05a33,#a05a33);
+  --rise-fill: linear-gradient(90deg,#8fd9e4,#00a6c0);
+  --fall-fill: repeating-linear-gradient(135deg,rgba(255,255,255,.28) 0 3px,transparent 3px 6px),linear-gradient(90deg,#e25700,#e25700);
 }
 .chart-drawer { margin: 10px 0 0; border-top: 1px solid var(--line); }
 .next-stage { font-size: 13px; }
@@ -134,7 +135,7 @@
   font-variant-numeric: tabular-nums;
 }
 .amount-row + .amount-row { margin-top: 7px }
-.amount-row .track { height: 11px; background: #09161191; border: none }
+.amount-row .track { height: 11px; background: rgba(17,24,39,.06); border: none }
 .amount-row .bar { height: 7px; margin-top: -3.5px; transform-origin: left; animation: grow-x .56s ease-out both }
 .amount-label { display: flex; align-items: baseline; justify-content: space-between; gap: 5px; margin-bottom: 1px }
 .amount-label span { color: var(--muted); font-size: 12px }
@@ -186,7 +187,7 @@
 .gap-values span:first-child { color: var(--aqua) }
 .gap-values span:last-child { color: var(--blue) }
 .gap-track { position: relative; height: 18px; margin: 3px 0; background: repeating-linear-gradient(90deg, rgba(17,24,39,.08) 0 1px, transparent 1px 20%); border-right: 1px solid rgba(17,24,39,.08) }
-.gap-track::before { position: absolute; inset: 8px 0 auto; height: 2px; background: #3b584d; content: "" }
+.gap-track::before { position: absolute; inset: 8px 0 auto; height: 2px; background: #cbd5e1; content: "" }
 .gap-band {
   position: absolute;
   top: 7px;
@@ -270,14 +271,14 @@
 .case-buttons button {
   min-height: 44px;
   padding: 7px 12px;
-  border: 1px solid #587467;
+  border: 1px solid #cddcd5;
   border-radius: 7px;
-  background: #eef5f1;
+  background: #f6faf8;
   color: var(--ink);
   font-size: 13px;
   font-weight: 730;
 }
-.case-buttons button:hover, .case-buttons button[aria-pressed="true"] { border-color: var(--aqua); background: #28503d }
+.case-buttons button:hover, .case-buttons button[aria-pressed="true"] { border-color: var(--aqua); background: #e6f4f8; color: #0b6f7e }
 .path { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 13px; padding: 0; list-style: none; margin: 0 }
 .path li {
   position: relative;
@@ -285,15 +286,15 @@
   place-items: center;
   min-height: 48px;
   padding: 5px 4px;
-  border: 1px solid #46685a;
+  border: 1px solid #d7e5dd;
   border-radius: 6px;
-  background: #f1f7f3;
+  background: #f5faf7;
   text-align: center;
   font-size: 13px;
   font-weight: 700;
 }
-.path li:last-child { background: #254a38; border-color: #8ecbaa }
-.path[data-current="1"] li:last-child { background: #493529; border-color: var(--amber) }
+.path li:last-child { background: #e8f7f1; border-color: #7cc7a8 }
+.path[data-current="1"] li:last-child { background: #fff1e6; border-color: var(--amber) }
 .path li + li::before { position: absolute; left: -12px; content: "›"; color: var(--aqua); font-size: 17px }
 .scenario-summary { margin: 8px 0 0 }
 .investigate { align-self: stretch; padding: 11px 12px; border-left: 3px solid var(--aqua); border-radius: 0 8px 8px 0; background: #edf5f0 }
@@ -665,7 +666,7 @@ summary { width: fit-content; min-height: 42px; padding: 10px 3px 8px 0; color: 
         "insight": "2025 年城乡人均可支配收入仍差 {gap} 元。",
         "colors": [
           "#0b7a86",
-          "#aebcff"
+          "#7c3aed"
         ]
       }
     },

@@ -20,13 +20,13 @@ h1{font-size:20px;margin:0 0 2px}
 .path .t{font-size:15px;font-weight:700;margin-bottom:4px}
 .path .d{font-size:12px;color:#5f6773;line-height:1.6}
 .path .src{font-size:10px;color:#98a1ad;margin-top:4px}
-.path .num{font-size:14px;font-weight:700;color:#b25b00;margin-top:6px}
+.path .num{font-size:14px;font-weight:700;color:#e25700;margin-top:6px}
 .switch{width:44px;height:24px;background:#e6e9ef;border-radius:12px;position:relative;flex:none;margin-top:4px;transition:.2s}
 .switch::after{content:'';position:absolute;width:20px;height:20px;background:#98a1ad;border-radius:50%;top:2px;left:2px;transition:.2s}
 .path.on .switch{background:#0a84ff}
 .path.on .switch::after{left:22px;background:#fff}
 .gap{background:#f6f7f9;border:1px solid #e6e9ef;border-radius:12px;padding:16px;margin-top:14px;text-align:center}
-.gap .big{font-size:28px;font-weight:800;color:#b25b00}
+.gap .big{font-size:28px;font-weight:800;color:#e25700}
 .next{text-align:center;margin-top:18px}
 .next a{background:#0a84ff;color:#fff;padding:10px 24px;border-radius:8px;text-decoration:none;font-weight:600;display:inline-block}
 .plain{background:#f1f6ec;border:1px solid #edf5e8;border-left:3px solid #0a84ff;border-radius:8px;padding:10px 12px;font-size:12.5px;line-height:1.9;color:#0b7a86;margin-top:10px}
@@ -169,7 +169,7 @@ function recalc(){
   document.getElementById("curHit").textContent="约"+Math.round(hit)+"%";
   const gn=document.getElementById("gapNum");
   gn.textContent=gap>0?("距参考目标 约"+Math.round(gap)+"亿"):"已到参考目标";
-  gn.style.color=gap<=0?"#00a6c0":gap<100?"#b25b00":"#c93b3b";
+  gn.style.color=gap<=0?"#00a6c0":gap<100?"#e25700":"#c93b3b";
 }
 recalc();
 </script>

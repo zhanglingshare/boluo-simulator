@@ -38,9 +38,9 @@ input[type=range]{width:100%;accent-color:#0a84ff;height:4px}
 .scenario .t{font-size:13px;font-weight:700;margin-bottom:4px}
 .scenario .d{font-size:11.5px;color:#5f6773;line-height:1.6}
 .tag{display:inline-block;font-size:9.5px;padding:2px 7px;border-radius:4px;margin-bottom:6px;font-weight:700}
-.tag-pos{background:#14532d;color:#0b7a86}
-.tag-mid{background:#efe2cc;color:#a86a00}
-.tag-neg{background:#fbe9e9;color:#b23b3b}
+.tag-pos{background:#e6f6ec;color:#2f7d3f;border:1px solid #c9e8d4}
+.tag-mid{background:#fff1dd;color:#a85b00;border:1px solid #efd7b4}
+.tag-neg{background:#fdeaea;color:#b23b3b;border:1px solid #f1cccc}
 .plain{background:#f1f6ec;border:1px solid #edf5e8;border-left:3px solid #0a84ff;border-radius:8px;padding:12px 14px;font-size:12.5px;line-height:1.9;color:#0b7a86;margin-top:10px}
 .plain .lab{display:block;font-size:10.5px;font-weight:800;color:#00a6c0;letter-spacing:1px;margin-bottom:4px}
 .plain.warn{background:#fff8ee;border-color:#efe2cc;border-left-color:#b25b00;color:#a86a00}
@@ -265,7 +265,7 @@ function render(){
   const prob=Math.round(m.hit);
 
   document.getElementById('gGdp').textContent=gdp2030+'亿（中位模型值'+Math.round(m.p50)+'亿）';
-  document.getElementById('gGdp').style.color=gdp2030>=1600?'#0a84ff':gdp2030>=1400?'#b25b00':'#c93b3b';
+  document.getElementById('gGdp').style.color=gdp2030>=1600?'#0a84ff':gdp2030>=1400?'#e25700':'#c93b3b';
   document.getElementById('gRate').textContent=(g*100).toFixed(1)+'%';
   document.getElementById('gProb').textContent=prob+'%';
 
@@ -278,13 +278,13 @@ function render(){
     tooltip:{trigger:'axis',backgroundColor:'#f8fafc',borderColor:'#d8dee8',textStyle:{color:'#12161c'}},
     legend:{top:0,textStyle:{color:'#5f6773',fontSize:11}},
     grid:{left:55,right:25,top:35,bottom:30},
-    xAxis:{type:'category',data:years,axisLabel:{color:'#5f6773'}},
-    yAxis:{type:'value',min:900,axisLabel:{color:'#5f6773'},splitLine:{lineStyle:{color:'#e6e9ef'}}},
+    xAxis:{type:'category',data:years,axisLabel:{color:'#12161c',fontWeight:700},axisLine:{lineStyle:{color:'#cbd5e1'}}},
+    yAxis:{type:'value',min:900,axisLabel:{color:'#5f6773'},axisLine:{lineStyle:{color:'#cbd5e1'}},splitLine:{lineStyle:{color:'#e6e9ef'}}},
     series:[
-      {name:'目标轨道1600亿',type:'line',data:targetPath,lineStyle:{color:'#b25b00',width:2,type:'dashed'},itemStyle:{color:'#b25b00'},symbol:'diamond',symbolSize:8},
-      {name:'自然增长5.5%',type:'line',data:basePath,lineStyle:{color:'#98a1ad',width:2},itemStyle:{color:'#98a1ad'},symbol:'circle',symbolSize:6},
-      {name:'你的设置',type:'line',data:path,lineStyle:{color:'#0a84ff',width:3.5},itemStyle:{color:'#0a84ff'},areaStyle:{color:'rgba(10,132,255,.10)'},symbol:'circle',symbolSize:8,
-       markLine:{silent:true,symbol:'none',data:[{yAxis:1600,lineStyle:{color:'#b25b00',type:'dotted',opacity:0.5},label:{color:'#b25b00',formatter:'1600亿目标线'}}]}}
+      {name:'目标轨道1600亿',type:'line',data:targetPath,lineStyle:{color:'#e25700',width:2.5,type:'dashed'},itemStyle:{color:'#e25700'},symbol:'diamond',symbolSize:8},
+      {name:'自然增长5.5%',type:'line',data:basePath,lineStyle:{color:'#94a3b8',width:2},itemStyle:{color:'#94a3b8'},symbol:'circle',symbolSize:6},
+      {name:'你的设置',type:'line',data:path,lineStyle:{color:'#0a84ff',width:4},itemStyle:{color:'#0a84ff'},areaStyle:{color:new echarts.graphic.LinearGradient(0,0,0,1,[{offset:0,color:'rgba(10,132,255,.22)'},{offset:1,color:'rgba(10,132,255,.02)'}])},symbol:'circle',symbolSize:8,
+       markLine:{silent:true,symbol:'none',data:[{yAxis:1600,lineStyle:{color:'#e25700',type:'dotted',opacity:0.6,width:2},label:{color:'#e25700',fontWeight:700,formatter:'1600亿目标线'}}]}}
     ]
   });
 
@@ -301,7 +301,7 @@ function render(){
       value:parseFloat(v.toFixed(2)),
       itemStyle:{color:v>=0?'#0a84ff':'#c93b3b',borderRadius:v>=0?[0,4,4,0]:[4,0,0,4]}
     })),barWidth:24,label:{show:true,position:function(v){return v.value>=0?'right':'left'},
-      color:'#5f6773',fontSize:11,formatter:function(p){return (p.value>0?'+':'')+p.value.toFixed(2)}}}]
+      color:'#12161c',fontWeight:700,fontSize:11,formatter:function(p){return (p.value>0?'+':'')+p.value.toFixed(2)}}}]
   });
 
   renderRadar(p);
@@ -316,7 +316,7 @@ function renderRadar(p){
     return [6,6,5,5,6]; // 基准
   }
   const names=['高铁效应','罗浮山过夜','投产推迟','基准'];
-  const colors=['#0a84ff','#b25b00','#c93b3b','#98a1ad'];
+  const colors=['#0a84ff','#e25700','#c93b3b','#94a3b8'];
   charts.chRadar.setOption({
     backgroundColor:'transparent',
     tooltip:{backgroundColor:'#f8fafc',borderColor:'#d8dee8',textStyle:{color:'#12161c'}},
@@ -333,9 +333,9 @@ function renderRadar(p){
     },
     series:[{type:'radar',data:names.map((n,i)=>({
       name:n,value:sceneVals(i+1),
-      lineStyle:{color:colors[i],width:2},
+      lineStyle:{color:colors[i],width:2.4},
       itemStyle:{color:colors[i]},
-      areaStyle:{color:colors[i],opacity:0.12}
+      areaStyle:{color:colors[i],opacity:0.16}
     }))}]
   });
 }
@@ -373,9 +373,9 @@ function renderTornado(){
     xAxis:{type:'value',min:900,max:1900,axisLabel:{color:'#5f6773'},splitLine:{lineStyle:{color:'#e6e9ef'}}},
     yAxis:{type:'category',data:labels,axisLabel:{color:'#5f6773',fontSize:12}},
     series:[
-      {type:'bar',stack:'t',data:rows.map(r=>r.lo),itemStyle:{color:'#c93b3b',opacity:0.7},barWidth:22,name:'低档'},
-      {type:'bar',stack:'t',data:rows.map(r=>r.hi-r.lo),itemStyle:{color:'#0a84ff',opacity:0.7},barWidth:22,name:'高档',
-       label:{show:true,position:'right',color:'#5f6773',fontSize:10.5,formatter:function(p){
+      {type:'bar',stack:'t',data:rows.map(r=>r.lo),itemStyle:{color:'#c93b3b',opacity:0.88},barWidth:22,name:'低档'},
+      {type:'bar',stack:'t',data:rows.map(r=>r.hi-r.lo),itemStyle:{color:'#0a84ff',opacity:0.88},barWidth:22,name:'高档',
+       label:{show:true,position:'right',color:'#12161c',fontWeight:700,fontSize:10.5,formatter:function(p){
          const r=rows[p.dataIndex];return `±${Math.round((r.hi-r.lo)/2)}亿`;
        }}}
     ]

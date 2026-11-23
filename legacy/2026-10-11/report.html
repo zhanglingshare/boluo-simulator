@@ -92,12 +92,12 @@
   font-weight: 750;
 }
 .stress-controls button:hover:not(:disabled) { border-color: var(--light) }
-.stress-controls button[aria-pressed="true"] { background: #5b382a; border-color: var(--ember); color: #fff1d4 }
+.stress-controls button[aria-pressed="true"] { background: #fff1e2; border-color: var(--ember); color: #a84a00 }
 .stress-controls button:disabled { cursor: default; opacity: .52 }
 .reset-stress { margin-left: auto }
 .chance-pair { display: grid; grid-template-columns: 1fr 1fr .82fr; gap: 9px; margin-top: 12px }
-.chance-cell, .scenario-takeaway { min-width: 0; padding: clamp(9px, 1.5vw, 17px); border: 1px solid #59694c; border-radius: 8px; background: #f2f8f4 }
-.chance-cell.current { background: #fff8ee; border-color: #a8684f }
+.chance-cell, .scenario-takeaway { min-width: 0; padding: clamp(9px, 1.5vw, 17px); border: 1px solid #dbe4ee; border-radius: 8px; background: #f7fafc }
+.chance-cell.current { background: #fff8ee; border-color: #e9c9b3 }
 .chance-title { display: block; color: var(--ink); font-size: 13px; font-weight: 720 }
 .chance-number {
   display: block;
@@ -110,10 +110,10 @@
 }
 .chance-cell.current[data-hit="false"] .chance-number { color: var(--ember) }
 .chance-grid { display: grid; grid-template-columns: repeat(20, minmax(0, 1fr)); gap: 3px; margin: 7px 0 0 }
-.chance-grid i { aspect-ratio: 1; border-radius: 2px; background: #405047; transition: background .24s, box-shadow .24s }
-.chance-grid .hit { background: var(--mint); box-shadow: 0 0 7px #95f1b68b }
-.chance-grid .lost { background: #6d422f; border: 1px solid #d5886380 }
-.scenario-takeaway { display: flex; flex-direction: column; justify-content: center; gap: 6px; background: #fff8ee; border-color: #746541 }
+.chance-grid i { aspect-ratio: 1; border-radius: 2px; background: #dce3ec; transition: background .24s, box-shadow .24s }
+.chance-grid .hit { background: var(--mint); box-shadow: 0 0 7px rgba(0,166,192,.28) }
+.chance-grid .lost { background: #f6ded5; border: 1px solid #e6b7a7 }
+.scenario-takeaway { display: flex; flex-direction: column; justify-content: center; gap: 6px; background: #fff8ee; border-color: #e8d5c0 }
 .scenario-impact { color: var(--light); font-size: clamp(19px, 3vw, 37px); font-weight: 820; letter-spacing: -.04em; line-height: 1.1 }
 .scenario-impact small { font-size: .45em; letter-spacing: 0; white-space: nowrap }
 .scenario-takeaway p { margin: 0; color: var(--muted); font-size: 12px }
@@ -322,21 +322,21 @@
       "plain": "农业等",
       "share": 10.7,
       "growth": 7.8,
-      "color": "#f6ed72"
+      "color": "#2f9e44"
     },
     {
       "label": "第二产业",
       "plain": "工业和建筑业",
       "share": 54.6,
       "growth": 6.9,
-      "color": "#0b7a86"
+      "color": "#0a84ff"
     },
     {
       "label": "第三产业",
       "plain": "服务业",
       "share": 34.7,
       "growth": 2.7,
-      "color": "#aebcff"
+      "color": "#7c3aed"
     }
   ]
 }

@@ -248,7 +248,7 @@ function run(){
     <div class="row"><span class="k">全局扰动</span><span class="v2">±${GLOBAL_SD}亿</span><span style="color:#98a1ad">模拟外部冲击等随机因素</span></div>
   `;
 
-  const probColor=s.hit>50?'#00a6c0':s.hit>20?'#b25b00':'#c93b3b';
+  const probColor=s.hit>50?'#0a84ff':s.hit>20?'#e25700':'#c93b3b';
   document.getElementById('prob').innerHTML=`<span style="color:${probColor}">${s.hit.toFixed(1)}%</span>`;
   document.getElementById('p10').textContent=Math.round(s.p10)+'亿';
   document.getElementById('p50').textContent=Math.round(s.p50)+'亿';
@@ -266,10 +266,10 @@ function run(){
     backgroundColor:'transparent',
     tooltip:{trigger:'axis',backgroundColor:'#f8fafc',borderColor:'#d8dee8',textStyle:{color:'#12161c'},formatter:ps=>`约${ps[0].name}亿<br/>出现${ps[0].value}次`},
     grid:{left:55,right:25,top:25,bottom:40},
-    xAxis:{type:'category',data:labels,axisLabel:{color:'#8a93a1',interval:Math.floor(bins/8)},axisLine:{lineStyle:{color:'#d8dee8'}}},
-    yAxis:{type:'value',axisLabel:{color:'#8a93a1'},splitLine:{lineStyle:{color:'#e6e9ef'}}},
-    series:[{type:'bar',data:data.map((v,i)=>({value:v,itemStyle:{color:labels[i]>=TARGET?'#0a84ff':'#0a84ff',opacity:.8}})),barCategoryGap:'15%',
-      markLine:{silent:true,symbol:'none',data:[{xAxis:String(Math.round(TARGET)),lineStyle:{color:'#6a5be0',width:2,type:'dashed'},label:{color:'#6a5be0',formatter:'1600亿',position:'start'}}]}}]
+    xAxis:{type:'category',data:labels,axisLabel:{color:'#5f6773',interval:Math.floor(bins/8)},axisLine:{lineStyle:{color:'#cbd5e1'}}},
+    yAxis:{type:'value',axisLabel:{color:'#5f6773'},splitLine:{lineStyle:{color:'#e6e9ef'}}},
+    series:[{type:'bar',data:data.map(v=>({value:v,itemStyle:{color:new echarts.graphic.LinearGradient(0,0,0,1,[{offset:0,color:'#0a84ff'},{offset:1,color:'#68b7ff'}])}})),barCategoryGap:'15%',
+      markLine:{silent:true,symbol:'none',data:[{xAxis:String(Math.round(TARGET)),lineStyle:{color:'#e25700',width:2,type:'dashed'},label:{color:'#e25700',fontWeight:700,formatter:'1600亿',position:'start'}}]}}]
   });
 
   // 堆叠
@@ -278,11 +278,11 @@ function run(){
     tooltip:{trigger:'axis',backgroundColor:'#f8fafc',borderColor:'#d8dee8',textStyle:{color:'#12161c'},axisPointer:{type:'shadow'}},
     legend:{top:0,textStyle:{color:'#5f6773',fontSize:10.5},type:'scroll'},
     grid:{left:60,right:20,top:35,bottom:20},
-    xAxis:{type:'value',axisLabel:{color:'#8a93a1'},splitLine:{lineStyle:{color:'#e6e9ef'}}},
-    yAxis:{type:'category',data:['2030年'],axisLabel:{color:'#5f6773'}},
+    xAxis:{type:'value',axisLabel:{color:'#5f6773'},axisLine:{lineStyle:{color:'#cbd5e1'}},splitLine:{lineStyle:{color:'#e6e9ef'}}},
+    yAxis:{type:'category',data:['2030年'],axisLabel:{color:'#12161c',fontWeight:700}},
     series:[
-      {name:'现有盘子',type:'bar',stack:'s',data:[BASE],itemStyle:{color:'#e9edf3'}},
-      ...PATHS.map(p=>({name:p.name,type:'bar',stack:'s',data:[p.mu],itemStyle:{color:p.color}}))
+      {name:'现有盘子',type:'bar',stack:'s',data:[BASE],itemStyle:{color:'#dbe2ea'}},
+      ...PATHS.map(p=>({name:p.name,type:'bar',stack:'s',data:[p.mu],itemStyle:{color:p.color,borderColor:'#ffffff',borderWidth:1}}))
     ]
   });
 
@@ -293,11 +293,11 @@ function run(){
     tooltip:{trigger:'axis',backgroundColor:'#f8fafc',borderColor:'#d8dee8',textStyle:{color:'#12161c'},formatter:ps=>{const p=tSorted[ps[0].dataIndex];return `${p.name}<br/>摆动±${p.sd}亿`}},
     legend:{top:0,textStyle:{color:'#5f6773',fontSize:10.5},data:['向下摆','向上摆']},
     grid:{left:110,right:50,top:35,bottom:30},
-    xAxis:{type:'value',axisLabel:{color:'#8a93a1',formatter:'{value}'},splitLine:{lineStyle:{color:'#e6e9ef'}}},
-    yAxis:{type:'category',data:tSorted.map(p=>p.name),axisLabel:{color:'#5f6773',fontSize:11.5}},
+    xAxis:{type:'value',axisLabel:{color:'#5f6773',formatter:'{value}'},axisLine:{lineStyle:{color:'#cbd5e1'}},splitLine:{lineStyle:{color:'#e6e9ef'}}},
+    yAxis:{type:'category',data:tSorted.map(p=>p.name),axisLabel:{color:'#12161c',fontSize:11.5}},
     series:[
-      {name:'向下摆',type:'bar',data:tSorted.map(p=>-p.sd),itemStyle:{color:'#c93b3b',opacity:.75},barWidth:18},
-      {name:'向上摆',type:'bar',data:tSorted.map(p=>p.sd),itemStyle:{color:'#0a84ff',opacity:.75},barWidth:18}
+      {name:'向下摆',type:'bar',data:tSorted.map(p=>-p.sd),itemStyle:{color:'#c93b3b',opacity:.9},barWidth:18},
+      {name:'向上摆',type:'bar',data:tSorted.map(p=>p.sd),itemStyle:{color:'#0a84ff',opacity:.9},barWidth:18}
     ]
   });
 
@@ -307,10 +307,10 @@ function run(){
     backgroundColor:'transparent',
     tooltip:{trigger:'axis',backgroundColor:'#f8fafc',borderColor:'#d8dee8',textStyle:{color:'#12161c'},formatter:ps=>`${cOrder[ps[0].dataIndex].p.name}<br/>关联强度 ${ps[0].value.toFixed(3)}`},
     grid:{left:110,right:50,top:15,bottom:30},
-    xAxis:{type:'value',max:1,axisLabel:{color:'#8a93a1'},splitLine:{lineStyle:{color:'#e6e9ef'}}},
-    yAxis:{type:'category',data:cOrder.map(o=>o.p.name),axisLabel:{color:'#5f6773',fontSize:11.5}},
+    xAxis:{type:'value',max:1,axisLabel:{color:'#5f6773'},axisLine:{lineStyle:{color:'#cbd5e1'}},splitLine:{lineStyle:{color:'#e6e9ef'}}},
+    yAxis:{type:'category',data:cOrder.map(o=>o.p.name),axisLabel:{color:'#12161c',fontSize:11.5}},
     series:[{type:'bar',data:cOrder.map(o=>({value:o.v.toFixed(3),itemStyle:{color:o.p.color}})),barWidth:18,
-      label:{show:true,position:'right',color:'#5f6773',fontSize:10.5}}]
+      label:{show:true,position:'right',color:'#12161c',fontWeight:700,fontSize:10.5}}]
   });
 
   const topCoef=cOrder[0];
@@ -344,11 +344,11 @@ function runSensitivity(){
     tooltip:{trigger:'axis',backgroundColor:'#f8fafc',borderColor:'#d8dee8',textStyle:{color:'#12161c'},formatter:ps=>{const r=rows[ps[0].dataIndex];const d=ps[0].seriesName==='+20%'?r.plusProb:r.minusProb;return `${r.name}<br/>${ps[0].seriesName}：达标率${d>=0?'+':''}${d.toFixed(1)}%`}},
     legend:{top:0,textStyle:{color:'#5f6773',fontSize:11},data:['+20%','-20%']},
     grid:{left:110,right:50,top:35,bottom:30},
-    xAxis:{type:'value',axisLabel:{color:'#8a93a1',formatter:'{value}%'},splitLine:{lineStyle:{color:'#e6e9ef'}}},
-    yAxis:{type:'category',data:rows.map(r=>r.name),axisLabel:{color:'#5f6773',fontSize:11.5}},
+    xAxis:{type:'value',axisLabel:{color:'#5f6773',formatter:'{value}%'},axisLine:{lineStyle:{color:'#cbd5e1'}},splitLine:{lineStyle:{color:'#e6e9ef'}}},
+    yAxis:{type:'category',data:rows.map(r=>r.name),axisLabel:{color:'#12161c',fontSize:11.5}},
     series:[
-      {name:'+20%',type:'bar',data:rows.map(r=>r.plusProb.toFixed(1)),itemStyle:{color:'#0a84ff',opacity:.8},barWidth:16},
-      {name:'-20%',type:'bar',data:rows.map(r=>r.minusProb.toFixed(1)),itemStyle:{color:'#c93b3b',opacity:.8},barWidth:16}
+      {name:'+20%',type:'bar',data:rows.map(r=>r.plusProb.toFixed(1)),itemStyle:{color:'#0a84ff',opacity:.9},barWidth:16},
+      {name:'-20%',type:'bar',data:rows.map(r=>r.minusProb.toFixed(1)),itemStyle:{color:'#c93b3b',opacity:.9},barWidth:16}
     ]
   });
   document.getElementById('sensTable').innerHTML=`
