@@ -2365,3 +2365,43 @@ text.target-label{fill:#0a84ff!important;font-weight:700!important}
 text.x-tick{fill:#5f6773!important}
 /* insights 排序行：原为居中，浅底上像空白条，改为左对齐列表 */
 .v11-story-rank-chip{justify-content:flex-start!important;text-align:left!important}
+
+/* ===== region 关系网络图：浅底配色 ===== */
+#regionalGraph .graph-node circle{fill:#ffffff!important;stroke:#0a7f95!important;stroke-width:2!important;filter:none!important}
+#regionalGraph .graph-node.hub circle{fill:#fff4ec!important;stroke:#e25700!important;stroke-width:3!important}
+#regionalGraph .graph-node.external circle{fill:#f4f8ff!important;stroke:#5b7ea6!important}
+#regionalGraph .graph-node.plan circle{fill:#eef5ff!important;stroke:#0a84ff!important}
+#regionalGraph .graph-node.question circle{fill:#fffaf4!important;stroke:#e25700!important;stroke-dasharray:5 4!important}
+#regionalGraph .graph-node.active circle{stroke:#e25700!important;stroke-width:4!important;filter:drop-shadow(0 2px 8px rgba(226,87,0,.25))!important}
+#regionalGraph .graph-node text{fill:#12161c!important;stroke:#ffffff!important;stroke-width:3!important;paint-order:stroke!important;font-weight:800!important}
+#regionalGraph .graph-edge.fact{stroke:#0a7f95!important}
+#regionalGraph .graph-edge.plan{stroke:#0a84ff!important}
+#regionalGraph .graph-edge.question{stroke:#e25700!important}
+#regionalGraph .graph-particle{fill:#0a84ff!important;filter:none!important}
+
+/* ===== SVG 文字：深底白字在浅底不可读，统一改深色 ===== */
+svg text{fill:#12161c!important;stroke:none!important}
+svg text.node-sub,svg text.p-sub,svg text.path-node-sub,svg text.node-meta,svg text.donut-center-small{fill:#5f6773!important}
+svg text.path-node-status,svg text.quad-threshold-label{fill:#b25b00!important}
+/* 仍为深色底的位置：保留白字 */
+g.sector-node text{fill:#ffffff!important}
+g.path-node text{fill:#12161c!important}
+g.path-node text.path-node-sub{fill:#5f6773!important}
+.network-svg .signal-node text{fill:#12161c!important}
+.network-svg .signal-node text.node-sub{fill:#5f6773!important}
+/* plan：空间节点卡浅底用深字，序号圆为深色底用白字 */
+g.p-node text{fill:#12161c!important}
+.stage-graphic svg text{fill:#12161c!important}
+.stage-graphic svg circle+text{fill:#ffffff!important}
+#planGraph .p-node text{fill:#12161c!important}
+.sector-map .quad-name{fill:#12161c!important}
+g.root-node text{fill:#12161c!important}
+svg.tree-scene rect[fill="#093844"]{fill:#eef4f8!important;stroke:rgba(10,127,149,.25)!important}
+#planGraph .p-node[data-kind] text{fill:#12161c!important}
+.plan-page #planGraph .p-node[data-kind="core"] text{fill:#12161c!important}
+.plan-page #planGraph .p-node[data-kind="core"] .p-sub{fill:#5f6773!important}
+.plan-page #planGraph .p-node .p-sub{fill:#5f6773!important}
+.sector-map .scatter-label{fill:#12161c!important}
+svg .scatter-label{fill:#12161c!important}
+.stage-graphic svg text:nth-of-type(1){fill:#12161c!important}
+#regionalGraph{overflow:visible!important}
