@@ -32,7 +32,7 @@ const escapeHTML=s=>String(s).replace(/[&<>"']/g,c=>({"&":"&amp;","<":"&lt;",">"
 function current(){return cases[state.active]}
 function val(i=0){return state.values[state.active][i]}
 function options(id){if(!cases[id])return;stopPlay();state.active=id;document.querySelectorAll("[data-case]").forEach(b=>{const active=b.dataset.case===id;b.classList.toggle("active",active);b.setAttribute("aria-pressed",String(active));});render();announce("已切换"+byid[id]+" · 改条件，看差别");}
-function text(id,s){$(id).textContent=s}
+function text(id,s){const el=$(id);if(el)el.textContent=s}
 function badge(s,good=false,missing=false){const t=$("riskBadge");t.className="status"+(good?" ok":missing?" missing":"");t.textContent=s}
 function unitNumber(n,unit){return fmt(n,1)+unit}
 function setupInputs(){
