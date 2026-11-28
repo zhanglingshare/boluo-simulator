@@ -1,17 +1,17 @@
 {
   "manifest_version": "data-manifest/1",
   "region": "boluo",
-  "generated_at": "2026-10-28",
+  "generated_at": "2026-11-28",
   "data_dictionary": "data-dict/1",
   "data_governance": "data-gov/1",
-  "note": "博罗数据资产底座注册表。三版本（全息/沙盘/风洞）通过本清单确认数据版本；事实(A/B/D)与假设(C)分层，模型参数经人工审核门。",
+  "note": "博罗数据资产底座注册表。三版本（全息/沙盘/风洞）通过本清单确认数据版本；事实(A/B/D)与假设(C)分层，模型参数经人工审核门。2026-11-28 账实校正：hot/life 时间戳对齐实际文件；新增 today-facts 条目；atlas 与 params 文件当前不存在，标注 missing 而非假装已落地。",
   "assets": [
     {
       "id": "hot",
       "path": "hot.json",
       "layer": "L1 事件",
       "schema_version": 2,
-      "updated": "2026-10-21 07:27",
+      "updated": "2026-11-17 15:35",
       "evidence": "A/B",
       "update": "每日采集"
     },
@@ -20,9 +20,22 @@
       "path": "life.json",
       "layer": "L2 生活",
       "schema_version": 2,
-      "updated": "2026-10-21 07:27",
+      "updated": "2026-11-17 15:35",
       "evidence": "A/B",
       "update": "每日采集"
+    },
+    {
+      "id": "today-facts",
+      "path": "data/today-facts.json",
+      "layer": "L4 事实",
+      "schema_version": "boluo-today-facts/v1",
+      "updated": "2026-11-28 16:30",
+      "evidence": "A",
+      "update": "官方统计发布后更新",
+      "consumers": [
+        "v11/reality.html#qsFacts",
+        "v11/wind.html#trendCompare(参数侧)"
+      ]
     },
     {
       "id": "atlas",
@@ -31,7 +44,9 @@
       "schema_version": "holo-m2-atlas/1",
       "updated": "2026-10-27 15:40",
       "evidence": "A/B/D",
-      "update": "有新证据才更新"
+      "update": "有新证据才更新",
+      "status": "missing",
+      "note": "清单登记但工作区无此文件，尚未落地；读取前应先确认生成脚本与审核流程。"
     },
     {
       "id": "params",
@@ -40,7 +55,9 @@
       "schema_version": "params-2026-10-27-4ev",
       "updated": "2026-10-27 08:23",
       "evidence": "C.calibrated",
-      "update": "人工审核门后发版"
+      "update": "人工审核门后发版",
+      "status": "missing",
+      "note": "清单登记但工作区无此文件，尚未落地；读取前应先确认生成脚本与审核流程。"
     },
     {
       "id": "evidence_events",
