@@ -1,86 +1,112 @@
 {
-  "manifest_version": "data-manifest/1",
-  "region": "boluo",
-  "generated_at": "2026-11-28",
-  "data_dictionary": "data-dict/1",
-  "data_governance": "data-gov/1",
-  "note": "博罗数据资产底座注册表。三版本（全息/沙盘/风洞）通过本清单确认数据版本；事实(A/B/D)与假设(C)分层，模型参数经人工审核门。2026-11-28 账实校正：hot/life 时间戳对齐实际文件；新增 today-facts 条目；atlas 与 params 文件当前不存在，标注 missing 而非假装已落地。",
-  "assets": [
-    {
-      "id": "hot",
-      "path": "hot.json",
-      "layer": "L1 事件",
-      "schema_version": 2,
-      "updated": "2026-11-17 15:35",
-      "evidence": "A/B",
-      "update": "每日采集"
-    },
-    {
-      "id": "life",
-      "path": "life.json",
-      "layer": "L2 生活",
-      "schema_version": 2,
-      "updated": "2026-11-17 15:35",
-      "evidence": "A/B",
-      "update": "每日采集"
-    },
-    {
-      "id": "today-facts",
-      "path": "data/today-facts.json",
-      "layer": "L4 事实",
-      "schema_version": "boluo-today-facts/v1",
-      "updated": "2026-11-28 16:30",
-      "evidence": "A",
-      "update": "官方统计发布后更新",
-      "consumers": [
-        "v11/reality.html#qsFacts",
-        "v11/wind.html#trendCompare(参数侧)"
-      ]
-    },
-    {
-      "id": "atlas",
-      "path": "experiments/holo-single/data/atlas.json",
-      "layer": "L3 关系/底座",
-      "schema_version": "holo-m2-atlas/1",
-      "updated": "2026-10-27 15:40",
-      "evidence": "A/B/D",
-      "update": "有新证据才更新",
-      "status": "missing",
-      "note": "清单登记但工作区无此文件，尚未落地；读取前应先确认生成脚本与审核流程。"
-    },
-    {
-      "id": "params",
-      "path": "params.json",
-      "layer": "L5 模型参数",
-      "schema_version": "params-2026-10-27-4ev",
-      "updated": "2026-10-27 08:23",
-      "evidence": "C.calibrated",
-      "update": "人工审核门后发版",
-      "status": "missing",
-      "note": "清单登记但工作区无此文件，尚未落地；读取前应先确认生成脚本与审核流程。"
-    },
-    {
-      "id": "evidence_events",
-      "path": "evidence/events/",
-      "layer": "证据台账",
-      "schema_version": null,
-      "updated": null,
-      "evidence": "A/B/D",
-      "update": "采集即登记，审核后发版"
-    }
-  ],
-  "node_count": 27,
-  "town_anchor_count": 16,
-  "evidence_grades": {
-    "A": "直接观测",
-    "B": "交叉推断（区间）",
-    "C": "假设探索（不覆盖事实）",
-    "D": "未知（不编造）"
+ "manifest_version": "data-manifest/1",
+ "region": "boluo",
+ "generated_at": "2026-11-28",
+ "data_dictionary": "data-dict/1",
+ "data_governance": "data-gov/1",
+ "note": "博罗数据资产底座注册表。三版本（全息/沙盘/风洞）通过本清单确认数据版本；事实(A/B/D)与假设(C)分层，模型参数经人工审核门。2026-11-28 账实校正：hot/life 时间戳对齐实际文件；新增 today-facts 条目；atlas 与 params 文件当前不存在，标注 missing 而非假装已落地。 2026-11-28 惠城风洞上线：新增 huicheng-facts 与 huicheng-model 两条资产（路径前缀 huicheng/，与博罗同仓库不同页面）。",
+ "assets": [
+  {
+   "id": "hot",
+   "path": "hot.json",
+   "layer": "L1 事件",
+   "schema_version": 2,
+   "updated": "2026-11-17 15:35",
+   "evidence": "A/B",
+   "update": "每日采集"
   },
-  "known_gaps": [
-    "多变量 OD 矩阵",
-    "真实物流/资金流",
-    "部分镇街人口与游客口径",
-    "园洲—东莞通勤为 B 级区间（约4500–17000人次/日），非实测"
-  ]
+  {
+   "id": "life",
+   "path": "life.json",
+   "layer": "L2 生活",
+   "schema_version": 2,
+   "updated": "2026-11-17 15:35",
+   "evidence": "A/B",
+   "update": "每日采集"
+  },
+  {
+   "id": "today-facts",
+   "path": "data/today-facts.json",
+   "layer": "L4 事实",
+   "schema_version": "boluo-today-facts/v1",
+   "updated": "2026-11-28 16:30",
+   "evidence": "A",
+   "update": "官方统计发布后更新",
+   "consumers": [
+    "v11/reality.html#qsFacts",
+    "v11/wind.html#trendCompare(参数侧)"
+   ]
+  },
+  {
+   "id": "atlas",
+   "path": "experiments/holo-single/data/atlas.json",
+   "layer": "L3 关系/底座",
+   "schema_version": "holo-m2-atlas/1",
+   "updated": "2026-10-27 15:40",
+   "evidence": "A/B/D",
+   "update": "有新证据才更新",
+   "status": "missing",
+   "note": "清单登记但工作区无此文件，尚未落地；读取前应先确认生成脚本与审核流程。"
+  },
+  {
+   "id": "params",
+   "path": "params.json",
+   "layer": "L5 模型参数",
+   "schema_version": "params-2026-10-27-4ev",
+   "updated": "2026-10-27 08:23",
+   "evidence": "C.calibrated",
+   "update": "人工审核门后发版",
+   "status": "missing",
+   "note": "清单登记但工作区无此文件，尚未落地；读取前应先确认生成脚本与审核流程。"
+  },
+  {
+   "id": "evidence_events",
+   "path": "evidence/events/",
+   "layer": "证据台账",
+   "schema_version": null,
+   "updated": null,
+   "evidence": "A/B/D",
+   "update": "采集即登记，审核后发版"
+  },
+  {
+   "id": "huicheng-facts",
+   "path": "huicheng/data/facts.json",
+   "layer": "L4 事实",
+   "schema_version": "huicheng-facts/v1",
+   "updated": "2026-11-28 19:40",
+   "evidence": "A",
+   "update": "官方统计发布后更新",
+   "consumers": [
+    "huicheng/index.html#facts"
+   ],
+   "note": "惠城区数据底座：2025 基期 GDP 1203.33 亿及三产结构、2026 上半年与前三季度、剪刀差、4 条 caveats，含 4 条政府网站来源 URL。"
+  },
+  {
+   "id": "huicheng-model",
+   "path": "huicheng/model.js",
+   "layer": "L5 模型",
+   "schema_version": "hc-model/1",
+   "updated": "2026-11-28 19:40",
+   "evidence": "C（参数）",
+   "update": "年度公报或规划调整后复核",
+   "consumers": [
+    "huicheng/index.html"
+   ],
+   "note": "惠城风洞内核：BASE 1203.33 / TARGET 2000 / NOISE_SD 40；五条规划路径合计 mu 796.67；TREND 路径 sd 压至 ≤0.6×mu 以避免负值截断抬高期望（未压缩时中位虚高约 28 亿）。"
+  }
+ ],
+ "node_count": 27,
+ "town_anchor_count": 16,
+ "evidence_grades": {
+  "A": "直接观测",
+  "B": "交叉推断（区间）",
+  "C": "假设探索（不覆盖事实）",
+  "D": "未知（不编造）"
+ },
+ "known_gaps": [
+  "多变量 OD 矩阵",
+  "真实物流/资金流",
+  "部分镇街人口与游客口径",
+  "园洲—东莞通勤为 B 级区间（约4500–17000人次/日），非实测"
+ ]
 }
