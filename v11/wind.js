@@ -113,8 +113,9 @@ function runThree(){
  const m=MODELS[state.shock];
  const p=window.BoluoExperimentBaseline?.getParams?.()||{};
  const scale=clamp(Number(p.baseScale??1),.6,1.4), volatility=clamp(Number(p.volScale??1),.5,1.8);
- const pathFactors=Array.isArray(p.paths)?p.paths:HT.DEFAULT_PATHS.map(()=>1);
- const baselinePaths=HT.DEFAULT_PATHS.map((item,i)=>({
+ const presetSet=(p.preset==='trend'&&Array.isArray(HT.TREND_PATHS))?HT.TREND_PATHS:HT.DEFAULT_PATHS;
+ const pathFactors=Array.isArray(p.paths)?p.paths:presetSet.map(()=>1);
+ const baselinePaths=presetSet.map((item,i)=>({
   ...item,mu:item.mu*scale*clamp(Number(pathFactors[i]??1),.5,1.5),sd:item.sd*volatility
  }));
  const count=clamp(Number(p.count??state.count),2000,12000);

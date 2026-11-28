@@ -50,8 +50,9 @@
     const p = params();
     const scale = clamp(Number(p.baseScale != null ? p.baseScale : 1), .6, 1.4);
     const vol = clamp(Number(p.volScale != null ? p.volScale : 1), .5, 1.8);
-    const pf = Array.isArray(p.paths) ? p.paths : HT.DEFAULT_PATHS.map(() => 1);
-    const baseline = HT.DEFAULT_PATHS.map((it, i) => ({
+    const baseSet = (p.preset === 'trend' && Array.isArray(HT.TREND_PATHS)) ? HT.TREND_PATHS : HT.DEFAULT_PATHS;
+    const pf = Array.isArray(p.paths) ? p.paths : baseSet.map(() => 1);
+    const baseline = baseSet.map((it, i) => ({
       ...it, mu: it.mu * scale * clamp(Number(pf[i] != null ? pf[i] : 1), .5, 1.5), sd: it.sd * vol
     }));
     const meta = core.MODELS[s.shock];

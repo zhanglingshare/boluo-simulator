@@ -7,6 +7,7 @@ const state={
  baseScale:clamp(qs.get("bs")??1,.65,1.35),
  volScale:clamp(qs.get("bv")??1,.6,1.6),
  paths:Array.from({length:5},(_,i)=>clamp(qs.get("bp"+i)??1,.5,1.5)),
+ preset:qs.get("ps")==="trend"?"trend":"plan",
  count:[2000,5000,10000].includes(Number(qs.get("n")))?Number(qs.get("n")):5000,
  threshold:clamp(qs.get("line")??1600,1250,1850),
  view:["density","hist","cdf"].includes(qs.get("view"))?qs.get("view"):"density"
@@ -29,6 +30,12 @@ const labels=()=>{
    const v=$("basePathValue"+i);if(v)v.textContent=Math.round(state.paths[i]*100)+"%";
  });
  document.querySelectorAll("[data-dist-view]").forEach(b=>b.setAttribute("aria-pressed",String(b.dataset.distView===state.view)));
+ const pp=$("presetPlan"),pt=$("presetTrend");
+ if(pp){pp.classList.toggle("active",state.preset==="plan");pp.setAttribute("aria-pressed",String(state.preset==="plan"));}
+ if(pt){pt.classList.toggle("active",state.preset==="trend");pt.setAttribute("aria-pressed",String(state.preset==="trend"));}
+ const tc=$("trendCompare"),tm=$("trendModeNote");
+ if(tc)tc.style.display=state.preset==="trend"?"none":"block";
+ if(tm)tm.style.display=state.preset==="trend"?"block":"none";
 };
 function syncURL(){
  const u=new URL(location.href);
@@ -38,6 +45,7 @@ function syncURL(){
  u.searchParams.set("n",String(state.count));
  u.searchParams.set("line",String(state.threshold));
  u.searchParams.set("view",state.view);
+ u.searchParams.set("ps",state.preset);
  history.replaceState(null,"",u.pathname+u.search+u.hash);
 }
 function rerun(animate=false){
@@ -48,19 +56,36 @@ function schedule(){
  clearTimeout(job);job=setTimeout(()=>rerun(false),65);
 }
 function reset(shouldRun=true){
- state.baseScale=1;state.volScale=1;state.paths=[1,1,1,1,1];state.count=5000;state.threshold=1600;state.view="density";
+ state.baseScale=1;state.volScale=1;state.paths=[1,1,1,1,1];state.count=5000;state.threshold=1600;state.view="density";state.preset="plan";
+ if(typeof renderPaths==="function")renderPaths();
  labels();
  if(shouldRun)rerun(true);
 }
-window.BoluoExperimentBaseline={getParams:()=>({baseScale:state.baseScale,volScale:state.volScale,paths:state.paths.slice(),count:state.count}),reset};
+window.BoluoExperimentBaseline={getParams:()=>({baseScale:state.baseScale,volScale:state.volScale,paths:state.paths.slice(),count:state.count,preset:state.preset}),reset};
 const pathBox=$("basePathControls");
-if(pathBox && typeof HT!=="undefined"){
- HT.DEFAULT_PATHS.forEach((p,i)=>{
+function renderPaths(){
+ if(!pathBox || typeof HT==="undefined")return;
+ const set=(state.preset==="trend")?HT.TREND_PATHS:HT.DEFAULT_PATHS;
+ if(!set)return;
+ pathBox.innerHTML="";
+ set.forEach((p,i)=>{
    const label=document.createElement("label");
-   label.innerHTML='<span>'+String(i+1).padStart(2,"0")+' · '+p.name+' <strong id="basePathValue'+i+'">'+Math.round(state.paths[i]*100)+'%</strong></span><input type="range" data-baseline-path="'+i+'" min=".5" max="1.5" step=".05" value="'+state.paths[i]+'"><small>默认情景贡献 '+p.mu+' 亿 · 当前 '+Math.round(p.mu*state.paths[i]*state.baseScale)+' 亿（仅路径假设）</small>';
+   const prem=(state.preset==="trend")?"实测基线":"默认情景";
+   label.innerHTML='<span>'+String(i+1).padStart(2,"0")+' · '+p.name+' <strong id="basePathValue'+i+'">'+Math.round(state.paths[i]*100)+'%</strong></span><input type="range" data-baseline-path="'+i+'" min=".5" max="1.5" step=".05" value="'+state.paths[i]+'"><small>'+prem+'贡献 '+p.mu+' 亿 · 当前 '+Math.round(p.mu*state.paths[i]*state.baseScale)+' 亿（仅路径假设）</small>';
    pathBox.append(label);
  });
 }
+renderPaths();
+function setPreset(p){
+ p=(p==="trend")?"trend":"plan";
+ if(p===state.preset)return;
+ state.preset=p;state.baseScale=1;state.paths=[1,1,1,1,1];
+ renderPaths();
+ if($("baseScale"))$("baseScale").value="1";
+ rerun(true);
+}
+$("presetPlan")?.addEventListener("click",()=>setPreset("plan"));
+$("presetTrend")?.addEventListener("click",()=>setPreset("trend"));
 const baseInput=$("baseScale"),volInput=$("baseVol");
 baseInput?.addEventListener("input",e=>{state.baseScale=clamp(e.target.value,.65,1.35);labels();schedule();});
 baseInput?.addEventListener("change",()=>rerun(true));
