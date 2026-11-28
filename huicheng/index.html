@@ -113,6 +113,7 @@
   }
   const tx=x(2000), mx2=x(res.p50);
   svg.style.aspectRatio=W+' / '+H;
+  svg.setAttribute('viewBox','0 0 '+W+' '+H);
   svg.innerHTML=
    '<path d="'+area+'" fill="#2f8be0" opacity="0.13"/>'+
    '<path d="'+line+'" fill="none" stroke="#2f8be0" stroke-width="2.2"/>'+
@@ -120,10 +121,10 @@
    '<line x1="'+tx.toFixed(1)+'" y1="'+(pt-4)+'" x2="'+tx.toFixed(1)+'" y2="'+(H-pb)+'" stroke="#f5b325" stroke-width="2.4" stroke-dasharray="7 5"/>'+
    '<text x="'+tx.toFixed(1)+'" y="'+(pt+8)+'" text-anchor="middle" font-size="11.5" font-weight="700" fill="#b1830f">目标 2000</text>'+
    '<line x1="'+mx2.toFixed(1)+'" y1="'+(pt+14)+'" x2="'+mx2.toFixed(1)+'" y2="'+(H-pb)+'" stroke="#165fb8" stroke-width="2"/>'+
-   (narrow?'':'<text x="'+mx2.toFixed(1)+'" y="'+(pt+30)+'" text-anchor="middle" font-size="11" font-weight="700" fill="#165fb8">中位 '+Math.round(res.p50)+'</text>')+
+   (narrow?'':'<text x="'+mx2.toFixed(1)+'" y="'+(pt+30)+'" text-anchor="middle" font-size="11" font-weight="700" fill="#165fb8" paint-order="stroke" stroke="#ffffff" stroke-width="3.5" stroke-linejoin="round">中位 '+Math.round(res.p50)+'</text>')+
    '<line x1="'+pl+'" y1="'+(H-pb)+'" x2="'+(W-pr)+'" y2="'+(H-pb)+'" stroke="#cfdeee" stroke-width="1.2"/>'+
    labels+
-   (narrow?'':'<text x="'+pl+'" y="'+(pt+10)+'" font-size="10.5" fill="#8aa3bb">频度 · 亿元</text>');
+   (narrow?'':'<text x="'+pl+'" y="'+(pt+10)+'" font-size="10.5" fill="#8aa3bb" paint-order="stroke" stroke="#ffffff" stroke-width="3.5" stroke-linejoin="round">频度 · 亿元</text>');
  }
 
  function render(){
