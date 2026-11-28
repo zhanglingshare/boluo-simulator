@@ -1,0 +1,184 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>惠城产业风洞 · 2030 目标压力测试</title>
+<link rel="stylesheet" href="./hc.css">
+<script src="./model.js"></script>
+</head>
+<body>
+<div class="wrap">
+
+<section class="card hero">
+ <p class="micro">惠城 · 中心城区 / 2030 目标压力测试</p>
+ <h1>1203 亿到 <em>2000 亿</em><br>中间隔着什么？</h1>
+ <p>惠城 2025 年 GDP 1203.33 亿，十五五要「向两千亿级跃升」。2026 年前三季度增速只有 1.1%。这台风洞把这 797 亿的增量拆成五条路，让你自己调，看目标被什么撑起来、又被什么卡住。</p>
+ <div class="chips"><span class="chip">2025 基数 1203.33 亿</span><span class="chip">2030 目标 2000 亿</span><span class="chip">前三季度 +1.1%</span><span class="chip">不是预测值</span></div>
+</section>
+
+<section class="card">
+ <h2>第一件事：你的基准是哪一套现实</h2>
+ <p class="sec-sub">规划兑现＝循规划路径投入；现状延续＝按 2026 年前三季度实际惯性外推。两套基线的差距，就是必须靠行动补上的部分。</p>
+ <div class="presets" role="group" aria-label="切换基准情景">
+  <span class="plabel">基准情景</span>
+  <button type="button" class="pbtn active" id="pPlan" aria-pressed="true">规划兑现</button>
+  <button type="button" class="pbtn" id="pTrend" aria-pressed="false">现状延续 · 实测</button>
+ </div>
+ <div class="kpis">
+  <div class="kpi pos"><small>2030 中位数</small><b id="kP50">—</b><span class="u">亿元</span></div>
+  <div class="kpi"><small>达标概率 · 达到 2000 亿</small><b id="kHit">—</b><span class="u">%</span></div>
+  <div class="kpi neg"><small>相对目标缺口</small><b id="kGap">—</b><span class="u">亿元</span></div>
+  <div class="kpi"><small>结果区间 · 偏低到偏高</small><b id="kRange">—</b></div>
+ </div>
+ <div class="chartbox">
+  <svg id="chart" viewBox="0 0 920 300" preserveAspectRatio="xMidYMid meet" role="img" aria-label="2030 年 GDP 结果的概率分布，竖线为 2000 亿目标"></svg>
+  <div class="legend"><span><i style="background:#2f8be0"></i>结果分布</span><span><i style="background:#f5b325"></i>2000 亿目标线</span><span><i style="background:#165fb8"></i>中位数</span></div>
+ </div>
+ <div id="modeNote" class="warnbox">当前为规划兑现基线。点上方「现状延续」，可以看到按现在的惯性走下去，2030 会落在哪里。</div>
+ <div id="trendNote" class="mintbox"></div>
+</section>
+
+<section class="card">
+ <h2>五条路：缺口要从哪里补出来</h2>
+ <p class="sec-sub">滑杆是该路径五年累计增量的兑现比例。100% 为情景设定值，调高表示这条路上投入更多、落地更快。</p>
+ <div id="pathBox"></div>
+ <div class="ctrls">
+  <div class="ctrl"><div class="top"><span>整体兑现强度</span><b id="scaleV">100%</b></div><input type="range" id="scale" min="0.6" max="1.4" step="0.05" value="1" aria-label="整体兑现强度"><p>统一缩放五条路径的增量。不是把 2025 年 GDP 乘一个比例。</p></div>
+  <div class="ctrl"><div class="top"><span>不确定性·波动强度</span><b id="volV">1.00×</b></div><input type="range" id="vol" min="0.6" max="1.6" step="0.05" value="1" aria-label="波动强度"><p>同时放大路径分散度与外部冲击，观察尾部风险如何变宽。</p></div>
+ </div>
+ <table id="qt"><thead><tr><th>情景</th><th>偏低 P10</th><th>中位 P50</th><th>偏高 P90</th><th>达标率</th></tr></thead><tbody id="qtb"></tbody></table>
+ <div class="note" id="readNote">—</div>
+</section>
+
+<section class="card">
+ <h2>前三季度实况：两个数字跑岔了</h2>
+ <p class="sec-sub">惠城区统计局 2026-11-03 发布；上半年为 1-6 月累计口径。</p>
+ <div class="factgrid">
+  <div class="fcell"><small>产出端 · 2026 上半年</small><b style="color:#dd6a17" id="fProd">+0.2%</b><p>规上工业增加值同比。上半年 GDP 564.13 亿，仅 +0.2%。</p></div>
+  <div class="fcell"><small>用电端 · 2026 上半年</small><b style="color:#165fb8" id="fElec">+19.7%</b><p>工业用电 21.27 亿千瓦时。用电增速是增加值增速的近百倍。</p></div>
+  <div class="fcell"><small>消费端 · 2026 前三季度</small><b style="color:#165fb8" id="fRetail">+2.0%</b><p>社消零 622.07 亿，由负转正，比上半年回升 5.3 个百分点。</p></div>
+ </div>
+ <div class="note" id="fRead">用电跑得比产值快得多。这不必然说明效率下降——也可能是新产线爬坡、订单未转化为产值，或统计口径差异。但它明确指向一件事：产能已经在转，产值没有跟上，中间缺的是订单或价格。</div>
+</section>
+
+<footer>惠城产业风洞 · 公共描述性统计工具，非官方报告<br>数据来自惠城区政府公开统计页；模型为情景推演，不构成预测或决策建议</footer>
+</div>
+
+<script>
+(function(){
+ const $=id=>document.getElementById(id);
+ const st={preset:'plan',scale:1,vol:1,w:[1,1,1,1,1],n:5000,seed:42};
+ function curSet(){ return st.preset==='trend'?HC.TREND_PATHS:HC.DEFAULT_PATHS; }
+ function paths(){
+  return curSet().map((p,i)=>({mu:p.mu*st.scale*st.w[i],sd:p.sd*st.vol,short:p.short,color:p.color}));
+ }
+ function fmt(n){ return Math.round(n).toLocaleString('zh-CN'); }
+
+ function buildPaths(){
+  const box=$('pathBox'); if(!box) return;
+  box.innerHTML='';
+  curSet().forEach((p,i)=>{
+   const row=document.createElement('div'); row.className='prow';
+   row.innerHTML='<div class="nm">'+p.short+'<span>'+(st.preset==='trend'?'实测基线':'规划情景')+' '+p.mu+' 亿</span></div>'+
+     '<input type="range" data-i="'+i+'" min="0.5" max="1.5" step="0.05" value="'+st.w[i]+'" aria-label="'+p.short+'的兑现比例">'+
+     '<div class="v" id="pv'+i+'">'+Math.round(st.w[i]*100)+'%</div>';
+   box.appendChild(row);
+  });
+  box.querySelectorAll('input[type=range]').forEach(inp=>{
+   inp.addEventListener('input',e=>{ st.w[+e.target.dataset.i]=+e.target.value; $('pv'+e.target.dataset.i).textContent=Math.round(+e.target.value*100)+'%'; render(); });
+  });
+ }
+
+ function chart(res){
+  const svg=$('chart'); const narrow=(window.innerWidth||1280)<620; const W=narrow?470:920,H=narrow?330:300,pl=narrow?50:54,pr=narrow?16:20,pt=narrow?20:16,pb=narrow?40:36;
+  const lo=Math.min(res.p10-20, 1180), hi=Math.max(res.p90+20, 2050);
+  const x=v=>pl+(v-lo)/(hi-lo)*(W-pl-pr);
+  const bins=72, cnt=new Array(bins).fill(0);
+  res.raw.forEach(v=>{ if(v>=lo&&v<hi){ let i=Math.floor((v-lo)/(hi-lo)*bins); if(i>=bins)i=bins-1; cnt[i]++; } });
+  const mx=Math.max.apply(null,cnt.concat([1]));
+  const y=c=>H-pb-(c/mx)*(H-pt-pb);
+  let line='', area='M'+x(lo).toFixed(1)+','+(H-pb).toFixed(1);
+  cnt.forEach((c,i)=>{
+   const px=x(lo+(i+0.5)*(hi-lo)/bins), py=y(c);
+   line+=(i?'L':'M')+px.toFixed(1)+','+py.toFixed(1);
+   area+='L'+px.toFixed(1)+','+py.toFixed(1);
+  });
+  area+='L'+x(hi).toFixed(1)+','+(H-pb).toFixed(1)+'Z';
+  let ticks='', labels='';
+  for(let k=0;k<=5;k++){
+   const v=lo+(hi-lo)*k/5, px=x(v);
+   ticks+='<line x1="'+px.toFixed(1)+'" y1="'+(H-pb)+'" x2="'+px.toFixed(1)+'" y2="'+pt+'" stroke="#e6eff9" stroke-width="1"/>';
+   labels+='<text x="'+px.toFixed(1)+'" y="'+(H-14)+'" text-anchor="middle" font-size="11" fill="#8aa3bb">'+Math.round(v)+'</text>';
+  }
+  const tx=x(2000), mx2=x(res.p50);
+  svg.style.aspectRatio=W+' / '+H;
+  svg.innerHTML=
+   '<path d="'+area+'" fill="#2f8be0" opacity="0.13"/>'+
+   '<path d="'+line+'" fill="none" stroke="#2f8be0" stroke-width="2.2"/>'+
+   ticks+
+   '<line x1="'+tx.toFixed(1)+'" y1="'+(pt-4)+'" x2="'+tx.toFixed(1)+'" y2="'+(H-pb)+'" stroke="#f5b325" stroke-width="2.4" stroke-dasharray="7 5"/>'+
+   '<text x="'+tx.toFixed(1)+'" y="'+(pt+8)+'" text-anchor="middle" font-size="11.5" font-weight="700" fill="#b1830f">目标 2000</text>'+
+   '<line x1="'+mx2.toFixed(1)+'" y1="'+(pt+14)+'" x2="'+mx2.toFixed(1)+'" y2="'+(H-pb)+'" stroke="#165fb8" stroke-width="2"/>'+
+   (narrow?'':'<text x="'+mx2.toFixed(1)+'" y="'+(pt+30)+'" text-anchor="middle" font-size="11" font-weight="700" fill="#165fb8">中位 '+Math.round(res.p50)+'</text>')+
+   '<line x1="'+pl+'" y1="'+(H-pb)+'" x2="'+(W-pr)+'" y2="'+(H-pb)+'" stroke="#cfdeee" stroke-width="1.2"/>'+
+   labels+
+   (narrow?'':'<text x="'+pl+'" y="'+(pt+10)+'" font-size="10.5" fill="#8aa3bb">频度 · 亿元</text>');
+ }
+
+ function render(){
+  const res=HC.run(st.seed,st.n,paths(),{noise:HC.NOISE_SD*st.vol});
+  $('kP50').textContent=fmt(res.p50);
+  $('kHit').textContent=res.hit<0.05?'<0.05':res.hit.toFixed(1);
+  $('kGap').textContent=fmt(Math.max(0,HC.TARGET-res.p50));
+  $('kRange').textContent=fmt(res.p10)+'–'+fmt(res.p90);
+  chart(res);
+  $('qtb').innerHTML='<tr><td>当前设定</td><td>'+fmt(res.p10)+'</td><td>'+fmt(res.p50)+'</td><td>'+fmt(res.p90)+'</td><td>'+(res.hit<0.05?'<0.05%':res.hit.toFixed(1)+'%')+'</td></tr>';
+  const set=curSet();
+  $('readNote').textContent='五条路的增量合计 '+fmt(set.reduce((a,b)=>a+b.mu,0)*st.scale)+' 亿'+
+    (st.preset==='trend'?'（按前三季度 1.1% 惯性的情景分解，不是逐企业测量）':'（情景设定，不是逐企业测量；证据等级见 model.js 注释）')+
+    '；模型把路径贡献做负值截断，所以 sd 都控制在 mu 的 0.6 倍以内，避免期望被系统性抬高。';
+  updateMode();
+ }
+
+ function updateMode(){
+  const isTrend=st.preset==='trend';
+  $('pPlan').classList.toggle('active',!isTrend); $('pPlan').setAttribute('aria-pressed',String(!isTrend));
+  $('pTrend').classList.toggle('active',isTrend); $('pTrend').setAttribute('aria-pressed',String(isTrend));
+  $('modeNote').style.display=isTrend?'none':'block';
+  const tn=$('trendNote');
+  if(!isTrend){ tn.style.display='none'; return; }
+  const base=HC.run(st.seed,st.n,HC.TREND_PATHS.map(p=>({mu:p.mu,sd:p.sd})));
+  const maxed=HC.run(st.seed,st.n,HC.TREND_PATHS.map(p=>({mu:p.mu*1.4,sd:p.sd})));
+  tn.style.display='block';
+  tn.innerHTML='这就是按前三季度 1.1% 惯性外推的结果：2030 中位 <b>'+fmt(base.p50)+'</b> 亿，达标率 '+(base.hit<0.05?'<0.05%':base.hit.toFixed(1)+'%')+'。'+
+   '就算把兑现强度直接拉到上限 140%，中位也只有 <b>'+fmt(maxed.p50)+'</b> 亿，缺口仍有 <b>'+fmt(Math.max(0,HC.TARGET-maxed.p50))+'</b> 亿——'+
+   '这说明靠"更努力一点"补不上，必须改路径结构。';
+ }
+
+ $('pPlan').addEventListener('click',()=>{ if(st.preset==='plan')return; st.preset='plan'; st.scale=1; st.w=[1,1,1,1,1]; $('scale').value='1'; $('scaleV').textContent='100%'; buildPaths(); render(); });
+ $('pTrend').addEventListener('click',()=>{ if(st.preset==='trend')return; st.preset='trend'; st.scale=1; st.w=[1,1,1,1,1]; $('scale').value='1'; $('scaleV').textContent='100%'; buildPaths(); render(); });
+ $('scale').addEventListener('input',e=>{ st.scale=+e.target.value; $('scaleV').textContent=Math.round(st.scale*100)+'%'; render(); });
+ $('vol').addEventListener('input',e=>{ st.vol=+e.target.value; $('volV').textContent=st.vol.toFixed(2)+'×'; render(); });
+
+ buildPaths(); render();
+
+ /* 实况卡：优先读 data/facts.json（单一数据源），失败则保留静态兜底 */
+ fetch('./data/facts.json').then(r=>{ if(!r.ok) throw new Error(r.status); return r.json(); }).then(d=>{
+  const s=d.scissors||{};
+  const h=(d.actual_2026||{}).h1||{};
+  const q=(d.actual_2026||{}).q1_q3||{};
+  const pct=v=>(typeof v==='number')?((v>0?'+':'')+v.toFixed(1)+'%'):null;
+  const put=(id,t)=>{const e=$(id); if(e&&t) e.textContent=t;};
+  put('fProd', pct(h['工业增加值_yoy']));
+  put('fElec', pct((h['工业用电']||{}).yoy));
+  put('fRetail', pct((q['社消零']||{}).yoy));
+  if(s.read) put('fRead', s.read);
+ }).catch(()=>{ /* 静态兜底已渲染 */ });
+
+ let rz=0;
+ window.addEventListener('resize',()=>{ clearTimeout(rz); rz=setTimeout(render,180); });
+})();
+</script>
+</body>
+</html>

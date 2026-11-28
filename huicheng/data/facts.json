@@ -1,0 +1,80 @@
+{
+  "schema": "huicheng-facts/v1",
+  "region": "惠城区",
+  "updated": "2026-11-28T19:50:00+08:00",
+  "note": "惠城区数据底座。A类为官方统计口径，C类为情景假设。目标线 2000 亿取自十五五规划纲要原文「向两千亿级跃升」，此处取整便于测算。",
+  "sources": {
+    "gdp_2025": "http://www.hcq.gov.cn/hzhctjj/gkmlpt/content/5/5784/post_5784292.html",
+    "gdp_2025_breakdown": "http://www.hcq.gov.cn/ecgk/jjfz/content/post_5705666.html",
+    "plan_15th": "https://www.hcq.gov.cn/attachment/0/366/366586/5850538.pdf",
+    "nine_months_2026": "http://www.hcq.gov.cn/hzhctjj/gkmlpt/content/5/5886/post_5886185.html"
+  },
+  "base": {
+    "year": 2025,
+    "gdp": 1203.33,
+    "yoy": 4.3,
+    "unit": "亿元",
+    "evidence": "A",
+    "breakdown": [
+      { "name": "第一产业", "value": 40.57, "yoy": 2.9 },
+      { "name": "第二产业", "value": 332.87, "yoy": 2.3 },
+      { "name": "第三产业", "value": 829.89, "yoy": 5.2 }
+    ],
+    "other": {
+      "规上工业总产值": { "value": 973.9, "yoy": 9.6, "unit": "亿元" },
+      "社会消费品零售总额": { "value": 805.7, "yoy": 3.7, "unit": "亿元" },
+      "农林牧渔业总产值": { "value": 60.17, "yoy": 3.1, "unit": "亿元" }
+    }
+  },
+  "target": {
+    "year": 2030,
+    "gdp": 2000,
+    "quote": "到「十五五」期末地区生产总值向两千亿级跃升",
+    "evidence": "A",
+    "source": "十五五规划纲要 第四节 主要目标"
+  },
+  "actual_2026": {
+    "h1": {
+      "period": "2026年上半年",
+      "gdp": 564.13, "gdp_yoy": 0.2,
+      "工业增加值_yoy": 0.2,
+      "全社会用电": { "value": 51.49, "yoy": 14.0, "unit": "亿千瓦时" },
+      "工业用电": { "value": 21.27, "yoy": 19.7, "unit": "亿千瓦时" },
+      "evidence": "A"
+    },
+    "q1_q3": {
+      "period": "2026年前三季度",
+      "gdp": 883.46, "gdp_yoy": 1.1,
+      "社消零": { "value": 622.07, "yoy": 2.0, "note": "由负转正，比上半年回升5.3个百分点" },
+      "农林牧渔总产值": { "value": 43.93, "yoy": 2.6 },
+      "进口": { "value": 143.2, "yoy": 22.6 },
+      "出口": { "value": 167.4, "yoy": 4.4 },
+      "evidence": "A"
+    }
+  },
+  "scissors": {
+    "title": "用电跑得比产值快得多",
+    "production": { "label": "产出端几乎停住", "headline": "规上工业增加值 +0.2%", "period": "2026年上半年", "trend": "flat" },
+    "energy": { "label": "用电端仍在大幅扩张", "headline": "工业用电 +19.7%", "period": "2026年上半年", "trend": "up" },
+    "read": "用电增速是增加值增速的近百倍。这不必然说明效率下降——也可能是新产线爬坡、订单未转化为产值、或统计口径差异。但它明确指向一件事：产能已经在运转，产值没有跟上，中间缺的是订单或价格。",
+    "evidence": "A"
+  },
+  "model_result": {
+    "base": 1203.33,
+    "target": 2000,
+    "plan_p50": 2000.6,
+    "plan_hit": 50.17,
+    "trend_p50": 1271.4,
+    "trend_hit": 0.0,
+    "gap": 728.6,
+    "required_cagr": 10.7,
+    "actual_yoy": 1.1,
+    "method": "蒙特卡洛 N=10000，seed=42，加性噪声 40 亿；路径贡献负值截断"
+  },
+  "caveats": [
+    "2026 前三季度 GDP 为累计数，全年为按 Q4 同比 +1.1% 的推算值，非官方发布",
+    "十五五目标原文为「两千亿级」，2000 亿是取整测算线，不是精确考核值",
+    "五条路径的 mu/sd 是情景参数（C级），非实测相关；仅制造业与服务业有 B 级以上依据",
+    "现状延续路径 sd 已人工下调至 ≤0.6×mu，避免负值截断抬高期望（原方案会使中位虚增约 28 亿）"
+  ]
+}
