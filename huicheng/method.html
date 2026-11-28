@@ -17,8 +17,10 @@
 .src a{color:#165fb8}
 .step{display:flex;gap:10px;padding:9px 0;border-top:1px solid #eef4fb;font-size:12px;line-height:1.75;color:#33587c}
 .step .n{flex:0 0 20px;height:20px;border-radius:50%;background:#165fb8;color:#fff;font-size:11px;font-weight:900;display:grid;place-items:center}
-table.t3 th:nth-child(2),table.t3 td:nth-child(2){text-align:left}
-table.t3 th:nth-child(2),table.t3 td:nth-child(3){width:88px}
+table.t3{table-layout:fixed}
+table.t3 th:nth-child(1),table.t3 td:nth-child(1){width:27%}
+table.t3 th:nth-child(2),table.t3 td:nth-child(2){width:51%;text-align:left}
+table.t3 th:nth-child(3),table.t3 td:nth-child(3){width:22%}
 </style>
 </head>
 <body>
@@ -35,7 +37,7 @@ table.t3 th:nth-child(2),table.t3 td:nth-child(3){width:88px}
  <p class="micro">惠城 · 中心城区 / 口径说明</p>
  <h1>哪些是事实<br>哪些只是<em>我们的假设</em></h1>
  <p>这一页不讲结论，只交代来源。惠城这套风洞里，基数和实况来自政府公开统计（A 类），目标线来自十五五规划原文（A 类），五条路径的量级是情景参数（C 类），噪声是人设的（D 类）。分不清这三层，前面几页的数字就会变成假精确。</p>
- <div class="chips"><span class="chip">4 条官方来源</span><span class="chip">A/B/C/D 四级</span><span class="chip">4 条已知偏差</span><span class="chip">4 项数据缺口</span></div>
+ <div class="chips"><span class="chip">6 条官方来源</span><span class="chip">A/B/C/D 四级</span><span class="chip">5 条已知偏差</span><span class="chip">缺口收敛为 2 项</span></div>
 </section>
 
 <section class="card">
@@ -48,7 +50,7 @@ table.t3 th:nth-child(2),table.t3 td:nth-child(3){width:88px}
 </section>
 
 <section class="card">
- <h2>二、四个来源，全部可点</h2>
+ <h2>二、六个来源，全部可点</h2>
  <div class="src">
   1 · 2025 年国民经济和社会发展统计公报（GDP 1203.33 亿、+4.3%，规上工业总产值 973.9 亿）<br>
   <a href="http://www.hcq.gov.cn/hzhctjj/gkmlpt/content/5/5784/post_5784292.html" target="_blank" rel="noopener noreferrer">hcq.gov.cn/hzhctjj/gkmlpt/content/5/5784/post_5784292.html</a><br><br>
@@ -57,7 +59,11 @@ table.t3 th:nth-child(2),table.t3 td:nth-child(3){width:88px}
   3 · 十五五规划纲要（目标原文"到十五五期末地区生产总值向两千亿级跃升"）<br>
   <a href="https://www.hcq.gov.cn/attachment/0/366/366586/5850538.pdf" target="_blank" rel="noopener noreferrer">hcq.gov.cn/attachment/0/366/366586/5850538.pdf</a><br><br>
   4 · 2026 年前三季度经济运行情况（GDP 883.46 亿、+1.1%，社消零 622.07 亿、+2.0%，进出口）<br>
-  <a href="http://www.hcq.gov.cn/hzhctjj/gkmlpt/content/5/5886/post_5886185.html" target="_blank" rel="noopener noreferrer">hcq.gov.cn/hzhctjj/gkmlpt/content/5/5886/post_5886185.html</a>
+  <a href="http://www.hcq.gov.cn/hzhctjj/gkmlpt/content/5/5886/post_5886185.html" target="_blank" rel="noopener noreferrer">hcq.gov.cn/hzhctjj/gkmlpt/content/5/5886/post_5886185.html</a><br><br>
+  5 · 2026 年 1-8 月经济运行简况（固投 −45.4%、财政 39.56 亿、进出口 300.4 亿，用于看月度节奏）<br>
+  <a href="http://www.hcq.gov.cn/gkmlpt/content/5/5881/post_5881996.html" target="_blank" rel="noopener noreferrer">hcq.gov.cn/gkmlpt/content/5/5881/post_5881996.html</a><br><br>
+  6 · 区工信部门对政协提案的答复（2025 年规上工业 562 家、三大特色产业 627.3 亿、规上生产性服务业营收 1006.9 亿）<br>
+  <a href="http://www.hcq.gov.cn/hzhckgxj/gkmlpt/content/5/5888/post_5888446.html" target="_blank" rel="noopener noreferrer">hcq.gov.cn/hzhckgxj/gkmlpt/content/5/5888/post_5888446.html</a>
  </div>
  <div class="note">2026 年上半年数据（GDP 564.13 亿、+0.2%，工业用电 21.27 亿千瓦时、+19.7%）来自同期统计发布，与第 4 条同源不同期。<strong>全年 GDP 不是官方数</strong>——它是按前三季度累计同比外推的，页面上一律标注为"外推"。</div>
 </section>
@@ -72,25 +78,27 @@ table.t3 th:nth-child(2),table.t3 td:nth-child(3){width:88px}
 </section>
 
 <section class="card">
- <h2>四、四条已知偏差，写在明面上</h2>
+ <h2>四、五条已知偏差，写在明面上</h2>
  <div class="note">
   <strong>1 · 目标线是取整。</strong>"两千亿级"不是 2000.0 亿，达标概率 50.3% 会随目标线移动而变，不能当考核结论。<br>
   <strong>2 · 五条 mu 是情景参数。</strong>只有制造业与商贸两条有 B 级以上依据，其余是方向判断。换一套参数，结论会变。<br>
   <strong>3 · 路径之间按独立处理。</strong>没有建模挤出与重叠（总部经济挤压商贸、文旅与消费口径重叠），所以"五条分别可达"不等于"五条同时可达"。<br>
-  <strong>4 · 2026 前三季度是累计同比。</strong>用它外推全年含季节性假设，四季度若异常，全年会偏离。
+  <strong>4 · 2026 前三季度是累计同比。</strong>用它外推全年含季节性假设，四季度若异常，全年会偏离。<br>
+  <strong>5 · 投资降幅未进模型。</strong>2026 前三季度固投 −40.7%、工业投资 −46.1%，但没有写入任何路径参数。TREND 仍按 1.1% 校准，等于把投资端当成已过去的冲击，没有当成持续约束。
  </div>
 </section>
 
 <section class="card">
- <h2>五、明确没有的四项</h2>
- <p class="sec-sub">惠城的数据比博罗薄。以下四项本期没有官方口径，页面上一律留空，不估算填充。</p>
+ <h2>五、缺口：本轮补了两项，还剩两项</h2>
+ <p class="sec-sub">2026-11-28 第二次取数后，原四项缺口收敛为两项。</p><table class="t3"><tr><th>本轮已补齐</th><th>数值</th><th>来源</th></tr><tr><td>固定资产投资及分项</td><td>−40.7%（工业投资 −46.1%、基建 −28.3%、房地产 −46.8%）</td><td>1-9月简况</td></tr><tr><td>一般公共预算收入</td><td>46.05 亿、−4.1%（税收 26.30 亿、+1.7%）</td><td>1-9月简况</td></tr><tr><td>2025 产业结构</td><td>规上工业 562 家；三大特色产业合计 627.3 亿；规上生产性服务业营收 1006.9 亿</td><td>政协提案答复</td></tr><tr><td>工业用电（1-7月）</td><td>25.92 亿千瓦时、+18.3%</td><td>1-7月简况</td></tr></table><p class="sec-sub" style="margin-top:14px">仍然没有的两项：</p>
  <table class="t3">
   <tr><th>缺的指标</th><th>影响</th><th>状态</th></tr>
-  <tr><td>固定资产投资及分项</td><td>无法判断投资对五条通道的支撑强度</td><td>未取到</td></tr>
-  <tr><td>规上工业总产值当期值</td><td>只有 2025 全年 973.9 亿，2026 缺当期</td><td>未取到</td></tr>
-  <tr><td>一般公共预算收入</td><td>无法看财政对更新与基建的承受力</td><td>未取到</td></tr>
-  <tr><td>实际利用外资</td><td>无法验证"融深融莞"的外资侧证据</td><td>未取到</td></tr>
+  
+  <tr><td>规上工业总产值 2026 当期值</td><td>1-9 月简况只发增加值增速，未发总产值绝对值；只有 2025 全年 973.9 亿</td><td>官方未发布</td></tr>
+  
+  <tr><td>实际利用外资</td><td>无法验证"融深融莞"的外资侧证据</td><td>官方未单列</td></tr>
  </table>
+ <div class="note"><strong>补数时发现一处口径打架，保留而不是抹平。</strong>2025 年规上工业总产值有两个数：统计公报 973.9 亿，区工信部门政协提案答复 937.9 亿，差 36 亿。两者都出自政府网站，差别在统计范围（辖区/区属、是否含某园区），现有公开信息不足以定谁对。本底座取公报口径，同时在 facts.json 的 caveats 里并列记录。<strong>遇到两个官方数不一致，正确做法是都留着并说明，不是挑一个看起来顺的。</strong></div>
  <div class="note"><strong>还有一个更重要的缺口：主体级关系图没有做。</strong>惠城没有像博罗那样的"26 主体三层网络"。原因是公开信息无法把企业逐一归到惠城——比如亿纬锂能的注册地在仲恺高新区，德赛西威主体在和畅五路（仲恺），三栋镇另有厂区。把这类主体直接画进惠城的网络图，会变成跨区归因。宁可空着，也不画一张归属错误的图。</div>
 </section>
 
